@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             MinHeight="420" MinWidth="640" MaxHeight="420" MaxWidth="640" IsEnabled="True">
-    <Grid Name="gridMain">
+             mc:Ignorable="d">
+    <Viewbox>
+    <Grid Name="gridMain" Width="640" Height="420">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />
             <ColumnDefinition Width="200" />
@@ -675,4 +675,5 @@
             <TextBlock Name="textBlockStateAfterAbsorb" Text="" FontSize="9" FontFamily="Courier New" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0" />
         </Grid>
     </Grid>
+    </Viewbox>
 </UserControl>

@@ -28,9 +28,6 @@ namespace Cryptool.Plugins.Keccak
         public KeccakPres()
         {
             InitializeComponent();
-
-            this.Width = 800;
-            this.Height = 500;
             buttonNextClickedEvent = new AutoResetEvent(false);
             skipStep = false;
             autostep = false;

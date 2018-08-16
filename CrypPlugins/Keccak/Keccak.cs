@@ -354,33 +354,6 @@ namespace Cryptool.Plugins.Keccak
             ProgressChanged(1, 1);
         }
 
-        /// <summary>
-        /// Copies the array and removes all occurences of
-        /// space, \t, \r, and \n
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <returns></returns>
-        private static byte[] RemoveWhiteSpaces(byte[] bytes)
-        {
-            List<byte> byteList = new List<byte>();
-            foreach (byte b in bytes)
-            {
-                switch (b)
-                {
-                    case (byte)' ':
-                    case (byte)'\t':
-                    case (byte)'\r':
-                    case (byte)'\n':
-                        break;
-                    default:
-                        byteList.Add(b);
-                        break;
-                }
-            }
-            return byteList.ToArray();
-        }
-
-
         #region IPlugin Members
 
         /// <summary>
