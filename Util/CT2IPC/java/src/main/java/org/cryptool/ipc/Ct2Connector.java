@@ -16,13 +16,13 @@
 package org.cryptool.ipc;
 
 import java.io.PrintStream;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.cryptool.ipc.loops.IReceiveLoop;
 import org.cryptool.ipc.loops.ISendLoop;

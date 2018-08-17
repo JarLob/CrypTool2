@@ -15,11 +15,11 @@
 */
 package org.cryptool.ipc.messages;
 
-import java.lang.System.Logger.Level;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Level;
 
 import org.cryptool.ipc.Ct2ConnectionState;
 import org.cryptool.ipc.messages.Ct2IpcMessages.Ct2Goodbye;
@@ -56,7 +56,7 @@ public class MessageHelper {
 			return true;
 		case VALUES: {
 			Ct2Values m = Ct2Values.parseFrom(body);
-			state.addValues(valueMap(m));
+			state.addValues(MessageHelper.valueMap(m));
 		}
 			return true;
 		case SHUTDOWN: {
@@ -105,7 +105,7 @@ public class MessageHelper {
 	}
 
 	public static TypedMessage encodeCt2Values(final List<String> valueList) {
-		final List<Integer> pinIds = idList(valueList.size());
+		final List<Integer> pinIds = MessageHelper.idList(valueList.size());
 		final List<String> values = new ArrayList<>(valueList);
 		return new TypedMessage(Ct2MessageType.VALUES, //
 				Ct2Values.newBuilder()//
@@ -148,7 +148,7 @@ public class MessageHelper {
 	}
 
 	public static Level loggerLevel(final LogLevel level) {
-		final Level defaultLevel = Level.ERROR;
+		final Level defaultLevel = Level.SEVERE;
 		if (level == null) {
 			return defaultLevel;
 		}
@@ -157,9 +157,9 @@ public class MessageHelper {
 		case CT2BALLOON:
 			return Level.INFO;
 		case CT2DEBUG:
-			return Level.DEBUG;
+			return Level.FINE;
 		case CT2ERROR:
-			return Level.ERROR;
+			return Level.SEVERE;
 		case CT2WARNING:
 			return Level.WARNING;
 		default:
