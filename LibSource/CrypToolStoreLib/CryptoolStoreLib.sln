@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrypToolStoreLib", "CrypToolStoreLib\CrypToolStoreLib.csproj", "{AC89A28A-71EE-4BD1-84AB-9F8438DBD32E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Main", "Main\Main.csproj", "{40B855E9-5AF4-49EA-9A99-268F9AD14DFE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC89A28A-71EE-4BD1-84AB-9F8438DBD32E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC89A28A-71EE-4BD1-84AB-9F8438DBD32E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC89A28A-71EE-4BD1-84AB-9F8438DBD32E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC89A28A-71EE-4BD1-84AB-9F8438DBD32E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40B855E9-5AF4-49EA-9A99-268F9AD14DFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40B855E9-5AF4-49EA-9A99-268F9AD14DFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40B855E9-5AF4-49EA-9A99-268F9AD14DFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40B855E9-5AF4-49EA-9A99-268F9AD14DFE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
