@@ -410,7 +410,7 @@ namespace CrypToolStoreLib.Database
         }
 
         /// <summary>
-        /// Updates the dedicated plugin identified by its id
+        /// Deletes the dedicated plugin identified by its id
         /// </summary>
         /// <param name="id"></param>
         /// <param name="username"></param>
@@ -550,7 +550,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated source: pluginid={0}, pluginversion={1}, zipfile={2}, buildstate={3}", pluginid, pluginversion, uploaddate, buildstate), this, Logtype.Info);
+            logger.LogText(String.Format("Created new source: pluginid={0}, pluginversion={1}, zipfile={2}, buildstate={3}", pluginid, pluginversion, uploaddate, buildstate), this, Logtype.Info);
         }
 
         /// <summary>
@@ -640,8 +640,6 @@ namespace CrypToolStoreLib.Database
             logger.LogText(String.Format("Deleted source: pluginid={0}, pluginversion={1}", pluginid, pluginversion), this, Logtype.Info);
         }
 
-
-
         /// <summary>
         /// Returns the dedicated Source identified by pluginid and pluginversion
         /// </summary>
@@ -714,6 +712,31 @@ namespace CrypToolStoreLib.Database
             }
             return sources;
         }
+
+        /// <summary>
+        /// Creates a new resource entry in the database
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        public void CreateResource(string username, string name, string description)
+        {
+            logger.LogText(String.Format("Creating new resource: username, name, description", username, name, description), this, Logtype.Info);
+            string query = "insert into resources (username, name, description) values (@username, @name, @description)";
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = new object[][]{
+                new object[]{"@username", username},
+                new object[]{"@name", name},
+                new object[]{"@description", description}
+            };
+
+            connection.ExecutePreparedStatement(query, parameters);
+
+            logger.LogText(String.Format("Creatied new resource: username, name, description", username, name, description), this, Logtype.Info);
+        }
+
 
         #endregion
     }
