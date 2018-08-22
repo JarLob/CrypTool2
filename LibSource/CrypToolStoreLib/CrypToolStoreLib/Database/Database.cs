@@ -526,6 +526,195 @@ namespace CrypToolStoreLib.Database
             return plugins;
         }
 
+        /// <summary>
+        /// Creates a new source entry in the database
+        /// </summary>
+        /// <param name="pluginid"></param>
+        /// <param name="pluginversion"></param>
+        /// <param name="zipfile"></param>
+        /// <param name="uploaddate"></param>
+        public void CreateSource(int pluginid, int pluginversion, byte[] zipfile, DateTime uploaddate, string buildstate)
+        {
+            logger.LogText(String.Format("Creating new source: pluginid={0}, pluginversion={1}, zipfile={2}, buildstate={3}", pluginid, pluginversion, uploaddate, buildstate), this, Logtype.Info);
+            string query = "insert into sources (pluginid, pluginversion, zipfile, uploaddate) values (@pluginid, @pluginversion, @zipfile, @uploaddate)";
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = new object[][]{
+                new object[]{"@pluginid", pluginid},
+                new object[]{"@pluginversion", pluginversion},
+                new object[]{"@zipfile", zipfile},
+                new object[]{"@uploaddate", uploaddate},
+                new object[]{"@buildstate", buildstate}
+            };
+
+            connection.ExecutePreparedStatement(query, parameters);
+
+            logger.LogText(String.Format("Updated source: pluginid={0}, pluginversion={1}, zipfile={2}, buildstate={3}", pluginid, pluginversion, uploaddate, buildstate), this, Logtype.Info);
+        }
+
+        /// <summary>
+        /// Updates a source in the database identified by pluginid and pluginversion
+        /// </summary>
+        /// <param name="pluginid"></param>
+        /// <param name="pluginversion"></param>
+        /// <param name="zipfile"></param>
+        /// <param name="uploaddate"></param>
+        /// <param name="buildstate"></param>
+        public void UpdateSource(int pluginid, int pluginversion, byte[] zipfile, DateTime uploaddate, string buildstate)
+        {
+            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, zipfile={2}, buildstate={3}", pluginid, pluginversion, zipfile != null ? zipfile.Length.ToString() : "null", uploaddate, buildstate), this, Logtype.Info);
+            string query = "update sources set zipfile = @zipfile, uploaddate=@uploaddate, buildstate=@buildstate where pluginid=@pluginid and pluginversion=@pluginversion";
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = new object[][]{                
+                
+                new object[]{"@zipfile", zipfile},
+                new object[]{"@uploaddate", uploaddate},
+                new object[]{"@buildstate", buildstate},
+                new object[]{"@pluginid", pluginid},
+                new object[]{"@pluginversion", pluginversion}
+            };
+
+            connection.ExecutePreparedStatement(query, parameters);
+
+            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, zipfile={2}, buildstate={3}", pluginid, pluginversion, zipfile != null ? zipfile.Length.ToString() : "null", uploaddate, buildstate), this, Logtype.Info);
+        }
+
+
+        /// <summary>
+        /// Updates the build of a source identified by pluginid and pluginversion
+        /// </summary>
+        /// <param name="pluginid"></param>
+        /// <param name="pluginversion"></param>
+        /// <param name="buildversion"></param>
+        /// <param name="buildstate"></param>
+        /// <param name="buildlog"></param>
+        /// <param name="assembly"></param>
+        /// <param name="builddate"></param>
+        public void UpdateSourceBuild(int pluginid, int pluginversion, int buildversion, string buildstate, string buildlog, byte[] assembly, DateTime builddate)
+        {
+            logger.LogText(String.Format("Updating source's build state: pluginid={0}, pluginversion={1}, buildversion={2}, buildstate={3}, buildlog={4}, assembly={5}, builddate={6}",
+                pluginid, pluginversion, buildversion, buildstate, buildlog, assembly != null ? assembly.Length.ToString() : "null", builddate), this, Logtype.Info);
+            string query = "update sources set buildversion=@buildversion, buildstate=@buildstate, buildlog=@buildlog, assembly=@assembly, builddate=@builddate where pluginid=@pluginid and pluginversion=@pluginversion";
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = new object[][]{
+
+                new object[]{"@buildversion", buildversion},
+                new object[]{"@buildstate", buildstate},
+                new object[]{"@buildlog", buildlog},
+                new object[]{"@assembly", assembly},
+                new object[]{"@builddate", builddate},
+                new object[]{"@pluginid", pluginid},
+                new object[]{"@pluginversion", pluginversion}
+            };
+
+            connection.ExecutePreparedStatement(query, parameters);
+
+            logger.LogText(String.Format("Updated source's build state: pluginid={0}, pluginversion={1}, buildversion={2}, buildstate={3}, buildlog={4}, assembly={5}, builddate={6}",
+                pluginid, pluginversion, buildversion, buildstate, buildlog, assembly != null ? assembly.Length.ToString() : "null", builddate), this, Logtype.Info);
+        }
+
+        /// <summary>
+        /// Deletes the dedicated source idenfified by pluginid and pluginversion
+        /// </summary>
+        /// <param name="pluginid"></param>
+        /// <param name="pluginversion"></param>
+        public void DeleteSource(int pluginid, int pluginversion)
+        {
+            logger.LogText(String.Format("Deleting source: pluginid={0}, pluginversion={1}", pluginid, pluginversion), this, Logtype.Info);
+            string query = "delete from sources where pluginid=@pluginid and pluginversion=@pluginversion";
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = new object[][]{
+                new object[]{"@pluginid", pluginid},
+                new object[]{"@pluginversion", pluginversion}
+            };
+
+            connection.ExecutePreparedStatement(query, parameters);
+
+            logger.LogText(String.Format("Deleted source: pluginid={0}, pluginversion={1}", pluginid, pluginversion), this, Logtype.Info);
+        }
+
+
+
+        /// <summary>
+        /// Returns the dedicated Source identified by pluginid and pluginversion
+        /// </summary>
+        /// <param name="pluginid"></param>
+        /// <param name="pluginversion"></param>
+        /// <returns></returns>
+        public Source GetSource(int pluginid, int pluginversion)
+        {
+            string query = "select pluginid, pluginversion, buildversion, zipfile, buildstate, buildlog, assembly, uploaddate, builddate from sources where pluginid=@pluginid and pluginversion=@pluginversion";
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = new object[][]{
+                new object[]{"@pluginid", pluginid},
+                new object[]{"@pluginversion", pluginversion}
+            };
+
+            var resultset = connection.ExecutePreparedStatement(query, parameters);
+            if (resultset.Count == 0)
+            {
+                return null;
+            }
+
+            Source source = new Source();
+            source.PluginId = (int)resultset[0]["pluginid"];
+            source.PluginVersion = (int)resultset[0]["pluginversion"];
+            source.BuildVersion = (int)resultset[0]["buildversion"];
+            source.ZipFile = (byte[])resultset[0]["zipfile"];
+            source.BuildState = (string)resultset[0]["buildstate"];
+            source.BuildLog = (string)resultset[0]["buildlog"];
+            source.Assembly = (byte[])resultset[0]["assembly"];
+            source.UploadDate = (DateTime)resultset[0]["uploaddate"];
+            source.BuildDate = (DateTime)resultset[0]["builddate"];
+
+            return source;          
+        }
+
+        /// <summary>
+        /// Returns a list of sources for the dedicated plugin idenfified by the pluginid
+        /// </summary>
+        /// <param name="pluginid"></param>
+        /// <returns></returns>
+        public List<Source> GetSources(int pluginid)
+        {
+            string query = "select pluginid, pluginversion, buildversion, zipfile, buildstate, buildlog, assembly, uploaddate, builddate from sources where pluginid=@pluginid";
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = new object[][]{
+                new object[]{"@pluginid", pluginid},
+            };
+
+            var resultset = connection.ExecutePreparedStatement(query, parameters);
+
+            List<Source> sources = new List<Source>();
+
+            foreach (var entry in resultset)
+            {
+                Source source = new Source();
+                source.PluginId = (int)entry["pluginid"];
+                source.PluginVersion = (int)entry["pluginversion"];
+                source.BuildVersion = (int)entry["buildversion"];
+                source.ZipFile = (byte[])entry["zipfile"];
+                source.BuildState = (string)entry["buildstate"];
+                source.BuildLog = (string)entry["buildlog"];
+                source.Assembly = (byte[])entry["assembly"];
+                source.UploadDate = (DateTime)entry["uploaddate"];
+                source.BuildDate = (DateTime)entry["builddate"];
+                sources.Add(source);
+            }
+            return sources;
+        }
+
         #endregion
     }
 }

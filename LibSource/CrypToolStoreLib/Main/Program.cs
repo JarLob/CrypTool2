@@ -40,11 +40,15 @@ namespace CrpyStoreLib
             {
                 using (Database database = new Database("192.168.0.122", "CrypToolStore", "cryptoolstore", "123", 1))
                 {
-                    database.CreatePlugin("kopal", "test", "short", "long", "authornames", "authoremails", "authorinstitutes", new byte[] { 1, 2, 3 });
-                    var result = database.GetPlugins();
-                    foreach (var entry in result)
+                    //database.CreateSource(7, 1, new byte[] { 1, 2, 3 }, DateTime.Now);
+                    //database.UpdateSource(7, 1, new byte[] { 2, 3, 4 }, DateTime.Now,"NEW");
+                    //database.UpdateSourceBuild(7, 1, 1, "SUCCESS", "Everything fine", new byte[] { 1, 2, 3 }, DateTime.Now);
+
+                    var sources = database.GetSources(7);
+
+                    foreach (var source in sources)
                     {
-                        Console.WriteLine(entry);
+                        Console.WriteLine(source);
                     }
                 }
             }
