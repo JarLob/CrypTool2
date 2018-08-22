@@ -24,6 +24,10 @@ using System.Threading.Tasks;
 
 namespace CrypToolStoreLib.Database
 {
+    /// <summary>
+    /// The Database manages connections the mysql database. It also offers method to inser, update, and delete all objects of CrypToolStore in the database.
+    /// Furthermore, it offers some check methods (e.g. developer's password)
+    /// </summary>
     public class Database : IDisposable
     {
         private Logger logger = Logger.GetLogger();
@@ -476,7 +480,7 @@ namespace CrypToolStoreLib.Database
         }
 
         /// <summary>
-        /// Returns a list of plugins from the database identified by its id
+        /// Returns a list of plugins from the database
         /// If username is set, it only returns plugins of that user
         /// </summary>
         /// <param name="id"></param>
@@ -674,7 +678,7 @@ namespace CrypToolStoreLib.Database
             source.UploadDate = (DateTime)resultset[0]["uploaddate"];
             source.BuildDate = (DateTime)resultset[0]["builddate"];
 
-            return source;          
+            return source;
         }
 
         /// <summary>
@@ -721,7 +725,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="description"></param>
         public void CreateResource(string username, string name, string description)
         {
-            logger.LogText(String.Format("Creating new resource: username, name, description", username, name, description), this, Logtype.Info);
+            logger.LogText(String.Format("Creating new resource: username={0}, name={1}, description={2}", username, name, description), this, Logtype.Info);
             string query = "insert into resources (username, name, description) values (@username, @name, @description)";
 
             DatabaseConnection connection = GetConnection();
@@ -734,9 +738,135 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Creatied new resource: username, name, description", username, name, description), this, Logtype.Info);
+            logger.LogText(String.Format("Created new resource: username={0}, name={1}, description={2}", username, name, description), this, Logtype.Info);
         }
 
+        /// <summary>
+        /// Updates the dedicated resource identified by its id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="username"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        public void UpdateResource(int id, string name, string description, int activeversion, bool publish)
+        {
+            logger.LogText(String.Format("Updating resource: id={0}, name={1}, description={2}, activeversion={3}, publish={4}", id, name, description, activeversion, publish == true ? "true" : "false"), this, Logtype.Info);
+            string query = "update resources set name=@name, description=@description, activeversion=@activeversion, publish=@publish where id=@id";
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = new object[][]{
+                new object[]{"@name", name},
+                new object[]{"@description", description},
+                new object[]{"@activeversion", activeversion},
+                new object[]{"@publish", publish},
+                new object[]{"@id", id}
+            };
+
+            connection.ExecutePreparedStatement(query, parameters);
+
+            logger.LogText(String.Format("Updated resource: id={0}, name={1}, description={2}, activeversion={3}, publish={4}", id, name, description, activeversion, publish == true ? "true" : "false"), this, Logtype.Info);
+        }
+
+        /// <summary>
+        /// Deletes the dedicated resource identified by its id
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        public void DeleteResource(int id)
+        {
+            logger.LogText(String.Format("Deleting resource: id={0}", id), this, Logtype.Info);
+            string query = "delete from resources where id=@id";
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = new object[][]{
+                new object[]{"@id", id},
+            };
+
+            connection.ExecutePreparedStatement(query, parameters);
+
+            logger.LogText(String.Format("Deleted resource: id={0}", id), this, Logtype.Info);
+        }
+
+        /// <summary>
+        /// Returns the dedicated resource identified by its id
+        /// Returns null, if the resource does not exist
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Resource GetResource(int id)
+        {
+            string query = "select id, username, name, description, activeversion, publish from resources where id=@id";
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = new object[][]{
+                new object[]{"@id", id},
+            };
+
+            var resultset = connection.ExecutePreparedStatement(query, parameters);
+            if (resultset.Count == 0)
+            {
+                return null;
+            }
+
+            Resource resource = new Resource();
+            resource.Id = (int)resultset[0]["id"];
+            resource.Username = (string)resultset[0]["username"];
+            resource.Name = (string)resultset[0]["name"];
+            resource.Description = (string)resultset[0]["description"];
+            resource.ActiveVersion = (int)resultset[0]["activeversion"];
+            resource.Publish = (bool)resultset[0]["publish"];          
+            return resource;
+        }
+
+        /// <summary>
+        /// Returns a list of resources from the database
+        /// If username is set, it only returns resources of that user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<Resource> GetResources(string username = null)
+        {
+            string query;
+            if (username == null)
+            {
+                query = "select id, username, name, description, activeversion, publish from resources";
+            }
+            else
+            {
+                query = "select id, username, name, description, activeversion, publish from resources where username=@username";
+            }
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = null;
+
+            if (username != null)
+            {
+                parameters = new object[][]{
+                new object[]{"@username", username}
+            };
+            }
+
+            var resultset = connection.ExecutePreparedStatement(query, parameters);
+            List<Resource> resources = new List<Resource>();
+
+            foreach (var entry in resultset)
+            {
+                Resource resource = new Resource();
+                resource.Id = (int)entry["id"];
+                resource.Username = (string)entry["username"];
+                resource.Name = (string)entry["name"];
+                resource.Description = (string)entry["description"];
+                resource.ActiveVersion = (int)entry["activeversion"];
+                resource.Publish = (bool)entry["publish"];          
+                resources.Add(resource);
+            }
+            return resources;
+        }
 
         #endregion
     }

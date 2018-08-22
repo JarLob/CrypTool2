@@ -93,13 +93,13 @@ namespace CrypToolStoreLib.DataObjects
         public string Username { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public bool ActiveVersion { get; set; }
+        public int ActiveVersion { get; set; }
         public bool Publish { get; set; }
 
         public override string ToString()
         {
             return String.Format("Resource{{id={0}, username={1}, name={2}, description={3}, activeversion={4}, publish={5}}}",
-                Id, Username, Description, ActiveVersion == true ? "true" : "false", Publish == true ? "true" : "false");
+                Id, Username, Name, Description, ActiveVersion, Publish == true ? "true" : "false");
         }        
     }
 
