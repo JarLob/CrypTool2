@@ -77,7 +77,7 @@ public class DatabaseConnection : IDisposable
             {
                 return;
             }
-            logger.LogText("Disconnecting to mysql database", this, Logtype.Debug);
+            logger.LogText("Disconnecting from mysql database", this, Logtype.Debug);
             mySqlConnection.Close();
             mySqlConnection = null;
             logger.LogText("Disconnected from mysql database", this, Logtype.Debug);

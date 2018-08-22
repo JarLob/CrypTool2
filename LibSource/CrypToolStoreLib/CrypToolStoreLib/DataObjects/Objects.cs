@@ -50,14 +50,15 @@ namespace CrypToolStoreLib.DataObjects
         public string LongDescription { get; set; }
         public string Authornames { get; set; }
         public string Authorinstitutes { get; set; }
+        public string Authoremails { get; set; }
         public byte[] Icon { get; set; }
-        public bool ActiveVersion { get; set; }
+        public int ActiveVersion { get; set; }
         public bool Publish { get; set; }
 
         public override string ToString()
         {
-            return String.Format("Developer{{id={0}, username={1}, name={2}, shortdescription={3}, longdescription={4}, authornames={5}, authorinstitutes={6}, icon={7}, activeversion={8}, publish={9}}}",
-                Id, Username, Name, ShortDescription, LongDescription, Authornames, Authorinstitutes, Icon != null ? Icon.Length.ToString() : "null", ActiveVersion == true ? "true" : "false", Publish == true ? "true" : "false");
+            return String.Format("Plugin{{id={0}, username={1}, name={2}, shortdescription={3}, longdescription={4}, authornames={5}, authoremails={6}, authorinstitutes={7}, icon={8}, activeversion={9}, publish={10}}}",
+                Id, Username, Name, ShortDescription, LongDescription, Authornames, Authoremails, Authorinstitutes, Icon != null ? Icon.Length.ToString() : "null", ActiveVersion, Publish == true ? "true" : "false");
         }
     }
 

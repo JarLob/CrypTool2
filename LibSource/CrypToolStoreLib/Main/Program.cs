@@ -40,10 +40,12 @@ namespace CrpyStoreLib
             {
                 using (Database database = new Database("192.168.0.122", "CrypToolStore", "cryptoolstore", "123", 1))
                 {
-                    //database.CreateNewDeveloperAccount("test2", "nils", "kopal", "nils.kopal@cryptool.org", "123");                    
-                    Console.WriteLine("Developer: " + database.GetDeveloper("kopal"));
-                    Console.WriteLine("Developer: " + database.GetDeveloper("test1"));
-                    Console.WriteLine("Developer: " + database.GetDeveloper("test2"));
+                    database.CreatePlugin("kopal", "test", "short", "long", "authornames", "authoremails", "authorinstitutes", new byte[] { 1, 2, 3 });
+                    var result = database.GetPlugins();
+                    foreach (var entry in result)
+                    {
+                        Console.WriteLine(entry);
+                    }
                 }
             }
             catch (Exception ex)
