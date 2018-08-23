@@ -94,7 +94,7 @@ namespace CrypToolStoreLib.Network
         /// </summary>
         /// <returns></returns>
         public byte[] Serialize()
-        {            
+        {                  
             //convert everything to byte arrays
             byte[] magicBytes = ASCIIEncoding.ASCII.GetBytes(MAGIC);
             byte[] messageTypeBytes = BitConverter.GetBytes((UInt32)MessageType);
@@ -138,7 +138,7 @@ namespace CrypToolStoreLib.Network
             string magicnumber = ASCIIEncoding.ASCII.GetString(bytes, 0, 13);
             if (!magicnumber.Equals(MAGIC))
             {
-                throw new DeserializationException(String.Format("Magic number mistmatch. Got \"{0}\" but expect \"{1}\"", magicnumber, MAGIC));
+                throw new DeserializationException(String.Format("Magic number mismatch. Got \"{0}\" but expect \"{1}\"", magicnumber, MAGIC));
             }
             try
             {
