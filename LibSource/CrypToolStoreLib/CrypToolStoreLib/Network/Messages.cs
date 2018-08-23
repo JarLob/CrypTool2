@@ -150,6 +150,7 @@ namespace CrypToolStoreLib.Network
                 int usernameLength = (int)BitConverter.ToUInt32(bytes, offset);
                 offset += 4;
                 Username = ASCIIEncoding.ASCII.GetString(bytes, offset, usernameLength);
+                offset += usernameLength;
                 return offset;
             }
             catch (Exception ex)
@@ -171,8 +172,14 @@ namespace CrypToolStoreLib.Network
     /// <summary>
     /// An abstract message
     /// </summary>
-    public abstract class Message
+    public class Message
     {
+        public Message()
+        {
+            MessageHeader = new MessageHeader();
+        }
+
+
         public MessageHeader MessageHeader
         {
             get;
@@ -184,8 +191,15 @@ namespace CrypToolStoreLib.Network
         /// </summary>
         /// <returns></returns>
         public byte[] Serialize()
-        {                        
-            return null;
+        {
+            byte[] headerbytes = MessageHeader.Serialize();
+            byte[] bytes = new byte[headerbytes.Length + (Payload != null ? Payload.Length : 0)];
+            Array.Copy(headerbytes, 0, bytes, 0, headerbytes.Length);
+            if (Payload != null && Payload.Length > 0)
+            {
+                Array.Copy(Payload, 0, bytes, headerbytes.Length, Payload.Length);
+            }
+            return bytes;
         }
 
         /// <summary>
@@ -194,10 +208,14 @@ namespace CrypToolStoreLib.Network
         /// <param name="bytes"></param>
         public void Deserialize(byte[] bytes)
         {
-
+            int offset = MessageHeader.Deserialize(bytes);
+            if (offset < bytes.Length - 1)
+            {
+                Array.Copy(bytes, offset, Payload, 0, bytes.Length - offset);
+            }
         }
 
-        public byte[] PayLoad { get; set; }
+        public byte[] Payload { get; set; }
     }
 
 
