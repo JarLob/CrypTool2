@@ -14,6 +14,7 @@
    limitations under the License.
 */
 using CrypToolStoreLib.Database;
+using CrypToolStoreLib.Network;
 using CrypToolStoreLib.Tools;
 using System;
 using System.Collections.Generic;
@@ -38,16 +39,15 @@ namespace CrpyStoreLib
             Logger.SetLogLevel(Logtype.Debug);
             try
             {
-                using (Database database = new Database("192.168.0.122", "CrypToolStore", "cryptoolstore", "123", 1))
-                {
-                    //database.UpdateResourceData(1005, 0, new byte[] { 1, 2, 3, 4, 5 }, DateTime.Now);
-                    //database.DeleteResourceData(1005, 0);
-                    var result = database.GetResourceDatas();
-                    foreach (var entey in result)
-                    {
-                        Console.WriteLine(entey);
-                    }
-                }
+                Message message = new Message();
+
+                message.MessageHeader.MessageType = MessageType.DeleteDeveloper;
+                message.MessageHeader.PayloadSize = 1000;
+                message.MessageHeader.Username = "fubar";
+
+                Message message2 = new Message();
+                message2.Deserialize(message.Serialize());
+                Console.WriteLine(message2.MessageHeader);
             }
             catch (Exception ex)
             {

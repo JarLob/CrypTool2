@@ -170,16 +170,22 @@ namespace CrypToolStoreLib.Network
     }
 
     /// <summary>
-    /// An abstract message
+    /// Superclass for all messages
     /// </summary>
     public class Message
     {
+        /// <summary>
+        /// Constructor
+        /// creates message header
+        /// </summary>
         public Message()
         {
             MessageHeader = new MessageHeader();
         }
 
-
+        /// <summary>
+        /// Header of this message
+        /// </summary>
         public MessageHeader MessageHeader
         {
             get;
@@ -219,5 +225,244 @@ namespace CrypToolStoreLib.Network
     }
 
 
+#region Login messages
+
+    public class LoginMessage : Message
+    {
+        
+    }
+    
+    public class ResponseLoginMessage : Message
+    {
+
+    }
+        
+    public class LogoutMessage : Message
+    {
+
+    }
+
+#endregion
+
+#region Developers messages
+
+    class ListDevelopers : Message{
+
+    }
+
+    public class ResponseDevelopersListMessage : Message
+    {
+    
+    }
+
+    public class CreateNewDeveloperMessage : Message
+    {
+
+    }
+
+    public class UpdateDeveloperMessage : Message
+    {
+
+    }
+    
+    public class DeleteDeveloperMessage : Message
+    {
+
+    }
+
+    public class ResponseDeveloperModificationMessage : Message
+    {
+
+    }
+
+    public class GetDeveloperMessage : Message
+    {
+
+    }
+
+    public class  ResponseGetDeveloperMessage : Message
+    {
+
+    }
+
+#endregion
+
+#region Plugin messages
+
+    public class ListPluginsMessage : Message
+    {
+
+    }
+
+    public class ResponseListPluginsMessage : Message
+    {
+    
+    }
+    
+    
+    public class CreateNewPluginMessage : Message
+    {
+
+    }
+
+    public class UpdatePluginMessage : Message
+    {
+
+    }
+
+    public class DeletePluginMessage : Message
+    {
+
+    }
+
+    public class ResponsePluginModificationMessage : Message
+    {
+
+    }
+
+    public class GetPluginMessage : Message
+    {
+
+    }
+
+    public class ResponseGetPluginMessage : Message
+    {
+
+    }
+
+#endregion
+
+#region Sources messages
+       
+    public class ListSourcesMessage : Message
+    {
+    
+    }
+
+    public class ResponseListSourcesMessage : Message
+    {
+
+    }
+
+    public class CreateNewSourceMessage : Message
+    {
+
+    }
+
+    public class UpdateSourceMessage : Message
+    {
+
+    }
+
+    public class DeleteSourceMessage : Message
+    {
+
+    }
+
+    public class ResponseSourceModificationMessage : Message
+    {
+
+    }
+
+    public class GetSourceMessage : Message 
+    {
+
+    }
+    
+    public class ResponseGetSourceMessage : Message
+    {
+
+    }
+        
+#endregion
+
+#region Resources messages
+
+    public class ListResourcesMessage : Message
+    {
+    
+    }
+
+    public class ResponseListResources : Message
+    {
+
+    }
+
+    public class CreateNewResourceMessage : Message
+    {
+
+    }
+
+    public class UpdateResourceMessage : Message
+    {
+
+    }
+
+    public class DeleteResourceMessage : Message
+    {
+
+    }
+
+    public class ResponseResourceModificationMessage : Message
+    {
+
+    }
+
+    public class GetResourceMessage : Message
+    {
+
+    }
+
+    public class ResponseGetResource : Message
+    {
+
+    }
+        
+#endregion
+
+#region ResourcesData messages
+    
+    public class ListResourcesDataMessage : Message
+    {
+
+    }
+    
+    public class ResponseListResourcesDataMessage : Message
+    {
+
+    }
+    
+    public class CreateNewResourceDataMessage : Message
+    {
+
+    }
+
+
+    public class UpdateResourceDataMessage : Message
+    {
+
+    }
+
+    public class DeleteResourceDataMessage : Message
+    {
+
+    }
+        
+    public class ResponseResourceModificationData : Message
+    {
+    
+    }
+
+    public class GetResourceDataMessage: Message
+    {
+
+    }
+
+    public class ResponseGetResourceDataMessage : Message
+    {
+
+    }
+
+#endregion
 
 }
