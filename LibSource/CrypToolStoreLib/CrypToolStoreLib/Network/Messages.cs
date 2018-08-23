@@ -102,11 +102,12 @@ namespace CrypToolStoreLib.Network
             byte[] usernameLengthBytes = BitConverter.GetBytes((UInt32)Username.Length);
             byte[] usernameBytes = ASCIIEncoding.ASCII.GetBytes(Username);
 
-            //create one byte array and return
+            //create one byte array and return it
             byte[] bytes = new byte[13 + 4 + 4 + 4 + Username.Length];
             int offset = 0;
-            Array.Copy(magicBytes, 0, bytes, 0, bytes.Length);
-            offset += bytes.Length;
+
+            Array.Copy(magicBytes, 0, bytes, 0, magicBytes.Length);
+            offset += magicBytes.Length;
             
             Array.Copy(messageTypeBytes, 0, bytes, offset, messageTypeBytes.Length);
             offset += messageTypeBytes.Length;
@@ -125,13 +126,46 @@ namespace CrypToolStoreLib.Network
 
         /// <summary>
         /// Deserializes a header from the byte array
+        /// returns the offset of the payload in the byte array
         /// </summary>
         /// <param name="bytes"></param>
-        public void Deserialize(byte[] bytes)
+        public int Deserialize(byte[] bytes)
         {
-
+            if (bytes.Length < 25)
+            {
+                throw new DeserializationException(String.Format("Message header too small. Got {0} but expect min {1}", bytes.Length, 25));
+            }            
+            string magicnumber = ASCIIEncoding.ASCII.GetString(bytes, 0, 13);
+            if (!magicnumber.Equals(MAGIC))
+            {
+                throw new DeserializationException(String.Format("Magic number mistmatch. Got \"{0}\" but expect \"{1}\"", magicnumber, MAGIC));
+            }
+            try
+            {
+                int offset = magicnumber.Length;
+                MessageType = (MessageType)BitConverter.ToUInt32(bytes, offset);
+                offset += 4;
+                PayloadSize = BitConverter.ToUInt32(bytes, offset);
+                offset += 4;
+                int usernameLength = (int)BitConverter.ToUInt32(bytes, offset);
+                offset += 4;
+                Username = ASCIIEncoding.ASCII.GetString(bytes, offset, usernameLength);
+                return offset;
+            }
+            catch (Exception ex)
+            {
+                throw new DeserializationException(String.Format("Exception during Deserialization: {0}", ex.Message));
+            }
         }
 
+        /// <summary>
+        /// Returns infos about the MessageHeader as string
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return String.Format("MessageHeader{{MessageType={0}, PayloadSize={1}, Username={2}}}", MessageType.ToString(), PayloadSize, Username);
+        }
     }
 
     /// <summary>
@@ -150,9 +184,7 @@ namespace CrypToolStoreLib.Network
         /// </summary>
         /// <returns></returns>
         public byte[] Serialize()
-        {
-            
-            
+        {                        
             return null;
         }
 
