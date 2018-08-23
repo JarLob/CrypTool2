@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 namespace CrypToolStoreLib.Database
 {
     /// <summary>
-    /// The Database manages connections the mysql database. It also offers method to inser, update, and delete all objects of CrypToolStore in the database.
+    /// The Database manages connections to the mysql database. It also offers method to insert, update, and delete all objects of CrypToolStore in the database.
     /// Furthermore, it offers some check methods (e.g. developer's password)
     /// </summary>
     public class Database : IDisposable
@@ -71,7 +71,7 @@ namespace CrypToolStoreLib.Database
                 connections[i] = new DatabaseConnection(databaseServer, databaseName, databaseUser, databasePassword);
                 connections[i].Connect();
             }
-        }        
+        }
 
         /// <summary>
         /// Returns next unused connection
@@ -866,6 +866,159 @@ namespace CrypToolStoreLib.Database
                 resources.Add(resource);
             }
             return resources;
+        }
+
+        /// <summary>
+        /// Creates a new resource data entry in the database
+        /// </summary>
+        /// <param name="version"></param>
+        /// <param name="data"></param>
+        /// <param name="uploaddate"></param>
+        public void CreateResourceData(int resourceid, int version, byte[] data, DateTime uploaddate)
+        {
+            logger.LogText(String.Format("Creating new resource data: resourceid={0}, version={1}, data={2}, uploaddate={3}", resourceid, version, data != null ? data.Length.ToString() : "null", uploaddate), this, Logtype.Info);
+            string query = "insert into resourcesdata (resourceid, version, data, uploaddate) values (@resourceid, @version, @data, @uploaddate)";
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = new object[][]{
+                new object[]{"@resourceid", resourceid},
+                new object[]{"@version", version},
+                new object[]{"@data", data},
+                new object[]{"@uploaddate", uploaddate}
+            };
+
+            connection.ExecutePreparedStatement(query, parameters);
+
+            logger.LogText(String.Format("Created new resource data: resourceid={0}, version={1}, data={2}, uploaddate={3}", resourceid, version, data != null ? data.Length.ToString() : "null", uploaddate), this, Logtype.Info);
+        }
+
+        /// <summary>
+        /// Updates a resource data entry in the database
+        /// </summary>
+        /// <param name="version"></param>
+        /// <param name="data"></param>
+        /// <param name="uploaddate"></param>
+        public void UpdateResourceData(int resourceid, int version, byte[] data, DateTime uploaddate)
+        {
+            logger.LogText(String.Format("Updating resource data: resourceid={0}, version={1}, data={2}, uploaddate={3}", resourceid, version, data != null ? data.Length.ToString() : "null", uploaddate), this, Logtype.Info);
+            string query = "update resourcesdata set data=@data, uploaddate=@uploaddate where resourceid=@resourceid and version=@version";
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = new object[][]{                
+                new object[]{"@data", data},
+                new object[]{"@uploaddate", uploaddate},
+                new object[]{"@resourceid", resourceid},
+                new object[]{"@version", version}
+            };
+
+            connection.ExecutePreparedStatement(query, parameters);
+
+            logger.LogText(String.Format("Updated resource data: resourceid={0}, version={1}, data={2}, uploaddate={3}", resourceid, version, data != null ? data.Length.ToString() : "null", uploaddate), this, Logtype.Info);
+        }
+
+        /// <summary>
+        /// Deletes a resource data entry in the database
+        /// </summary>
+        /// <param name="version"></param>
+        /// <param name="data"></param>
+        /// <param name="uploaddate"></param>
+        public void DeleteResourceData(int resourceid, int version)
+        {
+            logger.LogText(String.Format("Deleting resource data: resourceid={0}, version={1}", resourceid, version), this, Logtype.Info);
+            string query = "delete from resourcesdata where resourceid=@resourceid and version=@version";
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = new object[][]{
+                new object[]{"@resourceid", resourceid},
+                new object[]{"@version", version},
+            };
+
+            connection.ExecutePreparedStatement(query, parameters);
+
+            logger.LogText(String.Format("Deleting resource data: resourceid={0}, version={1}", resourceid, version), this, Logtype.Info);
+        }
+
+        /// <summary>
+        /// Returns the dedicated resource data identified by its id
+        /// Returns null, if the resource does not exist
+        /// </summary>
+        /// <param name="version"></param>
+        /// <param name="data"></param>
+        /// <param name="uploaddate"></param>
+        public ResourceData GetResourceData(int resourceid, int version)
+        {
+            string query = "select resourceid, version, data, uploaddate from resourcesdata where resourceid=@resourceid and version=@version";
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = new object[][]{
+                new object[]{"@resourceid", resourceid},
+                new object[]{"@version", version},
+            };
+
+            var resultset = connection.ExecutePreparedStatement(query, parameters);
+
+            if (resultset.Count == 0)
+            {
+                return null;
+            }
+
+            ResourceData resourceData = new ResourceData();
+            resourceData.ResourceId = (int)resultset[0]["resourceid"];
+            resourceData.Version = (int)resultset[0]["version"];
+            resourceData.Data = (byte[])resultset[0]["data"];
+            resourceData.UploadDate = (DateTime)resultset[0]["uploaddate"];
+            
+            return resourceData;
+        }
+
+        /// <summary>
+        /// Returns a list of resource data from the database
+        /// If resourceid is set, it only returns resources of that user
+        /// </summary>
+        /// <param name="version"></param>
+        /// <param name="data"></param>
+        /// <param name="uploaddate"></param>
+        public List<ResourceData> GetResourceDatas(int resourceid = -1)
+        {
+            string query;
+
+            if (resourceid != -1)
+            {
+                query = "select resourceid, version, data, uploaddate from resourcesdata where resourceid=@resourceid";
+            }
+            else
+            {
+                query = "select resourceid, version, data, uploaddate from resourcesdata";
+            }
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = null;
+
+            if (resourceid != -1)
+            {
+                parameters = new object[][]{
+                    new object[]{"@resourceid", resourceid}
+                };
+            }
+            var resultset = connection.ExecutePreparedStatement(query, parameters);
+
+            List<ResourceData> resourceDataList = new List<ResourceData>();
+
+            foreach (var entry in resultset)
+            {
+                ResourceData resourceData = new ResourceData();
+                resourceData.ResourceId = (int)entry["resourceid"];
+                resourceData.Version = (int)entry["version"];
+                resourceData.Data = (byte[])entry["data"];
+                resourceData.UploadDate = (DateTime)entry["uploaddate"];
+                resourceDataList.Add(resourceData);
+            }
+            return resourceDataList;
         }
 
         #endregion

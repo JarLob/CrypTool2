@@ -40,13 +40,13 @@ namespace CrpyStoreLib
             {
                 using (Database database = new Database("192.168.0.122", "CrypToolStore", "cryptoolstore", "123", 1))
                 {
-
-                    //database.CreateResource("kopal", "x name", "y description");
-                    var resources = database.GetResources();
-                    foreach (var resource in resources)
+                    //database.UpdateResourceData(1005, 0, new byte[] { 1, 2, 3, 4, 5 }, DateTime.Now);
+                    //database.DeleteResourceData(1005, 0);
+                    var result = database.GetResourceDatas();
+                    foreach (var entey in result)
                     {
-                        Console.WriteLine(resource);
-                    }  
+                        Console.WriteLine(entey);
+                    }
                 }
             }
             catch (Exception ex)

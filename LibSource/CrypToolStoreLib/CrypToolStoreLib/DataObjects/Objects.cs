@@ -111,12 +111,12 @@ namespace CrypToolStoreLib.DataObjects
         public int ResourceId { get; set; }
         public int Version { get; set; }
         public byte[] Data { get; set; }
-        public DateTime UploadTime { get; set; }
+        public DateTime UploadDate { get; set; }
 
         public override string ToString()
         {
             return String.Format("ResourceData{{resourceid={0}, version={1}, data={2}, uploadtime={3}}}",
-                ResourceId, Version, Data != null ? Data.Length.ToString() : "null", UploadTime);
+                ResourceId, Version, Data != null ? Data.Length.ToString() : "null", UploadDate);
         }
     }
 }
