@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2018 CrypTool 2 Team <ct2contact@cryptool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -158,12 +158,19 @@ namespace Cryptool.Plugins.BitcoinBlockDownloader
                         }
                         else if (InputBlock.Length != 64)
                         {
-                            GuiLogMessage("Invalid hash length, 64 characters are expected", NotificationLevel.Info);
+                            GuiLogMessage("Invalid hash length, 64 characters are expected", NotificationLevel.Warning);
                         }
                         else
                         {
                             OutputString = BlockChainDownloader.BlockDownloader(networkStream, InputBlock);
-                            OnPropertyChanged("OutputString");
+                            if (OutputString.Equals("response message")) {
+                                GuiLogMessage("Invalid block hash: " + InputBlock, NotificationLevel.Warning);
+                            }
+                            else
+                            {
+                                OnPropertyChanged("OutputString");
+                            }
+                            
                         }
                     }
                }
@@ -198,7 +205,6 @@ namespace Cryptool.Plugins.BitcoinBlockDownloader
         /// </summary>
         public void Stop()
         {
-
         }
 
         /// <summary>

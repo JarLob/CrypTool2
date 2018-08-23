@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2018 CrypTool 2 Team <ct2contact@cryptool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -252,6 +252,23 @@ namespace BitcoinBlockViewer
         /// </summary>
         public void Stop()
         {
+            //BitcoinBlockViewer Presentation
+            ((BitcoinBlockViewerPresentation)Presentation).Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                myPresentation.Height.Content = "height: ";
+                myPresentation.Blockhash.Content = "";
+                myPresentation.Previousblockhash.Content = "";
+                myPresentation.Nextblockhash.Content = "";
+                myPresentation.Merkleroot.Content = "";
+                myPresentation.Nonce.Content = "";
+                myPresentation.Weight.Content = "";
+                myPresentation.Confirmations.Content = "";
+                myPresentation.Strippedsize.Content = "";
+                myPresentation.Size.Content = "";
+                myPresentation.Difficulty.Content = "";
+                myPresentation.entries.Clear();
+            }
+            , null);
         }
 
         /// <summary>

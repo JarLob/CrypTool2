@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2018 CrypTool 2 Team <ct2contact@cryptool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ using Newtonsoft.Json.Linq;
 namespace Cryptool.Plugins.BitcoinTransactionDownloader
 {
     [Author("Dominik Vogt", "dvogt@posteo.de", null, null)]
-    [PluginInfo("BitcoinTransactionDownloader.Properties.Resources","PluginCaption", "PluginToolTip", "BitcoinTransactionDownloader/userdoc.xml", new[] { "BitcoinTransactionDownloader/Images/BC_Logo_.png" })]
+    [PluginInfo("BitcoinTransactionDownloader.Properties.Resources", "PluginCaption", "PluginToolTip", "BitcoinTransactionDownloader/userdoc.xml", new[] { "BitcoinTransactionDownloader/Images/BC_Logo_.png" })]
     [ComponentCategory(ComponentCategory.Protocols)]
     public class BitcoinTransactionDownloader : ICrypComponent
     {
@@ -136,44 +136,36 @@ namespace Cryptool.Plugins.BitcoinTransactionDownloader
                     {
                         //Download the Transaction information
                         String response = BlockChainDownloader.TransactionDownloader(networkStream, InputHash);
-                        try
-                        {
-                            //parsing the transaction data
-                            JObject joe = JObject.Parse(response);
-                            JObject transactionData = JObject.Parse(joe.GetValue("result").ToString());
-                            //save the transaction input data in separately JArray
-                            JArray vinData = JArray.Parse(transactionData.GetValue("vin").ToString());
-                            JArray vinOutput = new JArray();
 
-                            /*
-                             * The transaction data does not contain relevant information about the transaction 
-                             * receipts. These must be downloaded separately.
-                             */
-                            foreach (JObject vin in vinData)
+                        //parsing the transaction data
+                        JObject joe = JObject.Parse(response);
+                        JObject transactionData = JObject.Parse(joe.GetValue("result").ToString());
+                        //save the transaction input data in separately JArray
+                        JArray vinData = JArray.Parse(transactionData.GetValue("vin").ToString());
+                        JArray vinOutput = new JArray();
+
+                        /*
+                         * The transaction data does not contain relevant information about the transaction 
+                         * receipts. These must be downloaded separately.
+                         */
+                        foreach (JObject vin in vinData)
+                        {
+                            var txid = vin.GetValue("txid");
+                            if (txid != null && !txid.ToString().Equals(""))
                             {
-                                if(!vin.GetValue("txid").ToString().Equals(""))
-                                {
-                                    String s = BlockChainDownloader.TxoutDownloader(networkStream, vin.GetValue("txid").ToString(), (int)vin.GetValue("vout"));
-                                    JObject buffer = JObject.Parse(s);
-                                    JObject jObject = new JObject();
+                                String s = BlockChainDownloader.TxoutDownloader(networkStream, vin.GetValue("txid").ToString(), (int)vin.GetValue("vout"));
+                                JObject buffer = JObject.Parse(s);
+                                JObject jObject = new JObject();
 
-                                    JObject scriptPubKey = JObject.Parse(buffer.GetValue("scriptPubKey").ToString());
+                                JObject scriptPubKey = JObject.Parse(buffer.GetValue("scriptPubKey").ToString());
 
-                                    jObject.Add(new JProperty("address", scriptPubKey.GetValue("addresses").ToString()));
-                                    jObject.Add(new JProperty("value", buffer.GetValue("value").ToString()));
-                                    vinOutput.Add(jObject);
-                                }
-
+                                jObject.Add(new JProperty("address", scriptPubKey.GetValue("addresses").ToString()));
+                                jObject.Add(new JProperty("value", buffer.GetValue("value").ToString()));
+                                vinOutput.Add(jObject);
                             }
-                            TransactionInputData = vinOutput.ToString();
 
                         }
-                        //if the input list empty
-                        catch (Exception e)
-                        {
-                            TransactionInputData = "";
-                            GuiLogMessage("No entries in transaction: " + e.Message, NotificationLevel.Warning);
-                        }
+                        TransactionInputData = vinOutput.ToString();
                         TransactionData = response;
                     }
                 }

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2018 CrypTool 2 Team <ct2contact@cryptool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -21,10 +21,11 @@ using Cryptool.PluginBase.Miscellaneous;
 namespace Cryptool.Plugins.BitcoinBlockDownloader
 {
 
+
     public class BitcoinBlockDownloaderSettings : ISettings
     {
         #region Private Variables
-
+        
         private string hostname = "127.0.0.1";
         private int port = 8080;
 

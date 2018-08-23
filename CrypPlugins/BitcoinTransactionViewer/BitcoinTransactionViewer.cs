@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2018 CrypTool 2 Team <ct2contact@cryptool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -139,7 +139,7 @@ namespace BitcoinTransactionViewer
             //preparing the transaction inputs for the view
             try
             {
-                if (!TxOutInput.Equals(""))
+                if (!TxOutInput.Equals("[]"))
                 {
                     JArray vinData = JArray.Parse(TxOutInput);
 
@@ -167,7 +167,7 @@ namespace BitcoinTransactionViewer
 
             ((BitcoinTransactionViewerPresentation)Presentation).Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                var culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+                //var culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 
                 //Fill the transaction view with the main information
                 myPresentation.TXID.Content = "txid: " + transactionData.GetValue("txid").ToString();
@@ -239,6 +239,18 @@ namespace BitcoinTransactionViewer
         /// </summary>
         public void Stop()
         {
+            ((BitcoinTransactionViewerPresentation)Presentation).Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                myPresentation.TXID.Content = "txid: ";
+                myPresentation.Blockhash.Content = "";
+                myPresentation.Confirmations.Content = "";
+                myPresentation.Size.Content = "";
+                myPresentation.Fee.Content = "";
+                myPresentation.Time.Content = "";
+                myPresentation.vins.Clear();
+                myPresentation.vouts.Clear();
+            }
+            , null);
         }
 
         /// <summary>
