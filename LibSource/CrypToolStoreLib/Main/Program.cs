@@ -39,15 +39,10 @@ namespace CrpyStoreLib
             Logger.SetLogLevel(Logtype.Debug);
             try
             {
-                Message message = new Message();
-
-                message.MessageHeader.MessageType = MessageType.DeleteDeveloper;
-                message.MessageHeader.PayloadSize = 1000;
-                message.MessageHeader.Username = "fubar";
-
-                Message message2 = new Message();
-                message2.Deserialize(message.Serialize());
-                Console.WriteLine(message2.MessageHeader);
+                var message = new LoginMessage();
+                message.Username = "fubar";
+                message.Password = "123";
+                Console.WriteLine(message);
             }
             catch (Exception ex)
             {

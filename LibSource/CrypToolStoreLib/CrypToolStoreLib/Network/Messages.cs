@@ -16,11 +16,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CrypToolStoreLib.Network
 {
+    /// <summary>
+    /// Message types of the network protocol
+    /// </summary>
     public enum MessageType
     {
         //Login
@@ -30,7 +34,7 @@ namespace CrypToolStoreLib.Network
         //Messages for "developers"
 
         ListDevelopers = 100,
-        ResponseDevelopersList = 101,
+        ResponseListDevelopers = 101,
         CreateNewDeveloper = 102,
         UpdateDeveloper = 103,
         DeleteDeveloper = 104,
@@ -74,9 +78,31 @@ namespace CrypToolStoreLib.Network
         CreateNewResourceData = 502,
         UpdateResourceData = 503,
         DeleteResourceData = 504,
-        ResponseResourceModificationData = 505,
+        ResponseResourceDataModification = 505,
         GetResourceData = 506,
         ResponseGetResourceData = 507,
+
+        //no type defined
+        Undefined = 10000
+    }
+
+
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class MessageDataField : Attribute
+    {
+        /// <summary>
+        /// Is the ToString-method allowd to show the corresponding field or property?
+        /// </summary>
+        public bool ShowInToString { get; set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="showInToString">Indicates whether the ToString-method is allowd to show the attribute/field or not</param>
+        public MessageDataField(bool showInToString = true)
+        {
+            ShowInToString = showInToString;
+        }
     }
 
     /// <summary>
@@ -86,9 +112,19 @@ namespace CrypToolStoreLib.Network
     {                
         private const string MAGIC = "CrypToolStore";       // 13 byte (string); each message begins with that
         public MessageType MessageType { get; set; }        // 4 byte (uint32)
-        public UInt32 PayloadSize { get; set; }             // 4 byte (unint32)
+        private UInt32 PayloadSize { get; set; }            // 4 byte (unint32)
         public String Username { get; set; }                // 4 bytes for length + n bytes for string
-        
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public MessageHeader()
+        {
+            MessageType = MessageType.Undefined;
+            Username = string.Empty;
+            PayloadSize = 0;
+        }
+
         /// <summary>
         /// Serializes the header into a byte array
         /// </summary>
@@ -133,7 +169,7 @@ namespace CrypToolStoreLib.Network
         {
             if (bytes.Length < 25)
             {
-                throw new DeserializationException(String.Format("Message header too small. Got {0} but expect min {1}", bytes.Length, 25));
+                throw new DeserializationException(String.Format("Message header too small. Got {0} but expect min {1}", bytes.Length, MAGIC.Length));
             }            
             string magicnumber = ASCIIEncoding.ASCII.GetString(bytes, 0, 13);
             if (!magicnumber.Equals(MAGIC))
@@ -172,8 +208,71 @@ namespace CrypToolStoreLib.Network
     /// <summary>
     /// Superclass for all messages
     /// </summary>
-    public class Message
+    public abstract class Message
     {
+        private static Dictionary<MessageType, Type> MessageTypeDictionary = new Dictionary<MessageType,Type>();
+
+        /// <summary>
+        /// Register all message types for lookup
+        /// </summary>
+        static Message()
+        {
+            //login/logout
+            MessageTypeDictionary.Add(MessageType.Login, typeof(LoginMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseLogin, typeof(ResponseLoginMessage));
+            MessageTypeDictionary.Add(MessageType.Logout, typeof(LogoutMessage));
+
+            //developers
+            MessageTypeDictionary.Add(MessageType.ListDevelopers, typeof(ListDevelopersMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseListDevelopers, typeof(ResponseListDevelopersMessage));
+            MessageTypeDictionary.Add(MessageType.CreateNewDeveloper, typeof(CreateNewDeveloperMessage));
+            MessageTypeDictionary.Add(MessageType.UpdateDeveloper, typeof(UpdateDeveloperMessage));
+            MessageTypeDictionary.Add(MessageType.DeleteDeveloper, typeof(DeleteDeveloperMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseDeveloperModification, typeof(ResponseDeveloperModificationMessage));
+            MessageTypeDictionary.Add(MessageType.GetDeveloper, typeof(GetDeveloperMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseGetDeveloper, typeof(ResponseGetDeveloperMessage));
+
+            //plugins
+            MessageTypeDictionary.Add(MessageType.ListPlugins, typeof(ListPluginsMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseListPlugins, typeof(ResponseListPluginsMessage));
+            MessageTypeDictionary.Add(MessageType.CreateNewPlugin, typeof(CreateNewPluginMessage));
+            MessageTypeDictionary.Add(MessageType.UpdatePlugin, typeof(UpdatePluginMessage));
+            MessageTypeDictionary.Add(MessageType.DeletePlugin, typeof(DeletePluginMessage));
+            MessageTypeDictionary.Add(MessageType.ResponsePluginModification, typeof(ResponsePluginModificationMessage));
+            MessageTypeDictionary.Add(MessageType.GetPlugin, typeof(GetPluginMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseGetPlugin, typeof(ResponseGetPluginMessage));
+
+            //source
+            MessageTypeDictionary.Add(MessageType.ListSources, typeof(ListSourcesMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseListSources, typeof(ResponseListSourcesMessage));
+            MessageTypeDictionary.Add(MessageType.CreateNewSource, typeof(CreateNewSourceMessage));
+            MessageTypeDictionary.Add(MessageType.UpdateSource, typeof(UpdateSourceMessage));
+            MessageTypeDictionary.Add(MessageType.DeleteSource, typeof(DeleteSourceMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseSourceModification, typeof(ResponseSourceModificationMessage));
+            MessageTypeDictionary.Add(MessageType.GetSource, typeof(GetSourceMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseGetSource, typeof(ResponseGetSourceMessage));
+
+            //resources
+            MessageTypeDictionary.Add(MessageType.ListResources, typeof(ListResourcesMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseListResources, typeof(ResponseListResourcesMessage));
+            MessageTypeDictionary.Add(MessageType.CreateNewResource, typeof(CreateNewResourceMessage));
+            MessageTypeDictionary.Add(MessageType.UpdateResource, typeof(UpdateResourceMessage));
+            MessageTypeDictionary.Add(MessageType.DeleteResource, typeof(DeleteResourceMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseResourceModification, typeof(ResponseResourceModificationMessage));
+            MessageTypeDictionary.Add(MessageType.GetResource, typeof(GetResourceMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseGetResource, typeof(ResponseGetResourceMessage));
+
+            //resource data
+            MessageTypeDictionary.Add(MessageType.ListResourcesData, typeof(ListResourcesDataMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseListResourcesData, typeof(ResponseListResourcesDataMessage));
+            MessageTypeDictionary.Add(MessageType.CreateNewResourceData, typeof(CreateNewResourceDataMessage));
+            MessageTypeDictionary.Add(MessageType.UpdateResourceData, typeof(UpdateResourceDataMessage));
+            MessageTypeDictionary.Add(MessageType.DeleteResourceData, typeof(DeleteResourceDataMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseResourceDataModification, typeof(ResponseResourceDataModificationMessage));
+            MessageTypeDictionary.Add(MessageType.GetResourceData, typeof(GetResourceDataMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseGetResourceData, typeof(ResponseGetResourceDataMessage));
+        }
+
         /// <summary>
         /// Constructor
         /// creates message header
@@ -181,6 +280,22 @@ namespace CrypToolStoreLib.Network
         public Message()
         {
             MessageHeader = new MessageHeader();
+            //detect message type
+            bool typeFound = false;
+            foreach(Type type in MessageTypeDictionary.Values)
+            {
+                if (type.Equals(this.GetType()))
+                {
+                    MessageType typeId = MessageTypeDictionary.FirstOrDefault(x => x.Value.Equals(type)).Key;
+                    MessageHeader.MessageType = typeId;
+                    typeFound = true;
+                }
+            }
+            if (!typeFound)
+            {
+                throw new Exception(string.Format("Message type of class \"{0}\" can not be found! Please check and fix lookup dictionary in Messages.cs!", this.GetType().Name));
+            }
+
         }
 
         /// <summary>
@@ -199,6 +314,7 @@ namespace CrypToolStoreLib.Network
         public byte[] Serialize()
         {
             byte[] headerbytes = MessageHeader.Serialize();
+            SerializePayload();
             byte[] bytes = new byte[headerbytes.Length + (Payload != null ? Payload.Length : 0)];
             Array.Copy(headerbytes, 0, bytes, 0, headerbytes.Length);
             if (Payload != null && Payload.Length > 0)
@@ -219,9 +335,111 @@ namespace CrypToolStoreLib.Network
             {
                 Array.Copy(bytes, offset, Payload, 0, bytes.Length - offset);
             }
+            DeserializePayload();
         }
 
-        public byte[] Payload { get; set; }
+        /// <summary>
+        /// Generic method to serialize all members that have a "MessageDataField" attribute
+        /// Serialization is independent from ordering of the fields
+        /// </summary>
+        private void SerializePayload()
+        {
+            var memberInfos = GetType().GetMembers();
+            foreach (var memberInfo in memberInfos)
+            {
+                bool serializeMember = false;
+                foreach (var attribute in memberInfo.GetCustomAttributes(true))
+                {
+                    if (attribute.GetType().Name.Equals("MessageDataField")) 
+                    {
+                        serializeMember = true;
+                        break;
+                    }
+                }
+                if (serializeMember)
+                {
+                    FieldInfo fieldType = memberInfo as FieldInfo;
+                    PropertyInfo propertyInfo = memberInfo as PropertyInfo;
+
+                    if (fieldType != null)
+                    {
+                        //namelength        4byte
+                        //name              nbyte
+                        //valuelength       4byte
+                        //value             nbyte
+                        Console.WriteLine("Fieldname: " + fieldType.Name);
+                        Console.WriteLine("Fieldtype: " + fieldType.FieldType);
+                        Console.WriteLine("Data: " + fieldType.GetValue(this));
+                    }
+                    if(propertyInfo != null)
+                    {
+                        Console.WriteLine("Fieldname: " + propertyInfo.Name);
+                        Console.WriteLine("Fieldtype: " + propertyInfo.PropertyType);
+                        Console.WriteLine("Data: " + propertyInfo.GetValue(this));
+                    }                                        
+                }
+            }
+
+        }
+
+
+        private void DeserializePayload()
+        {
+            
+        }              
+
+        private byte[] Payload { get; set; }
+        
+        /// <summary>
+        /// Generic method which shows all fields and attributes marked with the "MessageDataField" attribute
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();                        
+            builder.Append(MessageTypeDictionary[MessageHeader.MessageType] != null ? MessageTypeDictionary[MessageHeader.MessageType].Name : "undefined");
+            builder.Append("{");
+
+            var memberInfos = GetType().GetMembers();
+            foreach (var memberInfo in memberInfos)
+            {
+                
+
+                bool showMember = false;
+                foreach (var attribute in memberInfo.GetCustomAttributes(true))
+                {
+                    if (attribute.GetType().Name.Equals("MessageDataField"))
+                    {
+                        MessageDataField messageDataField = (MessageDataField)attribute;
+                        //we only show data in the ToString method which is allowed to be shown
+                        //thus, we can hide password fields in log
+                        if (messageDataField.ShowInToString)
+                        {
+                            showMember = true;
+                        }
+                        break;
+                    }
+                }
+                if (showMember)
+                {
+                    FieldInfo fieldType = memberInfo as FieldInfo;
+                    PropertyInfo propertyInfo = memberInfo as PropertyInfo;
+
+                    if (fieldType != null)
+                    {
+                        builder.Append(fieldType.Name + "=" + fieldType.GetValue(this) + ", ");
+                    }
+                    if (propertyInfo != null)
+                    {
+                        builder.Append(propertyInfo.Name + "=" + propertyInfo.GetValue(this) + ", ");
+                    }
+                }
+            }
+            builder.Remove(builder.Length - 2, 2);
+            builder.Append("}");
+
+            return builder.ToString();
+        }
     }
 
 
@@ -229,7 +447,14 @@ namespace CrypToolStoreLib.Network
 
     public class LoginMessage : Message
     {
-        
+        [MessageDataField]
+        public string Username { get; set; }
+
+        [MessageDataField(false)]
+        public string Password { get; set; }
+
+        [MessageDataField]
+        public DateTime UTCTime { get; set; }
     }
     
     public class ResponseLoginMessage : Message
@@ -246,11 +471,11 @@ namespace CrypToolStoreLib.Network
 
 #region Developers messages
 
-    class ListDevelopers : Message{
+    class ListDevelopersMessage : Message{
 
     }
 
-    public class ResponseDevelopersListMessage : Message
+    public class ResponseListDevelopersMessage : Message
     {
     
     }
@@ -383,7 +608,7 @@ namespace CrypToolStoreLib.Network
     
     }
 
-    public class ResponseListResources : Message
+    public class ResponseListResourcesMessage : Message
     {
 
     }
@@ -413,7 +638,7 @@ namespace CrypToolStoreLib.Network
 
     }
 
-    public class ResponseGetResource : Message
+    public class ResponseGetResourceMessage : Message
     {
 
     }
@@ -448,7 +673,7 @@ namespace CrypToolStoreLib.Network
 
     }
         
-    public class ResponseResourceModificationData : Message
+    public class ResponseResourceDataModificationMessage : Message
     {
     
     }
