@@ -35,53 +35,53 @@ namespace CrypToolStoreLib.Tools
         Logout = 2,
         //Messages for "developers"
 
-        ListDevelopers = 100,
-        ResponseListDevelopers = 101,
+        RequestDeveloperList = 100,
+        ResponseDeveloperList = 101,
         CreateNewDeveloper = 102,
         UpdateDeveloper = 103,
         DeleteDeveloper = 104,
         ResponseDeveloperModification = 105,
-        GetDeveloper = 106,
-        ResponseGetDeveloper = 107,
+        RequestDeveloper = 106,
+        ResponseDeveloper = 107,
 
         //Messages for "plugins"
-        ListPlugins = 200,
-        ResponseListPlugins = 201,
+        RequestPluginList = 200,
+        ResponsePluginList = 201,
         CreateNewPlugin = 202,
         UpdatePlugin = 203,
         DeletePlugin = 204,
         ResponsePluginModification = 205,
-        GetPlugin = 206,
-        ResponseGetPlugin = 207,
+        RequestPlugin = 206,
+        ResponsePlugin = 207,
         
         //Message for "Source"
-        ListSources = 300,
-        ResponseListSources = 301,
+        RequestSourceList = 300,
+        ResponseSourceList = 301,
         CreateNewSource = 302,
         UpdateSource = 303,
         DeleteSource = 304,
         ResponseSourceModification = 305,
-        GetSource = 306,
-        ResponseGetSource = 307,
+        RequestSource = 306,
+        ResponseSource = 307,
         
         //Message for "Resources"
-        ListResources = 400,
-        ResponseListResources = 401,
+        RequestResourceMessage = 400,
+        ResponseResourceList = 401,
         CreateNewResource = 402,
         UpdateResource = 403,
         DeleteResource = 404,
         ResponseResourceModification = 405,
-        GetResource = 406,
-        ResponseGetResource = 407,
+        RequestResource = 406,
+        ResponseResource = 407,
         
         //Message for "ResourcesData"
-        ListResourcesData = 500,
-        ResponseListResourcesData = 501,
+        RequestResourceDataList = 500,
+        ResponseResourceDataList = 501,
         CreateNewResourceData = 502,
         UpdateResourceData = 503,
         DeleteResourceData = 504,
         ResponseResourceDataModification = 505,
-        GetResourceData = 506,
+        RequestResourceData = 506,
         ResponseGetResourceData = 507,
 
         //server error message
@@ -229,54 +229,54 @@ namespace CrypToolStoreLib.Tools
             MessageTypeDictionary.Add(MessageType.Logout, typeof(LogoutMessage));
 
             //developers
-            MessageTypeDictionary.Add(MessageType.ListDevelopers, typeof(ListDevelopersMessage));
-            MessageTypeDictionary.Add(MessageType.ResponseListDevelopers, typeof(ResponseListDevelopersMessage));
+            MessageTypeDictionary.Add(MessageType.RequestDeveloperList, typeof(RequestDeveloperListMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseDeveloperList, typeof(ResponseDeveloperListMessage));
             MessageTypeDictionary.Add(MessageType.CreateNewDeveloper, typeof(CreateNewDeveloperMessage));
             MessageTypeDictionary.Add(MessageType.UpdateDeveloper, typeof(UpdateDeveloperMessage));
             MessageTypeDictionary.Add(MessageType.DeleteDeveloper, typeof(DeleteDeveloperMessage));
             MessageTypeDictionary.Add(MessageType.ResponseDeveloperModification, typeof(ResponseDeveloperModificationMessage));
-            MessageTypeDictionary.Add(MessageType.GetDeveloper, typeof(GetDeveloperMessage));
-            MessageTypeDictionary.Add(MessageType.ResponseGetDeveloper, typeof(ResponseGetDeveloperMessage));
+            MessageTypeDictionary.Add(MessageType.RequestDeveloper, typeof(RequestDeveloperMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseDeveloper, typeof(ResponseDeveloperMessage));
 
             //plugins
-            MessageTypeDictionary.Add(MessageType.ListPlugins, typeof(ListPluginsMessage));
-            MessageTypeDictionary.Add(MessageType.ResponseListPlugins, typeof(ResponseListPluginsMessage));
+            MessageTypeDictionary.Add(MessageType.RequestPluginList, typeof(RequestPluginListMessage));
+            MessageTypeDictionary.Add(MessageType.ResponsePluginList, typeof(ResponsePluginListMessage));
             MessageTypeDictionary.Add(MessageType.CreateNewPlugin, typeof(CreateNewPluginMessage));
             MessageTypeDictionary.Add(MessageType.UpdatePlugin, typeof(UpdatePluginMessage));
             MessageTypeDictionary.Add(MessageType.DeletePlugin, typeof(DeletePluginMessage));
             MessageTypeDictionary.Add(MessageType.ResponsePluginModification, typeof(ResponsePluginModificationMessage));
-            MessageTypeDictionary.Add(MessageType.GetPlugin, typeof(GetPluginMessage));
-            MessageTypeDictionary.Add(MessageType.ResponseGetPlugin, typeof(ResponseGetPluginMessage));
+            MessageTypeDictionary.Add(MessageType.RequestPlugin, typeof(RequestPluginMessage));
+            MessageTypeDictionary.Add(MessageType.ResponsePlugin, typeof(ResponsePluginMessage));
 
             //source
-            MessageTypeDictionary.Add(MessageType.ListSources, typeof(ListSourcesMessage));
-            MessageTypeDictionary.Add(MessageType.ResponseListSources, typeof(ResponseListSourcesMessage));
+            MessageTypeDictionary.Add(MessageType.RequestSourceList, typeof(RequestSourceListMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseSourceList, typeof(ResponseSourceListMessage));
             MessageTypeDictionary.Add(MessageType.CreateNewSource, typeof(CreateNewSourceMessage));
             MessageTypeDictionary.Add(MessageType.UpdateSource, typeof(UpdateSourceMessage));
             MessageTypeDictionary.Add(MessageType.DeleteSource, typeof(DeleteSourceMessage));
             MessageTypeDictionary.Add(MessageType.ResponseSourceModification, typeof(ResponseSourceModificationMessage));
-            MessageTypeDictionary.Add(MessageType.GetSource, typeof(GetSourceMessage));
-            MessageTypeDictionary.Add(MessageType.ResponseGetSource, typeof(ResponseGetSourceMessage));
+            MessageTypeDictionary.Add(MessageType.RequestSource, typeof(RequestSourceMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseSource, typeof(ResponseSourceMessage));
 
             //resources
-            MessageTypeDictionary.Add(MessageType.ListResources, typeof(ListResourcesMessage));
-            MessageTypeDictionary.Add(MessageType.ResponseListResources, typeof(ResponseListResourcesMessage));
+            MessageTypeDictionary.Add(MessageType.RequestResourceMessage, typeof(RequestResourceListMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseResourceList, typeof(ResponseResourceListMessage));
             MessageTypeDictionary.Add(MessageType.CreateNewResource, typeof(CreateNewResourceMessage));
             MessageTypeDictionary.Add(MessageType.UpdateResource, typeof(UpdateResourceMessage));
             MessageTypeDictionary.Add(MessageType.DeleteResource, typeof(DeleteResourceMessage));
             MessageTypeDictionary.Add(MessageType.ResponseResourceModification, typeof(ResponseResourceModificationMessage));
-            MessageTypeDictionary.Add(MessageType.GetResource, typeof(GetResourceMessage));
-            MessageTypeDictionary.Add(MessageType.ResponseGetResource, typeof(ResponseGetResourceMessage));
+            MessageTypeDictionary.Add(MessageType.RequestResource, typeof(RequestResourceMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseResource, typeof(ResponseResourceMessage));
 
             //resource data
-            MessageTypeDictionary.Add(MessageType.ListResourcesData, typeof(ListResourcesDataMessage));
-            MessageTypeDictionary.Add(MessageType.ResponseListResourcesData, typeof(ResponseListResourcesDataMessage));
+            MessageTypeDictionary.Add(MessageType.RequestResourceDataList, typeof(RequestResourceDataListMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseResourceDataList, typeof(ResponseResourceDataListMessage));
             MessageTypeDictionary.Add(MessageType.CreateNewResourceData, typeof(CreateNewResourceDataMessage));
             MessageTypeDictionary.Add(MessageType.UpdateResourceData, typeof(UpdateResourceDataMessage));
             MessageTypeDictionary.Add(MessageType.DeleteResourceData, typeof(DeleteResourceDataMessage));
             MessageTypeDictionary.Add(MessageType.ResponseResourceDataModification, typeof(ResponseResourceDataModificationMessage));
-            MessageTypeDictionary.Add(MessageType.GetResourceData, typeof(GetResourceDataMessage));
-            MessageTypeDictionary.Add(MessageType.ResponseGetResourceData, typeof(ResponseGetResourceDataMessage));
+            MessageTypeDictionary.Add(MessageType.RequestResourceData, typeof(GetResourceDataMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseGetResourceData, typeof(RequestResourceDataMessage));
 
             //error messages
             MessageTypeDictionary.Add(MessageType.ServerError, typeof(ServerErrorMessage));
@@ -867,7 +867,15 @@ namespace CrypToolStoreLib.Tools
     /// <summary>
     /// Message to request the list of developers
     /// </summary>
-    public class ListDevelopersMessage : Message
+    public class RequestDeveloperListMessage : Message
+    {                
+
+    }
+
+    /// <summary>
+    /// Message to response to request message
+    /// </summary>
+    public class ResponseDeveloperListMessage : Message
     {
         [MessageDataField]
         public List<Developer> DeveloperList
@@ -879,19 +887,10 @@ namespace CrypToolStoreLib.Tools
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ListDevelopersMessage()
+        public ResponseDeveloperListMessage()
         {
             DeveloperList = new List<Developer>();
         }       
-
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class ResponseListDevelopersMessage : Message
-    {
-    
     }
 
     public class CreateNewDeveloperMessage : Message
@@ -914,12 +913,12 @@ namespace CrypToolStoreLib.Tools
 
     }
 
-    public class GetDeveloperMessage : Message
+    public class RequestDeveloperMessage : Message
     {
 
     }
 
-    public class  ResponseGetDeveloperMessage : Message
+    public class  ResponseDeveloperMessage : Message
     {
 
     }
@@ -928,12 +927,12 @@ namespace CrypToolStoreLib.Tools
 
 #region Plugin messages
 
-    public class ListPluginsMessage : Message
+    public class RequestPluginListMessage : Message
     {
 
     }
 
-    public class ResponseListPluginsMessage : Message
+    public class ResponsePluginListMessage : Message
     {
     
     }
@@ -959,12 +958,12 @@ namespace CrypToolStoreLib.Tools
 
     }
 
-    public class GetPluginMessage : Message
+    public class RequestPluginMessage : Message
     {
 
     }
 
-    public class ResponseGetPluginMessage : Message
+    public class ResponsePluginMessage : Message
     {
 
     }
@@ -973,12 +972,12 @@ namespace CrypToolStoreLib.Tools
 
 #region Sources messages
        
-    public class ListSourcesMessage : Message
+    public class RequestSourceListMessage : Message
     {
     
     }
 
-    public class ResponseListSourcesMessage : Message
+    public class ResponseSourceListMessage : Message
     {
 
     }
@@ -1003,12 +1002,12 @@ namespace CrypToolStoreLib.Tools
 
     }
 
-    public class GetSourceMessage : Message 
+    public class RequestSourceMessage : Message 
     {
 
     }
     
-    public class ResponseGetSourceMessage : Message
+    public class ResponseSourceMessage : Message
     {
 
     }
@@ -1017,12 +1016,12 @@ namespace CrypToolStoreLib.Tools
 
 #region Resources messages
 
-    public class ListResourcesMessage : Message
+    public class RequestResourceListMessage : Message
     {
     
     }
 
-    public class ResponseListResourcesMessage : Message
+    public class ResponseResourceListMessage : Message
     {
 
     }
@@ -1047,12 +1046,12 @@ namespace CrypToolStoreLib.Tools
 
     }
 
-    public class GetResourceMessage : Message
+    public class RequestResourceMessage : Message
     {
 
     }
 
-    public class ResponseGetResourceMessage : Message
+    public class ResponseResourceMessage : Message
     {
 
     }
@@ -1061,12 +1060,12 @@ namespace CrypToolStoreLib.Tools
 
 #region ResourcesData messages
     
-    public class ListResourcesDataMessage : Message
+    public class RequestResourceDataListMessage : Message
     {
 
     }
     
-    public class ResponseListResourcesDataMessage : Message
+    public class ResponseResourceDataListMessage : Message
     {
 
     }
@@ -1097,7 +1096,7 @@ namespace CrypToolStoreLib.Tools
 
     }
 
-    public class ResponseGetResourceDataMessage : Message
+    public class RequestResourceDataMessage : Message
     {
 
     }

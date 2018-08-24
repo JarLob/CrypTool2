@@ -41,7 +41,7 @@ namespace CrpyStoreLib
             {
                 Logger.SetLogLevel(Logtype.Debug);
 
-                ListDevelopersMessage message = new ListDevelopersMessage();
+                ResponseDeveloperListMessage message = new ResponseDeveloperListMessage();
                 message.DeveloperList.Add(new Developer() { Username = "0", Firstname = "a", Lastname = "w" });
                 message.DeveloperList.Add(new Developer() { Username = "1", Firstname = "b", Lastname = "x" });
                 message.DeveloperList.Add(new Developer() { Username = "2", Firstname = "c", Lastname = "y" });
@@ -49,7 +49,7 @@ namespace CrpyStoreLib
 
                 var data = message.Serialize();
 
-                ListDevelopersMessage message2 = new ListDevelopersMessage();
+                ResponseDeveloperListMessage message2 = new ResponseDeveloperListMessage();
                 message2.Deserialize(data);
 
                 foreach (var developer in message2.DeveloperList)
