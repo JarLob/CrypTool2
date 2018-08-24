@@ -41,13 +41,16 @@ namespace CrpyStoreLib
             {
                 Logger.SetLogLevel(Logtype.Debug);
 
-                ResponseDeveloperListMessage message = new ResponseDeveloperListMessage();
+                ResponseDeveloperListMessage message = new ResponseDeveloperListMessage();                
+
                 message.DeveloperList.Add(new Developer() { Username = "0", Firstname = "a", Lastname = "w" });
                 message.DeveloperList.Add(new Developer() { Username = "1", Firstname = "b", Lastname = "x" });
                 message.DeveloperList.Add(new Developer() { Username = "2", Firstname = "c", Lastname = "y" });
-                message.DeveloperList.Add(new Developer() { Username = "3", Firstname = "d", Lastname = "z" });
+                message.DeveloperList.Add(new Developer() { Username = "3", Firstname = "d", Lastname = "z" });                   
 
+                Console.WriteLine("Staring serialization");
                 var data = message.Serialize();
+                Console.WriteLine("Serialization done: " + data.Length + " byte");
 
                 ResponseDeveloperListMessage message2 = (ResponseDeveloperListMessage)Message.DeserializeMessage(data);                
 

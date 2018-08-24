@@ -1,5 +1,4 @@
-﻿using CrypToolStoreLib.DataObjects;
-/*
+﻿/*
    Copyright 2018 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using CrypToolStoreLib.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -91,7 +91,6 @@ namespace CrypToolStoreLib.Tools
         //no type defined
         Undefined = 10000
     }
-
 
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class MessageDataField : Attribute
@@ -303,7 +302,7 @@ namespace CrypToolStoreLib.Tools
             }
             if (!typeFound)
             {
-                throw new Exception(string.Format("Message type of class \"{0}\" can not be found! Please check and fix lookup dictionary in Messages.cs!", this.GetType().Name));
+                throw new Exception(string.Format("Message type of class \"{0}\" cannot be found! Please check and fix lookup dictionary in Messages.cs!", this.GetType().Name));
             }
 
         }
@@ -444,7 +443,7 @@ namespace CrypToolStoreLib.Tools
                                     }
                                     else
                                     {
-                                        throw new SerializationException(String.Format("Fieldtype \"{0}\" of field \"{1}\" of class \"{2}\" can not be serialized!", fieldInfo.FieldType.Name, fieldInfo.Name, this.GetType().Name));
+                                        throw new SerializationException(String.Format("Fieldtype \"{0}\" of field \"{1}\" of class \"{2}\" cannot be serialized!", fieldInfo.FieldType.Name, fieldInfo.Name, this.GetType().Name));
                                     }
                                     break;
                             }
@@ -527,7 +526,7 @@ namespace CrypToolStoreLib.Tools
                                     }
                                     else
                                     {
-                                        throw new SerializationException(String.Format("Propertytype \"{0}\" of property \"{1}\" of class \"{2}\" can not be serialized!", propertyInfo.PropertyType.Name, propertyInfo.Name, this.GetType().Name));
+                                        throw new SerializationException(String.Format("Propertytype \"{0}\" of property \"{1}\" of class \"{2}\" cannot be serialized!", propertyInfo.PropertyType.Name, propertyInfo.Name, this.GetType().Name));
                                     }
                                     break;                                    
                             }
@@ -583,7 +582,7 @@ namespace CrypToolStoreLib.Tools
                             MemberInfo[] memberInfo = GetType().GetMember(name);
                             if (memberInfo == null || memberInfo.Length == 0)
                             {
-                                throw new DeserializationException(String.Format("Can not find any member with name \"{0}\" for deserialization!", name));
+                                throw new DeserializationException(String.Format("Cannot find any member with name \"{0}\" for deserialization!", name));
                             }
 
                             FieldInfo fieldInfo = memberInfo[0] as FieldInfo;
@@ -653,7 +652,7 @@ namespace CrypToolStoreLib.Tools
                                         }
                                         else
                                         {
-                                            throw new SerializationException(String.Format("Fieldtype \"{0}\" of field \"{1}\" of class \"{2}\" can not be deserialized!", fieldInfo.FieldType.Name, fieldInfo.Name, this.GetType().Name));
+                                            throw new SerializationException(String.Format("Fieldtype \"{0}\" of field \"{1}\" of class \"{2}\" cannot be deserialized!", fieldInfo.FieldType.Name, fieldInfo.Name, this.GetType().Name));
                                         }
                                         break;
                                 }
@@ -722,7 +721,7 @@ namespace CrypToolStoreLib.Tools
                                         }
                                         else
                                         {
-                                            throw new SerializationException(String.Format("Propertytype \"{0}\" of property \"{1}\" of class \"{2}\" can not be deserialized!", propertyInfo.PropertyType.Name, propertyInfo.Name, this.GetType().Name));
+                                            throw new SerializationException(String.Format("Propertytype \"{0}\" of property \"{1}\" of class \"{2}\" cannot be deserialized!", propertyInfo.PropertyType.Name, propertyInfo.Name, this.GetType().Name));
                                         }
                                         break;
                                 }
@@ -904,7 +903,7 @@ namespace CrypToolStoreLib.Tools
     /// Message to response to request message
     /// </summary>
     public class ResponseDeveloperListMessage : Message
-    {
+    {        
         [MessageDataField]
         public List<Developer> DeveloperList
         {
