@@ -419,6 +419,29 @@ namespace CrypToolStoreLib.Tools
                                         ICrypToolStoreSerializable serializable = (ICrypToolStoreSerializable)fieldInfo.GetValue(this);
                                         valuebytes = serializable.Serialize();
                                     }
+                                    else if (fieldInfo.FieldType.IsGenericType &&  //we have a generic type
+                                         fieldInfo.FieldType.GetGenericTypeDefinition() == typeof(List<>) && //which is a list
+                                         fieldInfo.FieldType.GenericTypeArguments[0].GetInterfaces().Contains(typeof(ICrypToolStoreSerializable))) //that contains an object implementing ICrypToolStoreSerializable
+                                    {
+                                        //Here, we serialize a generic list that contains data object deriving from ICrypToolStoreSerializable
+                                        using (MemoryStream stream2 = new MemoryStream())
+                                        {
+                                            using (BinaryWriter writer = new BinaryWriter(stream2))
+                                            {
+                                                dynamic list = (dynamic)fieldInfo.GetValue(this);
+                                                int count = list.Count;
+                                                writer.Write(count);
+                                                foreach (var entry in list)
+                                                {
+                                                    ICrypToolStoreSerializable serializable = (ICrypToolStoreSerializable)entry;
+                                                    byte[] bytes = serializable.Serialize();
+                                                    writer.Write(bytes.Length);
+                                                    writer.Write(bytes);
+                                                }
+                                            }
+                                            valuebytes = stream2.ToArray();
+                                        }
+                                    }
                                     else
                                     {
                                         throw new SerializationException(String.Format("Fieldtype \"{0}\" of field \"{1}\" of class \"{2}\" can not be serialized!", fieldInfo.FieldType.Name, fieldInfo.Name, this.GetType().Name));
@@ -440,7 +463,6 @@ namespace CrypToolStoreLib.Tools
                         }
                         if (propertyInfo != null)
                         {
-
                             byte[] namebytes = ASCIIEncoding.ASCII.GetBytes(propertyInfo.Name);
                             byte[] namelengthbytes = BitConverter.GetBytes((UInt32)propertyInfo.Name.Length);
                             byte[] valuebytes = new byte[0];
@@ -473,12 +495,35 @@ namespace CrypToolStoreLib.Tools
                                 case "DateTime":
                                     valuebytes = BitConverter.GetBytes(((DateTime)propertyInfo.GetValue(this)).ToBinary());
                                     break;
-                                default:
+                                default:                                    
                                     if (propertyInfo.PropertyType.GetInterface("ICrypToolStoreSerializable") != null)
                                     {
                                         //ICrypToolStoreSerializable implement serialization; thus, we can serialize them and put them into the message
                                         ICrypToolStoreSerializable serializable = (ICrypToolStoreSerializable)propertyInfo.GetValue(this);
                                         valuebytes = serializable.Serialize();
+                                    }
+                                    else if (propertyInfo.PropertyType.IsGenericType &&  //we have a generic type
+                                        propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && //which is a list
+                                        propertyInfo.PropertyType.GenericTypeArguments[0].GetInterfaces().Contains(typeof(ICrypToolStoreSerializable))) //that contains an object implementing ICrypToolStoreSerializable
+                                    {
+                                        //Here, we serialize a generic list that contains data object deriving from ICrypToolStoreSerializable
+                                        using (MemoryStream stream2 = new MemoryStream())
+                                        {
+                                            using (BinaryWriter writer = new BinaryWriter(stream2))
+                                            {
+                                                dynamic list = (dynamic)propertyInfo.GetValue(this);
+                                                int count = list.Count;
+                                                writer.Write(count);
+                                                foreach (var entry in list)
+                                                {
+                                                    ICrypToolStoreSerializable serializable = (ICrypToolStoreSerializable)entry;
+                                                    byte[] bytes = serializable.Serialize();
+                                                    writer.Write(bytes.Length);
+                                                    writer.Write(bytes);
+                                                }
+                                            }
+                                            valuebytes = stream2.ToArray();
+                                        }
                                     }
                                     else
                                     {
@@ -583,6 +628,29 @@ namespace CrypToolStoreLib.Tools
                                             serializable.Deserialize(valuebytes);
                                             fieldInfo.SetValue(this, serializable);
                                         }
+                                        else if (fieldInfo.FieldType.IsGenericType &&  //we have a generic type
+                                           fieldInfo.FieldType.GetGenericTypeDefinition() == typeof(List<>) && //which is a list
+                                           fieldInfo.FieldType.GenericTypeArguments[0].GetInterfaces().Contains(typeof(ICrypToolStoreSerializable))) //that contains an object implementing ICrypToolStoreSerializable
+                                        {
+                                            //Here, we deserialize a generic list that contains data object deriving from ICrypToolStoreSerializable
+                                            using (MemoryStream stream2 = new MemoryStream(valuebytes))
+                                            {
+                                                using (BinaryReader reader2 = new BinaryReader(stream2))
+                                                {
+                                                    dynamic list = Activator.CreateInstance(fieldInfo.FieldType);
+                                                    fieldInfo.SetValue(this, list);
+                                                    int count = reader2.ReadInt32();
+                                                    for (int i = 0; i < count; i++)
+                                                    {
+                                                        int bytecount = reader2.ReadInt32();
+                                                        byte[] bytes = reader2.ReadBytes(bytecount);
+                                                        dynamic serializable = (dynamic)Activator.CreateInstance(fieldInfo.FieldType.GenericTypeArguments[0]);
+                                                        serializable.Deserialize(bytes);
+                                                        list.Add(serializable);
+                                                    }
+                                                }
+                                            }
+                                        }
                                         else
                                         {
                                             throw new SerializationException(String.Format("Fieldtype \"{0}\" of field \"{1}\" of class \"{2}\" can not be deserialized!", fieldInfo.FieldType.Name, fieldInfo.Name, this.GetType().Name));
@@ -628,6 +696,29 @@ namespace CrypToolStoreLib.Tools
                                             ICrypToolStoreSerializable serializable = (ICrypToolStoreSerializable)Activator.CreateInstance(propertyInfo.PropertyType);
                                             serializable.Deserialize(valuebytes);
                                             propertyInfo.SetValue(this, serializable);
+                                        }
+                                        else if (propertyInfo.PropertyType.IsGenericType &&  //we have a generic type
+                                            propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && //which is a list
+                                            propertyInfo.PropertyType.GenericTypeArguments[0].GetInterfaces().Contains(typeof(ICrypToolStoreSerializable))) //that contains an object implementing ICrypToolStoreSerializable
+                                        {
+                                            //Here, we deserialize a generic list that contains data object deriving from ICrypToolStoreSerializable
+                                            using (MemoryStream stream2 = new MemoryStream(valuebytes))
+                                            {
+                                                using (BinaryReader reader2 = new BinaryReader(stream2))
+                                                {
+                                                    dynamic list = Activator.CreateInstance(propertyInfo.PropertyType);
+                                                    propertyInfo.SetValue(this, list);
+                                                    int count = reader2.ReadInt32();
+                                                    for (int i = 0; i < count; i++)
+                                                    {
+                                                        int bytecount = reader2.ReadInt32();
+                                                        byte[] bytes = reader2.ReadBytes(bytecount);
+                                                        dynamic serializable = (dynamic)Activator.CreateInstance(propertyInfo.PropertyType.GenericTypeArguments[0]);
+                                                        serializable.Deserialize(bytes);
+                                                        list.Add(serializable);
+                                                    }
+                                                }
+                                            }
                                         }
                                         else
                                         {
@@ -779,9 +870,6 @@ namespace CrypToolStoreLib.Tools
     public class ListDevelopersMessage : Message
     {
         [MessageDataField]
-        public Developer Developer { get; set; }
-
-
         public List<Developer> DeveloperList
         {
             get;
@@ -789,67 +877,12 @@ namespace CrypToolStoreLib.Tools
         }
 
         /// <summary>
-        /// Field is used for serialization of list
+        /// Default constructor
         /// </summary>
-        [MessageDataField]
-        public byte[] DeveloperListData;
-
         public ListDevelopersMessage()
         {
             DeveloperList = new List<Developer>();
-        }
-
-        /// <summary>
-        /// Serializes this ListDevelopersMessage
-        /// </summary>
-        /// <returns></returns>
-        public override byte[] Serialize()
-        {
-            using (MemoryStream stream = new MemoryStream())
-            {
-                using (BinaryWriter writer = new BinaryWriter(stream))
-                {
-                    writer.Write(DeveloperList.Count);
-                    foreach (var developer in DeveloperList)
-                    {
-                        byte[] developerbytes = developer.Serialize();
-                        writer.Write(developerbytes.Length);
-                        writer.Write(developerbytes);
-                    }
-                }
-                DeveloperListData = stream.ToArray();
-            }
-            byte[] bytes = base.Serialize();
-            DeveloperListData = null;
-            return bytes;
-        }
-
-        /// <summary>
-        /// Deserializes this ListDevelopersMessage
-        /// </summary>
-        /// <returns></returns>
-        public override void Deserialize (byte[] bytes)
-        {
-            DeveloperList.Clear();
-            base.Deserialize(bytes);
-            using (MemoryStream stream = new MemoryStream(DeveloperListData))
-            {
-                using (BinaryReader reader = new BinaryReader(stream))
-                {
-                    int count = reader.ReadInt32();
-                    for (int i = 0; i < count; i++)
-                    {
-                        int developerbytessize = reader.ReadInt32();
-                        byte[] developerbytes = reader.ReadBytes(developerbytessize);
-                        Developer developer = new Developer();
-                        developer.Deserialize(developerbytes);
-                        DeveloperList.Add(developer);
-                    }
-                }
-                DeveloperListData = stream.ToArray();
-            }
-            DeveloperListData = null;
-        }
+        }       
 
     }
 

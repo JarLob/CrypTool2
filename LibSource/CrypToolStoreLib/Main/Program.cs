@@ -37,28 +37,30 @@ namespace CrpyStoreLib
 
         public void Run()
         {
-            Logger.SetLogLevel(Logtype.Debug);
-
-            ListDevelopersMessage message = new ListDevelopersMessage();
-            message.Developer = new Developer() { Username = "kopal", Firstname = "nils", Lastname = "kopal", Email = "Nils.Kopal@uni-kassel.de", IsAdmin = true };
-            message.DeveloperList.Add(new Developer() { Username = "0", Firstname = "a", Lastname = "w" });
-            message.DeveloperList.Add(new Developer() { Username = "1", Firstname = "b", Lastname = "x" });
-            message.DeveloperList.Add(new Developer() { Username = "2", Firstname = "c", Lastname = "y" });
-            message.DeveloperList.Add(new Developer() { Username = "3", Firstname = "d", Lastname = "z" });
-
-            var data = message.Serialize();
-
-            ListDevelopersMessage message2 = new ListDevelopersMessage();
-            message2.Deserialize(data);
-
-
-            foreach (var developer in message2.DeveloperList)
+            try
             {
-                Console.WriteLine(developer);
+                Logger.SetLogLevel(Logtype.Debug);
+
+                ListDevelopersMessage message = new ListDevelopersMessage();
+                message.DeveloperList.Add(new Developer() { Username = "0", Firstname = "a", Lastname = "w" });
+                message.DeveloperList.Add(new Developer() { Username = "1", Firstname = "b", Lastname = "x" });
+                message.DeveloperList.Add(new Developer() { Username = "2", Firstname = "c", Lastname = "y" });
+                message.DeveloperList.Add(new Developer() { Username = "3", Firstname = "d", Lastname = "z" });
+
+                var data = message.Serialize();
+
+                ListDevelopersMessage message2 = new ListDevelopersMessage();
+                message2.Deserialize(data);
+
+                foreach (var developer in message2.DeveloperList)
+                {
+                    Console.WriteLine(developer);
+                }
             }
-
-            Console.WriteLine(message2.Developer);
-
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+            }
             Console.ReadLine();
         }
     }
