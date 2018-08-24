@@ -15,6 +15,7 @@
 */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -344,42 +345,129 @@ namespace CrypToolStoreLib.Network
         /// </summary>
         private void SerializePayload()
         {
-            var memberInfos = GetType().GetMembers();
-            foreach (var memberInfo in memberInfos)
+            using (MemoryStream stream = new MemoryStream())
             {
-                bool serializeMember = false;
-                foreach (var attribute in memberInfo.GetCustomAttributes(true))
+                var memberInfos = GetType().GetMembers();
+                foreach (var memberInfo in memberInfos)
                 {
-                    if (attribute.GetType().Name.Equals("MessageDataField")) 
+                    bool serializeMember = false;
+                    foreach (var attribute in memberInfo.GetCustomAttributes(true))
                     {
-                        serializeMember = true;
-                        break;
+                        if (attribute.GetType().Name.Equals("MessageDataField"))
+                        {
+                            serializeMember = true;
+                            break;
+                        }
                     }
-                }
-                if (serializeMember)
-                {
-                    FieldInfo fieldType = memberInfo as FieldInfo;
-                    PropertyInfo propertyInfo = memberInfo as PropertyInfo;
+                    if (serializeMember)
+                    {
+                        FieldInfo fieldType = memberInfo as FieldInfo;
+                        PropertyInfo propertyInfo = memberInfo as PropertyInfo;
 
-                    if (fieldType != null)
-                    {
-                        //namelength        4byte
-                        //name              nbyte
-                        //valuelength       4byte
-                        //value             nbyte
-                        Console.WriteLine("Fieldname: " + fieldType.Name);
-                        Console.WriteLine("Fieldtype: " + fieldType.FieldType);
-                        Console.WriteLine("Data: " + fieldType.GetValue(this));
+                        if (fieldType != null)
+                        {
+                            byte[] namebytes = ASCIIEncoding.ASCII.GetBytes(fieldType.Name);
+                            byte[] namelengthbytes = BitConverter.GetBytes((UInt32)fieldType.Name.Length);
+                            byte[] valuebytes = new byte[0];
+                            switch (fieldType.FieldType.Name)
+                            {
+                                case "String":
+                                    valuebytes = UTF8Encoding.UTF8.GetBytes((string)fieldType.GetValue(this));
+                                    break;
+                                case "Int16":
+                                    valuebytes = BitConverter.GetBytes((Int16)fieldType.GetValue(this));
+                                    break;
+                                case "Int32":
+                                    valuebytes = BitConverter.GetBytes((Int32)fieldType.GetValue(this));
+                                    break;
+                                case "Int64":
+                                    valuebytes = BitConverter.GetBytes((Int64)fieldType.GetValue(this));
+                                    break;
+                                case "Double":
+                                    valuebytes = BitConverter.GetBytes((Double)fieldType.GetValue(this));
+                                    break;
+                                case "Single":
+                                    valuebytes = BitConverter.GetBytes((float)fieldType.GetValue(this));
+                                    break;
+                                case "Byte[]":
+                                    valuebytes = (byte[])fieldType.GetValue(this);
+                                    break;
+                                case "Byte":
+                                    valuebytes = new byte[] { (byte)fieldType.GetValue(this) };
+                                    break;
+                                case "DateTime":
+                                    valuebytes = BitConverter.GetBytes(((DateTime)fieldType.GetValue(this)).ToBinary());
+                                    break;
+                                default:
+                                    throw new SerializationException(String.Format("Fieldtype \"{0}\" of field \"{1}\" of class \"{2}\" can not be serialized!", fieldType.FieldType.Name, fieldType.Name, this.GetType().Name));
+                            }
+
+                            byte[] valuelengthbytes = BitConverter.GetBytes(valuebytes.Length);
+
+                            //namelength        4 byte
+                            //name              n byte
+                            //valuelength       4 byte
+                            //value             n byte
+                            stream.Write(namelengthbytes, 0, namelengthbytes.Length);
+                            stream.Write(namebytes, 0, namebytes.Length);
+                            stream.Write(valuelengthbytes, 0, valuelengthbytes.Length);
+                            stream.Write(valuebytes, 0, valuebytes.Length);
+                            stream.Flush();
+                        }
+                        if (propertyInfo != null)
+                        {
+
+                            byte[] namebytes = ASCIIEncoding.ASCII.GetBytes(propertyInfo.Name);
+                            byte[] namelengthbytes = BitConverter.GetBytes((UInt32)propertyInfo.Name.Length);
+                            byte[] valuebytes = new byte[0];
+                            switch (propertyInfo.PropertyType.Name)
+                            {
+                                case "String":
+                                    valuebytes = UTF8Encoding.UTF8.GetBytes((string)propertyInfo.GetValue(this));
+                                    break;
+                                case "Int16":
+                                    valuebytes = BitConverter.GetBytes((Int16)propertyInfo.GetValue(this));
+                                    break;
+                                case "Int32":
+                                    valuebytes = BitConverter.GetBytes((Int32)propertyInfo.GetValue(this));
+                                    break;
+                                case "Int64":
+                                    valuebytes = BitConverter.GetBytes((Int64)propertyInfo.GetValue(this));
+                                    break;
+                                case "Double":
+                                    valuebytes = BitConverter.GetBytes((Double)propertyInfo.GetValue(this));
+                                    break;
+                                case "Single":
+                                    valuebytes = BitConverter.GetBytes((float)propertyInfo.GetValue(this));
+                                    break;
+                                case "Byte[]":
+                                    valuebytes = (byte[])propertyInfo.GetValue(this);
+                                    break;
+                                case "Byte":
+                                    valuebytes = new byte[] { (byte)propertyInfo.GetValue(this) };
+                                    break;
+                                case "DateTime":
+                                    valuebytes = BitConverter.GetBytes(((DateTime)propertyInfo.GetValue(this)).ToBinary());
+                                    break;
+                                default:
+                                    throw new SerializationException(String.Format("Propertytype \"{0}\" of property \"{1}\" of class \"{2}\" can not be serialized!", propertyInfo.PropertyType.Name, propertyInfo.Name, this.GetType().Name));
+                            }
+                            byte[] valuelengthbytes = BitConverter.GetBytes(valuebytes.Length);
+
+                            //namelength        4 byte
+                            //name              n byte
+                            //valuelength       4 byte
+                            //value             n byte
+                            stream.Write(namelengthbytes, 0, namelengthbytes.Length);
+                            stream.Write(namebytes, 0, namebytes.Length);
+                            stream.Write(valuelengthbytes, 0, valuelengthbytes.Length);
+                            stream.Write(valuebytes, 0, valuebytes.Length);
+                            stream.Flush();
+                        }
                     }
-                    if(propertyInfo != null)
-                    {
-                        Console.WriteLine("Fieldname: " + propertyInfo.Name);
-                        Console.WriteLine("Fieldtype: " + propertyInfo.PropertyType);
-                        Console.WriteLine("Data: " + propertyInfo.GetValue(this));
-                    }                                        
                 }
+                Payload = stream.ToArray();
             }
-
         }
 
 
@@ -445,6 +533,9 @@ namespace CrypToolStoreLib.Network
 
 #region Login messages
 
+    /// <summary>
+    /// Message used for logging in by developer
+    /// </summary>
     public class LoginMessage : Message
     {
         [MessageDataField]
@@ -455,6 +546,16 @@ namespace CrypToolStoreLib.Network
 
         [MessageDataField]
         public DateTime UTCTime { get; set; }
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public LoginMessage()
+        {
+            Username = string.Empty;
+            Password = string.Empty;
+            UTCTime = DateTime.UtcNow;
+        }
     }
     
     public class ResponseLoginMessage : Message

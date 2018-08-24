@@ -40,9 +40,7 @@ namespace CrpyStoreLib
             try
             {
                 var message = new LoginMessage();
-                message.Username = "fubar";
-                message.Password = "123";
-                Console.WriteLine(message);
+                message.Serialize();
             }
             catch (Exception ex)
             {
