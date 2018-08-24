@@ -49,8 +49,7 @@ namespace CrpyStoreLib
 
                 var data = message.Serialize();
 
-                ResponseDeveloperListMessage message2 = new ResponseDeveloperListMessage();
-                message2.Deserialize(data);
+                ResponseDeveloperListMessage message2 = (ResponseDeveloperListMessage)Message.DeserializeMessage(data);                
 
                 foreach (var developer in message2.DeveloperList)
                 {

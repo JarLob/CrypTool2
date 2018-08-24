@@ -734,8 +734,36 @@ namespace CrypToolStoreLib.Tools
                         }
                     }
                 }
+            }            
+        }
+
+        /// <summary>
+        /// Helper method for deserialization of received message
+        /// First, identifies the type of the message using the message header field MessageType
+        /// Secondly, returns the message as correct type
+        /// Throws DeserializationException, if deserialization not possible
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        public static Message DeserializeMessage(byte[] bytes)
+        {
+            try
+            {
+                MessageHeader header = new MessageHeader();
+                header.Deserialize(bytes);
+                if (MessageTypeDictionary[header.MessageType] == null)
+                {
+                    throw new DeserializationException(String.Format("Could not deserialize message! Message type {0} is not defined in MessageTypeDictionary!", header.MessageType));
+                }
+                Message message = (Message)Activator.CreateInstance(MessageTypeDictionary[header.MessageType]);
+                message.Deserialize(bytes);
+                return message;
             }
-        }              
+            catch (Exception ex)
+            {
+                throw new DeserializationException(String.Format("Could not deserialize message: {0}", ex.Message));
+            }
+        }
 
         /// <summary>
         /// Only used during serialiazion and deserialization
