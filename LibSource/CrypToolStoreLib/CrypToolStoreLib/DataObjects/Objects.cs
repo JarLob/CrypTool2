@@ -26,7 +26,7 @@ namespace CrypToolStoreLib.DataObjects
     /// <summary>
     /// Simple object to store developer data
     /// </summary>
-    public class Developer
+    public class Developer : ICrypToolStoreSerializable
     {
         public string Username { get; set; }
         public string Password { get; set; }
@@ -112,7 +112,7 @@ namespace CrypToolStoreLib.DataObjects
     /// <summary>
     /// Simple object to store plugin data
     /// </summary>
-    public class Plugin
+    public class Plugin : ICrypToolStoreSerializable
     {
         public int Id { get; set; }
         public string Username { get; set; }
@@ -221,7 +221,7 @@ namespace CrypToolStoreLib.DataObjects
     /// <summary>
     /// Simple object to store source data
     /// </summary>
-    public class Source
+    public class Source : ICrypToolStoreSerializable
     {
         public int PluginId { get; set; }
         public int PluginVersion { get; set; }
@@ -322,7 +322,7 @@ namespace CrypToolStoreLib.DataObjects
     /// <summary>
     /// Simple object to store resource data
     /// </summary>
-    public class Resource
+    public class Resource : ICrypToolStoreSerializable
     {
         public int Id { get; set; }
         public string Username { get; set; }
@@ -409,7 +409,7 @@ namespace CrypToolStoreLib.DataObjects
     /// <summary>
     /// Simple object to store resourceData data
     /// </summary>
-    public class ResourceData
+    public class ResourceData : ICrypToolStoreSerializable
     {
         public int ResourceId { get; set; }
         public int Version { get; set; }

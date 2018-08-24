@@ -1,4 +1,5 @@
-﻿/*
+﻿using CrypToolStoreLib.DataObjects;
+/*
    Copyright 2018 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -320,7 +321,7 @@ namespace CrypToolStoreLib.Tools
         /// Serializes the message into a byte array
         /// </summary>
         /// <returns></returns>
-        public byte[] Serialize()
+        public virtual byte[] Serialize()
         {
             byte[] headerbytes = MessageHeader.Serialize();
             SerializePayload();
@@ -339,7 +340,7 @@ namespace CrypToolStoreLib.Tools
         /// Deserializes a message from the byte array
         /// </summary>
         /// <param name="bytes"></param>
-        public void Deserialize(byte[] bytes)
+        public virtual void Deserialize(byte[] bytes)
         {
             int offset = MessageHeader.Deserialize(bytes);
             if (offset < bytes.Length - 1)
@@ -412,7 +413,17 @@ namespace CrypToolStoreLib.Tools
                                     valuebytes = BitConverter.GetBytes(((DateTime)fieldInfo.GetValue(this)).ToBinary());
                                     break;
                                 default:
-                                    throw new SerializationException(String.Format("Fieldtype \"{0}\" of field \"{1}\" of class \"{2}\" can not be serialized!", fieldInfo.FieldType.Name, fieldInfo.Name, this.GetType().Name));
+                                    if (fieldInfo.FieldType.GetInterface("ICrypToolStoreSerializable")  != null)
+                                    {
+                                        //ICrypToolStoreSerializable implement serialization; thus, we can serialize them and put them into the message
+                                        ICrypToolStoreSerializable serializable = (ICrypToolStoreSerializable)fieldInfo.GetValue(this);
+                                        valuebytes = serializable.Serialize();
+                                    }
+                                    else
+                                    {
+                                        throw new SerializationException(String.Format("Fieldtype \"{0}\" of field \"{1}\" of class \"{2}\" can not be serialized!", fieldInfo.FieldType.Name, fieldInfo.Name, this.GetType().Name));
+                                    }
+                                    break;
                             }
 
                             byte[] valuelengthbytes = BitConverter.GetBytes(valuebytes.Length);
@@ -463,7 +474,17 @@ namespace CrypToolStoreLib.Tools
                                     valuebytes = BitConverter.GetBytes(((DateTime)propertyInfo.GetValue(this)).ToBinary());
                                     break;
                                 default:
-                                    throw new SerializationException(String.Format("Propertytype \"{0}\" of property \"{1}\" of class \"{2}\" can not be serialized!", propertyInfo.PropertyType.Name, propertyInfo.Name, this.GetType().Name));
+                                    if (propertyInfo.PropertyType.GetInterface("ICrypToolStoreSerializable") != null)
+                                    {
+                                        //ICrypToolStoreSerializable implement serialization; thus, we can serialize them and put them into the message
+                                        ICrypToolStoreSerializable serializable = (ICrypToolStoreSerializable)propertyInfo.GetValue(this);
+                                        valuebytes = serializable.Serialize();
+                                    }
+                                    else
+                                    {
+                                        throw new SerializationException(String.Format("Propertytype \"{0}\" of property \"{1}\" of class \"{2}\" can not be serialized!", propertyInfo.PropertyType.Name, propertyInfo.Name, this.GetType().Name));
+                                    }
+                                    break;                                    
                             }
                             byte[] valuelengthbytes = BitConverter.GetBytes(valuebytes.Length);
 
@@ -555,7 +576,18 @@ namespace CrypToolStoreLib.Tools
                                         fieldInfo.SetValue(this, DateTime.FromBinary(BitConverter.ToInt64(valuebytes, 0)));
                                         break;
                                     default:
-                                        throw new SerializationException(String.Format("Fieldtype \"{0}\" of field \"{1}\" of class \"{2}\" can not be deserialized!", fieldInfo.FieldType.Name, fieldInfo.Name, this.GetType().Name));
+                                        if (fieldInfo.FieldType.GetInterface("ICrypToolStoreSerializable") != null)
+                                        {
+                                            //ICrypToolStoreSerializable implement serialization; thus, we can deserialize it                                             
+                                            ICrypToolStoreSerializable serializable = (ICrypToolStoreSerializable)Activator.CreateInstance(fieldInfo.FieldType);
+                                            serializable.Deserialize(valuebytes);
+                                            fieldInfo.SetValue(this, serializable);
+                                        }
+                                        else
+                                        {
+                                            throw new SerializationException(String.Format("Fieldtype \"{0}\" of field \"{1}\" of class \"{2}\" can not be deserialized!", fieldInfo.FieldType.Name, fieldInfo.Name, this.GetType().Name));
+                                        }
+                                        break;
                                 }
                             }
                             if (propertyInfo != null)
@@ -590,7 +622,18 @@ namespace CrypToolStoreLib.Tools
                                         propertyInfo.SetValue(this, DateTime.FromBinary(BitConverter.ToInt64(valuebytes, 0)));                                        
                                         break;
                                     default:
-                                        throw new SerializationException(String.Format("Propertytype \"{0}\" of property \"{1}\" of class \"{2}\" can not be deserialized!", propertyInfo.PropertyType.Name, propertyInfo.Name, this.GetType().Name));
+                                        if (propertyInfo.PropertyType.GetInterface("ICrypToolStoreSerializable") != null)
+                                        {
+                                            //ICrypToolStoreSerializable implement serialization; thus, we can deserialize it                                             
+                                            ICrypToolStoreSerializable serializable = (ICrypToolStoreSerializable)Activator.CreateInstance(propertyInfo.PropertyType);
+                                            serializable.Deserialize(valuebytes);
+                                            propertyInfo.SetValue(this, serializable);
+                                        }
+                                        else
+                                        {
+                                            throw new SerializationException(String.Format("Propertytype \"{0}\" of property \"{1}\" of class \"{2}\" can not be deserialized!", propertyInfo.PropertyType.Name, propertyInfo.Name, this.GetType().Name));
+                                        }
+                                        break;
                                 }
                             }
                         }
@@ -735,6 +778,78 @@ namespace CrypToolStoreLib.Tools
     /// </summary>
     public class ListDevelopersMessage : Message
     {
+        [MessageDataField]
+        public Developer Developer { get; set; }
+
+
+        public List<Developer> DeveloperList
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Field is used for serialization of list
+        /// </summary>
+        [MessageDataField]
+        public byte[] DeveloperListData;
+
+        public ListDevelopersMessage()
+        {
+            DeveloperList = new List<Developer>();
+        }
+
+        /// <summary>
+        /// Serializes this ListDevelopersMessage
+        /// </summary>
+        /// <returns></returns>
+        public override byte[] Serialize()
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                {
+                    writer.Write(DeveloperList.Count);
+                    foreach (var developer in DeveloperList)
+                    {
+                        byte[] developerbytes = developer.Serialize();
+                        writer.Write(developerbytes.Length);
+                        writer.Write(developerbytes);
+                    }
+                }
+                DeveloperListData = stream.ToArray();
+            }
+            byte[] bytes = base.Serialize();
+            DeveloperListData = null;
+            return bytes;
+        }
+
+        /// <summary>
+        /// Deserializes this ListDevelopersMessage
+        /// </summary>
+        /// <returns></returns>
+        public override void Deserialize (byte[] bytes)
+        {
+            DeveloperList.Clear();
+            base.Deserialize(bytes);
+            using (MemoryStream stream = new MemoryStream(DeveloperListData))
+            {
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    int count = reader.ReadInt32();
+                    for (int i = 0; i < count; i++)
+                    {
+                        int developerbytessize = reader.ReadInt32();
+                        byte[] developerbytes = reader.ReadBytes(developerbytessize);
+                        Developer developer = new Developer();
+                        developer.Deserialize(developerbytes);
+                        DeveloperList.Add(developer);
+                    }
+                }
+                DeveloperListData = stream.ToArray();
+            }
+            DeveloperListData = null;
+        }
 
     }
 

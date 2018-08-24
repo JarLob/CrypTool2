@@ -60,6 +60,7 @@
     <Compile Include="Tools\Exceptions.cs" />
     <Compile Include="Network\Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\ICrypStoreSerializable.cs" />
     <Compile Include="Tools\Logger.cs" />
     <Compile Include="Tools\Tools.cs" />
   </ItemGroup>

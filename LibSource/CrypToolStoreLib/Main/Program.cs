@@ -39,30 +39,25 @@ namespace CrpyStoreLib
         {
             Logger.SetLogLevel(Logtype.Debug);
 
-            Source source = new Source();
-            source.BuildState = "123";
-            source.BuildVersion = 12;
-            source.BuildDate = DateTime.Now.Subtract(new TimeSpan(1, 1, 1));
-            Source source2 = new Source();
-            source2.Deserialize(source.Serialize());
-            Console.WriteLine(source2);
+            ListDevelopersMessage message = new ListDevelopersMessage();
+            message.Developer = new Developer() { Username = "kopal", Firstname = "nils", Lastname = "kopal", Email = "Nils.Kopal@uni-kassel.de", IsAdmin = true };
+            message.DeveloperList.Add(new Developer() { Username = "0", Firstname = "a", Lastname = "w" });
+            message.DeveloperList.Add(new Developer() { Username = "1", Firstname = "b", Lastname = "x" });
+            message.DeveloperList.Add(new Developer() { Username = "2", Firstname = "c", Lastname = "y" });
+            message.DeveloperList.Add(new Developer() { Username = "3", Firstname = "d", Lastname = "z" });
 
-            Resource resource = new Resource();
-            resource.Name = "fubar";
-            resource.Publish = true;
-            resource.Id = 1000;
-            Resource resource2 = new Resource();
-            resource2.Deserialize(resource.Serialize());
-            Console.WriteLine(resource2);
+            var data = message.Serialize();
 
-            ResourceData data = new ResourceData();
-            data.ResourceId = 10000;
-            data.UploadDate = DateTime.Now.Subtract(new TimeSpan(1, 1, 1));
-            data.Version = 50;
-            data.Data = new byte[] { 254, 55, 11, 1, 127 };
-            ResourceData data2 = new ResourceData();
-            data2.Deserialize(data.Serialize());
-            Console.WriteLine(data2);
+            ListDevelopersMessage message2 = new ListDevelopersMessage();
+            message2.Deserialize(data);
+
+
+            foreach (var developer in message2.DeveloperList)
+            {
+                Console.WriteLine(developer);
+            }
+
+            Console.WriteLine(message2.Developer);
 
             Console.ReadLine();
         }
