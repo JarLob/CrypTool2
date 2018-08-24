@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 namespace CrypToolStoreLib.Tools
 {
     /// <summary>
-    /// Exception that is thrown when something goes wrong during serialization of messages
+    /// Exception that is thrown when something goes wrong during serialization of data
     /// </summary>
     class SerializationException : Exception
     {
@@ -33,7 +33,7 @@ namespace CrypToolStoreLib.Tools
         }
     }
     /// <summary>
-    /// Exception that is thrown when something goes wrong during deserialization of messages
+    /// Exception that is thrown when something goes wrong during deserialization of data
     /// </summary>
     class DeserializationException : Exception
     {        

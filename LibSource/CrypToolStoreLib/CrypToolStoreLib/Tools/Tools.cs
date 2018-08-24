@@ -23,11 +23,21 @@ namespace CrypToolStoreLib.Tools
 {
     public class Tools
     {
+        /// <summary>
+        /// Converts a given byte array to a hex string
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         public static string ByteArrayToHexString(byte[] bytes)
         {
             return BitConverter.ToString(bytes).Replace("-", "");
         }
 
+        /// <summary>
+        /// Converts a string containing hex values to a byte array
+        /// </summary>
+        /// <param name="hex"></param>
+        /// <returns></returns>
         public static byte[] HexStringToByteArray(String hex)
         {
             int length = hex.Length;

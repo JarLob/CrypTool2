@@ -39,17 +39,30 @@ namespace CrpyStoreLib
         {
             Logger.SetLogLevel(Logtype.Debug);
 
-            Developer dev = new Developer();
-            dev.Firstname = "Nils";            
-            dev.Lastname = "Kopal";
-            dev.Username = "kopal";
-            dev.Email = "nils.kopal@uni-kassel.de";
-            dev.IsAdmin = true;
+            Source source = new Source();
+            source.BuildState = "123";
+            source.BuildVersion = 12;
+            source.BuildDate = DateTime.Now.Subtract(new TimeSpan(1, 1, 1));
+            Source source2 = new Source();
+            source2.Deserialize(source.Serialize());
+            Console.WriteLine(source2);
 
-            Developer dev2 = new Developer();
-            dev2.Deserialize(dev.Serialize());
+            Resource resource = new Resource();
+            resource.Name = "fubar";
+            resource.Publish = true;
+            resource.Id = 1000;
+            Resource resource2 = new Resource();
+            resource2.Deserialize(resource.Serialize());
+            Console.WriteLine(resource2);
 
-            Console.WriteLine(dev2);
+            ResourceData data = new ResourceData();
+            data.ResourceId = 10000;
+            data.UploadDate = DateTime.Now.Subtract(new TimeSpan(1, 1, 1));
+            data.Version = 50;
+            data.Data = new byte[] { 254, 55, 11, 1, 127 };
+            ResourceData data2 = new ResourceData();
+            data2.Deserialize(data.Serialize());
+            Console.WriteLine(data2);
 
             Console.ReadLine();
         }
