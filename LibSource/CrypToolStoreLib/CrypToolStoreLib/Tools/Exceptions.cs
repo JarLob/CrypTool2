@@ -19,8 +19,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CrypToolStoreLib.Network
+namespace CrypToolStoreLib.Tools
 {
+    /// <summary>
+    /// Exception that is thrown when something goes wrong during serialization of messages
+    /// </summary>
+    class SerializationException : Exception
+    {
+        public SerializationException(string message)
+            : base(message)
+        {
+
+        }
+    }
     /// <summary>
     /// Exception that is thrown when something goes wrong during deserialization of messages
     /// </summary>

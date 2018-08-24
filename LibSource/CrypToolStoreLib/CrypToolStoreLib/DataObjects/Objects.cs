@@ -1,4 +1,5 @@
-﻿/*
+﻿using CrypToolStoreLib.Tools;
+/*
    Copyright 2018 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,6 +16,7 @@
 */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,14 +29,83 @@ namespace CrypToolStoreLib.DataObjects
     public class Developer
     {
         public string Username { get; set; }
+        public string Password { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Email { get; set; }
         public bool IsAdmin { get; set; }
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public Developer()
+        {
+            Username = String.Empty;
+            Password = String.Empty;
+            Firstname = String.Empty;
+            Lastname = String.Empty;
+            Email = String.Empty;
+            IsAdmin = false;
+        }
+
         public override string ToString()
         {
             return String.Format("Developer{{username={0}, firstname={1}, lastname={2}, email={3}, isadmin={4}}}", Username, Firstname, Lastname, Email, (IsAdmin ? "true" : "false"));
+        }
+
+        /// <summary>
+        /// Serializes this developer into a byte array
+        /// </summary>
+        /// <returns></returns>
+        public byte[] Serialize()
+        {
+            try
+            {
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    using (BinaryWriter writer = new BinaryWriter(stream))
+                    {
+                        writer.Write(Username);
+                        writer.Write(Password);
+                        writer.Write(Firstname);
+                        writer.Write(Lastname);
+                        writer.Write(Email);
+                        writer.Write(IsAdmin);
+                        return stream.ToArray();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new SerializationException(String.Format("Exception during serialization of developer: {0}", ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Deserializes a developer from the byte array
+        /// </summary>
+        /// <param name="bytes"></param>
+        public void Deserialize(byte[] bytes)
+        {
+            try
+            {
+                using (MemoryStream stream = new MemoryStream(bytes))
+                {
+                    using (BinaryReader reader = new BinaryReader(stream))
+                    {
+                        Username = reader.ReadString();
+                        Password = reader.ReadString();
+                        Firstname = reader.ReadString();
+                        Lastname = reader.ReadString();
+                        Email = reader.ReadString();
+                        IsAdmin = reader.ReadBoolean();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new DeserializationException(String.Format("Exception during deserialization of developer: {0}", ex.Message));
+            }
         }
     }
 

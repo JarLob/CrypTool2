@@ -14,7 +14,8 @@
    limitations under the License.
 */
 using CrypToolStoreLib.Database;
-using CrypToolStoreLib.Network;
+using CrypToolStoreLib.DataObjects;
+using CrypToolStoreLib.Tools;
 using CrypToolStoreLib.Tools;
 using System;
 using System.Collections.Generic;
@@ -37,22 +38,19 @@ namespace CrpyStoreLib
         public void Run()
         {
             Logger.SetLogLevel(Logtype.Debug);
-            try
-            {
-                var message = new LoginMessage();
-                message.Username = "nils";
-                message.Password = "123";
-                var data = message.Serialize();
 
-                var message2 = new LoginMessage();
-                message2.Deserialize(data);
+            Developer dev = new Developer();
+            dev.Firstname = "Nils";            
+            dev.Lastname = "Kopal";
+            dev.Username = "kopal";
+            dev.Email = "nils.kopal@uni-kassel.de";
+            dev.IsAdmin = true;
 
-                Console.WriteLine(message2);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            Developer dev2 = new Developer();
+            dev2.Deserialize(dev.Serialize());
+
+            Console.WriteLine(dev2);
+
             Console.ReadLine();
         }
     }

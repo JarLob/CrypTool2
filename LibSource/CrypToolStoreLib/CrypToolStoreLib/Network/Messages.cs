@@ -21,7 +21,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CrypToolStoreLib.Network
+namespace CrypToolStoreLib.Tools
 {
     /// <summary>
     /// Message types of the network protocol
@@ -82,6 +82,10 @@ namespace CrypToolStoreLib.Network
         ResponseResourceDataModification = 505,
         GetResourceData = 506,
         ResponseGetResourceData = 507,
+
+        //server error message
+        ServerError = 600,
+        ClientError = 601,
 
         //no type defined
         Undefined = 10000
@@ -272,6 +276,10 @@ namespace CrypToolStoreLib.Network
             MessageTypeDictionary.Add(MessageType.ResponseResourceDataModification, typeof(ResponseResourceDataModificationMessage));
             MessageTypeDictionary.Add(MessageType.GetResourceData, typeof(GetResourceDataMessage));
             MessageTypeDictionary.Add(MessageType.ResponseGetResourceData, typeof(ResponseGetResourceDataMessage));
+
+            //error messages
+            MessageTypeDictionary.Add(MessageType.ServerError, typeof(ServerErrorMessage));
+            MessageTypeDictionary.Add(MessageType.ClientError, typeof(ClientErrorMessage));
         }
 
         /// <summary>
@@ -579,8 +587,7 @@ namespace CrypToolStoreLib.Network
                                         propertyInfo.SetValue(this, valuebytes[0]);
                                         break;
                                     case "DateTime":
-                                        propertyInfo.SetValue(this, DateTime.FromBinary(BitConverter.ToInt64(valuebytes, 0)));
-                                        
+                                        propertyInfo.SetValue(this, DateTime.FromBinary(BitConverter.ToInt64(valuebytes, 0)));                                        
                                         break;
                                     default:
                                         throw new SerializationException(String.Format("Propertytype \"{0}\" of property \"{1}\" of class \"{2}\" can not be deserialized!", propertyInfo.PropertyType.Name, propertyInfo.Name, this.GetType().Name));
@@ -637,12 +644,12 @@ namespace CrypToolStoreLib.Network
                     if (fieldType != null)
                     {
                         object value = fieldType.GetValue(this);                        
-                        builder.Append(fieldType.Name + "=" + (value.GetType().Name.Equals("Byte[]") ? Tools.Tools.ByteArrayToHexString((byte[])value) : value ) + ", ");
+                        builder.Append(fieldType.Name + "=" + (value.GetType().Name.Equals("Byte[]") ? Tools.ByteArrayToHexString((byte[])value) : value ) + ", ");
                     }
                     if (propertyInfo != null)
                     {
                         object value = propertyInfo.GetValue(this);
-                        builder.Append(propertyInfo.Name + "=" + (value.GetType().Name.Equals("Byte[]") ? Tools.Tools.ByteArrayToHexString((byte[])value) : value) + ", ");
+                        builder.Append(propertyInfo.Name + "=" + (value.GetType().Name.Equals("Byte[]") ? Tools.ByteArrayToHexString((byte[])value) : value) + ", ");
                     }
                 }
             }
@@ -656,7 +663,7 @@ namespace CrypToolStoreLib.Network
 #region Login messages
 
     /// <summary>
-    /// Message used for logging in by developer
+    /// Message used for login in by developer/user
     /// </summary>
     public class LoginMessage : Message
     {
@@ -680,24 +687,60 @@ namespace CrypToolStoreLib.Network
         }
     }
     
+    /// <summary>
+    /// Message send in response to the login request of the developer/user
+    /// </summary>
     public class ResponseLoginMessage : Message
     {
+        [MessageDataField]
+        public bool LoginOk;
 
+        [MessageDataField]
+        public string Message;
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public ResponseLoginMessage()
+        {
+            LoginOk = false;
+            Message = String.Empty;
+        }
     }
-        
+    
+    /// <summary>
+    /// Send to indicate, that a logout occurs
+    /// Can be send by client and server
+    /// </summary>
     public class LogoutMessage : Message
     {
+        [MessageDataField]
+        public string Username { get; set; }
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public LogoutMessage()
+        {
+            Username = String.Empty;
+        }
     }
 
 #endregion
 
 #region Developers messages
 
-    class ListDevelopersMessage : Message{
+    /// <summary>
+    /// Message to request the list of developers
+    /// </summary>
+    public class ListDevelopersMessage : Message
+    {
 
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class ResponseListDevelopersMessage : Message
     {
     
@@ -913,4 +956,16 @@ namespace CrypToolStoreLib.Network
 
 #endregion
 
+#region Error messages
+
+    public class ServerErrorMessage : Message
+    {
+
+    }
+
+    public class ClientErrorMessage : Message
+    {
+
+    }
+#endregion
 }

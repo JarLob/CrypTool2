@@ -57,7 +57,7 @@
     <Compile Include="Database\Database.cs" />
     <Compile Include="Database\DatabaseConnection.cs" />
     <Compile Include="DataObjects\Objects.cs" />
-    <Compile Include="Network\Exceptions.cs" />
+    <Compile Include="Tools\Exceptions.cs" />
     <Compile Include="Network\Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\Logger.cs" />
