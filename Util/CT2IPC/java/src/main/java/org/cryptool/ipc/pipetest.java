@@ -23,12 +23,7 @@ public class pipetest {
 
 	public static void main(String[] args) {
 
-		try {
-			System.out.println("Process id: " + NPHelper.getPID());
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		System.out.println("Process id: " + NPHelper.getPID());
 
 		// try (RandomAccessFile pipe = new RandomAccessFile(pipePath(pipename), "rw");
 		// //
