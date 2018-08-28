@@ -53,7 +53,7 @@ namespace CrypToolStoreLib.Tools
         ResponsePluginModification = 205,
         RequestPlugin = 206,
         ResponsePlugin = 207,
-        
+
         //Message for "Source"
         RequestSourceList = 300,
         ResponseSourceList = 301,
@@ -63,7 +63,7 @@ namespace CrypToolStoreLib.Tools
         ResponseSourceModification = 305,
         RequestSource = 306,
         ResponseSource = 307,
-        
+
         //Message for "Resources"
         RequestResourceMessage = 400,
         ResponseResourceList = 401,
@@ -73,7 +73,7 @@ namespace CrypToolStoreLib.Tools
         ResponseResourceModification = 405,
         RequestResource = 406,
         ResponseResource = 407,
-        
+
         //Message for "ResourcesData"
         RequestResourceDataList = 500,
         ResponseResourceDataList = 501,
@@ -114,7 +114,7 @@ namespace CrypToolStoreLib.Tools
     /// Message header of messages
     /// </summary>
     public class MessageHeader
-    {                
+    {
         private const string MAGIC = "CrypToolStore";       // 13 byte (string); each message begins with that
         public MessageType MessageType { get; set; }        // 4 byte (uint32)
         private UInt32 PayloadSize { get; set; }            // 4 byte (unint32)
@@ -135,7 +135,7 @@ namespace CrypToolStoreLib.Tools
         /// </summary>
         /// <returns></returns>
         public byte[] Serialize()
-        {                  
+        {
             //convert everything to byte arrays
             byte[] magicBytes = ASCIIEncoding.ASCII.GetBytes(MAGIC);
             byte[] messageTypeBytes = BitConverter.GetBytes((UInt32)MessageType);
@@ -149,7 +149,7 @@ namespace CrypToolStoreLib.Tools
 
             Array.Copy(magicBytes, 0, bytes, 0, magicBytes.Length);
             offset += magicBytes.Length;
-            
+
             Array.Copy(messageTypeBytes, 0, bytes, offset, messageTypeBytes.Length);
             offset += messageTypeBytes.Length;
 
@@ -175,7 +175,7 @@ namespace CrypToolStoreLib.Tools
             if (bytes.Length < 25)
             {
                 throw new DeserializationException(String.Format("Message header too small. Got {0} but expect min {1}", bytes.Length, MAGIC.Length));
-            }            
+            }
             string magicnumber = ASCIIEncoding.ASCII.GetString(bytes, 0, 13);
             if (!magicnumber.Equals(MAGIC))
             {
@@ -215,7 +215,7 @@ namespace CrypToolStoreLib.Tools
     /// </summary>
     public abstract class Message
     {
-        private static Dictionary<MessageType, Type> MessageTypeDictionary = new Dictionary<MessageType,Type>();
+        private static Dictionary<MessageType, Type> MessageTypeDictionary = new Dictionary<MessageType, Type>();
 
         /// <summary>
         /// Register all message types for lookup
@@ -274,8 +274,8 @@ namespace CrypToolStoreLib.Tools
             MessageTypeDictionary.Add(MessageType.UpdateResourceData, typeof(UpdateResourceDataMessage));
             MessageTypeDictionary.Add(MessageType.DeleteResourceData, typeof(DeleteResourceDataMessage));
             MessageTypeDictionary.Add(MessageType.ResponseResourceDataModification, typeof(ResponseResourceDataModificationMessage));
-            MessageTypeDictionary.Add(MessageType.RequestResourceData, typeof(GetResourceDataMessage));
-            MessageTypeDictionary.Add(MessageType.ResponseGetResourceData, typeof(RequestResourceDataMessage));
+            MessageTypeDictionary.Add(MessageType.RequestResourceData, typeof(RequestResourceDataMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseGetResourceData, typeof(ResponseResourceDataMessage));
 
             //error messages
             MessageTypeDictionary.Add(MessageType.ServerError, typeof(ServerErrorMessage));
@@ -291,7 +291,7 @@ namespace CrypToolStoreLib.Tools
             MessageHeader = new MessageHeader();
             //detect message type
             bool typeFound = false;
-            foreach(Type type in MessageTypeDictionary.Values)
+            foreach (Type type in MessageTypeDictionary.Values)
             {
                 if (type.Equals(this.GetType()))
                 {
@@ -412,7 +412,7 @@ namespace CrypToolStoreLib.Tools
                                     valuebytes = BitConverter.GetBytes(((DateTime)fieldInfo.GetValue(this)).ToBinary());
                                     break;
                                 default:
-                                    if (fieldInfo.FieldType.GetInterface("ICrypToolStoreSerializable")  != null)
+                                    if (fieldInfo.FieldType.GetInterface("ICrypToolStoreSerializable") != null)
                                     {
                                         //ICrypToolStoreSerializable implement serialization; thus, we can serialize them and put them into the message
                                         ICrypToolStoreSerializable serializable = (ICrypToolStoreSerializable)fieldInfo.GetValue(this);
@@ -494,7 +494,7 @@ namespace CrypToolStoreLib.Tools
                                 case "DateTime":
                                     valuebytes = BitConverter.GetBytes(((DateTime)propertyInfo.GetValue(this)).ToBinary());
                                     break;
-                                default:                                    
+                                default:
                                     if (propertyInfo.PropertyType.GetInterface("ICrypToolStoreSerializable") != null)
                                     {
                                         //ICrypToolStoreSerializable implement serialization; thus, we can serialize them and put them into the message
@@ -528,7 +528,7 @@ namespace CrypToolStoreLib.Tools
                                     {
                                         throw new SerializationException(String.Format("Propertytype \"{0}\" of property \"{1}\" of class \"{2}\" cannot be serialized!", propertyInfo.PropertyType.Name, propertyInfo.Name, this.GetType().Name));
                                     }
-                                    break;                                    
+                                    break;
                             }
                             byte[] valuelengthbytes = BitConverter.GetBytes(valuebytes.Length);
 
@@ -566,7 +566,7 @@ namespace CrypToolStoreLib.Tools
                             //name              n byte
                             //valuelength       4 byte
                             //value             n byte
-                            
+
                             //get name of field or property
                             byte[] namelengthbytes = reader.ReadBytes(4);
                             int namelength = (int)BitConverter.ToUInt32(namelengthbytes, 0);
@@ -577,7 +577,7 @@ namespace CrypToolStoreLib.Tools
                             byte[] valuelengthbytes = reader.ReadBytes(4);
                             int valuelength = (int)BitConverter.ToUInt32(valuelengthbytes, 0);
                             byte[] valuebytes = reader.ReadBytes(valuelength);
-                            
+
                             //get member and set value
                             MemberInfo[] memberInfo = GetType().GetMember(name);
                             if (memberInfo == null || memberInfo.Length == 0)
@@ -686,7 +686,7 @@ namespace CrypToolStoreLib.Tools
                                         propertyInfo.SetValue(this, valuebytes[0]);
                                         break;
                                     case "DateTime":
-                                        propertyInfo.SetValue(this, DateTime.FromBinary(BitConverter.ToInt64(valuebytes, 0)));                                        
+                                        propertyInfo.SetValue(this, DateTime.FromBinary(BitConverter.ToInt64(valuebytes, 0)));
                                         break;
                                     default:
                                         if (propertyInfo.PropertyType.GetInterface("ICrypToolStoreSerializable") != null)
@@ -733,7 +733,7 @@ namespace CrypToolStoreLib.Tools
                         }
                     }
                 }
-            }            
+            }
         }
 
         /// <summary>
@@ -768,20 +768,20 @@ namespace CrypToolStoreLib.Tools
         /// Only used during serialiazion and deserialization
         /// </summary>
         private byte[] Payload { get; set; }
-        
+
         /// <summary>
         /// Generic method which shows all fields and attributes marked with the "MessageDataField" attribute
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder();                        
+            StringBuilder builder = new StringBuilder();
             builder.Append(MessageTypeDictionary[MessageHeader.MessageType] != null ? MessageTypeDictionary[MessageHeader.MessageType].Name : "undefined");
             builder.Append("{");
 
             var memberInfos = GetType().GetMembers();
             foreach (var memberInfo in memberInfos)
-            {               
+            {
                 bool showMember = false;
                 foreach (var attribute in memberInfo.GetCustomAttributes(true))
                 {
@@ -804,8 +804,8 @@ namespace CrypToolStoreLib.Tools
 
                     if (fieldType != null)
                     {
-                        object value = fieldType.GetValue(this);                        
-                        builder.Append(fieldType.Name + "=" + (value.GetType().Name.Equals("Byte[]") ? Tools.ByteArrayToHexString((byte[])value) : value ) + ", ");
+                        object value = fieldType.GetValue(this);
+                        builder.Append(fieldType.Name + "=" + (value.GetType().Name.Equals("Byte[]") ? Tools.ByteArrayToHexString((byte[])value) : value) + ", ");
                     }
                     if (propertyInfo != null)
                     {
@@ -821,7 +821,7 @@ namespace CrypToolStoreLib.Tools
         }
     }
 
-#region Login messages
+    #region Login messages
 
     /// <summary>
     /// Message used for login in by developer/user
@@ -847,17 +847,25 @@ namespace CrypToolStoreLib.Tools
             UTCTime = DateTime.UtcNow;
         }
     }
-    
+
     /// <summary>
     /// Message send in response to the login request of the developer/user
     /// </summary>
     public class ResponseLoginMessage : Message
     {
         [MessageDataField]
-        public bool LoginOk;
+        public bool LoginOk
+        {
+            get;
+            set;
+        }
 
         [MessageDataField]
-        public string Message;
+        public string Message
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Default Constructor
@@ -868,7 +876,7 @@ namespace CrypToolStoreLib.Tools
             Message = String.Empty;
         }
     }
-    
+
     /// <summary>
     /// Send to indicate, that a logout occurs
     /// Can be send by client and server
@@ -887,15 +895,15 @@ namespace CrypToolStoreLib.Tools
         }
     }
 
-#endregion
+    #endregion
 
-#region Developers messages
+    #region Developers messages
 
     /// <summary>
     /// Message to request the list of developers
     /// </summary>
     public class RequestDeveloperListMessage : Message
-    {                
+    {
 
     }
 
@@ -903,7 +911,7 @@ namespace CrypToolStoreLib.Tools
     /// Message to response to request message
     /// </summary>
     public class ResponseDeveloperListMessage : Message
-    {        
+    {
         [MessageDataField]
         public List<Developer> DeveloperList
         {
@@ -917,229 +925,732 @@ namespace CrypToolStoreLib.Tools
         public ResponseDeveloperListMessage()
         {
             DeveloperList = new List<Developer>();
-        }       
+        }
     }
 
+    /// <summary>
+    /// Message for creating a new developer
+    /// </summary>
     public class CreateNewDeveloperMessage : Message
     {
+        [MessageDataField]
+        public Developer Developer { get; set; }
 
+        public CreateNewDeveloperMessage()
+        {
+            Developer = new Developer();
+        }
     }
 
+    /// <summary>
+    /// Message for updating an existing developer
+    /// </summary>
     public class UpdateDeveloperMessage : Message
     {
+        [MessageDataField]
+        public Developer Developer { get; set; }
 
+        public UpdateDeveloperMessage()
+        {
+            Developer = new Developer();
+        }
     }
-    
+
+    /// <summary>
+    /// Message for deleting an existing developer
+    /// </summary>
     public class DeleteDeveloperMessage : Message
     {
+        [MessageDataField]
+        public Developer Developer { get; set; }
 
+        public DeleteDeveloperMessage()
+        {
+            Developer = new Developer();
+        }
     }
 
+    /// <summary>
+    /// Message to response to developer modifications
+    /// </summary>
     public class ResponseDeveloperModificationMessage : Message
     {
-
+        [MessageDataField]
+        public string Message
+        {
+            get;
+            set;
+        }
+        public ResponseDeveloperModificationMessage()
+        {
+            Message = String.Empty;
+        }
     }
 
+    /// <summary>
+    /// Message to request a single developer
+    /// </summary>
     public class RequestDeveloperMessage : Message
     {
+        [MessageDataField]
+        public string Username
+        {
+            get;
+            set;
+        }
 
+        public RequestDeveloperMessage()
+        {
+            Username = string.Empty;
+        }
     }
 
-    public class  ResponseDeveloperMessage : Message
+    /// <summary>
+    /// Message to response to a developer request
+    /// </summary>
+    public class ResponseDeveloperMessage : Message
     {
+        [MessageDataField]
+        public Developer Developer
+        {
+            get;
+            set;
+        }
 
+        public ResponseDeveloperMessage()
+        {
+            Developer = new Developer();
+        }
     }
 
-#endregion
+    #endregion
 
-#region Plugin messages
+    #region Plugin messages
 
+    /// <summary>
+    /// Message to request a list of plugins
+    /// </summary>
     public class RequestPluginListMessage : Message
     {
+        [MessageDataField]
+        public String Username
+        {
+            get;
+            set;
+        }
 
+        public RequestPluginListMessage()
+        {
+            Username = string.Empty;
+        }
     }
 
+    /// <summary>
+    /// Message to response to RequestPluginListMessages
+    /// </summary>
     public class ResponsePluginListMessage : Message
     {
-    
+        [MessageDataField]
+        public List<Plugin> Plugins { get; set; }
+
+        public ResponsePluginListMessage()
+        {
+            Plugins = new List<Plugin>();
+        }
     }
-    
-    
+
+    /// <summary>
+    /// Message for creating a new plugin
+    /// </summary>
     public class CreateNewPluginMessage : Message
     {
+        [MessageDataField]
+        public Plugin Plugin
+        {
+            get;
+            set;
+        }
 
+        public CreateNewPluginMessage()
+        {
+            Plugin = new Plugin();
+        }
     }
 
+    /// <summary>
+    /// Message for updating an existing plugin
+    /// </summary>
     public class UpdatePluginMessage : Message
     {
+        [MessageDataField]
+        public Plugin Plugin
+        {
+            get;
+            set;
+        }
 
+        public UpdatePluginMessage()
+        {
+            Plugin = new Plugin();
+        }
     }
 
+    /// <summary>
+    /// Message for deleting an existing plugin
+    /// </summary>
     public class DeletePluginMessage : Message
     {
+        [MessageDataField]
+        public Plugin Plugin
+        {
+            get;
+            set;
+        }
 
+        public DeletePluginMessage()
+        {
+            Plugin = new Plugin();
+        }
     }
 
+    /// <summary>
+    /// Message for responding to plugin modification messages
+    /// </summary>
     public class ResponsePluginModificationMessage : Message
     {
+        [MessageDataField]
+        public String Message
+        {
+            get;
+            set;
+        }
 
+        public ResponsePluginModificationMessage()
+        {
+            Message = string.Empty;
+        }
     }
 
+    /// <summary>
+    /// Message for requesting a plugin
+    /// </summary>
     public class RequestPluginMessage : Message
     {
+        [MessageDataField]
+        public int Id
+        {
+            get;
+            set;
+        }
 
+        public RequestPluginMessage()
+        {
+            Id = -1;
+        }
     }
 
+    /// <summary>
+    /// Message to response to RequestPluginMessages
+    /// </summary>
     public class ResponsePluginMessage : Message
     {
+        [MessageDataField]
+        public Plugin Plugin
+        {
+            get;
+            set;
+        }
 
+        public ResponsePluginMessage()
+        {
+            Plugin = new Plugin();
+        }
     }
 
-#endregion
+    #endregion
 
-#region Sources messages
-       
+    #region Sources messages
+
+    /// <summary>
+    /// Message to request a list of sources
+    /// </summary>
     public class RequestSourceListMessage : Message
     {
-    
+        [MessageDataField]
+        public string Username { get; set; }
+
+        public RequestSourceListMessage()
+        {
+            Username = string.Empty;
+        }
     }
 
+    /// <summary>
+    /// Message to response to RequestSourceListMessages
+    /// </summary>
     public class ResponseSourceListMessage : Message
     {
+        [MessageDataField]
+        public List<Source> SourceList = new List<Source>();
 
+        public ResponseSourceListMessage()
+        {
+            SourceList = new List<Source>();
+        }
     }
 
+    /// <summary>
+    /// Message to create a new source
+    /// </summary>
     public class CreateNewSourceMessage : Message
     {
+        [MessageDataField]
+        public Source Source
+        {
+            get;
+            set;
+        }
 
+        public CreateNewSourceMessage()
+        {
+            Source = new Source();
+        }
     }
 
+    /// <summary>
+    /// Message to update an existing source
+    /// </summary>
     public class UpdateSourceMessage : Message
     {
+        [MessageDataField]
+        public Source Source
+        {
+            get;
+            set;
+        }
 
+        public UpdateSourceMessage()
+        {
+            Source = new Source();
+        }
     }
 
+    /// <summary>
+    /// Message to delete an existing source
+    /// </summary>
     public class DeleteSourceMessage : Message
     {
+        [MessageDataField]
+        public Source Source
+        {
+            get;
+            set;
+        }
 
+        public DeleteSourceMessage()
+        {
+            Source = new Source();
+        }
     }
 
+    /// <summary>
+    /// Message to response to source modification messages
+    /// </summary>
     public class ResponseSourceModificationMessage : Message
     {
+        [MessageDataField]
+        String Message
+        {
+            get;
+            set;
+        }
 
+        public ResponseSourceModificationMessage()
+        {
+            Message = string.Empty;
+        }
     }
 
-    public class RequestSourceMessage : Message 
+    /// <summary>
+    /// Message to request a source
+    /// </summary>
+    public class RequestSourceMessage : Message
     {
+        [MessageDataField]
+        public int PluginId
+        {
+            get;
+            set;
+        }
 
+        [MessageDataField]
+        public int PluginVersion
+        {
+            get;
+            set;
+        }
+
+        public RequestSourceMessage()
+        {
+            PluginId = -1;
+            PluginVersion = -1;
+        }
     }
-    
+
+    /// <summary>
+    /// Message to response to RequestSourceMessage
+    /// </summary>
     public class ResponseSourceMessage : Message
     {
+        [MessageDataField]
+        public Source Source
+        {
+            get;
+            set;
+        }
 
+        public ResponseSourceMessage()
+        {
+            Source = new Source();
+        }
     }
-        
-#endregion
 
-#region Resources messages
+    #endregion
 
+    #region Resources messages
+
+    /// <summary>
+    /// Message to request a list of resources
+    /// </summary>
     public class RequestResourceListMessage : Message
     {
-    
+        [MessageDataField]
+        public string Username
+        {
+            get;
+            set;
+        }
+
+        public RequestResourceListMessage()
+        {
+            Username = string.Empty;
+        }
     }
 
+    /// <summary>
+    /// Message to response to RequestResourceListMessages
+    /// </summary>
     public class ResponseResourceListMessage : Message
     {
+        [MessageDataField]
+        public List<Resource> ResourceList
+        {
+            get;
+            set;
+        }
 
+        public ResponseResourceListMessage()
+        {
+            ResourceList = new List<Resource>();
+        }
     }
 
+    /// <summary>
+    /// Message to create a new resource
+    /// </summary>
     public class CreateNewResourceMessage : Message
     {
+        [MessageDataField]
+        public Resource Resource
+        {
+            get;
+            set;
+        }
 
+        public CreateNewResourceMessage()
+        {
+            Resource = new Resource();
+        }
     }
 
+    /// <summary>
+    /// Message to update an existing resource
+    /// </summary>
     public class UpdateResourceMessage : Message
     {
+        [MessageDataField]
+        public Resource Resource
+        {
+            get;
+            set;
+        }
 
+        public UpdateResourceMessage()
+        {
+            Resource = new Resource();
+        }
     }
 
+    /// <summary>
+    /// Update to delete an existing resource
+    /// </summary>
     public class DeleteResourceMessage : Message
     {
+        [MessageDataField]
+        public Resource Resource
+        {
+            get;
+            set;
+        }
 
+        public DeleteResourceMessage()
+        {
+            Resource = new Resource();
+        }
     }
 
+    /// <summary>
+    /// Message to response to resource modification messages
+    /// </summary>
     public class ResponseResourceModificationMessage : Message
     {
-
+        [MessageDataField]
+        public String Message
+        {
+            get;
+            set;
+        }
+        public ResponseResourceModificationMessage()
+        {
+            Message = string.Empty;
+        }
     }
 
+    /// <summary>
+    /// Message to request an existing resource
+    /// </summary>
     public class RequestResourceMessage : Message
     {
+        [MessageDataField]
+        public int Id;
 
+        public RequestResourceMessage()
+        {
+            Id = -1;
+        }
     }
 
+    /// <summary>
+    /// Message to response to RequestResourceMessage
+    /// </summary>
     public class ResponseResourceMessage : Message
     {
+        [MessageDataField]
+        public Resource Resource
+        {
+            get;
+            set;
+        }
 
+        public ResponseResourceMessage()
+        {
+            Resource = new Resource();
+        }
     }
-        
-#endregion
 
-#region ResourcesData messages
-    
+    #endregion
+
+    #region ResourcesData messages
+
+    /// <summary>
+    /// Message to request a list of resources
+    /// </summary>
     public class RequestResourceDataListMessage : Message
     {
+        [MessageDataField]
+        public string Username
+        {
+            get;
+            set;
+        }
 
+        public RequestResourceDataListMessage()
+        {
+            Username = string.Empty;
+        }
     }
-    
+
+    /// <summary>
+    /// Message to response to RequestResourceDataListMessage
+    /// </summary>
     public class ResponseResourceDataListMessage : Message
     {
+        [MessageDataField]
+        public List<ResourceData> ResourceDataList
+        {
+            get;
+            set;
+        }
 
+        public ResponseResourceDataListMessage()
+        {
+            ResourceDataList = new List<ResourceData>();
+        }
     }
-    
+
+    /// <summary>
+    /// Message to create a new resource data
+    /// </summary>
     public class CreateNewResourceDataMessage : Message
     {
+        [MessageDataField]
+        public ResourceData ResourceData
+        {
+            get;
+            set;
+        }
 
+        public CreateNewResourceDataMessage()
+        {
+            ResourceData = new ResourceData();
+        }
     }
 
-
+    /// <summary>
+    /// Message to update an existing resource data
+    /// </summary>
     public class UpdateResourceDataMessage : Message
     {
+        [MessageDataField]
+        public ResourceData ResourceData
+        {
+            get;
+            set;
+        }
 
+        public UpdateResourceDataMessage()
+        {
+            ResourceData = new ResourceData();
+        }
     }
 
+    /// <summary>
+    /// Message to delete an existing resource data
+    /// </summary>
     public class DeleteResourceDataMessage : Message
     {
+        [MessageDataField]
+        public ResourceData ResourceData
+        {
+            get;
+            set;
+        }
 
+        public DeleteResourceDataMessage()
+        {
+            ResourceData = new ResourceData();
+        }
     }
-        
+
+    /// <summary>
+    /// Message to response to resource data modification messages
+    /// </summary>
     public class ResponseResourceDataModificationMessage : Message
     {
-    
+        [MessageDataField]
+        public String Message
+        {
+            get;
+            set;
+        }
+
+        public ResponseResourceDataModificationMessage()
+        {
+            Message = string.Empty;
+        }
     }
 
-    public class GetResourceDataMessage: Message
-    {
-
-    }
-
+    /// <summary>
+    /// Message to get an existing resource data
+    /// </summary>
     public class RequestResourceDataMessage : Message
     {
+        [MessageDataField]
+        public int ResourceId
+        {
+            get;
+            set;
+        }
+        [MessageDataField]
+        public int Version
+        {
+            get;
+            set;
+        }
+        public RequestResourceDataMessage()
+        {
+            ResourceId = -1;
+            Version = -1;
+        }
 
     }
 
-#endregion
+    /// <summary>
+    /// Message to response to RequestResourceDataMessages
+    /// </summary>
+    public class ResponseResourceDataMessage : Message
+    {
+        [MessageDataField]
+        public ResourceData ResourceData
+        {
+            get;
+            set;
+        }
 
-#region Error messages
+        public ResponseResourceDataMessage()
+        {
+            ResourceData = new ResourceData();
+        }
+    }
 
+    #endregion
+
+    #region Error messages
+
+    /// <summary>
+    /// Message to send errors from server to client
+    /// </summary>
     public class ServerErrorMessage : Message
     {
+        [MessageDataField]
+        public String Message
+        {
+            get;
+            set;
+        }
 
+        public ServerErrorMessage()
+        {
+            Message = string.Empty;
+        }
     }
 
+    /// <summary>
+    /// Message to send errors from client to server
+    /// </summary>
     public class ClientErrorMessage : Message
     {
+        [MessageDataField]
+        public String Message
+        {
+            get;
+            set;
+        }
 
+        public ClientErrorMessage()
+        {
+            Message = string.Empty;
+        }
     }
-#endregion
+    #endregion
 }
