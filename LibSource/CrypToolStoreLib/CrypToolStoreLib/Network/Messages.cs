@@ -85,8 +85,8 @@ namespace CrypToolStoreLib.Tools
         ResponseGetResourceData = 507,
 
         //server error message
-        ServerError = 600,
-        ClientError = 601,
+        ServerError = 800,
+        ClientError = 901,
 
         //no type defined
         Undefined = 10000
