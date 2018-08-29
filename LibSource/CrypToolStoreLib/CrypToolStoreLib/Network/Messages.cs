@@ -85,7 +85,7 @@ namespace CrypToolStoreLib.Tools
         ResponseGetResourceData = 507,
 
         //server error message
-        ServerError = 800,
+        ServerError = 900,
         ClientError = 901,
 
         //no type defined
@@ -115,10 +115,9 @@ namespace CrypToolStoreLib.Tools
     /// </summary>
     public class MessageHeader
     {
-        private const string MAGIC = "CrypToolStore";       // 13 byte (string); each message begins with that
+        private const string MAGIC = "CrypToolStore";       // 13 byte (string); each message begins with that                
         public MessageType MessageType { get; set; }        // 4 byte (uint32)
-        private UInt32 PayloadSize { get; set; }            // 4 byte (unint32)
-        public String Username { get; set; }                // 4 bytes for length + n bytes for string
+        public int PayloadSize { get; set; }             // 4 byte (unint32)
 
         /// <summary>
         /// Constructor
@@ -126,7 +125,6 @@ namespace CrypToolStoreLib.Tools
         public MessageHeader()
         {
             MessageType = MessageType.Undefined;
-            Username = string.Empty;
             PayloadSize = 0;
         }
 
@@ -140,11 +138,9 @@ namespace CrypToolStoreLib.Tools
             byte[] magicBytes = ASCIIEncoding.ASCII.GetBytes(MAGIC);
             byte[] messageTypeBytes = BitConverter.GetBytes((UInt32)MessageType);
             byte[] payloadSizeBytes = BitConverter.GetBytes(PayloadSize);
-            byte[] usernameLengthBytes = BitConverter.GetBytes((UInt32)Username.Length);
-            byte[] usernameBytes = ASCIIEncoding.ASCII.GetBytes(Username);
 
             //create one byte array and return it
-            byte[] bytes = new byte[13 + 4 + 4 + 4 + Username.Length];
+            byte[] bytes = new byte[13 + 4 + 4];
             int offset = 0;
 
             Array.Copy(magicBytes, 0, bytes, 0, magicBytes.Length);
@@ -154,13 +150,7 @@ namespace CrypToolStoreLib.Tools
             offset += messageTypeBytes.Length;
 
             Array.Copy(payloadSizeBytes, 0, bytes, offset, payloadSizeBytes.Length);
-            offset += payloadSizeBytes.Length;
-
-            Array.Copy(usernameLengthBytes, 0, bytes, offset, usernameLengthBytes.Length);
-            offset += usernameLengthBytes.Length;
-
-            Array.Copy(usernameBytes, 0, bytes, offset, usernameBytes.Length);
-            offset += usernameBytes.Length;
+            offset += payloadSizeBytes.Length;           
 
             return bytes;
         }
@@ -172,9 +162,9 @@ namespace CrypToolStoreLib.Tools
         /// <param name="bytes"></param>
         public int Deserialize(byte[] bytes)
         {
-            if (bytes.Length < 25)
+            if (bytes.Length < 21)
             {
-                throw new DeserializationException(String.Format("Message header too small. Got {0} but expect min {1}", bytes.Length, MAGIC.Length));
+                throw new DeserializationException(String.Format("Message header too small. Got {0} but expect min 21", bytes.Length));
             }
             string magicnumber = ASCIIEncoding.ASCII.GetString(bytes, 0, 13);
             if (!magicnumber.Equals(MAGIC))
@@ -186,12 +176,8 @@ namespace CrypToolStoreLib.Tools
                 int offset = magicnumber.Length;
                 MessageType = (MessageType)BitConverter.ToUInt32(bytes, offset);
                 offset += 4;
-                PayloadSize = BitConverter.ToUInt32(bytes, offset);
+                PayloadSize = BitConverter.ToInt32(bytes, offset);
                 offset += 4;
-                int usernameLength = (int)BitConverter.ToUInt32(bytes, offset);
-                offset += 4;
-                Username = ASCIIEncoding.ASCII.GetString(bytes, offset, usernameLength);
-                offset += usernameLength;
                 return offset;
             }
             catch (Exception ex)
@@ -206,7 +192,7 @@ namespace CrypToolStoreLib.Tools
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("MessageHeader{{MessageType={0}, PayloadSize={1}, Username={2}}}", MessageType.ToString(), PayloadSize, Username);
+            return String.Format("MessageHeader{{MessageType={0}, PayloadSize={1}}}", MessageType.ToString(), PayloadSize);
         }
     }
 

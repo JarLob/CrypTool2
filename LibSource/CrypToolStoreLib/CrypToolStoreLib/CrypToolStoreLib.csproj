@@ -54,9 +54,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\Client.cs" />
     <Compile Include="Database\Database.cs" />
     <Compile Include="Database\DatabaseConnection.cs" />
     <Compile Include="DataObjects\Objects.cs" />
+    <Compile Include="Server\Server.cs" />
     <Compile Include="Tools\Exceptions.cs" />
     <Compile Include="Network\Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,10 +66,7 @@
     <Compile Include="Tools\Logger.cs" />
     <Compile Include="Tools\Tools.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Client\" />
-    <Folder Include="Server\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

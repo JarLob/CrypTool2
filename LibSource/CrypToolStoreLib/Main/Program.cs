@@ -16,7 +16,7 @@
 using CrypToolStoreLib.Database;
 using CrypToolStoreLib.DataObjects;
 using CrypToolStoreLib.Tools;
-using CrypToolStoreLib.Tools;
+using CrypToolStoreLib.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,31 +37,25 @@ namespace CrpyStoreLib
 
         public void Run()
         {
+            CrypToolStoreServer server = null;
+
+            Logger.SetLogLevel(Logtype.Debug);
             try
             {
-                Logger.SetLogLevel(Logtype.Debug);
-
-                ResponseDeveloperListMessage message = new ResponseDeveloperListMessage();                
-
-                message.DeveloperList.Add(new Developer() { Username = "0", Firstname = "a", Lastname = "w" });
-                message.DeveloperList.Add(new Developer() { Username = "1", Firstname = "b", Lastname = "x" });
-                message.DeveloperList.Add(new Developer() { Username = "2", Firstname = "c", Lastname = "y" });
-                message.DeveloperList.Add(new Developer() { Username = "3", Firstname = "d", Lastname = "z" });                   
-
-                Console.WriteLine("Staring serialization");
-                var data = message.Serialize();
-                Console.WriteLine("Serialization done: " + data.Length + " byte");
-
-                ResponseDeveloperListMessage message2 = (ResponseDeveloperListMessage)Message.DeserializeMessage(data);                
-
-                foreach (var developer in message2.DeveloperList)
-                {
-                    Console.WriteLine(developer);
-                }
+                server = new CrypToolStoreServer();
+                server.Start();
+                Console.ReadLine();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Exception: " + ex.Message);
+            }
+            finally
+            {
+                if (server != null)
+                {
+                    server.Stop();
+                }
             }
             Console.ReadLine();
         }
