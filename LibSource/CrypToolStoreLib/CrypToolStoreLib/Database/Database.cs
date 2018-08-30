@@ -149,7 +149,7 @@ namespace CrypToolStoreLib.Database
                 }
                 catch (Exception ex)
                 {
-                    logger.LogText(String.Format("Exception occured whhile closing a connection to database: {0}", ex.Message), this, Logtype.Error);
+                    logger.LogText(String.Format("Exception occured while closing a connection to database: {0}", ex.Message), this, Logtype.Error);
                 }
             }
             logger.LogText("All connections to database closed", this, Logtype.Info);

@@ -41,7 +41,7 @@ namespace CrpyStoreLib
             CrypToolStoreDatabase database = CrypToolStoreDatabase.GetDatabase();
             if (!database.InitAndConnect("192.168.0.122", "CrypToolStore", "cryptoolstore", "123", 5))
             {
-                logger.LogText("Shutting down since we could not connect to mysql database", this, Logtype.Info);
+                logger.LogText("Shutting down as we could not connect to mysql database", this, Logtype.Info);
                 return;
             }
 
