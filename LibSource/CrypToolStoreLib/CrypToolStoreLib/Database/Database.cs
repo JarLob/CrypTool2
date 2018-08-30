@@ -28,7 +28,7 @@ namespace CrypToolStoreLib.Database
     /// The Database manages connections to the mysql database. It also offers method to insert, update, and delete all objects of CrypToolStore in the database.
     /// Furthermore, it offers some check methods (e.g. developer's password)
     /// </summary>
-    public class Database : IDisposable
+    public class CrypToolStoreDatabase : IDisposable
     {
         private Logger logger = Logger.GetLogger();
 
@@ -42,17 +42,17 @@ namespace CrypToolStoreLib.Database
         
         private DatabaseConnection[] connections;
 
-        private static Database database;
+        private static CrypToolStoreDatabase database;
 
         /// <summary>
         /// Return the instance of the database
         /// </summary>
         /// <returns></returns>
-        public static Database GetDatabase()
+        public static CrypToolStoreDatabase GetDatabase()
         {
             if (database == null)
             {
-                database = new Database();
+                database = new CrypToolStoreDatabase();
             }
 
             return database;
@@ -61,7 +61,7 @@ namespace CrypToolStoreLib.Database
         /// <summary>
         /// Set constructor to private for singleton pattern
         /// </summary>
-        private Database()
+        private CrypToolStoreDatabase()
         {
 
         }

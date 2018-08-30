@@ -1,4 +1,5 @@
-﻿/*
+﻿using CrypToolStoreLib.Database;
+/*
    Copyright 2018 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -155,7 +156,8 @@ namespace CrypToolStoreLib.Server
     public class ClientHandler
     {
         private Logger Logger = Logger.GetLogger();
-
+        private CrypToolStoreDatabase Database = CrypToolStoreDatabase.GetDatabase();
+        
         private bool ClientIsAuthenticated { get; set; }
         private bool ClientIsAdmin { get; set; }
         private string Username { get; set; }
@@ -226,27 +228,57 @@ namespace CrypToolStoreLib.Server
         /// </summary>
         /// <param name="message"></param>
         /// <param name="sslstream"></param>
-        private void HandleMessage(Message message, SslStream sslstream)
+        private void HandleMessage(Message message, SslStream sslStream)
         {
             switch (message.MessageHeader.MessageType)
             {
                 case MessageType.Login:
-                    HandleLoginMessage((LoginMessage)message);
+                    HandleLoginMessage((LoginMessage)message, sslStream);
                     break;
                 case MessageType.Logout:
-                    HandleLogoutMessage((LogoutMessage)message);
+                    HandleLogoutMessage((LogoutMessage)message, sslStream);
                     break;
             }
         }
-
-        private void HandleLoginMessage(LoginMessage loginMessage)
+        
+        /// <summary>
+        /// Handles login attempts
+        /// </summary>
+        /// <param name="loginMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleLoginMessage(LoginMessage loginMessage, SslStream sslStream)
         {
-            
+            //todo: protection agains brute-forcing a password
+            //todo: allow only 3 tries from a connection, even if one is correct
+            //todo: allow only 9 tries from an IP address, then disallow connections from that for 1h
+            string username = loginMessage.Username;
+            string password = loginMessage.Password;
+            if (Database.CheckDeveloperPassword(username, password) == true)
+            {
+                ClientIsAuthenticated = true;
+                ResponseLoginMessage response = new ResponseLoginMessage();
+                response.LoginOk = true;
+                response.Message = "Login credentials correct!";
+                SendMessage(response, sslStream);
+            }
+            else
+            {
+                ClientIsAuthenticated = false;
+                ResponseLoginMessage response = new ResponseLoginMessage();
+                response.LoginOk = false;
+                response.Message = "Login credentials incorrect!";
+                SendMessage(response, sslStream);
+            }
         }
 
-        private void HandleLogoutMessage(LogoutMessage logoutMessage)
+        /// <summary>
+        /// Handles logouts; set ClientIsAuthenticated to false
+        /// </summary>
+        /// <param name="logoutMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleLogoutMessage(LogoutMessage logoutMessage, SslStream sslStream)
         {
-
+            ClientIsAuthenticated = false;
         }
 
         /// <summary>
