@@ -37,7 +37,7 @@ namespace WellKnownPeer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("OwnKey.p12")]
+        [global::System.Configuration.DefaultSettingValueAttribute("anonymous.p12")]
         public string OwnKey {
             get {
                 return ((string)(this["OwnKey"]));
@@ -49,7 +49,7 @@ namespace WellKnownPeer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("enter own password here")]
+        [global::System.Configuration.DefaultSettingValueAttribute("anonymous")]
         public string OwnPassword {
             get {
                 return ((string)(this["OwnPassword"]));

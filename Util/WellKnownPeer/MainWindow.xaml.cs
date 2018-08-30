@@ -28,9 +28,9 @@ namespace WellKnownPeer
     /// </summary>
     public partial class MainWindow : Window
     {
-        private VoluntLib _voluntLib = new VoluntLib();
-
+        private VoluntLib _VoluntLib = new VoluntLib();
         private ObservableCollection<LogEntry> _Logs = new ObservableCollection<LogEntry>();
+        private FileLogger _FileLogger = new FileLogger();
 
         public MainWindow()
         {
@@ -39,18 +39,18 @@ namespace WellKnownPeer
 
             try
             {
-                Logger.SetLogLevel(Logtype.Info);
+                Logger.SetLogLevel(Logtype.Debug);
                 Logger.GetLogger().LoggOccured += MainWindow_LoggOccured;                
 
                 X509Certificate2 rootCA = new X509Certificate2(Properties.Settings.Default.RootCertificate);
                 X509Certificate2 ownKey = new X509Certificate2(Properties.Settings.Default.OwnKey, Properties.Settings.Default.OwnPassword);
                 
-                _voluntLib = new VoluntLib() { LocalStoragePath = "Jobs" };
+                _VoluntLib = new VoluntLib() { LocalStoragePath = "Jobs" };
 
                 var wellKnownPeers = Properties.Settings.Default.WellKnownPeers.Split(';');
                 if (wellKnownPeers.Length != 0)
                 {
-                    _voluntLib.WellKnownPeers.AddRange(wellKnownPeers);
+                    _VoluntLib.WellKnownPeers.AddRange(wellKnownPeers);
                 }
 
                 var administrators = Properties.Settings.Default.Administrators.Split(';');
@@ -68,12 +68,12 @@ namespace WellKnownPeer
                 }
 
                 LogListView.DataContext = _Logs;
-                _voluntLib.Start(rootCA, ownKey);
+                _VoluntLib.Start(rootCA, ownKey);
 
-                ContactListView.DataContext = _voluntLib.GetContactList();
-                JobList.DataContext = _voluntLib.GetJoblist();
+                ContactListView.DataContext = _VoluntLib.GetContactList();
+                JobList.DataContext = _VoluntLib.GetJoblist();
 
-                byte[] peerId = _voluntLib.GetPeerId();
+                byte[] peerId = _VoluntLib.GetPeerId();
                 string id = BitConverter.ToString(peerId);
                 if (Application.Current != null)
                 {
@@ -105,6 +105,9 @@ namespace WellKnownPeer
 
         void MainWindow_LoggOccured(object sender, LogEventArgs logEventArgs)
         {
+            //first, write to logfile
+            _FileLogger.OnLoggOccured(sender, logEventArgs);
+
             try
             {
                 LogEntry entry = new LogEntry();
@@ -149,7 +152,7 @@ namespace WellKnownPeer
         {
             try
             {
-                _voluntLib.Stop();
+                _VoluntLib.Stop();
             }
             catch (Exception)
             {
