@@ -1,5 +1,4 @@
-﻿using CrypToolStoreLib.Database;
-/*
+﻿/*
    Copyright 2018 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using CrypToolStoreLib.Database;
 using CrypToolStoreLib.Tools;
 using System;
 using System.Collections.Generic;
@@ -91,40 +91,47 @@ namespace CrypToolStoreLib.Server
         /// </summary>
         private void ListenThread()
         {
-            Server = new TcpListener(IPAddress.Any, Port);
-            Server.Start();
-
-            while (Running)
+            try
             {
-                try
+                Server = new TcpListener(IPAddress.Any, Port);
+                Server.Start();
+
+                while (Running)
                 {
-                    TcpClient client = Server.AcceptTcpClient();
-                    logger.LogText(String.Format("New client connected: {0}", client.Client.RemoteEndPoint), this, Logtype.Info);
-                    Thread handlerthread = new Thread(() =>
+                    try
                     {
-                        try
+                        TcpClient client = Server.AcceptTcpClient();
+                        logger.LogText(String.Format("New client connected: {0}", client.Client.RemoteEndPoint), this, Logtype.Info);
+                        Thread handlerthread = new Thread(() =>
                         {
-                            ClientHandler handler = new ClientHandler();
-                            handler.CrypToolStoreServer = this;
-                            handler.HandleClient(client);
-                        }
-                        catch (Exception ex)
-                        {
-                            logger.LogText(String.Format("Exception during handling of client: {0}", ex.Message), this, Logtype.Error);
-                        }
-                    });
-                    handlerthread.IsBackground = true;
-                    handlerthread.Start();
-                }
-                catch (Exception ex)
-                {
-                    if (Running)
+                            try
+                            {
+                                ClientHandler handler = new ClientHandler();
+                                handler.CrypToolStoreServer = this;
+                                handler.HandleClient(client);
+                            }
+                            catch (Exception ex)
+                            {
+                                logger.LogText(String.Format("Exception during handling of client: {0}", ex.Message), this, Logtype.Error);
+                            }
+                        });
+                        handlerthread.IsBackground = true;
+                        handlerthread.Start();
+                    }
+                    catch (Exception ex)
                     {
-                        logger.LogText(String.Format("Exception in ListenThread: {0}", ex.Message), this, Logtype.Error);
+                        if (Running)
+                        {
+                            logger.LogText(String.Format("Exception in ListenThread: {0}", ex.Message), this, Logtype.Error);
+                        }
                     }
                 }
+                logger.LogText("ListenThread terminated", this, Logtype.Info);
             }
-            logger.LogText("ListenThread terminated", this, Logtype.Info);
+            catch (Exception ex)
+            {
+                logger.LogText(String.Format("Exception in ListenThread: {0}", ex.Message), this, Logtype.Error);
+            }
         }      
 
         /// <summary>

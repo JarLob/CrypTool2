@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 namespace CrypToolStoreLib.Database
 {
     /// <summary>
-    /// The Database manages connections to the mysql database. It also offers method to insert, update, and delete all objects of CrypToolStore in the database.
+    /// The Database manages connections to the mysql database. It also offers methods to insert, update, and delete all objects of CrypToolStore in the database.
     /// Furthermore, it offers some check methods (e.g. developer's password)
     /// </summary>
     public class CrypToolStoreDatabase : IDisposable
