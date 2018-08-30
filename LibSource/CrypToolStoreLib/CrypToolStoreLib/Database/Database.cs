@@ -42,21 +42,56 @@ namespace CrypToolStoreLib.Database
         
         private DatabaseConnection[] connections;
 
+        private static Database database;
+
         /// <summary>
-        /// Create a Database object using the given parameters
+        /// Return the instance of the database
+        /// </summary>
+        /// <returns></returns>
+        public static Database GetDatabase()
+        {
+            if (database == null)
+            {
+                database = new Database();
+            }
+
+            return database;
+        }
+
+        /// <summary>
+        /// Set constructor to private for singleton pattern
+        /// </summary>
+        private Database()
+        {
+
+        }
+
+        /// <summary>
+        /// Initializes the database and connects to the mysql database
         /// </summary>
         /// <param name="databaseServer"></param>
         /// <param name="databaseName"></param>
         /// <param name="databaseUser"></param>
         /// <param name="databasePassword"></param>
         /// <param name="numberOfConnections"></param>
-        public Database(string databaseServer, string databaseName, string databaseUser, string databasePassword, int numberOfConnections)
+        public bool InitAndConnect(string databaseServer, string databaseName, string databaseUser, string databasePassword, int numberOfConnections)
         {
-            this.databaseServer = databaseServer;
-            this.databaseName = databaseName;
-            this.databaseUser = databaseUser;
-            this.databasePassword = databasePassword;
-            CreateConnections(numberOfConnections);
+            logger.LogText(String.Format("Connecting to mysql database with databaseServer={0}, databaseName={1}, databaseUser={2}", databaseServer, databaseName, databaseUser), this, Logtype.Info);
+            try
+            {
+                this.databaseServer = databaseServer;
+                this.databaseName = databaseName;
+                this.databaseUser = databaseUser;
+                this.databasePassword = databasePassword;
+                CreateConnections(numberOfConnections);
+                logger.LogText(String.Format("Connection successfully established", databaseServer, databaseName, databaseUser), this, Logtype.Info);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                logger.LogText(String.Format("Connection failed with exception: {0}", ex.Message), this, Logtype.Error);
+                return false;
+            }
         }
 
         /// <summary>
@@ -91,16 +126,33 @@ namespace CrypToolStoreLib.Database
             int i = random.Next(0, connections.Length - 1);
             return connections[i];
         }
-        
+
+        /// <summary>
+        /// Closes all open connections to mysql database
+        /// </summary>
+        public void Close()
+        {
+            Dispose();
+        }
+
         /// <summary>
         /// Closes all open connections to mysql database
         /// </summary>
         public void Dispose()
         {
+            logger.LogText("Closing all connections to database", this, Logtype.Info);
             foreach (DatabaseConnection connection in connections)
             {
-                connection.Close();
+                try
+                {
+                    connection.Close();                    
+                }
+                catch (Exception ex)
+                {
+                    logger.LogText(String.Format("Exception occured whhile closing a connection to database: {0}", ex.Message), this, Logtype.Error);
+                }
             }
+            logger.LogText("All connections to database closed", this, Logtype.Info);
         }
 
         #region database methods

@@ -13,7 +13,6 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-
 using CrypToolStoreLib.Tools;
 using System;
 using System.Collections.Generic;
@@ -30,45 +29,65 @@ namespace CrypToolStoreLib.Server
 {
     public class CrypToolStoreServer
     {
+        public const int DEFAULT_PORT = 15151;
         private Logger logger = Logger.GetLogger();
 
+        /// <summary>
+        /// Responsible for incoming TCP connections
+        /// </summary>
         private TcpListener Server
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Port to connect to
+        /// </summary>
         public int Port
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Flag to set state of server to running/not running
+        /// </summary>
         internal bool Running
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public CrypToolStoreServer()
         {
-            Port = 15151;
+            Port = DEFAULT_PORT;
         }        
 
+        /// <summary>
+        /// Starts the server
+        /// </summary>
         public void Start()
         {
             if (Running)
             {
                 return;
             }
-            logger.LogText("Starting listen thread", this, Logtype.Debug);
+            logger.LogText("Starting listen thread", this, Logtype.Info);
             Running = true;
             Thread listenThread = new Thread(ListenThread);
             listenThread.IsBackground = true;
             listenThread.Start();
-            logger.LogText("Listen thread started", this, Logtype.Debug);
+            Thread.Sleep(1000); //just to let the thread start
+            logger.LogText("Listen thread started", this, Logtype.Info);
         }
         
+        /// <summary>
+        /// Listens for new incoming connections
+        /// </summary>
         private void ListenThread()
         {
             Server = new TcpListener(IPAddress.Any, Port);
@@ -84,7 +103,8 @@ namespace CrypToolStoreLib.Server
                     {
                         try
                         {
-                            ServerHandler handler = new ServerHandler();
+                            ClientHandler handler = new ClientHandler();
+                            handler.CrypToolStoreServer = this;
                             handler.HandleClient(client);
                         }
                         catch (Exception ex)
@@ -103,47 +123,74 @@ namespace CrypToolStoreLib.Server
                     }
                 }
             }
-            logger.LogText("ListenThread terminated", this, Logtype.Debug);
+            logger.LogText("ListenThread terminated", this, Logtype.Info);
         }      
 
+        /// <summary>
+        /// Stops the server
+        /// </summary>
         public void Stop()
-        {
+        {            
             if (!Running)
             {
                 return;
             }
-            logger.LogText("Stopping server", this, Logtype.Info);
-            Running = false;
-            Server.Stop();
-            logger.LogText("Server stopped", this, Logtype.Info);
+            try
+            {
+                logger.LogText("Stopping server", this, Logtype.Info);
+                Running = false;
+                Server.Stop();
+                logger.LogText("Server stopped", this, Logtype.Info);
+            }
+            catch (Exception ex)
+            {
+                logger.LogText(String.Format("Exception during stopping of TCPListener: {0}", ex.Message), this, Logtype.Error);
+            }
         }
     }
 
-    public class ServerHandler
+    /// <summary>
+    /// A single client handler is responsible for the communication with one client
+    /// </summary>
+    public class ClientHandler
     {
-        private Logger logger = Logger.GetLogger();
+        private Logger Logger = Logger.GetLogger();
 
+        private bool ClientIsAuthenticated { get; set; }
+        private bool ClientIsAdmin { get; set; }
+        private string Username { get; set; }
+
+        /// <summary>
+        /// Reference to the server object
+        /// </summary>
         public CrypToolStoreServer CrypToolStoreServer
         {
             get;
             set;
         }
 
-        public ServerHandler()
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public ClientHandler()
         {
-
+            Username = string.Empty;
+            ClientIsAuthenticated = false;
+            ClientIsAdmin = false;
         }
 
+        /// <summary>
+        /// This method receives messages from the client and handles it
+        /// </summary>
+        /// <param name="client"></param>
         public void HandleClient(TcpClient client)
         {            
             using (SslStream sslstream = new SslStream(client.GetStream()))
             {
-                while (CrypToolStoreServer.Running)
+                while (CrypToolStoreServer.Running || !sslstream.CanRead || !sslstream.CanRead)
                 {
-                    //Step 1: Read message header
-
-                    //a message header is 21 bytes
-                    byte[] headerbytes = new byte[21];
+                    //Step 1: Read message header                    
+                    byte[] headerbytes = new byte[21]; //a message header is 21 bytes
                     int bytesread = 0;
                     while (bytesread < 21)
                     {
@@ -166,7 +213,7 @@ namespace CrypToolStoreLib.Server
 
                     //Step 4: Deserialize Message
                     Message message = Message.DeserializeMessage(messagebytes);
-                    logger.LogText(String.Format("Received a message of type {0}", message.MessageHeader.MessageType.ToString()), this, Logtype.Debug);
+                    Logger.LogText(String.Format("Received a message of type {0}", message.MessageHeader.MessageType.ToString()), this, Logtype.Debug);
 
                     //Step 5: Handle received message
                     HandleMessage(message, sslstream);
@@ -174,11 +221,48 @@ namespace CrypToolStoreLib.Server
             }
         }
 
+        /// <summary>
+        /// Responsible for handling received messages
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="sslstream"></param>
         private void HandleMessage(Message message, SslStream sslstream)
+        {
+            switch (message.MessageHeader.MessageType)
+            {
+                case MessageType.Login:
+                    HandleLoginMessage((LoginMessage)message);
+                    break;
+                case MessageType.Logout:
+                    HandleLogoutMessage((LogoutMessage)message);
+                    break;
+            }
+        }
+
+        private void HandleLoginMessage(LoginMessage loginMessage)
         {
             
         }
+
+        private void HandleLogoutMessage(LogoutMessage logoutMessage)
+        {
+
+        }
+
+        /// <summary>
+        /// Sends a message to the client
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="sslStream"></param>
+        private void SendMessage(Message message, SslStream sslStream)
+        {
+            lock (this)
+            {
+                byte[] messagebytes = message.Serialize();
+                sslStream.Write(messagebytes);
+                sslStream.Flush();
+                Logger.LogText(String.Format("Sent a \"{0}\" to the client", message.ToString()), this, Logtype.Debug);
+            }
+        }
     }
-
-
 }
