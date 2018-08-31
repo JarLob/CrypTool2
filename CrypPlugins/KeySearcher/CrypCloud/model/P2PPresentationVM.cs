@@ -176,7 +176,7 @@ namespace KeySearcher.CrypCloud
             KeysPerSecondGlobal = keysPerSecond;
             if (keysPerSecond != 0)
             {
-                var timePerBlock = (KeysPerBlock.DivideAndReturnDouble(KeysPerSecondGlobal));
+                var timePerBlock = (KeysPerBlock.DivideAndReturnDouble(KeysPerSecondGlobal / CrypCloudCore.Instance.AmountOfWorker));
                 AvgTimePerChunkGlobal = TimeSpan.FromSeconds(timePerBlock);
                 GlobalThroughputInBytes = keysPerSecond * BytesToUse;
             }
