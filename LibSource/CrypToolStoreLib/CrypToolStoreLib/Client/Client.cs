@@ -105,10 +105,12 @@ namespace CrypToolStoreLib.Client
             }
             else
             {
+                Logger.LogText("Disconnecting from the server", this, Logtype.Info);
                 LogoutMessage logout = new LogoutMessage();
                 SendMessage(logout);
                 SSLStream.Close();
                 Client.Close();
+                Logger.LogText("Disconnected from the server", this, Logtype.Info);
             }
         }
 
@@ -129,18 +131,17 @@ namespace CrypToolStoreLib.Client
             }
         }
 
-
-
         #region methods for login and logout
 
         /// <summary>
-        /// Try to log into CrypToolStore
+        /// Try to log into CrypToolStore using given username and password
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
         public bool Login(string username, string password)
         {
+            Logger.LogText(String.Format("Trying to login as {0}", username), this, Logtype.Info);
             LoginMessage message = new LoginMessage();
             message.Username = username;
             message.Password = password;
@@ -161,6 +162,10 @@ namespace CrypToolStoreLib.Client
             return false;
         }
 
+        /// <summary>
+        /// Receive a message from the ssl stream
+        /// </summary>
+        /// <returns></returns>
         private Message ReceiveMessage()
         {
             //Step 1: Read message header                    
@@ -192,11 +197,7 @@ namespace CrypToolStoreLib.Client
             return message;
         }
 
-
-
         #endregion
-
-
 
         #region Methods for working with developers
 

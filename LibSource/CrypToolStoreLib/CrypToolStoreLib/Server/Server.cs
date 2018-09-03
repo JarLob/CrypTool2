@@ -214,7 +214,8 @@ namespace CrypToolStoreLib.Server
         {
             IPAddress = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
             using (SslStream sslstream = new SslStream(client.GetStream()))
-            {
+            {                
+                //Step 0: Authenticate SSLStream as server
                 sslstream.AuthenticateAsServer(CrypToolStoreServer.ServerKey, false, false);
                 try
                 {
@@ -223,6 +224,7 @@ namespace CrypToolStoreLib.Server
                         //Step 1: Read message header                    
                         byte[] headerbytes = new byte[21]; //a message header is 21 bytes
                         int bytesread = 0;
+                        
                         while (bytesread < 21)
                         {
                             bytesread += sslstream.Read(headerbytes, bytesread, 21 - bytesread);
@@ -236,7 +238,7 @@ namespace CrypToolStoreLib.Server
                         //Step 3: Read complete message
                         byte[] messagebytes = new byte[payloadsize + 21];
                         Array.Copy(headerbytes, 0, messagebytes, 0, 21);
-
+                        
                         while (bytesread < payloadsize + 21)
                         {
                             bytesread += sslstream.Read(messagebytes, bytesread, payloadsize + 21 - bytesread);
@@ -249,6 +251,8 @@ namespace CrypToolStoreLib.Server
                         //Step 5: Handle received message
                         HandleMessage(message, sslstream);
                     }
+                    client.Close();
+                    Logger.LogText("Client disconnected", this, Logtype.Info);                    
                 }
                 catch (Exception ex)
                 {
@@ -314,7 +318,7 @@ namespace CrypToolStoreLib.Server
                 ResponseLoginMessage response = new ResponseLoginMessage();
                 response.LoginOk = true;
                 response.Message = "Login credentials correct!";
-                Logger.LogText(String.Format("User {0} successfully authenticated from {1}", username, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("User {0} successfully authenticated from {1}", username, IPAddress), this, Logtype.Info);
                 SendMessage(response, sslStream);
             }
             else
@@ -345,6 +349,8 @@ namespace CrypToolStoreLib.Server
         private void HandleLogoutMessage(LogoutMessage logoutMessage, SslStream sslStream)
         {
             ClientIsAuthenticated = false;
+            Logger.LogText(String.Format("User {0} logged out", Username), this, Logtype.Info);
+            sslStream.Close();
         }
 
         /// <summary>
