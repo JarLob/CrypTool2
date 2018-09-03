@@ -30,7 +30,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace CrypToolStoreLib.Server
-{
+{    
     public class CrypToolStoreServer
     {
         public const int DEFAULT_PORT = 15151;
@@ -45,7 +45,7 @@ namespace CrypToolStoreLib.Server
         /// <summary>
         /// Responsible for incoming TCP connections
         /// </summary>
-        private TcpListener Server
+        private TcpListener TCPListener
         {
             get;
             set;
@@ -102,14 +102,14 @@ namespace CrypToolStoreLib.Server
         {
             try
             {
-                Server = new TcpListener(IPAddress.Any, Port);
-                Server.Start();
+                TCPListener = new TcpListener(IPAddress.Any, Port);
+                TCPListener.Start();
 
                 while (Running)
                 {
                     try
                     {
-                        TcpClient client = Server.AcceptTcpClient();
+                        TcpClient client = TCPListener.AcceptTcpClient();
                         logger.LogText(String.Format("New client connected: {0}", client.Client.RemoteEndPoint), this, Logtype.Info);
                         Thread handlerthread = new Thread(() =>
                         {
@@ -156,7 +156,7 @@ namespace CrypToolStoreLib.Server
             {
                 logger.LogText("Stopping server", this, Logtype.Info);
                 Running = false;
-                Server.Stop();
+                TCPListener.Stop();
                 logger.LogText("Server stopped", this, Logtype.Info);
             }
             catch (Exception ex)
