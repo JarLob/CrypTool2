@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">Homophone Substitution Cipher and Nomenclature -- Encryption</title>
-  <summary lang="en">Encrypt texts using the <i>substiution</i> component for homophone encryption and nomenclatures</summary>
-  <description lang="en">This template shows the usage of the <i>subsitution</i> component for homophone encryption and the usage of a nomenclature.</description>
+  <summary lang="en">Encrypt texts using the <i>substitution</i> component for homophone encryption and nomenclatures</summary>
+  <description lang="en">This template shows how to use the <i>Subsitution</i> component in order to perform a homophone encryption and to use a nomenclature as key.</description>
   <keywords>substitution, monoalphabetic, homophone, nomenclature</keywords>
 
-  <title lang="de">Homophone Substitutionschiffre und Nomenklatur -- Verschlüsselung</title>
-  <summary lang="de">Benutzung des <i>Substitutionsplugins</i> für homophone Verschlüsselungen und Nomenklaturen</summary>
-  <description lang="de">Diese Vorlage zeigt die Benutzung der <i>Substitutionskomponente</i> um homophone Verschlüsselungen zu erzeugen und Nomenklaturen zu nutzen.</description>
+  <title lang="de">Homophone Substitutions-Chiffre und Nomenklatur -- Verschlüsselung</title>
+  <summary lang="de">Benutzung des <i>Substitutions-Plugins</i> für homophone Verschlüsselungen und Nomenklaturen</summary>
+  <description lang="de">Diese Vorlage zeigt, wie man die <i>Substitutions-Komponente</i> nutzen kann, um homophone Verschlüsselungen durchzuführen und auch Nomenklaturen als Schlüssel zu benutzen.</description>
   <keywords lang="de">Substitution, monoalphabetisch, homophon, Nomenklatur</keywords>
 
   <icon file="substitution.png" />
@@ -21,13 +21,15 @@
 	<replacement key="$NOMENCLATURE$" value="Nomenklatur"/>	
 	<replacement key="$PLAIN_COLUMN$" value="Klartextspalte"/>	
 	<replacement key="$CIPHER_COLUMN$" value="Geheimtextspalte"/>	
-	<replacement key="$MEMO$" value="{\fs25 Diese Vorlage zeigt, wie man mit Hilfe der Substitutionskomponente eine homophone Chiffre oder sogar eine Nomenklatur erstellen und dann einen Text mit dieser verschlüsseln kann.\line\line
-In der Texteingabe {\b Nomenklatur} können die Homophone bzw die Nomenklatur definiert werden.\line\line
+	<replacement key="$MEMO$" value="{\fs25 Diese Vorlage zeigt, wie man die Schlüssel von homophonen Chiffren oder sogar von Nomenklaturen erstellen kann, und wie man mit diesem Schlüssel und der Substitutions-Komponente einen Text verschlüsseln kann.\line\line
+In der Texteingabe-Komponente {\b Nomenklatur} können die Homophone bzw. die Nomenklatur definiert werden.\line\line
 {\b [A];[01|02]} definiert, dass der Buchstabe {\b A} durch eines der Homophone {\b 01} oder {\b 02} substituiert wird.\line
 {\b [BISHOP];[85]} definiert, dass das Wort {\b BISHOP} mit dem Homophon {\b 85} substituiert wird.\line\line
-Mit Hilfe der beiden CSV-Leserkomponenten werden die Zeichen des Klartextalphabets (A...Z sowie Wörter) und die Zeichen des Geheimtextalphabets (01 bis zu einer beliebigen Zahl) extrahiert und an die Substitutionskomponente weitergegeben. Die Substitutionskomponente nutzt diese dann, um die eigentliche Verschlüsselung durchzuführen. In der Nomenklatur werden die einzelnen Abbildungen der Zeichen durch Umbrüche getrennt. Klartext- und Geheimtextzeichen sind in den jeweiligen Abbildungen durch ein Semikolon getrennt.\line\line
-Um eigene Abbildungen zu definieren, kann eine bestehende Zeile einfach kopiert und unten angefügt werden. Danach kann die eigentliche Abbildung verändert werden.\line
-Ganze zu substituierende Wörte werden mit Hilfe von eckigen Klammern {\b []} definiert. Um ein Zeichen oder Wort auf mehrere unterschiedliche Homophone abzubilden, wird das Zeichen {\b |} genutzt.
+Mit Hilfe der beiden CSV-Leser-Komponenten werden die Elemente des Klartextalphabets (A...Z sowie Wörter) und die Elemente des Geheimtextalphabets (01 bis zu einer beliebigen ganzen Zahl) extrahiert und an die Substitutions-Komponente weitergegeben. Die Substitutions-Komponente nutzt diese als Input dann zusammen mit dem Klartext, um die eigentliche Verschlüsselung durchzuführen.\line\line
+In der Nomenklatur steht jede Abbildung eines Elements des Klartextalphabets in einer neuen Zeile; die Elemente vom Klartext- und vom Geheimtextalphabet innerhalb einer Zeile sind jeweils durch ein Semikolon getrennt.\line
+Ganze zu substituierende Wörter des Klartext-Alphabets werden genauso wie die Einzelzeichen mit Hilfe von eckigen Klammern {\b []} definiert. Um ein Zeichen oder Wort auf mehrere unterschiedliche Homophone abzubilden, werden die Homophone durch {\b |} voneinander getrennt.\line
+Um eigene Abbildungen zu definieren, kann eine bestehende Zeile einfach kopiert und unten angefügt werden. Die geänderte Abbildung wird im Play-Modus sofort wirksam.\line\line
+Quelle des Klartexts: https://en.wikipedia.org/wiki/Pope
 }"/>	
  </replacements>
  
@@ -38,12 +40,14 @@ Ganze zu substituierende Wörte werden mit Hilfe von eckigen Klammern {\b []} de
 	<replacement key="$PLAIN_COLUMN$" value="Plaintext column"/>	
 	<replacement key="$CIPHER_COLUMN$" value="Ciphertext column"/>	
 	<replacement key="$MEMO$" value="{\fs25 This template shows how to create a homophonic cipher or even a nomenclature using the substitution component and then encrypt a text using the created cipher.\line\line
-In the text input component {\b Nomenclature} the homophones or the nomenclature can be defined.\line\line
+In the TextInput component {\b Nomenclature} the homophones or the nomenclature can be defined.\line\line
 {\b [A];[01|02]} defines that the letter {\b A} is substituted by one of the homophones {\b 01} or {\b 02}.\line
-{\b [BISHOP];[85]} defines that the word {\b BISHOP} is substituted with the homophone {\b85}.\line\line
-With the help of the two CSV reader components, the characters of the plaintext alphabet (A ... Z and words) and the characters of the ciphertext alphabet (01 up to any number) are extracted and forwarded to the substitution component. The substitution component then uses these to perform the actual encryption. In the nomenclature, the mappings are separated by line breaks. Plaintext and ciphertext characters are separated by a semicolon in the mappings.\line\line
-To define your own mappings, an existing line in the nomenclature can simply be copied and added at the bottom. After that, the actual mapping can be changed.\line
-Whole words are defined by square brackets {\b[]}. To map a character or word to several different homophones, the character {\b |} is used.
+{\b [BISHOP];[85]} defines that the word {\b BISHOP} is substituted with the homophone {\b 85}.\line\line
+With the help of the two CSV-Reader components, the elements of the plaintext alphabet (A ... Z and words) and the elements of the ciphertext alphabet (01 up to any integer number) are extracted and forwarded to the Substitution component. The Substitution component then uses these as inputs together with the plaintext to perform the actual encryption.\line\line
+In the nomenclature, each mapping of an element of the plaintext alphabet is placed in a separate line; the elements of plaintext and ciphertext alphabet within one line are separated by a semicolon.\line
+Whole words of the plaintext alphabet are -- like the single characters -- defined by square brackets {\b[]}. To map a character or a word to several different homophones, the homophones are separated by {\b |}.\line
+To define your own mappings, an existing line in the nomenclature can simply be copied and added at the bottom. The changed mapping is effective in the Play mode at once.\line\line
+Source of the plaintext: https://en.wikipedia.org/wiki/Pope
 }"/>	
  </replacements>
 </sample>
