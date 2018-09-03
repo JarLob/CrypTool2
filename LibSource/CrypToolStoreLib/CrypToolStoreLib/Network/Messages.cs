@@ -306,10 +306,11 @@ namespace CrypToolStoreLib.Tools
         /// Serializes the message into a byte array
         /// </summary>
         /// <returns></returns>
-        public virtual byte[] Serialize()
+        public byte[] Serialize()
         {
-            byte[] headerbytes = MessageHeader.Serialize();
             SerializePayload();
+            MessageHeader.PayloadSize = Payload.Length;
+            byte[] headerbytes = MessageHeader.Serialize();            
             byte[] bytes = new byte[headerbytes.Length + (Payload != null ? Payload.Length : 0)];
             Array.Copy(headerbytes, 0, bytes, 0, headerbytes.Length);
             if (Payload != null && Payload.Length > 0)
@@ -325,15 +326,15 @@ namespace CrypToolStoreLib.Tools
         /// Deserializes a message from the byte array
         /// </summary>
         /// <param name="bytes"></param>
-        public virtual void Deserialize(byte[] bytes)
+        public void Deserialize(byte[] bytes)
         {
             int offset = MessageHeader.Deserialize(bytes);
             if (offset < bytes.Length - 1)
             {
                 Payload = new byte[bytes.Length - offset];
                 Array.Copy(bytes, offset, Payload, 0, bytes.Length - offset);
-            }
-            DeserializePayload();
+                DeserializePayload();
+            }            
             //after deserialization, we do not need the payload any more
             Payload = null;
         }
@@ -370,6 +371,9 @@ namespace CrypToolStoreLib.Tools
                             byte[] valuebytes = new byte[0];
                             switch (fieldInfo.FieldType.Name)
                             {
+                                case "Boolean":
+                                    valuebytes = BitConverter.GetBytes((bool)fieldInfo.GetValue(this));
+                                    break;
                                 case "String":
                                     valuebytes = UTF8Encoding.UTF8.GetBytes((string)fieldInfo.GetValue(this));
                                     break;
@@ -448,11 +452,14 @@ namespace CrypToolStoreLib.Tools
                         }
                         if (propertyInfo != null)
                         {
-                            byte[] namebytes = ASCIIEncoding.ASCII.GetBytes(propertyInfo.Name);
+                            byte[] namebytes = ASCIIEncoding.ASCII.GetBytes(propertyInfo.Name);                            
                             byte[] namelengthbytes = BitConverter.GetBytes((UInt32)propertyInfo.Name.Length);
                             byte[] valuebytes = new byte[0];
                             switch (propertyInfo.PropertyType.Name)
                             {
+                                case "Boolean":
+                                    valuebytes = BitConverter.GetBytes((bool)propertyInfo.GetValue(this));
+                                    break;
                                 case "String":
                                     valuebytes = UTF8Encoding.UTF8.GetBytes((string)propertyInfo.GetValue(this));
                                     break;
@@ -578,6 +585,9 @@ namespace CrypToolStoreLib.Tools
                             {
                                 switch (fieldInfo.FieldType.Name)
                                 {
+                                    case "Boolean":
+                                        fieldInfo.SetValue(this, BitConverter.ToBoolean(valuebytes, 0));
+                                        break;
                                     case "String":
                                         fieldInfo.SetValue(this, UTF8Encoding.UTF8.GetString(valuebytes));
                                         break;
@@ -647,6 +657,9 @@ namespace CrypToolStoreLib.Tools
                             {
                                 switch (propertyInfo.PropertyType.Name)
                                 {
+                                    case "Boolean":
+                                        propertyInfo.SetValue(this, BitConverter.ToBoolean(valuebytes, 0));
+                                        break;
                                     case "String":
                                         propertyInfo.SetValue(this, UTF8Encoding.UTF8.GetString(valuebytes));
                                         break;

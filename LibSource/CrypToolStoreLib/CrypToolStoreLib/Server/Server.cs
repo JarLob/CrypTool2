@@ -16,12 +16,14 @@
 using CrypToolStoreLib.Database;
 using CrypToolStoreLib.Tools;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Security;
 using System.Net.Sockets;
 using System.Security.Authentication;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,6 +34,12 @@ namespace CrypToolStoreLib.Server
     {
         public const int DEFAULT_PORT = 15151;
         private Logger logger = Logger.GetLogger();
+
+        public X509Certificate2 ServerKey
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Responsible for incoming TCP connections
@@ -169,12 +177,12 @@ namespace CrypToolStoreLib.Server
         private bool ClientIsAdmin { get; set; }
         private string Username { get; set; }
 
-        private IPAddress IPAddress { get; set; }
+        private IPAddress IPAddress { get; set; }        
 
         /// <summary>
         /// This hashset memorizes the tries of a password from a dedicated IP
         /// </summary>
-        private Dictionary<IPAddress, PasswordTry> PasswordTries = new Dictionary<IPAddress, PasswordTry>();
+        private static ConcurrentDictionary<IPAddress, PasswordTry> PasswordTries = new ConcurrentDictionary<IPAddress, PasswordTry>();
 
         private int PASSWORD_RETRY_INTERVAL = 5; //minutes
         private int ALLOWED_PASSWORD_RETRIES = 3;
@@ -207,36 +215,45 @@ namespace CrypToolStoreLib.Server
             IPAddress = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
             using (SslStream sslstream = new SslStream(client.GetStream()))
             {
-                while (CrypToolStoreServer.Running || !sslstream.CanRead || !sslstream.CanRead)
+                sslstream.AuthenticateAsServer(CrypToolStoreServer.ServerKey, false, false);
+                try
                 {
-                    //Step 1: Read message header                    
-                    byte[] headerbytes = new byte[21]; //a message header is 21 bytes
-                    int bytesread = 0;
-                    while (bytesread < 21)
+                    while (CrypToolStoreServer.Running && client.Connected && sslstream.CanRead && sslstream.CanWrite)
                     {
-                        bytesread += sslstream.Read(headerbytes, bytesread, 21 - bytesread);
+                        //Step 1: Read message header                    
+                        byte[] headerbytes = new byte[21]; //a message header is 21 bytes
+                        int bytesread = 0;
+                        while (bytesread < 21)
+                        {
+                            bytesread += sslstream.Read(headerbytes, bytesread, 21 - bytesread);
+                        }
+
+                        //Step 2: Deserialize message header and get payloadsize
+                        MessageHeader header = new MessageHeader();
+                        header.Deserialize(headerbytes);
+                        int payloadsize = header.PayloadSize;
+
+                        //Step 3: Read complete message
+                        byte[] messagebytes = new byte[payloadsize + 21];
+                        Array.Copy(headerbytes, 0, messagebytes, 0, 21);
+
+                        while (bytesread < payloadsize + 21)
+                        {
+                            bytesread += sslstream.Read(messagebytes, bytesread, payloadsize + 21 - bytesread);
+                        }
+
+                        //Step 4: Deserialize Message
+                        Message message = Message.DeserializeMessage(messagebytes);
+                        Logger.LogText(String.Format("Received a message of type {0}", message.MessageHeader.MessageType.ToString()), this, Logtype.Debug);
+
+                        //Step 5: Handle received message
+                        HandleMessage(message, sslstream);
                     }
-
-                    //Step 2: Deserialize message header and get payloadsize
-                    MessageHeader header = new MessageHeader();
-                    header.Deserialize(headerbytes);
-                    int payloadsize = header.PayloadSize;
-
-                    //Step 3: Read complete message
-                    byte[] messagebytes = new byte[payloadsize + 21];
-                    Array.Copy(headerbytes, 0, messagebytes, 0, 21);
-
-                    while (bytesread < payloadsize + 21)
-                    {
-                        bytesread += sslstream.Read(messagebytes, bytesread, payloadsize + 21 - bytesread);
-                    }
-
-                    //Step 4: Deserialize Message
-                    Message message = Message.DeserializeMessage(messagebytes);
-                    Logger.LogText(String.Format("Received a message of type {0}", message.MessageHeader.MessageType.ToString()), this, Logtype.Debug);
-
-                    //Step 5: Handle received message
-                    HandleMessage(message, sslstream);
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogText(String.Format("Exception during HandleClient: {0}", ex.Message), this, Logtype.Error);
+                    return;
                 }
             }
         }
@@ -269,25 +286,26 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleLoginMessage(LoginMessage loginMessage, SslStream sslStream)
         {
+            string username = loginMessage.Username;
+            string password = loginMessage.Password;
+
             if (PasswordTries.ContainsKey(IPAddress))
             {                            
                 if (DateTime.Now > PasswordTries[IPAddress].LastTryDateTime.AddMinutes(PASSWORD_RETRY_INTERVAL))
                 {
-                    PasswordTries.Remove(IPAddress);
+                    PasswordTry passwordTry;
+                    PasswordTries.TryRemove(IPAddress, out passwordTry);
                 }
                 else if (PasswordTries[IPAddress].Number >= ALLOWED_PASSWORD_RETRIES)
                 {                    
                     // after 3 tries, we just close the connection and refresh the timer
                     PasswordTries[IPAddress].LastTryDateTime = DateTime.Now;
                     PasswordTries[IPAddress].Number++;
-                    Logger.LogText(String.Format("{0}. try of a username/password combination from Ip {1} - disconnect the sslStream now", PasswordTries[IPAddress].Number, IPAddress), this, Logtype.Warning);
+                    Logger.LogText(String.Format("{0}. try of a username/password (username={1}) combination from IP {2} - kill the sslStream now", PasswordTries[IPAddress].Number, username, IPAddress), this, Logtype.Warning);
                     sslStream.Close();
                     return;
                 }    
-            }
-
-            string username = loginMessage.Username;
-            string password = loginMessage.Password;
+            }            
 
             if (Database.CheckDeveloperPassword(username, password) == true)
             {
@@ -296,13 +314,14 @@ namespace CrypToolStoreLib.Server
                 ResponseLoginMessage response = new ResponseLoginMessage();
                 response.LoginOk = true;
                 response.Message = "Login credentials correct!";
+                Logger.LogText(String.Format("User {0} successfully authenticated from {1}", username, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
             }
             else
             {
                 if (!PasswordTries.ContainsKey(IPAddress))
                 {
-                    PasswordTries.Add(IPAddress, new PasswordTry() { Number = 1, LastTryDateTime = DateTime.Now });
+                    PasswordTries.TryAdd(IPAddress, new PasswordTry() { Number = 1, LastTryDateTime = DateTime.Now });
                 }
                 else
                 {
@@ -313,7 +332,7 @@ namespace CrypToolStoreLib.Server
                 ResponseLoginMessage response = new ResponseLoginMessage();
                 response.LoginOk = false;
                 response.Message = "Login credentials incorrect!";
-                Logger.LogText(String.Format("{0}. try of a username/password combination from Ip {1}", PasswordTries[IPAddress].Number, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("{0}. try of a username/password (username={1}) combination from IP {2}", PasswordTries[IPAddress].Number, username, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
             }
         }
