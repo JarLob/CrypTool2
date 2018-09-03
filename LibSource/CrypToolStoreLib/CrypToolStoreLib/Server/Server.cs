@@ -14,6 +14,7 @@
    limitations under the License.
 */
 using CrypToolStoreLib.Database;
+using CrypToolStoreLib.DataObjects;
 using CrypToolStoreLib.Tools;
 using System;
 using System.Collections.Concurrent;
@@ -252,7 +253,7 @@ namespace CrypToolStoreLib.Server
                         HandleMessage(message, sslstream);
                     }
                     client.Close();
-                    Logger.LogText("Client disconnected", this, Logtype.Info);                    
+                    Logger.LogText("Client disconnected", this, Logtype.Info);
                 }
                 catch (Exception ex)
                 {
@@ -290,6 +291,10 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleLoginMessage(LoginMessage loginMessage, SslStream sslStream)
         {
+            //Initially, we set everything to false
+            ClientIsAuthenticated = false;
+            ClientIsAdmin = false;
+
             string username = loginMessage.Username;
             string password = loginMessage.Password;
 
@@ -312,13 +317,20 @@ namespace CrypToolStoreLib.Server
             }            
 
             if (Database.CheckDeveloperPassword(username, password) == true)
-            {
+            {                
                 ClientIsAuthenticated = true;
                 Username = username;
                 ResponseLoginMessage response = new ResponseLoginMessage();
                 response.LoginOk = true;
                 response.Message = "Login credentials correct!";
                 Logger.LogText(String.Format("User {0} successfully authenticated from {1}", username, IPAddress), this, Logtype.Info);
+                Developer developer = Database.GetDeveloper(username);
+                if (developer.IsAdmin)
+                {
+                    response.IsAdmin = true;
+                    ClientIsAdmin = true;
+                    Logger.LogText(String.Format("User {0} is admin", username), this, Logtype.Info);                                        
+                }
                 SendMessage(response, sslStream);
             }
             else
@@ -331,8 +343,7 @@ namespace CrypToolStoreLib.Server
                 {
                     PasswordTries[IPAddress].Number++;
                     PasswordTries[IPAddress].LastTryDateTime = DateTime.Now;
-                }
-                ClientIsAuthenticated = false;
+                }               
                 ResponseLoginMessage response = new ResponseLoginMessage();
                 response.LoginOk = false;
                 response.Message = "Login credentials incorrect!";

@@ -866,6 +866,13 @@ namespace CrypToolStoreLib.Tools
             set;
         }
 
+        [MessageDataField]
+        public bool IsAdmin
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Default Constructor
         /// </summary>

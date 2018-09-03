@@ -54,6 +54,9 @@ namespace CrypToolStoreLib.Client
             set;
         }
 
+        /// <summary>
+        /// Returns true, if the client is connected to the server
+        /// </summary>
         public bool IsConnected
         {
             get
@@ -66,18 +69,45 @@ namespace CrypToolStoreLib.Client
             }            
         }
 
+        /// <summary>
+        /// Returns true, if the client is authenticated
+        /// </summary>
+        public bool IsAuthenticated
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Returns true, if the user is administrator
+        /// </summary>
+        public bool IsAdmin
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Sets the server address
+        /// </summary>
         public string ServerAddress
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public CrypToolStoreClient()
         {
             ServerPort = DEFAULT_PORT;
             ServerAddress = DEFAULT_ADDRESS;
         }        
 
+        /// <summary>
+        /// Connect to the server
+        /// </summary>
         public void Connect()
         {
             if (IsConnected)
@@ -97,6 +127,9 @@ namespace CrypToolStoreLib.Client
             return true;
         }
 
+        /// <summary>
+        /// Disconnect from the server
+        /// </summary>
         public void Disconnect()
         {
             if (!IsConnected)
@@ -153,12 +186,20 @@ namespace CrypToolStoreLib.Client
                 if (responseLoginMessage.LoginOk == true)
                 {
                     Logger.LogText(String.Format("Successfully logged in as {0}. Server response message was: {1}", username, responseLoginMessage.Message), this, Logtype.Info);
+                    IsAuthenticated = true;
+                    if (responseLoginMessage.IsAdmin)
+                    {
+                        Logger.LogText(String.Format("User {0} is admin", username), this, Logtype.Info);
+                        IsAdmin = true;
+                    }
                     return true;
                 }
                 Logger.LogText(String.Format("Could not log in as {0}. Server response message was: {1}", username, responseLoginMessage.Message), this, Logtype.Info);
+                IsAuthenticated = false;
                 return false;
             }
             Logger.LogText(String.Format("Response message to login attempt was not a ResponseLoginMessage. It was {0}", response_message.MessageHeader.MessageType.ToString()), this, Logtype.Info);
+            IsAuthenticated = false;
             return false;
         }
 
@@ -168,33 +209,36 @@ namespace CrypToolStoreLib.Client
         /// <returns></returns>
         private Message ReceiveMessage()
         {
-            //Step 1: Read message header                    
-            byte[] headerbytes = new byte[21]; //a message header is 21 bytes
-            int bytesread = 0;
-            while (bytesread < 21)
+            lock (this)
             {
-                bytesread += SSLStream.Read(headerbytes, bytesread, 21 - bytesread);
+                //Step 1: Read message header                    
+                byte[] headerbytes = new byte[21]; //a message header is 21 bytes
+                int bytesread = 0;
+                while (bytesread < 21)
+                {
+                    bytesread += SSLStream.Read(headerbytes, bytesread, 21 - bytesread);
+                }
+
+                //Step 2: Deserialize message header and get payloadsize
+                MessageHeader header = new MessageHeader();
+                header.Deserialize(headerbytes);
+                int payloadsize = header.PayloadSize;
+
+                //Step 3: Read complete message
+                byte[] messagebytes = new byte[payloadsize + 21];
+                Array.Copy(headerbytes, 0, messagebytes, 0, 21);
+
+                while (bytesread < payloadsize + 21)
+                {
+                    bytesread += SSLStream.Read(messagebytes, bytesread, payloadsize + 21 - bytesread);
+                }
+
+                //Step 4: Deserialize Message
+                Message message = Message.DeserializeMessage(messagebytes);
+                Logger.LogText(String.Format("Received a message of type {0}", message.MessageHeader.MessageType.ToString()), this, Logtype.Debug);
+
+                return message;
             }
-
-            //Step 2: Deserialize message header and get payloadsize
-            MessageHeader header = new MessageHeader();
-            header.Deserialize(headerbytes);
-            int payloadsize = header.PayloadSize;
-
-            //Step 3: Read complete message
-            byte[] messagebytes = new byte[payloadsize + 21];
-            Array.Copy(headerbytes, 0, messagebytes, 0, 21);
-
-            while (bytesread < payloadsize + 21)
-            {
-                bytesread += SSLStream.Read(messagebytes, bytesread, payloadsize + 21 - bytesread);
-            }
-
-            //Step 4: Deserialize Message
-            Message message = Message.DeserializeMessage(messagebytes);
-            Logger.LogText(String.Format("Received a message of type {0}", message.MessageHeader.MessageType.ToString()), this, Logtype.Debug);
-
-            return message;
         }
 
         #endregion
