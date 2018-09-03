@@ -169,6 +169,16 @@ namespace CrypToolStoreLib.Server
         private bool ClientIsAdmin { get; set; }
         private string Username { get; set; }
 
+        private IPAddress IPAddress { get; set; }
+
+        /// <summary>
+        /// This hashset memorizes the tries of a password from a dedicated IP
+        /// </summary>
+        private Dictionary<IPAddress, PasswordTry> PasswordTries = new Dictionary<IPAddress, PasswordTry>();
+
+        private int PASSWORD_RETRY_INTERVAL = 5; //minutes
+        private int ALLOWED_PASSWORD_RETRIES = 3;
+
         /// <summary>
         /// Reference to the server object
         /// </summary>
@@ -193,7 +203,8 @@ namespace CrypToolStoreLib.Server
         /// </summary>
         /// <param name="client"></param>
         public void HandleClient(TcpClient client)
-        {            
+        {
+            IPAddress = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
             using (SslStream sslstream = new SslStream(client.GetStream()))
             {
                 while (CrypToolStoreServer.Running || !sslstream.CanRead || !sslstream.CanRead)
@@ -250,19 +261,38 @@ namespace CrypToolStoreLib.Server
         
         /// <summary>
         /// Handles login attempts
+        /// Each Ip is only allowed to try ALLOWED_PASSWORD_RETRIES passwords
+        /// After ALLOWED_PASSWORD_RETRIES wrong passwords, the authentication is always refused within the next PASSWORD_RETRY_INTERVAL minutes
+        /// Login attempts refresh the interval
         /// </summary>
         /// <param name="loginMessage"></param>
         /// <param name="sslStream"></param>
         private void HandleLoginMessage(LoginMessage loginMessage, SslStream sslStream)
         {
-            //todo: protection agains brute-forcing a password
-            //todo: allow only 3 tries from a connection, even if one is correct
-            //todo: allow only 9 tries from an IP address, then disallow connections from that for 1h
+            if (PasswordTries.ContainsKey(IPAddress))
+            {                            
+                if (DateTime.Now > PasswordTries[IPAddress].LastTryDateTime.AddMinutes(PASSWORD_RETRY_INTERVAL))
+                {
+                    PasswordTries.Remove(IPAddress);
+                }
+                else if (PasswordTries[IPAddress].Number >= ALLOWED_PASSWORD_RETRIES)
+                {                    
+                    // after 3 tries, we just close the connection and refresh the timer
+                    PasswordTries[IPAddress].LastTryDateTime = DateTime.Now;
+                    PasswordTries[IPAddress].Number++;
+                    Logger.LogText(String.Format("{0}. try of a username/password combination from Ip {1} - disconnect the sslStream now", PasswordTries[IPAddress].Number, IPAddress), this, Logtype.Warning);
+                    sslStream.Close();
+                    return;
+                }    
+            }
+
             string username = loginMessage.Username;
             string password = loginMessage.Password;
+
             if (Database.CheckDeveloperPassword(username, password) == true)
             {
                 ClientIsAuthenticated = true;
+                Username = username;
                 ResponseLoginMessage response = new ResponseLoginMessage();
                 response.LoginOk = true;
                 response.Message = "Login credentials correct!";
@@ -270,10 +300,20 @@ namespace CrypToolStoreLib.Server
             }
             else
             {
+                if (!PasswordTries.ContainsKey(IPAddress))
+                {
+                    PasswordTries.Add(IPAddress, new PasswordTry() { Number = 1, LastTryDateTime = DateTime.Now });
+                }
+                else
+                {
+                    PasswordTries[IPAddress].Number++;
+                    PasswordTries[IPAddress].LastTryDateTime = DateTime.Now;
+                }
                 ClientIsAuthenticated = false;
                 ResponseLoginMessage response = new ResponseLoginMessage();
                 response.LoginOk = false;
                 response.Message = "Login credentials incorrect!";
+                Logger.LogText(String.Format("{0}. try of a username/password combination from Ip {1}", PasswordTries[IPAddress].Number, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
             }
         }
@@ -303,5 +343,11 @@ namespace CrypToolStoreLib.Server
                 Logger.LogText(String.Format("Sent a \"{0}\" to the client", message.ToString()), this, Logtype.Debug);
             }
         }
+    }
+
+    public class PasswordTry
+    {
+        public int Number { get; set; }
+        public DateTime LastTryDateTime { get; set; }
     }
 }
