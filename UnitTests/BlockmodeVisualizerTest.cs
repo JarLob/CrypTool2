@@ -18,8 +18,8 @@ namespace UnitTests
     [TestClass]
     public class BlockmodeVisualizerTest
     {
-        // The hex representation of "Die Nachricht konnte nicht authentifiziert werden!"
-        private const string FAIL = "446965204E6163687269636874206B6F6E6E7465206E696368742061757468656E746966697A696572742077657264656E21";
+        // Error message for failed authentication in CCM and GCM mode.
+        private readonly string FAIL = Properties.Resources.ResourceManager.GetString("authentication_error".ToString()).ToHex();
 
         // Test components
         private readonly BV instance;

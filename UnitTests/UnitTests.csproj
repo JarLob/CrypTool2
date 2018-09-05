@@ -93,6 +93,11 @@
     <Compile Include="AESTest.cs" />
     <Compile Include="BLAKETest.cs" />
     <Compile Include="BlockmodeVisualizerTest.cs" />
+    <Compile Include="Properties\Resources.de.Designer.cs">
+      <DependentUpon>Resources.de.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="RandomNumberGenerator.cs" />
     <Compile Include="KKDFSHA256Test.cs" />
     <Compile Include="KKDFSHAKE256Test.cs" />
@@ -612,6 +617,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.de.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

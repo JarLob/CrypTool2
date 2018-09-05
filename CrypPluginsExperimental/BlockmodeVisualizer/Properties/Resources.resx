@@ -196,7 +196,7 @@
     <value>The key will be used for the selected blockcipher. Its length is determined by the chosen blockcipher.</value>
   </data>
   <data name="long_ad_warning" xml:space="preserve">
-    <value>The provided associated datas are too long and have been trimmed: </value>
+    <value>The provided associated data are too long and have been trimmed: </value>
   </data>
   <data name="long_input_warning" xml:space="preserve">
     <value>The provided input text is too long and has been trimmed: </value>
@@ -235,7 +235,7 @@
     <value>The Blockmode Visualizer can execute symmetric blockciphers in different modes of operation and visualize their operating principles graphically.</value>
   </data>
   <data name="short_ad_warning" xml:space="preserve">
-    <value>The provided associated datas are too short and have been padded with zeros: </value>
+    <value>The provided associated data are too short and have been padded with zeros: </value>
   </data>
   <data name="short_input_warning" xml:space="preserve">
     <value>The input text is too short and has been padded with zeros: </value>

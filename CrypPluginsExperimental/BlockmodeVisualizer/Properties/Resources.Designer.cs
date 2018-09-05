@@ -295,7 +295,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The provided associated datas are too long and have been trimmed:  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The provided associated data are too long and have been trimmed:  ähnelt.
         /// </summary>
         internal static string long_ad_warning {
             get {
@@ -412,7 +412,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The provided associated datas are too short and have been padded with zeros:  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The provided associated data are too short and have been padded with zeros:  ähnelt.
         /// </summary>
         internal static string short_ad_warning {
             get {

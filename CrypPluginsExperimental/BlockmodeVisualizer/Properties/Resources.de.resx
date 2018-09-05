@@ -127,7 +127,7 @@
     <value>Assoziierte Daten</value>
   </data>
   <data name="ad_tooltip" xml:space="preserve">
-    <value>Die Betriebsmodi CCM und GCM können zusätzlich zum Eingabetext weitere, s.g. assoziierte Daten, für die Authentifizierung verwenden.</value>
+    <value>Die Betriebsmodi CCM und GCM können zusätzlich zum Eingabetext weitere, s.g. assoziierte, Daten für die Authentifizierung verwenden.</value>
   </data>
   <data name="ansix923" xml:space="preserve">
     <value>ANSI X.923</value>
@@ -154,10 +154,10 @@
     <value>Counter Modus (CTR)</value>
   </data>
   <data name="datasegment_length_input" xml:space="preserve">
-    <value>Datensegment Länge (in Byte)</value>
+    <value>Datensegment-Länge (in Byte)</value>
   </data>
   <data name="datasegment_length_input_tooltip" xml:space="preserve">
-    <value>Im CFB-Modus wird nur ein Teil des Geheimtextes, das Datensegment, für den nächsten Block verwendet. Die Länge des Datensegments muss kleiner oder gleich der Blockgröße der verwendeten Blockchiffre sein.</value>
+    <value>Im CFB-Modus wird nur ein Teil des Geheimtexts, das Datensegment, für den nächsten Block verwendet. Die Länge des Datensegments muss kleiner oder gleich der Blockgröße der verwendeten Blockchiffre sein.</value>
   </data>
   <data name="data_segment_overflow_warning" xml:space="preserve">
     <value>Es wurde eine zu große Länge für das Datensegment eingestellt. Die korrigierte Länge ist: </value>
@@ -208,7 +208,7 @@
     <value>Der Schlüssel ist zu lang und wurde entsprechend gekürzt: </value>
   </data>
   <data name="missing_blockcipher_warning" xml:space="preserve">
-    <value>Es wurde keine Blockchiffre ausgewählt. Ver- oder Entschlüsselung nicht möglich!</value>
+    <value>Es wurde keine Blockchiffre ausgewählt. Ver- oder Entschlüsselung sind nicht möglich!</value>
   </data>
   <data name="none" xml:space="preserve">
     <value>Keine</value>
@@ -223,7 +223,7 @@
     <value>Auffüllmethode</value>
   </data>
   <data name="padding_select_tooltip" xml:space="preserve">
-    <value>Mit Hilfe einer Auffüllmethode können zu kurze Eingabetexte auf passende Längen aufgefüllt werden. Die Betriebsmodi ECB und CBC benötigen Eingaben, deren Längen ein Vielfaches der Blockgröße der verwendeten Blockchiffre sind.</value>
+    <value>Mit Hilfe einer Auffüllmethode (Padding) können zu kurze Eingabetexte auf passende Längen aufgefüllt werden. Die Betriebsmodi ECB und CBC benötigen Eingaben, deren Längen ein Vielfaches der Blockgröße der verwendeten Blockchiffre sind.</value>
   </data>
   <data name="pkcs7" xml:space="preserve">
     <value>PKCS #7</value>
@@ -262,7 +262,7 @@
     <value>Es wurde eine zu große Länge für das Nachrichten-Tag eingestellt. Die korrigierte Länge ist: </value>
   </data>
   <data name="tag_length_tooltip" xml:space="preserve">
-    <value>Die Länge des zu berechnenden Nachrichten-Tags darf höchstens so groß wie die Blockgröße der verwendeten Chiffre sein.</value>
+    <value>Die Länge des zu berechnenden Nachrichten-Tags darf höchstens so groß sein wie die Blockgröße der verwendeten Chiffre.</value>
   </data>
   <data name="tag_output_caption" xml:space="preserve">
     <value>Nachrichten-Tag Ausgabe</value>
