@@ -296,27 +296,27 @@ namespace CrypToolStoreLib.Client
         /// </summary>
         /// <param name="developer"></param>
         /// <returns></returns>
-        public DataModificationResult CreateNewDeveloper(Developer developer)
+        public DataModificationOrRequestResult CreateNewDeveloper(Developer developer)
         {
             lock (this)
             {
                 //we can only create users, when we are connected to the server
                 if (!IsConnected)
                 {
-                    return new DataModificationResult()
+                    return new DataModificationOrRequestResult()
                     {
                         Message = "Not connected to server",
-                        ModificationSuccess = false
+                        Success = false
                     };
                 }
                 //only admins are allowed, thus, we do not even send any creation messages
                 //if we are not authenticated as admin
                 if (!IsAdmin)
                 {
-                    return new DataModificationResult()
+                    return new DataModificationOrRequestResult()
                     {
                         Message = "Not authenticated as admin",
-                        ModificationSuccess = false
+                        Success = false
                     };
                 }
 
@@ -336,10 +336,10 @@ namespace CrypToolStoreLib.Client
                     logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
                     sslStream.Close();
                     Client.Close();
-                    return new DataModificationResult()
+                    return new DataModificationOrRequestResult()
                     {
                         Message = "Connection to server lost",
-                        ModificationSuccess = false
+                        Success = false
                     };
                 }
                 //Received ResponseDeveloperModification
@@ -347,21 +347,21 @@ namespace CrypToolStoreLib.Client
                 {
                     //received a response, forward it to user
                     ResponseDeveloperModificationMessage responseDeveloperModificationMessage = (ResponseDeveloperModificationMessage)response_message;
-                    logger.LogText(String.Format("{0} a new developer. Return message was: {1}", responseDeveloperModificationMessage.CreatedDeveloper == true ? "Successfully created" : "Did not create", responseDeveloperModificationMessage.Message), this, Logtype.Info);
-                    return new DataModificationResult()
+                    logger.LogText(String.Format("{0} a new developer. Return message was: {1}", responseDeveloperModificationMessage.ModifiedDeveloper == true ? "Successfully created" : "Did not create", responseDeveloperModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
                     {
                         Message = responseDeveloperModificationMessage.Message,
-                        ModificationSuccess = responseDeveloperModificationMessage.CreatedDeveloper
+                        Success = responseDeveloperModificationMessage.ModifiedDeveloper
                     };
                 }
 
                 //Received another (wrong) message
                 string msg = String.Format("Response message to create new developer was not a ResponseDeveloperModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
-                return new DataModificationResult()
+                return new DataModificationOrRequestResult()
                 {
                     Message = msg,
-                    ModificationSuccess = false
+                    Success = false
                 };
             }
         }
@@ -372,33 +372,33 @@ namespace CrypToolStoreLib.Client
         /// </summary>
         /// <param name="developer"></param>
         /// <returns></returns>
-        public DataModificationResult UpdateDeveloper(Developer developer)
+        public DataModificationOrRequestResult UpdateDeveloper(Developer developer)
         {
             lock (this)
             {
                 //we can only create users, when we are connected to the server
                 if (!IsConnected)
                 {
-                    return new DataModificationResult()
+                    return new DataModificationOrRequestResult()
                     {
                         Message = "Not connected to server",
-                        ModificationSuccess = false
+                        Success = false
                     };
                 }
                 //only admins are allowed, thus, we do not even send any update messages
                 //if we are not authenticated as admin
                 if (!IsAdmin)
                 {
-                    return new DataModificationResult()
+                    return new DataModificationOrRequestResult()
                     {
                         Message = "Not authenticated as admin",
-                        ModificationSuccess = false
+                        Success = false
                     };
                 }
 
                 logger.LogText(String.Format("Trying to update an existing developer: {0}", developer.ToString()), this, Logtype.Info);
 
-                //1. Step: Send UpdateDeveloper to server
+                //1. Step: Send UpdateDeveloperMessage to server
                 UpdateDeveloperMessage message = new UpdateDeveloperMessage();
                 message.Developer = developer;
                 SendMessage(message);
@@ -412,10 +412,10 @@ namespace CrypToolStoreLib.Client
                     logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
                     sslStream.Close();
                     Client.Close();
-                    return new DataModificationResult()
+                    return new DataModificationOrRequestResult()
                     {
                         Message = "Connection to server lost",
-                        ModificationSuccess = false
+                        Success = false
                     };
                 }
                 //Received ResponseDeveloperModification
@@ -423,28 +423,176 @@ namespace CrypToolStoreLib.Client
                 {
                     //received a response, forward it to user
                     ResponseDeveloperModificationMessage responseDeveloperModificationMessage = (ResponseDeveloperModificationMessage)response_message;
-                    logger.LogText(String.Format("{0} an existing developer. Return message was: {1}", responseDeveloperModificationMessage.CreatedDeveloper == true ? "Successfully updated" : "Did not update", responseDeveloperModificationMessage.Message), this, Logtype.Info);
-                    return new DataModificationResult()
+                    logger.LogText(String.Format("{0} an existing developer. Return message was: {1}", responseDeveloperModificationMessage.ModifiedDeveloper == true ? "Successfully updated" : "Did not update", responseDeveloperModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
                     {
                         Message = responseDeveloperModificationMessage.Message,
-                        ModificationSuccess = responseDeveloperModificationMessage.CreatedDeveloper
+                        Success = responseDeveloperModificationMessage.ModifiedDeveloper
                     };
                 }
 
                 //Received another (wrong) message
                 string msg = String.Format("Response message to update an existing developer was not a ResponseDeveloperModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
-                return new DataModificationResult()
+                return new DataModificationOrRequestResult()
                 {
                     Message = msg,
-                    ModificationSuccess = false
+                    Success = false
                 };
             }
         }
 
-        public string DeleteDeveloper()
+        /// <summary>
+        /// Deletes an existing developer account in the database
+        /// Only possible, when the user is authenticated as an admin
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult DeleteDeveloper(string username)
         {
-            return string.Empty;
+            lock (this)
+            {
+                //we can only create users, when we are connected to the server
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+                //only admins are allowed, thus, we do not even send any delete messages
+                //if we are not authenticated as admin
+                if (!IsAdmin)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not authenticated as admin",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to update an existing developer: {0}", username), this, Logtype.Info);
+
+                //1. Step: Send DeleteDeveloperMessage to server
+                DeleteDeveloperMessage message = new DeleteDeveloperMessage();
+                message.Developer = new Developer() { Username = username };
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponseDeveloperModification
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseDeveloperModification)
+                {
+                    //received a response, forward it to user
+                    ResponseDeveloperModificationMessage responseDeveloperModificationMessage = (ResponseDeveloperModificationMessage)response_message;
+                    logger.LogText(String.Format("{0} an existing developer. Return message was: {1}", responseDeveloperModificationMessage.ModifiedDeveloper == true ? "Successfully deleted" : "Did not delete", responseDeveloperModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responseDeveloperModificationMessage.Message,
+                        Success = responseDeveloperModificationMessage.ModifiedDeveloper
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to delete an existing developer was not a ResponseDeveloperModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
+        }
+
+        /// <summary>
+        /// Requests an existing developer from the database
+        /// Only possible, when the user is authenticated as an admin
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult GetDeveloper(string username)
+        {
+            lock (this)
+            {
+                //we can only create users, when we are connected to the server
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+                //only admins are allowed, thus, we do not even send any get messages
+                //if we are not authenticated as admin
+                if (!IsAdmin)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not authenticated as admin",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to get an existing developer: {0}", username), this, Logtype.Info);
+
+                //1. Step: Send UpdateDeveloper to server
+                RequestDeveloperMessage message = new RequestDeveloperMessage();
+                message.Username = username;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponseDeveloperMessage
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseDeveloper)
+                {
+                    //received a response, forward it to user
+                    ResponseDeveloperMessage responseDeveloperModificationMessage = (ResponseDeveloperMessage)response_message;
+                    logger.LogText(String.Format("{0} an existing developer. Return message was: {1}", responseDeveloperModificationMessage.DeveloperExists == true ? "Successfully received" : "Did not receive", responseDeveloperModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responseDeveloperModificationMessage.Message,
+                        Success = responseDeveloperModificationMessage.DeveloperExists,
+                        DataObject = responseDeveloperModificationMessage.Developer
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to request an existing developer was not a ResponseDeveloperMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
         public List<Developer> GetDeveloperList()
@@ -452,10 +600,6 @@ namespace CrypToolStoreLib.Client
             return null;
         }
 
-        public Developer GetDeveloper()
-        {
-            return null;
-        }
 
         #endregion
 

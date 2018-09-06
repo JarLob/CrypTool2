@@ -485,11 +485,12 @@ namespace CrypToolStoreLib.DataObjects
     }
 
     /// <summary>
-    /// A ModificationResult is returned by each method for modifying data 
+    /// A ModificationResult is returned by each method for modifying or requesting data 
     /// </summary>
-    public class DataModificationResult
+    public class DataModificationOrRequestResult
     {
         public string Message { get; set; }
-        public bool ModificationSuccess { get; set; }
+        public bool Success { get; set; }
+        public object DataObject { get; set; }
     }
 }

@@ -311,6 +311,12 @@ namespace CrypToolStoreLib.Server
                 case MessageType.UpdateDeveloper:
                     HandleUpdateDeveloper((UpdateDeveloperMessage)message, sslStream);
                     break;
+                case MessageType.DeleteDeveloper:
+                    HandleDeleteDeveloper((DeleteDeveloperMessage)message, sslStream);
+                    break;
+                case MessageType.RequestDeveloper:
+                    HandleRequestDeveloper((RequestDeveloperMessage)message, sslStream);
+                    break;
             }
         }
         
@@ -410,7 +416,7 @@ namespace CrypToolStoreLib.Server
             if (!ClientIsAuthenticated || !ClientIsAdmin)
             {
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
-                response.CreatedDeveloper = false;
+                response.ModifiedDeveloper = false;
                 response.Message = "Unauthorized to create new developers! Please authenticate as admin!";
                 Logger.LogText(String.Format("Unauthorized user {0} tried to create new developer={1} from Ip={2}", Username, createNewDeveloperMessage.Developer.Username, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
@@ -423,7 +429,7 @@ namespace CrypToolStoreLib.Server
                 Database.CreateDeveloper(developer.Username, developer.Firstname, developer.Lastname, developer.Email, developer.Password, developer.IsAdmin);
                 Logger.LogText(String.Format("User {0} created new developer in database: {1}", Username, developer), this, Logtype.Info);
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
-                response.CreatedDeveloper = true;
+                response.ModifiedDeveloper = true;
                 response.Message = String.Format("Created new developer in database: {0}", developer.ToString());                
                 SendMessage(response, sslStream);                                
             }
@@ -431,7 +437,7 @@ namespace CrypToolStoreLib.Server
             {
                 //creation failed; logg to logfile and return exception to client
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
-                response.CreatedDeveloper = false;
+                response.ModifiedDeveloper = false;
                 Logger.LogText(String.Format("User {0} tried to create a new developer. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
                 response.Message = String.Format("Exception during creation of new developer: {0}", ex.Message);
                 SendMessage(response, sslStream);       
@@ -451,7 +457,7 @@ namespace CrypToolStoreLib.Server
             if (!ClientIsAuthenticated || !ClientIsAdmin)
             {
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
-                response.CreatedDeveloper = false;
+                response.ModifiedDeveloper = false;
                 response.Message = "Unauthorized to create new developers! Please authenticate as admin!";
                 Logger.LogText(String.Format("Unauthorized user {0} tried to update developer={1} from Ip={2}", Username, updateDeveloperMessage.Developer.Username, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
@@ -464,21 +470,115 @@ namespace CrypToolStoreLib.Server
                 Database.UpdateDeveloper(developer.Username, developer.Firstname, developer.Lastname, developer.Email, developer.IsAdmin);
                 Logger.LogText(String.Format("User {0} updated existing developer in database: {1}", Username, developer), this, Logtype.Info);
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
-                response.CreatedDeveloper = true;
+                response.ModifiedDeveloper = true;
                 response.Message = String.Format("Updated developer in database: {0}", developer.ToString());
                 SendMessage(response, sslStream);
             }
             catch (Exception ex)
             {
-                //creation failed; logg to logfile and return exception to client
+                //update failed; logg to logfile and return exception to client
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
-                response.CreatedDeveloper = false;
+                response.ModifiedDeveloper = false;
                 Logger.LogText(String.Format("User {0} tried to update an existing developer. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
                 response.Message = String.Format("Exception during update of existing developer: {0}", ex.Message);
                 SendMessage(response, sslStream);
             }
         }
-       
+
+        /// <summary>
+        /// Handles DeleteDeveloperMessages
+        /// If the user is authenticated and he is admin, it tries to delete an existing developer in the database        
+        /// Then, it sends a response message which contains if it succeeded or failed
+        /// </summary>
+        /// <param name="deleteDeveloperMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleDeleteDeveloper(DeleteDeveloperMessage deleteDeveloperMessage, SslStream sslStream)
+        {
+            //Only authenticated admins are allowed to create new developers
+            if (!ClientIsAuthenticated || !ClientIsAdmin)
+            {
+                ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
+                response.ModifiedDeveloper = false;
+                response.Message = "Unauthorized to delete developers! Please authenticate as admin!";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to delete developer={1} from Ip={2}", Username, deleteDeveloperMessage.Developer.Username, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            //Here, the user is authenticated and he is an admin; thus, deletion of existing user in database is started
+            try
+            {
+                Developer developer = deleteDeveloperMessage.Developer;
+                Database.DeleteDeveloper(developer.Username);
+                Logger.LogText(String.Format("User {0} deleted existing developer in database: {1}", Username, developer), this, Logtype.Info);
+                ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
+                response.ModifiedDeveloper = true;
+                response.Message = String.Format("Deleted developer in database: {0}", developer.ToString());
+                SendMessage(response, sslStream);
+            }
+            catch (Exception ex)
+            {
+                //deletion failed; logg to logfile and return exception to client
+                ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
+                response.ModifiedDeveloper = false;
+                Logger.LogText(String.Format("User {0} tried to delete an existing developer. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
+                response.Message = String.Format("Exception during deletion of existing developer: {0}", ex.Message);
+                SendMessage(response, sslStream);
+            }
+        }
+
+        /// <summary>
+        /// Handles RequestDeveloperMessages
+        /// If the user is authenticated and he is admin, it tries to get an existing developer from the database        
+        /// Then, it sends a response message which contains it and if it succeeded or failed
+        /// </summary>
+        /// <param name="requestDeveloperMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleRequestDeveloper(RequestDeveloperMessage requestDeveloperMessage, SslStream sslStream)
+        {
+            //Only authenticated admins are allowed to create new developers
+            if (!ClientIsAuthenticated || !ClientIsAdmin)
+            {
+                ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
+                response.ModifiedDeveloper = false;
+                response.Message = "Unauthorized to get developers! Please authenticate as admin!";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to request developer={1} from Ip={2}", Username, requestDeveloperMessage.Username, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            //Here, the user is authenticated and he is an admin; thus, requesting existing user from database
+            try
+            {
+                Developer developer = Database.GetDeveloper(requestDeveloperMessage.Username);
+
+                if (developer == null)
+                {
+                    Logger.LogText(String.Format("User {0} requested a non existing developer from database: {1}", Username, requestDeveloperMessage.Username), this, Logtype.Info);
+                    ResponseDeveloperMessage response = new ResponseDeveloperMessage();
+                    response.Message = String.Format("Developer does not exist: {0}", requestDeveloperMessage.Username);
+                    response.DeveloperExists = false;
+                    SendMessage(response, sslStream);
+                }
+                else
+                {
+                    Logger.LogText(String.Format("User {0} requested an existing developer from database: {1}", requestDeveloperMessage.Username, developer), this, Logtype.Info);
+                    ResponseDeveloperMessage response = new ResponseDeveloperMessage();
+                    response.Message = String.Format("Return developer: {0}", developer.ToString());
+                    response.DeveloperExists = true;
+                    response.Developer = developer;
+                    SendMessage(response, sslStream);
+                }
+            }
+            catch (Exception ex)
+            {
+                //deletion failed; logg to logfile and return exception to client
+                ResponseDeveloperMessage response = new ResponseDeveloperMessage();
+                response.DeveloperExists = false;
+                Logger.LogText(String.Format("User {0} tried to get an existing developer. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
+                response.Message = String.Format("Exception during request of existing developer: {0}", ex.Message);
+                SendMessage(response, sslStream);
+            }
+        }
+
         /// <summary>
         /// Sends a message to the client
         /// </summary>

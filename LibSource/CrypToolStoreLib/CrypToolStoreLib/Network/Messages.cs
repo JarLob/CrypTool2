@@ -983,12 +983,11 @@ namespace CrypToolStoreLib.Tools
     public class ResponseDeveloperModificationMessage : Message
     {
         [MessageDataField]
-        public bool CreatedDeveloper
+        public bool ModifiedDeveloper
         {
             get;
             set;
         }
-
 
         [MessageDataField]
         public string Message
@@ -996,6 +995,7 @@ namespace CrypToolStoreLib.Tools
             get;
             set;
         }
+
         public ResponseDeveloperModificationMessage()
         {
             Message = String.Empty;
@@ -1025,6 +1025,21 @@ namespace CrypToolStoreLib.Tools
     /// </summary>
     public class ResponseDeveloperMessage : Message
     {
+        [MessageDataField]
+        public bool DeveloperExists
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
+        public string Message
+        {
+            get;
+            set;
+        }
+
+
         [MessageDataField]
         public Developer Developer
         {
