@@ -473,7 +473,7 @@ namespace CrypToolStoreLib.Server
                 //creation failed; logg to logfile and return exception to client
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.CreatedDeveloper = false;
-                Logger.LogText(String.Format("User {0} tried to create a update an existing developer. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} tried to update an existing developer. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
                 response.Message = String.Format("Exception during update of existing developer: {0}", ex.Message);
                 SendMessage(response, sslStream);
             }
