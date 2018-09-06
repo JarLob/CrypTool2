@@ -308,6 +308,9 @@ namespace CrypToolStoreLib.Server
                 case MessageType.CreateNewDeveloper:
                     HandleCreateNewDeveloperMessage((CreateNewDeveloperMessage)message, sslStream);
                     break;
+                case MessageType.UpdateDeveloper:
+                    HandleUpdateDeveloper((UpdateDeveloperMessage)message, sslStream);
+                    break;
             }
         }
         
@@ -383,6 +386,18 @@ namespace CrypToolStoreLib.Server
         }
 
         /// <summary>
+        /// Handles logouts; set ClientIsAuthenticated to false
+        /// </summary>
+        /// <param name="logoutMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleLogoutMessage(LogoutMessage logoutMessage, SslStream sslStream)
+        {
+            ClientIsAuthenticated = false;
+            Logger.LogText(String.Format("User {0} logged out", Username), this, Logtype.Info);
+            sslStream.Close();
+        }
+
+        /// <summary>
         /// Handles CreateNewDeveloperMessages
         /// If the user is authenticated and he is admin, it tries to create a new developer in the database        
         /// Then, it sends a response message which contains if it succeeded or failed
@@ -396,7 +411,7 @@ namespace CrypToolStoreLib.Server
             {
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.CreatedDeveloper = false;
-                response.Message = "Unauthorized to created new developers! Please authenticate as admin!";
+                response.Message = "Unauthorized to create new developers! Please authenticate as admin!";
                 Logger.LogText(String.Format("Unauthorized user {0} tried to create new developer={1} from Ip={2}", Username, createNewDeveloperMessage.Developer.Username, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
@@ -424,17 +439,46 @@ namespace CrypToolStoreLib.Server
         }
 
         /// <summary>
-        /// Handles logouts; set ClientIsAuthenticated to false
+        /// Handles UpdateDeveloperMessages
+        /// If the user is authenticated and he is admin, it tries to update an existing developer in the database        
+        /// Then, it sends a response message which contains if it succeeded or failed
         /// </summary>
-        /// <param name="logoutMessage"></param>
+        /// <param name="updateDeveloperMessage"></param>
         /// <param name="sslStream"></param>
-        private void HandleLogoutMessage(LogoutMessage logoutMessage, SslStream sslStream)
+        private void HandleUpdateDeveloper(UpdateDeveloperMessage updateDeveloperMessage, SslStream sslStream)
         {
-            ClientIsAuthenticated = false;
-            Logger.LogText(String.Format("User {0} logged out", Username), this, Logtype.Info);
-            sslStream.Close();
+            //Only authenticated admins are allowed to create new developers
+            if (!ClientIsAuthenticated || !ClientIsAdmin)
+            {
+                ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
+                response.CreatedDeveloper = false;
+                response.Message = "Unauthorized to create new developers! Please authenticate as admin!";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update developer={1} from Ip={2}", Username, updateDeveloperMessage.Developer.Username, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            //Here, the user is authenticated and he is an admin; thus, update of existing in database is started
+            try
+            {
+                Developer developer = updateDeveloperMessage.Developer;
+                Database.UpdateDeveloper(developer.Username, developer.Firstname, developer.Lastname, developer.Email, developer.IsAdmin);
+                Logger.LogText(String.Format("User {0} updated existing developer in database: {1}", Username, developer), this, Logtype.Info);
+                ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
+                response.CreatedDeveloper = true;
+                response.Message = String.Format("Updated developer in database: {0}", developer.ToString());
+                SendMessage(response, sslStream);
+            }
+            catch (Exception ex)
+            {
+                //creation failed; logg to logfile and return exception to client
+                ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
+                response.CreatedDeveloper = false;
+                Logger.LogText(String.Format("User {0} tried to create a update an existing developer. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
+                response.Message = String.Format("Exception during update of existing developer: {0}", ex.Message);
+                SendMessage(response, sslStream);
+            }
         }
-
+       
         /// <summary>
         /// Sends a message to the client
         /// </summary>

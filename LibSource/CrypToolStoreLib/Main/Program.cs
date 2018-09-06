@@ -66,13 +66,12 @@ namespace CrpyStoreLib
                         client.Login("kopal", "123");
 
                         Developer developer = new Developer();
-                        developer.Firstname = "Firstname";
-                        developer.Lastname = "Lastname";
-                        developer.Password="password";
-                        developer.IsAdmin = false;
-                        developer.Username = "Test4";
-                        developer.Email = "Test4@test.test";
-                        client.CreateNewDeveloper(developer);
+                        developer.Firstname = "A1";
+                        developer.Lastname = "B1";
+                        developer.IsAdmin = true;
+                        developer.Username = "Test";
+                        developer.Email = "C1";
+                        client.UpdateDeveloper(developer);
 
                         client.Disconnect();
                     }

@@ -28,7 +28,7 @@ namespace CrypToolStoreLib.Client
 {
     public class CrypToolStoreClient
     {
-        public const int DEFAULT_PORT = 15151;
+        public const int DEFAULT_PORT = 15151;        
         public const string DEFAULT_ADDRESS = "localhost";
 
         private Logger logger = Logger.GetLogger();
@@ -123,7 +123,7 @@ namespace CrypToolStoreLib.Client
             logger.LogText("Trying to connect to server", this, Logtype.Info);
             Client = new TcpClient(ServerAddress, ServerPort);                        
             sslStream = new SslStream(Client.GetStream(), false, new RemoteCertificateValidationCallback(ValidateServerCert));            
-            sslStream.AuthenticateAsClient(ServerAddress);            
+            sslStream.AuthenticateAsClient(ServerAddress);
             logger.LogText("Connected to server", this, Logtype.Info);
         }
 
@@ -197,7 +197,7 @@ namespace CrypToolStoreLib.Client
                 message.Password = password;
                 SendMessage(message);
 
-                //2. Step: Received response message from server
+                //2. Step: Receive response message from server
                 var response_message = ReceiveMessage();
 
                 //Received null = connection closed
@@ -264,14 +264,14 @@ namespace CrypToolStoreLib.Client
                     };
                 }
 
-                logger.LogText(String.Format("Trying to Create a new developer: {0}", developer.ToString()), this, Logtype.Info);
+                logger.LogText(String.Format("Trying to create a new developer: {0}", developer.ToString()), this, Logtype.Info);
 
                 //1. Step: Send CreateNewDeveloper to server
                 CreateNewDeveloperMessage message = new CreateNewDeveloperMessage();
                 message.Developer = developer;
                 SendMessage(message);
 
-                //2. Step: Received response message from server
+                //2. Step: Receive response message from server
                 var response_message = ReceiveMessage();
 
                 //Received null = connection closed
@@ -308,7 +308,83 @@ namespace CrypToolStoreLib.Client
                     ModificationSuccess = false
                 };
             }
-        }        
+        }
+
+        /// <summary>
+        /// Updates an existing developer account in the database
+        /// Only possible, when the user is authenticated as an admin
+        /// </summary>
+        /// <param name="developer"></param>
+        /// <returns></returns>
+        public DataModificationResult UpdateDeveloper(Developer developer)
+        {
+            lock (this)
+            {
+                //we can only create users, when we are connected to the server
+                if (!IsConnected)
+                {
+                    return new DataModificationResult()
+                    {
+                        Message = "Not connected to server",
+                        ModificationSuccess = false
+                    };
+                }
+                //only admins are allowed, thus, we do not even send any creation messages
+                //if we are not authenticated as admin
+                if (!IsAdmin)
+                {
+                    return new DataModificationResult()
+                    {
+                        Message = "Not authenticated as admin",
+                        ModificationSuccess = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to update an existing developer: {0}", developer.ToString()), this, Logtype.Info);
+
+                //1. Step: Send UpdateDeveloper to server
+                UpdateDeveloperMessage message = new UpdateDeveloperMessage();
+                message.Developer = developer;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationResult()
+                    {
+                        Message = "Connection to server lost",
+                        ModificationSuccess = false
+                    };
+                }
+                //Received ResponseDeveloperModification
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseDeveloperModification)
+                {
+                    //received a response, forward it to user
+                    ResponseDeveloperModificationMessage responseDeveloperModificationMessage = (ResponseDeveloperModificationMessage)response_message;
+                    logger.LogText(String.Format("{0} an existing developer. Return message was: {1}", responseDeveloperModificationMessage.CreatedDeveloper == true ? "Successfully updated" : "Did not update", responseDeveloperModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationResult()
+                    {
+                        Message = responseDeveloperModificationMessage.Message,
+                        ModificationSuccess = responseDeveloperModificationMessage.CreatedDeveloper
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to update an existing developer was not a ResponseDeveloperModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationResult()
+                {
+                    Message = msg,
+                    ModificationSuccess = false
+                };
+            }
+        }
 
         /// <summary>
         /// Receive a message from the ssl stream
