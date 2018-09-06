@@ -225,24 +225,41 @@ namespace CrypToolStoreLib.Server
                         //Step 1: Read message header                    
                         byte[] headerbytes = new byte[21]; //a message header is 21 bytes
                         int bytesread = 0;
-                        
+
                         while (bytesread < 21)
                         {
-                            bytesread += sslstream.Read(headerbytes, bytesread, 21 - bytesread);
+                            int readbytes = sslstream.Read(headerbytes, bytesread, 21 - bytesread);
+                            if (readbytes == 0)
+                            {
+                                //stream was closed
+                                return;
+                            }
+                            bytesread += readbytes;
                         }
 
                         //Step 2: Deserialize message header and get payloadsize
                         MessageHeader header = new MessageHeader();
                         header.Deserialize(headerbytes);
                         int payloadsize = header.PayloadSize;
+                        if (payloadsize > Message.MAX_PAYLOAD_SIZE)
+                        {
+                            //if we receive a message larger than MAX_PAYLOAD_SIZE we throw an exception which terminates the session
+                            throw new Exception(String.Format("Receiving a message with a payload which is larger (={0} bytes) than the Message.MAX_PAYLOAD_SIZE={1} bytes", payloadsize, Message.MAX_PAYLOAD_SIZE));
+                        }
 
                         //Step 3: Read complete message
                         byte[] messagebytes = new byte[payloadsize + 21];
                         Array.Copy(headerbytes, 0, messagebytes, 0, 21);
-                        
+
                         while (bytesread < payloadsize + 21)
                         {
-                            bytesread += sslstream.Read(messagebytes, bytesread, payloadsize + 21 - bytesread);
+                             int readbytes = sslstream.Read(messagebytes, bytesread, payloadsize + 21 - bytesread);
+                             if (readbytes == 0)
+                             {
+                                 //stream was closed
+                                 return;
+                             }
+                             bytesread += readbytes;
                         }
 
                         //Step 4: Deserialize Message
@@ -252,13 +269,23 @@ namespace CrypToolStoreLib.Server
                         //Step 5: Handle received message
                         HandleMessage(message, sslstream);
                     }
-                    client.Close();
-                    Logger.LogText("Client disconnected", this, Logtype.Info);
                 }
                 catch (Exception ex)
                 {
                     Logger.LogText(String.Format("Exception during HandleClient: {0}", ex.Message), this, Logtype.Error);
                     return;
+                }
+                finally
+                {
+                    if (sslstream != null)
+                    {
+                        sslstream.Close();
+                    }
+                    if (client != null)
+                    {
+                        client.Close();
+                    }                   
+                    Logger.LogText("Client disconnected", this, Logtype.Info);
                 }
             }
         }

@@ -201,6 +201,7 @@ namespace CrypToolStoreLib.Tools
     /// </summary>
     public abstract class Message
     {
+        public const int MAX_PAYLOAD_SIZE = 10485760; //10mb
         private static Dictionary<MessageType, Type> MessageTypeDictionary = new Dictionary<MessageType, Type>();
 
         /// <summary>

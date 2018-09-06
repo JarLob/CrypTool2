@@ -22,6 +22,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CrypToolStoreLib.Client;
+using System.Security.Cryptography.X509Certificates;
+using System.Net;
 
 namespace CrpyStoreLib
 {
@@ -36,7 +39,7 @@ namespace CrpyStoreLib
         }
 
         public void Run()
-        {
+        {       
             Logger.SetLogLevel(Logtype.Info);
             CrypToolStoreDatabase database = CrypToolStoreDatabase.GetDatabase();
             if (!database.InitAndConnect("192.168.0.122", "CrypToolStore", "cryptoolstore", "123", 5))
@@ -49,9 +52,26 @@ namespace CrpyStoreLib
             
             try
             {
+                X509Certificate2 cert = new X509Certificate2("anonymous.p12", "anonymous");                
                 server = new CrypToolStoreServer();
+                server.ServerKey = cert;
                 server.Start();
-                Console.ReadLine();
+
+                while (true)
+                {
+                    try
+                    {
+                        CrypToolStoreClient client = new CrypToolStoreClient();
+                        client.Connect();
+                        client.Login("kopal", "123");
+                        client.Disconnect();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    Console.ReadLine();
+                }
             }
             catch (Exception ex)
             {

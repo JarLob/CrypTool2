@@ -32,7 +32,15 @@ namespace CrypToolStoreLib.Client
         public const string DEFAULT_ADDRESS = "localhost";
 
         private Logger logger = Logger.GetLogger();
-        private SslStream sslStream;
+
+        /// <summary>
+        /// Encrypted stream between server and client
+        /// </summary>
+        private SslStream sslStream
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Responsible for the TCP connection
@@ -113,9 +121,9 @@ namespace CrypToolStoreLib.Client
                 return;
             }
             logger.LogText("Trying to connect to server", this, Logtype.Info);
-            Client = new TcpClient(ServerAddress, ServerPort);
-            sslStream = new SslStream(Client.GetStream(), false, new RemoteCertificateValidationCallback(ValidateServerCert));                                    
-            sslStream.AuthenticateAsClient(ServerAddress);
+            Client = new TcpClient(ServerAddress, ServerPort);                        
+            sslStream = new SslStream(Client.GetStream(), false, new RemoteCertificateValidationCallback(ValidateServerCert));            
+            sslStream.AuthenticateAsClient(ServerAddress);            
             logger.LogText("Connected to server", this, Logtype.Info);
         }
 
@@ -136,7 +144,6 @@ namespace CrypToolStoreLib.Client
             }
             else
             {
-                logger.LogText("Disconnecting from the server", this, Logtype.Info);
                 LogoutMessage logout = new LogoutMessage();
                 SendMessage(logout);
                 sslStream.Close();
@@ -173,11 +180,27 @@ namespace CrypToolStoreLib.Client
         public bool Login(string username, string password)
         {
             logger.LogText(String.Format("Trying to login as {0}", username), this, Logtype.Info);
+            
+            //0. Step: Initially set everything to false
+            IsAuthenticated = false;
+            IsAdmin = false;
+
+            //1. Step: Send LoginMessage to server
             LoginMessage message = new LoginMessage();
             message.Username = username;
             message.Password = password;
             SendMessage(message);
+
+            //2. Step: Received response message from server
             var response_message = ReceiveMessage();
+
+            //Received null = connection closed
+            if (response_message == null)
+            {
+                logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                return false;
+            }
+            //Received ResponseLogin
             if (response_message.MessageHeader.MessageType == MessageType.ResponseLogin)
             {
                 ResponseLoginMessage responseLoginMessage = (ResponseLoginMessage)response_message;
@@ -196,13 +219,15 @@ namespace CrypToolStoreLib.Client
                 IsAuthenticated = false;
                 return false;
             }
-            logger.LogText(String.Format("Response message to login attempt was not a ResponseLoginMessage. It was {0}", response_message.MessageHeader.MessageType.ToString()), this, Logtype.Info);
-            IsAuthenticated = false;
+
+            //Login failed
+            logger.LogText(String.Format("Response message to login attempt was not a ResponseLoginMessage. It was {0}", response_message.MessageHeader.MessageType.ToString()), this, Logtype.Info);            
             return false;
         }
 
         /// <summary>
         /// Receive a message from the ssl stream
+        /// if stream is closed, returns null
         /// </summary>
         /// <returns></returns>
         private Message ReceiveMessage()
@@ -214,7 +239,13 @@ namespace CrypToolStoreLib.Client
                 int bytesread = 0;
                 while (bytesread < 21)
                 {
-                    bytesread += sslStream.Read(headerbytes, bytesread, 21 - bytesread);
+                    int readbytes = sslStream.Read(headerbytes, bytesread, 21 - bytesread);
+                    if (readbytes == 0)
+                    {
+                        //stream was closed
+                        return null;
+                    }
+                    bytesread += readbytes;
                 }
 
                 //Step 2: Deserialize message header and get payloadsize
@@ -228,7 +259,13 @@ namespace CrypToolStoreLib.Client
 
                 while (bytesread < payloadsize + 21)
                 {
-                    bytesread += sslStream.Read(messagebytes, bytesread, payloadsize + 21 - bytesread);
+                    int readbytes = sslStream.Read(messagebytes, bytesread, payloadsize + 21 - bytesread);
+                    if (readbytes == 0)
+                    {
+                        //stream was closed
+                        return null;
+                    }
+                    bytesread += readbytes;
                 }
 
                 //Step 4: Deserialize Message
