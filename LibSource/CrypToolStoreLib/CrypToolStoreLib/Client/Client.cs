@@ -179,51 +179,136 @@ namespace CrypToolStoreLib.Client
         /// <returns></returns>
         public bool Login(string username, string password)
         {
-            logger.LogText(String.Format("Trying to login as {0}", username), this, Logtype.Info);
-            
-            //0. Step: Initially set everything to false
-            IsAuthenticated = false;
-            IsAdmin = false;
-
-            //1. Step: Send LoginMessage to server
-            LoginMessage message = new LoginMessage();
-            message.Username = username;
-            message.Password = password;
-            SendMessage(message);
-
-            //2. Step: Received response message from server
-            var response_message = ReceiveMessage();
-
-            //Received null = connection closed
-            if (response_message == null)
+            if (!IsConnected)
             {
-                logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
                 return false;
             }
-            //Received ResponseLogin
-            if (response_message.MessageHeader.MessageType == MessageType.ResponseLogin)
+            lock (this)
             {
-                ResponseLoginMessage responseLoginMessage = (ResponseLoginMessage)response_message;
-                if (responseLoginMessage.LoginOk == true)
-                {
-                    logger.LogText(String.Format("Successfully logged in as {0}. Server response message was: {1}", username, responseLoginMessage.Message), this, Logtype.Info);
-                    IsAuthenticated = true;
-                    if (responseLoginMessage.IsAdmin)
-                    {
-                        logger.LogText(String.Format("User {0} is admin", username), this, Logtype.Info);
-                        IsAdmin = true;
-                    }
-                    return true;
-                }
-                logger.LogText(String.Format("Could not log in as {0}. Server response message was: {1}", username, responseLoginMessage.Message), this, Logtype.Info);
+                logger.LogText(String.Format("Trying to login as {0}", username), this, Logtype.Info);
+
+                //0. Step: Initially set everything to false
                 IsAuthenticated = false;
+                IsAdmin = false;
+
+                //1. Step: Send LoginMessage to server
+                LoginMessage message = new LoginMessage();
+                message.Username = username;
+                message.Password = password;
+                SendMessage(message);
+
+                //2. Step: Received response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return false;
+                }
+                //Received ResponseLogin
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseLogin)
+                {
+                    ResponseLoginMessage responseLoginMessage = (ResponseLoginMessage)response_message;
+                    if (responseLoginMessage.LoginOk == true)
+                    {
+                        logger.LogText(String.Format("Successfully logged in as {0}. Server response message was: {1}", username, responseLoginMessage.Message), this, Logtype.Info);
+                        IsAuthenticated = true;
+                        if (responseLoginMessage.IsAdmin)
+                        {
+                            logger.LogText(String.Format("User {0} is admin", username), this, Logtype.Info);
+                            IsAdmin = true;
+                        }
+                        return true;
+                    }
+                    logger.LogText(String.Format("Could not log in as {0}. Server response message was: {1}", username, responseLoginMessage.Message), this, Logtype.Info);
+                    IsAuthenticated = false;
+                    return false;
+                }
+
+                //Received another (wrong) message
+                logger.LogText(String.Format("Response message to login attempt was not a ResponseLoginMessage. It was {0}", response_message.MessageHeader.MessageType.ToString()), this, Logtype.Info);
                 return false;
             }
-
-            //Login failed
-            logger.LogText(String.Format("Response message to login attempt was not a ResponseLoginMessage. It was {0}", response_message.MessageHeader.MessageType.ToString()), this, Logtype.Info);            
-            return false;
         }
+
+        /// <summary>
+        /// Creates a new developer account in the database
+        /// Only possible, when the user is authenticated as an admin
+        /// </summary>
+        /// <param name="developer"></param>
+        /// <returns></returns>
+        public DataModificationResult CreateNewDeveloper(Developer developer)
+        {
+            lock (this)
+            {
+                //we can only create users, when we are connected to the server
+                if (!IsConnected)
+                {
+                    return new DataModificationResult()
+                    {
+                        Message = "Not connected to server",
+                        ModificationSuccess = false
+                    };
+                }
+                //only admins are allowed, thus, we do not even send any creation messages
+                //if we are not authenticated as admin
+                if (!IsAdmin)
+                {
+                    return new DataModificationResult()
+                    {
+                        Message = "Not authenticated as admin",
+                        ModificationSuccess = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to Create a new developer: {0}", developer.ToString()), this, Logtype.Info);
+
+                //1. Step: Send CreateNewDeveloper to server
+                CreateNewDeveloperMessage message = new CreateNewDeveloperMessage();
+                message.Developer = developer;
+                SendMessage(message);
+
+                //2. Step: Received response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationResult()
+                    {
+                        Message = "Connection to server lost",
+                        ModificationSuccess = false
+                    };
+                }
+                //Received ResponseDeveloperModification
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseDeveloperModification)
+                {
+                    //received a response, forward it to user
+                    ResponseDeveloperModificationMessage responseDeveloperModificationMessage = (ResponseDeveloperModificationMessage)response_message;
+                    logger.LogText(String.Format("{0} a new developer. Return message was: {1}", responseDeveloperModificationMessage.CreatedDeveloper == true ? "Successfully created" : "Did not create", responseDeveloperModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationResult()
+                    {
+                        Message = responseDeveloperModificationMessage.Message,
+                        ModificationSuccess = responseDeveloperModificationMessage.CreatedDeveloper
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to create new developer was not a ResponseDeveloperModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationResult()
+                {
+                    Message = msg,
+                    ModificationSuccess = false
+                };
+            }
+        }        
 
         /// <summary>
         /// Receive a message from the ssl stream
@@ -232,48 +317,49 @@ namespace CrypToolStoreLib.Client
         /// <returns></returns>
         private Message ReceiveMessage()
         {
-            lock (this)
+            if (!IsConnected)
             {
-                //Step 1: Read message header                    
-                byte[] headerbytes = new byte[21]; //a message header is 21 bytes
-                int bytesread = 0;
-                while (bytesread < 21)
-                {
-                    int readbytes = sslStream.Read(headerbytes, bytesread, 21 - bytesread);
-                    if (readbytes == 0)
-                    {
-                        //stream was closed
-                        return null;
-                    }
-                    bytesread += readbytes;
-                }
-
-                //Step 2: Deserialize message header and get payloadsize
-                MessageHeader header = new MessageHeader();
-                header.Deserialize(headerbytes);
-                int payloadsize = header.PayloadSize;
-
-                //Step 3: Read complete message
-                byte[] messagebytes = new byte[payloadsize + 21];
-                Array.Copy(headerbytes, 0, messagebytes, 0, 21);
-
-                while (bytesread < payloadsize + 21)
-                {
-                    int readbytes = sslStream.Read(messagebytes, bytesread, payloadsize + 21 - bytesread);
-                    if (readbytes == 0)
-                    {
-                        //stream was closed
-                        return null;
-                    }
-                    bytesread += readbytes;
-                }
-
-                //Step 4: Deserialize Message
-                Message message = Message.DeserializeMessage(messagebytes);
-                logger.LogText(String.Format("Received a message of type {0}", message.MessageHeader.MessageType.ToString()), this, Logtype.Debug);
-
-                return message;
+                return null;
             }
+            //Step 1: Read message header                    
+            byte[] headerbytes = new byte[21]; //a message header is 21 bytes
+            int bytesread = 0;
+            while (bytesread < 21)
+            {
+                int readbytes = sslStream.Read(headerbytes, bytesread, 21 - bytesread);
+                if (readbytes == 0)
+                {
+                    //stream was closed
+                    return null;
+                }
+                bytesread += readbytes;
+            }
+
+            //Step 2: Deserialize message header and get payloadsize
+            MessageHeader header = new MessageHeader();
+            header.Deserialize(headerbytes);
+            int payloadsize = header.PayloadSize;
+
+            //Step 3: Read complete message
+            byte[] messagebytes = new byte[payloadsize + 21];
+            Array.Copy(headerbytes, 0, messagebytes, 0, 21);
+
+            while (bytesread < payloadsize + 21)
+            {
+                int readbytes = sslStream.Read(messagebytes, bytesread, payloadsize + 21 - bytesread);
+                if (readbytes == 0)
+                {
+                    //stream was closed
+                    return null;
+                }
+                bytesread += readbytes;
+            }
+
+            //Step 4: Deserialize Message
+            Message message = Message.DeserializeMessage(messagebytes);
+            logger.LogText(String.Format("Received a message of type {0}", message.MessageHeader.MessageType.ToString()), this, Logtype.Debug);
+
+            return message;            
         }
 
         #endregion

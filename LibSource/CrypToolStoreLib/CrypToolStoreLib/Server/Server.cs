@@ -305,6 +305,9 @@ namespace CrypToolStoreLib.Server
                 case MessageType.Logout:
                     HandleLogoutMessage((LogoutMessage)message, sslStream);
                     break;
+                case MessageType.CreateNewDeveloper:
+                    HandleCreateNewDeveloperMessage((CreateNewDeveloperMessage)message, sslStream);
+                    break;
             }
         }
         
@@ -376,6 +379,47 @@ namespace CrypToolStoreLib.Server
                 response.Message = "Login credentials incorrect!";
                 Logger.LogText(String.Format("{0}. try of a username/password (username={1}) combination from IP {2}", PasswordTries[IPAddress].Number, username, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
+            }
+        }
+
+        /// <summary>
+        /// Handles CreateNewDeveloperMessages
+        /// If the user is authenticated and he is admin, it tries to create a new developer in the database        
+        /// Then, it sends a response message which contains if it succeeded or failed
+        /// </summary>
+        /// <param name="createNewDeveloperMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleCreateNewDeveloperMessage(CreateNewDeveloperMessage createNewDeveloperMessage, SslStream sslStream)
+        {
+            //Only authenticated admins are allowed to create new developers
+            if (!ClientIsAuthenticated || !ClientIsAdmin)
+            {
+                ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
+                response.CreatedDeveloper = false;
+                response.Message = "Unauthorized to created new developers! Please authenticate as admin!";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to create new developer={1} from Ip={2}", Username, createNewDeveloperMessage.Developer.Username, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            //Here, the user is authenticated and he is an admin; thus, creation of new developer in database is started
+            try
+            {
+                Developer developer = createNewDeveloperMessage.Developer;
+                Database.CreateDeveloper(developer.Username, developer.Firstname, developer.Lastname, developer.Email, developer.Password, developer.IsAdmin);
+                Logger.LogText(String.Format("User {0} created new developer in database: {1}", Username, developer), this, Logtype.Info);
+                ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
+                response.CreatedDeveloper = true;
+                response.Message = String.Format("Created new developer in database: {0}", developer.ToString());                
+                SendMessage(response, sslStream);                                
+            }
+            catch (Exception ex)
+            {
+                //creation failed; logg to logfile and return exception to client
+                ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
+                response.CreatedDeveloper = false;
+                Logger.LogText(String.Format("User {0} tried to create a new developer. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
+                response.Message = String.Format("Exception during creation of new developer: {0}", ex.Message);
+                SendMessage(response, sslStream);       
             }
         }
 

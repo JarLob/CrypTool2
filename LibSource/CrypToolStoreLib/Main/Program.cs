@@ -64,6 +64,16 @@ namespace CrpyStoreLib
                         CrypToolStoreClient client = new CrypToolStoreClient();
                         client.Connect();
                         client.Login("kopal", "123");
+
+                        Developer developer = new Developer();
+                        developer.Firstname = "Firstname";
+                        developer.Lastname = "Lastname";
+                        developer.Password="password";
+                        developer.IsAdmin = false;
+                        developer.Username = "Test4";
+                        developer.Email = "Test4@test.test";
+                        client.CreateNewDeveloper(developer);
+
                         client.Disconnect();
                     }
                     catch (Exception ex)

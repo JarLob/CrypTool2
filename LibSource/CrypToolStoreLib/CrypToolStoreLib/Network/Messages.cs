@@ -983,6 +983,14 @@ namespace CrypToolStoreLib.Tools
     public class ResponseDeveloperModificationMessage : Message
     {
         [MessageDataField]
+        public bool CreatedDeveloper
+        {
+            get;
+            set;
+        }
+
+
+        [MessageDataField]
         public string Message
         {
             get;

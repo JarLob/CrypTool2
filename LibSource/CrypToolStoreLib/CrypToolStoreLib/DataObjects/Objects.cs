@@ -483,4 +483,13 @@ namespace CrypToolStoreLib.DataObjects
                 ResourceId, Version, Data != null ? Data.Length.ToString() : "null", UploadDate);
         }
     }
+
+    /// <summary>
+    /// A ModificationResult is returned by each method for modifying data 
+    /// </summary>
+    public class DataModificationResult
+    {
+        public string Message { get; set; }
+        public bool ModificationSuccess { get; set; }
+    }
 }
