@@ -28,7 +28,7 @@ namespace CrypToolStoreLib.Client
 {
     public class CrypToolStoreClient
     {
-        public const int DEFAULT_PORT = 15151;        
+        public const int DEFAULT_PORT = 15151;
         public const string DEFAULT_ADDRESS = "localhost";
 
         private Logger logger = Logger.GetLogger();
@@ -72,7 +72,7 @@ namespace CrypToolStoreLib.Client
                     return true;
                 }
                 return false;
-            }            
+            }
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace CrypToolStoreLib.Client
         {
             ServerPort = DEFAULT_PORT;
             ServerAddress = DEFAULT_ADDRESS;
-        }        
+        }
 
         /// <summary>
         /// Connect to the server
@@ -121,8 +121,8 @@ namespace CrypToolStoreLib.Client
                 return;
             }
             logger.LogText("Trying to connect to server", this, Logtype.Info);
-            Client = new TcpClient(ServerAddress, ServerPort);                        
-            sslStream = new SslStream(Client.GetStream(), false, new RemoteCertificateValidationCallback(ValidateServerCert));            
+            Client = new TcpClient(ServerAddress, ServerPort);
+            sslStream = new SslStream(Client.GetStream(), false, new RemoteCertificateValidationCallback(ValidateServerCert));
             sslStream.AuthenticateAsClient(ServerAddress);
             logger.LogText("Connected to server", this, Logtype.Info);
         }
@@ -152,7 +152,6 @@ namespace CrypToolStoreLib.Client
             }
         }
 
-
         /// <summary>
         /// Sends a message to the client
         /// </summary>
@@ -169,7 +168,60 @@ namespace CrypToolStoreLib.Client
             }
         }
 
-        #region methods for login and logout
+
+        /// <summary>
+        /// Receive a message from the ssl stream
+        /// if stream is closed, returns null
+        /// </summary>
+        /// <returns></returns>
+        private Message ReceiveMessage()
+        {
+            if (!IsConnected)
+            {
+                return null;
+            }
+            //Step 1: Read message header                    
+            byte[] headerbytes = new byte[21]; //a message header is 21 bytes
+            int bytesread = 0;
+            while (bytesread < 21)
+            {
+                int readbytes = sslStream.Read(headerbytes, bytesread, 21 - bytesread);
+                if (readbytes == 0)
+                {
+                    //stream was closed
+                    return null;
+                }
+                bytesread += readbytes;
+            }
+
+            //Step 2: Deserialize message header and get payloadsize
+            MessageHeader header = new MessageHeader();
+            header.Deserialize(headerbytes);
+            int payloadsize = header.PayloadSize;
+
+            //Step 3: Read complete message
+            byte[] messagebytes = new byte[payloadsize + 21];
+            Array.Copy(headerbytes, 0, messagebytes, 0, 21);
+
+            while (bytesread < payloadsize + 21)
+            {
+                int readbytes = sslStream.Read(messagebytes, bytesread, payloadsize + 21 - bytesread);
+                if (readbytes == 0)
+                {
+                    //stream was closed
+                    return null;
+                }
+                bytesread += readbytes;
+            }
+
+            //Step 4: Deserialize Message
+            Message message = Message.DeserializeMessage(messagebytes);
+            logger.LogText(String.Format("Received a message of type {0}", message.MessageHeader.MessageType.ToString()), this, Logtype.Debug);
+
+            return message;
+        }
+
+        #region methods to login/logout
 
         /// <summary>
         /// Try to log into CrypToolStore using given username and password
@@ -233,6 +285,10 @@ namespace CrypToolStoreLib.Client
                 return false;
             }
         }
+
+        #endregion
+
+        #region Methods for working with developers
 
         /// <summary>
         /// Creates a new developer account in the database
@@ -329,7 +385,7 @@ namespace CrypToolStoreLib.Client
                         ModificationSuccess = false
                     };
                 }
-                //only admins are allowed, thus, we do not even send any creation messages
+                //only admins are allowed, thus, we do not even send any update messages
                 //if we are not authenticated as admin
                 if (!IsAdmin)
                 {
@@ -384,73 +440,6 @@ namespace CrypToolStoreLib.Client
                     ModificationSuccess = false
                 };
             }
-        }
-
-        /// <summary>
-        /// Receive a message from the ssl stream
-        /// if stream is closed, returns null
-        /// </summary>
-        /// <returns></returns>
-        private Message ReceiveMessage()
-        {
-            if (!IsConnected)
-            {
-                return null;
-            }
-            //Step 1: Read message header                    
-            byte[] headerbytes = new byte[21]; //a message header is 21 bytes
-            int bytesread = 0;
-            while (bytesread < 21)
-            {
-                int readbytes = sslStream.Read(headerbytes, bytesread, 21 - bytesread);
-                if (readbytes == 0)
-                {
-                    //stream was closed
-                    return null;
-                }
-                bytesread += readbytes;
-            }
-
-            //Step 2: Deserialize message header and get payloadsize
-            MessageHeader header = new MessageHeader();
-            header.Deserialize(headerbytes);
-            int payloadsize = header.PayloadSize;
-
-            //Step 3: Read complete message
-            byte[] messagebytes = new byte[payloadsize + 21];
-            Array.Copy(headerbytes, 0, messagebytes, 0, 21);
-
-            while (bytesread < payloadsize + 21)
-            {
-                int readbytes = sslStream.Read(messagebytes, bytesread, payloadsize + 21 - bytesread);
-                if (readbytes == 0)
-                {
-                    //stream was closed
-                    return null;
-                }
-                bytesread += readbytes;
-            }
-
-            //Step 4: Deserialize Message
-            Message message = Message.DeserializeMessage(messagebytes);
-            logger.LogText(String.Format("Received a message of type {0}", message.MessageHeader.MessageType.ToString()), this, Logtype.Debug);
-
-            return message;            
-        }
-
-        #endregion
-
-        #region Methods for working with developers
-
-        public string CreateNewDeveloper()
-        {
-
-            return string.Empty;
-        }
-
-        public string UpdateDeveloper()
-        {
-            return string.Empty;
         }
 
         public string DeleteDeveloper()
@@ -585,6 +574,5 @@ namespace CrypToolStoreLib.Client
         }
 
         #endregion
-        
     }
 }

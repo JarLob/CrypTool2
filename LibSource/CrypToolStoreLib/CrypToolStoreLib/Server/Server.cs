@@ -496,6 +496,9 @@ namespace CrypToolStoreLib.Server
         }
     }
 
+    /// <summary>
+    /// A PasswordTry memorizes the number of username/password tries and the last time of the last try
+    /// </summary>
     public class PasswordTry
     {
         public int Number { get; set; }
