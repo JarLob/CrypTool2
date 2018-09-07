@@ -920,6 +920,20 @@ namespace CrypToolStoreLib.Tools
     public class ResponseDeveloperListMessage : Message
     {
         [MessageDataField]
+        public string Message
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
+        public bool AllowedToViewList
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
         public List<Developer> DeveloperList
         {
             get;

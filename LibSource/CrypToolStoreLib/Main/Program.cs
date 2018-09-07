@@ -79,6 +79,12 @@ namespace CrpyStoreLib
                         client.DeleteDeveloper("Test");
                         client.CreateNewDeveloper(developer);
 
+                        var returnvalue = client.GetDeveloperList();
+                        foreach (var entry in (List<Developer>)returnvalue.DataObject)
+                        {
+                            Console.WriteLine(entry);
+                        }
+
                         client.Disconnect();
                     }
                     catch (Exception ex)

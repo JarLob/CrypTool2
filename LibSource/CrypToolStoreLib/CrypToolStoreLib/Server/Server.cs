@@ -317,6 +317,9 @@ namespace CrypToolStoreLib.Server
                 case MessageType.RequestDeveloper:
                     HandleRequestDeveloper((RequestDeveloperMessage)message, sslStream);
                     break;
+                case MessageType.RequestDeveloperList:
+                    HandleRequestDeveloperList((RequestDeveloperListMessage)message, sslStream);
+                    break;
             }
         }
         
@@ -560,7 +563,7 @@ namespace CrypToolStoreLib.Server
                 }
                 else
                 {
-                    Logger.LogText(String.Format("User {0} requested an existing developer from database: {1}", requestDeveloperMessage.Username, developer), this, Logtype.Info);
+                    Logger.LogText(String.Format("User {0} requested an existing developer from database: {1}", Username, developer), this, Logtype.Info);
                     ResponseDeveloperMessage response = new ResponseDeveloperMessage();
                     response.Message = String.Format("Return developer: {0}", developer.ToString());
                     response.DeveloperExists = true;
@@ -574,6 +577,49 @@ namespace CrypToolStoreLib.Server
                 ResponseDeveloperMessage response = new ResponseDeveloperMessage();
                 response.DeveloperExists = false;
                 Logger.LogText(String.Format("User {0} tried to get an existing developer. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
+                response.Message = String.Format("Exception during request of existing developer: {0}", ex.Message);
+                SendMessage(response, sslStream);
+            }
+        }
+
+        /// <summary>
+        /// Handles RequestDeveloperListMessages
+        /// If the user is authenticated and he is admin, it tries to get a list of developers from the database        
+        /// Then, it sends a response message which contains it and if it succeeded or failed
+        /// </summary>
+        /// <param name="requestDeveloperMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleRequestDeveloperList(RequestDeveloperListMessage requestDeveloperListMessage, SslStream sslStream)
+        {
+            //Only authenticated admins are allowed to create new developers
+            if (!ClientIsAuthenticated || !ClientIsAdmin)
+            {
+                ResponseDeveloperListMessage response = new ResponseDeveloperListMessage();
+                response.AllowedToViewList = false;
+                response.Message = "Unauthorized to get developer list! Please authenticate as admin!";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to request developer list from Ip={1}", Username, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            //Here, the user is authenticated and he is an admin; thus, requesting existing user from database
+            try
+            {
+                List<Developer> developerList = Database.GetDevelopers();
+
+                Logger.LogText(String.Format("User {0} requested a developer list", Username), this, Logtype.Info);
+                    ResponseDeveloperListMessage response = new ResponseDeveloperListMessage();
+                    response.Message = String.Format("Return developer list");
+                    response.AllowedToViewList = true;
+                    response.DeveloperList = developerList;
+                    SendMessage(response, sslStream);
+
+            }
+            catch (Exception ex)
+            {
+                //deletion failed; logg to logfile and return exception to client
+                ResponseDeveloperListMessage response = new ResponseDeveloperListMessage();
+                response.AllowedToViewList = false;
+                Logger.LogText(String.Format("User {0} tried to get a developer list. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
                 response.Message = String.Format("Exception during request of existing developer: {0}", ex.Message);
                 SendMessage(response, sslStream);
             }

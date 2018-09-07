@@ -472,7 +472,7 @@ namespace CrypToolStoreLib.Client
                     };
                 }
 
-                logger.LogText(String.Format("Trying to update an existing developer: {0}", username), this, Logtype.Info);
+                logger.LogText(String.Format("Trying to delete an existing developer: {0}", username), this, Logtype.Info);
 
                 //1. Step: Send DeleteDeveloperMessage to server
                 DeleteDeveloperMessage message = new DeleteDeveloperMessage();
@@ -595,11 +595,83 @@ namespace CrypToolStoreLib.Client
             }
         }
 
-        public List<Developer> GetDeveloperList()
+        /// <summary>
+        /// Requests the list of developers
+        /// Only possible, when the user is authenticated as an admin
+        /// </summary>
+        /// <returns></returns>
+        public DataModificationOrRequestResult GetDeveloperList()
         {
-            return null;
-        }
+            lock (this)
+            {
+                //we can only create users, when we are connected to the server
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false,
+                        DataObject = new List<Developer>()
+                    };
+                }
+                //only admins are allowed, thus, we do not even send any request messages
+                //if we are not authenticated as admin
+                if (!IsAdmin)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not authenticated as admin",
+                        Success = false,
+                        DataObject = new List<Developer>()
+                    };
+                }
 
+                logger.LogText("Trying to get the list of developers", this, Logtype.Info);
+
+                //1. Step: Send UpdateDeveloper to server
+                RequestDeveloperListMessage message = new RequestDeveloperListMessage();
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false,
+                        DataObject = new List<Developer>()
+                    };
+                }
+                //Received ResponseDeveloperListMessage
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseDeveloperList)
+                {
+                    //received a response, forward it to user
+                    ResponseDeveloperListMessage responseDeveloperListMessage = (ResponseDeveloperListMessage)response_message;
+                    logger.LogText(String.Format("Received developer list. Message was: {0}", responseDeveloperListMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responseDeveloperListMessage.Message,
+                        Success = responseDeveloperListMessage.AllowedToViewList,
+                        DataObject = responseDeveloperListMessage.DeveloperList
+                    };
+                }
+                //Received another (wrong) message
+                string msg = String.Format("Response message to request a a developer list was not a ResponseDeveloperList. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false,
+                    DataObject = new List<Developer>()
+                };
+            }
+        }
 
         #endregion
 
