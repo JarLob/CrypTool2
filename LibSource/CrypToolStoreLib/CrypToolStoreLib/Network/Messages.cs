@@ -92,6 +92,9 @@ namespace CrypToolStoreLib.Tools
         Undefined = 10000
     }
 
+    /// <summary>
+    /// This attribute marks a field of a message as a "to-be-serialized" field, a "MessageDataField"
+    /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class MessageDataField : Attribute
     {
@@ -117,7 +120,7 @@ namespace CrypToolStoreLib.Tools
     {
         private const string MAGIC = "CrypToolStore";       // 13 byte (string); each message begins with that                
         public MessageType MessageType { get; set; }        // 4 byte (uint32)
-        public int PayloadSize { get; set; }             // 4 byte (unint32)
+        public int PayloadSize { get; set; }                // 4 byte (uint32)
 
         /// <summary>
         /// Constructor

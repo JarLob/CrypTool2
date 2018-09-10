@@ -321,6 +321,9 @@ namespace CrypToolStoreLib.Server
                 case MessageType.CreateNewPlugin:
                     HandleCreateNewPluginMessage((CreateNewPluginMessage)message, sslStream);
                     break;
+                case MessageType.UpdatePlugin:
+                    HandleUpdatePluginMessage((UpdatePluginMessage)message, sslStream);
+                    break;
             }
         }
         
@@ -667,7 +670,70 @@ namespace CrypToolStoreLib.Server
             }
         }
 
+        /// <summary>
+        /// Handles UpdatePluginMessages
+        /// If the user is authenticated, it tries to update an existing plugin in the database
+        /// Users can only update their plugins; admins can update all plugins
+        /// Then, it sends a response message which contains if it succeeded or failed
+        /// </summary>
+        /// <param name="updateDeveloperMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleUpdatePluginMessage(UpdatePluginMessage updatePluginMessage, SslStream sslStream)
+        {
+            //Only authenticated users are allowed to update plugins
+            if (!ClientIsAuthenticated)
+            {
+                ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
+                response.ModifiedPlugin = false;
+                response.Message = "Unauthorized to create new developers! Please authenticate as admin!";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update plugin={1} from IP={2}", Username, updatePluginMessage.Plugin, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }            
+            //check, if plugin to update exist
+            Plugin plugin = Database.GetPlugin(updatePluginMessage.Plugin.Id);
+            if (plugin == null)
+            {
+                ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
+                response.ModifiedPlugin = false;
+                response.Message = "Unauthorized to update that plugin!"; // we send an "unauthorized"; thus, it is not possible to search database for existing ids
+                Logger.LogText(String.Format("User {0} tried to update non-existing plugin={1} from IP={2}", Username, updatePluginMessage.Plugin, IPAddress), this, Logtype.Info);
+                SendMessage(response, sslStream);
+                return;
+            }
+            //"normal" users are only allowed to update their own plugins
+            if (ClientIsAdmin == false && plugin.Username != Username)
+            {
+                ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
+                response.ModifiedPlugin = false;
+                response.Message = "Unauthorized to update that plugin!";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update plugin={1} from IP={2}", Username, updatePluginMessage.Plugin, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
 
+            //Here, the user is authorized; thus, update of existing plugin in database is started
+            try
+            {
+                plugin = updatePluginMessage.Plugin;
+                Database.UpdatePlugin(plugin.Id, Username, plugin.Name, plugin.ShortDescription, plugin.LongDescription, plugin.Authornames, plugin.Authoremails, plugin.Authorinstitutes, plugin.Icon);
+                Logger.LogText(String.Format("User {0} updated existing plugin in database: {1}", Username, plugin.ToString()), this, Logtype.Info);
+                ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
+                response.ModifiedPlugin = true;
+                response.Message = String.Format("Updated plugin in database: {0}", plugin.ToString());
+                SendMessage(response, sslStream);
+            }
+            catch (Exception ex)
+            {
+                //update failed; logg to logfile and return exception to client
+                ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
+                response.ModifiedPlugin = false;
+                Logger.LogText(String.Format("User {0} tried to update an existing plugin. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
+                response.Message = String.Format("Exception during update of existing plugin: {0}", ex.Message);
+                SendMessage(response, sslStream);
+            }
+        }
+        
         /// <summary>
         /// Sends a message to the client
         /// </summary>

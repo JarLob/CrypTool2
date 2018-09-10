@@ -376,7 +376,7 @@ namespace CrypToolStoreLib.Client
         {
             lock (this)
             {
-                //we can only create users, when we are connected to the server
+                //we can only update users, when we are connected to the server
                 if (!IsConnected)
                 {
                     return new DataModificationOrRequestResult()
@@ -753,9 +753,79 @@ namespace CrypToolStoreLib.Client
             }
         }
 
-        public string UpdatePlugin()
+        /// <summary>
+        /// Updates an existing plugin in the database
+        /// Only possible, when the user is authenticated
+        /// </summary>
+        /// <param name="developer"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult UpdatePlugin(Plugin plugin)
         {
-            return string.Empty;
+            lock (this)
+            {
+                //we can update plugins, when we are connected to the server
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+                //only authenticated users are allowed, thus, we do not even send any update messages
+                if (!IsAuthenticated)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not authenticated",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to update an existing plugin: {0}", plugin.ToString()), this, Logtype.Info);
+
+                //1. Step: Send UpdatePluginMessage to server
+                UpdatePluginMessage message = new UpdatePluginMessage();
+                message.Plugin = plugin;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponsePluginModification
+                if (response_message.MessageHeader.MessageType == MessageType.ResponsePluginModification)
+                {
+                    //received a response, forward it to user
+                    ResponsePluginModificationMessage responsePluginModificationMessage = (ResponsePluginModificationMessage)response_message;
+                    logger.LogText(String.Format("{0} an existing plugin. Return message was: {1}", responsePluginModificationMessage.ModifiedPlugin == true ? "Successfully updated" : "Did not update", responsePluginModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responsePluginModificationMessage.Message,
+                        Success = responsePluginModificationMessage.ModifiedPlugin
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to update an existing plugin was not a ResponsePluginModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
         public string DeletePlugin()

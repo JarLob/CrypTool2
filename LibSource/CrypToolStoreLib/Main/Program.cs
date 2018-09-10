@@ -63,9 +63,10 @@ namespace CrpyStoreLib
                     {
                         CrypToolStoreClient client = new CrypToolStoreClient();
                         client.Connect();
-                        //client.Login("kopal", "123");
+                        client.Login("Test", "");
 
                         Plugin plugin = new Plugin();
+                        plugin.Id = 7;
                         plugin.Name = "Test";
                         plugin.LongDescription = "TestLong";
                         plugin.ShortDescription = "TestShort";
@@ -74,7 +75,9 @@ namespace CrpyStoreLib
                         plugin.Authorinstitutes = "Institutes";
                         plugin.Icon = new byte[] { 1, 2, 3 };
 
-                        client.CreatePlugin(plugin);
+                        var result = client.UpdatePlugin(plugin);
+                        Console.WriteLine("#### " + result.Message);
+
                         client.Disconnect();
                     }
                     catch (Exception ex)
