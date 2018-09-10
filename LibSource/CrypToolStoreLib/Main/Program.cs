@@ -78,6 +78,10 @@ namespace CrpyStoreLib
                         var result = client.UpdatePlugin(plugin);
                         Console.WriteLine("#### " + result.Message);
 
+
+                        var result2 = client.GetPlugin(7);
+                        Console.WriteLine("############# " + result2.DataObject);
+
                         client.Disconnect();
                     }
                     catch (Exception ex)

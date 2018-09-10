@@ -828,14 +828,145 @@ namespace CrypToolStoreLib.Client
             }
         }
 
-        public string DeletePlugin()
+        /// <summary>
+        /// Deletes an existing plugin in the database
+        /// Only possible, when the user is authenticated
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult DeletePlugin(int pluginId)
         {
-            return string.Empty;
+            lock (this)
+            {
+                //we can only create users, when we are connected to the server
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+                //only authenticated users are allowed, thus, we do not even send any delete messages
+                if (!IsAuthenticated)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not authenticated",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to delete an existing plugin: {0}", pluginId), this, Logtype.Info);
+
+                //1. Step: Send DeletePluginMessage to server
+                DeletePluginMessage message = new DeletePluginMessage();
+                message.Plugin = new Plugin() { Id = pluginId };
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponsePluginModification
+                if (response_message.MessageHeader.MessageType == MessageType.ResponsePluginModification)
+                {
+                    //received a response, forward it to user
+                    ResponsePluginModificationMessage responsePluginModificationMessage = (ResponsePluginModificationMessage)response_message;
+                    logger.LogText(String.Format("{0} an existing plugin. Return message was: {1}", responsePluginModificationMessage.ModifiedPlugin == true ? "Successfully deleted" : "Did not delete", responsePluginModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responsePluginModificationMessage.Message,
+                        Success = responsePluginModificationMessage.ModifiedPlugin
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to delete an existing plugin was not a ResponsePluginModification. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
-        public Plugin GetPlugin()
+        /// <summary>
+        /// Requests an existing plugin from the database
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult GetPlugin(int pluginId)
         {
-            return null;
+            lock (this)
+            {
+                //we can only receive plugins when we are connected
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to get an existing plugin: {0}", pluginId), this, Logtype.Info);
+
+                //1. Step: Send UpdateDeveloper to server
+                RequestPluginMessage message = new RequestPluginMessage();
+                message.Id = pluginId;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponseDeveloperMessage
+                if (response_message.MessageHeader.MessageType == MessageType.ResponsePlugin)
+                {
+                    //received a response, forward it to user
+                    ResponsePluginMessage responsePluginModificationMessage = (ResponsePluginMessage)response_message;
+                    logger.LogText(String.Format("{0} an existing plugin. Return message was: {1}", responsePluginModificationMessage.PluginExists == true ? "Successfully received" : "Did not receive", responsePluginModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responsePluginModificationMessage.Message,
+                        Success = responsePluginModificationMessage.PluginExists,
+                        DataObject = responsePluginModificationMessage.Plugin
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to request an existing plugin was not a ResponsePluginModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
         public List<Plugin> GetPluginList()

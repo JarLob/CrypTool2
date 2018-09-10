@@ -1164,7 +1164,7 @@ namespace CrypToolStoreLib.Tools
     /// Message for responding to plugin modification messages
     /// </summary>
     public class ResponsePluginModificationMessage : Message
-    {
+    {     
         [MessageDataField]
         public bool ModifiedPlugin
         {
@@ -1208,6 +1208,20 @@ namespace CrypToolStoreLib.Tools
     /// </summary>
     public class ResponsePluginMessage : Message
     {
+        [MessageDataField]
+        public String Message
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
+        public bool PluginExists
+        {
+            get;
+            set;
+        }
+
         [MessageDataField]
         public Plugin Plugin
         {

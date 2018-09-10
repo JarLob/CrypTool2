@@ -484,6 +484,16 @@ namespace CrypToolStoreLib.DataObjects
         }
     }
 
+
+    /// <summary>
+    /// A PasswordTry memorizes the number of username/password tries and the last time of the last try
+    /// </summary>
+    public class PasswordTry
+    {
+        public int Number { get; set; }
+        public DateTime LastTryDateTime { get; set; }
+    }
+
     /// <summary>
     /// A ModificationResult is returned by each method for modifying or requesting data 
     /// </summary>
