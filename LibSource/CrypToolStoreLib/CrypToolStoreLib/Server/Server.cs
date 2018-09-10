@@ -329,7 +329,7 @@ namespace CrypToolStoreLib.Server
                     break;
 
                 default:
-                    HendleUnknownMessage(message, sslStream);
+                    HandleUnknownMessage(message, sslStream);
                     break;
             }
         }
@@ -341,7 +341,7 @@ namespace CrypToolStoreLib.Server
         /// </summary>
         /// <param name="message"></param>
         /// <param name="sslStream"></param>
-        private void HendleUnknownMessage(Message message, SslStream sslStream)
+        private void HandleUnknownMessage(Message message, SslStream sslStream)
         {
             Logger.LogText(String.Format("Received message of unknown type {0} from user {1} from IP={2}", message.MessageHeader.MessageType, Username, IPAddress), this, Logtype.Warning);
             ServerErrorMessage error = new ServerErrorMessage();
@@ -613,7 +613,7 @@ namespace CrypToolStoreLib.Server
         /// If the user is authenticated and he is admin, it tries to get a list of developers from the database        
         /// Then, it sends a response message which contains it and if it succeeded or failed
         /// </summary>
-        /// <param name="requestDeveloperMessage"></param>
+        /// <param name="requestDeveloperListMessage"></param>
         /// <param name="sslStream"></param>
         private void HandleRequestDeveloperListMessage(RequestDeveloperListMessage requestDeveloperListMessage, SslStream sslStream)
         {
@@ -698,7 +698,7 @@ namespace CrypToolStoreLib.Server
         /// Users can only update their plugins; admins can update all plugins
         /// Then, it sends a response message which contains if it succeeded or failed
         /// </summary>
-        /// <param name="updateDeveloperMessage"></param>
+        /// <param name="updatePluginMessage"></param>
         /// <param name="sslStream"></param>
         private void HandleUpdatePluginMessage(UpdatePluginMessage updatePluginMessage, SslStream sslStream)
         {

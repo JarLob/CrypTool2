@@ -959,7 +959,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to request an existing plugin was not a ResponsePluginModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to request an existing plugin was not a ResponsePluginMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
