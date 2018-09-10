@@ -530,6 +530,7 @@ namespace CrypToolStoreLib.Database
         /// <summary>
         /// Returns a list of plugins from the database
         /// If username is set, it only returns plugins of that user
+        /// icons are NOT included to save bandwith for this request
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -538,11 +539,11 @@ namespace CrypToolStoreLib.Database
             string query;
             if (username == null)
             {
-               query = "select id, username, name, shortdescription, longdescription, authornames, authoremails, authorinstitutes, icon, activeversion, publish from plugins";
+               query = "select id, username, name, shortdescription, longdescription, authornames, authoremails, authorinstitutes, activeversion, publish from plugins";
             }
             else
             {
-                query = "select id, username, name, shortdescription, longdescription, authornames, authoremails, authorinstitutes, icon, activeversion, publish from plugins where username=@username";
+                query = "select id, username, name, shortdescription, longdescription, authornames, authoremails, authorinstitutes, activeversion, publish from plugins where username=@username";
             }
 
             DatabaseConnection connection = GetConnection();
@@ -570,7 +571,6 @@ namespace CrypToolStoreLib.Database
                 plugin.Authornames = (string)entry["authornames"];
                 plugin.Authoremails = (string)entry["authoremails"];
                 plugin.Authorinstitutes = (string)entry["authorinstitutes"];
-                plugin.Icon = (byte[])entry["icon"];
                 plugin.ActiveVersion = (int)entry["activeversion"];
                 plugin.Publish = (bool)entry["publish"];
                 plugins.Add(plugin);

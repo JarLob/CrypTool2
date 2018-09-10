@@ -327,13 +327,16 @@ namespace CrypToolStoreLib.Server
                 case MessageType.RequestPlugin:
                     HandleRequestPluginMessage((RequestPluginMessage)message, sslStream);
                     break;
+                case MessageType.RequestPluginList:
+                    HandleRequestPluginList((RequestPluginListMessage)message, sslStream);
+                    break;
 
                 default:
                     HandleUnknownMessage(message, sslStream);
                     break;
             }
         }
-        
+       
         /// <summary>
         /// Handles messages of unknown message type
         /// Sends that we do not know the type of message
@@ -467,7 +470,7 @@ namespace CrypToolStoreLib.Server
                 //creation failed; logg to logfile and return exception to client
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.ModifiedDeveloper = false;
-                Logger.LogText(String.Format("User {0} tried to create a new developer. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} tried to create a new developer. But we had an exception: {1}", Username, ex.Message), this, Logtype.Info);
                 response.Message = "Exception during creation of new developer";
                 SendMessage(response, sslStream);       
             }
@@ -508,7 +511,7 @@ namespace CrypToolStoreLib.Server
                 //update failed; logg to logfile and return exception to client
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.ModifiedDeveloper = false;
-                Logger.LogText(String.Format("User {0} tried to update an existing developer. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} tried to update an existing developer. But we had an exception: {1}", Username, ex.Message), this, Logtype.Info);
                 response.Message = "Exception during update of existing developer";
                 SendMessage(response, sslStream);
             }
@@ -549,7 +552,7 @@ namespace CrypToolStoreLib.Server
                 //deletion failed; logg to logfile and return exception to client
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.ModifiedDeveloper = false;
-                Logger.LogText(String.Format("User {0} tried to delete an existing developer. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} tried to delete an existing developer. But we had an exception: {1}", Username, ex.Message), this, Logtype.Info);
                 response.Message = "Exception during deletion of existing developer";
                 SendMessage(response, sslStream);
             }
@@ -602,7 +605,7 @@ namespace CrypToolStoreLib.Server
                 //deletion failed; logg to logfile and return exception to client
                 ResponseDeveloperMessage response = new ResponseDeveloperMessage();
                 response.DeveloperExists = false;
-                Logger.LogText(String.Format("User {0} tried to get an existing developer. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} tried to get an existing developer. But we had an exception: {1}", Username, ex.Message), this, Logtype.Info);
                 response.Message = "Exception during request of existing developer:";
                 SendMessage(response, sslStream);
             }
@@ -645,7 +648,7 @@ namespace CrypToolStoreLib.Server
                 //deletion failed; logg to logfile and return exception to client
                 ResponseDeveloperListMessage response = new ResponseDeveloperListMessage();
                 response.AllowedToViewList = false;
-                Logger.LogText(String.Format("User {0} tried to get a developer list. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} tried to get a developer list. But we had an exception: {1}", Username, ex.Message), this, Logtype.Info);
                 response.Message = "Exception during request of developer list";
                 SendMessage(response, sslStream);
             }
@@ -686,7 +689,7 @@ namespace CrypToolStoreLib.Server
                 //creation failed; logg to logfile and return exception to client
                 ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
                 response.ModifiedPlugin = false;
-                Logger.LogText(String.Format("User {0} tried to create a new plugin. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} tried to create a new plugin. But we had an exception: {1}", Username, ex.Message), this, Logtype.Info);
                 response.Message = "Exception during creation of new plugin";
                 SendMessage(response, sslStream);
             }
@@ -750,7 +753,7 @@ namespace CrypToolStoreLib.Server
                 //update failed; logg to logfile and return exception to client
                 ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
                 response.ModifiedPlugin = false;
-                Logger.LogText(String.Format("User {0} tried to update an existing plugin. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} tried to update an existing plugin. But we had an exception: {1}", Username, ex.Message), this, Logtype.Info);
                 response.Message = "Exception during update of existing plugin";
                 SendMessage(response, sslStream);
             }
@@ -791,11 +794,40 @@ namespace CrypToolStoreLib.Server
             {
                 //request failed; logg to logfile and return exception to client
                 ResponsePluginMessage response = new ResponsePluginMessage();
-                Logger.LogText(String.Format("User {0} tried to get an existing plugin. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} tried to get an existing plugin. But we had an exception: {1}", Username, ex.Message), this, Logtype.Info);
                 response.Message = "Exception during request of existing plugin.";
                 SendMessage(response, sslStream);
             }
         }
+
+        /// <summary>
+        /// Handles RequestPluginListMessages
+        /// responses with lists of plugins
+        /// </summary>
+        /// <param name="requestPluginListMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleRequestPluginList(RequestPluginListMessage requestPluginListMessage, SslStream sslStream)
+        {
+            Logger.LogText(String.Format("User {0} requested a list of plugins", Username), this, Logtype.Info);
+            try
+            {
+                List<Plugin> plugins = Database.GetPlugins(requestPluginListMessage.Username.Equals("*") ? null : requestPluginListMessage.Username);
+                ResponsePluginListMessage response = new ResponsePluginListMessage();
+                response.Plugins = plugins;
+                string message = String.Format("Responding with plugin list containing {0} elements", plugins.Count);
+                Logger.LogText(message, this, Logtype.Info);
+                response.Message = message;
+                SendMessage(response, sslStream);                
+            }
+            catch (Exception ex)
+            {
+                //request failed; logg to logfile and return exception to client
+                ResponsePluginMessage response = new ResponsePluginMessage();
+                Logger.LogText(String.Format("User {0} tried to get a plugin list. But we had an exception: {1}", Username, ex.Message), this, Logtype.Info);
+                response.Message = "Exception during request of existing plugin.";
+                SendMessage(response, sslStream);
+            }
+        }        
 
         /// <summary>
         /// Sends a message to the client

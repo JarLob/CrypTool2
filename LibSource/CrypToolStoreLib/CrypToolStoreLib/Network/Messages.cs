@@ -1098,6 +1098,9 @@ namespace CrypToolStoreLib.Tools
     public class ResponsePluginListMessage : Message
     {
         [MessageDataField]
+        public string Message { get; set; }
+
+        [MessageDataField]
         public List<Plugin> Plugins { get; set; }
 
         public ResponsePluginListMessage()

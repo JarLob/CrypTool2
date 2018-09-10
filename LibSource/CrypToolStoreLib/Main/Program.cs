@@ -79,8 +79,11 @@ namespace CrpyStoreLib
                         Console.WriteLine("#### " + result.Message);
 
 
-                        var result2 = client.GetPlugin(7);
-                        Console.WriteLine("############# " + result2.DataObject);
+                        var result2 = client.GetPluginList("kopal");
+                        foreach (var p in (List<Plugin>)result2.DataObject)
+                        {
+                            Console.WriteLine("######## " + p);
+                        }
 
                         client.Disconnect();
                     }
