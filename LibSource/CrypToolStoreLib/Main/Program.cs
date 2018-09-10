@@ -63,28 +63,18 @@ namespace CrpyStoreLib
                     {
                         CrypToolStoreClient client = new CrypToolStoreClient();
                         client.Connect();
-                        client.Login("kopal", "123");
+                        //client.Login("kopal", "123");
 
-                        Developer developer = new Developer();
-                        developer.Firstname = "Test";
-                        developer.Lastname = "Test";
-                        developer.IsAdmin = true;
-                        developer.Username = "Test";
-                        developer.Email = "Test";
+                        Plugin plugin = new Plugin();
+                        plugin.Name = "Test";
+                        plugin.LongDescription = "TestLong";
+                        plugin.ShortDescription = "TestShort";
+                        plugin.Authornames = "Names";
+                        plugin.Authoremails = "Emails";
+                        plugin.Authorinstitutes = "Institutes";
+                        plugin.Icon = new byte[] { 1, 2, 3 };
 
-                        Developer dev = (Developer)client.GetDeveloper("Test").DataObject;
-                        Console.WriteLine("############ " + dev);
-                        
-                        client.UpdateDeveloper(developer);
-                        client.DeleteDeveloper("Test");
-                        client.CreateNewDeveloper(developer);
-
-                        var returnvalue = client.GetDeveloperList();
-                        foreach (var entry in (List<Developer>)returnvalue.DataObject)
-                        {
-                            Console.WriteLine(entry);
-                        }
-
+                        client.CreatePlugin(plugin);
                         client.Disconnect();
                     }
                     catch (Exception ex)

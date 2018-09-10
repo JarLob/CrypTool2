@@ -31,17 +31,13 @@ namespace CrypToolStoreLib.Database
     public class CrypToolStoreDatabase : IDisposable
     {
         private Logger logger = Logger.GetLogger();
-
-        private int PBKDF2_ITERATION_COUNT = 10000;
-        private int PBKDF2_HASH_LENGTH = 32;
-
+        private const int PBKDF2_ITERATION_COUNT = 10000;
+        private const int PBKDF2_HASH_LENGTH = 32;
         private string databaseServer;
         private string databaseName;
         private string databaseUser;
-        private string databasePassword;
-        
+        private string databasePassword;        
         private DatabaseConnection[] connections;
-
         private static CrypToolStoreDatabase database;
 
         /// <summary>

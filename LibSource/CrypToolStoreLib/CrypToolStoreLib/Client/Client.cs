@@ -31,7 +31,7 @@ namespace CrypToolStoreLib.Client
         public const int DEFAULT_PORT = 15151;
         public const string DEFAULT_ADDRESS = "localhost";
 
-        private Logger logger = Logger.GetLogger();
+        private Logger logger = Logger.GetLogger();        
 
         /// <summary>
         /// Encrypted stream between server and client
@@ -108,7 +108,7 @@ namespace CrypToolStoreLib.Client
         public CrypToolStoreClient()
         {
             ServerPort = DEFAULT_PORT;
-            ServerAddress = DEFAULT_ADDRESS;
+            ServerAddress = DEFAULT_ADDRESS;            
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace CrypToolStoreLib.Client
         /// </summary>
         /// <param name="developer"></param>
         /// <returns></returns>
-        public DataModificationOrRequestResult CreateNewDeveloper(Developer developer)
+        public DataModificationOrRequestResult CreateDeveloper(Developer developer)
         {
             lock (this)
             {
@@ -662,7 +662,7 @@ namespace CrypToolStoreLib.Client
                     };
                 }
                 //Received another (wrong) message
-                string msg = String.Format("Response message to request a a developer list was not a ResponseDeveloperList. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to request a developer list was not a ResponseDeveloperList. It was {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -677,9 +677,80 @@ namespace CrypToolStoreLib.Client
 
         #region Methods for working with plugins
 
-        public string CreatePlugin()
+        /// <summary>
+        /// Creates a new plugin in the database
+        /// Only possible, when the user is authenticated
+        /// </summary>
+        /// <param name="developer"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult CreatePlugin(Plugin plugin)
         {
-            return string.Empty;
+            lock (this)
+            {
+                //we can only create users, when we are connected to the server
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+                //only authenticated users are allowed to create plugins
+                if (!IsAuthenticated)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not authenticated",
+                        Success = false,
+                        DataObject = new List<Developer>()
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to create a new plugin: {0}", plugin.ToString()), this, Logtype.Info);
+
+                //1. Step: Send CreateNewPlugin to server
+                CreateNewPluginMessage message = new CreateNewPluginMessage();
+                message.Plugin = plugin;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponsePluginModificationMessage
+                if (response_message.MessageHeader.MessageType == MessageType.ResponsePluginModification)
+                {
+                    //received a response, forward it to user
+                    ResponsePluginModificationMessage responsePluginModificationMessage = (ResponsePluginModificationMessage)response_message;
+                    logger.LogText(String.Format("{0} a new plugin. Return message was: {1}", responsePluginModificationMessage.ModifiedPlugin == true ? "Successfully created" : "Did not create", responsePluginModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responsePluginModificationMessage.Message,
+                        Success = responsePluginModificationMessage.ModifiedPlugin
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to create new plugin was not a ResponsePluginModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
         public string UpdatePlugin()

@@ -32,11 +32,8 @@ namespace CrypToolStoreLib.Database
         private string databaseName;
         private string databaseUser;
         private string databasePassword;
-
         private MySqlConnection mySqlConnection;
-
         private Dictionary<string, MySqlCommand> preparedStatementCache = new Dictionary<string, MySqlCommand>();
-
         private volatile bool currentlyUsed = false;
 
         /// <summary>

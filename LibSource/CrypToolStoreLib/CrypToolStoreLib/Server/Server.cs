@@ -110,7 +110,7 @@ namespace CrypToolStoreLib.Server
                     try
                     {
                         TcpClient client = TCPListener.AcceptTcpClient();
-                        logger.LogText(String.Format("New client connected: {0}", client.Client.RemoteEndPoint), this, Logtype.Info);
+                        logger.LogText(String.Format("New client connected from IP/Port={0}", client.Client.RemoteEndPoint), this, Logtype.Info);
                         Thread handlerthread = new Thread(() =>
                         {
                             try
@@ -121,7 +121,7 @@ namespace CrypToolStoreLib.Server
                             }
                             catch (Exception ex)
                             {
-                                logger.LogText(String.Format("Exception during handling of client: {0}", ex.Message), this, Logtype.Error);
+                                logger.LogText(String.Format("Exception during handling of client from IP/Port={0} : {1}", client.Client.RemoteEndPoint, ex.Message), this, Logtype.Error);
                             }
                         });
                         handlerthread.IsBackground = true;
@@ -172,12 +172,10 @@ namespace CrypToolStoreLib.Server
     public class ClientHandler
     {
         private Logger Logger = Logger.GetLogger();
-        private CrypToolStoreDatabase Database = CrypToolStoreDatabase.GetDatabase();
-        
+        private CrypToolStoreDatabase Database = CrypToolStoreDatabase.GetDatabase();        
         private bool ClientIsAuthenticated { get; set; }
         private bool ClientIsAdmin { get; set; }
         private string Username { get; set; }
-
         private IPAddress IPAddress { get; set; }        
 
         /// <summary>
@@ -202,7 +200,7 @@ namespace CrypToolStoreLib.Server
         /// </summary>
         public ClientHandler()
         {
-            Username = string.Empty;
+            Username = "anonymous"; //default username is anonymous
             ClientIsAuthenticated = false;
             ClientIsAdmin = false;
         }
@@ -309,23 +307,26 @@ namespace CrypToolStoreLib.Server
                     HandleCreateNewDeveloperMessage((CreateNewDeveloperMessage)message, sslStream);
                     break;
                 case MessageType.UpdateDeveloper:
-                    HandleUpdateDeveloper((UpdateDeveloperMessage)message, sslStream);
+                    HandleUpdateDeveloperMessage((UpdateDeveloperMessage)message, sslStream);
                     break;
                 case MessageType.DeleteDeveloper:
-                    HandleDeleteDeveloper((DeleteDeveloperMessage)message, sslStream);
+                    HandleDeleteDeveloperMessage((DeleteDeveloperMessage)message, sslStream);
                     break;
                 case MessageType.RequestDeveloper:
-                    HandleRequestDeveloper((RequestDeveloperMessage)message, sslStream);
+                    HandleRequestDeveloperMessage((RequestDeveloperMessage)message, sslStream);
                     break;
                 case MessageType.RequestDeveloperList:
-                    HandleRequestDeveloperList((RequestDeveloperListMessage)message, sslStream);
+                    HandleRequestDeveloperListMessage((RequestDeveloperListMessage)message, sslStream);
+                    break;
+                case MessageType.CreateNewPlugin:
+                    HandleCreateNewPluginMessage((CreateNewPluginMessage)message, sslStream);
                     break;
             }
         }
         
         /// <summary>
         /// Handles login attempts
-        /// Each Ip is only allowed to try ALLOWED_PASSWORD_RETRIES passwords
+        /// Each IP is only allowed to try ALLOWED_PASSWORD_RETRIES passwords
         /// After ALLOWED_PASSWORD_RETRIES wrong passwords, the authentication is always refused within the next PASSWORD_RETRY_INTERVAL minutes
         /// Login attempts refresh the interval
         /// </summary>
@@ -365,7 +366,7 @@ namespace CrypToolStoreLib.Server
                 ResponseLoginMessage response = new ResponseLoginMessage();
                 response.LoginOk = true;
                 response.Message = "Login credentials correct!";
-                Logger.LogText(String.Format("User {0} successfully authenticated from {1}", username, IPAddress), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} successfully authenticated from IP={1}", username, IPAddress), this, Logtype.Info);
                 Developer developer = Database.GetDeveloper(username);
                 if (developer.IsAdmin)
                 {
@@ -389,7 +390,7 @@ namespace CrypToolStoreLib.Server
                 ResponseLoginMessage response = new ResponseLoginMessage();
                 response.LoginOk = false;
                 response.Message = "Login credentials incorrect!";
-                Logger.LogText(String.Format("{0}. try of a username/password (username={1}) combination from IP {2}", PasswordTries[IPAddress].Number, username, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("{0}. try of a username/password (username={1}) combination from IP={2}", PasswordTries[IPAddress].Number, username, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
             }
         }
@@ -402,7 +403,7 @@ namespace CrypToolStoreLib.Server
         private void HandleLogoutMessage(LogoutMessage logoutMessage, SslStream sslStream)
         {
             ClientIsAuthenticated = false;
-            Logger.LogText(String.Format("User {0} logged out", Username), this, Logtype.Info);
+            Logger.LogText(String.Format("User {0} from IP={1} logged out", Username, IPAddress), this, Logtype.Info);
             sslStream.Close();
         }
 
@@ -421,7 +422,7 @@ namespace CrypToolStoreLib.Server
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.ModifiedDeveloper = false;
                 response.Message = "Unauthorized to create new developers! Please authenticate as admin!";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to create new developer={1} from Ip={2}", Username, createNewDeveloperMessage.Developer.Username, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to create new developer={1} from IP={2}", Username, createNewDeveloperMessage.Developer.Username, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -454,7 +455,7 @@ namespace CrypToolStoreLib.Server
         /// </summary>
         /// <param name="updateDeveloperMessage"></param>
         /// <param name="sslStream"></param>
-        private void HandleUpdateDeveloper(UpdateDeveloperMessage updateDeveloperMessage, SslStream sslStream)
+        private void HandleUpdateDeveloperMessage(UpdateDeveloperMessage updateDeveloperMessage, SslStream sslStream)
         {
             //Only authenticated admins are allowed to create new developers
             if (!ClientIsAuthenticated || !ClientIsAdmin)
@@ -462,7 +463,7 @@ namespace CrypToolStoreLib.Server
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.ModifiedDeveloper = false;
                 response.Message = "Unauthorized to create new developers! Please authenticate as admin!";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to update developer={1} from Ip={2}", Username, updateDeveloperMessage.Developer.Username, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update developer={1} from IP={2}", Username, updateDeveloperMessage.Developer.Username, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -495,7 +496,7 @@ namespace CrypToolStoreLib.Server
         /// </summary>
         /// <param name="deleteDeveloperMessage"></param>
         /// <param name="sslStream"></param>
-        private void HandleDeleteDeveloper(DeleteDeveloperMessage deleteDeveloperMessage, SslStream sslStream)
+        private void HandleDeleteDeveloperMessage(DeleteDeveloperMessage deleteDeveloperMessage, SslStream sslStream)
         {
             //Only authenticated admins are allowed to create new developers
             if (!ClientIsAuthenticated || !ClientIsAdmin)
@@ -503,7 +504,7 @@ namespace CrypToolStoreLib.Server
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.ModifiedDeveloper = false;
                 response.Message = "Unauthorized to delete developers! Please authenticate as admin!";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to delete developer={1} from Ip={2}", Username, deleteDeveloperMessage.Developer.Username, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to delete developer={1} from IP={2}", Username, deleteDeveloperMessage.Developer.Username, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -536,7 +537,7 @@ namespace CrypToolStoreLib.Server
         /// </summary>
         /// <param name="requestDeveloperMessage"></param>
         /// <param name="sslStream"></param>
-        private void HandleRequestDeveloper(RequestDeveloperMessage requestDeveloperMessage, SslStream sslStream)
+        private void HandleRequestDeveloperMessage(RequestDeveloperMessage requestDeveloperMessage, SslStream sslStream)
         {
             //Only authenticated admins are allowed to create new developers
             if (!ClientIsAuthenticated || !ClientIsAdmin)
@@ -544,7 +545,7 @@ namespace CrypToolStoreLib.Server
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.ModifiedDeveloper = false;
                 response.Message = "Unauthorized to get developers! Please authenticate as admin!";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to request developer={1} from Ip={2}", Username, requestDeveloperMessage.Username, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to request developer={1} from IP={2}", Username, requestDeveloperMessage.Username, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -589,7 +590,7 @@ namespace CrypToolStoreLib.Server
         /// </summary>
         /// <param name="requestDeveloperMessage"></param>
         /// <param name="sslStream"></param>
-        private void HandleRequestDeveloperList(RequestDeveloperListMessage requestDeveloperListMessage, SslStream sslStream)
+        private void HandleRequestDeveloperListMessage(RequestDeveloperListMessage requestDeveloperListMessage, SslStream sslStream)
         {
             //Only authenticated admins are allowed to create new developers
             if (!ClientIsAuthenticated || !ClientIsAdmin)
@@ -597,7 +598,7 @@ namespace CrypToolStoreLib.Server
                 ResponseDeveloperListMessage response = new ResponseDeveloperListMessage();
                 response.AllowedToViewList = false;
                 response.Message = "Unauthorized to get developer list! Please authenticate as admin!";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to request developer list from Ip={1}", Username, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to request developer list from IP={1}", Username, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -624,6 +625,48 @@ namespace CrypToolStoreLib.Server
                 SendMessage(response, sslStream);
             }
         }
+
+        /// <summary>
+        /// Handles CreateNewPluginMessages
+        /// If the user is authenticated, it tries to create a new plugin in the database        
+        /// Then, it sends a response message which contains if it succeeded or failed
+        /// </summary>
+        /// <param name="createNewPluginMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleCreateNewPluginMessage(CreateNewPluginMessage createNewPluginMessage, SslStream sslStream)
+        {
+            //Only authenticated users are allowed to create new plugins
+            if (!ClientIsAuthenticated)
+            {
+                ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
+                response.ModifiedPlugin = false;
+                response.Message = "Unauthorized to create new plugins! Please authenticate!";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to create new plugin={1} from IP={2}", Username, createNewPluginMessage.Plugin.Name, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            //Here, the user is authenticated; thus, creation of new plugin in database is started
+            try
+            {
+                Plugin plugin = createNewPluginMessage.Plugin;
+                Database.CreatePlugin(Username, plugin.Name, plugin.ShortDescription, plugin.LongDescription, plugin.Authornames, plugin.Authoremails, plugin.Authorinstitutes, plugin.Icon);
+                Logger.LogText(String.Format("User {0} created new plugin in database: {1}", Username, plugin), this, Logtype.Info);
+                ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
+                response.ModifiedPlugin = true;
+                response.Message = String.Format("Created new plugin in database: {0}", plugin.ToString());
+                SendMessage(response, sslStream);
+            }
+            catch (Exception ex)
+            {
+                //creation failed; logg to logfile and return exception to client
+                ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
+                response.ModifiedPlugin = false;
+                Logger.LogText(String.Format("User {0} tried to create a new plugin. But database returned an exception: {1}", Username, ex.Message), this, Logtype.Info);
+                response.Message = String.Format("Exception during creation of new plugin: {0}", ex.Message);
+                SendMessage(response, sslStream);
+            }
+        }
+
 
         /// <summary>
         /// Sends a message to the client

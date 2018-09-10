@@ -1163,6 +1163,13 @@ namespace CrypToolStoreLib.Tools
     public class ResponsePluginModificationMessage : Message
     {
         [MessageDataField]
+        public bool ModifiedPlugin
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
         public String Message
         {
             get;
