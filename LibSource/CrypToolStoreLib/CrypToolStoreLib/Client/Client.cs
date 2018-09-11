@@ -164,7 +164,7 @@ namespace CrypToolStoreLib.Client
                 byte[] messagebytes = message.Serialize();
                 sslStream.Write(messagebytes);
                 sslStream.Flush();
-                logger.LogText(String.Format("Sent a \"{0}\" to the server", message.ToString()), this, Logtype.Debug);
+                logger.LogText(String.Format("Sent a \"{0}\" message to the server", message.MessageHeader.MessageType.ToString()), this, Logtype.Debug);
             }
         }
 
@@ -216,7 +216,7 @@ namespace CrypToolStoreLib.Client
 
             //Step 4: Deserialize Message
             Message message = Message.DeserializeMessage(messagebytes);
-            logger.LogText(String.Format("Received a message of type {0}", message.MessageHeader.MessageType.ToString()), this, Logtype.Debug);
+            logger.LogText(String.Format("Received a \"{0}\" message from the server", message.MessageHeader.MessageType.ToString()), this, Logtype.Debug);
 
             return message;
         }
