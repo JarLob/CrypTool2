@@ -1330,7 +1330,14 @@ namespace CrypToolStoreLib.Tools
     public class ResponseSourceModificationMessage : Message
     {
         [MessageDataField]
-        String Message
+        public bool ModifiedSource
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
+        public String Message
         {
             get;
             set;
@@ -1339,7 +1346,7 @@ namespace CrypToolStoreLib.Tools
         public ResponseSourceModificationMessage()
         {
             Message = string.Empty;
-        }
+        }        
     }
 
     /// <summary>

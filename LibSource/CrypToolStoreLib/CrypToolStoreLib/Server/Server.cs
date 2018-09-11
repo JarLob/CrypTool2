@@ -328,7 +328,10 @@ namespace CrypToolStoreLib.Server
                     HandleRequestPluginMessage((RequestPluginMessage)message, sslStream);
                     break;
                 case MessageType.RequestPluginList:
-                    HandleRequestPluginList((RequestPluginListMessage)message, sslStream);
+                    HandleRequestPluginListMessage((RequestPluginListMessage)message, sslStream);
+                    break;
+                case MessageType.CreateNewSource:
+                    HandleCreateNewSourceMessage((CreateNewSourceMessage)message, sslStream);
                     break;
 
                 default:
@@ -336,7 +339,7 @@ namespace CrypToolStoreLib.Server
                     break;
             }
         }
-       
+
         /// <summary>
         /// Handles messages of unknown message type
         /// Sends that we do not know the type of message
@@ -806,7 +809,7 @@ namespace CrypToolStoreLib.Server
         /// </summary>
         /// <param name="requestPluginListMessage"></param>
         /// <param name="sslStream"></param>
-        private void HandleRequestPluginList(RequestPluginListMessage requestPluginListMessage, SslStream sslStream)
+        private void HandleRequestPluginListMessage(RequestPluginListMessage requestPluginListMessage, SslStream sslStream)
         {
             Logger.LogText(String.Format("User {0} requested a list of plugins", Username), this, Logtype.Info);
             try
@@ -827,7 +830,73 @@ namespace CrypToolStoreLib.Server
                 response.Message = "Exception during request of existing plugin.";
                 SendMessage(response, sslStream);
             }
-        }        
+        }
+
+        /// <summary>
+        /// Handles CreateNewSourceMessages
+        /// checks, if corresponding plugin exist and is owned by the user. If yes, it creates the source
+        /// </summary>
+        /// <param name="createNewSourceMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleCreateNewSourceMessage(CreateNewSourceMessage createNewSourceMessage, SslStream sslStream)
+        {
+            //Only authenticated users are allowed to create new plugins
+            if (!ClientIsAuthenticated)
+            {
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = false;
+                response.Message = "Unauthorized to create new plugins! Please authenticate!";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to create new source={1} from IP={2}", Username, createNewSourceMessage.Source, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+
+            //check, if plugin exists and is owned by the user
+            Source source = createNewSourceMessage.Source;
+            Plugin plugin = Database.GetPlugin(source.PluginId);
+
+            //Plugin does not exist
+            if (plugin == null)
+            {
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = false;
+                response.Message = String.Format("Plugin with id={0} does not exist!", source.PluginId);
+                Logger.LogText(String.Format("User {0} tried to create new source={1} from IP={2} for a non-existing plugin id={3}", Username, createNewSourceMessage.Source, IPAddress, source.PluginId), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+
+            //Plugin is not owned by the user
+            if (plugin.Username != Username)
+            {
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = false;
+                response.Message = "Not authorized!";
+                Logger.LogText(String.Format("User {0} tried to create new source={1} from IP={2} for a plugin (id={3}) that he does not own ", Username, createNewSourceMessage.Source, IPAddress, source.PluginId), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+
+            //Here, everything is fine; thus, we try to create the source
+            try
+            {
+                Database.CreateSource(source.PluginId, source.PluginVersion, source.ZipFile, DateTime.Now, BUILD_STATES.UPLOADED);
+                Logger.LogText(String.Format("User {0} created new source for plugin={0} in database: {2}", Username, plugin, source), this, Logtype.Info);
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = true;
+                response.Message = String.Format("Created new source in database: {0}", source.ToString());
+                SendMessage(response, sslStream);
+            }
+            catch (Exception ex)
+            {
+                //creation failed; logg to logfile and return exception to client
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = false;
+                Logger.LogText(String.Format("User {0} tried to create a new source. But an exception occured: {1}", Username, ex.Message), this, Logtype.Info);
+                response.Message = "Exception during creation of new source";
+                SendMessage(response, sslStream);
+            }
+        }
 
         /// <summary>
         /// Sends a message to the client

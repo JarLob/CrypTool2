@@ -65,25 +65,17 @@ namespace CrpyStoreLib
                         client.Connect();
                         client.Login("Test", "");
 
-                        Plugin plugin = new Plugin();
-                        plugin.Id = 7;
-                        plugin.Name = "Test";
-                        plugin.LongDescription = "TestLong";
-                        plugin.ShortDescription = "TestShort";
-                        plugin.Authornames = "Names";
-                        plugin.Authoremails = "Emails";
-                        plugin.Authorinstitutes = "Institutes";
-                        plugin.Icon = new byte[] { 1, 2, 3 };
+                        Source source = new Source();
+                        source.PluginId = 7;
+                        source.PluginVersion = 2;
+                        source.Assembly = new byte[] { 1, 2, 3 };
+                        source.BuildDate = DateTime.Now;
+                        source.BuildLog = "empty";
+                        source.BuildState = "state";
+                        source.BuildVersion = 0;
+                        source.ZipFile = new byte[] { 1, 2, 3 };
 
-                        var result = client.UpdatePlugin(plugin);
-                        Console.WriteLine("#### " + result.Message);
-
-
-                        var result2 = client.GetPluginList("kopal");
-                        foreach (var p in (List<Plugin>)result2.DataObject)
-                        {
-                            Console.WriteLine("######## " + p);
-                        }
+                        client.CreateSource(source);
 
                         client.Disconnect();
                     }

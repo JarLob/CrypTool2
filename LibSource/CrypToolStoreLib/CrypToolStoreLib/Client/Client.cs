@@ -1039,9 +1039,74 @@ namespace CrypToolStoreLib.Client
 
         #region Methods for working with sources
 
-        public string CreateSource()
+        public DataModificationOrRequestResult CreateSource(Source source)
         {
-            return string.Empty;
+            lock (this)
+            {
+                //we can only create users, when we are connected to the server
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+                //only authenticated users are allowed to create plugins
+                if (!IsAuthenticated)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not authenticated",
+                        Success = false,
+                        DataObject = new List<Developer>()
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to create a new source: {0}", source.ToString()), this, Logtype.Info);
+
+                //1. Step: Send CreateNewSourceMessage to server
+                CreateNewSourceMessage message = new CreateNewSourceMessage();
+                message.Source = source;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponseSourceModificationMessage
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseSourceModification)
+                {
+                    //received a response, forward it to user
+                    ResponseSourceModificationMessage responseSourceModificationMessage = (ResponseSourceModificationMessage)response_message;
+                    logger.LogText(String.Format("{0} a new resource. Return message was: {1}", responseSourceModificationMessage.ModifiedSource == true ? "Successfully created" : "Did not create", responseSourceModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responseSourceModificationMessage.Message,
+                        Success = responseSourceModificationMessage.ModifiedSource
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to create new plugin was not a ResponseSourceModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
         public string UpdateSource()
