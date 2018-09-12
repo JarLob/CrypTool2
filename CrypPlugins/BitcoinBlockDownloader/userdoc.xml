@@ -8,18 +8,56 @@
   <introduction lang="en">
     The Bitcoin-Block-Downloader downloads a block from the Bitcoin Blockchain.
     <newline />
-         To use this downloader you need access to a server / client that has the complete blockchain stored. 
-         It is important that this server is started with certain parameters.
-         <newline />
-         -server<newline />
-         -rpcuser=%USERNAME<newline />
-         -rpcpassword=%PASSWORD<newline />
-         -rpcport=%PORTNUMBER<newline />
-         -txindex<newline />
-         <newline />
-         With the access data you can then query the blockchain using API. 
-         Particularly important is the -txindex, otherwise not all transactions will be downloaded, 
-         which can lead to errors.
+    To use this downloader you need access to a server / client that has the complete blockchain stored. 
+    It is important that this server is started with certain parameters.
+    <newline />
+    -server<newline />
+    -rpcuser=%USERNAME<newline />
+    -rpcpassword=%PASSWORD<newline />
+    -rpcport=%PORTNUMBER<newline />
+    -txindex<newline />
+    <newline />
+    With the access data you can then query the blockchain using API. 
+    Particularly important is the <newline/>-txindex, otherwise not all transactions will be downloaded, 
+    which can lead to errors.
+    <newline/><newline/>
+    The Department of Applied Information Security of the University of Kassel provides such a server. In this component, this server is set by default to be able to start directly.
+    <newline/><newline/>
+    What is needed to set up this server locally read in the following section:<newline/><b>ATTENTION:</b> Deploying a local server can take several days!
+    <newline/><newline/>
+    1. Check out the SVN repository of CrypTool 2
+    <list>
+    <item>Download instructions:<external ref="https://www.cryptool.org/trac/CrypTool2/browser/trunk/Documentation/PluginHowTo/HowToDeveloper.pdf">HowToDeveloper.pdf</external>
+    </item>
+    <item>Chapter 1.2 of the manual explains how to use Tortoise to check out SVN.</item>
+    </list>
+    <newline/>
+    2. Set up the local Bitcoin Core Server
+    <list>
+    <item>Download and install the Bitcoin Cores: <external ref="https://bitcoin.org/en/download">Bitcoin Core Download</external>
+    </item>
+    <item>Before the client is started:<newline/>Copy in the CrypTool 2 repository under <b>Util\BitcoinDownloadServer\BitcoinDownloadServer</b> the file bitcoin.conf in
+    <b>%APPDATA%\Bitcoin</b> (unter Linux: <b>$HOME/.bitcoin/</b>), this is the default directory.<newline/>
+    If another directory was selected during the installation, select it.<newline/>
+    Username and Password can be selected in the bitcoin.conf file. The lines <b>server=1</b> and <b>txindex=1</b> must be commented out.<newline/>
+    If the line <b>rpcport=8332</b> is commented in, this is also set as default.<newline/>
+    In this configuration file further settings can be made which are not absolutely necessary.<newline/>
+    </item>
+    <item>Now the Bitcoin client downloads the complete blockchain, this process can take several days (about 200GB).</item>
+    <item>In parallel, the <b>Util\BitcoinDownloadServer\</b> server component can be set up and compiled.</item>
+    <item>Start the project with Visual Studio, for example.</item>
+    <item>Enter the username, password and the URL to your Bitcoin Core Server in App.config. Additionally, the location for your logfile.
+    </item>
+    <item>
+    The project can be compiled and then the executable file can be started under <b>BitcoinDownloadServer\bin\x86\Debug</b>. 
+    The server should already connect to the Bitcoin Core Server even if the blockchain has not been completely downloaded yet.
+    </item>
+    </list>
+    <newline/>
+    3. When the blockchain has been completely downloaded, the IP and port settings in this component must be changed to the local server. 
+    Now you can query your own blockchain.<newline/><newline/>
+
+    In the references are two more links to a video as well as a detailed explanation of the configuration file.
   </introduction>
 
   <introduction lang="de-DE">
@@ -36,6 +74,49 @@
     <newline/>
     Mit dem Zugangsdaten kann man dann die Blockchain mittels API abfragen. Besonders wichtig ist der -txindex, 
     sonst werden nicht alle Transaktionen heruntergeladen, was zu Fehlern führen kann.
+    <newline/><newline/>
+    Das Fachgebiet Angewandte Informationssicherheit der Universität Kassel stellt einen solchen Server zur Verfügung.
+    In dieser Komponente ist dieser Server per default eingestellt, um direkt starten zu können.
+    <newline/><newline/>
+    Was benötigt wird um diesen Server lokal aufzusetzen lesen sie in dem folgenden Abschnitt:
+    <b>ACHTUNG:</b> Das bereitstellen eines lokalen Servers kann mehrere Tage dauern!
+    <newline/><newline/>
+    1. Das SVN Repository von CrypTool 2 auschecken
+    <list>
+    <item>Anleitung herunterladen:<external ref="https://www.cryptool.org/trac/CrypTool2/browser/trunk/Documentation/PluginHowTo/HowToDeveloper.pdf">HowToDeveloper.pdf</external>
+    </item>
+    <item>Kapitel 1.2 der Anleitung erklärt wie man mittels Tortoise das SVN auscheckt.</item>
+    </list>
+    <newline/>
+    2. Einrichten des lokalen Bitcoin Core Servers
+    <list>
+      <item>Herunterladen und installieren des Bitcoin Cores: <external ref="https://bitcoin.org/de/download">Bitcoin Core Download</external>
+    </item>
+      <item>Bevor der Client gestartet wird:<newline/>Im CrypTool 2 Repository unter <b>Util\BitcoinDownloadServer\BitcoinDownloadServer</b> die Datei bitcoin.conf
+        kopieren in <b>%APPDATA%\Bitcoin</b> (unter Linux: <b>$HOME/.bitcoin/</b>), dies ist das default Verzeichnis.<newline/>
+        Wurde bei der Installation ein anderes Verzeichnis gewählt ist dieses auszuwählen.<newline/>
+        In der bitcoin.conf Datei können Username und Password gewählt werden. Die Zeilen <b>server=1</b> und <b>txindex=1</b> müssen auskommentiert sein.<newline/>
+        Ist die Zeile <b>rpcport=8332</b> einkommentiert wird dieser auch als default gesetzt.<newline/>
+        In dieser Konfiugartionsdatei können weitere Einstellungen vorgenommen werden die aber nicht zwingend erforderlich sind.<newline/>
+      </item>
+      <item>Jetzt läd der Bitcoin Client die komplette Blockchain herunter, dieser Prozess kann mehrere Tage dauern (ca. 200GB).</item>
+      <item>Parallel kann die unter <b>Util\BitcoinDownloadServer\</b> liegende Server Komponente eingerichtet und kompiliert werden.</item>
+      <item>Starten sie das Projekt zum Beispiel mit Visual Studio.</item>
+      <item>
+        Tragen sie in der App.config den Usernamen, Passwort und die URL zu ihrem Bitcoin Core Server ein. Zusätzlich noch den
+        Speicherort für ihr logfile.
+      </item>
+      <item>
+        Das Projekt kann kompiliert und anschließend die ausführbare Datei unter <b>BitcoinDownloadServer\bin\x86\Debug</b>
+        gestartet werden. Der Server sollte sich mit dem Bitcoin Core Server bereits verbinden, auch wenn die Blockchain noch nicht
+        vollständig heruntergeladen wurde.
+      </item>
+    </list>
+    <newline/>
+    3. Wenn die Blockchain vollständig heruntergeladen wurde muss in den Einstellungen dieser Komponente die IP und der Port 
+    auf den lokalen Server umgestellt werden. Jetzt kann die eigene Blockchain abgefragt werden.<newline/><newline/>
+
+    In den Referenzen sind zwei weitere Links zu einem Video sowie eine detailierte Erklärung der Konfigurationsdatei.
   </introduction>
 
   <usage lang="en">
@@ -68,6 +149,18 @@
     <caption lang="en">Here the used Bitcoin API is made available on a website (getblockhash)</caption>
     <link url="http://chainquery.com/bitcoin-api/getblockhash" lang="de-DE" />
     <caption lang="de-DE">Hier wird die verwendete Bitcoin API auf einer Website bereitgestellt (getblockhash)</caption>
+    </linkReference>
+      <linkReference>
+      <link url="http://www.larsholdgaard.com/run-bitcoin-qt/" lang="de-DE" />
+      <caption lang="de-DE">Video wie man die bitcoin.config einrichtet</caption>
+      <link url="http://www.larsholdgaard.com/run-bitcoin-qt/" lang="en" />
+      <caption lang="en">Video for setting up bitcoin.conf</caption>
+    </linkReference>
+    <linkReference>
+      <link url="https://en.bitcoin.it/wiki/Running_Bitcoin" lang="de-DE" />
+      <caption lang="de-DE">Detaillierte Erklärung der konfigurationsdatei</caption>
+          <link url="https://en.bitcoin.it/wiki/Running_Bitcoin" lang="en" />
+      <caption lang="en">Detailed explanation of the configuration file</caption>
     </linkReference>
   </references>
 </documentation>
