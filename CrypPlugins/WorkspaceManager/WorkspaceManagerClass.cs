@@ -350,14 +350,17 @@ namespace WorkspaceManager
         public IList<PluginModel> CurrentCopies = new List<PluginModel>();
         public void Paste()
         {
-            if (copy == null || WorkspaceSpaceEditorView.IsFullscreenOpen)
+            if (copy == null || WorkspaceSpaceEditorView.IsFullscreenOpen || isExecuting())
+            {
                 return;
-
+            }
             WorkspaceModel.ModifyModel(copy, true);
             CurrentCopies = copy.GetCopiedModelElements().OfType<PluginModel>().ToList();
             if (PasteOccured != null)
+            {
                 PasteOccured.Invoke(this, null);
-            copy = null;
+            }
+            doCopy();
         }
 
         public void Remove()
