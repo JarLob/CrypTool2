@@ -13,14 +13,6 @@ namespace WindowsFormsApplication1
     public class ListViewColumnSorter : IComparer
     {
         /// <summary>
-        /// Specifies the column to be sorted
-        /// </summary>
-        private int ColumnToSort;
-        /// <summary>
-        /// Specifies the order in which to sort (i.e. 'Ascending').
-        /// </summary>
-        private SortOrder OrderOfSort;
-        /// <summary>
         /// Case insensitive comparer object
         /// </summary>
         private CaseInsensitiveComparer ObjectCompare;
@@ -30,11 +22,8 @@ namespace WindowsFormsApplication1
         /// </summary>
         public ListViewColumnSorter()
         {
-            // Initialize the column to '0'
-            ColumnToSort = 0;
-
-            // Initialize the sort order to 'none'
-            OrderOfSort = SortOrder.None;
+            SortColumn = 0;
+            Order = SortOrder.None;
 
             // Initialize the CaseInsensitiveComparer object
             ObjectCompare = new CaseInsensitiveComparer();
@@ -48,32 +37,12 @@ namespace WindowsFormsApplication1
         /// <returns>The result of the comparison. "0" if equal, negative if 'x' is less than 'y' and positive if 'x' is greater than 'y'</returns>
         public int Compare(object x, object y)
         {
-            int compareResult;
-            ListViewItem listviewX, listviewY;
+            if (Order == SortOrder.None) return 0;
 
-            // Cast the objects to be compared to ListViewItem objects
-            listviewX = (ListViewItem)x;
-            listviewY = (ListViewItem)y;
+            ListViewItem lvX = (ListViewItem)x;
+            ListViewItem lvY = (ListViewItem)y;
 
-            // Compare the two items
-            compareResult = ObjectCompare.Compare(listviewX.SubItems[ColumnToSort].Text, listviewY.SubItems[ColumnToSort].Text);
-
-            // Calculate correct return value based on object comparison
-            if (OrderOfSort == SortOrder.Ascending)
-            {
-                // Ascending sort is selected, return normal result of compare operation
-                return compareResult;
-            }
-            else if (OrderOfSort == SortOrder.Descending)
-            {
-                // Descending sort is selected, return negative result of compare operation
-                return (-compareResult);
-            }
-            else
-            {
-                // Return '0' to indicate they are equal
-                return 0;
-            }
+            return ObjectCompare.Compare(lvX.SubItems[SortColumn].Text, lvY.SubItems[SortColumn].Text) * (Order == SortOrder.Ascending ? 1 : -1);
         }
 
         /// <summary>
@@ -81,14 +50,7 @@ namespace WindowsFormsApplication1
         /// </summary>
         public int SortColumn
         {
-            set
-            {
-                ColumnToSort = value;
-            }
-            get
-            {
-                return ColumnToSort;
-            }
+            get; set;
         }
 
         /// <summary>
@@ -96,15 +58,7 @@ namespace WindowsFormsApplication1
         /// </summary>
         public SortOrder Order
         {
-            set
-            {
-                OrderOfSort = value;
-            }
-            get
-            {
-                return OrderOfSort;
-            }
+            get; set;
         }
-
     }
 }

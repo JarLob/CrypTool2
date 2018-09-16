@@ -36,6 +36,7 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveMergedResourcesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToBasepathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -49,10 +50,12 @@
             this.label6 = new System.Windows.Forms.Label();
             this.basepathTextBox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.lang1TextBox = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.lang1TextBox = new System.Windows.Forms.RichTextBox();
             this.lang2TextBox = new System.Windows.Forms.RichTextBox();
+            this.lang3TextBox = new System.Windows.Forms.RichTextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.fileTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -102,7 +105,8 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadToolStripMenuItem,
-            this.saveToolStripMenuItem});
+            this.saveToolStripMenuItem,
+            this.quitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -113,7 +117,7 @@
             this.loadMergedResourcesToolStripMenuItem,
             this.recursiveDirectoryScanToolStripMenuItem});
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.loadToolStripMenuItem.Text = "Load";
             // 
             // loadMergedResourcesToolStripMenuItem
@@ -136,7 +140,7 @@
             this.saveMergedResourcesToolStripMenuItem,
             this.saveToBasepathToolStripMenuItem});
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // saveMergedResourcesToolStripMenuItem
@@ -152,6 +156,13 @@
             this.saveToBasepathToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.saveToBasepathToolStripMenuItem.Text = "Save to basepath";
             this.saveToBasepathToolStripMenuItem.Click += new System.EventHandler(this.saveToBasepathToolStripMenuItem_Click);
+            // 
+            // quitToolStripMenuItem
+            // 
+            this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.quitToolStripMenuItem.Text = "Quit";
+            this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -281,13 +292,16 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel1.Controls.Add(this.lang1TextBox, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label2, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.lang1TextBox, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.lang2TextBox, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.lang2TextBox, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.lang3TextBox, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label8, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 25);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -296,6 +310,18 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 79.22078F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(942, 77);
             this.tableLayoutPanel1.TabIndex = 15;
+            // 
+            // lang1TextBox
+            // 
+            this.lang1TextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lang1TextBox.Location = new System.Drawing.Point(3, 18);
+            this.lang1TextBox.Name = "lang1TextBox";
+            this.lang1TextBox.Size = new System.Drawing.Size(308, 56);
+            this.lang1TextBox.TabIndex = 12;
+            this.lang1TextBox.Tag = "en";
+            this.lang1TextBox.Text = "";
+            this.lang1TextBox.TextChanged += new System.EventHandler(this.LangTextBox_Leave);
+            this.lang1TextBox.Leave += new System.EventHandler(this.LangTextBox_Leave);
             // 
             // label1
             // 
@@ -309,30 +335,44 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(474, 0);
+            this.label2.Location = new System.Drawing.Point(317, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(50, 13);
             this.label2.TabIndex = 10;
             this.label2.Text = "Deutsch:";
             // 
-            // lang1TextBox
-            // 
-            this.lang1TextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lang1TextBox.Location = new System.Drawing.Point(3, 18);
-            this.lang1TextBox.Name = "lang1TextBox";
-            this.lang1TextBox.Size = new System.Drawing.Size(465, 56);
-            this.lang1TextBox.TabIndex = 7;
-            this.lang1TextBox.Text = "";
-            // 
             // lang2TextBox
             // 
             this.lang2TextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lang2TextBox.Location = new System.Drawing.Point(474, 18);
+            this.lang2TextBox.Location = new System.Drawing.Point(317, 18);
             this.lang2TextBox.Name = "lang2TextBox";
-            this.lang2TextBox.Size = new System.Drawing.Size(465, 56);
-            this.lang2TextBox.TabIndex = 8;
+            this.lang2TextBox.Size = new System.Drawing.Size(308, 56);
+            this.lang2TextBox.TabIndex = 7;
+            this.lang2TextBox.Tag = "de";
             this.lang2TextBox.Text = "";
-            this.lang2TextBox.Leave += new System.EventHandler(this.lang2TextBox_Leave);
+            this.lang2TextBox.TextChanged += new System.EventHandler(this.LangTextBox_Leave);
+            this.lang2TextBox.Leave += new System.EventHandler(this.LangTextBox_Leave);
+            // 
+            // lang3TextBox
+            // 
+            this.lang3TextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lang3TextBox.Location = new System.Drawing.Point(631, 18);
+            this.lang3TextBox.Name = "lang3TextBox";
+            this.lang3TextBox.Size = new System.Drawing.Size(308, 56);
+            this.lang3TextBox.TabIndex = 8;
+            this.lang3TextBox.Tag = "ru";
+            this.lang3TextBox.Text = "";
+            this.lang3TextBox.TextChanged += new System.EventHandler(this.LangTextBox_Leave);
+            this.lang3TextBox.Leave += new System.EventHandler(this.LangTextBox_Leave);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(631, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(53, 13);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "Russisch:";
             // 
             // label5
             // 
@@ -435,9 +475,9 @@
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.Location = new System.Drawing.Point(3, 55);
             this.splitContainer1.Name = "splitContainer1";
@@ -482,6 +522,7 @@
             this.listView1.View = System.Windows.Forms.View.Details;
             this.listView1.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listView1_ColumnClick);
             this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            this.listView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseClick);
             // 
             // columnHeader1
             // 
@@ -495,12 +536,12 @@
             // columnHeader3
             // 
             this.columnHeader3.Text = "Englisch";
-            this.columnHeader3.Width = 264;
+            this.columnHeader3.Width = 189;
             // 
             // columnHeader4
             // 
             this.columnHeader4.Text = "Deutsch";
-            this.columnHeader4.Width = 260;
+            this.columnHeader4.Width = 197;
             // 
             // tabPage1
             // 
@@ -516,9 +557,9 @@
             // logBox
             // 
             this.logBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.logBox.Enabled = false;
             this.logBox.Location = new System.Drawing.Point(3, 3);
             this.logBox.Name = "logBox";
+            this.logBox.ReadOnly = true;
             this.logBox.Size = new System.Drawing.Size(942, 491);
             this.logBox.TabIndex = 0;
             this.logBox.Text = "";
@@ -545,6 +586,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "CT2Translate";
             this.Text = "CT2Translate";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CT2Translate_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -586,12 +628,12 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.RichTextBox lang1TextBox;
+        private System.Windows.Forms.RichTextBox lang2TextBox;
         private System.Windows.Forms.TextBox keyTextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RichTextBox lang2TextBox;
+        private System.Windows.Forms.RichTextBox lang3TextBox;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.Label label4;
@@ -616,6 +658,9 @@
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveMergedResourcesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToBasepathToolStripMenuItem;
+        private System.Windows.Forms.RichTextBox lang1TextBox;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
     }
 }
 

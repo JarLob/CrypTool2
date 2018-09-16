@@ -13,6 +13,8 @@ using System.Text.RegularExpressions;
 
 namespace WindowsFormsApplication1
 {
+    delegate void LogDelegate(string msg);
+
     public partial class CT2Translate : Form
     {
         private ListViewColumnSorter lvwColumnSorter;
@@ -20,12 +22,14 @@ namespace WindowsFormsApplication1
         //Dictionary<string, TranslatedResource> theResources = new Dictionary<string,TranslatedResource>();
         AllResources allres = new AllResources();
 
-        string[] displayedLanguages = { "en", "de" };
-        Dictionary<string, string> LongLanguage = new Dictionary<string, string> { {"en","Englisch"}, {"de","Deutsch"} };
+        public static string[] displayedLanguages = { "en", "de", "ru" };
+        Dictionary<string, string> LongLanguage = new Dictionary<string, string> { {"en","Englisch"}, { "de", "Deutsch" }, { "ru", "Russisch" } };
+        HashSet<string> ignorePaths = new HashSet<string> { "obj" };
 
 
         public CT2Translate()
         {
+            allres.log = log;
             InitializeComponent();
             // Create an instance of a ListView column sorter and assign it 
             // to the ListView control.
@@ -49,6 +53,12 @@ namespace WindowsFormsApplication1
             toolTip1.SetToolTip(SearchButton, "apply filter");
 
             //pathTextBox.Text = Properties.Settings.Default.Path;
+            textBox1.LostFocus += new EventHandler(LangTextBox_Leave);
+        }
+
+        public void log(string msg)
+        {
+            logBox.AppendText(String.Format("{0}: {1}\n", DateTime.Now, msg));
         }
 
         private void recursiveDirectoryScanToolStripMenuItem_Click(object sender, EventArgs e)
@@ -82,12 +92,16 @@ namespace WindowsFormsApplication1
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if ( listView1.SelectedItems.Count>0 ) {
-                fileTextBox.Text = listView1.SelectedItems[0].SubItems[0].Text;
-                keyTextBox.Text = listView1.SelectedItems[0].SubItems[1].Text;
-                lang1TextBox.Text = listView1.SelectedItems[0].SubItems[displayedLanguages[0]].Text;
-                if( displayedLanguages.Count()>1 )
-                    lang2TextBox.Text = listView1.SelectedItems[0].SubItems[displayedLanguages[1]].Text;
+            if (listView1.SelectedItems.Count > 0)
+            {
+                var sel = listView1.SelectedItems[0];
+                fileTextBox.Text = sel.SubItems[0].Text;
+                keyTextBox.Text = sel.SubItems[1].Text;
+                lang1TextBox.Text = sel.SubItems[displayedLanguages[0]].Text;
+                lang2TextBox.Text = sel.SubItems[displayedLanguages[1]].Text;
+                lang3TextBox.Text = sel.SubItems[displayedLanguages[2]].Text;
+                //if (displayedLanguages.Count() > 1)
+                //    lang3TextBox.Text = sel.SubItems[displayedLanguages[1]].Text;
             }
         }
 
@@ -97,10 +111,13 @@ namespace WindowsFormsApplication1
 
             foreach (string lang in displayedLanguages)
             {
-                if (tk.Translations.ContainsKey(lang)) {
+                if (tk.Translations.ContainsKey(lang))
+                {
                     item.SubItems[lang].BackColor = Color.Transparent;
                     item.SubItems[lang].Text = tk.Translations[lang];
-                } else {
+                }
+                else
+                {
                     item.SubItems[lang].BackColor = Color.LightSalmon;
                     item.SubItems[lang].Text = "";
                 }
@@ -113,20 +130,18 @@ namespace WindowsFormsApplication1
 
             try
             {
+                RegexOptions options = searchcaseBox.Checked ? RegexOptions.None : RegexOptions.IgnoreCase;
+
                 foreach (KeyValuePair<string, TranslatedKey> pair in dict.TranslatedKey)
                 {
-                    RegexOptions options = (searchcaseBox.Checked) ? RegexOptions.None : RegexOptions.IgnoreCase;
+                    bool match = Regex.Match(pair.Key, filter, options).Success ||
+                                   displayedLanguages.Any(l => pair.Value.Translations.ContainsKey(l) && Regex.Match(pair.Value.Translations[l], filter, options).Success);
 
-                    bool matched = Regex.Match(pair.Key.ToString(), filter, options).Success;
-
-                    foreach (string lang in displayedLanguages)
-                        if (pair.Value.Translations.ContainsKey(lang))
-                            matched |= Regex.Match(pair.Value.Translations[lang].ToString(), filter, options).Success;
-
-                    if (!matched) continue;
+                    if (!match) continue;
                     
                     // populate listview
-                    ListViewItem item = new ListViewItem( new string[] { fname, pair.Key.ToString() } );
+                    ListViewItem item = new ListViewItem( new string[] { fname, pair.Key } );
+                    item.SubItems[0].Tag = dict;
                     foreach (string lang in displayedLanguages)
                     {
                         ListViewItem.ListViewSubItem subitem = item.SubItems.Add("");
@@ -138,6 +153,7 @@ namespace WindowsFormsApplication1
                     UpdateItem(item);
                     lvi.Add(item);
                 }
+
                 listView1.Items.AddRange(lvi.ToArray());    // viel schneller als einzelnes Hinzufügen!
             }
             catch (Exception e)
@@ -156,6 +172,7 @@ namespace WindowsFormsApplication1
             foreach (string path in paths)
                 listViewAdd(path, allres.Resources[path], filter);
             listView1.EndUpdate();
+
             //toolStripStatusLabel1.Text = listView1.Items.Count + " items displayed";
             textBox1.Text = String.Format("{0} item{1} displayed{2}", 
                 listView1.Items.Count,
@@ -169,21 +186,15 @@ namespace WindowsFormsApplication1
         {
             int count = 0;
 
-            foreach( ListViewItem item in listView1.Items ) {
-                TranslatedKey tk = (TranslatedKey)item.Tag;
-                foreach (string lang in displayedLanguages)
-                {
-                    if (!tk.Translations.ContainsKey(lang))
-                    {
-                        count++;
-                    }
-                }
+            foreach (ListViewItem item in listView1.Items)
+            {
+                var translations = ((TranslatedKey)item.Tag).Translations;
+                count += displayedLanguages.Count(lang => !translations.ContainsKey(lang));
             }
 
             return count;
         }
-
-
+        
         private void nextmissButton_Click(object sender, EventArgs e)
         {
             if (listView1.Items.Count == 0) return;
@@ -228,14 +239,14 @@ namespace WindowsFormsApplication1
 
         private void UpdateList()
         {
+            if (fileTree.Nodes.Count == 0) return;
+
             Cursor.Current = Cursors.WaitCursor;
-
-            if( fileTree.Nodes.Count==0 ) return;
-
+            
             if (fileTree.SelectedNode == null)
                 fileTree.SelectedNode = fileTree.Nodes[0];
 
-            string[] files = allres.MatchFiles((string)fileTree.SelectedNode.Tag);
+            string[] files = allres.MatchFiles(fileTree.SelectedNode.Name);
 
             listView1.Items.Clear();
             listViewAdd(files, filterBox.Text);
@@ -382,23 +393,58 @@ namespace WindowsFormsApplication1
             allres.SaveText(path+"\\CT2german.txt", "de");
         }
 
-        private void lang2TextBox_Leave(object sender, EventArgs e)
+        private void saveToBasepathToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            allres.Update();
+        }
+
+        private void LangTextBox_Leave(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count <= 0) return;
 
-            string lang = "de";
+            RichTextBox rtb = (RichTextBox)sender;
+            string lang = (string)rtb.Tag;
             ListViewItem item = listView1.SelectedItems[0];
+            TranslatedResource rsrc = (TranslatedResource)item.SubItems[0].Tag;
             TranslatedKey tk = (TranslatedKey)item.Tag;
-            if( !tk.Translations.ContainsKey(lang) ) tk.Add(lang, "");
-            tk.Translations[lang] = lang2TextBox.Text;
-            item.SubItems[lang].Text = lang2TextBox.Text;
+            if (!tk.Translations.ContainsKey(lang) && rtb.Text == "") return;
+            if (tk.Translations.ContainsKey(lang) && tk.Translations[lang] == rtb.Text) return;
+            if (!rsrc.files.ContainsKey(lang)) rsrc.files.Add(lang,"");
+            rsrc.modified[lang] = true;
+            //if (!tk.Translations.ContainsKey(lang)) tk.Add(lang, "");
+            tk.Translations[lang] = rtb.Text;
+            item.SubItems[lang].Text = rtb.Text;
             UpdateItem(item);
             textBox2.Text = countEmptyKeys().ToString();
         }
 
-        private void saveToBasepathToolStripMenuItem_Click(object sender, EventArgs e)
+        private bool quitWhileModified()
         {
-            allres.Update();
+            return !allres.Modified || MessageBox.Show("You have not saved the modified data. Quit anyway?", "Modified Data", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning) == DialogResult.Yes;
+        }
+
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(quitWhileModified()) Application.Exit();
+        }
+
+        private void CT2Translate_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = !quitWhileModified();
+        }
+
+        private void listView1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (listView1.SelectedItems.Count <= 0) return;
+            ListViewItem item = listView1.SelectedItems[0];
+            TranslatedResource rsrc = (TranslatedResource)item.SubItems[0].Tag;
+            string nodeName = rsrc.files.Values.OrderBy(x => x).First();
+            TreeNode[] tns = fileTree.Nodes.Find(nodeName,true);
+            if (tns.Length > 0)
+            {
+                fileTree.SelectedNode = tns[0];
+                fileTree.Focus();
+            }
         }
 
     }

@@ -32,10 +32,23 @@ namespace WindowsFormsApplication1
 
     class TranslatedResource
     {
-        Dictionary<string,TranslatedKey> translatedKey = new Dictionary<string,TranslatedKey>();
+        // maps a resource key to a dictionary with texts in different languages for this key
+        Dictionary<string, TranslatedKey> translatedKey = new Dictionary<string, TranslatedKey>();
+
         public Dictionary<string, string> files = new Dictionary<string, string>();
         public Dictionary<string, bool> modified = new Dictionary<string, bool>();
         public string basepath;
+        public LogDelegate log;
+
+        public TranslatedResource(LogDelegate del = null)
+        {
+            log = del;
+        }
+
+        private void Log(string msg)
+        {
+            log?.Invoke(msg);
+        }
 
         public Dictionary<string, TranslatedKey> TranslatedKey
         {
@@ -45,6 +58,19 @@ namespace WindowsFormsApplication1
             }
         }
 
+        public bool Modified
+        {
+            get
+            {
+                return modified.ContainsValue(true);
+            }
+        }
+
+        public void ClearModified()
+        {
+            modified.Clear();
+        }
+
         public void SaveAs(string lang, string modification)
         {
             Save(basepath + "." + modification + "." + AllResources.langext[lang] + ".resx", lang);
@@ -52,8 +78,8 @@ namespace WindowsFormsApplication1
 
         public void Save()
         {
-            foreach (string lang in files.Keys) 
-                Save(files[lang],lang);
+            foreach (string lang in files.Keys)
+                Save(files[lang], lang);
         }
 
         public void Save(string lang)
@@ -71,7 +97,7 @@ namespace WindowsFormsApplication1
                 if (translatedKey[key].Translations.ContainsKey(lang))
                 {
                     string value = translatedKey[key].Translations[lang];
-                    writer.AddResource(key, value+"Hello, world!");
+                    writer.AddResource(key, value);
                 }
             }
 
@@ -79,48 +105,74 @@ namespace WindowsFormsApplication1
             writer.Close();
         }
 
-        public void Update(string lang)
+        public bool Update(string lang)
         {
+            //if (!modified.ContainsKey(lang) || !modified[lang]) return;
             List<ResXDataNode> nodelist = new List<ResXDataNode>();
             string filename = basepath + files[lang];
 
             // read nodes
             ResXResourceReader reader = new ResXResourceReader(filename);
+            
             reader.BasePath = Path.GetDirectoryName(filename);
-            reader.UseResXDataNodes = true; 
-                
+            reader.UseResXDataNodes = true;
+
+            bool modified = false;
+
             foreach (DictionaryEntry entry in reader)
             {
                 ResXDataNode dataNode = (ResXDataNode)entry.Value;
-                if (dataNode.FileRef == null)
+                string key, value;
+                try
                 {
-                    string key = entry.Key.ToString();
-                    string value = entry.Value.ToString();
+                    if (dataNode.FileRef == null)
+                    {
+                        key = entry.Key.ToString();
+                        var v = dataNode.GetValue((System.ComponentModel.Design.ITypeResolutionService)null);
+                        value = (v == null) ? "" : v.ToString();
 
-                    if (translatedKey.ContainsKey(key))
-                        if (translatedKey[key].Translations.ContainsKey(lang))
-                            if (translatedKey[key].Translations[lang] != value)
-                                dataNode = new ResXDataNode(key, translatedKey[key].Translations[lang]);
+                        if (translatedKey.ContainsKey(key))
+                            if (translatedKey[key].Translations.ContainsKey(lang))
+                                if (translatedKey[key].Translations[lang] != value)
+                                {
+                                    dataNode = new ResXDataNode(key, translatedKey[key].Translations[lang]);
+                                    modified = true;
+                                }
+                    }
+                    nodelist.Add(dataNode);
                 }
-                nodelist.Add(dataNode);
+                catch (Exception ex)
+                {
+                }
             }
 
             reader.Close();
 
-            // write nodes
-            ResXResourceWriter writer = new ResXResourceWriter(filename);
-            foreach (ResXDataNode dataNode in nodelist)
+            // write nodes if resource was modified
+            if (modified)
             {
-                writer.AddResource(dataNode);
+                ResXResourceWriter writer = new ResXResourceWriter(filename);
+                writer.BasePath = Path.GetDirectoryName(filename);
+                nodelist.ForEach(n => writer.AddResource(n));
+                //foreach (ResXDataNode dataNode in nodelist)
+                //    writer.AddResource(dataNode);
+                writer.Generate();
+                writer.Close();
+
+                Log(filename + " updated");
             }
-            writer.Generate();
-            writer.Close();
+
+            this.modified.Remove(lang);
+
+            return modified;
         }
 
-        public void Update()
+        public int Update()
         {
+            int cnt = 0;
             foreach (string lang in files.Keys)
-                Update(lang);
+                if (Update(lang)) cnt++;
+            return cnt;
         }
 
         public void Load(string lang, string filename)
@@ -155,7 +207,7 @@ namespace WindowsFormsApplication1
         {
             XmlDocument xml = new XmlDocument();
             xml.Load(basepath + filename);
-            
+
             try
             {
                 XmlNodeList nodelist = xml.DocumentElement.SelectNodes("data[not(@type or @mimetype)]");
@@ -165,7 +217,7 @@ namespace WindowsFormsApplication1
                     //string value = n.SelectSingleNode(".//value").InnerText;
                     string key = n.Attributes["name"].Value;
                     string value = n.ChildNodes[1].InnerText;
-                    
+
                     if (!translatedKey.ContainsKey(key))
                         translatedKey.Add(key, new TranslatedKey());
                     translatedKey[key].Add(lang, value);
@@ -175,21 +227,41 @@ namespace WindowsFormsApplication1
             {
                 Console.WriteLine(exception.Message);
             }
-            
+
             //xml.Save("C:\\Users\\u1\\Desktop\\test2.xml");
             files[lang] = filename;
         }
-
     }
 
     class AllResources
     {
-        public static string[] cultures = new string[] { "en", "de" };
+        public static string[] cultures = new string[] { "en", "de", "ru" };
         public static string defaultculture = "en";
-        public static Dictionary<string, string> langext = new Dictionary<string, string> { { "en", "en-EN" }, { "de", "de-DE" } };
+        public static Dictionary<string, string> langext = new Dictionary<string, string> { { "en", "en" }, { "de", "de" }, { "ru", "ru" } };
+        //public static Dictionary<string, string> langext = new Dictionary<string, string> { { "en", "en-EN" }, { "de", "de-DE" }, { "ru", "ru-RU" } };
+        public static HashSet<string> ignorePaths = new HashSet<string> { "obj" };
 
         public Dictionary<string, TranslatedResource> Resources = new Dictionary<string, TranslatedResource>();
         public string basepath;
+        public LogDelegate log;
+
+        private void Log(string msg)
+        {
+            log?.Invoke(msg);
+        }
+
+        public AllResources(LogDelegate del=null)
+        {
+            log = del;
+        }
+
+        public bool Modified
+        {
+            get
+            {
+                return Resources.Values.Any(tr => tr.Modified);
+            }
+        }
 
         public string getKey(string fname)
         {
@@ -201,7 +273,7 @@ namespace WindowsFormsApplication1
 
             foreach (string culture in cultures)
             {
-                Match match = Regex.Match(basename, "^(.*)." + langext[culture] + "$");
+                Match match = Regex.Match(basename, $"^(.*)\\.{langext[culture]}$");
                 if (match.Success) return match.Groups[1].Value;
             }
 
@@ -210,15 +282,9 @@ namespace WindowsFormsApplication1
 
         public static string getCulture(string fname)
         {
-            if (Path.GetExtension(fname) != ".resx") return null;
-            string basename = Path.GetFileNameWithoutExtension(fname);
-            string lang = Path.GetExtension(basename);
-
             foreach (string culture in cultures)
-            {
-                Match match = Regex.Match(basename, "^(.*)." + langext[culture] + "$");
-                if (match.Success) return culture;
-            }
+                if (Regex.Match(fname, "^(.*)." + langext[culture] + ".resx$").Success)
+                    return culture;
 
             return AllResources.defaultculture;
         }
@@ -242,7 +308,7 @@ namespace WindowsFormsApplication1
 
         public TranslatedResource getResources(Dictionary<string, string> fnames)
         {
-            TranslatedResource result = new TranslatedResource();
+            TranslatedResource result = new TranslatedResource(log);
             result.basepath = basepath;
 
             foreach (string lang in fnames.Keys)
@@ -278,12 +344,12 @@ namespace WindowsFormsApplication1
         {
             try
             {
-                foreach (TranslatedResource tr in Resources.Values)
-                    tr.Update();
+                int cnt = Resources.Values.Sum(tr => tr.Update());
+                Log(cnt + " file(s) updated.");
             }
             catch (Exception e)
             {
-                MessageBox.Show("Error while updating:\n"+e.Message, "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error while updating:\n" + e.Message, "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -341,6 +407,10 @@ namespace WindowsFormsApplication1
                 w.WriteEndElement();
             }
 
+            // Clear all modified flags if resources were saved as merged XML
+            foreach(var res in Resources.Keys)
+                Resources[res].ClearModified();
+
             w.Close();
         }
 
@@ -356,7 +426,7 @@ namespace WindowsFormsApplication1
             XmlNodeList nl = xml.SelectNodes("/root/resource");
             foreach (XmlNode r in nl)
             {
-                TranslatedResource tr = new TranslatedResource();
+                TranslatedResource tr = new TranslatedResource(log);
                 tr.basepath = basepath;
 
                 string b = r.Attributes["base"].Value;
@@ -386,43 +456,35 @@ namespace WindowsFormsApplication1
             }
         }
 
-        public string[] MatchFiles( string pathprefix )
+        public string[] MatchFiles(string pathprefix)
         {
-            List<string> result = new List<string>();
-
-            foreach (string path in this.Resources.Keys)
-            {
-                if (path.IndexOf(pathprefix) == 0) result.Add(path);
-            }
-
-            return result.ToArray();
+            if (Path.GetExtension(pathprefix) == ".resx")
+                pathprefix = Path.GetDirectoryName(pathprefix);
+            return Resources.Keys.Where(path => path.IndexOf(pathprefix) == 0).ToArray();
         }
 
         public TreeNode GetTree()
         {
             TreeNode root = new TreeNode(this.basepath);
+            root.Name = "";
 
-            foreach (string key in this.Resources.Keys)
+            foreach (string path in this.Resources.Keys)
             {
-                foreach (string file in this.Resources[key].files.Values)
+                foreach (string file in this.Resources[path].files.Values)
                 {
                     string[] dirs = file.Split(new char[] { '/', '\\' });
                     TreeNode t = root;
                     foreach (string dir in dirs)
                     {
                         if (dir.Length == 0) continue;
-                        if (!t.Nodes.ContainsKey(dir)) { 
-                            t.Nodes.Add(dir, dir);
-                            t.Nodes[dir].Tag = t.Tag + "\\" + dir;
-                        }
-                        t = t.Nodes[dir];
+                        string name = t.Name + "\\" + dir;
+                        t = t.Nodes.ContainsKey(name) ? t.Nodes[name] : t.Nodes.Add(name, dir);
                     }
                     t.ToolTipText = this.basepath + file;
-                    t.Tag = key;
                 }
             }
 
-            root.Tag = "\\";    // must be here for tag creation to work properly
+            //root.Tag = "\\";    // must be here for tag creation to work properly
             return root;
         }
 
@@ -447,6 +509,8 @@ namespace WindowsFormsApplication1
 
                 foreach (string d in Directory.GetDirectories(sDir))
                 {
+                    string dir = new DirectoryInfo(d).Name;
+                    if (ignorePaths.Contains(dir)) continue;
                     int found = DirSearch(d);
                     if (found > 0) cnt += found;
                 }
