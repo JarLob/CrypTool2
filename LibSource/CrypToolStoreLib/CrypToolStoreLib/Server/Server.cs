@@ -327,6 +327,9 @@ namespace CrypToolStoreLib.Server
                 case MessageType.RequestPlugin:
                     HandleRequestPluginMessage((RequestPluginMessage)message, sslStream);
                     break;
+                case MessageType.DeletePlugin:
+                    HandleDelePluginMessage((DeletePluginMessage)message,sslStream);
+                    break;
                 case MessageType.RequestPluginList:
                     HandleRequestPluginListMessage((RequestPluginListMessage)message, sslStream);
                     break;
@@ -334,7 +337,10 @@ namespace CrypToolStoreLib.Server
                     HandleCreateNewSourceMessage((CreateNewSourceMessage)message, sslStream);
                     break;
                 case MessageType.UpdateSource:
-                    HandleUpdateSource((UpdateSourceMessage)message, sslStream);
+                    HandleUpdateSourceMessage((UpdateSourceMessage)message, sslStream);
+                    break;
+                case MessageType.DeleteSource:
+                    HandleDeleteSourceMessage((DeleteSourceMessage)message, sslStream);
                     break;
 
                 default:
@@ -342,7 +348,7 @@ namespace CrypToolStoreLib.Server
                     break;
             }
         }
-        
+
         /// <summary>
         /// Handles messages of unknown message type
         /// Sends that we do not know the type of message
@@ -766,6 +772,70 @@ namespace CrypToolStoreLib.Server
         }
 
         /// <summary>
+        /// Handles DeletePluginMessages
+        /// If the user is authenticated, it tries to delete an existing plugin in the database
+        /// Users can only delete their plugins; admins can delete all plugins
+        /// Then, it sends a response message which contains if it succeeded or failed
+        /// </summary>
+        /// <param name="deletePluginMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleDelePluginMessage(DeletePluginMessage deletePluginMessage, SslStream sslStream)
+        {
+            //Only authenticated users are allowed to delete plugins
+            if (!ClientIsAuthenticated)
+            {
+                ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
+                response.ModifiedPlugin = false;
+                response.Message = "Unauthorized to delete that plugin!";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to delete plugin={1} from IP={2}", Username, deletePluginMessage.Plugin.Id, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            //check, if plugin to update exist
+            Plugin plugin = Database.GetPlugin(deletePluginMessage.Plugin.Id);
+            if (plugin == null)
+            {
+                ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
+                response.ModifiedPlugin = false;
+                response.Message = "Unauthorized to delete that plugin!"; // we send an "unauthorized"; thus, it is not possible to search database for existing ids
+                Logger.LogText(String.Format("User {0} tried to delete non-existing plugin={1} from IP={2}", Username, deletePluginMessage.Plugin.Id, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            //"normal" users are only allowed to update their own plugins
+            if (ClientIsAdmin == false && plugin.Username != Username)
+            {
+                ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
+                response.ModifiedPlugin = false;
+                response.Message = "Unauthorized to delete that plugin!";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to delete plugin={1} from IP={2}", Username, deletePluginMessage.Plugin.Id, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+
+            //Here, the user is authorized; thus, deletion of existing plugin in database is started
+            try
+            {
+                plugin = deletePluginMessage.Plugin;
+                Database.DeletePlugin(deletePluginMessage.Plugin.Id);
+                Logger.LogText(String.Format("User {0} deleted existing plugin in database: {1}", Username, plugin.Id), this, Logtype.Info);
+                ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
+                response.ModifiedPlugin = true;
+                response.Message = String.Format("Deleted plugin in database: {0}", plugin.ToString());
+                SendMessage(response, sslStream);
+            }
+            catch (Exception ex)
+            {
+                //Deletion failed; logg to logfile and return exception to client
+                ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
+                response.ModifiedPlugin = false;
+                Logger.LogText(String.Format("User {0} tried to delete an existing plugin={1}. But an exception occured: {1}", Username, deletePluginMessage.Plugin.Id, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during delete of existing plugin";
+                SendMessage(response, sslStream);
+            }
+        }
+        
+        /// <summary>
         /// Handles RequestPluginMessage
         /// Returns the plugin if it exists in the database
         /// Everyone is able to get plugins
@@ -837,7 +907,8 @@ namespace CrypToolStoreLib.Server
 
         /// <summary>
         /// Handles CreateNewSourceMessages
-        /// checks, if corresponding plugin exist and is owned by the user. If yes, it creates the source
+        /// checks, if corresponding plugin exist and is owned by the user. If yes, it creates the source.
+        /// Also admin are able to create sources
         /// </summary>
         /// <param name="createNewSourceMessage"></param>
         /// <param name="sslStream"></param>
@@ -869,8 +940,8 @@ namespace CrypToolStoreLib.Server
                 return;
             }
 
-            //Plugin is not owned by the user
-            if (plugin.Username != Username)
+            //Plugin is not owned by the user and user is not admin
+            if (plugin.Username != Username && !ClientIsAdmin)
             {
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
@@ -909,7 +980,7 @@ namespace CrypToolStoreLib.Server
         /// </summary>
         /// <param name="updateSourceMessage"></param>
         /// <param name="sslStream"></param>
-        private void HandleUpdateSource(UpdateSourceMessage updateSourceMessage, SslStream sslStream)
+        private void HandleUpdateSourceMessage(UpdateSourceMessage updateSourceMessage, SslStream sslStream)
         {
             //Only authenticated users are allowed to update sources
             if (!ClientIsAuthenticated)
@@ -965,7 +1036,16 @@ namespace CrypToolStoreLib.Server
                 SendMessage(response, sslStream);
             }
         }
+
+
+        private void HandleDeleteSourceMessage(DeleteSourceMessage deleteSourceMessage, SslStream sslStream)
+        {
+            
+        }
         
+
+
+
         /// <summary>
         /// Sends a message to the client
         /// </summary>
