@@ -153,8 +153,6 @@ namespace CrypToolStoreLib.Database
                                 {
                                     string field_name = reader.GetName(i);
                                     object field_value = reader.GetValue(i);
-
-
                                     row.Add(field_name, field_value);
                                 }
                                 resultset.Add(row);

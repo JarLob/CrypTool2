@@ -70,12 +70,14 @@ namespace CrpyStoreLib
                         source.PluginVersion = 2;
                         source.Assembly = new byte[] { 1, 2, 3 };
                         source.BuildDate = DateTime.Now;
-                        source.BuildLog = "empty";
-                        source.BuildState = "state";
+                        source.BuildLog = "empty2";
+                        source.BuildState = "state2";
                         source.BuildVersion = 0;
                         source.ZipFile = new byte[] { 1, 2, 3 };
 
                         client.CreateSource(source);
+
+                        client.UpdateSource(source);
 
                         client.Disconnect();
                     }

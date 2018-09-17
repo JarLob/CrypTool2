@@ -333,13 +333,16 @@ namespace CrypToolStoreLib.Server
                 case MessageType.CreateNewSource:
                     HandleCreateNewSourceMessage((CreateNewSourceMessage)message, sslStream);
                     break;
+                case MessageType.UpdateSource:
+                    HandleUpdateSource((UpdateSourceMessage)message, sslStream);
+                    break;
 
                 default:
                     HandleUnknownMessage(message, sslStream);
                     break;
             }
         }
-
+        
         /// <summary>
         /// Handles messages of unknown message type
         /// Sends that we do not know the type of message
@@ -713,7 +716,7 @@ namespace CrypToolStoreLib.Server
             {
                 ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
                 response.ModifiedPlugin = false;
-                response.Message = "Unauthorized to create new developers! Please authenticate as admin!";
+                response.Message = "Unauthorized to update that plugin!";
                 Logger.LogText(String.Format("Unauthorized user {0} tried to update plugin={1} from IP={2}", Username, updatePluginMessage.Plugin, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
@@ -898,6 +901,71 @@ namespace CrypToolStoreLib.Server
             }
         }
 
+        /// <summary>
+        /// Handles UpdateSourceMessages
+        /// If the user is authenticated, it tries to update an existing source in the database
+        /// Users can only update their sources; admins can update all sources
+        /// Then, it sends a response message which contains if it succeeded or failed
+        /// </summary>
+        /// <param name="updateSourceMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleUpdateSource(UpdateSourceMessage updateSourceMessage, SslStream sslStream)
+        {
+            //Only authenticated users are allowed to update sources
+            if (!ClientIsAuthenticated)
+            {
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = false;
+                response.Message = "Unauthorized to update that source";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update source={1} from IP={2}", Username, updateSourceMessage.Source, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            //check, if source to update exist
+            Plugin plugin = Database.GetPlugin(updateSourceMessage.Source.PluginId);
+            Source source = Database.GetSource(updateSourceMessage.Source.PluginId, updateSourceMessage.Source.PluginVersion);
+            if (source == null)
+            {
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = false;
+                response.Message = "Unauthorized to update that source!"; // we send an "unauthorized"; thus, it is not possible to search database for existing ids
+                Logger.LogText(String.Format("User {0} tried to update non-existing source={1} from IP={2}", Username, updateSourceMessage.Source, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            //"normal" users are only allowed to update their own sources
+            if (ClientIsAdmin == false && plugin.Username != Username)
+            {
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = false;
+                response.Message = "Unauthorized to update that plugin!";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update source={1} from IP={2}", Username, updateSourceMessage.Source, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+
+            //Here, the user is authorized; thus, update of existing source in database is started
+            try
+            {
+                source = updateSourceMessage.Source;
+                Database.UpdateSource(source.PluginId, source.PluginVersion, source.ZipFile, source.BuildState, source.BuildLog);
+                Logger.LogText(String.Format("User {0} updated existing source in database: {1}", Username, source.ToString()), this, Logtype.Info);
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = true;
+                response.Message = String.Format("Updated source in database: {0}", source.ToString());
+                SendMessage(response, sslStream);
+            }
+            catch (Exception ex)
+            {
+                //update failed; logg to logfile and return exception to client
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = false;
+                Logger.LogText(String.Format("User {0} tried to update an existing source. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during update of existing source";
+                SendMessage(response, sslStream);
+            }
+        }
+        
         /// <summary>
         /// Sends a message to the client
         /// </summary>

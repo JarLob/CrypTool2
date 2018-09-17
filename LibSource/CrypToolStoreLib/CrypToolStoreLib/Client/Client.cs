@@ -1039,6 +1039,12 @@ namespace CrypToolStoreLib.Client
 
         #region Methods for working with sources
 
+        /// <summary>
+        /// Creates a new source in the database
+        /// Only possible, when the user is authenticated
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public DataModificationOrRequestResult CreateSource(Source source)
         {
             lock (this)
@@ -1109,9 +1115,79 @@ namespace CrypToolStoreLib.Client
             }
         }
 
-        public string UpdateSource()
+        /// <summary>
+        /// Updates an existing source account in the database
+        /// Only possible, when the user is authenticated
+        /// </summary>
+        /// <param name="developer"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult UpdateSource(Source source)
         {
-            return string.Empty;
+            lock (this)
+            {
+                //we can update plugins, when we are connected to the server
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+                //only authenticated users are allowed, thus, we do not even send any update messages
+                if (!IsAuthenticated)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not authenticated",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to update an existing source: {0}", source.ToString()), this, Logtype.Info);
+
+                //1. Step: Send UpdatePluginMessage to server
+                UpdateSourceMessage message = new UpdateSourceMessage();
+                message.Source = source;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponseSourceModificationMessage
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseSourceModification)
+                {
+                    //received a response, forward it to user
+                    ResponseSourceModificationMessage responseSourceModificationMessage = (ResponseSourceModificationMessage)response_message;
+                    logger.LogText(String.Format("{0} an existing source. Return message was: {1}", responseSourceModificationMessage.ModifiedSource == true ? "Successfully updated" : "Did not update", responseSourceModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responseSourceModificationMessage.Message,
+                        Success = responseSourceModificationMessage.ModifiedSource
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to update an existing source was not a ResponseSourceModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
         public string DeleteSource()
