@@ -36,7 +36,7 @@ namespace WindowsFormsApplication1
             lvwColumnSorter = new ListViewColumnSorter();
             listView1.ListViewItemSorter = lvwColumnSorter;
             listView1.Columns.Clear();
-            listView1.Columns.Add(new ColHeader("Resource", 5, HorizontalAlignment.Left, true));
+            listView1.Columns.Add(new ColHeader("Resource", 70, HorizontalAlignment.Left, true));
             listView1.Columns.Add(new ColHeader("Key", 100, HorizontalAlignment.Left, true));
             foreach( string lang in displayedLanguages )
                 listView1.Columns.Add(new ColHeader(LongLanguage[lang], 160, HorizontalAlignment.Left, true));
