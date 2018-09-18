@@ -888,6 +888,10 @@ namespace CrypToolStoreLib.Server
             try
             {
                 List<Plugin> plugins = Database.GetPlugins(requestPluginListMessage.Username.Equals("*") ? null : requestPluginListMessage.Username);
+                if (!ClientIsAdmin)
+                {
+                    plugins = (from p in plugins where p.Publish == true || p.Username == Username select p).ToList();
+                }
                 ResponsePluginListMessage response = new ResponsePluginListMessage();
                 response.Plugins = plugins;
                 string message = String.Format("Responding with plugin list containing {0} elements", plugins.Count);
