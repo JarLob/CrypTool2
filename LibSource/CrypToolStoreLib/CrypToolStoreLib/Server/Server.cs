@@ -829,7 +829,7 @@ namespace CrypToolStoreLib.Server
                 //Deletion failed; logg to logfile and return exception to client
                 ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
                 response.ModifiedPlugin = false;
-                Logger.LogText(String.Format("User {0} tried to delete an existing plugin={1}. But an exception occured: {1}", Username, deletePluginMessage.Plugin.Id, ex.Message), this, Logtype.Error);
+                Logger.LogText(String.Format("User {0} tried to delete an existing plugin={1}. But an exception occured: {2}", Username, deletePluginMessage.Plugin.Id, ex.Message), this, Logtype.Error);
                 response.Message = "Exception during delete of existing plugin";
                 SendMessage(response, sslStream);
             }
@@ -1037,15 +1037,71 @@ namespace CrypToolStoreLib.Server
             }
         }
 
-
+        /// <summary>
+        /// Handles DeleteSourceMessages
+        /// If the user is authenticated, it tries to delete an existing source in the database
+        /// Users are only allowed to delete their sources
+        /// Admins are allowed to delete any source
+        /// Then, it sends a response message which contains if it succeeded or failed
+        /// </summary>
+        /// <param name="deleteDeveloperMessage"></param>
+        /// <param name="sslStream"></param>
         private void HandleDeleteSourceMessage(DeleteSourceMessage deleteSourceMessage, SslStream sslStream)
         {
-            
+            //Only authenticated users are allowed to delete sources
+            if (!ClientIsAuthenticated)
+            {
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = false;
+                response.Message = "Unauthorized to delete that source!";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to delete source={1} {2} from IP={2}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            //check, if source to delete exist
+            Plugin plugin = Database.GetPlugin(deleteSourceMessage.Source.PluginId);
+            Source source = Database.GetSource(deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion);
+            if (source == null)
+            {
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = false;
+                response.Message = "Unauthorized to delete that plugin!"; // we send an "unauthorized"; thus, it is not possible to search database for existing ids
+                Logger.LogText(String.Format("User {0} tried to delete non-existing source={1} {2} from IP={2}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            //"normal" users are only allowed to update their own sources
+            if (ClientIsAdmin == false && plugin.Username != Username)
+            {
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = false;
+                response.Message = "Unauthorized to delete that plugin!";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to delete source={1} {2} from IP={2}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+
+            //Here, the user is authorized; thus, deletion of existing source in database is started
+            try
+            {
+                Database.DeleteSource(deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion);
+                Logger.LogText(String.Format("User {0} deleted existing source in database: {1}", Username, plugin.Id), this, Logtype.Info);
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = true;
+                response.Message = String.Format("Deleted source in database: {0}", source.ToString());
+                SendMessage(response, sslStream);
+            }
+            catch (Exception ex)
+            {
+                //Deletion failed; logg to logfile and return exception to client
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = false;
+                Logger.LogText(String.Format("User {0} tried to delete an existing source={1} {2}. But an exception occured: {3}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during delete of existing source";
+                SendMessage(response, sslStream);
+            }
         }
         
-
-
-
         /// <summary>
         /// Sends a message to the client
         /// </summary>

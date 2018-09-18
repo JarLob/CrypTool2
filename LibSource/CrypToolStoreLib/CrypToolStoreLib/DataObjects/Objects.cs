@@ -263,6 +263,7 @@ namespace CrypToolStoreLib.DataObjects
                     {
                         writer.Write(PluginId);
                         writer.Write(PluginVersion);
+                        writer.Write(BuildVersion);
                         writer.Write(ZipFile.Length);//first write length of byte array
                         writer.Write(ZipFile);
                         writer.Write(BuildState);
@@ -295,6 +296,7 @@ namespace CrypToolStoreLib.DataObjects
                     {
                         PluginId = reader.ReadInt32();
                         PluginVersion = reader.ReadInt32();
+                        BuildVersion = reader.ReadInt32();
                         int length = reader.ReadInt32(); //first read length of byte array
                         ZipFile = reader.ReadBytes(length);
                         BuildState = reader.ReadString();
