@@ -1381,6 +1381,20 @@ namespace CrypToolStoreLib.Tools
     public class ResponseSourceMessage : Message
     {
         [MessageDataField]
+        public String Message
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
+        public bool SourceExists
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
         public Source Source
         {
             get;

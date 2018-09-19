@@ -342,6 +342,9 @@ namespace CrypToolStoreLib.Server
                 case MessageType.DeleteSource:
                     HandleDeleteSourceMessage((DeleteSourceMessage)message, sslStream);
                     break;
+                case MessageType.RequestSource:
+                    HandleRequestSourceMessage((RequestSourceMessage)message,sslStream);
+                    break;
 
                 default:
                     HandleUnknownMessage(message, sslStream);
@@ -378,7 +381,7 @@ namespace CrypToolStoreLib.Server
             ClientIsAuthenticated = false;
             ClientIsAdmin = false;
 
-            string username = loginMessage.Username;
+            string username = loginMessage.Username.ToLower();  //all usernames have to be lowercase
             string password = loginMessage.Password;
 
             if (PasswordTries.ContainsKey(IPAddress))
@@ -1102,6 +1105,60 @@ namespace CrypToolStoreLib.Server
                 response.ModifiedSource = false;
                 Logger.LogText(String.Format("User {0} tried to delete an existing source={1} {2}. But an exception occured: {3}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, ex.Message), this, Logtype.Error);
                 response.Message = "Exception during delete of existing source";
+                SendMessage(response, sslStream);
+            }
+        }
+
+        /// <summary>
+        /// Handles RequestSourceMessage
+        /// Returns the source if it exists in the database
+        /// Only the owners of a plugin or admins are allowed to get the sources
+        /// </summary>
+        /// <param name="requestPluginMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleRequestSourceMessage(RequestSourceMessage requestSourceMessage, SslStream sslStream)
+        {
+            try
+            {
+                Source source = Database.GetSource(requestSourceMessage.PluginId, requestSourceMessage.PluginVersion);
+                if (source == null)
+                {
+                    ResponseSourceMessage response = new ResponseSourceMessage();
+                    response.SourceExists = false;
+                    Logger.LogText(String.Format("User {0} tried to get a non-existing source", Username), this, Logtype.Warning);
+                    response.Message = "Unauthorized to get that source!";
+                    SendMessage(response, sslStream);
+                }
+                else
+                {
+                    //Check, if plugin is owned by user or user is admin
+                    Plugin plugin = Database.GetPlugin(source.PluginId);
+                    if (ClientIsAdmin || plugin.Username == Username)
+                    {
+                        ResponseSourceMessage response = new ResponseSourceMessage();
+                        response.Source = source;
+                        response.SourceExists = true;
+                        string message = String.Format("Responding with source: {0}", source.ToString());
+                        Logger.LogText(message, this, Logtype.Info);
+                        response.Message = message;
+                        SendMessage(response, sslStream);
+                    }
+                    else
+                    {
+                        ResponseSourceMessage response = new ResponseSourceMessage();
+                        response.SourceExists = false;
+                        Logger.LogText(String.Format("Unauthorized user {0} tried to get a source {1}{2}", Username, requestSourceMessage.PluginId, requestSourceMessage.PluginVersion), this, Logtype.Warning);
+                        response.Message = "Unauthorized to get that source!";
+                        SendMessage(response, sslStream);
+                    }                    
+                }
+            }
+            catch (Exception ex)
+            {
+                //request failed; logg to logfile and return exception to client
+                ResponseSourceMessage response = new ResponseSourceMessage();
+                Logger.LogText(String.Format("User {0} tried to get an existing source. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during request of existing source.";
                 SendMessage(response, sslStream);
             }
         }

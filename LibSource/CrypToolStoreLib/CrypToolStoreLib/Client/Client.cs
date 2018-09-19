@@ -1266,9 +1266,71 @@ namespace CrypToolStoreLib.Client
             }
         }
 
-        public Source GetSource()
+        /// <summary>
+        /// Requests an existing source from the database
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult GetSource(int pluginId, int pluginversion)
         {
-            return null;
+            lock (this)
+            {
+                //we can only receive plugins when we are connected
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to get an existing source: {0} {1}", pluginId, pluginversion), this, Logtype.Info);
+
+                //1. Step: Send RequestSourceMessage to server
+                RequestSourceMessage message = new RequestSourceMessage();
+                message.PluginId = pluginId;
+                message.PluginVersion = pluginversion;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponseSourceMessage
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseSource)
+                {
+                    //received a response, forward it to user
+                    ResponseSourceMessage responseSourceMessage = (ResponseSourceMessage)response_message;
+                    logger.LogText(String.Format("{0} an existing source. Return message was: {1}", responseSourceMessage.SourceExists == true ? "Successfully received" : "Did not receive", responseSourceMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responseSourceMessage.Message,
+                        Success = responseSourceMessage.SourceExists,
+                        DataObject = responseSourceMessage.Source
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to request an existing plugin was not a ResponseSourceMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
         public List<Source> GetSourceList()
