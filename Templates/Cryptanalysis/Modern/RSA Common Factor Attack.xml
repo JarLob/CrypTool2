@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+  <title lang="en">RSA Common Factor Attack</title>
+  <title lang="ru">Общая атака фактора на RSA</title>
+  <title lang="de">RSA-Angriff auf gemeinsamen Faktor</title>
+  
+  <summary lang="en">Attack on the <i>RSA</i> algorithm used with common factors</summary>
+  <summary lang="ru">Атака на алгоритм <i>RSA</i>, используемый с общими факторами</summary>
+  <summary lang="de">Angriff auf den <i>RSA</i>-Algorithmus, der mit gemeinsamen Faktoren verwendet wird</summary>
+  
+  <description lang="en">Attack on the <i>RSA</i> algorithm used with common factors</description>
+  <description lang="ru">така на алгоритм <i> RSA</i>, используемый с общими факторами</description>
+  <description lang="de">Angriff auf den <i> RSA</i> Algorithmus, der mit gemeinsamen Primfaktoren verwendet wird</description>
+  
+  <keywords lang="en">RSA, attack, common factor, shared primes</keywords>  
+  <keywords lang="de">RSA, Angriff, gemeinsamer Faktor, gemeinsame Primzahl</keywords>
+  <keywords lang="ru">RSA, атака, общий коэффициент, общий простой</keywords>
+  
+  <icon file="RSA.png" />
+  <relevantPlugins>
+    <plugin name="Number Operation" />
+	<plugin name="Prime Generator" />
+  </relevantPlugins>
+  
+    <replacements lang="en">
+    <replacement key="$memo$" value="This template demonstrates how easily RSA can be broken if two N-values share a common prime factor. The attack was presented by Lenstra et al. in [1]. They showed, that in 2 of 1,000 public RSA keys on the Internet a common prime factor is used. In this example, first, three different 512 bit prime numbers are randomly generated using three 'Prime Generator' components:\line
+{\b P, Q, and R}\line
+Then, we compute two different N-values:\line
+{\b N1 = P * Q\line
+N2 = Q * R}\line
+Both N-values are 1024 bit numbers. We assume, these are part of two public RSA keys.\line
+For an attacker, factorizing N1 or N2 is currently impossible using state-of-the-art factorization algorithms. But computing the greates common divisor (GCD) is easy.\line
+Thus, in the next step, we compute\line
+{\b GCD(N1, N2)}\line
+which is Q. Finally, the other primes P and R can be computed by dividing N1 and N2 by Q.\line
+{\b P = N1 / GCD(N1, N2) = N1 / Q\line
+R = N2 / GCD(N1, N2) = N2 / Q}\line
+Having P,Q, and R, the private RSA keys can be easily computed using the extended Euclidian algorithm.\line
+[1] Arjen K. Lenstra et al., 'Ron was wrong, Whit is right', Cryptology ePrint Archive Report 2012/064, February 2012, http://eprint.iacr.org/2012/064." />
+  </replacements>  
+  
+  <replacements lang="de"> 
+    <replacement key="$memo$" value="Diese Vorlage zeigt, wie leicht RSA gebrochen werden kann, wenn zwei N-Werte einen gemeinsamen Primfaktor teilen. Der Angriff wurde von Lenstra et al. in [1] präsentiert. Sie zeigten, dass in 2 von 1.000 öffentlichen RSA Schlüsseln im Internet ein gemeinsamer Primfaktor verwendet wird. In diesem Beispiel werden zunächst drei verschiedene 512-Bit-Primzahlen mit drei 'Primzahl Generator'-Komponenten zufällig generiert:\line
+{\b P, Q und R} \line
+Dann werden zwei verschiedene N-Werte berechnet: \line
+{\b N1 = P * Q \ Linie
+N2 = Q * R} \ Linie
+Beide N-Werte sind 1024 Bit-Nummern. Wir nehmen an, diese sind Teil von zwei öffentlichen RSA-Schlüsseln. \line
+Für einen Angreifer ist die Faktorisierung von N1 oder N2 derzeit nicht möglich, wenn moderne Faktorisierungsalgorithmen verwendet werden. Aber die Berechnung des größten gemeinsamen Teilers (GCD) ist einfach. \line
+Daher berechnen wir im nächsten Schritt \line
+{\b GCD (N1, N2)} \line
+Das ist Q. Schließlich können die anderen Primzahlen P und R berechnet werden, indem N1 und N2 durch Q dividiert werden. \line
+{\b P = N1 / GCD (N1, N2) = N1 / Q \line
+R = N2 / GCD (N1, N2) = N2 / Q} \line
+Mit P, Q und R können die privaten RSA-Schlüssel leicht mit dem erweiterten euklidischen Algorithmus berechnet werden.\line
+[1] Arjen K. Lenstra et al. 'Ron lag falsch, Whit hat Recht', Cryptology ePrint-Archivbericht 2012/064, Februar 2012, http://eprint.iacr.org/2012/064." />
+  </replacements>
+    
+  <replacements lang="ru">
+    <replacement key="$memo$" value="Этот шаблон демонстрирует, как легко RSA можно сломать, если два значения N имеют общий простой коэффициент. Атака была представлена ​​Ленстра и др. в 1]. Они показали, что в 2 из 1000 открытых ключей RSA в Интернете используется общий простой коэффициент. В этом примере, во-первых, три разных 512-разрядных простых числа генерируются случайным образом с использованием трех компонентов «Prime Generator»: \line
+{\b P, Q и R} \line
+Затем мы вычисляем два разных значения N: \line
+{\b N1 = P * Q \line
+N2 = Q * R} \line
+Оба значения N являются 1024-битными числами. Мы предполагаем, что это часть двух открытых ключей RSA. \line
+Для злоумышленника факторизация N1 или N2 в настоящее время невозможна с использованием современных алгоритмов факторизации. Но вычислять общий делитель greates (GCD) легко. \line
+Таким образом, на следующем шаге мы вычисляем \line
+{\b GCD (N1, N2)} \line
+который равен Q. Наконец, другие простые числа P и R могут быть вычислены путем деления N1 и N2 на Q. \line
+{\b P = N1 / GCD (N1, N2) = N1 / Q \line
+R = N2 / GCD (N1, N2) = N2 / Q} \line
+Имея P, Q и R, частные ключи RSA могут быть легко вычислены с использованием расширенного евклидова алгоритма. \line
+[1] Аржен К. Ленстра и др. «Рон ошибался, Уит прав», Cryptology ePrint Archive Report 2012/064, февраль 2012, http://eprint.iacr.org/2012/064." />    
+  </replacements>
+-->
+</sample>
