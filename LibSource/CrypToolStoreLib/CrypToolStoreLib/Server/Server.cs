@@ -171,6 +171,9 @@ namespace CrypToolStoreLib.Server
     /// </summary>
     public class ClientHandler
     {
+        private const int READ_TIMEOUT = 5000;
+        private const int WRITE_TIMEOUT = 5000;
+
         private Logger Logger = Logger.GetLogger();
         private CrypToolStoreDatabase Database = CrypToolStoreDatabase.GetDatabase();        
         private bool ClientIsAuthenticated { get; set; }
@@ -215,6 +218,8 @@ namespace CrypToolStoreLib.Server
             using (SslStream sslstream = new SslStream(client.GetStream()))
             {                
                 //Step 0: Authenticate SSLStream as server
+                sslstream.ReadTimeout = READ_TIMEOUT;
+                sslstream.WriteTimeout = WRITE_TIMEOUT;
                 sslstream.AuthenticateAsServer(CrypToolStoreServer.ServerKey, false, false);
                 try
                 {
@@ -348,12 +353,15 @@ namespace CrypToolStoreLib.Server
                 case MessageType.RequestSourceList:
                     HandleRequestSourceListMessage((RequestSourceListMessage)message, sslStream);
                     break;
+                case MessageType.CreateNewResource:
+                    HandleCreateNewResourceMessage((CreateNewResourceMessage)message, sslStream);
+                    break;
 
                 default:
                     HandleUnknownMessage(message, sslStream);
                     break;
             }
-        }        
+        }
 
         /// <summary>
         /// Handles messages of unknown message type
@@ -1251,6 +1259,43 @@ namespace CrypToolStoreLib.Server
             }                       
             
         }
+
+
+        private void HandleCreateNewResourceMessage(CreateNewResourceMessage createNewResourceMessage, SslStream sslStream)
+        {
+            Logger.LogText(String.Format("User {0} tries to create a resource", Username), this, Logtype.Debug);
+
+            //Only authenticated users are allowed to create new plugins
+            if (!ClientIsAuthenticated)
+            {
+                ResponseResourceModificationMessage response = new ResponseResourceModificationMessage();
+                response.ModifiedResource = false;
+                response.Message = "Unauthorized to create new resources! Please authenticate!";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to create new resource={1} from IP={2}", Username, createNewResourceMessage.Resource.Name, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            //Here, the user is authenticated; thus, creation of new resource in database is started
+            try
+            {
+                Resource resource = createNewResourceMessage.Resource;
+                Database.CreateResource(Username, resource.Name, resource.Description);
+                Logger.LogText(String.Format("User {0} created new resource in database: {1}", Username, resource), this, Logtype.Info);
+                ResponseResourceModificationMessage response = new ResponseResourceModificationMessage();
+                response.ModifiedResource = true;
+                response.Message = String.Format("Created new resource in database: {0}", resource.ToString());
+                SendMessage(response, sslStream);
+            }
+            catch (Exception ex)
+            {
+                //creation failed; logg to logfile and return exception to client
+                ResponseResourceModificationMessage response = new ResponseResourceModificationMessage();
+                response.ModifiedResource = false;
+                Logger.LogText(String.Format("User {0} tried to create a new resource. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during creation of new resource";
+                SendMessage(response, sslStream);
+            }
+        }        
 
         /// <summary>
         /// Sends a message to the client

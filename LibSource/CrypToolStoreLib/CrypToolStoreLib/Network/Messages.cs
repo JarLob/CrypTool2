@@ -1537,11 +1537,19 @@ namespace CrypToolStoreLib.Tools
     public class ResponseResourceModificationMessage : Message
     {
         [MessageDataField]
-        public String Message
+        public bool ModifiedResource
         {
             get;
             set;
         }
+
+        [MessageDataField]
+        public string Message
+        {
+            get;
+            set;
+        }
+
         public ResponseResourceModificationMessage()
         {
             Message = string.Empty;

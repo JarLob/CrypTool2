@@ -30,6 +30,8 @@ namespace CrypToolStoreLib.Client
     {
         public const int DEFAULT_PORT = 15151;
         public const string DEFAULT_ADDRESS = "localhost";
+        private const int READ_TIMEOUT = 5000;
+        private const int WRITE_TIMEOUT = 5000;
 
         private Logger logger = Logger.GetLogger();        
 
@@ -123,7 +125,9 @@ namespace CrypToolStoreLib.Client
             logger.LogText("Trying to connect to server", this, Logtype.Info);
             Client = new TcpClient(ServerAddress, ServerPort);
             sslStream = new SslStream(Client.GetStream(), false, new RemoteCertificateValidationCallback(ValidateServerCert));
-            sslStream.AuthenticateAsClient(ServerAddress);
+            sslStream.ReadTimeout = READ_TIMEOUT;
+            sslStream.WriteTimeout = WRITE_TIMEOUT;
+            sslStream.AuthenticateAsClient(ServerAddress);            
             logger.LogText("Connected to server", this, Logtype.Info);
         }
 
@@ -687,7 +691,7 @@ namespace CrypToolStoreLib.Client
         {
             lock (this)
             {
-                //we can only create users, when we are connected to the server
+                //we can only create plugins, when we are connected to the server
                 if (!IsConnected)
                 {
                     return new DataModificationOrRequestResult()
@@ -1333,6 +1337,11 @@ namespace CrypToolStoreLib.Client
             }
         }
 
+        /// <summary>
+        /// Requests a list of sources from the database
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public DataModificationOrRequestResult GetSourceList(int pluginid)
         {
             lock (this)
@@ -1397,9 +1406,80 @@ namespace CrypToolStoreLib.Client
 
         #region Methods for working with Resources
 
-        public string CreateResource()
+        /// <summary>
+        /// Creates a new resource in the database
+        /// Only possible, when the user is authenticated
+        /// </summary>
+        /// <param name="developer"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult CreateResource(Resource resource)
         {
-            return string.Empty;
+            lock (this)
+            {
+                //we can only create resources, when we are connected to the server
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+                //only authenticated users are allowed to create resources
+                if (!IsAuthenticated)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not authenticated",
+                        Success = false,
+                        DataObject = new List<Developer>()
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to create a new plugin: {0}", resource.ToString()), this, Logtype.Info);
+
+                //1. Step: Send CreateNewResourceMessage to server
+                CreateNewResourceMessage message = new CreateNewResourceMessage();
+                message.Resource = resource;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponseResourceModificationMessage
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseResourceModification)
+                {
+                    //received a response, forward it to user
+                    ResponseResourceModificationMessage responseResourceModificationMessage = (ResponseResourceModificationMessage)response_message;
+                    logger.LogText(String.Format("{0} a new resource. Return message was: {1}", responseResourceModificationMessage.ModifiedResource == true ? "Successfully created" : "Did not create", responseResourceModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responseResourceModificationMessage.Message,
+                        Success = responseResourceModificationMessage.ModifiedResource
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to create new plugin was not a ResponseResourceModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
         public string UpdateResource()
