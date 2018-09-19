@@ -345,12 +345,15 @@ namespace CrypToolStoreLib.Server
                 case MessageType.RequestSource:
                     HandleRequestSourceMessage((RequestSourceMessage)message,sslStream);
                     break;
+                case MessageType.RequestSourceList:
+                    HandleRequestSourceListMessage((RequestSourceListMessage)message, sslStream);
+                    break;
 
                 default:
                     HandleUnknownMessage(message, sslStream);
                     break;
             }
-        }
+        }        
 
         /// <summary>
         /// Handles messages of unknown message type
@@ -907,7 +910,7 @@ namespace CrypToolStoreLib.Server
                 //request failed; logg to logfile and return exception to client
                 ResponsePluginMessage response = new ResponsePluginMessage();
                 Logger.LogText(String.Format("User {0} tried to get a plugin list. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
-                response.Message = "Exception during request of existing plugin.";
+                response.Message = "Exception during request of source list.";
                 SendMessage(response, sslStream);
             }
         }
@@ -1162,7 +1165,66 @@ namespace CrypToolStoreLib.Server
                 SendMessage(response, sslStream);
             }
         }
-        
+
+        /// <summary>
+        /// Handles RequestSourceListMessage
+        /// responses with lists of sources
+        /// Only sources are returned that are owned by the user
+        /// Admins may receice everything
+        /// </summary>
+        /// <param name="requestPluginListMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleRequestSourceListMessage(RequestSourceListMessage requestSourceListMessage, SslStream sslStream)
+        {
+            Logger.LogText(String.Format("User {0} requested a list of sources", Username), this, Logtype.Info);
+
+            //Only authenticated admins are allowed to receive source lists
+            if (!ClientIsAuthenticated)
+            {
+                ResponseSourceListMessage response = new ResponseSourceListMessage();
+                response.AllowedToViewList = false;
+                response.Message = "Unauthorized to get resource list! Please authenticate!";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to request source list of plugin= from IP={1}", Username, requestSourceListMessage.PluginId, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            try
+            {
+                if (!ClientIsAdmin)
+                {
+                    Plugin plugin = Database.GetPlugin(requestSourceListMessage.PluginId);
+                    if (plugin.Username != Username)
+                    {
+                        ResponseSourceListMessage response = new ResponseSourceListMessage();
+                        response.AllowedToViewList = false;
+                        response.Message = "Unauthorized to get resource list! Please authenticate!";
+                        Logger.LogText(String.Format("Unauthorized user {0} tried to request source list of plugin= from IP={1}", Username, requestSourceListMessage.PluginId, IPAddress), this, Logtype.Warning);
+                        SendMessage(response, sslStream);
+                        return;
+                    }
+                }                
+                List<Source> sources = Database.GetSources(requestSourceListMessage.PluginId);
+                ResponseSourceListMessage responseSourceListMessage = new ResponseSourceListMessage();
+                responseSourceListMessage.AllowedToViewList = true;
+                string message = String.Format("Responding with source list containing {0} elements", sources.Count);
+                Logger.LogText(message, this, Logtype.Info);
+                responseSourceListMessage.Message = message;
+                responseSourceListMessage.SourceList = sources;
+                SendMessage(responseSourceListMessage, sslStream);
+            }
+            catch (Exception ex)
+            {
+                //request failed; logg to logfile and return exception to client
+                ResponseSourceListMessage response = new ResponseSourceListMessage();
+                Logger.LogText(String.Format("User {0} tried to get a source list. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during request of source list.";
+                SendMessage(response, sslStream);
+            }                       
+            
+        }
+
+
+
         /// <summary>
         /// Sends a message to the client
         /// </summary>

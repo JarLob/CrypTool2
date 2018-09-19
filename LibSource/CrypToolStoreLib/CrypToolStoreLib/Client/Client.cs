@@ -1333,9 +1333,64 @@ namespace CrypToolStoreLib.Client
             }
         }
 
-        public List<Source> GetSourceList()
+        public DataModificationOrRequestResult GetSourceList(int pluginid)
         {
-            return null;
+            lock (this)
+            {
+                //we can only receive source lists when we are connected
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to get sources of plugin: {0}", pluginid), this, Logtype.Info);
+
+                //1. Step: Send RequestPluginListMessage to server
+                RequestSourceListMessage message = new RequestSourceListMessage();
+                message.PluginId = pluginid;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponseSourceListMessage
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseSourceList)
+                {
+                    //received a response, forward it to user
+                    ResponseSourceListMessage responseSourceListMessage = (ResponseSourceListMessage)response_message;
+                    logger.LogText(String.Format("Received a source list. Message was {0}", responseSourceListMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responseSourceListMessage.Message,
+                        DataObject = responseSourceListMessage.SourceList
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to request a plugin list was not a ResponsePluginList. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
         #endregion

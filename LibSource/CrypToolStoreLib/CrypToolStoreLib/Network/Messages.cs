@@ -1248,11 +1248,11 @@ namespace CrypToolStoreLib.Tools
     public class RequestSourceListMessage : Message
     {
         [MessageDataField]
-        public string Username { get; set; }
+        public int PluginId { get; set; }
 
         public RequestSourceListMessage()
         {
-            Username = string.Empty;
+            
         }
     }
 
@@ -1261,6 +1261,20 @@ namespace CrypToolStoreLib.Tools
     /// </summary>
     public class ResponseSourceListMessage : Message
     {
+        [MessageDataField]
+        public bool AllowedToViewList
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
+        public string Message
+        {
+            get;
+            set;
+        }
+
         [MessageDataField]
         public List<Source> SourceList = new List<Source>();
 
@@ -1435,6 +1449,20 @@ namespace CrypToolStoreLib.Tools
     public class ResponseResourceListMessage : Message
     {
         [MessageDataField]
+        public bool AllowedToViewList
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
+        public string Message
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
         public List<Resource> ResourceList
         {
             get;
@@ -1445,6 +1473,8 @@ namespace CrypToolStoreLib.Tools
         {
             ResourceList = new List<Resource>();
         }
+
+        
     }
 
     /// <summary>
