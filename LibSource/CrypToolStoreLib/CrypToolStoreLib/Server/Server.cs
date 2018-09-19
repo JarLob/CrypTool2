@@ -364,7 +364,7 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleUnknownMessage(Message message, SslStream sslStream)
         {
-            Logger.LogText(String.Format("Received message of unknown type {0} from user {1} from IP={2}", message.MessageHeader.MessageType, Username, IPAddress), this, Logtype.Warning);
+            Logger.LogText(String.Format("Received message of unknown type {0} from user {1} from IP={2}", message.MessageHeader.MessageType, Username, IPAddress), this, Logtype.Debug);
             ServerErrorMessage error = new ServerErrorMessage();
             error.Message = String.Format("Unknown type of message: {0}", message.MessageHeader.MessageType);            
             SendMessage(error, sslStream);
@@ -380,6 +380,8 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleLoginMessage(LoginMessage loginMessage, SslStream sslStream)
         {
+            Logger.LogText(String.Format("Login attempt from Ip={0}", IPAddress), this, Logtype.Debug);
+
             //Initially, we set everything to false
             ClientIsAuthenticated = false;
             ClientIsAdmin = false;
@@ -462,6 +464,8 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleCreateNewDeveloperMessage(CreateNewDeveloperMessage createNewDeveloperMessage, SslStream sslStream)
         {
+            Logger.LogText(String.Format("User {0} tries to create a developer", Username), this, Logtype.Debug);
+
             //Only authenticated admins are allowed to create new developers
             if (!ClientIsAuthenticated || !ClientIsAdmin)
             {
@@ -503,6 +507,8 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleUpdateDeveloperMessage(UpdateDeveloperMessage updateDeveloperMessage, SslStream sslStream)
         {
+            Logger.LogText(String.Format("User {0} tries to update a developer", Username), this, Logtype.Debug);
+
             //Only authenticated admins are allowed to create new developers
             if (!ClientIsAuthenticated || !ClientIsAdmin)
             {
@@ -544,6 +550,8 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleDeleteDeveloperMessage(DeleteDeveloperMessage deleteDeveloperMessage, SslStream sslStream)
         {
+            Logger.LogText(String.Format("User {0} tries to delete a developer", Username), this, Logtype.Debug);
+
             //Only authenticated admins are allowed to create new developers
             if (!ClientIsAuthenticated || !ClientIsAdmin)
             {
@@ -585,6 +593,8 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleRequestDeveloperMessage(RequestDeveloperMessage requestDeveloperMessage, SslStream sslStream)
         {
+            Logger.LogText(String.Format("User {0} requests a developer", Username), this, Logtype.Debug);
+
             //Only authenticated admins are allowed to create new developers
             if (!ClientIsAuthenticated || !ClientIsAdmin)
             {
@@ -610,7 +620,7 @@ namespace CrypToolStoreLib.Server
                 }
                 else
                 {
-                    Logger.LogText(String.Format("User {0} requested an existing developer from database: {1}", Username, developer), this, Logtype.Info);
+                    Logger.LogText(String.Format("User {0} requested an existing developer from database: {1}", Username, developer), this, Logtype.Debug);
                     ResponseDeveloperMessage response = new ResponseDeveloperMessage();
                     response.Message = String.Format("Return developer: {0}", developer.ToString());
                     response.DeveloperExists = true;
@@ -638,6 +648,8 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleRequestDeveloperListMessage(RequestDeveloperListMessage requestDeveloperListMessage, SslStream sslStream)
         {
+            Logger.LogText(String.Format("User {0} requests a developerlist", Username), this, Logtype.Debug);
+
             //Only authenticated admins are allowed to create new developers
             if (!ClientIsAuthenticated || !ClientIsAdmin)
             {
@@ -653,7 +665,7 @@ namespace CrypToolStoreLib.Server
             {
                 List<Developer> developerList = Database.GetDevelopers();
 
-                Logger.LogText(String.Format("User {0} requested a developer list", Username), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} requested a developer list", Username), this, Logtype.Debug);
                     ResponseDeveloperListMessage response = new ResponseDeveloperListMessage();
                     response.Message = String.Format("Return developer list");
                     response.AllowedToViewList = true;
@@ -681,6 +693,8 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleCreateNewPluginMessage(CreateNewPluginMessage createNewPluginMessage, SslStream sslStream)
         {
+            Logger.LogText(String.Format("User {0} tries to create a plugin", Username), this, Logtype.Debug);
+
             //Only authenticated users are allowed to create new plugins
             if (!ClientIsAuthenticated)
             {
@@ -723,6 +737,8 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleUpdatePluginMessage(UpdatePluginMessage updatePluginMessage, SslStream sslStream)
         {
+            Logger.LogText(String.Format("User {0} tries to update a plugin", Username), this, Logtype.Debug);
+
             //Only authenticated users are allowed to update plugins
             if (!ClientIsAuthenticated)
             {
@@ -787,6 +803,8 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleDelePluginMessage(DeletePluginMessage deletePluginMessage, SslStream sslStream)
         {
+            Logger.LogText(String.Format("User {0} tries to delete a plugin", Username), this, Logtype.Debug);
+
             //Only authenticated users are allowed to delete plugins
             if (!ClientIsAuthenticated)
             {
@@ -850,6 +868,8 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleRequestPluginMessage(RequestPluginMessage requestPluginMessage, SslStream sslStream)
         {
+            Logger.LogText(String.Format("User {0} tries to request a plugin", Username), this, Logtype.Debug);
+
             try
             {
                 Plugin plugin = Database.GetPlugin(requestPluginMessage.Id);
@@ -867,7 +887,7 @@ namespace CrypToolStoreLib.Server
                     response.Plugin = plugin;
                     response.PluginExists = true;
                     string message = String.Format("Responding with plugin: {0}", plugin.ToString());
-                    Logger.LogText(message, this, Logtype.Info);
+                    Logger.LogText(message, this, Logtype.Debug);
                     response.Message = message;
                     SendMessage(response, sslStream);
                 }
@@ -890,7 +910,8 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleRequestPluginListMessage(RequestPluginListMessage requestPluginListMessage, SslStream sslStream)
         {
-            Logger.LogText(String.Format("User {0} requested a list of plugins", Username), this, Logtype.Info);
+            Logger.LogText(String.Format("User {0} requested a list of plugins", Username), this, Logtype.Debug);
+
             try
             {
                 List<Plugin> plugins = Database.GetPlugins(requestPluginListMessage.Username.Equals("*") ? null : requestPluginListMessage.Username);
@@ -901,7 +922,7 @@ namespace CrypToolStoreLib.Server
                 ResponsePluginListMessage response = new ResponsePluginListMessage();
                 response.Plugins = plugins;
                 string message = String.Format("Responding with plugin list containing {0} elements", plugins.Count);
-                Logger.LogText(message, this, Logtype.Info);
+                Logger.LogText(message, this, Logtype.Debug);
                 response.Message = message;
                 SendMessage(response, sslStream);                
             }
@@ -924,6 +945,8 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleCreateNewSourceMessage(CreateNewSourceMessage createNewSourceMessage, SslStream sslStream)
         {
+            Logger.LogText(String.Format("User {0} tries to create a source", Username), this, Logtype.Debug);
+
             //Only authenticated users are allowed to create new plugins
             if (!ClientIsAuthenticated)
             {
@@ -992,6 +1015,8 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleUpdateSourceMessage(UpdateSourceMessage updateSourceMessage, SslStream sslStream)
         {
+            Logger.LogText(String.Format("User {0} tries to update a source", Username), this, Logtype.Debug);
+
             //Only authenticated users are allowed to update sources
             if (!ClientIsAuthenticated)
             {
@@ -1058,6 +1083,8 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleDeleteSourceMessage(DeleteSourceMessage deleteSourceMessage, SslStream sslStream)
         {
+            Logger.LogText(String.Format("User {0} tries to delete a source", Username), this, Logtype.Debug);
+
             //Only authenticated users are allowed to delete sources
             if (!ClientIsAuthenticated)
             {
@@ -1121,6 +1148,8 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleRequestSourceMessage(RequestSourceMessage requestSourceMessage, SslStream sslStream)
         {
+            Logger.LogText(String.Format("User {0} requested a source", Username), this, Logtype.Debug);
+
             try
             {
                 Source source = Database.GetSource(requestSourceMessage.PluginId, requestSourceMessage.PluginVersion);
@@ -1142,7 +1171,7 @@ namespace CrypToolStoreLib.Server
                         response.Source = source;
                         response.SourceExists = true;
                         string message = String.Format("Responding with source: {0}", source.ToString());
-                        Logger.LogText(message, this, Logtype.Info);
+                        Logger.LogText(message, this, Logtype.Debug);
                         response.Message = message;
                         SendMessage(response, sslStream);
                     }
@@ -1176,7 +1205,7 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleRequestSourceListMessage(RequestSourceListMessage requestSourceListMessage, SslStream sslStream)
         {
-            Logger.LogText(String.Format("User {0} requested a list of sources", Username), this, Logtype.Info);
+            Logger.LogText(String.Format("User {0} requested a list of sources", Username), this, Logtype.Debug);
 
             //Only authenticated admins are allowed to receive source lists
             if (!ClientIsAuthenticated)
@@ -1207,7 +1236,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceListMessage responseSourceListMessage = new ResponseSourceListMessage();
                 responseSourceListMessage.AllowedToViewList = true;
                 string message = String.Format("Responding with source list containing {0} elements", sources.Count);
-                Logger.LogText(message, this, Logtype.Info);
+                Logger.LogText(message, this, Logtype.Debug);
                 responseSourceListMessage.Message = message;
                 responseSourceListMessage.SourceList = sources;
                 SendMessage(responseSourceListMessage, sslStream);
@@ -1222,8 +1251,6 @@ namespace CrypToolStoreLib.Server
             }                       
             
         }
-
-
 
         /// <summary>
         /// Sends a message to the client

@@ -63,22 +63,14 @@ namespace CrpyStoreLib
                     {
                         CrypToolStoreClient client = new CrypToolStoreClient();
                         client.Connect();
-                        client.Login("Test", "");
+                        client.Login("kopal", "123");
+                        //client.Login("test", "");
 
-                        Source source = new Source();
-                        source.PluginId = 7;
-                        source.PluginVersion = 2;
-                        source.Assembly = new byte[] { 1, 2, 3 };
-                        source.BuildDate = DateTime.Now;
-                        source.BuildLog = "empty2";
-                        source.BuildState = "state2";
-                        source.BuildVersion = 0;
-                        source.ZipFile = new byte[] { 1, 2, 3 };
-
-                        client.CreateSource(source);
-
-                        client.UpdateSource(source);
-
+                        List<Source> sources = (List<Source>)client.GetSourceList(7).DataObject;
+                        foreach (var s in sources)
+                        {
+                            Console.WriteLine("###: " + s);
+                        }
                         client.Disconnect();
                     }
                     catch (Exception ex)
