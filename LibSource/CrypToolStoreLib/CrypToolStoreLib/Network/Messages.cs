@@ -1576,6 +1576,19 @@ namespace CrypToolStoreLib.Tools
     public class ResponseResourceMessage : Message
     {
         [MessageDataField]
+        public String Message
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
+        public bool ResourceExists
+        {
+            get;
+            set;
+        }
+        [MessageDataField]
         public Resource Resource
         {
             get;

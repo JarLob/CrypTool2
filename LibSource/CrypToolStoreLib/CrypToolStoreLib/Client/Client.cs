@@ -1482,19 +1482,220 @@ namespace CrypToolStoreLib.Client
             }
         }
 
-        public string UpdateResource()
+        /// <summary>
+        /// Updates an existing resource in the database
+        /// Only possible, when the user is authenticated
+        /// </summary>
+        /// <param name="developer"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult UpdateResource(Resource resource)
         {
-            return string.Empty;
+            lock (this)
+            {
+                //we can update resources, when we are connected to the server
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+                //only authenticated users are allowed, thus, we do not even send any update messages
+                if (!IsAuthenticated)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not authenticated",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to update an existing resource: {0}", resource.ToString()), this, Logtype.Info);
+
+                //1. Step: Send UpdatePluginMessage to server
+                UpdateResourceMessage message = new UpdateResourceMessage();
+                message.Resource = resource;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponseResourceModificationMessage
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseResourceModification)
+                {
+                    //received a response, forward it to user
+                    ResponseResourceModificationMessage responsePluginModificationMessage = (ResponseResourceModificationMessage)response_message;
+                    logger.LogText(String.Format("{0} an existing resource. Return message was: {1}", responsePluginModificationMessage.ModifiedResource == true ? "Successfully updated" : "Did not update", responsePluginModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responsePluginModificationMessage.Message,
+                        Success = responsePluginModificationMessage.ModifiedResource
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to update an existing plugin was not a ResponseResourceModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
-        public string DeleteResource()
+        /// <summary>
+        /// Deletes an existing resource in the database
+        /// Only possible, when the user is authenticated
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult DeleteResource(int resourceId)
         {
-            return string.Empty;
+            lock (this)
+            {
+                //we can only create users, when we are connected to the server
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+                //only authenticated users are allowed, thus, we do not even send any delete messages
+                if (!IsAuthenticated)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not authenticated",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to delete an existing resource: {0}", resourceId), this, Logtype.Info);
+
+                //1. Step: Send DeleteResourceMessage to server
+                DeleteResourceMessage message = new DeleteResourceMessage();
+                message.Resource = new Resource() { Id = resourceId };
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponseResourceModification
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseResourceModification)
+                {
+                    //received a response, forward it to user
+                    ResponseResourceModificationMessage responseResourceModificationMessage = (ResponseResourceModificationMessage)response_message;
+                    logger.LogText(String.Format("{0} an existing resource. Return message was: {1}", responseResourceModificationMessage.ModifiedResource == true ? "Successfully deleted" : "Did not delete", responseResourceModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responseResourceModificationMessage.Message,
+                        Success = responseResourceModificationMessage.ModifiedResource
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to delete an existing resource was not a ResponseResourceModification. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
-        public Resource GetResource()
+        /// <summary>
+        /// Requests an existing resource from the database
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult GetResource(int resourceId)
         {
-            return null;
+            lock (this)
+            {
+                //we can only receive resources when we are connected
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to get an existing resource: {0}", resourceId), this, Logtype.Info);
+
+                //1. Step: Send RequestResourceMessage to server
+                RequestResourceMessage message = new RequestResourceMessage();
+                message.Id = resourceId;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponseResource
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseResource)
+                {
+                    //received a response, forward it to user
+                    ResponseResourceMessage responseResourceModificationMessage = (ResponseResourceMessage)response_message;
+                    logger.LogText(String.Format("{0} an existing resource. Return message was: {1}", responseResourceModificationMessage.ResourceExists == true ? "Successfully received" : "Did not receive", responseResourceModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responseResourceModificationMessage.Message,
+                        Success = responseResourceModificationMessage.ResourceExists,
+                        DataObject = responseResourceModificationMessage.Resource
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to request an existing resource was not a ResponseResourceMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
         public List<Resource> GetResourceList()
