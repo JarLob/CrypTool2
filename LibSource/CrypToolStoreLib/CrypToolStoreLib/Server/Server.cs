@@ -368,12 +368,18 @@ namespace CrypToolStoreLib.Server
                 case MessageType.RequestResourceList:
                     HandleRequestResourceListMessage((RequestResourceListMessage)message, sslStream);
                     break;
+                case MessageType.CreateNewResourceData:
+                    HandleCreateNewResourceDataMessage((CreateNewResourceDataMessage)message, sslStream);
+                    break;
+                case MessageType.UpdateResourceData:
+                    HandleUpdateResourceDataMessage((UpdateResourceDataMessage)message, sslStream);
+                    break;
 
                 default:
                     HandleUnknownMessage(message, sslStream);
                     break;
             }
-        }
+        }  
 
         /// <summary>
         /// Handles messages of unknown message type
@@ -881,7 +887,7 @@ namespace CrypToolStoreLib.Server
         }
         
         /// <summary>
-        /// Handles RequestPluginMessage
+        /// Handles RequestPluginMessages
         /// Returns the plugin if it exists in the database
         /// Everyone is able to get plugins
         /// </summary>
@@ -1111,7 +1117,7 @@ namespace CrypToolStoreLib.Server
         /// Admins are allowed to delete any source
         /// Then, it sends a response message which contains if it succeeded or failed
         /// </summary>
-        /// <param name="deleteDeveloperMessage"></param>
+        /// <param name="deleteSourceMessage"></param>
         /// <param name="sslStream"></param>
         private void HandleDeleteSourceMessage(DeleteSourceMessage deleteSourceMessage, SslStream sslStream)
         {
@@ -1172,11 +1178,11 @@ namespace CrypToolStoreLib.Server
         }
 
         /// <summary>
-        /// Handles RequestSourceMessage
+        /// Handles RequestSourceMessages
         /// Returns the source if it exists in the database
         /// Only the owners of a plugin or admins are allowed to get the sources
         /// </summary>
-        /// <param name="requestPluginMessage"></param>
+        /// <param name="requestSourceMessage"></param>
         /// <param name="sslStream"></param>
         private void HandleRequestSourceMessage(RequestSourceMessage requestSourceMessage, SslStream sslStream)
         {
@@ -1228,12 +1234,12 @@ namespace CrypToolStoreLib.Server
         }
 
         /// <summary>
-        /// Handles RequestSourceListMessage
+        /// Handles RequestSourceListMessages
         /// responses with lists of sources
         /// Only sources are returned that are owned by the user
         /// Admins may receice everything
         /// </summary>
-        /// <param name="requestPluginListMessage"></param>
+        /// <param name="requestSourceListMessage"></param>
         /// <param name="sslStream"></param>
         private void HandleRequestSourceListMessage(RequestSourceListMessage requestSourceListMessage, SslStream sslStream)
         {
@@ -1285,11 +1291,11 @@ namespace CrypToolStoreLib.Server
         }
 
         /// <summary>
-        /// Handles CreateNewResourceMessage
+        /// Handles CreateNewResourceMessages
         /// If the user is authenticated, it tries to create a new resource in the database        
         /// Then, it sends a response message which contains if it succeeded or failed
         /// </summary>
-        /// <param name="createNewDeveloperMessage"></param>
+        /// <param name="createNewResourceMessage"></param>
         /// <param name="sslStream"></param>
         private void HandleCreateNewResourceMessage(CreateNewResourceMessage createNewResourceMessage, SslStream sslStream)
         {
@@ -1400,7 +1406,7 @@ namespace CrypToolStoreLib.Server
         /// Users can only delete their resources; admins can delete all resources
         /// Then, it sends a response message which contains if it succeeded or failed
         /// </summary>
-        /// <param name="deletePluginMessage"></param>
+        /// <param name="deleteResourceMessage"></param>
         /// <param name="sslStream"></param>
         private void HandleDeletResourceMessage(DeleteResourceMessage deleteResourceMessage, SslStream sslStream)
         {
@@ -1461,7 +1467,7 @@ namespace CrypToolStoreLib.Server
         }
 
         /// <summary>
-        /// Handles RequestResourceMessage
+        /// Handles RequestResourceMessages
         /// Returns the resource if it exists in the database
         /// Everyone is able to get resources
         /// </summary>
@@ -1519,7 +1525,7 @@ namespace CrypToolStoreLib.Server
         /// Handles RequestResourceListMessages
         /// responses with lists of resources
         /// </summary>
-        /// <param name="requestPluginListMessage"></param>
+        /// <param name="requestResourceListMessage"></param>
         /// <param name="sslStream"></param>
         private void HandleRequestResourceListMessage(RequestResourceListMessage requestResourceListMessage, SslStream sslStream)
         {
@@ -1548,10 +1554,142 @@ namespace CrypToolStoreLib.Server
                 SendMessage(response, sslStream);
             }
         }
-       
 
+        /// <summary>
+        /// Handles CreateNewResourceDataMessages
+        /// If the user is authenticated, it tries to create a new resource data in the database        
+        /// Then, it sends a response message which contains if it succeeded or failed
+        /// </summary>
+        /// <param name="createNewResourceDataMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleCreateNewResourceDataMessage(CreateNewResourceDataMessage createNewResourceDataMessage, SslStream sslStream)
+        {
+            Logger.LogText(String.Format("User {0} tries to create a resourceData", Username), this, Logtype.Debug);
 
+            //Only authenticated users are allowed to create new plugins
+            if (!ClientIsAuthenticated)
+            {
+                ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
+                response.ModifiedResourceData = false;
+                response.Message = "Unauthorized to create new plugins. Please authenticate yourself";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to create new resourceData={1} from IP={2}", Username, createNewResourceDataMessage.ResourceData, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
 
+            //check, if resource exists and is owned by the user
+            ResourceData resourceData = createNewResourceDataMessage.ResourceData;
+            Resource resource = Database.GetResource(resourceData.ResourceId);
+
+            //Plugin does not exist
+            if (resource == null)
+            {
+                ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
+                response.ModifiedResourceData = false;
+                response.Message = String.Format("Plugin with id={0} does not exist", resourceData.ResourceId);
+                Logger.LogText(String.Format("User {0} tried to create new resource data={1} from IP={2} for a non-existing resource id={3}", Username, createNewResourceDataMessage.ResourceData, IPAddress, resourceData.ResourceId), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+
+            //Plugin is not owned by the user and user is not admin
+            if (resource.Username != Username && !ClientIsAdmin)
+            {
+                ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
+                response.ModifiedResourceData = false;
+                response.Message = "Not authorized";
+                Logger.LogText(String.Format("User {0} tried to create new resource data={1} from IP={2} for a plugin (id={3}) that he does not own ", Username, createNewResourceDataMessage.ResourceData, IPAddress, resourceData.ResourceId), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+
+            //Here, everything is fine; thus, we try to create the resource data
+            try
+            {
+                Database.CreateResourceData(createNewResourceDataMessage.ResourceData.ResourceId, createNewResourceDataMessage.ResourceData.Version, createNewResourceDataMessage.ResourceData.Data, DateTime.Now);
+                Logger.LogText(String.Format("User {0} created new resourceData for plugin={0} in database: {2}", Username, resource, resourceData), this, Logtype.Info);
+                ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
+                response.ModifiedResourceData = true;
+                response.Message = String.Format("Created new resource data in database: {0}", resourceData.ToString());
+                SendMessage(response, sslStream);
+            }
+            catch (Exception ex)
+            {
+                //creation failed; logg to logfile and return exception to client
+                ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
+                response.ModifiedResourceData = false;
+                Logger.LogText(String.Format("User {0} tried to create a new resourceData. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during creation of new resourceData";
+                SendMessage(response, sslStream);
+            }
+        }
+
+        /// <summary>
+        /// Handles UpdateResourceDataMessages
+        /// If the user is authenticated, it tries to update an existing resource data in the database
+        /// Users can only update their resource data; admins can update all resource data
+        /// Then, it sends a response message which contains if it succeeded or failed
+        /// </summary>
+        /// <param name="updateResourceDataMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleUpdateResourceDataMessage(UpdateResourceDataMessage updateResourceDataMessage, SslStream sslStream)
+        {
+            Logger.LogText(String.Format("User {0} tries to update a resourceData", Username), this, Logtype.Debug);
+
+            //Only authenticated users are allowed to update resourceDatas
+            if (!ClientIsAuthenticated)
+            {
+                ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
+                response.ModifiedResourceData = false;
+                response.Message = "Unauthorized to update that resourceData";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update resourceData={1} from IP={2}", Username, updateResourceDataMessage.ResourceData, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            //check, if resourceData to update exist
+            Resource resource = Database.GetResource(updateResourceDataMessage.ResourceData.ResourceId);
+            ResourceData resourceData = Database.GetResourceData(updateResourceDataMessage.ResourceData.ResourceId, updateResourceDataMessage.ResourceData.Version);
+            if (resourceData == null)
+            {
+                ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
+                response.ModifiedResourceData = false;
+                response.Message = "Unauthorized to update that resourceData"; // we send an "unauthorized"; thus, it is not possible to search database for existing ids
+                Logger.LogText(String.Format("User {0} tried to update non-existing resourceData={1} from IP={2}", Username, updateResourceDataMessage.ResourceData, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            //"normal" users are only allowed to update their own resourceDatas
+            if (ClientIsAdmin == false && resource.Username != Username)
+            {
+                ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
+                response.ModifiedResourceData = false;
+                response.Message = "Unauthorized to update that plugin";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update resourceData={1} from IP={2}", Username, updateResourceDataMessage.ResourceData, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+
+            //Here, the user is authorized; thus, update of existing resourceData in database is started
+            try
+            {
+                resourceData = updateResourceDataMessage.ResourceData;
+                Database.UpdateResourceData(resourceData.ResourceId, resourceData.Version, resourceData.Data, DateTime.Now);
+                Logger.LogText(String.Format("User {0} updated existing resourceData in database: {1}", Username, resourceData.ToString()), this, Logtype.Info);
+                ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
+                response.ModifiedResourceData = true;
+                response.Message = String.Format("Updated resourceData in database: {0}", resourceData.ToString());
+                SendMessage(response, sslStream);
+            }
+            catch (Exception ex)
+            {
+                //update failed; logg to logfile and return exception to client
+                ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
+                response.ModifiedResourceData = false;
+                Logger.LogText(String.Format("User {0} tried to update an existing resourceData. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during update of existing resourceData";
+                SendMessage(response, sslStream);
+            }
+        }     
 
         /// <summary>
         /// Sends a message to the client

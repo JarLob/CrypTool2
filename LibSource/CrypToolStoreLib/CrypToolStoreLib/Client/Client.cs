@@ -1768,14 +1768,155 @@ namespace CrypToolStoreLib.Client
 
         #region Methods for working with ResourceDatas
 
-        public string CreateResourceData()
+        /// <summary>
+        /// Creates a new resource adata in the database
+        /// Only possible, when the user is authenticated
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult CreateResourceData(ResourceData resourceData)
         {
-            return string.Empty;
+            lock (this)
+            {
+                //we can only create users, when we are connected to the server
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+                //only authenticated users are allowed to create plugins
+                if (!IsAuthenticated)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not authenticated",
+                        Success = false,
+                        DataObject = new List<Developer>()
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to create a new resource data: {0}", resourceData.ToString()), this, Logtype.Info);
+
+                //1. Step: Send CreateNewResourceDataMessage to server
+                CreateNewResourceDataMessage message = new CreateNewResourceDataMessage();
+                message.ResourceData = resourceData;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponseResourceDataModificationMessage
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseResourceDataModification)
+                {
+                    //received a response, forward it to user
+                    ResponseResourceDataModificationMessage responseResourceDataModificationMessage = (ResponseResourceDataModificationMessage)response_message;
+                    logger.LogText(String.Format("{0} a new reresource data. Return message was: {1}", responseResourceDataModificationMessage.ModifiedResourceData == true ? "Successfully created" : "Did not create", responseResourceDataModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responseResourceDataModificationMessage.Message,
+                        Success = responseResourceDataModificationMessage.ModifiedResourceData
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to create new plugin was not a ResponseResourceDataModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
-        public string UpdateResourceData()
+        /// <summary>
+        /// Updates an existing resource data in the database
+        /// Only possible, when the user is authenticated
+        /// </summary>
+        /// <param name="developer"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult UpdateResourceData(ResourceData resourceData)
         {
-            return string.Empty;
+            lock (this)
+            {
+                //we can update plugins, when we are connected to the server
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+                //only authenticated users are allowed, thus, we do not even send any update messages
+                if (!IsAuthenticated)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not authenticated",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to update an existing resourceData: {0}", resourceData.ToString()), this, Logtype.Info);
+
+                //1. Step: Send UpdatePluginMessage to server
+                UpdateResourceDataMessage message = new UpdateResourceDataMessage();
+                message.ResourceData = resourceData;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponseResourceDataModification
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseResourceDataModification)
+                {
+                    //received a response, forward it to user
+                    ResponseResourceDataModificationMessage responseResourceModificationMessage = (ResponseResourceDataModificationMessage)response_message;
+                    logger.LogText(String.Format("{0} an existing resource data. Return message was: {1}", responseResourceModificationMessage.ModifiedResourceData == true ? "Successfully updated" : "Did not update", responseResourceModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responseResourceModificationMessage.Message,
+                        Success = responseResourceModificationMessage.ModifiedResourceData
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to update an existing resource data was not a ResponseResourceDataModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
         public string DeleteResourceData()
