@@ -1698,9 +1698,70 @@ namespace CrypToolStoreLib.Client
             }
         }
 
-        public List<Resource> GetResourceList()
+        /// <summary>
+        /// Requests a list of resources from the server
+        /// if username is *, it requests a list of all resources; otherwise it returns all resources of the given user
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult GetResourceList(string username = "*")
         {
-            return null;
+            lock (this)
+            {
+                //we can only receive resource lists when we are connected
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to get resources of user: {0}", username), this, Logtype.Info);
+
+                //1. Step: Send RequestResourceListMessage to server
+                RequestResourceListMessage message = new RequestResourceListMessage();
+                message.Username = username;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponseResourceListMessage
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseResourceList)
+                {
+                    //received a response, forward it to user
+                    ResponseResourceListMessage responseResourceListMessage = (ResponseResourceListMessage)response_message;
+                    logger.LogText(String.Format("Received a resource list. Message was {0}", responseResourceListMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responseResourceListMessage.Message,
+                        DataObject = responseResourceListMessage.Resources
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to request a resource list was not a ResponseResourceListMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
         #endregion

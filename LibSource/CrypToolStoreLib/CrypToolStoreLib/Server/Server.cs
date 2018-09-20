@@ -365,14 +365,16 @@ namespace CrypToolStoreLib.Server
                 case MessageType.RequestResource:
                     HandleRequestResourceMessage((RequestResourceMessage)message, sslStream);
                     break;
-
+                case MessageType.RequestResourceList:
+                    HandleRequestResourceListMessage((RequestResourceListMessage)message, sslStream);
+                    break;
 
                 default:
                     HandleUnknownMessage(message, sslStream);
                     break;
             }
         }
-       
+
         /// <summary>
         /// Handles messages of unknown message type
         /// Sends that we do not know the type of message
@@ -947,7 +949,7 @@ namespace CrypToolStoreLib.Server
                 List<Plugin> plugins = Database.GetPlugins(requestPluginListMessage.Username.Equals("*") ? null : requestPluginListMessage.Username);
                 if (!ClientIsAdmin)
                 {
-                    plugins = (from p in plugins where p.Publish == true || p.Username == Username || ClientIsAdmin select p).ToList();
+                    plugins = (from p in plugins where p.Publish == true || p.Username == Username select p).ToList();
                 }
                 ResponsePluginListMessage response = new ResponsePluginListMessage();
                 response.Plugins = plugins;
@@ -1458,8 +1460,6 @@ namespace CrypToolStoreLib.Server
             }
         }
 
-
-
         /// <summary>
         /// Handles RequestResourceMessage
         /// Returns the resource if it exists in the database
@@ -1514,6 +1514,44 @@ namespace CrypToolStoreLib.Server
                 SendMessage(response, sslStream);
             }
         }
+
+        /// <summary>
+        /// Handles RequestResourceListMessages
+        /// responses with lists of resources
+        /// </summary>
+        /// <param name="requestPluginListMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleRequestResourceListMessage(RequestResourceListMessage requestResourceListMessage, SslStream sslStream)
+        {
+            Logger.LogText(String.Format("User {0} requested a list of resources", Username), this, Logtype.Debug);
+
+            try
+            {
+                List<Resource> resources = Database.GetResources(requestResourceListMessage.Username.Equals("*") ? null : requestResourceListMessage.Username);
+                if (!ClientIsAdmin)
+                {
+                    resources = (from p in resources where p.Publish == true || p.Username == Username select p).ToList();
+                }
+                ResponseResourceListMessage response = new ResponseResourceListMessage();
+                response.Resources = resources;
+                string message = String.Format("Responding with resource list containing {0} elements", resources.Count);
+                Logger.LogText(message, this, Logtype.Debug);
+                response.Message = message;
+                SendMessage(response, sslStream);
+            }
+            catch (Exception ex)
+            {
+                //request failed; logg to logfile and return exception to client
+                ResponseResourceMessage response = new ResponseResourceMessage();
+                Logger.LogText(String.Format("User {0} tried to get a resource list. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during request of source list";
+                SendMessage(response, sslStream);
+            }
+        }
+       
+
+
+
 
         /// <summary>
         /// Sends a message to the client

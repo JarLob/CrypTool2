@@ -65,7 +65,7 @@ namespace CrypToolStoreLib.Tools
         ResponseSource = 307,
 
         //Message for "Resources"
-        RequestResourceMessage = 400,
+        RequestResourceList = 400,
         ResponseResourceList = 401,
         CreateNewResource = 402,
         UpdateResource = 403,
@@ -248,7 +248,7 @@ namespace CrypToolStoreLib.Tools
             MessageTypeDictionary.Add(MessageType.ResponseSource, typeof(ResponseSourceMessage));
 
             //resources
-            MessageTypeDictionary.Add(MessageType.RequestResourceMessage, typeof(RequestResourceListMessage));
+            MessageTypeDictionary.Add(MessageType.RequestResourceList, typeof(RequestResourceListMessage));
             MessageTypeDictionary.Add(MessageType.ResponseResourceList, typeof(ResponseResourceListMessage));
             MessageTypeDictionary.Add(MessageType.CreateNewResource, typeof(CreateNewResourceMessage));
             MessageTypeDictionary.Add(MessageType.UpdateResource, typeof(UpdateResourceMessage));
@@ -1463,7 +1463,7 @@ namespace CrypToolStoreLib.Tools
         }
 
         [MessageDataField]
-        public List<Resource> ResourceList
+        public List<Resource> Resources
         {
             get;
             set;
@@ -1471,9 +1471,8 @@ namespace CrypToolStoreLib.Tools
 
         public ResponseResourceListMessage()
         {
-            ResourceList = new List<Resource>();
+            Resources = new List<Resource>();
         }
-
         
     }
 
