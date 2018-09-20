@@ -1607,7 +1607,7 @@ namespace CrypToolStoreLib.Server
             try
             {
                 Database.CreateResourceData(createNewResourceDataMessage.ResourceData.ResourceId, createNewResourceDataMessage.ResourceData.Version, createNewResourceDataMessage.ResourceData.Data, DateTime.Now);
-                Logger.LogText(String.Format("User {0} created new resourceData for plugin={0} in database: {2}", Username, resource, resourceData), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} created new resource data for resource={0} in database: {2}", Username, resource.Id, resourceData), this, Logtype.Info);
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = true;
                 response.Message = String.Format("Created new resource data in database: {0}", resourceData.ToString());
@@ -1618,7 +1618,7 @@ namespace CrypToolStoreLib.Server
                 //creation failed; logg to logfile and return exception to client
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
-                Logger.LogText(String.Format("User {0} tried to create a new resourceData. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogText(String.Format("User {0} tried to create a new resource data. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
                 response.Message = "Exception during creation of new resourceData";
                 SendMessage(response, sslStream);
             }
@@ -1634,7 +1634,7 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleUpdateResourceDataMessage(UpdateResourceDataMessage updateResourceDataMessage, SslStream sslStream)
         {
-            Logger.LogText(String.Format("User {0} tries to update a resourceData", Username), this, Logtype.Debug);
+            Logger.LogText(String.Format("User {0} tries to update a resource data", Username), this, Logtype.Debug);
 
             //Only authenticated users are allowed to update resourceDatas
             if (!ClientIsAuthenticated)
@@ -1642,7 +1642,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 response.Message = "Unauthorized to update that resourceData";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to update resourceData={1} from IP={2}", Username, updateResourceDataMessage.ResourceData, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update resource data={1} from IP={2}", Username, updateResourceDataMessage.ResourceData, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1654,7 +1654,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 response.Message = "Unauthorized to update that resourceData"; // we send an "unauthorized"; thus, it is not possible to search database for existing ids
-                Logger.LogText(String.Format("User {0} tried to update non-existing resourceData={1} from IP={2}", Username, updateResourceDataMessage.ResourceData, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("User {0} tried to update non-existing resource data={1} from IP={2}", Username, updateResourceDataMessage.ResourceData, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1664,7 +1664,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 response.Message = "Unauthorized to update that plugin";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to update resourceData={1} from IP={2}", Username, updateResourceDataMessage.ResourceData, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update resource data={1} from IP={2}", Username, updateResourceDataMessage.ResourceData, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1674,7 +1674,7 @@ namespace CrypToolStoreLib.Server
             {
                 resourceData = updateResourceDataMessage.ResourceData;
                 Database.UpdateResourceData(resourceData.ResourceId, resourceData.Version, resourceData.Data, DateTime.Now);
-                Logger.LogText(String.Format("User {0} updated existing resourceData in database: {1}", Username, resourceData.ToString()), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} updated existing resource data in database: {1}", Username, resourceData.ToString()), this, Logtype.Info);
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = true;
                 response.Message = String.Format("Updated resourceData in database: {0}", resourceData.ToString());
@@ -1685,7 +1685,7 @@ namespace CrypToolStoreLib.Server
                 //update failed; logg to logfile and return exception to client
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
-                Logger.LogText(String.Format("User {0} tried to update an existing resourceData. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogText(String.Format("User {0} tried to update an existing resource data. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
                 response.Message = "Exception during update of existing resourceData";
                 SendMessage(response, sslStream);
             }

@@ -62,15 +62,17 @@ namespace CrpyStoreLib
                     try
                     {
                         CrypToolStoreClient client = new CrypToolStoreClient();
-                        client.Connect();
+                        client.Connect();                        
                         client.Login("kopal", "123");
                         //client.Login("test", "");
 
-                        List<Source> sources = (List<Source>)client.GetSourceList(7).DataObject;
-                        foreach (var s in sources)
-                        {
-                            Console.WriteLine("###: " + s);
-                        }
+                        ResourceData data = new ResourceData();
+                        data.ResourceId = 1006;
+                        data.Version = 4;
+                        data.Data = new byte[] { 1 };
+
+                        client.UpdateResourceData(data);
+
                         client.Disconnect();
                     }
                     catch (Exception ex)

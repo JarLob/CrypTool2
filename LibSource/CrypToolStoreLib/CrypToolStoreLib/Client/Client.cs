@@ -1873,7 +1873,7 @@ namespace CrypToolStoreLib.Client
                     };
                 }
 
-                logger.LogText(String.Format("Trying to update an existing resourceData: {0}", resourceData.ToString()), this, Logtype.Info);
+                logger.LogText(String.Format("Trying to update an existing resource data: {0}", resourceData.ToString()), this, Logtype.Info);
 
                 //1. Step: Send UpdatePluginMessage to server
                 UpdateResourceDataMessage message = new UpdateResourceDataMessage();
