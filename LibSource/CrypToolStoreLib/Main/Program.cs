@@ -66,8 +66,6 @@ namespace CrpyStoreLib
                         client.Login("kopal", "123");
                         //client.Login("test", "");
 
-                        
-
                         ResourceData data = new ResourceData();
                         data.ResourceId = 1006;
                         data.ResourceVersion = 4;
@@ -76,6 +74,9 @@ namespace CrpyStoreLib
                         client.CreateResourceData(data);
 
                         client.UpdateResourceData(data);
+
+                        data = (ResourceData) client.GetResourceData(1006, 4).DataObject;
+                        Console.WriteLine(data);
 
                         client.DeleteResourceData(data.ResourceId, data.ResourceVersion);
 

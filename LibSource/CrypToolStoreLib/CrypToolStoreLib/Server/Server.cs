@@ -377,6 +377,9 @@ namespace CrypToolStoreLib.Server
                 case MessageType.DeleteResourceData:
                     HandleDeleteResourceDataMessage((DeleteResourceDataMessage)message, sslStream);
                     break;
+                case MessageType.RequestResourceData:
+                    HandleRequestResourceDataMessage((RequestResourceDataMessage)message, sslStream);
+                    break;
 
                 default:
                     HandleUnknownMessage(message, sslStream);
@@ -1759,7 +1762,64 @@ namespace CrypToolStoreLib.Server
                 response.Message = "Exception during delete of existing resource data";
                 SendMessage(response, sslStream);
             }
-        }  
+        }
+
+        /// <summary>
+        /// Handles RequestResourceDataMessage
+        /// Returns the resource data if it exists in the database
+        /// Only the owners of a plugin or admins are allowed to get the sources
+        /// </summary>
+        /// <param name="requestSourceMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleRequestResourceDataMessage(RequestResourceDataMessage requestResourceDataMessage, SslStream sslStream)
+        {
+            Logger.LogText(String.Format("User {0} requested a resource data", Username), this, Logtype.Debug);
+
+            try
+            {
+                ResourceData resourceData = Database.GetResourceData(requestResourceDataMessage.ResourceId, requestResourceDataMessage.ResourceVersion);
+                if (resourceData == null)
+                {
+                    ResponseResourceDataMessage response = new ResponseResourceDataMessage();
+                    response.ResourceDataExists = false;
+                    Logger.LogText(String.Format("User {0} tried to get a non-existing resource data", Username), this, Logtype.Warning);
+                    response.Message = "Unauthorized to get that resourceData";
+                    SendMessage(response, sslStream);
+                }
+                else
+                {
+                    //Check, if resource is owned by user or user is admin
+                    Resource resource = Database.GetResource(resourceData.ResourceId);
+                    if (ClientIsAdmin || resource.Username == Username)
+                    {
+                        ResponseResourceDataMessage response = new ResponseResourceDataMessage();
+                        response.ResourceData = resourceData;
+                        response.ResourceDataExists = true;
+                        string message = String.Format("Responding with resource data: {0}", resourceData.ToString());
+                        Logger.LogText(message, this, Logtype.Debug);
+                        response.Message = message;
+                        SendMessage(response, sslStream);
+                    }
+                    else
+                    {
+                        ResponseResourceDataMessage response = new ResponseResourceDataMessage();
+                        response.ResourceDataExists = false;
+                        Logger.LogText(String.Format("Unauthorized user {0} tried to get a resource data {1}{2}", Username, requestResourceDataMessage.ResourceId, requestResourceDataMessage.ResourceVersion), this, Logtype.Warning);
+                        response.Message = "Unauthorized to get that resource data";
+                        SendMessage(response, sslStream);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //request failed; logg to logfile and return exception to client
+                ResponseResourceDataMessage response = new ResponseResourceDataMessage();
+                Logger.LogText(String.Format("User {0} tried to get an existing resource data. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during request of existing resource data";
+                SendMessage(response, sslStream);
+            }
+        }
+
 
         /// <summary>
         /// Sends a message to the client

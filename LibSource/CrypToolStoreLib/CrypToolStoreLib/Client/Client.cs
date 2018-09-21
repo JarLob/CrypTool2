@@ -1995,9 +1995,71 @@ namespace CrypToolStoreLib.Client
             }
         }
 
-        public ResourceData GetResourceData()
+        /// <summary>
+        /// Requests an existing resource data from the database
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult GetResourceData(int resourceid, int resourceversion)
         {
-            return null;
+            lock (this)
+            {
+                //we can only receive resources when we are connected
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to get an existing resource data: {0} {1}", resourceid, resourceversion), this, Logtype.Info);
+
+                //1. Step: Send RequestReresourceDataMessage to server
+                RequestResourceDataMessage message = new RequestResourceDataMessage();
+                message.ResourceId = resourceid;
+                message.ResourceVersion = resourceversion;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponseResourceDataMessage
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseResourceData)
+                {
+                    //received a response, forward it to user
+                    ResponseResourceDataMessage responseReresourceDataMessage = (ResponseResourceDataMessage)response_message;
+                    logger.LogText(String.Format("{0} an existing resource data. Return message was: {1}", responseReresourceDataMessage.ResourceDataExists == true ? "Successfully received" : "Did not receive", responseReresourceDataMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responseReresourceDataMessage.Message,
+                        Success = responseReresourceDataMessage.ResourceDataExists,
+                        DataObject = responseReresourceDataMessage.ResourceData
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to request an existing resource data was not a ResponseResourceDataMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
         public List<ResourceData> GetResourceDataList()

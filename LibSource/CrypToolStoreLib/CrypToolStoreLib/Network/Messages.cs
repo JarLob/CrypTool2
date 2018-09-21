@@ -82,7 +82,7 @@ namespace CrypToolStoreLib.Tools
         DeleteResourceData = 504,
         ResponseResourceDataModification = 505,
         RequestResourceData = 506,
-        ResponseGetResourceData = 507,
+        ResponseResourceData = 507,
 
         //server error message
         ServerError = 900,
@@ -265,7 +265,7 @@ namespace CrypToolStoreLib.Tools
             MessageTypeDictionary.Add(MessageType.DeleteResourceData, typeof(DeleteResourceDataMessage));
             MessageTypeDictionary.Add(MessageType.ResponseResourceDataModification, typeof(ResponseResourceDataModificationMessage));
             MessageTypeDictionary.Add(MessageType.RequestResourceData, typeof(RequestResourceDataMessage));
-            MessageTypeDictionary.Add(MessageType.ResponseGetResourceData, typeof(ResponseResourceDataMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseResourceData, typeof(ResponseResourceDataMessage));
 
             //error messages
             MessageTypeDictionary.Add(MessageType.ServerError, typeof(ServerErrorMessage));
@@ -1732,7 +1732,7 @@ namespace CrypToolStoreLib.Tools
             set;
         }
         [MessageDataField]
-        public int Version
+        public int ResourceVersion
         {
             get;
             set;
@@ -1740,7 +1740,7 @@ namespace CrypToolStoreLib.Tools
         public RequestResourceDataMessage()
         {
             ResourceId = -1;
-            Version = -1;
+            ResourceVersion = -1;
         }
 
     }
@@ -1751,6 +1751,21 @@ namespace CrypToolStoreLib.Tools
     public class ResponseResourceDataMessage : Message
     {
         [MessageDataField]
+        public String Message
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
+        public bool ResourceDataExists
+        {
+            get;
+            set;
+        }
+
+
+        [MessageDataField]
         public ResourceData ResourceData
         {
             get;
@@ -1760,7 +1775,7 @@ namespace CrypToolStoreLib.Tools
         public ResponseResourceDataMessage()
         {
             ResourceData = new ResourceData();
-        }
+        }        
     }
 
     #endregion
