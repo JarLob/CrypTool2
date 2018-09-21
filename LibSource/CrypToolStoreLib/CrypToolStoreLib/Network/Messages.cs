@@ -1717,7 +1717,7 @@ namespace CrypToolStoreLib.Tools
         public ResponseResourceDataModificationMessage()
         {
             Message = string.Empty;
-        }
+        }        
     }
 
     /// <summary>

@@ -1919,9 +1919,80 @@ namespace CrypToolStoreLib.Client
             }
         }
 
-        public string DeleteResourceData()
+        /// <summary>
+        /// Deletes an existing resource data in the database
+        /// Only possible, when the user is authenticated
+        /// </summary>
+        /// <param name="resourceid"></param>
+        /// <param name="resourceversion"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult DeleteResourceData(int resourceid, int resourceversion)
         {
-            return string.Empty;
+            lock (this)
+            {
+                //we can only create users, when we are connected to the server
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+                //only authenticated users are allowed, thus, we do not even send any delete messages
+                if (!IsAuthenticated)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not authenticated",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to delete an existing resource data: resourceid={0}, version={1}", resourceid, resourceversion), this, Logtype.Info);
+
+                //1. Step: Send DeleteResourceDataMessage to server
+                DeleteResourceDataMessage message = new DeleteResourceDataMessage();
+                message.ResourceData = new ResourceData() { ResourceId = resourceid, ResourceVersion = resourceversion };
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponseResourceDataModificationMessage
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseResourceDataModification)
+                {
+                    //received a response, forward it to user
+                    ResponseResourceDataModificationMessage responseReresourceDataModificationMessage = (ResponseResourceDataModificationMessage)response_message;
+                    logger.LogText(String.Format("{0} an existing resource data. Return message was: {1}", responseReresourceDataModificationMessage.ModifiedResourceData == true ? "Successfully deleted" : "Did not delete", responseReresourceDataModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responseReresourceDataModificationMessage.Message,
+                        Success = responseReresourceDataModificationMessage.ModifiedResourceData
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to delete an existing resource data was not a ResponseResourceDataModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
         public ResourceData GetResourceData()

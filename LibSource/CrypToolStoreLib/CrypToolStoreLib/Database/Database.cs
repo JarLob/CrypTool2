@@ -986,7 +986,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Deleting resource data: resourceid={0}, version={1}", resourceid, version), this, Logtype.Info);
+            logger.LogText(String.Format("Deleted resource data: resourceid={0}, version={1}", resourceid, version), this, Logtype.Info);
         }
 
         /// <summary>
@@ -1016,7 +1016,7 @@ namespace CrypToolStoreLib.Database
 
             ResourceData resourceData = new ResourceData();
             resourceData.ResourceId = (int)resultset[0]["resourceid"];
-            resourceData.Version = (int)resultset[0]["version"];
+            resourceData.ResourceVersion = (int)resultset[0]["version"];
             resourceData.Data = (byte[])resultset[0]["data"];
             resourceData.UploadDate = (DateTime)resultset[0]["uploaddate"];
             
@@ -1061,7 +1061,7 @@ namespace CrypToolStoreLib.Database
             {
                 ResourceData resourceData = new ResourceData();
                 resourceData.ResourceId = (int)entry["resourceid"];
-                resourceData.Version = (int)entry["version"];
+                resourceData.ResourceVersion = (int)entry["version"];
                 resourceData.Data = (byte[])entry["data"];
                 resourceData.UploadDate = (DateTime)entry["uploaddate"];
                 resourceDataList.Add(resourceData);

@@ -66,12 +66,18 @@ namespace CrpyStoreLib
                         client.Login("kopal", "123");
                         //client.Login("test", "");
 
+                        
+
                         ResourceData data = new ResourceData();
                         data.ResourceId = 1006;
-                        data.Version = 4;
+                        data.ResourceVersion = 4;
                         data.Data = new byte[] { 1 };
 
+                        client.CreateResourceData(data);
+
                         client.UpdateResourceData(data);
+
+                        client.DeleteResourceData(data.ResourceId, data.ResourceVersion);
 
                         client.Disconnect();
                     }

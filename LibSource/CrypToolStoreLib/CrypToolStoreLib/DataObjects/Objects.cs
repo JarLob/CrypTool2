@@ -414,14 +414,14 @@ namespace CrypToolStoreLib.DataObjects
     public class ResourceData : ICrypToolStoreSerializable
     {
         public int ResourceId { get; set; }
-        public int Version { get; set; }
+        public int ResourceVersion { get; set; }
         public byte[] Data { get; set; }
         public DateTime UploadDate { get; set; }
 
         public ResourceData()
         {
             ResourceId = -1;
-            Version = -1;
+            ResourceVersion = -1;
             Data = new byte[0];
             UploadDate = DateTime.MinValue;
         }
@@ -439,7 +439,7 @@ namespace CrypToolStoreLib.DataObjects
                     using (BinaryWriter writer = new BinaryWriter(stream))
                     {
                         writer.Write(ResourceId);
-                        writer.Write(Version);
+                        writer.Write(ResourceVersion);
                         writer.Write(Data.Length);//first write length of byte array
                         writer.Write(Data);                        
                         writer.Write(UploadDate.ToBinary());
@@ -466,7 +466,7 @@ namespace CrypToolStoreLib.DataObjects
                     using (BinaryReader reader = new BinaryReader(stream))
                     {
                         ResourceId = reader.ReadInt32();
-                        Version = reader.ReadInt32();
+                        ResourceVersion = reader.ReadInt32();
                         int length = reader.ReadInt32();//first read length of byte array
                         Data = reader.ReadBytes(length);
                         UploadDate = DateTime.FromBinary(reader.ReadInt64());
@@ -482,7 +482,7 @@ namespace CrypToolStoreLib.DataObjects
         public override string ToString()
         {
             return String.Format("ResourceData{{resourceid={0}, version={1}, data={2}, uploadtime={3}}}",
-                ResourceId, Version, Data != null ? Data.Length.ToString() : "null", UploadDate);
+                ResourceId, ResourceVersion, Data != null ? Data.Length.ToString() : "null", UploadDate);
         }
     }
 
