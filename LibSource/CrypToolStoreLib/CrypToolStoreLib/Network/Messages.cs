@@ -1610,7 +1610,7 @@ namespace CrypToolStoreLib.Tools
     public class RequestResourceDataListMessage : Message
     {
         [MessageDataField]
-        public string Username
+        public int ResourceId
         {
             get;
             set;
@@ -1618,7 +1618,7 @@ namespace CrypToolStoreLib.Tools
 
         public RequestResourceDataListMessage()
         {
-            Username = string.Empty;
+            ResourceId = -1;
         }
     }
 
@@ -1627,6 +1627,20 @@ namespace CrypToolStoreLib.Tools
     /// </summary>
     public class ResponseResourceDataListMessage : Message
     {
+        [MessageDataField]
+        public bool AllowedToViewList
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
+        public string Message
+        {
+            get;
+            set;
+        }
+
         [MessageDataField]
         public List<ResourceData> ResourceDataList
         {
@@ -1638,6 +1652,7 @@ namespace CrypToolStoreLib.Tools
         {
             ResourceDataList = new List<ResourceData>();
         }
+        
     }
 
     /// <summary>

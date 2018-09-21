@@ -380,6 +380,9 @@ namespace CrypToolStoreLib.Server
                 case MessageType.RequestResourceData:
                     HandleRequestResourceDataMessage((RequestResourceDataMessage)message, sslStream);
                     break;
+                case MessageType.RequestResourceDataList:
+                    HandleRequestResourceDataListMessage((RequestResourceDataListMessage)message, sslStream);
+                    break;
 
                 default:
                     HandleUnknownMessage(message, sslStream);
@@ -1257,7 +1260,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceListMessage response = new ResponseSourceListMessage();
                 response.AllowedToViewList = false;
                 response.Message = "Unauthorized to get resource list. Please authenticate yourself";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to request source list of plugin= from IP={1}", Username, requestSourceListMessage.PluginId, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to request source list of plugin={1} from IP={2}", Username, requestSourceListMessage.PluginId, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1271,7 +1274,7 @@ namespace CrypToolStoreLib.Server
                         ResponseSourceListMessage response = new ResponseSourceListMessage();
                         response.AllowedToViewList = false;
                         response.Message = "Unauthorized to get resource list. Please authenticate yourself";
-                        Logger.LogText(String.Format("Unauthorized user {0} tried to request source list of plugin= from IP={1}", Username, requestSourceListMessage.PluginId, IPAddress), this, Logtype.Warning);
+                        Logger.LogText(String.Format("Unauthorized user {0} tried to request source list of plugin={1} from IP={2}", Username, requestSourceListMessage.PluginId, IPAddress), this, Logtype.Warning);
                         SendMessage(response, sslStream);
                         return;
                     }
@@ -1292,8 +1295,7 @@ namespace CrypToolStoreLib.Server
                 Logger.LogText(String.Format("User {0} tried to get a source list. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
                 response.Message = "Exception during request of source list";
                 SendMessage(response, sslStream);
-            }                       
-            
+            }                                   
         }
 
         /// <summary>
@@ -1820,6 +1822,61 @@ namespace CrypToolStoreLib.Server
             }
         }
 
+        /// <summary>
+        /// Handles RequestResourceDataListMessage
+        /// responses with lists of resource data
+        /// Only source data are returned that are owned by the user
+        /// Admins may receice everything
+        /// </summary>
+        /// <param name="requestSourceListMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleRequestResourceDataListMessage(RequestResourceDataListMessage requestResourceDataListMessage, SslStream sslStream)
+        {
+            Logger.LogText(String.Format("User {0} requested a list of resource data", Username), this, Logtype.Debug);
+
+            //Only authenticated admins are allowed to receive ResourceData lists
+            if (!ClientIsAuthenticated)
+            {
+                ResponseResourceDataListMessage response = new ResponseResourceDataListMessage();
+                response.AllowedToViewList = false;
+                response.Message = "Unauthorized to get resource data list. Please authenticate yourself";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to request resource data list of Resource={1} from IP={2}", Username, requestResourceDataListMessage.ResourceId, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            try
+            {
+                if (!ClientIsAdmin)
+                {
+                    Resource Resource = Database.GetResource(requestResourceDataListMessage.ResourceId);
+                    if (Resource.Username != Username)
+                    {
+                        ResponseResourceDataListMessage response = new ResponseResourceDataListMessage();
+                        response.AllowedToViewList = false;
+                        response.Message = "Unauthorized to get resource data list. Please authenticate yourself";
+                        Logger.LogText(String.Format("Unauthorized user {0} tried to request resource data list of resource={1} from IP={2}", Username, requestResourceDataListMessage.ResourceId, IPAddress), this, Logtype.Warning);
+                        SendMessage(response, sslStream);
+                        return;
+                    }
+                }
+                List<ResourceData> ResourceDatas = Database.GetResourceDatas(requestResourceDataListMessage.ResourceId);
+                ResponseResourceDataListMessage responseResourceDataListMessage = new ResponseResourceDataListMessage();
+                responseResourceDataListMessage.AllowedToViewList = true;
+                string message = String.Format("Responding with resource data list containing {0} elements", ResourceDatas.Count);
+                Logger.LogText(message, this, Logtype.Debug);
+                responseResourceDataListMessage.Message = message;
+                responseResourceDataListMessage.ResourceDataList = ResourceDatas;
+                SendMessage(responseResourceDataListMessage, sslStream);
+            }
+            catch (Exception ex)
+            {
+                //request failed; logg to logfile and return exception to client
+                ResponseResourceDataListMessage response = new ResponseResourceDataListMessage();
+                Logger.LogText(String.Format("User {0} tried to get a resource data list. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during request of resource data list";
+                SendMessage(response, sslStream);
+            }
+        }
 
         /// <summary>
         /// Sends a message to the client

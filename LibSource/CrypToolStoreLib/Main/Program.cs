@@ -78,6 +78,13 @@ namespace CrpyStoreLib
                         data = (ResourceData) client.GetResourceData(1006, 4).DataObject;
                         Console.WriteLine(data);
 
+                        List<ResourceData> list = (List<ResourceData>)client.GetResourceDataList(1006).DataObject;
+                        foreach (var entry in list)
+                        {
+                            Console.WriteLine("listentry:" + entry);
+                        }
+
+
                         client.DeleteResourceData(data.ResourceId, data.ResourceVersion);
 
                         client.Disconnect();
