@@ -51,7 +51,7 @@ namespace CrypTool.CertificateServer
 
         #region Certificate Request
 
-        public ProcessingResult ProcessCertificateRequest(ClientInfo client, CertificateRequest certRequest)
+        public ProcessingResult ProcessCertificateRequest(ClientInfo client, CT2CertificateRequest certRequest)
         {
             // Check the request data
             ValidateCertificateRequest(certRequest);
@@ -147,7 +147,7 @@ namespace CrypTool.CertificateServer
         /// </summary>
         /// <param name="request">The certificate request data</param>
         /// <exception cref="ProcessingException"></exception>
-        private void ValidateCertificateRequest(CertificateRequest request)
+        private void ValidateCertificateRequest(CT2CertificateRequest request)
         {
             if (!Verification.IsValidPassword(request.Password))
             {

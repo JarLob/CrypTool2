@@ -543,7 +543,7 @@ namespace CrypTool.CertificateClientSimpleGUI
                 return;
             }
 
-            CertificateRequest certRequest = null;
+            CT2CertificateRequest certRequest = null;
             if (this.certRequestComboBox.SelectedIndex == this.certRequestComboBox.Items.IndexOf("Avatar"))
             {
                 if (!Verification.IsValidAvatar(this.certRequestAvatarEmailTextBox.Text))
@@ -556,7 +556,7 @@ namespace CrypTool.CertificateClientSimpleGUI
                 else
                 {
                     this.certRequestAvatarEmailTextBox.BackColor = SystemColors.Window;
-                    certRequest = new CertificateRequest(certRequestAvatarEmailTextBox.Text, null, certRequestPasswordTextBox.Text);
+                    certRequest = new CT2CertificateRequest(certRequestAvatarEmailTextBox.Text, null, certRequestPasswordTextBox.Text);
                 }
             }
             else
@@ -571,7 +571,7 @@ namespace CrypTool.CertificateClientSimpleGUI
                 else
                 {
                     this.certRequestAvatarEmailTextBox.BackColor = SystemColors.Window;
-                    certRequest = new CertificateRequest(null, certRequestAvatarEmailTextBox.Text, certRequestPasswordTextBox.Text);
+                    certRequest = new CT2CertificateRequest(null, certRequestAvatarEmailTextBox.Text, certRequestPasswordTextBox.Text);
                 }
             }
 
@@ -668,10 +668,10 @@ namespace CrypTool.CertificateClientSimpleGUI
         {
             try
             {
-                CertificateRequest certRequest = e.Argument as CertificateRequest;
+                CT2CertificateRequest certRequest = e.Argument as CT2CertificateRequest;
                 if (certRequest == null)
                 {
-                    throw new ArgumentException("DoWorkEventArgs argument is no CertificateRequest object!");
+                    throw new ArgumentException("DoWorkEventArgs argument is no CT2CertificateRequest object!");
                 }
 
                 this.ConfigureClient();

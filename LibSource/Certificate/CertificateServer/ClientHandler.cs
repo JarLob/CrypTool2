@@ -305,7 +305,7 @@ namespace CrypTool.CertificateServer
         private Packet HandleCertificateRequest(byte[] data)
         {
             // Deserialize XML request
-            CertificateRequest certRequest = new CertificateRequest();
+            CT2CertificateRequest certRequest = new CT2CertificateRequest();
             bool deserializationSucceeded = certRequest.Deserialize(data);
             if (!deserializationSucceeded)
             {
@@ -691,7 +691,7 @@ namespace CrypTool.CertificateServer
         //private WebPacket HandleHttpCertificateRequest(HttpListenerResponse response, byte[] data)
         //{
         //    // Deserialize XML request
-        //    CertificateRequest certRequest = new CertificateRequest();
+        //    CT2CertificateRequest certRequest = new CertificateRequest();
         //    bool deserializationSucceeded = certRequest.Deserialize(data);
         //    if (!deserializationSucceeded)
         //    {
