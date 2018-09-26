@@ -157,7 +157,7 @@ namespace CrypCloud.Manager.ViewModels
         private void LoadRemoteCertificateAndLogin()
         {
             var errorAction = new Action<string>(msg => ErrorMessage = msg);
-            var request = new CertificateRequest(Username, null, Password.ToUnsecuredString());
+            var request = new CT2CertificateRequest(Username, null, Password.ToUnsecuredString());
 
             CAServerHelper.RequestCertificate(request, OnCertificateReceived, HandleProcessingError, errorAction);
         }

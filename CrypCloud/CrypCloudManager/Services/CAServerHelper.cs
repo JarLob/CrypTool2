@@ -54,7 +54,7 @@ namespace CrypCloud.Manager.Services
             TryAsyncCommunication(() => certificateClient.RegisterCertificate(request), errorHandler);
         }
 
-        public static void RequestCertificate(CertificateRequest request, Action<CertificateReceivedEventArgs> successAction,
+        public static void RequestCertificate(CT2CertificateRequest request, Action<CertificateReceivedEventArgs> successAction,
                                               Action<ProcessingErrorEventArgs> processingError,  Action<string> errorAction)
         {
             var certificateClient = GetACertificateClient(errorAction);
