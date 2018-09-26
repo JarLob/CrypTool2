@@ -164,13 +164,13 @@ namespace CrypTool.CertificateLibrary.Network
     /// Certificate request payload (client packet)
     /// </summary>
     [Serializable]
-    public class CertificateRequest : ClientMessage
+    public class CT2CertificateRequest : ClientMessage
     {
-        public CertificateRequest()
+        public CT2CertificateRequest()
         {
         }
 
-        public CertificateRequest(string avatar, string email, string password)
+        public CT2CertificateRequest(string avatar, string email, string password)
         {
             this.Avatar = avatar;
             this.Email = email;
@@ -190,11 +190,11 @@ namespace CrypTool.CertificateLibrary.Network
         {
             try
             {
-                CertificateRequest content = null;
+                CT2CertificateRequest content = null;
                 using (MemoryStream mstream = new MemoryStream(bytes))
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof(CertificateRequest));
-                    content = (CertificateRequest)serializer.Deserialize(mstream);
+                    XmlSerializer serializer = new XmlSerializer(typeof(CT2CertificateRequest));
+                    content = (CT2CertificateRequest)serializer.Deserialize(mstream);
                     mstream.Close();
                 }
                 this.Avatar = content.Avatar;

@@ -511,7 +511,7 @@ namespace CrypTool.CertificateLibrary.Network
         /// <exception cref="InvalidPacketTypeException">The received packet type is invalid for the current system state</exception>
         /// <exception cref="NetworkException">Could not connect to the server</exception>
         /// <exception cref="NetworkStreamException">Could not write packet to the network stream</exception>
-        public void RequestCertificate(CertificateRequest certRequest)
+        public void RequestCertificate(CT2CertificateRequest certRequest)
         {
             if (!Verification.IsValidPassword(certRequest.Password))
             {
