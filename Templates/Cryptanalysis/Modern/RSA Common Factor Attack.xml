@@ -29,7 +29,7 @@ Then, we compute two different N-values:\line
 {\b N1 = P * Q\line
 N2 = Q * R}\line
 Both N-values are 1024 bit numbers. We assume, these are part of two public RSA keys.\line
-For an attacker, factorizing N1 or N2 is currently impossible using state-of-the-art factorization algorithms. But computing the greates common divisor (GCD) is easy.\line
+For an attacker, factorizing N1 or N2 is currently impossible using state-of-the-art factorization algorithms. But computing the greatest common divisor (GCD) is easy.\line
 Thus, in the next step, we compute\line
 {\b GCD(N1, N2)}\line
 which is Q. Finally, the other primes P and R can be computed by dividing N1 and N2 by Q.\line
@@ -63,7 +63,7 @@ Mit P, Q und R können die privaten RSA-Schlüssel leicht mit dem erweiterten eu
 {\b N1 = P * Q \line
 N2 = Q * R} \line
 Оба значения N являются 1024-битными числами. Мы предполагаем, что это часть двух открытых ключей RSA. \line
-Для злоумышленника факторизация N1 или N2 в настоящее время невозможна с использованием современных алгоритмов факторизации. Но вычислять общий делитель greates (GCD) легко. \line
+Для злоумышленника факторизация N1 или N2 в настоящее время невозможна с использованием современных алгоритмов факторизации. Но вычисление наибольшего общего делителя (GCD) легко. \line
 Таким образом, на следующем шаге мы вычисляем \line
 {\b GCD (N1, N2)} \line
 который равен Q. Наконец, другие простые числа P и R могут быть вычислены путем деления N1 и N2 на Q. \line
