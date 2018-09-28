@@ -294,10 +294,29 @@ namespace KeyTextBox
         private void SetKeyOffset(int caretPosition)
         {
             var count = 0;
-            foreach (var inline in KeyBox.CaretPosition.Paragraph.Inlines)
+
+            //added all the null checks due to a bug that occurs when the user copy and pastes using
+            //ctrl + a, ctrl + c and then ctrl + v
+            var caretPos = KeyBox.CaretPosition;
+            if (caretPos == null)
             {
-                var run = (Run) inline;
-                if (count+run.Text.Length < caretPosition)
+                return;
+            }
+            var paragraph = caretPos.Paragraph;
+            if (paragraph == null)
+            {
+                return;
+            }
+            var inlines = paragraph.Inlines;
+            if (inlines == null)
+            {
+                return;
+            }
+
+            foreach (var inline in inlines)
+            {
+                var run = (Run)inline;
+                if (count + run.Text.Length < caretPosition)
                 {
                     count += run.Text.Length;
                 }
