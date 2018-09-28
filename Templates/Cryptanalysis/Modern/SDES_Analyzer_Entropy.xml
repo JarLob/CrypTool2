@@ -21,7 +21,7 @@
   <replacements lang="de">
     <replacement key="$Ciphertext$" value="Geheimtext" />
     <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext" />
-    <replacement key="$Key$" value="Schlüssel" />
+    <replacement key="$Key$" value="Bester gefundener Schlüssel" />
     <replacement key="$KeySearcher$" value="Schlüsselsuche" />
     <replacement key="$StringDecoder$" value="String-Dekodierer" />
     <replacement key="$StringEncoder$" value="String-Kodierer" />
@@ -29,7 +29,7 @@
   <replacements lang="ru">
     <replacement key="$Ciphertext$" value="шифротекста" />
     <replacement key="$Revealed Plaintext$" value="Расшифрованный открытый текст" />
-    <replacement key="$Key$" value="ключ" />
+    <replacement key="$Key$" value="Найден лучший ключ" />
     <replacement key="$KeySearcher$" value="ключ поиска" />
     <replacement key="$StringDecoder$" value="Строка декодера" />
     <replacement key="$StringEncoder$" value="Строка кодировщик" />
@@ -37,7 +37,7 @@
   <replacements lang="en">
     <replacement key="$Ciphertext$" value="Ciphertext" />
     <replacement key="$Revealed Plaintext$" value="Revealed Plaintext" />
-    <replacement key="$Key$" value="Key" />
+    <replacement key="$Key$" value="Best key found yet" />
     <replacement key="$KeySearcher$" value="KeySearcher" />
     <replacement key="$StringDecoder$" value="String Decoder" />
     <replacement key="$StringEncoder$" value="String Encoder" />
