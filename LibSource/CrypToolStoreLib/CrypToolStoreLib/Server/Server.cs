@@ -1615,7 +1615,7 @@ namespace CrypToolStoreLib.Server
             try
             {
                 Database.CreateResourceData(createNewResourceDataMessage.ResourceData.ResourceId, createNewResourceDataMessage.ResourceData.ResourceVersion, createNewResourceDataMessage.ResourceData.Data, DateTime.Now);
-                Logger.LogText(String.Format("User {0} created new resource data for resource={0} in database: {2}", Username, resource.Id, resourceData), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} created new resource data for resource={1} in database: {2}", Username, resource.Id, resourceData), this, Logtype.Info);
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = true;
                 response.Message = String.Format("Created new resource data in database: {0}", resourceData.ToString());
