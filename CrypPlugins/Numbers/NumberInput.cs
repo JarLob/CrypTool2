@@ -98,7 +98,7 @@ namespace Cryptool.Plugins.Numbers
             if (e.DataObject.GetData(DataFormats.Text) is string)
             {
                 var s = (string)e.DataObject.GetData(DataFormats.Text);
-                if (s.Any(c => !"01234567890+-*/^ ()AaBbCcDdEeFf#HhXx".Contains(c)))
+                if (s.Any(c => !"01234567890+-*/^ ()AaBbCcDdEeFf#HhXx\r\n\t".Contains(c)))
                 {
                     e.CancelCommand();
                 }
