@@ -532,7 +532,7 @@
     <value>Store:</value>
   </data>
   <data name="Tested_Bits_" xml:space="preserve">
-    <value>Tested bits:</value>
+    <value>Bits to be tested:</value>
   </data>
   <data name="There_must_be_an_error__because_we_bruteforced_too_much_keys___" xml:space="preserve">
     <value>Data inconsistency error, we seem to have calculated more keys than expected...</value>

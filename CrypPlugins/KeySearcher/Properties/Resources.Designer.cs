@@ -1800,7 +1800,7 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tested bits: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bits to be tested: ähnelt.
         /// </summary>
         public static string Tested_Bits_ {
             get {
