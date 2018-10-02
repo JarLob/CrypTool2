@@ -1,0 +1,56 @@
+Task 1:
+-------
+In cryptography, a Caesar cipher, also known as Caesar's cipher, theshift cipher, Caesar's code or Caesar shift, is one of the simplestand most widely known encryption techniques. It is a type ofsubstitution cipher in which each letter in the plaintext isreplaced by a letter some fixed number of positions down thealphabet. For example, with a left shift of 3, D would be replacedby A, E would become B, and so on. The method is named after JuliusCaesar, who used it in his private correspondence.
+
+Task 2:
+-------
+Qksec Tevsec Mkockb uxygx li rsc myqxywox Tevsec Mkockb gkc k Bywkxzyvsdsmskx kxn wsvsdkbi qoxobkv gry zvkion k mbsdsmkv byvo sx droofoxdc drkd von dy dro nowsco yp dro Bywkx Bozelvsm kxn dro bsco ypdro Bywkx Owzsbo. Ro sc kvcy uxygx kc kx kedryb yp Vkdsx zbyco.
+
+Task 3:
+-------
+In cryptography, a cipher is an algorithm for performing encryptionor decryption -- a series of well-defined steps that can be followedas a procedure. An alternative, less common term is encipherment. Toencipher or encode is to convert information into cipher or code. Incommon parlance, "cipher" is synonymous with "code," as they areboth a set of steps that encrypt a message; however, the conceptsare distinct in cryptography, especially classical cryptography.
+
+Task 4:
+-------
+The Advanced Encryption Standard (AES), also known by its original name Rijndael is a specification for the encryption of electronic data established by the U.S. National Institute of Standards and Technology (NIST) in 2001.
+
+Task 5:
+-------
+0A 18 74 93 21 95 90 D7 8A 27 1C 12 2C 85 82 C4 94 50 F6 C0 68 C4 70 1F 82 D8 04 20 0D 91 7D 16 63 16 57 AD C1 B8 7C 12 08 9B BF 18 8C 00 E1 AF 31 21 E8 9F 4E 3F BA 2F 9F 99 24 87 88 91 C0 0F 66 8E 06 8C 6C 34 5B D1 2A 66 1E 8A 36 19 8A 4B 37 FF 18 4D F9 6F F4 5E DF 93 6E CD 70 5D 70 1D 67 94 43 58 DC 99 64 A6 57 72 9F 7E 14 DD 13 B9 3C 48 73 92 71 2B 44 D8 DD 87 D9 B8 C1 AD 6A CE
+
+Task 6:
+-------
+For the AES the National Institute of Standards and Technology selected three members of the Rijndael family, each with a block size of 128 bits, but three different key lengths: 128, 192 and 256 bits. 
+
+Task 6b:
+-------
+no solution :-)
+
+Task 7:
+-------
+Plaintext: RSA (Rivest–Shamir–Adleman) is one of the first public-key cryptosystems and is widely used for secure data transmission.
+
+Task 8:
+-------
+57 52 18 F2 CC 23 1D DB 7D A4 2D 2A CB F7 9A 6B 05 DD DF DA B8 9C A0 7A BA F0 15 CA 1F 75 AE DA 2C FB 9F B3 C6 A7 50 B0 9E 70 69 D5 1F 8F 3E D1 A8 55 AB C0 7F 89 65 E2 EE 8B 06 23 76 28 EF 1E 98 08 A7 1E 17 AC DB BB 81 16 3B 63 C4 BF A0 4F 87 9B 5E 42 D9 9B 25 C5 FE A3 A2 32 FB 53 02 D3 5F 5C CA 34 30 F8 7A 91 6A 79 15 81 F5 50 51 39 B6 DB 7E B7 88 6D 7D 4F 71 CA CE 64 51 49 F2 5D 2D 75 AA 5B E2 CF 0D CF 52 81 4E 57 35 6F 70 8D 36 70 C3 E6 CA BA EF CC AA F2 FC FE 81 9F 52 F2 98 34 6C 1F F1 D0 5F 47 66 31 CE 14 1F 7E E6 F7 E2 4B A1 7C 13 BC 6E 2E 98 6D 38 46 56 EE 80 D7 BF 4E 3C B1 B6 27 8F D9 BA FA AF E0 AE A6 2A 29 EA 2F FC 73 7F 22 27 74 D5 B7 0D 77 3F BC BD DB D8 08 93 24 CB A3 35 A8 81 C8 24 72 2C 35 9B 64 0A E3 0F CD 8C A5 7C ED 56 08 AB 67 DC 53 51 2A
+
+Hint: remove line breaks after copy+paste!
+
+Task 9:
+-------
+MIT was granted U.S. Patent 4,405,829 for a "Cryptographic communications system and method" that used the algorithm, on September 20, 1983
+
+Task 10:
+
+A prime number (or a prime) is a natural number greater than 1 that cannot be formed by multiplying two smaller natural numbers.
+
+Task 11:
+-------
+password
+automobile
+superman
+confidential
+
+Task 12:
+-------
+no solution :-)
