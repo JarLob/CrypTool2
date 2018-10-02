@@ -1403,7 +1403,7 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Key Searcher ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die KeySearcher ähnelt.
         /// </summary>
         public static string PluginCaption {
             get {

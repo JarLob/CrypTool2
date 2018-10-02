@@ -436,7 +436,7 @@
     <value>PLEASE UPDATE</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Key Searcher</value>
+    <value>KeySearcher</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Performs a brute-force attack on a ciphertext</value>

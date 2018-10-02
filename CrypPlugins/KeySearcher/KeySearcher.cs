@@ -1659,7 +1659,7 @@ namespace KeySearcher
             return res;
         }
 
-        #region cloud key searcher
+        #region cloud KeySearcher
 
         private CloudKeySearcher cloudKeySearcher;
 
