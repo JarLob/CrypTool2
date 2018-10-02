@@ -17,7 +17,7 @@
         <CommandBinding Command="{StaticResource ReloadTemplatesCommand}" Executed="ReloadTemplates" />
     </UserControl.CommandBindings>
 
-    <Grid>
+    <Grid PreviewDrop="PreviewDropHandler">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />

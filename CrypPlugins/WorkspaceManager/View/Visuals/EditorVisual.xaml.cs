@@ -2300,13 +2300,12 @@ namespace WorkspaceManager.View.Visuals
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] filePaths = (string[])(e.Data.GetData(DataFormats.FileDrop));
-                foreach (string fileLoc in filePaths)
+                if (filePaths != null && filePaths.Count() == 1)
                 {
-                    // Code to read the contents of the text file
-                    if (System.IO.File.Exists(fileLoc))
+                    // we only open existing files that names end with cwm
+                    if (System.IO.File.Exists(filePaths[0]) && filePaths[0].ToLower().EndsWith("cwm"))
                     {
-                        MyEditor.Open(fileLoc);
-                        break;
+                        MyEditor.Open(filePaths[0]);
                     }
                 }
                 return;

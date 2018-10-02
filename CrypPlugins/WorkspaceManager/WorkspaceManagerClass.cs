@@ -163,9 +163,10 @@ namespace WorkspaceManager
             {
                 this.OnProjectTitleChanged.Invoke(this, typeof(WorkspaceManagerClass).GetPluginStringResource("unnamed_project"));
             }
+            WorkspaceModel.DeleteAllModelElements();
             WorkspaceModel.UndoRedoManager.ClearStacks();
             WorkspaceModel.UpdateableView = this.WorkspaceSpaceEditorView;
-            WorkspaceModel.MyEditor = this;
+            WorkspaceModel.MyEditor = this;            
             this.SelectedPluginsList.Clear();
         }
 

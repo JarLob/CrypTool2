@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Editor;
 using StartCenter;
+using System.IO;
 
 namespace Startcenter
 {
@@ -79,6 +80,33 @@ namespace Startcenter
         public void ShowHelp()
         {
             _panelsObj.ShowHelp();
+        }
+
+        /// <summary>
+        /// This handles the drop of files onto the Startcenter
+        /// If a cwm-file is dropped, it opens a new WorkspaceManager
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PreviewDropHandler(object sender, DragEventArgs e)
+        {            
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] filePaths = (string[])(e.Data.GetData(DataFormats.FileDrop));
+
+                foreach (var path in filePaths)
+                {
+                    // we only open existing files that names end with cwm
+                    if (System.IO.File.Exists(path) && path.ToLower().EndsWith("cwm"))
+                    {
+                        var info = new TabInfo()
+                        {
+                            Filename = new FileInfo(path)
+                        };
+                        TemplateLoaded.Invoke(this, new TemplateOpenEventArgs() { Type = typeof(WorkspaceManager.WorkspaceManagerClass), Info = info });
+                    }
+                }                
+            }
         }
     }
 }
