@@ -128,7 +128,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 128 Bits ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 128 bit ähnelt.
         /// </summary>
         internal static string BlocksizeList1 {
             get {
@@ -137,7 +137,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 192 Bits ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 192 bit ähnelt.
         /// </summary>
         internal static string BlocksizeList2 {
             get {
@@ -146,7 +146,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 256 Bits ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 256 bit ähnelt.
         /// </summary>
         internal static string BlocksizeList3 {
             get {
@@ -281,7 +281,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 128 Bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 128 bit ähnelt.
         /// </summary>
         internal static string KeysizeList1 {
             get {
@@ -290,7 +290,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 192 Bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 192 bit ähnelt.
         /// </summary>
         internal static string KeysizeList2 {
             get {
@@ -299,7 +299,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 256 Bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 256 bit ähnelt.
         /// </summary>
         internal static string KeysizeList3 {
             get {
