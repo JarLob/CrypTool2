@@ -813,6 +813,30 @@ namespace WorkspaceManager.Model
                 }
             }
         }
+
+        /// <summary>
+        /// Deletes all Elements of this Model by calling the appropriate delete functions
+        /// This also forces the UI to update each delete
+        /// </summary>
+        public void DeleteAllModelElements()
+        {
+            foreach (var connectionModel in new List<ConnectionModel>(GetAllConnectionModels()))
+            {
+                deleteConnectionModel(connectionModel);
+            }
+            foreach (var pluginModel in new List<PluginModel>(GetAllPluginModels()))
+            {
+                deletePluginModel(pluginModel);
+            }
+            foreach (var textModel in new List<TextModel>(GetAllTextModels()))
+            {
+                deleteTextModel(textModel);
+            }
+            foreach (var imageModel in new List<ImageModel>(GetAllImageModels()))
+            {
+                deleteImageModel(imageModel);
+            }
+        }
     }
 
     /// <summary>
