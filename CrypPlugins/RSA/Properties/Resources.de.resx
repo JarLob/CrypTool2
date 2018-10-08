@@ -289,4 +289,13 @@ Diese werden dann anstatt der automatisch ermittelten Blockgrößen verwendet. <
   <data name="RangeTypeTooltip" xml:space="preserve">
     <value>Soll der Größenparameter die Anzahl der Bits oder eine obere Schranke für die zu erzeugenden Primzahlen angeben?</value>
   </data>
+  <data name="Enter_d" xml:space="preserve">
+    <value>d eingeben</value>
+  </data>
+  <data name="Enter_e" xml:space="preserve">
+    <value>e eingeben</value>
+  </data>
+  <data name="E_or_D" xml:space="preserve">
+    <value>e oder d eingeben</value>
+  </data>
 </root>

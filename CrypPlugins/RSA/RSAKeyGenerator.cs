@@ -162,53 +162,111 @@ namespace Cryptool.Plugins.RSA
             {
                 // manual
                 case 0:
-                    try
+                    if (settings.E_or_D == 0) //user knows e
                     {
-                        p = BigIntegerHelper.ParseExpression(settings.P);
-                        q = BigIntegerHelper.ParseExpression(settings.Q);
-                        e = BigIntegerHelper.ParseExpression(settings.E);
-
-                        if (!BigIntegerHelper.IsProbablePrime(p))
+                        try
                         {
-                            GuiLogMessage(p.ToString() + " is not prime!", NotificationLevel.Error);
+
+                            p = BigIntegerHelper.ParseExpression(settings.P);
+                            q = BigIntegerHelper.ParseExpression(settings.Q);
+                            e = BigIntegerHelper.ParseExpression(settings.E);
+
+                            if (!BigIntegerHelper.IsProbablePrime(p))
+                            {
+                                GuiLogMessage(p.ToString() + " is not prime!", NotificationLevel.Error);
+                                return;
+                            }
+                            if (!BigIntegerHelper.IsProbablePrime(q))
+                            {
+                                GuiLogMessage(q.ToString() + " is not prime!", NotificationLevel.Error);
+                                return;
+                            }
+                            if (p == q)
+                            {
+                                GuiLogMessage("The primes P and Q can not be equal!", NotificationLevel.Error);
+                                return;
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            GuiLogMessage("Invalid Big Number input: " + ex.Message, NotificationLevel.Error);
                             return;
                         }
-                        if (!BigIntegerHelper.IsProbablePrime(q))
+
+                        try
                         {
-                            GuiLogMessage(q.ToString() + " is not prime!", NotificationLevel.Error);
+                            D = BigIntegerHelper.ModInverse(e, (p - 1) * (q - 1));
+                        }
+                        catch (Exception)
+                        {
+                            GuiLogMessage("RSAKeyGenerator Error: E (" + e + ") can not be inverted.", NotificationLevel.Error);
                             return;
                         }
-                        if (p == q)
+
+                        try
                         {
-                            GuiLogMessage("The primes P and Q can not be equal!", NotificationLevel.Error);
+                            N = p * q;
+                            E = e;
+                        }
+                        catch (Exception ex)
+                        {
+                            GuiLogMessage("Big Number fail: " + ex.Message, NotificationLevel.Error);
                             return;
                         }
                     }
-                    catch (Exception ex)
+                    else //user knows d
                     {
-                        GuiLogMessage("Invalid Big Number input: " + ex.Message, NotificationLevel.Error);
-                        return;
-                    }
+                        try
+                        {
 
-                    try
-                    {
-                        D = BigIntegerHelper.ModInverse(e, (p - 1) * (q - 1));
-                    }
-                    catch (Exception)
-                    {
-                        GuiLogMessage("RSAKeyGenerator Error: E (" + e + ") can not be inverted.", NotificationLevel.Error);
-                        return;
-                    }
+                            p = BigIntegerHelper.ParseExpression(settings.P);
+                            q = BigIntegerHelper.ParseExpression(settings.Q);
+                            d = BigIntegerHelper.ParseExpression(settings.D);
 
-                    try
-                    {                       
-                        N = p * q;
-                        E = e;                        
-                    }
-                    catch (Exception ex)
-                    {
-                        GuiLogMessage("Big Number fail: " + ex.Message, NotificationLevel.Error);
-                        return;
+                            if (!BigIntegerHelper.IsProbablePrime(p))
+                            {
+                                GuiLogMessage(p.ToString() + " is not prime!", NotificationLevel.Error);
+                                return;
+                            }
+                            if (!BigIntegerHelper.IsProbablePrime(q))
+                            {
+                                GuiLogMessage(q.ToString() + " is not prime!", NotificationLevel.Error);
+                                return;
+                            }
+                            if (p == q)
+                            {
+                                GuiLogMessage("The primes P and Q can not be equal!", NotificationLevel.Error);
+                                return;
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            GuiLogMessage("Invalid Big Number input: " + ex.Message, NotificationLevel.Error);
+                            return;
+                        }
+
+                        try
+                        {
+                            E = BigIntegerHelper.ModInverse(d, (p - 1) * (q - 1));
+                        }
+                        catch (Exception)
+                        {
+                            GuiLogMessage("RSAKeyGenerator Error: D (" + d + ") can not be inverted.", NotificationLevel.Error);
+                            return;
+                        }
+
+                        try
+                        {
+                            N = p * q;
+                            D = d;
+                        }
+                        catch (Exception ex)
+                        {
+                            GuiLogMessage("Big Number fail: " + ex.Message, NotificationLevel.Error);
+                            return;
+                        }
                     }
                     break;
 

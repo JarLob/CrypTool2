@@ -288,4 +288,13 @@
   <data name="RangeTypeTooltip" xml:space="preserve">
     <value>Shall the range parameter be interpreted as 'number of bits' or as 'upper limit'?</value>
   </data>
+  <data name="Enter_d" xml:space="preserve">
+    <value>Enter d</value>
+  </data>
+  <data name="Enter_e" xml:space="preserve">
+    <value>Enter e</value>
+  </data>
+  <data name="E_or_D" xml:space="preserve">
+    <value>Enter e or d</value>
+  </data>
 </root>

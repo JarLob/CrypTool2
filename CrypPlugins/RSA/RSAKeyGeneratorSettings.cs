@@ -33,6 +33,8 @@ namespace Cryptool.Plugins.RSA
         #region private members
 
         private int source;
+        private int e_or_d;
+
         private String p = "23";
         private String q = "13";
         private String n = "299";
@@ -78,6 +80,25 @@ namespace Cryptool.Plugins.RSA
             }
         }
 
+        /// <summary>
+        /// Getter/Setter for the source of the Key Data
+        /// </summary>
+        [TaskPane("E_or_D", "E_or_DTooltip", null, 2, false, ControlType.ComboBox, new string[] { "Enter_e", "Enter_d",})]
+        public int E_or_D
+        {
+            get { return e_or_d; }
+            set
+            {
+                if (((int)value) != e_or_d)
+                {
+                    e_or_d = (int)value;
+                    UpdateTaskPaneVisibility();
+                    OnPropertyChanged("E_or_D");
+                }
+            }
+        }
+
+
         internal void UpdateTaskPaneVisibility()
         {
             if (TaskPaneAttributeChanged == null)
@@ -91,8 +112,9 @@ namespace Cryptool.Plugins.RSA
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("Password", Visibility.Collapsed)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("P", Visibility.Visible)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("Q", Visibility.Visible)));
-                    TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("E", Visibility.Visible)));
-                    TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("D", Visibility.Collapsed)));
+                    TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("E_or_D", Visibility.Visible)));
+                    TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("E", e_or_d == 0 ? Visibility.Visible : Visibility.Collapsed)));
+                    TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("D", e_or_d == 0 ? Visibility.Collapsed : Visibility.Visible)));                                        
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("N", Visibility.Collapsed)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("RangeType", Visibility.Collapsed)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("Range", Visibility.Collapsed)));
@@ -103,6 +125,7 @@ namespace Cryptool.Plugins.RSA
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("Password", Visibility.Collapsed)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("P", Visibility.Collapsed)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("Q", Visibility.Collapsed)));
+                    TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("E_or_D", Visibility.Collapsed)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("E", Visibility.Visible)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("D", Visibility.Visible)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("N", Visibility.Visible)));
@@ -115,6 +138,7 @@ namespace Cryptool.Plugins.RSA
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("Password", Visibility.Collapsed)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("P", Visibility.Collapsed)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("Q", Visibility.Collapsed)));
+                    TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("E_or_D", Visibility.Collapsed)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("E", Visibility.Collapsed)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("D", Visibility.Collapsed)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("N", Visibility.Collapsed)));
@@ -127,6 +151,7 @@ namespace Cryptool.Plugins.RSA
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("Password", Visibility.Visible)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("P", Visibility.Collapsed)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("Q", Visibility.Collapsed)));
+                    TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("E_or_D", Visibility.Collapsed)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("E", Visibility.Collapsed)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("D", Visibility.Collapsed)));
                     TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer("N", Visibility.Collapsed)));
@@ -139,7 +164,7 @@ namespace Cryptool.Plugins.RSA
         /// <summary>
         /// Getter/Setter for prime P
         /// </summary>
-        [TaskPane( "PCaption", "PTooltip", null, 2, false, ControlType.TextBox)]
+        [TaskPane( "PCaption", "PTooltip", null, 3, false, ControlType.TextBox)]
         public String P
         {
             get
@@ -156,7 +181,7 @@ namespace Cryptool.Plugins.RSA
         /// <summary>
         /// Getter/Setter for the prime Q
         /// </summary>
-        [TaskPane( "QCaption", "QTooltip", null, 3, false, ControlType.TextBox)]
+        [TaskPane( "QCaption", "QTooltip", null, 4, false, ControlType.TextBox)]
         public String Q
         {
             get
@@ -173,7 +198,7 @@ namespace Cryptool.Plugins.RSA
         /// <summary>
         /// Getter/Setter for the N
         /// </summary>
-        [TaskPane( "NCaption", "NTooltip", null, 4, false, ControlType.TextBox)]
+        [TaskPane( "NCaption", "NTooltip", null, 5, false, ControlType.TextBox)]
         public String N
         {
             get
@@ -190,7 +215,7 @@ namespace Cryptool.Plugins.RSA
         /// <summary>
         /// Getter/Setter for the e
         /// </summary>
-        [TaskPane( "ECaption", "ETooltip", null, 5, false, ControlType.TextBox)]
+        [TaskPane( "ECaption", "ETooltip", null, 6, false, ControlType.TextBox)]
         public String E
         {
             get
@@ -207,7 +232,7 @@ namespace Cryptool.Plugins.RSA
         /// <summary>
         /// Getter/Setter for the D
         /// </summary>
-        [TaskPane( "DCaption", "DTooltip", null, 6, false, ControlType.TextBox)]
+        [TaskPane( "DCaption", "DTooltip", null, 7, false, ControlType.TextBox)]
         public String D
         {
             get
@@ -224,7 +249,7 @@ namespace Cryptool.Plugins.RSA
         /// <summary>
         /// Getter/Setter for the certificate file
         /// </summary>
-        [TaskPane( "CertificateFileCaption", "CertificateFileTooltip", null, 5, false, ControlType.OpenFileDialog, FileExtension = "X.509 certificates (*.cer)|*.cer")]
+        [TaskPane( "CertificateFileCaption", "CertificateFileTooltip", null, 6, false, ControlType.OpenFileDialog, FileExtension = "X.509 certificates (*.cer)|*.cer")]
         public string CertificateFile
         {
             get { return certificateFile; }
@@ -242,7 +267,7 @@ namespace Cryptool.Plugins.RSA
         /// Getter/Setter for the password of the certificate
         /// </summary>
         [DontSave]
-        [TaskPane( "PasswordCaption", "PasswordTooltip", null, 4, false, ControlType.TextBoxHidden)]
+        [TaskPane( "PasswordCaption", "PasswordTooltip", null, 5, false, ControlType.TextBoxHidden)]
         public String Password
         {
             get
@@ -259,7 +284,7 @@ namespace Cryptool.Plugins.RSA
         /// <summary>
         /// Button to "close" the certificate file. That means it will not appear any more in the text field
         /// </summary>
-        [TaskPane( "CloseFileCaption", "CloseFileTooltip", null, 6, false, ControlType.Button)]
+        [TaskPane( "CloseFileCaption", "CloseFileTooltip", null, 7, false, ControlType.Button)]
         public void CloseFile()
         {
             CertificateFile = null;
@@ -268,7 +293,7 @@ namespace Cryptool.Plugins.RSA
         /// <summary>
         /// Getter/Setter for the type of the given range
         /// </summary>
-        [TaskPane("RangeTypeCaption", "RangeTypeTooltip", null, 2, false, ControlType.RadioButton, new string[] { "RangeTypeList1", "RangeTypeList2" })]
+        [TaskPane("RangeTypeCaption", "RangeTypeTooltip", null, 3, false, ControlType.RadioButton, new string[] { "RangeTypeList1", "RangeTypeList2" })]
         public int RangeType
         {
             get
@@ -284,7 +309,7 @@ namespace Cryptool.Plugins.RSA
         /// <summary>
         /// Getter/Setter for the range of the primes
         /// </summary>
-        [TaskPane("RangeCaption", "RangeTooltip", null, 3, false, ControlType.TextBox, ValidationType.RegEx, "^[0-9]+$")]
+        [TaskPane("RangeCaption", "RangeTooltip", null, 4, false, ControlType.TextBox, ValidationType.RegEx, "^[0-9]+$")]
         public String Range
         {
             get { return range; }

@@ -288,4 +288,13 @@
   <data name="RangeTypeTooltip" xml:space="preserve">
     <value>Должен ли параметр диапазона интерпретироваться как «количество бит» или «верхний предел»?</value>
   </data>
+  <data name="Enter_d" xml:space="preserve">
+    <value>Введите d</value>
+  </data>
+  <data name="Enter_e" xml:space="preserve">
+    <value>Введите e</value>
+  </data>
+  <data name="E_or_D" xml:space="preserve">
+    <value>Введите e или d</value>
+  </data>
 </root>
