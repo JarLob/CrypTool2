@@ -17,32 +17,27 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/RSA-Kryptosystem" /></descri
   <icon file="RSA.png" />
   <relevantPlugins>
     <plugin name="RSA" />
+	<plugin name="RSAKeyGenerator" />
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$Plaintext$" value="Klartext" />
     <replacement key="$Ciphertext$" value="Geheimtext" />
     <replacement key="$StringEncoder$" value="String-Codierer" />
     <replacement key="$StringDecoder$" value="String-Decodierer" />
-    <replacement key="$RSA Decryption$" value="RSA-Entschlüsselung" />
-    <replacement key="$Decrypted Number$" value="Entschlüsselte Zahl" />
-    <replacement key="$Encrypted Number$" value="Verschlüsselte Zahl" />
+	<replacement key="$RSAKeyGenerator$" value="RSA-Schlüsselgenerator" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Plaintext$" value="обычный текст" />
     <replacement key="$Ciphertext$" value="шифротекста" />
     <replacement key="$StringEncoder$" value="Строка кодировщик" />
     <replacement key="$StringDecoder$" value="Строка декодера" />
-    <replacement key="$RSA Decryption$" value="RSA дешифрования" />
-    <replacement key="$Decrypted Number$" value="Расшифрованное число" />
-    <replacement key="$Encrypted Number$" value="Зашифрованное число" />
+	<replacement key="$RSAKeyGenerator$" value="Генератор ключа RSA" />
   </replacements>
   <replacements lang="en">
     <replacement key="$Plaintext$" value="Plaintext" />
     <replacement key="$Ciphertext$" value="Ciphertext" />
     <replacement key="$StringEncoder$" value="StringEncoder" />
     <replacement key="$StringDecoder$" value="StringDecoder" />
-    <replacement key="$RSA Decryption$" value="RSA Decryption" />
-    <replacement key="$Decrypted Number$" value="Decrypted Number" />
-    <replacement key="$Encrypted Number$" value="Encrypted Number" />
+	<replacement key="$RSAKeyGenerator$" value="RSA Key Generator" />
   </replacements>
 </sample>
