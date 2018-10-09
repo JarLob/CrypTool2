@@ -157,13 +157,13 @@ namespace Cryptool.Plugins.RSA
                 
                 if (blocksize_input == 0)
                 {
-                    GuiLogMessage("Input blocksize 0 - RSA can not work", NotificationLevel.Error);
+                    GuiLogMessage("Input blocksize 0 - RSA cannot work", NotificationLevel.Error);
                     return;
                 }
 
                 if (blocksize_output == 0)
                 {
-                    GuiLogMessage("Output blocksize 0 - RSA can not work", NotificationLevel.Error);
+                    GuiLogMessage("Output blocksize 0 - RSA cannot work", NotificationLevel.Error);
                     return;
                 }
 

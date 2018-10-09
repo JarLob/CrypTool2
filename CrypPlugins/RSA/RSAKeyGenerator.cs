@@ -183,7 +183,7 @@ namespace Cryptool.Plugins.RSA
                             }
                             if (p == q)
                             {
-                                GuiLogMessage("The primes P and Q can not be equal!", NotificationLevel.Error);
+                                GuiLogMessage("The primes P and Q cannot be equal!", NotificationLevel.Error);
                                 return;
                             }
 
@@ -200,7 +200,7 @@ namespace Cryptool.Plugins.RSA
                         }
                         catch (Exception)
                         {
-                            GuiLogMessage("RSAKeyGenerator Error: E (" + e + ") can not be inverted.", NotificationLevel.Error);
+                            GuiLogMessage("RSAKeyGenerator Error: E (" + e + ") cannot be inverted.", NotificationLevel.Error);
                             return;
                         }
 
@@ -236,7 +236,7 @@ namespace Cryptool.Plugins.RSA
                             }
                             if (p == q)
                             {
-                                GuiLogMessage("The primes P and Q can not be equal!", NotificationLevel.Error);
+                                GuiLogMessage("The primes P and Q cannot be equal!", NotificationLevel.Error);
                                 return;
                             }
 
@@ -253,7 +253,7 @@ namespace Cryptool.Plugins.RSA
                         }
                         catch (Exception)
                         {
-                            GuiLogMessage("RSAKeyGenerator Error: D (" + d + ") can not be inverted.", NotificationLevel.Error);
+                            GuiLogMessage("RSAKeyGenerator Error: D (" + d + ") cannot be inverted.", NotificationLevel.Error);
                             return;
                         }
 
