@@ -47,7 +47,7 @@
         <!-- Set output format of the message encoder to Hexadecimal -->
         <pluginSetter plugin="$Message Encoder$" property="PresentationFormatSetting">4</pluginSetter>
       </item>
-      <item lang="ru" content="шифровать">0044</item>
+      <item lang="ru" content="шифровать" />
       <item lang="de" content="Verschlüsseln" />
       <item lang="en" content="Decrypt">
         <!-- Set AES to decrypt -->
@@ -59,7 +59,7 @@
         <!-- Set Encoding of the message encoder to ASCII -->
         <pluginSetter plugin="$Message Encoder$" property="Encoding">4</pluginSetter>
       </item>
-      <item lang="ru" content="расшифровывать">1404</item>
+      <item lang="ru" content="расшифровывать"/>
       <item lang="de" content="Entschlüsseln" />
     </comboBox>
     <comboBox plugin="AES" property="Mode" alignment="Left" defaultValue="0">
@@ -158,7 +158,7 @@
         <!-- Set output format of the message encoder to Hexadecimal -->
         <pluginSetter plugin="$Message Encoder$" property="PresentationFormatSetting">4</pluginSetter>
       </item>
-      <item lang="ru" content="шифровать">0044</item>
+      <item lang="ru" content="шифровать"/>
       <item lang="de" content="Verschlüsseln" />
       <item lang="en" content="Decrypt">
         <!-- Set DES to decrypt -->
@@ -170,7 +170,7 @@
         <!-- Set Encoding of the message encoder to ASCII -->
         <pluginSetter plugin="$Message Encoder$" property="Encoding">4</pluginSetter>
       </item>
-      <item lang="ru" content="расшифровывать">1404</item>
+      <item lang="ru" content="расшифровывать"/>
       <item lang="de" content="Entschlüsseln" />
     </comboBox>
     <comboBox plugin="DES" property="Mode" alignment="Left" defaultValue="0">
@@ -261,7 +261,7 @@
         <!-- Set output format of the message encoder to Hexadecimal -->
         <pluginSetter plugin="$Message Encoder$" property="PresentationFormatSetting">4</pluginSetter>
       </item>
-      <item lang="ru" content="шифровать">0044</item>
+      <item lang="ru" content="шифровать"/>
       <item lang="de" content="Verschlüsseln" />
       <item lang="en" content="Decrypt">
         <!-- Set SDES to decrypt -->
@@ -273,7 +273,7 @@
         <!-- Set Encoding of the message encoder to ASCII -->
         <pluginSetter plugin="$Message Encoder$" property="Encoding">4</pluginSetter>
       </item>
-      <item lang="ru" content="расшифровывать">1404</item>
+      <item lang="ru" content="расшифровывать"/>
       <item lang="de" content="Entschlüsseln" />
     </comboBox>
     <comboBox plugin="SDES" property="Mode" alignment="Left" defaultValue="0">
@@ -363,7 +363,7 @@
         <!-- Set output format of the message encoder to Hexadecimal -->
         <pluginSetter plugin="$Message Encoder$" property="PresentationFormatSetting">4</pluginSetter>
       </item>
-      <item lang="ru" content="шифровать">0044</item>
+      <item lang="ru" content="шифровать"/>
       <item lang="de" content="Verschlüsseln" />
       <item lang="en" content="Decrypt">
         <!-- Set Twofish to decrypt -->
@@ -375,7 +375,7 @@
         <!-- Set Encoding of the message encoder to ASCII -->
         <pluginSetter plugin="$Message Encoder$" property="Encoding">4</pluginSetter>
       </item>
-      <item lang="ru" content="расшифровывать">1404</item>
+      <item lang="ru" content="расшифровывать" />
       <item lang="de" content="Entschlüsseln" />
     </comboBox>
     <comboBox plugin="Twofish" property="KeySize" alignment="Left" defaultValue="0">
@@ -474,7 +474,7 @@
         <!-- Set output format of the message encoder to Hexadecimal -->
         <pluginSetter plugin="$Message Encoder$" property="PresentationFormatSetting">4</pluginSetter>
       </item>
-      <item lang="ru" content="шифровать">0044</item>
+      <item lang="ru" content="шифровать"/>
       <item lang="de" content="Verschlüsseln" />
       <item lang="en" content="Decrypt">
         <!-- Set TEA to decrypt -->
@@ -486,7 +486,7 @@
         <!-- Set Encoding of the message encoder to ASCII -->
         <pluginSetter plugin="$Message Encoder$" property="Encoding">4</pluginSetter>
       </item>
-      <item lang="ru" content="расшифровывать">1404</item>
+      <item lang="ru" content="расшифровывать" />
       <item lang="de" content="Entschlüsseln" />
     </comboBox>
     <comboBox plugin="TEA" property="Mode" alignment="Left" defaultValue="0">
@@ -584,7 +584,7 @@
         <!-- Set output format of the message encoder to Hexadecimal -->
         <pluginSetter plugin="$Message Encoder$" property="PresentationFormatSetting">4</pluginSetter>
       </item>
-      <item lang="ru" content="шифровать">0044</item>
+      <item lang="ru" content="шифровать"/>
       <item lang="de" content="Verschlüsseln" />
       <item lang="en" content="Decrypt">
         <!-- Set RC2 to decrypt -->
@@ -596,7 +596,7 @@
         <!-- Set Encoding of the message encoder to ASCII -->
         <pluginSetter plugin="$Message Encoder$" property="Encoding">4</pluginSetter>
       </item>
-      <item lang="ru" content="расшифровывать">1404</item>
+      <item lang="ru" content="расшифровывать" />
       <item lang="de" content="Entschlüsseln" />
     </comboBox>
     <comboBox plugin="RC2" property="Mode" alignment="Left" defaultValue="0">

@@ -130,13 +130,13 @@
       <item lang="en" content="Encrypt">
         <pluginSetter plugin="$Vigenère dec$" property="Action">1</pluginSetter>
       </item>
-      <item lang="ru" content="шифровать">1</item>
-      <item lang="de" content="Verschlüsseln" />
+      <item lang="ru" content="шифровать"/>
+      <item lang="de" content="Verschlüsseln"/>      
       <item lang="en" content="Decrypt">
         <pluginSetter plugin="$Vigenère dec$" property="Action">0</pluginSetter>
       </item>
-      <item lang="ru" content="расшифровывать">0</item>
-      <item lang="de" content="Entschlüsseln" />
+      <item lang="ru" content="расшифровывать"/>        
+      <item lang="de" content="Entschlüsseln" />      
     </comboBox>
     <inputBox plugin="$Plaintext$" property="Text" alignment="Right" width="78%" visibleLines="5" group="1">
       <description lang="en">Message to encrypt/decrypt:</description>
@@ -197,13 +197,13 @@
       <item lang="en" content="Encrypt">
         <pluginSetter plugin="$Decrypt$" property="Action">1</pluginSetter>
       </item>
-      <item lang="ru" content="шифровать">1</item>
-      <item lang="de" content="Verschlüsseln" />
-      <item lang="en" content="Decrypt">
+      <item lang="ru" content="шифровать"/>      
+      <item lang="de" content="Verschlüsseln"/>       
+        <item lang="en" content="Decrypt">
         <pluginSetter plugin="$Decrypt$" property="Action">0</pluginSetter>
       </item>
-      <item lang="ru" content="расшифровывать">0</item>
-      <item lang="de" content="Entschlüsseln" />
+      <item lang="ru" content="расшифровывать"/>     
+      <item lang="de" content="Entschlüsseln"/>     
     </comboBox>
     <comboBox plugin="$Encrypt$" property="UnknownSymbolHandling" alignment="Left" width="20%">
       <description lang="en">Unknown symbols handling:</description>
@@ -435,13 +435,13 @@
       <item lang="en" content="Encrypt">
         <pluginSetter plugin="$ADFGVX_Decrypt$" property="Action">1</pluginSetter>
       </item>
-      <item lang="ru" content="шифровать">1</item>
-      <item lang="de" content="Verschlüsseln" />
+      <item lang="ru" content="шифровать"/>       
+      <item lang="de" content="Verschlüsseln"/>   
       <item lang="en" content="Decrypt">
         <pluginSetter plugin="$ADFGVX_Decrypt$" property="Action">0</pluginSetter>
       </item>
-      <item lang="ru" content="расшифровывать">0</item>
-      <item lang="de" content="Entschlüsseln" />
+      <item lang="ru" content="расшифровывать"/>
+      <item lang="de" content="Entschlüsseln"/>
     </comboBox>
     <inputBox plugin="$Plaintext$" property="Text" alignment="Stretch" visibleLines="5">
       <description lang="en">Message to encrypt/decrypt:</description>
@@ -560,12 +560,12 @@
       <item lang="en" content="Encrypt">
         <pluginSetter plugin="$Transposition (Decryption)$" property="Action">1</pluginSetter>
       </item>
-      <item lang="ru" content="шифровать">1</item>
+      <item lang="ru" content="шифровать"/>
       <item lang="de" content="Verschlüsseln" />
       <item lang="en" content="Decrypt">
         <pluginSetter plugin="$Transposition (Decryption)$" property="Action">0</pluginSetter>
       </item>
-      <item lang="ru" content="расшифровывать">0</item>
+      <item lang="ru" content="расшифровывать"/>
       <item lang="de" content="Entschlüsseln" />
     </comboBox>
     <inputBox plugin="$Plaintext$" property="Text" alignment="Stretch" width="49%" visibleLines="5" group="InputGroup">

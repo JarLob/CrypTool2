@@ -1253,15 +1253,23 @@ namespace Wizard
 
             object propertyObject = null;
             PropertyInfo property;
-            if (plugin.Plugin.GetType().GetProperty(ppv.PropertyName) != null)
+            if (!ppv.PropertyName.StartsWith(".") && plugin.Plugin.GetType().GetProperty(ppv.PropertyName) != null)
             {
                 property = plugin.Plugin.GetType().GetProperty(ppv.PropertyName);
                 propertyObject = plugin.Plugin;
             }
             else
             {
-                property = settings.GetType().GetProperty(ppv.PropertyName);
-                propertyObject = settings;
+                if (ppv.PropertyName.StartsWith("."))
+                {
+                    property = settings.GetType().GetProperty(ppv.PropertyName.Substring(1, ppv.PropertyName.Length - 1));
+                    propertyObject = settings;
+                }
+                else
+                {
+                    property = settings.GetType().GetProperty(ppv.PropertyName);
+                    propertyObject = settings;
+                }
             }
             
             if (property != null)
@@ -1422,14 +1430,23 @@ namespace Wizard
                         object theObject = null;
 
                         var property = plugin.Plugin.GetType().GetProperty(propertyName);
-                        if (property != null)
+                        //we check, if the property name starts with a "."; thus, we assume we want to target the settings of a component
+                        if (!propertyName.StartsWith(".") && property != null)
                         {
                             theObject = plugin.Plugin;
                         }
                         else    //Use property from settings
                         {
-                            property = settings.GetType().GetProperty(propertyName);
-                            theObject = settings;
+                            if (propertyName.StartsWith("."))
+                            {
+                                property = settings.GetType().GetProperty(propertyName.Substring(1, propertyName.Length - 1));
+                                theObject = settings;
+                            }
+                            else
+                            {
+                                property = settings.GetType().GetProperty(propertyName);
+                                theObject = settings;
+                            }                            
                         }
 
                         if (property != null)
