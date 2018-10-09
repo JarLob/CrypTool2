@@ -11,7 +11,7 @@
 
         <controls:HeaderView x:Name="HeaderView" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
         <controls:LoginView x:Name="LoginView" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
-        <controls:MainMenuView x:Name="MainMenuView" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
+        <controls:MainMenuView x:Name="MainMenuView" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>

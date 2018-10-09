@@ -5,17 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+    <Grid VerticalAlignment="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" Name="UserManagementRow"/>
+            <RowDefinition Height="50" Name="PluginManagementRow"/>
+            <RowDefinition Height="50" Name="ResourceManagementRow"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">Main Menu</Label>
-        <Button Name="UserManagement" Grid.Row="2" Height="40">User Management</Button>
-        <Button Name="PluginManagement" Grid.Row="3" Height="40">Plugin Management</Button>
-        <Button Name="ResourceManagement" Grid.Row="4" Height="40">Resource Management</Button>
+        <Button Name="UserManagementButton" Grid.Row="2" Height="40" Width="200">User Management</Button>
+        <Button Name="PluginManagementButton" Grid.Row="3" Height="40" Width="200">Plugin Management</Button>
+        <Button Name="ResourceManagementButton" Grid.Row="4" Height="40" Width="200">Resource Management</Button>
     </Grid>
 </UserControl>
