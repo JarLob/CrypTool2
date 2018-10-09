@@ -135,6 +135,9 @@
   <data name="CipherTypeList2" xml:space="preserve">
     <value>ADFGVX</value>
   </data>
+  <data name="CipherTypeList3" xml:space="preserve">
+    <value>ADFGVXZ</value>
+  </data>
   <data name="CipherVariantCaption" xml:space="preserve">
     <value>Вариант шифрования</value>
   </data>

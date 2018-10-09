@@ -117,85 +117,172 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ActionCaption" xml:space="preserve">
-    <value>Action</value>
-  </data>
-  <data name="ActionList1" xml:space="preserve">
-    <value>Encrypt</value>
-  </data>
-  <data name="ActionList2" xml:space="preserve">
-    <value>Decrypt</value>
-  </data>
-  <data name="ActionTooltip" xml:space="preserve">
-    <value>Select the algorithm action</value>
-  </data>
-  <data name="CipherTypeList1" xml:space="preserve">
-    <value>ADFGX</value>
-  </data>
-  <data name="CipherTypeList2" xml:space="preserve">
-    <value>ADFGVX</value>
-  </data>
-  <data name="CipherTypeList3" xml:space="preserve">
-    <value>ADFGVXZ</value>
-  </data>
-  <data name="CipherVariantCaption" xml:space="preserve">
-    <value>Cipher variant</value>
-  </data>
-  <data name="CipherVariantTooltip" xml:space="preserve">
-    <value>ADFGX uses a 25 letter plaintext alphabet (A-Z without J) while ADFGVX uses a 36 letter alphabet (A-Z and 0-9).</value>
-  </data>
-  <data name="CleanTranspositionPassCaption" xml:space="preserve">
-    <value>Transposition column sequence</value>
-  </data>
-  <data name="CleanTranspositionPassTooltip" xml:space="preserve">
-    <value>Order of column numbers being used for the transposition stage</value>
-  </data>
-  <data name="InputStringCaption" xml:space="preserve">
-    <value>Text input</value>
-  </data>
-  <data name="InputStringTooltip" xml:space="preserve">
-    <value>Input string to be encrypted or decrypted</value>
-  </data>
-  <data name="OutputStringCaption" xml:space="preserve">
-    <value>Text output</value>
-  </data>
-  <data name="OutputStringTooltip" xml:space="preserve">
-    <value>Output ciphertext or plaintext after processing</value>
-  </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>ADFGVX</value>
+    <value>Vigenère Analyzer</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Cipher used in WW1, combining substitution and transposition</value>
+    <value>Cryptanalysis of the Vigenère cipher using hillclimbing.</value>
   </data>
-  <data name="RandomMatrixCaption" xml:space="preserve">
-    <value>Random keys</value>
+  <data name="Copy_all" xml:space="preserve">
+    <value>Copy all lines</value>
   </data>
-  <data name="RandomMatrixTooltip" xml:space="preserve">
-    <value>Create random substitution matrix and transposition key</value>
+  <data name="Copy_key" xml:space="preserve">
+    <value>Copy key</value>
   </data>
-  <data name="StandardMatrixCaption" xml:space="preserve">
-    <value>Reset keys</value>
+  <data name="Copy_line" xml:space="preserve">
+    <value>Copy selected line</value>
   </data>
-  <data name="StandardMatrixTooltip" xml:space="preserve">
-    <value>Create default substitution matrix without transposition key</value>
+  <data name="Copy_text" xml:space="preserve">
+    <value>Copy text</value>
   </data>
-  <data name="SubstitutionMatrixCaption" xml:space="preserve">
-    <value>Substitution matrix</value>
+  <data name="Copy_value" xml:space="preserve">
+    <value>Copy value</value>
   </data>
-  <data name="SubstitutionMatrixTooltip" xml:space="preserve">
-    <value>The matrixed used for encryption/decryption</value>
+  <data name="FromKeylengthCaption" xml:space="preserve">
+    <value>Lower bound of keylength</value>
   </data>
-  <data name="SubstitutionPassCaption" xml:space="preserve">
-    <value>Substitution password</value>
+  <data name="FromKeylengthTooltip" xml:space="preserve">
+    <value>Start from this keylength when analyzing the given ciphertext.</value>
   </data>
-  <data name="SubstitutionPassTooltip" xml:space="preserve">
-    <value>Enter the string of the substitution matrix</value>
+  <data name="KeyStyleCaption" xml:space="preserve">
+    <value>Keystyle</value>
   </data>
-  <data name="TranspositionPassCaption" xml:space="preserve">
-    <value>Transposition password</value>
+  <data name="KeyStyleTooltip" xml:space="preserve">
+    <value>Is the key a natural passphrase or not?</value>
   </data>
-  <data name="TranspositionPassTooltip" xml:space="preserve">
-    <value>Password being used to generate column order sequence for transposition. Uses same alphabet as substitution matrix, i.e. plaintext alphabet.</value>
+  <data name="LanguageCaption" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LanguageTooltip" xml:space="preserve">
+    <value>Use this language for the costfunction.</value>
+  </data>
+  <data name="ModeCaption" xml:space="preserve">
+    <value>Mode</value>
+  </data>
+  <data name="ModeTooltip" xml:space="preserve">
+    <value>Use this mode for the analysis.</value>
+  </data>
+  <data name="NaturalLanguage" xml:space="preserve">
+    <value>Natural Language</value>
+  </data>
+  <data name="Random" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="RestartsCaption" xml:space="preserve">
+    <value>Restarts</value>
+  </data>
+  <data name="RestartsTooltip" xml:space="preserve">
+    <value>Amount of restarts of the hillclimbing algorithm.</value>
+  </data>
+  <data name="ToKeylengthCaption" xml:space="preserve">
+    <value>Upper bound of keylength</value>
+  </data>
+  <data name="ToKeylengthTooltip" xml:space="preserve">
+    <value>Stop the analysis after evaluating this keylength.</value>
+  </data>
+  <data name="Vigenere" xml:space="preserve">
+    <value>Classic Vigenère</value>
+  </data>
+  <data name="VigenereAutokey" xml:space="preserve">
+    <value>Vigenère Autokey</value>
+  </data>
+  <data name="CiphertextCaption" xml:space="preserve">
+    <value>Ciphertext</value>
+  </data>
+  <data name="CiphertextTooltip" xml:space="preserve">
+    <value>The ciphertext that should be analyzed.</value>
+  </data>
+  <data name="ElapsedLabel" xml:space="preserve">
+    <value>Elapsed Time:</value>
+  </data>
+  <data name="EndLabel" xml:space="preserve">
+    <value>End Time:</value>
+  </data>
+  <data name="KeyCaption" xml:space="preserve">
+    <value>Best Key</value>
+  </data>
+  <data name="KeyHeader" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="KeyLengthHeader" xml:space="preserve">
+    <value>Key Length</value>
+  </data>
+  <data name="KeyTooltip" xml:space="preserve">
+    <value>The best key found during the analysis.</value>
+  </data>
+  <data name="PlaintextCaption" xml:space="preserve">
+    <value>Best Plaintext</value>
+  </data>
+  <data name="PlaintextTooltip" xml:space="preserve">
+    <value>The best plaintext which was found during the analysis.</value>
+  </data>
+  <data name="StartLabel" xml:space="preserve">
+    <value>Start Time:</value>
+  </data>
+  <data name="TextHeader" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="ValueHeader" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="VigenereAlphabetCaption" xml:space="preserve">
+    <value>Vigenère Alphabet</value>
+  </data>
+  <data name="VigenereAlphabetTooltip" xml:space="preserve">
+    <value>Use this Vigenère alphabet for the analyis.</value>
+  </data>
+  <data name="CurrentAnalysedKeylengthLabel" xml:space="preserve">
+    <value>Current analyzed keylength:</value>
+  </data>
+  <data name="FastConvergeCaption" xml:space="preserve">
+    <value>Fast converge</value>
+  </data>
+  <data name="FastConvergeTooltip" xml:space="preserve">
+    <value>If selected, the hillclimbing algorithm jumps to every improvement. Otherwise it jumps to the best possible improvement.</value>
+  </data>
+  <data name="LocalLabel" xml:space="preserve">
+    <value>Analysis</value>
+  </data>
+  <data name="TopTenLabel" xml:space="preserve">
+    <value>Bestlist</value>
+  </data>
+  <data name="SpeedLabel" xml:space="preserve">
+    <value>Keys/second:</value>
+  </data>
+  <data name="Both" xml:space="preserve">
+    <value>Trigrams + 4-grams</value>
+  </data>
+  <data name="CostFunction" xml:space="preserve">
+    <value>Cost function</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="German" xml:space="preserve">
+    <value>German</value>
+  </data>
+  <data name="Quadgrams" xml:space="preserve">
+    <value>4-grams</value>
+  </data>
+  <data name="Trigrams" xml:space="preserve">
+    <value>Trigrams</value>
+  </data>
+  <data name="CostFunctionTooltip" xml:space="preserve">
+    <value>The costfunction for rating the putative cleartext.</value>
+  </data>
+  <data name="Spanish" xml:space="preserve">
+    <value>Spanish</value>
+  </data>
+  <data name="ComparisonFrequencyCaption" xml:space="preserve">
+    <value>Stop percentage</value>
+  </data>
+  <data name="ComparisonFrequencyTooltip" xml:space="preserve">
+    <value>Stop the current analysis in the cryptanalytic component if the given percentage is reached.</value>
+  </data>
+  <data name="StopIfPercentReachedCaption" xml:space="preserve">
+    <value>Stop current analysis if percentage reached</value>
+  </data>
+  <data name="StopIfPercentReachedTooltip" xml:space="preserve">
+    <value>Stop the current analysis in the cryptanalytic component if the given percentage is reached.</value>
   </data>
 </root>

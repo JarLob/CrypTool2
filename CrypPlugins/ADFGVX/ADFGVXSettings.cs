@@ -33,10 +33,12 @@ namespace Cryptool.ADFGVX
 
         private const string ALPHABET25 = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
         private const string ALPHABET36 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        private const string ALPHABET49 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .,:;?()-+><=";
 
         private const string CIPHER_ALPHABET5 = "ADFGX";
         private const string CIPHER_ALPHABET6 = "ADFGVX";
-        
+        private const string CIPHER_ALPHABET7 = "ADFGVXZ";
+
         public string Alphabet
         {
             get; set;
@@ -62,7 +64,7 @@ namespace Cryptool.ADFGVX
 
         public enum CipherTypeEnum
         {
-            ADFGX, ADFGVX
+            ADFGX, ADFGVX, ADFGVXZ
         }
 
         #endregion
@@ -167,6 +169,10 @@ namespace Cryptool.ADFGVX
                     this.Alphabet = ALPHABET36;
                     this.CipherAlphabet = CIPHER_ALPHABET6;
                     break;
+                case CipherTypeEnum.ADFGVXZ:
+                    this.Alphabet = ALPHABET49;
+                    this.CipherAlphabet = CIPHER_ALPHABET7;
+                    break;
             }
 
             rebuildSubstitutionMatrix();
@@ -198,7 +204,7 @@ namespace Cryptool.ADFGVX
 
         private CipherTypeEnum cipherType = CipherTypeEnum.ADFGVX;
 
-        [TaskPane("CipherVariantCaption", "CipherVariantTooltip", null, 2, false, ControlType.ComboBox, new string[] { "CipherTypeList1", "CipherTypeList2" })]
+        [TaskPane("CipherVariantCaption", "CipherVariantTooltip", null, 2, false, ControlType.ComboBox, new string[] { "CipherTypeList1", "CipherTypeList2", "CipherTypeList3" })]
         public CipherTypeEnum CipherType
         {
             get { return this.cipherType; }

@@ -5,16 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9B9CD0E9-D048-45FD-BF0F-7C5A8E714AA2}</ProjectGuid>
+    <ProjectGuid>{5D78E3B5-2DFA-45B3-B125-62A7CF623657}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.ADFGVX</RootNamespace>
-    <AssemblyName>ADFGVX</AssemblyName>
+    <RootNamespace>ADFGVXAnalyzer</RootNamespace>
+    <AssemblyName>ADFGVXAnalyzer</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -34,8 +31,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -45,16 +41,18 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE</DefineConstants>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
-    <OutputPath>..\..\CrypBuild\Debug\CrypPlugins\</OutputPath>
+    <OutputPath>..\..\CrypBuild\Debug\CrypPlugins</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore">
@@ -81,27 +79,32 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ADFGVX.cs" />
-    <Compile Include="ADFGVXSettings.cs" />
+    <Compile Include="adfgvx.cs" />
+    <Compile Include="ADFGVXAnalyzer.cs" />
+    <Compile Include="ADFGVXAnalyzerSettings.cs" />
+    <Compile Include="ADFGVXVector.cs" />
+    <Compile Include="Alphabet36Vector.cs" />
+    <Compile Include="Algorithm.cs" />
+    <Compile Include="common\AlphabetVector.cs" />
+    <Compile Include="common\Logger.cs" />
+    <Compile Include="common\Transposition.cs" />
+    <Compile Include="common\TranspositionTransformations.cs" />
+    <Compile Include="common\Vector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ADFGVXAnalyzerPresentation.xaml.cs">
+      <DependentUpon>ADFGVXAnalyzerPresentation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.de.Designer.cs">
       <DependentUpon>Resources.de.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Resources.ru.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.ru.resx</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\icon.png" />
+    <Compile Include="SimulatedAnnealing.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CrypPluginBase\CrypPluginBase.csproj">
@@ -109,10 +112,6 @@
       <Name>CrypPluginBase</Name>
       <Private>False</Private>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\decrypt.png" />
-    <Resource Include="Images\encrypt.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -132,25 +131,25 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="userdoc.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ADFGVXAnalyzerPresentation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.de.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.de.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.ru.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="DetailedDescription\doc.xml" />
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
