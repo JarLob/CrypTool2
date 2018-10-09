@@ -93,7 +93,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     else
                     {
                         MainWindow.IsLoggedIn = false;
-                        MessageBox.Show("Username or Password wrong", "Login failed");
+                        MessageBox.Show("Username or password wrong", "Login failed");
                     }
 
 

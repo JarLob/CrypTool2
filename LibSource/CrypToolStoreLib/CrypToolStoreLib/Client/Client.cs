@@ -163,13 +163,10 @@ namespace CrypToolStoreLib.Client
         /// <param name="sslStream"></param>
         private void SendMessage(Message message)
         {
-            lock (this)
-            {
-                byte[] messagebytes = message.Serialize();
-                sslStream.Write(messagebytes);
-                sslStream.Flush();
-                logger.LogText(String.Format("Sent a \"{0}\" message to the server", message.MessageHeader.MessageType.ToString()), this, Logtype.Debug);
-            }
+            byte[] messagebytes = message.Serialize();
+            sslStream.Write(messagebytes);
+            sslStream.Flush();
+            logger.LogText(String.Format("Sent a \"{0}\" message to the server", message.MessageHeader.MessageType.ToString()), this, Logtype.Debug);            
         }
 
 

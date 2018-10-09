@@ -11,7 +11,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Label VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="20" Grid.Row="0">CrypToolStore Developer Client</Label>
-        <Label VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="16" Grid.Row="1" Content="Logged in as:"/>
+        <Label VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="16" Grid.Row="1" Content="Username:"/>
         <Label VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="16" Grid.Row="1" Content="{Binding Username, ElementName=HeaderViewControl}"  Margin="100,0,0,0"/>
     </Grid>
 </UserControl>

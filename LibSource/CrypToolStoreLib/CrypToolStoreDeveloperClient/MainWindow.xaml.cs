@@ -35,7 +35,8 @@ namespace CrypToolStoreDeveloperClient
     public enum UiState
     {
         LoginScreen,
-        MainMenu
+        MainMenu,
+        UserManagement
     }
 
     /// <summary>
@@ -64,6 +65,7 @@ namespace CrypToolStoreDeveloperClient
             LoginView.MainWindow = this;
             HeaderView.MainWindow = this;
             MainMenuView.MainWindow = this;
+            UserManagementView.MainWindow = this;
 
             ChangeScreen(UiState.LoginScreen);            
         }
@@ -79,6 +81,7 @@ namespace CrypToolStoreDeveloperClient
             HeaderView.Visibility = Visibility.Hidden;
             LoginView.Visibility = Visibility.Hidden;
             MainMenuView.Visibility = Visibility.Hidden;
+            UserManagementView.Visibility = Visibility.Hidden;
 
             switch (uiState)
             {
@@ -88,8 +91,16 @@ namespace CrypToolStoreDeveloperClient
                     Height = 400;
                     break;
                 case UiState.MainMenu:
+                    Width = 400;
+                    Height = 400;
                     HeaderView.Visibility = Visibility.Visible;
                     MainMenuView.Visibility = Visibility.Visible;
+                    break;
+                case UiState.UserManagement:
+                    Width = 900;
+                    Height = 600;
+                    HeaderView.Visibility = Visibility.Visible;
+                    UserManagementView.Visibility = Visibility.Visible;
                     break;
             }
         }       

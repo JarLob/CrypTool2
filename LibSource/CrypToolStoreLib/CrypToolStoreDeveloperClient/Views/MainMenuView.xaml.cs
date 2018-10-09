@@ -45,6 +45,8 @@ namespace CrypToolStoreDeveloperClient.Views
 
         private void MainMenuView_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            //Only admins are allowed to edit/view developers
+            //thus, the user management is only shown to them
             if (MainWindow.IsAdmin)
             {
                 UserManagementRow.Height = new GridLength(50);
@@ -55,6 +57,16 @@ namespace CrypToolStoreDeveloperClient.Views
                 UserManagementRow.Height = new GridLength(0);
                 UserManagementButton.Visibility = Visibility.Hidden;
             }
+        }
+
+        /// <summary>
+        /// Change screen to UserManagement when UserManagementButton is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserManagementButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.ChangeScreen(UiState.UserManagement);
         }
     }
 }
