@@ -409,7 +409,7 @@
     <value>Einige Bearbeitungsfunktionen sind während der Ausführung deaktiviert.</value>
   </data>
   <data name="Toggle_Plugin_Parameters" xml:space="preserve">
-    <value>Öffne/schließe Fenster mit Komponentenparametern</value>
+    <value>Öffne/schließe Fenster mit Komponenteneinstellungen</value>
   </data>
   <data name="Save_File" xml:space="preserve">
     <value>Datei speichern</value>
