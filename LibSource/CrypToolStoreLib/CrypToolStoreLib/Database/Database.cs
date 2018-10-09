@@ -110,11 +110,12 @@ namespace CrypToolStoreLib.Database
         /// </summary>
         /// <returns></returns>
         private DatabaseConnection GetConnection()
-        {
+        {                        
             foreach (DatabaseConnection connection in connections)
             {
                 if (!connection.CurrentlyUsed())
                 {
+                    connection.CheckConnection();
                     return connection;
                 }
             }

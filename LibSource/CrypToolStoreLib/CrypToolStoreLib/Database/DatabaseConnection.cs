@@ -104,7 +104,7 @@ namespace CrypToolStoreLib.Database
         {
             lock (this)
             {
-                if (mySqlConnection == null)
+                if (mySqlConnection == null || mySqlConnection.Ping() == false)
                 {
                     throw new Exception("Not connected");
                 }
@@ -185,6 +185,32 @@ namespace CrypToolStoreLib.Database
         public bool CurrentlyUsed()
         {
             return currentlyUsed;
+        }
+
+        /// <summary>
+        /// Checks if the MySqlConenction is still open - if not, it creates a new one
+        /// Also deletes the cache if it was not open
+        /// </summary>
+        public void CheckConnection()
+        {
+            lock (this)
+            {
+                try
+                {
+                    currentlyUsed = true;
+                    if (mySqlConnection == null || mySqlConnection.Ping() == false)
+                    {
+                        logger.LogText("Connection was closed or null. Open a new one", this, Logtype.Warning);
+                        mySqlConnection = null;
+                        preparedStatementCache.Clear();
+                        Connect();
+                    }
+                }
+                finally
+                {
+                    currentlyUsed = false;
+                }
+            }
         }
     }
 }

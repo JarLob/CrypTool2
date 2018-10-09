@@ -1,6 +1,4 @@
-﻿using CrypToolStoreLib.Client;
-using CrypToolStoreLib.DataObjects;
-/*
+﻿/*
    Copyright 2018 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,11 +13,14 @@ using CrypToolStoreLib.DataObjects;
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using CrypToolStoreLib.Client;
+using CrypToolStoreLib.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -50,34 +51,62 @@ namespace CrypToolStoreDeveloperClient.Views
             IsVisibleChanged += UserManagementView_IsVisibleChanged;
         }
 
-        void UserManagementView_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        /// <summary>
+        /// Called, when the UI changes to visible starte
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserManagementView_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (!IsVisible)
             {
                 return;
             }
-            CrypToolStoreClient client = new CrypToolStoreClient();            
+
+            //we fetch the user list in a seperate thread, thus, the ui is not blocked during download of the list67
+            Thread fetchUserListThread = new Thread(FetchUserList);
+            fetchUserListThread.IsBackground = true;
+            fetchUserListThread.Start();
+            
+        }
+
+        /// <summary>
+        /// Method requests a user list and stores it in the list of the GUI
+        /// </summary>
+        private void FetchUserList()
+        {
             try
             {
-                Developers.Clear();
-                
+                CrypToolStoreClient client = new CrypToolStoreClient();                
                 client.ServerAddress = Constants.ServerAddress;
                 client.ServerPort = Constants.ServerPort;
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
-
                 DataModificationOrRequestResult result = client.GetDeveloperList();
                 List<Developer> developers = (List<Developer>)result.DataObject;
-                foreach (Developer developer in developers)
+
+                Dispatcher.BeginInvoke(new ThreadStart(() =>
                 {
-                    Developers.Add(developer);
-                }
+                    try
+                    {
+                        Developers.Clear();
+                        foreach (Developer developer in developers)
+                        {
+                            Developers.Add(developer);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(String.Format("Exception during adding developers to list: {0}", ex.Message), "Exception");
+                    }
+                }));
                 client.Disconnect();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(String.Format("Exception during retrieving of list of developers: {0}", ex.Message), "Exception");
-            }           
+            }         
         }
+
     }
 }
