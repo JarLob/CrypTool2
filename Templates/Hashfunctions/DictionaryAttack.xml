@@ -8,9 +8,9 @@
   <description lang="ru">Этот шаблон показывает, как атака словаря на значение хеш-пароля может быть реализована и реализована в CrypTool 2.</description>
   <keywords>hash, attack, dictionary, SHA256, pre-image</keywords>
   <keywords lang="ru">хэш, атака, словарь, SHA256, предварительный просмотр</keywords>
-  <title lang="de">Wörterbuch Angriff auf einen Passwort-Hash-Wert</title>
-  <summary lang="de">Durchführung eines Wörterbuchangriffes auf einen Passwort-Hash-Wert</summary>
-  <description lang="de">Diese Vorlage zeigt, wie ein Wörterbuchangriff auf einen Passwort-Hash-Wert in CrypTool 2 implementiert und ausgeführt werden kann.</description>
+  <title lang="de">Wörterbuch-Angriff auf einen Passwort-Hash-Wert</title>
+  <summary lang="de">Durchführung eines Wörterbuch-Angriffes auf einen Passwort-Hash-Wert</summary>
+  <description lang="de">Diese Vorlage zeigt, wie ein Wörterbuch-Angriff auf einen Passwort-Hash-Wert in CrypTool 2 implementiert und ausgeführt werden kann.</description>
   <keywords lang="de">Hash, Angriff, Wörterbuch, SHA256, Urbild</keywords>
   <icon file="DictionaryAttack.png" />
   <relevantPlugins>
@@ -35,7 +35,7 @@
     <replacement key="$Found index$" value="Gefundener Index" />
     <replacement key="$Progress$" value="Teil des Suchraums" />
     <replacement key="$Test password - Hash-value (HEX)$" value="Test-Passwort (angegeben als Hash-Wert in Hex)" />
-    <replacement key="$memo$" value="Diese Vorlage demonstriert, wie ein Wörterbuch-Angriff mit CrypTool 2 durchgefürt werden kann.\line\line Das Wörterbuch wird durch eine Zahl indiziert. Dieser Index wird solange erhöht, bis das korrekte Passwort gefunden wurde.\line\line Von jedem Wörterbucheintrag wird der Hashwert berechnet und mit dem Hashwert des zu testenden Passwortes verglichen.\line\line Das gefundene Passwort und sein Index werden schliesslich in den Komponenten &quot;Gefundenes Passwort&quot; und &quot;Gefundener Index&quot; ausgegeben. \line\line Um die Ausführung zu beschleunigen, minimieren Sie einfach die beiden Textausgabe-Komponenten &quot;Momentan analysiertes Passwort&quot; und %quot;Gefundener Index&quot;.\line\line Die Ausführung terminiert nicht bei 100% Fortschritt sondern genau dann, wenn das Passwort gefunden wurde -- daher kann CrypTool 2 auch weniger als 100% Fortschritt anzeigen, wenn das Passwort gefunden wurde." />
+    <replacement key="$memo$" value="Diese Vorlage demonstriert, wie ein Wörterbuch-Angriff mit CrypTool 2 durchgefürt werden kann.\line\line Das Wörterbuch wird durch eine Zahl indiziert. Dieser Index wird solange erhöht, bis das korrekte Passwort gefunden wurde.\line\line Von jedem Wörterbucheintrag wird der Hashwert berechnet und mit dem Hashwert des zu testenden Passwortes verglichen.\line\line Das gefundene Passwort und sein Index werden schliesslich in den Komponenten &quot;Gefundenes Passwort&quot; und &quot;Gefundener Index&quot; ausgegeben. \line\line Um die Ausführung zu beschleunigen, minimieren Sie einfach die beiden Textausgabe-Komponenten &quot;Momentan analysiertes Passwort&quot; und %quot;Gefundener Index&quot;.\line\line Die Ausführung terminiert nicht nur bei 100% Fortschritt sondern genau dann, wenn das Passwort gefunden wurde -- daher kann CrypTool 2 auch weniger als 100% Fortschritt anzeigen, wenn das Passwort gefunden wurde." />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Dictionary$" value="словарь" />
@@ -65,6 +65,6 @@
     <replacement key="$Found index$" value="Found index" />
     <replacement key="$Progress$" value="Portion of search space" />
     <replacement key="$Test password - Hash-value (HEX)$" value="Test password (given as hash value in hex)" />
-    <replacement key="$memo$" value="This template shows how a dictionary attack can be built using CrypTool 2.\line\line The dictionary is indexed using a number. This number is incremented until the correct password is found.\line\line All entries of the dictionary will be hashed and tested against the hash of the test password.\line\line Finally, the found password and the corresponding index are visible in the textboxes &quot;Found password&quot; and &quot;Found index&quot;. \line\line To speed up the execution just minimize the two text output components &quot;Current analyzed password&quot; and &quot;Found index&quot;.\line\line Execution does not terminate at 100% progress, but when the password is found -- so CrypTool 2 can also show less than 100% progress if the password was found." />
+    <replacement key="$memo$" value="This template shows how a dictionary attack can be built using CrypTool 2.\line\line The dictionary is indexed using a number. This number is incremented until the correct password is found.\line\line All entries of the dictionary will be hashed and tested against the hash of the test password.\line\line Finally, the found password and the corresponding index are visible in the textboxes &quot;Found password&quot; and &quot;Found index&quot;. \line\line To speed up the execution just minimize the two text output components &quot;Current analyzed password&quot; and &quot;Found index&quot;.\line\line Execution does not onlyterminate at 100% progress, but when the password is found -- so CrypTool 2 can also show less than 100% progress if the password was found." />
   </replacements>
 </sample>
