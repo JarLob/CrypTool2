@@ -135,6 +135,7 @@ namespace CrypToolStoreDeveloperClient.Views
 
                     if (result.Success)
                     {
+                        MessageBox.Show(String.Format("Successfully deleted {0}", username), "Developer deleted");
                         FetchUserList();
                     }
                     else
@@ -144,7 +145,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(String.Format("Exception during retrieving of list of developers: {0}", ex.Message), "Exception");
+                    MessageBox.Show(String.Format("Exception during deletion of developer: {0}", ex.Message), "Exception");
                 }         
             }
         }
@@ -152,6 +153,19 @@ namespace CrypToolStoreDeveloperClient.Views
         private void Update_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        /// <summary>
+        /// Shows a window to create a new user
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CreateNewUserButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateNewUserWindow createNewUserWindow = new CreateNewUserWindow();
+            createNewUserWindow.MainWindow = MainWindow;
+            createNewUserWindow.ShowDialog();
+            FetchUserList();
         }
 
     }

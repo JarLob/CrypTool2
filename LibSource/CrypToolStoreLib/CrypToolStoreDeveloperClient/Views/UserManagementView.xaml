@@ -66,6 +66,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Name="CreateNewUserButton" Grid.Row="1" Width="100" Height="25" HorizontalAlignment="Center">Create new user</Button>
+        <Button Name="CreateNewUserButton" Grid.Row="1" Width="100" Height="25" HorizontalAlignment="Center" Click="CreateNewUserButton_Click">Create new user</Button>
     </Grid>
 </UserControl>
