@@ -559,6 +559,10 @@ namespace CrypToolStoreLib.Server
             {
                 Developer developer = updateDeveloperMessage.Developer;
                 Database.UpdateDeveloper(developer.Username, developer.Firstname, developer.Lastname, developer.Email, developer.IsAdmin);
+                if (!String.IsNullOrEmpty(developer.Password))
+                {
+                    Database.UpdateDeveloperPassword(developer.Username, developer.Password);
+                }
                 Logger.LogText(String.Format("User {0} updated existing developer in database: {1}", Username, developer.Username), this, Logtype.Info);
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.ModifiedDeveloper = true;

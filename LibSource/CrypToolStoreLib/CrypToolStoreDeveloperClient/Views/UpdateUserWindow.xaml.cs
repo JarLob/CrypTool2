@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,6 +46,48 @@ namespace CrypToolStoreDeveloperClient.Views
             InitializeComponent();
             ResizeMode = ResizeMode.NoResize;
             Username = username;
+            UsernameLabel.Content = Username;
+            Loaded += UpdateUserWindow_Loaded;
+        }
+
+        void UpdateUserWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CrypToolStoreClient client = new CrypToolStoreClient();
+                client.ServerAddress = Constants.ServerAddress;
+                client.ServerPort = Constants.ServerPort;
+                client.Connect();
+                client.Login(MainWindow.Username, MainWindow.Password);
+
+                DataModificationOrRequestResult result = client.GetDeveloper(Username);
+                Developer developer = (Developer)result.DataObject;
+                client.Disconnect();
+                if (developer == null)
+                {
+                    return;
+                }
+                Dispatcher.BeginInvoke(new ThreadStart(() =>
+                {
+                    try
+                    {
+
+                        FirstnameTextBox.Text = developer.Firstname;
+                        LastnameTextBox.Text = developer.Lastname;
+                        EmailTextBox.Text = developer.Email;
+                        IsAdminCheckBox.IsChecked = developer.IsAdmin;                        
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(String.Format("Exception during retrieval of developer data: {0}", ex.Message), "Exception");
+                    }
+                }));
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(String.Format("Exception during retrieval of developer data: {0}", ex.Message), "Exception");
+            }      
         }
 
         /// <summary>
@@ -53,20 +96,14 @@ namespace CrypToolStoreDeveloperClient.Views
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
-        {
-            string username = UsernameTextBox.Text;
+        {            
             string firstname = FirstnameTextBox.Text;
             string lastname = LastnameTextBox.Text;
             string email = EmailTextBox.Text;
             bool isAdmin = IsAdminCheckBox.IsChecked == true;
             string password = PasswordPasswordBox.Password;
             string confirmPassword = ConfirmPasswordPasswordBox.Password;
-
-            if (string.IsNullOrEmpty(username))
-            {
-                MessageBox.Show("Please enter a username", "Username missing");
-                return;
-            }
+       
             if (string.IsNullOrEmpty(firstname))
             {
                 MessageBox.Show("Please enter a firstname", "Username missing");
@@ -87,12 +124,12 @@ namespace CrypToolStoreDeveloperClient.Views
                 MessageBox.Show("Please enter a valid email", "Invalid email");
                 return;
             }
-            if (string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(password) && ! string.IsNullOrEmpty(confirmPassword))
             {
                 MessageBox.Show("Please enter a password", "Password missing");
                 return;
             }
-            if (string.IsNullOrEmpty(confirmPassword))
+            if (!string.IsNullOrEmpty(password) && string.IsNullOrEmpty(confirmPassword))
             {
                 MessageBox.Show("Please confirm password", "Password confirmation missing");
                 return;
@@ -112,29 +149,30 @@ namespace CrypToolStoreDeveloperClient.Views
                 client.Login(MainWindow.Username, MainWindow.Password);
 
                 Developer developer = new Developer();
-                developer.Username = username;
+                developer.Username = Username;
                 developer.Firstname = firstname;
                 developer.Lastname = lastname;
                 developer.Email = email;
                 developer.Password = password;
                 developer.IsAdmin = isAdmin;
                 
-                DataModificationOrRequestResult result = client.CreateDeveloper(developer);
-                
+                DataModificationOrRequestResult result = client.UpdateDeveloper(developer);
+
+
                 if (result.Success)
                 {
-                    MessageBox.Show("Successfully created a new developer", "Developer created");
+                    MessageBox.Show("Successfully updated developer", "Developer updated");
                     Close();
                 }
                 else
                 {
-                    MessageBox.Show(String.Format("Could not create new developer: {0}", result.Message), "Creation not possible");
+                    MessageBox.Show(String.Format("Could not update developer: {0}", result.Message), "Update not possible");
                 }                
                 client.Disconnect();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during creation of new developer: {0}", ex.Message), "Exception");
+                MessageBox.Show(String.Format("Exception during update of developer: {0}", ex.Message), "Exception");
             }         
         }
 

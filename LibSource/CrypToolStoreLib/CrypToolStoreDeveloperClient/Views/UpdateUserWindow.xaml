@@ -26,7 +26,7 @@
         <Label Grid.Column="0" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Right">Password:</Label>
         <Label Grid.Column="0" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Right">Confirm Password:</Label>
 
-        <TextBox Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="150" Name="UsernameTextBox"/>
+        <Label Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="150" Height="25" Name="UsernameLabel"/>
         <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="150" Name="FirstnameTextBox"/>
         <TextBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Width="150" Name="LastnameTextBox"/>
         <TextBox Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Width="150" Name="EmailTextBox"/>
