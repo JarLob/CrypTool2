@@ -112,6 +112,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 Developer developer = new Developer();
                 developer.Username = username;
                 developer.Firstname = firstname;
+                developer.Lastname = lastname;
                 developer.Email = email;
                 developer.Password = password;
                 developer.IsAdmin = isAdmin;
