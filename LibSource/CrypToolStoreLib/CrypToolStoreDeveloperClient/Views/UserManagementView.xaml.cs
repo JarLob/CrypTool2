@@ -152,7 +152,12 @@ namespace CrypToolStoreDeveloperClient.Views
 
         private void Update_Click(object sender, RoutedEventArgs e)
         {
-
+            Button button = (Button)sender;
+            string username = (string)button.CommandParameter;
+            UpdateUserWindow updateUserWindow = new UpdateUserWindow(username);
+            updateUserWindow.MainWindow = MainWindow;
+            updateUserWindow.ShowDialog();
+            FetchUserList();
         }
 
         /// <summary>
