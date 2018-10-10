@@ -58,9 +58,23 @@ namespace CrypToolStoreDeveloperClient.Views
 
         public HeaderView()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            IsVisibleChanged += HeaderView_IsVisibleChanged;
         }
 
+        private void HeaderView_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (MainWindow.UiState == UiState.MainMenu)
+            {
+                BackToMainMenuRow.Height = new GridLength(0);
+                BackToMainMenuButton.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                BackToMainMenuRow.Height = new GridLength(50);
+                BackToMainMenuButton.Visibility = Visibility.Visible;
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string name)
@@ -69,6 +83,11 @@ namespace CrypToolStoreDeveloperClient.Views
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
+        }
+
+        private void BackToMainMenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.ChangeScreen(UiState.MainMenu);
         }
     }
 }

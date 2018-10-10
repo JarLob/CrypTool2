@@ -108,5 +108,51 @@ namespace CrypToolStoreDeveloperClient.Views
             }         
         }
 
+        /// <summary>
+        /// Deletes the user defined by the clicked button
+        /// Then, updates the user list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            string username = (string)button.CommandParameter;
+
+            MessageBoxResult messageBoxResult = MessageBox.Show(String.Format("Do you really want to delete the developer {0}?", username), String.Format("Delete {0}", username), MessageBoxButton.YesNo);
+
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    CrypToolStoreClient client = new CrypToolStoreClient();
+                    client.ServerAddress = Constants.ServerAddress;
+                    client.ServerPort = Constants.ServerPort;
+                    client.Connect();
+                    client.Login(MainWindow.Username, MainWindow.Password);
+                    DataModificationOrRequestResult result = client.DeleteDeveloper(username);
+                    client.Disconnect();
+
+                    if (result.Success)
+                    {
+                        FetchUserList();
+                    }
+                    else
+                    {
+                        MessageBox.Show(String.Format("Could not delete developer: {0}", result.Message), "Deletion not possible");
+                    }                                        
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(String.Format("Exception during retrieving of list of developers: {0}", ex.Message), "Exception");
+                }         
+            }
+        }
+
+        private void Update_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }

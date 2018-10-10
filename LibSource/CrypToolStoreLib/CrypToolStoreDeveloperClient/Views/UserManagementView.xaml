@@ -6,7 +6,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="900">
     <Grid>
-        <ListView x:Name="DevelopersListView" Width="800" Height="300">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <ListView x:Name="DevelopersListView" Width="800" Height="300" Grid.Row="0">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Username" DisplayMemberBinding="{Binding Path=Username}" Width="140">
@@ -53,8 +57,8 @@
                                         <ColumnDefinition Width="75"/>
                                         <ColumnDefinition Width="75"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Name="Update" Grid.Column="0">Update</Button>
-                                    <Button Name="Delete" Grid.Column="1">Delete</Button>
+                                    <Button CommandParameter="{Binding Path=Username}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Click="Update_Click">Update</Button>
+                                    <Button CommandParameter="{Binding Path=Username}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Click="Delete_Click">Delete</Button>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -62,5 +66,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button Name="CreateNewUserButton" Grid.Row="1" Width="100" Height="25" HorizontalAlignment="Center">Create new user</Button>
     </Grid>
 </UserControl>

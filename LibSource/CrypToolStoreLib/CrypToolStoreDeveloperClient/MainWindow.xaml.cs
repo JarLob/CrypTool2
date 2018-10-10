@@ -88,7 +88,7 @@ namespace CrypToolStoreDeveloperClient
                 case UiState.LoginScreen:
                     LoginView.Visibility = Visibility.Visible;
                     Width = 400;
-                    Height = 400;
+                    Height = 200;
                     break;
                 case UiState.MainMenu:
                     Width = 400;
