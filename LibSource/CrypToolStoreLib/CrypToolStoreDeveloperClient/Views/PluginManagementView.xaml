@@ -11,59 +11,59 @@
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="PluginsListView" Width="1100" Height="300" Grid.Row="1">
+        <ListView x:Name="PluginsListView" Width="1050" Height="300" Grid.Row="1">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path=Id}" Width="80">
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path=Id}" Width="50">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Username" DisplayMemberBinding="{Binding Path=Username}" Width="120">
+                    <GridViewColumn Header="Username" DisplayMemberBinding="{Binding Path=Username}" Width="115">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}" Width="120">
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}" Width="115">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Short Description" DisplayMemberBinding="{Binding Path=ShortDescription}" Width="120">
+                    <GridViewColumn Header="Short Description" DisplayMemberBinding="{Binding Path=ShortDescription}" Width="115">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Long Description" DisplayMemberBinding="{Binding Path=LongDescription}" Width="120">
+                    <GridViewColumn Header="Long Description" DisplayMemberBinding="{Binding Path=LongDescription}" Width="115">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Author Names" DisplayMemberBinding="{Binding Path=Authornames}" Width="120">
+                    <GridViewColumn Header="Author Names" DisplayMemberBinding="{Binding Path=Authornames}" Width="115">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Author Emails" DisplayMemberBinding="{Binding Path=Authoremails}" Width="120">
+                    <GridViewColumn Header="Author Emails" DisplayMemberBinding="{Binding Path=Authoremails}" Width="115">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Author Institutes" DisplayMemberBinding="{Binding Path=Authorinstitutes}" Width="120">
+                    <GridViewColumn Header="Author Institutes" DisplayMemberBinding="{Binding Path=Authorinstitutes}" Width="115">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>

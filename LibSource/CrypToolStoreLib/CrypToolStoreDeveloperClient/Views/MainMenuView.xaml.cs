@@ -91,6 +91,7 @@ namespace CrypToolStoreDeveloperClient.Views
             MainWindow.Username = String.Empty;
             MainWindow.Password = String.Empty;
             MainWindow.IsLoggedIn = false;
+            MainWindow.IsAdmin = false;
             MainWindow.ChangeScreen(UiState.LoginScreen);
         }
 
