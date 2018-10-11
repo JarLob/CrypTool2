@@ -60,7 +60,7 @@ namespace CrypToolStoreDeveloperClient.Views
         }
 
         /// <summary>
-        /// Change screen to UserManagement when UserManagementButton is clicked
+        /// Change screen to User Management when UserManagementButton is clicked
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -92,6 +92,16 @@ namespace CrypToolStoreDeveloperClient.Views
             MainWindow.Password = String.Empty;
             MainWindow.IsLoggedIn = false;
             MainWindow.ChangeScreen(UiState.LoginScreen);
+        }
+
+        /// <summary>
+        /// Change screen to Plugin Management when PluginManagementButton is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PluginManagementButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.ChangeScreen(UiState.PluginManagement);
         }
     }
 }

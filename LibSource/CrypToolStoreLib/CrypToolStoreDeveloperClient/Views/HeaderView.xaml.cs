@@ -37,6 +37,7 @@ namespace CrypToolStoreDeveloperClient.Views
     public partial class HeaderView : UserControl, INotifyPropertyChanged
     {
         private string username;
+        private string uititel;
 
         public MainWindow MainWindow { get; set; }
 
@@ -52,6 +53,22 @@ namespace CrypToolStoreDeveloperClient.Views
                 {
                     username = value;
                     OnPropertyChanged("Username");
+                }
+            }
+        }
+
+        public String UiTitel
+        {
+            get
+            {
+                return uititel;
+            }
+            set
+            {
+                if (value != uititel)
+                {
+                    uititel = value;
+                    OnPropertyChanged("UiTitel");
                 }
             }
         }

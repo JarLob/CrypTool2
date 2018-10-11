@@ -36,7 +36,8 @@ namespace CrypToolStoreDeveloperClient
     {
         LoginScreen,
         MainMenu,
-        UserManagement
+        UserManagement,
+        PluginManagement
     }
 
     /// <summary>
@@ -44,7 +45,6 @@ namespace CrypToolStoreDeveloperClient
     /// </summary>
     public partial class MainWindow : Window
     {
-
         public string Password;
         public string Username;
         public bool IsLoggedIn;
@@ -66,6 +66,7 @@ namespace CrypToolStoreDeveloperClient
             HeaderView.MainWindow = this;
             MainMenuView.MainWindow = this;
             UserManagementView.MainWindow = this;
+            PluginManagementView.MainWindow = this;
 
             ChangeScreen(UiState.LoginScreen);            
         }
@@ -82,6 +83,7 @@ namespace CrypToolStoreDeveloperClient
             LoginView.Visibility = Visibility.Hidden;
             MainMenuView.Visibility = Visibility.Hidden;
             UserManagementView.Visibility = Visibility.Hidden;
+            PluginManagementView.Visibility = Visibility.Hidden;
 
             switch (uiState)
             {
@@ -90,18 +92,28 @@ namespace CrypToolStoreDeveloperClient
                     Width = 400;
                     Height = 200;
                     LoginView.FocusOnUsername();
+                    HeaderView.UiTitel = "Login";
                     break;
                 case UiState.MainMenu:
                     Width = 400;
                     Height = 400;
                     HeaderView.Visibility = Visibility.Visible;
                     MainMenuView.Visibility = Visibility.Visible;
+                    HeaderView.UiTitel = "Main Menu";
                     break;
                 case UiState.UserManagement:
                     Width = 900;
                     Height = 600;
                     HeaderView.Visibility = Visibility.Visible;
                     UserManagementView.Visibility = Visibility.Visible;
+                    HeaderView.UiTitel = "User Management";
+                    break;
+                case UiState.PluginManagement:
+                    Width = 1100;
+                    Height = 600;
+                    HeaderView.Visibility = Visibility.Visible;
+                    PluginManagementView.Visibility = Visibility.Visible;
+                    HeaderView.UiTitel = "Plugin Management";
                     break;
             }
         }       

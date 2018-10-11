@@ -120,7 +120,7 @@ namespace CrypToolStoreDeveloperClient.Views
         }
 
         /// <summary>
-        /// Just for convinience; if the user enters a return in password field, it behaves like a click
+        /// Just for convenience; if the user enters a return in password field, it behaves like a click
         /// on the login button
         /// </summary>
         /// <param name="sender"></param>

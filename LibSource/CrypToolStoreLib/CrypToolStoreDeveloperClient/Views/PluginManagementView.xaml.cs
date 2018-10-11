@@ -37,17 +37,17 @@ namespace CrypToolStoreDeveloperClient.Views
     /// <summary>
     /// Interaktionslogik für UserManagementView.xaml
     /// </summary>
-    public partial class UserManagementView : UserControl
+    public partial class PluginManagementView : UserControl
     {        
         public MainWindow MainWindow { get; set; }
 
-        private ObservableCollection<Developer> Developers = new ObservableCollection<Developer>();
+        private ObservableCollection<Plugin> Plugins = new ObservableCollection<Plugin>();
 
-        public UserManagementView()
+        public PluginManagementView()
         {
-            InitializeComponent();            
-            DevelopersListView.ItemsSource = Developers;
-            Developers.Clear();
+            InitializeComponent();
+            PluginsListView.ItemsSource = Plugins;
+            Plugins.Clear();
             IsVisibleChanged += UserManagementView_IsVisibleChanged;
         }
 
@@ -63,17 +63,17 @@ namespace CrypToolStoreDeveloperClient.Views
                 return;
             }
 
-            //we fetch the user list in a seperate thread, thus, the ui is not blocked during download of the list67
-            Thread fetchUserListThread = new Thread(FetchUserList);
-            fetchUserListThread.IsBackground = true;
-            fetchUserListThread.Start();
+            //we fetch the plugin list in a seperate thread, thus, the ui is not blocked during download of the list67
+            Thread fetchPluginListThread = new Thread(FetchPluginList);
+            fetchPluginListThread.IsBackground = true;
+            fetchPluginListThread.Start();
             
         }
 
         /// <summary>
-        /// Method requests a user list and stores it in the list of the GUI
+        /// Method requests a plugin list and stores it in the list of the GUI
         /// </summary>
-        private void FetchUserList()
+        private void FetchPluginList()
         {
             try
             {
@@ -82,41 +82,41 @@ namespace CrypToolStoreDeveloperClient.Views
                 client.ServerPort = Constants.ServerPort;
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
-                DataModificationOrRequestResult result = client.GetDeveloperList();
-                List<Developer> developers = (List<Developer>)result.DataObject;
+                DataModificationOrRequestResult result = client.GetPluginList(MainWindow.IsAdmin ? "*" :  MainWindow.Username);
+                List<Plugin> plugins = (List<Plugin>)result.DataObject;
 
                 Dispatcher.BeginInvoke(new ThreadStart(() =>
                 {
                     try
                     {
-                        Developers.Clear();
-                        foreach (Developer developer in developers)
+                        Plugins.Clear();
+                        foreach (Plugin plugin in plugins)
                         {
-                            Developers.Add(developer);
+                            Plugins.Add(plugin);                            
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(String.Format("Exception during adding developers to list: {0}", ex.Message), "Exception");
+                        MessageBox.Show(String.Format("Exception during adding plugins to list: {0}", ex.Message), "Exception");
                     }
                 }));
                 client.Disconnect();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during retrieving of list of developers: {0}", ex.Message), "Exception");
+                MessageBox.Show(String.Format("Exception during retrieving of list of plugins: {0}", ex.Message), "Exception");
             }         
         }
 
         /// <summary>
-        /// Deletes the user defined by the clicked button
+        /// Deletes the plugin defined by the clicked button
         /// Then, updates the user list
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            Button button = (Button)sender;
+            /*Button button = (Button)sender;
             string username = (string)button.CommandParameter;
 
             MessageBoxResult messageBoxResult = MessageBox.Show(String.Format("Do you really want to delete the developer {0}?", username), String.Format("Delete {0}", username), MessageBoxButton.YesNo);
@@ -136,46 +136,46 @@ namespace CrypToolStoreDeveloperClient.Views
                     if (result.Success)
                     {
                         MessageBox.Show(String.Format("Successfully deleted {0}", username), "Developer deleted");
-                        FetchUserList();
+                        FetchPluginList();
                     }
                     else
                     {
-                        MessageBox.Show(String.Format("Could not delete developer: {0}", result.Message), "Deletion not possible");
+                        MessageBox.Show(String.Format("Could not delete plugin: {0}", result.Message), "Deletion not possible");
                     }                                        
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(String.Format("Exception during deletion of developer: {0}", ex.Message), "Exception");
+                    MessageBox.Show(String.Format("Exception during deletion of plugin: {0}", ex.Message), "Exception");
                 }         
-            }
+            }*/
         }
 
         /// <summary>
-        /// Opens window for updating the user
+        /// Shows a window for updating a plugin
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Update_Click(object sender, RoutedEventArgs e)
         {
-            Button button = (Button)sender;
+            /*Button button = (Button)sender;
             string username = (string)button.CommandParameter;
             UpdateUserWindow updateUserWindow = new UpdateUserWindow(username);
             updateUserWindow.MainWindow = MainWindow;
             updateUserWindow.ShowDialog();
-            FetchUserList();
+            FetchPluginList();*/
         }
 
         /// <summary>
-        /// Opens a window for creatign a new user
+        /// Shows a window for creating a new plugin
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CreateNewUserButton_Click(object sender, RoutedEventArgs e)
+        private void CreateNewPluginButton_Click(object sender, RoutedEventArgs e)
         {
-            CreateNewUserWindow createNewUserWindow = new CreateNewUserWindow();
+            /*CreateNewUserWindow createNewUserWindow = new CreateNewUserWindow();
             createNewUserWindow.MainWindow = MainWindow;
             createNewUserWindow.ShowDialog();
-            FetchUserList();
+            FetchPluginList();*/
         }
 
     }
