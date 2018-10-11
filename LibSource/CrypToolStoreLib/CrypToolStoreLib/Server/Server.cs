@@ -545,11 +545,11 @@ namespace CrypToolStoreLib.Server
             Logger.LogText(String.Format("User {0} tries to update a developer", Username), this, Logtype.Debug);
 
             //Only authenticated admins are allowed to create new developers
-            if (!ClientIsAuthenticated || !ClientIsAdmin)
+            if (!ClientIsAuthenticated || !ClientIsAdmin && Username != updateDeveloperMessage.Developer.Username)
             {
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.ModifiedDeveloper = false;
-                response.Message = "Unauthorized to create new developers. Please authenticate yourself as admin";
+                response.Message = "Unauthorized to update a developer. Please authenticate yourself as admin or try only to update yourself";
                 Logger.LogText(String.Format("Unauthorized user {0} tried to update developer={1} from IP={2}", Username, updateDeveloperMessage.Developer.Username, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
@@ -558,7 +558,15 @@ namespace CrypToolStoreLib.Server
             try
             {
                 Developer developer = updateDeveloperMessage.Developer;
-                Database.UpdateDeveloper(developer.Username, developer.Firstname, developer.Lastname, developer.Email, developer.IsAdmin);
+                if (ClientIsAdmin)
+                {
+                    //Only admins are allowed to set/remove admin flags
+                    Database.UpdateDeveloper(developer.Username, developer.Firstname, developer.Lastname, developer.Email, developer.IsAdmin);
+                }
+                else
+                {
+                    Database.UpdateDeveloperNoAdmin(developer.Username, developer.Firstname, developer.Lastname, developer.Email);
+                }
                 if (!String.IsNullOrEmpty(developer.Password))
                 {
                     Database.UpdateDeveloperPassword(developer.Username, developer.Password);
@@ -634,12 +642,12 @@ namespace CrypToolStoreLib.Server
         {
             Logger.LogText(String.Format("User {0} requests a developer", Username), this, Logtype.Debug);
 
-            //Only authenticated admins are allowed to create new developers
-            if (!ClientIsAuthenticated || !ClientIsAdmin)
+            //Only authenticated admins are allowed to request any user; users may only request their data
+            if (!ClientIsAuthenticated || !ClientIsAdmin && Username != requestDeveloperMessage.Username)
             {
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.ModifiedDeveloper = false;
-                response.Message = "Unauthorized to get developers. Please authenticate yourself as admin";
+                response.Message = "Unauthorized to get developer. Please authenticate yourself as admin";
                 Logger.LogText(String.Format("Unauthorized user {0} tried to request developer={1} from IP={2}", Username, requestDeveloperMessage.Username, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;

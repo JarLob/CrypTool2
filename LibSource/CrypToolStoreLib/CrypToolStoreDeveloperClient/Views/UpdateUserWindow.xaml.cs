@@ -40,16 +40,27 @@ namespace CrypToolStoreDeveloperClient.Views
     {
         public MainWindow MainWindow { get; set; }
         private string Username { get; set; }
+        private bool ChangeAdminFlag { get; set; }
 
-        public UpdateUserWindow(string username)
+        public UpdateUserWindow(string username, bool changeAdminFlag = true)
         {
             InitializeComponent();
             ResizeMode = ResizeMode.NoResize;
             Username = username;
             UsernameLabel.Content = Username;
             Loaded += UpdateUserWindow_Loaded;
+            ChangeAdminFlag = changeAdminFlag;
+            if (ChangeAdminFlag == false)
+            {
+                IsAdminCheckBox.IsEnabled = false;
+            }
         }
 
+        /// <summary>
+        /// Called, when window is loaded; retrieves user data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void UpdateUserWindow_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -161,6 +172,12 @@ namespace CrypToolStoreDeveloperClient.Views
 
                 if (result.Success)
                 {
+                    if (Username == MainWindow.Username && !String.IsNullOrEmpty(password))
+                    {
+                        //if the user updated his password, we have to change it in the MainWindow, thus, he can be
+                        //still be authenticated in following requests
+                        MainWindow.Password = password;
+                    }
                     MessageBox.Show("Successfully updated developer", "Developer updated");
                     Close();
                 }

@@ -385,17 +385,7 @@ namespace CrypToolStoreLib.Client
                         Message = "Not connected to server",
                         Success = false
                     };
-                }
-                //only admins are allowed, thus, we do not even send any update messages
-                //if we are not authenticated as admin
-                if (!IsAdmin)
-                {
-                    return new DataModificationOrRequestResult()
-                    {
-                        Message = "Not authenticated as admin",
-                        Success = false
-                    };
-                }
+                }               
 
                 logger.LogText(String.Format("Trying to update an existing developer: {0}", developer.ToString()), this, Logtype.Info);
 
@@ -537,17 +527,7 @@ namespace CrypToolStoreLib.Client
                         Message = "Not connected to server",
                         Success = false
                     };
-                }
-                //only admins are allowed, thus, we do not even send any get messages
-                //if we are not authenticated as admin
-                if (!IsAdmin)
-                {
-                    return new DataModificationOrRequestResult()
-                    {
-                        Message = "Not authenticated as admin",
-                        Success = false
-                    };
-                }
+                }                
 
                 logger.LogText(String.Format("Trying to get an existing developer: {0}", username), this, Logtype.Info);
 

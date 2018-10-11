@@ -68,5 +68,17 @@ namespace CrypToolStoreDeveloperClient.Views
         {
             MainWindow.ChangeScreen(UiState.UserManagement);
         }
+
+        /// <summary>
+        /// Updates the own user data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UpdateMyDataButton_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateUserWindow updateUserWindow = new UpdateUserWindow(MainWindow.Username, false);
+            updateUserWindow.MainWindow = MainWindow;
+            updateUserWindow.ShowDialog();
+        }
     }
 }

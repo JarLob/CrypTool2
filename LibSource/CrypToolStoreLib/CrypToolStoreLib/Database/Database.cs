@@ -288,7 +288,7 @@ namespace CrypToolStoreLib.Database
         public void UpdateDeveloper(string username, string firstname, string lastname, string email, bool isAdmin = false)
         {
             logger.LogText(String.Format("Updating existing developer: username={0}, firstname={1}, lastname={2}, email={3}", username, firstname, lastname, email), this, Logtype.Info);
-            string query = "update developers set firstname=@firstname, lastname=@lastname, email=@email, isadmin=@isadmin where username=@username";            
+            string query = "update developers set firstname=@firstname, lastname=@lastname, email=@email, isadmin=@isadmin where username=@username";
 
             DatabaseConnection connection = GetConnection();
 
@@ -303,6 +303,34 @@ namespace CrypToolStoreLib.Database
             connection.ExecutePreparedStatement(query, parameters);
 
             logger.LogText(String.Format("Updated existing developer: username={0}, firstname={1}, lastname={2}, email={3}, isadmin={4}", username, firstname, lastname, email, isAdmin == true ? "true" : "false"), this, Logtype.Info);
+        }
+
+        /// <summary>
+        /// Updates an existing developer account entry in the database
+        /// Does NOT update the password
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="firstname"></param>
+        /// <param name="lastname"></param>
+        /// <param name="email"></param>
+        /// <param name="isAdmin"></param>
+        public void UpdateDeveloperNoAdmin(string username, string firstname, string lastname, string email)
+        {
+            logger.LogText(String.Format("Updating existing developer: username={0}, firstname={1}, lastname={2}, email={3}", username, firstname, lastname, email), this, Logtype.Info);
+            string query = "update developers set firstname=@firstname, lastname=@lastname, email=@email where username=@username";
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = new object[][]{                
+                new object[]{"@firstname", firstname},
+                new object[]{"@lastname", lastname},
+                new object[]{"@email", email},
+                new object[]{"@username", username},
+            };
+
+            connection.ExecutePreparedStatement(query, parameters);
+
+            logger.LogText(String.Format("Updated existing developer: username={0}, firstname={1}, lastname={2}, email={3}", username, firstname, lastname, email), this, Logtype.Info);
         }
 
         /// <summary>
