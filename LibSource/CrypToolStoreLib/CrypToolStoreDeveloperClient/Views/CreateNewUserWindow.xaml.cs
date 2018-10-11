@@ -1,6 +1,4 @@
-﻿using CrypToolStoreLib.Client;
-using CrypToolStoreLib.DataObjects;
-/*
+﻿/*
    Copyright 2018 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,6 +13,8 @@ using CrypToolStoreLib.DataObjects;
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using CrypToolStoreLib.Client;
+using CrypToolStoreLib.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

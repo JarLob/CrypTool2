@@ -41,14 +41,25 @@ namespace CrypToolStoreDeveloperClient.Views
         public LoginView()
         {
             InitializeComponent();
-            Loaded += LoginView_Loaded;
+            Loaded += LoginView_Loaded;            
         }
 
+        /// <summary>
+        /// At startup we focus on username text input
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LoginView_Loaded(object sender, RoutedEventArgs e)
         {
-            Username.Focus();
+            FocusOnUsername();
         }
 
+        /// <summary>
+        /// Trys a "test login", if it succeeded, it forwards to main menu
+        /// and stores username and password
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             lock (this)
@@ -75,9 +86,13 @@ namespace CrypToolStoreDeveloperClient.Views
                     client.ServerAddress = Constants.ServerAddress;
                     client.ServerPort = Constants.ServerPort;
                     client.Connect();
+                    //just a test login, to verify username and password
+                    bool authenticated = client.Login(Username.Text, Password.Password);
+                    client.Disconnect();
 
-                    if (client.Login(Username.Text, Password.Password))
+                    if (authenticated)
                     {
+                        //store everything for later requests in ui
                         MainWindow.IsLoggedIn = true;
                         MainWindow.Username = Username.Text;
                         MainWindow.Password = Password.Password;
@@ -86,17 +101,16 @@ namespace CrypToolStoreDeveloperClient.Views
                         {
                             MainWindow.IsAdmin = true;
                         }
-
-                        client.Disconnect();
-                        ((MainWindow)((Grid)this.Parent).Parent).ChangeScreen(UiState.MainMenu);
+                        //remove everything from UI for later logout; thus, the inputs are empty for a new login
+                        Username.Text = String.Empty;
+                        Password.Password = String.Empty;                        
+                        ((MainWindow)((Grid)this.Parent).Parent).ChangeScreen(UiState.MainMenu);                        
                     }
                     else
                     {
                         MainWindow.IsLoggedIn = false;
                         MessageBox.Show("Username or password wrong", "Login failed");
                     }
-
-
                 }
                 catch (Exception ex)
                 {
@@ -105,12 +119,26 @@ namespace CrypToolStoreDeveloperClient.Views
             }
         }
 
+        /// <summary>
+        /// Just for convinience; if the user enters a return in password field, it behaves like a click
+        /// on the login button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Password_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
                 LoginButton_Click(sender, e);
             }
+        }
+
+        /// <summary>
+        /// Sets the focus on the username text input
+        /// </summary>
+        public void FocusOnUsername()
+        {
+            Username.Focus();
         }
     }
 }

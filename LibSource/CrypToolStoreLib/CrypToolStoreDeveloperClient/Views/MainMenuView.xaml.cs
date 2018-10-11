@@ -80,5 +80,18 @@ namespace CrypToolStoreDeveloperClient.Views
             updateUserWindow.MainWindow = MainWindow;
             updateUserWindow.ShowDialog();
         }
+
+        /// <summary>
+        /// "Logs" out by removing username and password and changing to login screen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Username = String.Empty;
+            MainWindow.Password = String.Empty;
+            MainWindow.IsLoggedIn = false;
+            MainWindow.ChangeScreen(UiState.LoginScreen);
+        }
     }
 }

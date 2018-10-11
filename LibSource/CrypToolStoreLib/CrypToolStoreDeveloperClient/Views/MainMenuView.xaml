@@ -13,11 +13,13 @@
             <RowDefinition Height="50" Name="PluginManagementRow"/>
             <RowDefinition Height="50" Name="ResourceManagementRow"/>
             <RowDefinition Height="50" Name="UpdateMyDataRow"/>
+            <RowDefinition Height="50" Name="LogOutRow"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">Main Menu</Label>
         <Button Name="UserManagementButton" Grid.Row="2" Height="40" Width="200" Click="UserManagementButton_Click">User Management</Button>
         <Button Name="PluginManagementButton" Grid.Row="3" Height="40" Width="200">Plugin Management</Button>
         <Button Name="ResourceManagementButton" Grid.Row="4" Height="40" Width="200">Resource Management</Button>
         <Button Name="UpdateMyDataButton" Grid.Row="5" Height="40" Width="200" Click="UpdateMyDataButton_Click">Update my Data</Button>
+        <Button Name="LogoutButton" Grid.Row="5" Height="40" Width="200" Click="LogoutButton_Click">Logout</Button>
     </Grid>
 </UserControl>
