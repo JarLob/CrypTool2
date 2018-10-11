@@ -116,10 +116,10 @@ namespace CrypToolStoreDeveloperClient.Views
         /// <param name="e"></param>
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            /*Button button = (Button)sender;
-            string username = (string)button.CommandParameter;
+            Button button = (Button)sender;
+            int id = (int)button.CommandParameter;
 
-            MessageBoxResult messageBoxResult = MessageBox.Show(String.Format("Do you really want to delete the developer {0}?", username), String.Format("Delete {0}", username), MessageBoxButton.YesNo);
+            MessageBoxResult messageBoxResult = MessageBox.Show(String.Format("Do you really want to delete the plugin {0}?", id), String.Format("Delete {0}", id), MessageBoxButton.YesNo);
 
             if (messageBoxResult == MessageBoxResult.Yes)
             {
@@ -130,12 +130,12 @@ namespace CrypToolStoreDeveloperClient.Views
                     client.ServerPort = Constants.ServerPort;
                     client.Connect();
                     client.Login(MainWindow.Username, MainWindow.Password);
-                    DataModificationOrRequestResult result = client.DeleteDeveloper(username);
+                    DataModificationOrRequestResult result = client.DeletePlugin(id);
                     client.Disconnect();
 
                     if (result.Success)
                     {
-                        MessageBox.Show(String.Format("Successfully deleted {0}", username), "Developer deleted");
+                        MessageBox.Show(String.Format("Successfully deleted {0}", id), "Plugin deleted");
                         FetchPluginList();
                     }
                     else
@@ -147,7 +147,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 {
                     MessageBox.Show(String.Format("Exception during deletion of plugin: {0}", ex.Message), "Exception");
                 }         
-            }*/
+            }
         }
 
         /// <summary>
@@ -172,10 +172,10 @@ namespace CrypToolStoreDeveloperClient.Views
         /// <param name="e"></param>
         private void CreateNewPluginButton_Click(object sender, RoutedEventArgs e)
         {
-            /*CreateNewUserWindow createNewUserWindow = new CreateNewUserWindow();
-            createNewUserWindow.MainWindow = MainWindow;
-            createNewUserWindow.ShowDialog();
-            FetchPluginList();*/
+            CreateNewPluginWindow createNewPluginWindow = new CreateNewPluginWindow();
+            createNewPluginWindow.MainWindow = MainWindow;
+            createNewPluginWindow.ShowDialog();
+            FetchPluginList();
         }
 
     }
