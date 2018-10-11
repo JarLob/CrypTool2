@@ -92,7 +92,7 @@ namespace CrypToolStoreDeveloperClient.Views
                         Plugins.Clear();
                         foreach (Plugin plugin in plugins)
                         {
-                            Plugins.Add(plugin);                            
+                            Plugins.Add(plugin);        
                         }
                     }
                     catch (Exception ex)

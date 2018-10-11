@@ -14,42 +14,56 @@
         <ListView x:Name="PluginsListView" Width="1100" Height="300" Grid.Row="1">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}" Width="140">
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path=Id}" Width="80">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Short Description" DisplayMemberBinding="{Binding Path=ShortDescription}" Width="140">
+                    <GridViewColumn Header="Username" DisplayMemberBinding="{Binding Path=Username}" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Long Description" DisplayMemberBinding="{Binding Path=LongDescription}" Width="140">
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Author Names" DisplayMemberBinding="{Binding Path=Authornames}" Width="140">
+                    <GridViewColumn Header="Short Description" DisplayMemberBinding="{Binding Path=ShortDescription}" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Author Emails" DisplayMemberBinding="{Binding Path=Authoremails}" Width="140">
+                    <GridViewColumn Header="Long Description" DisplayMemberBinding="{Binding Path=LongDescription}" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Author Institutes" DisplayMemberBinding="{Binding Path=Authorinstitutes}" Width="140">
+                    <GridViewColumn Header="Author Names" DisplayMemberBinding="{Binding Path=Authornames}" Width="120">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Author Emails" DisplayMemberBinding="{Binding Path=Authoremails}" Width="120">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Author Institutes" DisplayMemberBinding="{Binding Path=Authorinstitutes}" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
@@ -57,7 +71,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     
-                    <GridViewColumn Header="Modify" Width="180">
+                    <GridViewColumn Header="Modify" Width="160">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -65,8 +79,8 @@
                                         <ColumnDefinition Width="75"/>
                                         <ColumnDefinition Width="75"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button CommandParameter="{Binding Path=Username}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Click="Update_Click">Update</Button>
-                                    <Button CommandParameter="{Binding Path=Username}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Click="Delete_Click">Delete</Button>
+                                    <Button CommandParameter="{Binding Path=Id}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Click="Update_Click">Update</Button>
+                                    <Button CommandParameter="{Binding Path=Id}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Click="Delete_Click">Delete</Button>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
