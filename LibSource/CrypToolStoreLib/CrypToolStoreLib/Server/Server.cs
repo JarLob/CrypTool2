@@ -976,7 +976,7 @@ namespace CrypToolStoreLib.Server
                 List<Plugin> plugins = Database.GetPlugins(requestPluginListMessage.Username.Equals("*") ? null : requestPluginListMessage.Username);
                 if (!ClientIsAdmin)
                 {
-                    plugins = (from p in plugins where p.Publish == true || p.Username == Username select p).ToList();
+                    plugins = (from p in plugins where p.Username == Username select p).ToList();
                 }
                 ResponsePluginListMessage response = new ResponsePluginListMessage();
                 response.Plugins = plugins;
