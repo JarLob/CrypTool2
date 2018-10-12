@@ -88,6 +88,9 @@ namespace CrypToolStoreDeveloperClient.Views
             }
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public CreateNewPluginWindow()
         {
             InitializeComponent();
@@ -224,7 +227,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     byte[] image = File.ReadAllBytes(openFileDialog.FileName);
                     if (image.Length > ClientHandler.MAX_ICON_FILE_SIZE)
                     {
-                        MessageBox.Show(String.Format("File size of icons can only by less or equal to {0} byte!", ClientHandler.MAX_ICON_FILE_SIZE), "Invalid icon file size");
+                        MessageBox.Show(String.Format("File size of icons can only be less or equal to {0} byte!", ClientHandler.MAX_ICON_FILE_SIZE), "Invalid icon file size");
                         return;
                     }
                     Icon = image;

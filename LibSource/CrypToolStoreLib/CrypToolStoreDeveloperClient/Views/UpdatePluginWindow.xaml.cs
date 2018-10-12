@@ -89,12 +89,17 @@ namespace CrypToolStoreDeveloperClient.Views
             }
         }
 
+        /// <summary>
+        /// Contrucor, needs a plugin id to know which plugin to show
+        /// </summary>
+        /// <param name="pluginid"></param>
         public UpdatePluginWindow(int pluginid)
         {
             InitializeComponent();
             ResizeMode = ResizeMode.NoResize;
             Loaded += UpdatePluginWindow_Loaded;
             PluginId = pluginid;
+            Icon = new byte[0];
         }
 
         /// <summary>
@@ -275,7 +280,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     byte[] image = File.ReadAllBytes(openFileDialog.FileName);
                     if (image.Length > ClientHandler.MAX_ICON_FILE_SIZE)
                     {
-                        MessageBox.Show(String.Format("File size of icons can only by less or equal to {0} byte!", ClientHandler.MAX_ICON_FILE_SIZE), "Invalid icon file size");
+                        MessageBox.Show(String.Format("File size of icons can only be less or equal to {0} byte!", ClientHandler.MAX_ICON_FILE_SIZE), "Invalid icon file size");
                         return;
                     }
                     Icon = image;
