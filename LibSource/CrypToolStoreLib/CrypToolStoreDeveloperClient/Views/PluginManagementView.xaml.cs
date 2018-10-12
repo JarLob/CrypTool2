@@ -92,7 +92,10 @@ namespace CrypToolStoreDeveloperClient.Views
                         Plugins.Clear();
                         foreach (Plugin plugin in plugins)
                         {
-                            Plugins.Add(plugin);        
+                            if (plugin.Username == MainWindow.Username || MainWindow.IsAdmin)
+                            {
+                                Plugins.Add(plugin);
+                            }
                         }
                     }
                     catch (Exception ex)
@@ -157,12 +160,12 @@ namespace CrypToolStoreDeveloperClient.Views
         /// <param name="e"></param>
         private void Update_Click(object sender, RoutedEventArgs e)
         {
-            /*Button button = (Button)sender;
-            string username = (string)button.CommandParameter;
-            UpdateUserWindow updateUserWindow = new UpdateUserWindow(username);
-            updateUserWindow.MainWindow = MainWindow;
-            updateUserWindow.ShowDialog();
-            FetchPluginList();*/
+            Button button = (Button)sender;
+            int id = (int)button.CommandParameter;
+            UpdatePluginWindow updatePluginWindow = new UpdatePluginWindow(id);
+            updatePluginWindow.MainWindow = MainWindow;
+            updatePluginWindow.ShowDialog();
+            FetchPluginList();
         }
 
         /// <summary>

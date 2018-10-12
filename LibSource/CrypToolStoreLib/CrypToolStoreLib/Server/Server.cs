@@ -931,15 +931,7 @@ namespace CrypToolStoreLib.Server
                 }
                 else
                 {
-                    if (plugin.Publish == false && plugin.Username != Username && !ClientIsAdmin)
-                    {
-                        ResponsePluginMessage response = new ResponsePluginMessage();
-                        response.PluginExists = false;
-                        Logger.LogText(String.Format("Unauthorized user {0} tried to get a plugin={1}", Username, requestPluginMessage.Id), this, Logtype.Warning);
-                        response.Message = String.Format("Plugin {0} does not exist", requestPluginMessage.Id);
-                        SendMessage(response, sslStream);
-                    }
-                    else
+                    if (plugin.Publish == true || plugin.Username == Username || ClientIsAdmin)
                     {
                         ResponsePluginMessage response = new ResponsePluginMessage();
                         response.Plugin = plugin;
@@ -947,6 +939,15 @@ namespace CrypToolStoreLib.Server
                         string message = String.Format("Responding with plugin: {0}", plugin.ToString());
                         Logger.LogText(message, this, Logtype.Debug);
                         response.Message = message;
+                        SendMessage(response, sslStream);
+                        
+                    }
+                    else
+                    {
+                        ResponsePluginMessage response = new ResponsePluginMessage();
+                        response.PluginExists = false;
+                        Logger.LogText(String.Format("Unauthorized user {0} tried to get a plugin={1}", Username, requestPluginMessage.Id), this, Logtype.Warning);
+                        response.Message = String.Format("Plugin {0} does not exist", requestPluginMessage.Id);
                         SendMessage(response, sslStream);
                     }
                 }
@@ -976,7 +977,7 @@ namespace CrypToolStoreLib.Server
                 List<Plugin> plugins = Database.GetPlugins(requestPluginListMessage.Username.Equals("*") ? null : requestPluginListMessage.Username);
                 if (!ClientIsAdmin)
                 {
-                    plugins = (from p in plugins where p.Username == Username select p).ToList();
+                    plugins = (from p in plugins where p.Username == Username || p.Publish == true select p).ToList();
                 }
                 ResponsePluginListMessage response = new ResponsePluginListMessage();
                 response.Plugins = plugins;
