@@ -1,7 +1,7 @@
 ﻿<Window x:Class="CrypToolStoreDeveloperClient.Views.CreateNewPluginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Create new Plugin" Height="400" Width="500">
+        Title="Create new Plugin" Height="420" Width="500">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -10,13 +10,14 @@
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
-            <RowDefinition Height="25"/>            
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120"/>
             <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
-
+        
         <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right">Name:</Label>
         <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right">Short Description:</Label>
         <Label Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right">Long Description:</Label>
@@ -31,6 +32,14 @@
         <TextBox Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center" Width="300" Name="AuthorEmailsTextBox"/>
         <TextBox Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center" Width="300" Name="AuthorInstitutesTextBox"/>
 
-        <Button Name="CreateButton" Click="CreateButton_Click" Grid.Column="1" Grid.Row="6" Height="25" Width="100" HorizontalAlignment="Right">Confirm</Button>
+        <Grid  Grid.Column="1" Grid.Row="6" Height="50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Image Name="IconImage" Grid.Column="0" Width="50" Height="50" HorizontalAlignment="Center"/>
+            <Button Name="SelectIconButton" Click="SelectIconButton_Click" Grid.Column="1" Height="25" Width="100" HorizontalAlignment="Right">Select Icon File</Button>
+        </Grid>
+        <Button Name="CreateButton" Click="CreateButton_Click" Grid.Column="1" Grid.Row="7" Height="25" Width="100" HorizontalAlignment="Right">Create</Button>
     </Grid>
 </Window>

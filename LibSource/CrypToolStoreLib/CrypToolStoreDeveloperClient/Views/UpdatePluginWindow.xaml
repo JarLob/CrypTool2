@@ -40,6 +40,6 @@
             <Image Name="IconImage" Grid.Column="0" Width="50" Height="50" HorizontalAlignment="Center"/>
             <Button Name="SelectIconButton" Click="SelectIconButton_Click" Grid.Column="1" Height="25" Width="100" HorizontalAlignment="Right">Select Icon File</Button>
         </Grid>        
-        <Button Name="CreateButton" Click="UpdateButton_Click" Grid.Column="1" Grid.Row="7" Height="25" Width="100" HorizontalAlignment="Right">Update</Button>
+        <Button Name="UpdateButton" Click="UpdateButton_Click" Grid.Column="1" Grid.Row="7" Height="25" Width="100" HorizontalAlignment="Right">Update</Button>
     </Grid>
 </Window>
