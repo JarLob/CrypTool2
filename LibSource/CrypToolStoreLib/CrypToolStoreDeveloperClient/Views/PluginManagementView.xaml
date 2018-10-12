@@ -71,16 +71,18 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     
-                    <GridViewColumn Header="Modify" Width="160">
+                    <GridViewColumn Header="Modify" Width="240">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="75"/>
                                         <ColumnDefinition Width="75"/>
+                                        <ColumnDefinition Width="75"/>
                                     </Grid.ColumnDefinitions>
                                     <Button CommandParameter="{Binding Path=Id}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Click="Update_Click">Update</Button>
                                     <Button CommandParameter="{Binding Path=Id}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Click="Delete_Click">Delete</Button>
+                                    <Button CommandParameter="{Binding Path=Id}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Click="Source_Click">Source</Button>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

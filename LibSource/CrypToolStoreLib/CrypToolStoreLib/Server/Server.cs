@@ -173,6 +173,7 @@ namespace CrypToolStoreLib.Server
     {
         private const int READ_TIMEOUT = 5000;
         private const int WRITE_TIMEOUT = 5000;
+        public const int MAX_ICON_FILE_SIZE = 65536;
 
         private Logger Logger = Logger.GetLogger();
         private CrypToolStoreDatabase Database = CrypToolStoreDatabase.GetDatabase();        
@@ -821,6 +822,15 @@ namespace CrypToolStoreLib.Server
             //Here, the user is authorized; thus, update of existing plugin in database is started
             try
             {
+                if (plugin.Icon.Length > MAX_ICON_FILE_SIZE)
+                {
+                    ResponsePluginModificationMessage icon_too_big_response = new ResponsePluginModificationMessage();
+                    icon_too_big_response.ModifiedPlugin = false;
+                    Logger.LogText(String.Format("User {0} tried to upload an icon > {0} byte", MAX_ICON_FILE_SIZE), this, Logtype.Error);
+                    icon_too_big_response.Message = String.Format("Icon file size > {0} byte now allowed!", MAX_ICON_FILE_SIZE);
+                    SendMessage(icon_too_big_response, sslStream);
+                    return;
+                }
                 plugin = updatePluginMessage.Plugin;
                 Database.UpdatePlugin(plugin.Id, Username, plugin.Name, plugin.ShortDescription, plugin.LongDescription, plugin.Authornames, plugin.Authoremails, plugin.Authorinstitutes, plugin.Icon);
                 plugin = Database.GetPlugin(plugin.Id);

@@ -15,8 +15,11 @@
 */
 using CrypToolStoreLib.Client;
 using CrypToolStoreLib.DataObjects;
+using CrypToolStoreLib.Server;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -41,6 +44,50 @@ namespace CrypToolStoreDeveloperClient.Views
         public MainWindow MainWindow { get; set; }
         private int PluginId { get; set; }
 
+        private byte[] icon;
+        private byte[] Icon
+        {
+            get
+            {
+                return icon;
+            }
+            set
+            {
+                icon = value;
+                UpdateIconInUi();
+            }
+        }
+
+        /// <summary>
+        /// Updates the icon image in the ui to show the icon image
+        /// </summary>
+        private void UpdateIconInUi()
+        {
+            try
+            {
+                if (icon == null || icon.Length == 0)
+                {
+                    return;
+                }
+                BitmapImage bitmapImage = new BitmapImage();
+                using (var mem = new MemoryStream(icon))
+                {
+                    mem.Position = 0;
+                    bitmapImage.BeginInit();
+                    bitmapImage.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmapImage.UriSource = null;
+                    bitmapImage.StreamSource = mem;
+                    bitmapImage.EndInit();
+                }
+                bitmapImage.Freeze();
+                IconImage.Source = bitmapImage;
+            }
+            catch (Exception)
+            {
+                //wtf?
+            }
+        }
 
         public UpdatePluginWindow(int pluginid)
         {
@@ -82,6 +129,7 @@ namespace CrypToolStoreDeveloperClient.Views
                         AuthorNamesTextBox.Text = plugin.Authornames;
                         AuthorEmailsTextBox.Text = plugin.Authoremails;
                         AuthorInstitutesTextBox.Text = plugin.Authorinstitutes;
+                        Icon = plugin.Icon;
                     }
                     catch (Exception ex)
                     {
@@ -169,6 +217,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 plugin.Authornames = authornames;
                 plugin.Authoremails = authoremails;
                 plugin.Authorinstitutes = authorinstitutes;
+                plugin.Icon = Icon;
 
                 DataModificationOrRequestResult result = client.UpdatePlugin(plugin);
                 
@@ -204,6 +253,37 @@ namespace CrypToolStoreDeveloperClient.Views
             catch (FormatException)
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Shows an open file dialog to open an icon file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SelectIconButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Title = "Select Icon for the Plugin";
+                openFileDialog.Filter = "png files (*.png)|*.png|jpg files (*.jpg)|*.jpg";
+                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                bool? dialogResult = openFileDialog.ShowDialog();
+                if (dialogResult == true)
+                {
+                    byte[] image = File.ReadAllBytes(openFileDialog.FileName);
+                    if (image.Length > ClientHandler.MAX_ICON_FILE_SIZE)
+                    {
+                        MessageBox.Show(String.Format("File size of icons can only by less or equal to {0} byte!", ClientHandler.MAX_ICON_FILE_SIZE), "Invalid icon file size");
+                        return;
+                    }
+                    Icon = image;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(String.Format("Exception during selecting of icon: {0}", ex.Message), "Exception");
             }
         }
     }

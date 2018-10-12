@@ -181,5 +181,10 @@ namespace CrypToolStoreDeveloperClient.Views
             FetchPluginList();
         }
 
+        private void Source_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }
