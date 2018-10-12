@@ -118,7 +118,8 @@ namespace CrypToolStoreDeveloperClient.Views
                 plugin.Authorinstitutes = authorinstitutes;
 
                 DataModificationOrRequestResult result = client.CreatePlugin(plugin);
-                
+                client.Disconnect();
+
                 if (result.Success)
                 {
                     MessageBox.Show("Successfully created a new plugin", "Plugin created");
@@ -127,8 +128,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 else
                 {
                     MessageBox.Show(String.Format("Could not create new plugin: {0}", result.Message), "Creation not possible");
-                }                
-                client.Disconnect();
+                }                                
             }
             catch (Exception ex)
             {
