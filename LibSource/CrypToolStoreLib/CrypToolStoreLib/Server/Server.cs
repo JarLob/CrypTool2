@@ -1938,7 +1938,7 @@ namespace CrypToolStoreLib.Server
                 ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                 response.Success = false;
                 response.Message = "Unauthorized to upload zip file. Please authenticate yourself";
-                Logger.LogText(String.Format("Unauthorized user {0} tried upload a zip file for Source={1} from IP={2}", Username, startUploadZipfileMessage.Source, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to upload a zip file for Source={1} from IP={2}", Username, startUploadZipfileMessage.Source, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1951,7 +1951,7 @@ namespace CrypToolStoreLib.Server
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
                     response.Message = "Unauthorized to upload zip file for that source";
-                    Logger.LogText(String.Format("Unauthorized user {0} tried upload a zip file for Source={1} from IP={2}", Username, startUploadZipfileMessage.Source, IPAddress), this, Logtype.Warning);
+                    Logger.LogText(String.Format("Unauthorized user {0} tried to upload a zip file for Source={1} from IP={2}", Username, startUploadZipfileMessage.Source, IPAddress), this, Logtype.Warning);
                     SendMessage(response, sslStream);
                     return;
                 }
