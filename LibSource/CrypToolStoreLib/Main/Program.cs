@@ -40,7 +40,7 @@ namespace CrpyStoreLib
 
         public void Run()
         {       
-            Logger.SetLogLevel(Logtype.Debug);
+            Logger.SetLogLevel(Logtype.Info);
             CrypToolStoreDatabase database = CrypToolStoreDatabase.GetDatabase();
             if (!database.InitAndConnect("192.168.0.122", "CrypToolStore", "cryptoolstore", "123", 5))
             {
@@ -58,41 +58,7 @@ namespace CrpyStoreLib
                 server.Start();
 
                 while (true)
-                {
-                    try
-                    {
-                        CrypToolStoreClient client = new CrypToolStoreClient();
-                        client.Connect();                        
-                        client.Login("kopal", "123");
-                        //client.Login("test", "");
-
-                        ResourceData data = new ResourceData();
-                        data.ResourceId = 1006;
-                        data.ResourceVersion = 4;
-                        data.Data = new byte[] { 1 };
-
-                        client.CreateResourceData(data);
-
-                        client.UpdateResourceData(data);
-
-                        data = (ResourceData) client.GetResourceData(1006, 4).DataObject;
-                        Console.WriteLine(data);
-
-                        List<ResourceData> list = (List<ResourceData>)client.GetResourceDataList(1006).DataObject;
-                        foreach (var entry in list)
-                        {
-                            Console.WriteLine("listentry:" + entry);
-                        }
-
-
-                        client.DeleteResourceData(data.ResourceId, data.ResourceVersion);
-
-                        client.Disconnect();
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
+                {                    
                     Console.ReadLine();
                 }
             }

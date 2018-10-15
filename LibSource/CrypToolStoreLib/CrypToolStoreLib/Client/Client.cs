@@ -23,6 +23,7 @@ using CrypToolStoreLib.Tools;
 using System.Net.Sockets;
 using System.Net.Security;
 using System.Net;
+using System.IO;
 
 namespace CrypToolStoreLib.Client
 {
@@ -32,6 +33,7 @@ namespace CrypToolStoreLib.Client
         public const string DEFAULT_ADDRESS = "localhost";
         private const int READ_TIMEOUT = 5000;
         private const int WRITE_TIMEOUT = 5000;
+        private const int FILE_BUFFER_SIZE = 1048576; //1 MB
 
         private Logger logger = Logger.GetLogger();        
 
@@ -1379,6 +1381,182 @@ namespace CrypToolStoreLib.Client
             }
         }
 
+        /// <summary>
+        /// Uploads a zip file for the specified source
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="file"></param>
+        public DataModificationOrRequestResult UploadZipFile(Source source, string file)
+        {
+            lock (this)
+            {
+                //we can only receive source lists when we are connected
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+
+                //Step 1: Send startUploadZipfileMessage to start the uploading process
+                FileInfo fileInfo = new FileInfo(file);
+                long filesize = fileInfo.Length;
+
+                StartUploadZipfileMessage startUploadZipfileMessage = new StartUploadZipfileMessage();
+                startUploadZipfileMessage.Source = source;
+                startUploadZipfileMessage.FileSize = filesize;
+                startUploadZipfileMessage.FileName = fileInfo.FullName;
+                SendMessage(startUploadZipfileMessage);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+
+                //Received ResponseUploadDownloadDataMessage
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseUploadDownloadDataMessage)
+                {
+                    //received a response, forward it to user
+                    ResponseUploadDownloadDataMessage responseUploadDownloadDataMessage = (ResponseUploadDownloadDataMessage)response_message;
+
+                    if (responseUploadDownloadDataMessage.Success == false)
+                    {
+                        string failmsg = String.Format("Upload failed, reason: {0}", responseUploadDownloadDataMessage.Message);
+                        logger.LogText(failmsg, this, Logtype.Info);
+                        return new DataModificationOrRequestResult()
+                        {
+                            Message = failmsg,
+                            Success = false
+                        };
+                    }
+
+                    //Step 3: send file
+                    long totalbytesread = 0;
+                    using (FileStream fileStream = new FileStream(file, FileMode.Open, FileAccess.Read))
+                    {
+                        byte[] buffer = new byte[FILE_BUFFER_SIZE];
+
+                        while (totalbytesread < filesize)
+                        {
+                            //read a block of data
+                            int bytesread = 0;
+                            int current_bytesread = 0;
+                            while ((current_bytesread = fileStream.Read(buffer, bytesread, FILE_BUFFER_SIZE - bytesread)) > 0 && bytesread < FILE_BUFFER_SIZE)
+                            {
+                                bytesread += current_bytesread;
+                            }
+
+                            byte[] data;
+                            if (bytesread < FILE_BUFFER_SIZE)
+                            {
+                                data = new byte[bytesread];
+                                Array.Copy(buffer, 0, data, 0, bytesread);
+                            }
+                            else
+                            {
+                                data = buffer;
+                            }
+
+                            //send the block of data
+
+                            UploadDownloadDataMessage uploadDownloadDataMessage = new UploadDownloadDataMessage();
+                            uploadDownloadDataMessage.Data = data;
+                            uploadDownloadDataMessage.FileName = fileInfo.FullName;
+                            uploadDownloadDataMessage.Offset = totalbytesread;
+                            uploadDownloadDataMessage.FileSize = filesize;
+
+                            SendMessage(uploadDownloadDataMessage);
+
+                            //check, if block of data was received without error
+                            response_message = ReceiveMessage();
+
+                            //Received null = connection closed
+                            if (response_message == null)
+                            {
+                                logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                                sslStream.Close();
+                                Client.Close();
+                                return new DataModificationOrRequestResult()
+                                {
+                                    Message = "Connection to server lost",
+                                    Success = false
+                                };
+                            }
+                            
+                            //Received ResponseUploadDownloadDataMessage
+                            if (response_message.MessageHeader.MessageType == MessageType.ResponseUploadDownloadDataMessage)
+                            {
+                                responseUploadDownloadDataMessage = (ResponseUploadDownloadDataMessage)response_message;
+                                if (responseUploadDownloadDataMessage.Success == false)
+                                {
+                                    string failmsg = String.Format("Upload failed, reason: {0}", responseUploadDownloadDataMessage.Message);
+                                    logger.LogText(failmsg, this, Logtype.Info);
+                                    return new DataModificationOrRequestResult()
+                                    {
+                                        Message = failmsg,
+                                        Success = false
+                                    };
+                                }
+                            }
+                            else
+                            {
+                                //Received another (wrong) message
+                                string msg = String.Format("Response message to upload a zipfile was not a ResponseUploadDownloadDataMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                                logger.LogText(msg, this, Logtype.Info);
+                                return new DataModificationOrRequestResult()
+                                {
+                                    Message = msg,
+                                    Success = false
+                                };
+                            }
+
+                            //increment total read bytes
+
+                            //todo: fire event for upload progress bar
+
+                            totalbytesread += bytesread;
+                        }
+                    }
+
+                    //todo: fire final event for upload progress bar
+
+                    //Received another (wrong) message                    
+                    logger.LogText("Upload completed", this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Upload completed",
+                        Success = false
+                    };
+                }
+                else
+                {
+
+                    //Received another (wrong) message
+                    string msg = String.Format("Response message to upload a zipfile was not a ResponseUploadDownloadDataMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                    logger.LogText(msg, this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = msg,
+                        Success = false
+                    };
+                }
+            }
+           
+        }
+        
         #endregion
 
         #region Methods for working with Resources

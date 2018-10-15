@@ -612,7 +612,7 @@ namespace CrypToolStoreLib.Database
         /// </summary>
         /// <param name="pluginid"></param>
         /// <param name="pluginversion"></param>
-        /// <param name="zipfile"></param>
+        /// <param name="zipfilename"></param>
         /// <param name="uploaddate"></param>
         public void CreateSource(int pluginid, int pluginversion, string zipfilename, DateTime uploaddate, string buildstate)
         {
@@ -730,7 +730,7 @@ namespace CrypToolStoreLib.Database
         /// <returns></returns>
         public Source GetSource(int pluginid, int pluginversion)
         {
-            string query = "select pluginid, pluginversion, buildversion, zipfile, buildstate, buildlog, assembly, uploaddate, builddate from sources where pluginid=@pluginid and pluginversion=@pluginversion";
+            string query = "select pluginid, pluginversion, buildversion, zipfilename, buildstate, buildlog, assembly, uploaddate, builddate from sources where pluginid=@pluginid and pluginversion=@pluginversion";
 
             DatabaseConnection connection = GetConnection();
 
@@ -749,7 +749,7 @@ namespace CrypToolStoreLib.Database
             source.PluginId = (int)resultset[0]["pluginid"];
             source.PluginVersion = (int)resultset[0]["pluginversion"];
             source.BuildVersion = (int)resultset[0]["buildversion"];
-            source.ZipFileName = (string)resultset[0]["zipfile"];
+            source.ZipFileName = (string)resultset[0]["zipfilename"];
             source.BuildState = (string)resultset[0]["buildstate"];
             source.BuildLog = (string)resultset[0]["buildlog"];
             source.AssemblyFileName = (string)resultset[0]["assembly"];

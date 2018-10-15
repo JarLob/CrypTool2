@@ -84,8 +84,11 @@ namespace CrypToolStoreLib.Tools
         RequestResourceData = 506,
         ResponseResourceData = 507,
 
-        //Message for Uploading/Downloading Data
+        //Message for uploading/downloading data
         UploadDownloadDataMessage = 600,
+        ResponseUploadDownloadDataMessage = 601,
+        StartUploadZipfileMessage = 602,
+        RequestDownloadZipfileMessage = 603,
 
         //server error message
         ServerError = 900,
@@ -269,6 +272,11 @@ namespace CrypToolStoreLib.Tools
             MessageTypeDictionary.Add(MessageType.ResponseResourceDataModification, typeof(ResponseResourceDataModificationMessage));
             MessageTypeDictionary.Add(MessageType.RequestResourceData, typeof(RequestResourceDataMessage));
             MessageTypeDictionary.Add(MessageType.ResponseResourceData, typeof(ResponseResourceDataMessage));
+
+            //upload/download messages
+            MessageTypeDictionary.Add(MessageType.UploadDownloadDataMessage, typeof(UploadDownloadDataMessage));
+            MessageTypeDictionary.Add(MessageType.StartUploadZipfileMessage, typeof(StartUploadZipfileMessage));
+            MessageTypeDictionary.Add(MessageType.RequestDownloadZipfileMessage, typeof(RequestDownloadZipfileMessage));
 
             //error messages
             MessageTypeDictionary.Add(MessageType.ServerError, typeof(ServerErrorMessage));
@@ -1803,25 +1811,16 @@ namespace CrypToolStoreLib.Tools
     /// <summary>
     /// Message for uploading/downloading data (files) to the store and from the store
     /// </summary>
-    public class UploadDownloadDataMessage
+    public class UploadDownloadDataMessage : Message
     {
         [MessageDataField]
         public string FileName { get; set; }
 
         [MessageDataField]
-        public uint FileSize { get; set; }
+        public long FileSize { get; set; }
 
         [MessageDataField]
-        public uint Offset { get; set; }
-        
-        [MessageDataField]
-        public uint TotalParts { get; set; }
-
-        [MessageDataField]
-        public uint Part { get; set; }
-
-        [MessageDataField]
-        public byte[] DataHash { get; set; }
+        public long Offset { get; set; }       
 
         [MessageDataField]
         public byte[] Data { get; set; }        
@@ -1830,9 +1829,45 @@ namespace CrypToolStoreLib.Tools
         {
 
         }
-
     }
 
+    /// <summary>
+    /// Response message for UploadDownloadDataMessage
+    /// </summary>
+    public class ResponseUploadDownloadDataMessage : Message
+    {
+        public ResponseUploadDownloadDataMessage()
+        {
+
+        }
+
+        public bool Success { get; set; }
+        public string Message { get; set; }
+    }
+
+    /// <summary>
+    /// Message for uploading zip files of sources to the server
+    /// </summary>
+    public class StartUploadZipfileMessage : Message
+    {
+        [MessageDataField]
+        public Source Source { get; set; }
+
+        [MessageDataField]
+        public string FileName { get; set; }
+
+        [MessageDataField]
+        public long FileSize { get; set; }
+    }
+
+    /// <summary>
+    /// Message for downloading zip files of sources from the server
+    /// </summary>
+    public class RequestDownloadZipfileMessage : Message
+    {
+        [MessageDataField]
+        public Source Source { get; set; }    
+    }
     #endregion
 
     #region Error messages
