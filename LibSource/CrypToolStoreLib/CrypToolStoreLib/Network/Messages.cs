@@ -275,9 +275,10 @@ namespace CrypToolStoreLib.Tools
 
             //upload/download messages
             MessageTypeDictionary.Add(MessageType.UploadDownloadDataMessage, typeof(UploadDownloadDataMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseUploadDownloadDataMessage, typeof(ResponseUploadDownloadDataMessage));
             MessageTypeDictionary.Add(MessageType.StartUploadZipfileMessage, typeof(StartUploadZipfileMessage));
             MessageTypeDictionary.Add(MessageType.RequestDownloadZipfileMessage, typeof(RequestDownloadZipfileMessage));
-
+            
             //error messages
             MessageTypeDictionary.Add(MessageType.ServerError, typeof(ServerErrorMessage));
             MessageTypeDictionary.Add(MessageType.ClientError, typeof(ClientErrorMessage));
@@ -685,7 +686,7 @@ namespace CrypToolStoreLib.Tools
                                         propertyInfo.SetValue(this, BitConverter.ToInt32(valuebytes, 0));
                                         break;
                                     case "Int64":
-                                        fieldInfo.SetValue(this, BitConverter.ToInt64(valuebytes, 0));
+                                        propertyInfo.SetValue(this, BitConverter.ToInt64(valuebytes, 0));
                                         break;
                                     case "Double":
                                         propertyInfo.SetValue(this, BitConverter.ToDouble(valuebytes, 0));
@@ -1813,8 +1814,6 @@ namespace CrypToolStoreLib.Tools
     /// </summary>
     public class UploadDownloadDataMessage : Message
     {
-        [MessageDataField]
-        public string FileName { get; set; }
 
         [MessageDataField]
         public long FileSize { get; set; }
@@ -1835,14 +1834,16 @@ namespace CrypToolStoreLib.Tools
     /// Response message for UploadDownloadDataMessage
     /// </summary>
     public class ResponseUploadDownloadDataMessage : Message
-    {
+    {       
+        [MessageDataField]
+        public bool Success { get; set; }
+        [MessageDataField]
+        public string Message { get; set; }
         public ResponseUploadDownloadDataMessage()
         {
 
         }
 
-        public bool Success { get; set; }
-        public string Message { get; set; }
     }
 
     /// <summary>
@@ -1852,9 +1853,6 @@ namespace CrypToolStoreLib.Tools
     {
         [MessageDataField]
         public Source Source { get; set; }
-
-        [MessageDataField]
-        public string FileName { get; set; }
 
         [MessageDataField]
         public long FileSize { get; set; }

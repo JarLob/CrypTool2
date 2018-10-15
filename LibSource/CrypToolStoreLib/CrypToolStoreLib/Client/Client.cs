@@ -1407,7 +1407,6 @@ namespace CrypToolStoreLib.Client
                 StartUploadZipfileMessage startUploadZipfileMessage = new StartUploadZipfileMessage();
                 startUploadZipfileMessage.Source = source;
                 startUploadZipfileMessage.FileSize = filesize;
-                startUploadZipfileMessage.FileName = fileInfo.FullName;
                 SendMessage(startUploadZipfileMessage);
 
                 //2. Step: Receive response message from server
@@ -1474,7 +1473,6 @@ namespace CrypToolStoreLib.Client
 
                             UploadDownloadDataMessage uploadDownloadDataMessage = new UploadDownloadDataMessage();
                             uploadDownloadDataMessage.Data = data;
-                            uploadDownloadDataMessage.FileName = fileInfo.FullName;
                             uploadDownloadDataMessage.Offset = totalbytesread;
                             uploadDownloadDataMessage.FileSize = filesize;
 

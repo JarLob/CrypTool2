@@ -19,6 +19,7 @@ using CrypToolStoreLib.Tools;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Security;
@@ -228,52 +229,14 @@ namespace CrypToolStoreLib.Server
                 {
                     while (CrypToolStoreServer.Running && client.Connected && sslstream.CanRead && sslstream.CanWrite)
                     {
-                        //Step 1: Read message header                    
-                        byte[] headerbytes = new byte[21]; //a message header is 21 bytes
-                        int bytesread = 0;
-
-                        while (bytesread < 21)
+                        //Receive message
+                        Message message = ReceiveMessage(sslstream);
+                        
+                        //Handle received message
+                        if (message != null)
                         {
-                            int readbytes = sslstream.Read(headerbytes, bytesread, 21 - bytesread);
-                            if (readbytes == 0)
-                            {
-                                //stream was closed
-                                return;
-                            }
-                            bytesread += readbytes;
+                            HandleMessage(message, sslstream);
                         }
-
-                        //Step 2: Deserialize message header and get payloadsize
-                        MessageHeader header = new MessageHeader();
-                        header.Deserialize(headerbytes);
-                        int payloadsize = header.PayloadSize;
-                        if (payloadsize > Message.MAX_PAYLOAD_SIZE)
-                        {
-                            //if we receive a message larger than MAX_PAYLOAD_SIZE we throw an exception which terminates the session
-                            throw new Exception(String.Format("Receiving a message with a payload which is larger (={0} bytes) than the Message.MAX_PAYLOAD_SIZE={1} bytes", payloadsize, Message.MAX_PAYLOAD_SIZE));
-                        }
-
-                        //Step 3: Read complete message
-                        byte[] messagebytes = new byte[payloadsize + 21];
-                        Array.Copy(headerbytes, 0, messagebytes, 0, 21);
-
-                        while (bytesread < payloadsize + 21)
-                        {
-                             int readbytes = sslstream.Read(messagebytes, bytesread, payloadsize + 21 - bytesread);
-                             if (readbytes == 0)
-                             {
-                                 //stream was closed
-                                 return;
-                             }
-                             bytesread += readbytes;
-                        }
-
-                        //Step 4: Deserialize Message
-                        Message message = Message.DeserializeMessage(messagebytes);
-                        Logger.LogText(String.Format("Received a \"{0}\" message from the client", message.MessageHeader.MessageType.ToString()), this, Logtype.Debug);
-
-                        //Step 5: Handle received message
-                        HandleMessage(message, sslstream);
                     }
                 }
                 catch (Exception ex)
@@ -294,6 +257,60 @@ namespace CrypToolStoreLib.Server
                     Logger.LogText("Client disconnected", this, Logtype.Info);
                 }
             }
+        }
+
+        /// <summary>
+        /// Receives a message from the ssl stream
+        /// </summary>
+        /// <param name="sslstream"></param>
+        /// <returns></returns>
+        private Message ReceiveMessage(SslStream sslstream)
+        {
+            //Step 1: Read message header                    
+            byte[] headerbytes = new byte[21]; //a message header is 21 bytes
+            int bytesread = 0;
+
+            while (bytesread < 21)
+            {
+                int readbytes = sslstream.Read(headerbytes, bytesread, 21 - bytesread);
+                if (readbytes == 0)
+                {
+                    //stream was closed
+                    return null;
+                }
+                bytesread += readbytes;
+            }
+
+            //Step 2: Deserialize message header and get payloadsize
+            MessageHeader header = new MessageHeader();
+            header.Deserialize(headerbytes);
+            int payloadsize = header.PayloadSize;
+            if (payloadsize > Message.MAX_PAYLOAD_SIZE)
+            {
+                //if we receive a message larger than MAX_PAYLOAD_SIZE we throw an exception which terminates the session
+                throw new Exception(String.Format("Receiving a message with a payload which is larger (={0} bytes) than the Message.MAX_PAYLOAD_SIZE={1} bytes", payloadsize, Message.MAX_PAYLOAD_SIZE));
+            }
+
+            //Step 3: Read complete message
+            byte[] messagebytes = new byte[payloadsize + 21];
+            Array.Copy(headerbytes, 0, messagebytes, 0, 21);
+
+            while (bytesread < payloadsize + 21)
+            {
+                int readbytes = sslstream.Read(messagebytes, bytesread, payloadsize + 21 - bytesread);
+                if (readbytes == 0)
+                {
+                    //stream was closed
+                    return null;
+                }
+                bytesread += readbytes;
+            }
+
+            //Step 4: Deserialize Message
+            Message message = Message.DeserializeMessage(messagebytes);
+            Logger.LogText(String.Format("Received a \"{0}\" message from the client", message.MessageHeader.MessageType.ToString()), this, Logtype.Debug);
+            
+            return message;
         }
 
         /// <summary>
@@ -385,6 +402,9 @@ namespace CrypToolStoreLib.Server
                     break;
                 case MessageType.RequestResourceDataList:
                     HandleRequestResourceDataListMessage((RequestResourceDataListMessage)message, sslStream);
+                    break;
+                case MessageType.StartUploadZipfileMessage:
+                    HandleUploadZipFileMessages((StartUploadZipfileMessage)message, sslStream);
                     break;
 
                 default:
@@ -1059,7 +1079,7 @@ namespace CrypToolStoreLib.Server
             //Here, everything is fine; thus, we try to create the source
             try
             {
-                Database.CreateSource(source.PluginId, source.PluginVersion, source.ZipFileName, DateTime.Now, BUILD_STATES.UPLOADED);
+                Database.CreateSource(source.PluginId, source.PluginVersion);
                 Logger.LogText(String.Format("User {0} created new source for plugin={0} in database: {2}", Username, plugin, source), this, Logtype.Info);
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = true;
@@ -1901,6 +1921,126 @@ namespace CrypToolStoreLib.Server
                 response.Message = "Exception during request of resource data list";
                 SendMessage(response, sslStream);
             }
+        }
+
+        /// <summary>
+        /// Handles uploading of zip files
+        /// </summary>
+        /// <param name="startUploadZipfileMessage"></param>
+        private void HandleUploadZipFileMessages(StartUploadZipfileMessage startUploadZipfileMessage, SslStream sslStream)
+        {
+            DateTime uploadStartTime = DateTime.Now;
+            Logger.LogText(String.Format("User {0} starts uploading a zip file", Username), this, Logtype.Debug);
+
+            //Only authenticated admins are allowed to receive ResourceData lists
+            if (!ClientIsAuthenticated)
+            {
+                ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                response.Success = false;
+                response.Message = "Unauthorized to upload zip file. Please authenticate yourself";
+                Logger.LogText(String.Format("Unauthorized user {0} tried upload a zip file for Source={1} from IP={2}", Username, startUploadZipfileMessage.Source, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            try
+            {
+                Plugin plugin = Database.GetPlugin(startUploadZipfileMessage.Source.PluginId);
+
+                if (!ClientIsAdmin && !(Username == plugin.Username))
+                {
+                    ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                    response.Success = false;
+                    response.Message = "Unauthorized to upload zip file for that source";
+                    Logger.LogText(String.Format("Unauthorized user {0} tried upload a zip file for Source={1} from IP={2}", Username, startUploadZipfileMessage.Source, IPAddress), this, Logtype.Warning);
+                    SendMessage(response, sslStream);
+                    return;
+                }
+                Source source = Database.GetSource(startUploadZipfileMessage.Source.PluginId, startUploadZipfileMessage.Source.PluginVersion);
+
+                ResponseUploadDownloadDataMessage responseSuccess = new ResponseUploadDownloadDataMessage();
+                responseSuccess.Success = true;
+                responseSuccess.Message = "Authorized to upload data";                
+                SendMessage(responseSuccess, sslStream);
+
+                long filesize = startUploadZipfileMessage.FileSize;
+                string filename = "Source-" + source.PluginId + "-" + source.PluginVersion + ".gzip";
+                string tempfilename = filename + "_" + DateTime.Now.Ticks;
+
+                CheckPluginSourceFolder();
+                long writtenFilesize = 0;
+                using (FileStream fileStream = new FileStream(PLUGIN_SOURCE_FOLDER + "\\" + tempfilename, FileMode.CreateNew, FileAccess.Write))
+                {
+                    
+                    while (true)
+                    {
+                        //Receive message from stream
+                        Message message = ReceiveMessage(sslStream);
+                        if (message.MessageHeader.MessageType == MessageType.UploadDownloadDataMessage)
+                        {
+                            UploadDownloadDataMessage uploadDownloadDataMessage = (UploadDownloadDataMessage)message;
+                            fileStream.Write(uploadDownloadDataMessage.Data, 0, uploadDownloadDataMessage.Data.Length);
+                            writtenFilesize += uploadDownloadDataMessage.Data.Length;
+                            //received wrong message, abort
+                            ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                            response.Success = true;
+                            response.Message = "OK";
+                            SendMessage(response, sslStream);
+                            if (writtenFilesize == filesize)
+                            {
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            //received wrong message, abort
+                            ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                            Logger.LogText(String.Format("User {0} sent a wrong message. Exptected UploadDownloadDataMessage but received {1}", Username, message.MessageHeader.MessageType), this, Logtype.Error);
+                            response.Success = false;
+                            response.Message = "Exception during upload of zipfile";
+                            SendMessage(response, sslStream);
+                        }
+                    }
+                }
+
+                if (File.Exists(PLUGIN_SOURCE_FOLDER + "\\" + filename))
+                {
+                    Logger.LogText(String.Format("File {0} already exists. Delete it now", filename), this, Logtype.Info);
+                    File.Delete(PLUGIN_SOURCE_FOLDER + "\\" + filename);
+                    Logger.LogText(String.Format("Deleted file {0}", filename), this, Logtype.Info);
+                }
+                
+                Logger.LogText(String.Format("Renaming file {0} to {1}", tempfilename, filename), this, Logtype.Info);
+                File.Move(PLUGIN_SOURCE_FOLDER + "\\" + tempfilename, PLUGIN_SOURCE_FOLDER + "\\" + filename);
+                Logger.LogText(String.Format("Renamed file {0} to {1}", tempfilename, filename), this, Logtype.Info);
+
+                Logger.LogText(String.Format("Updating Source={0} in database", source), this, Logtype.Info);
+                Database.UpdateSource(source.PluginId, source.PluginVersion, filename, "UPLOADED", String.Format("Zipfile uploaded by {0}", Username), DateTime.Now);
+                Logger.LogText(String.Format("Updated Source={0} in database", source), this, Logtype.Info);
+
+                Logger.LogText(String.Format("User {0} uploaded a {1} byte zip for source={2} in {3}", Username, writtenFilesize, source, DateTime.Now - uploadStartTime), this, Logtype.Info);
+            }
+            catch (Exception ex)
+            {
+                //request failed; logg to logfile and return exception to client
+                ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                response.Success = false;
+                Logger.LogText(String.Format("User {0} tried to upload a zipfile. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during upload of zipfile";
+                SendMessage(response, sslStream);
+            }
+        }
+        
+        /// <summary>
+        /// Checks, if the Plugin Source folder exists; if not it creates it
+        /// </summary>
+        private void CheckPluginSourceFolder()
+        {
+            if (!Directory.Exists(PLUGIN_SOURCE_FOLDER))
+            {
+                Logger.LogText(String.Format("PLUGIN_SOURCE_FOLDER={0} does not exist. Create it now", PLUGIN_SOURCE_FOLDER), this, Logtype.Info);
+                Directory.CreateDirectory(PLUGIN_SOURCE_FOLDER);
+                Logger.LogText(String.Format("PLUGIN_SOURCE_FOLDER={0} created", PLUGIN_SOURCE_FOLDER), this, Logtype.Info);
+            }            
         }
 
         /// <summary>
