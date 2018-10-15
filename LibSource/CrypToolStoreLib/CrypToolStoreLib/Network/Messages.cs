@@ -84,6 +84,9 @@ namespace CrypToolStoreLib.Tools
         RequestResourceData = 506,
         ResponseResourceData = 507,
 
+        //Message for Uploading/Downloading Data
+        UploadDownloadDataMessage = 600,
+
         //server error message
         ServerError = 900,
         ClientError = 901,
@@ -1791,6 +1794,43 @@ namespace CrypToolStoreLib.Tools
         {
             ResourceData = new ResourceData();
         }        
+    }
+
+    #endregion
+
+    #region Upload/download data messages
+
+    /// <summary>
+    /// Message for uploading/downloading data (files) to the store and from the store
+    /// </summary>
+    public class UploadDownloadDataMessage
+    {
+        [MessageDataField]
+        public string FileName { get; set; }
+
+        [MessageDataField]
+        public uint FileSize { get; set; }
+
+        [MessageDataField]
+        public uint Offset { get; set; }
+        
+        [MessageDataField]
+        public uint TotalParts { get; set; }
+
+        [MessageDataField]
+        public uint Part { get; set; }
+
+        [MessageDataField]
+        public byte[] DataHash { get; set; }
+
+        [MessageDataField]
+        public byte[] Data { get; set; }        
+
+        public UploadDownloadDataMessage()
+        {
+
+        }
+
     }
 
     #endregion

@@ -226,10 +226,10 @@ namespace CrypToolStoreLib.DataObjects
         public int PluginId { get; set; }
         public int PluginVersion { get; set; }
         public int BuildVersion { get; set; }
-        public byte[] ZipFile { get; set; }
+        public string ZipFileName { get; set; }
         public string BuildState { get; set; }
         public string BuildLog { get; set; }
-        public byte[] Assembly { get; set; }
+        public string AssemblyFileName { get; set; }
         public DateTime UploadDate { get; set; }
         public DateTime BuildDate { get; set; }
 
@@ -241,10 +241,10 @@ namespace CrypToolStoreLib.DataObjects
             PluginId = -1;
             PluginVersion = -1;
             BuildVersion = -1;
-            ZipFile = new byte[0];
+            ZipFileName = String.Empty;
             BuildState = String.Empty;
             BuildLog = String.Empty;
-            Assembly = new byte[0];
+            AssemblyFileName = String.Empty;
             UploadDate = DateTime.MinValue;
             BuildDate = DateTime.MinValue;
         }
@@ -264,12 +264,10 @@ namespace CrypToolStoreLib.DataObjects
                         writer.Write(PluginId);
                         writer.Write(PluginVersion);
                         writer.Write(BuildVersion);
-                        writer.Write(ZipFile.Length);//first write length of byte array
-                        writer.Write(ZipFile);
+                        writer.Write(ZipFileName);
                         writer.Write(BuildState);
                         writer.Write(BuildLog);
-                        writer.Write(Assembly.Length);//first write length of byte array
-                        writer.Write(Assembly);
+                        writer.Write(AssemblyFileName);
                         writer.Write(UploadDate.ToBinary());
                         writer.Write(BuildDate.ToBinary());
                         return stream.ToArray();
@@ -297,12 +295,10 @@ namespace CrypToolStoreLib.DataObjects
                         PluginId = reader.ReadInt32();
                         PluginVersion = reader.ReadInt32();
                         BuildVersion = reader.ReadInt32();
-                        int length = reader.ReadInt32(); //first read length of byte array
-                        ZipFile = reader.ReadBytes(length);
+                        ZipFileName = reader.ReadString();
                         BuildState = reader.ReadString();
                         BuildLog = reader.ReadString();
-                        length = reader.ReadInt32();//first read length of byte array
-                        Assembly = reader.ReadBytes(length);
+                        AssemblyFileName = reader.ReadString();
                         UploadDate = DateTime.FromBinary(reader.ReadInt64());
                         BuildDate = DateTime.FromBinary(reader.ReadInt64());
                     }
@@ -317,7 +313,7 @@ namespace CrypToolStoreLib.DataObjects
         public override string ToString()
         {
             return String.Format("Source{{pluginid={0}, pluginversion={1}, buildversion={2}, zipfile={3},buildstate={4}, buildlog={5}, assembly={6}, uploaddate={7}, builddate={8}}}",
-                PluginId, PluginVersion, BuildVersion, ZipFile != null ? ZipFile.Length.ToString() : "null", BuildState, BuildLog, Assembly != null ? Assembly.Length.ToString() : "null", UploadDate, BuildDate);
+                PluginId, PluginVersion, BuildVersion, ZipFileName != null ? ZipFileName.Length.ToString() : "null", BuildState, BuildLog, AssemblyFileName != null ? AssemblyFileName.Length.ToString() : "null", UploadDate, BuildDate);
         }        
     }
 

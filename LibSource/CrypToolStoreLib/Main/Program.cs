@@ -40,7 +40,7 @@ namespace CrpyStoreLib
 
         public void Run()
         {       
-            Logger.SetLogLevel(Logtype.Info);
+            Logger.SetLogLevel(Logtype.Debug);
             CrypToolStoreDatabase database = CrypToolStoreDatabase.GetDatabase();
             if (!database.InitAndConnect("192.168.0.122", "CrypToolStore", "cryptoolstore", "123", 5))
             {

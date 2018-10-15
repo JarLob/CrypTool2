@@ -614,26 +614,25 @@ namespace CrypToolStoreLib.Database
         /// <param name="pluginversion"></param>
         /// <param name="zipfile"></param>
         /// <param name="uploaddate"></param>
-        public void CreateSource(int pluginid, int pluginversion, byte[] zipfile, DateTime uploaddate, string buildstate)
+        public void CreateSource(int pluginid, int pluginversion, string zipfilename, DateTime uploaddate, string buildstate)
         {
-            logger.LogText(String.Format("Creating new source: pluginid={0}, pluginversion={1}, zipfile={2}, buildstate={3}", pluginid, pluginversion, uploaddate, buildstate), this, Logtype.Info);
-            string query = "insert into sources (pluginid, pluginversion, zipfile, uploaddate, buildstate, assembly, builddate) values (@pluginid, @pluginversion, @zipfile, @uploaddate, @buildstate, @assembly, @builddate)";
+            logger.LogText(String.Format("Creating new source: pluginid={0}, pluginversion={1}, zipfile={2}, buildstate={4}", pluginid, pluginversion, uploaddate, buildstate), this, Logtype.Info);
+            string query = "insert into sources (pluginid, pluginversion, zipfilename, uploaddate, buildstate, builddate) values (@pluginid, @pluginversion, @zipfilename, @uploaddate, @buildstate, @builddate)";
 
             DatabaseConnection connection = GetConnection();
 
             object[][] parameters = new object[][]{
                 new object[]{"@pluginid", pluginid},
                 new object[]{"@pluginversion", pluginversion},
-                new object[]{"@zipfile", zipfile},
+                new object[]{"@zipfilefilename", zipfilename},
                 new object[]{"@uploaddate", uploaddate},
-                new object[]{"@buildstate", buildstate},
-                new object[]{"@assembly", new byte[] {} },
+                new object[]{"@buildstate", buildstate},                
                 new object[]{"@builddate", DateTime.MinValue}
             };
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Created new source: pluginid={0}, pluginversion={1}, zipfile={2}, buildstate={3}", pluginid, pluginversion, uploaddate, buildstate), this, Logtype.Info);
+            logger.LogText(String.Format("Created new source: pluginid={0}, pluginversion={1}, zipfilename={2}, buildstate={3}", pluginid, pluginversion, zipfilename, buildstate), this, Logtype.Info);
         }
 
         /// <summary>
@@ -641,19 +640,19 @@ namespace CrypToolStoreLib.Database
         /// </summary>
         /// <param name="pluginid"></param>
         /// <param name="pluginversion"></param>
-        /// <param name="zipfile"></param>
+        /// <param name="zipfilename"></param>
         /// <param name="uploaddate"></param>
         /// <param name="buildstate"></param>
-        public void UpdateSource(int pluginid, int pluginversion, byte[] zipfile, string buildstate, string buildlog)
+        public void UpdateSource(int pluginid, int pluginversion, string zipfilename, string buildstate, string buildlog)
         {
-            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, zipfile={2}, buildstate={3}, buildlog={4}", pluginid, pluginversion, zipfile != null ? zipfile.Length.ToString() : "null", buildstate, buildlog), this, Logtype.Info);
-            string query = "update sources set zipfile = @zipfile, buildstate=@buildstate, buildlog=@buildlog where pluginid=@pluginid and pluginversion=@pluginversion";
+            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, zipfilename={2}, buildstate={3}, buildlog={4}", pluginid, pluginversion, zipfilename, buildstate, buildlog), this, Logtype.Info);
+            string query = "update sources set zipfilename = @zipfilename, buildstate=@buildstate, buildlog=@buildlog where pluginid=@pluginid and pluginversion=@pluginversion";
 
             DatabaseConnection connection = GetConnection();
 
             object[][] parameters = new object[][]{                
                 
-                new object[]{"@zipfile", zipfile},
+                new object[]{"@zipfilename", zipfilename},
                 new object[]{"@buildstate", buildstate},
                 new object[]{"@buildlog", buildlog},
                 new object[]{"@pluginid", pluginid},
@@ -662,7 +661,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, zipfile={2}, buildstate={3}, buildlog={4}", pluginid, pluginversion, zipfile != null ? zipfile.Length.ToString() : "null",  buildstate, buildlog), this, Logtype.Info);
+            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, zipfilename={2}, buildstate={3}, buildlog={4}", pluginid, pluginversion, zipfilename, buildstate, buildlog), this, Logtype.Info);
         }
 
 
@@ -674,13 +673,13 @@ namespace CrypToolStoreLib.Database
         /// <param name="buildversion"></param>
         /// <param name="buildstate"></param>
         /// <param name="buildlog"></param>
-        /// <param name="assembly"></param>
+        /// <param name="assemblyfilename"></param>
         /// <param name="builddate"></param>
-        public void UpdateSourceBuild(int pluginid, int pluginversion, int buildversion, string buildstate, string buildlog, byte[] assembly, DateTime builddate)
+        public void UpdateSourceBuild(int pluginid, int pluginversion, int buildversion, string buildstate, string buildlog, string assemblyfilename, DateTime builddate)
         {
-            logger.LogText(String.Format("Updating source's build state: pluginid={0}, pluginversion={1}, buildversion={2}, buildstate={3}, buildlog={4}, assembly={5}, builddate={6}",
-                pluginid, pluginversion, buildversion, buildstate, buildlog, assembly != null ? assembly.Length.ToString() : "null", builddate), this, Logtype.Info);
-            string query = "update sources set buildversion=@buildversion, buildstate=@buildstate, buildlog=@buildlog, assembly=@assembly, builddate=@builddate where pluginid=@pluginid and pluginversion=@pluginversion";
+            logger.LogText(String.Format("Updating source's build state: pluginid={0}, pluginversion={1}, buildversion={2}, buildstate={3}, buildlog={4}, assemblyfilename={5}, builddate={6}",
+                pluginid, pluginversion, buildversion, buildstate, buildlog, assemblyfilename, builddate), this, Logtype.Info);
+            string query = "update sources set buildversion=@buildversion, buildstate=@buildstate, buildlog=@buildlog, assemblyfilename=@assemblyfilename, builddate=@builddate where pluginid=@pluginid and pluginversion=@pluginversion";
 
             DatabaseConnection connection = GetConnection();
 
@@ -689,7 +688,7 @@ namespace CrypToolStoreLib.Database
                 new object[]{"@buildversion", buildversion},
                 new object[]{"@buildstate", buildstate},
                 new object[]{"@buildlog", buildlog},
-                new object[]{"@assembly", assembly},
+                new object[]{"@assemblyfilename", assemblyfilename},
                 new object[]{"@builddate", builddate},
                 new object[]{"@pluginid", pluginid},
                 new object[]{"@pluginversion", pluginversion}
@@ -697,8 +696,8 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated source's build state: pluginid={0}, pluginversion={1}, buildversion={2}, buildstate={3}, buildlog={4}, assembly={5}, builddate={6}",
-                pluginid, pluginversion, buildversion, buildstate, buildlog, assembly != null ? assembly.Length.ToString() : "null", builddate), this, Logtype.Info);
+            logger.LogText(String.Format("Updated source's build state: pluginid={0}, pluginversion={1}, buildversion={2}, buildstate={3}, buildlog={4}, assemblyfilename={5}, builddate={6}",
+                pluginid, pluginversion, buildversion, buildstate, buildlog, assemblyfilename, builddate), this, Logtype.Info);
         }
 
         /// <summary>
@@ -750,10 +749,10 @@ namespace CrypToolStoreLib.Database
             source.PluginId = (int)resultset[0]["pluginid"];
             source.PluginVersion = (int)resultset[0]["pluginversion"];
             source.BuildVersion = (int)resultset[0]["buildversion"];
-            source.ZipFile = (byte[])resultset[0]["zipfile"];
+            source.ZipFileName = (string)resultset[0]["zipfile"];
             source.BuildState = (string)resultset[0]["buildstate"];
             source.BuildLog = (string)resultset[0]["buildlog"];
-            source.Assembly = (byte[])resultset[0]["assembly"];
+            source.AssemblyFileName = (string)resultset[0]["assembly"];
             source.UploadDate = (DateTime)resultset[0]["uploaddate"];
             source.BuildDate = (DateTime)resultset[0]["builddate"];
 

@@ -174,6 +174,8 @@ namespace CrypToolStoreLib.Server
         private const int READ_TIMEOUT = 5000;
         private const int WRITE_TIMEOUT = 5000;
         public const int MAX_ICON_FILE_SIZE = 65536;
+        public const string PLUGIN_SOURCE_FOLDER = "Sources";
+        public const string RESOURCES_FOLDER = "Resources";
 
         private Logger Logger = Logger.GetLogger();
         private CrypToolStoreDatabase Database = CrypToolStoreDatabase.GetDatabase();        
@@ -1057,7 +1059,7 @@ namespace CrypToolStoreLib.Server
             //Here, everything is fine; thus, we try to create the source
             try
             {
-                Database.CreateSource(source.PluginId, source.PluginVersion, source.ZipFile, DateTime.Now, BUILD_STATES.UPLOADED);
+                Database.CreateSource(source.PluginId, source.PluginVersion, source.ZipFileName, DateTime.Now, BUILD_STATES.UPLOADED);
                 Logger.LogText(String.Format("User {0} created new source for plugin={0} in database: {2}", Username, plugin, source), this, Logtype.Info);
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = true;
@@ -1124,7 +1126,7 @@ namespace CrypToolStoreLib.Server
             try
             {
                 source = updateSourceMessage.Source;
-                Database.UpdateSource(source.PluginId, source.PluginVersion, source.ZipFile, source.BuildState, source.BuildLog);
+                Database.UpdateSource(source.PluginId, source.PluginVersion, source.ZipFileName, source.BuildState, source.BuildLog);
                 Logger.LogText(String.Format("User {0} updated existing source in database: {1}", Username, source.ToString()), this, Logtype.Info);
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = true;
