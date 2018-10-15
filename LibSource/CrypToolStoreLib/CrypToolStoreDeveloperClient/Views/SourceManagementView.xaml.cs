@@ -37,18 +37,18 @@ namespace CrypToolStoreDeveloperClient.Views
     /// <summary>
     /// Interaktionslogik für UserManagementView.xaml
     /// </summary>
-    public partial class PluginManagementView : UserControl
+    public partial class SourceManagementView : UserControl
     {        
         public MainWindow MainWindow { get; set; }
 
         private ObservableCollection<Plugin> Plugins = new ObservableCollection<Plugin>();
 
-        public PluginManagementView()
+        public SourceManagementView()
         {
             InitializeComponent();
             PluginsListView.ItemsSource = Plugins;
             Plugins.Clear();
-            IsVisibleChanged += PluginManagementView_IsVisibleChanged;
+            IsVisibleChanged += SourceManagementView_IsVisibleChanged;
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace CrypToolStoreDeveloperClient.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PluginManagementView_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void SourceManagementView_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (!IsVisible)
             {
