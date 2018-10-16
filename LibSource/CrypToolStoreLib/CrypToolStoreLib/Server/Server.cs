@@ -568,7 +568,7 @@ namespace CrypToolStoreLib.Server
             Logger.LogText(String.Format("User {0} tries to update a developer", Username), this, Logtype.Debug);
 
             //Only authenticated admins are allowed to create new developers
-            if (!ClientIsAuthenticated || !ClientIsAdmin && Username != updateDeveloperMessage.Developer.Username)
+            if (!ClientIsAuthenticated || (!ClientIsAdmin && Username != updateDeveloperMessage.Developer.Username))
             {
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.ModifiedDeveloper = false;
@@ -666,7 +666,7 @@ namespace CrypToolStoreLib.Server
             Logger.LogText(String.Format("User {0} requests a developer", Username), this, Logtype.Debug);
 
             //Only authenticated admins are allowed to request any user; users may only request their data
-            if (!ClientIsAuthenticated || !ClientIsAdmin && Username != requestDeveloperMessage.Username)
+            if (!ClientIsAuthenticated || (!ClientIsAdmin && Username != requestDeveloperMessage.Username))
             {
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.ModifiedDeveloper = false;

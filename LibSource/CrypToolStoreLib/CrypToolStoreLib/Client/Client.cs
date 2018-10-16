@@ -1385,8 +1385,8 @@ namespace CrypToolStoreLib.Client
         /// Uploads a zip file for the specified source
         /// </summary>
         /// <param name="source"></param>
-        /// <param name="file"></param>
-        public DataModificationOrRequestResult UploadZipFile(Source source, string file)
+        /// <param name="filename"></param>
+        public DataModificationOrRequestResult UploadZipFile(Source source, string filename)
         {
             lock (this)
             {
@@ -1401,7 +1401,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Step 1: Send startUploadZipfileMessage to start the uploading process
-                FileInfo fileInfo = new FileInfo(file);
+                FileInfo fileInfo = new FileInfo(filename);
                 long filesize = fileInfo.Length;
 
                 StartUploadZipfileMessage startUploadZipfileMessage = new StartUploadZipfileMessage();
@@ -1444,7 +1444,7 @@ namespace CrypToolStoreLib.Client
 
                     //Step 3: send file
                     long totalbytesread = 0;
-                    using (FileStream fileStream = new FileStream(file, FileMode.Open, FileAccess.Read))
+                    using (FileStream fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read))
                     {
                         byte[] buffer = new byte[FILE_BUFFER_SIZE];
 
@@ -1453,9 +1453,27 @@ namespace CrypToolStoreLib.Client
                             //read a block of data
                             int bytesread = 0;
                             int current_bytesread = 0;
+                            
+                            DateTime LastEventFireTime = DateTime.Now;
+                            long lasttotalbytesread = totalbytesread;
+
                             while ((current_bytesread = fileStream.Read(buffer, bytesread, FILE_BUFFER_SIZE - bytesread)) > 0 && bytesread < FILE_BUFFER_SIZE)
                             {
                                 bytesread += current_bytesread;
+                                totalbytesread += current_bytesread;
+
+                                //every second fire event for download progress
+                                if (UploadDownloadProgressChanged != null && DateTime.Now >= LastEventFireTime.AddMilliseconds(1000))
+                                {
+                                    UploadDownloadProgressEventArgs args = new UploadDownloadProgressEventArgs();
+                                    args.FileName = filename;
+                                    args.FileSize = filesize;
+                                    args.DownloadedUploaded = totalbytesread;
+                                    args.BytePerSecond = totalbytesread - lasttotalbytesread;
+                                    lasttotalbytesread = totalbytesread;
+                                    UploadDownloadProgressChanged.Invoke(this, args);
+                                    LastEventFireTime = DateTime.Now;
+                                }
                             }
 
                             byte[] data;
@@ -1520,16 +1538,19 @@ namespace CrypToolStoreLib.Client
                                     Success = false
                                 };
                             }
-
-                            //increment total read bytes
-
-                            //todo: fire event for upload progress bar
-
-                            totalbytesread += bytesread;
                         }
                     }
 
-                    //todo: fire final event for upload progress bar
+                    //fire last event when file is completely uploaded
+                    if (UploadDownloadProgressChanged != null)
+                    {
+                        UploadDownloadProgressEventArgs args = new UploadDownloadProgressEventArgs();
+                        args.FileName = filename;
+                        args.FileSize = filesize;
+                        args.DownloadedUploaded = totalbytesread;
+                        args.BytePerSecond = 0;
+                        UploadDownloadProgressChanged.Invoke(this, args);
+                    }
 
                     //Received another (wrong) message                    
                     logger.LogText("Upload completed", this, Logtype.Info);
@@ -1554,7 +1575,9 @@ namespace CrypToolStoreLib.Client
             }
            
         }
-        
+
+        public event EventHandler<UploadDownloadProgressEventArgs> UploadDownloadProgressChanged;
+
         #endregion
 
         #region Methods for working with Resources
@@ -2281,5 +2304,14 @@ namespace CrypToolStoreLib.Client
         }
 
         #endregion
+    }
+
+    public class UploadDownloadProgressEventArgs : EventArgs
+    {
+        public string FileName { get; set; }
+        public long DownloadedUploaded { get; set; }
+        public long FileSize { get; set; }
+        public long BytePerSecond { get; set; }
+
     }
 }
