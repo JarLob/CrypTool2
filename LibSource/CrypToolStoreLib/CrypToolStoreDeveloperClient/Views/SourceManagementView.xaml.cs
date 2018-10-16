@@ -165,6 +165,10 @@ namespace CrypToolStoreDeveloperClient.Views
             UploadZipFileWindow uploadZipFileWindow = new UploadZipFileWindow(PluginId, pluginversion);
             uploadZipFileWindow.MainWindow = MainWindow;
             uploadZipFileWindow.ShowDialog();
+            //we fetch the source list in a seperate thread, thus, the ui is not blocked during download of the list
+            Thread fetchSourceListThread = new Thread(FetchSourceList);
+            fetchSourceListThread.IsBackground = true;
+            fetchSourceListThread.Start();
         }
 
         /// <summary>

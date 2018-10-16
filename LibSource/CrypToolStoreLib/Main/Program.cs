@@ -58,20 +58,7 @@ namespace CrpyStoreLib
                 server.Start();
 
                 while (true)
-                {
-                    CrypToolStoreClient client = new CrypToolStoreClient();
-                    client.Connect();
-                    client.Login("kopal", "123");                   
-                    Source source = new Source();
-                    source.PluginId = 7;
-                    source.PluginVersion = 1;
-
-                    client.DeleteSource(source.PluginId, source.PluginVersion);
-                    client.CreateSource(source);
-
-                    client.UploadZipFile(source, @"C:\Users\nilsk\Desktop\DVD.zip");
-                   
-                    client.Disconnect();
+                {                 
                     Console.ReadLine();
                 }
             }

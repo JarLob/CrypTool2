@@ -64,6 +64,12 @@ namespace CrypToolStoreDeveloperClient.Views
         /// <param name="e"></param>
         private void UploadButton_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(FileName))
+            {
+                MessageBox.Show("Please select a zip file to upload", "Zip file missing");
+                return;
+            }
+            
             //we fetch the source list in a seperate thread, thus, the ui is not blocked during download of the list
             Thread uploadZipFileThread = new Thread(UploadZipfile);
             uploadZipFileThread.IsBackground = true;
@@ -87,10 +93,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 Source source = new Source();
                 source.PluginId = PluginId;
                 source.PluginVersion = PluginVersion;
-                source.UploadDate = DateTime.Now;
-                source.BuildState = BuildState.UPLOADED.ToString();
-                source.BuildLog = String.Format("Uploaded by {0}",MainWindow.Username);
-
+                
                 client.UploadDownloadProgressChanged += client_UploadDownloadProgressChanged;                
                 DataModificationOrRequestResult result = client.UploadZipFile(source, FileName);
                 
@@ -149,13 +152,62 @@ namespace CrypToolStoreDeveloperClient.Views
                     ProgressBar.Value = e.DownloadedUploaded;
                     double progress = e.DownloadedUploaded / (double)e.FileSize * 100;
 
-                    ProgressText.Text = Math.Round(progress, 2) + " % (" + e.BytePerSecond + " byte/sec)";
+                    ProgressText.Text = Math.Round(progress, 2) + " % (" + FormatSpeedString(e.BytePerSecond) + " - " + RemainingTime(e.BytePerSecond, e.FileSize, e.DownloadedUploaded) + ")";
                 }
                 catch (Exception ex)
                 {
                    //wtf?
                 }
             }));
+        }
+
+        /// <summary>
+        /// Returns a formatted time left string
+        /// </summary>
+        /// <param name="bytepersec"></param>
+        /// <param name="totalbytes"></param>
+        /// <param name="downloadedbytes"></param>
+        /// <returns></returns>
+        private string RemainingTime(long bytepersec, long totalbytes, long downloadedbytes)
+        {
+            long remainingSeconds = (totalbytes - downloadedbytes) / bytepersec;
+            string formatted = "";
+            if (remainingSeconds > (60 * 60))//hours
+            {
+                long hours = remainingSeconds / (60 * 60);
+                formatted += hours + " h";
+                remainingSeconds = remainingSeconds % (60 * 60);
+            }
+            if (remainingSeconds > 60) //minutes
+            {
+                long minutes = remainingSeconds / 60;
+                formatted += minutes + " min";
+                remainingSeconds = remainingSeconds % 60;
+            }
+            formatted += remainingSeconds + " sec";
+            return formatted;
+        }
+
+        /// <summary>
+        /// Returns a formatted speed string based on byte/sec
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        private string FormatSpeedString(long bytes)
+        {
+            if (bytes > (1024 * 1024 * 1024)) //GiB / sec
+            {
+                return Math.Round(bytes / (1024 * 1024 * 1024.0),2) + " GB/sec";
+            }
+            if (bytes > (1024 * 1024))
+            {
+                return Math.Round(bytes / (1024 * 1024.0),2) + " MB/sec";
+            }
+            if (bytes > 1024)
+            {
+                return bytes / 1024.0 + " KB/sec";
+            }
+            return bytes + " byte/sec";
         }
 
         /// <summary>

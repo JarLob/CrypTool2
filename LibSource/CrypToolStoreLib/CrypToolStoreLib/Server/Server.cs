@@ -1940,6 +1940,7 @@ namespace CrypToolStoreLib.Server
         {
             DateTime uploadStartTime = DateTime.Now;
             Logger.LogText(String.Format("User {0} starts uploading a zip file", Username), this, Logtype.Debug);
+            string tempfilename = String.Empty;
 
             //Only authenticated admins are allowed to receive ResourceData lists
             if (!ClientIsAuthenticated)
@@ -1973,7 +1974,7 @@ namespace CrypToolStoreLib.Server
 
                 long filesize = startUploadZipfileMessage.FileSize;
                 string filename = "Source-" + source.PluginId + "-" + source.PluginVersion + ".gzip";
-                string tempfilename = filename + "_" + DateTime.Now.Ticks;
+                tempfilename = filename + "_" + DateTime.Now.Ticks;
 
                 CheckPluginSourceFolder();
                 long writtenFilesize = 0;
@@ -2007,6 +2008,12 @@ namespace CrypToolStoreLib.Server
                             response.Success = false;
                             response.Message = "Exception during upload of zipfile";
                             SendMessage(response, sslStream);
+
+                            Logger.LogText(String.Format("Delete temp file {0}", PLUGIN_SOURCE_FOLDER + "\\" + tempfilename), this, Logtype.Error);
+                            File.Delete(PLUGIN_SOURCE_FOLDER + "\\" + tempfilename);
+                            Logger.LogText(String.Format("Deleted temp file {0}", PLUGIN_SOURCE_FOLDER + "\\" + tempfilename), this, Logtype.Error);
+
+                            break;
                         }
                     }
                 }
@@ -2023,19 +2030,29 @@ namespace CrypToolStoreLib.Server
                 Logger.LogText(String.Format("Renamed file {0} to {1}", tempfilename, filename), this, Logtype.Info);
 
                 Logger.LogText(String.Format("Updating Source={0} in database", source), this, Logtype.Info);
-                Database.UpdateSource(source.PluginId, source.PluginVersion, filename, "UPLOADED", String.Format("Zipfile uploaded by {0}", Username), DateTime.Now);
+                Database.UpdateSource(source.PluginId, source.PluginVersion, filename, BuildState.UPLOADED.ToString(), String.Format("Uploaded by {0}", Username), DateTime.Now);
                 Logger.LogText(String.Format("Updated Source={0} in database", source), this, Logtype.Info);
 
                 Logger.LogText(String.Format("User {0} uploaded a {1} byte zip for source={2} in {3}", Username, writtenFilesize, source, DateTime.Now - uploadStartTime), this, Logtype.Info);
             }
             catch (Exception ex)
             {
+                //remove temp file since it is not needed any more
+                if (tempfilename != string.Empty && File.Exists(PLUGIN_SOURCE_FOLDER + "\\" + tempfilename))
+                {
+                    Logger.LogText(String.Format("Delete temp file {0}", PLUGIN_SOURCE_FOLDER + "\\" + tempfilename), this, Logtype.Error);
+                    File.Delete(PLUGIN_SOURCE_FOLDER + "\\" + tempfilename);
+                    Logger.LogText(String.Format("Deleted temp file {0}", PLUGIN_SOURCE_FOLDER + "\\" + tempfilename), this, Logtype.Error);
+                }
+
                 //request failed; logg to logfile and return exception to client
                 ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                 response.Success = false;
                 Logger.LogText(String.Format("User {0} tried to upload a zipfile. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
                 response.Message = "Exception during upload of zipfile";
                 SendMessage(response, sslStream);
+
+                
             }
         }
         

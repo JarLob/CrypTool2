@@ -33,7 +33,7 @@ namespace CrypToolStoreLib.Client
         public const string DEFAULT_ADDRESS = "localhost";
         private const int READ_TIMEOUT = 5000;
         private const int WRITE_TIMEOUT = 5000;
-        private const int FILE_BUFFER_SIZE = 1048576; //1 MB
+        private const int FILE_BUFFER_SIZE = 1048576; // 1MB
 
         private Logger logger = Logger.GetLogger();        
 
@@ -1445,35 +1445,22 @@ namespace CrypToolStoreLib.Client
 
                     //Step 3: send file
                     long totalbytesread = 0;
+                    long lasttotalbytesread = 0;
                     DateTime LastEventFireTime = DateTime.Now;
+
                     using (FileStream fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read))
                     {
-                        byte[] buffer = new byte[FILE_BUFFER_SIZE];
-
+                        byte[] buffer = new byte[FILE_BUFFER_SIZE];                        
                         while (totalbytesread < filesize)
                         {
                             //read a block of data
                             int bytesread = 0;
                             int current_bytesread = 0;                                                        
-                            long lasttotalbytesread = totalbytesread;
-
+                            
                             while ((current_bytesread = fileStream.Read(buffer, bytesread, FILE_BUFFER_SIZE - bytesread)) > 0 && bytesread < FILE_BUFFER_SIZE)
                             {
                                 bytesread += current_bytesread;
                                 totalbytesread += current_bytesread;
-
-                                //every second fire event for download progress
-                                if (UploadDownloadProgressChanged != null && DateTime.Now >= LastEventFireTime.AddMilliseconds(1000))
-                                {
-                                    UploadDownloadProgressEventArgs args = new UploadDownloadProgressEventArgs();
-                                    args.FileName = filename;
-                                    args.FileSize = filesize;
-                                    args.DownloadedUploaded = totalbytesread;
-                                    args.BytePerSecond = totalbytesread - lasttotalbytesread;
-                                    lasttotalbytesread = totalbytesread;
-                                    UploadDownloadProgressChanged.Invoke(this, args);
-                                    LastEventFireTime = DateTime.Now;
-                                }
                             }
 
                             byte[] data;
@@ -1510,8 +1497,8 @@ namespace CrypToolStoreLib.Client
                                     Message = "Connection to server lost",
                                     Success = false
                                 };
-                            }
-                            
+                            }                            
+
                             //Received ResponseUploadDownloadDataMessage
                             if (response_message.MessageHeader.MessageType == MessageType.ResponseUploadDownloadDataMessage)
                             {
@@ -1525,6 +1512,20 @@ namespace CrypToolStoreLib.Client
                                         Message = failmsg,
                                         Success = false
                                     };
+                                }
+
+                                //every second fire event for upload progress
+                                if (UploadDownloadProgressChanged != null && DateTime.Now > LastEventFireTime.AddMilliseconds(1000))
+                                {
+                                    UploadDownloadProgressEventArgs args = new UploadDownloadProgressEventArgs();
+                                    args.FileName = filename;
+                                    args.FileSize = filesize;
+                                    args.DownloadedUploaded = totalbytesread;
+                                    TimeSpan duration = DateTime.Now - LastEventFireTime;
+                                    args.BytePerSecond = (long)((((double)totalbytesread - (double)lasttotalbytesread) / duration.TotalMilliseconds) * 1000.0);
+                                    lasttotalbytesread = totalbytesread;
+                                    UploadDownloadProgressChanged.Invoke(this, args);
+                                    LastEventFireTime = DateTime.Now;
                                 }
                             }
                             else
