@@ -35,7 +35,7 @@ using System.Windows.Shapes;
 namespace CrypToolStoreDeveloperClient.Views
 {
     /// <summary>
-    /// Interaktionslogik für UserManagementView.xaml
+    /// Interaktionslogik für SourceManagementView.xaml
     /// </summary>
     public partial class SourceManagementView : UserControl
     {        
@@ -71,7 +71,7 @@ namespace CrypToolStoreDeveloperClient.Views
         }
 
         /// <summary>
-        /// Method requests a plugin list and stores it in the list of the GUI
+        /// Method requests a source list and stores it in the list of the GUI
         /// </summary>
         private void FetchSourceList()
         {
@@ -166,7 +166,7 @@ namespace CrypToolStoreDeveloperClient.Views
         }
 
         /// <summary>
-        /// Shows a window for creating a new plugin
+        /// Shows a window for creating a new source
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

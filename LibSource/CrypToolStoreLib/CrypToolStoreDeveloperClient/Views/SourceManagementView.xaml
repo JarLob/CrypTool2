@@ -81,6 +81,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Name="CreateNewSourceButton" Grid.Row="2" Width="100" Height="25" HorizontalAlignment="Center" Click="CreateNewSourceButton_Click">Create new plugin</Button>
+        <Button Name="CreateNewSourceButton" Background="White" Grid.Row="2" Width="100" Height="25" HorizontalAlignment="Center" Click="CreateNewSourceButton_Click">Create new source</Button>
     </Grid>
 </UserControl>

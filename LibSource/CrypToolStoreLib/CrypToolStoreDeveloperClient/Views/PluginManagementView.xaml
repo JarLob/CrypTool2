@@ -80,9 +80,9 @@
                                         <ColumnDefinition Width="75"/>
                                         <ColumnDefinition Width="75"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button CommandParameter="{Binding Path=Id}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Click="Update_Click">Update</Button>
-                                    <Button CommandParameter="{Binding Path=Id}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Click="Delete_Click">Delete</Button>
-                                    <Button CommandParameter="{Binding Path=Id}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Click="Source_Click">Source</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=Id}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Click="Update_Click">Update</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=Id}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Click="Delete_Click">Delete</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=Id}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Click="Source_Click">Source</Button>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -90,6 +90,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Name="CreateNewPluginButton" Grid.Row="2" Width="100" Height="25" HorizontalAlignment="Center" Click="CreateNewPluginButton_Click">Create new plugin</Button>
+        <Button Name="CreateNewPluginButton" Background="White" Grid.Row="2" Width="100" Height="25" HorizontalAlignment="Center" Click="CreateNewPluginButton_Click">Create new plugin</Button>
     </Grid>
 </UserControl>

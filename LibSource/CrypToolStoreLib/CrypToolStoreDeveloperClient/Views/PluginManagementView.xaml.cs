@@ -35,7 +35,7 @@ using System.Windows.Shapes;
 namespace CrypToolStoreDeveloperClient.Views
 {
     /// <summary>
-    /// Interaktionslogik für UserManagementView.xaml
+    /// Interaktionslogik für PluginManagementView.xaml
     /// </summary>
     public partial class PluginManagementView : UserControl
     {        

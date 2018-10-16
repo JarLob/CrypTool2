@@ -14,10 +14,10 @@
             <RowDefinition Height="50" Name="UpdateMyDataRow"/>
             <RowDefinition Height="50" Name="LogOutRow"/>
         </Grid.RowDefinitions>        
-        <Button Name="UserManagementButton" Grid.Row="1" Height="40" Width="200" Click="UserManagementButton_Click">User Management</Button>
-        <Button Name="PluginManagementButton" Grid.Row="2" Height="40" Width="200" Click="PluginManagementButton_Click">Plugin Management</Button>
-        <Button Name="ResourceManagementButton" Grid.Row="3" Height="40" Width="200">Resource Management</Button>
-        <Button Name="UpdateMyDataButton" Grid.Row="4" Height="40" Width="200" Click="UpdateMyDataButton_Click">Update my data</Button>
-        <Button Name="LogoutButton" Grid.Row="5" Height="40" Width="200" Click="LogoutButton_Click">Logout</Button>
+        <Button Name="UserManagementButton" Background="White" Grid.Row="1" Height="40" Width="200" Click="UserManagementButton_Click">User Management</Button>
+        <Button Name="PluginManagementButton" Background="White" Grid.Row="2" Height="40" Width="200" Click="PluginManagementButton_Click">Plugin Management</Button>
+        <Button Name="ResourceManagementButton" Background="White" Grid.Row="3" Height="40" Width="200">Resource Management</Button>
+        <Button Name="UpdateMyDataButton" Background="White" Grid.Row="4" Height="40" Width="200" Click="UpdateMyDataButton_Click">Update my data</Button>
+        <Button Name="LogoutButton" Background="White" Grid.Row="5" Height="40" Width="200" Click="LogoutButton_Click">Logout</Button>
     </Grid>
 </UserControl>

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="CrypToolStore Developer Client" Height="350" Width="525"
         xmlns:controls="clr-namespace:CrypToolStoreDeveloperClient.Views">
-    <Grid>
+    <Grid Background="AliceBlue">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="64*"/>
             <ColumnDefinition Width="453*"/>

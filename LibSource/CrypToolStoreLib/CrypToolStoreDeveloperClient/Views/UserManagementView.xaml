@@ -58,8 +58,8 @@
                                         <ColumnDefinition Width="75"/>
                                         <ColumnDefinition Width="75"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button CommandParameter="{Binding Path=Username}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Click="Update_Click">Update</Button>
-                                    <Button CommandParameter="{Binding Path=Username}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Click="Delete_Click">Delete</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=Username}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Click="Update_Click">Update</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=Username}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Click="Delete_Click">Delete</Button>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -67,6 +67,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Name="CreateNewUserButton" Grid.Row="2" Width="100" Height="25" HorizontalAlignment="Center" Click="CreateNewUserButton_Click">Create new user</Button>
+        <Button Name="CreateNewUserButton" Background="White" Grid.Row="2" Width="100" Height="25" HorizontalAlignment="Center" Click="CreateNewUserButton_Click">Create new user</Button>
     </Grid>
 </UserControl>
