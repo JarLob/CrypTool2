@@ -154,18 +154,17 @@ namespace CrypToolStoreDeveloperClient.Views
         }
 
         /// <summary>
-        /// Shows a window for updating a source
+        /// Shows a window for uploading a zip for the source
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Update_Click(object sender, RoutedEventArgs e)
+        private void Upload_Click(object sender, RoutedEventArgs e)
         {
-            /*Button button = (Button)sender;
-            int id = (int)button.CommandParameter;
-            UpdatePluginWindow updatePluginWindow = new UpdatePluginWindow(id);
-            updatePluginWindow.MainWindow = MainWindow;
-            updatePluginWindow.ShowDialog();
-            FetchSourceList();*/
+            Button button = (Button)sender;
+            int pluginversion = (int)button.CommandParameter;
+            UploadZipFileWindow uploadZipFileWindow = new UploadZipFileWindow(PluginId, pluginversion);
+            uploadZipFileWindow.MainWindow = MainWindow;
+            uploadZipFileWindow.ShowDialog();
         }
 
         /// <summary>
@@ -212,7 +211,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     Source newsource = new Source();
                     newsource.PluginId = PluginId;
                     newsource.PluginVersion = highestVersionNumber + 1;                    
-                    newsource.BuildState = BuildState.UPLOADED.ToString();
+                    newsource.BuildState = BuildState.CREATED.ToString();
                     newsource.BuildLog = String.Format("Created by {0}", MainWindow.Username);
 
                     result = client.CreateSource(newsource);

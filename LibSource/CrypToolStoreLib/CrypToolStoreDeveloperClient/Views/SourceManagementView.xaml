@@ -72,7 +72,7 @@
                                         <ColumnDefinition Width="75"/>
                                         <ColumnDefinition Width="75"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Click="Update_Click">Update</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Click="Upload_Click">Upload zip</Button>
                                     <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Click="Delete_Click">Delete</Button>
                                 </Grid>
                             </DataTemplate>

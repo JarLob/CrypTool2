@@ -1445,6 +1445,7 @@ namespace CrypToolStoreLib.Client
 
                     //Step 3: send file
                     long totalbytesread = 0;
+                    DateTime LastEventFireTime = DateTime.Now;
                     using (FileStream fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read))
                     {
                         byte[] buffer = new byte[FILE_BUFFER_SIZE];
@@ -1453,9 +1454,7 @@ namespace CrypToolStoreLib.Client
                         {
                             //read a block of data
                             int bytesread = 0;
-                            int current_bytesread = 0;
-                            
-                            DateTime LastEventFireTime = DateTime.Now;
+                            int current_bytesread = 0;                                                        
                             long lasttotalbytesread = totalbytesread;
 
                             while ((current_bytesread = fileStream.Read(buffer, bytesread, FILE_BUFFER_SIZE - bytesread)) > 0 && bytesread < FILE_BUFFER_SIZE)
@@ -1558,7 +1557,7 @@ namespace CrypToolStoreLib.Client
                     return new DataModificationOrRequestResult()
                     {
                         Message = "Upload completed",
-                        Success = false
+                        Success = true
                     };
                 }
                 else
