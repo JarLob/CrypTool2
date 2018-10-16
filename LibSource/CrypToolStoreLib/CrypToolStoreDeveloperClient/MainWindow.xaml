@@ -14,6 +14,7 @@
         <controls:MainMenuView x:Name="MainMenuView" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
         <controls:UserManagementView x:Name="UserManagementView" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
         <controls:PluginManagementView x:Name="PluginManagementView" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
+        <controls:SourceManagementView x:Name="SourceManagementView" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>

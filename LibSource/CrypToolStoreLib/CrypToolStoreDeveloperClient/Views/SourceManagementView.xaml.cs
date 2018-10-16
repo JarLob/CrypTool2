@@ -41,13 +41,14 @@ namespace CrypToolStoreDeveloperClient.Views
     {        
         public MainWindow MainWindow { get; set; }
 
-        private ObservableCollection<Plugin> Plugins = new ObservableCollection<Plugin>();
+        private ObservableCollection<Source> Sources = new ObservableCollection<Source>();
+        public int PluginId { get; set; }
 
         public SourceManagementView()
         {
             InitializeComponent();
-            PluginsListView.ItemsSource = Plugins;
-            Plugins.Clear();
+            SourcesListView.ItemsSource = Sources;
+            Sources.Clear();
             IsVisibleChanged += SourceManagementView_IsVisibleChanged;
         }
 
@@ -63,17 +64,16 @@ namespace CrypToolStoreDeveloperClient.Views
                 return;
             }
 
-            //we fetch the plugin list in a seperate thread, thus, the ui is not blocked during download of the list67
-            Thread fetchPluginListThread = new Thread(FetchPluginList);
-            fetchPluginListThread.IsBackground = true;
-            fetchPluginListThread.Start();
-            
+            //we fetch the source list in a seperate thread, thus, the ui is not blocked during download of the list
+            Thread fetchSourceListThread = new Thread(FetchSourceList);
+            fetchSourceListThread.IsBackground = true;
+            fetchSourceListThread.Start();            
         }
 
         /// <summary>
         /// Method requests a plugin list and stores it in the list of the GUI
         /// </summary>
-        private void FetchPluginList()
+        private void FetchSourceList()
         {
             try
             {
@@ -82,47 +82,44 @@ namespace CrypToolStoreDeveloperClient.Views
                 client.ServerPort = Constants.ServerPort;
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
-                DataModificationOrRequestResult result = client.GetPluginList(MainWindow.IsAdmin ? "*" :  MainWindow.Username);
-                List<Plugin> plugins = (List<Plugin>)result.DataObject;
+                DataModificationOrRequestResult result = client.GetSourceList(PluginId);
+                List<Source> sources = (List<Source>)result.DataObject;
 
                 Dispatcher.BeginInvoke(new ThreadStart(() =>
                 {
                     try
                     {
-                        Plugins.Clear();
-                        foreach (Plugin plugin in plugins)
+                        Sources.Clear();
+                        foreach (Source source in sources)
                         {
-                            if (plugin.Username == MainWindow.Username || MainWindow.IsAdmin)
-                            {
-                                Plugins.Add(plugin);
-                            }
+                            Sources.Add(source);                            
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(String.Format("Exception during adding plugins to list: {0}", ex.Message), "Exception");
+                        MessageBox.Show(String.Format("Exception during adding sources to list: {0}", ex.Message), "Exception");
                     }
                 }));
                 client.Disconnect();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during retrieving of list of plugins: {0}", ex.Message), "Exception");
+                MessageBox.Show(String.Format("Exception during retrieving of list of sources: {0}", ex.Message), "Exception");
             }         
         }
 
         /// <summary>
-        /// Deletes the plugin defined by the clicked button
-        /// Then, updates the user list
+        /// Deletes the source defined by the clicked button
+        /// Then, updates the source list
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
-            int id = (int)button.CommandParameter;
+            int pluginversion = (int)button.CommandParameter;
 
-            MessageBoxResult messageBoxResult = MessageBox.Show(String.Format("Do you really want to delete the plugin {0}?", id), String.Format("Delete {0}", id), MessageBoxButton.YesNo);
+            MessageBoxResult messageBoxResult = MessageBox.Show(String.Format("Do you really want to delete the source {0}-{1}?", PluginId, pluginversion), String.Format("Delete {0}-{1}", PluginId, pluginversion), MessageBoxButton.YesNo);
 
             if (messageBoxResult == MessageBoxResult.Yes)
             {
@@ -133,39 +130,39 @@ namespace CrypToolStoreDeveloperClient.Views
                     client.ServerPort = Constants.ServerPort;
                     client.Connect();
                     client.Login(MainWindow.Username, MainWindow.Password);
-                    DataModificationOrRequestResult result = client.DeletePlugin(id);
+                    DataModificationOrRequestResult result = client.DeleteSource(PluginId, pluginversion);
                     client.Disconnect();
 
                     if (result.Success)
                     {
-                        MessageBox.Show(String.Format("Successfully deleted {0}", id), "Plugin deleted");
-                        FetchPluginList();
+                        MessageBox.Show(String.Format("Successfully deleted source {0}-{1}", PluginId, pluginversion), "Source deleted");
+                        FetchSourceList();
                     }
                     else
                     {
-                        MessageBox.Show(String.Format("Could not delete plugin: {0}", result.Message), "Deletion not possible");
+                        MessageBox.Show(String.Format("Could not delete source: {0}", result.Message), "Deletion not possible");
                     }                                        
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(String.Format("Exception during deletion of plugin: {0}", ex.Message), "Exception");
+                    MessageBox.Show(String.Format("Exception during deletion of source: {0}", ex.Message), "Exception");
                 }         
             }
         }
 
         /// <summary>
-        /// Shows a window for updating a plugin
+        /// Shows a window for updating a source
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Update_Click(object sender, RoutedEventArgs e)
         {
-            Button button = (Button)sender;
+            /*Button button = (Button)sender;
             int id = (int)button.CommandParameter;
             UpdatePluginWindow updatePluginWindow = new UpdatePluginWindow(id);
             updatePluginWindow.MainWindow = MainWindow;
             updatePluginWindow.ShowDialog();
-            FetchPluginList();
+            FetchSourceList();*/
         }
 
         /// <summary>
@@ -173,18 +170,12 @@ namespace CrypToolStoreDeveloperClient.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CreateNewPluginButton_Click(object sender, RoutedEventArgs e)
+        private void CreateNewSourceButton_Click(object sender, RoutedEventArgs e)
         {
-            CreateNewPluginWindow createNewPluginWindow = new CreateNewPluginWindow();
+            /*CreateNewPluginWindow createNewPluginWindow = new CreateNewPluginWindow();
             createNewPluginWindow.MainWindow = MainWindow;
             createNewPluginWindow.ShowDialog();
-            FetchPluginList();
+            FetchSourceList();*/
         }
-
-        private void Source_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
     }
 }

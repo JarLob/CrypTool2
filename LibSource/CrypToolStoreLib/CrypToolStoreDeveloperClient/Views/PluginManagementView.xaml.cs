@@ -63,7 +63,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 return;
             }
 
-            //we fetch the plugin list in a seperate thread, thus, the ui is not blocked during download of the list67
+            //we fetch the plugin list in a seperate thread, thus, the ui is not blocked during download of the list
             Thread fetchPluginListThread = new Thread(FetchPluginList);
             fetchPluginListThread.IsBackground = true;
             fetchPluginListThread.Start();
@@ -113,7 +113,7 @@ namespace CrypToolStoreDeveloperClient.Views
 
         /// <summary>
         /// Deletes the plugin defined by the clicked button
-        /// Then, updates the user list
+        /// Then, updates the plugin list
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -181,9 +181,17 @@ namespace CrypToolStoreDeveloperClient.Views
             FetchPluginList();
         }
 
+        /// <summary>
+        /// Switches to the source view showing the sources of the defined plugin
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Source_Click(object sender, RoutedEventArgs e)
         {
-
+            Button button = (Button)sender;
+            int id = (int)button.CommandParameter;
+            MainWindow.SourceManagementView.PluginId = id;
+            MainWindow.ChangeScreen(UiState.SourceManagement);
         }
 
     }

@@ -90,6 +90,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Name="CreateNewUserButton" Grid.Row="2" Width="100" Height="25" HorizontalAlignment="Center" Click="CreateNewPluginButton_Click">Create new plugin</Button>
+        <Button Name="CreateNewPluginButton" Grid.Row="2" Width="100" Height="25" HorizontalAlignment="Center" Click="CreateNewPluginButton_Click">Create new plugin</Button>
     </Grid>
 </UserControl>

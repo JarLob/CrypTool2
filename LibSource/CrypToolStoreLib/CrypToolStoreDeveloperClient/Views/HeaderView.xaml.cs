@@ -40,6 +40,7 @@ namespace CrypToolStoreDeveloperClient.Views
         private string uititel;
 
         public MainWindow MainWindow { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public String Username
         {
@@ -79,20 +80,41 @@ namespace CrypToolStoreDeveloperClient.Views
             IsVisibleChanged += HeaderView_IsVisibleChanged;
         }
 
+        /// <summary>
+        /// Shows, depending on the view, the back button in the header
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HeaderView_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (MainWindow.UiState == UiState.MainMenu)
             {
-                BackToMainMenuRow.Height = new GridLength(0);
-                BackToMainMenuButton.Visibility = Visibility.Hidden;
+                BackButtonRow.Height = new GridLength(0);
+                BackButton.Visibility = Visibility.Hidden;
             }
             else
             {
-                BackToMainMenuRow.Height = new GridLength(50);
-                BackToMainMenuButton.Visibility = Visibility.Visible;
+                BackButtonRow.Height = new GridLength(50);
+                BackButton.Visibility = Visibility.Visible;
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
+      
+        /// <summary>
+        /// Changes back to previous window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainWindow.UiState == UiState.SourceManagement)
+            {
+                MainWindow.ChangeScreen(UiState.PluginManagement);
+            }
+            else
+            {
+                MainWindow.ChangeScreen(UiState.MainMenu);
+            }
+        }        
 
         protected void OnPropertyChanged(string name)
         {
@@ -102,9 +124,5 @@ namespace CrypToolStoreDeveloperClient.Views
             }
         }
 
-        private void BackToMainMenuButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.ChangeScreen(UiState.MainMenu);
-        }
     }
 }

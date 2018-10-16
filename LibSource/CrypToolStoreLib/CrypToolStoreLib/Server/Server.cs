@@ -1213,6 +1213,15 @@ namespace CrypToolStoreLib.Server
             //Here, the user is authorized; thus, deletion of existing source in database is started
             try
             {
+                //1. delete file in file system
+                string filename = PLUGIN_SOURCE_FOLDER + "\\" + "Source-" + source.PluginId + "-" + source.PluginVersion + ".gzip";
+                if(File.Exists(filename))
+                {
+                    Logger.LogText(String.Format("Deleting source zip file: {0}", filename), this, Logtype.Info);
+                    File.Delete(filename);
+                    Logger.LogText(String.Format("Deleted source zip file: {0}", filename), this, Logtype.Info);
+                }
+                //2. delete source in database
                 Database.DeleteSource(deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion);
                 Logger.LogText(String.Format("User {0} deleted existing source in database: {1} {2}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion), this, Logtype.Info);
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();

@@ -37,7 +37,8 @@ namespace CrypToolStoreDeveloperClient
         LoginScreen,
         MainMenu,
         UserManagement,
-        PluginManagement
+        PluginManagement,
+        SourceManagement
     }
 
     /// <summary>
@@ -67,6 +68,7 @@ namespace CrypToolStoreDeveloperClient
             MainMenuView.MainWindow = this;
             UserManagementView.MainWindow = this;
             PluginManagementView.MainWindow = this;
+            SourceManagementView.MainWindow = this;
 
             ChangeScreen(UiState.LoginScreen);            
         }
@@ -84,6 +86,7 @@ namespace CrypToolStoreDeveloperClient
             MainMenuView.Visibility = Visibility.Hidden;
             UserManagementView.Visibility = Visibility.Hidden;
             PluginManagementView.Visibility = Visibility.Hidden;
+            SourceManagementView.Visibility = Visibility.Hidden;
 
             switch (uiState)
             {
@@ -114,6 +117,13 @@ namespace CrypToolStoreDeveloperClient
                     HeaderView.Visibility = Visibility.Visible;
                     PluginManagementView.Visibility = Visibility.Visible;
                     HeaderView.UiTitel = "Plugin Management";
+                    break;
+                case UiState.SourceManagement:
+                    Width = 1100;
+                    Height = 600;
+                    HeaderView.Visibility = Visibility.Visible;
+                    SourceManagementView.Visibility = Visibility.Visible;
+                    HeaderView.UiTitel = "Source Management";
                     break;
             }
         }       
