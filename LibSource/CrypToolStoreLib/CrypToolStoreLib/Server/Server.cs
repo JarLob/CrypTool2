@@ -1079,7 +1079,7 @@ namespace CrypToolStoreLib.Server
             //Here, everything is fine; thus, we try to create the source
             try
             {
-                Database.CreateSource(source.PluginId, source.PluginVersion);
+                Database.CreateSource(source);
                 Logger.LogText(String.Format("User {0} created new source for plugin={0} in database: {2}", Username, plugin, source), this, Logtype.Info);
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = true;

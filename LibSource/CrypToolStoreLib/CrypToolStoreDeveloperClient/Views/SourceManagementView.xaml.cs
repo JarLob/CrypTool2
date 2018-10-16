@@ -38,7 +38,7 @@ namespace CrypToolStoreDeveloperClient.Views
     /// Interaktionslogik für SourceManagementView.xaml
     /// </summary>
     public partial class SourceManagementView : UserControl
-    {        
+    {
         public MainWindow MainWindow { get; set; }
 
         private ObservableCollection<Source> Sources = new ObservableCollection<Source>();
@@ -67,7 +67,7 @@ namespace CrypToolStoreDeveloperClient.Views
             //we fetch the source list in a seperate thread, thus, the ui is not blocked during download of the list
             Thread fetchSourceListThread = new Thread(FetchSourceList);
             fetchSourceListThread.IsBackground = true;
-            fetchSourceListThread.Start();            
+            fetchSourceListThread.Start();
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace CrypToolStoreDeveloperClient.Views
         {
             try
             {
-                CrypToolStoreClient client = new CrypToolStoreClient();                
+                CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerAddress = Constants.ServerAddress;
                 client.ServerPort = Constants.ServerPort;
                 client.Connect();
@@ -92,7 +92,7 @@ namespace CrypToolStoreDeveloperClient.Views
                         Sources.Clear();
                         foreach (Source source in sources)
                         {
-                            Sources.Add(source);                            
+                            Sources.Add(source);
                         }
                     }
                     catch (Exception ex)
@@ -105,7 +105,7 @@ namespace CrypToolStoreDeveloperClient.Views
             catch (Exception ex)
             {
                 MessageBox.Show(String.Format("Exception during retrieving of list of sources: {0}", ex.Message), "Exception");
-            }         
+            }
         }
 
         /// <summary>
@@ -136,17 +136,20 @@ namespace CrypToolStoreDeveloperClient.Views
                     if (result.Success)
                     {
                         MessageBox.Show(String.Format("Successfully deleted source {0}-{1}", PluginId, pluginversion), "Source deleted");
-                        FetchSourceList();
+                        //we fetch the source list in a seperate thread, thus, the ui is not blocked during download of the list
+                        Thread fetchSourceListThread = new Thread(FetchSourceList);
+                        fetchSourceListThread.IsBackground = true;
+                        fetchSourceListThread.Start();
                     }
                     else
                     {
                         MessageBox.Show(String.Format("Could not delete source: {0}", result.Message), "Deletion not possible");
-                    }                                        
+                    }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(String.Format("Exception during deletion of source: {0}", ex.Message), "Exception");
-                }         
+                }
             }
         }
 
@@ -172,10 +175,68 @@ namespace CrypToolStoreDeveloperClient.Views
         /// <param name="e"></param>
         private void CreateNewSourceButton_Click(object sender, RoutedEventArgs e)
         {
-            /*CreateNewPluginWindow createNewPluginWindow = new CreateNewPluginWindow();
-            createNewPluginWindow.MainWindow = MainWindow;
-            createNewPluginWindow.ShowDialog();
-            FetchSourceList();*/
+            try
+            {
+                MessageBoxResult messageBoxResult = MessageBox.Show(String.Format("Do you really want to create a new source for plugin {0}?", PluginId), "Create new source", MessageBoxButton.YesNo);
+
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    CrypToolStoreClient client = new CrypToolStoreClient();
+                    client.ServerAddress = Constants.ServerAddress;
+                    client.ServerPort = Constants.ServerPort;
+                    client.Connect();
+                    client.Login(MainWindow.Username, MainWindow.Password);
+
+                    //1. compute highest version number for new source
+                    DataModificationOrRequestResult result = client.GetSourceList(PluginId);
+
+                    if (result.Success == false)
+                    {
+                        client.Disconnect();
+                        MessageBox.Show(String.Format("Could not get source list for computing new version number: {0}", result.Message), "Creation not possible");                        
+                        return;
+                    }
+
+                    List<Source> sources = (List<Source>)result.DataObject;
+
+                    int highestVersionNumber = 0;
+                    foreach (Source source in sources)
+                    {
+                        if (source.PluginVersion > highestVersionNumber)
+                        {
+                            highestVersionNumber = source.PluginVersion;
+                        }
+                    }
+
+                    //2: create new source
+                    Source newsource = new Source();
+                    newsource.PluginId = PluginId;
+                    newsource.PluginVersion = highestVersionNumber + 1;                    
+                    newsource.BuildState = BuildState.UPLOADED.ToString();
+                    newsource.BuildLog = String.Format("Created by {0}", MainWindow.Username);
+
+                    result = client.CreateSource(newsource);
+                    client.Disconnect();
+
+                    //3. Show result to user
+                    if (result.Success == true)
+                    {
+                        MessageBox.Show(String.Format("Created new source: {0}-{1}", newsource.PluginId, newsource.PluginVersion), "Source created");
+                        //we fetch the source list in a seperate thread, thus, the ui is not blocked during download of the list
+                        Thread fetchSourceListThread = new Thread(FetchSourceList);
+                        fetchSourceListThread.IsBackground = true;
+                        fetchSourceListThread.Start();
+                    }
+                    else
+                    {
+                        MessageBox.Show(String.Format("Creation not possible: {0}", result.Message), "Source created");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(String.Format("Exception during creation of new source: {0}", ex.Message), "Exception");
+            }
         }
     }
 }

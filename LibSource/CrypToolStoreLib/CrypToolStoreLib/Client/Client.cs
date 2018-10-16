@@ -1366,7 +1366,8 @@ namespace CrypToolStoreLib.Client
                     return new DataModificationOrRequestResult()
                     {
                         Message = responseSourceListMessage.Message,
-                        DataObject = responseSourceListMessage.SourceList
+                        DataObject = responseSourceListMessage.SourceList,
+                        Success = responseSourceListMessage.AllowedToViewList
                     };
                 }
 
@@ -1925,7 +1926,8 @@ namespace CrypToolStoreLib.Client
                     return new DataModificationOrRequestResult()
                     {
                         Message = responseResourceListMessage.Message,
-                        DataObject = responseResourceListMessage.Resources
+                        DataObject = responseResourceListMessage.Resources,
+                        Success = true
                     };
                 }
 

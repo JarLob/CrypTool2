@@ -162,7 +162,10 @@ namespace CrypToolStoreDeveloperClient.Views
             UpdateUserWindow updateUserWindow = new UpdateUserWindow(username);
             updateUserWindow.MainWindow = MainWindow;
             updateUserWindow.ShowDialog();
-            FetchUserList();
+            //we fetch the user list in a seperate thread, thus, the ui is not blocked during download of the list67
+            Thread fetchUserListThread = new Thread(FetchUserList);
+            fetchUserListThread.IsBackground = true;
+            fetchUserListThread.Start();
         }
 
         /// <summary>
@@ -175,7 +178,10 @@ namespace CrypToolStoreDeveloperClient.Views
             CreateNewUserWindow createNewUserWindow = new CreateNewUserWindow();
             createNewUserWindow.MainWindow = MainWindow;
             createNewUserWindow.ShowDialog();
-            FetchUserList();
+            //we fetch the user list in a seperate thread, thus, the ui is not blocked during download of the list67
+            Thread fetchUserListThread = new Thread(FetchUserList);
+            fetchUserListThread.IsBackground = true;
+            fetchUserListThread.Start();
         }
 
     }

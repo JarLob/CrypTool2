@@ -24,6 +24,18 @@ using System.Threading.Tasks;
 namespace CrypToolStoreLib.DataObjects
 {
     /// <summary>
+    /// Buildstate for build process of sources
+    /// </summary>
+    public enum BuildState
+    {
+        CREATED,
+        UPLOADED,
+        BUILDING,
+        SUCCESS,
+        FAILURE
+    }
+
+    /// <summary>
     /// Simple object to store developer data
     /// </summary>
     public class Developer : ICrypToolStoreSerializable

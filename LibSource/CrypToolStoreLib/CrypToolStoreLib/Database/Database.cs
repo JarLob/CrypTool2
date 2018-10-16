@@ -610,28 +610,26 @@ namespace CrypToolStoreLib.Database
         /// <summary>
         /// Creates a new source entry in the database
         /// </summary>
-        /// <param name="pluginid"></param>
-        /// <param name="pluginversion"></param>
-        /// <param name="zipfilename"></param>
-        /// <param name="uploaddate"></param>
-        public void CreateSource(int pluginid, int pluginversion)
+        /// <param name="source"></param>
+        public void CreateSource(Source source)
         {
-            logger.LogText(String.Format("Creating new source: pluginid={0}, pluginversion={1}", pluginid, pluginversion), this, Logtype.Info);
-            string query = "insert into sources (pluginid, pluginversion, zipfilename, assemblyfilename, buildstate) values (@pluginid, @pluginversion, @zipfilename, @assemblyfilename, @buildstate)";
+            logger.LogText(String.Format("Creating new source: pluginid={0}, pluginversion={1}, buildstate={2}, buildlog={3}", source.PluginId, source.PluginVersion, source.BuildState, source.BuildLog), this, Logtype.Info);
+            string query = "insert into sources (pluginid, pluginversion, zipfilename, assemblyfilename, buildstate, buildlog) values (@pluginid, @pluginversion, @zipfilename, @assemblyfilename, @buildstate, @buildlog)";
 
             DatabaseConnection connection = GetConnection();
 
             object[][] parameters = new object[][]{
-                new object[]{"@pluginid", pluginid},
-                new object[]{"@pluginversion", pluginversion},             
+                new object[]{"@pluginid", source.PluginId},
+                new object[]{"@pluginversion", source.PluginVersion},             
                 new object[]{"@zipfilename", String.Empty},       
                 new object[]{"@assemblyfilename", String.Empty},       
-                new object[]{"@buildstate", String.Empty},       
+                new object[]{"@buildstate", source.BuildState},       
+                new object[]{"@buildlog", source.BuildLog},       
             };
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Created new source: pluginid={0}, pluginversion={1}", pluginid, pluginversion), this, Logtype.Info);
+            logger.LogText(String.Format("Created new source: pluginid={0}, pluginversion={1}, buildstate={2}, buildlog={3}", source.PluginId, source.PluginVersion, source.BuildState, source.BuildLog), this, Logtype.Info);
         }
 
         /// <summary>

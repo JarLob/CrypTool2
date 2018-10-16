@@ -165,7 +165,10 @@ namespace CrypToolStoreDeveloperClient.Views
             UpdatePluginWindow updatePluginWindow = new UpdatePluginWindow(id);
             updatePluginWindow.MainWindow = MainWindow;
             updatePluginWindow.ShowDialog();
-            FetchPluginList();
+            //we fetch the plugin list in a seperate thread, thus, the ui is not blocked during download of the list
+            Thread fetchPluginListThread = new Thread(FetchPluginList);
+            fetchPluginListThread.IsBackground = true;
+            fetchPluginListThread.Start();
         }
 
         /// <summary>
@@ -178,7 +181,10 @@ namespace CrypToolStoreDeveloperClient.Views
             CreateNewPluginWindow createNewPluginWindow = new CreateNewPluginWindow();
             createNewPluginWindow.MainWindow = MainWindow;
             createNewPluginWindow.ShowDialog();
-            FetchPluginList();
+            //we fetch the plugin list in a seperate thread, thus, the ui is not blocked during download of the list
+            Thread fetchPluginListThread = new Thread(FetchPluginList);
+            fetchPluginListThread.IsBackground = true;
+            fetchPluginListThread.Start();
         }
 
         /// <summary>
