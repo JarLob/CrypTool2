@@ -37,7 +37,7 @@ using System.Windows.Shapes;
 namespace CrypToolStoreDeveloperClient.Views
 {
     /// <summary>
-    /// Interaktionslogik für CreateNewUserWindow.xaml
+    /// Interaktionslogik für UpdatePluginWindow.xaml
     /// </summary>
     public partial class UpdatePluginWindow : Window
     {
@@ -228,7 +228,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 
                 if (result.Success)
                 {
-                    MessageBox.Show("Successfully updated plugin", "Plugin created");
+                    MessageBox.Show("Successfully updated plugin", "Plugin updated");
                     Close();
                 }
                 else

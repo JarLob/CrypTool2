@@ -46,6 +46,8 @@ namespace CrypToolStoreDeveloperClient.Views
         private int PluginVersion {get;set;}
         private string FileName { get; set; }
 
+        private bool Stop = false;
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -55,6 +57,18 @@ namespace CrypToolStoreDeveloperClient.Views
             ResizeMode = ResizeMode.NoResize;
             PluginId = pluginid;
             PluginVersion = pluginversion;
+            Closing += UploadZipFileWindow_Closing;
+        }
+
+        /// <summary>
+        /// When the window is closed, it sets "Stop" to true
+        /// Then, if an upload is currently running, it is automatically stopped
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UploadZipFileWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Stop = true;
         }
 
         /// <summary>
@@ -74,11 +88,14 @@ namespace CrypToolStoreDeveloperClient.Views
             Thread uploadZipFileThread = new Thread(UploadZipfile);
             uploadZipFileThread.IsBackground = true;
             uploadZipFileThread.Start();
+
             UploadButton.IsEnabled = false;
+            SelectZipFileButton.IsEnabled = false;
         }    
 
         /// <summary>
-        /// 
+        /// Uploads the selected zip file
+        /// stops, if the window is closed
         /// </summary>
         private void UploadZipfile()
         {
@@ -95,12 +112,25 @@ namespace CrypToolStoreDeveloperClient.Views
                 source.PluginVersion = PluginVersion;
                 
                 client.UploadDownloadProgressChanged += client_UploadDownloadProgressChanged;                
-                DataModificationOrRequestResult result = client.UploadZipFile(source, FileName);
+                DataModificationOrRequestResult result = client.UploadZipFile(source, FileName, ref Stop);
                 
                 client.Disconnect();
                 
                 if (result.Success)
                 {
+                    Dispatcher.BeginInvoke(new ThreadStart(() =>
+                    {
+                        try
+                        {
+                            ProgressBar.Maximum = 1;
+                            ProgressBar.Value = 1;
+                            ProgressText.Text = "100 %";
+                        }
+                        catch (Exception ex)
+                        {
+                            //wtf?
+                        }
+                    }));
                     MessageBox.Show("Successfully uploaded zip file", "Zipfile uploaded");                    
                     Dispatcher.BeginInvoke(new ThreadStart(() =>
                     {
@@ -116,7 +146,10 @@ namespace CrypToolStoreDeveloperClient.Views
                 }
                 else
                 {
-                    MessageBox.Show(String.Format("Could not upload zip file: {0}", result.Message), "Zipfile upload not possible");
+                    if (result.Message != "USERSTOP")
+                    {
+                        MessageBox.Show(String.Format("Could not upload zip file: {0}", result.Message), "Zipfile upload not possible");
+                    }
                 }
             }
             catch (Exception ex)
@@ -129,6 +162,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 try
                 {
                     UploadButton.IsEnabled = true;
+                    SelectZipFileButton.IsEnabled = true;
                 }
                 catch (Exception ex)
                 {
@@ -163,6 +197,7 @@ namespace CrypToolStoreDeveloperClient.Views
 
         /// <summary>
         /// Returns a formatted time left string
+        /// Shows remaning hours, minutes, and seconds
         /// </summary>
         /// <param name="bytepersec"></param>
         /// <param name="totalbytes"></param>
@@ -190,6 +225,7 @@ namespace CrypToolStoreDeveloperClient.Views
 
         /// <summary>
         /// Returns a formatted speed string based on byte/sec
+        /// Shows speed in GB/sec, MB/sec, KB/sec, and byte/sec
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>

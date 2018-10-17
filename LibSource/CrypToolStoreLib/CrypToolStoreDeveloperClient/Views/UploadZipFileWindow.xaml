@@ -14,9 +14,11 @@
         </Grid.ColumnDefinitions>
         
         <ProgressBar Name="ProgressBar" Background="White" Grid.Column="1" Grid.Row="0" Height="25"/>
-        <TextBlock Name="ProgressText" Background="Transparent" Grid.Column="1" Grid.Row="0"  Foreground="Black" TextAlignment="Center" VerticalAlignment="Center"/>    
-        <Button Name="SelectIconButton" Background="White" Click="SelectZipFileButton_Click" Grid.Column="1" Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Right">Select Zip File</Button>
+        <TextBlock Name="ProgressText" Background="Transparent" Grid.Column="1" Grid.Row="0"  Foreground="Black" TextAlignment="Center" VerticalAlignment="Center">Upload Progress</TextBlock>    
+        <Button Name="SelectZipFileButton" Background="White" Click="SelectZipFileButton_Click" Grid.Column="1" Grid.Row="1" Height="25" Width="100" HorizontalAlignment="Right">Select Zip File</Button>
         <Button Name="UploadButton" Background="White" Click="UploadButton_Click" Grid.Column="1" Grid.Row="2" Height="25" Width="100" HorizontalAlignment="Right">Upload</Button>
-        <TextBlock Name="ZipFileName" Background="Transparent" Grid.Column="1" Grid.Row="1" Width="320"  Foreground="Black" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBlock Name="ZipFileName" Background="Transparent" Grid.Column="1" Grid.Row="1" Width="320"  Foreground="Black" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center">
+            No file selected
+        </TextBlock>
     </Grid>
 </Window>

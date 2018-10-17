@@ -38,14 +38,14 @@ namespace CrypToolStoreDeveloperClient.Views
     /// Interaktionslogik für UserManagementView.xaml
     /// </summary>
     public partial class UserManagementView : UserControl
-    {        
+    {
         public MainWindow MainWindow { get; set; }
 
         private ObservableCollection<Developer> Developers = new ObservableCollection<Developer>();
 
         public UserManagementView()
         {
-            InitializeComponent();            
+            InitializeComponent();
             DevelopersListView.ItemsSource = Developers;
             Developers.Clear();
             IsVisibleChanged += UserManagementView_IsVisibleChanged;
@@ -67,7 +67,7 @@ namespace CrypToolStoreDeveloperClient.Views
             Thread fetchUserListThread = new Thread(FetchUserList);
             fetchUserListThread.IsBackground = true;
             fetchUserListThread.Start();
-            
+
         }
 
         /// <summary>
@@ -77,14 +77,14 @@ namespace CrypToolStoreDeveloperClient.Views
         {
             try
             {
-                CrypToolStoreClient client = new CrypToolStoreClient();                
+                CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerAddress = Constants.ServerAddress;
                 client.ServerPort = Constants.ServerPort;
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
                 DataModificationOrRequestResult result = client.GetDeveloperList();
                 List<Developer> developers = (List<Developer>)result.DataObject;
-
+                client.Disconnect();
                 Dispatcher.BeginInvoke(new ThreadStart(() =>
                 {
                     try
@@ -100,12 +100,12 @@ namespace CrypToolStoreDeveloperClient.Views
                         MessageBox.Show(String.Format("Exception during adding developers to list: {0}", ex.Message), "Exception");
                     }
                 }));
-                client.Disconnect();
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show(String.Format("Exception during retrieving of list of developers: {0}", ex.Message), "Exception");
-            }         
+            }
         }
 
         /// <summary>
@@ -141,12 +141,12 @@ namespace CrypToolStoreDeveloperClient.Views
                     else
                     {
                         MessageBox.Show(String.Format("Could not delete developer: {0}", result.Message), "Deletion not possible");
-                    }                                        
+                    }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(String.Format("Exception during deletion of developer: {0}", ex.Message), "Exception");
-                }         
+                }
             }
         }
 
@@ -184,5 +184,23 @@ namespace CrypToolStoreDeveloperClient.Views
             fetchUserListThread.Start();
         }
 
+        /// <summary>
+        /// Resets the view
+        /// Clears the developer list
+        /// </summary>
+        public void Reset()
+        {
+            Dispatcher.BeginInvoke(new ThreadStart(() =>
+            {
+                try
+                {
+                    Developers.Clear();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(String.Format("Exception during reset of developer list: {0}", ex.Message), "Exception");
+                }
+            }));
+        }
     }
 }

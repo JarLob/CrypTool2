@@ -84,7 +84,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 client.Login(MainWindow.Username, MainWindow.Password);
                 DataModificationOrRequestResult result = client.GetPluginList(MainWindow.IsAdmin ? "*" :  MainWindow.Username);
                 List<Plugin> plugins = (List<Plugin>)result.DataObject;
-
+                client.Disconnect();
                 Dispatcher.BeginInvoke(new ThreadStart(() =>
                 {
                     try
@@ -102,8 +102,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     {
                         MessageBox.Show(String.Format("Exception during adding plugins to list: {0}", ex.Message), "Exception");
                     }
-                }));
-                client.Disconnect();
+                }));                
             }
             catch (Exception ex)
             {
@@ -199,6 +198,24 @@ namespace CrypToolStoreDeveloperClient.Views
             MainWindow.SourceManagementView.PluginId = id;
             MainWindow.ChangeScreen(UiState.SourceManagement);
         }
-
+        
+        /// <summary>
+        /// Resets the view
+        /// Clears the plugin list
+        /// </summary>
+        public void Reset()
+        {
+            Dispatcher.BeginInvoke(new ThreadStart(() =>
+            {
+                try
+                {
+                    Plugins.Clear();                    
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(String.Format("Exception during reset of plugin list: {0}", ex.Message), "Exception");
+                }
+            }));
+        }
     }
 }

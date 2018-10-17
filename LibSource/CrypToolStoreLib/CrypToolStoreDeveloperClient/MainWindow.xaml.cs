@@ -79,6 +79,7 @@ namespace CrypToolStoreDeveloperClient
         /// <param name="uiState"></param>
         public void ChangeScreen(UiState uiState)
         {
+            Reset();
             UiState = uiState;
 
             HeaderView.Visibility = Visibility.Hidden;
@@ -97,7 +98,7 @@ namespace CrypToolStoreDeveloperClient
                     LoginView.FocusOnUsername();
                     HeaderView.UiTitel = "Login";
                     break;
-                case UiState.MainMenu:
+                case UiState.MainMenu:                    
                     Width = 400;
                     Height = 400;
                     HeaderView.Visibility = Visibility.Visible;
@@ -126,6 +127,16 @@ namespace CrypToolStoreDeveloperClient
                     HeaderView.UiTitel = "Source Management";
                     break;
             }
-        }       
+        }
+
+        /// <summary>
+        /// Resets all views by emptying the list of each view
+        /// </summary>
+        public void Reset()
+        {
+            UserManagementView.Reset();
+            PluginManagementView.Reset();
+            SourceManagementView.Reset();
+        }
     }
 }

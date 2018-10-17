@@ -84,7 +84,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 client.Login(MainWindow.Username, MainWindow.Password);
                 DataModificationOrRequestResult result = client.GetSourceList(PluginId);
                 List<Source> sources = (List<Source>)result.DataObject;
-
+                client.Disconnect();
                 Dispatcher.BeginInvoke(new ThreadStart(() =>
                 {
                     try
@@ -99,8 +99,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     {
                         MessageBox.Show(String.Format("Exception during adding sources to list: {0}", ex.Message), "Exception");
                     }
-                }));
-                client.Disconnect();
+                }));                
             }
             catch (Exception ex)
             {
@@ -196,7 +195,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     if (result.Success == false)
                     {
                         client.Disconnect();
-                        MessageBox.Show(String.Format("Could not get source list for computing new version number: {0}", result.Message), "Creation not possible");                        
+                        MessageBox.Show(String.Format("Could not get source list for computing new version number: {0}", result.Message), "Creation not possible");
                         return;
                     }
 
@@ -214,7 +213,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     //2: create new source
                     Source newsource = new Source();
                     newsource.PluginId = PluginId;
-                    newsource.PluginVersion = highestVersionNumber + 1;                    
+                    newsource.PluginVersion = highestVersionNumber + 1;
                     newsource.BuildState = BuildState.CREATED.ToString();
                     newsource.BuildLog = String.Format("Created by {0}", MainWindow.Username);
 
@@ -240,6 +239,25 @@ namespace CrypToolStoreDeveloperClient.Views
             {
                 MessageBox.Show(String.Format("Exception during creation of new source: {0}", ex.Message), "Exception");
             }
+        }
+
+        /// <summary>
+        /// Resets the view
+        /// Clears the source list
+        /// </summary>
+        public void Reset()
+        {
+            Dispatcher.BeginInvoke(new ThreadStart(() =>
+            {
+                try
+                {
+                    Sources.Clear();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(String.Format("Exception during reset of source list: {0}", ex.Message), "Exception");
+                }
+            }));
         }
     }
 }

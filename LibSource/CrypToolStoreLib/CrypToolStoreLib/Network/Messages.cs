@@ -85,10 +85,11 @@ namespace CrypToolStoreLib.Tools
         ResponseResourceData = 507,
 
         //Message for uploading/downloading data
-        UploadDownloadDataMessage = 600,
-        ResponseUploadDownloadDataMessage = 601,
-        StartUploadZipfileMessage = 602,
-        RequestDownloadZipfileMessage = 603,
+        UploadDownloadData = 600,
+        ResponseUploadDownloadData = 601,
+        StartUploadZipfile = 602,
+        RequestDownloadZipfile = 603,
+        StopUploadDownload = 604,
 
         //server error message
         ServerError = 900,
@@ -274,10 +275,11 @@ namespace CrypToolStoreLib.Tools
             MessageTypeDictionary.Add(MessageType.ResponseResourceData, typeof(ResponseResourceDataMessage));
 
             //upload/download messages
-            MessageTypeDictionary.Add(MessageType.UploadDownloadDataMessage, typeof(UploadDownloadDataMessage));
-            MessageTypeDictionary.Add(MessageType.ResponseUploadDownloadDataMessage, typeof(ResponseUploadDownloadDataMessage));
-            MessageTypeDictionary.Add(MessageType.StartUploadZipfileMessage, typeof(StartUploadZipfileMessage));
-            MessageTypeDictionary.Add(MessageType.RequestDownloadZipfileMessage, typeof(RequestDownloadZipfileMessage));
+            MessageTypeDictionary.Add(MessageType.UploadDownloadData, typeof(UploadDownloadDataMessage));
+            MessageTypeDictionary.Add(MessageType.ResponseUploadDownloadData, typeof(ResponseUploadDownloadDataMessage));
+            MessageTypeDictionary.Add(MessageType.StartUploadZipfile, typeof(StartUploadZipfileMessage));
+            MessageTypeDictionary.Add(MessageType.RequestDownloadZipfile, typeof(RequestDownloadZipfileMessage));
+            MessageTypeDictionary.Add(MessageType.StopUploadDownload, typeof(StopUploadDownloadMessage));
             
             //error messages
             MessageTypeDictionary.Add(MessageType.ServerError, typeof(ServerErrorMessage));
@@ -1866,6 +1868,15 @@ namespace CrypToolStoreLib.Tools
         [MessageDataField]
         public Source Source { get; set; }    
     }
+
+    /// <summary>
+    /// Message for stopping upload or download
+    /// </summary>
+    public class StopUploadDownloadMessage : Message
+    {
+
+    }
+
     #endregion
 
     #region Error messages

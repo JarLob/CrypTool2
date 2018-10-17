@@ -403,7 +403,7 @@ namespace CrypToolStoreLib.Server
                 case MessageType.RequestResourceDataList:
                     HandleRequestResourceDataListMessage((RequestResourceDataListMessage)message, sslStream);
                     break;
-                case MessageType.StartUploadZipfileMessage:
+                case MessageType.StartUploadZipfile:
                     HandleUploadZipFileMessages((StartUploadZipfileMessage)message, sslStream);
                     break;
 
@@ -1939,7 +1939,7 @@ namespace CrypToolStoreLib.Server
         private void HandleUploadZipFileMessages(StartUploadZipfileMessage startUploadZipfileMessage, SslStream sslStream)
         {
             DateTime uploadStartTime = DateTime.Now;
-            Logger.LogText(String.Format("User {0} starts uploading a zip file", Username), this, Logtype.Debug);
+            Logger.LogText(String.Format("User {0} starts uploading a zip file ({1} byte) for source {2}-{3}", Username, startUploadZipfileMessage.FileSize, startUploadZipfileMessage.Source.PluginId, startUploadZipfileMessage.Source.PluginVersion), this, Logtype.Info);
             string tempfilename = String.Empty;
 
             //Only authenticated admins are allowed to receive ResourceData lists
@@ -1985,7 +1985,9 @@ namespace CrypToolStoreLib.Server
                     {
                         //Receive message from stream
                         Message message = ReceiveMessage(sslStream);
-                        if (message.MessageHeader.MessageType == MessageType.UploadDownloadDataMessage)
+
+                        //case 1: we receive a data message
+                        if (message.MessageHeader.MessageType == MessageType.UploadDownloadData)
                         {
                             UploadDownloadDataMessage uploadDownloadDataMessage = (UploadDownloadDataMessage)message;
                             fileStream.Write(uploadDownloadDataMessage.Data, 0, uploadDownloadDataMessage.Data.Length);
@@ -1997,26 +1999,33 @@ namespace CrypToolStoreLib.Server
                             SendMessage(response, sslStream);
                             if (writtenFilesize == filesize)
                             {
-                                break;
+                                break; // upload completed
                             }
                         }
-                        else
+                        //case 2: we receive a stop message
+                        else if(message.MessageHeader.MessageType == MessageType.StopUploadDownload)
                         {
                             //received wrong message, abort
                             ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
-                            Logger.LogText(String.Format("User {0} sent a wrong message. Exptected UploadDownloadDataMessage but received {1}", Username, message.MessageHeader.MessageType), this, Logtype.Error);
+                            Logger.LogText(String.Format("User {0} stopped the upload for source: {1}-{2}", Username, source.PluginId, source.PluginVersion), this, Logtype.Info);
+                            return; // stopped by user
+                        }
+                        //case 3: we receive something wrong...
+                        else
+                        {
+                            //when we received a wrong message, we abort
+                            ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                            Logger.LogText(String.Format("User {0} sent a wrong message. Expected UploadDownloadDataMessage but received {1}", Username, message.MessageHeader.MessageType), this, Logtype.Error);
                             response.Success = false;
                             response.Message = "Exception during upload of zipfile";
                             SendMessage(response, sslStream);
-
-                            Logger.LogText(String.Format("Delete temp file {0}", PLUGIN_SOURCE_FOLDER + "\\" + tempfilename), this, Logtype.Error);
-                            File.Delete(PLUGIN_SOURCE_FOLDER + "\\" + tempfilename);
-                            Logger.LogText(String.Format("Deleted temp file {0}", PLUGIN_SOURCE_FOLDER + "\\" + tempfilename), this, Logtype.Error);
-
-                            break;
+                            return; // error: wrong message
                         }
                     }
                 }
+          
+                //when we are here, the upload went well,
+                //thus we can delete the old file, if it exists, and rename the temp file
 
                 if (File.Exists(PLUGIN_SOURCE_FOLDER + "\\" + filename))
                 {
@@ -2024,7 +2033,7 @@ namespace CrypToolStoreLib.Server
                     File.Delete(PLUGIN_SOURCE_FOLDER + "\\" + filename);
                     Logger.LogText(String.Format("Deleted file {0}", filename), this, Logtype.Info);
                 }
-                
+
                 Logger.LogText(String.Format("Renaming file {0} to {1}", tempfilename, filename), this, Logtype.Info);
                 File.Move(PLUGIN_SOURCE_FOLDER + "\\" + tempfilename, PLUGIN_SOURCE_FOLDER + "\\" + filename);
                 Logger.LogText(String.Format("Renamed file {0} to {1}", tempfilename, filename), this, Logtype.Info);
@@ -2034,25 +2043,27 @@ namespace CrypToolStoreLib.Server
                 Logger.LogText(String.Format("Updated Source={0} in database", source), this, Logtype.Info);
 
                 Logger.LogText(String.Format("User {0} uploaded a {1} byte zip for source={2} in {3}", Username, writtenFilesize, source, DateTime.Now - uploadStartTime), this, Logtype.Info);
+                
             }
             catch (Exception ex)
             {
-                //remove temp file since it is not needed any more
-                if (tempfilename != string.Empty && File.Exists(PLUGIN_SOURCE_FOLDER + "\\" + tempfilename))
-                {
-                    Logger.LogText(String.Format("Delete temp file {0}", PLUGIN_SOURCE_FOLDER + "\\" + tempfilename), this, Logtype.Error);
-                    File.Delete(PLUGIN_SOURCE_FOLDER + "\\" + tempfilename);
-                    Logger.LogText(String.Format("Deleted temp file {0}", PLUGIN_SOURCE_FOLDER + "\\" + tempfilename), this, Logtype.Error);
-                }
-
                 //request failed; logg to logfile and return exception to client
                 ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                 response.Success = false;
                 Logger.LogText(String.Format("User {0} tried to upload a zipfile. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
                 response.Message = "Exception during upload of zipfile";
                 SendMessage(response, sslStream);
-
-                
+            }
+            finally
+            {
+                //If something went wrong, maybe the tempfile still exists
+                //thus, we delete it here
+                if (tempfilename != string.Empty && File.Exists(PLUGIN_SOURCE_FOLDER + "\\" + tempfilename))
+                {
+                    Logger.LogText(String.Format("Delete temp file {0}", PLUGIN_SOURCE_FOLDER + "\\" + tempfilename), this, Logtype.Info);
+                    File.Delete(PLUGIN_SOURCE_FOLDER + "\\" + tempfilename);
+                    Logger.LogText(String.Format("Deleted temp file {0}", PLUGIN_SOURCE_FOLDER + "\\" + tempfilename), this, Logtype.Info);
+                }
             }
         }
         

@@ -1387,7 +1387,7 @@ namespace CrypToolStoreLib.Client
         /// </summary>
         /// <param name="source"></param>
         /// <param name="filename"></param>
-        public DataModificationOrRequestResult UploadZipFile(Source source, string filename)
+        public DataModificationOrRequestResult UploadZipFile(Source source, string filename, ref bool stop)
         {
             lock (this)
             {
@@ -1427,7 +1427,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received ResponseUploadDownloadDataMessage
-                if (response_message.MessageHeader.MessageType == MessageType.ResponseUploadDownloadDataMessage)
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseUploadDownloadData)
                 {
                     //received a response, forward it to user
                     ResponseUploadDownloadDataMessage responseUploadDownloadDataMessage = (ResponseUploadDownloadDataMessage)response_message;
@@ -1453,6 +1453,20 @@ namespace CrypToolStoreLib.Client
                         byte[] buffer = new byte[FILE_BUFFER_SIZE];                        
                         while (totalbytesread < filesize)
                         {
+                            if (stop)
+                            {
+                                //user wants to stop the upload, thus, we notify the server
+                                StopUploadDownloadMessage stopUploadDownloadMessage = new StopUploadDownloadMessage();
+                                SendMessage(stopUploadDownloadMessage);
+                                //return USERSTOP, thus, the ui wont update itself
+                                return new DataModificationOrRequestResult()
+                                {
+                                    Success = false,
+                                    DataObject = null,
+                                    Message = "USERSTOP"
+                                };
+                            }
+
                             //read a block of data
                             int bytesread = 0;
                             int current_bytesread = 0;                                                        
@@ -1500,7 +1514,7 @@ namespace CrypToolStoreLib.Client
                             }                            
 
                             //Received ResponseUploadDownloadDataMessage
-                            if (response_message.MessageHeader.MessageType == MessageType.ResponseUploadDownloadDataMessage)
+                            if (response_message.MessageHeader.MessageType == MessageType.ResponseUploadDownloadData)
                             {
                                 responseUploadDownloadDataMessage = (ResponseUploadDownloadDataMessage)response_message;
                                 if (responseUploadDownloadDataMessage.Success == false)
