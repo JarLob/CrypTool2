@@ -2107,7 +2107,7 @@ namespace CrypToolStoreLib.Server
                 }
 
                 //check, if source exists
-                Source source = Database.GetSource( requestDownloadZipfileMessage.Source.PluginId, requestDownloadZipfileMessage.Source.PluginVersion);
+                Source source = Database.GetSource(requestDownloadZipfileMessage.Source.PluginId, requestDownloadZipfileMessage.Source.PluginVersion);
                 if(source == null)
                 {
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
@@ -2142,7 +2142,7 @@ namespace CrypToolStoreLib.Server
                     return;
                 }
 
-                FileInfo fileInfo = new FileInfo(filename);
+                FileInfo fileInfo = new FileInfo(PLUGIN_SOURCE_FOLDER + "\\" + filename);
                 long filesize = fileInfo.Length;
                 long totalbytesread = 0;
 
@@ -2181,19 +2181,19 @@ namespace CrypToolStoreLib.Server
                         SendMessage(uploadDownloadDataMessage, sslStream);
 
                         //check, if block of data was received without error
-                        Message response_message = ReceiveMessage(sslStream);
+                        Message response = ReceiveMessage(sslStream);
 
                         //Received null = connection closed
-                        if (response_message == null)
+                        if (response == null)
                         {
                             Logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
                             return;
                         }
 
                         //Received ResponseUploadDownloadDataMessage
-                        if (response_message.MessageHeader.MessageType == MessageType.ResponseUploadDownloadData)
+                        if (response.MessageHeader.MessageType == MessageType.ResponseUploadDownloadData)
                         {
-                            ResponseUploadDownloadDataMessage responseUploadDownloadDataMessage = (ResponseUploadDownloadDataMessage)response_message;
+                            ResponseUploadDownloadDataMessage responseUploadDownloadDataMessage = (ResponseUploadDownloadDataMessage)response;
                             if (responseUploadDownloadDataMessage.Success == false)
                             {
                                 string failmsg = String.Format("Download of source={0}-{1} failed, reason: {2}", source.PluginId, source.PluginVersion, responseUploadDownloadDataMessage.Message);
@@ -2201,7 +2201,7 @@ namespace CrypToolStoreLib.Server
                                 return;
                             }                           
                         }
-                        if (response_message.MessageHeader.MessageType == MessageType.StopUploadDownload)
+                        if (response.MessageHeader.MessageType == MessageType.StopUploadDownload)
                         {
                             Logger.LogText(String.Format("User aborted download of source={0}-{1}", source.PluginId, source.PluginVersion),this, Logtype.Info);
                             return;
@@ -2209,7 +2209,7 @@ namespace CrypToolStoreLib.Server
                         else
                         {
                             //Received another (wrong) message
-                            string msg = String.Format("Response message to download a zipfile was not a ResponseUploadDownloadDataMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                            string msg = String.Format("Response message UploadDownloadDataMessage was not a ResponseUploadDownloadDataMessage or a StopUploadDownloadMessage. It was {0}", response.MessageHeader.MessageType.ToString());
                             Logger.LogText(msg, this, Logtype.Info);
                             return;
                         }

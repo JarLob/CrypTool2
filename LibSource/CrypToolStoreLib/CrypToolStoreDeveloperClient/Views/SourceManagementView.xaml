@@ -11,7 +11,7 @@
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="SourcesListView" Width="1050" Height="300" Grid.Row="1">
+        <ListView x:Name="SourcesListView" Width="1100" Height="300" Grid.Row="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Plugin Id" DisplayMemberBinding="{Binding Path=PluginId}" Width="80">
@@ -28,6 +28,13 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    <GridViewColumn Header="Has ZIP" DisplayMemberBinding="{Binding Path=HasZipFile}" Width="80">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Build Version" DisplayMemberBinding="{Binding Path=BuildVersion}" Width="80">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -35,7 +42,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>                  
-                    <GridViewColumn Header="Build State" DisplayMemberBinding="{Binding Path=BuildState}" Width="160">
+                    <GridViewColumn Header="Build State" DisplayMemberBinding="{Binding Path=BuildState}" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
@@ -63,17 +70,18 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>                    
-                    <GridViewColumn Header="Modify" Width="240">
+                    <GridViewColumn Header="Modify" Width="260">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="75"/>
-                                        <ColumnDefinition Width="75"/>
-                                        <ColumnDefinition Width="75"/>
+                                        <ColumnDefinition Width="85"/>
+                                        <ColumnDefinition Width="85"/>
+                                        <ColumnDefinition Width="85"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Click="Upload_Click">Upload zip</Button>
-                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Click="Delete_Click">Delete</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="80" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Click="Upload_Click">Upload zip</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="80" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Click="Download_Click">Download zip</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="80" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Click="Delete_Click">Delete</Button>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

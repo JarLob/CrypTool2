@@ -75,6 +75,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Constants.cs" />
+    <Compile Include="Views\DownloadZipFileWindow.xaml.cs">
+      <DependentUpon>DownloadZipFileWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UploadZipFileWindow.xaml.cs">
       <DependentUpon>UploadZipFileWindow.xaml</DependentUpon>
     </Compile>
@@ -120,6 +123,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\DownloadZipFileWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\UploadZipFileWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

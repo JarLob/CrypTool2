@@ -153,7 +153,7 @@ namespace CrypToolStoreDeveloperClient.Views
         }
 
         /// <summary>
-        /// Shows a window for uploading a zip for the source
+        /// Shows a window for uploading a zip of the source
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -164,6 +164,24 @@ namespace CrypToolStoreDeveloperClient.Views
             UploadZipFileWindow uploadZipFileWindow = new UploadZipFileWindow(PluginId, pluginversion);
             uploadZipFileWindow.MainWindow = MainWindow;
             uploadZipFileWindow.ShowDialog();
+            //we fetch the source list in a seperate thread, thus, the ui is not blocked during download of the list
+            Thread fetchSourceListThread = new Thread(FetchSourceList);
+            fetchSourceListThread.IsBackground = true;
+            fetchSourceListThread.Start();
+        }
+
+        /// <summary>
+        /// Shows a window for downloading a zip of the source
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Download_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            int pluginversion = (int)button.CommandParameter;
+            DownloadZipFileWindow downloadZipFileWindow = new DownloadZipFileWindow(PluginId, pluginversion);
+            downloadZipFileWindow.MainWindow = MainWindow;
+            downloadZipFileWindow.ShowDialog();
             //we fetch the source list in a seperate thread, thus, the ui is not blocked during download of the list
             Thread fetchSourceListThread = new Thread(FetchSourceList);
             fetchSourceListThread.IsBackground = true;

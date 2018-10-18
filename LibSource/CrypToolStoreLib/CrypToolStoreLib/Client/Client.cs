@@ -1651,10 +1651,11 @@ namespace CrypToolStoreLib.Client
                             writtenData += uploadDownloadDataMessage.Data.Length;
 
                             //received wrong message, abort
-                            ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
-                            response.Success = true;
-                            response.Message = "OK";
-                            SendMessage(response);
+                            ResponseUploadDownloadDataMessage responseUploadDownloadDataMessage = new ResponseUploadDownloadDataMessage();
+                            responseUploadDownloadDataMessage.Success = true;
+                            responseUploadDownloadDataMessage.Message = "OK";
+                            SendMessage(responseUploadDownloadDataMessage);
+
                             if (writtenData == uploadDownloadDataMessage.FileSize)
                             {
                                 // download completed
@@ -1688,11 +1689,22 @@ namespace CrypToolStoreLib.Client
                                 LastEventFireTime = DateTime.Now;
                             }
 
-                        }                       
+                        }
+                        // something went wrong, i.e. ResponseUploadDownloadDataMessage, we received a  thus we abort
+                        else if (responseMessage.MessageHeader.MessageType == MessageType.ResponseUploadDownloadData)
+                        {
+                            ResponseUploadDownloadDataMessage responseUploadDownloadDataMessage = (ResponseUploadDownloadDataMessage)responseMessage;
+                            logger.LogText(String.Format("Download failed: {0}", responseUploadDownloadDataMessage.Message), this, Logtype.Info);
+                            return new DataModificationOrRequestResult()
+                            {
+                                Message = responseUploadDownloadDataMessage.Message,
+                                Success = false
+                            };
+                        }
                         //we receive something wrong...
                         else
                         {
-                            string msg = String.Format("Response message to download a zipfile was not a UploadDownloadData. It was {0}", responseMessage.MessageHeader.MessageType.ToString());
+                            string msg = String.Format("Response message to RequestDownloadZipfileMessage a zipfile was not a UploadDownloadDataMessage. It was {0}", responseMessage.MessageHeader.MessageType.ToString());
                             logger.LogText(msg, this, Logtype.Info);
                             return new DataModificationOrRequestResult()
                             {

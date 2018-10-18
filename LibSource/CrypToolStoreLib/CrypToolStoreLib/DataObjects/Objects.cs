@@ -245,6 +245,22 @@ namespace CrypToolStoreLib.DataObjects
         public DateTime UploadDate { get; set; }
         public DateTime BuildDate { get; set; }
 
+        public bool HasZipFile
+        {
+            get
+            {
+                return !ZipFileName.Equals(String.Empty);
+            }
+        }
+
+        public bool HasAssemblyFile
+        {
+            get
+            {
+                return !AssemblyFileName.Equals(String.Empty);
+            }
+        }
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -258,7 +274,7 @@ namespace CrypToolStoreLib.DataObjects
             BuildLog = String.Empty;
             AssemblyFileName = String.Empty;
             UploadDate = DateTime.MinValue;
-            BuildDate = DateTime.MinValue;
+            BuildDate = DateTime.MinValue; 
         }
 
         /// <summary>

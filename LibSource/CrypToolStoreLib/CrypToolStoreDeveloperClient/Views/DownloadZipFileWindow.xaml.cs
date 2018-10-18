@@ -39,65 +39,58 @@ namespace CrypToolStoreDeveloperClient.Views
     /// <summary>
     /// Interaktionslogik für UploadZipFileWindow.xaml
     /// </summary>
-    public partial class UploadZipFileWindow : Window
+    public partial class DownloadZipFileWindow : Window
     {
         public MainWindow MainWindow { get; set; }
         private int PluginId { get; set; }
         private int PluginVersion {get;set;}
-        private string FileName { get; set; }
 
         private bool Stop = false;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public UploadZipFileWindow(int pluginid, int pluginversion)
+        public DownloadZipFileWindow(int pluginid, int pluginversion)
         {
             InitializeComponent();
             ResizeMode = ResizeMode.NoResize;
             PluginId = pluginid;
             PluginVersion = pluginversion;
-            Closing += UploadZipFileWindow_Closing;
+            Closing += DownloadZipFileWindow_Closing;
         }
 
         /// <summary>
         /// When the window is closed, it sets "Stop" to true
-        /// Then, if an upload is currently running, it is automatically stopped
+        /// Then, if a download is currently running, it is automatically stopped
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UploadZipFileWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void DownloadZipFileWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Stop = true;
         }
 
         /// <summary>
-        /// Tries to upload a new zip
+        /// Tries to download a zip
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UploadButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(FileName))
-            {
-                MessageBox.Show("Please select a zip file to upload", "Zip file missing");
-                return;
-            }
+        private void DownloadButton_Click(object sender, RoutedEventArgs e)
+        {      
             
             //we fetch the source list in a seperate thread, thus, the ui is not blocked during download of the list
-            Thread uploadZipFileThread = new Thread(UploadZipfile);
+            Thread uploadZipFileThread = new Thread(DownloadZipfile);
             uploadZipFileThread.IsBackground = true;
             uploadZipFileThread.Start();
 
-            UploadButton.IsEnabled = false;
-            SelectZipFileButton.IsEnabled = false;
+            DownloadButton.IsEnabled = false;
         }    
 
         /// <summary>
-        /// Uploads the selected zip file
+        /// Downloads the selected zip file
         /// stops, if the window is closed
         /// </summary>
-        private void UploadZipfile()
+        private void DownloadZipfile()
         {
             try
             {
@@ -110,9 +103,11 @@ namespace CrypToolStoreDeveloperClient.Views
                 Source source = new Source();
                 source.PluginId = PluginId;
                 source.PluginVersion = PluginVersion;
-                
-                client.UploadDownloadProgressChanged += client_UploadDownloadProgressChanged;                
-                DataModificationOrRequestResult result = client.UploadZipFile(source, FileName, ref Stop);
+
+                string filename = "Source-" + PluginId + "-" + PluginVersion + ".gzip";
+
+                client.UploadDownloadProgressChanged += client_UploadDownloadProgressChanged;
+                DataModificationOrRequestResult result = client.DownloadZipFile(source, Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + filename, ref Stop);
                 
                 client.Disconnect();
                 
@@ -131,7 +126,7 @@ namespace CrypToolStoreDeveloperClient.Views
                             //wtf?
                         }
                     }));
-                    MessageBox.Show("Successfully uploaded zip file", "Zipfile uploaded");                    
+                    MessageBox.Show("Successfully download zip file", "Zipfile downloaded");                    
                     Dispatcher.BeginInvoke(new ThreadStart(() =>
                     {
                         try
@@ -148,21 +143,20 @@ namespace CrypToolStoreDeveloperClient.Views
                 {
                     if (result.Message != "USERSTOP")
                     {
-                        MessageBox.Show(String.Format("Could not upload zip file: {0}", result.Message), "Zipfile upload not possible");
+                        MessageBox.Show(String.Format("Could not download zip file: {0}", result.Message), "Zipfile download not possible");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during upload of zip file: {0}", ex.Message), "Exception");
+                MessageBox.Show(String.Format("Exception during download of zip file: {0}", ex.Message), "Exception");
             }
             
             Dispatcher.BeginInvoke(new ThreadStart(() =>
             {
                 try
                 {
-                    UploadButton.IsEnabled = true;
-                    SelectZipFileButton.IsEnabled = true;
+                    DownloadButton.IsEnabled = true;
                 }
                 catch (Exception ex)
                 {
@@ -244,42 +238,6 @@ namespace CrypToolStoreDeveloperClient.Views
                 return bytes / 1024.0 + " KB/sec";
             }
             return bytes + " byte/sec";
-        }
-
-        /// <summary>
-        /// Shows an open file dialog to select a zip file
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SelectZipFileButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Title = "Select Icon for the Plugin";
-                openFileDialog.Filter = "(*.gzip)|*.gzip";
-                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                bool? dialogResult = openFileDialog.ShowDialog();
-                if (dialogResult == true)
-                {
-                    FileName = openFileDialog.FileName;                 
-                }
-                Dispatcher.BeginInvoke(new ThreadStart(() =>
-                {
-                    try
-                    {
-                        ZipFileName.Text = FileName;
-                    }
-                    catch (Exception ex)
-                    {
-                        //wtf?
-                    }
-                }));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(String.Format("Exception during selecting of zip file: {0}", ex.Message), "Exception");
-            }
-        }
+        }       
     }
 }
