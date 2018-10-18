@@ -57,6 +57,7 @@ namespace CrypToolStoreDeveloperClient.Views
             PluginId = pluginid;
             PluginVersion = pluginversion;
             Closing += DownloadZipFileWindow_Closing;
+            this.Title = String.Format("Downoad Zip File: Source-{0}-{1}.gzip", pluginid, pluginversion);
         }
 
         /// <summary>

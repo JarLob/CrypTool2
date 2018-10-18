@@ -2004,7 +2004,19 @@ namespace CrypToolStoreLib.Server
                             SendMessage(response, sslStream);
                             if (writtenFilesize == filesize)
                             {
+                                //we received the exact filesize, thus, we assume everything is OK
                                 break; // upload completed
+                            }
+                            if (writtenFilesize > filesize)
+                            {
+                                //here, something went wrong
+                                //client sent more bytes than he initially told us to send
+                                ResponseUploadDownloadDataMessage wrongUploadSizeResponseUploadDownloadDataMessage = new ResponseUploadDownloadDataMessage();
+                                Logger.LogText(String.Format("User {0} sent too much data. Exptected {1} but already received {2} Abort now", Username, filesize, writtenFilesize), this, Logtype.Error);
+                                wrongUploadSizeResponseUploadDownloadDataMessage.Success = false;
+                                wrongUploadSizeResponseUploadDownloadDataMessage.Message = "Exception during upload of zipfile. You send too much data";
+                                SendMessage(wrongUploadSizeResponseUploadDownloadDataMessage, sslStream);
+                                return; // error: wrong message
                             }
                         }
                         //case 2: we receive a stop message
@@ -2080,7 +2092,7 @@ namespace CrypToolStoreLib.Server
         private void HandleRequestDownloadZipfileMessages(RequestDownloadZipfileMessage requestDownloadZipfileMessage, SslStream sslStream)
         {
             DateTime downloadStartTime = DateTime.Now;
-            Logger.LogText(String.Format("User {0} wants to download a zip file for source={1}-{2}", Username, requestDownloadZipfileMessage.Source.PluginId, requestDownloadZipfileMessage.Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("User {0} starts downloading a zip file for source={1}-{2}", Username, requestDownloadZipfileMessage.Source.PluginId, requestDownloadZipfileMessage.Source.PluginVersion), this, Logtype.Info);
 
             //Only authenticated users are allowed to download a zip file
             if (!ClientIsAuthenticated)
@@ -2136,7 +2148,7 @@ namespace CrypToolStoreLib.Server
                 {
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
-                    response.Message = "Source zip file does not exist. Please contact CrypCloud admin";
+                    response.Message = "Source zip file does not exist. Please contact a CrypToolStore admin";
                     Logger.LogText(String.Format("User {0} tried to download a zip file for a source={0}-{1} that does not exists in file system from IP={2}", Username, requestDownloadZipfileMessage.Source.PluginId, requestDownloadZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Error);
                     SendMessage(response, sslStream);
                     return;
@@ -2201,7 +2213,7 @@ namespace CrypToolStoreLib.Server
                                 return;
                             }                           
                         }
-                        if (response.MessageHeader.MessageType == MessageType.StopUploadDownload)
+                        else if (response.MessageHeader.MessageType == MessageType.StopUploadDownload)
                         {
                             Logger.LogText(String.Format("User aborted download of source={0}-{1}", source.PluginId, source.PluginVersion),this, Logtype.Info);
                             return;
@@ -2209,7 +2221,7 @@ namespace CrypToolStoreLib.Server
                         else
                         {
                             //Received another (wrong) message
-                            string msg = String.Format("Response message UploadDownloadDataMessage was not a ResponseUploadDownloadDataMessage or a StopUploadDownloadMessage. It was {0}", response.MessageHeader.MessageType.ToString());
+                            string msg = String.Format("Response message to UploadDownloadDataMessage was not a ResponseUploadDownloadDataMessage or a StopUploadDownloadMessage. It was {0}", response.MessageHeader.MessageType.ToString());
                             Logger.LogText(msg, this, Logtype.Info);
                             return;
                         }
