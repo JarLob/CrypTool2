@@ -315,7 +315,7 @@ namespace CrypToolStoreLib.Server
         }
 
         /// <summary>
-        /// Responsible for handling received messages
+        /// Responsible for handling received messages by calling message handlers based on the message type
         /// </summary>
         /// <param name="message"></param>
         /// <param name="sslstream"></param>
@@ -419,7 +419,7 @@ namespace CrypToolStoreLib.Server
 
         /// <summary>
         /// Handles messages of unknown message type
-        /// Sends that we do not know the type of message
+        /// Sends that we do not know the type of message to the client
         /// Also writes a log entry
         /// </summary>
         /// <param name="message"></param>
@@ -722,7 +722,7 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleRequestDeveloperListMessage(RequestDeveloperListMessage requestDeveloperListMessage, SslStream sslStream)
         {
-            Logger.LogText(String.Format("User {0} requests a developerlist", Username), this, Logtype.Debug);
+            Logger.LogText(String.Format("User {0} requests a developer list", Username), this, Logtype.Debug);
 
             //Only authenticated admins are allowed to create new developers
             if (!ClientIsAuthenticated || !ClientIsAdmin)
@@ -819,7 +819,7 @@ namespace CrypToolStoreLib.Server
                 ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
                 response.ModifiedPlugin = false;
                 response.Message = "Unauthorized to update that plugin";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to update plugin={1} from IP={2}", Username, updatePluginMessage.Plugin, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update plugin={1} from IP={2}", Username, updatePluginMessage.Plugin.Id, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }            
@@ -830,7 +830,7 @@ namespace CrypToolStoreLib.Server
                 ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
                 response.ModifiedPlugin = false;
                 response.Message = "Unauthorized to update that plugin"; // we send an "unauthorized"; thus, it is not possible to search database for existing ids
-                Logger.LogText(String.Format("User {0} tried to update non-existing plugin={1} from IP={2}", Username, updatePluginMessage.Plugin, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("User {0} tried to update non-existing plugin={1} from IP={2}", Username, updatePluginMessage.Plugin.Id, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -840,7 +840,7 @@ namespace CrypToolStoreLib.Server
                 ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
                 response.ModifiedPlugin = false;
                 response.Message = "Unauthorized to update that plugin";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to update plugin={1} from IP={2}", Username, updatePluginMessage.Plugin, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update plugin={1} from IP={2}", Username, updatePluginMessage.Plugin.Id, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -952,7 +952,7 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleRequestPluginMessage(RequestPluginMessage requestPluginMessage, SslStream sslStream)
         {
-            Logger.LogText(String.Format("User {0} tries to request a plugin", Username), this, Logtype.Debug);
+            Logger.LogText(String.Format("User {0} tries to request a plugin={1}", Username, requestPluginMessage.Id), this, Logtype.Debug);
 
             try
             {
@@ -972,11 +972,10 @@ namespace CrypToolStoreLib.Server
                         ResponsePluginMessage response = new ResponsePluginMessage();
                         response.Plugin = plugin;
                         response.PluginExists = true;
-                        string message = String.Format("Responding with plugin: {0}", plugin.ToString());
+                        string message = String.Format("Responding with plugin={0}", plugin.Id);
                         Logger.LogText(message, this, Logtype.Debug);
                         response.Message = message;
-                        SendMessage(response, sslStream);
-                        
+                        SendMessage(response, sslStream);                        
                     }
                     else
                     {
@@ -1049,7 +1048,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
                 response.Message = "Unauthorized to create new plugins. Please authenticate yourself";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to create new source={1} from IP={2}", Username, createNewSourceMessage.Source, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to create new source={1}-{2} from IP={3}", Username, createNewSourceMessage.Source.PluginId, createNewSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1064,7 +1063,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
                 response.Message = String.Format("Plugin with id={0} does not exist", source.PluginId);
-                Logger.LogText(String.Format("User {0} tried to create new source={1} from IP={2} for a non-existing plugin id={3}", Username, createNewSourceMessage.Source, IPAddress, source.PluginId), this, Logtype.Warning);
+                Logger.LogText(String.Format("User {0} tried to create new source={1}-{2} from IP={3} for a non-existing plugin id={4}", Username, createNewSourceMessage.Source.PluginId, createNewSourceMessage.Source.PluginVersion, IPAddress, source.PluginId), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1075,7 +1074,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
                 response.Message = "Not authorized";
-                Logger.LogText(String.Format("User {0} tried to create new source={1} from IP={2} for a plugin (id={3}) that he does not own ", Username, createNewSourceMessage.Source, IPAddress, source.PluginId), this, Logtype.Warning);
+                Logger.LogText(String.Format("User {0} tried to create new source={1}-{2} from IP={3} for a plugin that he does not own ", Username, createNewSourceMessage.Source.PluginId, createNewSourceMessage.Source.PluginVersion, IPAddress, source.PluginId), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1084,7 +1083,7 @@ namespace CrypToolStoreLib.Server
             try
             {
                 Database.CreateSource(source);
-                Logger.LogText(String.Format("User {0} created new source for plugin={0} in database: {2}", Username, plugin, source), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} created new source={1}-{2}", Username, source.PluginId, source.PluginVersion), this, Logtype.Info);
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = true;
                 response.Message = String.Format("Created new source in database: {0}", source.ToString());
@@ -1119,7 +1118,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
                 response.Message = "Unauthorized to update that source";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to update source={1} from IP={2}", Username, updateSourceMessage.Source, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update source={1}-{2} from IP={3}", Username, updateSourceMessage.Source.PluginId, updateSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1131,7 +1130,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
                 response.Message = "Unauthorized to update that source"; // we send an "unauthorized"; thus, it is not possible to search database for existing ids
-                Logger.LogText(String.Format("User {0} tried to update non-existing source={1} from IP={2}", Username, updateSourceMessage.Source, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("User {0} tried to update non-existing source={1}-{2} from IP={3}", Username, updateSourceMessage.Source.PluginId, updateSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1141,7 +1140,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
                 response.Message = "Unauthorized to update that plugin";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to update source={1} from IP={2}", Username, updateSourceMessage.Source, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update source={1}-{2} from IP={3}", Username, updateSourceMessage.Source.PluginId, updateSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1151,7 +1150,7 @@ namespace CrypToolStoreLib.Server
             {
                 source = updateSourceMessage.Source;
                 Database.UpdateSource(source.PluginId, source.PluginVersion, source.ZipFileName, source.BuildState, source.BuildLog);
-                Logger.LogText(String.Format("User {0} updated existing source in database: {1}", Username, source.ToString()), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} updated existing source={1}-{2} in database", Username, source.PluginId, source.PluginVersion), this, Logtype.Info);
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = true;
                 response.Message = String.Format("Updated source in database: {0}", source.ToString());
@@ -1187,7 +1186,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
                 response.Message = "Unauthorized to delete that source";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to delete source={1} {2} from IP={2}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to delete source={1}-{2} from IP={2}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1199,7 +1198,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
                 response.Message = "Unauthorized to delete that source"; // we send an "unauthorized"; thus, it is not possible to search database for existing ids
-                Logger.LogText(String.Format("User {0} tried to delete non-existing source={1} {2} from IP={2}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("User {0} tried to delete non-existing source={1}-{2} from IP={2}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1209,7 +1208,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
                 response.Message = "Unauthorized to delete that source";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to delete source={1} {2} from IP={2}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to delete source={1}-{2} from IP={2}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1227,7 +1226,7 @@ namespace CrypToolStoreLib.Server
                 }
                 //2. delete source in database
                 Database.DeleteSource(deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion);
-                Logger.LogText(String.Format("User {0} deleted existing source in database: {1} {2}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} deleted existing source in database: {1}-{2}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion), this, Logtype.Info);
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = true;
                 response.Message = String.Format("Deleted source in database: {0}", source.ToString());
@@ -1238,7 +1237,7 @@ namespace CrypToolStoreLib.Server
                 //Deletion failed; logg to logfile and return exception to client
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
-                Logger.LogText(String.Format("User {0} tried to delete an existing source={1} {2}. But an exception occured: {3}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, ex.Message), this, Logtype.Error);
+                Logger.LogText(String.Format("User {0} tried to delete an existing source={1}-{2}. But an exception occured: {3}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, ex.Message), this, Logtype.Error);
                 response.Message = "Exception during delete of existing source";
                 SendMessage(response, sslStream);
             }
@@ -1253,7 +1252,7 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleRequestSourceMessage(RequestSourceMessage requestSourceMessage, SslStream sslStream)
         {
-            Logger.LogText(String.Format("User {0} requested a source", Username), this, Logtype.Debug);
+            Logger.LogText(String.Format("User {0} requested a source={1}-{2}", Username, requestSourceMessage.PluginId, requestSourceMessage.PluginVersion), this, Logtype.Debug);
 
             try
             {
@@ -1262,7 +1261,7 @@ namespace CrypToolStoreLib.Server
                 {
                     ResponseSourceMessage response = new ResponseSourceMessage();
                     response.SourceExists = false;
-                    Logger.LogText(String.Format("User {0} tried to get a non-existing source", Username), this, Logtype.Warning);
+                    Logger.LogText(String.Format("User {0} tried to get a non-existing source={1}-{2}", Username, requestSourceMessage.PluginId, requestSourceMessage.PluginVersion), this, Logtype.Warning);
                     response.Message = "Unauthorized to get that source";
                     SendMessage(response, sslStream);
                 }
@@ -1275,7 +1274,7 @@ namespace CrypToolStoreLib.Server
                         ResponseSourceMessage response = new ResponseSourceMessage();
                         response.Source = source;
                         response.SourceExists = true;
-                        string message = String.Format("Responding with source: {0}", source.ToString());
+                        string message = String.Format("Responding with source {0}-{1}", source.PluginId, source.PluginVersion);
                         Logger.LogText(message, this, Logtype.Debug);
                         response.Message = message;
                         SendMessage(response, sslStream);
@@ -1284,7 +1283,7 @@ namespace CrypToolStoreLib.Server
                     {
                         ResponseSourceMessage response = new ResponseSourceMessage();
                         response.SourceExists = false;
-                        Logger.LogText(String.Format("Unauthorized user {0} tried to get a source {1}{2}", Username, requestSourceMessage.PluginId, requestSourceMessage.PluginVersion), this, Logtype.Warning);
+                        Logger.LogText(String.Format("Unauthorized user {0} tried to get a source {1}-{2}", Username, requestSourceMessage.PluginId, requestSourceMessage.PluginVersion), this, Logtype.Warning);
                         response.Message = "Unauthorized to get that source";
                         SendMessage(response, sslStream);
                     }                    
@@ -1294,7 +1293,7 @@ namespace CrypToolStoreLib.Server
             {
                 //request failed; logg to logfile and return exception to client
                 ResponseSourceMessage response = new ResponseSourceMessage();
-                Logger.LogText(String.Format("User {0} tried to get an existing source. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogText(String.Format("User {0} tried to get an existing source={1}-{2}. But an exception occured: {3}", Username, requestSourceMessage.PluginId, requestSourceMessage.PluginVersion, ex.Message), this, Logtype.Error);
                 response.Message = "Exception during request of existing source";
                 SendMessage(response, sslStream);
             }
@@ -1365,7 +1364,7 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleCreateNewResourceMessage(CreateNewResourceMessage createNewResourceMessage, SslStream sslStream)
         {
-            Logger.LogText(String.Format("User {0} tries to create a resource", Username), this, Logtype.Debug);
+            Logger.LogText(String.Format("User {0} tries to create a resource={1}", createNewResourceMessage.Resource.Name, Username), this, Logtype.Debug);
 
             //Only authenticated users are allowed to create new plugins
             if (!ClientIsAuthenticated)
@@ -1382,10 +1381,10 @@ namespace CrypToolStoreLib.Server
             {
                 Resource resource = createNewResourceMessage.Resource;
                 Database.CreateResource(Username, resource.Name, resource.Description);
-                Logger.LogText(String.Format("User {0} created new resource in database: {1}", Username, resource), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} created new resource={1} in database", Username, resource.Name), this, Logtype.Info);
                 ResponseResourceModificationMessage response = new ResponseResourceModificationMessage();
                 response.ModifiedResource = true;
-                response.Message = String.Format("Created new resource in database: {0}", resource.ToString());
+                response.Message = String.Format("Created new resource={0} in database", resource.Name);
                 SendMessage(response, sslStream);
             }
             catch (Exception ex)
@@ -1409,7 +1408,7 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleUpdateResourceMessage(UpdateResourceMessage updateResourceMessage, SslStream sslStream)
         {
-            Logger.LogText(String.Format("User {0} tries to update a resource", Username), this, Logtype.Debug);
+            Logger.LogText(String.Format("User {0} tries to update a resource={1}", Username, updateResourceMessage.Resource.Id), this, Logtype.Debug);
 
             //Only authenticated users are allowed to update resources
             if (!ClientIsAuthenticated)
@@ -1476,7 +1475,7 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleDeletResourceMessage(DeleteResourceMessage deleteResourceMessage, SslStream sslStream)
         {
-            Logger.LogText(String.Format("User {0} tries to delete a resource", Username), this, Logtype.Debug);
+            Logger.LogText(String.Format("User {0} tries to delete a resource={1}", Username, deleteResourceMessage.Resource.Id), this, Logtype.Debug);
 
             //Only authenticated users are allowed to delete resources
             if (!ClientIsAuthenticated)
@@ -1541,7 +1540,7 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleRequestResourceMessage(RequestResourceMessage requestResourceMessage, SslStream sslStream)
         {
-            Logger.LogText(String.Format("User {0} tries to request a resource", Username), this, Logtype.Debug);
+            Logger.LogText(String.Format("User {0} tries to request a resource={1}", Username, requestResourceMessage.Id), this, Logtype.Debug);
 
             try
             {
@@ -1630,7 +1629,7 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleCreateNewResourceDataMessage(CreateNewResourceDataMessage createNewResourceDataMessage, SslStream sslStream)
         {
-            Logger.LogText(String.Format("User {0} tries to create a resource data", Username), this, Logtype.Debug);
+            Logger.LogText(String.Format("User {0} tries to create a resource data={1}-{2}", Username, createNewResourceDataMessage.ResourceData.ResourceId, createNewResourceDataMessage.ResourceData.ResourceVersion), this, Logtype.Debug);
 
             //Only authenticated users are allowed to create new plugins
             if (!ClientIsAuthenticated)
@@ -1638,7 +1637,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 response.Message = "Unauthorized to create new resource data. Please authenticate yourself";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to create new resource data={1} from IP={2}", Username, createNewResourceDataMessage.ResourceData, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to create new resource data={1}-{2} from IP={3}", Username, createNewResourceDataMessage.ResourceData.ResourceId,createNewResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1653,7 +1652,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 response.Message = String.Format("Resource with id={0} does not exist", resourceData.ResourceId);
-                Logger.LogText(String.Format("User {0} tried to create new resource data={1} from IP={2} for a non-existing resource id={3}", Username, createNewResourceDataMessage.ResourceData, IPAddress, resourceData.ResourceId), this, Logtype.Warning);
+                Logger.LogText(String.Format("User {0} tried to create new resource data={1}-{2} from IP={3} for a non-existing resource", Username, createNewResourceDataMessage.ResourceData.ResourceId, createNewResourceDataMessage.ResourceData.ResourceVersion, IPAddress, resourceData.ResourceId), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1664,7 +1663,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 response.Message = "Not authorized";
-                Logger.LogText(String.Format("User {0} tried to create new resource data={1} from IP={2} for a plugin (id={3}) that he does not own ", Username, createNewResourceDataMessage.ResourceData, IPAddress, resourceData.ResourceId), this, Logtype.Warning);
+                Logger.LogText(String.Format("User {0} tried to create new resource data={1}-{2} from IP={3} for a resource that he does not own ", Username, createNewResourceDataMessage.ResourceData.ResourceId, createNewResourceDataMessage.ResourceData.ResourceVersion, IPAddress, resourceData.ResourceId), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1673,10 +1672,10 @@ namespace CrypToolStoreLib.Server
             try
             {
                 Database.CreateResourceData(createNewResourceDataMessage.ResourceData.ResourceId, createNewResourceDataMessage.ResourceData.ResourceVersion, createNewResourceDataMessage.ResourceData.Data, DateTime.Now);
-                Logger.LogText(String.Format("User {0} created new resource data for resource={1} in database: {2}", Username, resource.Id, resourceData), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} created new resource data for resource={1}-{2} in database", Username, createNewResourceDataMessage.ResourceData.ResourceId, createNewResourceDataMessage.ResourceData.ResourceVersion), this, Logtype.Info);
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = true;
-                response.Message = String.Format("Created new resource data in database: {0}", resourceData.ToString());
+                response.Message = String.Format("Created new resource data={0}-{1} in database", resourceData.ResourceId, resourceData.ResourceVersion);
                 SendMessage(response, sslStream);
             }
             catch (Exception ex)
@@ -1684,7 +1683,7 @@ namespace CrypToolStoreLib.Server
                 //creation failed; logg to logfile and return exception to client
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
-                Logger.LogText(String.Format("User {0} tried to create a new resource data. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogText(String.Format("User {0} tried to create a new resource data={1}-{2}. But an exception occured: {3}", Username, createNewResourceDataMessage.ResourceData.ResourceId, createNewResourceDataMessage.ResourceData.ResourceVersion, ex.Message), this, Logtype.Error);
                 response.Message = "Exception during creation of new resource data";
                 SendMessage(response, sslStream);
             }
@@ -1700,7 +1699,7 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleUpdateResourceDataMessage(UpdateResourceDataMessage updateResourceDataMessage, SslStream sslStream)
         {
-            Logger.LogText(String.Format("User {0} tries to update a resource data", Username), this, Logtype.Debug);
+            Logger.LogText(String.Format("User {0} tries to update a resource data={1}-{2}", Username, updateResourceDataMessage.ResourceData.ResourceId, updateResourceDataMessage.ResourceData.ResourceVersion), this, Logtype.Debug);
 
             //Only authenticated users are allowed to update resourceDatas
             if (!ClientIsAuthenticated)
@@ -1708,7 +1707,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 response.Message = "Unauthorized to update that resourceData";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to update resource data={1} from IP={2}", Username, updateResourceDataMessage.ResourceData, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update resource data={1}-{2} from IP={2}", Username, updateResourceDataMessage.ResourceData.ResourceId, updateResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1720,7 +1719,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 response.Message = "Unauthorized to update that resourceData"; // we send an "unauthorized"; thus, it is not possible to search database for existing ids
-                Logger.LogText(String.Format("User {0} tried to update non-existing resource data={1} from IP={2}", Username, updateResourceDataMessage.ResourceData, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("User {0} tried to update non-existing resource data={1}-{2} from IP={3}", Username, updateResourceDataMessage.ResourceData.ResourceId, updateResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1730,7 +1729,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 response.Message = "Unauthorized to update that plugin";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to update resource data={1} from IP={2}", Username, updateResourceDataMessage.ResourceData, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update resource data={1}-{2} from IP={3}", Username, updateResourceDataMessage.ResourceData.ResourceId, updateResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1740,10 +1739,10 @@ namespace CrypToolStoreLib.Server
             {
                 resourceData = updateResourceDataMessage.ResourceData;
                 Database.UpdateResourceData(resourceData.ResourceId, resourceData.ResourceVersion, resourceData.Data, DateTime.Now);
-                Logger.LogText(String.Format("User {0} updated existing resource data in database: {1}", Username, resourceData.ToString()), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} updated existing resource data={1}-{2} in database", Username, updateResourceDataMessage.ResourceData.ResourceId, updateResourceDataMessage.ResourceData.ResourceVersion), this, Logtype.Info);
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = true;
-                response.Message = String.Format("Updated resource data in database: {0}", resourceData.ToString());
+                response.Message = String.Format("Updated resource data={0}-{1} in database", updateResourceDataMessage.ResourceData.ResourceId, updateResourceDataMessage.ResourceData.ResourceVersion);
                 SendMessage(response, sslStream);
             }
             catch (Exception ex)
@@ -1751,7 +1750,7 @@ namespace CrypToolStoreLib.Server
                 //update failed; logg to logfile and return exception to client
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
-                Logger.LogText(String.Format("User {0} tried to update an existing resource data. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogText(String.Format("User {0} tried to update an existing resource data={1}-{2}. But an exception occured: {3}", Username, updateResourceDataMessage.ResourceData.ResourceId, updateResourceDataMessage.ResourceData.ResourceVersion, ex.Message), this, Logtype.Error);
                 response.Message = "Exception during update of existing resource data";
                 SendMessage(response, sslStream);
             }
@@ -1768,7 +1767,7 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleDeleteResourceDataMessage(DeleteResourceDataMessage deleteResourceDataMessage, SslStream sslStream)
         {
-            Logger.LogText(String.Format("User {0} tries to delete a resource data", Username), this, Logtype.Debug);
+            Logger.LogText(String.Format("User {0} tries to delete a resource data={1}-{2}", deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion, Username), this, Logtype.Debug);
 
             //Only authenticated users are allowed to delete sourceDatas
             if (!ClientIsAuthenticated)
@@ -1776,7 +1775,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 response.Message = "Unauthorized to delete that resource data";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to delete resource data={1} {2} from IP={2}", Username, deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to delete resource data={1}-{2} from IP={2}", Username, deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1788,7 +1787,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 response.Message = "Unauthorized to delete that resource data"; // we send an "unauthorized"; thus, it is not possible to search database for existing ids
-                Logger.LogText(String.Format("User {0} tried to delete non-existing resource data={1} {2} from IP={2}", Username, deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("User {0} tried to delete non-existing resource data={1}-{2} from IP={2}", Username, deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1798,7 +1797,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 response.Message = "Unauthorized to delete that resource data";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to delete resource data={1} {2} from IP={2}", Username, deleteResourceDataMessage.ResourceData.ResourceVersion, deleteResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to delete resource data={1}-{2} from IP={2}", Username, deleteResourceDataMessage.ResourceData.ResourceVersion, deleteResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1807,10 +1806,10 @@ namespace CrypToolStoreLib.Server
             try
             {
                 Database.DeleteResourceData(deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion);
-                Logger.LogText(String.Format("User {0} deleted existing resource data in database: {1} {2}", Username, deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} deleted existing resource data={1}-{2} in database", Username, deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion), this, Logtype.Info);
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = true;
-                response.Message = String.Format("Deleted source data in database: {0}", sourceData.ToString());
+                response.Message = String.Format("Deleted source data={0}-{1} in database", deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion);
                 SendMessage(response, sslStream);
             }
             catch (Exception ex)
@@ -1818,7 +1817,7 @@ namespace CrypToolStoreLib.Server
                 //Deletion failed; logg to logfile and return exception to client
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
-                Logger.LogText(String.Format("User {0} tried to delete an existing resource data={1} {2}. But an exception occured: {3}", Username, deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion, ex.Message), this, Logtype.Error);
+                Logger.LogText(String.Format("User {0} tried to delete an existing resource data={1}-{2}. But an exception occured: {3}", Username, deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion, ex.Message), this, Logtype.Error);
                 response.Message = "Exception during delete of existing resource data";
                 SendMessage(response, sslStream);
             }
@@ -1833,7 +1832,7 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleRequestResourceDataMessage(RequestResourceDataMessage requestResourceDataMessage, SslStream sslStream)
         {
-            Logger.LogText(String.Format("User {0} requested a resource data", Username), this, Logtype.Debug);
+            Logger.LogText(String.Format("User {0} requested a resource data={1}-{2}", requestResourceDataMessage.ResourceId, requestResourceDataMessage.ResourceVersion, Username), this, Logtype.Debug);
 
             try
             {
@@ -1842,7 +1841,7 @@ namespace CrypToolStoreLib.Server
                 {
                     ResponseResourceDataMessage response = new ResponseResourceDataMessage();
                     response.ResourceDataExists = false;
-                    Logger.LogText(String.Format("User {0} tried to get a non-existing resource data", Username), this, Logtype.Warning);
+                    Logger.LogText(String.Format("User {0} tried to get a non-existing resource data={1}-{2}", Username, requestResourceDataMessage.ResourceId, requestResourceDataMessage.ResourceVersion), this, Logtype.Warning);
                     response.Message = "Unauthorized to get that resourceData";
                     SendMessage(response, sslStream);
                 }
@@ -1855,7 +1854,7 @@ namespace CrypToolStoreLib.Server
                         ResponseResourceDataMessage response = new ResponseResourceDataMessage();
                         response.ResourceData = resourceData;
                         response.ResourceDataExists = true;
-                        string message = String.Format("Responding with resource data: {0}", resourceData.ToString());
+                        string message = String.Format("Responding with resource data={0}-{1}", requestResourceDataMessage.ResourceId, requestResourceDataMessage.ResourceVersion);
                         Logger.LogText(message, this, Logtype.Debug);
                         response.Message = message;
                         SendMessage(response, sslStream);
@@ -1864,7 +1863,7 @@ namespace CrypToolStoreLib.Server
                     {
                         ResponseResourceDataMessage response = new ResponseResourceDataMessage();
                         response.ResourceDataExists = false;
-                        Logger.LogText(String.Format("Unauthorized user {0} tried to get a resource data {1}{2}", Username, requestResourceDataMessage.ResourceId, requestResourceDataMessage.ResourceVersion), this, Logtype.Warning);
+                        Logger.LogText(String.Format("Unauthorized user {0} tried to get a resource data={1}-{2}", Username, requestResourceDataMessage.ResourceId, requestResourceDataMessage.ResourceVersion), this, Logtype.Warning);
                         response.Message = "Unauthorized to get that resource data";
                         SendMessage(response, sslStream);
                     }
@@ -1874,7 +1873,7 @@ namespace CrypToolStoreLib.Server
             {
                 //request failed; logg to logfile and return exception to client
                 ResponseResourceDataMessage response = new ResponseResourceDataMessage();
-                Logger.LogText(String.Format("User {0} tried to get an existing resource data. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogText(String.Format("User {0} tried to get an existing resource data={1}-{2}. But an exception occured: {3}", Username, requestResourceDataMessage.ResourceId, requestResourceDataMessage.ResourceVersion, ex.Message), this, Logtype.Error);
                 response.Message = "Exception during request of existing resource data";
                 SendMessage(response, sslStream);
             }
