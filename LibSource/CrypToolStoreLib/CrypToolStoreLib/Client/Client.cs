@@ -1387,6 +1387,7 @@ namespace CrypToolStoreLib.Client
         /// </summary>
         /// <param name="source"></param>
         /// <param name="filename"></param>
+        /// <param name="stop"></param>
         public DataModificationOrRequestResult UploadZipFile(Source source, string filename, ref bool stop)
         {
             lock (this)
@@ -1588,6 +1589,120 @@ namespace CrypToolStoreLib.Client
                     };
                 }
             }           
+        }
+
+        /// <summary>
+        /// Dowloads a zip file of the specified source and stores it in the specified file
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="filename"></param>
+        /// <param name="stop"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult DownloadZipFile(Source source, string filename, ref bool stop)
+        {
+            lock (this)
+            {
+                //we can only receive source lists when we are connected
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+
+                //Step 1: Send requestDownloadZipfileMessage to start the uploading process      
+                RequestDownloadZipfileMessage requestDownloadZipfileMessage = new RequestDownloadZipfileMessage();
+                requestDownloadZipfileMessage.Source = source;
+                SendMessage(requestDownloadZipfileMessage);
+             
+                long writtenData = 0;
+                long lastWrittenData = 0;
+                DateTime LastEventFireTime = DateTime.Now;
+
+                //Step 2: Download file
+                using (FileStream fileStream = new FileStream(filename, FileMode.CreateNew, FileAccess.Write))
+                {
+                    while (true)
+                    {
+                        //Receive message from stream
+                        Message responseMessage = ReceiveMessage();
+
+                        if (stop)
+                        {
+                            //user wants to stop the upload, thus, we notify the server
+                            StopUploadDownloadMessage stopUploadDownloadMessage = new StopUploadDownloadMessage();
+                            SendMessage(stopUploadDownloadMessage);
+                            //return USERSTOP, thus, the ui wont update itself
+                            return new DataModificationOrRequestResult()
+                            {
+                                Success = false,
+                                DataObject = null,
+                                Message = "USERSTOP"
+                            };
+                        }
+
+                        //receive data message
+                        if (responseMessage.MessageHeader.MessageType == MessageType.UploadDownloadData)
+                        {
+                            UploadDownloadDataMessage uploadDownloadDataMessage = (UploadDownloadDataMessage)responseMessage;
+                            fileStream.Write(uploadDownloadDataMessage.Data, 0, uploadDownloadDataMessage.Data.Length);
+                            writtenData += uploadDownloadDataMessage.Data.Length;
+
+                            //received wrong message, abort
+                            ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                            response.Success = true;
+                            response.Message = "OK";
+                            SendMessage(response);
+                            if (writtenData == uploadDownloadDataMessage.FileSize)
+                            {
+                                // download completed
+                                if (UploadDownloadProgressChanged != null)
+                                {
+                                    UploadDownloadProgressEventArgs args = new UploadDownloadProgressEventArgs();
+                                    args.FileName = filename;
+                                    args.FileSize = uploadDownloadDataMessage.FileSize;
+                                    args.DownloadedUploaded = writtenData;
+                                    args.BytePerSecond = 0;
+                                    UploadDownloadProgressChanged.Invoke(this, args);                                }
+                                
+                                return new DataModificationOrRequestResult()
+                                {
+                                    Message = "Download completed",
+                                    Success = true
+                                };
+                            }
+
+                            //every second fire event for upload progress
+                            if (UploadDownloadProgressChanged != null && DateTime.Now > LastEventFireTime.AddMilliseconds(1000))
+                            {
+                                UploadDownloadProgressEventArgs args = new UploadDownloadProgressEventArgs();
+                                args.FileName = filename;
+                                args.FileSize = uploadDownloadDataMessage.FileSize;
+                                args.DownloadedUploaded = writtenData;
+                                TimeSpan duration = DateTime.Now - LastEventFireTime;
+                                args.BytePerSecond = (long)((((double)writtenData - (double)lastWrittenData) / duration.TotalMilliseconds) * 1000.0);
+                                lastWrittenData = writtenData;
+                                UploadDownloadProgressChanged.Invoke(this, args);
+                                LastEventFireTime = DateTime.Now;
+                            }
+
+                        }                       
+                        //we receive something wrong...
+                        else
+                        {
+                            string msg = String.Format("Response message to download a zipfile was not a UploadDownloadData. It was {0}", responseMessage.MessageHeader.MessageType.ToString());
+                            logger.LogText(msg, this, Logtype.Info);
+                            return new DataModificationOrRequestResult()
+                            {
+                                Message = msg,
+                                Success = false
+                            };
+                        }
+                    }
+                }
+            }
         }
 
         public event EventHandler<UploadDownloadProgressEventArgs> UploadDownloadProgressChanged;
@@ -2321,12 +2436,15 @@ namespace CrypToolStoreLib.Client
         #endregion
     }
 
+    /// <summary>
+    /// Arguments for the UploadDownload event
+    /// Used by the UI to display upload/download speed, time, etc
+    /// </summary>
     public class UploadDownloadProgressEventArgs : EventArgs
     {
         public string FileName { get; set; }
         public long DownloadedUploaded { get; set; }
         public long FileSize { get; set; }
         public long BytePerSecond { get; set; }
-
     }
 }
