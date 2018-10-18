@@ -1587,8 +1587,7 @@ namespace CrypToolStoreLib.Client
                         Success = false
                     };
                 }
-            }
-           
+            }           
         }
 
         public event EventHandler<UploadDownloadProgressEventArgs> UploadDownloadProgressChanged;
