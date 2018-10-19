@@ -257,7 +257,7 @@ namespace CrypToolStoreDeveloperClient.Views
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Title = "Select Icon for the Plugin";
-                openFileDialog.Filter = "(*.gzip)|*.gzip";
+                openFileDialog.Filter = "(*.zip)|*.zip";
                 openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 bool? dialogResult = openFileDialog.ShowDialog();
                 if (dialogResult == true)

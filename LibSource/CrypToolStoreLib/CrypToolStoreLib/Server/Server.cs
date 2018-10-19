@@ -1217,7 +1217,7 @@ namespace CrypToolStoreLib.Server
             try
             {
                 //1. delete file in file system
-                string filename = PLUGIN_SOURCE_FOLDER + "\\" + "Source-" + source.PluginId + "-" + source.PluginVersion + ".gzip";
+                string filename = PLUGIN_SOURCE_FOLDER + "\\" + "Source-" + source.PluginId + "-" + source.PluginVersion + ".zip";
                 if(File.Exists(filename))
                 {
                     Logger.LogText(String.Format("Deleting source zip file: {0}", filename), this, Logtype.Info);
@@ -1977,7 +1977,7 @@ namespace CrypToolStoreLib.Server
                 SendMessage(responseSuccess, sslStream);
 
                 long filesize = startUploadZipfileMessage.FileSize;
-                string filename = "Source-" + source.PluginId + "-" + source.PluginVersion + ".gzip";
+                string filename = "Source-" + source.PluginId + "-" + source.PluginVersion + ".zip";
                 tempfilename = filename + "_" + DateTime.Now.Ticks;
 
                 CheckPluginSourceFolder();

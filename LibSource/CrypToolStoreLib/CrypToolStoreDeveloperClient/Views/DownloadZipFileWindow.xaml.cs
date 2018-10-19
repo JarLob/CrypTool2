@@ -57,7 +57,7 @@ namespace CrypToolStoreDeveloperClient.Views
             PluginId = pluginid;
             PluginVersion = pluginversion;
             Closing += DownloadZipFileWindow_Closing;
-            this.Title = String.Format("Downoad Zip File: Source-{0}-{1}.gzip", pluginid, pluginversion);
+            this.Title = String.Format("Downoad Zip File: Source-{0}-{1}.zip", pluginid, pluginversion);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 source.PluginId = PluginId;
                 source.PluginVersion = PluginVersion;
 
-                string filename = "Source-" + PluginId + "-" + PluginVersion + ".gzip";
+                string filename = "Source-" + PluginId + "-" + PluginVersion + ".zip";
 
                 client.UploadDownloadProgressChanged += client_UploadDownloadProgressChanged;
                 DataModificationOrRequestResult result = client.DownloadZipFile(source, Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + filename, ref Stop);
