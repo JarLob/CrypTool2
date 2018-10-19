@@ -1,0 +1,55 @@
+Plugin Build Process
+------------------------------------------------------------------------
+
+0) Check for sources in state "UPLOADED"
+
+Foreach Source found:
+
+During the build, the source goes to state BUILDING to avoid the build of the same source twice at the same time
+
+Start "Plugin Build Process" (Thread)
+
+  1) Process creates folder for plugin (e.g. Build\Plugin-1-1, = Plugin-PluginId-SourceId)
+
+  2) Process creates folder structure in plugin folder
+    --> \plugin           contains source
+    --> \build_output     contains builded plugins
+    --> build_plugin.xml  contains msbuild script
+
+    note: Also makes references to
+    --> signing certificate
+    --> custom build tasks
+    --> ct2 libraries (CrypCore.dll and CrypPluginBase.dll)
+
+  3) Process downloads zip file and extracts complete content into "plugin" folder
+
+  4) Process searches for exactly one csproj file in the root folder, i.e. "plugin"
+    --> if it finds 0 or more than 1, the build process fails at this point
+  
+  5) Process modifies csproj file
+    --> changes references to CrypPluginBase to correct path (hint: dont forget <private>false</private>)
+    --> changes output folder of "Release" target to "build_output" folder
+
+  6) Process modifies msbuild script
+    --> change name of target project to name of csproj file found in "plugin" folder
+
+  7) Process starts "msbuild.exe" (hint: set correct password for signtool to allow it opening signing certificate)
+    --> msbuild compiles the plugin
+    --> signtool is also started and signs the builded assembly file
+
+  8) Process checks, if assembly file exists in "build_output" (if not => ERROR)
+
+  9) Process zips everything located in "build_output" - this also includes "de/ru" etc subfolders of the plugin
+       --> zip name is "Assembly-1-1.zip, = Assembly-PluginId-SourceId")
+
+  10) Process uploads assembly zip file to CrypToolStore Server, and also updates source data in database
+
+  11) Process cleans up by deleting build folder (also in case of an error)
+
+General:
+
+In case of an error, the source goes to state BUILD_ERROR
+In case of no error, the source goes to state BUILD_OK
+In both cases, the complete build log (i.e. the std out of msbuild) is uploaded to the database
+
+Idea: Sent email to developer to inform him
