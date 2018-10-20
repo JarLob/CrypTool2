@@ -1320,8 +1320,9 @@ namespace CrypToolStoreLib.Client
         /// Requests a list of sources from the database
         /// </summary>
         /// <param name="username"></param>
+        /// <param name="buildstate"></param>
         /// <returns></returns>
-        public DataModificationOrRequestResult GetSourceList(int pluginid)
+        public DataModificationOrRequestResult GetSourceList(int pluginid, string buildstate = "")
         {
             lock (this)
             {
@@ -1335,11 +1336,27 @@ namespace CrypToolStoreLib.Client
                     };
                 }
 
-                logger.LogText(String.Format("Trying to get sources of plugin: {0}", pluginid), this, Logtype.Info);
+                if (pluginid != -1)
+                {
+                    logger.LogText(String.Format("Trying to get sources of plugin: {0}", pluginid), this, Logtype.Info);
+                }
+                else if (!String.IsNullOrEmpty(buildstate))
+                {
+                    logger.LogText(String.Format("Trying to get sources in buildstate: {0}", buildstate), this, Logtype.Info);
+                }
+                else
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "No plugin or buildstate given",
+                        Success = false
+                    };
+                }
 
                 //1. Step: Send RequestPluginListMessage to server
                 RequestSourceListMessage message = new RequestSourceListMessage();
                 message.PluginId = pluginid;
+                message.BuildState = buildstate;
                 SendMessage(message);
 
                 //2. Step: Receive response message from server
@@ -1372,7 +1389,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to request a plugin list was not a ResponsePluginList. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to request a source list was not a ResponseSourceListMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {

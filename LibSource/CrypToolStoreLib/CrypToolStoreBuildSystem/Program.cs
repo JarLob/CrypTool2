@@ -10,6 +10,9 @@ namespace CrypToolStoreBuildSystem
     {
         static void Main(string[] args)
         {
+            CrypToolStoreBuildServer server = new CrypToolStoreBuildServer();
+            server.Start();
+            Console.ReadLine();
         }
     }
 }

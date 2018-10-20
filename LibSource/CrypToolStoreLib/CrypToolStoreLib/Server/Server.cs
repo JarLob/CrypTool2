@@ -1336,7 +1336,18 @@ namespace CrypToolStoreLib.Server
                         return;
                     }
                 }                
-                List<Source> sources = Database.GetSources(requestSourceListMessage.PluginId);
+                List<Source> sources = new List<Source>();
+                if (requestSourceListMessage.PluginId != -1)
+                {
+                    //return all sources of a dedicated plugin
+                    sources = Database.GetSources(requestSourceListMessage.PluginId);
+                }
+                else if (ClientIsAdmin && !String.IsNullOrEmpty(requestSourceListMessage.BuildState))
+                {
+                    //return all sources in a dedicated BuildState; mainly needed by buildserver
+                    //only admin users are allowed to do this
+                    sources = Database.GetSources(requestSourceListMessage.BuildState);
+                }
                 ResponseSourceListMessage responseSourceListMessage = new ResponseSourceListMessage();
                 responseSourceListMessage.AllowedToViewList = true;
                 string message = String.Format("Responding with source list containing {0} elements", sources.Count);

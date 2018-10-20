@@ -824,6 +824,41 @@ namespace CrypToolStoreLib.Database
         }
 
         /// <summary>
+        /// Returns a list of sources for with the dedicated buildstate
+        /// <param name="buildstate"></param>
+        /// </summary>
+        public List<Source> GetSources(string buildstate)
+        {
+            string query = "select pluginid, pluginversion, buildversion, buildstate, buildlog, uploaddate, builddate, zipfilename, assemblyfilename from sources where buildstate=@buildstate";
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = new object[][]{
+                new object[]{"@buildstate", buildstate},
+            };
+
+            var resultset = connection.ExecutePreparedStatement(query, parameters);
+
+            List<Source> sources = new List<Source>();
+
+            foreach (var entry in resultset)
+            {
+                Source source = new Source();
+                source.PluginId = (int)entry["pluginid"];
+                source.PluginVersion = (int)entry["pluginversion"];
+                source.BuildVersion = (int)entry["buildversion"];
+                source.BuildState = (string)entry["buildstate"];
+                source.BuildLog = (string)entry["buildlog"];
+                source.UploadDate = (DateTime)entry["uploaddate"];
+                source.BuildDate = (DateTime)entry["builddate"];
+                source.ZipFileName = (string)entry["zipfilename"];
+                source.AssemblyFileName = (string)entry["assemblyfilename"];
+                sources.Add(source);
+            }
+            return sources;
+        }
+
+        /// <summary>
         /// Creates a new resource entry in the database
         /// </summary>
         /// <param name="username"></param>

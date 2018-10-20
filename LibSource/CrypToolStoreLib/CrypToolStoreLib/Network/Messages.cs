@@ -1264,9 +1264,13 @@ namespace CrypToolStoreLib.Tools
         [MessageDataField]
         public int PluginId { get; set; }
 
+        [MessageDataField]
+        public string BuildState { get; set; }
+
         public RequestSourceListMessage()
         {
-            
+            BuildState = string.Empty;
+            PluginId = -1;
         }
     }
 
