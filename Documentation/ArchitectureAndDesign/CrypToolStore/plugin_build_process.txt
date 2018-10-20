@@ -39,12 +39,14 @@ Start "Plugin Build Process" (Thread)
 
   8) Process checks, if assembly file exists in "build_output" (if not => ERROR)
 
-  9) Process zips everything located in "build_output" - this also includes "de/ru" etc subfolders of the plugin
+  9) Process checks, if a component is located in the assembly, i.e. a class which inheritates from IPlugin (if not => ERROR)
+
+  10) Process zips everything located in "build_output" - this also includes "de/ru" etc subfolders of the plugin
        --> zip name is "Assembly-1-1.zip, = Assembly-PluginId-SourceId")
 
-  10) Process uploads assembly zip file to CrypToolStore Server, and also updates source data in database
+  11) Process uploads assembly zip file to CrypToolStore Server, and also updates source data in database
 
-  11) Process cleans up by deleting build folder (also in case of an error)
+  12) Process cleans up by deleting build folder (also in case of an error)
 
 General:
 
