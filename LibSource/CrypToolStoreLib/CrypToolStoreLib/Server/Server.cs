@@ -2231,7 +2231,7 @@ namespace CrypToolStoreLib.Server
                         else
                         {
                             //Received another (wrong) message
-                            string msg = String.Format("Response message to UploadDownloadDataMessage was not a ResponseUploadDownloadDataMessage or a StopUploadDownloadMessage. It was {0}", response.MessageHeader.MessageType.ToString());
+                            string msg = String.Format("Response message to UploadDownloadDataMessage was not a ResponseUploadDownloadDataMessage or a StopUploadDownloadMessage. Message was: {0}", response.MessageHeader.MessageType.ToString());
                             Logger.LogText(msg, this, Logtype.Info);
                             return;
                         }

@@ -284,7 +284,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                logger.LogText(String.Format("Response message to login attempt was not a ResponseLoginMessage. It was {0}", response_message.MessageHeader.MessageType.ToString()), this, Logtype.Info);
+                logger.LogText(String.Format("Response message to login attempt was not a ResponseLoginMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString()), this, Logtype.Info);
                 return false;
             }
         }
@@ -359,7 +359,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to create new developer was not a ResponseDeveloperModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to create new developer was not a ResponseDeveloperModificationMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -425,7 +425,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to update an existing developer was not a ResponseDeveloperModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to update an existing developer was not a ResponseDeveloperModificationMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -501,7 +501,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to delete an existing developer was not a ResponseDeveloperModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to delete an existing developer was not a ResponseDeveloperModificationMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -568,7 +568,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to request an existing developer was not a ResponseDeveloperMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to request an existing developer was not a ResponseDeveloperMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -645,7 +645,7 @@ namespace CrypToolStoreLib.Client
                     };
                 }
                 //Received another (wrong) message
-                string msg = String.Format("Response message to request a developer list was not a ResponseDeveloperList. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to request a developer list was not a ResponseDeveloperList. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -726,7 +726,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to create new plugin was not a ResponsePluginModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to create new plugin was not a ResponsePluginModificationMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -801,7 +801,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to update an existing plugin was not a ResponsePluginModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to update an existing plugin was not a ResponsePluginModificationMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -876,7 +876,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to delete an existing plugin was not a ResponsePluginModification. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to delete an existing plugin was not a ResponsePluginModification. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -942,7 +942,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to request an existing plugin was not a ResponsePluginMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to request an existing plugin was not a ResponsePluginMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -999,7 +999,7 @@ namespace CrypToolStoreLib.Client
                 {
                     //received a response, forward it to user
                     ResponsePluginListMessage responsePluginListMessage = (ResponsePluginListMessage)response_message;
-                    logger.LogText(String.Format("Received a plugin list. Message was {0}", responsePluginListMessage.Message), this, Logtype.Info);
+                    logger.LogText(String.Format("Received a plugin list. Message was: {0}", responsePluginListMessage.Message), this, Logtype.Info);
                     return new DataModificationOrRequestResult()
                     {
                         Message = responsePluginListMessage.Message,
@@ -1008,7 +1008,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to request a plugin list was not a ResponsePluginListMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to request a plugin list was not a ResponsePluginListMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -1088,7 +1088,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to create new plugin was not a ResponseSourceModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to create new plugin was not a ResponseSourceModificationMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -1163,7 +1163,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to update an existing source was not a ResponseSourceModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to update an existing source was not a ResponseSourceModificationMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -1239,7 +1239,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to delete an existing source was not a ResponseSourceModification. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to delete an existing source was not a ResponseSourceModification. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -1306,7 +1306,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to request an existing plugin was not a ResponseSourceMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to request an existing plugin was not a ResponseSourceMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -1379,7 +1379,7 @@ namespace CrypToolStoreLib.Client
                 {
                     //received a response, forward it to user
                     ResponseSourceListMessage responseSourceListMessage = (ResponseSourceListMessage)response_message;
-                    logger.LogText(String.Format("Received a source list. Message was {0}", responseSourceListMessage.Message), this, Logtype.Info);
+                    logger.LogText(String.Format("Received a source list. Message was: {0}", responseSourceListMessage.Message), this, Logtype.Info);
                     return new DataModificationOrRequestResult()
                     {
                         Message = responseSourceListMessage.Message,
@@ -1389,7 +1389,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to request a source list was not a ResponseSourceListMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to request a source list was not a ResponseSourceListMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -1563,7 +1563,7 @@ namespace CrypToolStoreLib.Client
                             else
                             {
                                 //Received another (wrong) message
-                                string msg = String.Format("Response message to upload a zipfile was not a ResponseUploadDownloadDataMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                                string msg = String.Format("Response message to upload a zipfile was not a ResponseUploadDownloadDataMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                                 logger.LogText(msg, this, Logtype.Info);
                                 return new DataModificationOrRequestResult()
                                 {
@@ -1597,7 +1597,7 @@ namespace CrypToolStoreLib.Client
                 {
 
                     //Received another (wrong) message
-                    string msg = String.Format("Response message to upload a zipfile was not a ResponseUploadDownloadDataMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                    string msg = String.Format("Response message to upload a zipfile was not a ResponseUploadDownloadDataMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                     logger.LogText(msg, this, Logtype.Info);
                     return new DataModificationOrRequestResult()
                     {
@@ -1736,7 +1736,7 @@ namespace CrypToolStoreLib.Client
                             //we receive something wrong...
                             else
                             {
-                                string msg = String.Format("Response message to RequestDownloadZipfileMessage a zipfile was not a UploadDownloadDataMessage. It was {0}", responseMessage.MessageHeader.MessageType.ToString());
+                                string msg = String.Format("Response message to RequestDownloadZipfileMessage a zipfile was not a UploadDownloadDataMessage. Message was: {0}", responseMessage.MessageHeader.MessageType.ToString());
                                 logger.LogText(msg, this, Logtype.Info);
                                 deleteFile = true;
                                 return new DataModificationOrRequestResult()
@@ -1840,7 +1840,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to create new plugin was not a ResponseResourceModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to create new plugin was not a ResponseResourceModificationMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -1915,7 +1915,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to update an existing plugin was not a ResponseResourceModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to update an existing plugin was not a ResponseResourceModificationMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -1990,7 +1990,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to delete an existing resource was not a ResponseResourceModification. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to delete an existing resource was not a ResponseResourceModification. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -2056,7 +2056,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to request an existing resource was not a ResponseResourceMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to request an existing resource was not a ResponseResourceMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -2113,7 +2113,7 @@ namespace CrypToolStoreLib.Client
                 {
                     //received a response, forward it to user
                     ResponseResourceListMessage responseResourceListMessage = (ResponseResourceListMessage)response_message;
-                    logger.LogText(String.Format("Received a resource list. Message was {0}", responseResourceListMessage.Message), this, Logtype.Info);
+                    logger.LogText(String.Format("Received a resource list. Message was: {0}", responseResourceListMessage.Message), this, Logtype.Info);
                     return new DataModificationOrRequestResult()
                     {
                         Message = responseResourceListMessage.Message,
@@ -2123,7 +2123,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to request a resource list was not a ResponseResourceListMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to request a resource list was not a ResponseResourceListMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -2203,7 +2203,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to create new plugin was not a ResponseResourceDataModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to create new plugin was not a ResponseResourceDataModificationMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -2278,7 +2278,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to update an existing resource data was not a ResponseResourceDataModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to update an existing resource data was not a ResponseResourceDataModificationMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -2354,7 +2354,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to delete an existing resource data was not a ResponseResourceDataModificationMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to delete an existing resource data was not a ResponseResourceDataModificationMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -2421,7 +2421,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to request an existing resource data was not a ResponseResourceDataMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to request an existing resource data was not a ResponseResourceDataMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -2477,7 +2477,7 @@ namespace CrypToolStoreLib.Client
                 {
                     //received a response, forward it to user
                     ResponseResourceDataListMessage responseResourceDataListMessage = (ResponseResourceDataListMessage)response_message;
-                    logger.LogText(String.Format("Received a resource data list. Message was {0}", responseResourceDataListMessage.Message), this, Logtype.Info);
+                    logger.LogText(String.Format("Received a resource data list. Message was: {0}", responseResourceDataListMessage.Message), this, Logtype.Info);
                     return new DataModificationOrRequestResult()
                     {
                         Message = responseResourceDataListMessage.Message,
@@ -2486,7 +2486,7 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Received another (wrong) message
-                string msg = String.Format("Response message to request a resource data list was not a ResponseResourceDataListMessage. It was {0}", response_message.MessageHeader.MessageType.ToString());
+                string msg = String.Format("Response message to request a resource data list was not a ResponseResourceDataListMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
