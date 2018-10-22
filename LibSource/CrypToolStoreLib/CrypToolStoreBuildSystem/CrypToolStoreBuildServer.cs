@@ -145,7 +145,7 @@ namespace CrypToolStoreBuildSystem
                 if (workers.Count < MAX_BUILD_WORKERS)
                 {
 
-                    Logger.LogText(String.Format("Creating build worker to build source {0}-{1}", source.PluginId, source.PluginVersion), this, Logtype.Info);
+                    Logger.LogText(String.Format("Creating and starting worker to build source {0}-{1}", source.PluginId, source.PluginVersion), this, Logtype.Info);
                     BuildWorker worker = new BuildWorker(source);
                     workers.Add(worker);
                     worker.Start();
