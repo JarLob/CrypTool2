@@ -529,12 +529,4 @@ namespace CrypToolStoreLib.DataObjects
         public bool Success { get; set; }
         public object DataObject { get; set; }
     }
-
-    public class BUILD_STATES
-    {
-        public const string UPLOADED = "Uploaded";
-        public const string BUILDING = "BUILDING";
-        public const string ERROR = "Error";
-        public const string SUCCESS = "Success";
-    }
 }

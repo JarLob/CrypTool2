@@ -112,7 +112,7 @@ namespace CrypToolStoreLib.Server
                     {
                         TcpClient client = TCPListener.AcceptTcpClient();
                         logger.LogText(String.Format("New client connected from IP/Port={0}", client.Client.RemoteEndPoint), this, Logtype.Info);
-                        Thread handlerthread = new Thread(() =>
+                        Task handlertask = new Task(() =>
                         {
                             try
                             {
@@ -125,8 +125,7 @@ namespace CrypToolStoreLib.Server
                                 logger.LogText(String.Format("Exception during handling of client from IP/Port={0} : {1}", client.Client.RemoteEndPoint, ex.Message), this, Logtype.Error);
                             }
                         });
-                        handlerthread.IsBackground = true;
-                        handlerthread.Start();
+                        handlertask.Start();
                     }
                     catch (Exception ex)
                     {
@@ -445,6 +444,7 @@ namespace CrypToolStoreLib.Server
             Logger.LogText(String.Format("Login attempt from Ip={0}", IPAddress), this, Logtype.Debug);
 
             //Initially, we set everything to false
+            Username = "anonymous"; //default username is anonymous
             ClientIsAuthenticated = false;
             ClientIsAdmin = false;
 
@@ -512,7 +512,9 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleLogoutMessage(LogoutMessage logoutMessage, SslStream sslStream)
         {
+            Username = "anonymous"; //default username is anonymous
             ClientIsAuthenticated = false;
+            ClientIsAdmin = false;
             Logger.LogText(String.Format("User {0} from IP={1} logged out", Username, IPAddress), this, Logtype.Info);
             sslStream.Close();
         }
