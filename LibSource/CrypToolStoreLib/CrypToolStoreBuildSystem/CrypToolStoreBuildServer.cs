@@ -86,14 +86,21 @@ namespace CrypToolStoreBuildSystem
                     if (DateTime.Now >= lastCheckTime.AddMilliseconds(BUILD_CHECK_INTERVAL))
                     {
                         CheckBuildNeeded();
-                        lastCheckTime = DateTime.Now;
+                        
                     }
-                    Thread.Sleep(1000);
+                    
                 }
                 catch (Exception ex)
                 {
                     Logger.LogText(String.Format("Exception occured in BuildServerLoop: {0}", ex.Message), this, Logtype.Error);
-                }                                    
+                }
+                finally
+                {
+                    lastCheckTime = DateTime.Now;
+                    Thread.Sleep(1000);
+                }
+
+
             }
             Logger.LogText("CrypToolStore BuildServer terminated", this, Logtype.Info);
         }

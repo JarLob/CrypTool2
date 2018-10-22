@@ -84,7 +84,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 return;
             }
             
-            //we fetch the source list in a seperate thread, thus, the ui is not blocked during download of the list
+            //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
             Thread uploadZipFileThread = new Thread(UploadZipfile);
             uploadZipFileThread.IsBackground = true;
             uploadZipFileThread.Start();

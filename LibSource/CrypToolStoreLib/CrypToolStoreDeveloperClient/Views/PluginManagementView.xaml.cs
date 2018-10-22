@@ -63,7 +63,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 return;
             }
 
-            //we fetch the plugin list in a seperate thread, thus, the ui is not blocked during download of the list
+            //we fetch the plugin list in a separate thread, thus, the ui is not blocked during download of the list
             Thread fetchPluginListThread = new Thread(FetchPluginList);
             fetchPluginListThread.IsBackground = true;
             fetchPluginListThread.Start();
@@ -106,7 +106,7 @@ namespace CrypToolStoreDeveloperClient.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during retrieving of list of plugins: {0}", ex.Message), "Exception");
+                MessageBox.Show(String.Format("Exception during retrieving list of plugins: {0}", ex.Message), "Exception");
             }         
         }
 
@@ -164,7 +164,7 @@ namespace CrypToolStoreDeveloperClient.Views
             UpdatePluginWindow updatePluginWindow = new UpdatePluginWindow(id);
             updatePluginWindow.MainWindow = MainWindow;
             updatePluginWindow.ShowDialog();
-            //we fetch the plugin list in a seperate thread, thus, the ui is not blocked during download of the list
+            //we fetch the plugin list in a separate thread, thus, the ui is not blocked during download of the list
             Thread fetchPluginListThread = new Thread(FetchPluginList);
             fetchPluginListThread.IsBackground = true;
             fetchPluginListThread.Start();
@@ -180,7 +180,7 @@ namespace CrypToolStoreDeveloperClient.Views
             CreateNewPluginWindow createNewPluginWindow = new CreateNewPluginWindow();
             createNewPluginWindow.MainWindow = MainWindow;
             createNewPluginWindow.ShowDialog();
-            //we fetch the plugin list in a seperate thread, thus, the ui is not blocked during download of the list
+            //we fetch the plugin list in a separate thread, thus, the ui is not blocked during download of the list
             Thread fetchPluginListThread = new Thread(FetchPluginList);
             fetchPluginListThread.IsBackground = true;
             fetchPluginListThread.Start();

@@ -79,7 +79,7 @@ namespace CrypToolStoreDeveloperClient.Views
         private void DownloadButton_Click(object sender, RoutedEventArgs e)
         {      
             
-            //we fetch the source list in a seperate thread, thus, the ui is not blocked during download of the list
+            //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
             Thread uploadZipFileThread = new Thread(DownloadZipfile);
             uploadZipFileThread.IsBackground = true;
             uploadZipFileThread.Start();

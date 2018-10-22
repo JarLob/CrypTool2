@@ -63,7 +63,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 return;
             }
 
-            //we fetch the user list in a seperate thread, thus, the ui is not blocked during download of the list67
+            //we fetch the user list in a separate thread, thus, the ui is not blocked during download of the list67
             Thread fetchUserListThread = new Thread(FetchUserList);
             fetchUserListThread.IsBackground = true;
             fetchUserListThread.Start();
@@ -104,7 +104,7 @@ namespace CrypToolStoreDeveloperClient.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during retrieving of list of developers: {0}", ex.Message), "Exception");
+                MessageBox.Show(String.Format("Exception during retrieving list of developers: {0}", ex.Message), "Exception");
             }
         }
 
@@ -162,7 +162,7 @@ namespace CrypToolStoreDeveloperClient.Views
             UpdateUserWindow updateUserWindow = new UpdateUserWindow(username);
             updateUserWindow.MainWindow = MainWindow;
             updateUserWindow.ShowDialog();
-            //we fetch the user list in a seperate thread, thus, the ui is not blocked during download of the list67
+            //we fetch the user list in a separate thread, thus, the ui is not blocked during download of the list67
             Thread fetchUserListThread = new Thread(FetchUserList);
             fetchUserListThread.IsBackground = true;
             fetchUserListThread.Start();
@@ -178,7 +178,7 @@ namespace CrypToolStoreDeveloperClient.Views
             CreateNewUserWindow createNewUserWindow = new CreateNewUserWindow();
             createNewUserWindow.MainWindow = MainWindow;
             createNewUserWindow.ShowDialog();
-            //we fetch the user list in a seperate thread, thus, the ui is not blocked during download of the list67
+            //we fetch the user list in a separate thread, thus, the ui is not blocked during download of the list67
             Thread fetchUserListThread = new Thread(FetchUserList);
             fetchUserListThread.IsBackground = true;
             fetchUserListThread.Start();

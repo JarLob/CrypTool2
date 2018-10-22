@@ -2024,7 +2024,7 @@ namespace CrypToolStoreLib.Server
                                 ResponseUploadDownloadDataMessage wrongUploadSizeResponseUploadDownloadDataMessage = new ResponseUploadDownloadDataMessage();
                                 Logger.LogText(String.Format("User {0} sent too much data. Exptected {1} but already received {2} Abort now", Username, filesize, writtenFilesize), this, Logtype.Error);
                                 wrongUploadSizeResponseUploadDownloadDataMessage.Success = false;
-                                wrongUploadSizeResponseUploadDownloadDataMessage.Message = "Exception during upload of zipfile. You send too much data";
+                                wrongUploadSizeResponseUploadDownloadDataMessage.Message = "Exception during upload of zipfile. You sent too much data";
                                 SendMessage(wrongUploadSizeResponseUploadDownloadDataMessage, sslStream);
                                 return; // error: wrong message
                             }

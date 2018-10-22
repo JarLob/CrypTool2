@@ -1736,7 +1736,7 @@ namespace CrypToolStoreLib.Client
                             //we receive something wrong...
                             else
                             {
-                                string msg = String.Format("Response message to RequestDownloadZipfileMessage a zipfile was not a UploadDownloadDataMessage. Message was: {0}", responseMessage.MessageHeader.MessageType.ToString());
+                                string msg = String.Format("Response message to RequestDownloadZipfileMessage a zipfile was not an UploadDownloadDataMessage. Message was: {0}", responseMessage.MessageHeader.MessageType.ToString());
                                 logger.LogText(msg, this, Logtype.Info);
                                 deleteFile = true;
                                 return new DataModificationOrRequestResult()

@@ -64,7 +64,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 return;
             }
 
-            //we fetch the source list in a seperate thread, thus, the ui is not blocked during download of the list
+            //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
             Thread fetchSourceListThread = new Thread(FetchSourceList);
             fetchSourceListThread.IsBackground = true;
             fetchSourceListThread.Start();
@@ -103,7 +103,7 @@ namespace CrypToolStoreDeveloperClient.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during retrieving of list of sources: {0}", ex.Message), "Exception");
+                MessageBox.Show(String.Format("Exception during retrieving list of sources: {0}", ex.Message), "Exception");
             }
         }
 
@@ -135,7 +135,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     if (result.Success)
                     {
                         MessageBox.Show(String.Format("Successfully deleted source {0}-{1}", PluginId, pluginversion), "Source deleted");
-                        //we fetch the source list in a seperate thread, thus, the ui is not blocked during download of the list
+                        //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
                         Thread fetchSourceListThread = new Thread(FetchSourceList);
                         fetchSourceListThread.IsBackground = true;
                         fetchSourceListThread.Start();
@@ -164,7 +164,7 @@ namespace CrypToolStoreDeveloperClient.Views
             UploadZipFileWindow uploadZipFileWindow = new UploadZipFileWindow(PluginId, pluginversion);
             uploadZipFileWindow.MainWindow = MainWindow;
             uploadZipFileWindow.ShowDialog();
-            //we fetch the source list in a seperate thread, thus, the ui is not blocked during download of the list
+            //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
             Thread fetchSourceListThread = new Thread(FetchSourceList);
             fetchSourceListThread.IsBackground = true;
             fetchSourceListThread.Start();
@@ -182,7 +182,7 @@ namespace CrypToolStoreDeveloperClient.Views
             DownloadZipFileWindow downloadZipFileWindow = new DownloadZipFileWindow(PluginId, pluginversion);
             downloadZipFileWindow.MainWindow = MainWindow;
             downloadZipFileWindow.ShowDialog();
-            //we fetch the source list in a seperate thread, thus, the ui is not blocked during download of the list
+            //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
             Thread fetchSourceListThread = new Thread(FetchSourceList);
             fetchSourceListThread.IsBackground = true;
             fetchSourceListThread.Start();
@@ -242,7 +242,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     if (result.Success == true)
                     {
                         MessageBox.Show(String.Format("Created new source: {0}-{1}", newsource.PluginId, newsource.PluginVersion), "Source created");
-                        //we fetch the source list in a seperate thread, thus, the ui is not blocked during download of the list
+                        //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
                         Thread fetchSourceListThread = new Thread(FetchSourceList);
                         fetchSourceListThread.IsBackground = true;
                         fetchSourceListThread.Start();
