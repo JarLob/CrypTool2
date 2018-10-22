@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuildLogger.cs" />
     <Compile Include="BuildWorker.cs" />
     <Compile Include="CrypToolStoreBuildServer.cs" />
     <Compile Include="Constants.cs" />
