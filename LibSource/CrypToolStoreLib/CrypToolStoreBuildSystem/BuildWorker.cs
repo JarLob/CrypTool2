@@ -100,6 +100,9 @@ namespace CrypToolStoreBuildSystem
             Logger.LogText(String.Format("Started build of source {0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             try
             {
+                // 0) Set source to building state
+                SetToBuildingState();
+
                 // 1) Process creates folder for plugin (e.g. Build\Plugin-1-1, = Plugin-PluginId-SourceId)
                 if (!CreateBuildFolder())
                 {
@@ -277,6 +280,49 @@ namespace CrypToolStoreBuildSystem
         }
 
         /// <summary>
+        ///  0) Set source to building state
+        /// </summary>
+        private bool SetToBuildingState()
+        {
+            Logger.LogText(String.Format("Set source {0}-{1} to state: {2}", Source.PluginId, Source.PluginVersion, BuildState.BUILDING.ToString()), this, Logtype.Info);
+
+            CrypToolStoreClient client = new CrypToolStoreClient();
+            client.ServerAddress = Constants.ServerAddress;
+            client.ServerPort = Constants.ServerPort;
+            client.Connect();
+            client.Login(Constants.Username, Constants.Password);
+
+            try
+            {
+                //get source for update
+                DataModificationOrRequestResult result = client.GetSource(Source.PluginId, Source.PluginVersion);
+                if (!result.Success)
+                {
+                    Logger.LogText(String.Format("Could not get source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, result.Message), this, Logtype.Error);
+                    client.Disconnect();
+                    return false;
+                }
+                Source source = (Source)result.DataObject;
+                //update that source to building state
+                source.BuildState = BuildState.BUILDING.ToString();
+                source.BuildLog = String.Format("Buildserver started build process at {0}", DateTime.Now);
+                result = client.UpdateSource(source);
+                if (!result.Success)
+                {
+                    Logger.LogText(String.Format("Could not set source-{0}-{1} to state {2}: {3}", Source.PluginId, Source.PluginVersion, BuildState.BUILDING, result.Message), this, Logtype.Error);
+                    return false;
+                }
+
+                Logger.LogText(String.Format("Source-{0}-{1} is now in state: {2}", Source.PluginId, Source.PluginVersion, BuildState.BUILDING.ToString()), this, Logtype.Info);
+                return true;
+            }
+            finally
+            {
+                client.Disconnect();
+            }
+        }
+
+        /// <summary>
         /// 1) Checks, if the BUILD_FOLDER exists, if not it creats it
         /// Also creates SOURCE_FILE_NAME-PluginId-PluginVersion folder for the actual build
         /// </summary>
@@ -297,7 +343,7 @@ namespace CrypToolStoreBuildSystem
             if (!Directory.Exists(buildfoldername))
             {                
                 Directory.CreateDirectory(buildfoldername);
-                Logger.LogText(String.Format("Created build folder for source {0}-{1}: {2}", Source.PluginId, Source.PluginVersion, BUILD_FOLDER), this, Logtype.Info);
+                Logger.LogText(String.Format("Created build folder for source {0}-{1}: {2}", Source.PluginId, Source.PluginVersion, buildfoldername), this, Logtype.Info);
                 return true;
             }
             else

@@ -689,7 +689,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, zipfilename={2}, buildstate={3}, buildlog={4}", pluginid, pluginversion, zipfilename, buildstate, buildlog), this, Logtype.Info);
+            logger.LogText(String.Format("Updated source: pluginid={0}, pluginversion={1}, zipfilename={2}, buildstate={3}, buildlog={4}", pluginid, pluginversion, zipfilename, buildstate, buildlog), this, Logtype.Info);
         }
 
 
