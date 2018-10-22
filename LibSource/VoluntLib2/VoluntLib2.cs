@@ -128,7 +128,7 @@ namespace VoluntLib2
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogText(String.Format("List of WellKnownPeers contained invalid entry (Exception: {0}): {0}. Ignore it", ex.Message, wellknownpeer), this, Logtype.Warning);
+                    Logger.LogText(String.Format("List of WellKnownPeers contained invalid entry (Exception: {0}): {1}. Ignore it", ex.Message, wellknownpeer), this, Logtype.Warning);
                     continue;
                 }
             }
