@@ -1203,7 +1203,7 @@ namespace CrypToolStoreLib.Client
                     };
                 }
 
-                logger.LogText(String.Format("Trying to delete an existing source: pluginid={0}, pluginversion={1}", pluginid, pluginversion), this, Logtype.Info);
+                logger.LogText(String.Format("Trying to delete source-{0}-{1}", pluginid, pluginversion), this, Logtype.Info);
 
                 //1. Step: Send DeletePluginMessage to server
                 DeleteSourceMessage message = new DeleteSourceMessage();
@@ -1268,7 +1268,7 @@ namespace CrypToolStoreLib.Client
                     };
                 }
 
-                logger.LogText(String.Format("Trying to get an existing source: {0} {1}", pluginId, pluginversion), this, Logtype.Info);
+                logger.LogText(String.Format("Trying to get source-{0}-{1}", pluginId, pluginversion), this, Logtype.Info);
 
                 //1. Step: Send RequestSourceMessage to server
                 RequestSourceMessage message = new RequestSourceMessage();

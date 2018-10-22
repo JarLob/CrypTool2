@@ -1076,7 +1076,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
                 response.Message = "Not authorized";
-                Logger.LogText(String.Format("User {0} tried to create new source={1}-{2} from IP={3} for a plugin that he does not own ", Username, createNewSourceMessage.Source.PluginId, createNewSourceMessage.Source.PluginVersion, IPAddress, source.PluginId), this, Logtype.Warning);
+                Logger.LogText(String.Format("User {0} tried to create new source={1}-{2} from IP={3} for a plugin={4} that he does not own ", Username, createNewSourceMessage.Source.PluginId, createNewSourceMessage.Source.PluginVersion, IPAddress, source.PluginId), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1188,7 +1188,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
                 response.Message = "Unauthorized to delete that source";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to delete source={1}-{2} from IP={2}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to delete source={1}-{2} from IP={3}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1200,7 +1200,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
                 response.Message = "Unauthorized to delete that source"; // we send an "unauthorized"; thus, it is not possible to search database for existing ids
-                Logger.LogText(String.Format("User {0} tried to delete non-existing source={1}-{2} from IP={2}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("User {0} tried to delete non-existing source={1}-{2} from IP={3}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1210,7 +1210,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
                 response.Message = "Unauthorized to delete that source";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to delete source={1}-{2} from IP={2}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to delete source={1}-{2} from IP={3}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1665,7 +1665,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 response.Message = String.Format("Resource with id={0} does not exist", resourceData.ResourceId);
-                Logger.LogText(String.Format("User {0} tried to create new resource data={1}-{2} from IP={3} for a non-existing resource", Username, createNewResourceDataMessage.ResourceData.ResourceId, createNewResourceDataMessage.ResourceData.ResourceVersion, IPAddress, resourceData.ResourceId), this, Logtype.Warning);
+                Logger.LogText(String.Format("User {0} tried to create new resource data={1}-{2} from IP={3} for a non-existing resource", Username, createNewResourceDataMessage.ResourceData.ResourceId, createNewResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1676,7 +1676,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 response.Message = "Not authorized";
-                Logger.LogText(String.Format("User {0} tried to create new resource data={1}-{2} from IP={3} for a resource that he does not own ", Username, createNewResourceDataMessage.ResourceData.ResourceId, createNewResourceDataMessage.ResourceData.ResourceVersion, IPAddress, resourceData.ResourceId), this, Logtype.Warning);
+                Logger.LogText(String.Format("User {0} tried to create new resource data={1}-{2} from IP={3} for a resource that he does not own ", Username, createNewResourceDataMessage.ResourceData.ResourceId, createNewResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1720,7 +1720,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 response.Message = "Unauthorized to update that resourceData";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to update resource data={1}-{2} from IP={2}", Username, updateResourceDataMessage.ResourceData.ResourceId, updateResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update resource data={1}-{2} from IP={3}", Username, updateResourceDataMessage.ResourceData.ResourceId, updateResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1788,7 +1788,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 response.Message = "Unauthorized to delete that resource data";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to delete resource data={1}-{2} from IP={2}", Username, deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to delete resource data={1}-{2} from IP={3}", Username, deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1800,7 +1800,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 response.Message = "Unauthorized to delete that resource data"; // we send an "unauthorized"; thus, it is not possible to search database for existing ids
-                Logger.LogText(String.Format("User {0} tried to delete non-existing resource data={1}-{2} from IP={2}", Username, deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("User {0} tried to delete non-existing resource data={1}-{2} from IP={3}", Username, deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1810,7 +1810,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 response.Message = "Unauthorized to delete that resource data";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to delete resource data={1}-{2} from IP={2}", Username, deleteResourceDataMessage.ResourceData.ResourceVersion, deleteResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to delete resource data={1}-{2} from IP={3}", Username, deleteResourceDataMessage.ResourceData.ResourceVersion, deleteResourceDataMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -2112,7 +2112,7 @@ namespace CrypToolStoreLib.Server
                 ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                 response.Success = false;
                 response.Message = "Unauthorized to download a zip file. Please authenticate yourself";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to download a zip file for source={1}-{2} from IP={2}", Username, requestDownloadZipfileMessage.Source.PluginId, requestDownloadZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to download a zip file for source={1}-{2} from IP={3}", Username, requestDownloadZipfileMessage.Source.PluginId, requestDownloadZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -2137,7 +2137,7 @@ namespace CrypToolStoreLib.Server
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
                     response.Message = "Source does not exist";
-                    Logger.LogText(String.Format("User {0} tried to download a zip file for a non-existing source={0}-{1} from IP={2}", Username, requestDownloadZipfileMessage.Source.PluginId,requestDownloadZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                    Logger.LogText(String.Format("User {0} tried to download a zip file for a non-existing source={1}-{2} from IP={3}", Username, requestDownloadZipfileMessage.Source.PluginId,requestDownloadZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                     SendMessage(response, sslStream);
                     return;
                 }                             
@@ -2150,7 +2150,7 @@ namespace CrypToolStoreLib.Server
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
                     response.Message = "No zip file has been previously uploaded for this source";
-                    Logger.LogText(String.Format("User {0} tried to download a non existing zip file for a source={0}-{1} from IP={2}", Username, requestDownloadZipfileMessage.Source.PluginId, requestDownloadZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                    Logger.LogText(String.Format("User {0} tried to download a non existing zip file for a source={1}-{2} from IP={3}", Username, requestDownloadZipfileMessage.Source.PluginId, requestDownloadZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                     SendMessage(response, sslStream);
                     return;
                 }
@@ -2161,7 +2161,7 @@ namespace CrypToolStoreLib.Server
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
                     response.Message = "Source zip file does not exist. Please contact a CrypToolStore admin";
-                    Logger.LogText(String.Format("User {0} tried to download a zip file for a source={0}-{1} that does not exists in file system from IP={2}", Username, requestDownloadZipfileMessage.Source.PluginId, requestDownloadZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Error);
+                    Logger.LogText(String.Format("User {0} tried to download a zip file for a source={1}-{2} that does not exists in file system from IP={3}", Username, requestDownloadZipfileMessage.Source.PluginId, requestDownloadZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Error);
                     SendMessage(response, sslStream);
                     return;
                 }

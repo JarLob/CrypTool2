@@ -1,5 +1,4 @@
-﻿using CrypToolStoreLib.Client;
-/*
+﻿/*
    Copyright 2018 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using CrypToolStoreLib.Client;
 using CrypToolStoreLib.DataObjects;
 using CrypToolStoreLib.Tools;
 using System;
@@ -348,7 +348,7 @@ namespace CrypToolStoreBuildSystem
             }
             else
             {
-                Logger.LogText(String.Format("Folder for source {0}-{1} already exists. Maybe because of faulty previous build. Abort now", Source.PluginId, Source.PluginVersion, BUILD_FOLDER), this, Logtype.Error);
+                Logger.LogText(String.Format("Folder for source {0}-{1} already exists. Maybe because of faulty previous build. Abort now", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
                 return false;
             }
         }
