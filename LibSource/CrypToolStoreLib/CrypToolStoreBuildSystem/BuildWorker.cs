@@ -327,7 +327,6 @@ namespace CrypToolStoreBuildSystem
                 if (!result.Success)
                 {
                     Logger.LogText(String.Format("Could not get source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, result.Message), this, Logtype.Error);
-                    client.Disconnect();
                     return false;
                 }
                 Source source = (Source)result.DataObject;
@@ -430,7 +429,6 @@ namespace CrypToolStoreBuildSystem
                 }
             }
             Logger.LogText(String.Format("Created build_plugin.xml for source {0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
-
             return true;
         }
 
@@ -730,17 +728,17 @@ namespace CrypToolStoreBuildSystem
 
         /// <summary>
         ///  11)  Worker zips everything located in "build_output" -- this also includes "de/ru" etc subfolders of the plugin
-        ///  --> zip name is "Assembly-1-1.zip, = Assembly-PluginId-SourceId")
+        ///  --> zip name is "assembly-1-1.zip, = assembly-PluginId-SourceId")
         /// </summary>
         /// <returns></returns>
         private bool CreateAssemblyZip()
         {
-            Logger.LogText(String.Format("Start creating Assembly-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("Start creating assembly-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
 
-            string zipfile_path_and_name = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\Assembly-" + Source.PluginId + "-" + Source.PluginVersion + ".zip";
+            string zipfile_path_and_name = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\assembly-" + Source.PluginId + "-" + Source.PluginVersion + ".zip";
             ZipFile.CreateFromDirectory(BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\" + "build_output\\", zipfile_path_and_name, CompressionLevel.Optimal, false);
 
-            Logger.LogText(String.Format("Created Assembly-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("Created assembly-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             return true;
         }
 
