@@ -254,19 +254,7 @@ namespace CrypToolStoreBuildSystem
                     return;
                 }
 
-                // 10) Worker checks, if a component is located in the assembly, i.e. a class which inherits from IPlugin (if not => ERROR)
-                if (!CheckComponentExists())
-                {
-                    return;
-                }
-
-                //check, if stop has been called
-                if (!IsRunning)
-                {
-                    return;
-                }
-
-                // 11)  Worker zips everything located in "build_output" -- this also includes "de/ru" etc subfolders of the plugin
+                // 10)  Worker zips everything located in "build_output" -- this also includes "de/ru" etc subfolders of the plugin
                 // --> zip name is "Assembly-1-1.zip, = Assembly-PluginId-SourceId")
                 if (!CreateAssemblyZip())
                 {
@@ -279,7 +267,7 @@ namespace CrypToolStoreBuildSystem
                     return;
                 }
 
-                // 12) Worker uploads assembly zip file to CrypToolStore Server, and also updates source data in database
+                // 11) Worker uploads assembly zip file to CrypToolStore Server, and also updates source data in database
                 if (!UploadAssemblyZip())
                 {
                     return;
@@ -293,7 +281,7 @@ namespace CrypToolStoreBuildSystem
             }
             finally
             {
-                // 13) Worker cleans up by deleting build folder (also in case of an error)
+                // 12) Worker cleans up by deleting build folder (also in case of an error)
                 try
                 {                    
                     CleanUp();
@@ -491,7 +479,7 @@ namespace CrypToolStoreBuildSystem
             string buildfoldername = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion;
 
             //Search for the csproj file in folder structure
-            SearchDir(buildfoldername,ref counter);
+            SearchDir(buildfoldername, ref counter, "csproj");
 
             //We only allow exactly one csproj file per Source
             if (counter == 0)
@@ -513,12 +501,12 @@ namespace CrypToolStoreBuildSystem
         /// </summary>
         /// <param name="dir"></param>
         /// <param name="counter"></param>
-        private void SearchDir(string dir, ref int counter)
+        private void SearchDir(string dir, ref int counter, string fileEnding)
         {            
             string[] files = Directory.GetFiles(dir);
             foreach (string name in files)
             {
-                if (name.ToLower().EndsWith("csproj"))
+                if (name.ToLower().EndsWith(fileEnding))
                 {
                     CSProjFileName = name;
                     counter++;
@@ -527,7 +515,7 @@ namespace CrypToolStoreBuildSystem
             string[] dirs = Directory.GetDirectories(dir);
             foreach (string dir2 in dirs)
             {
-                SearchDir(dir2, ref counter);
+                SearchDir(dir2, ref counter, fileEnding);
             }
         }
 
@@ -658,11 +646,11 @@ namespace CrypToolStoreBuildSystem
             process.BeginErrorReadLine();
             process.WaitForExit();
 
-            Logger.LogText("Output of msbuild:\r\n " + msbuild_Log.ToString(), this, Logtype.Info);
+            Logger.LogText(String.Format("Output of msbuild for source-{0}-{1}:\r\n{2}", Source.PluginId, Source.PluginVersion, msbuild_Log.ToString()), this, process.ExitCode == 0 ? Logtype.Info : Logtype.Error);
 
             if (process.ExitCode != 0)
             {
-                Logger.LogText(String.Format("Build of source-{0}-{1} failed", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+                Logger.LogText(String.Format("Build of source-{0}-{1} failed", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
                 return false;
             }
             return true;
@@ -704,30 +692,36 @@ namespace CrypToolStoreBuildSystem
         /// <returns></returns>
         private bool CheckBuild()
         {
+            int counter=0;
+            string buildfoldername = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\" + "build_output";
+            SearchDir(buildfoldername, ref counter, "dll");
+
+            if (counter == 0)
+            {
+                Logger.LogText(String.Format("Did not find any dll-file in build_output folder after building source-{0}-{1}. Abort now", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
+                return false;
+            }
             return true;
         }
 
         /// <summary>
-        /// 10) Worker checks, if a component is located in the assembly, i.e. a class which inherits from IPlugin (if not => ERROR)
-        /// </summary>
-        /// <returns></returns>
-        private bool CheckComponentExists()
-        {
-            return true;
-        }
-
-        /// <summary>
-        ///  11)  Worker zips everything located in "build_output" -- this also includes "de/ru" etc subfolders of the plugin
+        ///  10)  Worker zips everything located in "build_output" -- this also includes "de/ru" etc subfolders of the plugin
         ///  --> zip name is "Assembly-1-1.zip, = Assembly-PluginId-SourceId")
         /// </summary>
         /// <returns></returns>
         private bool CreateAssemblyZip()
         {
+            Logger.LogText(String.Format("Start creating Source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+
+            string zipfile_path_and_name = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + ".zip";
+            ZipFile.CreateFromDirectory(BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\" + "build_output\\", zipfile_path_and_name, CompressionLevel.Optimal, false);
+
+            Logger.LogText(String.Format("Created Source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             return true;
         }
 
         /// <summary>
-        /// 12) Worker uploads assembly zip file to CrypToolStore Server, and also updates source data in database
+        /// 11) Worker uploads assembly zip file to CrypToolStore Server, and also updates source data in database
         /// </summary>
         /// <returns></returns>
         private bool UploadAssemblyZip()
@@ -736,14 +730,14 @@ namespace CrypToolStoreBuildSystem
         }
 
         /// <summary>
-        /// 13) Worker cleans up by deleting build folder (also in case of an error)
+        /// 12) Worker cleans up by deleting build folder (also in case of an error)
         /// </summary>
         private void CleanUp()
         {
             string buildfoldername = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion;
             if (Directory.Exists(buildfoldername))
             {
-                Directory.Delete(buildfoldername, true);
+                //Directory.Delete(buildfoldername, true);
                 Logger.LogText(String.Format("Deleted build folder for source {0}-{1}: {2}", Source.PluginId, Source.PluginVersion, buildfoldername), this, Logtype.Info);                
             }            
         }
