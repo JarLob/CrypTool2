@@ -254,7 +254,19 @@ namespace CrypToolStoreBuildSystem
                     return;
                 }
 
-                // 10)  Worker zips everything located in "build_output" -- this also includes "de/ru" etc subfolders of the plugin
+                // 10) Create meta file containing meta information
+                if (!CreateMetaFile())
+                {
+                    return;
+                }
+
+                //check, if stop has been called
+                if (!IsRunning)
+                {
+                    return;
+                }
+
+                // 11)  Worker zips everything located in "build_output" -- this also includes "de/ru" etc subfolders of the plugin
                 // --> zip name is "Assembly-1-1.zip, = Assembly-PluginId-SourceId")
                 if (!CreateAssemblyZip())
                 {
@@ -267,7 +279,7 @@ namespace CrypToolStoreBuildSystem
                     return;
                 }
 
-                // 11) Worker uploads assembly zip file to CrypToolStore Server, and also updates source data in database
+                // 12) Worker uploads assembly zip file to CrypToolStore Server, and also updates source data in database
                 if (!UploadAssemblyZip())
                 {
                     return;
@@ -281,7 +293,7 @@ namespace CrypToolStoreBuildSystem
             }
             finally
             {
-                // 12) Worker cleans up by deleting build folder (also in case of an error)
+                // 13) Worker cleans up by deleting build folder (also in case of an error)
                 try
                 {                    
                     CleanUp();
@@ -687,7 +699,7 @@ namespace CrypToolStoreBuildSystem
         }
 
         /// <summary>
-        /// 9) Worker checks, if assembly file exists in "build_output" (if not => ERROR)
+        ///  9) Worker checks, if assembly file exists in "build_output" (if not => ERROR)
         /// </summary>
         /// <returns></returns>
         private bool CheckBuild()
@@ -705,23 +717,35 @@ namespace CrypToolStoreBuildSystem
         }
 
         /// <summary>
-        ///  10)  Worker zips everything located in "build_output" -- this also includes "de/ru" etc subfolders of the plugin
+        ///  10) Create meta file containing meta information
+        /// </summary>
+        /// <returns></returns>
+        private bool CreateMetaFile()
+        {
+            //here, we create a meta file that will also be zipped
+            //this meta file is used by ct2 to detect, if a new version of the plugin is available in the store
+            //also other useful information are located in the meta file, i.e. author names, references to resources, etc.
+            return true;
+        }
+
+        /// <summary>
+        ///  11)  Worker zips everything located in "build_output" -- this also includes "de/ru" etc subfolders of the plugin
         ///  --> zip name is "Assembly-1-1.zip, = Assembly-PluginId-SourceId")
         /// </summary>
         /// <returns></returns>
         private bool CreateAssemblyZip()
         {
-            Logger.LogText(String.Format("Start creating Source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("Start creating Assembly-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
 
-            string zipfile_path_and_name = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + ".zip";
+            string zipfile_path_and_name = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\Assembly-" + Source.PluginId + "-" + Source.PluginVersion + ".zip";
             ZipFile.CreateFromDirectory(BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\" + "build_output\\", zipfile_path_and_name, CompressionLevel.Optimal, false);
 
-            Logger.LogText(String.Format("Created Source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("Created Assembly-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             return true;
         }
 
         /// <summary>
-        /// 11) Worker uploads assembly zip file to CrypToolStore Server, and also updates source data in database
+        /// 12) Worker uploads assembly zip file to CrypToolStore Server, and also updates source data in database
         /// </summary>
         /// <returns></returns>
         private bool UploadAssemblyZip()
@@ -730,14 +754,14 @@ namespace CrypToolStoreBuildSystem
         }
 
         /// <summary>
-        /// 12) Worker cleans up by deleting build folder (also in case of an error)
+        /// 13) Worker cleans up by deleting build folder (also in case of an error)
         /// </summary>
         private void CleanUp()
         {
             string buildfoldername = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion;
             if (Directory.Exists(buildfoldername))
             {
-                //Directory.Delete(buildfoldername, true);
+                Directory.Delete(buildfoldername, true);
                 Logger.LogText(String.Format("Deleted build folder for source {0}-{1}: {2}", Source.PluginId, Source.PluginVersion, buildfoldername), this, Logtype.Info);                
             }            
         }
