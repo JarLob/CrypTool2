@@ -86,7 +86,7 @@ namespace CrypToolStoreBuildSystem
                     if (DateTime.Now >= lastCheckTime.AddMilliseconds(BUILD_CHECK_INTERVAL))
                     {
                         CheckBuildNeeded();
-                        
+                        lastCheckTime = DateTime.Now;
                     }
                     
                 }
@@ -96,11 +96,8 @@ namespace CrypToolStoreBuildSystem
                 }
                 finally
                 {
-                    lastCheckTime = DateTime.Now;
                     Thread.Sleep(1000);
                 }
-
-
             }
             Logger.LogText("CrypToolStore BuildServer terminated", this, Logtype.Info);
         }
