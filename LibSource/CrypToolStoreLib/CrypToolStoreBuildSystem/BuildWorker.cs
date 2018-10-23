@@ -18,6 +18,7 @@ using CrypToolStoreLib.DataObjects;
 using CrypToolStoreLib.Tools;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -48,7 +49,7 @@ namespace CrypToolStoreBuildSystem
         }
 
         /// <summary>
-        /// Is the build process currently running?
+        /// Is the build Worker currently running?
         /// </summary>
         public bool IsRunning
         {
@@ -60,6 +61,24 @@ namespace CrypToolStoreBuildSystem
         /// Name of the csproj file of the plugin
         /// </summary>
         private string CSProjFileName
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Filename/path of code signing certificate
+        /// </summary>
+        public string CertificatePfxFile
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Password of code signing certificate
+        /// </summary>
+        public string CertificatePassword
         {
             get;
             set;
@@ -101,10 +120,10 @@ namespace CrypToolStoreBuildSystem
             Logger.LogText(String.Format("Started build of source {0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             try
             {
-                // 0) Set source to building state
+                // 0) Worker sets source to building state
                 SetToBuildingState();
 
-                // 1) Process creates folder for plugin (e.g. Build\Plugin-1-1, = Plugin-PluginId-SourceId)
+                // 1) Worker creates folder for plugin (e.g. Build\Plugin-1-1, = Plugin-PluginId-SourceId)
                 if (!CreateBuildFolder())
                 {
                     return;
@@ -116,7 +135,7 @@ namespace CrypToolStoreBuildSystem
                     return;
                 }
 
-                // 2) Process creates folder structure in plugin folder
+                // 2) Worker creates folder structure in plugin folder
                 // --> \plugin           contains source
                 // --> \build_output     contains builded plugins
                 // --> build_plugin.xml  contains msbuild script
@@ -136,7 +155,7 @@ namespace CrypToolStoreBuildSystem
                     return;
                 }
 
-                // 3) Process downloads zip file
+                // 3) Worker downloads zip file
                 if (!DownloadZipFile())
                 {
                     return;
@@ -148,7 +167,7 @@ namespace CrypToolStoreBuildSystem
                     return;
                 }
 
-                // 4) Process extracts zip file
+                // 4) Worker extracts zip file
                 if (!ExtractZipFile())
                 {
                     return;
@@ -160,8 +179,8 @@ namespace CrypToolStoreBuildSystem
                     return;
                 }
 
-                // 5) Process searches for exactly one csproj file in the root folder, i.e. "plugin"
-                // --> if it finds 0 or more than 1, the build process fails at this point
+                // 5) Worker searches for exactly one csproj file in the root folder, i.e. "plugin"
+                // --> if it finds 0 or more than 1, the build Worker fails at this point
                 if (!SearchCSProjFile())
                 {
                     return;
@@ -173,7 +192,7 @@ namespace CrypToolStoreBuildSystem
                     return;
                 }
 
-                // 6) Process modifies csproj file
+                // 6) Worker modifies csproj file
                 // --> changes references to CrypPluginBase to correct path (hint: dont forget <private>false</private>)
                 // --> changes output folder of "Release" target to "build_output" folder
                 if (!ModifyCSProjFile())
@@ -187,7 +206,7 @@ namespace CrypToolStoreBuildSystem
                     return;
                 }
 
-                // 7) Process modifies msbuild script
+                // 7) Worker modifies msbuild script
                 // --> change name of target project to name of csproj file found in "plugin" folder
                 if (!ModifyMsBuildScript())
                 {
@@ -200,7 +219,7 @@ namespace CrypToolStoreBuildSystem
                     return;
                 }
 
-                // 8) Process starts "msbuild.exe" (hint: set correct password for signtool to allow it opening signing certificate)
+                // 8) Worker starts "msbuild.exe" (hint: set correct password for signtool to allow it opening signing certificate)
                 // --> msbuild compiles the plugin
                 // --> signtool is also started and signs the builded assembly file
                 if (!BuildPlugin())
@@ -214,7 +233,7 @@ namespace CrypToolStoreBuildSystem
                     return;
                 }
 
-                // 9) Process checks, if assembly file exists in "build_output" (if not => ERROR)
+                // 9) Worker checks, if assembly file exists in "build_output" (if not => ERROR)
                 if (!CheckBuild())
                 {
                     return;
@@ -226,7 +245,7 @@ namespace CrypToolStoreBuildSystem
                     return;
                 }
 
-                // 10) Process checks, if a component is located in the assembly, i.e. a class which inherits from IPlugin (if not => ERROR)
+                // 10) Worker checks, if a component is located in the assembly, i.e. a class which inherits from IPlugin (if not => ERROR)
                 if (!CheckComponentExists())
                 {
                     return;
@@ -238,7 +257,7 @@ namespace CrypToolStoreBuildSystem
                     return;
                 }
 
-                // 11)  Process zips everything located in "build_output" -- this also includes "de/ru" etc subfolders of the plugin
+                // 11)  Worker zips everything located in "build_output" -- this also includes "de/ru" etc subfolders of the plugin
                 // --> zip name is "Assembly-1-1.zip, = Assembly-PluginId-SourceId")
                 if (!CreateAssemblyZip())
                 {
@@ -251,7 +270,7 @@ namespace CrypToolStoreBuildSystem
                     return;
                 }
 
-                // 12) Process uploads assembly zip file to CrypToolStore Server, and also updates source data in database
+                // 12) Worker uploads assembly zip file to CrypToolStore Server, and also updates source data in database
                 if (!UploadAssemblyZip())
                 {
                     return;
@@ -265,7 +284,7 @@ namespace CrypToolStoreBuildSystem
             }
             finally
             {
-                // 13) Process cleans up by deleting build folder (also in case of an error)
+                // 13) Worker cleans up by deleting build folder (also in case of an error)
                 try
                 {
                     //TODO: remove comment, thus, at the end everything is deleted
@@ -281,7 +300,7 @@ namespace CrypToolStoreBuildSystem
         }
 
         /// <summary>
-        ///  0) Set source to building state
+        ///  0) Worker sets source to building state
         /// </summary>
         private bool SetToBuildingState()
         {
@@ -306,7 +325,7 @@ namespace CrypToolStoreBuildSystem
                 Source source = (Source)result.DataObject;
                 //update that source to building state
                 source.BuildState = BuildState.BUILDING.ToString();
-                source.BuildLog = String.Format("Buildserver started build process at {0}", DateTime.Now);
+                source.BuildLog = String.Format("Buildserver started build Worker at {0}", DateTime.Now);
                 result = client.UpdateSource(source);
                 if (!result.Success)
                 {
@@ -355,8 +374,8 @@ namespace CrypToolStoreBuildSystem
         }
 
         /// <summary>
-        ///  2) Process creates folder structure in plugin folder
-        ///  --> \plugin          contains source
+        ///  2) Worker creates folder structure in plugin folder
+        ///  --> \plugin           contains source
         ///  --> \build_output     contains builded plugins
         ///  --> build_plugin.xml  contains msbuild script
         ///  
@@ -385,12 +404,12 @@ namespace CrypToolStoreBuildSystem
                 {
                     //todo: variable anteile setzen...
                     writer.WriteLine("<Project DefaultTargets=\"BuildAndSign\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">");
-                    writer.WriteLine("  <Import Project=\"..\\CustomBuildTasks\\CustomBuildTasks.Targets\"/>");
+                    writer.WriteLine("  <Import Project=\"..\\..\\CustomBuildTasks\\CustomBuildTasks.Targets\"/>");
                     writer.WriteLine("  <PropertyGroup>");
                     writer.WriteLine("    <QM>\"</QM>");
                     writer.WriteLine("  </PropertyGroup>");
                     writer.WriteLine("  <Target Name=\"BuildCrypPlugin\">");
-                    writer.WriteLine("    <MSBuild Projects=\"$(ProjectName)\" Targets=\"Build\" />");
+                    writer.WriteLine("    <MSBuild Projects=\"$PROJECT$\" Targets=\"Build\" />");
                     writer.WriteLine("  </Target>");
                     writer.WriteLine("  <Target Name=\"SignCrypPlugin\">");
                     writer.WriteLine("    <ItemGroup>");
@@ -408,7 +427,7 @@ namespace CrypToolStoreBuildSystem
         }
 
         /// <summary>
-        /// 3) Process downloads zip file and extracts complete content into "plugin" folder
+        /// 3) Worker downloads zip file and extracts complete content into "plugin" folder
         /// </summary>
         /// <returns></returns>
         private bool DownloadZipFile()
@@ -440,7 +459,7 @@ namespace CrypToolStoreBuildSystem
         }
 
         /// <summary>
-        ///  4) Process extracts zip file
+        ///  4) Worker extracts zip file
         /// </summary>
         /// <returns></returns>
         private bool ExtractZipFile()
@@ -454,8 +473,8 @@ namespace CrypToolStoreBuildSystem
         }
 
         /// <summary>
-        ///  5) Process searches for exactly one csproj file in the root folder, i.e. "plugin"        
-        ///  --> if it finds 0 or more than 1, the build process fails at this point
+        ///  5) Worker searches for exactly one csproj file in the root folder, i.e. "plugin"        
+        ///  --> if it finds 0 or more than 1, the build Worker fails at this point
         /// </summary>
         /// <returns></returns>
         private bool SearchCSProjFile()
@@ -505,7 +524,7 @@ namespace CrypToolStoreBuildSystem
         }
 
         /// <summary>
-        ///  6) Process modifies csproj file
+        ///  6) Worker modifies csproj file
         ///  --> changes references to CrypPluginBase to correct path (hint: dont forget <private>false</private>)
         ///  --> changes output folder of "Release" target to "build_output" folder
         /// </summary>
@@ -514,6 +533,8 @@ namespace CrypToolStoreBuildSystem
         {
             //Step 0: load csproj xml file
             XDocument csprojXDocument = XDocument.Load(CSProjFileName);
+
+            XNamespace defaultNamespace = csprojXDocument.Root.GetDefaultNamespace();
 
             //Step 1: change output path (of Release) to correct path
             IEnumerable<XElement> outputPaths = csprojXDocument.Descendants();
@@ -550,17 +571,17 @@ namespace CrypToolStoreBuildSystem
                     }
                     else
                     {
-                        privateElement = new XElement("Private");
+                        privateElement = new XElement(defaultNamespace + "Private");
                         privateElement.Value = "false";
                         projectReference.Add(privateElement);
                     }
 
                     //Change type of reference
-                    projectReference.Name = "Reference";
+                    projectReference.Name = defaultNamespace + "Reference";                    
 
-                    //Add hint path to CrypPluginBase
-                    XElement hintPathElement = new XElement("HintPath");
-                    hintPathElement.Value = @"..\..\..\..\ct2_libraries\CrypPluginBase.dll";
+                    //Add hint path to CrypPluginBase                    
+                    XElement hintPathElement = new XElement(defaultNamespace + "HintPath");
+                    hintPathElement.Value = @"..\..\..\ct2_libraries\CrypPluginBase.dll";
                     projectReference.Add(hintPathElement);
 
                     changedCrypPluginBaseReference = true;
@@ -577,37 +598,58 @@ namespace CrypToolStoreBuildSystem
             {
                 Logger.LogText("Did not find reference to CrypPluginBase.dll to change it", this, Logtype.Error);
                 return false;
-            }
-
-            csprojXDocument.Save(CSProjFileName);
-            Logger.LogText(String.Format("wrote changes to {0}", CSProjFileName), this, Logtype.Info);
+            }            
+            csprojXDocument.Save(CSProjFileName,SaveOptions.OmitDuplicateNamespaces);
+            Logger.LogText(String.Format("Wrote changes to {0}", CSProjFileName), this, Logtype.Info);
 
             return true;
         }
 
         /// <summary>
-        ///  7) Process modifies msbuild script
+        ///  7) Worker modifies msbuild script
         ///  --> change name of target project to name of csproj file found in "plugin" folder
         /// </summary>
         /// <returns></returns>
         private bool ModifyMsBuildScript()
         {
+            string buildfoldername = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion;
+            string script = File.ReadAllText(buildfoldername + @"\build_plugin.xml", UTF8Encoding.UTF8);
+            //here, we remove everything from the path and create \\plugin\\xyz.csproj (where xyz is the csproj filename)
+            string[] paths = CSProjFileName.Split('\\');
+            string csprojfilepath = "plugin\\" + paths[paths.Length - 1];
+            script = script.Replace("$PROJECT$", csprojfilepath);
+            File.WriteAllText(buildfoldername + @"\build_plugin.xml", script);
+            Logger.LogText(string.Format("Modified build_plugin.xml: changed $PROJECT$ to {0}", csprojfilepath), this, Logtype.Info);
             return true;
         }
 
         /// <summary>
-        ///  8) Process starts "msbuild.exe" (hint: set correct password for signtool to allow it opening signing certificate)
+        ///  8) Worker starts "msbuild.exe" (hint: set correct password for signtool to allow it opening signing certificate)
         ///  --> msbuild compiles the plugin
         ///  --> signtool is also started and signs the builded assembly file
         /// </summary>
         /// <returns></returns>
         private bool BuildPlugin()
         {
+            Logger.LogText(String.Format("Starting actual build of source-{0}-{1} using msbuild.exe", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            string buildfoldername = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion;
+            ProcessStartInfo info = new ProcessStartInfo("msbuild.exe");
+            info.Arguments = buildfoldername + String.Format("\\build_plugin.xml /p:Platform=x86 /p:Configuration=Release /p:CertificatePfxFile=\"{0}\" /p:CertificatePassword=\"{1}\"", CertificatePfxFile, CertificatePassword);
+            info.CreateNoWindow = false;
+            info.UseShellExecute = false;
+            Process process = Process.Start(info);
+            process.WaitForExit();
+
+            if (process.ExitCode != 0)
+            {
+                Logger.LogText(String.Format("Build of source-{0}-{1} failed", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+                return false;
+            }
             return true;
         }
 
         /// <summary>
-        /// 9) Process checks, if assembly file exists in "build_output" (if not => ERROR)
+        /// 9) Worker checks, if assembly file exists in "build_output" (if not => ERROR)
         /// </summary>
         /// <returns></returns>
         private bool CheckBuild()
@@ -616,7 +658,7 @@ namespace CrypToolStoreBuildSystem
         }
 
         /// <summary>
-        /// 10) Process checks, if a component is located in the assembly, i.e. a class which inherits from IPlugin (if not => ERROR)
+        /// 10) Worker checks, if a component is located in the assembly, i.e. a class which inherits from IPlugin (if not => ERROR)
         /// </summary>
         /// <returns></returns>
         private bool CheckComponentExists()
@@ -625,7 +667,7 @@ namespace CrypToolStoreBuildSystem
         }
 
         /// <summary>
-        ///  11)  Process zips everything located in "build_output" -- this also includes "de/ru" etc subfolders of the plugin
+        ///  11)  Worker zips everything located in "build_output" -- this also includes "de/ru" etc subfolders of the plugin
         ///  --> zip name is "Assembly-1-1.zip, = Assembly-PluginId-SourceId")
         /// </summary>
         /// <returns></returns>
@@ -635,7 +677,7 @@ namespace CrypToolStoreBuildSystem
         }
 
         /// <summary>
-        /// 12) Process uploads assembly zip file to CrypToolStore Server, and also updates source data in database
+        /// 12) Worker uploads assembly zip file to CrypToolStore Server, and also updates source data in database
         /// </summary>
         /// <returns></returns>
         private bool UploadAssemblyZip()
@@ -644,7 +686,7 @@ namespace CrypToolStoreBuildSystem
         }
 
         /// <summary>
-        /// 13) Process cleans up by deleting build folder (also in case of an error)
+        /// 13) Worker cleans up by deleting build folder (also in case of an error)
         /// </summary>
         private void CleanUp()
         {
