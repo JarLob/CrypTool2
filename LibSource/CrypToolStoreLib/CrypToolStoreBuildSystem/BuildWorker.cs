@@ -85,6 +85,15 @@ namespace CrypToolStoreBuildSystem
         }
 
         /// <summary>
+        /// Will contain std out and err fo msbuild
+        /// </summary>
+        private StringBuilder msbuild_Log
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="source"></param>
@@ -286,9 +295,8 @@ namespace CrypToolStoreBuildSystem
             {
                 // 13) Worker cleans up by deleting build folder (also in case of an error)
                 try
-                {
-                    //TODO: remove comment, thus, at the end everything is deleted
-                    //CleanUp();
+                {                    
+                    CleanUp();
                 }
                 catch (Exception ex)
                 {
@@ -488,12 +496,12 @@ namespace CrypToolStoreBuildSystem
             //We only allow exactly one csproj file per Source
             if (counter == 0)
             {
-                Logger.LogText(String.Format("source-{0}-{1} does not contain any csproj file", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+                Logger.LogText(String.Format("source-{0}-{1} does not contain any csproj file", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
                 return false;
             }
             if (counter > 1)
             {
-                Logger.LogText(String.Format("source-{0}-{1} contains more than one csproj file", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+                Logger.LogText(String.Format("source-{0}-{1} contains more than one csproj file", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
             }
 
             Logger.LogText(String.Format("Found csproj file in source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, CSProjFileName), this, Logtype.Info);
@@ -633,12 +641,24 @@ namespace CrypToolStoreBuildSystem
         {
             Logger.LogText(String.Format("Starting actual build of source-{0}-{1} using msbuild.exe", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             string buildfoldername = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion;
+
             ProcessStartInfo info = new ProcessStartInfo("msbuild.exe");
             info.Arguments = buildfoldername + String.Format("\\build_plugin.xml /p:Platform=x86 /p:Configuration=Release /p:CertificatePfxFile=\"{0}\" /p:CertificatePassword=\"{1}\"", CertificatePfxFile, CertificatePassword);
             info.CreateNoWindow = false;
             info.UseShellExecute = false;
-            Process process = Process.Start(info);
+            info.RedirectStandardOutput = true;
+            info.RedirectStandardError = true;
+            Process process = new Process();
+            process.StartInfo = info;            
+            process.OutputDataReceived += CaptureOutput;
+            process.ErrorDataReceived += CaptureError;
+            msbuild_Log = new StringBuilder();
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
             process.WaitForExit();
+
+            Logger.LogText("Output of msbuild:\r\n " + msbuild_Log.ToString(), this, Logtype.Info);
 
             if (process.ExitCode != 0)
             {
@@ -646,6 +666,36 @@ namespace CrypToolStoreBuildSystem
                 return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// Redirects outputstream to msbuild_Log
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CaptureOutput(object sender, DataReceivedEventArgs e)
+        {
+            if (e.Data != null)
+            {
+                //we remove absolute directory infos from the messages since these are "confidential"
+                string message = e.Data.Replace(Directory.GetCurrentDirectory(), "");
+                msbuild_Log.AppendLine(message);
+            }
+        }
+
+        /// <summary>
+        /// Redirects errorstream to msbuild_Log
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CaptureError(object sender, DataReceivedEventArgs e)
+        {
+            if (e.Data != null)
+            {
+                //we remove absolute directory infos from the messages since these are "confidential"
+                string message = e.Data.Replace(Directory.GetCurrentDirectory(), "");
+                msbuild_Log.AppendLine(message);
+            }
         }
 
         /// <summary>
@@ -694,9 +744,8 @@ namespace CrypToolStoreBuildSystem
             if (Directory.Exists(buildfoldername))
             {
                 Directory.Delete(buildfoldername, true);
-                Logger.LogText(String.Format("Deleted build folder for source {0}-{1}: {2}", Source.PluginId, Source.PluginVersion, BUILD_FOLDER), this, Logtype.Info);                
-            }
-            
+                Logger.LogText(String.Format("Deleted build folder for source {0}-{1}: {2}", Source.PluginId, Source.PluginVersion, buildfoldername), this, Logtype.Info);                
+            }            
         }
     }
 }

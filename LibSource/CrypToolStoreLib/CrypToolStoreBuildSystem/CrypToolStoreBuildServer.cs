@@ -85,8 +85,8 @@ namespace CrypToolStoreBuildSystem
                 {
                     if (DateTime.Now >= lastCheckTime.AddMilliseconds(BUILD_CHECK_INTERVAL))
                     {
-                        CheckBuildNeeded();
                         lastCheckTime = DateTime.Now;
+                        CheckBuildNeeded();                        
                     }
                     
                 }
