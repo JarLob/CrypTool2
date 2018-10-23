@@ -24,6 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace CrypToolStoreBuildSystem
 {
@@ -511,6 +512,76 @@ namespace CrypToolStoreBuildSystem
         /// <returns></returns>
         private bool ModifyCSProjFile()
         {
+            //Step 0: load csproj xml file
+            XDocument csprojXDocument = XDocument.Load(CSProjFileName);
+
+            //Step 1: change output path (of Release) to correct path
+            IEnumerable<XElement> outputPaths = csprojXDocument.Descendants();
+
+            bool changedOutputPath = false;
+            foreach (XElement outputPath in outputPaths)
+            {
+                if (outputPath.Name.LocalName.ToLower().Equals("outputpath") && outputPath.Value.ToLower().Contains("release"))
+                {                    
+                    outputPath.Value = @"..\build_output\";
+                    changedOutputPath = true;
+                    Logger.LogText(@"Changed output path of Release target", this, Logtype.Info);
+                    
+                }
+            }
+            
+            //Step 2: change project reference to correct path of CrypPluginBase
+            IEnumerable<XElement> projectReferences = csprojXDocument.Descendants();
+            
+            bool changedCrypPluginBaseReference = false;
+            foreach (XElement projectReference in projectReferences)
+            {
+                XAttribute includeAttribute = projectReference.Attribute("Include");
+                if (projectReference.Name.LocalName.ToLower().Equals("projectreference") && includeAttribute != null && !string.IsNullOrEmpty(includeAttribute.Value) && includeAttribute.Value.ToLower().Contains("cryppluginbase"))
+                {
+                    //change include attribute value
+                    includeAttribute.Value = @"CrypPluginBase";                    
+
+                    //change/add private element
+                    XElement privateElement = projectReference.Element("Private");
+                    if (privateElement != null)
+                    {
+                        privateElement.Value = "false";                        
+                    }
+                    else
+                    {
+                        privateElement = new XElement("Private");
+                        privateElement.Value = "false";
+                        projectReference.Add(privateElement);
+                    }
+
+                    //Change type of reference
+                    projectReference.Name = "Reference";
+
+                    //Add hint path to CrypPluginBase
+                    XElement hintPathElement = new XElement("HintPath");
+                    hintPathElement.Value = @"..\..\..\..\ct2_libraries\CrypPluginBase.dll";
+                    projectReference.Add(hintPathElement);
+
+                    changedCrypPluginBaseReference = true;
+                    Logger.LogText("Changed reference to CrypPluginBase", this, Logtype.Info);
+                }
+            }
+
+            if (!changedOutputPath)
+            {
+                Logger.LogText("Did not find Release target to change output path of build", this, Logtype.Error);
+                return false;
+            }
+            if (!changedCrypPluginBaseReference)
+            {
+                Logger.LogText("Did not find reference to CrypPluginBase.dll to change it", this, Logtype.Error);
+                return false;
+            }
+
+            csprojXDocument.Save(CSProjFileName);
+            Logger.LogText(String.Format("wrote changes to {0}", CSProjFileName), this, Logtype.Info);
+
             return true;
         }
 
