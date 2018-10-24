@@ -23,54 +23,41 @@
   </relevantPlugins>
   
     <replacements lang="en">
-    <replacement key="$memo$" value="This template demonstrates how easily RSA can be broken if two N-values share a common prime factor. The attack was presented by Lenstra et al. in [1]. They showed, that in 2 of 1,000 public RSA keys on the Internet a common prime factor is used. In this example, first, three different 512 bit prime numbers are randomly generated using three 'Prime Generator' components:\line
-{\b P, Q, and R}\line
-Then, we compute two different N-values:\line
-{\b N1 = P * Q\line
-N2 = Q * R}\line
-Both N-values are 1024 bit numbers. We assume, these are part of two public RSA keys.\line
-For an attacker, factorizing N1 or N2 is currently impossible using state-of-the-art factorization algorithms. But computing the greatest common divisor (GCD) is easy.\line
-Thus, in the next step, we compute\line
-{\b GCD(N1, N2)}\line
-which is Q. Finally, the other primes P and R can be computed by dividing N1 and N2 by Q.\line
-{\b P = N1 / GCD(N1, N2) = N1 / Q\line
-R = N2 / GCD(N1, N2) = N2 / Q}\line
-Having P,Q, and R, the private RSA keys can be easily computed using the extended Euclidian algorithm.\line
-[1] Arjen K. Lenstra et al., 'Ron was wrong, Whit is right', Cryptology ePrint Archive Report 2012/064, February 2012, http://eprint.iacr.org/2012/064." />
+    <replacement key="$memo$" value="{\b Template to show the common factor attack (aka shared prime)}\line
+\line
+Given are 2 modules N1 = P*Q  and  N2 = R*Q,  which share one common prime factor Q.\line
+You don't know the factors P, Q, and R, but only the two modules (products).\line
+\line
+Without factoring N1 or N2, you first find the common factor Q, and then by simple division the two other factors P and R.\line
+\line
+In reality, N1 and N2 are much bigger (e.g. 2^2048 or 10^620). Then, it's much much more obvious, that factorization is slow or even impossible, but calculating the according gcd is really fast.\line
+\line
+See the CT Book, section 4.11.5.4 about shared primes in RSA modules used in reality.\line" />
   </replacements>  
   
   <replacements lang="de"> 
-    <replacement key="$memo$" value="Diese Vorlage zeigt, wie leicht RSA gebrochen werden kann, wenn zwei N-Werte einen gemeinsamen Primfaktor teilen. Der Angriff wurde von Lenstra et al. in [1] präsentiert. Sie zeigten, dass in 2 von 1.000 öffentlichen RSA Schlüsseln im Internet ein gemeinsamer Primfaktor verwendet wird. In diesem Beispiel werden zunächst drei verschiedene 512-Bit-Primzahlen mit drei 'Primzahl Generator'-Komponenten zufällig generiert:\line
-{\b P, Q und R} \line
-Dann werden zwei verschiedene N-Werte berechnet: \line
-{\b N1 = P * Q \ Linie
-N2 = Q * R} \ Linie
-Beide N-Werte sind 1024 Bit-Nummern. Wir nehmen an, diese sind Teil von zwei öffentlichen RSA-Schlüsseln. \line
-Für einen Angreifer ist die Faktorisierung von N1 oder N2 derzeit nicht möglich, wenn moderne Faktorisierungsalgorithmen verwendet werden. Aber die Berechnung des größten gemeinsamen Teilers (GCD) ist einfach. \line
-Daher berechnen wir im nächsten Schritt \line
-{\b GCD (N1, N2)} \line
-Das ist Q. Schließlich können die anderen Primzahlen P und R berechnet werden, indem N1 und N2 durch Q dividiert werden. \line
-{\b P = N1 / GCD (N1, N2) = N1 / Q \line
-R = N2 / GCD (N1, N2) = N2 / Q} \line
-Mit P, Q und R können die privaten RSA-Schlüssel leicht mit dem erweiterten euklidischen Algorithmus berechnet werden.\line
-[1] Arjen K. Lenstra et al. 'Ron lag falsch, Whit hat Recht', Cryptology ePrint-Archivbericht 2012/064, Februar 2012, http://eprint.iacr.org/2012/064." />
+    <replacement key="$memo$" value="{\b Gemeinsamer-Primfaktor-Angriff (aka Shared Prime)}\line
+\line
+Gegeben sind 2 Module N1 = P * Q und N2 = R * Q, die sich einen gemeinsamen Primfaktor Q teilen.\line
+Sie kennen die Faktoren P, Q und R nicht, sondern nur die beiden Module (Produkte).\line
+\line
+Ohne N1 oder N2 zu faktorisieren finden Sie zuerst den gemeinsamen Faktor Q und dann durch einfache Division die beiden anderen Faktoren P und R.\line
+\line
+In der Realität sind N1 und N2 viel größer (z. B. 2 ^ 2048 oder 10 ^ 620). Mit solchen Werten ist Faktorisierung sehr langsam oder sogar unmöglich, aber die Berechnung der entsprechenden GCD ist sehr schnell.\line
+\line
+Siehe CT Buch, Abschnitt 4.11.5.4 über gemeinsame Primzahlen in RSA-Modulen, die in der Realität verwendet werden." />
   </replacements>
     
   <replacements lang="ru">
-    <replacement key="$memo$" value="Этот шаблон демонстрирует, как легко RSA можно сломать, если два значения N имеют общий простой коэффициент. Атака была представлена ​​Ленстра и др. в 1]. Они показали, что в 2 из 1000 открытых ключей RSA в Интернете используется общий простой коэффициент. В этом примере, во-первых, три разных 512-разрядных простых числа генерируются случайным образом с использованием трех компонентов «Prime Generator»: \line
-{\b P, Q и R} \line
-Затем мы вычисляем два разных значения N: \line
-{\b N1 = P * Q \line
-N2 = Q * R} \line
-Оба значения N являются 1024-битными числами. Мы предполагаем, что это часть двух открытых ключей RSA. \line
-Для злоумышленника факторизация N1 или N2 в настоящее время невозможна с использованием современных алгоритмов факторизации. Но вычисление наибольшего общего делителя (GCD) легко. \line
-Таким образом, на следующем шаге мы вычисляем \line
-{\b GCD (N1, N2)} \line
-который равен Q. Наконец, другие простые числа P и R могут быть вычислены путем деления N1 и N2 на Q. \line
-{\b P = N1 / GCD (N1, N2) = N1 / Q \line
-R = N2 / GCD (N1, N2) = N2 / Q} \line
-Имея P, Q и R, частные ключи RSA могут быть легко вычислены с использованием расширенного евклидова алгоритма. \line
-[1] Аржен К. Ленстра и др. «Рон ошибался, Уит прав», Cryptology ePrint Archive Report 2012/064, февраль 2012, http://eprint.iacr.org/2012/064." />    
+    <replacement key="$memo$" value="{\b Общая атака основного фактора (aka Shared Prime)}\line
+\line
+Даны 2 модуля N1 = P * Q и N2 = R * Q, которые имеют общий простой множитель Q.\line
+Вы не знаете факторов P, Q и R, но только два модуля (продукты).\line
+\line
+Без факторизации N1 или N2 вы сначала найдете общий множитель Q, а затем простым делением других двух факторов P и R.\line
+\line
+На самом деле N1 и N2 намного больше (например, 2 ^ 2048 или 10 ^ 620). При таких значениях факторизация очень медленная или даже невозможная, но вычисление соответствующего GCD происходит очень быстро.\line
+\line
+См. Книгу CT, раздел 4.11.5.4, для обычных простых чисел в модулях RSA, используемых в реальности." />    
   </replacements>
--->
 </sample>
