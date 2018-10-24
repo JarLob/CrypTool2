@@ -509,6 +509,25 @@ namespace Startcenter
             {
                 SearchTextBox.Text = "";
             }
+            //if only one item is left, the user may open the corresponding template by hitting the enter key
+            if (e.Key == Key.Return && (int)FoundTemplateCountLabel.Content == 1)            
+            {
+                try
+                {
+                    foreach (ListBoxItem item in TemplatesListBox.Items)
+                    {
+                        if (item.Visibility == Visibility.Visible)
+                        {
+                            TemplateItemDoubleClick(item, null);
+                            break;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    //wtf?
+                }
+            }
         }
 
         private string GetRelativePathBySubtracting(string path1, string path2)
