@@ -11,7 +11,15 @@ namespace KeySearcherPresentation.Controls
 {
     [Cryptool.PluginBase.Attributes.Localization("KeySearcher.Properties.Resources")]
     public partial class LocalQuickWatchPresentation
-    {        
+    {
+        private KeySearcher.KeySearcher.UpdateOutput _updateOutputFromUserChoice;
+
+        public KeySearcher.KeySearcher.UpdateOutput UpdateOutputFromUserChoice
+        {
+            get { return _updateOutputFromUserChoice; }
+            set { _updateOutputFromUserChoice = value; }
+        }
+
         public ObservableCollection<ResultEntry> entries = new ObservableCollection<ResultEntry>();
 
         public static readonly DependencyProperty IsOpenCLEnabledProperty =
@@ -43,10 +51,10 @@ namespace KeySearcherPresentation.Controls
 
         string entryToText(ResultEntry entry)
         {
-            return "Rank: " + entry.Ranking + "\n" +
-                   "Value: " + entry.Value + "\n" +
-                   "Key: " + entry.Key + "\n" +
-                   "Text: " + removeNuls(entry.Text);
+            return "Rank: " + entry.Ranking + "\r\n" +
+                   "Value: " + entry.Value + "\r\n" +
+                   "Key: " + entry.Key + "\r\n" +
+                   "Text: " + removeNuls(entry.FullText);
         }
 
         public void ContextMenuHandler(Object sender, EventArgs eventArgs)
@@ -78,12 +86,23 @@ namespace KeySearcherPresentation.Controls
                 {
                     List<string> lines = new List<string>();
                     foreach (var e in entries) lines.Add(entryToText(e));
-                    Clipboard.SetText(String.Join("\n\n", lines));
+                    Clipboard.SetText(String.Join("\r\n\r\n", lines));
                 }
             } 
             catch(Exception ex)
             {
                 Clipboard.SetText("");
+            }
+        }
+
+        public void HandleDoubleClick(Object sender, EventArgs eventArgs)
+        {
+            var lvi = sender as ListViewItem;
+            var r = lvi.Content as ResultEntry;
+
+            if (r != null)
+            {
+                _updateOutputFromUserChoice(r.Key, r.FullText);
             }
         }
     }

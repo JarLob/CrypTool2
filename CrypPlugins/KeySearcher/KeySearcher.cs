@@ -45,6 +45,14 @@ namespace KeySearcher
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class KeySearcher : ACloudCompatible
     {
+
+        /// <summary>
+        /// Delegate for outputting user selected plaintext and key
+        /// </summary>
+        /// <param name="plaintext"></param>
+        /// <param name="key"></param>
+        public delegate void UpdateOutput(string plaintext, string key);
+
         /// <summary>
         /// used for creating the UserStatistics
         /// </summary>
@@ -282,7 +290,7 @@ namespace KeySearcher
         #endregion
 
         public KeySearcher()
-        { 
+        {         
             try
             { 
                 IsKeySearcherRunning = false;
@@ -315,13 +323,34 @@ namespace KeySearcher
                 if (JobId != 0)
                 {
                     p2PQuickWatchPresentation.ViewModel.UpdateStaticView(JobId, this, settings);
-                } 
+                }
 
+                localQuickWatchPresentation.UpdateOutputFromUserChoice += UpdateOutputFromUserChoice;
+                p2PQuickWatchPresentation.UpdateOutputFromUserChoice += UpdateOutputFromUserChoice;
             }
             catch (Exception ex)
             {
                 GuiLogMessage(string.Format("Error trying to initialize KeySearcher component: {0}", ex.Message), NotificationLevel.Error);
             }
+        }
+
+        private void UpdateOutputFromUserChoice(string keyString, string plaintextString)
+        {
+            Top1Key = StringToByteArray(keyString.Replace("-", ""));
+            Top1Message = Encoding.GetEncoding(1252).GetBytes(plaintextString);
+        }
+
+        public byte[] StringToByteArray(string hex)
+        {
+            int NumberChars = hex.Length;
+            byte[] bytes = new byte[NumberChars / 2];
+            for (int i = 0; i < NumberChars; i += 2)
+            {
+
+                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+
+            }
+            return bytes;
         }
 
         void SettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -656,7 +685,7 @@ namespace KeySearcher
                 {
                     ValueKey valueKey = new ValueKey { value = cost, key = keyTranslator.GetKeyRepresentation(i + add) };
                     valueKey.keya = keyTranslator.GetKeyFromRepresentation(valueKey.key);
-                    valueKey.decryption = sender.Decrypt(this.encryptedDataOptimized, valueKey.keya, this.initVectorOptimized, bytesToUse);
+                    valueKey.decryption = sender.Decrypt(this.encryptedDataOptimized, valueKey.keya, this.initVectorOptimized);
                     EnhanceUserName(ref valueKey);
                     valuequeue.Enqueue(valueKey);
                 }
@@ -717,6 +746,7 @@ namespace KeySearcher
                 {
                     valueKey.key = keyTranslator.GetKeyRepresentation();
                     valueKey.keya = (byte[])keya.Clone();
+                    valueKey.decryption = sender.Decrypt(this.encryptedDataOptimized, keya, this.initVectorOptimized, encryptedDataOptimized.Length);
                     EnhanceUserName(ref valueKey);
                     valuequeue.Enqueue(valueKey);
                 }
@@ -727,6 +757,7 @@ namespace KeySearcher
                 {
                     valueKey.key = keyTranslator.GetKeyRepresentation();
                     valueKey.keya = (byte[])keya.Clone();
+                    valueKey.decryption = sender.Decrypt(this.encryptedDataOptimized, keya, this.initVectorOptimized, encryptedDataOptimized.Length);
                     EnhanceUserName(ref valueKey);
                     valuequeue.Enqueue(valueKey);
                 }
@@ -1170,12 +1201,13 @@ namespace KeySearcher
 
             for (LinkedListNode<ValueKey> node = costList.First; node != null; node = node.Next)
             {
+                string plaintext = Encoding.GetEncoding(1252).GetString(node.Value.decryption);
                 ResultEntry entry = new ResultEntry();
                 entry.Ranking = "" + i++;
                 entry.Value = "" + Math.Round(node.Value.value, 3);
                 entry.Key = node.Value.key;
-                entry.Text = Encoding.GetEncoding(1252).GetString(node.Value.decryption);
-
+                entry.Text = plaintext.Length > 32 ? plaintext.Substring(0,32) + "..." : plaintext;
+                entry.FullText = plaintext;
                 localQuickWatchPresentation.entries.Add(entry);
             }
         }

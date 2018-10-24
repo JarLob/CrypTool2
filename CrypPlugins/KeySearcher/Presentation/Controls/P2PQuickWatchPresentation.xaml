@@ -2,7 +2,8 @@
              xmlns:Converter="clr-namespace:KeySearcherConverter" xmlns:Controls="clr-namespace:KeySearcherPresentation.Controls"
              xmlns:con="clr-namespace:KeySearcher.Converter"
              xmlns:crypCloud="clr-namespace:KeySearcher.CrypCloud"
-             x:Name="P2PQuickWatch" Loaded="P2PQuickWatch_Loaded">
+             xmlns:properties="clr-namespace:KeySearcher.Properties"
+             x:Name="P2PQuickWatch">
 
     <UserControl.Resources>
         <con:BigIntegerToStringConverter x:Key="BigIntegerToStringConverter"/>
@@ -163,6 +164,23 @@
                         <ListView Name="ToplistView" Background="#AFE2FFCE" ItemsSource="{Binding TopList}" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
                                   ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                   Height="200" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="0,2,0,1">
+
+                            <ListView.Resources>
+                                <ContextMenu x:Key="ItemContextMenu">
+                                    <MenuItem Header="{x:Static properties:Resources.Copy_value}" Tag="copy_value" CommandParameter="{Binding}" Click="ContextMenuHandler" />
+                                    <MenuItem Header="{x:Static properties:Resources.Copy_key}" Tag="copy_key" CommandParameter="{Binding}" Click="ContextMenuHandler" />
+                                    <MenuItem Header="{x:Static properties:Resources.Copy_text}" Tag="copy_text" CommandParameter="{Binding}" Click="ContextMenuHandler" />
+                                    <MenuItem Header="{x:Static properties:Resources.Copy_line}" Tag="copy_line" CommandParameter="{Binding}" Click="ContextMenuHandler" />
+                                </ContextMenu>
+                            </ListView.Resources>
+
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}"/>
+                                    <EventSetter Event="MouseDoubleClick" Handler="HandleDoubleClick" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+
                             <ListView.View> 
                                 <GridView>
                                     <GridViewColumn Header="{Loc Value}" Width="73" DisplayMemberBinding="{Binding Path=Costs}"/>

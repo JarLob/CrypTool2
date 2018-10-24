@@ -11,6 +11,8 @@ namespace KeySearcher
         public string Value { get; set; }
         public string Key { get; set; }
         public string Text { get; set; }
+        public string FullText { get; set; }
+
         //-------
         public string User { get; set; }
         public DateTime Time { get; set; }
