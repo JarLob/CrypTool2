@@ -52,7 +52,7 @@ namespace Startcenter
                 {
                     _templatesDir = value;
                     FillTemplatesNavigationPane();
-                    FoundTemplateCountLabel.Content = String.Format("({0})", TemplateCount);
+                    FoundTemplateCountLabel.Content = TemplateCount;
                 }
             }
         }
@@ -448,7 +448,7 @@ namespace Startcenter
                     textBlock.Inlines.Add(title.Substring(begin, title.Length - begin));
                 }
             }
-            FoundTemplateCountLabel.Content = String.Format("({0})", templateFoundCounter);
+            FoundTemplateCountLabel.Content = templateFoundCounter;
         }
 
         private int IndexOfFirstHit(string text, string[] searchWords, int begin, out int length)
