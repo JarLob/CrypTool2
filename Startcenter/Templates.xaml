@@ -33,54 +33,60 @@
         </Grid.Resources>
         
         <Grid.RowDefinitions>
-            <RowDefinition Height="26" />
+            <RowDefinition Height="26" />            
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBox Name="SearchTextBox" TextChanged="TemplateSearchInputChanged" 
+        <Grid Grid.Row="0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Name="SearchTextBox" TextChanged="TemplateSearchInputChanged"   
                              KeyDown="TemplateSearchBoxKeyDown" VerticalAlignment="Top" HorizontalAlignment="Stretch" ToolTip="{Loc Search}" Focusable="True">
-            <TextBox.Style>
-                <Style TargetType="TextBox">
-                    <Style.Triggers>
-                        <Trigger Property="Text" Value="">
-                            <Setter Property="Background" Value="{StaticResource HelpBrush}"/>
-                        </Trigger>
-                        <Trigger Property="Text" Value=" ">
-                            <Setter Property="Background" Value="{StaticResource HelpBrush}"/>
-                        </Trigger>
-                    </Style.Triggers>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type TextBoxBase}">
-                                <Border 
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="Background" Value="{StaticResource HelpBrush}"/>
+                            </Trigger>
+                            <Trigger Property="Text" Value=" ">
+                                <Setter Property="Background" Value="{StaticResource HelpBrush}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                                    <Border 
                                                                       Name="Border"
                                                                       CornerRadius="2" 
                                                                       Padding="2"
                                                                       Background="White"
                                                                       BorderBrush="#CCC"
                                                                       BorderThickness="1" >
-                                    <Border Background="{TemplateBinding Background}">
-                                        <DockPanel LastChildFill="True">
-                                            <Image Source="/Startcenter;component/search.png" DockPanel.Dock="Left"></Image>
-                                            <ScrollViewer Margin="0" x:Name="PART_ContentHost" VerticalAlignment="Center"/>
-                                        </DockPanel>
+                                        <Border Background="{TemplateBinding Background}">
+                                            <DockPanel LastChildFill="True">
+                                                <Image Source="/Startcenter;component/search.png" DockPanel.Dock="Left"></Image>
+                                                <ScrollViewer Margin="0" x:Name="PART_ContentHost" VerticalAlignment="Center"/>
+                                            </DockPanel>
+                                        </Border>
+
+
                                     </Border>
-
-
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter TargetName="Border" Property="Background" Value="#CCC"/>
-                                        <Setter TargetName="Border" Property="BorderBrush" Value="#CCC"/>
-                                        <Setter Property="Foreground" Value="#CCC"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </TextBox.Style>
-        </TextBox>
-
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter TargetName="Border" Property="Background" Value="#CCC"/>
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="#CCC"/>
+                                            <Setter Property="Foreground" Value="#CCC"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <Label Name="FoundTemplateCountLabel" Grid.Column="1" VerticalAlignment="Center" Background="White" HorizontalAlignment="Center" Height="26" Width="50"/>
+        </Grid>
         <TreeView Name="TemplatesTreeView" Grid.Row="1" Background="#00000000" ScrollViewer.CanContentScroll="False">
             <TreeView.ContextMenu>
                 <ContextMenu>

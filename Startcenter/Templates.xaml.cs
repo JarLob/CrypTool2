@@ -32,6 +32,7 @@ namespace Startcenter
     public partial class Templates : UserControl
     {
         private readonly RecentFileList _recentFileList = RecentFileList.GetSingleton();
+        private int TemplateCount = 0;
 
         public event OpenEditorHandler OnOpenEditor;
         public event OpenTabHandler OnOpenTab;
@@ -51,6 +52,7 @@ namespace Startcenter
                 {
                     _templatesDir = value;
                     FillTemplatesNavigationPane();
+                    FoundTemplateCountLabel.Content = String.Format("({0})", TemplateCount);
                 }
             }
         }
@@ -157,8 +159,9 @@ namespace Startcenter
             parent.Items.Add(item);
 
             foreach (var subDirectory in directory.GetDirectories())
+            {
                 HandleTemplateDirectories(subDirectory, item);
-
+            }
             MakeTemplateInformation(directory, item);
         }
 
@@ -230,7 +233,7 @@ namespace Startcenter
                                     internationalizedKeywords[lang].Add(keyword.Trim());
                                 }
                             }
-                        }
+                        }                        
                     }
                     catch(Exception)
                     {
@@ -296,6 +299,7 @@ namespace Startcenter
                 ToolTipService.SetShowDuration(item, Int32.MaxValue);
                 item.MouseDoubleClick += TemplateItemDoubleClick;
                 parent.Items.Add(item);
+                TemplateCount++;
             }
         }
 
@@ -353,31 +357,18 @@ namespace Startcenter
                         info = new TabInfo()
                         {
                             Filename = templateItem.File,
-                        };
-                        //var tooltipInline = ((TextBlock) templateItem.ToolTip).Inlines.FirstOrDefault();
-                        //if (tooltipInline != null)
-                        //{
-                        //    editor.Presentation.ToolTip = new TextBlock(tooltipInline) { TextWrapping = TextWrapping.Wrap, MaxWidth = 400 };
-                        //}
+                        };                       
                     }
                     else if (sender is ListBoxItem)
                     {
                         var searchItem = (ListBoxItem) sender;
                         info = (TabInfo)((System.Collections.ArrayList)((FrameworkElement)searchItem.Content).Tag)[0];
-
-                        //var tooltipInline = ((TextBlock)searchItem.ToolTip).Inlines.FirstOrDefault();
-                        //if (tooltipInline != null)
-                        //{
-                        //    editor.Presentation.ToolTip = new TextBlock(tooltipInline) { TextWrapping = TextWrapping.Wrap, MaxWidth = 400 };
-                        //}
-                        //editor.Presentation.Tag = ((Image)((StackPanel)searchItem.Content).Children[0]).Source;
                     }
 
                     if (TemplateLoaded != null)
                     {
                         TemplateLoaded.Invoke(this, new TemplateOpenEventArgs() { Info = info, Type = editorType });
-                    }
-                    //OnOpenTab(editor, info, null);     //rename tab header
+                    }                    
                     _recentFileList.AddRecentFile(infos.Key);
                 }
             }
@@ -399,11 +390,14 @@ namespace Startcenter
             {
                 TemplatesListBox.Visibility = Visibility.Collapsed;
                 TemplatesTreeView.Visibility = Visibility.Visible;
+                FoundTemplateCountLabel.Content = TemplateCount;
                 return;
             }
 
             TemplatesListBox.Visibility = Visibility.Visible;
             TemplatesTreeView.Visibility = Visibility.Collapsed;
+            
+            int templateFoundCounter = 0;
 
             foreach (ListBoxItem item in TemplatesListBox.Items)
             {
@@ -422,10 +416,20 @@ namespace Startcenter
                     List<string> keywords = SearchMatchingKeywords(item, searchWords, hitSearchWords);
                     allSearchWordsFound = hitSearchWords.Count == searchWords.Count;
                     if (allSearchWordsFound)
+                    {
                         title += " (" + String.Join(", ", keywords) + ")";
+                    }
                 }
 
-                item.Visibility = allSearchWordsFound ? Visibility.Visible : Visibility.Collapsed;
+                if (allSearchWordsFound)
+                {
+                    item.Visibility = Visibility.Visible;
+                    templateFoundCounter++;
+                }
+                else
+                {
+                    item.Visibility = Visibility.Collapsed;
+                }
 
                 // display matching text segments in bold font
                 if (allSearchWordsFound)
@@ -444,6 +448,7 @@ namespace Startcenter
                     textBlock.Inlines.Add(title.Substring(begin, title.Length - begin));
                 }
             }
+            FoundTemplateCountLabel.Content = String.Format("({0})", templateFoundCounter);
         }
 
         private int IndexOfFirstHit(string text, string[] searchWords, int begin, out int length)
