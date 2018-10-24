@@ -226,7 +226,7 @@
     <value>Do you want the input data to be encrypted or decrypted?</value>
   </data>
   <data name="CoresUsedCaption" xml:space="preserve">
-    <value>Cores Used</value>
+    <value>Cores used</value>
   </data>
   <data name="CoresUsedTooltip" xml:space="preserve">
     <value>Choose how many cores should be used.</value>

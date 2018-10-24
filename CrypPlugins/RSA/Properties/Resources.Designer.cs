@@ -133,7 +133,7 @@ namespace RSA.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cores Used ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cores used ähnelt.
         /// </summary>
         internal static string CoresUsedCaption {
             get {
