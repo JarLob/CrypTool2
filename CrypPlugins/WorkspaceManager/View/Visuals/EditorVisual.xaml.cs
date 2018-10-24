@@ -2177,6 +2177,12 @@ namespace WorkspaceManager.View.Visuals
 
             if (ctrl && !shift && !alt)
             {
+                if (e.Key == Key.I)
+                {
+                    //with CTRL+I, the user can toggle the settings bar
+                    IsSettingsOpen = !IsSettingsOpen;
+                }
+
                 // select all components
                 if (e.Key == Key.A)
                 {
