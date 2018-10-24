@@ -137,9 +137,50 @@ namespace KeyTextBox
 
         private void KeyBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            var key = KeyManager.GetKey();
+            var key = KeyManager.GetKey();          
             switch (e.Key)
             {
+                case Key.V:
+                    e.Handled = true;
+                    try
+                    {
+                        if (Keyboard.Modifiers == ModifierKeys.Control)
+                        {
+                            if (Clipboard.ContainsText())
+                            {
+                                string clipboardtext = Clipboard.GetText();
+                                var format = KeyManager.GetFormat();
+                                int start = GetKeyOffset(KeyBox.CaretPosition);
+                                int end = key.Length;
+                                if (KeyBox.Selection != null && !string.IsNullOrEmpty(KeyBox.Selection.Text))
+                                {
+                                    start = GetKeyOffset(KeyBox.Selection.Start);
+                                    end = GetKeyOffset(KeyBox.Selection.End);
+                                    if (end == 0)
+                                    {
+                                        //end == 0 means, the user pressed CTRL+A to select everything
+                                        end = key.Length;
+                                    }                                    
+                                }
+                                for (int i = start; i < end; i++)
+                                {
+                                    SetKeyOffset(i);
+                                    if (i - start > clipboardtext.Length)
+                                    {
+                                        break;
+                                    }
+                                    SetKeyOffset(i);
+                                    HandleInput(clipboardtext[i - start].ToString());
+                                }             
+                               
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        //wtf?
+                    }
+                    break;
                 case Key.Space:
                     e.Handled = true;
                     HandleInput(" ");
@@ -147,6 +188,24 @@ namespace KeyTextBox
                 case Key.Back:
                 case Key.Delete:
                     e.Handled = true;
+                    //remove everything that is selected when pressing delete or back
+                    if(KeyBox.Selection != null && !string.IsNullOrEmpty(KeyBox.Selection.Text))
+                    {
+                        int start = GetKeyOffset(KeyBox.Selection.Start);
+                        int end = GetKeyOffset(KeyBox.Selection.End);
+
+                        if (end == 0)
+                        {
+                            //end == 0 means, the user pressed CTRL+A to select everything
+                            end = key.Length;
+                        }
+                        for (int i = start; i < end; i++)
+                        {                            
+                            SetKeyOffset(i);
+                            HandleInput("*");
+                        }
+                        break;
+                    }                                        
                     var caretIndex = GetKeyOffset(KeyBox.CaretPosition);
                     if (e.Key == Key.Back)
                     {
@@ -252,11 +311,21 @@ namespace KeyTextBox
                     }
                     else
                     {
-                        return true;
+                        //if the user presses an invalid char, the * is added
+                        switch (elType)
+                        {
+                            case ElementType.Joker:
+                            case ElementType.Character:
+                                key = key.Remove(caretIndex, 1).Insert(caretIndex, "*");
+                                caretIndex++;
+                                break;
+                            case ElementType.Group:
+                                //in a group, nothing happens
+                                break;
+                        }                                               
                     }
                     break;
             }
-
             KeyManager.SetKey(key);
             SetKeyBox(key, caretIndex);
             return false;
