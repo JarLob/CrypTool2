@@ -36,16 +36,17 @@ See the CT Book, section 4.11.5.4 about shared primes in RSA modules used in rea
   </replacements>  
   
   <replacements lang="de"> 
-    <replacement key="$memo$" value="{\b Gemeinsamer-Primfaktor-Angriff (aka Shared Prime)}\line
+    <replacement key="$memo$" value="{\b Angriff auf gemeinsamen Primfaktor (aka Shared Prime)}\line
 \line
 Gegeben sind 2 Module N1 = P * Q und N2 = R * Q, die sich einen gemeinsamen Primfaktor Q teilen.\line
 Sie kennen die Faktoren P, Q und R nicht, sondern nur die beiden Module (Produkte).\line
 \line
 Ohne N1 oder N2 zu faktorisieren finden Sie zuerst den gemeinsamen Faktor Q und dann durch einfache Division die beiden anderen Faktoren P und R.\line
 \line
-In der Realität sind N1 und N2 viel größer (z. B. 2 ^ 2048 oder 10 ^ 620). Mit solchen Werten ist Faktorisierung sehr langsam oder sogar unmöglich, aber die Berechnung der entsprechenden GCD ist sehr schnell.\line
+In der Realität sind N1 und N2 viel größer (z. B. 2^2048 oder 10^620). Mit solchen Werten dauert die Faktorisierung sehr lange oder sogar ist sogar unmöglich, aber die Berechnung des entsprechenden ggT (englisch gcd) ist sehr schnell.
 \line
-Siehe CT Buch, Abschnitt 4.11.5.4 über gemeinsame Primzahlen in RSA-Modulen, die in der Realität verwendet werden." />
+\line
+Siehe CT-Buch, Abschnitt 4.11.5.4 über gemeinsame Primfaktoren in RSA-Modulen, die in der Realität verwendet wurden." />
   </replacements>
     
   <replacements lang="ru">
