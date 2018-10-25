@@ -227,6 +227,14 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                         OnPropertyChanged("Output");
                     }
                     break;
+
+                case OutputType.Bool:
+                    {
+                        _output = random.Next(2) == 1;
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+
                 default:
                     throw new Exception(String.Format("Output type {0} not implemented", _Settings.OutputType.ToString()));
             }
@@ -323,6 +331,15 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                             OnPropertyChanged("Output");
                         }
                         break;
+                    case OutputType.Bool:
+                        {
+                            byte[] output = new byte[1];
+                            random.GetBytes(output);
+                            _output = output[0] % 2 == 0;
+                            OnPropertyChanged("Output");
+                        }
+                        break;
+
                     default:
                         throw new Exception(String.Format("Output type {0} not implemented", _Settings.OutputType.ToString()));
                 }
@@ -435,6 +452,13 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                             array[i] = new BigInteger(output);
                         }
                         _output = array;
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.Bool:
+                    {
+                        X2 x2Generator = new X2(seed, modulus, 1);
+                        _output = x2Generator.randBit() == 0;
                         OnPropertyChanged("Output");
                     }
                     break;
@@ -566,6 +590,13 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                             array[i] = new BigInteger(output);
                         }
                         _output = array;
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.Bool:
+                    {
+                        LCG lcgGenerator = new LCG(seed, modulus, a, b, outputlength);
+                        _output = lcgGenerator.randBit() == 0;
                         OnPropertyChanged("Output");
                     }
                     break;
@@ -701,6 +732,13 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                             array[i] = new BigInteger(output);
                         }
                         _output = array;
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.Bool:
+                    {
+                        ICG icgGenerator = new ICG(seed, modulus, a, b, outputlength);
+                        _output = icgGenerator.randBit() == 0;
                         OnPropertyChanged("Output");
                     }
                     break;

@@ -204,4 +204,10 @@
   <data name="OutputAmountTooltip" xml:space="preserve">
     <value>Изменяет количество элементов выходного массива</value>
   </data>
+  <data name="Number" xml:space="preserve">
+    <value>номер</value>
+  </data>
+  <data name="NumberArray" xml:space="preserve">
+    <value>номер массива</value>
+  </data>
 </root>

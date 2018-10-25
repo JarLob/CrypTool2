@@ -214,6 +214,24 @@ namespace RandomNumberGenerator.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number ähnelt.
+        /// </summary>
+        internal static string Number {
+            get {
+                return ResourceManager.GetString("Number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number Array ähnelt.
+        /// </summary>
+        internal static string NumberArray {
+            get {
+                return ResourceManager.GetString("NumberArray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Elements in output array ähnelt.
         /// </summary>
         internal static string OutputAmountCaption {

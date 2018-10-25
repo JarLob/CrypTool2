@@ -45,7 +45,8 @@ namespace Cryptool.Plugins.RandomNumberGenerator
         ByteArray = 0,
         CrypToolStream = 1,
         Number = 2,
-        NumberArray = 3
+        NumberArray = 3, 
+        Bool
     }
     
 
@@ -93,7 +94,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             }
         }
 
-        [TaskPane("OutputTypeCaption", "OutputTypeTooltip", "GeneralSettingsGroup", 1, false, ControlType.ComboBox, new string[] { "Byte Array", "CryptoolStream", "Number", "Number Array" })]
+        [TaskPane("OutputTypeCaption", "OutputTypeTooltip", "GeneralSettingsGroup", 1, false, ControlType.ComboBox, new string[] { "Byte Array", "CryptoolStream", "Number", "Number Array" , "Bool" })]
         public OutputType OutputType
         {
             get

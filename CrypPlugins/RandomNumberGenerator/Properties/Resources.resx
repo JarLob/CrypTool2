@@ -204,4 +204,10 @@
   <data name="GeneralSettingsGroup" xml:space="preserve">
     <value>General</value>
   </data>
+  <data name="Number" xml:space="preserve">
+    <value>Number</value>
+  </data>
+  <data name="NumberArray" xml:space="preserve">
+    <value>Number Array</value>
+  </data>
 </root>
