@@ -1405,7 +1405,7 @@ namespace CrypToolStoreLib.Client
         /// <param name="source"></param>
         /// <param name="filename"></param>
         /// <param name="stop"></param>
-        public DataModificationOrRequestResult UploadZipFile(Source source, string filename, ref bool stop)
+        public DataModificationOrRequestResult UploadSourceZipFile(Source source, string filename, ref bool stop)
         {
             lock (this)
             {
@@ -1423,10 +1423,10 @@ namespace CrypToolStoreLib.Client
                 FileInfo fileInfo = new FileInfo(filename);
                 long filesize = fileInfo.Length;
 
-                StartUploadZipfileMessage startUploadZipfileMessage = new StartUploadZipfileMessage();
-                startUploadZipfileMessage.Source = source;
-                startUploadZipfileMessage.FileSize = filesize;
-                SendMessage(startUploadZipfileMessage);
+                StartUploadSourceZipfileMessage startUploadSourceZipfileMessage = new StartUploadSourceZipfileMessage();
+                startUploadSourceZipfileMessage.Source = source;
+                startUploadSourceZipfileMessage.FileSize = filesize;
+                SendMessage(startUploadSourceZipfileMessage);
 
                 //2. Step: Receive response message from server
                 var response_message = ReceiveMessage();
@@ -1615,7 +1615,7 @@ namespace CrypToolStoreLib.Client
         /// <param name="filename"></param>
         /// <param name="stop"></param>
         /// <returns></returns>
-        public DataModificationOrRequestResult DownloadZipFile(Source source, string filename, ref bool stop)
+        public DataModificationOrRequestResult DownloadSourceZipFile(Source source, string filename, ref bool stop)
         {
             lock (this)
             {
@@ -1640,9 +1640,9 @@ namespace CrypToolStoreLib.Client
                 }
 
                 //Step 1: Send requestDownloadZipfileMessage to start the uploading process      
-                RequestDownloadZipfileMessage requestDownloadZipfileMessage = new RequestDownloadZipfileMessage();
-                requestDownloadZipfileMessage.Source = source;
-                SendMessage(requestDownloadZipfileMessage);
+                RequestDownloadSourceZipfileMessage requestDownloadSourceZipfileMessage = new RequestDownloadSourceZipfileMessage();
+                requestDownloadSourceZipfileMessage.Source = source;
+                SendMessage(requestDownloadSourceZipfileMessage);
              
                 long writtenData = 0;
                 long lastWrittenData = 0;

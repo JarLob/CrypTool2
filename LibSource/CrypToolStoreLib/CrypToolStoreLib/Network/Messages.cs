@@ -87,8 +87,8 @@ namespace CrypToolStoreLib.Tools
         //Message for uploading/downloading data
         UploadDownloadData = 600,
         ResponseUploadDownloadData = 601,
-        StartUploadZipfile = 602,
-        RequestDownloadZipfile = 603,
+        StartUploadSourceZipfile = 602,
+        RequestDownloadSourceZipfile = 603,
         StopUploadDownload = 604,
 
         //server error message
@@ -277,8 +277,8 @@ namespace CrypToolStoreLib.Tools
             //upload/download messages
             MessageTypeDictionary.Add(MessageType.UploadDownloadData, typeof(UploadDownloadDataMessage));
             MessageTypeDictionary.Add(MessageType.ResponseUploadDownloadData, typeof(ResponseUploadDownloadDataMessage));
-            MessageTypeDictionary.Add(MessageType.StartUploadZipfile, typeof(StartUploadZipfileMessage));
-            MessageTypeDictionary.Add(MessageType.RequestDownloadZipfile, typeof(RequestDownloadZipfileMessage));
+            MessageTypeDictionary.Add(MessageType.StartUploadSourceZipfile, typeof(StartUploadSourceZipfileMessage));
+            MessageTypeDictionary.Add(MessageType.RequestDownloadSourceZipfile, typeof(RequestDownloadSourceZipfileMessage));
             MessageTypeDictionary.Add(MessageType.StopUploadDownload, typeof(StopUploadDownloadMessage));
             
             //error messages
@@ -1855,7 +1855,7 @@ namespace CrypToolStoreLib.Tools
     /// <summary>
     /// Message for uploading zip files of sources to the server
     /// </summary>
-    public class StartUploadZipfileMessage : Message
+    public class StartUploadSourceZipfileMessage : Message
     {
         [MessageDataField]
         public Source Source { get; set; }
@@ -1867,7 +1867,7 @@ namespace CrypToolStoreLib.Tools
     /// <summary>
     /// Message for downloading zip files of sources from the server
     /// </summary>
-    public class RequestDownloadZipfileMessage : Message
+    public class RequestDownloadSourceZipfileMessage : Message
     {
         [MessageDataField]
         public Source Source { get; set; }    

@@ -332,7 +332,7 @@ namespace CrypToolStoreBuildSystem
                 Source source = (Source)result.DataObject;
                 //update that source to building state
                 source.BuildState = BuildState.BUILDING.ToString();
-                source.BuildLog = String.Format("Buildserver started build Worker at {0}", DateTime.Now);
+                source.BuildLog = String.Format("Buildserver started build worker at {0}", DateTime.Now);
                 result = client.UpdateSource(source);
                 if (!result.Success)
                 {
@@ -449,7 +449,7 @@ namespace CrypToolStoreBuildSystem
 
             DateTime startTime = DateTime.Now;
             bool stop = false;
-            DataModificationOrRequestResult result = client.DownloadZipFile(Source, String.Format(buildfoldername + @"\plugin\source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), ref stop);
+            DataModificationOrRequestResult result = client.DownloadSourceZipFile(Source, String.Format(buildfoldername + @"\plugin\source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), ref stop);
             client.Disconnect();
 
             if (result.Success)

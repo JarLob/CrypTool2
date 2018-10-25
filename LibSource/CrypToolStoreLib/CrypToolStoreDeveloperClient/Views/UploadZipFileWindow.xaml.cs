@@ -112,7 +112,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 source.PluginVersion = PluginVersion;
                 
                 client.UploadDownloadProgressChanged += client_UploadDownloadProgressChanged;                
-                DataModificationOrRequestResult result = client.UploadZipFile(source, FileName, ref Stop);
+                DataModificationOrRequestResult result = client.UploadSourceZipFile(source, FileName, ref Stop);
                 
                 client.Disconnect();
                 

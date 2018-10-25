@@ -403,11 +403,11 @@ namespace CrypToolStoreLib.Server
                 case MessageType.RequestResourceDataList:
                     HandleRequestResourceDataListMessage((RequestResourceDataListMessage)message, sslStream);
                     break;
-                case MessageType.StartUploadZipfile:
-                    HandleUploadZipFileMessages((StartUploadZipfileMessage)message, sslStream);
+                case MessageType.StartUploadSourceZipfile:
+                    HandleUploadSourceZipFileMessage((StartUploadSourceZipfileMessage)message, sslStream);
                     break;
-                case MessageType.RequestDownloadZipfile:
-                    HandleRequestDownloadZipfileMessages((RequestDownloadZipfileMessage)message, sslStream);
+                case MessageType.RequestDownloadSourceZipfile:
+                    HandleRequestDownloadSourceZipfileMessage((RequestDownloadSourceZipfileMessage)message, sslStream);
                     break;
 
                 default:
@@ -1949,13 +1949,13 @@ namespace CrypToolStoreLib.Server
         }
 
         /// <summary>
-        /// Handles uploading of zip files
+        /// Handles uploading of source zip files
         /// </summary>
-        /// <param name="startUploadZipfileMessage"></param>
-        private void HandleUploadZipFileMessages(StartUploadZipfileMessage startUploadZipfileMessage, SslStream sslStream)
+        /// <param name="startUploadSourceZipfileMessage"></param>
+        private void HandleUploadSourceZipFileMessage(StartUploadSourceZipfileMessage startUploadSourceZipfileMessage, SslStream sslStream)
         {
             DateTime uploadStartTime = DateTime.Now;
-            Logger.LogText(String.Format("User {0} starts uploading a zip file ({1} byte) for source={2}-{3}", Username, startUploadZipfileMessage.FileSize, startUploadZipfileMessage.Source.PluginId, startUploadZipfileMessage.Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("User {0} starts uploading a zip file ({1} byte) for source={2}-{3}", Username, startUploadSourceZipfileMessage.FileSize, startUploadSourceZipfileMessage.Source.PluginId, startUploadSourceZipfileMessage.Source.PluginVersion), this, Logtype.Info);
             string tempfilename = String.Empty;
 
             //Only authenticated users are allowed to upload a zip file
@@ -1964,13 +1964,13 @@ namespace CrypToolStoreLib.Server
                 ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                 response.Success = false;
                 response.Message = "Unauthorized to upload zip file. Please authenticate yourself";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to upload a zip file for source={1}-{2} from IP={3}", Username, startUploadZipfileMessage.Source.PluginId, startUploadZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to upload a zip file for source={1}-{2} from IP={3}", Username, startUploadSourceZipfileMessage.Source.PluginId, startUploadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
             try
             {
-                Plugin plugin = Database.GetPlugin(startUploadZipfileMessage.Source.PluginId);
+                Plugin plugin = Database.GetPlugin(startUploadSourceZipfileMessage.Source.PluginId);
 
                 //only admins and users that own the resource are allowed to a upload zip file
                 if (!ClientIsAdmin && !(Username == plugin.Username))
@@ -1978,22 +1978,22 @@ namespace CrypToolStoreLib.Server
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
                     response.Message = "Unauthorized to upload zip file for that source";
-                    Logger.LogText(String.Format("Unauthorized user {0} tried to upload a zip file for source={1}-{2} from IP={3}", Username, startUploadZipfileMessage.Source.PluginId, startUploadZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                    Logger.LogText(String.Format("Unauthorized user {0} tried to upload a zip file for source={1}-{2} from IP={3}", Username, startUploadSourceZipfileMessage.Source.PluginId, startUploadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                     SendMessage(response, sslStream);
                     return;
                 }
-                Source source = Database.GetSource(startUploadZipfileMessage.Source.PluginId, startUploadZipfileMessage.Source.PluginVersion);
+                Source source = Database.GetSource(startUploadSourceZipfileMessage.Source.PluginId, startUploadSourceZipfileMessage.Source.PluginVersion);
 
                 ResponseUploadDownloadDataMessage responseSuccess = new ResponseUploadDownloadDataMessage();
                 responseSuccess.Success = true;
                 responseSuccess.Message = "Authorized to upload data";                
                 SendMessage(responseSuccess, sslStream);
 
-                long filesize = startUploadZipfileMessage.FileSize;
+                long filesize = startUploadSourceZipfileMessage.FileSize;
                 string filename = "Source-" + source.PluginId + "-" + source.PluginVersion + ".zip";
                 tempfilename = filename + "_" + DateTime.Now.Ticks;
 
-                CheckPluginSourceFolder();
+                CheckSourceFolder();
                 long writtenFilesize = 0;
                 using (FileStream fileStream = new FileStream(PLUGIN_SOURCE_FOLDER + "\\" + tempfilename, FileMode.CreateNew, FileAccess.Write))
                 {
@@ -2097,14 +2097,14 @@ namespace CrypToolStoreLib.Server
         }
 
         /// <summary>
-        /// Handles downloading of zip files
+        /// Handles downloading of source zip files
         /// </summary>
-        /// <param name="requestDownloadZipfileMessage"></param>
+        /// <param name="requestDownloadSourceZipfileMessage"></param>
         /// <param name="sslStream"></param>
-        private void HandleRequestDownloadZipfileMessages(RequestDownloadZipfileMessage requestDownloadZipfileMessage, SslStream sslStream)
+        private void HandleRequestDownloadSourceZipfileMessage(RequestDownloadSourceZipfileMessage requestDownloadSourceZipfileMessage, SslStream sslStream)
         {
             DateTime downloadStartTime = DateTime.Now;
-            Logger.LogText(String.Format("User {0} starts downloading a zip file for source={1}-{2}", Username, requestDownloadZipfileMessage.Source.PluginId, requestDownloadZipfileMessage.Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("User {0} starts downloading a zip file for source={1}-{2}", Username, requestDownloadSourceZipfileMessage.Source.PluginId, requestDownloadSourceZipfileMessage.Source.PluginVersion), this, Logtype.Info);
 
             //Only authenticated users are allowed to download a zip file
             if (!ClientIsAuthenticated)
@@ -2112,32 +2112,32 @@ namespace CrypToolStoreLib.Server
                 ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                 response.Success = false;
                 response.Message = "Unauthorized to download a zip file. Please authenticate yourself";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to download a zip file for source={1}-{2} from IP={3}", Username, requestDownloadZipfileMessage.Source.PluginId, requestDownloadZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to download a zip file for source={1}-{2} from IP={3}", Username, requestDownloadSourceZipfileMessage.Source.PluginId, requestDownloadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
             try
             {
-                Plugin plugin = Database.GetPlugin(requestDownloadZipfileMessage.Source.PluginId);
+                Plugin plugin = Database.GetPlugin(requestDownloadSourceZipfileMessage.Source.PluginId);
                 //check, if user is admin or plugin is owned by user
                 if (!ClientIsAdmin && !(Username == plugin.Username))
                 {
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
                     response.Message = "Unauthorized to download zip file for that source";
-                    Logger.LogText(String.Format("Unauthorized user {0} tried to download a zip file for source={1}-{2} from IP={3}", Username, requestDownloadZipfileMessage.Source.PluginId, requestDownloadZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                    Logger.LogText(String.Format("Unauthorized user {0} tried to download a zip file for source={1}-{2} from IP={3}", Username, requestDownloadSourceZipfileMessage.Source.PluginId, requestDownloadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                     SendMessage(response, sslStream);
                     return;
                 }
 
                 //check, if source exists
-                Source source = Database.GetSource(requestDownloadZipfileMessage.Source.PluginId, requestDownloadZipfileMessage.Source.PluginVersion);
+                Source source = Database.GetSource(requestDownloadSourceZipfileMessage.Source.PluginId, requestDownloadSourceZipfileMessage.Source.PluginVersion);
                 if(source == null)
                 {
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
                     response.Message = "Source does not exist";
-                    Logger.LogText(String.Format("User {0} tried to download a zip file for a non-existing source={1}-{2} from IP={3}", Username, requestDownloadZipfileMessage.Source.PluginId,requestDownloadZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                    Logger.LogText(String.Format("User {0} tried to download a zip file for a non-existing source={1}-{2} from IP={3}", Username, requestDownloadSourceZipfileMessage.Source.PluginId,requestDownloadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                     SendMessage(response, sslStream);
                     return;
                 }                             
@@ -2150,7 +2150,7 @@ namespace CrypToolStoreLib.Server
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
                     response.Message = "No zip file has been previously uploaded for this source";
-                    Logger.LogText(String.Format("User {0} tried to download a non existing zip file for a source={1}-{2} from IP={3}", Username, requestDownloadZipfileMessage.Source.PluginId, requestDownloadZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                    Logger.LogText(String.Format("User {0} tried to download a non existing zip file for a source={1}-{2} from IP={3}", Username, requestDownloadSourceZipfileMessage.Source.PluginId, requestDownloadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                     SendMessage(response, sslStream);
                     return;
                 }
@@ -2161,7 +2161,7 @@ namespace CrypToolStoreLib.Server
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
                     response.Message = "Source zip file does not exist. Please contact a CrypToolStore admin";
-                    Logger.LogText(String.Format("User {0} tried to download a zip file for a source={1}-{2} that does not exists in file system from IP={3}", Username, requestDownloadZipfileMessage.Source.PluginId, requestDownloadZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Error);
+                    Logger.LogText(String.Format("User {0} tried to download a zip file for a source={1}-{2} that does not exists in file system from IP={3}", Username, requestDownloadSourceZipfileMessage.Source.PluginId, requestDownloadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Error);
                     SendMessage(response, sslStream);
                     return;
                 }
@@ -2255,9 +2255,9 @@ namespace CrypToolStoreLib.Server
         }
 
         /// <summary>
-        /// Checks, if the Plugin Source folder exists; if not it creates it
+        /// Checks, if the Source folder exists; if not it creates it
         /// </summary>
-        private void CheckPluginSourceFolder()
+        private void CheckSourceFolder()
         {
             if (!Directory.Exists(PLUGIN_SOURCE_FOLDER))
             {

@@ -108,7 +108,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 string filename = "Source-" + PluginId + "-" + PluginVersion + ".zip";
 
                 client.UploadDownloadProgressChanged += client_UploadDownloadProgressChanged;
-                DataModificationOrRequestResult result = client.DownloadZipFile(source, Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + filename, ref Stop);
+                DataModificationOrRequestResult result = client.DownloadSourceZipFile(source, Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + filename, ref Stop);
                 
                 client.Disconnect();
                 
