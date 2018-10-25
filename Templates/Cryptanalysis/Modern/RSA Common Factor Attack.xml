@@ -43,7 +43,7 @@ Sie kennen die Faktoren P, Q und R nicht, sondern nur die beiden Module (Produkt
 \line
 Ohne N1 oder N2 zu faktorisieren finden Sie zuerst den gemeinsamen Faktor Q und dann durch einfache Division die beiden anderen Faktoren P und R.\line
 \line
-In der Realität sind N1 und N2 viel größer (z. B. 2^2048 oder 10^620). Mit solchen Werten dauert die Faktorisierung sehr lange oder sogar ist sogar unmöglich, aber die Berechnung des entsprechenden ggT (englisch gcd) ist sehr schnell.
+In der Realität sind N1 und N2 viel größer (z. B. 2^2048 oder 10^620). Mit solchen Werten dauert die Faktorisierung sehr lange oder ist sogar unmöglich, aber die Berechnung des entsprechenden ggT (englisch gcd) ist sehr schnell.
 \line
 \line
 Siehe CT-Buch, Abschnitt 4.11.5.4 über gemeinsame Primfaktoren in RSA-Modulen, die in der Realität verwendet wurden." />
