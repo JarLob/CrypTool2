@@ -85,7 +85,9 @@
                     </Style>
                 </TextBox.Style>
             </TextBox>
-            <Label Name="FoundTemplateCountLabel" Grid.Column="1" VerticalAlignment="Center" Background="White" HorizontalAlignment="Center" Height="26" Width="50"/>
+            <Label Name="FoundTemplateCountLabel" Padding="4" Background="White" BorderBrush="#CCC" BorderThickness="1" Focusable="False" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="26" Width="50">
+                0
+            </Label>
         </Grid>
         <TreeView Name="TemplatesTreeView" Grid.Row="1" Background="#00000000" ScrollViewer.CanContentScroll="False">
             <TreeView.ContextMenu>
