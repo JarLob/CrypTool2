@@ -17,16 +17,31 @@
     <plugin name="RandomNumberGenerator" />
   </relevantPlugins>
   <replacements lang="de">
-    <replacement key="$compDesc$" value="Zufallszahlengenerator" />
+    <replacement key="$random number generator$" value="Zufallszahlengenerator" />
 	<replacement key="$output$" value="Zufallsbytes" />
-
+	<replacement key="$memo$" value="Dieses Template zeigt, wie man in CrypTool 2 Zufallszahlen erstellen kann.\line
+Hierfür wird die Zufallszahlengenerator-Komponente benötigt.\line
+In den Einstellungen der Komponente können verschiedene Generatoren ausgewählt werden.\line
+Details zu den einzelnen Generatoren stehen in der Hilfe des Zufallszahlengenerators.\line
+Auch können verschiedene Ausgabedatentypen (Byte Array, CrypToolStream, Zahl, und ZahlenArray) ausgewählt werden.
+" />
   </replacements>
   <replacements lang="ru">
-    <replacement key="$compDesc$" value="" />
-	<replacement key="$output$" value="" />
+    <replacement key="$random number generator$" value="Генератор случайных чисел" />
+	<replacement key="$output$" value="случайные байты" />
+	<replacement key="$memo$" value="Этот шаблон показывает, как создавать случайные числа в CrypTool 2.\line
+Для этого требуется компонент генератора случайных чисел. \line
+В настройках компонента могут быть выбраны различные генераторы. \line
+Детали отдельных генераторов доступны с помощью генератора случайных чисел. \line
+Кроме того, могут быть выбраны различные типы выходных данных (Byte Array, CrypToolStream, Number и NumberArray)." />
   </replacements>
   <replacements lang="en">
-    <replacement key="$compDesc$" value="Random number generator" />
+    <replacement key="$random number generator$" value="RandomNumberGenerator" />
 	<replacement key="$output$" value="Random bytes" />
+	<replacement key="$memo$" value="This template shows how to create random numbers in CrypTool 2.\line
+This requires the RandomNumberGenerator component. \line
+Different random number generators can be selected in the component's settings. \line
+Details of the individual generators are available in the help of the RandomNumberGenerator component. \line
+Also, different output data types (Byte Array, CrypToolStream, Number, and NumberArray) can be selected." />
   </replacements>
 </sample>
