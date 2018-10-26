@@ -19,11 +19,11 @@
   <replacements lang="de">
     <replacement key="$random number generator$" value="Zufallszahlengenerator" />
 	<replacement key="$output$" value="Zufallsbytes" />
-	<replacement key="$memo$" value="Dieses Template zeigt, wie man in CrypTool 2 Zufallszahlen erstellen kann.\line
+	<replacement key="$memo$" value="Dieses Template zeigt, wie man in CrypTool 2 Zufallszahlen erzeugen kann.\line
 Hierfür wird die Zufallszahlengenerator-Komponente benötigt.\line
 In den Einstellungen der Komponente können verschiedene Generatoren ausgewählt werden.\line
 Details zu den einzelnen Generatoren stehen in der Hilfe des Zufallszahlengenerators.\line
-Auch können verschiedene Ausgabedatentypen (Byte Array, CrypToolStream, Zahl, und ZahlenArray) ausgewählt werden.
+Auch können verschiedene Ausgabedatentypen (Byte Array, CrypToolStream, Zahl und ZahlenArray) ausgewählt werden.
 " />
   </replacements>
   <replacements lang="ru">
@@ -41,7 +41,7 @@ Auch können verschiedene Ausgabedatentypen (Byte Array, CrypToolStream, Zahl, u
 	<replacement key="$memo$" value="This template shows how to create random numbers in CrypTool 2.\line
 This requires the RandomNumberGenerator component. \line
 Different random number generators can be selected in the component's settings. \line
-Details of the individual generators are available in the help of the RandomNumberGenerator component. \line
+Details of the individual generators are available in the online help of the RandomNumberGenerator component. \line
 Also, different output data types (Byte Array, CrypToolStream, Number, and NumberArray) can be selected." />
   </replacements>
 </sample>
