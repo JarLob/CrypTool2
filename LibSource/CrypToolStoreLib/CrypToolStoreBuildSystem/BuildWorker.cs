@@ -130,7 +130,7 @@ namespace CrypToolStoreBuildSystem
         /// </summary>
         public void BuildWorkerTaskMethod()
         {
-            Logger.LogText(String.Format("Started build of source {0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("(General) Started build of source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             bool buildError = true; //set build error to true; at the end, if everything is ok, error is set to false
                                     //this is needed for the update of the Source's state in the CrypToolStoreDatabase
             try
@@ -293,11 +293,11 @@ namespace CrypToolStoreBuildSystem
 
                 //if the build process reaches this point, we have no build error
                 buildError = false;
-                Logger.LogText(String.Format("Finished build of source {0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+                Logger.LogText(String.Format("(General) Finished build of source-{0}-{1} without errors", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             }
             catch (Exception ex)
             {
-                Logger.LogText(String.Format("Exception occured during build of source {0}-{1}: {2}", Source.PluginId, Source.PluginVersion, ex.Message), this, Logtype.Error);
+                Logger.LogText(String.Format("(General) Exception occured during build of source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, ex.Message), this, Logtype.Error);
             }
             finally
             {
@@ -308,13 +308,19 @@ namespace CrypToolStoreBuildSystem
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogText(String.Format("Exception occured during cleanup of source {0}-{1}: {2}", Source.PluginId, Source.PluginVersion, ex.Message), this, Logtype.Error);
+                    Logger.LogText(String.Format("(General) Exception occured during cleanup of source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, ex.Message), this, Logtype.Error);
                 }
 
                 // 14) Set state of source in database to BUILDED or ERROR
                 //     also put build_log in database
-                SetFinalBuildStateAndUploadBuildlog(buildError);
-
+                try
+                {
+                    SetFinalBuildStateAndUploadBuildlog(buildError);
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogText(String.Format("(General) Exception occured during SetFinalBuildStateAndUploadBuildlog of source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, ex.Message), this, Logtype.Error);
+                }
                 IsRunning = false;
             }
         }
@@ -324,7 +330,7 @@ namespace CrypToolStoreBuildSystem
         /// </summary>
         private bool SetToBuildingState()
         {
-            Logger.LogText(String.Format("(Buildstep 0) Set source {0}-{1} to state: {2}", Source.PluginId, Source.PluginVersion, BuildState.BUILDING.ToString()), this, Logtype.Info);
+            Logger.LogText(String.Format("(Buildstep 0) Set source-{0}-{1} to state: {2}", Source.PluginId, Source.PluginVersion, BuildState.BUILDING.ToString()), this, Logtype.Info);
 
             CrypToolStoreClient client = new CrypToolStoreClient();
             client.ServerAddress = Constants.ServerAddress;
@@ -382,12 +388,12 @@ namespace CrypToolStoreBuildSystem
             if (!Directory.Exists(buildfoldername))
             {                
                 Directory.CreateDirectory(buildfoldername);
-                Logger.LogText(String.Format("(Buildstep 1) Created build folder for source {0}-{1}: {2}", Source.PluginId, Source.PluginVersion, buildfoldername), this, Logtype.Info);
+                Logger.LogText(String.Format("(Buildstep 1) Created build folder for source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, buildfoldername), this, Logtype.Info);
                 return true;
             }
             else
             {
-                Logger.LogText(String.Format("(Buildstep 1) Folder for source {0}-{1} already exists. Maybe because of faulty previous build. Abort now", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
+                Logger.LogText(String.Format("(Buildstep 1) Folder for source-{0}-{1} already exists. Maybe because of faulty previous build. Abort now", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
                 return false;
             }
         }
@@ -410,11 +416,11 @@ namespace CrypToolStoreBuildSystem
 
             //1. create plugin folder
             Directory.CreateDirectory(buildfoldername + @"\plugin");
-            Logger.LogText(String.Format("(Buildstep 2) Created plugin folder for source {0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("(Buildstep 2) Created plugin folder for source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
 
             //2. create build_output folder
             Directory.CreateDirectory(buildfoldername + @"\build_output");
-            Logger.LogText(String.Format("(Buildstep 2) Created build_output folder for source {0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("(Buildstep 2) Created build_output folder for source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
 
             //3. create build_plugin.xml
             using (Stream stream = new FileStream(buildfoldername + @"\build_plugin.xml", FileMode.Create))
@@ -440,7 +446,7 @@ namespace CrypToolStoreBuildSystem
                     writer.WriteLine("</Project>");
                 }
             }
-            Logger.LogText(String.Format("(Buildstep 2) Created build_plugin.xml for source {0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("(Buildstep 2) Created build_plugin.xml for source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             return true;
         }
 
@@ -809,7 +815,7 @@ namespace CrypToolStoreBuildSystem
             if (Directory.Exists(buildfoldername))
             {
                 Directory.Delete(buildfoldername, true);
-                Logger.LogText(String.Format("(Buildstep 13) Deleted build folder for source {0}-{1}: {2}", Source.PluginId, Source.PluginVersion, buildfoldername), this, Logtype.Info);                
+                Logger.LogText(String.Format("(Buildstep 13) Deleted build folder for source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, buildfoldername), this, Logtype.Info);                
             }            
         }
 
