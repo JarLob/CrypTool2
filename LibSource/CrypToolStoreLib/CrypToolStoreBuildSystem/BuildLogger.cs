@@ -74,5 +74,13 @@ namespace CrypToolStoreBuildSystem
             }
         }
 
+        /// <summary>
+        /// Returns the complete content of the written log of this logger
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return LogStringBuilder.ToString();
+        }
     }
 }

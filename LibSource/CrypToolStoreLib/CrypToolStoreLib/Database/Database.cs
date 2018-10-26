@@ -665,27 +665,29 @@ namespace CrypToolStoreLib.Database
 
         /// <summary>
         /// Updates a source (only assembly file name) in the database identified by pluginid and pluginversion
+        /// automatically sets the builddate to the uploadtime
         /// </summary>
         /// <param name="pluginid"></param>
         /// <param name="pluginversion"></param>
         /// <param name="assemblyfilename"></param>
         public void UpdateSource(int pluginid, int pluginversion, string assemblyfilename)
         {
-            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, assemblyfilename={2}", pluginid, pluginversion, assemblyfilename), this, Logtype.Info);
-            string query = "update sources set assemblyfilename=@assemblyfilename where pluginid=@pluginid and pluginversion=@pluginversion";
+            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, assemblyfilename={2}, builddate={3}", pluginid, pluginversion, assemblyfilename, DateTime.Now), this, Logtype.Info);
+            string query = "update sources set assemblyfilename=@assemblyfilename, builddate=@builddate where pluginid=@pluginid and pluginversion=@pluginversion";
 
             DatabaseConnection connection = GetConnection();
 
             object[][] parameters = new object[][]{                
                 
                 new object[]{"@assemblyfilename", assemblyfilename},
+                new object[]{"@builddate", DateTime.Now},
                 new object[]{"@pluginid", pluginid},
                 new object[]{"@pluginversion", pluginversion},
             };
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated source: pluginid={0}, pluginversion={1}, assemblyfilename={2}", pluginid, pluginversion, assemblyfilename), this, Logtype.Info);
+            logger.LogText(String.Format("Updated source: pluginid={0}, pluginversion={1}, assemblyfilename={2}, builddate={3}", pluginid, pluginversion, assemblyfilename, DateTime.Now), this, Logtype.Info);
         }
 
         /// <summary>
@@ -696,10 +698,10 @@ namespace CrypToolStoreLib.Database
         /// <param name="zipfilename"></param>
         /// <param name="buildstate"></param>
         /// <param name="buildlog"></param>
-        public void UpdateSource(int pluginid, int pluginversion, string zipfilename, string buildstate, string buildlog)
+        public void UpdateSource(int pluginid, int pluginversion, string zipfilename, string buildstate, string buildlog, int buildversion)
         {
-            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, zipfilename={2}, buildstate={3}, buildlog={4}", pluginid, pluginversion, zipfilename, buildstate, buildlog), this, Logtype.Info);
-            string query = "update sources set zipfilename = @zipfilename, buildstate=@buildstate, buildlog=@buildlog where pluginid=@pluginid and pluginversion=@pluginversion";
+            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, zipfilename={2}, buildstate={3}, buildlog={4}, buildversion={5}", pluginid, pluginversion, zipfilename, buildstate, buildlog, buildversion), this, Logtype.Info);
+            string query = "update sources set zipfilename = @zipfilename, buildstate=@buildstate, buildlog=@buildlog, buildversion=@buildversion where pluginid=@pluginid and pluginversion=@pluginversion";
 
             DatabaseConnection connection = GetConnection();
 
@@ -710,11 +712,12 @@ namespace CrypToolStoreLib.Database
                 new object[]{"@buildlog", buildlog},
                 new object[]{"@pluginid", pluginid},
                 new object[]{"@pluginversion", pluginversion},
+                new object[]{"@buildversion", buildversion},
             };
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated source: pluginid={0}, pluginversion={1}, zipfilename={2}, buildstate={3}, buildlog={4}", pluginid, pluginversion, zipfilename, buildstate, buildlog), this, Logtype.Info);
+            logger.LogText(String.Format("Updated source: pluginid={0}, pluginversion={1}, zipfilename={2}, buildstate={3}, buildlog={4}, buildversion={5}", pluginid, pluginversion, zipfilename, buildstate, buildlog, buildversion), this, Logtype.Info);
         }
 
 

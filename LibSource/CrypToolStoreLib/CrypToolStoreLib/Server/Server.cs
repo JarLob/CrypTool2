@@ -1158,7 +1158,7 @@ namespace CrypToolStoreLib.Server
             try
             {
                 source = updateSourceMessage.Source;
-                Database.UpdateSource(source.PluginId, source.PluginVersion, source.ZipFileName, source.BuildState, source.BuildLog);
+                Database.UpdateSource(source.PluginId, source.PluginVersion, source.ZipFileName, source.BuildState, source.BuildLog, source.BuildVersion);
                 Logger.LogText(String.Format("User {0} updated existing source={1}-{2} in database", Username, source.PluginId, source.PluginVersion), this, Logtype.Info);
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = true;

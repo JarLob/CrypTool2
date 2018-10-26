@@ -32,7 +32,7 @@ namespace CrypToolStoreLib.DataObjects
         UPLOADED,
         BUILDING,
         SUCCESS,
-        FAILURE
+        ERROR
     }
 
     /// <summary>
