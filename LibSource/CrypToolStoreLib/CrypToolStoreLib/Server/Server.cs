@@ -2585,7 +2585,7 @@ namespace CrypToolStoreLib.Server
         /// </summary>
         private void CheckAssembliesFolder()
         {
-            if (!Directory.Exists(PLUGIN_SOURCE_FOLDER))
+            if (!Directory.Exists(PLUGIN_ASSEMBLIES_FOLDER))
             {
                 Logger.LogText(String.Format("PLUGIN_ASSEMBLIES_FOLDER={0} does not exist. Create it now", PLUGIN_ASSEMBLIES_FOLDER), this, Logtype.Info);
                 Directory.CreateDirectory(PLUGIN_ASSEMBLIES_FOLDER);

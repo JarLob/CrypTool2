@@ -671,7 +671,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="assemblyfilename"></param>
         public void UpdateSource(int pluginid, int pluginversion, string assemblyfilename)
         {
-            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, assemblyfilename={3}", pluginid, pluginversion, assemblyfilename), this, Logtype.Info);
+            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, assemblyfilename={2}", pluginid, pluginversion, assemblyfilename), this, Logtype.Info);
             string query = "update sources set assemblyfilename=@assemblyfilename where pluginid=@pluginid and pluginversion=@pluginversion";
 
             DatabaseConnection connection = GetConnection();
@@ -685,7 +685,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated source: pluginid={0}, pluginversion={1}, assemblyfilename={3}", pluginid, pluginversion, assemblyfilename), this, Logtype.Info);
+            logger.LogText(String.Format("Updated source: pluginid={0}, pluginversion={1}, assemblyfilename={2}", pluginid, pluginversion, assemblyfilename), this, Logtype.Info);
         }
 
         /// <summary>

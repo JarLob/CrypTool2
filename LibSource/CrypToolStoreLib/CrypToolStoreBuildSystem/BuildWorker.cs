@@ -748,7 +748,31 @@ namespace CrypToolStoreBuildSystem
         /// <returns></returns>
         private bool UploadAssemblyZip()
         {
-            return true;
+            Logger.LogText(String.Format("Start uploading assembly zipfile for source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            CrypToolStoreClient client = new CrypToolStoreClient();
+            client.ServerAddress = Constants.ServerAddress;
+            client.ServerPort = Constants.ServerPort;
+            client.Connect();
+            client.Login(Constants.Username, Constants.Password);
+
+            string zipfile_path_and_name = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\assembly-" + Source.PluginId + "-" + Source.PluginVersion + ".zip";
+            
+
+            DateTime startTime = DateTime.Now;
+            bool stop = false;
+            DataModificationOrRequestResult result = client.UploadAssemblyZipFile(Source, zipfile_path_and_name, ref stop);
+            client.Disconnect();
+
+            if (result.Success)
+            {
+                Logger.LogText(String.Format("Uploaded assembly zipfile of source-{0}-{1}.zip in {2}", Source.PluginId, Source.PluginVersion, DateTime.Now.Subtract(startTime)), this, Logtype.Info);
+                return true;
+            }
+            else
+            {
+                Logger.LogText(String.Format("Upload of assembly zipfile of source-{0}-{1}.zip failed. Message was: {2}", Source.PluginId, Source.PluginVersion, result.Message), this, Logtype.Error);
+                return false;
+            }            
         }
 
         /// <summary>
