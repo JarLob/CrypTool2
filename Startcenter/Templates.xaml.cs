@@ -175,6 +175,7 @@ namespace Startcenter
                 {
                     continue;
                 }
+                StringBuilder copyTextBuilder = new StringBuilder();
                 bool component = (file.Extension.ToLower() == ".component");
                 string title = null;
                 Span summary1 = new Span();
@@ -189,14 +190,22 @@ namespace Startcenter
                         XElement xml = XElement.Load(xmlFile);
                         var titleElement = XMLHelper.GetGlobalizedElementFromXML(xml, "title");
                         if (titleElement != null)
+                        {
                             title = titleElement.Value;
+                            //add title to text for copy context menu
+                            copyTextBuilder.AppendLine(title);                           
+                        }
 
                         var summaryElement = XMLHelper.GetGlobalizedElementFromXML(xml, "summary");
                         var descriptionElement = XMLHelper.GetGlobalizedElementFromXML(xml, "description");
                         if (summaryElement != null)
                         {
                             summary1.Inlines.Add(new Bold(XMLHelper.ConvertFormattedXElement(summaryElement)));
-                            summary2.Inlines.Add(new Bold(XMLHelper.ConvertFormattedXElement(summaryElement)));  
+                            summary2.Inlines.Add(new Bold(XMLHelper.ConvertFormattedXElement(summaryElement)));
+
+                            //add summary to text for copy context menu
+                            copyTextBuilder.AppendLine();
+                            copyTextBuilder.AppendLine(XMLHelper.ConvertFormattedXElementToString(summaryElement));  
                         }
                         if (descriptionElement != null && descriptionElement.Value.Length > 1) 
                         {
@@ -205,7 +214,11 @@ namespace Startcenter
                             summary1.Inlines.Add(XMLHelper.ConvertFormattedXElement(descriptionElement));
                             summary2.Inlines.Add(new LineBreak());
                             summary2.Inlines.Add(new LineBreak());
-                            summary2.Inlines.Add(XMLHelper.ConvertFormattedXElement(descriptionElement));  
+                            summary2.Inlines.Add(XMLHelper.ConvertFormattedXElement(descriptionElement));
+
+                            //add description to text for copy context menu
+                            copyTextBuilder.AppendLine();
+                            copyTextBuilder.AppendLine(XMLHelper.ConvertFormattedXElementToString(descriptionElement));  
                         }
 
                         if (xml.Element("icon") != null && xml.Element("icon").Attribute("file") != null)
@@ -244,7 +257,7 @@ namespace Startcenter
                 if ((title == null) || (title.Trim() == ""))
                 {
                     title = component ? file.Name : Path.GetFileNameWithoutExtension(file.Name).Replace("-", " ").Replace("_", " ");
-                }
+                }             
 
                 if (summary1.Inlines.Count == 0)
                 {
@@ -295,11 +308,69 @@ namespace Startcenter
                 ((StackPanel)searchItem.Content).Tag = list;
                 TemplatesListBox.Items.Add(searchItem);
 
-                CTTreeViewItem item = new CTTreeViewItem(file, title, summary2, image) { Background = bg };
+                CTTreeViewItem item = new CTTreeViewItem(file, title, summary2, image) 
+                { 
+                    Background = bg 
+                };
                 ToolTipService.SetShowDuration(item, Int32.MaxValue);
                 item.MouseDoubleClick += TemplateItemDoubleClick;
+
+                //adding context menu for opening template
+                item.ContextMenu = new ContextMenu();
+                MenuItem menuItem = new MenuItem();
+                menuItem.Header = Properties.Resources.OpenTemplate;
+                menuItem.Tag = item;
+                menuItem.AddHandler(MenuItem.ClickEvent, new RoutedEventHandler(ContextMenu_OpenTemplateClick));
+                item.ContextMenu.Items.Add(menuItem);                
+                //adding context menu for copying the description text to this template entry                
+                menuItem = new MenuItem();
+                menuItem.Header = Properties.Resources.CopyDescription;
+                menuItem.Tag = copyTextBuilder.ToString();
+                menuItem.AddHandler(MenuItem.ClickEvent, new RoutedEventHandler(ContextMenu_CopyClick));
+                item.ContextMenu.Items.Add(menuItem);
+                
                 parent.Items.Add(item);
                 TemplateCount++;
+            }
+        }
+
+        /// <summary>
+        /// User clicked on open template in context menu of an entry of the template list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
+        public void ContextMenu_OpenTemplateClick(Object sender, EventArgs eventArgs)
+        {
+            try
+            {
+                //when user clicks on the "open template" entry of the context menu
+                //we invoke the double click on the item, thus, opening the template
+                MenuItem menuItem = (MenuItem)((RoutedEventArgs)eventArgs).Source;
+                CTTreeViewItem cTTreeViewItem = (CTTreeViewItem)menuItem.Tag;
+                TemplateItemDoubleClick(cTTreeViewItem, null);
+            }
+            catch (Exception)
+            {
+                //wtf ?
+            }
+        }
+
+        /// <summary>
+        /// User clicked on copy in context menu of an entry of the template list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
+        public void ContextMenu_CopyClick(Object sender, EventArgs eventArgs)
+        {
+            try
+            {
+                MenuItem menuItem = (MenuItem)((RoutedEventArgs)eventArgs).Source;
+                string copytext = (string)menuItem.Tag;
+                Clipboard.SetText(copytext);                
+            }
+            catch (Exception)
+            {
+                Clipboard.SetText("");
             }
         }
 

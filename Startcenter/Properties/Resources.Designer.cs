@@ -97,6 +97,15 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy description ähnelt.
+        /// </summary>
+        internal static string CopyDescription {
+            get {
+                return ResourceManager.GetString("CopyDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Create a new workspace with the graphical editor. ähnelt.
         /// </summary>
         internal static string Create_a_new_workspace_with_the_graphical_editor_ {
@@ -201,6 +210,15 @@ namespace Startcenter.Properties {
         internal static string Open_the_ct_book_ {
             get {
                 return ResourceManager.GetString("Open_the_ct_book_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open template ähnelt.
+        /// </summary>
+        internal static string OpenTemplate {
+            get {
+                return ResourceManager.GetString("OpenTemplate", resourceCulture);
             }
         }
         

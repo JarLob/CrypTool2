@@ -213,4 +213,10 @@
   <data name="ExpandAll" xml:space="preserve">
     <value>Alle aufklappen</value>
   </data>
+  <data name="CopyDescription" xml:space="preserve">
+    <value>Beschreibung kopieren</value>
+  </data>
+  <data name="OpenTemplate" xml:space="preserve">
+    <value>Öffne Vorlage</value>
+  </data>
 </root>

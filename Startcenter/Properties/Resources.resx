@@ -219,4 +219,10 @@
   <data name="ExpandAll" xml:space="preserve">
     <value>Expand all</value>
   </data>
+  <data name="CopyDescription" xml:space="preserve">
+    <value>Copy description</value>
+  </data>
+  <data name="OpenTemplate" xml:space="preserve">
+    <value>Open template</value>
+  </data>
 </root>

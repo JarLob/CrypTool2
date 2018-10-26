@@ -219,4 +219,10 @@
   <data name="ExpandAll" xml:space="preserve">
     <value>Расширить все</value>
   </data>
+  <data name="CopyDescription" xml:space="preserve">
+    <value>Описание копирования</value>
+  </data>
+  <data name="OpenTemplate" xml:space="preserve">
+    <value>открытый шаблон</value>
+  </data>
 </root>
