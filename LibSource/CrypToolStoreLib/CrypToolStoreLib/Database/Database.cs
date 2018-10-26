@@ -664,6 +664,31 @@ namespace CrypToolStoreLib.Database
         }
 
         /// <summary>
+        /// Updates a source (only assembly file name) in the database identified by pluginid and pluginversion
+        /// </summary>
+        /// <param name="pluginid"></param>
+        /// <param name="pluginversion"></param>
+        /// <param name="assemblyfilename"></param>
+        public void UpdateSource(int pluginid, int pluginversion, string assemblyfilename)
+        {
+            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, assemblyfilename={3}", pluginid, pluginversion, assemblyfilename), this, Logtype.Info);
+            string query = "update sources set assemblyfilename=@assemblyfilename where pluginid=@pluginid and pluginversion=@pluginversion";
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = new object[][]{                
+                
+                new object[]{"@assemblyfilename", assemblyfilename},
+                new object[]{"@pluginid", pluginid},
+                new object[]{"@pluginversion", pluginversion},
+            };
+
+            connection.ExecutePreparedStatement(query, parameters);
+
+            logger.LogText(String.Format("Updated source: pluginid={0}, pluginversion={1}, assemblyfilename={3}", pluginid, pluginversion, assemblyfilename), this, Logtype.Info);
+        }
+
+        /// <summary>
         /// Updates a source in the database identified by pluginid and pluginversion
         /// </summary>
         /// <param name="pluginid"></param>

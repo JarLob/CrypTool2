@@ -175,6 +175,7 @@ namespace CrypToolStoreLib.Server
         private const int WRITE_TIMEOUT = 5000;
         public const int MAX_ICON_FILE_SIZE = 65536;
         public const string PLUGIN_SOURCE_FOLDER = "Sources";
+        public const string PLUGIN_ASSEMBLIES_FOLDER = "Assemblies";
         public const string RESOURCES_FOLDER = "Resources";
         private const int FILE_BUFFER_SIZE = 1048576; // 1MB
 
@@ -404,10 +405,16 @@ namespace CrypToolStoreLib.Server
                     HandleRequestResourceDataListMessage((RequestResourceDataListMessage)message, sslStream);
                     break;
                 case MessageType.StartUploadSourceZipfile:
-                    HandleUploadSourceZipFileMessage((StartUploadSourceZipfileMessage)message, sslStream);
+                    HandleStartUploadSourceZipFileMessage((StartUploadSourceZipfileMessage)message, sslStream);
+                    break;
+                case MessageType.StartUploadAssemblyZipfile:
+                    HandleStartUploadAssemblyZipFileMessage((StartUploadAssemblyZipfileMessage)message, sslStream);
                     break;
                 case MessageType.RequestDownloadSourceZipfile:
                     HandleRequestDownloadSourceZipfileMessage((RequestDownloadSourceZipfileMessage)message, sslStream);
+                    break;
+                case MessageType.RequestDownloadAssemblyZipfile:
+                    HandleRequestDownloadAssemblyZipfileMessage((RequestDownloadAssemblyZipfileMessage)message, sslStream);
                     break;
 
                 default:
@@ -1222,9 +1229,9 @@ namespace CrypToolStoreLib.Server
                 string filename = PLUGIN_SOURCE_FOLDER + "\\" + "Source-" + source.PluginId + "-" + source.PluginVersion + ".zip";
                 if(File.Exists(filename))
                 {
-                    Logger.LogText(String.Format("Deleting source zip file: {0}", filename), this, Logtype.Info);
+                    Logger.LogText(String.Format("Deleting source zipfile: {0}", filename), this, Logtype.Info);
                     File.Delete(filename);
-                    Logger.LogText(String.Format("Deleted source zip file: {0}", filename), this, Logtype.Info);
+                    Logger.LogText(String.Format("Deleted source zipfile: {0}", filename), this, Logtype.Info);
                 }
                 //2. delete source in database
                 Database.DeleteSource(deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion);
@@ -1949,22 +1956,22 @@ namespace CrypToolStoreLib.Server
         }
 
         /// <summary>
-        /// Handles uploading of source zip files
+        /// Handles uploading of source zipfiles
         /// </summary>
         /// <param name="startUploadSourceZipfileMessage"></param>
-        private void HandleUploadSourceZipFileMessage(StartUploadSourceZipfileMessage startUploadSourceZipfileMessage, SslStream sslStream)
+        private void HandleStartUploadSourceZipFileMessage(StartUploadSourceZipfileMessage startUploadSourceZipfileMessage, SslStream sslStream)
         {
             DateTime uploadStartTime = DateTime.Now;
-            Logger.LogText(String.Format("User {0} starts uploading a zip file ({1} byte) for source={2}-{3}", Username, startUploadSourceZipfileMessage.FileSize, startUploadSourceZipfileMessage.Source.PluginId, startUploadSourceZipfileMessage.Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("User {0} starts uploading a source zipfile ({1} byte) for source={2}-{3}", Username, startUploadSourceZipfileMessage.FileSize, startUploadSourceZipfileMessage.Source.PluginId, startUploadSourceZipfileMessage.Source.PluginVersion), this, Logtype.Info);
             string tempfilename = String.Empty;
 
-            //Only authenticated users are allowed to upload a zip file
+            //Only authenticated users are allowed to upload a zipfile
             if (!ClientIsAuthenticated)
             {
                 ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                 response.Success = false;
-                response.Message = "Unauthorized to upload zip file. Please authenticate yourself";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to upload a zip file for source={1}-{2} from IP={3}", Username, startUploadSourceZipfileMessage.Source.PluginId, startUploadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                response.Message = "Unauthorized to upload a source zipfile. Please authenticate yourself";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to upload a source zipfile for source={1}-{2} from IP={3}", Username, startUploadSourceZipfileMessage.Source.PluginId, startUploadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1972,13 +1979,13 @@ namespace CrypToolStoreLib.Server
             {
                 Plugin plugin = Database.GetPlugin(startUploadSourceZipfileMessage.Source.PluginId);
 
-                //only admins and users that own the resource are allowed to a upload zip file
+                //only admins and users that own the resource are allowed to a upload zipfile
                 if (!ClientIsAdmin && !(Username == plugin.Username))
                 {
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
-                    response.Message = "Unauthorized to upload zip file for that source";
-                    Logger.LogText(String.Format("Unauthorized user {0} tried to upload a zip file for source={1}-{2} from IP={3}", Username, startUploadSourceZipfileMessage.Source.PluginId, startUploadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                    response.Message = "Unauthorized to upload a source zipfile for that source";
+                    Logger.LogText(String.Format("Unauthorized user {0} tried to upload a source zipfile for source={1}-{2} from IP={3}", Username, startUploadSourceZipfileMessage.Source.PluginId, startUploadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                     SendMessage(response, sslStream);
                     return;
                 }
@@ -2036,7 +2043,7 @@ namespace CrypToolStoreLib.Server
                         {
                             //received wrong message, abort
                             ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
-                            Logger.LogText(String.Format("User {0} stopped the upload for source: {1}-{2}", Username, source.PluginId, source.PluginVersion), this, Logtype.Info);
+                            Logger.LogText(String.Format("User {0} stopped the upload of source zipfile for source: {1}-{2}", Username, source.PluginId, source.PluginVersion), this, Logtype.Info);
                             return; // stopped by user
                         }
                         //case 3: we receive something wrong...
@@ -2071,8 +2078,156 @@ namespace CrypToolStoreLib.Server
                 Database.UpdateSource(source.PluginId, source.PluginVersion, filename, BuildState.UPLOADED.ToString(), String.Format("Uploaded by {0}", Username), DateTime.Now);
                 Logger.LogText(String.Format("Updated Source={0} in database", source), this, Logtype.Info);
 
-                Logger.LogText(String.Format("User {0} uploaded a {1} byte zip for source={2} in {3}", Username, writtenFilesize, source, DateTime.Now - uploadStartTime), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} uploaded a {1} byte source zip for source={2} in {3}", Username, writtenFilesize, source, DateTime.Now - uploadStartTime), this, Logtype.Info);
                 
+            }
+            catch (Exception ex)
+            {
+                //request failed; logg to logfile and return exception to client
+                ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                response.Success = false;
+                Logger.LogText(String.Format("User {0} tried to upload a source zipfile. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during upload of source zipfile";
+                SendMessage(response, sslStream);
+            }
+            finally
+            {
+                //If something went wrong, maybe the tempfile still exists
+                //thus, we delete it here
+                if (tempfilename != string.Empty && File.Exists(PLUGIN_SOURCE_FOLDER + "\\" + tempfilename))
+                {
+                    Logger.LogText(String.Format("Delete temp file {0}", PLUGIN_SOURCE_FOLDER + "\\" + tempfilename), this, Logtype.Info);
+                    File.Delete(PLUGIN_SOURCE_FOLDER + "\\" + tempfilename);
+                    Logger.LogText(String.Format("Deleted temp file {0}", PLUGIN_SOURCE_FOLDER + "\\" + tempfilename), this, Logtype.Info);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles uploading of source zipfiles
+        /// </summary>
+        /// <param name="startUploadAssemblyZipfileMessage"></param>
+        private void HandleStartUploadAssemblyZipFileMessage(StartUploadAssemblyZipfileMessage startUploadAssemblyZipfileMessage, SslStream sslStream)
+        {
+            DateTime uploadStartTime = DateTime.Now;
+            Logger.LogText(String.Format("User {0} starts uploading an assembly zipfile ({1} byte) for source={2}-{3}", Username, startUploadAssemblyZipfileMessage.FileSize, startUploadAssemblyZipfileMessage.Source.PluginId, startUploadAssemblyZipfileMessage.Source.PluginVersion), this, Logtype.Info);
+            string tempfilename = String.Empty;
+
+            //Only authenticated users are allowed to upload a zipfile
+            if (!ClientIsAuthenticated)
+            {
+                ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                response.Success = false;
+                response.Message = "Unauthorized to upload an assembly zipfile. Please authenticate yourself";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to upload an assembly zipfile for source={1}-{2} from IP={3}", Username, startUploadAssemblyZipfileMessage.Source.PluginId, startUploadAssemblyZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            try
+            {
+                Plugin plugin = Database.GetPlugin(startUploadAssemblyZipfileMessage.Source.PluginId);
+
+                //only admins and users that own the resource are allowed to a upload zipfile
+                if (!ClientIsAdmin && !(Username == plugin.Username))
+                {
+                    ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                    response.Success = false;
+                    response.Message = "Unauthorized to upload an assembly zipfile for that source";
+                    Logger.LogText(String.Format("Unauthorized user {0} tried to upload an assembly zipfile for source={1}-{2} from IP={3}", Username, startUploadAssemblyZipfileMessage.Source.PluginId, startUploadAssemblyZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                    SendMessage(response, sslStream);
+                    return;
+                }
+                Source source = Database.GetSource(startUploadAssemblyZipfileMessage.Source.PluginId, startUploadAssemblyZipfileMessage.Source.PluginVersion);
+
+                ResponseUploadDownloadDataMessage responseSuccess = new ResponseUploadDownloadDataMessage();
+                responseSuccess.Success = true;
+                responseSuccess.Message = "Authorized to upload data";
+                SendMessage(responseSuccess, sslStream);
+
+                long filesize = startUploadAssemblyZipfileMessage.FileSize;
+                string filename = "Assembly-" + source.PluginId + "-" + source.PluginVersion + ".zip";
+                tempfilename = filename + "_" + DateTime.Now.Ticks;
+
+                CheckAssembliesFolder();
+                long writtenFilesize = 0;
+                using (FileStream fileStream = new FileStream(PLUGIN_ASSEMBLIES_FOLDER + "\\" + tempfilename, FileMode.CreateNew, FileAccess.Write))
+                {
+
+                    while (true)
+                    {
+                        //Receive message from stream
+                        Message message = ReceiveMessage(sslStream);
+
+                        //case 1: we receive a data message
+                        if (message.MessageHeader.MessageType == MessageType.UploadDownloadData)
+                        {
+                            UploadDownloadDataMessage uploadDownloadDataMessage = (UploadDownloadDataMessage)message;
+                            fileStream.Write(uploadDownloadDataMessage.Data, 0, uploadDownloadDataMessage.Data.Length);
+                            writtenFilesize += uploadDownloadDataMessage.Data.Length;
+                            //received wrong message, abort
+                            ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                            response.Success = true;
+                            response.Message = "OK";
+                            SendMessage(response, sslStream);
+                            if (writtenFilesize == filesize)
+                            {
+                                //we received the exact filesize, thus, we assume everything is OK
+                                break; // upload completed
+                            }
+                            if (writtenFilesize > filesize)
+                            {
+                                //here, something went wrong
+                                //client sent more bytes than he initially told us to send
+                                ResponseUploadDownloadDataMessage wrongUploadSizeResponseUploadDownloadDataMessage = new ResponseUploadDownloadDataMessage();
+                                Logger.LogText(String.Format("User {0} sent too much data. Exptected {1} but already received {2} Abort now", Username, filesize, writtenFilesize), this, Logtype.Error);
+                                wrongUploadSizeResponseUploadDownloadDataMessage.Success = false;
+                                wrongUploadSizeResponseUploadDownloadDataMessage.Message = "Exception during upload of zipfile. You sent too much data";
+                                SendMessage(wrongUploadSizeResponseUploadDownloadDataMessage, sslStream);
+                                return; // error: wrong message
+                            }
+                        }
+                        //case 2: we receive a stop message
+                        else if (message.MessageHeader.MessageType == MessageType.StopUploadDownload)
+                        {
+                            //received wrong message, abort
+                            ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                            Logger.LogText(String.Format("User {0} stopped the upload of assembly zipfile for source: {1}-{2}", Username, source.PluginId, source.PluginVersion), this, Logtype.Info);
+                            return; // stopped by user
+                        }
+                        //case 3: we receive something wrong...
+                        else
+                        {
+                            //when we received a wrong message, we abort
+                            ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                            Logger.LogText(String.Format("User {0} sent a wrong message. Expected UploadDownloadDataMessage but received {1}", Username, message.MessageHeader.MessageType), this, Logtype.Error);
+                            response.Success = false;
+                            response.Message = "Exception during upload of zipfile";
+                            SendMessage(response, sslStream);
+                            return; // error: wrong message
+                        }
+                    }
+                }
+
+                //when we are here, the upload went well,
+                //thus we can delete the old file, if it exists, and rename the temp file
+
+                if (File.Exists(PLUGIN_ASSEMBLIES_FOLDER + "\\" + filename))
+                {
+                    Logger.LogText(String.Format("File {0} already exists. Delete it now", filename), this, Logtype.Info);
+                    File.Delete(PLUGIN_ASSEMBLIES_FOLDER + "\\" + filename);
+                    Logger.LogText(String.Format("Deleted file {0}", filename), this, Logtype.Info);
+                }
+
+                Logger.LogText(String.Format("Renaming file {0} to {1}", tempfilename, filename), this, Logtype.Info);
+                File.Move(PLUGIN_ASSEMBLIES_FOLDER + "\\" + tempfilename, PLUGIN_ASSEMBLIES_FOLDER + "\\" + filename);
+                Logger.LogText(String.Format("Renamed file {0} to {1}", tempfilename, filename), this, Logtype.Info);
+
+                Logger.LogText(String.Format("Updating Source={0} in database", source), this, Logtype.Info);
+                Database.UpdateSource(source.PluginId, source.PluginVersion, filename);
+                Logger.LogText(String.Format("Updated Source={0} in database", source), this, Logtype.Info);
+
+                Logger.LogText(String.Format("User {0} uploaded a {1} byte assembly zipfile for source={2} in {3}", Username, writtenFilesize, source, DateTime.Now - uploadStartTime), this, Logtype.Info);
+
             }
             catch (Exception ex)
             {
@@ -2097,22 +2252,22 @@ namespace CrypToolStoreLib.Server
         }
 
         /// <summary>
-        /// Handles downloading of source zip files
+        /// Handles downloading of source zipfiles
         /// </summary>
         /// <param name="requestDownloadSourceZipfileMessage"></param>
         /// <param name="sslStream"></param>
         private void HandleRequestDownloadSourceZipfileMessage(RequestDownloadSourceZipfileMessage requestDownloadSourceZipfileMessage, SslStream sslStream)
         {
             DateTime downloadStartTime = DateTime.Now;
-            Logger.LogText(String.Format("User {0} starts downloading a zip file for source={1}-{2}", Username, requestDownloadSourceZipfileMessage.Source.PluginId, requestDownloadSourceZipfileMessage.Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("User {0} starts downloading a zipfile for source={1}-{2}", Username, requestDownloadSourceZipfileMessage.Source.PluginId, requestDownloadSourceZipfileMessage.Source.PluginVersion), this, Logtype.Info);
 
-            //Only authenticated users are allowed to download a zip file
+            //Only authenticated users are allowed to download a zipfile
             if (!ClientIsAuthenticated)
             {
                 ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                 response.Success = false;
-                response.Message = "Unauthorized to download a zip file. Please authenticate yourself";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to download a zip file for source={1}-{2} from IP={3}", Username, requestDownloadSourceZipfileMessage.Source.PluginId, requestDownloadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                response.Message = "Unauthorized to download a zipfile. Please authenticate yourself";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to download a zipfile for source={1}-{2} from IP={3}", Username, requestDownloadSourceZipfileMessage.Source.PluginId, requestDownloadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);
                 return;
             }
@@ -2124,8 +2279,8 @@ namespace CrypToolStoreLib.Server
                 {
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
-                    response.Message = "Unauthorized to download zip file for that source";
-                    Logger.LogText(String.Format("Unauthorized user {0} tried to download a zip file for source={1}-{2} from IP={3}", Username, requestDownloadSourceZipfileMessage.Source.PluginId, requestDownloadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                    response.Message = "Unauthorized to download zipfile for that source";
+                    Logger.LogText(String.Format("Unauthorized user {0} tried to download a zipfile for source={1}-{2} from IP={3}", Username, requestDownloadSourceZipfileMessage.Source.PluginId, requestDownloadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                     SendMessage(response, sslStream);
                     return;
                 }
@@ -2137,20 +2292,20 @@ namespace CrypToolStoreLib.Server
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
                     response.Message = "Source does not exist";
-                    Logger.LogText(String.Format("User {0} tried to download a zip file for a non-existing source={1}-{2} from IP={3}", Username, requestDownloadSourceZipfileMessage.Source.PluginId,requestDownloadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                    Logger.LogText(String.Format("User {0} tried to download a zipfile for a non-existing source={1}-{2} from IP={3}", Username, requestDownloadSourceZipfileMessage.Source.PluginId,requestDownloadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                     SendMessage(response, sslStream);
                     return;
                 }                             
                                 
                 string filename = source.ZipFileName;
 
-                //no zip file previously uploaded
+                //no zipfile previously uploaded
                 if (filename.Equals(String.Empty))
                 {
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
-                    response.Message = "No zip file has been previously uploaded for this source";
-                    Logger.LogText(String.Format("User {0} tried to download a non existing zip file for a source={1}-{2} from IP={3}", Username, requestDownloadSourceZipfileMessage.Source.PluginId, requestDownloadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                    response.Message = "No zipfile has been previously uploaded for this source";
+                    Logger.LogText(String.Format("User {0} tried to download a non existing zipfile for a source={1}-{2} from IP={3}", Username, requestDownloadSourceZipfileMessage.Source.PluginId, requestDownloadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
                     SendMessage(response, sslStream);
                     return;
                 }
@@ -2160,8 +2315,8 @@ namespace CrypToolStoreLib.Server
                 {
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
-                    response.Message = "Source zip file does not exist. Please contact a CrypToolStore admin";
-                    Logger.LogText(String.Format("User {0} tried to download a zip file for a source={1}-{2} that does not exists in file system from IP={3}", Username, requestDownloadSourceZipfileMessage.Source.PluginId, requestDownloadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Error);
+                    response.Message = "Source zipfile does not exist. Please contact a CrypToolStore admin";
+                    Logger.LogText(String.Format("User {0} tried to download a zipfile for a source={1}-{2} that does not exists in file system from IP={3}", Username, requestDownloadSourceZipfileMessage.Source.PluginId, requestDownloadSourceZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Error);
                     SendMessage(response, sslStream);
                     return;
                 }
@@ -2220,14 +2375,14 @@ namespace CrypToolStoreLib.Server
                             ResponseUploadDownloadDataMessage responseUploadDownloadDataMessage = (ResponseUploadDownloadDataMessage)response;
                             if (responseUploadDownloadDataMessage.Success == false)
                             {
-                                string failmsg = String.Format("Download of source={0}-{1} failed, reason: {2}", source.PluginId, source.PluginVersion, responseUploadDownloadDataMessage.Message);
+                                string failmsg = String.Format("Download of source zipfile of source={0}-{1} failed, reason: {2}", source.PluginId, source.PluginVersion, responseUploadDownloadDataMessage.Message);
                                 Logger.LogText(failmsg, this, Logtype.Info);
                                 return;
                             }                           
                         }
                         else if (response.MessageHeader.MessageType == MessageType.StopUploadDownload)
                         {
-                            Logger.LogText(String.Format("User aborted download of source={0}-{1}", source.PluginId, source.PluginVersion),this, Logtype.Info);
+                            Logger.LogText(String.Format("User aborted download of source zipfile of source={0}-{1}", source.PluginId, source.PluginVersion),this, Logtype.Info);
                             return;
                         }
                         else
@@ -2248,10 +2403,168 @@ namespace CrypToolStoreLib.Server
                 //request failed; logg to logfile and return exception to client
                 ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                 response.Success = false;
-                Logger.LogText(String.Format("User {0} tried to download a zipfile. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
-                response.Message = "Exception during download of zipfile";
+                Logger.LogText(String.Format("User {0} tried to download a source zipfile. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during download of source zipfile";
                 SendMessage(response, sslStream);
             }          
+        }
+
+        /// <summary>
+        /// Handles downloading of assembly zipfiles
+        /// </summary>
+        /// <param name="requestDownloadAssemblyZipfileMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleRequestDownloadAssemblyZipfileMessage(RequestDownloadAssemblyZipfileMessage requestDownloadAssemblyZipfileMessage, SslStream sslStream)
+        {
+            DateTime downloadStartTime = DateTime.Now;
+            Logger.LogText(String.Format("User {0} starts downloading an assembly zipfile for source={1}-{2}", Username, requestDownloadAssemblyZipfileMessage.Source.PluginId, requestDownloadAssemblyZipfileMessage.Source.PluginVersion), this, Logtype.Info);
+
+            //Only authenticated users are allowed to download a zipfile
+            if (!ClientIsAuthenticated)
+            {
+                ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                response.Success = false;
+                response.Message = "Unauthorized to download an assembly zipfile. Please authenticate yourself";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to download an assembly zipfile for source={1}-{2} from IP={3}", Username, requestDownloadAssemblyZipfileMessage.Source.PluginId, requestDownloadAssemblyZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            try
+            {
+                Plugin plugin = Database.GetPlugin(requestDownloadAssemblyZipfileMessage.Source.PluginId);
+                //check, if user is admin or plugin is owned by user
+                if (!ClientIsAdmin && !(Username == plugin.Username))
+                {
+                    ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                    response.Success = false;
+                    response.Message = "Unauthorized to download assembly zipfile for that source";
+                    Logger.LogText(String.Format("Unauthorized user {0} tried to download an assembly zipfile for source={1}-{2} from IP={3}", Username, requestDownloadAssemblyZipfileMessage.Source.PluginId, requestDownloadAssemblyZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                    SendMessage(response, sslStream);
+                    return;
+                }
+
+                //check, if source exists
+                Source source = Database.GetSource(requestDownloadAssemblyZipfileMessage.Source.PluginId, requestDownloadAssemblyZipfileMessage.Source.PluginVersion);
+                if (source == null)
+                {
+                    ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                    response.Success = false;
+                    response.Message = "Assembly does not exist";
+                    Logger.LogText(String.Format("User {0} tried to download an assembly zipfile for a non-existing source={1}-{2} from IP={3}", Username, requestDownloadAssemblyZipfileMessage.Source.PluginId, requestDownloadAssemblyZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                    SendMessage(response, sslStream);
+                    return;
+                }
+
+                string filename = source.AssemblyFileName;
+
+                //no zipfile previously uploaded
+                if (filename.Equals(String.Empty))
+                {
+                    ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                    response.Success = false;
+                    response.Message = "No assembly zipfile has been previously uploaded for this source";
+                    Logger.LogText(String.Format("User {0} tried to download a non existing assembly zipfile for a source={1}-{2} from IP={3}", Username, requestDownloadAssemblyZipfileMessage.Source.PluginId, requestDownloadAssemblyZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                    SendMessage(response, sslStream);
+                    return;
+                }
+
+                //check if file in file system exists
+                if (!File.Exists(PLUGIN_ASSEMBLIES_FOLDER + "\\" + filename))
+                {
+                    ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                    response.Success = false;
+                    response.Message = "Assembly zipfile does not exist. Please contact a CrypToolStore admin";
+                    Logger.LogText(String.Format("User {0} tried to download an assembly zipfile for a source={1}-{2} that does not exists in file system from IP={3}", Username, requestDownloadAssemblyZipfileMessage.Source.PluginId, requestDownloadAssemblyZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Error);
+                    SendMessage(response, sslStream);
+                    return;
+                }
+
+                FileInfo fileInfo = new FileInfo(PLUGIN_ASSEMBLIES_FOLDER + "\\" + filename);
+                long filesize = fileInfo.Length;
+                long totalbytesread = 0;
+
+                using (FileStream fileStream = new FileStream(PLUGIN_ASSEMBLIES_FOLDER + "\\" + filename, FileMode.Open, FileAccess.Read))
+                {
+                    byte[] buffer = new byte[FILE_BUFFER_SIZE];
+                    while (totalbytesread < filesize)
+                    {
+                        //read a block of data
+                        int bytesread = 0;
+                        int current_bytesread = 0;
+
+                        while ((current_bytesread = fileStream.Read(buffer, bytesread, FILE_BUFFER_SIZE - bytesread)) > 0 && bytesread < FILE_BUFFER_SIZE)
+                        {
+                            bytesread += current_bytesread;
+                            totalbytesread += current_bytesread;
+                        }
+
+                        byte[] data;
+                        if (bytesread < FILE_BUFFER_SIZE)
+                        {
+                            data = new byte[bytesread];
+                            Array.Copy(buffer, 0, data, 0, bytesread);
+                        }
+                        else
+                        {
+                            data = buffer;
+                        }
+
+                        //send the block of data
+                        UploadDownloadDataMessage uploadDownloadDataMessage = new UploadDownloadDataMessage();
+                        uploadDownloadDataMessage.Data = data;
+                        uploadDownloadDataMessage.Offset = totalbytesread;
+                        uploadDownloadDataMessage.FileSize = filesize;
+
+                        SendMessage(uploadDownloadDataMessage, sslStream);
+
+                        //check, if block of data was received without error
+                        Message response = ReceiveMessage(sslStream);
+
+                        //Received null = connection closed
+                        if (response == null)
+                        {
+                            Logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                            return;
+                        }
+
+                        //Received ResponseUploadDownloadDataMessage
+                        if (response.MessageHeader.MessageType == MessageType.ResponseUploadDownloadData)
+                        {
+                            ResponseUploadDownloadDataMessage responseUploadDownloadDataMessage = (ResponseUploadDownloadDataMessage)response;
+                            if (responseUploadDownloadDataMessage.Success == false)
+                            {
+                                string failmsg = String.Format("Download of assembly zipfile for source={0}-{1} failed, reason: {2}", source.PluginId, source.PluginVersion, responseUploadDownloadDataMessage.Message);
+                                Logger.LogText(failmsg, this, Logtype.Info);
+                                return;
+                            }
+                        }
+                        else if (response.MessageHeader.MessageType == MessageType.StopUploadDownload)
+                        {
+                            Logger.LogText(String.Format("User aborted download of assembly zipfile of source={0}-{1}", source.PluginId, source.PluginVersion), this, Logtype.Info);
+                            return;
+                        }
+                        else
+                        {
+                            //Received another (wrong) message
+                            string msg = String.Format("Response message to UploadDownloadDataMessage was not a ResponseUploadDownloadDataMessage or a StopUploadDownloadMessage. Message was: {0}", response.MessageHeader.MessageType.ToString());
+                            Logger.LogText(msg, this, Logtype.Info);
+                            return;
+                        }
+                    }
+                }
+
+                //Received another (wrong) message                    
+                Logger.LogText(String.Format("User {0} completely downloaded {1} in {2}", Username, filename, DateTime.Now - downloadStartTime), this, Logtype.Info);
+            }
+            catch (Exception ex)
+            {
+                //request failed; logg to logfile and return exception to client
+                ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                response.Success = false;
+                Logger.LogText(String.Format("User {0} tried to download an assembly zipfile. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during download of assembly zipfile";
+                SendMessage(response, sslStream);
+            }
         }
 
         /// <summary>
@@ -2265,6 +2578,19 @@ namespace CrypToolStoreLib.Server
                 Directory.CreateDirectory(PLUGIN_SOURCE_FOLDER);
                 Logger.LogText(String.Format("PLUGIN_SOURCE_FOLDER={0} created", PLUGIN_SOURCE_FOLDER), this, Logtype.Info);
             }            
+        }
+
+        /// <summary>
+        /// Checks, if the Source folder exists; if not it creates it
+        /// </summary>
+        private void CheckAssembliesFolder()
+        {
+            if (!Directory.Exists(PLUGIN_SOURCE_FOLDER))
+            {
+                Logger.LogText(String.Format("PLUGIN_ASSEMBLIES_FOLDER={0} does not exist. Create it now", PLUGIN_ASSEMBLIES_FOLDER), this, Logtype.Info);
+                Directory.CreateDirectory(PLUGIN_ASSEMBLIES_FOLDER);
+                Logger.LogText(String.Format("PLUGIN_ASSEMBLIES_FOLDER={0} created", PLUGIN_ASSEMBLIES_FOLDER), this, Logtype.Info);
+            }
         }
 
         /// <summary>

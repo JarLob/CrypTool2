@@ -88,8 +88,10 @@ namespace CrypToolStoreLib.Tools
         UploadDownloadData = 600,
         ResponseUploadDownloadData = 601,
         StartUploadSourceZipfile = 602,
-        RequestDownloadSourceZipfile = 603,
-        StopUploadDownload = 604,
+        StartUploadAssemblyZipfile = 603,
+        RequestDownloadSourceZipfile = 604,
+        RequestDownloadAssemblyZipfile = 605,
+        StopUploadDownload = 606,
 
         //server error message
         ServerError = 900,
@@ -278,7 +280,9 @@ namespace CrypToolStoreLib.Tools
             MessageTypeDictionary.Add(MessageType.UploadDownloadData, typeof(UploadDownloadDataMessage));
             MessageTypeDictionary.Add(MessageType.ResponseUploadDownloadData, typeof(ResponseUploadDownloadDataMessage));
             MessageTypeDictionary.Add(MessageType.StartUploadSourceZipfile, typeof(StartUploadSourceZipfileMessage));
+            MessageTypeDictionary.Add(MessageType.StartUploadAssemblyZipfile, typeof(StartUploadAssemblyZipfileMessage));
             MessageTypeDictionary.Add(MessageType.RequestDownloadSourceZipfile, typeof(RequestDownloadSourceZipfileMessage));
+            MessageTypeDictionary.Add(MessageType.RequestDownloadAssemblyZipfile, typeof(RequestDownloadAssemblyZipfileMessage));
             MessageTypeDictionary.Add(MessageType.StopUploadDownload, typeof(StopUploadDownloadMessage));
             
             //error messages
@@ -1865,12 +1869,33 @@ namespace CrypToolStoreLib.Tools
     }
 
     /// <summary>
+    /// Message for uploading zip files of assemblies to the server
+    /// </summary>
+    public class StartUploadAssemblyZipfileMessage : Message
+    {
+        [MessageDataField]
+        public Source Source { get; set; }
+
+        [MessageDataField]
+        public long FileSize { get; set; }
+    }
+
+    /// <summary>
     /// Message for downloading zip files of sources from the server
     /// </summary>
     public class RequestDownloadSourceZipfileMessage : Message
     {
         [MessageDataField]
         public Source Source { get; set; }    
+    }
+
+    /// <summary>
+    /// Message for downloading zip files of assemblies from the server
+    /// </summary>
+    public class RequestDownloadAssemblyZipfileMessage : Message
+    {
+        [MessageDataField]
+        public Source Source { get; set; }
     }
 
     /// <summary>
