@@ -2074,11 +2074,11 @@ namespace CrypToolStoreLib.Server
                 File.Move(PLUGIN_SOURCE_FOLDER + "\\" + tempfilename, PLUGIN_SOURCE_FOLDER + "\\" + filename);
                 Logger.LogText(String.Format("Renamed file {0} to {1}", tempfilename, filename), this, Logtype.Info);
 
-                Logger.LogText(String.Format("Updating Source={0} in database", source), this, Logtype.Info);
+                Logger.LogText(String.Format("Updating Source={0}-{1} in database", source.PluginId, source.PluginVersion), this, Logtype.Info);
                 Database.UpdateSource(source.PluginId, source.PluginVersion, filename, BuildState.UPLOADED.ToString(), String.Format("Uploaded by {0}", Username), DateTime.Now);
-                Logger.LogText(String.Format("Updated Source={0} in database", source), this, Logtype.Info);
+                Logger.LogText(String.Format("Updated Source={0}-{1} in database", source.PluginId, source.PluginVersion), this, Logtype.Info);
 
-                Logger.LogText(String.Format("User {0} uploaded a {1} byte source zip for source={2} in {3}", Username, writtenFilesize, source, DateTime.Now - uploadStartTime), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} uploaded a {1} byte source zip for source={2}-{3} in {4}", Username, writtenFilesize, source.PluginId, source.PluginVersion, DateTime.Now - uploadStartTime), this, Logtype.Info);
                 
             }
             catch (Exception ex)
@@ -2222,11 +2222,11 @@ namespace CrypToolStoreLib.Server
                 File.Move(PLUGIN_ASSEMBLIES_FOLDER + "\\" + tempfilename, PLUGIN_ASSEMBLIES_FOLDER + "\\" + filename);
                 Logger.LogText(String.Format("Renamed file {0} to {1}", tempfilename, filename), this, Logtype.Info);
 
-                Logger.LogText(String.Format("Updating Source={0} in database", source), this, Logtype.Info);
+                Logger.LogText(String.Format("Updating source={0}-{1} in database", source.PluginId, source.PluginVersion), this, Logtype.Info);
                 Database.UpdateSource(source.PluginId, source.PluginVersion, filename);
-                Logger.LogText(String.Format("Updated Source={0} in database", source), this, Logtype.Info);
+                Logger.LogText(String.Format("Updated source={0}-{1} in database", source.PluginId, source.PluginVersion), this, Logtype.Info);
 
-                Logger.LogText(String.Format("User {0} uploaded a {1} byte assembly zipfile for source={2} in {3}", Username, writtenFilesize, source, DateTime.Now - uploadStartTime), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} uploaded a {1} byte assembly zipfile for source={2}-{3} in {4}", Username, writtenFilesize, source.PluginId, source.PluginVersion, DateTime.Now - uploadStartTime), this, Logtype.Info);
 
             }
             catch (Exception ex)
