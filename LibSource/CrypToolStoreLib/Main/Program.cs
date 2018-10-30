@@ -30,7 +30,7 @@ namespace CrpyStoreLib
 {
     class Program
     {
-        private static Logger logger = Logger.GetLogger();
+        private static Logger logger;
         private static Program program = new Program();
 
         static void Main(string[] args)
@@ -39,7 +39,11 @@ namespace CrpyStoreLib
         }
 
         public void Run()
-        {       
+        {
+            Logger.LogFilePrefix = "CrypToolStoreServer";
+            Logger.EnableFileLog = true;
+            logger = Logger.GetLogger();
+
             Logger.SetLogLevel(Logtype.Info);
             CrypToolStoreDatabase database = CrypToolStoreDatabase.GetDatabase();
             if (!database.InitAndConnect("192.168.0.122", "CrypToolStore", "cryptoolstore", "123", 5))

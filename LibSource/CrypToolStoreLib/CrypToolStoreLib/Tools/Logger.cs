@@ -17,6 +17,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,19 +39,76 @@ namespace CrypToolStoreLib.Tools
         Error = 3
     }
 
-    public class Logger
+    public class Logger : IDisposable
     {
+        private DateTime _LogFileOpenedTime;
+        private FileStream _FileStream;
+        private StreamWriter _StreamWriter;
+        private static Logger Instance;
+        private static Logtype Loglevel = Logtype.Info;
+
         public event EventHandler<LogEventArgs> LoggOccured;
 
-        private static Logger Instance = new Logger();
-        private static Logtype Loglevel = Logtype.Info;
+        /// <summary>
+        /// Enables log to file
+        /// </summary>
+        public static bool EnableFileLog
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Prefix of the logfile name
+        /// </summary>
+        public static string LogFilePrefix
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Interval in days, in which logfiles should be deleted
+        /// </summary>
+        public static int LogFileDeleteInterval
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Directory, in which logfiles should be written
+        /// </summary>
+        public static string LogDirectory
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Static constructor
+        /// Sets config to default values
+        /// </summary>
+        static Logger()
+        {
+            EnableFileLog = false;
+            LogFilePrefix = "logfile";
+            LogFileDeleteInterval = 31;
+            LogDirectory = "Logs";
+        }
 
         /// <summary>
         /// Singleton, thus private constructor
         /// </summary>
         private Logger()
         {
-            //add file handling for logfile
+            if (EnableFileLog)
+            {
+                if (!Directory.Exists(LogDirectory))
+                {
+                    Directory.CreateDirectory(LogDirectory);
+                }
+            }
         }
 
         /// <summary>
@@ -59,6 +117,10 @@ namespace CrypToolStoreLib.Tools
         /// <returns></returns>
         public static Logger GetLogger()
         {
+            if (Instance == null)
+            {
+                Instance = new Logger();
+            }
             return Instance;
         }
 
@@ -88,28 +150,67 @@ namespace CrypToolStoreLib.Tools
             }         
             lock (this)
             {
+                if (EnableFileLog)
+                {
+                    if (_FileStream == null)
+                    {
+                        CreateAndOpenLogFile();
+                    }
+                    if (DateTime.Now > _LogFileOpenedTime.AddDays(1))
+                    {
+                        _StreamWriter.Flush();
+                        _StreamWriter.Close();
+                        CreateAndOpenLogFile();
+                        DeleteOldLogfiles();
+                    }
+                }
                 switch (logtype)
                 {
                     case Logtype.Debug:
                         Console.ForegroundColor = ConsoleColor.Blue;
                         Console.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Debug", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
+                        if (EnableFileLog)
+                        {
+                            _StreamWriter.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Debug", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
+                            _StreamWriter.Flush();
+                        }
                         Console.ResetColor();
                         break;
                     case Logtype.Info:
-                        Console.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Info", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);                        
-                        break;
+                        Console.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Info", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
+                        if (EnableFileLog)
+                        {
+                            _StreamWriter.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Info", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
+                            _StreamWriter.Flush();
+                        }
+                         break;
                     case Logtype.Warning:
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Warning", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
+                        if (EnableFileLog)
+                        {
+                            _StreamWriter.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Warning", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
+                            _StreamWriter.Flush();
+                        }
                         Console.ResetColor();
                         break;
                     case Logtype.Error:
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Error.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Error", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
+                        if (EnableFileLog)
+                        {
+                            _StreamWriter.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Error", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
+                            _StreamWriter.Flush();
+                        }
                         Console.ResetColor();
                         break;
                     default:
                         Console.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Unknown", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
+                        if (EnableFileLog)
+                        {
+                            _StreamWriter.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Unknown", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
+                            _StreamWriter.Flush();
+                        }
                         break;
                 }
                 OnLoggOccured(String.Format("{0} {1}", (whoLoggs != null ? whoLoggs.GetType().FullName : "null"), message), logtype);
@@ -146,30 +247,133 @@ namespace CrypToolStoreLib.Tools
                         
             lock (this)
             {
+                if (EnableFileLog)
+                {
+                    if (_FileStream == null)
+                    {
+                        CreateAndOpenLogFile();
+                    }
+                    if (DateTime.Now > _LogFileOpenedTime.AddDays(1))
+                    {
+                        _StreamWriter.Flush();
+                        _StreamWriter.Close();
+                        CreateAndOpenLogFile();
+                        DeleteOldLogfiles();
+                    }
+                }
+
                 switch (logtype)
                 {
                     case Logtype.Debug:
                         Console.WriteLine("{0} {1} {2}: Stacktrace:", DateTime.Now, "Debug", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null");
-                        Console.WriteLine(ex.StackTrace);                        
+                        if (EnableFileLog)
+                        {
+                            _StreamWriter.WriteLine("{0} {1} {2}: Stacktrace:", DateTime.Now, "Debug", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null");
+                            _StreamWriter.Flush();
+                        }
+                        Console.WriteLine(ex.StackTrace);
+                        if (EnableFileLog)
+                        {
+                            _StreamWriter.WriteLine(ex.StackTrace);
+                            _StreamWriter.Flush();
+                        }
                         break;
                     case Logtype.Info:
                         Console.WriteLine("{0} {1} {2}: Stacktrace:", DateTime.Now, "Info", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null");
-                        Console.WriteLine(ex.StackTrace);                        
+                        if (EnableFileLog)
+                        {
+                            _StreamWriter.WriteLine("{0} {1} {2}: Stacktrace:", DateTime.Now, "Info", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null");
+                            _StreamWriter.Flush();
+                        }
+                        Console.WriteLine(ex.StackTrace);
+                        if (EnableFileLog)
+                        {
+                            _StreamWriter.WriteLine(ex.StackTrace);
+                            _StreamWriter.Flush();
+                        }
                         break;
                     case Logtype.Warning:
                         Console.WriteLine("{0} {1} {2}: Stacktrace:", DateTime.Now, "Warning", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null");
+                        if (EnableFileLog)
+                        {
+                            _StreamWriter.WriteLine("{0} {1} {2}: Stacktrace:", DateTime.Now, "Warning", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null");
+                            _StreamWriter.Flush();
+                        }
                         Console.WriteLine(ex.StackTrace);
+                        if (EnableFileLog)
+                        {
+                            _StreamWriter.WriteLine(ex.StackTrace);
+                            _StreamWriter.Flush();
+                        }
                         break;
                     case Logtype.Error:
                         Console.WriteLine("{0} {1} {2}: Stacktrace:", DateTime.Now, "Error", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null");
+                        if (EnableFileLog)
+                        {
+                            _StreamWriter.WriteLine("{0} {1} {2}: Stacktrace:", DateTime.Now, "Error", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null");
+                            _StreamWriter.Flush();
+                        }
                         Console.Error.WriteLine(ex.StackTrace);
+                        if (EnableFileLog)
+                        {
+                            _StreamWriter.WriteLine(ex.StackTrace);
+                            _StreamWriter.Flush();
+                        }
                         break;
                     default:
                         Console.WriteLine("{0} {1} {2}: Stacktrace:", DateTime.Now, "Unknown", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null");
+                        if (EnableFileLog)
+                        {
+                            _StreamWriter.WriteLine("{0} {1} {2}: Stacktrace:", DateTime.Now, "Unknown", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null");
+                            _StreamWriter.Flush();
+                        }
                         Console.WriteLine(ex.StackTrace);
+                        if (EnableFileLog)
+                        {
+                            _StreamWriter.WriteLine(ex.StackTrace);
+                            _StreamWriter.Flush();
+                        }
                         break;
                 }
                 OnLoggOccured(String.Format("{0} {1}: Stacktrace: {2}", (whoLoggs != null ? whoLoggs.GetType().FullName : "null"), ex.Message, ex.StackTrace), logtype);
+            }
+        }
+
+        /// <summary>
+        /// Deletes old log files from log folder
+        /// </summary>
+        private void DeleteOldLogfiles()
+        {
+            foreach (var filename in Directory.GetFiles(LogDirectory))
+            {
+                DateTime creationdate = File.GetCreationTime(filename);
+                if (DateTime.Now > creationdate.AddDays(LogFileDeleteInterval))
+                {
+                    File.Delete(filename);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates a new logfile and opens it
+        /// </summary>
+        private void CreateAndOpenLogFile()
+        {
+            string logfilename = LogDirectory + "\\" + LogFilePrefix + "_" + DateTime.Now.Year + "_" + DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + ".log";
+            _FileStream = new FileStream(logfilename, FileMode.Create, FileAccess.Write);
+            _StreamWriter = new StreamWriter(_FileStream);
+            _LogFileOpenedTime = DateTime.Now;
+        }
+
+        /// <summary>
+        /// Closes the current open logfile
+        /// </summary>
+        public void Dispose()
+        {
+            if (EnableFileLog)
+            {
+                _StreamWriter.Flush();
+                _StreamWriter.Close();
             }
         }
     }

@@ -34,7 +34,7 @@ namespace CrypToolStoreBuildSystem
     /// </summary>
     public class BuildWorker
     {
-        private const string BUILD_FOLDER = "build";
+        private const string BUILD_FOLDER = "Build";
         private const string SOURCE_FILE_NAME = "Source";
 
         private BuildLogger Logger = new BuildLogger();
@@ -606,7 +606,7 @@ namespace CrypToolStoreBuildSystem
 
                     //Add hint path to CrypPluginBase                    
                     XElement hintPathElement = new XElement(defaultNamespace + "HintPath");
-                    hintPathElement.Value = @"..\..\..\ct2_libraries\CrypPluginBase.dll";
+                    hintPathElement.Value = @"..\..\..\CT2_Libraries\CrypPluginBase.dll";
                     projectReference.Add(hintPathElement);
 
                     changedCrypPluginBaseReference = true;

@@ -1,4 +1,5 @@
-﻿/*
+﻿using CrypToolStoreLib.Tools;
+/*
    Copyright 2018 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,6 +26,8 @@ namespace CrypToolStoreBuildSystem
     {
         static void Main(string[] args)
         {
+            Logger.LogFilePrefix = "CrypToolStoreBuildSystem";
+            Logger.EnableFileLog = true;
             CrypToolStoreBuildServer server = new CrypToolStoreBuildServer();
             server.Start();
             Console.ReadLine();

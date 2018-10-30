@@ -65,10 +65,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ct2_libraries\CrypCore.dll">
+    <Content Include="CT2_Libraries\CrypCore.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ct2_libraries\CrypPluginBase.dll">
+    <Content Include="CT2_Libraries\CrypPluginBase.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="CustomBuildTasks\CustomBuildTasks.exe">
