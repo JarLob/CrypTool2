@@ -38,6 +38,7 @@ namespace CrypToolStoreBuildSystem
         private const string SOURCE_FILE_NAME = "Source";
 
         private BuildLogger Logger = new BuildLogger();
+        private Configuration Config = Configuration.GetConfiguration();
 
         /// <summary>
         /// Reference to source to build
@@ -333,10 +334,10 @@ namespace CrypToolStoreBuildSystem
             Logger.LogText(String.Format("(Buildstep 0) Set source-{0}-{1} to state: {2}", Source.PluginId, Source.PluginVersion, BuildState.BUILDING.ToString()), this, Logtype.Info);
 
             CrypToolStoreClient client = new CrypToolStoreClient();
-            client.ServerAddress = Constants.ServerAddress;
-            client.ServerPort = Constants.ServerPort;
+            client.ServerAddress = Config.GetConfigEntry("ServerAddress");
+            client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
-            client.Login(Constants.Username, Constants.Password);
+            client.Login(Config.GetConfigEntry("Username"), Config.GetConfigEntry("Password"));
 
             try
             {
@@ -457,10 +458,10 @@ namespace CrypToolStoreBuildSystem
         {
             Logger.LogText(String.Format("(Buildstep 3) Start downloading source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             CrypToolStoreClient client = new CrypToolStoreClient();
-            client.ServerAddress = Constants.ServerAddress;
-            client.ServerPort = Constants.ServerPort;
+            client.ServerAddress = Config.GetConfigEntry("ServerAddress");
+            client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
-            client.Login(Constants.Username, Constants.Password);
+            client.Login(Config.GetConfigEntry("Username"), Config.GetConfigEntry("Password"));
 
             string buildfoldername = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion;
 
@@ -745,10 +746,10 @@ namespace CrypToolStoreBuildSystem
             string metafilename = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\build_output\pluginmetainfo.xml";
 
             CrypToolStoreClient client = new CrypToolStoreClient();
-            client.ServerAddress = Constants.ServerAddress;
-            client.ServerPort = Constants.ServerPort;
+            client.ServerAddress = Config.GetConfigEntry("ServerAddress");
+            client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
-            client.Login(Constants.Username, Constants.Password);
+            client.Login(Config.GetConfigEntry("Username"), Config.GetConfigEntry("Password"));
 
             DataModificationOrRequestResult result = client.GetPlugin(Source.PluginId);
             Plugin plugin = (Plugin)result.DataObject;
@@ -807,10 +808,10 @@ namespace CrypToolStoreBuildSystem
         {
             Logger.LogText(String.Format("(Buildstep 12) Start uploading assembly zipfile for source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             CrypToolStoreClient client = new CrypToolStoreClient();
-            client.ServerAddress = Constants.ServerAddress;
-            client.ServerPort = Constants.ServerPort;
+            client.ServerAddress = Config.GetConfigEntry("ServerAddress");
+            client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
-            client.Login(Constants.Username, Constants.Password);
+            client.Login(Config.GetConfigEntry("Username"), Config.GetConfigEntry("Password"));
 
             string zipfile_path_and_name = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\assembly-" + Source.PluginId + "-" + Source.PluginVersion + ".zip";
             
@@ -853,10 +854,10 @@ namespace CrypToolStoreBuildSystem
         {
             Logger.LogText(String.Format("(Buildstep 14) Set final build state of source-{0}-{1} and upload build log", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             CrypToolStoreClient client = new CrypToolStoreClient();
-            client.ServerAddress = Constants.ServerAddress;
-            client.ServerPort = Constants.ServerPort;
+            client.ServerAddress = Config.GetConfigEntry("ServerAddress");
+            client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
-            client.Login(Constants.Username, Constants.Password);
+            client.Login(Config.GetConfigEntry("Username"), Config.GetConfigEntry("Password"));
 
             DataModificationOrRequestResult result = client.GetSource(Source.PluginId, Source.PluginVersion);
             Source source = (Source)result.DataObject;

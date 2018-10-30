@@ -59,6 +59,7 @@
     <Compile Include="Database\DatabaseConnection.cs" />
     <Compile Include="DataObjects\Objects.cs" />
     <Compile Include="Server\Server.cs" />
+    <Compile Include="Tools\Configuration.cs" />
     <Compile Include="Tools\Exceptions.cs" />
     <Compile Include="Network\Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,9 +69,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="anonymous.p12">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

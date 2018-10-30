@@ -15,6 +15,7 @@
 */
 using CrypToolStoreLib.Client;
 using CrypToolStoreLib.DataObjects;
+using CrypToolStoreLib.Tools;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -43,6 +44,8 @@ namespace CrypToolStoreDeveloperClient.Views
 
         private ObservableCollection<Source> Sources = new ObservableCollection<Source>();
         public int PluginId { get; set; }
+
+        private Configuration Config = Configuration.GetConfiguration();
 
         public SourceManagementView()
         {
@@ -78,8 +81,8 @@ namespace CrypToolStoreDeveloperClient.Views
             try
             {
                 CrypToolStoreClient client = new CrypToolStoreClient();
-                client.ServerAddress = Constants.ServerAddress;
-                client.ServerPort = Constants.ServerPort;
+                client.ServerAddress = Config.GetConfigEntry("ServerAddress");
+                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
                 DataModificationOrRequestResult result = client.GetSourceList(PluginId);
@@ -125,8 +128,8 @@ namespace CrypToolStoreDeveloperClient.Views
                 try
                 {
                     CrypToolStoreClient client = new CrypToolStoreClient();
-                    client.ServerAddress = Constants.ServerAddress;
-                    client.ServerPort = Constants.ServerPort;
+                    client.ServerAddress = Config.GetConfigEntry("ServerAddress");
+                    client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
                     client.Connect();
                     client.Login(MainWindow.Username, MainWindow.Password);
                     DataModificationOrRequestResult result = client.DeleteSource(PluginId, pluginversion);
@@ -202,8 +205,8 @@ namespace CrypToolStoreDeveloperClient.Views
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
                     CrypToolStoreClient client = new CrypToolStoreClient();
-                    client.ServerAddress = Constants.ServerAddress;
-                    client.ServerPort = Constants.ServerPort;
+                    client.ServerAddress = Config.GetConfigEntry("ServerAddress");
+                    client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
                     client.Connect();
                     client.Login(MainWindow.Username, MainWindow.Password);
 

@@ -31,6 +31,7 @@ namespace CrpyStoreLib
     class Program
     {
         private static Logger logger;
+        private static Configuration Config = Configuration.GetConfiguration();
         private static Program program = new Program();
 
         static void Main(string[] args)
@@ -56,8 +57,9 @@ namespace CrpyStoreLib
             
             try
             {
-                X509Certificate2 cert = new X509Certificate2("anonymous.p12", "anonymous");                
+                X509Certificate2 cert = new X509Certificate2(Config.GetConfigEntry("Cert_File"), Config.GetConfigEntry("Cert_Password"));
                 server = new CrypToolStoreServer();
+                server.Port = int.Parse(Config.GetConfigEntry("Listenport"));
                 server.ServerKey = cert;
                 server.Start();
 

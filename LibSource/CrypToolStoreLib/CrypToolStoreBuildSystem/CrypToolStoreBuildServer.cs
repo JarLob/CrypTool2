@@ -34,6 +34,8 @@ namespace CrypToolStoreBuildSystem
         private const int MAX_BUILD_WORKERS = 8;
 
         private Logger Logger = Logger.GetLogger();
+        private Configuration Config = Configuration.GetConfiguration();
+
         private bool IsRunning { get; set; }
         private ConcurrentBag<BuildWorker> workers = new ConcurrentBag<BuildWorker>();
 
@@ -127,10 +129,10 @@ namespace CrypToolStoreBuildSystem
 
             //get all sources from the CrypToolStore
             CrypToolStoreClient client = new CrypToolStoreClient();
-            client.ServerAddress = Constants.ServerAddress;
-            client.ServerPort = Constants.ServerPort;
+            client.ServerAddress = Config.GetConfigEntry("ServerAddress");
+            client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
-            client.Login(Constants.Username, Constants.Password);
+            client.Login(Config.GetConfigEntry("Username"), Config.GetConfigEntry("Password"));
 
             List<Source> sources = (List<Source>)client.GetSourceList(-1, BuildState.UPLOADED.ToString()).DataObject;
 

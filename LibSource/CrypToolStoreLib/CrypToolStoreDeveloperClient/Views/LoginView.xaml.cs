@@ -14,6 +14,7 @@
    limitations under the License.
 */
 using CrypToolStoreLib.Client;
+using CrypToolStoreLib.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,8 @@ namespace CrypToolStoreDeveloperClient.Views
     public partial class LoginView : UserControl
     {
         public MainWindow MainWindow { get; set; }
+
+        private Configuration Config = Configuration.GetConfiguration();
 
         public LoginView()
         {
@@ -83,8 +86,8 @@ namespace CrypToolStoreDeveloperClient.Views
                     }
 
                     CrypToolStoreClient client = new CrypToolStoreClient();
-                    client.ServerAddress = Constants.ServerAddress;
-                    client.ServerPort = Constants.ServerPort;
+                    client.ServerAddress = Config.GetConfigEntry("ServerAddress");
+                    client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
                     client.Connect();
                     //just a test login, to verify username and password
                     bool authenticated = client.Login(Username.Text, Password.Password);

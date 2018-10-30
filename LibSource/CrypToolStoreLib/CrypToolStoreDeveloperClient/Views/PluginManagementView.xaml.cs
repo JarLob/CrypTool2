@@ -15,6 +15,7 @@
 */
 using CrypToolStoreLib.Client;
 using CrypToolStoreLib.DataObjects;
+using CrypToolStoreLib.Tools;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -42,6 +43,8 @@ namespace CrypToolStoreDeveloperClient.Views
         public MainWindow MainWindow { get; set; }
 
         private ObservableCollection<Plugin> Plugins = new ObservableCollection<Plugin>();
+
+        private Configuration Config = Configuration.GetConfiguration();
 
         public PluginManagementView()
         {
@@ -77,9 +80,9 @@ namespace CrypToolStoreDeveloperClient.Views
         {
             try
             {
-                CrypToolStoreClient client = new CrypToolStoreClient();                
-                client.ServerAddress = Constants.ServerAddress;
-                client.ServerPort = Constants.ServerPort;
+                CrypToolStoreClient client = new CrypToolStoreClient();
+                client.ServerAddress = Config.GetConfigEntry("ServerAddress");
+                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
                 DataModificationOrRequestResult result = client.GetPluginList(MainWindow.IsAdmin ? "*" :  MainWindow.Username);
@@ -128,8 +131,8 @@ namespace CrypToolStoreDeveloperClient.Views
                 try
                 {
                     CrypToolStoreClient client = new CrypToolStoreClient();
-                    client.ServerAddress = Constants.ServerAddress;
-                    client.ServerPort = Constants.ServerPort;
+                    client.ServerAddress = Config.GetConfigEntry("ServerAddress");
+                    client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
                     client.Connect();
                     client.Login(MainWindow.Username, MainWindow.Password);
                     DataModificationOrRequestResult result = client.DeletePlugin(id);

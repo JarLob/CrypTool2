@@ -15,6 +15,7 @@
 */
 using CrypToolStoreLib.Client;
 using CrypToolStoreLib.DataObjects;
+using CrypToolStoreLib.Tools;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -40,6 +41,7 @@ namespace CrypToolStoreDeveloperClient.Views
     public partial class UserManagementView : UserControl
     {
         public MainWindow MainWindow { get; set; }
+        private Configuration Config = Configuration.GetConfiguration();
 
         private ObservableCollection<Developer> Developers = new ObservableCollection<Developer>();
 
@@ -78,8 +80,8 @@ namespace CrypToolStoreDeveloperClient.Views
             try
             {
                 CrypToolStoreClient client = new CrypToolStoreClient();
-                client.ServerAddress = Constants.ServerAddress;
-                client.ServerPort = Constants.ServerPort;
+                client.ServerAddress = Config.GetConfigEntry("ServerAddress");
+                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
                 DataModificationOrRequestResult result = client.GetDeveloperList();
@@ -126,8 +128,8 @@ namespace CrypToolStoreDeveloperClient.Views
                 try
                 {
                     CrypToolStoreClient client = new CrypToolStoreClient();
-                    client.ServerAddress = Constants.ServerAddress;
-                    client.ServerPort = Constants.ServerPort;
+                    client.ServerAddress = Config.GetConfigEntry("ServerAddress");
+                    client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
                     client.Connect();
                     client.Login(MainWindow.Username, MainWindow.Password);
                     DataModificationOrRequestResult result = client.DeleteDeveloper(username);

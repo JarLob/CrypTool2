@@ -15,6 +15,7 @@
 */
 using CrypToolStoreLib.Client;
 using CrypToolStoreLib.DataObjects;
+using CrypToolStoreLib.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,8 @@ namespace CrypToolStoreDeveloperClient.Views
         private string Username { get; set; }
         private bool ChangeAdminFlag { get; set; }
 
+        private Configuration Config = Configuration.GetConfiguration();
+
         public UpdateUserWindow(string username, bool changeAdminFlag = true)
         {
             InitializeComponent();
@@ -66,8 +69,8 @@ namespace CrypToolStoreDeveloperClient.Views
             try
             {
                 CrypToolStoreClient client = new CrypToolStoreClient();
-                client.ServerAddress = Constants.ServerAddress;
-                client.ServerPort = Constants.ServerPort;
+                client.ServerAddress = Config.GetConfigEntry("ServerAddress");
+                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
 
@@ -154,8 +157,8 @@ namespace CrypToolStoreDeveloperClient.Views
             try
             {
                 CrypToolStoreClient client = new CrypToolStoreClient();
-                client.ServerAddress = Constants.ServerAddress;
-                client.ServerPort = Constants.ServerPort;
+                client.ServerAddress = Config.GetConfigEntry("ServerAddress");
+                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
 
