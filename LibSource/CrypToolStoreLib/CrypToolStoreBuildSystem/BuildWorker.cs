@@ -427,7 +427,6 @@ namespace CrypToolStoreBuildSystem
             {
                 using (StreamWriter writer = new StreamWriter(stream))
                 {
-                    //todo: variable anteile setzen...
                     writer.WriteLine("<Project DefaultTargets=\"BuildAndSign\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">");
                     writer.WriteLine("  <Import Project=\"..\\..\\CustomBuildTasks\\CustomBuildTasks.Targets\"/>");
                     writer.WriteLine("  <PropertyGroup>");
@@ -723,7 +722,7 @@ namespace CrypToolStoreBuildSystem
         private bool CheckBuild()
         {
             int counter=0;
-            string buildfoldername = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\" + "build_output";
+            string buildfoldername = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\build_output";
             SearchDir(buildfoldername, ref counter, "dll", false);
 
             if (counter == 0)
@@ -741,11 +740,38 @@ namespace CrypToolStoreBuildSystem
         /// <returns></returns>
         private bool CreateMetaFile()
         {
-            Logger.LogText(String.Format("(Buildstep 10) Start creating meta information file for assembly-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
-            //here, we create a meta file that will also be zipped
-            //this meta file is used by ct2 to detect, if a new version of the plugin is available in the store
-            //also other useful information are located in the meta file, i.e. author names, references to resources, etc.
-            Logger.LogText(String.Format("(Buildstep 10) Created meta information file for assembly-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("(Buildstep 10) Start creating pluginmetainfo.xml for assembly-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+
+            string metafilename = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\build_output\pluginmetainfo.xml";
+
+            CrypToolStoreClient client = new CrypToolStoreClient();
+            client.ServerAddress = Constants.ServerAddress;
+            client.ServerPort = Constants.ServerPort;
+            client.Connect();
+            client.Login(Constants.Username, Constants.Password);
+
+            DataModificationOrRequestResult result = client.GetPlugin(Source.PluginId);
+            Plugin plugin = (Plugin)result.DataObject;
+
+            client.Disconnect();
+
+            using (Stream stream = new FileStream(metafilename, FileMode.Create))
+            {
+                using (StreamWriter writer = new StreamWriter(stream))
+                {
+                    writer.WriteLine("<xml>");
+                    writer.WriteLine("	<Plugin>");
+                    writer.WriteLine("		<Id>{0}</Id>", Source.PluginId);
+                    writer.WriteLine("		<Version>{0}</Version>", Source.PluginVersion);
+                    writer.WriteLine("		<BuildVersion>{0}</BuildVersion>", Source.BuildVersion + 1);
+                    writer.WriteLine("		<Name>{0}</Name>", plugin.Name);
+                    writer.WriteLine("		<Icon>{0}</Icon>", System.Convert.ToBase64String(plugin.Icon));
+                    writer.WriteLine("	</Plugin>");
+                    writer.WriteLine("</xml>");
+                }
+            }
+
+            Logger.LogText(String.Format("(Buildstep 10) Created pluginmetainfo.xml for assembly-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             return true;
         }
 
@@ -858,11 +884,11 @@ namespace CrypToolStoreBuildSystem
 
             if (result.Success)
             {
-                Logger.LogText(String.Format("Completed setting final build state of source-{0}-{1} and upload build log", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+                Logger.LogText(String.Format("(Buildstep 14) Uploaded build log. Source-{0}-{1} is now in state: SUCCESS", Source.PluginId, Source.PluginVersion, BuildState.BUILDING.ToString()), this, Logtype.Info);
             }
             else
             {
-                Logger.LogText(String.Format("Setting final build state of source-{0}-{1} and upload build log failed. Message was: {2}", Source.PluginId, Source.PluginVersion, result.Message), this, Logtype.Error);
+                Logger.LogText(String.Format("(Buildstep 14) Setting final build state of source-{0}-{1} and upload build log failed. Message was: {2}", Source.PluginId, Source.PluginVersion, result.Message), this, Logtype.Error);
             }           
         }
     }
