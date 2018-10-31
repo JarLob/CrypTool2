@@ -1315,16 +1315,23 @@ namespace CrypToolStoreLib.Server
                 return;
             }
 
-            //Here, the user is authorized; thus, deletion of existing source in database is started
+            //Here, the user is authorized; thus, deletion of existing source in database as well as deletion of files is started
             try
             {
-                //1. delete file in file system
+                //1. delete files in file system
                 string filename = PLUGIN_SOURCE_FOLDER + "\\" + "Source-" + source.PluginId + "-" + source.PluginVersion + ".zip";
                 if(File.Exists(filename))
                 {
                     Logger.LogText(String.Format("Deleting source zipfile: {0}", filename), this, Logtype.Info);
                     File.Delete(filename);
                     Logger.LogText(String.Format("Deleted source zipfile: {0}", filename), this, Logtype.Info);
+                }
+                filename = PLUGIN_ASSEMBLIES_FOLDER + "\\" + "Assembly-" + source.PluginId + "-" + source.PluginVersion + ".zip";
+                if (File.Exists(filename))
+                {
+                    Logger.LogText(String.Format("Deleting assembly zipfile: {0}", filename), this, Logtype.Info);
+                    File.Delete(filename);
+                    Logger.LogText(String.Format("Deleted assembly zipfile: {0}", filename), this, Logtype.Info);
                 }
                 //2. delete source in database
                 Database.DeleteSource(deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion);
