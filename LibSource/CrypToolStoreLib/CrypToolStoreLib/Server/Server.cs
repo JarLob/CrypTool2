@@ -976,7 +976,7 @@ namespace CrypToolStoreLib.Server
                 }
                 else
                 {
-                    if (plugin.Publish == true || plugin.Username == Username || ClientIsAdmin)
+                    if (plugin.Username == Username || ClientIsAdmin)
                     {
                         ResponsePluginMessage response = new ResponsePluginMessage();
                         response.Plugin = plugin;
@@ -1021,7 +1021,7 @@ namespace CrypToolStoreLib.Server
                 List<Plugin> plugins = Database.GetPlugins(requestPluginListMessage.Username.Equals("*") ? null : requestPluginListMessage.Username);
                 if (!ClientIsAdmin)
                 {
-                    plugins = (from p in plugins where p.Username == Username || p.Publish == true select p).ToList();
+                    plugins = (from p in plugins where p.Username == Username select p).ToList();
                 }
                 ResponsePluginListMessage response = new ResponsePluginListMessage();
                 response.Plugins = plugins;

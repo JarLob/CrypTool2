@@ -36,6 +36,18 @@ namespace CrypToolStoreLib.DataObjects
     }
 
     /// <summary>
+    /// Publishstate for builds of sources
+    /// </summary>
+    public enum PublishState
+    {
+        NOTPUBLISHED,
+        DEVELOPER,
+        NIGHTLY,
+        BETA,
+        RELEASE
+    }
+
+    /// <summary>
     /// Simple object to store developer data
     /// </summary>
     public class Developer : ICrypToolStoreSerializable
@@ -135,8 +147,6 @@ namespace CrypToolStoreLib.DataObjects
         public string Authorinstitutes { get; set; }
         public string Authoremails { get; set; }
         public byte[] Icon { get; set; }
-        public int ActiveVersion { get; set; }
-        public bool Publish { get; set; }
 
         /// <summary>
         /// Default constructor
@@ -152,8 +162,6 @@ namespace CrypToolStoreLib.DataObjects
             Authorinstitutes = String.Empty;
             Authoremails = String.Empty;
             Icon = new byte[0];
-            ActiveVersion = -1;
-            Publish = false;
         }
 
         /// <summary>
@@ -178,8 +186,6 @@ namespace CrypToolStoreLib.DataObjects
                         writer.Write(Authoremails);
                         writer.Write(Icon.Length); //first write length of byte array
                         writer.Write(Icon);
-                        writer.Write(ActiveVersion);
-                        writer.Write(Publish);
                         return stream.ToArray();
                     }
                 }
@@ -212,8 +218,6 @@ namespace CrypToolStoreLib.DataObjects
                         Authoremails = reader.ReadString();
                         int length = reader.ReadInt32(); //first read length of byte array
                         Icon = reader.ReadBytes(length);
-                        ActiveVersion = reader.ReadInt32();
-                        Publish = reader.ReadBoolean();
                     }
                 }
             }
@@ -225,8 +229,8 @@ namespace CrypToolStoreLib.DataObjects
         
         public override string ToString()
         {
-            return String.Format("Plugin{{id={0}, username={1}, name={2}, shortdescription={3}, longdescription={4}, authornames={5}, authoremails={6}, authorinstitutes={7}, icon={8}, activeversion={9}, publish={10}}}",
-                Id, Username, Name, ShortDescription, LongDescription, Authornames, Authoremails, Authorinstitutes, Icon != null ? Icon.Length.ToString() : "null", ActiveVersion, Publish == true ? "true" : "false");
+            return String.Format("Plugin{{id={0}, username={1}, name={2}, shortdescription={3}, longdescription={4}, authornames={5}, authoremails={6}, authorinstitutes={7}, icon={8}}}",
+                Id, Username, Name, ShortDescription, LongDescription, Authornames, Authoremails, Authorinstitutes, Icon != null ? Icon.Length.ToString() : "null");
         }
     }
 
@@ -244,6 +248,7 @@ namespace CrypToolStoreLib.DataObjects
         public string AssemblyFileName { get; set; }
         public DateTime UploadDate { get; set; }
         public DateTime BuildDate { get; set; }
+        public string PublishState { get; set; }
 
         public bool HasZipFile
         {
@@ -274,7 +279,8 @@ namespace CrypToolStoreLib.DataObjects
             BuildLog = String.Empty;
             AssemblyFileName = String.Empty;
             UploadDate = DateTime.MinValue;
-            BuildDate = DateTime.MinValue; 
+            BuildDate = DateTime.MinValue;
+            PublishState = CrypToolStoreLib.DataObjects.PublishState.NOTPUBLISHED.ToString();
         }
 
         /// <summary>
@@ -298,6 +304,7 @@ namespace CrypToolStoreLib.DataObjects
                         writer.Write(AssemblyFileName);
                         writer.Write(UploadDate.ToBinary());
                         writer.Write(BuildDate.ToBinary());
+                        writer.Write(PublishState);
                         return stream.ToArray();
                     }
                 }
@@ -329,6 +336,7 @@ namespace CrypToolStoreLib.DataObjects
                         AssemblyFileName = reader.ReadString();
                         UploadDate = DateTime.FromBinary(reader.ReadInt64());
                         BuildDate = DateTime.FromBinary(reader.ReadInt64());
+                        PublishState = reader.ReadString();
                     }
                 }
             }
@@ -340,8 +348,8 @@ namespace CrypToolStoreLib.DataObjects
 
         public override string ToString()
         {
-            return String.Format("Source{{pluginid={0}, pluginversion={1}, buildversion={2}, zipfile={3},buildstate={4}, buildlog={5}, assembly={6}, uploaddate={7}, builddate={8}}}",
-                PluginId, PluginVersion, BuildVersion, ZipFileName != null ? ZipFileName.Length.ToString() : "null", BuildState, BuildLog, AssemblyFileName != null ? AssemblyFileName.Length.ToString() : "null", UploadDate, BuildDate);
+            return String.Format("Source{{pluginid={0}, pluginversion={1}, buildversion={2}, zipfile={3},buildstate={4}, buildlog={5}, assembly={6}, uploaddate={7}, builddate={8}, publishstate={9}}}",
+                PluginId, PluginVersion, BuildVersion, ZipFileName != null ? ZipFileName.Length.ToString() : "null", BuildState, BuildLog, AssemblyFileName != null ? AssemblyFileName.Length.ToString() : "null", UploadDate, BuildDate, PublishState);
         }        
     }
 

@@ -49,10 +49,12 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Build Log" DisplayMemberBinding="{Binding Path=BuildLog}" Width="160">
+                    <GridViewColumn Header="Build Log" Width="160">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Label/>
+                                <Label MaxWidth="160" MaxHeight="30">
+                                    <TextBlock Text="{Binding Path=BuildLog}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"/>
+                                </Label>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
