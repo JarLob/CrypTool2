@@ -42,14 +42,14 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>                  
-                    <GridViewColumn Header="Build State" DisplayMemberBinding="{Binding Path=BuildState}" Width="120">
+                    <GridViewColumn Header="Build State" DisplayMemberBinding="{Binding Path=BuildState}" Width="110">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Build Log" Width="160">
+                    <GridViewColumn Header="Build Log" Width="150">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label MaxWidth="160" MaxHeight="30">
@@ -72,20 +72,24 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>                    
-                    <GridViewColumn Header="Modify" Width="415">
+                    <GridViewColumn Header="Modify" Width="250">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="105"/>
-                                        <ColumnDefinition Width="105"/>
-                                        <ColumnDefinition Width="105"/>
-                                        <ColumnDefinition Width="105"/>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="120"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Click="UploadSourceZipFile_Click">Upload Src Zip</Button>
-                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Click="DownloadSourceZipFile_Click">Download Src Zip</Button>
-                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Click="DownloadAssembly_Click">Download Assembly</Button>
-                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" Click="Delete_Click">Delete</Button>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0" Click="UploadSourceZipFile_Click">Upload src zip</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0" Click="DownloadSourceZipFile_Click">Download src zip</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1" Click="DownloadAssembly_Click">Download assembly</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" Click="Delete_Click">Delete</Button>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

@@ -4,13 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="120" d:DesignWidth="350">
+             d:DesignHeight="130" d:DesignWidth="350">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="30" Name="BackButtonRow"/>
+            <RowDefinition Height="42"/>
+            <RowDefinition Height="27"/>
+            <RowDefinition Height="27"/>
+            <RowDefinition Height="32" Name="BackButtonRow"/>
         </Grid.RowDefinitions>
         <Image Source="/Resources/cryptool.ico" Grid.Row="0" HorizontalAlignment="Left"/>
         <Label VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="20" Grid.Row="0" Margin="40,0,0,0">CrypToolStore Developer Client</Label>

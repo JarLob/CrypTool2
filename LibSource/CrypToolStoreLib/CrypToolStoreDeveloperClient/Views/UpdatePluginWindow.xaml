@@ -38,7 +38,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Image Name="IconImage" Grid.Column="0" Width="50" Height="50" HorizontalAlignment="Center"/>
-            <Button Background="White" Name="SelectIconButton" Click="SelectIconButton_Click" Grid.Column="1" Height="25" Width="100" HorizontalAlignment="Right">Select Icon File</Button>
+            <Button Background="White" Name="SelectIconButton" Click="SelectIconButton_Click" Grid.Column="1" Height="25" Width="100" HorizontalAlignment="Right">Select icon file</Button>
         </Grid>
         <Button Name="UpdateButton" Background="White" Click="UpdateButton_Click" Grid.Column="1" Grid.Row="7" Height="25" Width="100" HorizontalAlignment="Right">Update</Button>
     </Grid>

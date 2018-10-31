@@ -102,6 +102,11 @@ namespace CrypToolStoreLib.Tools
             }
         }
 
+        /// <summary>
+        /// Sets a config entry
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
         public void SetConfigurationEntry(string key, string value)
         {
             ConfigurationDictionary[key] = value;
@@ -119,6 +124,5 @@ namespace CrypToolStoreLib.Tools
             }
             return Instance;
         }
-
     }
 }
