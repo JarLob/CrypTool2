@@ -74,6 +74,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Views\DownloadAssemblyZipFileWindow.xaml.cs">
+      <DependentUpon>DownloadAssemblyZipFileWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DownloadSourceZipFileWindow.xaml.cs">
       <DependentUpon>DownloadSourceZipFileWindow.xaml</DependentUpon>
     </Compile>
@@ -122,6 +125,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\DownloadAssemblyZipFileWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\DownloadSourceZipFileWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

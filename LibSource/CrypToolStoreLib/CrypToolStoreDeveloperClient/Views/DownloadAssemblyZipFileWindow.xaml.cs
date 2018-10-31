@@ -38,9 +38,9 @@ using System.Windows.Shapes;
 namespace CrypToolStoreDeveloperClient.Views
 {
     /// <summary>
-    /// Interaktionslogik für DownloadSourceZipFileWindow.xaml
+    /// Interaktionslogik für DownloadAssemblyZipFileWindow.xaml
     /// </summary>
-    public partial class DownloadSourceZipFileWindow : Window
+    public partial class DownloadAssemblyZipFileWindow : Window
     {
         public MainWindow MainWindow { get; set; }
 
@@ -54,14 +54,14 @@ namespace CrypToolStoreDeveloperClient.Views
         /// <summary>
         /// Constructor
         /// </summary>
-        public DownloadSourceZipFileWindow(int pluginid, int pluginversion)
+        public DownloadAssemblyZipFileWindow(int pluginid, int pluginversion)
         {
             InitializeComponent();
             ResizeMode = ResizeMode.NoResize;
             PluginId = pluginid;
             PluginVersion = pluginversion;
-            Closing += DownloadSourceZipFileWindow_Closing;
-            this.Title = String.Format("Downoad Source Zip File: Source-{0}-{1}.zip", pluginid, pluginversion);
+            Closing += DownloadAssemblyZipFileWindow_Closing;
+            this.Title = String.Format("Downoad Assembly Zip File: Source-{0}-{1}.zip", pluginid, pluginversion);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace CrypToolStoreDeveloperClient.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DownloadSourceZipFileWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void DownloadAssemblyZipFileWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Stop = true;
         }
@@ -84,7 +84,7 @@ namespace CrypToolStoreDeveloperClient.Views
         {      
             
             //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
-            Thread UploadSourceZipFileThread = new Thread(DownloadSourceZipFile);
+            Thread UploadSourceZipFileThread = new Thread(DownloadAssembyZipFile);
             UploadSourceZipFileThread.IsBackground = true;
             UploadSourceZipFileThread.Start();
 
@@ -95,7 +95,7 @@ namespace CrypToolStoreDeveloperClient.Views
         /// Downloads the selected zip file
         /// stops, if the window is closed
         /// </summary>
-        private void DownloadSourceZipFile()
+        private void DownloadAssembyZipFile()
         {
             try
             {
@@ -109,10 +109,10 @@ namespace CrypToolStoreDeveloperClient.Views
                 source.PluginId = PluginId;
                 source.PluginVersion = PluginVersion;
 
-                string filename = "Source-" + PluginId + "-" + PluginVersion + ".zip";
+                string filename = "Assembly-" + PluginId + "-" + PluginVersion + ".zip";
 
                 client.UploadDownloadProgressChanged += client_UploadDownloadProgressChanged;
-                DataModificationOrRequestResult result = client.DownloadSourceZipFile(source, Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + filename, ref Stop);
+                DataModificationOrRequestResult result = client.DownloadAssemblyZipFile(source, Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + filename, ref Stop);
                 
                 client.Disconnect();
                 
@@ -131,7 +131,7 @@ namespace CrypToolStoreDeveloperClient.Views
                             //wtf?
                         }
                     }));
-                    MessageBox.Show("Successfully download source zip file", "Zipfile downloaded");                    
+                    MessageBox.Show("Successfully download assembly zip file", "Zipfile downloaded");                    
                     Dispatcher.BeginInvoke(new ThreadStart(() =>
                     {
                         try
@@ -148,13 +148,13 @@ namespace CrypToolStoreDeveloperClient.Views
                 {
                     if (result.Message != "USERSTOP")
                     {
-                        MessageBox.Show(String.Format("Could not download source zip file: {0}", result.Message), "Source zip file download not possible");
+                        MessageBox.Show(String.Format("Could not download assembly zip file: {0}", result.Message), "Assembly zip file download not possible");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during download of source zip file: {0}", ex.Message), "Exception");
+                MessageBox.Show(String.Format("Exception during download of asse,böy zip file: {0}", ex.Message), "Exception");
             }
             
             Dispatcher.BeginInvoke(new ThreadStart(() =>

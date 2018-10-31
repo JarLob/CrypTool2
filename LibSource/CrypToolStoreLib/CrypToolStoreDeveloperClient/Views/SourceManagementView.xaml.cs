@@ -56,7 +56,7 @@ namespace CrypToolStoreDeveloperClient.Views
         }
 
         /// <summary>
-        /// Called, when the UI changes to visible starte
+        /// Called, when the UI changes to visible state
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -164,9 +164,9 @@ namespace CrypToolStoreDeveloperClient.Views
         {
             Button button = (Button)sender;
             int pluginversion = (int)button.CommandParameter;
-            UploadSourceZipFileWindow UploadSourceZipFileWindow = new UploadSourceZipFileWindow(PluginId, pluginversion);
-            UploadSourceZipFileWindow.MainWindow = MainWindow;
-            UploadSourceZipFileWindow.ShowDialog();
+            UploadSourceZipFileWindow uploadSourceZipFileWindow = new UploadSourceZipFileWindow(PluginId, pluginversion);
+            uploadSourceZipFileWindow.MainWindow = MainWindow;
+            uploadSourceZipFileWindow.ShowDialog();
             //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
             Thread fetchSourceListThread = new Thread(FetchSourceList);
             fetchSourceListThread.IsBackground = true;
@@ -182,9 +182,27 @@ namespace CrypToolStoreDeveloperClient.Views
         {
             Button button = (Button)sender;
             int pluginversion = (int)button.CommandParameter;
-            DownloadSourceZipFileWindow DownloadSourceZipFileWindow = new DownloadSourceZipFileWindow(PluginId, pluginversion);
-            DownloadSourceZipFileWindow.MainWindow = MainWindow;
-            DownloadSourceZipFileWindow.ShowDialog();
+            DownloadSourceZipFileWindow downloadSourceZipFileWindow = new DownloadSourceZipFileWindow(PluginId, pluginversion);
+            downloadSourceZipFileWindow.MainWindow = MainWindow;
+            downloadSourceZipFileWindow.ShowDialog();
+            //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
+            Thread fetchSourceListThread = new Thread(FetchSourceList);
+            fetchSourceListThread.IsBackground = true;
+            fetchSourceListThread.Start();
+        }
+
+        /// <summary>
+        /// Shows a window for downloading a zip of an assembly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DownloadAssembly_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            int pluginversion = (int)button.CommandParameter;
+            DownloadAssemblyZipFileWindow downloadAssemblyZipFileWindow = new DownloadAssemblyZipFileWindow(PluginId, pluginversion);
+            downloadAssemblyZipFileWindow.MainWindow = MainWindow;
+            downloadAssemblyZipFileWindow.ShowDialog();
             //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
             Thread fetchSourceListThread = new Thread(FetchSourceList);
             fetchSourceListThread.IsBackground = true;
