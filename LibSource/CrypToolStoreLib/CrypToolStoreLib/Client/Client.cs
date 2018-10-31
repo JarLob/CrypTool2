@@ -1174,6 +1174,91 @@ namespace CrypToolStoreLib.Client
         }
 
         /// <summary>
+        /// Updates the publish state of the dedicated source
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="publishState"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult UpdateSourcePublishState(Source source, PublishState publishState)
+        {
+            lock (this)
+            {
+                //we can update plugins, when we are connected to the server
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+                //only authenticated users are allowed, thus, we do not even send any update messages
+                if (!IsAuthenticated)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not authenticated",
+                        Success = false
+                    };
+                }
+                //only admins are allowed to update the publish state of a source
+                if (!IsAdmin)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not authenticated",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to update the publish state of an existing source: {0}", source.ToString()), this, Logtype.Info);
+
+                //1. Step: Send UpdatePluginMessage to server
+                UpdateSourcePublishStateMessage message = new UpdateSourcePublishStateMessage();
+                message.Source = source;
+                source.PublishState = publishState.ToString();
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponseSourceModification
+                if (response_message.MessageHeader.MessageType == MessageType.ResponseSourceModification)
+                {
+                    //received a response, forward it to user
+                    ResponseSourceModificationMessage responseSourceModificationMessage = (ResponseSourceModificationMessage)response_message;
+                    logger.LogText(String.Format("{0} the publish state of an existing source. Return message was: {1}", responseSourceModificationMessage.ModifiedSource == true ? "Successfully updated" : "Did not update", responseSourceModificationMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responseSourceModificationMessage.Message,
+                        Success = responseSourceModificationMessage.ModifiedSource
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to update the publish state of an existing source was not a ResponseSourceModificationMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
+        }
+
+        /// <summary>
         /// Deletes an existing source in the database
         /// Only possible, when the user is authenticated
         /// </summary>

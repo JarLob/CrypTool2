@@ -63,6 +63,7 @@ namespace CrypToolStoreLib.Tools
         ResponseSourceModification = 305,
         RequestSource = 306,
         ResponseSource = 307,
+        UpdateSourcePublishState = 308,
 
         //Message for "Resources"
         RequestResourceList = 400,
@@ -255,6 +256,7 @@ namespace CrypToolStoreLib.Tools
             MessageTypeDictionary.Add(MessageType.ResponseSourceModification, typeof(ResponseSourceModificationMessage));
             MessageTypeDictionary.Add(MessageType.RequestSource, typeof(RequestSourceMessage));
             MessageTypeDictionary.Add(MessageType.ResponseSource, typeof(ResponseSourceMessage));
+            MessageTypeDictionary.Add(MessageType.UpdateSourcePublishState, typeof(UpdateSourcePublishStateMessage));
 
             //resources
             MessageTypeDictionary.Add(MessageType.RequestResourceList, typeof(RequestResourceListMessage));
@@ -1438,6 +1440,24 @@ namespace CrypToolStoreLib.Tools
         }
 
         public ResponseSourceMessage()
+        {
+            Source = new Source();
+        }
+    }
+
+    /// <summary>
+    /// Message to update the publish state of a source
+    /// </summary>
+    public class UpdateSourcePublishStateMessage : Message
+    {
+        [MessageDataField]
+        public Source Source
+        {
+            get;
+            set;
+        }
+
+        public UpdateSourcePublishStateMessage()
         {
             Source = new Source();
         }
