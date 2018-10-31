@@ -160,13 +160,13 @@ namespace CrypToolStoreDeveloperClient.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Upload_Click(object sender, RoutedEventArgs e)
+        private void UploadSourceZipFile_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
             int pluginversion = (int)button.CommandParameter;
-            UploadZipFileWindow uploadZipFileWindow = new UploadZipFileWindow(PluginId, pluginversion);
-            uploadZipFileWindow.MainWindow = MainWindow;
-            uploadZipFileWindow.ShowDialog();
+            UploadSourceZipFileWindow UploadSourceZipFileWindow = new UploadSourceZipFileWindow(PluginId, pluginversion);
+            UploadSourceZipFileWindow.MainWindow = MainWindow;
+            UploadSourceZipFileWindow.ShowDialog();
             //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
             Thread fetchSourceListThread = new Thread(FetchSourceList);
             fetchSourceListThread.IsBackground = true;
@@ -178,13 +178,13 @@ namespace CrypToolStoreDeveloperClient.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Download_Click(object sender, RoutedEventArgs e)
+        private void DownloadSourceZipFile_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
             int pluginversion = (int)button.CommandParameter;
-            DownloadZipFileWindow downloadZipFileWindow = new DownloadZipFileWindow(PluginId, pluginversion);
-            downloadZipFileWindow.MainWindow = MainWindow;
-            downloadZipFileWindow.ShowDialog();
+            DownloadSourceZipFileWindow DownloadSourceZipFileWindow = new DownloadSourceZipFileWindow(PluginId, pluginversion);
+            DownloadSourceZipFileWindow.MainWindow = MainWindow;
+            DownloadSourceZipFileWindow.ShowDialog();
             //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
             Thread fetchSourceListThread = new Thread(FetchSourceList);
             fetchSourceListThread.IsBackground = true;

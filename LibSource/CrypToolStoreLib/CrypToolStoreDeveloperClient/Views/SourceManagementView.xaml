@@ -72,18 +72,18 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>                    
-                    <GridViewColumn Header="Modify" Width="260">
+                    <GridViewColumn Header="Modify" Width="315">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="85"/>
-                                        <ColumnDefinition Width="85"/>
-                                        <ColumnDefinition Width="85"/>
+                                        <ColumnDefinition Width="105"/>
+                                        <ColumnDefinition Width="105"/>
+                                        <ColumnDefinition Width="105"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="80" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Click="Upload_Click">Upload zip</Button>
-                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="80" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Click="Download_Click">Download zip</Button>
-                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="80" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Click="Delete_Click">Delete</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Click="UploadSourceZipFile_Click">Upload Src Zip</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Click="DownloadSourceZipFile_Click">Download Src Zip</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Click="Delete_Click">Delete</Button>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

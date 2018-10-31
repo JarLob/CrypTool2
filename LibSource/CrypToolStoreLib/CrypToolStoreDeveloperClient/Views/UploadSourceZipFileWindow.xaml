@@ -1,7 +1,7 @@
-﻿<Window x:Class="CrypToolStoreDeveloperClient.Views.UploadZipFileWindow"
+﻿<Window x:Class="CrypToolStoreDeveloperClient.Views.UploadSourceZipFileWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Upload new zip file" Height="200" Width="500">
+        Title="Upload New Source Zip File" Height="200" Width="500">
     <Grid Background="AliceBlue" Width="500" HorizontalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>

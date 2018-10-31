@@ -38,9 +38,9 @@ using System.Windows.Shapes;
 namespace CrypToolStoreDeveloperClient.Views
 {
     /// <summary>
-    /// Interaktionslogik für UploadZipFileWindow.xaml
+    /// Interaktionslogik für UploadSourceZipFileWindow.xaml
     /// </summary>
-    public partial class DownloadZipFileWindow : Window
+    public partial class DownloadSourceZipFileWindow : Window
     {
         public MainWindow MainWindow { get; set; }
 
@@ -54,13 +54,13 @@ namespace CrypToolStoreDeveloperClient.Views
         /// <summary>
         /// Constructor
         /// </summary>
-        public DownloadZipFileWindow(int pluginid, int pluginversion)
+        public DownloadSourceZipFileWindow(int pluginid, int pluginversion)
         {
             InitializeComponent();
             ResizeMode = ResizeMode.NoResize;
             PluginId = pluginid;
             PluginVersion = pluginversion;
-            Closing += DownloadZipFileWindow_Closing;
+            Closing += DownloadSourceZipFileWindow_Closing;
             this.Title = String.Format("Downoad Zip File: Source-{0}-{1}.zip", pluginid, pluginversion);
         }
 
@@ -70,7 +70,7 @@ namespace CrypToolStoreDeveloperClient.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DownloadZipFileWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void DownloadSourceZipFileWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Stop = true;
         }
@@ -84,9 +84,9 @@ namespace CrypToolStoreDeveloperClient.Views
         {      
             
             //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
-            Thread uploadZipFileThread = new Thread(DownloadZipfile);
-            uploadZipFileThread.IsBackground = true;
-            uploadZipFileThread.Start();
+            Thread UploadSourceZipFileThread = new Thread(DownloadSourceZipFile);
+            UploadSourceZipFileThread.IsBackground = true;
+            UploadSourceZipFileThread.Start();
 
             DownloadButton.IsEnabled = false;
         }    
@@ -95,7 +95,7 @@ namespace CrypToolStoreDeveloperClient.Views
         /// Downloads the selected zip file
         /// stops, if the window is closed
         /// </summary>
-        private void DownloadZipfile()
+        private void DownloadSourceZipFile()
         {
             try
             {
