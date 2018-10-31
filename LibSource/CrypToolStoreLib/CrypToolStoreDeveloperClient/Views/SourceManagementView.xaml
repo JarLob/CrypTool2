@@ -71,7 +71,14 @@
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                    </GridViewColumn>                    
+                    </GridViewColumn>
+                    <GridViewColumn Header="Publish state" DisplayMemberBinding="{Binding Path=PublishState}" Width="120">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Modify" Width="250">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -85,11 +92,13 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
                                     </Grid.RowDefinitions>
                                     <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0" Click="UploadSourceZipFile_Click">Upload src zip</Button>
                                     <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0" Click="DownloadSourceZipFile_Click">Download src zip</Button>
                                     <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1" Click="DownloadAssembly_Click">Download assembly</Button>
                                     <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" Click="Delete_Click">Delete</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="2" Click="UpdatePublishState_Click">Publish state</Button>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -97,6 +106,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Name="CreateNewSourceButton" Background="White" Grid.Row="2" Width="100" Height="25" HorizontalAlignment="Center" Click="CreateNewSourceButton_Click">Create new source</Button>
+        <Button Name="CreateNewSourceButton" Background="White" Grid.Row="2" Width="110" Height="25" HorizontalAlignment="Center" Click="CreateNewSourceButton_Click">Create new source</Button>
     </Grid>
 </UserControl>

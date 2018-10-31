@@ -65,7 +65,7 @@ namespace CrypToolStoreDeveloperClient.Views
             if (!IsVisible)
             {
                 return;
-            }
+            }            
 
             //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
             Thread fetchSourceListThread = new Thread(FetchSourceList);
@@ -210,6 +210,49 @@ namespace CrypToolStoreDeveloperClient.Views
         }
 
         /// <summary>
+        /// Updates the publish state of a source
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UpdatePublishState_Click(object sender, RoutedEventArgs e)
+        {
+            if (!MainWindow.IsAdmin)
+            {
+                MessageBox.Show("Only administrators are allowed to change the publish state of a source", "Update publish state not possible");
+                return;
+            }
+            Button button = (Button)sender;
+            int pluginversion = (int)button.CommandParameter;
+
+            //retrieve old state for default selection of combo box in UpdateSourcePublishStateWindow
+            string oldstate = "NOTPUBLISHED";
+            try
+            {
+                CrypToolStoreClient client = new CrypToolStoreClient();
+                client.ServerAddress = Config.GetConfigEntry("ServerAddress");
+                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                client.Connect();
+                client.Login(MainWindow.Username, MainWindow.Password);
+                DataModificationOrRequestResult result = client.GetSource(PluginId, pluginversion);
+                Source source = (Source)result.DataObject;
+                
+                client.Disconnect();
+                oldstate = source.PublishState;                
+            }
+            catch (Exception)
+            {
+                //wtf?
+            }            
+            UpdateSourcePublishStateWindow updateSourcePublishStateWindow = new UpdateSourcePublishStateWindow(PluginId, pluginversion, oldstate);
+            updateSourcePublishStateWindow.MainWindow = MainWindow;
+            updateSourcePublishStateWindow.ShowDialog();
+            //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
+            Thread fetchSourceListThread = new Thread(FetchSourceList);
+            fetchSourceListThread.IsBackground = true;
+            fetchSourceListThread.Start();
+        }
+
+        /// <summary>
         /// Shows a window for creating a new source
         /// </summary>
         /// <param name="sender"></param>
@@ -298,5 +341,6 @@ namespace CrypToolStoreDeveloperClient.Views
                 }
             }));
         }
+
     }
 }

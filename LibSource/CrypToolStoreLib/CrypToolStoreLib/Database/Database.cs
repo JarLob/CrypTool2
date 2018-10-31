@@ -695,19 +695,20 @@ namespace CrypToolStoreLib.Database
         /// <param name="publishstate"></param>
         public void UpdateSource(int pluginid, int pluginversion, PublishState publishstate)
         {
-            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, publishstate={3}", pluginid, pluginversion, publishstate.ToString()), this, Logtype.Debug);
+            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, publishstate={2}", pluginid, pluginversion, publishstate.ToString()), this, Logtype.Debug);
             string query = "update sources set publishstate=@publishstate where pluginid=@pluginid and pluginversion=@pluginversion";
 
             DatabaseConnection connection = GetConnection();
 
             object[][] parameters = new object[][]{                
-                
+                new object[]{"@pluginid", pluginid},
+                new object[]{"@pluginversion", pluginversion},
                 new object[]{"@publishstate", publishstate.ToString()}                
             };
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated source: pluginid={0}, pluginversion={1}, publishstate={3}", pluginid, pluginversion, publishstate.ToString()), this, Logtype.Debug);
+            logger.LogText(String.Format("Updated source: pluginid={0}, pluginversion={1}, publishstate={2}", pluginid, pluginversion, publishstate.ToString()), this, Logtype.Debug);
         }
 
         /// <summary>

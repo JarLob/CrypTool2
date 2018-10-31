@@ -228,7 +228,8 @@ namespace CrypToolStoreDeveloperClient.Views
                 plugin.Icon = Icon;
 
                 DataModificationOrRequestResult result = client.UpdatePlugin(plugin);
-                
+                client.Disconnect();
+
                 if (result.Success)
                 {
                     MessageBox.Show("Successfully updated plugin", "Plugin updated");
@@ -238,7 +239,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 {
                     MessageBox.Show(String.Format("Could not update: {0}", result.Message), "Update not possible");
                 }                
-                client.Disconnect();
+                
             }
             catch (Exception ex)
             {
