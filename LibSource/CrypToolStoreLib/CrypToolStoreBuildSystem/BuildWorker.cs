@@ -885,7 +885,7 @@ namespace CrypToolStoreBuildSystem
 
             if (result.Success)
             {
-                Logger.LogText(String.Format("(Buildstep 14) Uploaded build log. Source-{0}-{1} is now in state: SUCCESS", Source.PluginId, Source.PluginVersion, BuildState.BUILDING.ToString()), this, Logtype.Info);
+                Logger.LogText(String.Format("(Buildstep 14) Uploaded build log of source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             }
             else
             {
