@@ -118,30 +118,30 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="attackbleichenbacher" xml:space="preserve">
-    <value>Bleichenbacher-Angriff</value>
+    <value>Bleichenbacher attack</value>
   </data>
   <data name="attackvariant" xml:space="preserve">
-    <value>Angriff mit kürzeren Schlüsseln (Kühn)</value>
+    <value>Attack with shorter keys (Kuehn)</value>
   </data>
   <data name="keygen" xml:space="preserve">
-    <value>RSA-Schlüssel erzeugen</value>
+    <value>Generate RSA key</value>
   </data>
   <data name="pkcs1attack" xml:space="preserve">
-    <value>Angriffe auf PKCS#1</value>
+    <value>Attacks on PKCS#1</value>
   </data>
   <data name="pkcs1gen" xml:space="preserve">
-    <value>Sichere PKCS#1-Signatur erzeugen</value>
+    <value>Generate secure PKCS#1 signature</value>
   </data>
   <data name="pkcs1validate" xml:space="preserve">
-    <value>PKCS#1-Signatur verifizieren</value>
+    <value>Validate PKCS#1 signature</value>
   </data>
   <data name="siggen" xml:space="preserve">
-    <value>Signaturgenerierung</value>
+    <value>Signature generation</value>
   </data>
   <data name="sigval" xml:space="preserve">
-    <value>Signaturvalidierung</value>
+    <value>Signature validation</value>
   </data>
   <data name="startpage" xml:space="preserve">
-    <value>Startseite</value>
+    <value>Start</value>
   </data>
 </root>

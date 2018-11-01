@@ -118,15 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="bit" xml:space="preserve">
-    <value>Bit</value>
+    <value>bit</value>
   </data>
   <data name="error" xml:space="preserve">
-    <value>Fehler!</value>
+    <value>Error!</value>
   </data>
   <data name="length" xml:space="preserve">
-    <value>(Länge: {0} Bits)</value>
+    <value>(length: {0} bits)</value>
   </data>
   <data name="startTitle" xml:space="preserve">
-    <value>Angriffe auf PKCS#1</value>
+    <value>Attacks on PKCS#1</value>
   </data>
 </root>

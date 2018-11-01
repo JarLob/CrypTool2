@@ -118,36 +118,36 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="decrypted" xml:space="preserve">
-    <value>Unverschlüsselt</value>
+    <value>Decrypted</value>
   </data>
   <data name="encrypted" xml:space="preserve">
-    <value>Verschlüsselt</value>
+    <value>Encrypted</value>
   </data>
   <data name="generatedSig" xml:space="preserve">
-    <value>Erzeugte Signatur</value>
+    <value>Generated signature</value>
   </data>
   <data name="genFakeSig" xml:space="preserve">
-    <value>Gefälschte Signatur erzeugen</value>
+    <value>Generate fake signature</value>
   </data>
   <data name="genSig" xml:space="preserve">
-    <value>Signatur erzeugen</value>
+    <value>Generate signature</value>
   </data>
   <data name="genSigErrorMaxIter" xml:space="preserve">
-    <value>Signatur konnte nicht erstellt werden. Es ist das Limit an Iterationen erreicht worden.</value>
+    <value>Signature could not be generated. Maximum amount of iterations reached.</value>
   </data>
   <data name="maxIterations" xml:space="preserve">
-    <value>Maximale Anzahl an Iterationen:</value>
+    <value>Maximum number of iterations:</value>
   </data>
   <data name="pubKey" xml:space="preserve">
-    <value>Öffentlicher Schlüssel:</value>
+    <value>Public key:</value>
   </data>
   <data name="rsaKeySize" xml:space="preserve">
-    <value>RSA-Schlüsselgröße (in Bit):</value>
+    <value>RSA key size (in bits):</value>
   </data>
   <data name="structure" xml:space="preserve">
-    <value>Struktur</value>
+    <value>Structure</value>
   </data>
   <data name="title" xml:space="preserve">
-    <value>Angriff mit kürzeren Schlüsseln (Kühn)</value>
+    <value>Attack with shorter keys (Kuehn)</value>
   </data>
 </root>

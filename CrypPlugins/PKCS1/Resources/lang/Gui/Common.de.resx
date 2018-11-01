@@ -117,35 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="bitSize" xml:space="preserve">
-    <value>Modulus bit size:</value>
+  <data name="bit" xml:space="preserve">
+    <value>Bit</value>
   </data>
-  <data name="bitSizeUnit" xml:space="preserve">
-    <value>(in bits)</value>
+  <data name="error" xml:space="preserve">
+    <value>Fehler!</value>
   </data>
-  <data name="generatedKey" xml:space="preserve">
-    <value>Generated key</value>
+  <data name="length" xml:space="preserve">
+    <value>(Länge: {0} Bits)</value>
   </data>
-  <data name="genKey" xml:space="preserve">
-    <value>Generate key</value>
-  </data>
-  <data name="genRsaKey" xml:space="preserve">
-    <value>Generate RSA key</value>
-  </data>
-  <data name="mod" xml:space="preserve">
-    <value>Modulus</value>
-  </data>
-  <data name="privKey" xml:space="preserve">
-    <value>Private key</value>
-  </data>
-  <data name="pubKey" xml:space="preserve">
-    <value>Public key:</value>
-  </data>
-  <data name="pubKeyComment" xml:space="preserve">
-    <value>(has to be 3 to execute attacks)</value>
-  </data>
-  <data name="title" xml:space="preserve">
-    <value>Generate RSA key</value>
-    <comment>title in tab, not navigation</comment>
+  <data name="startTitle" xml:space="preserve">
+    <value>Angriffe auf PKCS#1</value>
   </data>
 </root>

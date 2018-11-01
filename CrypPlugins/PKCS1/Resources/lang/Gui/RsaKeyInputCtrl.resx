@@ -118,39 +118,39 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="dec" xml:space="preserve">
-    <value>DEZ</value>
+    <value>DEC</value>
   </data>
   <data name="errorBitLengthShorter" xml:space="preserve">
-    <value>Die Bitlänge des eingegebenen Wertes muss kleiner oder gleich der Schlüssellänge sein!</value>
+    <value>The bit length of the inserted value has to be shorter than or equal to the key length!</value>
   </data>
   <data name="errorInsertNumber" xml:space="preserve">
-    <value>Bitte eine Zahl eingeben!</value>
+    <value>Please insert a number!</value>
   </data>
   <data name="errorValidSignsOnly" xml:space="preserve">
-    <value>Bitte nur zulässige Zeichen eingeben!</value>
+    <value>Please insert only valid characters!</value>
   </data>
   <data name="hex" xml:space="preserve">
     <value>HEX</value>
   </data>
   <data name="inputKey" xml:space="preserve">
-    <value>Schlüssel eingeben</value>
+    <value>Input key</value>
   </data>
   <data name="inputRsaKey" xml:space="preserve">
-    <value>RSA-Schlüssel eingeben</value>
+    <value>Input RSA key</value>
   </data>
   <data name="keyLength" xml:space="preserve">
-    <value>Schlüssellänge (in Bit)</value>
+    <value>Key length (in bits)</value>
   </data>
   <data name="mod" xml:space="preserve">
     <value>Modulus</value>
   </data>
   <data name="privKey" xml:space="preserve">
-    <value>Privater Schlüssel</value>
+    <value>Private key</value>
   </data>
   <data name="pubKey" xml:space="preserve">
-    <value>Öffentlicher Schlüssel</value>
+    <value>Public key</value>
   </data>
   <data name="takeInput" xml:space="preserve">
-    <value>Eingabe übernehmen</value>
+    <value>Confirm input</value>
   </data>
 </root>

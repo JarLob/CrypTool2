@@ -117,71 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnBack" xml:space="preserve">
-    <value>Back</value>
+  <data name="bitSize" xml:space="preserve">
+    <value>Bitgröße des Modulus:</value>
   </data>
-  <data name="btnClose" xml:space="preserve">
-    <value>Close</value>
+  <data name="bitSizeUnit" xml:space="preserve">
+    <value>(in Bit)</value>
   </data>
-  <data name="btnForward" xml:space="preserve">
-    <value>Forward</value>
+  <data name="generatedKey" xml:space="preserve">
+    <value>Erzeugter Schlüssel</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Gen_Bleichenb_BitPos" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>en\Gen_Bleichenb_BitPos.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="genKey" xml:space="preserve">
+    <value>Schlüssel erzeugen</value>
   </data>
-  <data name="Gen_Bleichenb_ChangeSign" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>en\Gen_Bleichenb_ChangeSign.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="genRsaKey" xml:space="preserve">
+    <value>RSA-Schlüssel erzeugen</value>
   </data>
-  <data name="Gen_Bleichenb_Sig_Tab" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>en\Gen_Bleichenb_Sig_Tab.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="mod" xml:space="preserve">
+    <value>Modulus</value>
   </data>
-  <data name="Gen_Datablock_Tab" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>en\Gen_Datablock_Tab.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="privKey" xml:space="preserve">
+    <value>Privater Schlüssel</value>
   </data>
-  <data name="Gen_Kuehn_Iterations" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>en\Gen_Kuehn_Iterations.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="pubKey" xml:space="preserve">
+    <value>Öffentlicher Schlüssel:</value>
   </data>
-  <data name="Gen_Kuehn_Sig_Tab" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>en\Gen_Kuehn_Sig_Tab.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="Gen_PKCS1_Sig_Tab" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>en\Gen_PKCS1_Sig_Tab.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="KeyGen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>en\KeyGen.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="KeyGen_ModulusSize" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>en\KeyGen_ModulusSize.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="KeyGen_PubExponent" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>en\KeyGen_PubExponent.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="KeyGen_Tab" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>en\KeyGen_Tab.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="KeyInput_Tab" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>en\KeyInput_Tab.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="SigGen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>en\SigGen.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="SigGenFakeBleichenbacher" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>en\SigGenFakeBleichenbacher.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="SigGenFakeKuehn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>en\SigGenFakeKuehn.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="SigVal" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>en\SigVal.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="StartControl" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>en\StartControl.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="pubKeyComment" xml:space="preserve">
+    <value>(muss 3 sein, um Angriffe durchführen zu können)</value>
   </data>
   <data name="title" xml:space="preserve">
-    <value>Online Help Bleichenbacher attack</value>
-  </data>
-  <data name="Start" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\WpfControls\Start.en.htm;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>RSA-Schlüssel erzeugen</value>
+    <comment>title in tab, not navigation</comment>
   </data>
 </root>

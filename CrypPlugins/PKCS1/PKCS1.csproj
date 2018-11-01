@@ -98,13 +98,13 @@
     <Compile Include="Library\Signature.cs" />
     <Compile Include="Library\SignatureType.cs" />
     <Compile Include="Library\SignatureHandler.cs" />
-    <Compile Include="OnlineHelp\HelpFiles\Help.Designer.cs">
+    <Compile Include="OnlineHelp\HelpFiles\Help.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Help.resx</DependentUpon>
+      <DependentUpon>Help.de.resx</DependentUpon>
     </Compile>
-    <Compile Include="OnlineHelp\HelpFiles\Help.en.Designer.cs">
-      <DependentUpon>Help.en.resx</DependentUpon>
+    <Compile Include="OnlineHelp\HelpFiles\Help.Designer.cs">
+      <DependentUpon>Help.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -125,73 +125,38 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.ru.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.ru.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Resources\lang\Gui\Common.de.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Common.de.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\lang\Gui\Common.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Common.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\lang\Gui\Common.en.Designer.cs">
-      <DependentUpon>Common.en.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\lang\Gui\RsaKeyInputCtrl.en.Designer.cs">
-      <DependentUpon>RsaKeyInputCtrl.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Resources\lang\Gui\RsaKeyInputCtrl.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>RsaKeyInputCtrl.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\lang\Gui\SigValCtrl.en.Designer.cs">
-      <DependentUpon>SigValCtrl.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Resources\lang\Gui\SigGenRsaCtrl.en.Designer.cs">
-      <DependentUpon>SigGenRsaCtrl.en.resx</DependentUpon>
+    <Compile Include="Resources\lang\Gui\RsaKeyInputCtrl.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\lang\Gui\SigGenKuehnCtrl.en.Designer.cs">
-      <DependentUpon>SigGenKuehnCtrl.en.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\lang\Gui\SigGenBleichenbCtrl.en.Designer.cs">
-      <DependentUpon>SigGenBleichenbCtrl.en.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\lang\Gui\RsaKeyGenCtrl.en.Designer.cs">
-      <DependentUpon>RsaKeyGenCtrl.en.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\lang\Gui\DatablockCtrl.en.Designer.cs">
-      <DependentUpon>DatablockCtrl.en.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\lang\Gui\RsaKeyGenCtrl.Designer.cs">
-      <DependentUpon>RsaKeyGenCtrl.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
+      <DependentUpon>RsaKeyInputCtrl.de.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\lang\Gui\SigValCtrl.Designer.cs">
       <DependentUpon>SigValCtrl.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\lang\Gui\SigGenBleichenbCtrl.Designer.cs">
-      <DependentUpon>SigGenBleichenbCtrl.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -200,25 +165,65 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Resources\lang\Gui\DatablockCtrl.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DatablockCtrl.resx</DependentUpon>
-    </Compile>
     <Compile Include="Resources\lang\Gui\SigGenKuehnCtrl.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>SigGenKuehnCtrl.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\lang\Navigation\Navigation.en.Designer.cs">
-      <DependentUpon>Navigation.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\lang\Gui\SigGenBleichenbCtrl.Designer.cs">
+      <DependentUpon>SigGenBleichenbCtrl.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\lang\Gui\RsaKeyGenCtrl.Designer.cs">
+      <DependentUpon>RsaKeyGenCtrl.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\lang\Gui\DatablockCtrl.Designer.cs">
+      <DependentUpon>DatablockCtrl.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\lang\Gui\RsaKeyGenCtrl.de.Designer.cs">
+      <DependentUpon>RsaKeyGenCtrl.de.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\lang\Gui\SigValCtrl.de.Designer.cs">
+      <DependentUpon>SigValCtrl.de.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\lang\Gui\SigGenBleichenbCtrl.de.Designer.cs">
+      <DependentUpon>SigGenBleichenbCtrl.de.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\lang\Gui\SigGenRsaCtrl.de.Designer.cs">
+      <DependentUpon>SigGenRsaCtrl.de.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\lang\Gui\DatablockCtrl.de.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DatablockCtrl.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\lang\Gui\SigGenKuehnCtrl.de.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SigGenKuehnCtrl.de.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\lang\Navigation\Navigation.Designer.cs">
+      <DependentUpon>Navigation.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Navigation.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\lang\Navigation\Navigation.de.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Navigation.de.resx</DependentUpon>
     </Compile>
     <Compile Include="WpfControls\Components\DatablockControl.xaml.cs">
       <DependentUpon>DatablockControl.xaml</DependentUpon>
@@ -388,14 +393,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="OnlineHelp\HelpFiles\Help.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Help.de.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="OnlineHelp\HelpFiles\Help.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Help.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OnlineHelp\HelpFiles\Help.en.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Help.en.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.de.resx">
@@ -408,82 +413,84 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\lang\Gui\Common.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Common.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\Gui\Common.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Common.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\Gui\Common.en.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Common.en.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\Gui\RsaKeyInputCtrl.en.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>RsaKeyInputCtrl.en.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\Gui\RsaKeyInputCtrl.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RsaKeyInputCtrl.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\Gui\SigValCtrl.en.resx">
+    <EmbeddedResource Include="Resources\lang\Gui\RsaKeyInputCtrl.de.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SigValCtrl.en.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\Gui\SigGenRsaCtrl.en.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SigGenRsaCtrl.en.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\Gui\SigGenKuehnCtrl.en.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SigGenKuehnCtrl.en.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\Gui\SigGenBleichenbCtrl.en.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SigGenBleichenbCtrl.en.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\Gui\RsaKeyGenCtrl.en.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>RsaKeyGenCtrl.en.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\Gui\DatablockCtrl.en.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>DatablockCtrl.en.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\Gui\RsaKeyGenCtrl.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>RsaKeyGenCtrl.Designer.cs</LastGenOutput>
+      <LastGenOutput>RsaKeyInputCtrl.de.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\Gui\SigValCtrl.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SigValCtrl.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\Gui\SigGenBleichenbCtrl.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SigGenBleichenbCtrl.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\Gui\SigGenRsaCtrl.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SigGenRsaCtrl.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\Gui\DatablockCtrl.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>DatablockCtrl.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\Gui\SigGenKuehnCtrl.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SigGenKuehnCtrl.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\Navigation\Navigation.en.resx">
+    <EmbeddedResource Include="Resources\lang\Gui\SigGenBleichenbCtrl.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Navigation.en.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
+      <LastGenOutput>SigGenBleichenbCtrl.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\lang\Gui\RsaKeyGenCtrl.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RsaKeyGenCtrl.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\lang\Gui\DatablockCtrl.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DatablockCtrl.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\lang\Gui\RsaKeyGenCtrl.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RsaKeyGenCtrl.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\lang\Gui\SigValCtrl.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SigValCtrl.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\lang\Gui\SigGenBleichenbCtrl.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SigGenBleichenbCtrl.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\lang\Gui\SigGenRsaCtrl.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SigGenRsaCtrl.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\lang\Gui\DatablockCtrl.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DatablockCtrl.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\lang\Gui\SigGenKuehnCtrl.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SigGenKuehnCtrl.de.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\Navigation\Navigation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Navigation.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\lang\Navigation\Navigation.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Navigation.de.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.ru.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -552,7 +559,7 @@
     <Content Include="OnlineHelp\HelpFiles\de\SigVal.html">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="OnlineHelp\HelpFiles\template.en.htm" />
+    <None Include="OnlineHelp\HelpFiles\template.htm" />
     <Content Include="OnlineHelp\HelpFiles\en\Gen_Bleichenb_BitPos.html" />
     <Content Include="OnlineHelp\HelpFiles\en\Gen_Bleichenb_ChangeSign.html" />
     <Content Include="OnlineHelp\HelpFiles\en\Gen_Bleichenb_Sig_Tab.html" />
@@ -572,9 +579,9 @@
     <Content Include="OnlineHelp\HelpFiles\en\StartControl.html">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="OnlineHelp\HelpFiles\template.htm" />
-    <None Include="WpfControls\Start.en.htm" />
-    <Content Include="WpfControls\Start.htm">
+    <Content Include="OnlineHelp\HelpFiles\template.de.htm" />
+    <Content Include="WpfControls\Start.htm" />
+    <Content Include="WpfControls\Start.de.htm">
       <SubType>Designer</SubType>
     </Content>
     <Resource Include="Resources\icons\unequal.png" />

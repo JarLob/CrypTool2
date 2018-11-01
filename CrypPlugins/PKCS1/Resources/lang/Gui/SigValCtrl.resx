@@ -118,60 +118,60 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="sigToTest" xml:space="preserve">
-    <value>Zu testende Signatur:</value>
+    <value>Signature to be tested:</value>
   </data>
   <data name="impl" xml:space="preserve">
-    <value>Implementierung:</value>
+    <value>Implementation:</value>
   </data>
   <data name="rsaSig" xml:space="preserve">
-    <value>PKCS#1-Signatur</value>
+    <value>PKCS#1 signature</value>
   </data>
   <data name="kuehnSig" xml:space="preserve">
-    <value>Kühn-Signatur</value>
+    <value>Kuehn signature</value>
   </data>
   <data name="implCorrect" xml:space="preserve">
-    <value>Korrekt (PKCS#1 Version 2.1)</value>
+    <value>Correct (PKCS#1 version 2.1)</value>
   </data>
   <data name="implFlaw" xml:space="preserve">
-    <value>Fehlerhaft (PKCS#1 Version 1.5)</value>
+    <value>With flaw (PKCS#1 version 1.5)</value>
   </data>
   <data name="result" xml:space="preserve">
-    <value>Ergebnis:</value>
+    <value>Result:</value>
   </data>
   <data name="verifySig" xml:space="preserve">
-    <value>Signatur verifizieren</value>
+    <value>Validate signature</value>
   </data>
   <data name="bleichenbSig" xml:space="preserve">
-    <value>Bleichenbacher Signatur</value>
+    <value>Bleichenbacher signature</value>
   </data>
   <data name="decSig" xml:space="preserve">
-    <value>Unverschlüsselte Signatur</value>
+    <value>Decrypted signature</value>
   </data>
   <data name="encSig" xml:space="preserve">
-    <value>Verschlüsselte Signatur</value>
+    <value>Encrypted signature</value>
   </data>
   <data name="plsGenSigFirst" xml:space="preserve">
-    <value>Keine Signatur erzeugt. Bitte erzeugen Sie zuerst eine Signatur.</value>
+    <value>No signature generated. Please generate a signature first.</value>
   </data>
   <data name="resHashNotReadable" xml:space="preserve">
-    <value>Hashalgorithmus: nicht auslesbar</value>
+    <value>Hash algorithm: not readable</value>
   </data>
   <data name="resIdentifiedHash" xml:space="preserve">
-    <value>Erkannter Hashalgorithmus:</value>
+    <value>Identified hash algorithm:</value>
   </data>
   <data name="resSigNotValid" xml:space="preserve">
-    <value>Signatur nicht valide</value>
+    <value>Signature not valid</value>
   </data>
   <data name="resSigValid" xml:space="preserve">
-    <value>Signatur valide</value>
+    <value>Signature valid</value>
   </data>
   <data name="signature" xml:space="preserve">
-    <value>Signatur</value>
+    <value>Signature</value>
   </data>
   <data name="sigNotGeneratedYet" xml:space="preserve">
-    <value>(noch nicht erzeugt)</value>
+    <value>(not yet generated)</value>
   </data>
   <data name="title" xml:space="preserve">
-    <value>PKCS#1-Signatur verifizieren</value>
+    <value>Validate PKCS#1 signature</value>
   </data>
 </root>

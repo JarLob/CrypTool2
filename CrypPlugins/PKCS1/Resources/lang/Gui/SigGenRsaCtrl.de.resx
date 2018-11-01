@@ -117,31 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="chooseHashfunction" xml:space="preserve">
-    <value>Choose hash function</value>
+  <data name="decrypted" xml:space="preserve">
+    <value>Unverschlüsselt</value>
   </data>
-  <data name="fileLoad" xml:space="preserve">
-    <value>Load file</value>
+  <data name="encrypted" xml:space="preserve">
+    <value>Verschlüsselt</value>
   </data>
-  <data name="fileOpen" xml:space="preserve">
-    <value>Open file</value>
+  <data name="generatedSig" xml:space="preserve">
+    <value>Erzeugte Signatur</value>
   </data>
-  <data name="genDatablock" xml:space="preserve">
-    <value>Generate data block</value>
+  <data name="genSig" xml:space="preserve">
+    <value>Signatur erzeugen</value>
   </data>
-  <data name="generatedDatablock" xml:space="preserve">
-    <value>Generated data block</value>
+  <data name="pubKey" xml:space="preserve">
+    <value>Öffentlicher Schlüssel:</value>
   </data>
-  <data name="hd" xml:space="preserve">
-    <value>Hash digest (HD)</value>
+  <data name="rsaKeySize" xml:space="preserve">
+    <value>RSA-Schlüsselgröße (in Bit):</value>
   </data>
-  <data name="hi" xml:space="preserve">
-    <value>Hash function identifier (HI)</value>
+  <data name="structure" xml:space="preserve">
+    <value>Struktur</value>
   </data>
-  <data name="textDefault" xml:space="preserve">
-    <value>Please insert text here!</value>
-  </data>
-  <data name="textInput" xml:space="preserve">
-    <value>Insert text</value>
+  <data name="title" xml:space="preserve">
+    <value>Sichere PKCS#1-Signatur erzeugen</value>
   </data>
 </root>

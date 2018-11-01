@@ -118,30 +118,30 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="chooseHashfunction" xml:space="preserve">
-    <value>Hashfunktion wählen</value>
+    <value>Choose hash function</value>
   </data>
   <data name="fileLoad" xml:space="preserve">
-    <value>Datei laden</value>
+    <value>Load file</value>
   </data>
   <data name="fileOpen" xml:space="preserve">
-    <value>Datei öffnen</value>
+    <value>Open file</value>
   </data>
   <data name="genDatablock" xml:space="preserve">
-    <value>Datenblock erzeugen</value>
+    <value>Generate data block</value>
   </data>
   <data name="generatedDatablock" xml:space="preserve">
-    <value>Erzeugter Datenblock</value>
+    <value>Generated data block</value>
   </data>
   <data name="hd" xml:space="preserve">
-    <value>Hashwert (HD)</value>
+    <value>Hash digest (HD)</value>
   </data>
   <data name="hi" xml:space="preserve">
-    <value>Hashfunktion-Identifier (HI)</value>
+    <value>Hash function identifier (HI)</value>
   </data>
   <data name="textDefault" xml:space="preserve">
-    <value>Hier bitte den zu signierenden Text eingeben.</value>
+    <value>Please insert text here!</value>
   </data>
   <data name="textInput" xml:space="preserve">
-    <value>Text eingeben</value>
+    <value>Insert text</value>
   </data>
 </root>

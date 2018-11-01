@@ -117,40 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="dec" xml:space="preserve">
-    <value>DEC</value>
+  <data name="attackbleichenbacher" xml:space="preserve">
+    <value>Bleichenbacher-Angriff</value>
   </data>
-  <data name="errorBitLengthShorter" xml:space="preserve">
-    <value>The bit length of the inserted value has to be shorter than or equal to the key length!</value>
+  <data name="attackvariant" xml:space="preserve">
+    <value>Angriff mit kürzeren Schlüsseln (Kühn)</value>
   </data>
-  <data name="errorInsertNumber" xml:space="preserve">
-    <value>Please insert a number!</value>
+  <data name="keygen" xml:space="preserve">
+    <value>RSA-Schlüssel erzeugen</value>
   </data>
-  <data name="errorValidSignsOnly" xml:space="preserve">
-    <value>Please insert only valid characters!</value>
+  <data name="pkcs1attack" xml:space="preserve">
+    <value>Angriffe auf PKCS#1</value>
   </data>
-  <data name="hex" xml:space="preserve">
-    <value>HEX</value>
+  <data name="pkcs1gen" xml:space="preserve">
+    <value>Sichere PKCS#1-Signatur erzeugen</value>
   </data>
-  <data name="inputKey" xml:space="preserve">
-    <value>Input key</value>
+  <data name="pkcs1validate" xml:space="preserve">
+    <value>PKCS#1-Signatur verifizieren</value>
   </data>
-  <data name="inputRsaKey" xml:space="preserve">
-    <value>Input RSA key</value>
+  <data name="siggen" xml:space="preserve">
+    <value>Signaturgenerierung</value>
   </data>
-  <data name="keyLength" xml:space="preserve">
-    <value>Key length (in bits)</value>
+  <data name="sigval" xml:space="preserve">
+    <value>Signaturvalidierung</value>
   </data>
-  <data name="mod" xml:space="preserve">
-    <value>Modulus</value>
-  </data>
-  <data name="privKey" xml:space="preserve">
-    <value>Private key</value>
-  </data>
-  <data name="pubKey" xml:space="preserve">
-    <value>Public key</value>
-  </data>
-  <data name="takeInput" xml:space="preserve">
-    <value>Confirm input</value>
+  <data name="startpage" xml:space="preserve">
+    <value>Startseite</value>
   </data>
 </root>

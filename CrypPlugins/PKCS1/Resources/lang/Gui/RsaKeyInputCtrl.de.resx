@@ -117,28 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="decrypted" xml:space="preserve">
-    <value>Decrypted</value>
+  <data name="dec" xml:space="preserve">
+    <value>DEZ</value>
   </data>
-  <data name="encrypted" xml:space="preserve">
-    <value>Encrypted</value>
+  <data name="errorBitLengthShorter" xml:space="preserve">
+    <value>Die Bitlänge des eingegebenen Wertes muss kleiner oder gleich der Schlüssellänge sein!</value>
   </data>
-  <data name="generatedSig" xml:space="preserve">
-    <value>Generated signature</value>
+  <data name="errorInsertNumber" xml:space="preserve">
+    <value>Bitte eine Zahl eingeben!</value>
   </data>
-  <data name="genSig" xml:space="preserve">
-    <value>Generate signature</value>
+  <data name="errorValidSignsOnly" xml:space="preserve">
+    <value>Bitte nur zulässige Zeichen eingeben!</value>
+  </data>
+  <data name="hex" xml:space="preserve">
+    <value>HEX</value>
+  </data>
+  <data name="inputKey" xml:space="preserve">
+    <value>Schlüssel eingeben</value>
+  </data>
+  <data name="inputRsaKey" xml:space="preserve">
+    <value>RSA-Schlüssel eingeben</value>
+  </data>
+  <data name="keyLength" xml:space="preserve">
+    <value>Schlüssellänge (in Bit)</value>
+  </data>
+  <data name="mod" xml:space="preserve">
+    <value>Modulus</value>
+  </data>
+  <data name="privKey" xml:space="preserve">
+    <value>Privater Schlüssel</value>
   </data>
   <data name="pubKey" xml:space="preserve">
-    <value>Public key:</value>
+    <value>Öffentlicher Schlüssel</value>
   </data>
-  <data name="rsaKeySize" xml:space="preserve">
-    <value>RSA key size (in bits):</value>
-  </data>
-  <data name="structure" xml:space="preserve">
-    <value>Structure</value>
-  </data>
-  <data name="title" xml:space="preserve">
-    <value>Generate secure PKCS#1 signature</value>
+  <data name="takeInput" xml:space="preserve">
+    <value>Eingabe übernehmen</value>
   </data>
 </root>

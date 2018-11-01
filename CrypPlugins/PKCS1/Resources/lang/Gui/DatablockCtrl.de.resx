@@ -117,37 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="decrypted" xml:space="preserve">
-    <value>Decrypted</value>
+  <data name="chooseHashfunction" xml:space="preserve">
+    <value>Hashfunktion wählen</value>
   </data>
-  <data name="encrypted" xml:space="preserve">
-    <value>Encrypted</value>
+  <data name="fileLoad" xml:space="preserve">
+    <value>Datei laden</value>
   </data>
-  <data name="generatedSig" xml:space="preserve">
-    <value>Generated signature</value>
+  <data name="fileOpen" xml:space="preserve">
+    <value>Datei öffnen</value>
   </data>
-  <data name="genFakeSig" xml:space="preserve">
-    <value>Generate fake signature</value>
+  <data name="genDatablock" xml:space="preserve">
+    <value>Datenblock erzeugen</value>
   </data>
-  <data name="genSig" xml:space="preserve">
-    <value>Generate signature</value>
+  <data name="generatedDatablock" xml:space="preserve">
+    <value>Erzeugter Datenblock</value>
   </data>
-  <data name="genSigErrorMaxIter" xml:space="preserve">
-    <value>Signature could not be generated. Maximum amount of iterations reached.</value>
+  <data name="hd" xml:space="preserve">
+    <value>Hashwert (HD)</value>
   </data>
-  <data name="maxIterations" xml:space="preserve">
-    <value>Maximum number of iterations:</value>
+  <data name="hi" xml:space="preserve">
+    <value>Hashfunktion-Identifier (HI)</value>
   </data>
-  <data name="pubKey" xml:space="preserve">
-    <value>Public key:</value>
+  <data name="textDefault" xml:space="preserve">
+    <value>Hier bitte den zu signierenden Text eingeben.</value>
   </data>
-  <data name="rsaKeySize" xml:space="preserve">
-    <value>RSA key size (in bits):</value>
-  </data>
-  <data name="structure" xml:space="preserve">
-    <value>Structure</value>
-  </data>
-  <data name="title" xml:space="preserve">
-    <value>Attack with shorter keys (Kuehn)</value>
+  <data name="textInput" xml:space="preserve">
+    <value>Text eingeben</value>
   </data>
 </root>
