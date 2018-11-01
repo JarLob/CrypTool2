@@ -37,11 +37,12 @@ namespace WindowsFormsApplication1
 
         public Dictionary<string, string> files = new Dictionary<string, string>();
         public Dictionary<string, bool> modified = new Dictionary<string, bool>();
-        public string basepath;
+        public string relpath; // filename ohne basepath, language und .resx
         public LogDelegate log;
 
-        public TranslatedResource(LogDelegate del = null)
+        public TranslatedResource(string basepath, string relpath, LogDelegate del = null)
         {
+            this.relpath = relpath;
             log = del;
         }
 
@@ -71,26 +72,26 @@ namespace WindowsFormsApplication1
             modified.Clear();
         }
 
-        public void SaveAs(string lang, string modification)
+        public void SaveAs(string basepath, string lang, string modification)
         {
             Save(basepath + "." + modification + "." + AllResources.langext[lang] + ".resx", lang);
         }
 
-        public void Save()
+        public void Save(string basepath)
         {
             foreach (string lang in files.Keys)
-                Save(files[lang], lang);
+                Save(basepath, files[lang], lang);
         }
 
-        public void Save(string lang)
+        public void Save(string basepath, string lang)
         {
             if (files.ContainsKey(lang))
-                Save(files[lang], lang);
+                Save(basepath, files[lang], lang);
         }
 
-        public void Save(string filename, string lang)
+        public void Save(string basepath, string filename, string lang)
         {
-            IResourceWriter writer = new ResXResourceWriter(filename);
+            IResourceWriter writer = new ResXResourceWriter(basepath + filename);
 
             foreach (string key in translatedKey.Keys)
             {
@@ -105,9 +106,8 @@ namespace WindowsFormsApplication1
             writer.Close();
         }
 
-        public bool Update(string lang)
+        public bool Update(string basepath, string lang)
         {
-            //if (!modified.ContainsKey(lang) || !modified[lang]) return;
             List<ResXDataNode> nodelist = new List<ResXDataNode>();
             string filename = basepath + files[lang];
 
@@ -118,7 +118,9 @@ namespace WindowsFormsApplication1
             reader.UseResXDataNodes = true;
 
             bool modified = false;
+            var done = new HashSet<string>();
 
+            // aktualisiere alle bereits in der .resx-Datei vorhandenen Keys und übernehme Nicht-Text-Einträge (z.B. FileRefs)
             foreach (DictionaryEntry entry in reader)
             {
                 ResXDataNode dataNode = (ResXDataNode)entry.Value;
@@ -133,17 +135,32 @@ namespace WindowsFormsApplication1
 
                         if (translatedKey.ContainsKey(key))
                             if (translatedKey[key].Translations.ContainsKey(lang))
+                            {
+                                done.Add(key);  // key wurde beim durchlaufen der vorhandenen Einträge behandelt
                                 if (translatedKey[key].Translations[lang] != value)
                                 {
                                     dataNode = new ResXDataNode(key, translatedKey[key].Translations[lang]);
                                     modified = true;
                                 }
+                            }
                     }
                     nodelist.Add(dataNode);
                 }
                 catch (Exception ex)
                 {
                 }
+            }
+
+            // füge die neu hinzugekommenen Keys dazu
+            foreach(var key in translatedKey.Keys)
+            {
+                if(!done.Contains(key))
+                    if (translatedKey[key].Translations.ContainsKey(lang))
+                    {
+                        var dataNode = new ResXDataNode(key, translatedKey[key].Translations[lang]);
+                        nodelist.Add(dataNode);
+                        modified = true;
+                    }
             }
 
             reader.Close();
@@ -154,8 +171,6 @@ namespace WindowsFormsApplication1
                 ResXResourceWriter writer = new ResXResourceWriter(filename);
                 writer.BasePath = Path.GetDirectoryName(filename);
                 nodelist.ForEach(n => writer.AddResource(n));
-                //foreach (ResXDataNode dataNode in nodelist)
-                //    writer.AddResource(dataNode);
                 writer.Generate();
                 writer.Close();
 
@@ -167,11 +182,29 @@ namespace WindowsFormsApplication1
             return modified;
         }
 
-        public int Update()
+        void CreateEmptyResourceFile(string basepath, string lang)
+        {
+            string resource = relpath + "." + lang + ".resx";
+            files.Add(lang, resource);
+            string fname = basepath + resource;
+            File.WriteAllText(fname, Properties.Resources.Resource_template);
+            Log("Missing resource file " + fname + " created");
+        }
+
+        public int Update(string basepath)
         {
             int cnt = 0;
+
+            // Check if a resource file for a new language has to be generated.
+            // This is necessary if a key is added to a language that previously contained no keys.
+            var langs = translatedKey.Values.SelectMany(tk => tk.Translations.Keys).Distinct();
+            var missingLangs = langs.Where(lang => !files.ContainsKey(lang));
+            foreach (var lang in missingLangs)
+                CreateEmptyResourceFile(basepath, lang);
+
             foreach (string lang in files.Keys)
-                if (Update(lang)) cnt++;
+                if (Update(basepath, lang)) cnt++;
+
             return cnt;
         }
 
@@ -203,7 +236,7 @@ namespace WindowsFormsApplication1
         }
 
         /* lädt die resx-Dateien ohne die referenzierten externen Keys */
-        public void LoadXML(string lang, string filename)
+        public void LoadXML(string basepath, string lang, string filename)
         {
             XmlDocument xml = new XmlDocument();
             xml.Load(basepath + filename);
@@ -227,8 +260,7 @@ namespace WindowsFormsApplication1
             {
                 Console.WriteLine(exception.Message);
             }
-
-            //xml.Save("C:\\Users\\u1\\Desktop\\test2.xml");
+            
             files[lang] = filename;
         }
     }
@@ -238,7 +270,6 @@ namespace WindowsFormsApplication1
         public static string[] cultures = new string[] { "en", "de", "ru" };
         public static string defaultculture = "en";
         public static Dictionary<string, string> langext = new Dictionary<string, string> { { "en", "en" }, { "de", "de" }, { "ru", "ru" } };
-        //public static Dictionary<string, string> langext = new Dictionary<string, string> { { "en", "en-EN" }, { "de", "de-DE" }, { "ru", "ru-RU" } };
         public static HashSet<string> ignorePaths = new HashSet<string> { "obj" };
 
         public Dictionary<string, TranslatedResource> Resources = new Dictionary<string, TranslatedResource>();
@@ -306,33 +337,29 @@ namespace WindowsFormsApplication1
             return result;
         }
 
-        public TranslatedResource getResources(Dictionary<string, string> fnames)
+        public TranslatedResource getResources(string basepath, string relpath)
         {
-            TranslatedResource result = new TranslatedResource(log);
-            result.basepath = basepath;
+            Dictionary<string, string> fnames = getExistingFileNames(relpath);
+
+            TranslatedResource result = new TranslatedResource(basepath, relpath, log);
 
             foreach (string lang in fnames.Keys)
-                result.LoadXML(lang, fnames[lang]);
+                result.LoadXML(basepath, lang, fnames[lang]);
 
             return result;
         }
 
-        public TranslatedResource getResources(string relpath)
-        {
-            return getResources(getExistingFileNames(relpath));
-        }
-
-        public void Add(string fname)
+        public void Add(string basepath, string fname)
         {
             string relpath = getKey(fname);
             if (relpath != null && !Resources.ContainsKey(relpath))
-                Resources[relpath] = getResources(relpath);
+                Resources[relpath] = getResources(basepath, relpath);
         }
 
-        public void Add(string[] fname)
+        public void Add(string basepath, string[] fname)
         {
             foreach (string f in fname)
-                Add(f);
+                Add(basepath, f);
         }
 
         public void Clear()
@@ -340,11 +367,11 @@ namespace WindowsFormsApplication1
             Resources.Clear();
         }
 
-        public void Update()
+        public void Update(string basepath)
         {
             try
             {
-                int cnt = Resources.Values.Sum(tr => tr.Update());
+                int cnt = Resources.Values.Sum(tr => tr.Update(basepath));
                 Log(cnt + " file(s) updated.");
             }
             catch (Exception e)
@@ -426,11 +453,10 @@ namespace WindowsFormsApplication1
             XmlNodeList nl = xml.SelectNodes("/root/resource");
             foreach (XmlNode r in nl)
             {
-                TranslatedResource tr = new TranslatedResource(log);
-                tr.basepath = basepath;
+                string relpath = r.Attributes["base"].Value;
+                if (relpath.IndexOf(basepath) == 0) relpath = relpath.Remove(0, basepath.Length);
 
-                string b = r.Attributes["base"].Value;
-                if (b.IndexOf(basepath) == 0) b = b.Remove(0, basepath.Length);
+                TranslatedResource tr = new TranslatedResource(basepath, relpath, log);
 
                 XmlNode f = r.SelectSingleNode("files");
                 foreach (XmlNode l in f.SelectNodes("file"))
@@ -452,7 +478,7 @@ namespace WindowsFormsApplication1
                     tr.TranslatedKey[key] = tk;
                 }
 
-                Resources[b] = tr;
+                Resources[relpath] = tr;
             }
         }
 
@@ -503,7 +529,7 @@ namespace WindowsFormsApplication1
             {
                 foreach (string f in Directory.GetFiles(sDir, "*.resx"))
                 {
-                    Add(f);
+                    Add(basepath, f);
                     cnt++;
                 }
 
@@ -524,14 +550,4 @@ namespace WindowsFormsApplication1
         }
 
     }
-
-    //<key value="ActionCaption">
-    //  <translation lang="de">
-    //    <value>Aktion</value>
-    //  </translation>
-    //  <translation lang="en">
-    //    <value>Action</value>
-    //  </translation>
-    //</key>
-
 }

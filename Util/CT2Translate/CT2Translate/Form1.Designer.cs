@@ -117,7 +117,7 @@
             this.loadMergedResourcesToolStripMenuItem,
             this.recursiveDirectoryScanToolStripMenuItem});
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.loadToolStripMenuItem.Text = "Load";
             // 
             // loadMergedResourcesToolStripMenuItem
@@ -140,7 +140,7 @@
             this.saveMergedResourcesToolStripMenuItem,
             this.saveToBasepathToolStripMenuItem});
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // saveMergedResourcesToolStripMenuItem
@@ -160,7 +160,7 @@
             // quitToolStripMenuItem
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.quitToolStripMenuItem.Text = "Quit";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
@@ -286,7 +286,6 @@
             // 
             this.basepathTextBox.Location = new System.Drawing.Point(61, 0);
             this.basepathTextBox.Name = "basepathTextBox";
-            this.basepathTextBox.ReadOnly = true;
             this.basepathTextBox.Size = new System.Drawing.Size(213, 20);
             this.basepathTextBox.TabIndex = 17;
             // 

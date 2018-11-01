@@ -19,7 +19,6 @@ namespace WindowsFormsApplication1
     {
         private ListViewColumnSorter lvwColumnSorter;
         List<string> allResources = new List<string>();
-        //Dictionary<string, TranslatedResource> theResources = new Dictionary<string,TranslatedResource>();
         AllResources allres = new AllResources();
 
         public static string[] displayedLanguages = { "en", "de", "ru" };
@@ -31,8 +30,7 @@ namespace WindowsFormsApplication1
         {
             allres.log = log;
             InitializeComponent();
-            // Create an instance of a ListView column sorter and assign it 
-            // to the ListView control.
+            // Create an instance of a ListView column sorter and assign it to the ListView control.
             lvwColumnSorter = new ListViewColumnSorter();
             listView1.ListViewItemSorter = lvwColumnSorter;
             listView1.Columns.Clear();
@@ -172,8 +170,7 @@ namespace WindowsFormsApplication1
             foreach (string path in paths)
                 listViewAdd(path, allres.Resources[path], filter);
             listView1.EndUpdate();
-
-            //toolStripStatusLabel1.Text = listView1.Items.Count + " items displayed";
+            
             textBox1.Text = String.Format("{0} item{1} displayed{2}", 
                 listView1.Items.Count,
                 (listView1.Items.Count==1) ? "" : "s",
@@ -320,8 +317,7 @@ namespace WindowsFormsApplication1
 
         private string GetOpenFileName(string title)
         {
-            OpenFileDialog dlg = new OpenFileDialog();
-            //dlg.Title = "Open Cryptool Merged Resource";            
+            OpenFileDialog dlg = new OpenFileDialog();          
             dlg.Title = title;
             dlg.Filter = "Merged Resource (*.xml)|*.xml";
             if (dlg.ShowDialog() == DialogResult.OK)
@@ -336,8 +332,7 @@ namespace WindowsFormsApplication1
 
         private string GetSaveFileName(string title)
         {
-            SaveFileDialog dlg = new SaveFileDialog();
-            //dlg.Title = "Open Cryptool Merged Resource";            
+            SaveFileDialog dlg = new SaveFileDialog();          
             dlg.Title = title;
             dlg.Filter = "Merged Resource (*.xml)|*.xml";
             if (dlg.ShowDialog() == DialogResult.OK)
@@ -395,7 +390,12 @@ namespace WindowsFormsApplication1
 
         private void saveToBasepathToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            allres.Update();
+            if (String.IsNullOrEmpty(basepathTextBox.Text) || !Directory.Exists(basepathTextBox.Text))
+            {
+                MessageBox.Show("Please enter a valid basepath.", "No basepath", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            allres.Update(basepathTextBox.Text);
         }
 
         private void LangTextBox_Leave(object sender, EventArgs e)
@@ -409,7 +409,7 @@ namespace WindowsFormsApplication1
             TranslatedKey tk = (TranslatedKey)item.Tag;
             if (!tk.Translations.ContainsKey(lang) && rtb.Text == "") return;
             if (tk.Translations.ContainsKey(lang) && tk.Translations[lang] == rtb.Text) return;
-            if (!rsrc.files.ContainsKey(lang)) rsrc.files.Add(lang,"");
+            //if (!rsrc.files.ContainsKey(lang)) rsrc.files.Add(lang,"");
             rsrc.modified[lang] = true;
             //if (!tk.Translations.ContainsKey(lang)) tk.Add(lang, "");
             tk.Translations[lang] = rtb.Text;
@@ -446,6 +446,5 @@ namespace WindowsFormsApplication1
                 fileTree.Focus();
             }
         }
-
     }
 }
