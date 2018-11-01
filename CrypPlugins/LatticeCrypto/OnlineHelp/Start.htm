@@ -1,104 +1,121 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
-<head>
-    <title></title>
-    <style type="text/css">
-        body
-        {
-            font-family: Arial,Verdana,Georgia;
-            font-size: smaller;
-        }
-    </style>
-</head>
+
+   <head>
+      <title></title>
+      <style type="text/css">
+			body
+			{
+	   		font-family:Arial,Verdana,Georgia;
+	   		font-size:smaller;
+			}
+      </style>
+   </head>
+
 <body>
-    <h2>
-        Gitterbasierte Kryptographie</h2>
-    <p>
-        In diesem Kryptotutorial lernen Sie Gitter kennen und erfahren über ihren Einsatz in der Kryptographie, 
-        insbesondere der Kryptoanalyse. Diese Einführung soll die Grundlagen vermitteln, mithilfe derer Sie die 
-        nachfolgenden Kapitel besser verstehen lernen.
+   <h2>Lattice-based cryptography</h2>
+
+   <p align="justify">
+		In this crypto tutorial you will learn about lattices and their use in cryptography 
+		especially cryptanalysis. This introduction is intended to provide the basics, 
+		to better understand the following chapters.
+   </p>
+
+   <p>
+		<strong>Lattices</strong><br>
+
+		A lattice consists of linearly independent vectors that are linearly combined with each other and thereby generate lattice points. 
+		The difference between lattices and a &quot;normal&quot; vector space is the fact that the 
+		vectors are multiplied with integer factors instead of real factors.<br>
+
+		All the vectors form a so called basis for the lattice. This basis can be written in the form of a matrix.
+		The vectors can be written down in column notation, this is the most common way in papers. The vectors define so-called parallelepipeds, in the two-dimensional case these are parallelograms.
+		The volume of this parallelepiped is equal to the absolute value of the determinant.<br><br>
+
+		Please note that in this crypto tutorial all values are integers, 
+		since big integers are common in modern cryptography. This however is not a 
+		requirement for lattices itself, but only for the factors multiplied with the 
+		vectors. The benefit of this limitation will arise in the later chapters "Merkle-Hellman" and "RSA".
+	</p>
+
+	<p>
+		<strong>Lattice problems</strong><br>
+
+  		An important characteristic of lattices is the fact that they
+		can have different bases producing the same lattice. The determinants of all these bases 
+		have the same value. Regarding lattices, vectors with minimum length are 
+		interesting. The problem to find these vectors is called the Shortest Vector 
+		Problem (SVP) and relates to the search for "successive minima".<br>
+
+		The first minimum is the shortest vector. All other vectors are linearly independent to this and to each other, they are 
+		also as short as possible. 
+		An upper bound for the shortest vector is determined by the Hermite constant. The shortest vector is also interesting for the packing density of a lattice. Here circles are constructed around each
+		Lattice point being as large as possible without overlapping each other 
+		(both the Hermite circuit and the package circuits can be enabled in the settings).
+		It can be easily observed that after reduction the vectors are very much orthogonal to each other, ideally they even have the angle of 90&deg;.<br>
+
+		Another interesting problem is the Closest Vector Problem (CVP).
+		Here an arbitrary point is specified and then we search for a lattice point which is closest to this arbitrary point. 
+	</p>
+
+	<p>
+		<strong>Lattice reduction</strong><br> 
+
+		There are two important methods that implement the search for shortest vectors. One of these is the Gaussian algorithm for dimension 2 and secondly the LLL algorithm, named after
+  		Arjen Lenstra, Hendrik Lenstra and L&aacute;szl&oacute; Lov&aacute;sz, for an arbitrary lattice dimension.
+		The Gaussian algorithm works similar to the Euclidean algorithm for searching 
+		the greatest common divisor (gcd) of two integers. By combining and subtracting of two vectors the basis&nbsp;improves after each iteration with a shorter vector. 
+		The LLL algorithm works similar to the Gauss algorithm, but for higher 
+		dimensions it produces only an approximation to the shortest vector. An 
+		important part of the algorithm is the Gram-Schmidt orthogonalization.
+	</p>
+
+	<p align="justify">
+		<strong>Cryptanalysis</strong><br>
+
+		After the publication of the LLL algorithm in 1982, many possible applications were found for it, cryptanalysis being one of them.
+		The Merkle-Hellman knapsack cryptosystem, designed in 1978 and named after its two inventors Ralph C. Merkle and Martin E. Hellman, could impressively be broken with the help of lattices. 
+		This cryptosystem is based on the knapsack problem, for which a general solution is difficult to find. 
+		But it could be demonstrated, that the problem of decrypting a ciphertext can be reformulated as a search for a shortest vector.<br>
+
+		The well-known asymmetric encryption scheme RSA (named after its inventors Ronald L. Rivest, Adi Shamir and Leonard Adleman) was developed at about the same time as the Merkle-Hellman cryptosystem.
+		It is based on the problem of the prime factorization of big integers.
+		Using lattices, Don Coppersmith was able to show that certain messages, for which a part of the plaintext is known, can be deciphered.
+		The messages in this case are so called "stereotypical messages", for example "Your new PIN is: ****".
+		The first part of the messages, which is always the same, must be known to the attacker.
+		A prerequisite for this attack is that the public exponent e is very small, for example 3.<br>
+
+		Another attack scenario that uses lattices involves a partially known private key. 
+		In contrast to the Merkle-Hellman cryptosystem, RSA was not broken and can as yet be considered safe, provided some constraints on the parameters are respected.
     </p>
-    <p>
-        <strong>Gitter</strong><br> Ein Gitter besteht aus linear unabhängigen Vektoren, die miteinander linear kombiniert werden, 
-        und dadurch Gitterpunkte erzeugen. Der Unterschied zwischen Gittern und einem "normalen" Vektorraum besteht 
-        darin, dass die Vektoren ganzzahlig kombiniert werden.<br>
-        Nimmt man alle Vektoren zusammen, bezeichnet man diese als Basis für das Gitter. Diese Basis kann auch in 
-        Form einer Matrix aufgeschrieben werden. Die Vektoren können z.B. in Spaltenschreibweise 
-        aufgeschrieben werden. Die Vektoren spannen so genannte Parallelepipede auf, im zwei-dimensionalen Fall sind dies Parallelogramme. 
-        Das Volumen dieses Parallelepipeds ist gleich dem Absolutbetrag der Determinante. 
-        <br><br>
-        Beachten Sie bitte, dass in diesem Kryptotutorial alle Werte ganzzahlig sind. Dies ist keine Voraussetzung 
-        für Gitter. Da aber in der Kryptographie häufig mit großen Ganzzahlen gerechnet wird, werden auch hier 
-        Ganzzahlen verwendet. Der Nutzen dieser Einschränkung zeigt sich in den späteren Kapiteln 
-        "Merkle-Hellman" und "RSA".
-    </p>
-    <p>
-        <strong>Gitterprobleme</strong><br> Eine wichtige Eigenschaft von Gittern ist, dass sie 
-        verschiedene Basen haben können, die alle das gleiche  Gitter erzeugen. Diese Basen haben dann auch 
-        alle die gleiche Gitterdeterminante. Im Zusammenhang mit Gittern sind aber vor allem solche Vektoren interessant,
-        die eine minimale Länge besitzen. Dieses Problem wird Shortest Vector Problem (SVP) genannt. 
-        Gesucht werden dabei die so genannten "Sukzessiven Minima".<br>
-        Das erste Minimum ist dabei der kürzeste Vektor. Alle weiteren sind dazu linear unabhängig und wiederum 
-        so kurz wie möglich. Eine obere Schranke für den kürzesten Vektor wird durch die Hermite-Konstante. Der 
-        kürzeste Vektor ist auch interessant für die Packungsdichte eines Gitters. Dabei werden Kreise um jeden 
-        Gitterpunkt konstruiert, welche so groß wie möglich sind, ohne dass sie sich gegenseitig überdecken 
-        (sowohl der Hermite-Kreis als auch die Packungskreise können in den Einstellungen freigeschaltet werden).
-        Es lässt sich gut beobachten, dass die Vektoren nach einer Reduktion sehr viel orthogonaler zueinander sind, 
-        im Idealfall haben sie sogar den Winkel 90&deg;.<br>
-        Ein weiteres interessantes Problem ist das Closest Vector Problem (CVP). Hier wird ein beliebiger Punkt 
-        vorgegeben und es soll ein Gitterpunkt gesucht werden, der diesem Punkt am nächsten ist.
-    </p>
-    <p>
-        <strong>Gitterreduktion</strong><br> Es gibt zwei wichtige Verfahren, welche die Suche nach 
-        kürzesten Vektoren realisieren. Zum einen ist dies der Gauß-Algorithmus für die Dimension 2 und 
-        zum anderen der LLL-Algorithmus, benannt nach Arjen Lenstra, Hendrik Lenstra und L&aacute;szl&oacute; Lov&aacute;sz, 
-        für eine beliebige Gitterdimension.<br>
-        Der Gauß-Algorithmus arbeitet ähnlich dem euklidischen Algorithmus zur Suche des größten gemeinsamen Teilers 
-        (ggT) zweier ganzer Zahlen. Durch Kombination und Subtraktion der beiden Vektoren 
-        verbessert sich die Basis nach jedem Iterationsschritt um einen kürzeren Vektor.
-        Der LLL-Algorithmus arbeitet ähnlich dem Gauß-Algorithmus, liefert in höheren Dimensionen 
-        aber nur 
-        noch eine Approximation (Annäherung) an den kürzesten Vektor. Ein wichtiger Bestandteil des 
-        Algorithmus ist die Gram-Schmidt-Orthogonalisierung.<br>
-    </p>
+
     <p align="justify">
-        <strong>Kryptoanalyse</strong><br> Nachdem der LLL-Algorithmus 1982 veröffentlicht wurde, 
-        fanden sich zahlreiche Einsatzmöglichkeiten, unter anderem in der Kryptoanalyse. So wurde das 
-        von Ralph C. Merkle und Martin E. Hellman 1978 entwickelte und nach ihnen benannte Kryptosystem 
-        eindrucksvoll mithilfe von Gittern vollständig gebrochen. Das Merkle-Hellman-Kryptosystem basierte auf 
-        dem Rucksackproblem, welches im Allgemeinen sehr schwer zu lösen ist. Im Konkreten zeigte sich jedoch, 
-        dass das Entschlüsseln einer Chiffre in Kombination mit dem öffentlichen Schlüssel als Suche nach einem kürzesten Vektor 
-        umformuliert werden konnte.<br>
-        Das bekannteste, asymmetrische Verschlüsselungsverfahren RSA, benannt nach Ronald L. Rivest, Adi Shamir und Leonard Adleman, 
-        wurde etwa zur gleichen Zeit wie das von Merkle und Hellman entwickelt. Es basiert auf dem Problem der Primfaktorzerlegung von großen Zahlen. 
-        Mithilfe von Gittern hat Don Coppersmith gezeigt, dass bestimmte Arten von Nachrichten, bei denen ein Teil 
-        der Nachricht bekannt ist, entschlüsselt werden können. Diese Nachrichten sind so genannte "stereotype Nachrichten", 
-        wie z.B. "Ihre neue PIN lautet: ****". Der erste Teil der Nachricht kann immer gleich sein und daher dem Angreifer bekannt. 
-        Voraussetzung für den Angriff ist, dass der öffentliche Exponent e sehr klein ist, z.B. 3.<br> 
-        Eine weitere Angriffsmöglichkeit ist ein teilweise bekannter privater Schlüssel. Auch hier kann mithilfe von Gittern ein Angriff gestartet werden.
-        Im Gegensatz zum Merkle-Hellman-Kryptosystem konnte das RSA-Verfahren nicht gebrochen werden und gilt daher (mit einigen 
-        Bedingungen an die Parameter) bis heute als sicher.
+		<strong>Lattice-based cryptosystems</strong><br>
+
+		Cryptosystems that are based on lattices exploit the hardness of certain lattice problems, in particular the Shortest Vector Problem (SVP) and the Closest Vector Problem (CVP).
+		As in the case of RSA, these cryptosystems are asymmetric public-key cryptosystems.<br>
+
+		The foundations for lattice-based cryptography were laid by Miklos Ajtai in 1986, when he demonstrated how lattices could be used for cryptography.
+		In cooperation with Cynthia Dwork, Ajtai published the Ajtai-Dwork cryptosystem a short time later in 1997. Its security is based on the hardness of SVP.
+		In the same year, Oded Goldreich, Shafi Goldwasser and Shai Halevi published the GGH cryptosystem. Improvements by Daniele Micciancio made the system practicable.
+		The security of GGH is based on the hardness of CVP.
+		GGH can also be used to generate electronic signatures.
+		Both cryptosystems, Ajtai-Dwork and GGH, were successfully attacked and broken.<br>
+
+		The cryptosystem NTRU (Number Theory Research Unit) was presented by Jeffrey Hoffstein, Jill Pipher and Joseph H. Silverman in 1998.
+		It can encrypt (NTRUEncrypt) as well as create electronic signatures (NTRUSign). The security of NTRU relies on the hardness of SVP.
+		The advantages of NTRU are the fast encryption and decryption speed and the fact that, unlike in the case of RSA, no quantum algorithm for attacking it in polynomial time is as yet known.<br>
+
+		The latest lattice-based cryptosystem is <i>Learning With Errors</i> (LWE), which was published by Oded Regev in 2005.
+		It too is based on hard lattice problems, like SVP.<br>
+
+		Compared to established public-key cryptosystems like RSA, lattice-based cryptosystems have to handle larger key sizes and also larger ciphertexts.
+		On the other hand, they have the advantage of being faster and, in contrast to RSA, they are not (yet) vulnerable to quantum computing attacks.
     </p>
-    <p align="justify">
-        <strong>Gitterbasierte Kryptosysteme</strong><br>
-        Kryptosysteme, die auf Basis von Gittern arbeiten, machen sich die Gitterprobleme, im Besonderen, Shortest Vector Problem (SVP) und Closest Vector Problem (CVP), zunutze. Es handelt sich hierbei, wie bei RSA, um asymmetrische Public-Key-Kryptosysteme.<br>
-        Die Grundlagen für die gitterbasierte Kryptographie wurden 1996 von Miklos Ajtai 
-        geschaffen, indem er aufzeigte, wie Gitter für die Kryptographie genutzt werden 
-        könnten. Wenig später veröffentlichte Ajtai zusammen Cynthia Dwork 1997 das 
-        Ajtai-Dwork-Kryptosystem, welches die Sicherheit in das Finden des kürzesten 
-        Vektors legte. Im selben Jahr veröffentlichen Oded Goldreich, Shafi Goldwasser 
-        und Shai Halevi das GGH-Kryptosystem. Es wurde von Daniele Micciancio verbessert 
-        und dadurch erst praxistauglich gemacht. Die Sicherheit von GGH beruhte auf der 
-        Schwierigkeit das CVP zu lösen. Es war außerdem möglich, Nachrichten mithilfe 
-        des GGH-Signaturverfahren zu signieren. Beide Kryptosysteme, sowohl Ajtai-Dwork 
-        als auch GGH, wurden erfolgreich angegriffen und gebrochen.<br>
-Das Kryptosystem NTRU (als Abkürzung von &quot;Number Theory Research Unit&quot;) wurde 1998 von Jeffrey Hoffstein, Jill Pipher und Joseph H. Silverman vorgestellt. Es sind sowohl Verschlüsselungen (NTRUEncrypt) als auch elektronische Signaturen (NTRUSign) möglich. Die Sicherheit von NTRU liegt im Lösen des SVP. Als Besonderheit gilt zum einen die schnelle Ver- und Entschlüsselung und zum anderen der Umstand, dass (im Gegensatz zu RSA) bisher noch kein Quantenalgorithmus bekannt ist, der NTRU in Polynomialzeit bricht.<br>
-        Das neueste, gitterbasierte Kryptosystem ist Learning with Errors (kurz LWE), welches von Oded Regev in 2005 veröffentlicht wurde. Es basiert ebenfalls auf schwer zu lösenden Gitterproblemen, wie dem SVP.<br>
-Im Vergleich zu etablierten Public-Key-Verfahren wie RSA haben gitterbasierte Kryptosysteme häufig mit längeren Schlüssellängen und auch größeren Chiffren zu kämpfen. Dagegen haben sie oft den Vorteil, dass sie schneller sind und im Gegensatz zu RSA (noch) nicht durch den Einsatz von Quantencomputern angreifbar sind.
-    </p>
+
     <p>
-        Hinweis: Dieses Plugin verwendet Ikonen, welche einer Creative Commons Attribution NonCommercial licence (BY-NC) Lizenz unterliegen.
-        Zu den Designern dieser Ikonen gehören "iconshock.com", "gentleface.com" und "wpzoom.com".
+		Note: This plugin uses icons with Creative Commons Attribution NonCommercial licence (BY-NC). Designers of these icons are "iconshock.com", "gentleface.com" and "wpzoom.com".
     </p>
+
 </body>
 </html>

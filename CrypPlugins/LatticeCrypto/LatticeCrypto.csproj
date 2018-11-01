@@ -103,13 +103,13 @@
     <Compile Include="Models\VectorND.cs" />
     <Compile Include="Models\ObsoleteClasses.cs" />
     <Compile Include="LatticeCryptoPlugin.cs" />
-    <Compile Include="Properties\HelpLanguages.Designer.cs">
+    <Compile Include="Properties\HelpLanguages.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HelpLanguages.resx</DependentUpon>
+      <DependentUpon>HelpLanguages.de.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\HelpLanguages.en-US.Designer.cs">
-      <DependentUpon>HelpLanguages.en-US.resx</DependentUpon>
+    <Compile Include="Properties\HelpLanguages.Designer.cs">
+      <DependentUpon>HelpLanguages.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -128,25 +128,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\SettingsLanguages.de.Designer.cs">
+      <DependentUpon>SettingsLanguages.de.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Properties\SettingsLanguages.Designer.cs">
       <DependentUpon>SettingsLanguages.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Properties\SettingsLanguages.en-US.Designer.cs">
-      <DependentUpon>SettingsLanguages.en-US.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Properties\Languages.en-US.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Languages.en-US.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Languages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Languages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Languages.de.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Languages.de.resx</DependentUpon>
     </Compile>
     <Compile Include="Utilities\Arrows\ArrowEnds.cs" />
     <Compile Include="Utilities\Arrows\ArrowheadsDemo.cs" />
@@ -286,15 +286,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Properties\HelpLanguages.en-US.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>HelpLanguages.en-US.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\HelpLanguages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
       <LastGenOutput>HelpLanguages.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\HelpLanguages.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>HelpLanguages.de.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.de.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -304,24 +304,24 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\SettingsLanguages.en-US.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SettingsLanguages.en-US.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\SettingsLanguages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SettingsLanguages.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Languages.en-US.resx">
+    <EmbeddedResource Include="Properties\SettingsLanguages.de.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Languages.en-US.Designer.cs</LastGenOutput>
+      <LastGenOutput>SettingsLanguages.de.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Languages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Languages.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Languages.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Languages.de.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -508,7 +508,7 @@
     <Content Include="OnlineHelp\HelpFiles\en\TargetPoint.html">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="OnlineHelp\HelpFiles\template.htm" />
+    <Content Include="OnlineHelp\HelpFiles\template.de.htm" />
     <Resource Include="OnlineHelp\Resources\ImgLattice.png" />
     <Resource Include="OnlineHelp\Resources\ImgSuccessiveMinima.png" />
     <Resource Include="OnlineHelp\Resources\ImgTwoBasis.png" />
@@ -519,15 +519,15 @@
     <Content Include="OnlineHelp\Resources\ImgLWE2.png" />
     <Content Include="OnlineHelp\Resources\ImgMerkleHellman.PNG" />
     <Content Include="OnlineHelp\Resources\ImgSuccessiveMinimaEng.png" />
-    <Content Include="OnlineHelp\Start.htm">
+    <Content Include="OnlineHelp\Start.de.htm">
       <SubType>Designer</SubType>
     </Content>
     <Resource Include="Utilities\Images\unequal.png" />
     <Resource Include="Utilities\Images\help32.gif" />
     <Resource Include="Utilities\Images\help.png" />
     <Resource Include="Utilities\Images\equal.png" />
-    <None Include="OnlineHelp\Start.en.htm" />
-    <None Include="OnlineHelp\HelpFiles\template.en.htm" />
+    <None Include="OnlineHelp\Start.htm" />
+    <None Include="OnlineHelp\HelpFiles\template.htm" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.ru.resx">

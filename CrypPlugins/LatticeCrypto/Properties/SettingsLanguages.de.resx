@@ -117,77 +117,70 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnBack" xml:space="preserve">
-    <value>Back</value>
+  <data name="labelMaxCountLatticePoints" xml:space="preserve">
+    <value>Maximale Anzahl an Gitterpunkten:</value>
   </data>
-  <data name="btnClose" xml:space="preserve">
-    <value>Close</value>
+  <data name="labelMaxCountPolygons" xml:space="preserve">
+    <value>Maximale Anzahl an Parallelogrammen:</value>
   </data>
-  <data name="btnForward" xml:space="preserve">
-    <value>Forward</value>
+  <data name="labelUseSameScaleForBothAxes" xml:space="preserve">
+    <value>Gleiche Skalierung für beide Axen:</value>
   </data>
-  
-  <data name="title" xml:space="preserve">
-    <value>Online Help Lattice-based cryptography</value>
+  <data name="comma" xml:space="preserve">
+    <value>Komma</value>
   </data>
-  <data name="Start" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\Start.en.htm;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="curlyBrackets" xml:space="preserve">
+    <value>Geschweifte Klammern</value>
   </data>
-  <data name="StartControl" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\HelpFiles\en\startcontrol.html;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="labelCoordinatesSeparator" xml:space="preserve">
+    <value>Koordinaten Trennzeichen:</value>
   </data>
-  <data name="template" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\HelpFiles\template.en.htm;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="labelFormatting" xml:space="preserve">
+    <value>Formatierung:</value>
   </data>
-  <data name="Gauss" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\HelpFiles\en\gauss.html;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="labelLatticeTags" xml:space="preserve">
+    <value>Gitter Tags:</value>
   </data>
-  <data name="LLL" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\HelpFiles\en\lll.html;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="labelPresentation" xml:space="preserve">
+    <value>Darstellung:</value>
   </data>
-  <data name="CVP" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\HelpFiles\en\cvp.html;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="labelVectorSeparator" xml:space="preserve">
+    <value>Vektor Trennzeichen:</value>
   </data>
-  <data name="MerkleHellman" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\HelpFiles\en\merklehellman.html;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="labelVectorTags" xml:space="preserve">
+    <value>Vektor Tags:</value>
   </data>
-  <data name="RSA" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\HelpFiles\en\rsa.html;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="noBrackets" xml:space="preserve">
+    <value>Keine Klammern</value>
   </data>
-  <data name="Codomain" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\HelpFiles\en\codomain.html;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="roundBrackets" xml:space="preserve">
+    <value>Runde Klammern</value>
   </data>
-  <data name="CodomainLLL" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\HelpFiles\en\codomainlll.html;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="semicolon" xml:space="preserve">
+    <value>Semikolon</value>
   </data>
-  <data name="DimensionLLL" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\HelpFiles\en\dimensionlll.html;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="space" xml:space="preserve">
+    <value>Leerzeichen</value>
   </data>
-  <data name="LengthVector" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\HelpFiles\en\lengthvector.html;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="squareBrackets" xml:space="preserve">
+    <value>Eckige Klammern</value>
   </data>
-  <data name="AngleVectors" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\HelpFiles\en\anglevectors.html;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="tab" xml:space="preserve">
+    <value>Tab</value>
   </data>
-  <data name="DeterminantLattice" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\HelpFiles\en\determinantlattice.html;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="labelShowHermiteCircle" xml:space="preserve">
+    <value>Zeige Hermite-Kreis</value>
   </data>
-  <data name="SuccessiveMinima" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\HelpFiles\en\SuccessiveMinima.html;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="labelSpherePacking" xml:space="preserve">
+    <value>Zeige Kreispackungen</value>
   </data>
-  <data name="SVP" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\HelpFiles\en\SVP.html;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="labelForceAcuteAngle" xml:space="preserve">
+    <value>Erzwinge spitzen Winkel für Gauß</value>
   </data>
-  <data name="TargetPoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\HelpFiles\en\TargetPoint.html;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="labelMaxDecimalPlaces" xml:space="preserve">
+    <value>Max. Dezimalstellen im Log</value>
   </data>
-  <data name="GGH" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\HelpFiles\en\ggh.html;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="LWE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\HelpFiles\en\lwe.html;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="ImgSuccessiveMinimaEng" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OnlineHelp\resources\ImgSuccessiveMinimaEng.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="errorInputPositiveInteger" xml:space="preserve">
+    <value>Bitte geben Sie eine positive Ganzzahl ein.</value>
   </data>
 </root>
