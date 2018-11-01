@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6deb4
--- https://www.phpmyadmin.net/
+-- version 4.5.4.1deb2ubuntu2.1
+-- http://www.phpmyadmin.net
 --
--- Host: localhost:3306
--- Generation Time: Aug 20, 2018 at 01:11 PM
--- Server version: 10.1.26-MariaDB-0+deb9u1
--- PHP Version: 7.0.30-0+deb9u1
+-- Host: localhost
+-- Erstellungszeit: 01. Nov 2018 um 14:36
+-- Server-Version: 5.7.24-0ubuntu0.16.04.1
+-- PHP-Version: 7.0.32-0ubuntu0.16.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,21 +17,24 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `CrypToolStore`
+-- Datenbank: `CrypToolStore`
 --
+CREATE DATABASE IF NOT EXISTS `CrypToolStore` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `CrypToolStore`;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `developers`
+-- Tabellenstruktur für Tabelle `developers`
 --
 
 CREATE TABLE `developers` (
   `username` varchar(100) NOT NULL,
   `firstname` varchar(100) NOT NULL,
   `lastname` varchar(100) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `passwordsalt` varchar(50) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `passwordsalt` varchar(100) NOT NULL,
+  `passworditerations` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
   `isadmin` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -39,7 +42,7 @@ CREATE TABLE `developers` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `plugins`
+-- Tabellenstruktur für Tabelle `plugins`
 --
 
 CREATE TABLE `plugins` (
@@ -51,15 +54,13 @@ CREATE TABLE `plugins` (
   `authornames` text NOT NULL,
   `authoremails` text NOT NULL,
   `authorinstitutes` text NOT NULL,
-  `icon` blob,
-  `activeversion` int(11) NOT NULL,
-  `publish` tinyint(1) NOT NULL
+  `icon` blob
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `resources`
+-- Tabellenstruktur für Tabelle `resources`
 --
 
 CREATE TABLE `resources` (
@@ -74,109 +75,110 @@ CREATE TABLE `resources` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `resourcesdata`
+-- Tabellenstruktur für Tabelle `resourcesdata`
 --
 
 CREATE TABLE `resourcesdata` (
   `resourceid` int(11) NOT NULL,
   `version` int(11) NOT NULL,
-  `data` blob,
-  `uploadtime` datetime NOT NULL
+  `data` varchar(100) DEFAULT NULL,
+  `uploaddate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sources`
+-- Tabellenstruktur für Tabelle `sources`
 --
 
 CREATE TABLE `sources` (
   `pluginid` int(11) NOT NULL,
   `pluginversion` int(11) NOT NULL,
-  `buildversion` int(11) NOT NULL,
-  `zipfile` blob,
-  `buildstate` varchar(100) NOT NULL,
+  `buildversion` int(11) NOT NULL DEFAULT '0',
+  `zipfilename` varchar(100) DEFAULT NULL,
+  `buildstate` varchar(100) DEFAULT NULL,
   `buildlog` text NOT NULL,
-  `assembly` blob,
-  `uploaddate` datetime NOT NULL,
-  `builddate` datetime NOT NULL
+  `assemblyfilename` varchar(100) DEFAULT NULL,
+  `uploaddate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `builddate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `publishstate` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Indexes for dumped tables
+-- Indizes der exportierten Tabellen
 --
 
 --
--- Indexes for table `developers`
+-- Indizes für die Tabelle `developers`
 --
 ALTER TABLE `developers`
   ADD PRIMARY KEY (`username`);
 
 --
--- Indexes for table `plugins`
+-- Indizes für die Tabelle `plugins`
 --
 ALTER TABLE `plugins`
   ADD PRIMARY KEY (`id`),
   ADD KEY `username` (`username`);
 
 --
--- Indexes for table `resources`
+-- Indizes für die Tabelle `resources`
 --
 ALTER TABLE `resources`
   ADD PRIMARY KEY (`id`),
   ADD KEY `username` (`username`);
 
 --
--- Indexes for table `resourcesdata`
+-- Indizes für die Tabelle `resourcesdata`
 --
 ALTER TABLE `resourcesdata`
   ADD PRIMARY KEY (`resourceid`,`version`);
 
 --
--- Indexes for table `sources`
+-- Indizes für die Tabelle `sources`
 --
 ALTER TABLE `sources`
   ADD PRIMARY KEY (`pluginid`,`pluginversion`),
   ADD KEY `pluginversion` (`pluginversion`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT für exportierte Tabellen
 --
 
 --
--- AUTO_INCREMENT for table `plugins`
+-- AUTO_INCREMENT für Tabelle `plugins`
 --
 ALTER TABLE `plugins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `resources`
+-- AUTO_INCREMENT für Tabelle `resources`
 --
 ALTER TABLE `resources`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- Constraints for dumped tables
+-- Constraints der exportierten Tabellen
 --
 
 --
--- Constraints for table `plugins`
+-- Constraints der Tabelle `plugins`
 --
 ALTER TABLE `plugins`
   ADD CONSTRAINT `plugins_ibfk_1` FOREIGN KEY (`username`) REFERENCES `developers` (`username`);
 
 --
--- Constraints for table `resources`
+-- Constraints der Tabelle `resources`
 --
 ALTER TABLE `resources`
   ADD CONSTRAINT `resources_ibfk_1` FOREIGN KEY (`username`) REFERENCES `developers` (`username`);
 
 --
--- Constraints for table `resourcesdata`
+-- Constraints der Tabelle `resourcesdata`
 --
 ALTER TABLE `resourcesdata`
   ADD CONSTRAINT `resourcesdata_ibfk_1` FOREIGN KEY (`resourceid`) REFERENCES `resources` (`id`);
 
 --
--- Constraints for table `sources`
+-- Constraints der Tabelle `sources`
 --
 ALTER TABLE `sources`
   ADD CONSTRAINT `sources_ibfk_1` FOREIGN KEY (`pluginid`) REFERENCES `plugins` (`id`);
