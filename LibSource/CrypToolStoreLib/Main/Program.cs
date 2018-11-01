@@ -47,9 +47,9 @@ namespace CrpyStoreLib
 
             Logger.SetLogLevel(Logtype.Info);
             CrypToolStoreDatabase database = CrypToolStoreDatabase.GetDatabase();
-            if (!database.InitAndConnect("192.168.0.122", "CrypToolStore", "cryptoolstore", "123", 5))
+            if (!database.InitAndConnect(Config.GetConfigEntry("DB_Server"), Config.GetConfigEntry("DB_Name"), Config.GetConfigEntry("DB_User"), Config.GetConfigEntry("DB_Password"), int.Parse(Config.GetConfigEntry("DB_Connections"))))
             {
-                logger.LogText("Shutting down as we could not connect to mysql database", this, Logtype.Info);
+                logger.LogText("Shutting down as we could not connect to mysql database", this, Logtype.Error);
                 return;
             }
 
@@ -70,7 +70,7 @@ namespace CrpyStoreLib
             }
             catch (Exception ex)
             {
-                logger.LogText(String.Format("Exception while running the server: {0}", ex.Message), this, Logtype.Info);
+                logger.LogText(String.Format("Exception while running the server: {0}", ex.Message), this, Logtype.Error);
             }
             finally
             {
@@ -80,7 +80,6 @@ namespace CrpyStoreLib
                 }
                 database.Close();
             }
-            Console.ReadLine();
         }
     }
 }

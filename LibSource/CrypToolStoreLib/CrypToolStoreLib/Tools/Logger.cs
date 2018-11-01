@@ -101,14 +101,7 @@ namespace CrypToolStoreLib.Tools
         /// Singleton, thus private constructor
         /// </summary>
         private Logger()
-        {
-            if (EnableFileLog)
-            {
-                if (!Directory.Exists(LogDirectory))
-                {
-                    Directory.CreateDirectory(LogDirectory);
-                }
-            }
+        {            
         }
 
         /// <summary>
@@ -120,6 +113,13 @@ namespace CrypToolStoreLib.Tools
             if (Instance == null)
             {
                 Instance = new Logger();
+            }
+            if (EnableFileLog)
+            {
+                if (!Directory.Exists(LogDirectory))
+                {
+                    Directory.CreateDirectory(LogDirectory);
+                }
             }
             return Instance;
         }
@@ -359,7 +359,7 @@ namespace CrypToolStoreLib.Tools
         /// </summary>
         private void CreateAndOpenLogFile()
         {
-            string logfilename = LogDirectory + "\\" + LogFilePrefix + "_" + DateTime.Now.Year + "_" + DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + ".log";
+            string logfilename = LogDirectory + Path.DirectorySeparatorChar + LogFilePrefix + "_" + DateTime.Now.Year + "_" + DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + ".log";
             _FileStream = new FileStream(logfilename, FileMode.Create, FileAccess.Write);
             _StreamWriter = new StreamWriter(_FileStream);
             _LogFileOpenedTime = DateTime.Now;
