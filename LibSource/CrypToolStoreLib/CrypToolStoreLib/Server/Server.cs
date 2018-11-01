@@ -524,11 +524,11 @@ namespace CrypToolStoreLib.Server
         /// <param name="logoutMessage"></param>
         /// <param name="sslStream"></param>
         private void HandleLogoutMessage(LogoutMessage logoutMessage, SslStream sslStream)
-        {
+        {            
+            Logger.LogText(String.Format("User {0} from IP={1} logged out", Username, IPAddress), this, Logtype.Info);
             Username = "anonymous"; //default username is anonymous
             ClientIsAuthenticated = false;
             ClientIsAdmin = false;
-            Logger.LogText(String.Format("User {0} from IP={1} logged out", Username, IPAddress), this, Logtype.Info);
             sslStream.Close();
         }
 
