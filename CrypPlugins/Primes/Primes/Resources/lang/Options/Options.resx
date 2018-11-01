@@ -112,31 +112,31 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="optionsheader_countprimes" xml:space="preserve">
-    <value>Anzahl der Primzahlen</value>
+    <value>How many primes are there</value>
   </data>
   <data name="optionslin_groupboxheader" xml:space="preserve">
-    <value>Berechnung des logarithmischen Integrals mit Hilfe von</value>
+    <value>Calculate Li(n) by using</value>
   </data>
   <data name="optionslin_moreinfo" xml:space="preserve">
-    <value>Mehr Informationen</value>
+    <value>More Information</value>
   </data>
   <data name="optionslin_usepari" xml:space="preserve">
     <value>Pari-GP</value>
   </data>
   <data name="optionslin_usesimpson" xml:space="preserve">
-    <value>der Simpson-Formel</value>
+    <value>the Simpson-Formular</value>
   </data>
   <data name="options_btncancel" xml:space="preserve">
-    <value>Abbrechen</value>
+    <value>Cancel</value>
   </data>
   <data name="optionsheader_versioninfo" xml:space="preserve">
-    <value>Über</value>
+    <value>About</value>
   </data>
   <data name="optionabout_version" xml:space="preserve">
     <value>Version</value>

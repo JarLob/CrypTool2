@@ -117,127 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="mr_calculating1" xml:space="preserve">
-    <value>Calculate {0}^{1} mod {2} = {3}</value>
+  <data name="btnCancel" xml:space="preserve">
+    <value>Abbrechen</value>
   </data>
-  <data name="mr_calculating2" xml:space="preserve">
-    <value>Calculate ({0}^{1})^{2} mod {3} = {4}^2 mod {3} = {5}</value>
+  <data name="btnExecute" xml:space="preserve">
+    <value>Ausführen</value>
   </data>
-  <data name="mr_choosearnd" xml:space="preserve">
-    <value>Choose a base from 2 to </value>
+  <data name="generaternd_biginteger" xml:space="preserve">
+    <value>Eine Zufallszahl</value>
   </data>
-  <data name="mr_chooseasys" xml:space="preserve">
-    <value>Choose a base</value>
+  <data name="generaternd_Header" xml:space="preserve">
+    <value>Zufallszahlen generieren</value>
   </data>
-  <data name="mr_countrounds" xml:space="preserve">
-    <value>Maximum number of rounds</value>
+  <data name="generaternd_integermanyfactors" xml:space="preserve">
+    <value>Eine Zufallszahl mit vielen kleinen Primfaktoren</value>
   </data>
-  <data name="mr_iseven" xml:space="preserve">
-    <value>{0} is odd and thus not a prime.</value>
+  <data name="generaternd_integertwofactors" xml:space="preserve">
+    <value>Eine Zufallszahl mit zwei großen Primfaktoren</value>
   </data>
-  <data name="mr_isnotprime1" xml:space="preserve">
-    <value>{0} is a square root of 1 mod {1}. Thus {1} can't be a prime.</value>
+  <data name="inputrange_from" xml:space="preserve">
+    <value>von</value>
   </data>
-  <data name="mr_isnotprime2" xml:space="preserve">
-    <value>{0} has failed the Fermat test, as {1}^{2} mod {3} = {4} ≠ 1. Thus {0} can't be a prime.</value>
+  <data name="inputrange_to" xml:space="preserve">
+    <value>bis</value>
   </data>
-  <data name="mr_isprime" xml:space="preserve">
-    <value>Round with base {0} finished. {1} could be a prime.</value>
+  <data name="logcontextmenucopyall" xml:space="preserve">
+    <value>Gesamten Text in die Zwischenablage kopieren</value>
   </data>
-  <data name="mr_options" xml:space="preserve">
-    <value>Options</value>
+  <data name="logcontextmenucopyselection" xml:space="preserve">
+    <value>Markierung in die Zwischenablage kopieren</value>
   </data>
-  <data name="mr_rbchoosearnd" xml:space="preserve">
-    <value>Random base choice</value>
+  <data name="logprogress" xml:space="preserve">
+    <value>Fortschritt</value>
   </data>
-  <data name="mr_rbchooseasys" xml:space="preserve">
-    <value>Systematic base choice</value>
+  <data name="generaternd1_Header" xml:space="preserve">
+    <value>Zufallszahl generieren</value>
   </data>
-  <data name="mr_round" xml:space="preserve">
-    <value>Round {0} with base {1}</value>
+  <data name="secondparameter" xml:space="preserve">
+    <value>Zweiter Parameter</value>
   </data>
-  <data name="mr_shiftcalc" xml:space="preserve">
-    <value>Calculate the biggest power of 2, that divides n-1 = {0}.</value>
-  </data>
-  <data name="mr_shiftedright" xml:space="preserve">
-    <value>There was {0} right shift: : {1} = 2^{0} * {2}</value>
-  </data>
-  <data name="mr_shiftedright2" xml:space="preserve">
-    <value>There were {0} right shifts: : {1} = 2^{0} * {2}</value>
-  </data>
-  <data name="mr_shiftright" xml:space="preserve">
-    <value>{0} is even and is shifted right by 1 bit = {1}</value>
-  </data>
-  <data name="mr_witnessfound1" xml:space="preserve">
-    <value>Found a witness after {0} round. Thus {1} is not a prime number.</value>
-  </data>
-  <data name="mr_witnessfound2" xml:space="preserve">
-    <value>Found a witness after {0} rounds. Thus {1} is not a prime number.</value>
-  </data>
-  <data name="mr_witnessnotfound1" xml:space="preserve">
-    <value>No witnesses found after {0} round. Thus {1} is probably a prime number.</value>
-  </data>
-  <data name="mr_witnessnotfound2" xml:space="preserve">
-    <value>No witnesses found after {0} rounds. Thus {1} is probably a prime number.</value>
-  </data>
-  <data name="soe_btnresume" xml:space="preserve">
-    <value>Resume automatic execution</value>
-  </data>
-  <data name="soe_done" xml:space="preserve">
-    <value>done</value>
-  </data>
-  <data name="soe_doneautomatic" xml:space="preserve">
-    <value>Execution done: </value>
-  </data>
-  <data name="soe_infostepwise1" xml:space="preserve">
-    <value>List all numbers from 2 to {0}!</value>
-  </data>
-  <data name="soe_infostepwise2" xml:space="preserve">
-    <value>Please remove all multiples of the next number, beginning with 2, by clicking the number.</value>
-  </data>
-  <data name="soe_isnotprime" xml:space="preserve">
-    <value>{0} is not a prime</value>
-  </data>
-  <data name="soe_isprime" xml:space="preserve">
-    <value>{0} is a prime</value>
-  </data>
-  <data name="soe_method" xml:space="preserve">
-    <value>Method</value>
-  </data>
-  <data name="soe_methodauto" xml:space="preserve">
-    <value>automatic</value>
-  </data>
-  <data name="soe_methodstepwise" xml:space="preserve">
-    <value>stepwise</value>
-  </data>
-  <data name="soe_multiplenotexpected" xml:space="preserve">
-    <value>The number {0} was not expected.</value>
-  </data>
-  <data name="soe_removemultiple" xml:space="preserve">
-    <value>The multiples of {0} are removed.</value>
-  </data>
-  <data name="soe_removemultipleof" xml:space="preserve">
-    <value>Remove multiples of {0}.</value>
-  </data>
-  <data name="soe_validatormessage" xml:space="preserve">
-    <value>Only numbers from {0} to {1} are allowed for the "Sieve of Eratosthenes".</value>
-  </data>
-  <data name="test_fermat" xml:space="preserve">
-    <value>Fermat-Test</value>
-  </data>
-  <data name="test_genNumber" xml:space="preserve">
-    <value>Generate prime candidate</value>
-  </data>
-  <data name="test_groupboxheader" xml:space="preserve">
-    <value>Prime candidate</value>
-  </data>
-  <data name="test_millerrabin" xml:space="preserve">
-    <value>Miller-Rabin test</value>
-  </data>
-  <data name="test_soa" xml:space="preserve">
-    <value>Sieve of Atkin</value>
-  </data>
-  <data name="test_soe" xml:space="preserve">
-    <value>Sieve of Eratosthenes</value>
+  <data name="generaternd_prime" xml:space="preserve">
+    <value>Eine zufällige Primzahl</value>
   </data>
 </root>

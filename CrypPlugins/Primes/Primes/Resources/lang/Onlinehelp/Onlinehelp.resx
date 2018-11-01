@@ -118,15 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="btnBack" xml:space="preserve">
-    <value>Zurück</value>
+    <value>Back</value>
   </data>
   <data name="btnClose" xml:space="preserve">
-    <value>Schließen</value>
+    <value>Close</value>
   </data>
   <data name="btnForward" xml:space="preserve">
-    <value>Vorwärts</value>
+    <value>Forward</value>
   </data>
   <data name="helptitle" xml:space="preserve">
-    <value>Onlinehilfe Primzahlen</value>
+    <value>Online Help Prime numbers</value>
   </data>
 </root>

@@ -117,28 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="optionsheader_countprimes" xml:space="preserve">
-    <value>How many primes are there</value>
+  <data name="BigIntegerMinValueMaxValueValidator" xml:space="preserve">
+    <value>Es wird eine ganze Zahl größer oder gleich {0} und kleiner oder gleich {1} erwartet.</value>
   </data>
-  <data name="optionslin_groupboxheader" xml:space="preserve">
-    <value>Calculate Li(n) by using</value>
+  <data name="BigIntegerMinValueValidator" xml:space="preserve">
+    <value>Es wird eine ganze Zahl größer oder gleich {0} erwartet.</value>
   </data>
-  <data name="optionslin_moreinfo" xml:space="preserve">
-    <value>More Information</value>
+  <data name="BigIntegerValidator" xml:space="preserve">
+    <value>Es wird eine ganze Zahl erwartet.</value>
   </data>
-  <data name="optionslin_usepari" xml:space="preserve">
-    <value>Pari-GP</value>
+  <data name="largenumberadvisor" xml:space="preserve">
+    <value>Bitte beachten Sie den Hinweis bezüglich der Eingabe großer Zahlen.</value>
   </data>
-  <data name="optionslin_usesimpson" xml:space="preserve">
-    <value>the Simpson-Formular</value>
+  <data name="PositiveMaxValueBigIntegerValidator" xml:space="preserve">
+    <value>Es wird eine ganze positive Zahl größer als 0 aber kleiner als {0} erwartet.</value>
   </data>
-  <data name="options_btncancel" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="IllegalRangeValidator" xml:space="preserve">
+    <value>Der Wert im Feld "von" muss kleiner sein als der Wert im Feld "bis".</value>
   </data>
-  <data name="optionsheader_versioninfo" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="optionabout_version" xml:space="preserve">
-    <value>Version</value>
+  <data name="IllegalRangeValidator2" xml:space="preserve">
+    <value>Der Wert im Feld "von" muss kleiner oder gleich sein wie der Wert im Feld "bis".</value>
   </data>
 </root>

@@ -118,24 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BigIntegerMinValueMaxValueValidator" xml:space="preserve">
-    <value>Es wird eine ganze Zahl größer oder gleich {0} und kleiner oder gleich {1} erwartet.</value>
+    <value>A number larger than or equal to {0} and smaller than or equal to {1} is expected.</value>
   </data>
   <data name="BigIntegerMinValueValidator" xml:space="preserve">
-    <value>Es wird eine ganze Zahl größer oder gleich {0} erwartet.</value>
+    <value>A number larger than or equal to {0} is expected.</value>
   </data>
   <data name="BigIntegerValidator" xml:space="preserve">
-    <value>Es wird eine ganze Zahl erwartet.</value>
+    <value>A number is expected.</value>
   </data>
   <data name="largenumberadvisor" xml:space="preserve">
-    <value>Bitte beachten Sie den Hinweis bezüglich der Eingabe großer Zahlen.</value>
+    <value>Please note the advice about large numbers.</value>
   </data>
   <data name="PositiveMaxValueBigIntegerValidator" xml:space="preserve">
-    <value>Es wird eine ganze positive Zahl größer als 0 aber kleiner als {0} erwartet.</value>
+    <value>A number larger than or equal to zero and smaller than or equal to {0} is expected.</value>
   </data>
   <data name="IllegalRangeValidator" xml:space="preserve">
-    <value>Der Wert im Feld "von" muss kleiner sein als der Wert im Feld "bis".</value>
+    <value>The from-value must be smaller than the to-value.</value>
   </data>
-  <data name="IllegalRangeValidator2" xml:space="preserve">
-    <value>Der Wert im Feld "von" muss kleiner oder gleich sein wie der Wert im Feld "bis".</value>
+  <data name="IllegalRangeValidator1" xml:space="preserve">
+    <value>The from-value must be smaller than or equal to the to-value.</value>
   </data>
 </root>

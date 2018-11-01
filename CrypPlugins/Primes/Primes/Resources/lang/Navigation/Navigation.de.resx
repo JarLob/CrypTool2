@@ -117,25 +117,61 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BigIntegerMinValueMaxValueValidator" xml:space="preserve">
-    <value>A number larger than or equal to {0} and smaller than or equal to {1} is expected.</value>
+  <data name="bruteforce" xml:space="preserve">
+    <value>Probedivision</value>
   </data>
-  <data name="BigIntegerMinValueValidator" xml:space="preserve">
-    <value>A number larger than or equal to {0} is expected.</value>
+  <data name="countprimes" xml:space="preserve">
+    <value>Anzahl der Primzahlen</value>
   </data>
-  <data name="BigIntegerValidator" xml:space="preserve">
-    <value>A number is expected.</value>
+  <data name="distribution" xml:space="preserve">
+    <value>Verteilung der Primzahlen</value>
   </data>
-  <data name="largenumberadvisor" xml:space="preserve">
-    <value>Please note the advice about large numbers.</value>
+  <data name="distributiongoldbach" xml:space="preserve">
+    <value>Goldbach-Vermutung</value>
   </data>
-  <data name="PositiveMaxValueBigIntegerValidator" xml:space="preserve">
-    <value>A number larger than or equal to zero and smaller than or equal to {0} is expected.</value>
+  <data name="distributionnumbergrid" xml:space="preserve">
+    <value>Zahlengitter</value>
   </data>
-  <data name="IllegalRangeValidator" xml:space="preserve">
-    <value>The from-value must be smaller than the to-value.</value>
+  <data name="distributionnumberline" xml:space="preserve">
+    <value>Zahlengerade</value>
   </data>
-  <data name="IllegalRangeValidator1" xml:space="preserve">
-    <value>The from-value must be smaller than or equal to the to-value.</value>
+  <data name="distributionulam" xml:space="preserve">
+    <value>Ulam-Spirale</value>
+  </data>
+  <data name="factorization" xml:space="preserve">
+    <value>Faktorisierung</value>
+  </data>
+  <data name="genprimes" xml:space="preserve">
+    <value>Erzeugung von Primzahlen</value>
+  </data>
+  <data name="millerrabin" xml:space="preserve">
+    <value>Miller-Rabin-Test</value>
+  </data>
+  <data name="ntfunctions" xml:space="preserve">
+    <value>Zahlentheoretische Funktionen</value>
+  </data>
+  <data name="numbertheory" xml:space="preserve">
+    <value>Zahlentheorie</value>
+  </data>
+  <data name="powermod" xml:space="preserve">
+    <value>Potenzieren</value>
+  </data>
+  <data name="primetest" xml:space="preserve">
+    <value>Primzahltests</value>
+  </data>
+  <data name="proots" xml:space="preserve">
+    <value>Primitivwurzeln</value>
+  </data>
+  <data name="qs" xml:space="preserve">
+    <value>Quadratisches Sieb</value>
+  </data>
+  <data name="sieveofatkin" xml:space="preserve">
+    <value>Sieb des Atkin</value>
+  </data>
+  <data name="soe" xml:space="preserve">
+    <value>Sieb des Eratosthenes</value>
+  </data>
+  <data name="startpage" xml:space="preserve">
+    <value>Startseite</value>
   </data>
 </root>

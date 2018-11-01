@@ -118,155 +118,154 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="bf_actualdiv" xml:space="preserve">
-    <value>aktueller Teiler: </value>
+    <value>actual divisor: </value>
   </data>
   <data name="bf_scale" xml:space="preserve">
-    <value>Skalisierung des Faktorbaums</value>
+    <value>Scale of the factor tree</value>
   </data>
   <data name="fac_bruteforce" xml:space="preserve">
-    <value>Probedivision</value>
+    <value>Brute-force</value>
   </data>
   <data name="fac_copytoclipboard" xml:space="preserve">
-    <value>In die Zwischenablage kopieren</value>
+    <value>Copy to clipboard</value>
   </data>
   <data name="fac_generaternd" xml:space="preserve">
-    <value>Zufällige Zahl zur Faktorisierung generieren</value>
+    <value>Generate random number for factorization</value>
   </data>
   <data name="fac_groupboxheader" xml:space="preserve">
-    <value>Zu faktorisierende Zahl</value>
+    <value>Number to factorize</value>
   </data>
   <data name="fac_qs" xml:space="preserve">
-    <value>Quadratisches Sieb</value>
+    <value>Quadratic sieve</value>
   </data>
   <data name="fac_result" xml:space="preserve">
-    <value>Faktorisierungsergebnis</value>
+    <value>Factorization result</value>
   </data>
   <data name="fac_resultaborted" xml:space="preserve">
-    <value>Faktorisierungsergebnis (abgebrochen)</value>
+    <value>Factorization result (aborted)</value>
   </data>
   <data name="fac_resultabortedtime" xml:space="preserve">
-    <value>Faktorisierungsergebnis (Die Probedivision wurde nach {0} abgebrochen.)</value>
+    <value>Factorization result (The brute-force division was canceled after {0}.)</value>
   </data>
   <data name="fac_resultfinished" xml:space="preserve">
-    <value>Faktorisierungsergebnis (beendet)</value>
+    <value>Factorization result (finished)</value>
   </data>
   <data name="fac_resultfinishedtime" xml:space="preserve">
-    <value>Faktorisierungsergebnis (Die Probedivision wurde beendet. Die benötigte Zeit beträgt {0}.)</value>
+    <value>Factorization result (The brute-force division finished in {0}.)</value>
   </data>
   <data name="fac_resultrunning" xml:space="preserve">
-    <value>Faktorisierungsergebnis (aktuell in Arbeit)</value>
+    <value>Factorization result (running)</value>
   </data>
   <data name="fac_timehour" xml:space="preserve">
-    <value>Stunde</value>
+    <value>hour</value>
   </data>
   <data name="fac_timehours" xml:space="preserve">
-    <value>Stunden</value>
+    <value>hours</value>
   </data>
   <data name="fac_timeminute" xml:space="preserve">
-    <value>Minute</value>
+    <value>minute</value>
   </data>
   <data name="fac_timeminutes" xml:space="preserve">
-    <value>Minuten</value>
+    <value>minutes</value>
   </data>
   <data name="fac_timeseconds" xml:space="preserve">
-    <value>Sekunden</value>
+    <value>seconds</value>
   </data>
   <data name="qs_btnrestart" xml:space="preserve">
-    <value>Neustart</value>
+    <value>Restart</value>
   </data>
   <data name="qs_copytoclipboard" xml:space="preserve">
-    <value>In die Zwischenablage kopieren</value>
+    <value>Copy to clipboard</value>
   </data>
   <data name="qs_step1" xml:space="preserve">
-    <value>Schritt 1 (Ermittlung geeigneter Werte)</value>
+    <value>Step 1 (Determine suitable values)</value>
   </data>
   <data name="qs_step1_squareroot" xml:space="preserve">
-    <value>Die Quadratwurzel aus n={0} ist {1} ≈ {2}. Das Siebintervall ist [{3}, {4}].</value>
+    <value>The square root of n={0} is {1} ≈ {2}. The sieving interval is [{3}, {4}].</value>
   </data>
   <data name="qs_step2" xml:space="preserve">
-    <value>Schritt 2 (Ermittlung der glatten Werte)</value>
+    <value>Step 2 (Determine smooth values)</value>
   </data>
   <data name="qs_step2_B" xml:space="preserve">
-    <value>Der Wert der oberen Schranke beträgt {0}. Die Faktorbasis ist {{{1}}}. Siebschritt wird gestartet.</value>
+    <value>The upper bound is {0}. The factor base is {{{1}}}. Start sieving step.</value>
   </data>
   <data name="qs_step2_bsmooth" xml:space="preserve">
-    <value>Ist B-Glatt?</value>
+    <value>Is b-smooth?</value>
   </data>
   <data name="qs_step2_factorization" xml:space="preserve">
-    <value>Glatte Faktoren</value>
+    <value>Smooth factors</value>
   </data>
   <data name="qs_step2_no" xml:space="preserve">
-    <value>nein</value>
+    <value>no</value>
   </data>
   <data name="qs_step2_yes" xml:space="preserve">
-    <value>ja</value>
+    <value>yes</value>
   </data>
   <data name="qs_step3" xml:space="preserve">
-    <value>Schritt 3 (Suchen von Quadratzahlen)</value>
+    <value>Step 3 (Search for squares)</value>
   </data>
   <data name="qs_step3_ignored" xml:space="preserve">
-    <value>{0} wird ignoriert.</value>
+    <value>{0} is ignored.</value>
   </data>
   <data name="qs_step3_isnotsquare" xml:space="preserve">
-    <value>{0} ist keine Quadratzahl.</value>
+    <value>{0} is not a square number.</value>
   </data>
   <data name="qs_step3_issquare" xml:space="preserve">
-    <value>{0} ist eine Quadratzahl. Die Wurzel aus {1} ist {2}.</value>
+    <value>{0} is a square number. The square root of {1} is {2}.</value>
   </data>
   <data name="qs_step3_smooth" xml:space="preserve">
-    <value>{0} glatte Werte gefunden.</value>
+    <value>{0} smooth value(s) found.</value>
   </data>
   <data name="qs_step3_smoothvalues" xml:space="preserve">
-    <value>{0} glatte Werte gefunden.</value>
+    <value>{0} smooth value(s) found.</value>
   </data>
   <data name="qs_step3_testcombi" xml:space="preserve">
-    <value>Test der Kombination </value>
+    <value>Test combinations</value>
   </data>
   <data name="qs_step3_testcombiignore" xml:space="preserve">
-    <value>Die Kombination {0} = {1} wird ignoriert.</value>
+    <value>The combination {0} = {1} is ignored.</value>
   </data>
   <data name="qs_step3_testcombiisnotsquare" xml:space="preserve">
-    <value>Die Kombination {0} = {1} ist keine Quadratzahl.</value>
+    <value>The combination {0} = {1} is not a square.</value>
   </data>
   <data name="qs_step3_testcombiisquare" xml:space="preserve">
-    <value>Die Kombination {0} = {1} ist eine Quadratzahl. Die Wurzel aus {2} ist {3}.</value>
+    <value>The combination {0} = {1} is a square. The square root of {2} is {3}.</value>
   </data>
   <data name="qs_step4" xml:space="preserve">
-    <value>Schritt 4 (Berechnung der Kongruenzen und Faktorisierung)</value>
+    <value>Step 4 (Calculate congruences and factorization)</value>
   </data>
   <data name="qs_step4_abcalculated" xml:space="preserve">
-    <value>a und b wurden ermittelt mit a = {0}, b = {1}.</value>
+    <value>a and b were calculated with a = {0}, b = {1}.</value>
   </data>
   <data name="qs_step4_checkcong" xml:space="preserve">
-    <value>Überprüfe die Kongruenzen a² ≡ b² (mod n), a ≢ b (mod n):</value>
+    <value>Check the congruences a² ≡ b² (mod n), a ≢ b (mod n):</value>
   </data>
   <data name="qs_step4_end" xml:space="preserve">
-    <value>Keine weiteren Kongruenzen gefunden.
-n={0} konnte mit dem quadratischen Sieb nicht faktorisiert werden.</value>
+    <value>No more congruences found. Could not factorize n={0} with the quadratic sieve.</value>
   </data>
   <data name="qs_step4_factor1" xml:space="preserve">
-    <value>   ggT({0} + {1}, {2}) = {3}</value>
+    <value>   gcd({0} + {1}, {2}) = {3}</value>
   </data>
   <data name="qs_step4_factor2" xml:space="preserve">
-    <value>   ggT({0} - {1}, {2}) = {3}</value>
+    <value>   gcd({0} - {1}, {2}) = {3}</value>
   </data>
   <data name="qs_step4_no" xml:space="preserve">
-    <value>nein</value>
+    <value>no</value>
   </data>
   <data name="qs_step4_notproofed" xml:space="preserve">
-    <value>Die Bedingungen sind nicht erfüllt. Klicken Sie auf "Neustart", um eine neue Kombination zu suchen.</value>
+    <value>The conditions are not fulfilled. Click 'Restart' to search for a new combination.</value>
   </data>
   <data name="qs_step4_proofed" xml:space="preserve">
-    <value>Beide Bedingungen sind erfüllt und wir erhalten folgende Faktoren von n={0}:</value>
+    <value>Both conditions are fulfilled. We get the following factors of n={0}:</value>
   </data>
   <data name="qs_step4_refactorize" xml:space="preserve">
-    <value>{0} ist keine Primzahl. Mit Klick auf "Neustart" wird {1} faktorisiert.</value>
+    <value>{0} is not a prime. Click 'Restart' to factorize {1}.</value>
   </data>
   <data name="qs_step4_reset" xml:space="preserve">
-    <value>Die Faktorisierung mit den Werten a = {0} und b = {1} ergab nur triviale Faktoren.
-Mit Klick auf "Neustart" starten Sie Faktorisierung neu. Die bereits getesteten Werte werden ab dann ignoriert.</value>
+    <value>The factorization with a = {0} and b = {1} provided only trivial factors.
+Click 'Restart' for a new factorization round. The unsuccessful values will be ignored.</value>
   </data>
   <data name="qs_step4_yes" xml:space="preserve">
-    <value>ja</value>
+    <value>yes</value>
   </data>
 </root>

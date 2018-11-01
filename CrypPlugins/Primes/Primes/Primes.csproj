@@ -107,6 +107,66 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.ru.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.ru.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\lang\Navigation\Navigation.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Navigation.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\lang\Numbertheory\Numbertheory.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Numbertheory.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\lang\Onlinehelp\Onlinehelp.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Onlinehelp.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\lang\Options\Options.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Options.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\lang\PrimesControl\PrimesControl.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PrimesControl.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\lang\Validation\Validation.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Validation.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\lang\WpfControls\Components\Components.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Components.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\lang\WpfControls\Distribution\Distribution.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Distribution.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\lang\WpfControls\Factorization\Factorization.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Factorization.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\lang\WpfControls\Generation\PrimesGeneration.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PrimesGeneration.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\lang\WpfControls\Primetest\Primetest.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Primetest.resx</DependentUpon>
+    </Compile>
     <Compile Include="SettingsTab\PrimesSettingsTab.xaml.cs">
       <DependentUpon>PrimesSettingsTab.xaml</DependentUpon>
     </Compile>
@@ -168,55 +228,55 @@
     <Compile Include="Navigation\Navigation.xaml.cs">
       <DependentUpon>Navigation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Resources\lang\Navigation\Navigation.Designer.cs">
+    <Compile Include="Resources\lang\Navigation\Navigation.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Navigation.resx</DependentUpon>
+      <DependentUpon>Navigation.de.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\lang\Onlinehelp\Onlinehelp.Designer.cs">
+    <Compile Include="Resources\lang\Onlinehelp\Onlinehelp.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Onlinehelp.resx</DependentUpon>
+      <DependentUpon>Onlinehelp.de.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\lang\Options\Options.Designer.cs">
+    <Compile Include="Resources\lang\Options\Options.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Options.resx</DependentUpon>
+      <DependentUpon>Options.de.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\lang\PrimesControl\PrimesControl.Designer.cs">
+    <Compile Include="Resources\lang\PrimesControl\PrimesControl.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PrimesControl.resx</DependentUpon>
+      <DependentUpon>PrimesControl.de.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\lang\Validation\Validation.Designer.cs">
+    <Compile Include="Resources\lang\Validation\Validation.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Validation.resx</DependentUpon>
+      <DependentUpon>Validation.de.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\lang\WpfControls\Components\Components.Designer.cs">
+    <Compile Include="Resources\lang\WpfControls\Components\Components.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Components.resx</DependentUpon>
+      <DependentUpon>Components.de.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\lang\WpfControls\Distribution\Distribution.Designer.cs">
+    <Compile Include="Resources\lang\WpfControls\Distribution\Distribution.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Distribution.resx</DependentUpon>
+      <DependentUpon>Distribution.de.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\lang\WpfControls\Factorization\Factorization.Designer.cs">
+    <Compile Include="Resources\lang\WpfControls\Factorization\Factorization.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Factorization.resx</DependentUpon>
+      <DependentUpon>Factorization.de.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\lang\WpfControls\Generation\PrimesGeneration.Designer.cs">
+    <Compile Include="Resources\lang\WpfControls\Generation\PrimesGeneration.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PrimesGeneration.resx</DependentUpon>
+      <DependentUpon>PrimesGeneration.de.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\lang\WpfControls\Primetest\Primetest.Designer.cs">
+    <Compile Include="Resources\lang\WpfControls\Primetest\Primetest.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Primetest.resx</DependentUpon>
+      <DependentUpon>Primetest.de.resx</DependentUpon>
     </Compile>
     <Compile Include="WpfControls.Validation\Advisors\LargeNumberAdvisor.cs" />
     <Compile Include="WpfControls.Validation\ControlValidator\Exceptions\ControlValidationException.cs" />
@@ -392,10 +452,10 @@
     <Compile Include="WpfVisualization\PrimesControl.xaml.cs">
       <DependentUpon>PrimesControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Resources\lang\Numbertheory\Numbertheory.Designer.cs">
+    <Compile Include="Resources\lang\Numbertheory\Numbertheory.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Numbertheory.resx</DependentUpon>
+      <DependentUpon>Numbertheory.de.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -836,9 +896,9 @@
     <Content Include="OnlineHelp\HelpFiles\en\Simpson_Lin.html" />
     <Content Include="OnlineHelp\HelpFiles\en\Spiral_Ulam.html" />
     <Content Include="OnlineHelp\HelpFiles\en\StartControl.html" />
-    <Content Include="OnlineHelp\HelpFiles\template.en.html" />
     <Resource Include="PrimesPlugin.png" />
     <None Include="OnlineHelp\Resources\sigma.jpg" />
+    <Content Include="OnlineHelp\HelpFiles\template.de.html" />
     <Content Include="OnlineHelp\HelpFiles\template.html" />
     <Content Include="WpfControls\Start.de.html" />
     <Content Include="WpfControls\Start.html" />
@@ -860,6 +920,7 @@
     <Resource Include="Resources\icons\polynomdegree2.jpg" />
     <Resource Include="Resources\icons\resultset_next.png" />
     <Resource Include="Resources\icons\resultset_previous.png" />
+    <EmbeddedResource Include="OnlineHelp\HelpFiles\Help.de.resx" />
     <EmbeddedResource Include="OnlineHelp\Resources\eulerphi.jpg" />
     <EmbeddedResource Include="OnlineHelp\Resources\eulerphi.png" />
     <EmbeddedResource Include="OnlineHelp\Resources\eulerphiproduct.jpg" />
@@ -873,9 +934,6 @@
     <EmbeddedResource Include="OnlineHelp\Resources\tau.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="OnlineHelp\HelpFiles\Help.en.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="OnlineHelp\HelpFiles\Help.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Help.Designer.cs</LastGenOutput>
@@ -891,96 +949,120 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\Navigation\Navigation.en.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\Navigation\Navigation.resx">
+      <SubType>Designer</SubType>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Navigation.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\Numbertheory\Numbertheory.en.resx">
+    <EmbeddedResource Include="Resources\lang\Navigation\Navigation.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Navigation.de.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\Numbertheory\Numbertheory.resx">
+      <SubType>Designer</SubType>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Numbertheory.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\Onlinehelp\Onlinehelp.en.resx">
+    <EmbeddedResource Include="Resources\lang\Numbertheory\Numbertheory.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Numbertheory.de.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\Onlinehelp\Onlinehelp.resx">
+      <SubType>Designer</SubType>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Onlinehelp.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\Options\Options.en.resx">
+    <EmbeddedResource Include="Resources\lang\Onlinehelp\Onlinehelp.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Onlinehelp.de.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\Options\Options.resx">
+      <SubType>Designer</SubType>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Options.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\PrimesControl\PrimesControl.en.resx">
+    <EmbeddedResource Include="Resources\lang\Options\Options.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Options.de.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\PrimesControl\PrimesControl.resx">
+      <SubType>Designer</SubType>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PrimesControl.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\Validation\Validation.en.resx">
+    <EmbeddedResource Include="Resources\lang\PrimesControl\PrimesControl.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PrimesControl.de.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\Validation\Validation.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Validation.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Validation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\WpfControls\Components\Components.en.resx">
+    <EmbeddedResource Include="Resources\lang\Validation\Validation.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Validation.de.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\WpfControls\Components\Components.resx">
+      <SubType>Designer</SubType>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Components.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\WpfControls\Distribution\Distribution.en.resx">
+    <EmbeddedResource Include="Resources\lang\WpfControls\Components\Components.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Components.de.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\WpfControls\Distribution\Distribution.resx">
+      <SubType>Designer</SubType>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Distribution.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\WpfControls\Factorization\Factorization.en.resx">
+    <EmbeddedResource Include="Resources\lang\WpfControls\Distribution\Distribution.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Distribution.de.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\WpfControls\Factorization\Factorization.resx">
+      <SubType>Designer</SubType>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Factorization.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\WpfControls\Generation\PrimesGeneration.en.resx">
+    <EmbeddedResource Include="Resources\lang\WpfControls\Factorization\Factorization.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Factorization.de.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\WpfControls\Generation\PrimesGeneration.resx">
+      <SubType>Designer</SubType>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PrimesGeneration.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\lang\WpfControls\Primetest\Primetest.en.resx">
+    <EmbeddedResource Include="Resources\lang\WpfControls\Generation\PrimesGeneration.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PrimesGeneration.de.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\WpfControls\Primetest\Primetest.resx">
+      <SubType>Designer</SubType>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Primetest.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\lang\WpfControls\Primetest\Primetest.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Primetest.de.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.ru.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

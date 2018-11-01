@@ -118,57 +118,57 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="btnclose" xml:space="preserve">
-    <value>Beenden</value>
+    <value>Close</value>
   </data>
   <data name="miclose" xml:space="preserve">
-    <value>Beenden</value>
+    <value>Close</value>
   </data>
   <data name="mioptions" xml:space="preserve">
-    <value>Optionen</value>
+    <value>Options</value>
   </data>
   <data name="miswitch_hide" xml:space="preserve">
-    <value>Navigation ausblenden</value>
+    <value>Hide Navigation</value>
   </data>
   <data name="miswitch_show" xml:space="preserve">
-    <value>Navigation einblenden</value>
+    <value>Show Navigation</value>
   </data>
   <data name="title_distribution" xml:space="preserve">
-    <value>Verteilung der Primzahlen in den natürlichen Zahlen</value>
+    <value>Distribution of primes</value>
   </data>
   <data name="title_factorize" xml:space="preserve">
-    <value>Faktorisierung von Zahlen</value>
+    <value>Factorization</value>
   </data>
   <data name="title_numberline" xml:space="preserve">
-    <value>Verteilung</value>
+    <value>Distribution</value>
   </data>
   <data name="title_Numbertheory" xml:space="preserve">
-    <value>Zahlentheorie</value>
+    <value>Number theory</value>
   </data>
   <data name="title_primecount" xml:space="preserve">
-    <value>Anzahl der Primzahlen</value>
+    <value>Number of primes</value>
   </data>
   <data name="title_primesgeneration" xml:space="preserve">
-    <value>Erzeugung von Primzahlen</value>
+    <value>Generation of primes</value>
   </data>
   <data name="title_primespiral" xml:space="preserve">
-    <value>Ulam-Spirale</value>
+    <value>Ulam´s spiral</value>
   </data>
   <data name="title_primetest" xml:space="preserve">
-    <value>Primzahltests</value>
+    <value>Primality test</value>
   </data>
   <data name="title_primitivroot" xml:space="preserve">
-    <value>Primitivwurzeln</value>
+    <value>Primitive roots</value>
   </data>
   <data name="title_start" xml:space="preserve">
-    <value>Die Welt der Primzahlen</value>
+    <value>The World of Prime Numbers</value>
   </data>
   <data name="miback" xml:space="preserve">
-    <value>Zurück</value>
+    <value>Back</value>
   </data>
   <data name="miforward" xml:space="preserve">
-    <value>Vorwärts</value>
+    <value>Forward</value>
   </data>
   <data name="title_soa" xml:space="preserve">
-    <value>Sieb des Atkin</value>
+    <value>The Sieve of Atkin</value>
   </data>
 </root>

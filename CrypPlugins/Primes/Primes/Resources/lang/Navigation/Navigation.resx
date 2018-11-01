@@ -118,60 +118,60 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="bruteforce" xml:space="preserve">
-    <value>Probedivision</value>
+    <value>Brute-force</value>
   </data>
   <data name="countprimes" xml:space="preserve">
-    <value>Anzahl der Primzahlen</value>
+    <value>Number of primes</value>
   </data>
   <data name="distribution" xml:space="preserve">
-    <value>Verteilung der Primzahlen</value>
+    <value>Distribution of primes</value>
   </data>
   <data name="distributiongoldbach" xml:space="preserve">
-    <value>Goldbach-Vermutung</value>
+    <value>Goldbach's conjecture</value>
   </data>
   <data name="distributionnumbergrid" xml:space="preserve">
-    <value>Zahlengitter</value>
+    <value>Number grid</value>
   </data>
   <data name="distributionnumberline" xml:space="preserve">
-    <value>Zahlengerade</value>
+    <value>Number line</value>
   </data>
   <data name="distributionulam" xml:space="preserve">
-    <value>Ulam-Spirale</value>
+    <value>Ulam´s spiral</value>
   </data>
   <data name="factorization" xml:space="preserve">
-    <value>Faktorisierung</value>
+    <value>Factorization</value>
   </data>
   <data name="genprimes" xml:space="preserve">
-    <value>Erzeugung von Primzahlen</value>
+    <value>Generation of primes</value>
   </data>
   <data name="millerrabin" xml:space="preserve">
-    <value>Miller-Rabin-Test</value>
+    <value>Miller-Rabin test</value>
   </data>
   <data name="ntfunctions" xml:space="preserve">
-    <value>Zahlentheoretische Funktionen</value>
+    <value>Number-theoretic functions</value>
   </data>
   <data name="numbertheory" xml:space="preserve">
-    <value>Zahlentheorie</value>
+    <value>Number theory</value>
   </data>
   <data name="powermod" xml:space="preserve">
-    <value>Potenzieren</value>
+    <value>Powering</value>
   </data>
   <data name="primetest" xml:space="preserve">
-    <value>Primzahltests</value>
+    <value>Primality test</value>
   </data>
   <data name="proots" xml:space="preserve">
-    <value>Primitivwurzeln</value>
+    <value>Primitive roots</value>
   </data>
   <data name="qs" xml:space="preserve">
-    <value>Quadratisches Sieb</value>
+    <value>Quadratic sieve</value>
   </data>
   <data name="sieveofatkin" xml:space="preserve">
-    <value>Sieb des Atkin</value>
+    <value>Sieve of Atkin</value>
   </data>
   <data name="soe" xml:space="preserve">
-    <value>Sieb des Eratosthenes</value>
+    <value>Sieve of Eratosthenes</value>
   </data>
   <data name="startpage" xml:space="preserve">
-    <value>Startseite</value>
+    <value>Start</value>
   </data>
 </root>
