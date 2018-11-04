@@ -472,7 +472,7 @@
     <value>Führe das Model jetzt aus!</value>
   </data>
   <data name="WorkspaceManagerClass_Execute_SleepTime" xml:space="preserve">
-    <value>SleepTime kann nicht &lt;=0 sein; Bitte benutzen sie SleepTime &gt;= 0</value>
+    <value>SleepTime kann nicht &lt;0 sein; Benutze SleepTime = 0</value>
   </data>
   <data name="WorkspaceManagerClass_Open_Could_not_load_Model___0_" xml:space="preserve">
     <value>Konnte Model nicht laden: {0}</value>

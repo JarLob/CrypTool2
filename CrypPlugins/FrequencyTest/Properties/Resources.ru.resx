@@ -157,7 +157,7 @@
     <value>Фрагменты границы слова</value>
   </data>
   <data name="BoundaryFragmentsTooltip" xml:space="preserve">
-    <value>Включить дополнительные фрагменты с пробелами на границе слова? Только для длины графа&amp;gt; = 2.</value>
+    <value>Включить дополнительные фрагменты с пробелами на границе слова? Только для длины графа &gt;= 2.</value>
   </data>
   <data name="CaseSensitivityCaption" xml:space="preserve">
     <value>Чувствительность к алфавиту</value>

@@ -196,7 +196,7 @@
     <value>Удалить</value>
   </data>
   <data name="UnknownSymbolHandlingList3" xml:space="preserve">
-    <value>Заменить &amp;#39;?&amp;#39;</value>
+    <value>Заменить '?'</value>
   </data>
   <data name="ShiftStringCaption" xml:space="preserve">
     <value>Отображение символов</value>

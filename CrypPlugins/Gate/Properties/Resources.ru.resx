@@ -163,10 +163,10 @@
     <value>edge (value swap)</value>
   </data>
   <data name="TriggerList6" xml:space="preserve">
-    <value>положительный край (false-&amp;gt; true)</value>
+    <value>положительный край (false-&gt;true)</value>
   </data>
   <data name="TriggerList7" xml:space="preserve">
-    <value>отрицательный край (true-&amp;gt; false)</value>
+    <value>отрицательный край (true-&gt;false)</value>
   </data>
   <data name="TriggerList8" xml:space="preserve">
     <value>счетчик</value>

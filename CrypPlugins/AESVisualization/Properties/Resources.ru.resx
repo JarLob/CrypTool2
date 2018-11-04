@@ -271,10 +271,10 @@
     <value>Круглый 9</value>
   </data>
   <data name="shiftLeftButton" xml:space="preserve">
-    <value>&amp;lt;&amp;lt;</value>
+    <value>&lt;&lt;</value>
   </data>
   <data name="shiftRightButton" xml:space="preserve">
-    <value>&amp;gt;&amp;gt;</value>
+    <value>&gt;&gt;</value>
   </data>
   <data name="shiftRowButton" xml:space="preserve">
     <value>Shift Row</value>

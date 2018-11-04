@@ -166,7 +166,7 @@
     <value>Второй рабочий параметр</value>
   </data>
   <data name="StringOperations_Execute_Could_not_execute_operation___0______1_" xml:space="preserve">
-    <value>Не удалось выполнить операцию &amp;#39;{0}&amp;#39;: {1}</value>
+    <value>Не удалось выполнить операцию '{0}': {1}</value>
   </data>
   <data name="String3Caption" xml:space="preserve">
     <value>Строка-Три</value>

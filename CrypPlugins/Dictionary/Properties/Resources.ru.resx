@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="dic_file_not_found" xml:space="preserve">
-    <value>Файл слова &amp;quot;{0}&amp;quot; не найден.</value>
+    <value>Файл слова "{0}" не найден.</value>
   </data>
   <data name="finished_loading_dic" xml:space="preserve">
     <value>... закончил загрузку словаря в {0} миллисекундах.</value>
   </data>
   <data name="loading_dic_now" xml:space="preserve">
-    <value>Загрузка словаря &amp;quot;{0}&amp;quot; сейчас ...</value>
+    <value>Загрузка словаря "{0}" сейчас ...</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Словарь</value>

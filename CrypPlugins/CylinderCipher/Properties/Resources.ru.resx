@@ -157,7 +157,7 @@
     <value>игнорировать</value>
   </data>
   <data name="InvalidCharacterHandlingList3" xml:space="preserve">
-    <value>Заменить на &amp;#39;?&amp;#39;</value>
+    <value>Заменить на '?'</value>
   </data>
   <data name="InvalidCharacterHandlingTooltip" xml:space="preserve">
     <value>Выберите способ использования недопустимых символов, которые не поддерживаются используемыми полосками.</value>

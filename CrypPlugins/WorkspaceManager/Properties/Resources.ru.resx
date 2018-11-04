@@ -469,10 +469,10 @@
     <value>Нельзя повторить: {0}</value>
   </data>
   <data name="WorkspaceManagerClass_Print_Printing_document___0___now" xml:space="preserve">
-    <value>Печать документа &amp;#39;{0}&amp;#39; сейчас</value>
+    <value>Печать документа '{0}' сейчас</value>
   </data>
   <data name="WorkspaceManagerClass_Print_Printed__0__pages_of_document___1__" xml:space="preserve">
-    <value>Распечатанные {0} страницы документа &amp;#39;{1}&amp;#39;</value>
+    <value>Распечатанные {0} страницы документа '{1}'</value>
   </data>
   <data name="WorkspaceManagerClass_Print_Exception_while_printing___0_" xml:space="preserve">
     <value>Исключение во время печати: {0}</value>
@@ -481,13 +481,13 @@
     <value>Выполните модель сейчас!</value>
   </data>
   <data name="WorkspaceManagerClass_Execute_" xml:space="preserve">
-    <value>GuiUpdateInterval не может быть &amp;lt;= 0; Использовать GuiUpdateInterval = 1</value>
+    <value>GuiUpdateInterval не может быть &lt;=0; Использовать GuiUpdateInterval = 1</value>
   </data>
   <data name="WorkspaceManagerClass_Execute_Could_not_set_GuiUpdateInterval___0_" xml:space="preserve">
     <value>Не удалось установить GuiUpdateInterval: {0}</value>
   </data>
   <data name="WorkspaceManagerClass_Execute_SleepTime" xml:space="preserve">
-    <value>SleepTime не может быть &amp;lt;= 0; Использовать SleepTime = 0</value>
+    <value>SleepTime не может быть &lt;0; Использовать SleepTime = 0</value>
   </data>
   <data name="WorkspaceManagerClass_Execute_Could_not_set_SleepTime___0_" xml:space="preserve">
     <value>Не удалось установить SleepTime: {0}</value>

@@ -244,7 +244,7 @@
     <value>Использовать папку по умолчанию% APPDATA% \\ Local \\ CrypTool2</value>
   </data>
   <data name="Client__0__tried_to_auth_with_invalid_password" xml:space="preserve">
-    <value>Клиент {0} &amp;#39;пытался аутентифицироваться с использованием недопустимого пароля</value>
+    <value>Клиент '{0}' пытался аутентифицироваться с использованием недопустимого пароля</value>
   </data>
   <data name="Aggregate_Statistics_" xml:space="preserve">
     <value>Совокупная статистика</value>
@@ -280,7 +280,7 @@
     <value>Шифрованные данные</value>
   </data>
   <data name="Ended_bruteforcing_pattern__" xml:space="preserve">
-    <value>Законченная атака грубой силы на ключевой шаблон &amp;#39;</value>
+    <value>Законченная атака грубой силы на ключевой шаблон '</value>
   </data>
   <data name="Endgame_Mode_" xml:space="preserve">
     <value>Режим эндшпиля</value>
@@ -463,7 +463,7 @@
     <value>Готовы к расчёту</value>
   </data>
   <data name="Received_late_job_result_0_from_client_1" xml:space="preserve">
-    <value>Получен поздний результат работы {0} из клиента &amp;#39;{1}&amp;#39;</value>
+    <value>Получен поздний результат работы {0} из клиента '{1}'</value>
   </data>
   <data name="Received_Link_" xml:space="preserve">
     <value>Получено (ссылка):</value>
@@ -517,7 +517,7 @@
     <value>Начало:</value>
   </data>
   <data name="Start_bruteforcing_pattern__" xml:space="preserve">
-    <value>Запуск атаки грубой силы на ключевой шаблон &amp;#39;</value>
+    <value>Запуск атаки грубой силы на ключевой шаблон '</value>
   </data>
   <data name="Static_" xml:space="preserve">
     <value>статический</value>

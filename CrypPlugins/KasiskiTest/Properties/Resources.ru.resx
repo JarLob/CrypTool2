@@ -166,10 +166,10 @@
     <value>Что нужно делать с встречающимися символами на входе, которые не находятся в алфавите?</value>
   </data>
   <data name="CaseSensitivityList1" xml:space="preserve">
-    <value>Да &amp;#39;a&amp;#39; должен быть равен &amp;#39;A&amp;#39;</value>
+    <value>Да 'a' должен быть равен 'A'</value>
   </data>
   <data name="CaseSensitivityList2" xml:space="preserve">
-    <value>Нет &amp;#39;a&amp;#39; не должен равняться &amp;#39;A&amp;#39;</value>
+    <value>Нет 'a' не должен равняться 'A'</value>
   </data>
   <data name="RemoveUnknownSymbolsList1" xml:space="preserve">
     <value>Игнорировать (оставить без изменений)</value>

@@ -199,7 +199,7 @@
     <value>Алгоритмическое описание верхнего уровня НАСТОЯЩЕГО:</value>
   </data>
   <data name="bit_group_sbox" xml:space="preserve">
-    <value>бит {0} (бит {1: d2}, {2: d2}, {3: d2}, {4: d2}) sbox: {5} -&amp;gt; {6}</value>
+    <value>бит {0} (бит {1: d2}, {2: d2}, {3: d2}, {4: d2}) sbox: {5} -&gt; {6}</value>
   </data>
   <data name="bit_group_xor" xml:space="preserve">
     <value>бит {0} (бит {1: d2}, {2: d2}, {3: d2}, {4: d2}) ключ xor: {5} XOR {6} = {7}</value>
@@ -244,7 +244,7 @@
     <value>Key_XOR</value>
   </data>
   <data name="Key_XOR_" xml:space="preserve">
-    <value>Ключ XOR (0x {1: x16} -&amp;gt; 0x {2: x16})</value>
+    <value>Ключ XOR (0x{1: x16} -&gt; 0x{2: x16})</value>
   </data>
   <data name="next_round" xml:space="preserve">
     <value>следующий раунд</value>
@@ -256,7 +256,7 @@
     <value>обзор</value>
   </data>
   <data name="passing_leftmost_4_bits" xml:space="preserve">
-    <value>прохождение крайних левых 4 бит через S-box ({0} -&amp;gt; {1})</value>
+    <value>прохождение крайних левых 4 бит через S-box ({0} -&gt; {1})</value>
   </data>
   <data name="pause_resume" xml:space="preserve">
     <value>пауза / возобновление анимации</value>
@@ -274,7 +274,7 @@
     <value>предыдущий шаг</value>
   </data>
   <data name="rotate_key_register_61" xml:space="preserve">
-    <value>поверните регистр ключей 61 влево (0x {0: x16} {1: x4} -&amp;gt; 0x {2: x16} {3: x4})</value>
+    <value>поверните регистр ключей 61 влево (0x {0: x16} {1: x4} -&gt; 0x {2: x16} {3: x4})</value>
   </data>
   <data name="Roundcounter_XOR" xml:space="preserve">
     <value>Круглый стол XOR</value>

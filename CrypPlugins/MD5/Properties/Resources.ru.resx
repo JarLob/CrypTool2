@@ -142,13 +142,13 @@
     <value>Выходные данные хешированного значения в виде байтового массива</value>
   </data>
   <data name="End_of_Block__" xml:space="preserve">
-    <value>Конец блока &amp;gt;&amp;gt;&amp;gt;&amp;gt;</value>
+    <value>Конец блока &gt;&gt;&gt;&gt;</value>
   </data>
   <data name="End_of_Round__" xml:space="preserve">
-    <value>Конец тура &amp;gt;&amp;gt;&amp;gt;</value>
+    <value>Конец тура &gt;&gt;&gt;</value>
   </data>
   <data name="Next__" xml:space="preserve">
-    <value>Следующая &amp;gt;&amp;gt;</value>
+    <value>Следующая &gt;&gt;</value>
   </data>
   <data name="Round_" xml:space="preserve">
     <value>Круглый:</value>
@@ -163,7 +163,7 @@
     <value>Мы добавили байты заполнения, и наши данные теперь выглядят так:</value>
   </data>
   <data name="__Previous" xml:space="preserve">
-    <value>&amp;lt;&amp;lt; Предыдущая</value>
+    <value>&lt;&lt; Предыдущая</value>
   </data>
   <data name="We_now_calculate_the_length_of_our_data" xml:space="preserve">
     <value>Теперь мы вычисляем длину наших данных (без байтов заполнения от предыдущего шага) в битах:</value>

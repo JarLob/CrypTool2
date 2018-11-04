@@ -160,25 +160,25 @@
     <value>Вход для потока фотонов для декодирования</value>
   </data>
   <data name="res_Setting1Caption" xml:space="preserve">
-    <value>Фотон &amp;quot;|&amp;quot; :</value>
+    <value>Фотон "|" :</value>
   </data>
   <data name="res_Setting1Tooltip" xml:space="preserve">
     <value>Режим изменения для декодирования на базе PLUS</value>
   </data>
   <data name="res_Setting2Caption" xml:space="preserve">
-    <value>Фотон &amp;quot;-&amp;quot;:</value>
+    <value>Фотон "-" :</value>
   </data>
   <data name="res_Setting2Tooltip" xml:space="preserve">
     <value>Режим изменения для декодирования на базе PLUS</value>
   </data>
   <data name="res_Setting3Caption" xml:space="preserve">
-    <value>Фотон &amp;quot;/&amp;quot;:</value>
+    <value>Фотон "/" :</value>
   </data>
   <data name="res_Setting3Tooltip" xml:space="preserve">
     <value>Режим изменения для декодирования на базе X</value>
   </data>
   <data name="res_Setting4Caption" xml:space="preserve">
-    <value>Фотон &amp;quot;\&amp;quot;:</value>
+    <value>Фотон "\" :</value>
   </data>
   <data name="res_Setting4Tooltip" xml:space="preserve">
     <value>Режим изменения для декодирования на базе X</value>

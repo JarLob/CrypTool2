@@ -121,7 +121,7 @@
     <value>словарь n-gram</value>
   </data>
   <data name="InputGramsTooltip" xml:space="preserve">
-    <value>Словарь с грамм-счетом (строка -&amp;gt; [абсолютный, процентный, лог2])</value>
+    <value>Словарь с грамм-счетом (строка -&gt; [абсолютный, процентный, лог2])</value>
   </data>
   <data name="TextInputCaption" xml:space="preserve">
     <value>Ввод текста</value>

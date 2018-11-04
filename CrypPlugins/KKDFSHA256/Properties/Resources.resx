@@ -168,7 +168,7 @@ Byte 25 - 32: {4}</value>
     <value>Output of the to generate key material</value>
   </data>
   <data name="PrintToFileGroup" xml:space="preserve">
-    <value>Saving parameters</value>
+    <value>Saving-Parameters</value>
   </data>
   <data name="ConfigPresCaption" xml:space="preserve">
     <value>Explain the KKDF SHA-256</value>
@@ -186,7 +186,7 @@ Byte 25 - 32: {4}</value>
     <value>Next</value>
   </data>
   <data name="ProcessGroup" xml:space="preserve">
-    <value>Generation process</value>
+    <value>Configuration of the generationprocess</value>
   </data>
   <data name="SaveFileDialogCaption" xml:space="preserve">
     <value>Save key material to file:</value>
