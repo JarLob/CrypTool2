@@ -25,7 +25,7 @@ import org.cryptool.ipc.messages.Ct2IpcMessages.Ct2IpcMessage;
 import org.cryptool.ipc.messages.Ct2MessageType;
 import org.cryptool.ipc.messages.MessageHelper;
 
-public class NamedPipeReceiver extends AbstractLoop<Ct2IpcMessage> implements IReceiveLoop<Ct2IpcMessage> {
+public final class NamedPipeReceiver extends AbstractLoop<Ct2IpcMessage> implements IReceiveLoop<Ct2IpcMessage> {
 
 	private final String pipeUrl;
 	private final Ct2ConnectionState connState;
@@ -52,7 +52,8 @@ public class NamedPipeReceiver extends AbstractLoop<Ct2IpcMessage> implements IR
 					this.setStopped(false);
 					return;
 				}
-				InputStream is = NPHelper.getInputStream(pipe, DelayOnConnectionError, MaxConnectionErrors);
+				InputStream is = NPHelper.getInputStream(pipe, AbstractLoop.DelayOnConnectionError,
+						AbstractLoop.MaxConnectionErrors);
 				// possibly unnecessary optimization to avoid
 				// polling the atomic boolean on each pass
 				int stateUpdateCounter = 0;

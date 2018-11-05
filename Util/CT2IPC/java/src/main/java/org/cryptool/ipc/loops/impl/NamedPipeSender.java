@@ -27,7 +27,7 @@ import org.cryptool.ipc.loops.ISendLoop;
 import org.cryptool.ipc.messages.Ct2IpcMessages.Ct2IpcMessage;
 import org.cryptool.ipc.messages.TypedMessage;
 
-public class NamedPipeSender extends AbstractLoop<TypedMessage> implements ISendLoop<TypedMessage> {
+public final class NamedPipeSender extends AbstractLoop<TypedMessage> implements ISendLoop<TypedMessage> {
 
 	private final BlockingQueue<TypedMessage> queue = new LinkedBlockingQueue<>();
 	private final String pipeUrl;
@@ -52,7 +52,8 @@ public class NamedPipeSender extends AbstractLoop<TypedMessage> implements ISend
 				if (this.myState.get() != LoopState.RUNNING) {
 					return;
 				}
-				final OutputStream os = NPHelper.getOutputStream(pipe, DelayOnConnectionError, MaxConnectionErrors);
+				final OutputStream os = NPHelper.getOutputStream(pipe, AbstractLoop.DelayOnConnectionError,
+						AbstractLoop.MaxConnectionErrors);
 				// possibly unnecessary optimization to avoid
 				// polling the atomic boolean on each loop
 				int stateUpdateCounter = 0;

@@ -17,7 +17,7 @@ package org.cryptool.ipc;
 
 import org.cryptool.ipc.loops.impl.NPHelper;
 
-public class pipetest {
+final class pipetest {
 
 	private static final String pipename = "testpipe";
 

@@ -20,7 +20,7 @@ import java.util.Map;
 
 import org.cryptool.ipc.messages.Ct2IpcMessages.Ct2LogEntry.LogLevel;
 
-public class ConnectorTest {
+final class ConnectorTest {
 
 	public static void main(String[] args) {
 		try {

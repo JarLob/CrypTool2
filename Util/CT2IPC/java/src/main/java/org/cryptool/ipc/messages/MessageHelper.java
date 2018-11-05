@@ -34,7 +34,7 @@ import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.ProtocolStringList;
 
-public class MessageHelper {
+public final class MessageHelper {
 
 	public static boolean handleMessage(Ct2IpcMessage message, Ct2ConnectionState state)
 			throws InvalidProtocolBufferException {

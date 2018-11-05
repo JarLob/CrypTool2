@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.cryptool.ipc.loops.impl.AbstractLoop.LoopState;
 
-public class NPHelper {
+public final class NPHelper {
 
 	/**
 	 * Requires Java 9 or later.

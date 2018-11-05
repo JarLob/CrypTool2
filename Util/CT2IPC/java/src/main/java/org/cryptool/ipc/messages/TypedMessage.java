@@ -17,7 +17,7 @@ package org.cryptool.ipc.messages;
 
 import com.google.protobuf.ByteString;
 
-public class TypedMessage {
+public final class TypedMessage {
 
 	private final Ct2MessageType type;
 	private final ByteString encodedMessage;

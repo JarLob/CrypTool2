@@ -22,7 +22,7 @@ import java.util.Map.Entry;
 
 import org.cryptool.ipc.loops.impl.AbstractLoop.LoopState;
 
-public class IpcTest {
+final class IpcTest {
 
 	public static void main(String[] args) {
 
@@ -50,7 +50,7 @@ public class IpcTest {
 			System.out.println("Servername: " + Ct2Connector.getServerCtName());
 			System.out.println("Serverversion: " + Ct2Connector.getServerCtVersion());
 			System.out.println("Values:");
-			printValues(Ct2Connector.getValues());
+			IpcTest.printValues(Ct2Connector.getValues());
 			System.out.println();
 			try {
 				Thread.sleep(500);
