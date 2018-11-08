@@ -20,18 +20,21 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/RSA-Kryptosystem" /></descri
 	<plugin name="RSAKeyGenerator" />
   </relevantPlugins>
   <replacements lang="de">
+    <replacement key="$memo$" value="In der Kryptographie ist RSA (was für Rivest, Shamir und Adleman steht) ein Algorithmus für die Kryptographie mit öffentlichem Schlüssel (Asymmetrische Kryptographie). Es ist der erste bekannte Algorithmus, der sowohl für das Signieren als auch für die Verschlüsselung geeignet ist, und war einer der ersten großen Fortschritte in der Kryptographie mit öffentlichen Schlüsseln. RSA wird häufig in Protokollen für den elektronischen Handel verwendet und gilt bei ausreichend langen Schlüsseln und der Verwendung aktueller Implementierungen als ausreichend sicher."/>
     <replacement key="$Plaintext$" value="Klartext" />
     <replacement key="$Ciphertext$" value="Geheimtext" />
     <replacement key="$RSA Encryption$" value="RSA-Verschlüsselung" />
 	<replacement key="$RSAKeyGenerator$" value="RSA-Schlüsselgenerator" />
   </replacements>
   <replacements lang="ru">
+    <replacement key="$memo$" value="В криптографии RSA (которая стоит за Rivest, Shamir и Adleman) является алгоритмом криптографии с открытым ключом (асимметричная криптография). Это первый известный алгоритм, подходящий как для подписи, так и для шифрования, и был одним из первых важных достижений в криптографии с открытым ключом. RSA широко используется в протоколах электронной коммерции и считается достаточно надежным, если ключи достаточно длинные и используют текущие реализации."/>
     <replacement key="$Plaintext$" value="обычный текст" />
     <replacement key="$Ciphertext$" value="шифротекста" />
     <replacement key="$RSA Encryption$" value="шифрование RSA" />
 	<replacement key="$RSAKeyGenerator$" value="Генератор ключа RSA" />
   </replacements>
   <replacements lang="en">
+    <replacement key="$memo$" value="In cryptography, RSA (which stands for Rivest, Shamir and Adleman who first publicly described it) is an algorithm for public-key cryptography. It is the first algorithm known to be suitable for signing as well as encryption, and was one of the first great advances in public key cryptography. RSA is widely used in electronic commerce protocols, and is believed to be sufficiently secure given sufficiently long keys and the use of up-to-date implementations."/>
     <replacement key="$Plaintext$" value="Plaintext" />
     <replacement key="$Ciphertext$" value="Ciphertext" />
     <replacement key="$RSA Encryption$" value="RSA Encryption" />
