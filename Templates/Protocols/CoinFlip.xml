@@ -29,8 +29,8 @@
     <replacement key="$Bob's Guess$" value="Bobs Vermutung" />
     <replacement key="$Comparator$" value="Vergleich" />
     <replacement key="$Alice honest?$" value="Alice ehrlich?" />
-    <replacement key="$step1$" value="{\b Schritt 1}\line Alic wirft eine Münze." />
-    <replacement key="$step2$" value="{\b Schritt 2}\line Alice wählt einen geheimen Schlüssel und sendet das verschlüsselte Resultat ihres Münzwurfes an Bob." />
+    <replacement key="$step1$" value="{\b Schritt 1}\line Alice wirft eine Münze." />
+    <replacement key="$step2$" value="{\b Schritt 2}\line Alice wählt einen geheimen Schlüssel und sendet das verschlüsselte Resultat ihres Münzwurfs an Bob." />
     <replacement key="$step3$" value="{\b Schritt 3}\line Bob rät das Ergebnis von Alices Münzwurf und schickt seine Vermutung an Alice." />
     <replacement key="$step4$" value="{\b Schritt 4}\line Abhängig von ihrer Ehrlichkeit verrät Alice Bob ihre geworfene Münze oder sie lügt. Dann bestimmt sie den Gewinner und teilt Bob ihren geheimen Schlüssel mit." />
     <replacement key="$step5$" value="{\b Schritt 5}\line Bob empfängt den geheimen Schlüssel und verschlüsselt damit den Münzwert, den Alice ihm mitgeteilt hat. Er vergleicht den Wert mit dem von Alice verschlüsselten Wert. Sind sie unterschiedlich, so weiss Bob, dass Alice gelogen hat." />
