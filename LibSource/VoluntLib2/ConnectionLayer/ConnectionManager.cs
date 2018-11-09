@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -62,7 +63,7 @@ namespace VoluntLib2.ConnectionLayer
         internal ConcurrentQueue<DataMessage> DataMessagesOutgoing = new ConcurrentQueue<DataMessage>();        
 
         //Port where this ConnectionManager listens on
-        private ushort Port = 0;            
+        internal ushort Port = 0;            
 
         //unique randomly chosen number identifying this peer
         private byte[] PeerId = Guid.NewGuid().ToByteArray();        
@@ -81,7 +82,6 @@ namespace VoluntLib2.ConnectionLayer
         /// Number of connection changed
         /// </summary>
         public event EventHandler<ConnectionsNumberChangedEventArgs> ConnectionsNumberChanged;
-
 
         /// <summary>
         /// Observable list of contacts for UI
@@ -135,6 +135,9 @@ namespace VoluntLib2.ConnectionLayer
             Client.Client.ReceiveTimeout = RECEIVE_TIMEOUT;
             Client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             Client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.IpTimeToLive, 255);
+            Client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, 1);
+            Client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontRoute, 1);
+
             //Set Running to true; thus, threads know we are alive
             Running = true;
             //Create a thread for receving data
@@ -190,7 +193,6 @@ namespace VoluntLib2.ConnectionLayer
             WellKnownPeers.Add(new Contact() { IPAddress = ip, Port = port });
         }
 
-
         /// <summary>
         /// Main method of the thread of the ConnectionManager
         /// </summary>
@@ -203,6 +205,24 @@ namespace VoluntLib2.ConnectionLayer
                 {
                     IPEndPoint remoteEndpoint = new IPEndPoint(IPAddress.Any, 0);
                     byte[] data = Client.Receive(ref remoteEndpoint);
+                    bool ignore = false;
+                    foreach (NetworkInterface networkInterface in NetworkInterface.GetAllNetworkInterfaces())
+                    {
+                        foreach (UnicastIPAddressInformation unicastIPAddressInformation in networkInterface.GetIPProperties().UnicastAddresses)
+                        {
+                            if (IPAddress.Equals(remoteEndpoint.Address, unicastIPAddressInformation.Address))
+                            {
+                                //we ignore messages, that we receive from ourselves (= our own ips), i.e. broadcast messages
+                                ignore = true;
+                                goto next; // hack to leave the foreach-loops
+                            }
+                        }
+                    }
+                    next:
+                    if (ignore)
+                    {
+                        continue;
+                    }
                     Logger.LogText(String.Format("Data from {0}:{1} : {2} bytes", remoteEndpoint.Address, remoteEndpoint.Port, data.Length), this, Logtype.Debug);
 
                     Message message = null;
@@ -362,14 +382,39 @@ namespace VoluntLib2.ConnectionLayer
         /// <param name="port"></param>
         /// <param name="data"></param>
         internal void SendData(IPAddress ip, int port, byte[] data)
-        {            
+        {
             if (data.Length > MAX_UDP_MESSAGE_PAYLOAD_SIZE)
             {
                 throw new Exception(String.Format("Given message size is too long. Got {0} byte, but max size is {1} bytes!", data.Length, MAX_UDP_MESSAGE_PAYLOAD_SIZE));
             }
             lock (this)
             {
-                Client.Send(data, data.Length, new IPEndPoint(ip, port));
+                if (!IPAddress.Equals(ip, IPAddress.Broadcast))
+                {
+                    Client.Send(data, data.Length, new IPEndPoint(ip, port));
+                }
+                else
+                {
+                    //send broadcast to all interfaces
+                    foreach (NetworkInterface networkInterface in NetworkInterface.GetAllNetworkInterfaces())
+                    {
+                        if (networkInterface.OperationalStatus == OperationalStatus.Up && networkInterface.SupportsMulticast && networkInterface.GetIPProperties().GetIPv4Properties() != null)
+                        {
+                            int index = networkInterface.GetIPProperties().GetIPv4Properties().Index;
+                            if (NetworkInterface.LoopbackInterfaceIndex != index)
+                            {
+                                foreach (UnicastIPAddressInformation uip in networkInterface.GetIPProperties().UnicastAddresses)
+                                {
+                                    if (uip.Address.AddressFamily == AddressFamily.InterNetwork)
+                                    {
+                                        IPEndPoint target = new IPEndPoint(IPAddress.Broadcast, 10000);
+                                        Client.Send(data, data.Length, target);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -632,7 +677,9 @@ namespace VoluntLib2.ConnectionLayer
             ushort counter = 0;
             foreach (var entry in Contacts)
             {
-                if (entry.Value.IsOffline == false)
+                //we dont count "private ip addresses" as "real connections"
+                //this should avoid, that pcs of computing pools only connect to each other and not to the internet
+                if (entry.Value.IsOffline == false && !IpTools.IsPrivateIP(entry.Value.IPAddress))
                 {
                     counter++;
                 }

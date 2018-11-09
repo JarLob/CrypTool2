@@ -987,7 +987,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
                             sendToAll = false;
                             break;
                         }
-                    }
+                    }                    
                 }
 
                 foreach (var keyvalue in ConnectionManager.Contacts)
@@ -1007,6 +1007,12 @@ namespace VoluntLib2.ConnectionLayer.Operations
                         }
                         ConnectionManager.SendDataMessage(keyvalue.Value.IPAddress, keyvalue.Value.Port, dataMessage);
                     }
+                }
+                
+                if (sendToAll)
+                {
+                    //we also send to broadcast address
+                    ConnectionManager.SendDataMessage(IPAddress.Broadcast, ConnectionManager.Port, dataMessage);
                 }
             }
         }
