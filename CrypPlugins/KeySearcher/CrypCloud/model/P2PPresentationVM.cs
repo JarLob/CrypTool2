@@ -160,14 +160,22 @@ namespace KeySearcher.CrypCloud
      
         #endregion 
         
-        public void BlockHasBeenFinished(JobProgressEventArgs progress, List<KeyResultEntry> keyResultEntries)
+        public void BlockHasBeenFinished()
+        {            
+            GlobalSpeedStatistics.AddEntry(KeysPerBlock);                        
+        }
+
+        /// <summary>
+        /// Updates the global progress
+        /// </summary>
+        /// <param name="progress"></param>
+        /// <param name="keyResultEntries"></param>
+        public void UpdateGlobalProgress(JobProgressEventArgs progress, List<KeyResultEntry> keyResultEntries)
         {
             FinishedNumberOfBlocks = progress.NumberOfCalculatedBlocks;
-            GlobalSpeedStatistics.AddEntry(KeysPerBlock); 
             GlobalProgress = 100 * progress.NumberOfCalculatedBlocks.DivideAndReturnDouble(progress.NumberOfBlocks);
             numberOfLeftBlocks = progress.NumberOfBlocks - progress.NumberOfCalculatedBlocks;
             FillTopList(keyResultEntries);
-
             OnPropertyChanged("GlobalProgressString"); 
         }
 

@@ -36,6 +36,8 @@ namespace KeySearcher
         private Timer updateTimer;
         private StreamWriter Logfile = null;
 
+        private BigInteger LastNumberOfCalculatedBlocks = BigInteger.Zero;
+
         public CloudKeySearcher(JobDataContainer jobDataContainer, KeyPattern.KeyPattern pattern, P2PQuickWatchPresentation presentation, KeySearcher keySearcher)
         {
             this.keySearcher = keySearcher;            
@@ -127,16 +129,31 @@ namespace KeySearcher
                 viewModel.EndedLocalCalculation(taskArgs);
                 keySearcher.ProgressChanged(Math.Floor(viewModel.GlobalProgress), 100);
             });
-        }
+        }        
 
         private void JobStateChanged(object sender, JobProgressEventArgs progress)
         {
             if (progress.JobId != jobId) return;
-
             var keyResultList = ExtractResultList(progress);
             RunInUiContext(() =>
             {
-                viewModel.BlockHasBeenFinished(progress, keyResultList.ToList());
+                //for each "new block", we call BlockHasBeenFinished for the global speed calculation
+                lock (this)
+                {
+                    if (LastNumberOfCalculatedBlocks == BigInteger.Zero)
+                    {
+                        LastNumberOfCalculatedBlocks = progress.NumberOfCalculatedBlocks;
+                    }
+                    if (progress.NumberOfCalculatedBlocks > LastNumberOfCalculatedBlocks)
+                    {
+                        for (int i = 0; i < progress.NumberOfCalculatedBlocks - LastNumberOfCalculatedBlocks; i++)
+                        {
+                            viewModel.BlockHasBeenFinished();
+                        }
+                        LastNumberOfCalculatedBlocks = progress.NumberOfCalculatedBlocks;
+                    }
+                }
+                viewModel.UpdateGlobalProgress(progress, keyResultList.ToList());
                 keySearcher.ProgressChanged(Math.Floor(viewModel.GlobalProgress), 100);
             });
 
