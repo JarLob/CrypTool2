@@ -27,7 +27,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 {
     public class JsonDownloaderAndConverter : IDisposable
     {
-        public const string DOWNLOAD_URL = "https://stp.lingfil.uu.se/decode/records";
+        public const string DOWNLOAD_URL = "https://stp.lingfil.uu.se/decode/database/records";
 
         public const string GETRECORDLIST = "GetRecordsList";
         public const string GETRECORDSTRING = "GetRecordString";
