@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Yao's Millionaire Problem</title>
-  <title lang="ru">Проблема миллионера Яо</title>
-  <summary lang="en">Usage of <i>Yao's millionaire problem</i></summary>
-  <summary lang="ru">Использование проблемы миллионера Яо</summary>
-  <description lang="en">This template shows <i>Yao's millionaire problem</i>.</description>
-  <description lang="ru">Этот шаблон показывает проблему миллионера Яо.</description>
+  <title lang="en">Yao's Millionaire Problem Protocol</title>
+  <title lang="ru">Протокол проблемы миллионеров Яо</title>
+  <summary lang="en">Usage of <i>Yao's millionaire problem protocol</i></summary>
+  <summary lang="ru">Использование протокола проблемы миллионеров Яо</summary>
+  <description lang="en">This template shows <i>Yao's millionaire problem protocol</i>.</description>
+  <description lang="ru">Этот шаблон показывает протокол проблемы миллионеров Яо.</description>
   <keywords>yao's millionaire problem</keywords>
   <keywords lang="ru">проблема миллионера яо</keywords>
-  <title lang="de">Yaos Millionärs-Problem</title>
-  <summary lang="de">Benutzung von <i>Yaos Millionärs-Problem</i></summary>
-  <description lang="de">Diese Vorlage zeigt <i>Yaos Millionärs-Problem</i>.</description>
+  <title lang="de">Yaos Millionärs-Problem-Protokoll</title>
+  <summary lang="de">Benutzung von <i>Yaos Millionärs-Problem-Protokoll</i></summary>
+  <description lang="de">Diese Vorlage zeigt <i>Yaos Millionärs-Problem-Protokoll</i>.</description>
   <keywords lang="de">yaos, millionär, problem</keywords>
   <icon file="Yao.png" />
   <relevantPlugins>
