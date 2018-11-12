@@ -81,9 +81,7 @@ namespace VoluntLib2.ManagementLayer.Messages
     /// The header of all messages of VoluntLib2 JobManagementLayer
     /// </summary>
     public class MessageHeader
-    {        
-        private const int STRING_MAX_LENGTH = 255;
-
+    {                
         public byte[] MessageId = new byte[16];        // 16 bytes
         public MessageType MessageType;                // 1 byte
         public ushort PayloadLength;                   // 2 bytes
@@ -111,18 +109,18 @@ namespace VoluntLib2.ManagementLayer.Messages
         public byte[] Serialize()
         {
             //World Name
-            if (WorldName.Length > STRING_MAX_LENGTH)
+            if (WorldName.Length > Constants.MESSAGES_STRING_MAX_LENGTH)
             {
-                WorldName = WorldName.Substring(0, STRING_MAX_LENGTH);
+                WorldName = WorldName.Substring(0, Constants.MESSAGES_STRING_MAX_LENGTH);
             }
             //convert World Name to byte array and get its length
             byte[] worldNameBytes = UTF8Encoding.UTF8.GetBytes(WorldName);
             int worldNameLength = worldNameBytes.Length;
 
             //Sender Name
-            if (SenderName.Length > STRING_MAX_LENGTH)
+            if (SenderName.Length > Constants.MESSAGES_STRING_MAX_LENGTH)
             {
-                SenderName = SenderName.Substring(0, STRING_MAX_LENGTH);
+                SenderName = SenderName.Substring(0, Constants.MESSAGES_STRING_MAX_LENGTH);
             }
             //convert Sender Name to byte array and get its length
             byte[] senderNameBytes = UTF8Encoding.UTF8.GetBytes(SenderName);
@@ -228,13 +226,10 @@ namespace VoluntLib2.ManagementLayer.Messages
     /// </summary>
     public class Message
     {
-        public const string VLIB2MNGMT = "VLib2Mngmt";  //Magic Number to identify VoluntLib2 management protocol
-        public const byte VOLUNTLIB2_VERSION = 0x01;    //Protocol version number
-
         public byte[] PeerId;                           //set by receiving thread; will not be serialized
         public MessageHeader MessageHeader;
         public byte[] Payload;                          //length defined by header.PayloadLength
-        public byte VoluntLibVersion = VOLUNTLIB2_VERSION;
+        public byte VoluntLibVersion = Constants.MGM_MESSAGE_VOLUNTLIB2_VERSION;
 
         public Message()
         {
@@ -264,7 +259,7 @@ namespace VoluntLib2.ManagementLayer.Messages
             
             MessageHeader.SignatureData = new byte[0];
 
-            byte[] magicNumber = Encoding.ASCII.GetBytes(VLIB2MNGMT);       //10 bytes
+            byte[] magicNumber = Encoding.ASCII.GetBytes(Constants.MESSAGE_VLIB2MNGMT);       //10 bytes
             // 1 byte protocol version
             byte[] headerbytes = MessageHeader.Serialize();             
 
@@ -272,7 +267,7 @@ namespace VoluntLib2.ManagementLayer.Messages
             byte[] messagebytes = new byte[10 + 1 + headerbytes.Length + payloadLengthBytes];
 
             Array.Copy(magicNumber, 0, messagebytes, 0, 10);
-            messagebytes[10] = VOLUNTLIB2_VERSION;
+            messagebytes[10] = Constants.MGM_MESSAGE_VOLUNTLIB2_VERSION;
             Array.Copy(headerbytes, 0, messagebytes, 11, headerbytes.Length);
             if (Payload != null && Payload.Length > 0)
             {
@@ -291,7 +286,7 @@ namespace VoluntLib2.ManagementLayer.Messages
             headerbytes = MessageHeader.Serialize();
             messagebytes = new byte[10 + 1 + headerbytes.Length + payloadLengthBytes];
             Array.Copy(magicNumber, 0, messagebytes, 0, 10);
-            messagebytes[10] = VOLUNTLIB2_VERSION;
+            messagebytes[10] = Constants.MGM_MESSAGE_VOLUNTLIB2_VERSION;
             Array.Copy(headerbytes, 0, messagebytes, 11, headerbytes.Length);
             if (Payload != null && Payload.Length > 0)
             {
@@ -312,13 +307,13 @@ namespace VoluntLib2.ManagementLayer.Messages
                 throw new VoluntLibSerializationException(String.Format("Invalid message received. Expected minimum 27 bytes. Got {0} bytes!", data.Length));
             }
             string magicnumber = Encoding.ASCII.GetString(data, 0, 10);
-            if (!magicnumber.Equals(VLIB2MNGMT))
+            if (!magicnumber.Equals(Constants.MESSAGE_VLIB2MNGMT))
             {
-                throw new VoluntLibSerializationException(String.Format("Invalid magic number. Expected '{0}'. Received '{1}'", VLIB2MNGMT, magicnumber));
+                throw new VoluntLibSerializationException(String.Format("Invalid magic number. Expected '{0}'. Received '{1}'", Constants.MESSAGE_VLIB2MNGMT, magicnumber));
             }
-            if (data[10] > VOLUNTLIB2_VERSION)
+            if (data[10] > Constants.MGM_MESSAGE_VOLUNTLIB2_VERSION)
             {
-                throw new VoluntLibSerializationException(String.Format("Expected a VoluntLib2 version <= {0}. Received a version {1}. Please update!", VLIB2MNGMT, magicnumber));
+                throw new VoluntLibSerializationException(String.Format("Expected a VoluntLib2 version <= {0}. Received a version {1}. Please update!", Constants.MESSAGE_VLIB2MNGMT, magicnumber));
             }
 
             MessageHeader = new MessageHeader();

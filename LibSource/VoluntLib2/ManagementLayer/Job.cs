@@ -32,10 +32,7 @@ using VoluntLib2.Tools;
 namespace VoluntLib2.ManagementLayer
 {
     public class Job : IEquatable<Job>, IComparable<Job>, INotifyPropertyChanged, IVoluntLibSerializable
-    {
-        private const int STRING_MAX_LENGTH = 255;
-        private const int STRING_MAX_JOB_DESCRIPTION_LENGTH = 1024; //1kb                
-
+    {        
         private Logger Logger = Logger.GetLogger();
 
         public Job(BigInteger jobID)
@@ -140,25 +137,25 @@ namespace VoluntLib2.ManagementLayer
         public byte[] Serialize()
         {
             //0. Trim string length to max lengths
-            if (JobName.Length > STRING_MAX_LENGTH)
+            if (JobName.Length > Constants.JOB_STRING_MAX_LENGTH)
             {
-                JobName = JobName.Substring(0, STRING_MAX_LENGTH);
+                JobName = JobName.Substring(0, Constants.JOB_STRING_MAX_LENGTH);
             }
-            if (JobType.Length > STRING_MAX_LENGTH)
+            if (JobType.Length > Constants.JOB_STRING_MAX_LENGTH)
             {
-                JobType = JobType.Substring(0, STRING_MAX_LENGTH);
+                JobType = JobType.Substring(0, Constants.JOB_STRING_MAX_LENGTH);
             }
-            if (JobDescription.Length > STRING_MAX_JOB_DESCRIPTION_LENGTH)
+            if (JobDescription.Length > Constants.JOB_STRING_MAX_JOB_DESCRIPTION_LENGTH)
             {
-                JobDescription = JobDescription.Substring(0, STRING_MAX_LENGTH);
+                JobDescription = JobDescription.Substring(0, Constants.JOB_STRING_MAX_LENGTH);
             }
-            if (WorldName.Length > STRING_MAX_LENGTH)
+            if (WorldName.Length > Constants.JOB_STRING_MAX_LENGTH)
             {
-                WorldName = WorldName.Substring(0, STRING_MAX_LENGTH);
+                WorldName = WorldName.Substring(0, Constants.JOB_STRING_MAX_LENGTH);
             }
-            if (CreatorName.Length > STRING_MAX_LENGTH)
+            if (CreatorName.Length > Constants.JOB_STRING_MAX_LENGTH)
             {
-                CreatorName = CreatorName.Substring(0, STRING_MAX_LENGTH);
+                CreatorName = CreatorName.Substring(0, Constants.JOB_STRING_MAX_LENGTH);
             }
 
             //1. Convert all to byte arrays + "length of fields"-byte arrays; also calculate total size of data array
@@ -422,7 +419,7 @@ namespace VoluntLib2.ManagementLayer
                 X509Certificate2 creatorCertificate = new X509Certificate2(CreatorCertificateData);
 
                 //some checks on the certificate                
-                if (creatorCertificate.SubjectName.Name.ToLower().Equals("anonymous"))
+                if (creatorCertificate.SubjectName.Name.ToLower().Equals(Constants.JOB_ANONYMOUS_USER))
                 {
                     //it is not allowed to create a job using the anonymous user
                     return false;

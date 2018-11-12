@@ -54,6 +54,7 @@
     <Compile Include="ComputationLayer\ComputationManager.cs" />
     <Compile Include="ComputationLayer\Operations.cs" />
     <Compile Include="ConnectionLayer\Contact.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="ManagementLayer\JobManager.cs" />
     <Compile Include="ManagementLayer\Messages.cs" />
     <Compile Include="ManagementLayer\Operations.cs" />

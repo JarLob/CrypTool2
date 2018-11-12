@@ -32,14 +32,13 @@ using VoluntLib2.Tools;
 
 namespace VoluntLib2.ManagementLayer
 {
+    /// <summary>
+    /// JobManager is responsible for creation and deletion of jobs
+    /// Furhtermore, it stores all received jobs
+    /// </summary>
     internal class JobManager
     {
         private Logger Logger = Logger.GetLogger();
-
-        private const int MAX_TERMINATION_WAIT_TIME = 5000; //5 s
-        private const int WORKER_THREAD_SLEEPTIME = 1; // ms
-        private const int MAX_JOB_PAYLOAD_SIZE = 20 * 1024; // 20KiB
-
         private bool Running = false;
         private Thread ReceivingThread;
         private Thread WorkerThread;
@@ -301,7 +300,7 @@ namespace VoluntLib2.ManagementLayer
                 }
                 try
                 {
-                    Thread.Sleep(WORKER_THREAD_SLEEPTIME);
+                    Thread.Sleep(Constants.JOBMANAGER_WORKER_THREAD_SLEEPTIME);
                 }
                 catch (Exception ex)
                 {
@@ -324,7 +323,7 @@ namespace VoluntLib2.ManagementLayer
             Logger.LogText("Stop method was called...", this, Logtype.Info);
             Running = false;
             DateTime start = DateTime.Now;
-            while ((ReceivingThread.IsAlive || WorkerThread.IsAlive) && DateTime.Now < start.AddMilliseconds(MAX_TERMINATION_WAIT_TIME))
+            while ((ReceivingThread.IsAlive || WorkerThread.IsAlive) && DateTime.Now < start.AddMilliseconds(Constants.JOBMANAGER_MAX_TERMINATION_WAIT_TIME))
             {
                 Thread.Sleep(100);
             }
@@ -377,9 +376,9 @@ namespace VoluntLib2.ManagementLayer
                 return BigInteger.MinusOne;
             }
 
-            if (payload.Length > MAX_JOB_PAYLOAD_SIZE)
+            if (payload.Length > Constants.JOBMANAGER_MAX_JOB_PAYLOAD_SIZE)
             {
-                throw new JobPayloadTooBigException(String.Format("Job size too big. Maximum size is {0}, given size was {1}.", MAX_JOB_PAYLOAD_SIZE, payload.Length));
+                throw new JobPayloadTooBigException(String.Format("Job size too big. Maximum size is {0}, given size was {1}.", Constants.JOBMANAGER_MAX_JOB_PAYLOAD_SIZE, payload.Length));
             }
             //copy the payload
             byte[] payloadCopy = new byte[payload.Length];
@@ -409,7 +408,7 @@ namespace VoluntLib2.ManagementLayer
             job.JobCreatorSignatureData = GenerateCreatorSignatureData(job);
             //dynamically create bitmask with appropriate masksize
             BigInteger masksize = numberOfBlocks / 8;
-            job.JobEpochState.Bitmask = new Bitmask(masksize > Bitmask.MAX_MASKSIZE ? Bitmask.MAX_MASKSIZE : (uint)masksize);
+            job.JobEpochState.Bitmask = new Bitmask(masksize > Constants.BITMASK_MAX_MASKSIZE ? Constants.BITMASK_MAX_MASKSIZE : (uint)masksize);
             job.CheckAndUpdateEpochAndBitmask();
             //finally, add payload
             job.JobPayload = payloadCopy;

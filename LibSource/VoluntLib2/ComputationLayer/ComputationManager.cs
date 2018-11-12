@@ -33,10 +33,7 @@ namespace VoluntLib2.ComputationLayer
     /// B) taking care, that workers are started and stopped
     /// </summary>
     internal class ComputationManager
-    {
-        private const int MAX_TERMINATION_WAIT_TIME = 5000; //5 s
-        private const int WORKER_THREAD_SLEEPTIME = 1; // ms
-        
+    {       
         private Logger Logger = Logger.GetLogger();
         private bool Running = false;
         private Thread WorkerThread;
@@ -125,7 +122,7 @@ namespace VoluntLib2.ComputationLayer
                 }
                 try
                 {
-                    Thread.Sleep(WORKER_THREAD_SLEEPTIME);
+                    Thread.Sleep(Constants.COMPUTATIONMANAGER_WORKER_THREAD_SLEEPTIME);
                 }
                 catch (Exception ex)
                 {
@@ -148,7 +145,7 @@ namespace VoluntLib2.ComputationLayer
             Logger.LogText("Stop method was called...", this, Logtype.Info);
             Running = false;
             DateTime start = DateTime.Now;
-            while ((WorkerThread.IsAlive) && DateTime.Now < start.AddMilliseconds(MAX_TERMINATION_WAIT_TIME))
+            while ((WorkerThread.IsAlive) && DateTime.Now < start.AddMilliseconds(Constants.COMPUTATIONMANAGER_MAX_TERMINATION_WAIT_TIME))
             {
                 Thread.Sleep(100);
             }

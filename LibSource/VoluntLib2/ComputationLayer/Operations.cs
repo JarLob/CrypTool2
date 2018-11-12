@@ -269,8 +269,7 @@ namespace VoluntLib2.ComputationLayer
     /// This operation checks if a job has been finished. If yes, it will invoke the JobFinished event of VoluntLib for this job
     /// </summary>
     internal class CheckJobsCompletionState : Operation
-    {
-        private const int CHECK_INTERVAL = 5000; //5sec
+    {        
         private DateTime LastExecutionTime = DateTime.MinValue;
 
         public override bool IsFinished
@@ -283,7 +282,7 @@ namespace VoluntLib2.ComputationLayer
         /// </summary>
         public override void Execute()
         {
-            if(DateTime.Now > LastExecutionTime.AddMilliseconds(CHECK_INTERVAL))
+            if (DateTime.Now > LastExecutionTime.AddMilliseconds(Constants.CHECKJOBSCOMPLETIONSTATE_CHECK_INTERVAL))
             {
                 LastExecutionTime = DateTime.Now;
                 foreach (Job job in ComputationManager.JobManager.Jobs.Values)

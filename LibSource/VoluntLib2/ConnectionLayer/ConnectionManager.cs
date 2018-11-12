@@ -42,11 +42,6 @@ namespace VoluntLib2.ConnectionLayer
     {
         private Logger Logger = Logger.GetLogger();
 
-        private const int RECEIVE_TIMEOUT = 100; //ms
-        private const int MAX_TERMINATION_WAIT_TIME = 5000; //5 s
-        private const int MAX_UDP_MESSAGE_PAYLOAD_SIZE = 65507; //maximum size of UDP payload
-        private const int WORKER_THREAD_SLEEPTIME = 1; // ms
-
         //all known contacts of this peer
         internal ConcurrentDictionary<IPEndPoint, Contact> Contacts = new ConcurrentDictionary<IPEndPoint, Contact>();
         
@@ -135,7 +130,7 @@ namespace VoluntLib2.ConnectionLayer
 
             //Create a new udp client for sending and receiving data            
             Client = new UdpClient(new IPEndPoint(IPAddress.Any, Port));
-            Client.Client.ReceiveTimeout = RECEIVE_TIMEOUT;
+            Client.Client.ReceiveTimeout = Constants.CONNECTIONMANAGER_RECEIVE_TIMEOUT;
             Client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             Client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.IpTimeToLive, 255);
             Client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, 1);
@@ -179,7 +174,7 @@ namespace VoluntLib2.ConnectionLayer
             //add a HousekeepReceivedNeighborsOperation which is responsible to remove peers received by neighbors whose KnownBys are all offline
             Operations.Enqueue(new HousekeepReceivedNeighborsOperation() { ConnectionManager = this });
             //add a HouseKeepExternalIPAddresses which is responsible to remove external ip addresses that we did not see for 5 minutes
-            Operations.Enqueue(new HouseKeepExternalIPAddresses() { ConnectionManager = this });
+            Operations.Enqueue(new HouseKeepExternalIPAddressesOperation() { ConnectionManager = this });
 
             //shows the state of this peer every 5 seconds (displays the current number of connections)
             //state is only shown, when number of peers changed
@@ -375,7 +370,7 @@ namespace VoluntLib2.ConnectionLayer
                 }
                 try
                 {
-                    Thread.Sleep(WORKER_THREAD_SLEEPTIME);
+                    Thread.Sleep(Constants.CONNECTIONMANAGER_WORKER_THREAD_SLEEPTIME);
                 }
                 catch (Exception ex)
                 {
@@ -414,9 +409,9 @@ namespace VoluntLib2.ConnectionLayer
         /// <param name="data"></param>
         internal void SendData(IPAddress ip, int port, byte[] data)
         {
-            if (data.Length > MAX_UDP_MESSAGE_PAYLOAD_SIZE)
+            if (data.Length > Constants.CONNECTIONMANAGER_MAX_UDP_MESSAGE_PAYLOAD_SIZE)
             {
-                throw new Exception(String.Format("Given message size is too long. Got {0} byte, but max size is {1} bytes!", data.Length, MAX_UDP_MESSAGE_PAYLOAD_SIZE));
+                throw new Exception(String.Format("Given message size is too long. Got {0} byte, but max size is {1} bytes!", data.Length, Constants.CONNECTIONMANAGER_MAX_UDP_MESSAGE_PAYLOAD_SIZE));
             }
             lock (this)
             {
@@ -591,7 +586,7 @@ namespace VoluntLib2.ConnectionLayer
             Logger.LogText("Stop method was called...", this, Logtype.Info);
             Running = false;
             DateTime start = DateTime.Now;
-            while ((ReceivingThread.IsAlive || WorkerThread.IsAlive) && DateTime.Now < start.AddMilliseconds(MAX_TERMINATION_WAIT_TIME))
+            while ((ReceivingThread.IsAlive || WorkerThread.IsAlive) && DateTime.Now < start.AddMilliseconds(Constants.CONNECTIONMANAGER_MAX_TERMINATION_WAIT_TIME))
             {
                 Thread.Sleep(100);
             }
@@ -770,7 +765,7 @@ namespace VoluntLib2.ConnectionLayer
                 }
                 else
                 {
-                    Thread.Sleep(WORKER_THREAD_SLEEPTIME);
+                    Thread.Sleep(Constants.CONNECTIONMANAGER_WORKER_THREAD_SLEEPTIME);
                 }
             }
             return null;

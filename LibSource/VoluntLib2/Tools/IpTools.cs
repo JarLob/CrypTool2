@@ -21,21 +21,6 @@ namespace VoluntLib2.Tools
     public class IpTools
     {
         /// <summary>
-        /// Set of private IP ranges for IsPrivateIP method
-        /// </summary>
-        private static uint[][] ipranges = new uint[][]
-        {
-            new uint[]{167772160u,   184549375u}, /*    10.0.0.0 -  10.255.255.255 */
-            new uint[]{3232235520u, 3232301055u}, /* 192.168.0.0 - 192.168.255.255 */
-            new uint[]{2130706432u, 2147483647u}, /*   127.0.0.0 - 127.255.255.255 */
-            new uint[]{2851995648u, 2852061183u}, /* 169.254.0.0 - 169.254.255.255 */
-            new uint[]{2886729728u, 2887778303u}, /*  172.16.0.0 -  172.31.255.255 */
-            new uint[]{3758096384u, 4026531839u}, /*   224.0.0.0 - 239.255.255.255 */
-            new uint[]{0u, 0u},                   /*     0.0.0.0 - 0.0.0.0.        */
-            new uint[]{4294967295u, 4294967295u}, /*  255.255.255.255 - 255.255.255.255 */
-        };
-
-        /// <summary>
         /// Checks if a given IP adress is inside one of the private ip address ranges
         /// </summary>
         /// <param name="ipaddress"></param>
@@ -45,7 +30,7 @@ namespace VoluntLib2.Tools
             byte[] bytes = ipaddress.GetAddressBytes();
             bytes = new byte[] { bytes[3], bytes[2], bytes[1], bytes[0] }; //reverse the ip for calculation
             uint ipNumber = BitConverter.ToUInt32(bytes, 0);
-            foreach (uint[] range in ipranges)
+            foreach (uint[] range in Constants.IPTOOLS_PRIVATE_IP_RANGES)
             {
                 if (ipNumber >= range[0] && ipNumber <= range[1])
                 {

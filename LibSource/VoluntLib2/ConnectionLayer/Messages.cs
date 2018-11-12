@@ -185,12 +185,9 @@ namespace VoluntLib2.ConnectionLayer.Messages
     /// </summary>
     internal class Message
     {
-        public const string VOLUNTLIB2 = "VoluntLib2";  //Magic Number to identify protocol
-        public const byte VOLUNTLIB2_VERSION = 0x01;    //Protocol version number
-
         public MessageHeader MessageHeader;
         public byte[] Payload;                              //length defined by header.PayloadLength
-        public byte VoluntLibVersion = VOLUNTLIB2_VERSION;
+        public byte VoluntLibVersion = Constants.MESSAGE_VOLUNTLIB2_VERSION;
 
         public Message()
         {
@@ -210,7 +207,7 @@ namespace VoluntLib2.ConnectionLayer.Messages
                 MessageHeader.PayloadLength = 0;
             }
 
-            byte[] magicNumber = Encoding.ASCII.GetBytes(VOLUNTLIB2);       //10 bytes
+            byte[] magicNumber = Encoding.ASCII.GetBytes(Constants.MESSAGE_VOLUNTLIB2);       //10 bytes
                                                                             // 1 byte protocol versin
             byte[] headerbytes = MessageHeader.Serialize();                 //63 bytes
 
@@ -218,7 +215,7 @@ namespace VoluntLib2.ConnectionLayer.Messages
             byte[] messagebytes = new byte[10 + 1 + 63 + payloadLengthBytes];
 
             Array.Copy(magicNumber, 0, messagebytes, 0, 10);
-            messagebytes[10] = VOLUNTLIB2_VERSION;
+            messagebytes[10] = Constants.MESSAGE_VOLUNTLIB2_VERSION;
             Array.Copy(headerbytes, 0, messagebytes, 11, 62);
             if (Payload != null && Payload.Length > 0)
             {
@@ -234,13 +231,13 @@ namespace VoluntLib2.ConnectionLayer.Messages
                 throw new VoluntLibSerializationException(String.Format("Invalid message received. Expected minimum 74 bytes. Got {0} bytes!", data.Length));
             }            
             string magicnumber = Encoding.ASCII.GetString(data, 0, 10);
-            if (!magicnumber.Equals(VOLUNTLIB2))
+            if (!magicnumber.Equals(Constants.MESSAGE_VOLUNTLIB2))
             {
-                throw new VoluntLibSerializationException(String.Format("Invalid magic number. Expected '{0}'. Received '{1}'", VOLUNTLIB2, magicnumber));
+                throw new VoluntLibSerializationException(String.Format("Invalid magic number. Expected '{0}'. Received '{1}'", Constants.MESSAGE_VOLUNTLIB2, magicnumber));
             }
-            if (data[10] > VOLUNTLIB2_VERSION)
+            if (data[10] > Constants.MESSAGE_VOLUNTLIB2_VERSION)
             {
-                throw new VoluntLibSerializationException(String.Format("Expected a VoluntLib2 version <= {0}. Received a version {1}. Please update!", VOLUNTLIB2, magicnumber));
+                throw new VoluntLibSerializationException(String.Format("Expected a VoluntLib2 version <= {0}. Received a version {1}. Please update!", Constants.MESSAGE_VOLUNTLIB2, magicnumber));
             }
 
             MessageHeader = new MessageHeader();

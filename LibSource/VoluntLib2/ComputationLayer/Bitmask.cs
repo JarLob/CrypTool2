@@ -28,8 +28,7 @@ namespace VoluntLib2.ComputationLayer
     /// PhD thesis of Nils Kopal
     /// </summary>
     public class Bitmask : IVoluntLibSerializable
-    {
-        public const int MAX_MASKSIZE = 35840; //35 kiB
+    {        
         //public const int MAX_MASKSIZE = 10; // only for testing
         private Random random;
         public uint MaskSize { get; private set; }
@@ -81,7 +80,7 @@ namespace VoluntLib2.ComputationLayer
         /// <summary>
         /// Create a new empty bitmask
         /// </summary>
-        public Bitmask(uint masksize = MAX_MASKSIZE)
+        public Bitmask(uint masksize = Constants.BITMASK_MAX_MASKSIZE)
         {
             MaskSize = masksize;
             mask = new byte[MaskSize];

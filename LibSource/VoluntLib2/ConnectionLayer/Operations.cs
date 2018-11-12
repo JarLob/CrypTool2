@@ -62,10 +62,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
     /// If this operations fails for 30 seconds, it can also be deleted (IsFinished = true)
     /// </summary>
     internal class HelloOperation : Operation
-    {
-        private const long TIMEOUT = 30000;
-        private const long RETRY_TIMESPAN = 5000;
-        
+    {       
         private bool HelloToWellKnownPeer = false;
         private Logger Logger = Logger.GetLogger();
 
@@ -103,7 +100,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
         /// </summary>
         public override bool IsFinished
         {
-            get { return MyState == State.Finished || DateTime.Now > CreationTime.AddMilliseconds(TIMEOUT); }
+            get { return MyState == State.Finished || DateTime.Now > CreationTime.AddMilliseconds(Constants.HELLOOPERATION_TIMEOUT); }
         }
 
         /// <summary>
@@ -147,7 +144,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
             //If we are here, we did not receive a response
             //thus, we send the hello again; but only every RETRY_TIMESPAN ms
 
-            if (DateTime.Now < LastHelloSendTime.AddMilliseconds(RETRY_TIMESPAN))
+            if (DateTime.Now < LastHelloSendTime.AddMilliseconds(Constants.HELLOOPERATION_RETRY_TIMESPAN))
             {
                 return;
             }
@@ -265,10 +262,6 @@ namespace VoluntLib2.ConnectionLayer.Operations
     /// </summary>
     internal class CheckContactsOperation : Operation
     {
-        private const int SAY_HELLO_INTERVAL = 30000; //30 seconds
-        private const int SET_CONTACT_OFFLINE = 300000; //5 minutes
-        private const int REMOVE_OFFLINE_CONTACT = 86400000; //24 hours
-
         private Logger Logger = Logger.GetLogger();
 
         /// <summary>
@@ -290,19 +283,19 @@ namespace VoluntLib2.ConnectionLayer.Operations
             IPEndPoint removeKey = null;
             foreach (var keyvaluepair in ConnectionManager.Contacts)
             {
-                if (keyvaluepair.Value.IsOffline == false && DateTime.Now > keyvaluepair.Value.LastSeen.AddMilliseconds(SAY_HELLO_INTERVAL) && DateTime.Now > keyvaluepair.Value.LastHelloSent.AddMilliseconds(SAY_HELLO_INTERVAL))
+                if (keyvaluepair.Value.IsOffline == false && DateTime.Now > keyvaluepair.Value.LastSeen.AddMilliseconds(Constants.CHECKCONTACTSOPERATION_SAY_HELLO_INTERVAL) && DateTime.Now > keyvaluepair.Value.LastHelloSent.AddMilliseconds(Constants.CHECKCONTACTSOPERATION_SAY_HELLO_INTERVAL))
                 {
                     HelloOperation operation = new HelloOperation(keyvaluepair.Value.IPAddress, keyvaluepair.Value.Port) { ConnectionManager = ConnectionManager };
                     ConnectionManager.Operations.Enqueue(operation);
                     keyvaluepair.Value.LastHelloSent = DateTime.Now;
                     Logger.LogText(String.Format("Created HelloOperation for contact {0}:{1} because did not see him in a while...", keyvaluepair.Value.IPAddress, keyvaluepair.Value.Port), this, Logtype.Debug);
                 }
-                if (keyvaluepair.Value.IsOffline == false && DateTime.Now > keyvaluepair.Value.LastSeen.AddMilliseconds(SET_CONTACT_OFFLINE))
+                if (keyvaluepair.Value.IsOffline == false && DateTime.Now > keyvaluepair.Value.LastSeen.AddMilliseconds(Constants.CHECKCONTACTSOPERATION_SET_CONTACT_OFFLINE))
                 {
                     keyvaluepair.Value.IsOffline = true;
                     Logger.LogText(String.Format("Set contact {0}:{1} to offline because did not see him in a while...", keyvaluepair.Value.IPAddress, keyvaluepair.Value.Port), this, Logtype.Debug);
                 }
-                if (keyvaluepair.Value.IsOffline == true && DateTime.Now > keyvaluepair.Value.LastSeen.AddMilliseconds(REMOVE_OFFLINE_CONTACT))
+                if (keyvaluepair.Value.IsOffline == true && DateTime.Now > keyvaluepair.Value.LastSeen.AddMilliseconds(Constants.CHECKCONTACTSOPERATION_REMOVE_OFFLINE_CONTACT))
                 {
                     removeKey = keyvaluepair.Key;
                 }
@@ -336,10 +329,6 @@ namespace VoluntLib2.ConnectionLayer.Operations
     /// </summary>
     internal class RequestNeighborListOperation : Operation
     {
-
-        private const long TIMEOUT = 30000;
-        private const long RETRY_TIMESPAN = 5000;
-
         private Logger Logger = Logger.GetLogger();
 
         private enum State
@@ -375,7 +364,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
         /// </summary>
         public override bool IsFinished
         {
-            get { return MyState == State.Finished || DateTime.Now > CreationTime.AddMilliseconds(TIMEOUT); }
+            get { return MyState == State.Finished || DateTime.Now > CreationTime.AddMilliseconds(Constants.REQUESTNEIGHBORLISTOPERATION_TIMEOUT); }
         }
 
         /// <summary>
@@ -418,7 +407,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
         {
             //If we are here, we did not receive a response
             //thus, we send the request again; but only every RETRY_TIMESPAN ms
-            if (DateTime.Now < LastRequestSendTime.AddMilliseconds(RETRY_TIMESPAN))
+            if (DateTime.Now < LastRequestSendTime.AddMilliseconds(Constants.REQUESTNEIGHBORLISTOPERATION_RETRY_TIMESPAN))
             {
                 return;
             }
@@ -581,8 +570,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
     /// Loggs the number of connections every 5 seconds ONLY if the number changed
     /// </summary>
     internal class MyStatusOperation : Operation
-    {
-        private const uint STATUS_SHOW_INTERVAL = 5000; // 5sec
+    {        
         private DateTime LastStatusShownTime = DateTime.Now;
         private Logger Logger = Logger.GetLogger();
         private ushort LastConnectionCount = ushort.MaxValue;
@@ -600,7 +588,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
         /// </summary>
         public override void Execute()
         {
-            if (DateTime.Now > LastStatusShownTime.AddMilliseconds(STATUS_SHOW_INTERVAL))
+            if (DateTime.Now > LastStatusShownTime.AddMilliseconds(Constants.MYSTATUSOPERATION_STATUS_SHOW_INTERVAL))
             {
                 LastStatusShownTime = DateTime.Now;
                 ushort connectionCount = ConnectionManager.GetConnectionCount();
@@ -637,8 +625,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
     /// This operation creats a set of RequestNeighborListOperation every 5 minutes for all of our contacts
     /// </summary>
     internal class AskForNeighborListsOperation : Operation
-    {
-        private const int ASK_FOR_NEIGHBORLIST_INTERVAL = 300000; // 5 minutes
+    {        
         private DateTime LastTimeAsked = DateTime.Now;
         private Logger Logger = Logger.GetLogger();
 
@@ -652,7 +639,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
 
         public override void Execute()
         {
-            if (DateTime.Now > LastTimeAsked.AddMilliseconds(ASK_FOR_NEIGHBORLIST_INTERVAL))
+            if (DateTime.Now > LastTimeAsked.AddMilliseconds(Constants.ASKFORNEIGHBORLISTOPERATION_ASK_FOR_NEIGHBORLIST_INTERVAL))
             {
                 Logger.LogText("Requesting neighbor lists from my contacts now", this, Logtype.Debug);
                 foreach (var entry in ConnectionManager.Contacts)
@@ -856,10 +843,6 @@ namespace VoluntLib2.ConnectionLayer.Operations
     /// </summary>
     internal class CheckMyConnectionsNumberOperation : Operation
     {
-        private const int CHECK_CONNECTIONS_INTERVAL = 10000; //10 sec 
-        private const int MIN_CONNECTIONS_NUMBER = 10;
-        private const int MAX_CONNECTIONS_NUMBER = 20;
-
         private Logger Logger = Logger.GetLogger();
         private DateTime LastCheckedTime = DateTime.MinValue;
         private Random Random = new Random(BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0));
@@ -874,7 +857,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
 
         public override void Execute()
         {
-            if (DateTime.Now > LastCheckedTime.AddMilliseconds(CHECK_CONNECTIONS_INTERVAL))
+            if (DateTime.Now > LastCheckedTime.AddMilliseconds(Constants.CHECKMYCONNECTIONSNUMBEROPERATION_CHECK_CONNECTIONS_INTERVAL))
             {
                 LastCheckedTime = DateTime.Now;
                 ushort connectionCount = ConnectionManager.GetConnectionCount();
@@ -884,14 +867,14 @@ namespace VoluntLib2.ConnectionLayer.Operations
                     LastCheckedTime = DateTime.Now;
                     return;
                 }
-                if (connectionCount < MIN_CONNECTIONS_NUMBER)
+                if (connectionCount < Constants.CHECKMYCONNECTIONSNUMBEROPERATION_MIN_CONNECTIONS_NUMBER)
                 {
                     //if we have too few connections, we start a tryCreateNewConnectionOperation to get an additional connection
-                    Logger.LogText(String.Format("Not enough connections. Have {0} but {1} are wanted. Created a TryCreateNewConnectionOperation.", connectionCount, MIN_CONNECTIONS_NUMBER), this, Logtype.Debug);
+                    Logger.LogText(String.Format("Not enough connections. Have {0} but {1} are wanted. Created a TryCreateNewConnectionOperation.", connectionCount, Constants.CHECKMYCONNECTIONSNUMBEROPERATION_MIN_CONNECTIONS_NUMBER), this, Logtype.Debug);
                     TryCreateNewConnectionOperation tryCreateNewConnectionOperation = new TryCreateNewConnectionOperation() { ConnectionManager = ConnectionManager };
                     ConnectionManager.Operations.Enqueue(tryCreateNewConnectionOperation);                    
                 }
-                if (connectionCount > MAX_CONNECTIONS_NUMBER)
+                if (connectionCount > Constants.CHECKMYCONNECTIONSNUMBEROPERATION_MAX_CONNECTIONS_NUMBER)
                 {
                     //if we have too much connections, we send one randomly chosen peer that we go offline. 
                     //Additionally, we set him to offline and remove all HelloOperations and all RequestNeighborListOperations
@@ -919,7 +902,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
                         return;
                     }
 
-                    Logger.LogText(String.Format("Too many connections. Have {0} but want a maximum of {1}. Remove {2}:{3} now.", connectionCount, MAX_CONNECTIONS_NUMBER, contact.IPAddress, contact.Port), this, Logtype.Debug);
+                    Logger.LogText(String.Format("Too many connections. Have {0} but want a maximum of {1}. Remove {2}:{3} now.", connectionCount, Constants.CHECKMYCONNECTIONSNUMBEROPERATION_MAX_CONNECTIONS_NUMBER, contact.IPAddress, contact.Port), this, Logtype.Debug);
                     
                     //1. Send GoingOfflineMessage
                     ConnectionManager.SendGoingOfflineMessage(contact.IPAddress, contact.Port);
@@ -970,7 +953,6 @@ namespace VoluntLib2.ConnectionLayer.Operations
     /// </summary>
     internal class SendDataOperation : Operation
     {
-
         /// <summary>
         /// The SendDataOperation never expires...
         /// </summary>
@@ -1076,7 +1058,6 @@ namespace VoluntLib2.ConnectionLayer.Operations
     /// </summary>
     internal class BootstrapOperation : Operation
     {
-        private const int CHECK_INTERVAL = 120000; //2 min
         private DateTime LastCheckedTime = DateTime.MinValue;
         private Logger Logger = Logger.GetLogger();
         
@@ -1104,7 +1085,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
         /// </summary>
         public override void Execute()
         {
-            if (DateTime.Now > LastCheckedTime.AddMilliseconds(CHECK_INTERVAL))
+            if (DateTime.Now > LastCheckedTime.AddMilliseconds(Constants.BOOTSTRAPOPERATION_CHECK_INTERVAL))
             {                
                 if(ConnectionManager.GetConnectionCount() > 0)
                 {
@@ -1201,8 +1182,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
     /// This operation removes contacts from ConnectionManager.ReceivedContacts whose all KnownBy are offline
     /// </summary>
     internal class HousekeepReceivedNeighborsOperation : Operation
-    {
-        private const int CHECK_INTERVAL = 60000; //1 min
+    {        
         private DateTime LastCheckedTime = DateTime.Now;
         private Logger Logger = Logger.GetLogger();
 
@@ -1216,7 +1196,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
 
         public override void Execute()
         {
-            if (DateTime.Now > LastCheckedTime.AddMilliseconds(CHECK_INTERVAL))
+            if (DateTime.Now > LastCheckedTime.AddMilliseconds(Constants.HOUSEKEEPRECEIVEDNEIGHBORLISTOPERATION_CHECK_INTERVAL))
             {
                 //1. Collect entries of ConnectionManager.ReceivedContacts to remove
                 List<IPEndPoint> removeList = new List<IPEndPoint>();
@@ -1264,10 +1244,8 @@ namespace VoluntLib2.ConnectionLayer.Operations
     /// <summary>
     /// This operation removes external ip addresses that we did not see for 5 minutes
     /// </summary>
-    internal class HouseKeepExternalIPAddresses : Operation
-    {
-        private const int CHECK_INTERVAL = 60000; //1 min
-        private const int REMOVE_INTERVAL = 300000; //5 min
+    internal class HouseKeepExternalIPAddressesOperation : Operation
+    {        
         private DateTime LastCheckedTime = DateTime.Now;
         private Logger Logger = Logger.GetLogger();
 
@@ -1281,13 +1259,13 @@ namespace VoluntLib2.ConnectionLayer.Operations
 
         public override void Execute()
         {
-            if (DateTime.Now > LastCheckedTime.AddMilliseconds(CHECK_INTERVAL))
+            if (DateTime.Now > LastCheckedTime.AddMilliseconds(Constants.HOUSEKEEPEXTERNALIPADDRESSESOPERATION_CHECK_INTERVAL))
             {
                 //1. collect external ip addresses that we did not see for 5 minutes
                 List<IPAddress> removeList = new List<IPAddress>();
                 foreach (var ip in ConnectionManager.ExternalIpAddresses.Keys)
                 {
-                    if (DateTime.Now > ConnectionManager.ExternalIpAddresses[ip].AddMilliseconds(REMOVE_INTERVAL))
+                    if (DateTime.Now > ConnectionManager.ExternalIpAddresses[ip].AddMilliseconds(Constants.HOUSEKEEPEXTERNALIPADDRESSESOPERATION_REMOVE_INTERVAL))
                     {
                         removeList.Add(ip);
                     }

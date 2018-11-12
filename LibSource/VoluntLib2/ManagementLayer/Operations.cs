@@ -61,8 +61,7 @@ namespace VoluntLib2.ManagementLayer
     /// </summary>
     internal class ShareJobListAndJobsOperation : Operation
     {
-        private Logger Logger = Logger.GetLogger();
-        private const int SHARE_INTERVAL = 300000; //5min
+        private Logger Logger = Logger.GetLogger();        
         private DateTime LastExecutionTime = DateTime.MinValue;
 
         /// <summary>
@@ -78,7 +77,7 @@ namespace VoluntLib2.ManagementLayer
         /// </summary>
         public override void Execute()
         {
-            if (DateTime.Now > LastExecutionTime.AddMilliseconds(SHARE_INTERVAL))
+            if (DateTime.Now > LastExecutionTime.AddMilliseconds(Constants.SHAREJOBLISTANDJOBSOPERATION_SHARE_INTERVAL))
             {
                 Logger.LogText("Sending ResponseJobListMessages to all neighbors", this, Logtype.Debug);
                 //Send a ResponseJobListMessage to every neighbor
@@ -109,8 +108,7 @@ namespace VoluntLib2.ManagementLayer
     /// </summary>
     internal class RequestJobListOperation : Operation
     {
-        private Logger Logger = Logger.GetLogger();
-        private const int REQUEST_INTERVAL = 60000; //1min        
+        private Logger Logger = Logger.GetLogger();               
         private DateTime LastExecutionTime = DateTime.Now;
 
         /// <summary>
@@ -126,7 +124,7 @@ namespace VoluntLib2.ManagementLayer
         /// </summary>
         public override void Execute()
         {
-            if (DateTime.Now > LastExecutionTime.AddMilliseconds(REQUEST_INTERVAL))
+            if (DateTime.Now > LastExecutionTime.AddMilliseconds(Constants.REQUESTJOBLISTOPERATION_REQUEST_INTERVAL))
             {
                 Logger.LogText("Sending RequestJobListMessages to all neighbors", this, Logtype.Debug);
                 //Send a RequestJobListMessage to every neighbor
@@ -429,8 +427,7 @@ namespace VoluntLib2.ManagementLayer
     /// </summary>
     internal class CheckJobsPayloadOperation : Operation
     {
-        private Logger Logger = Logger.GetLogger();
-        private const int REQUEST_INTERVAL = 60000; //1 min
+        private Logger Logger = Logger.GetLogger();        
 
         /// <summary>
         /// CheckJobsPayloadOperation never finishes
@@ -448,7 +445,7 @@ namespace VoluntLib2.ManagementLayer
         {
             foreach (Job job in JobManager.Jobs.Values)
             {
-                if (!job.HasPayload && DateTime.Now > job.LastPayloadRequestTime.AddMilliseconds(REQUEST_INTERVAL))
+                if (!job.HasPayload && DateTime.Now > job.LastPayloadRequestTime.AddMilliseconds(Constants.CHECKJOBSPAYLOADOPERATION_REQUEST_INTERVAL))
                 {
                     Logger.LogText(String.Format("Do not have payload for job {0}. Asking my neighbors now", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Debug);
                     JobManager.SendRequestJobMessage(null, job.JobId);
@@ -504,8 +501,7 @@ namespace VoluntLib2.ManagementLayer
     /// </summary>
     internal class JobsSerializationOperation : Operation
     {
-        private Logger Logger = Logger.GetLogger();
-        private const int SERIALIZATION_INTERVAL = 300000; //5min        
+        private Logger Logger = Logger.GetLogger();        
         private DateTime LastSerializationTime = DateTime.Now;
 
         /// <summary>
@@ -521,7 +517,7 @@ namespace VoluntLib2.ManagementLayer
         /// </summary>
         public override void Execute()
         {
-            if (DateTime.Now > LastSerializationTime.AddMilliseconds(SERIALIZATION_INTERVAL))
+            if (DateTime.Now > LastSerializationTime.AddMilliseconds(Constants.JOBSSERIALIZATIONOPERATION_SERIALIZATION_INTERVAL))
             {
                 if (!Directory.Exists(JobManager.LocalStoragePath))
                 {
@@ -690,8 +686,7 @@ namespace VoluntLib2.ManagementLayer
     /// This operation updates the progress for the UI of each job
     /// </summary>
     internal class UpdateJobsProgressOperation : Operation
-    {
-        private const int UPDATE_TIME_INTERVAL = 1000; //1 sec        
+    {        
         private DateTime LastUpdateTime = DateTime.MinValue;
 
         /// <summary>
@@ -707,7 +702,7 @@ namespace VoluntLib2.ManagementLayer
         /// </summary>
         public override void Execute()
         {
-            if(DateTime.Now > LastUpdateTime.AddMilliseconds(UPDATE_TIME_INTERVAL))
+            if (DateTime.Now > LastUpdateTime.AddMilliseconds(Constants.UPDATEJOBSPROGRESSOPERATION_UPDATE_TIME_INTERVAL))
             {               
                 foreach (Job job in new List<Job>(JobManager.JobList))
                 {
