@@ -104,5 +104,15 @@ namespace CrypToolStoreDeveloperClient.Views
         {
             MainWindow.ChangeScreen(UiState.PluginManagement);
         }
+
+        /// <summary>
+        /// Change screen to Resource Management when ResourceManagementButton is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ResourceManagementButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.ChangeScreen(UiState.ResourceManagement);
+        }
     }
 }

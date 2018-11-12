@@ -80,6 +80,9 @@
     <Compile Include="Views\DownloadSourceZipFileWindow.xaml.cs">
       <DependentUpon>DownloadSourceZipFileWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ResourceManagementView.xaml.cs">
+      <DependentUpon>ResourceManagementView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SourceManagementView.xaml.cs">
       <DependentUpon>SourceManagementView.xaml</DependentUpon>
     </Compile>
@@ -133,6 +136,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\DownloadSourceZipFileWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ResourceManagementView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
