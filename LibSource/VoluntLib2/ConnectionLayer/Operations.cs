@@ -460,6 +460,14 @@ namespace VoluntLib2.ConnectionLayer.Operations
                         //Someone sent us a private IP; we can not do anything with that address; so dont save it
                         continue;
                     }
+
+                    if (ConnectionManager.ExternalIpAddresses.ContainsKey(contact.IPAddress))
+                    {
+                        //we dont add peers to our contacts having the same external ip address than we have
+                        //this can be the case, when a peer is behind the same router than we are, e.g. inside the same network
+                        continue;
+                    }
+
                     IPEndPoint contactEndpoint = new IPEndPoint(contact.IPAddress, contact.Port);
                     if (ConnectionManager.Contacts.ContainsKey(contactEndpoint) && ConnectionManager.Contacts[contactEndpoint].IsOffline == false)
                     {
@@ -499,7 +507,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
         }
     }
     /// <summary>
-    /// Never expiring operation that answers a ResponseNeighborListMessage to each received HelloMessage
+    /// Never expiring operation that answers a ResponseNeighborListMessage to each received RequestNeighborListMessage
     /// </summary>
     internal class ResponseNeighborListOperation : Operation
     {
@@ -1190,7 +1198,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
     }
 
     /// <summary>
-    /// This message removes contacts from ConnectionManager.ReceivedContacts whose all KnownBy are offline
+    /// This operation removes contacts from ConnectionManager.ReceivedContacts whose all KnownBy are offline
     /// </summary>
     internal class HousekeepReceivedNeighborsOperation : Operation
     {
@@ -1237,6 +1245,61 @@ namespace VoluntLib2.ConnectionLayer.Operations
                     if(ConnectionManager.ReceivedContacts.TryRemove(endpoint,out contact))
                     {
                         Logger.LogText(String.Format("Removed {0}:{1} from the received contacts list as nobody is online who knows this peer.", contact.IPAddress, contact.Port), this, Logtype.Debug);
+                    }
+                }
+                LastCheckedTime = DateTime.Now;
+            }
+        }
+
+        /// <summary>
+        /// This operation does nothing with messages...
+        /// </summary>
+        /// <param name="message"></param>
+        public override void HandleMessage(Message message)
+        {
+            //do nothing
+        }
+    }
+
+    /// <summary>
+    /// This operation removes external ip addresses that we did not see for 5 minutes
+    /// </summary>
+    internal class HouseKeepExternalIPAddresses : Operation
+    {
+        private const int CHECK_INTERVAL = 60000; //1 min
+        private const int REMOVE_INTERVAL = 300000; //5 min
+        private DateTime LastCheckedTime = DateTime.Now;
+        private Logger Logger = Logger.GetLogger();
+
+        /// <summary>
+        /// The HouseKeepExternalIPAddresses never finishes
+        /// </summary>
+        public override bool IsFinished
+        {
+            get { return false; }
+        }
+
+        public override void Execute()
+        {
+            if (DateTime.Now > LastCheckedTime.AddMilliseconds(CHECK_INTERVAL))
+            {
+                //1. collect external ip addresses that we did not see for 5 minutes
+                List<IPAddress> removeList = new List<IPAddress>();
+                foreach (var ip in ConnectionManager.ExternalIpAddresses.Keys)
+                {
+                    if (DateTime.Now > ConnectionManager.ExternalIpAddresses[ip].AddMilliseconds(REMOVE_INTERVAL))
+                    {
+                        removeList.Add(ip);
+                    }
+                }
+
+                //2. Remove all entries
+                foreach (IPAddress ip in removeList)
+                {
+                    DateTime time;
+                    if (ConnectionManager.ExternalIpAddresses.TryRemove(ip, out time))
+                    {
+                        Logger.LogText(String.Format("Removed IP {0} from the list of external IP addresses list since we did not see it for 5 minutes", ip), this, Logtype.Debug);
                     }
                 }
                 LastCheckedTime = DateTime.Now;

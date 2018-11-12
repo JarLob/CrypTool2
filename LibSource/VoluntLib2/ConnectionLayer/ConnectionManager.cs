@@ -62,6 +62,9 @@ namespace VoluntLib2.ConnectionLayer
         //a queue containing all to be sended DataMessages
         internal ConcurrentQueue<DataMessage> DataMessagesOutgoing = new ConcurrentQueue<DataMessage>();        
 
+        //a dictionary containing all external ip addresse
+        internal ConcurrentDictionary<IPAddress, DateTime> ExternalIpAddresses = new ConcurrentDictionary<IPAddress, DateTime>();
+
         //Port where this ConnectionManager listens on
         internal ushort Port = 0;            
 
@@ -175,6 +178,8 @@ namespace VoluntLib2.ConnectionLayer
             Operations.Enqueue(new GoingOfflineOperation() { ConnectionManager = this });
             //add a HousekeepReceivedNeighborsOperation which is responsible to remove peers received by neighbors whose KnownBys are all offline
             Operations.Enqueue(new HousekeepReceivedNeighborsOperation() { ConnectionManager = this });
+            //add a HouseKeepExternalIPAddresses which is responsible to remove external ip addresses that we did not see for 5 minutes
+            Operations.Enqueue(new HouseKeepExternalIPAddresses() { ConnectionManager = this });
 
             //shows the state of this peer every 5 seconds (displays the current number of connections)
             //state is only shown, when number of peers changed
@@ -235,6 +240,8 @@ namespace VoluntLib2.ConnectionLayer
 
                         try
                         {
+                            //we memorize the "receiver ip address" since these are our external addresses
+                            UpdateExternalIPAddresses(message.MessageHeader.ReceiverIPAddress);
                             //we received a message from this peer, thus, we can update our contact
                             UpdateContact(new IPAddress(message.MessageHeader.SenderIPAddress), message.MessageHeader.SenderExternalPort, message.MessageHeader.SenderPeerId);
                         }
@@ -295,6 +302,30 @@ namespace VoluntLib2.ConnectionLayer
                 }
             }
             Logger.LogText("ReceivingThread terminated", this, Logtype.Info);
+        }
+
+        /// <summary>
+        /// Memorizes our external ip addresses
+        /// </summary>
+        /// <param name="ipbytes"></param>
+        private void UpdateExternalIPAddresses(byte[] ipbytes)
+        {
+            try
+            {
+                IPAddress ip = new IPAddress(ipbytes);
+                if (!ExternalIpAddresses.ContainsKey(ip))
+                {
+                    ExternalIpAddresses.TryAdd(ip, DateTime.Now);
+                }
+                else
+                {
+                    ExternalIpAddresses[ip] = DateTime.Now;
+                }
+            }
+            catch (Exception)
+            {
+                //wtf?
+            }
         }      
 
         /// <summary>
@@ -639,8 +670,14 @@ namespace VoluntLib2.ConnectionLayer
         /// <param name="ip"></param>
         /// <param name="port"></param>
         /// <param name="peerID"></param>
-        internal Contact UpdateContact(IPAddress ip, ushort port, byte[] peerID)
+        internal void UpdateContact(IPAddress ip, ushort port, byte[] peerID)
         {
+            if (ExternalIpAddresses.ContainsKey(ip))
+            {
+                //we dont add peers to our contacts having the same external ip address than we have
+                //this can be the case, when a peer is behind the same router than we are, e.g. inside the same network
+                return;
+            }
             IPEndPoint endpoint = new IPEndPoint(ip, port);
             if (ReceivedContacts.ContainsKey(endpoint))
             {
@@ -656,7 +693,7 @@ namespace VoluntLib2.ConnectionLayer
                 //Create a RequestNeighborList operation for this new neighbor to receive his neighbors
                 RequestNeighborListOperation requestNeighborListOperation = new RequestNeighborListOperation(ip, port) { ConnectionManager = this };
                 Operations.Enqueue(requestNeighborListOperation);
-                return contact;
+                return;
             }
             else
             {
@@ -664,7 +701,7 @@ namespace VoluntLib2.ConnectionLayer
                 Contacts[endpoint].LastHelloSent = DateTime.Now;
                 Contacts[endpoint].IsOffline = false;
                 Logger.LogText(String.Format("Updated contact: {0}", endpoint), this, Logtype.Debug);
-                return Contacts[endpoint];
+                return;
             }
         }
 
