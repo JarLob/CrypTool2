@@ -107,10 +107,6 @@
       <Name>CrypPluginBase</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\CrypPlugins\Primes\Primes\Primes.csproj">
-      <Project>{2830F337-A7A3-4A68-87AC-64F3AA79C70B}</Project>
-      <Name>Primes</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\LibSource\BitcoinBlockChainAnalyser\BitcoinBlockChainAnalyser.csproj">
       <Project>{8f817267-0e1b-4336-91b7-fcb7ad85cb20}</Project>
       <Name>BitcoinBlockChainAnalyser</Name>

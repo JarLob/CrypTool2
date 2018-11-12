@@ -20,9 +20,16 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
     /// </summary>
     public partial class BVPresentation : UserControl
     {
+        private BlockmodeVisualizer blockmodeVisualizer;
+
         public BVPresentation()
         {
             InitializeComponent();
+        }
+
+        public BVPresentation(BlockmodeVisualizer blockmodeVisualizer)
+        {
+            this.blockmodeVisualizer = blockmodeVisualizer;
         }
     }
 }
