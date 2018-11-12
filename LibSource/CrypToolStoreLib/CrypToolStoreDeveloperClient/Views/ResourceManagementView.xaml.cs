@@ -161,7 +161,7 @@ namespace CrypToolStoreDeveloperClient.Views
         /// <param name="e"></param>
         private void Update_Click(object sender, RoutedEventArgs e)
         {
-            /*Button button = (Button)sender;
+            Button button = (Button)sender;
             int id = (int)button.CommandParameter;
             UpdateResourceWindow updateResourceWindow = new UpdateResourceWindow(id);
             updateResourceWindow.MainWindow = MainWindow;
@@ -169,7 +169,7 @@ namespace CrypToolStoreDeveloperClient.Views
             //we fetch the Resource list in a separate thread, thus, the ui is not blocked during download of the list
             Thread fetchResourceListThread = new Thread(FetchResourceList);
             fetchResourceListThread.IsBackground = true;
-            fetchResourceListThread.Start();*/
+            fetchResourceListThread.Start();
         }
 
         /// <summary>

@@ -89,6 +89,9 @@
     <Compile Include="Views\SourceManagementView.xaml.cs">
       <DependentUpon>SourceManagementView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UpdateResourceWindow.xaml.cs">
+      <DependentUpon>UpdateResourceWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UpdatePluginWindow.xaml.cs">
       <DependentUpon>UpdatePluginWindow.xaml</DependentUpon>
     </Compile>
@@ -151,6 +154,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SourceManagementView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UpdateResourceWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
