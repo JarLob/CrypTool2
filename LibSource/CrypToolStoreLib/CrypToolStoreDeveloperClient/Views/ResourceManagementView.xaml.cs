@@ -70,7 +70,6 @@ namespace CrypToolStoreDeveloperClient.Views
             Thread fetchResourceListThread = new Thread(FetchResourceList);
             fetchResourceListThread.IsBackground = true;
             fetchResourceListThread.Start();
-
         }
 
         /// <summary>
@@ -180,13 +179,13 @@ namespace CrypToolStoreDeveloperClient.Views
         /// <param name="e"></param>
         private void CreateNewResourceButton_Click(object sender, RoutedEventArgs e)
         {
-            /*CreateNewResourceWindow createNewResourceWindow = new CreateNewResourceWindow();
+            CreateNewResourceWindow createNewResourceWindow = new CreateNewResourceWindow();
             createNewResourceWindow.MainWindow = MainWindow;
             createNewResourceWindow.ShowDialog();
             //we fetch the Resource list in a separate thread, thus, the ui is not blocked during download of the list
             Thread fetchResourceListThread = new Thread(FetchResourceList);
             fetchResourceListThread.IsBackground = true;
-            fetchResourceListThread.Start();*/
+            fetchResourceListThread.Start();
         }
 
         /// <summary>

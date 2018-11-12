@@ -45,8 +45,6 @@ namespace CrypToolStoreDeveloperClient.Views
 
         private Configuration Config = Configuration.GetConfiguration();
 
-        private int PluginId { get; set; }
-
         private byte[] icon;
         private byte[] Icon
         {
