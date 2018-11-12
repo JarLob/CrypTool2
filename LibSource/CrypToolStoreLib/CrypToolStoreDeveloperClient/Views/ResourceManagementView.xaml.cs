@@ -42,15 +42,15 @@ namespace CrypToolStoreDeveloperClient.Views
     {
         public MainWindow MainWindow { get; set; }
 
-        private ObservableCollection<Resource> Resources = new ObservableCollection<Resource>();
+        private ObservableCollection<Resource> ResourcesList = new ObservableCollection<Resource>();
 
         private Configuration Config = Configuration.GetConfiguration();
 
         public ResourceManagementView()
         {
             InitializeComponent();
-            ResourcesListView.ItemsSource = Resources;
-            Resources.Clear();
+            ResourcesListView.ItemsSource = ResourcesList;
+            ResourcesList.Clear();
             IsVisibleChanged += ResourceManagementView_IsVisibleChanged;
         }
 
@@ -91,12 +91,12 @@ namespace CrypToolStoreDeveloperClient.Views
                 {
                     try
                     {
-                        Resources.Clear();
+                        ResourcesList.Clear();
                         foreach (Resource Resource in resources)
                         {
                             if (Resource.Username == MainWindow.Username || MainWindow.IsAdmin)
                             {
-                                Resources.Add(Resource);
+                                ResourcesList.Add(Resource);
                             }
                         }
                     }
@@ -211,7 +211,7 @@ namespace CrypToolStoreDeveloperClient.Views
             {
                 try
                 {
-                    Resources.Clear();
+                    ResourcesList.Clear();
                 }
                 catch (Exception ex)
                 {

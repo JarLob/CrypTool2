@@ -323,6 +323,22 @@ namespace CrypToolStoreDeveloperClient.Views
             }
         }
 
+        
+        /// <summary>
+        /// Shows a window containing the buildlog
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Buildlog_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            string buildlog = (string)button.CommandParameter;
+            ShowBuildLogWindow showBuildlogWindow = new ShowBuildLogWindow(buildlog);
+            showBuildlogWindow.MainWindow = MainWindow;
+            showBuildlogWindow.ShowDialog();          
+        }
+        
+
         /// <summary>
         /// Resets the view
         /// Clears the source list

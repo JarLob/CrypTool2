@@ -77,6 +77,9 @@
     <Compile Include="Views\CreateNewResourceWindow.xaml.cs">
       <DependentUpon>CreateNewResourceWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CreateNewUserWindow.xaml.cs">
+      <DependentUpon>CreateNewUserWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DownloadAssemblyZipFileWindow.xaml.cs">
       <DependentUpon>DownloadAssemblyZipFileWindow.xaml</DependentUpon>
     </Compile>
@@ -104,8 +107,8 @@
     <Compile Include="Views\UpdateUserWindow.xaml.cs">
       <DependentUpon>UpdateUserWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CreateNewUserWindow.xaml.cs">
-      <DependentUpon>CreateNewUserWindow.xaml</DependentUpon>
+    <Compile Include="Views\ShowBuildlogWindow.xaml.cs">
+      <DependentUpon>ShowBuildlogWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HeaderView.xaml.cs">
       <DependentUpon>HeaderView.xaml</DependentUpon>
@@ -138,6 +141,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\CreateNewResourceWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CreateNewUserWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -177,7 +184,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\CreateNewUserWindow.xaml">
+    <Page Include="Views\ShowBuildlogWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

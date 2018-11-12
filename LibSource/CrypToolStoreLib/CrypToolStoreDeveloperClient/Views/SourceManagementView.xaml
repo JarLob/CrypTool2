@@ -99,6 +99,7 @@
                                     <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1" Click="DownloadAssembly_Click">Download assembly</Button>
                                     <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" Click="Delete_Click">Delete</Button>
                                     <Button Background="White" CommandParameter="{Binding Path=PluginVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="2" Click="UpdatePublishState_Click">Publish state</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=BuildLog}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" Click="Buildlog_Click">Buildlog</Button>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
