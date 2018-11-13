@@ -362,8 +362,6 @@ namespace CrypToolStoreLib.DataObjects
         public string Username { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int ActiveVersion { get; set; }
-        public bool Publish { get; set; }
 
         /// <summary>
         /// Default constructor
@@ -374,8 +372,6 @@ namespace CrypToolStoreLib.DataObjects
             Username = String.Empty;
             Name = String.Empty;
             Description = String.Empty;
-            ActiveVersion = -1;
-            Publish = false;
         }
 
         /// <summary>
@@ -394,8 +390,6 @@ namespace CrypToolStoreLib.DataObjects
                         writer.Write(Username);
                         writer.Write(Name);
                         writer.Write(Description);
-                        writer.Write(ActiveVersion);
-                        writer.Write(Publish);
                         return stream.ToArray();
                     }
                 }
@@ -422,8 +416,6 @@ namespace CrypToolStoreLib.DataObjects
                         Username = reader.ReadString();
                         Name = reader.ReadString();
                         Description = reader.ReadString();
-                        ActiveVersion = reader.ReadInt32();
-                        Publish = reader.ReadBoolean();
                     }
                 }
             }
@@ -435,8 +427,7 @@ namespace CrypToolStoreLib.DataObjects
 
         public override string ToString()
         {
-            return String.Format("Resource{{id={0}, username={1}, name={2}, description={3}, activeversion={4}, publish={5}}}",
-                Id, Username, Name, Description, ActiveVersion, Publish == true ? "true" : "false");
+            return String.Format("Resource{{id={0}, username={1}, name={2}, description={3}}}", Id, Username, Name, Description);
         }        
     }
 

@@ -905,24 +905,22 @@ namespace CrypToolStoreLib.Database
         /// <param name="username"></param>
         /// <param name="name"></param>
         /// <param name="description"></param>
-        public void UpdateResource(int id, string name, string description, int activeversion, bool publish)
+        public void UpdateResource(int id, string name, string description)
         {
-            logger.LogText(String.Format("Updating resource: id={0}, name={1}, description={2}, activeversion={3}, publish={4}", id, name, description, activeversion, publish == true ? "true" : "false"), this, Logtype.Debug);
-            string query = "update resources set name=@name, description=@description, activeversion=@activeversion, publish=@publish where id=@id";
+            logger.LogText(String.Format("Updating resource: id={0}, name={1}, description={2}", id, name, description), this, Logtype.Debug);
+            string query = "update resources set name=@name, description=@description where id=@id";
 
             DatabaseConnection connection = GetConnection();
 
             object[][] parameters = new object[][]{
                 new object[]{"@name", name},
                 new object[]{"@description", description},
-                new object[]{"@activeversion", activeversion},
-                new object[]{"@publish", publish},
                 new object[]{"@id", id}
             };
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated resource: id={0}, name={1}, description={2}, activeversion={3}, publish={4}", id, name, description, activeversion, publish == true ? "true" : "false"), this, Logtype.Debug);
+            logger.LogText(String.Format("Updated resource: id={0}, name={1}, description={2}", id, name, description), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -955,7 +953,7 @@ namespace CrypToolStoreLib.Database
         /// <returns></returns>
         public Resource GetResource(int id)
         {
-            string query = "select id, username, name, description, activeversion, publish from resources where id=@id";
+            string query = "select id, username, name, description from resources where id=@id";
 
             DatabaseConnection connection = GetConnection();
 
@@ -973,9 +971,7 @@ namespace CrypToolStoreLib.Database
             resource.Id = (int)resultset[0]["id"];
             resource.Username = (string)resultset[0]["username"];
             resource.Name = (string)resultset[0]["name"];
-            resource.Description = (string)resultset[0]["description"];
-            resource.ActiveVersion = (int)resultset[0]["activeversion"];
-            resource.Publish = (bool)resultset[0]["publish"];          
+            resource.Description = (string)resultset[0]["description"];    
             return resource;
         }
 
@@ -990,11 +986,11 @@ namespace CrypToolStoreLib.Database
             string query;
             if (username == null)
             {
-                query = "select id, username, name, description, activeversion, publish from resources";
+                query = "select id, username, name, description from resources";
             }
             else
             {
-                query = "select id, username, name, description, activeversion, publish from resources where username=@username";
+                query = "select id, username, name, description from resources where username=@username";
             }
 
             DatabaseConnection connection = GetConnection();
@@ -1017,9 +1013,7 @@ namespace CrypToolStoreLib.Database
                 resource.Id = (int)entry["id"];
                 resource.Username = (string)entry["username"];
                 resource.Name = (string)entry["name"];
-                resource.Description = (string)entry["description"];
-                resource.ActiveVersion = (int)entry["activeversion"];
-                resource.Publish = (bool)entry["publish"];          
+                resource.Description = (string)entry["description"];       
                 resources.Add(resource);
             }
             return resources;

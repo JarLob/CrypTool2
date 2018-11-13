@@ -1566,7 +1566,7 @@ namespace CrypToolStoreLib.Server
             try
             {
                 resource = updateResourceMessage.Resource;
-                Database.UpdateResource(resource.Id, resource.Name, resource.Description, resource.ActiveVersion, resource.Publish);
+                Database.UpdateResource(resource.Id, resource.Name, resource.Description);
                 resource = Database.GetResource(resource.Id);
                 Logger.LogText(String.Format("User {0} updated existing resource={1} in database", Username, resource.Id), this, Logtype.Info);
                 ResponseResourceModificationMessage response = new ResponseResourceModificationMessage();
@@ -1676,7 +1676,7 @@ namespace CrypToolStoreLib.Server
                 else
                 {
 
-                    if (resource.Publish == false && resource.Username != Username && !ClientIsAdmin)
+                    if (resource.Username != Username && !ClientIsAdmin)
                     {
                         ResponseResourceMessage response = new ResponseResourceMessage();
                         response.ResourceExists = false;
@@ -1721,7 +1721,7 @@ namespace CrypToolStoreLib.Server
                 List<Resource> resources = Database.GetResources(requestResourceListMessage.Username.Equals("*") ? null : requestResourceListMessage.Username);
                 if (!ClientIsAdmin)
                 {
-                    resources = (from p in resources where p.Publish == true || p.Username == Username select p).ToList();
+                    resources = (from p in resources where p.Username == Username select p).ToList();
                 }
                 ResponseResourceListMessage response = new ResponseResourceListMessage();
                 response.Resources = resources;
