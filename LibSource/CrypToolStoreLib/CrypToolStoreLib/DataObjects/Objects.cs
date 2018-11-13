@@ -447,15 +447,28 @@ namespace CrypToolStoreLib.DataObjects
     {
         public int ResourceId { get; set; }
         public int ResourceVersion { get; set; }
-        public byte[] Data { get; set; }
+        public string DataFilename { get; set; }
         public DateTime UploadDate { get; set; }
+        public string PublishState { get; set; }
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public ResourceData()
         {
             ResourceId = -1;
             ResourceVersion = -1;
-            Data = new byte[0];
+            DataFilename = string.Empty;
             UploadDate = DateTime.MinValue;
+        }
+
+        /// <summary>
+        /// Returns true if this ResourceData contains any Data
+        /// </summary>
+        /// <returns></returns>
+        public bool HasData()
+        {
+            return !string.IsNullOrEmpty(DataFilename);
         }
 
         /// <summary>
@@ -472,9 +485,9 @@ namespace CrypToolStoreLib.DataObjects
                     {
                         writer.Write(ResourceId);
                         writer.Write(ResourceVersion);
-                        writer.Write(Data.Length);//first write length of byte array
-                        writer.Write(Data);                        
+                        writer.Write(DataFilename);                        
                         writer.Write(UploadDate.ToBinary());
+                        writer.Write(PublishState);
                         return stream.ToArray();
                     }
                 }
@@ -499,9 +512,9 @@ namespace CrypToolStoreLib.DataObjects
                     {
                         ResourceId = reader.ReadInt32();
                         ResourceVersion = reader.ReadInt32();
-                        int length = reader.ReadInt32();//first read length of byte array
-                        Data = reader.ReadBytes(length);
+                        DataFilename = reader.ReadString();
                         UploadDate = DateTime.FromBinary(reader.ReadInt64());
+                        PublishState = reader.ReadString();
                     }
                 }
             }
@@ -513,8 +526,8 @@ namespace CrypToolStoreLib.DataObjects
 
         public override string ToString()
         {
-            return String.Format("ResourceData{{resourceid={0}, version={1}, data={2}, uploadtime={3}}}",
-                ResourceId, ResourceVersion, Data != null ? Data.Length.ToString() : "null", UploadDate);
+            return String.Format("ResourceData{{resourceid={0}, version={1}, datafilename={2}, uploadtime={3}, publishstate={4}}}",
+                ResourceId, ResourceVersion, DataFilename, UploadDate, PublishState);
         }
     }
 

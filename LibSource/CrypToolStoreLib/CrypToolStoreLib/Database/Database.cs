@@ -1029,50 +1029,53 @@ namespace CrypToolStoreLib.Database
         /// Creates a new resource data entry in the database
         /// </summary>
         /// <param name="version"></param>
-        /// <param name="data"></param>
+        /// <param name="datafilename"></param>
         /// <param name="uploaddate"></param>
-        public void CreateResourceData(int resourceid, int version, byte[] data, DateTime uploaddate)
+        public void CreateResourceData(int resourceid, int version, string datafilename, DateTime uploaddate)
         {
-            logger.LogText(String.Format("Creating new resource data: resourceid={0}, version={1}, data={2}, uploaddate={3}", resourceid, version, data != null ? data.Length.ToString() : "null", uploaddate), this, Logtype.Debug);
-            string query = "insert into resourcesdata (resourceid, version, data, uploaddate) values (@resourceid, @version, @data, @uploaddate)";
+            logger.LogText(String.Format("Creating new resource data: resourceid={0}, version={1}, datafilename={2}, uploaddate={3}", resourceid, version, datafilename != null ? datafilename.Length.ToString() : "null", uploaddate), this, Logtype.Debug);
+            string query = "insert into resourcesdata (resourceid, version, datafilename, uploaddate, publishstate) values (@resourceid, @version, @datafilename, @uploaddate, @publishstate)";
 
             DatabaseConnection connection = GetConnection();
 
             object[][] parameters = new object[][]{
                 new object[]{"@resourceid", resourceid},
                 new object[]{"@version", version},
-                new object[]{"@data", data},
-                new object[]{"@uploaddate", uploaddate}
+                new object[]{"@datafilename", datafilename},
+                new object[]{"@uploaddate", uploaddate},
+                new object[]{"@publishstate", PublishState.NOTPUBLISHED.ToString()}
             };
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Created new resource data: resourceid={0}, version={1}, data={2}, uploaddate={3}", resourceid, version, data != null ? data.Length.ToString() : "null", uploaddate), this, Logtype.Debug);
+            logger.LogText(String.Format("Created new resource data: resourceid={0}, version={1}, datafilename={2}, uploaddate={3}", resourceid, version, datafilename, uploaddate), this, Logtype.Debug);
         }
 
         /// <summary>
         /// Updates a resource data entry in the database
         /// </summary>
         /// <param name="version"></param>
-        /// <param name="data"></param>
+        /// <param name="datafilename"></param>
         /// <param name="uploaddate"></param>
-        public void UpdateResourceData(int resourceid, int version, byte[] data, DateTime uploaddate)
+        /// <param name="publishstate"></param>
+        public void UpdateResourceData(int resourceid, int version, string datafilename, DateTime uploaddate, string publishstate)
         {
-            logger.LogText(String.Format("Updating resource data: resourceid={0}, version={1}, data={2}, uploaddate={3}", resourceid, version, data != null ? data.Length.ToString() : "null", uploaddate), this, Logtype.Debug);
-            string query = "update resourcesdata set data=@data, uploaddate=@uploaddate where resourceid=@resourceid and version=@version";
+            logger.LogText(String.Format("Updating resource data: resourceid={0}, version={1}, datafilename={2}, uploaddate={3}", resourceid, version, datafilename, uploaddate), this, Logtype.Debug);
+            string query = "update resourcesdata set datafilename=@datafilename, uploaddate=@uploaddate, publishstate=@publishstate where resourceid=@resourceid and version=@version";
 
             DatabaseConnection connection = GetConnection();
 
             object[][] parameters = new object[][]{                
-                new object[]{"@data", data},
+                new object[]{"@datafilename", datafilename},
                 new object[]{"@uploaddate", uploaddate},
                 new object[]{"@resourceid", resourceid},
-                new object[]{"@version", version}
+                new object[]{"@version", version},
+                new object[]{"@publishstate", publishstate},
             };
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated resource data: resourceid={0}, version={1}, data={2}, uploaddate={3}", resourceid, version, data != null ? data.Length.ToString() : "null", uploaddate), this, Logtype.Debug);
+            logger.LogText(String.Format("Updated resource data: resourceid={0}, version={1}, datafilename={2}, uploaddate={3}", resourceid, version, datafilename != null ? datafilename.Length.ToString() : "null", uploaddate), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -1107,7 +1110,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="uploaddate"></param>
         public ResourceData GetResourceData(int resourceid, int version)
         {
-            string query = "select resourceid, version, data, uploaddate from resourcesdata where resourceid=@resourceid and version=@version";
+            string query = "select resourceid, version, datafilename, uploaddate, publishstate from resourcesdata where resourceid=@resourceid and version=@version";
 
             DatabaseConnection connection = GetConnection();
 
@@ -1126,8 +1129,9 @@ namespace CrypToolStoreLib.Database
             ResourceData resourceData = new ResourceData();
             resourceData.ResourceId = (int)resultset[0]["resourceid"];
             resourceData.ResourceVersion = (int)resultset[0]["version"];
-            resourceData.Data = (byte[])resultset[0]["data"];
+            resourceData.DataFilename = (string)resultset[0]["datafilename"];
             resourceData.UploadDate = (DateTime)resultset[0]["uploaddate"];
+            resourceData.PublishState = (string)resultset[0]["publishstate"];
             
             return resourceData;
         }
@@ -1145,11 +1149,11 @@ namespace CrypToolStoreLib.Database
 
             if (resourceid != -1)
             {
-                query = "select resourceid, version, data, uploaddate from resourcesdata where resourceid=@resourceid";
+                query = "select resourceid, version, datafilename, uploaddate, publishstate from resourcesdata where resourceid=@resourceid";
             }
             else
             {
-                query = "select resourceid, version, data, uploaddate from resourcesdata";
+                query = "select resourceid, version, datafilename, uploaddate, publishstate from resourcesdata";
             }
 
             DatabaseConnection connection = GetConnection();
@@ -1171,8 +1175,9 @@ namespace CrypToolStoreLib.Database
                 ResourceData resourceData = new ResourceData();
                 resourceData.ResourceId = (int)entry["resourceid"];
                 resourceData.ResourceVersion = (int)entry["version"];
-                resourceData.Data = (byte[])entry["data"];
+                resourceData.DataFilename = (string)entry["datafilename"];
                 resourceData.UploadDate = (DateTime)entry["uploaddate"];
+                resourceData.PublishState = (string)entry["publishstate"];
                 resourceDataList.Add(resourceData);
             }
             return resourceDataList;

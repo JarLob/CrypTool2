@@ -189,16 +189,16 @@ namespace CrypToolStoreDeveloperClient.Views
         }
 
         /// <summary>
-        /// Switches to the source view showing the sources of the defined Resource
+        /// Switches to the source view showing the datas of the defined resource
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ResourceData_Click(object sender, RoutedEventArgs e)
         {
-            /*Button button = (Button)sender;
+            Button button = (Button)sender;
             int id = (int)button.CommandParameter;
-            MainWindow.SourceManagementView.ResourceId = id;
-            MainWindow.ChangeScreen(UiState.SourceManagement);*/
+            MainWindow.ResourceDataManagementView.ResourceId = id;
+            MainWindow.ChangeScreen(UiState.ResourceDataManagement);
         }
 
         /// <summary>

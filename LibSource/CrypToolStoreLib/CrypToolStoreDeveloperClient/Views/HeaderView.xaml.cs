@@ -110,6 +110,10 @@ namespace CrypToolStoreDeveloperClient.Views
             {
                 MainWindow.ChangeScreen(UiState.PluginManagement);
             }
+            else if (MainWindow.UiState == UiState.ResourceDataManagement)
+            {
+                MainWindow.ChangeScreen(UiState.ResourceManagement);
+            }
             else
             {
                 MainWindow.ChangeScreen(UiState.MainMenu);

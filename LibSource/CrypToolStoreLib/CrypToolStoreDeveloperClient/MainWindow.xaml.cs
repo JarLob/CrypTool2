@@ -39,7 +39,8 @@ namespace CrypToolStoreDeveloperClient
         UserManagement,
         PluginManagement,
         SourceManagement,
-        ResourceManagement
+        ResourceManagement,
+        ResourceDataManagement
     }
 
     /// <summary>
@@ -71,6 +72,7 @@ namespace CrypToolStoreDeveloperClient
             PluginManagementView.MainWindow = this;
             SourceManagementView.MainWindow = this;
             ResourceManagementView.MainWindow = this;
+            ResourceDataManagementView.MainWindow = this;
 
             ChangeScreen(UiState.LoginScreen);            
         }
@@ -91,6 +93,7 @@ namespace CrypToolStoreDeveloperClient
             PluginManagementView.Visibility = Visibility.Hidden;
             SourceManagementView.Visibility = Visibility.Hidden;
             ResourceManagementView.Visibility = Visibility.Hidden;
+            ResourceDataManagementView.Visibility = Visibility.Hidden;
 
             switch (uiState)
             {
@@ -135,6 +138,13 @@ namespace CrypToolStoreDeveloperClient
                     HeaderView.Visibility = Visibility.Visible;
                     ResourceManagementView.Visibility = Visibility.Visible;
                     HeaderView.UiTitel = "Resource Management";
+                    break;
+                case UiState.ResourceDataManagement:
+                    Width = 1100;
+                    Height = 600;
+                    HeaderView.Visibility = Visibility.Visible;
+                    ResourceDataManagementView.Visibility = Visibility.Visible;
+                    HeaderView.UiTitel = "Resource Data Management";
                     break;
             }
         }

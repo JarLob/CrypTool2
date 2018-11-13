@@ -1791,7 +1791,7 @@ namespace CrypToolStoreLib.Server
             //Here, everything is fine; thus, we try to create the resource data
             try
             {
-                Database.CreateResourceData(createNewResourceDataMessage.ResourceData.ResourceId, createNewResourceDataMessage.ResourceData.ResourceVersion, createNewResourceDataMessage.ResourceData.Data, DateTime.Now);
+                Database.CreateResourceData(createNewResourceDataMessage.ResourceData.ResourceId, createNewResourceDataMessage.ResourceData.ResourceVersion, createNewResourceDataMessage.ResourceData.DataFilename, DateTime.Now);
                 Logger.LogText(String.Format("User {0} created new resource data for resource={1}-{2} in database", Username, createNewResourceDataMessage.ResourceData.ResourceId, createNewResourceDataMessage.ResourceData.ResourceVersion), this, Logtype.Info);
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = true;
@@ -1858,7 +1858,7 @@ namespace CrypToolStoreLib.Server
             try
             {
                 resourceData = updateResourceDataMessage.ResourceData;
-                Database.UpdateResourceData(resourceData.ResourceId, resourceData.ResourceVersion, resourceData.Data, DateTime.Now);
+                Database.UpdateResourceData(resourceData.ResourceId, resourceData.ResourceVersion, resourceData.DataFilename, DateTime.Now, resourceData.PublishState);
                 Logger.LogText(String.Format("User {0} updated existing resource data={1}-{2} in database", Username, updateResourceDataMessage.ResourceData.ResourceId, updateResourceDataMessage.ResourceData.ResourceVersion), this, Logtype.Info);
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = true;
