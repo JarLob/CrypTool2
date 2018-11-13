@@ -467,9 +467,12 @@ namespace CrypToolStoreLib.DataObjects
         /// Returns true if this ResourceData contains any Data
         /// </summary>
         /// <returns></returns>
-        public bool HasData()
+        public bool HasData
         {
-            return !string.IsNullOrEmpty(DataFilename);
+            get
+            {
+                return !string.IsNullOrEmpty(DataFilename);
+            }
         }
 
         /// <summary>
