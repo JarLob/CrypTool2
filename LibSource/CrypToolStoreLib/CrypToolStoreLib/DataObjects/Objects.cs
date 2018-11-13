@@ -460,6 +460,7 @@ namespace CrypToolStoreLib.DataObjects
             ResourceVersion = -1;
             DataFilename = string.Empty;
             UploadDate = DateTime.MinValue;
+            PublishState = CrypToolStoreLib.DataObjects.PublishState.NOTPUBLISHED.ToString();
         }
 
         /// <summary>

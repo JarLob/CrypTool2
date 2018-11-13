@@ -2933,7 +2933,8 @@ namespace CrypToolStoreLib.Client
                     return new DataModificationOrRequestResult()
                     {
                         Message = responseResourceDataListMessage.Message,
-                        DataObject = responseResourceDataListMessage.ResourceDataList
+                        DataObject = responseResourceDataListMessage.ResourceDataList,
+                        Success = true
                     };
                 }
 

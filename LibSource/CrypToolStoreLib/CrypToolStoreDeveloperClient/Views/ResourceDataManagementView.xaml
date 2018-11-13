@@ -77,6 +77,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Name="CreateNewResourceDataButton" Background="White" Grid.Row="2" Width="110" Height="25" HorizontalAlignment="Center" Click="CreateNewResourceDataButton_Click">Create new ResourceData</Button>
+        <Button Name="CreateNewResourceDataButton" Background="White" Grid.Row="2" Width="150" Height="25" HorizontalAlignment="Center" Click="CreateNewResourceDataButton_Click">Create new Resource Data</Button>
     </Grid>
 </UserControl>

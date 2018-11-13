@@ -158,6 +158,7 @@ namespace CrypToolStoreDeveloperClient
             PluginManagementView.Reset();
             SourceManagementView.Reset();
             ResourceManagementView.Reset();
+            ResourceDataManagementView.Reset();
         }
     }
 }
