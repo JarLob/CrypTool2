@@ -62,14 +62,11 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
                                     </Grid.RowDefinitions>
-                                    <Button Background="White" CommandParameter="{Binding Path=ResourceVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0" Click="UploadResourceDataZipFile_Click">Upload src zip</Button>
-                                    <Button Background="White" CommandParameter="{Binding Path=ResourceVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0" Click="DownloadResourceDataZipFile_Click">Download src zip</Button>
-                                    <Button Background="White" CommandParameter="{Binding Path=ResourceVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1" Click="DownloadAssembly_Click">Download assembly</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=ResourceVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0" Click="UploadResourceDataZipFile_Click">Upload data</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=ResourceVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0" Click="DownloadResourceDataZipFile_Click">Download data</Button>
                                     <Button Background="White" CommandParameter="{Binding Path=ResourceVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" Click="Delete_Click">Delete</Button>
-                                    <Button Background="White" CommandParameter="{Binding Path=ResourceVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="2" Click="UpdatePublishState_Click">Publish state</Button>
-                                    <Button Background="White" CommandParameter="{Binding Path=BuildLog}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" Click="Buildlog_Click">Buildlog</Button>
+                                    <Button Background="White" CommandParameter="{Binding Path=ResourceVersion}" Width="115" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1" Click="UpdatePublishState_Click">Publish state</Button>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

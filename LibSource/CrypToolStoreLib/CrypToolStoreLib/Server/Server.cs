@@ -1900,7 +1900,7 @@ namespace CrypToolStoreLib.Server
                 return;
             }
             //check, if sourceData to delete exist
-            Plugin plugin = Database.GetPlugin(deleteResourceDataMessage.ResourceData.ResourceId);
+            Resource resource = Database.GetResource(deleteResourceDataMessage.ResourceData.ResourceId);
             ResourceData sourceData = Database.GetResourceData(deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion);
             if (sourceData == null)
             {
@@ -1912,7 +1912,7 @@ namespace CrypToolStoreLib.Server
                 return;
             }
             //"normal" users are only allowed to update their own sourceDatas
-            if (ClientIsAdmin == false && plugin.Username != Username)
+            if (ClientIsAdmin == false && resource.Username != Username)
             {
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
