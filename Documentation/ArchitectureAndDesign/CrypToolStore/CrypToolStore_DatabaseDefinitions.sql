@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2.1
--- http://www.phpmyadmin.net
+-- version 4.6.6deb4
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Erstellungszeit: 01. Nov 2018 um 14:36
--- Server-Version: 5.7.24-0ubuntu0.16.04.1
--- PHP-Version: 7.0.32-0ubuntu0.16.04.1
+-- Host: localhost:3306
+-- Erstellungszeit: 13. Nov 2018 um 16:44
+-- Server-Version: 10.1.26-MariaDB-0+deb9u1
+-- PHP-Version: 7.0.30-0+deb9u1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,13 +19,11 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `CrypToolStore`
 --
-CREATE DATABASE IF NOT EXISTS `CrypToolStore` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `CrypToolStore`;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur fÃ¼r Tabelle `developers`
+-- Tabellenstruktur für Tabelle `developers`
 --
 
 CREATE TABLE `developers` (
@@ -42,7 +40,7 @@ CREATE TABLE `developers` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur fÃ¼r Tabelle `plugins`
+-- Tabellenstruktur für Tabelle `plugins`
 --
 
 CREATE TABLE `plugins` (
@@ -60,41 +58,40 @@ CREATE TABLE `plugins` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur fÃ¼r Tabelle `resources`
+-- Tabellenstruktur für Tabelle `resources`
 --
 
 CREATE TABLE `resources` (
   `id` int(11) NOT NULL,
   `username` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `description` text NOT NULL,
-  `activeversion` int(11) NOT NULL,
-  `publish` tinyint(1) NOT NULL
+  `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur fÃ¼r Tabelle `resourcesdata`
+-- Tabellenstruktur für Tabelle `resourcesdata`
 --
 
 CREATE TABLE `resourcesdata` (
   `resourceid` int(11) NOT NULL,
   `version` int(11) NOT NULL,
-  `data` varchar(100) DEFAULT NULL,
-  `uploaddate` datetime NOT NULL
+  `datafilename` varchar(100) DEFAULT NULL,
+  `uploaddate` datetime NOT NULL,
+  `publishstate` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur fÃ¼r Tabelle `sources`
+-- Tabellenstruktur für Tabelle `sources`
 --
 
 CREATE TABLE `sources` (
   `pluginid` int(11) NOT NULL,
   `pluginversion` int(11) NOT NULL,
-  `buildversion` int(11) NOT NULL DEFAULT '0',
+  `buildversion` int(11) NOT NULL,
   `zipfilename` varchar(100) DEFAULT NULL,
   `buildstate` varchar(100) DEFAULT NULL,
   `buildlog` text NOT NULL,
@@ -109,52 +106,52 @@ CREATE TABLE `sources` (
 --
 
 --
--- Indizes fÃ¼r die Tabelle `developers`
+-- Indizes für die Tabelle `developers`
 --
 ALTER TABLE `developers`
   ADD PRIMARY KEY (`username`);
 
 --
--- Indizes fÃ¼r die Tabelle `plugins`
+-- Indizes für die Tabelle `plugins`
 --
 ALTER TABLE `plugins`
   ADD PRIMARY KEY (`id`),
   ADD KEY `username` (`username`);
 
 --
--- Indizes fÃ¼r die Tabelle `resources`
+-- Indizes für die Tabelle `resources`
 --
 ALTER TABLE `resources`
   ADD PRIMARY KEY (`id`),
   ADD KEY `username` (`username`);
 
 --
--- Indizes fÃ¼r die Tabelle `resourcesdata`
+-- Indizes für die Tabelle `resourcesdata`
 --
 ALTER TABLE `resourcesdata`
   ADD PRIMARY KEY (`resourceid`,`version`);
 
 --
--- Indizes fÃ¼r die Tabelle `sources`
+-- Indizes für die Tabelle `sources`
 --
 ALTER TABLE `sources`
   ADD PRIMARY KEY (`pluginid`,`pluginversion`),
   ADD KEY `pluginversion` (`pluginversion`);
 
 --
--- AUTO_INCREMENT fÃ¼r exportierte Tabellen
+-- AUTO_INCREMENT für exportierte Tabellen
 --
 
 --
--- AUTO_INCREMENT fÃ¼r Tabelle `plugins`
+-- AUTO_INCREMENT für Tabelle `plugins`
 --
 ALTER TABLE `plugins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 --
--- AUTO_INCREMENT fÃ¼r Tabelle `resources`
+-- AUTO_INCREMENT für Tabelle `resources`
 --
 ALTER TABLE `resources`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1030;
 --
 -- Constraints der exportierten Tabellen
 --
