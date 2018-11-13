@@ -561,7 +561,7 @@ namespace CrypToolStoreLib.Server
                 Logger.LogText(String.Format("User {0} created new developer in database: {1}", Username, developer), this, Logtype.Info);
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.ModifiedDeveloper = true;
-                response.Message = String.Format("Created new developer in database: {0}", developer.ToString());                
+                response.Message = String.Format("Created new developer={0} in database", developer.Username);
                 SendMessage(response, sslStream);                                
             }
             catch (Exception ex)
@@ -659,7 +659,7 @@ namespace CrypToolStoreLib.Server
                 Logger.LogText(String.Format("User {0} deleted existing developer in database: {1}", Username, developer.Username), this, Logtype.Info);
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.ModifiedDeveloper = true;
-                response.Message = String.Format("Deleted developer in database: {0}", developer.ToString());
+                response.Message = String.Format("Deleted developer={0} in database", developer.Username);
                 SendMessage(response, sslStream);
             }
             catch (Exception ex)
@@ -711,7 +711,7 @@ namespace CrypToolStoreLib.Server
                 {
                     Logger.LogText(String.Format("User {0} requested an existing developer from database: {1}", Username, developer), this, Logtype.Debug);
                     ResponseDeveloperMessage response = new ResponseDeveloperMessage();
-                    response.Message = String.Format("Return developer: {0}", developer.ToString());
+                    response.Message = String.Format("Return developer={0}", developer.Username);
                     response.DeveloperExists = true;
                     response.Developer = developer;
                     SendMessage(response, sslStream);
@@ -802,7 +802,7 @@ namespace CrypToolStoreLib.Server
                 Logger.LogText(String.Format("User {0} created new plugin in database: {1}", Username, plugin), this, Logtype.Info);
                 ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
                 response.ModifiedPlugin = true;
-                response.Message = String.Format("Created new plugin in database: {0}", plugin.ToString());
+                response.Message = String.Format("Created new plugin={0} in database", plugin.Id);
                 SendMessage(response, sslStream);
             }
             catch (Exception ex)
@@ -875,10 +875,10 @@ namespace CrypToolStoreLib.Server
                 plugin = updatePluginMessage.Plugin;
                 Database.UpdatePlugin(plugin.Id, Username, plugin.Name, plugin.ShortDescription, plugin.LongDescription, plugin.Authornames, plugin.Authoremails, plugin.Authorinstitutes, plugin.Icon);
                 plugin = Database.GetPlugin(plugin.Id);
-                Logger.LogText(String.Format("User {0} updated existing plugin in database: {1}", Username, plugin.ToString()), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} updated existing plugin={1} in database", Username, plugin.Id), this, Logtype.Info);
                 ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
                 response.ModifiedPlugin = true;
-                response.Message = String.Format("Updated plugin in database: {0}", plugin.ToString());
+                response.Message = String.Format("Updated plugin={0} in database", plugin.Id);
                 SendMessage(response, sslStream);
             }
             catch (Exception ex)
@@ -941,7 +941,7 @@ namespace CrypToolStoreLib.Server
             {
                 plugin = deletePluginMessage.Plugin;
                 Database.DeletePlugin(deletePluginMessage.Plugin.Id);
-                Logger.LogText(String.Format("User {0} deleted existing plugin in database: {1}", Username, plugin.Id), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} deleted existing plugin={1} in database", Username, plugin.Id), this, Logtype.Info);
                 ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
                 response.ModifiedPlugin = true;
                 response.Message = String.Format("Deleted plugin in database: {0}", plugin.Id);
@@ -1101,7 +1101,7 @@ namespace CrypToolStoreLib.Server
                 Logger.LogText(String.Format("User {0} created new source={1}-{2}", Username, source.PluginId, source.PluginVersion), this, Logtype.Info);
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = true;
-                response.Message = String.Format("Created new source in database: {0}", source.ToString());
+                response.Message = String.Format("Created new source={0}-{1} in database", source.PluginId, source.PluginVersion);
                 SendMessage(response, sslStream);
             }
             catch (Exception ex)
@@ -1168,7 +1168,7 @@ namespace CrypToolStoreLib.Server
                 Logger.LogText(String.Format("User {0} updated existing source={1}-{2} in database", Username, source.PluginId, source.PluginVersion), this, Logtype.Info);
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = true;
-                response.Message = String.Format("Updated source in database: {0}", source.ToString());
+                response.Message = String.Format("Updated source={0}-{1} in database {0}", source.PluginId, source.PluginVersion);
                 SendMessage(response, sslStream);
             }
             catch (Exception ex)
@@ -1255,7 +1255,7 @@ namespace CrypToolStoreLib.Server
                 Logger.LogText(String.Format("User {0} updated publish state of existing source={1}-{2} in database", Username, source.PluginId, source.PluginVersion), this, Logtype.Info);
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = true;
-                response.Message = String.Format("Updated publish state of source in database: {0}", source.ToString());
+                response.Message = String.Format("Updated publish state of source={0}-{1} in database", source.PluginId, source.PluginVersion);
                 SendMessage(response, sslStream);
             }
             catch (Exception ex)
@@ -1338,7 +1338,7 @@ namespace CrypToolStoreLib.Server
                 Logger.LogText(String.Format("User {0} deleted existing source in database: {1}-{2}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion), this, Logtype.Info);
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = true;
-                response.Message = String.Format("Deleted source in database: {0}", source.ToString());
+                response.Message = String.Format("Deleted source={0}-{1} in database", source.PluginId, source.PluginVersion);
                 SendMessage(response, sslStream);
             }
             catch (Exception ex)
@@ -1568,10 +1568,10 @@ namespace CrypToolStoreLib.Server
                 resource = updateResourceMessage.Resource;
                 Database.UpdateResource(resource.Id, resource.Name, resource.Description, resource.ActiveVersion, resource.Publish);
                 resource = Database.GetResource(resource.Id);
-                Logger.LogText(String.Format("User {0} updated existing resource in database: {1}", Username, resource.ToString()), this, Logtype.Info);
+                Logger.LogText(String.Format("User {0} updated existing resource={1} in database", Username, resource.Id), this, Logtype.Info);
                 ResponseResourceModificationMessage response = new ResponseResourceModificationMessage();
                 response.ModifiedResource = true;
-                response.Message = String.Format("Updated resource in database: {0}", resource.ToString());
+                response.Message = String.Format("Updated resource={0} in database.", resource.Id);
                 SendMessage(response, sslStream);
             }
             catch (Exception ex)
@@ -1579,7 +1579,7 @@ namespace CrypToolStoreLib.Server
                 //update failed; logg to logfile and return exception to client
                 ResponseResourceModificationMessage response = new ResponseResourceModificationMessage();                
                 response.ModifiedResource = false;
-                Logger.LogText(String.Format("User {0} tried to update an existing resource. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogText(String.Format("User {0} tried to update an existing resource={1}. But an exception occured: {2}", Username, resource.Id, ex.Message), this, Logtype.Error);
                 response.Message = "Exception during update of existing resource";
                 SendMessage(response, sslStream);
             }
@@ -1689,7 +1689,7 @@ namespace CrypToolStoreLib.Server
                         ResponseResourceMessage response = new ResponseResourceMessage();
                         response.Resource = resource;
                         response.ResourceExists = true;
-                        string message = String.Format("Responding with resource: {0}", resource.ToString());
+                        string message = String.Format("Responding with resource={0}", resource.Id);
                         Logger.LogText(message, this, Logtype.Debug);
                         response.Message = message;
                         SendMessage(response, sslStream);
