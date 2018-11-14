@@ -84,6 +84,7 @@ namespace CrypToolStoreLib.Tools
         ResponseResourceDataModification = 505,
         RequestResourceData = 506,
         ResponseResourceData = 507,
+        UpdateResourceDataPublishState = 508,
 
         //Message for uploading/downloading data
         UploadDownloadData = 600,
@@ -279,6 +280,7 @@ namespace CrypToolStoreLib.Tools
             MessageTypeDictionary.Add(MessageType.ResponseResourceDataModification, typeof(ResponseResourceDataModificationMessage));
             MessageTypeDictionary.Add(MessageType.RequestResourceData, typeof(RequestResourceDataMessage));
             MessageTypeDictionary.Add(MessageType.ResponseResourceData, typeof(ResponseResourceDataMessage));
+            MessageTypeDictionary.Add(MessageType.UpdateResourceDataPublishState, typeof(UpdateResourceDataPublishStateMessage));
 
             //upload/download messages
             MessageTypeDictionary.Add(MessageType.UploadDownloadData, typeof(UploadDownloadDataMessage));
@@ -1837,6 +1839,24 @@ namespace CrypToolStoreLib.Tools
         {
             ResourceData = new ResourceData();
         }        
+    }
+
+    /// <summary>
+    /// Message to update the publish state of a source
+    /// </summary>
+    public class UpdateResourceDataPublishStateMessage : Message
+    {
+        [MessageDataField]
+        public ResourceData ResourceData
+        {
+            get;
+            set;
+        }
+
+        public UpdateResourceDataPublishStateMessage()
+        {
+            ResourceData = new ResourceData();
+        }
     }
 
     #endregion

@@ -402,6 +402,9 @@ namespace CrypToolStoreLib.Server
                 case MessageType.UpdateResourceData:
                     HandleUpdateResourceDataMessage((UpdateResourceDataMessage)message, sslStream);
                     break;
+                case MessageType.UpdateResourceDataPublishState:
+                    HandleUpdateResourceDataPublishState((UpdateResourceDataPublishStateMessage)message, sslStream);
+                    break;
                 case MessageType.DeleteResourceData:
                     HandleDeleteResourceDataMessage((DeleteResourceDataMessage)message, sslStream);
                     break;
@@ -1882,6 +1885,95 @@ namespace CrypToolStoreLib.Server
                 SendMessage(response, sslStream);
             }
         }
+
+        /// <summary>
+        /// Handles UpdateResourceDataPublishStateMessages
+        /// Updates the dedicated ResourceData's publish state to the given one
+        /// </summary>
+        /// <param name="updateResourceDataPublishStateMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleUpdateResourceDataPublishState(UpdateResourceDataPublishStateMessage updateResourceDataPublishStateMessage, SslStream sslStream)
+        {
+            Logger.LogText(String.Format("User {0} tries to update the publish state of a source", Username), this, Logtype.Debug);
+
+            //Only authenticated users are allowed to update resourcedatas
+            if (!ClientIsAuthenticated)
+            {
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = false;
+                response.Message = "Unauthorized to update that resourcedata";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update the publish state of resourcedata={1}-{2} from IP={3}", Username, updateResourceDataPublishStateMessage.ResourceData.ResourceId, updateResourceDataPublishStateMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            //check, if resourcedata to update exist
+            Plugin plugin = Database.GetPlugin(updateResourceDataPublishStateMessage.ResourceData.ResourceId);
+            ResourceData resourceData = Database.GetResourceData(updateResourceDataPublishStateMessage.ResourceData.ResourceId, updateResourceDataPublishStateMessage.ResourceData.ResourceVersion);
+            if (resourceData == null)
+            {
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = false;
+                response.Message = "Unauthorized to update that resourcedata"; // we send an "unauthorized"; thus, it is not possible to search database for existing ids
+                Logger.LogText(String.Format("User {0} tried to update the public state of a non-existing resourcedata={1}-{2} from IP={3}", Username, updateResourceDataPublishStateMessage.ResourceData.ResourceId, updateResourceDataPublishStateMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+            //only admins are allowed to update the publish state
+            if (ClientIsAdmin == false)
+            {
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = false;
+                response.Message = "Unauthorized to update that resourcedata";
+                Logger.LogText(String.Format("Unauthorized user {0} tried to update resourcedata={1}-{2} from IP={3}", Username, updateResourceDataPublishStateMessage.ResourceData.ResourceId, updateResourceDataPublishStateMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
+                SendMessage(response, sslStream);
+                return;
+            }
+
+            //Here, the user is authorized; thus, update of existing source in database is started
+            try
+            {
+                resourceData = updateResourceDataPublishStateMessage.ResourceData;
+
+                PublishState publishState;
+                switch (resourceData.PublishState)
+                {
+                    case "DEVELOPER":
+                        publishState = PublishState.DEVELOPER;
+                        break;
+                    case "NIGHTLY":
+                        publishState = PublishState.NIGHTLY;
+                        break;
+                    case "BETA":
+                        publishState = PublishState.BETA;
+                        break;
+                    case "RELEASE":
+                        publishState = PublishState.RELEASE;
+                        break;
+                    default:
+                    case "NOTPUBLISHED":
+                        publishState = PublishState.NOTPUBLISHED;
+                        break;
+                }
+
+                Database.UpdateResourceData(resourceData.ResourceId, resourceData.ResourceVersion, publishState);
+                Logger.LogText(String.Format("User {0} updated publish state of existing resourcedata={1}-{2} in database", Username, resourceData.ResourceId, resourceData.ResourceVersion), this, Logtype.Info);
+                ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
+                response.ModifiedResourceData = true;
+                response.Message = String.Format("Updated publish state of resourcedata={0}-{1} in database", resourceData.ResourceId, resourceData.ResourceVersion);
+                SendMessage(response, sslStream);
+            }
+            catch (Exception ex)
+            {
+                //update failed; logg to logfile and return exception to client
+                ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
+                response.ModifiedSource = false;
+                Logger.LogText(String.Format("User {0} tried to update the publish state of an existing source. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during update of publish state of existing source";
+                SendMessage(response, sslStream);
+            }
+        }
+
+
 
         /// <summary>
         /// Handles DeleteResourceDataMessage

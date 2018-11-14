@@ -198,13 +198,13 @@ namespace CrypToolStoreDeveloperClient.Views
         /// <param name="e"></param>
         private void UpdatePublishState_Click(object sender, RoutedEventArgs e)
         {
-            /*if (!MainWindow.IsAdmin)
+            if (!MainWindow.IsAdmin)
             {
                 MessageBox.Show("Only administrators are allowed to change the publish state of a ResourceData", "Update publish state not possible");
                 return;
             }
             Button button = (Button)sender;
-            int pluginversion = (int)button.CommandParameter;
+            int resourceversion = (int)button.CommandParameter;
 
             //retrieve old state for default selection of combo box in UpdateResourceDataPublishStateWindow
             string oldstate = "NOTPUBLISHED";
@@ -215,7 +215,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
-                DataModificationOrRequestResult result = client.GetResourceData(PluginId, pluginversion);
+                DataModificationOrRequestResult result = client.GetResourceData(ResourceId, resourceversion);
                 ResourceData ResourceData = (ResourceData)result.DataObject;
 
                 client.Disconnect();
@@ -225,13 +225,13 @@ namespace CrypToolStoreDeveloperClient.Views
             {
                 //wtf?
             }
-            UpdateResourceDataPublishStateWindow updateResourceDataPublishStateWindow = new UpdateResourceDataPublishStateWindow(PluginId, pluginversion, oldstate);
+            UpdateResourceDataPublishStateWindow updateResourceDataPublishStateWindow = new UpdateResourceDataPublishStateWindow(ResourceId, resourceversion, oldstate);
             updateResourceDataPublishStateWindow.MainWindow = MainWindow;
             updateResourceDataPublishStateWindow.ShowDialog();
             //we fetch the ResourceData list in a separate thread, thus, the ui is not blocked during download of the list
             Thread fetchResourceDataListThread = new Thread(FetchResourceDataList);
             fetchResourceDataListThread.IsBackground = true;
-            fetchResourceDataListThread.Start();*/
+            fetchResourceDataListThread.Start();
         }
 
         /// <summary>

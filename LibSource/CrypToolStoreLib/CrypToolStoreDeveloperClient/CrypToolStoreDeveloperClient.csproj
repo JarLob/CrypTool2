@@ -107,6 +107,9 @@
     <Compile Include="Views\CreateNewPluginWindow.xaml.cs">
       <DependentUpon>CreateNewPluginWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UpdateResourceDataPublishStateWindow.xaml.cs">
+      <DependentUpon>UpdateResourceDataPublishStateWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UpdateSourcePublishStateWindow.xaml.cs">
       <DependentUpon>UpdateSourcePublishStateWindow.xaml</DependentUpon>
     </Compile>
@@ -190,6 +193,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CreateNewPluginWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UpdateResourceDataPublishStateWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
