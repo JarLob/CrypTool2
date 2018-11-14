@@ -260,7 +260,7 @@ namespace CrypToolStoreDeveloperClient.Views
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Title = "Select Icon for the Plugin";
+                openFileDialog.Title = "Select File for the Upload";
                 openFileDialog.Filter = "(*.zip)|*.zip";
                 openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 bool? dialogResult = openFileDialog.ShowDialog();

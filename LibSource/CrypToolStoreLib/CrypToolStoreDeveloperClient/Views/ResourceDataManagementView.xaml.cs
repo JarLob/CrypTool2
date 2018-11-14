@@ -156,59 +156,41 @@ namespace CrypToolStoreDeveloperClient.Views
         }
 
         /// <summary>
-        /// Shows a window for uploading a zip of the ResourceData
+        /// Shows a window for uploading a file of the ResourceData
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void UploadResourceDataZipFile_Click(object sender, RoutedEventArgs e)
         {
-            /*Button button = (Button)sender;
-            int pluginversion = (int)button.CommandParameter;
-            UploadResourceDataZipFileWindow uploadResourceDataZipFileWindow = new UploadResourceDataZipFileWindow(PluginId, pluginversion);
-            uploadResourceDataZipFileWindow.MainWindow = MainWindow;
-            uploadResourceDataZipFileWindow.ShowDialog();
+            Button button = (Button)sender;
+            int resourceversion = (int)button.CommandParameter;
+            UploadResourceDataFileWindow uploadResourceDataFileWindow = new UploadResourceDataFileWindow(ResourceId, resourceversion);
+            uploadResourceDataFileWindow.MainWindow = MainWindow;
+            uploadResourceDataFileWindow.ShowDialog();
             //we fetch the ResourceData list in a separate thread, thus, the ui is not blocked during download of the list
             Thread fetchResourceDataListThread = new Thread(FetchResourceDataList);
             fetchResourceDataListThread.IsBackground = true;
-            fetchResourceDataListThread.Start();*/
+            fetchResourceDataListThread.Start();
         }
 
         /// <summary>
-        /// Shows a window for downloading a zip of the ResourceData
+        /// Shows a window for downloading a file of the ResourceData
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void DownloadResourceDataZipFile_Click(object sender, RoutedEventArgs e)
         {
-            /*Button button = (Button)sender;
-            int pluginversion = (int)button.CommandParameter;
-            DownloadResourceDataZipFileWindow downloadResourceDataZipFileWindow = new DownloadResourceDataZipFileWindow(ResourceId, pluginversion);
-            downloadResourceDataZipFileWindow.MainWindow = MainWindow;
-            downloadResourceDataZipFileWindow.ShowDialog();
+            Button button = (Button)sender;
+            int resourceversion = (int)button.CommandParameter;
+            DownloadResourceDataFileWindow downloadResourceDataFileWindow = new DownloadResourceDataFileWindow(ResourceId, resourceversion);
+            downloadResourceDataFileWindow.MainWindow = MainWindow;
+            downloadResourceDataFileWindow.ShowDialog();
             //we fetch the ResourceData list in a separate thread, thus, the ui is not blocked during download of the list
             Thread fetchResourceDataListThread = new Thread(FetchResourceDataList);
             fetchResourceDataListThread.IsBackground = true;
-            fetchResourceDataListThread.Start();*/
+            fetchResourceDataListThread.Start();
         }
-
-        /// <summary>
-        /// Shows a window for downloading a zip of an assembly
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void DownloadAssembly_Click(object sender, RoutedEventArgs e)
-        {
-            /*Button button = (Button)sender;
-            int pluginversion = (int)button.CommandParameter;
-            DownloadAssemblyZipFileWindow downloadAssemblyZipFileWindow = new DownloadAssemblyZipFileWindow(ResourceId, pluginversion);
-            downloadAssemblyZipFileWindow.MainWindow = MainWindow;
-            downloadAssemblyZipFileWindow.ShowDialog();
-            //we fetch the ResourceData list in a separate thread, thus, the ui is not blocked during download of the list
-            Thread fetchResourceDataListThread = new Thread(FetchResourceDataList);
-            fetchResourceDataListThread.IsBackground = true;
-            fetchResourceDataListThread.Start();*/
-        }
-
+     
         /// <summary>
         /// Updates the publish state of a ResourceData
         /// </summary>

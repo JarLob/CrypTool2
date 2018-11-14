@@ -80,6 +80,9 @@
     <Compile Include="Views\CreateNewUserWindow.xaml.cs">
       <DependentUpon>CreateNewUserWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DownloadResourceDataFile.xaml.cs">
+      <DependentUpon>DownloadResourceDataFile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DownloadAssemblyZipFileWindow.xaml.cs">
       <DependentUpon>DownloadAssemblyZipFileWindow.xaml</DependentUpon>
     </Compile>
@@ -125,6 +128,9 @@
     <Compile Include="Views\PluginManagementView.xaml.cs">
       <DependentUpon>PluginManagementView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UploadResourceDataFileWindow.xaml.cs">
+      <DependentUpon>UploadResourceDataFileWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UploadSourceZipFileWindow.xaml.cs">
       <DependentUpon>UploadSourceZipFileWindow.xaml</DependentUpon>
     </Compile>
@@ -148,6 +154,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CreateNewUserWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DownloadResourceDataFile.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -208,6 +218,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PluginManagementView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UploadResourceDataFileWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

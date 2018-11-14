@@ -38,30 +38,30 @@ using System.Windows.Shapes;
 namespace CrypToolStoreDeveloperClient.Views
 {
     /// <summary>
-    /// Interaktionslogik für DownloadAssemblyZipFileWindow.xaml
+    /// Interaktionslogik für DownloadResourceDataFileWindow.xaml
     /// </summary>
-    public partial class DownloadAssemblyZipFileWindow : Window
+    public partial class DownloadResourceDataFileWindow : Window
     {
         public MainWindow MainWindow { get; set; }
 
         private Configuration Config = Configuration.GetConfiguration();
 
-        private int PluginId { get; set; }
-        private int PluginVersion {get;set;}
+        private int ResourceId { get; set; }
+        private int ResourceVersion { get; set; }
 
         private bool Stop = false;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public DownloadAssemblyZipFileWindow(int pluginid, int pluginversion)
+        public DownloadResourceDataFileWindow(int pluginid, int pluginversion)
         {
             InitializeComponent();
             ResizeMode = ResizeMode.NoResize;
-            PluginId = pluginid;
-            PluginVersion = pluginversion;
-            Closing += DownloadAssemblyZipFileWindow_Closing;
-            this.Title = String.Format("Downoad Assembly Zip File: Source-{0}-{1}.zip", pluginid, pluginversion);
+            ResourceId = pluginid;
+            ResourceVersion = pluginversion;
+            Closing += DownloadResourceDataFileWindow_Closing;
+            this.Title = String.Format("Downoad ResourceData File: ResourceData-{0}-{1}.bin", pluginid, pluginversion);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace CrypToolStoreDeveloperClient.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DownloadAssemblyZipFileWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void DownloadResourceDataFileWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Stop = true;
         }
@@ -81,15 +81,15 @@ namespace CrypToolStoreDeveloperClient.Views
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void DownloadButton_Click(object sender, RoutedEventArgs e)
-        {      
-            
+        {
+
             //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
             Thread UploadSourceZipFileThread = new Thread(DownloadAssembyZipFile);
             UploadSourceZipFileThread.IsBackground = true;
             UploadSourceZipFileThread.Start();
 
             DownloadButton.IsEnabled = false;
-        }    
+        }
 
         /// <summary>
         /// Downloads the selected zip file
@@ -105,17 +105,17 @@ namespace CrypToolStoreDeveloperClient.Views
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
 
-                Source source = new Source();
-                source.PluginId = PluginId;
-                source.PluginVersion = PluginVersion;
+                ResourceData resourceData = new ResourceData();
+                resourceData.ResourceId = ResourceId;
+                resourceData.ResourceVersion = ResourceVersion;
 
-                string filename = "Assembly-" + PluginId + "-" + PluginVersion + ".zip";
+                string filename = "ResourceData-" + ResourceId + "-" + ResourceVersion + ".bin";
 
                 client.UploadDownloadProgressChanged += client_UploadDownloadProgressChanged;
-                DataModificationOrRequestResult result = client.DownloadAssemblyZipFile(source, Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + filename, ref Stop);
-                
+                DataModificationOrRequestResult result = client.DownloadResourceDataFile(resourceData, Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + filename, ref Stop);
+
                 client.Disconnect();
-                
+
                 if (result.Success)
                 {
                     Dispatcher.BeginInvoke(new ThreadStart(() =>
@@ -131,7 +131,7 @@ namespace CrypToolStoreDeveloperClient.Views
                             //wtf?
                         }
                     }));
-                    MessageBox.Show("Successfully download assembly zip file", "Zipfile downloaded");                    
+                    MessageBox.Show("Successfully download ResourceData file", "ResourceData file downloaded");
                     Dispatcher.BeginInvoke(new ThreadStart(() =>
                     {
                         try
@@ -148,15 +148,15 @@ namespace CrypToolStoreDeveloperClient.Views
                 {
                     if (result.Message != "USERSTOP")
                     {
-                        MessageBox.Show(String.Format("Could not download assembly zip file: {0}", result.Message), "Assembly zip file download not possible");
+                        MessageBox.Show(String.Format("Could not download ResourceData file: {0}", result.Message), "ResourceData file download not possible");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during download of assemly zip file: {0}", ex.Message), "Exception");
+                MessageBox.Show(String.Format("Exception during download of ResourceData zip file: {0}", ex.Message), "Exception");
             }
-            
+
             Dispatcher.BeginInvoke(new ThreadStart(() =>
             {
                 try
@@ -189,7 +189,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 }
                 catch (Exception ex)
                 {
-                   //wtf?
+                    //wtf?
                 }
             }));
         }
@@ -232,17 +232,17 @@ namespace CrypToolStoreDeveloperClient.Views
         {
             if (bytes > (1024 * 1024 * 1024)) //GiB / sec
             {
-                return Math.Round(bytes / (1024 * 1024 * 1024.0),2) + " GB/sec";
+                return Math.Round(bytes / (1024 * 1024 * 1024.0), 2) + " GB/sec";
             }
             if (bytes > (1024 * 1024))
             {
-                return Math.Round(bytes / (1024 * 1024.0),2) + " MB/sec";
+                return Math.Round(bytes / (1024 * 1024.0), 2) + " MB/sec";
             }
             if (bytes > 1024)
             {
                 return bytes / 1024.0 + " KB/sec";
             }
             return bytes + " byte/sec";
-        }       
+        }
     }
 }

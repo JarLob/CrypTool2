@@ -33,8 +33,8 @@ namespace CrypToolStoreLib.Tools
         Login = 0,
         ResponseLogin = 1,
         Logout = 2,
-        //Messages for "developers"
 
+        //Messagess for "Developers"
         RequestDeveloperList = 100,
         ResponseDeveloperList = 101,
         CreateNewDeveloper = 102,
@@ -44,7 +44,7 @@ namespace CrypToolStoreLib.Tools
         RequestDeveloper = 106,
         ResponseDeveloper = 107,
 
-        //Messages for "plugins"
+        //Messages for "Plugins"
         RequestPluginList = 200,
         ResponsePluginList = 201,
         CreateNewPlugin = 202,
@@ -54,7 +54,7 @@ namespace CrypToolStoreLib.Tools
         RequestPlugin = 206,
         ResponsePlugin = 207,
 
-        //Message for "Source"
+        //Messages for "Sources"
         RequestSourceList = 300,
         ResponseSourceList = 301,
         CreateNewSource = 302,
@@ -65,7 +65,7 @@ namespace CrypToolStoreLib.Tools
         ResponseSource = 307,
         UpdateSourcePublishState = 308,
 
-        //Message for "Resources"
+        //Messages for "Resources"
         RequestResourceList = 400,
         ResponseResourceList = 401,
         CreateNewResource = 402,
@@ -75,7 +75,7 @@ namespace CrypToolStoreLib.Tools
         RequestResource = 406,
         ResponseResource = 407,
 
-        //Message for "ResourcesData"
+        //Messages for "ResourcesDatas"
         RequestResourceDataList = 500,
         ResponseResourceDataList = 501,
         CreateNewResourceData = 502,
@@ -90,11 +90,13 @@ namespace CrypToolStoreLib.Tools
         ResponseUploadDownloadData = 601,
         StartUploadSourceZipfile = 602,
         StartUploadAssemblyZipfile = 603,
-        RequestDownloadSourceZipfile = 604,
-        RequestDownloadAssemblyZipfile = 605,
-        StopUploadDownload = 606,
+        StartUploadResourceDataFile = 604,
+        RequestDownloadSourceZipfile = 605,
+        RequestDownloadAssemblyZipfile = 606,
+        RequestDownloadResourceDataFile = 607,
+        StopUploadDownload = 608,
 
-        //server error message
+        //server error messages
         ServerError = 900,
         ClientError = 901,
 
@@ -283,8 +285,10 @@ namespace CrypToolStoreLib.Tools
             MessageTypeDictionary.Add(MessageType.ResponseUploadDownloadData, typeof(ResponseUploadDownloadDataMessage));
             MessageTypeDictionary.Add(MessageType.StartUploadSourceZipfile, typeof(StartUploadSourceZipfileMessage));
             MessageTypeDictionary.Add(MessageType.StartUploadAssemblyZipfile, typeof(StartUploadAssemblyZipfileMessage));
+            MessageTypeDictionary.Add(MessageType.StartUploadResourceDataFile, typeof(StartUploadResourceDataFileMessage));
             MessageTypeDictionary.Add(MessageType.RequestDownloadSourceZipfile, typeof(RequestDownloadSourceZipfileMessage));
             MessageTypeDictionary.Add(MessageType.RequestDownloadAssemblyZipfile, typeof(RequestDownloadAssemblyZipfileMessage));
+            MessageTypeDictionary.Add(MessageType.RequestDownloadResourceDataFile, typeof(RequestDownloadResourceDataFileMessage));
             MessageTypeDictionary.Add(MessageType.StopUploadDownload, typeof(StopUploadDownloadMessage));
             
             //error messages
@@ -1901,6 +1905,18 @@ namespace CrypToolStoreLib.Tools
     }
 
     /// <summary>
+    /// Message for uploading resource data files of resources
+    /// </summary>
+    public class StartUploadResourceDataFileMessage : Message
+    {
+        [MessageDataField]
+        public ResourceData ResourceData { get; set; }
+
+        [MessageDataField]
+        public long FileSize { get; set; }
+    }
+
+    /// <summary>
     /// Message for downloading zip files of sources from the server
     /// </summary>
     public class RequestDownloadSourceZipfileMessage : Message
@@ -1916,6 +1932,15 @@ namespace CrypToolStoreLib.Tools
     {
         [MessageDataField]
         public Source Source { get; set; }
+    }
+
+    /// <summary>
+    /// Message for downloading zip files of resource datas from the server
+    /// </summary>
+    public class RequestDownloadResourceDataFileMessage : Message
+    {
+        [MessageDataField]
+        public ResourceData ResourceData { get; set; }
     }
 
     /// <summary>

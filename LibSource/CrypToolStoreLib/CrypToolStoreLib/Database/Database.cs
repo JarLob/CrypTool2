@@ -1072,6 +1072,30 @@ namespace CrypToolStoreLib.Database
             logger.LogText(String.Format("Updated resource data: resourceid={0}, version={1}, datafilename={2}, uploaddate={3}", resourceid, version, datafilename != null ? datafilename.Length.ToString() : "null", uploaddate), this, Logtype.Debug);
         }
 
+        /// Updates a resource data entry in the database
+        /// </summary>
+        /// <param name="version"></param>
+        /// <param name="datafilename"></param>
+        /// <param name="uploaddate"></param>
+        public void UpdateResourceData(int resourceid, int version, string datafilename)
+        {
+            logger.LogText(String.Format("Updating resource data: resourceid={0}, version={1}, datafilename={2}", resourceid, version, datafilename), this, Logtype.Debug);
+            string query = "update resourcesdata set datafilename=@datafilename, uploaddate=@uploaddate where resourceid=@resourceid and version=@version";
+
+            DatabaseConnection connection = GetConnection();
+
+            object[][] parameters = new object[][]{                
+                new object[]{"@datafilename", datafilename},
+                new object[]{"@resourceid", resourceid},
+                new object[]{"@version", version},
+                new object[]{"@uploaddate", DateTime.Now}
+            };
+
+            connection.ExecutePreparedStatement(query, parameters);
+
+            logger.LogText(String.Format("Updated resource data: resourceid={0}, version={1}, datafilename={2}", resourceid, version, datafilename != null ? datafilename.Length.ToString() : "null"), this, Logtype.Debug);
+        }
+
         /// <summary>
         /// Deletes a resource data entry in the database
         /// </summary>

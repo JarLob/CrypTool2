@@ -1494,7 +1494,7 @@ namespace CrypToolStoreLib.Client
         {
             lock (this)
             {
-                //we can only receive source lists when we are connected
+                //we can only upload when we are connected
                 if (!IsConnected)
                 {
                     return new DataModificationOrRequestResult()
@@ -1516,180 +1516,8 @@ namespace CrypToolStoreLib.Client
                 //2. Step: Receive response message from server
                 var response_message = ReceiveMessage();
 
-                //Received null = connection closed
-                if (response_message == null)
-                {
-                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
-                    sslStream.Close();
-                    Client.Close();
-                    return new DataModificationOrRequestResult()
-                    {
-                        Message = "Connection to server lost",
-                        Success = false
-                    };
-                }
-
-                //Received ResponseUploadDownloadDataMessage
-                if (response_message.MessageHeader.MessageType == MessageType.ResponseUploadDownloadData)
-                {
-                    //received a response, forward it to user
-                    ResponseUploadDownloadDataMessage responseUploadDownloadDataMessage = (ResponseUploadDownloadDataMessage)response_message;
-
-                    if (responseUploadDownloadDataMessage.Success == false)
-                    {
-                        string failmsg = String.Format("Upload failed, reason: {0}", responseUploadDownloadDataMessage.Message);
-                        logger.LogText(failmsg, this, Logtype.Info);
-                        return new DataModificationOrRequestResult()
-                        {
-                            Message = failmsg,
-                            Success = false
-                        };
-                    }
-
-                    //Step 3: send file
-                    long totalbytesread = 0;
-                    long lasttotalbytesread = 0;
-                    DateTime LastEventFireTime = DateTime.Now;
-
-                    using (FileStream fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read))
-                    {
-                        byte[] buffer = new byte[FILE_BUFFER_SIZE];                        
-                        while (totalbytesread < filesize)
-                        {
-                            if (stop)
-                            {
-                                //user wants to stop the upload, thus, we notify the server
-                                StopUploadDownloadMessage stopUploadDownloadMessage = new StopUploadDownloadMessage();
-                                SendMessage(stopUploadDownloadMessage);
-                                //return USERSTOP, thus, the ui wont update itself
-                                return new DataModificationOrRequestResult()
-                                {
-                                    Success = false,
-                                    DataObject = null,
-                                    Message = "USERSTOP"
-                                };
-                            }
-
-                            //read a block of data
-                            int bytesread = 0;
-                            int current_bytesread = 0;                                                        
-                            
-                            while ((current_bytesread = fileStream.Read(buffer, bytesread, FILE_BUFFER_SIZE - bytesread)) > 0 && bytesread < FILE_BUFFER_SIZE)
-                            {
-                                bytesread += current_bytesread;
-                                totalbytesread += current_bytesread;
-                            }
-
-                            byte[] data;
-                            if (bytesread < FILE_BUFFER_SIZE)
-                            {
-                                data = new byte[bytesread];
-                                Array.Copy(buffer, 0, data, 0, bytesread);
-                            }
-                            else
-                            {
-                                data = buffer;
-                            }
-
-                            //send the block of data
-
-                            UploadDownloadDataMessage uploadDownloadDataMessage = new UploadDownloadDataMessage();
-                            uploadDownloadDataMessage.Data = data;
-                            uploadDownloadDataMessage.Offset = totalbytesread;
-                            uploadDownloadDataMessage.FileSize = filesize;
-
-                            SendMessage(uploadDownloadDataMessage);
-
-                            //check, if block of data was received without error
-                            response_message = ReceiveMessage();
-
-                            //Received null = connection closed
-                            if (response_message == null)
-                            {
-                                logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
-                                sslStream.Close();
-                                Client.Close();
-                                return new DataModificationOrRequestResult()
-                                {
-                                    Message = "Connection to server lost",
-                                    Success = false
-                                };
-                            }                            
-
-                            //Received ResponseUploadDownloadDataMessage
-                            if (response_message.MessageHeader.MessageType == MessageType.ResponseUploadDownloadData)
-                            {
-                                responseUploadDownloadDataMessage = (ResponseUploadDownloadDataMessage)response_message;
-                                if (responseUploadDownloadDataMessage.Success == false)
-                                {
-                                    string failmsg = String.Format("Upload failed, reason: {0}", responseUploadDownloadDataMessage.Message);
-                                    logger.LogText(failmsg, this, Logtype.Info);
-                                    return new DataModificationOrRequestResult()
-                                    {
-                                        Message = failmsg,
-                                        Success = false
-                                    };
-                                }
-
-                                //every second fire event for upload progress
-                                if (UploadDownloadProgressChanged != null && DateTime.Now > LastEventFireTime.AddMilliseconds(1000))
-                                {
-                                    UploadDownloadProgressEventArgs args = new UploadDownloadProgressEventArgs();
-                                    args.FileName = filename;
-                                    args.FileSize = filesize;
-                                    args.DownloadedUploaded = totalbytesread;
-                                    TimeSpan duration = DateTime.Now - LastEventFireTime;
-                                    args.BytePerSecond = (long)((((double)totalbytesread - (double)lasttotalbytesread) / duration.TotalMilliseconds) * 1000.0);
-                                    lasttotalbytesread = totalbytesread;
-                                    UploadDownloadProgressChanged.Invoke(this, args);
-                                    LastEventFireTime = DateTime.Now;
-                                }
-                            }
-                            else
-                            {
-                                //Received another (wrong) message
-                                string msg = String.Format("Response message to upload a source zipfile was not a ResponseUploadDownloadDataMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
-                                logger.LogText(msg, this, Logtype.Info);
-                                return new DataModificationOrRequestResult()
-                                {
-                                    Message = msg,
-                                    Success = false
-                                };
-                            }
-                        }
-                    }
-
-                    //fire last event when file is completely uploaded
-                    if (UploadDownloadProgressChanged != null)
-                    {
-                        UploadDownloadProgressEventArgs args = new UploadDownloadProgressEventArgs();
-                        args.FileName = filename;
-                        args.FileSize = filesize;
-                        args.DownloadedUploaded = totalbytesread;
-                        args.BytePerSecond = 0;
-                        UploadDownloadProgressChanged.Invoke(this, args);
-                    }
-
-                    //Received another (wrong) message                    
-                    logger.LogText("Upload completed", this, Logtype.Info);
-                    return new DataModificationOrRequestResult()
-                    {
-                        Message = "Upload completed",
-                        Success = true
-                    };
-                }
-                else
-                {
-                    //Received another (wrong) message
-                    string msg = String.Format("Response message to upload a source zipfile was not a ResponseUploadDownloadDataMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
-                    logger.LogText(msg, this, Logtype.Info);
-                    return new DataModificationOrRequestResult()
-                    {
-                        Message = msg,
-                        Success = false
-                    };
-                }
-            }           
+                return DoFileUpload(response_message, filename, filesize, ref stop);
+            }
         }
 
         /// <summary>
@@ -1702,7 +1530,7 @@ namespace CrypToolStoreLib.Client
         {
             lock (this)
             {
-                //we can only receive source lists when we are connected
+                //we can only upload when we are connected
                 if (!IsConnected)
                 {
                     return new DataModificationOrRequestResult()
@@ -1724,179 +1552,7 @@ namespace CrypToolStoreLib.Client
                 //2. Step: Receive response message from server
                 var response_message = ReceiveMessage();
 
-                //Received null = connection closed
-                if (response_message == null)
-                {
-                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
-                    sslStream.Close();
-                    Client.Close();
-                    return new DataModificationOrRequestResult()
-                    {
-                        Message = "Connection to server lost",
-                        Success = false
-                    };
-                }
-
-                //Received ResponseUploadDownloadDataMessage
-                if (response_message.MessageHeader.MessageType == MessageType.ResponseUploadDownloadData)
-                {
-                    //received a response, forward it to user
-                    ResponseUploadDownloadDataMessage responseUploadDownloadDataMessage = (ResponseUploadDownloadDataMessage)response_message;
-
-                    if (responseUploadDownloadDataMessage.Success == false)
-                    {
-                        string failmsg = String.Format("Upload failed, reason: {0}", responseUploadDownloadDataMessage.Message);
-                        logger.LogText(failmsg, this, Logtype.Info);
-                        return new DataModificationOrRequestResult()
-                        {
-                            Message = failmsg,
-                            Success = false
-                        };
-                    }
-
-                    //Step 3: send file
-                    long totalbytesread = 0;
-                    long lasttotalbytesread = 0;
-                    DateTime LastEventFireTime = DateTime.Now;
-
-                    using (FileStream fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read))
-                    {
-                        byte[] buffer = new byte[FILE_BUFFER_SIZE];
-                        while (totalbytesread < filesize)
-                        {
-                            if (stop)
-                            {
-                                //user wants to stop the upload, thus, we notify the server
-                                StopUploadDownloadMessage stopUploadDownloadMessage = new StopUploadDownloadMessage();
-                                SendMessage(stopUploadDownloadMessage);
-                                //return USERSTOP, thus, the ui wont update itself
-                                return new DataModificationOrRequestResult()
-                                {
-                                    Success = false,
-                                    DataObject = null,
-                                    Message = "USERSTOP"
-                                };
-                            }
-
-                            //read a block of data
-                            int bytesread = 0;
-                            int current_bytesread = 0;
-
-                            while ((current_bytesread = fileStream.Read(buffer, bytesread, FILE_BUFFER_SIZE - bytesread)) > 0 && bytesread < FILE_BUFFER_SIZE)
-                            {
-                                bytesread += current_bytesread;
-                                totalbytesread += current_bytesread;
-                            }
-
-                            byte[] data;
-                            if (bytesread < FILE_BUFFER_SIZE)
-                            {
-                                data = new byte[bytesread];
-                                Array.Copy(buffer, 0, data, 0, bytesread);
-                            }
-                            else
-                            {
-                                data = buffer;
-                            }
-
-                            //send the block of data
-
-                            UploadDownloadDataMessage uploadDownloadDataMessage = new UploadDownloadDataMessage();
-                            uploadDownloadDataMessage.Data = data;
-                            uploadDownloadDataMessage.Offset = totalbytesread;
-                            uploadDownloadDataMessage.FileSize = filesize;
-
-                            SendMessage(uploadDownloadDataMessage);
-
-                            //check, if block of data was received without error
-                            response_message = ReceiveMessage();
-
-                            //Received null = connection closed
-                            if (response_message == null)
-                            {
-                                logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
-                                sslStream.Close();
-                                Client.Close();
-                                return new DataModificationOrRequestResult()
-                                {
-                                    Message = "Connection to server lost",
-                                    Success = false
-                                };
-                            }
-
-                            //Received ResponseUploadDownloadDataMessage
-                            if (response_message.MessageHeader.MessageType == MessageType.ResponseUploadDownloadData)
-                            {
-                                responseUploadDownloadDataMessage = (ResponseUploadDownloadDataMessage)response_message;
-                                if (responseUploadDownloadDataMessage.Success == false)
-                                {
-                                    string failmsg = String.Format("Upload failed, reason: {0}", responseUploadDownloadDataMessage.Message);
-                                    logger.LogText(failmsg, this, Logtype.Info);
-                                    return new DataModificationOrRequestResult()
-                                    {
-                                        Message = failmsg,
-                                        Success = false
-                                    };
-                                }
-
-                                //every second fire event for upload progress
-                                if (UploadDownloadProgressChanged != null && DateTime.Now > LastEventFireTime.AddMilliseconds(1000))
-                                {
-                                    UploadDownloadProgressEventArgs args = new UploadDownloadProgressEventArgs();
-                                    args.FileName = filename;
-                                    args.FileSize = filesize;
-                                    args.DownloadedUploaded = totalbytesread;
-                                    TimeSpan duration = DateTime.Now - LastEventFireTime;
-                                    args.BytePerSecond = (long)((((double)totalbytesread - (double)lasttotalbytesread) / duration.TotalMilliseconds) * 1000.0);
-                                    lasttotalbytesread = totalbytesread;
-                                    UploadDownloadProgressChanged.Invoke(this, args);
-                                    LastEventFireTime = DateTime.Now;
-                                }
-                            }
-                            else
-                            {
-                                //Received another (wrong) message
-                                string msg = String.Format("Response message to upload an assembly zipfile was not a ResponseUploadDownloadDataMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
-                                logger.LogText(msg, this, Logtype.Info);
-                                return new DataModificationOrRequestResult()
-                                {
-                                    Message = msg,
-                                    Success = false
-                                };
-                            }
-                        }
-                    }
-
-                    //fire last event when file is completely uploaded
-                    if (UploadDownloadProgressChanged != null)
-                    {
-                        UploadDownloadProgressEventArgs args = new UploadDownloadProgressEventArgs();
-                        args.FileName = filename;
-                        args.FileSize = filesize;
-                        args.DownloadedUploaded = totalbytesread;
-                        args.BytePerSecond = 0;
-                        UploadDownloadProgressChanged.Invoke(this, args);
-                    }
-
-                    //Received another (wrong) message                    
-                    logger.LogText("Upload completed", this, Logtype.Info);
-                    return new DataModificationOrRequestResult()
-                    {
-                        Message = "Upload completed",
-                        Success = true
-                    };
-                }
-                else
-                {
-                    //Received another (wrong) message
-                    string msg = String.Format("Response message to upload an assembly zipfile was not a ResponseUploadDownloadDataMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
-                    logger.LogText(msg, this, Logtype.Info);
-                    return new DataModificationOrRequestResult()
-                    {
-                        Message = msg,
-                        Success = false
-                    };
-                }
+                return DoFileUpload(response_message, filename, filesize, ref stop);
             }
         }
 
@@ -1911,7 +1567,7 @@ namespace CrypToolStoreLib.Client
         {
             lock (this)
             {
-                //we can only receive source lists when we are connected
+                //we can only download when we are connected
                 if (!IsConnected)
                 {
                     return new DataModificationOrRequestResult()
@@ -1934,111 +1590,13 @@ namespace CrypToolStoreLib.Client
                 //Step 1: Send RequestDownloadSourceZipfileMessage to start the uploading process      
                 RequestDownloadSourceZipfileMessage requestDownloadSourceZipfileMessage = new RequestDownloadSourceZipfileMessage();
                 requestDownloadSourceZipfileMessage.Source = source;
-                SendMessage(requestDownloadSourceZipfileMessage);
-             
-                long writtenData = 0;
-                long lastWrittenData = 0;
-                DateTime LastEventFireTime = DateTime.Now;
+                SendMessage(requestDownloadSourceZipfileMessage);                            
 
                 bool deleteFile = false;
                 //Step 2: Download file
                 try
                 {
-                    using (FileStream fileStream = new FileStream(filename + ".part", FileMode.CreateNew, FileAccess.Write))
-                    {
-                        while (true)
-                        {
-                            //Receive message from stream
-                            Message responseMessage = ReceiveMessage();
-
-                            if (stop)
-                            {
-                                //user wants to stop the upload, thus, we notify the server
-                                StopUploadDownloadMessage stopUploadDownloadMessage = new StopUploadDownloadMessage();
-                                SendMessage(stopUploadDownloadMessage);
-                                //return USERSTOP, thus, the ui wont update itself
-                                deleteFile = true;
-                                return new DataModificationOrRequestResult()
-                                {
-                                    Success = false,
-                                    DataObject = null,
-                                    Message = "USERSTOP"
-                                };
-                            }
-
-                            //receive data message
-                            if (responseMessage.MessageHeader.MessageType == MessageType.UploadDownloadData)
-                            {
-                                UploadDownloadDataMessage uploadDownloadDataMessage = (UploadDownloadDataMessage)responseMessage;
-                                fileStream.Write(uploadDownloadDataMessage.Data, 0, uploadDownloadDataMessage.Data.Length);
-                                writtenData += uploadDownloadDataMessage.Data.Length;
-
-                                //received wrong message, abort
-                                ResponseUploadDownloadDataMessage responseUploadDownloadDataMessage = new ResponseUploadDownloadDataMessage();
-                                responseUploadDownloadDataMessage.Success = true;
-                                responseUploadDownloadDataMessage.Message = "OK";
-                                SendMessage(responseUploadDownloadDataMessage);
-
-                                if (writtenData == uploadDownloadDataMessage.FileSize)
-                                {
-                                    // download completed
-                                    if (UploadDownloadProgressChanged != null)
-                                    {
-                                        UploadDownloadProgressEventArgs args = new UploadDownloadProgressEventArgs();
-                                        args.FileName = filename;
-                                        args.FileSize = uploadDownloadDataMessage.FileSize;
-                                        args.DownloadedUploaded = writtenData;
-                                        args.BytePerSecond = 0;
-                                        UploadDownloadProgressChanged.Invoke(this, args);
-                                    }
-                                    return new DataModificationOrRequestResult()
-                                    {
-                                        Message = "Download completed",
-                                        Success = true
-                                    };
-                                }
-
-                                //every second fire event for upload progress
-                                if (UploadDownloadProgressChanged != null && DateTime.Now > LastEventFireTime.AddMilliseconds(1000))
-                                {
-                                    UploadDownloadProgressEventArgs args = new UploadDownloadProgressEventArgs();
-                                    args.FileName = filename;
-                                    args.FileSize = uploadDownloadDataMessage.FileSize;
-                                    args.DownloadedUploaded = writtenData;
-                                    TimeSpan duration = DateTime.Now - LastEventFireTime;
-                                    args.BytePerSecond = (long)((((double)writtenData - (double)lastWrittenData) / duration.TotalMilliseconds) * 1000.0);
-                                    lastWrittenData = writtenData;
-                                    UploadDownloadProgressChanged.Invoke(this, args);
-                                    LastEventFireTime = DateTime.Now;
-                                }
-
-                            }
-                            // something went wrong, i.e. ResponseUploadDownloadDataMessage, we received a  thus we abort
-                            else if (responseMessage.MessageHeader.MessageType == MessageType.ResponseUploadDownloadData)
-                            {
-                                ResponseUploadDownloadDataMessage responseUploadDownloadDataMessage = (ResponseUploadDownloadDataMessage)responseMessage;
-                                logger.LogText(String.Format("Download failed: {0}", responseUploadDownloadDataMessage.Message), this, Logtype.Info);
-                                deleteFile = true;
-                                return new DataModificationOrRequestResult()
-                                {
-                                    Message = responseUploadDownloadDataMessage.Message,
-                                    Success = false
-                                };
-                            }
-                            //we receive something wrong...
-                            else
-                            {
-                                string msg = String.Format("Response message to RequestDownloadSourceZipfileMessage a zipfile was not an UploadDownloadDataMessage. Message was: {0}", responseMessage.MessageHeader.MessageType.ToString());
-                                logger.LogText(msg, this, Logtype.Info);
-                                deleteFile = true;
-                                return new DataModificationOrRequestResult()
-                                {
-                                    Message = msg,
-                                    Success = false
-                                };
-                            }
-                        }
-                    }
+                    return DoDownloadFile(filename, ref deleteFile, ref stop);
                 }
                 finally
                 {
@@ -2095,110 +1653,12 @@ namespace CrypToolStoreLib.Client
                 RequestDownloadAssemblyZipfileMessage requestDownloadAssemblyZipfileMessage = new RequestDownloadAssemblyZipfileMessage();
                 requestDownloadAssemblyZipfileMessage.Source = source;
                 SendMessage(requestDownloadAssemblyZipfileMessage);
-
-                long writtenData = 0;
-                long lastWrittenData = 0;
-                DateTime LastEventFireTime = DateTime.Now;
-
+               
                 bool deleteFile = false;
                 //Step 2: Download file
                 try
                 {
-                    using (FileStream fileStream = new FileStream(filename + ".part", FileMode.CreateNew, FileAccess.Write))
-                    {
-                        while (true)
-                        {
-                            //Receive message from stream
-                            Message responseMessage = ReceiveMessage();
-
-                            if (stop)
-                            {
-                                //user wants to stop the upload, thus, we notify the server
-                                StopUploadDownloadMessage stopUploadDownloadMessage = new StopUploadDownloadMessage();
-                                SendMessage(stopUploadDownloadMessage);
-                                //return USERSTOP, thus, the ui wont update itself
-                                deleteFile = true;
-                                return new DataModificationOrRequestResult()
-                                {
-                                    Success = false,
-                                    DataObject = null,
-                                    Message = "USERSTOP"
-                                };
-                            }
-
-                            //receive data message
-                            if (responseMessage.MessageHeader.MessageType == MessageType.UploadDownloadData)
-                            {
-                                UploadDownloadDataMessage uploadDownloadDataMessage = (UploadDownloadDataMessage)responseMessage;
-                                fileStream.Write(uploadDownloadDataMessage.Data, 0, uploadDownloadDataMessage.Data.Length);
-                                writtenData += uploadDownloadDataMessage.Data.Length;
-
-                                //received wrong message, abort
-                                ResponseUploadDownloadDataMessage responseUploadDownloadDataMessage = new ResponseUploadDownloadDataMessage();
-                                responseUploadDownloadDataMessage.Success = true;
-                                responseUploadDownloadDataMessage.Message = "OK";
-                                SendMessage(responseUploadDownloadDataMessage);
-
-                                if (writtenData == uploadDownloadDataMessage.FileSize)
-                                {
-                                    // download completed
-                                    if (UploadDownloadProgressChanged != null)
-                                    {
-                                        UploadDownloadProgressEventArgs args = new UploadDownloadProgressEventArgs();
-                                        args.FileName = filename;
-                                        args.FileSize = uploadDownloadDataMessage.FileSize;
-                                        args.DownloadedUploaded = writtenData;
-                                        args.BytePerSecond = 0;
-                                        UploadDownloadProgressChanged.Invoke(this, args);
-                                    }
-                                    return new DataModificationOrRequestResult()
-                                    {
-                                        Message = "Download completed",
-                                        Success = true
-                                    };
-                                }
-
-                                //every second fire event for upload progress
-                                if (UploadDownloadProgressChanged != null && DateTime.Now > LastEventFireTime.AddMilliseconds(1000))
-                                {
-                                    UploadDownloadProgressEventArgs args = new UploadDownloadProgressEventArgs();
-                                    args.FileName = filename;
-                                    args.FileSize = uploadDownloadDataMessage.FileSize;
-                                    args.DownloadedUploaded = writtenData;
-                                    TimeSpan duration = DateTime.Now - LastEventFireTime;
-                                    args.BytePerSecond = (long)((((double)writtenData - (double)lastWrittenData) / duration.TotalMilliseconds) * 1000.0);
-                                    lastWrittenData = writtenData;
-                                    UploadDownloadProgressChanged.Invoke(this, args);
-                                    LastEventFireTime = DateTime.Now;
-                                }
-
-                            }
-                            // something went wrong, i.e. ResponseUploadDownloadDataMessage, we received a  thus we abort
-                            else if (responseMessage.MessageHeader.MessageType == MessageType.ResponseUploadDownloadData)
-                            {
-                                ResponseUploadDownloadDataMessage responseUploadDownloadDataMessage = (ResponseUploadDownloadDataMessage)responseMessage;
-                                logger.LogText(String.Format("Download failed: {0}", responseUploadDownloadDataMessage.Message), this, Logtype.Info);
-                                deleteFile = true;
-                                return new DataModificationOrRequestResult()
-                                {
-                                    Message = responseUploadDownloadDataMessage.Message,
-                                    Success = false
-                                };
-                            }
-                            //we receive something wrong...
-                            else
-                            {
-                                string msg = String.Format("Response message to RequestDownloadAssemblyZipfileMessage a zipfile was not an UploadDownloadDataMessage. Message was: {0}", responseMessage.MessageHeader.MessageType.ToString());
-                                logger.LogText(msg, this, Logtype.Info);
-                                deleteFile = true;
-                                return new DataModificationOrRequestResult()
-                                {
-                                    Message = msg,
-                                    Success = false
-                                };
-                            }
-                        }
-                    }
+                    return DoDownloadFile(filename, ref deleteFile, ref stop);
                 }
                 finally
                 {
@@ -2946,6 +2406,403 @@ namespace CrypToolStoreLib.Client
                     Message = msg,
                     Success = false
                 };
+            }
+        }
+
+        /// <summary>
+        /// Uploads a resource data file for the specified resource data
+        /// </summary>
+        /// <param name="resourceData"></param>
+        /// <param name="filename"></param>
+        /// <param name="stop"></param>
+        public DataModificationOrRequestResult UploadResourceDataFile(ResourceData resourceData, string filename, ref bool stop)
+        {
+            lock (this)
+            {
+                //we can only receive source lists when we are connected
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+
+                //Step 1: Send StartUploadResourceDataFileMessage to start the uploading process
+                FileInfo fileInfo = new FileInfo(filename);
+                long filesize = fileInfo.Length;
+
+                StartUploadResourceDataFileMessage startUploadResourceDataFileMessage = new StartUploadResourceDataFileMessage();
+                startUploadResourceDataFileMessage.ResourceData = resourceData;
+                startUploadResourceDataFileMessage.FileSize = filesize;
+                SendMessage(startUploadResourceDataFileMessage);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+
+                return DoFileUpload(response_message, filename, filesize, ref stop);
+            }
+        }
+
+        /// <summary>
+        /// Dowloads a ResourceData file of the specified ResourceData and stores it in the specified file
+        /// </summary>
+        /// <param name="resourceData"></param>
+        /// <param name="filename"></param>
+        /// <param name="stop"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult DownloadResourceDataFile(ResourceData resourceData, string filename, ref bool stop)
+        {
+            lock (this)
+            {
+                //we can only download when we are connected
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+                //Step 0: Check, if file already exists on Desktop of user
+                if (File.Exists(filename))
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Success = false,
+                        DataObject = null,
+                        Message = String.Format("File {0} already exists. Please rename, move, or delete the existing file before starting a new download", filename)
+                    };
+                }
+
+                //Step 1: Send RequestDownloadResourceDataFileMessage to start the uploading process      
+                RequestDownloadResourceDataFileMessage requestDownloadResourceDataFileMessage = new RequestDownloadResourceDataFileMessage();
+                requestDownloadResourceDataFileMessage.ResourceData = resourceData;
+                SendMessage(requestDownloadResourceDataFileMessage);
+
+                bool deleteFile = false;
+                //Step 2: Download file
+                try
+                {
+                    return DoDownloadFile(filename, ref deleteFile, ref stop);
+                }
+                finally
+                {
+                    //if an error occured or the user aborted, we delete the created file
+                    if (deleteFile == true && File.Exists(filename + ".part"))
+                    {
+                        logger.LogText(String.Format("Error occured or user stopped download, thus, file {0} will be deleted now", filename), this, Logtype.Info);
+                        File.Delete(filename + ".part");
+                        logger.LogText(String.Format("File {0} deleted", filename), this, Logtype.Info);
+                    }
+                    //if no error occured, the temp file is renamed to the correct name
+                    if (!deleteFile && File.Exists(filename + ".part"))
+                    {
+                        logger.LogText(String.Format("File successfully downloaded. Rename file {0} to {1} now", filename + ".part", filename), this, Logtype.Info);
+                        File.Move(filename + ".part", filename);
+                        logger.LogText(String.Format("Renamed file {0} to {1}", filename + ".part", filename), this, Logtype.Info);
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region upload/download 
+
+        /// <summary>
+        /// Performs the upload of a file
+        /// </summary>
+        /// <param name="response_message"></param>
+        /// <param name="filename"></param>
+        /// <param name="filesize"></param>
+        /// <param name="stop"></param>
+        /// <returns></returns>
+        private DataModificationOrRequestResult DoFileUpload(Message response_message, string filename, long filesize, ref bool stop)
+        {
+            //Received ResponseUploadDownloadDataMessage
+            if (response_message.MessageHeader.MessageType == MessageType.ResponseUploadDownloadData)
+            {
+                //received a response, forward it to user
+                ResponseUploadDownloadDataMessage responseUploadDownloadDataMessage = (ResponseUploadDownloadDataMessage)response_message;
+
+                if (responseUploadDownloadDataMessage.Success == false)
+                {
+                    string failmsg = String.Format("Upload failed, reason: {0}", responseUploadDownloadDataMessage.Message);
+                    logger.LogText(failmsg, this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = failmsg,
+                        Success = false
+                    };
+                }
+
+                //send file
+                long totalbytesread = 0;
+                long lasttotalbytesread = 0;
+                DateTime LastEventFireTime = DateTime.Now;
+
+                using (FileStream fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read))
+                {
+                    byte[] buffer = new byte[FILE_BUFFER_SIZE];
+                    while (totalbytesread < filesize)
+                    {
+                        if (stop)
+                        {
+                            //user wants to stop the upload, thus, we notify the server
+                            StopUploadDownloadMessage stopUploadDownloadMessage = new StopUploadDownloadMessage();
+                            SendMessage(stopUploadDownloadMessage);
+                            //return USERSTOP, thus, the ui wont update itself
+                            return new DataModificationOrRequestResult()
+                            {
+                                Success = false,
+                                DataObject = null,
+                                Message = "USERSTOP"
+                            };
+                        }
+
+                        //read a block of data
+                        int bytesread = 0;
+                        int current_bytesread = 0;
+
+                        while ((current_bytesread = fileStream.Read(buffer, bytesread, FILE_BUFFER_SIZE - bytesread)) > 0 && bytesread < FILE_BUFFER_SIZE)
+                        {
+                            bytesread += current_bytesread;
+                            totalbytesread += current_bytesread;
+                        }
+
+                        byte[] data;
+                        if (bytesread < FILE_BUFFER_SIZE)
+                        {
+                            data = new byte[bytesread];
+                            Array.Copy(buffer, 0, data, 0, bytesread);
+                        }
+                        else
+                        {
+                            data = buffer;
+                        }
+
+                        //send the block of data
+
+                        UploadDownloadDataMessage uploadDownloadDataMessage = new UploadDownloadDataMessage();
+                        uploadDownloadDataMessage.Data = data;
+                        uploadDownloadDataMessage.Offset = totalbytesread;
+                        uploadDownloadDataMessage.FileSize = filesize;
+
+                        SendMessage(uploadDownloadDataMessage);
+
+                        //check, if block of data was received without error
+                        response_message = ReceiveMessage();
+
+                        //Received null = connection closed
+                        if (response_message == null)
+                        {
+                            logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                            sslStream.Close();
+                            Client.Close();
+                            return new DataModificationOrRequestResult()
+                            {
+                                Message = "Connection to server lost",
+                                Success = false
+                            };
+                        }
+
+                        //Received ResponseUploadDownloadDataMessage
+                        if (response_message.MessageHeader.MessageType == MessageType.ResponseUploadDownloadData)
+                        {
+                            responseUploadDownloadDataMessage = (ResponseUploadDownloadDataMessage)response_message;
+                            if (responseUploadDownloadDataMessage.Success == false)
+                            {
+                                string failmsg = String.Format("Upload failed, reason: {0}", responseUploadDownloadDataMessage.Message);
+                                logger.LogText(failmsg, this, Logtype.Info);
+                                return new DataModificationOrRequestResult()
+                                {
+                                    Message = failmsg,
+                                    Success = false
+                                };
+                            }
+
+                            //every second fire event for upload progress
+                            if (UploadDownloadProgressChanged != null && DateTime.Now > LastEventFireTime.AddMilliseconds(1000))
+                            {
+                                UploadDownloadProgressEventArgs args = new UploadDownloadProgressEventArgs();
+                                args.FileName = filename;
+                                args.FileSize = filesize;
+                                args.DownloadedUploaded = totalbytesread;
+                                TimeSpan duration = DateTime.Now - LastEventFireTime;
+                                args.BytePerSecond = (long)((((double)totalbytesread - (double)lasttotalbytesread) / duration.TotalMilliseconds) * 1000.0);
+                                lasttotalbytesread = totalbytesread;
+                                UploadDownloadProgressChanged.Invoke(this, args);
+                                LastEventFireTime = DateTime.Now;
+                            }
+                        }
+                        else
+                        {
+                            //Received another (wrong) message
+                            string msg = String.Format("Response message to upload a ResourceDataFile was not a ResponseUploadDownloadDataMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
+                            logger.LogText(msg, this, Logtype.Info);
+                            return new DataModificationOrRequestResult()
+                            {
+                                Message = msg,
+                                Success = false
+                            };
+                        }
+                    }
+                }
+
+                //fire last event when file is completely uploaded
+                if (UploadDownloadProgressChanged != null)
+                {
+                    UploadDownloadProgressEventArgs args = new UploadDownloadProgressEventArgs();
+                    args.FileName = filename;
+                    args.FileSize = filesize;
+                    args.DownloadedUploaded = totalbytesread;
+                    args.BytePerSecond = 0;
+                    UploadDownloadProgressChanged.Invoke(this, args);
+                }
+
+                //Received another (wrong) message                    
+                logger.LogText("Upload completed", this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = "Upload completed",
+                    Success = true
+                };
+            }
+            else
+            {
+                //Received another (wrong) message
+                string msg = String.Format("Response message to upload a file was not a ResponseUploadDownloadDataMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
+        }
+
+        /// <summary>
+        /// Performs the download of a file
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="deleteFile"></param>
+        /// <param name="stop"></param>
+        /// <returns></returns>
+        private DataModificationOrRequestResult DoDownloadFile(string filename, ref bool deleteFile, ref bool stop)
+        {
+            long writtenData = 0;
+            long lastWrittenData = 0;
+            DateTime LastEventFireTime = DateTime.Now;
+
+            using (FileStream fileStream = new FileStream(filename + ".part", FileMode.CreateNew, FileAccess.Write))
+            {
+                while (true)
+                {
+                    //Receive message from stream
+                    Message responseMessage = ReceiveMessage();
+
+                    if (stop)
+                    {
+                        //user wants to stop the upload, thus, we notify the server
+                        StopUploadDownloadMessage stopUploadDownloadMessage = new StopUploadDownloadMessage();
+                        SendMessage(stopUploadDownloadMessage);
+                        //return USERSTOP, thus, the ui wont update itself
+                        deleteFile = true;
+                        return new DataModificationOrRequestResult()
+                        {
+                            Success = false,
+                            DataObject = null,
+                            Message = "USERSTOP"
+                        };
+                    }
+
+                    //receive data message
+                    if (responseMessage.MessageHeader.MessageType == MessageType.UploadDownloadData)
+                    {
+                        UploadDownloadDataMessage uploadDownloadDataMessage = (UploadDownloadDataMessage)responseMessage;
+                        fileStream.Write(uploadDownloadDataMessage.Data, 0, uploadDownloadDataMessage.Data.Length);
+                        writtenData += uploadDownloadDataMessage.Data.Length;
+
+                        //received wrong message, abort
+                        ResponseUploadDownloadDataMessage responseUploadDownloadDataMessage = new ResponseUploadDownloadDataMessage();
+                        responseUploadDownloadDataMessage.Success = true;
+                        responseUploadDownloadDataMessage.Message = "OK";
+                        SendMessage(responseUploadDownloadDataMessage);
+
+                        if (writtenData == uploadDownloadDataMessage.FileSize)
+                        {
+                            // download completed
+                            if (UploadDownloadProgressChanged != null)
+                            {
+                                UploadDownloadProgressEventArgs args = new UploadDownloadProgressEventArgs();
+                                args.FileName = filename;
+                                args.FileSize = uploadDownloadDataMessage.FileSize;
+                                args.DownloadedUploaded = writtenData;
+                                args.BytePerSecond = 0;
+                                UploadDownloadProgressChanged.Invoke(this, args);
+                            }
+                            return new DataModificationOrRequestResult()
+                            {
+                                Message = "Download completed",
+                                Success = true
+                            };
+                        }
+
+                        //every second fire event for upload progress
+                        if (UploadDownloadProgressChanged != null && DateTime.Now > LastEventFireTime.AddMilliseconds(1000))
+                        {
+                            UploadDownloadProgressEventArgs args = new UploadDownloadProgressEventArgs();
+                            args.FileName = filename;
+                            args.FileSize = uploadDownloadDataMessage.FileSize;
+                            args.DownloadedUploaded = writtenData;
+                            TimeSpan duration = DateTime.Now - LastEventFireTime;
+                            args.BytePerSecond = (long)((((double)writtenData - (double)lastWrittenData) / duration.TotalMilliseconds) * 1000.0);
+                            lastWrittenData = writtenData;
+                            UploadDownloadProgressChanged.Invoke(this, args);
+                            LastEventFireTime = DateTime.Now;
+                        }
+
+                    }
+                    //something went wrong, i.e. ResponseUploadDownloadDataMessage, we received a  thus we abort
+                    else if (responseMessage.MessageHeader.MessageType == MessageType.ResponseUploadDownloadData)
+                    {
+                        ResponseUploadDownloadDataMessage responseUploadDownloadDataMessage = (ResponseUploadDownloadDataMessage)responseMessage;
+                        logger.LogText(String.Format("Download failed: {0}", responseUploadDownloadDataMessage.Message), this, Logtype.Info);
+                        deleteFile = true;
+                        return new DataModificationOrRequestResult()
+                        {
+                            Message = responseUploadDownloadDataMessage.Message,
+                            Success = false
+                        };
+                    }
+                    //we receive something wrong...
+                    else
+                    {
+                        string msg = String.Format("Response message to request to download a file was not an UploadDownloadDataMessage. Message was: {0}", responseMessage.MessageHeader.MessageType.ToString());
+                        logger.LogText(msg, this, Logtype.Info);
+                        deleteFile = true;
+                        return new DataModificationOrRequestResult()
+                        {
+                            Message = msg,
+                            Success = false
+                        };
+                    }
+                }
             }
         }
 
