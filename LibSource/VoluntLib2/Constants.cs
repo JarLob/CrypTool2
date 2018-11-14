@@ -32,16 +32,16 @@ namespace VoluntLib2
 
         //ComputationManager class
         public const int COMPUTATIONMANAGER_MAX_TERMINATION_WAIT_TIME = 5000; //5 s
-        public const int COMPUTATIONMANAGER_WORKER_THREAD_SLEEPTIME = 1; // ms
+        public const int COMPUTATIONMANAGER_WORKER_THREAD_SLEEPTIME = 1; //1 ms
         
         //CheckJobsCompletionState class
-        public const int CHECKJOBSCOMPLETIONSTATE_CHECK_INTERVAL = 5000; //5sec
+        public const int CHECKJOBSCOMPLETIONSTATE_CHECK_INTERVAL = 5000; //5 sec
 
         //ConnectionManager class
-        public const int CONNECTIONMANAGER_RECEIVE_TIMEOUT = 100; //ms
+        public const int CONNECTIONMANAGER_RECEIVE_TIMEOUT = 100; //100 ms
         public const int CONNECTIONMANAGER_MAX_TERMINATION_WAIT_TIME = 5000; //5 s
         public const int CONNECTIONMANAGER_MAX_UDP_MESSAGE_PAYLOAD_SIZE = 65507; //maximum size of UDP payload
-        public const int CONNECTIONMANAGER_WORKER_THREAD_SLEEPTIME = 1; // ms
+        public const int CONNECTIONMANAGER_WORKER_THREAD_SLEEPTIME = 1; //1 ms
 
         //ConnectionLayer.Message class
         public const string MESSAGE_VOLUNTLIB2 = "VoluntLib2";  //Magic number to identify voluntlib protocol messages
@@ -52,22 +52,22 @@ namespace VoluntLib2
         public const long HELLOOPERATION_RETRY_TIMESPAN = 5000;
 
         //CheckContactsOperation class
-        public const int CHECKCONTACTSOPERATION_SAY_HELLO_INTERVAL = 30000; //30 seconds
-        public const int CHECKCONTACTSOPERATION_SET_CONTACT_OFFLINE = 300000; //5 minutes
-        public const int CHECKCONTACTSOPERATION_REMOVE_OFFLINE_CONTACT = 86400000; //24 hours
+        public const int CHECKCONTACTSOPERATION_SAY_HELLO_INTERVAL = 30000; //30 sec
+        public const int CHECKCONTACTSOPERATION_SET_CONTACT_OFFLINE = 300000; //5 min
+        public const int CHECKCONTACTSOPERATION_REMOVE_OFFLINE_CONTACT = 86400000; //24 h
 
         //RequestNeighborListOperation class
-        public const long REQUESTNEIGHBORLISTOPERATION_TIMEOUT = 30000;
-        public const long REQUESTNEIGHBORLISTOPERATION_RETRY_TIMESPAN = 5000;
+        public const long REQUESTNEIGHBORLISTOPERATION_TIMEOUT = 30000; //30 sec
+        public const long REQUESTNEIGHBORLISTOPERATION_RETRY_TIMESPAN = 5000; //5 sec
 
         //MyStatusOperation class
-        public const uint MYSTATUSOPERATION_STATUS_SHOW_INTERVAL = 5000; // 5sec
+        public const uint MYSTATUSOPERATION_STATUS_SHOW_INTERVAL = 5000; // 5 sec
 
         //AskForNeighborListOperation class
-        public const int ASKFORNEIGHBORLISTOPERATION_ASK_FOR_NEIGHBORLIST_INTERVAL = 300000; // 5 minutes
+        public const int ASKFORNEIGHBORLISTOPERATION_ASK_FOR_NEIGHBORLIST_INTERVAL = 300000; // 5 min
 
         //CheckMyConnectionsNumberOperation class
-        public const int CHECKMYCONNECTIONSNUMBEROPERATION_CHECK_CONNECTIONS_INTERVAL = 10000; //10 sec 
+        public const int CHECKMYCONNECTIONSNUMBEROPERATION_CHECK_CONNECTIONS_INTERVAL = 10000; //10 sec
         public const int CHECKMYCONNECTIONSNUMBEROPERATION_MIN_CONNECTIONS_NUMBER = 10;
         public const int CHECKMYCONNECTIONSNUMBEROPERATION_MAX_CONNECTIONS_NUMBER = 20;
 
@@ -83,13 +83,13 @@ namespace VoluntLib2
 
         //Job class
         public const int JOB_STRING_MAX_LENGTH = 255;
-        public const int JOB_STRING_MAX_JOB_DESCRIPTION_LENGTH = 1024; //1kb
+        public const int JOB_STRING_MAX_JOB_DESCRIPTION_LENGTH = 1024; //1 KiB
         public const string JOB_ANONYMOUS_USER = "anonymous";
 
         //JobManager class
         public const int JOBMANAGER_MAX_TERMINATION_WAIT_TIME = 5000; //5 s
-        public const int JOBMANAGER_WORKER_THREAD_SLEEPTIME = 1; // ms
-        public const int JOBMANAGER_MAX_JOB_PAYLOAD_SIZE = 20 * 1024; // 20KiB
+        public const int JOBMANAGER_WORKER_THREAD_SLEEPTIME = 1; // 1 ms
+        public const int JOBMANAGER_MAX_JOB_PAYLOAD_SIZE = 20 * 1024; // 20 KiB
 
         //ManagementLayer.MessageHeader class
         public const int MESSAGES_STRING_MAX_LENGTH = 255;
@@ -99,16 +99,16 @@ namespace VoluntLib2
         public const byte MGM_MESSAGE_VOLUNTLIB2_VERSION = 0x01;    //Protocol version number
 
         //ShareJobListAndJobsOperation class
-        public const int SHAREJOBLISTANDJOBSOPERATION_SHARE_INTERVAL = 300000; //5min
+        public const int SHAREJOBLISTANDJOBSOPERATION_SHARE_INTERVAL = 300000; //5 min
 
         //RequestJobListOperation class
-        public const int REQUESTJOBLISTOPERATION_REQUEST_INTERVAL = 60000; //1min 
+        public const int REQUESTJOBLISTOPERATION_REQUEST_INTERVAL = 60000; //1 min 
 
         //CheckJobsPayloadOperation class
         public const int CHECKJOBSPAYLOADOPERATION_REQUEST_INTERVAL = 60000; //1 min
 
         //JobsSerializationOperation class
-        public const int JOBSSERIALIZATIONOPERATION_SERIALIZATION_INTERVAL = 300000; //5min
+        public const int JOBSSERIALIZATIONOPERATION_SERIALIZATION_INTERVAL = 300000; //5 min
 
         //UpdateJobsProgressOperation class
         public const int UPDATEJOBSPROGRESSOPERATION_UPDATE_TIME_INTERVAL = 1000; //1 sec
