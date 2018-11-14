@@ -2493,7 +2493,7 @@ namespace CrypToolStoreLib.Server
                 SendMessage(responseSuccess, sslStream);
 
                 long filesize = startUploadResourceDataFileMessage.FileSize;
-                string filename = "Resource-" + resourceData.ResourceId + "-" + resourceData.ResourceVersion + ".bin";
+                string filename = "ResourceData-" + resourceData.ResourceId + "-" + resourceData.ResourceVersion + ".bin";
                 tempfilename = filename + "_" + DateTime.Now.Ticks;
 
                 CheckResourceDataFolder();
