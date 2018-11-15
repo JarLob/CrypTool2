@@ -610,7 +610,7 @@ namespace CrypToolStoreLib.Database
         {
             string query = "SELECT "+
                 "a.id, MAX(a.pluginversion) AS pluginversion, a.buildversion, a.publishstate, a.name, a.shortdescription, a.longdescription, a.authornames, a.authoremails, a.authorinstitutes, icon "+
-                "FROM (SELECT plugins.*, sources.* FROM plugins INNER JOIN sources ON plugins.id = sources.pluginid WHERE sources.publishstate IN (@list)) "+
+                "FROM (SELECT plugins.*, sources.* FROM plugins INNER JOIN sources ON plugins.id = sources.pluginid WHERE sources.publishstate IN ($LIST$)) "+
                 "a GROUP BY a.id ORDER BY a.id ASC";      
 
             DatabaseConnection connection = GetConnection();
@@ -634,10 +634,10 @@ namespace CrypToolStoreLib.Database
                 case PublishState.RELEASE:
                     list = "'DEVELOPER', 'NIGHTLY','BETA','RELEASE'";
                     break;            
-            }                                  
+            }
+            query = query.Replace("$LIST$", list);
 
-            object[][] parameters = new object[][]{
-            new object[]{"@list", list}
+            object[][] parameters = new object[][]{                
             };
 
             var resultset = connection.ExecutePreparedStatement(query, parameters);
