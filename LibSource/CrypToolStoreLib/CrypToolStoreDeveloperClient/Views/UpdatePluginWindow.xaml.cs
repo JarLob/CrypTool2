@@ -1,4 +1,5 @@
-﻿/*
+﻿using CrypToolStoreLib;
+/*
    Copyright 2018 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -282,9 +283,9 @@ namespace CrypToolStoreDeveloperClient.Views
                 if (dialogResult == true)
                 {
                     byte[] image = File.ReadAllBytes(openFileDialog.FileName);
-                    if (image.Length > ClientHandler.MAX_ICON_FILE_SIZE)
+                    if (image.Length > Constants.CLIENTHANDLER_MAX_ICON_FILE_SIZE)
                     {
-                        MessageBox.Show(String.Format("File size of icons can only be less or equal to {0} byte!", ClientHandler.MAX_ICON_FILE_SIZE), "Invalid icon file size");
+                        MessageBox.Show(String.Format("File size of icons can only be less or equal to {0} byte!", Constants.CLIENTHANDLER_MAX_ICON_FILE_SIZE), "Invalid icon file size");
                         return;
                     }
                     Icon = image;

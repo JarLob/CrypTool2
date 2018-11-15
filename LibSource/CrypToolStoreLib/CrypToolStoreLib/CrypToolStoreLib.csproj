@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client\Client.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Database\Database.cs" />
     <Compile Include="Database\DatabaseConnection.cs" />
     <Compile Include="DataObjects\Objects.cs" />

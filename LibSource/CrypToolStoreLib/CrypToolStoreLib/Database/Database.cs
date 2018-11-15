@@ -31,8 +31,6 @@ namespace CrypToolStoreLib.Database
     public class CrypToolStoreDatabase : IDisposable
     {
         private Logger logger = Logger.GetLogger();
-        private const int PBKDF2_ITERATION_COUNT = 10000;
-        private const int PBKDF2_HASH_LENGTH = 32;
         private string databaseServer;
         private string databaseName;
         private string databaseUser;
@@ -170,12 +168,12 @@ namespace CrypToolStoreLib.Database
             string query = "insert into developers (username, firstname, lastname, email, password, passwordsalt, passworditerations, isadmin) values (@username, @firstname, @lastname, @email, @password, @passwordsalt, @passworditerations, @isadmin)";
 
             byte[] hash_bytes;
-            byte[] salt_bytes = new byte[PBKDF2_HASH_LENGTH];
+            byte[] salt_bytes = new byte[Constants.DATABASE_PBKDF2_HASH_LENGTH];
             using (RNGCryptoServiceProvider rngCryptoServiceProvider = new RNGCryptoServiceProvider())
             {
                 rngCryptoServiceProvider.GetBytes(salt_bytes);
-                Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, salt_bytes, PBKDF2_ITERATION_COUNT);
-                hash_bytes = rfc2898DeriveBytes.GetBytes(PBKDF2_HASH_LENGTH);
+                Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, salt_bytes, Constants.DATABASE_PBKDF2_ITERATION_COUNT);
+                hash_bytes = rfc2898DeriveBytes.GetBytes(Constants.DATABASE_PBKDF2_HASH_LENGTH);
             }
 
             string hash_string = Tools.Tools.ByteArrayToHexString(hash_bytes);
@@ -190,7 +188,7 @@ namespace CrypToolStoreLib.Database
                 new object[]{"@email", email},
                 new object[]{"@password", hash_string},
                 new object[]{"@passwordsalt", salt_string},
-                new object[]{"@passworditerations", PBKDF2_ITERATION_COUNT},
+                new object[]{"@passworditerations", Constants.DATABASE_PBKDF2_ITERATION_COUNT},
                 new object[]{"@isadmin", isAdmin}
             };
 
@@ -344,12 +342,12 @@ namespace CrypToolStoreLib.Database
             string query = "update developers set password=@password, passwordsalt=@passwordsalt, passworditerations=@passworditerations where username=@username";
 
             byte[] hash_bytes;
-            byte[] salt_bytes = new byte[PBKDF2_HASH_LENGTH];
+            byte[] salt_bytes = new byte[Constants.DATABASE_PBKDF2_HASH_LENGTH];
             using (RNGCryptoServiceProvider rngCryptoServiceProvider = new RNGCryptoServiceProvider())
             {
                 rngCryptoServiceProvider.GetBytes(salt_bytes);
-                Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, salt_bytes, PBKDF2_ITERATION_COUNT);
-                hash_bytes = rfc2898DeriveBytes.GetBytes(PBKDF2_HASH_LENGTH);
+                Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, salt_bytes, Constants.DATABASE_PBKDF2_ITERATION_COUNT);
+                hash_bytes = rfc2898DeriveBytes.GetBytes(Constants.DATABASE_PBKDF2_HASH_LENGTH);
             }
 
             string hash_string = Tools.Tools.ByteArrayToHexString(hash_bytes);
@@ -360,7 +358,7 @@ namespace CrypToolStoreLib.Database
             object[][] parameters = new object[][]{                         
                 new object[]{"@password", hash_string},
                 new object[]{"@passwordsalt", salt_string},
-                new object[]{"@passworditerations", PBKDF2_ITERATION_COUNT},
+                new object[]{"@passworditerations", Constants.DATABASE_PBKDF2_ITERATION_COUNT},
                 new object[]{"@username", username}       
             };
 

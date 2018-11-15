@@ -33,8 +33,7 @@ using System.Threading.Tasks;
 namespace CrypToolStoreLib.Server
 {        
     public class CrypToolStoreServer
-    {
-        public const int DEFAULT_PORT = 15151;        
+    {        
         private Logger logger = Logger.GetLogger();
 
         /// <summary>
@@ -78,7 +77,7 @@ namespace CrypToolStoreLib.Server
         /// </summary>
         public CrypToolStoreServer()
         {
-            Port = DEFAULT_PORT;
+            Port = Constants.SERVER_DEFAULT_PORT;
         }        
 
         /// <summary>
@@ -173,18 +172,9 @@ namespace CrypToolStoreLib.Server
     /// A single client handler is responsible for the communication with one client
     /// </summary>
     public class ClientHandler
-    {
-        private const int READ_TIMEOUT = 5000;
-        private const int WRITE_TIMEOUT = 5000;
-        public const int MAX_ICON_FILE_SIZE = 65536;
-        public const string PLUGIN_SOURCE_FOLDER = "Sources";
-        public const string PLUGIN_ASSEMBLIES_FOLDER = "Assemblies";
-        public const string RESOURCES_FOLDER = "Resources";
-        private const int FILE_BUFFER_SIZE = 1048576; // 1MB
-        private const string RESOURCEDATA_FOLDER = "ResourceData";
-
+    {       
         private Logger Logger = Logger.GetLogger();
-        private CrypToolStoreDatabase Database = CrypToolStoreDatabase.GetDatabase();        
+        private CrypToolStoreDatabase Database = CrypToolStoreDatabase.GetDatabase();
         private bool ClientIsAuthenticated { get; set; }
         private bool ClientIsAdmin { get; set; }
         private string Username { get; set; }
@@ -227,8 +217,8 @@ namespace CrypToolStoreLib.Server
             using (SslStream sslstream = new SslStream(client.GetStream()))
             {                
                 //Step 0: Authenticate SSLStream as server
-                sslstream.ReadTimeout = READ_TIMEOUT;
-                sslstream.WriteTimeout = WRITE_TIMEOUT;
+                sslstream.ReadTimeout = Constants.CLIENTHANDLER_READ_TIMEOUT;
+                sslstream.WriteTimeout = Constants.CLIENTHANDLER_WRITE_TIMEOUT;
                 sslstream.AuthenticateAsServer(CrypToolStoreServer.ServerKey, false, false);
                 try
                 {
@@ -290,10 +280,10 @@ namespace CrypToolStoreLib.Server
             MessageHeader header = new MessageHeader();
             header.Deserialize(headerbytes);
             int payloadsize = header.PayloadSize;
-            if (payloadsize > Message.MAX_PAYLOAD_SIZE)
+            if (payloadsize > Constants.SERVER_MESSAGE_MAX_PAYLOAD_SIZE)
             {
                 //if we receive a message larger than MAX_PAYLOAD_SIZE we throw an exception which terminates the session
-                throw new Exception(String.Format("Receiving a message with a payload which is larger (={0} bytes) than the Message.MAX_PAYLOAD_SIZE={1} bytes", payloadsize, Message.MAX_PAYLOAD_SIZE));
+                throw new Exception(String.Format("Receiving a message with a payload which is larger (={0} bytes) than the SERVER_MAX_PAYLOAD_SIZE={1} bytes", payloadsize, Constants.SERVER_MESSAGE_MAX_PAYLOAD_SIZE));
             }
 
             //Step 3: Read complete message
@@ -873,12 +863,12 @@ namespace CrypToolStoreLib.Server
             //Here, the user is authorized; thus, update of existing plugin in database is started
             try
             {
-                if (plugin.Icon.Length > MAX_ICON_FILE_SIZE)
+                if (plugin.Icon.Length > Constants.CLIENTHANDLER_MAX_ICON_FILE_SIZE)
                 {
                     ResponsePluginModificationMessage icon_too_big_response = new ResponsePluginModificationMessage();
                     icon_too_big_response.ModifiedPlugin = false;
-                    Logger.LogText(String.Format("User {0} tried to upload an icon > {0} byte", MAX_ICON_FILE_SIZE), this, Logtype.Error);
-                    icon_too_big_response.Message = String.Format("Icon file size > {0} byte now allowed!", MAX_ICON_FILE_SIZE);
+                    Logger.LogText(String.Format("User {0} tried to upload an icon > {0} byte", Constants.CLIENTHANDLER_MAX_ICON_FILE_SIZE), this, Logtype.Error);
+                    icon_too_big_response.Message = String.Format("Icon file size > {0} byte now allowed!", Constants.CLIENTHANDLER_MAX_ICON_FILE_SIZE);
                     SendMessage(icon_too_big_response, sslStream);
                     return;
                 }
@@ -1329,14 +1319,14 @@ namespace CrypToolStoreLib.Server
             try
             {
                 //1. delete files in file system
-                string filename = PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + "Source-" + source.PluginId + "-" + source.PluginVersion + ".zip";
+                string filename = Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + "Source-" + source.PluginId + "-" + source.PluginVersion + ".zip";
                 if(File.Exists(filename))
                 {
                     Logger.LogText(String.Format("Deleting source zipfile: {0}", filename), this, Logtype.Info);
                     File.Delete(filename);
                     Logger.LogText(String.Format("Deleted source zipfile: {0}", filename), this, Logtype.Info);
                 }
-                filename = PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + "Assembly-" + source.PluginId + "-" + source.PluginVersion + ".zip";
+                filename = Constants.CLIENTHANDLER_PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + "Assembly-" + source.PluginId + "-" + source.PluginVersion + ".zip";
                 if (File.Exists(filename))
                 {
                     Logger.LogText(String.Format("Deleting assembly zipfile: {0}", filename), this, Logtype.Info);
@@ -2201,7 +2191,7 @@ namespace CrypToolStoreLib.Server
 
                 CheckSourceFolder();
                 long writtenFilesize = 0;
-                using (FileStream fileStream = new FileStream(PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename, FileMode.CreateNew, FileAccess.Write))
+                using (FileStream fileStream = new FileStream(Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename, FileMode.CreateNew, FileAccess.Write))
                 {
                     
                     while (true)
@@ -2262,15 +2252,15 @@ namespace CrypToolStoreLib.Server
                 //when we are here, the upload went well,
                 //thus we can delete the old file, if it exists, and rename the temp file
 
-                if (File.Exists(PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + filename))
+                if (File.Exists(Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + filename))
                 {
                     Logger.LogText(String.Format("File {0} already exists. Delete it now", filename), this, Logtype.Info);
-                    File.Delete(PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + filename);
+                    File.Delete(Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + filename);
                     Logger.LogText(String.Format("Deleted file {0}", filename), this, Logtype.Info);
                 }
 
                 Logger.LogText(String.Format("Renaming file {0} to {1}", tempfilename, filename), this, Logtype.Info);
-                File.Move(PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename, PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + filename);
+                File.Move(Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename, Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + filename);
                 Logger.LogText(String.Format("Renamed file {0} to {1}", tempfilename, filename), this, Logtype.Info);
 
                 Logger.LogText(String.Format("Updating Source={0}-{1} in database", source.PluginId, source.PluginVersion), this, Logtype.Info);
@@ -2293,11 +2283,11 @@ namespace CrypToolStoreLib.Server
             {
                 //If something went wrong, maybe the tempfile still exists
                 //thus, we delete it here
-                if (tempfilename != string.Empty && File.Exists(PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename))
+                if (tempfilename != string.Empty && File.Exists(Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename))
                 {
-                    Logger.LogText(String.Format("Delete temp file {0}", PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename), this, Logtype.Info);
-                    File.Delete(PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename);
-                    Logger.LogText(String.Format("Deleted temp file {0}", PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename), this, Logtype.Info);
+                    Logger.LogText(String.Format("Delete temp file {0}", Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename), this, Logtype.Info);
+                    File.Delete(Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename);
+                    Logger.LogText(String.Format("Deleted temp file {0}", Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename), this, Logtype.Info);
                 }
             }
         }
@@ -2349,7 +2339,7 @@ namespace CrypToolStoreLib.Server
 
                 CheckAssembliesFolder();
                 long writtenFilesize = 0;
-                using (FileStream fileStream = new FileStream(PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + tempfilename, FileMode.CreateNew, FileAccess.Write))
+                using (FileStream fileStream = new FileStream(Constants.CLIENTHANDLER_PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + tempfilename, FileMode.CreateNew, FileAccess.Write))
                 {
 
                     while (true)
@@ -2410,15 +2400,15 @@ namespace CrypToolStoreLib.Server
                 //when we are here, the upload went well,
                 //thus we can delete the old file, if it exists, and rename the temp file
 
-                if (File.Exists(PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + filename))
+                if (File.Exists(Constants.CLIENTHANDLER_PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + filename))
                 {
                     Logger.LogText(String.Format("File {0} already exists. Delete it now", filename), this, Logtype.Info);
-                    File.Delete(PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + filename);
+                    File.Delete(Constants.CLIENTHANDLER_PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + filename);
                     Logger.LogText(String.Format("Deleted file {0}", filename), this, Logtype.Info);
                 }
 
                 Logger.LogText(String.Format("Renaming file {0} to {1}", tempfilename, filename), this, Logtype.Info);
-                File.Move(PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + tempfilename, PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + filename);
+                File.Move(Constants.CLIENTHANDLER_PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + tempfilename, Constants.CLIENTHANDLER_PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + filename);
                 Logger.LogText(String.Format("Renamed file {0} to {1}", tempfilename, filename), this, Logtype.Info);
 
                 Logger.LogText(String.Format("Updating source={0}-{1} in database", source.PluginId, source.PluginVersion), this, Logtype.Info);
@@ -2441,11 +2431,11 @@ namespace CrypToolStoreLib.Server
             {
                 //If something went wrong, maybe the tempfile still exists
                 //thus, we delete it here
-                if (tempfilename != string.Empty && File.Exists(PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename))
+                if (tempfilename != string.Empty && File.Exists(Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename))
                 {
-                    Logger.LogText(String.Format("Delete temp file {0}", PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename), this, Logtype.Info);
-                    File.Delete(PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename);
-                    Logger.LogText(String.Format("Deleted temp file {0}", PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename), this, Logtype.Info);
+                    Logger.LogText(String.Format("Delete temp file {0}", Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename), this, Logtype.Info);
+                    File.Delete(Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename);
+                    Logger.LogText(String.Format("Deleted temp file {0}", Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + tempfilename), this, Logtype.Info);
                 }
             }
         }
@@ -2499,7 +2489,7 @@ namespace CrypToolStoreLib.Server
                 CheckResourceDataFolder();
 
                 long writtenFilesize = 0;
-                using (FileStream fileStream = new FileStream(RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + tempfilename, FileMode.CreateNew, FileAccess.Write))
+                using (FileStream fileStream = new FileStream(Constants.CLIENTHANDLER_RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + tempfilename, FileMode.CreateNew, FileAccess.Write))
                 {
 
                     while (true)
@@ -2560,15 +2550,15 @@ namespace CrypToolStoreLib.Server
                 //when we are here, the upload went well,
                 //thus we can delete the old file, if it exists, and rename the temp file
 
-                if (File.Exists(RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + filename))
+                if (File.Exists(Constants.CLIENTHANDLER_RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + filename))
                 {
                     Logger.LogText(String.Format("File {0} already exists. Delete it now", filename), this, Logtype.Info);
-                    File.Delete(RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + filename);
+                    File.Delete(Constants.CLIENTHANDLER_RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + filename);
                     Logger.LogText(String.Format("Deleted file {0}", filename), this, Logtype.Info);
                 }
 
                 Logger.LogText(String.Format("Renaming file {0} to {1}", tempfilename, filename), this, Logtype.Info);
-                File.Move(RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + tempfilename, RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + filename);
+                File.Move(Constants.CLIENTHANDLER_RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + tempfilename, Constants.CLIENTHANDLER_RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + filename);
                 Logger.LogText(String.Format("Renamed file {0} to {1}", tempfilename, filename), this, Logtype.Info);
 
                 Logger.LogText(String.Format("Updating resourcedata={0}-{1} in database", resourceData.ResourceId, resourceData.ResourceVersion), this, Logtype.Info);
@@ -2591,11 +2581,11 @@ namespace CrypToolStoreLib.Server
             {
                 //If something went wrong, maybe the tempfile still exists
                 //thus, we delete it here
-                if (tempfilename != string.Empty && File.Exists(RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + tempfilename))
+                if (tempfilename != string.Empty && File.Exists(Constants.CLIENTHANDLER_RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + tempfilename))
                 {
-                    Logger.LogText(String.Format("Delete temp file {0}", RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + tempfilename), this, Logtype.Info);
-                    File.Delete(RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + tempfilename);
-                    Logger.LogText(String.Format("Deleted temp file {0}", RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + tempfilename), this, Logtype.Info);
+                    Logger.LogText(String.Format("Delete temp file {0}", Constants.CLIENTHANDLER_RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + tempfilename), this, Logtype.Info);
+                    File.Delete(Constants.CLIENTHANDLER_RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + tempfilename);
+                    Logger.LogText(String.Format("Deleted temp file {0}", Constants.CLIENTHANDLER_RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + tempfilename), this, Logtype.Info);
                 }
             }
         }
@@ -2660,7 +2650,7 @@ namespace CrypToolStoreLib.Server
                 }
 
                 //check if file in file system exists
-                if (!File.Exists(PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + filename))
+                if (!File.Exists(Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + filename))
                 {
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
@@ -2670,27 +2660,27 @@ namespace CrypToolStoreLib.Server
                     return;
                 }
 
-                FileInfo fileInfo = new FileInfo(PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + filename);
+                FileInfo fileInfo = new FileInfo(Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + filename);
                 long filesize = fileInfo.Length;
                 long totalbytesread = 0;
 
-                using (FileStream fileStream = new FileStream(PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + filename, FileMode.Open, FileAccess.Read))
+                using (FileStream fileStream = new FileStream(Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER + Path.DirectorySeparatorChar + filename, FileMode.Open, FileAccess.Read))
                 {
-                    byte[] buffer = new byte[FILE_BUFFER_SIZE];
+                    byte[] buffer = new byte[Constants.CLIENTHANDLER_FILE_BUFFER_SIZE];
                     while (totalbytesread < filesize)
                     {
                         //read a block of data
                         int bytesread = 0;
                         int current_bytesread = 0;
 
-                        while ((current_bytesread = fileStream.Read(buffer, bytesread, FILE_BUFFER_SIZE - bytesread)) > 0 && bytesread < FILE_BUFFER_SIZE)
+                        while ((current_bytesread = fileStream.Read(buffer, bytesread, Constants.CLIENTHANDLER_FILE_BUFFER_SIZE - bytesread)) > 0 && bytesread < Constants.CLIENTHANDLER_FILE_BUFFER_SIZE)
                         {
                             bytesread += current_bytesread;
                             totalbytesread += current_bytesread;
                         }
 
                         byte[] data;
-                        if (bytesread < FILE_BUFFER_SIZE)
+                        if (bytesread < Constants.CLIENTHANDLER_FILE_BUFFER_SIZE)
                         {
                             data = new byte[bytesread];
                             Array.Copy(buffer, 0, data, 0, bytesread);
@@ -2818,7 +2808,7 @@ namespace CrypToolStoreLib.Server
                 }
 
                 //check if file in file system exists
-                if (!File.Exists(PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + filename))
+                if (!File.Exists(Constants.CLIENTHANDLER_PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + filename))
                 {
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
@@ -2828,27 +2818,27 @@ namespace CrypToolStoreLib.Server
                     return;
                 }
 
-                FileInfo fileInfo = new FileInfo(PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + filename);
+                FileInfo fileInfo = new FileInfo(Constants.CLIENTHANDLER_PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + filename);
                 long filesize = fileInfo.Length;
                 long totalbytesread = 0;
 
-                using (FileStream fileStream = new FileStream(PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + filename, FileMode.Open, FileAccess.Read))
+                using (FileStream fileStream = new FileStream(Constants.CLIENTHANDLER_PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + filename, FileMode.Open, FileAccess.Read))
                 {
-                    byte[] buffer = new byte[FILE_BUFFER_SIZE];
+                    byte[] buffer = new byte[Constants.CLIENTHANDLER_FILE_BUFFER_SIZE];
                     while (totalbytesread < filesize)
                     {
                         //read a block of data
                         int bytesread = 0;
                         int current_bytesread = 0;
 
-                        while ((current_bytesread = fileStream.Read(buffer, bytesread, FILE_BUFFER_SIZE - bytesread)) > 0 && bytesread < FILE_BUFFER_SIZE)
+                        while ((current_bytesread = fileStream.Read(buffer, bytesread, Constants.CLIENTHANDLER_FILE_BUFFER_SIZE - bytesread)) > 0 && bytesread < Constants.CLIENTHANDLER_FILE_BUFFER_SIZE)
                         {
                             bytesread += current_bytesread;
                             totalbytesread += current_bytesread;
                         }
 
                         byte[] data;
-                        if (bytesread < FILE_BUFFER_SIZE)
+                        if (bytesread < Constants.CLIENTHANDLER_FILE_BUFFER_SIZE)
                         {
                             data = new byte[bytesread];
                             Array.Copy(buffer, 0, data, 0, bytesread);
@@ -2976,7 +2966,7 @@ namespace CrypToolStoreLib.Server
                 }
 
                 //check if file in file system exists
-                if (!File.Exists(RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + filename))
+                if (!File.Exists(Constants.CLIENTHANDLER_RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + filename))
                 {
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
@@ -2986,27 +2976,27 @@ namespace CrypToolStoreLib.Server
                     return;
                 }
 
-                FileInfo fileInfo = new FileInfo(RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + filename);
+                FileInfo fileInfo = new FileInfo(Constants.CLIENTHANDLER_RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + filename);
                 long filesize = fileInfo.Length;
                 long totalbytesread = 0;
 
-                using (FileStream fileStream = new FileStream(RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + filename, FileMode.Open, FileAccess.Read))
+                using (FileStream fileStream = new FileStream(Constants.CLIENTHANDLER_RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + filename, FileMode.Open, FileAccess.Read))
                 {
-                    byte[] buffer = new byte[FILE_BUFFER_SIZE];
+                    byte[] buffer = new byte[Constants.CLIENTHANDLER_FILE_BUFFER_SIZE];
                     while (totalbytesread < filesize)
                     {
                         //read a block of data
                         int bytesread = 0;
                         int current_bytesread = 0;
 
-                        while ((current_bytesread = fileStream.Read(buffer, bytesread, FILE_BUFFER_SIZE - bytesread)) > 0 && bytesread < FILE_BUFFER_SIZE)
+                        while ((current_bytesread = fileStream.Read(buffer, bytesread, Constants.CLIENTHANDLER_FILE_BUFFER_SIZE - bytesread)) > 0 && bytesread < Constants.CLIENTHANDLER_FILE_BUFFER_SIZE)
                         {
                             bytesread += current_bytesread;
                             totalbytesread += current_bytesread;
                         }
 
                         byte[] data;
-                        if (bytesread < FILE_BUFFER_SIZE)
+                        if (bytesread < Constants.CLIENTHANDLER_FILE_BUFFER_SIZE)
                         {
                             data = new byte[bytesread];
                             Array.Copy(buffer, 0, data, 0, bytesread);
@@ -3078,11 +3068,11 @@ namespace CrypToolStoreLib.Server
         /// </summary>
         private void CheckSourceFolder()
         {
-            if (!Directory.Exists(PLUGIN_SOURCE_FOLDER))
+            if (!Directory.Exists(Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER))
             {
-                Logger.LogText(String.Format("PLUGIN_SOURCE_FOLDER={0} does not exist. Create it now", PLUGIN_SOURCE_FOLDER), this, Logtype.Info);
-                Directory.CreateDirectory(PLUGIN_SOURCE_FOLDER);
-                Logger.LogText(String.Format("PLUGIN_SOURCE_FOLDER={0} created", PLUGIN_SOURCE_FOLDER), this, Logtype.Info);
+                Logger.LogText(String.Format("PLUGIN_SOURCE_FOLDER={0} does not exist. Create it now", Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER), this, Logtype.Info);
+                Directory.CreateDirectory(Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER);
+                Logger.LogText(String.Format("PLUGIN_SOURCE_FOLDER={0} created", Constants.CLIENTHANDLER_PLUGIN_SOURCE_FOLDER), this, Logtype.Info);
             }            
         }
 
@@ -3091,11 +3081,11 @@ namespace CrypToolStoreLib.Server
         /// </summary>
         private void CheckAssembliesFolder()
         {
-            if (!Directory.Exists(PLUGIN_ASSEMBLIES_FOLDER))
+            if (!Directory.Exists(Constants.CLIENTHANDLER_PLUGIN_ASSEMBLIES_FOLDER))
             {
-                Logger.LogText(String.Format("PLUGIN_ASSEMBLIES_FOLDER={0} does not exist. Create it now", PLUGIN_ASSEMBLIES_FOLDER), this, Logtype.Info);
-                Directory.CreateDirectory(PLUGIN_ASSEMBLIES_FOLDER);
-                Logger.LogText(String.Format("PLUGIN_ASSEMBLIES_FOLDER={0} created", PLUGIN_ASSEMBLIES_FOLDER), this, Logtype.Info);
+                Logger.LogText(String.Format("PLUGIN_ASSEMBLIES_FOLDER={0} does not exist. Create it now", Constants.CLIENTHANDLER_PLUGIN_ASSEMBLIES_FOLDER), this, Logtype.Info);
+                Directory.CreateDirectory(Constants.CLIENTHANDLER_PLUGIN_ASSEMBLIES_FOLDER);
+                Logger.LogText(String.Format("PLUGIN_ASSEMBLIES_FOLDER={0} created", Constants.CLIENTHANDLER_PLUGIN_ASSEMBLIES_FOLDER), this, Logtype.Info);
             }
         }
 
@@ -3104,11 +3094,11 @@ namespace CrypToolStoreLib.Server
         /// </summary>
         private void CheckResourceDataFolder()
         {
-            if (!Directory.Exists(RESOURCEDATA_FOLDER))
+            if (!Directory.Exists(Constants.CLIENTHANDLER_RESOURCEDATA_FOLDER))
             {
-                Logger.LogText(String.Format("RESOURCEDATA_FOLDER={0} does not exist. Create it now", RESOURCEDATA_FOLDER), this, Logtype.Info);
-                Directory.CreateDirectory(RESOURCEDATA_FOLDER);
-                Logger.LogText(String.Format("RESOURCEDATA_FOLDER={0} created", RESOURCEDATA_FOLDER), this, Logtype.Info);
+                Logger.LogText(String.Format("RESOURCEDATA_FOLDER={0} does not exist. Create it now", Constants.CLIENTHANDLER_RESOURCEDATA_FOLDER), this, Logtype.Info);
+                Directory.CreateDirectory(Constants.CLIENTHANDLER_RESOURCEDATA_FOLDER);
+                Logger.LogText(String.Format("RESOURCEDATA_FOLDER={0} created", Constants.CLIENTHANDLER_RESOURCEDATA_FOLDER), this, Logtype.Info);
             }
         }
 

@@ -130,8 +130,7 @@ namespace CrypToolStoreLib.Tools
     /// Message header of messages
     /// </summary>
     public class MessageHeader
-    {
-        private const string MAGIC = "CrypToolStore";       // 13 byte (string); each message begins with that                
+    {        
         public MessageType MessageType { get; set; }        // 4 byte (uint32)
         public int PayloadSize { get; set; }                // 4 byte (uint32)
 
@@ -151,7 +150,7 @@ namespace CrypToolStoreLib.Tools
         public byte[] Serialize()
         {
             //convert everything to byte arrays
-            byte[] magicBytes = ASCIIEncoding.ASCII.GetBytes(MAGIC);
+            byte[] magicBytes = ASCIIEncoding.ASCII.GetBytes(Constants.MESSAGEHEADER_MAGIC);
             byte[] messageTypeBytes = BitConverter.GetBytes((UInt32)MessageType);
             byte[] payloadSizeBytes = BitConverter.GetBytes(PayloadSize);
 
@@ -183,9 +182,9 @@ namespace CrypToolStoreLib.Tools
                 throw new DeserializationException(String.Format("Message header too small. Got {0} but expect min 21", bytes.Length));
             }
             string magicnumber = ASCIIEncoding.ASCII.GetString(bytes, 0, 13);
-            if (!magicnumber.Equals(MAGIC))
+            if (!magicnumber.Equals(Constants.MESSAGEHEADER_MAGIC))
             {
-                throw new DeserializationException(String.Format("Magic number mismatch. Got \"{0}\" but expect \"{1}\"", magicnumber, MAGIC));
+                throw new DeserializationException(String.Format("Magic number mismatch. Got \"{0}\" but expect \"{1}\"", magicnumber, Constants.MESSAGEHEADER_MAGIC));
             }
             try
             {
@@ -216,8 +215,7 @@ namespace CrypToolStoreLib.Tools
     /// Superclass for all messages
     /// </summary>
     public abstract class Message
-    {
-        public const int MAX_PAYLOAD_SIZE = 10485760; //10mb
+    {        
         private static Dictionary<MessageType, Type> MessageTypeDictionary = new Dictionary<MessageType, Type>();
 
         /// <summary>

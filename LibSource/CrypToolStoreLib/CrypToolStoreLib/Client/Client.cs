@@ -28,13 +28,7 @@ using System.IO;
 namespace CrypToolStoreLib.Client
 {
     public class CrypToolStoreClient
-    {
-        public const int DEFAULT_PORT = 15151;
-        public const string DEFAULT_ADDRESS = "localhost";
-        private const int READ_TIMEOUT = 5000;
-        private const int WRITE_TIMEOUT = 5000;
-        private const int FILE_BUFFER_SIZE = 1048576; // 1MB
-
+    {      
         private Logger logger = Logger.GetLogger();        
 
         /// <summary>
@@ -111,8 +105,8 @@ namespace CrypToolStoreLib.Client
         /// </summary>
         public CrypToolStoreClient()
         {
-            ServerPort = DEFAULT_PORT;
-            ServerAddress = DEFAULT_ADDRESS;            
+            ServerPort = Constants.CLIENT_DEFAULT_PORT;
+            ServerAddress = Constants.CLIENT_DEFAULT_ADDRESS;            
         }
 
         /// <summary>
@@ -127,8 +121,8 @@ namespace CrypToolStoreLib.Client
             logger.LogText("Trying to connect to server", this, Logtype.Info);
             Client = new TcpClient(ServerAddress, ServerPort);
             sslStream = new SslStream(Client.GetStream(), false, new RemoteCertificateValidationCallback(ValidateServerCert));
-            sslStream.ReadTimeout = READ_TIMEOUT;
-            sslStream.WriteTimeout = WRITE_TIMEOUT;
+            sslStream.ReadTimeout = Constants.CLIENT_READ_TIMEOUT;
+            sslStream.WriteTimeout = Constants.CLIENT_WRITE_TIMEOUT;
             sslStream.AuthenticateAsClient(ServerAddress);            
             logger.LogText("Connected to server", this, Logtype.Info);
         }
@@ -2643,7 +2637,7 @@ namespace CrypToolStoreLib.Client
 
                 using (FileStream fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read))
                 {
-                    byte[] buffer = new byte[FILE_BUFFER_SIZE];
+                    byte[] buffer = new byte[Constants.CLIENT_FILE_BUFFER_SIZE];
                     while (totalbytesread < filesize)
                     {
                         if (stop)
@@ -2664,14 +2658,14 @@ namespace CrypToolStoreLib.Client
                         int bytesread = 0;
                         int current_bytesread = 0;
 
-                        while ((current_bytesread = fileStream.Read(buffer, bytesread, FILE_BUFFER_SIZE - bytesread)) > 0 && bytesread < FILE_BUFFER_SIZE)
+                        while ((current_bytesread = fileStream.Read(buffer, bytesread, Constants.CLIENT_FILE_BUFFER_SIZE - bytesread)) > 0 && bytesread < Constants.CLIENT_FILE_BUFFER_SIZE)
                         {
                             bytesread += current_bytesread;
                             totalbytesread += current_bytesread;
                         }
 
                         byte[] data;
-                        if (bytesread < FILE_BUFFER_SIZE)
+                        if (bytesread < Constants.CLIENT_FILE_BUFFER_SIZE)
                         {
                             data = new byte[bytesread];
                             Array.Copy(buffer, 0, data, 0, bytesread);
