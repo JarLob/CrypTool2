@@ -1,0 +1,20 @@
+# this document contains some useful sql statements (which may also be used in the database class of cryptoolstore)
+
+# 1) select statement to get all plugins/sources that are in a given publishstate (here all states) and only those with the highest version number
+
+SELECT a.id, MAX(a.pluginversion) AS pluginversion, a.publishstate, a.name, a.shortdescription, a.longdescription, a.authornames, a.authoremails, a.authorinstitutes, icon 
+FROM
+	(SELECT plugins.*, sources.* FROM plugins INNER JOIN sources ON plugins.id = sources.pluginid 
+		WHERE sources.publishstate IN ('NOTPUBLISHED','DEVELOPER', 'NIGHTLY', 'BETA', 'RELEASE')) a
+GROUP BY a.id
+ORDER BY a.id ASC
+
+
+#2 ) select statement to get all resources/resourcesdata that are in a given publishstate (here all states) and only those with the highest version number
+
+SELECT a.id, MAX(a.version) AS version, a.publishstate, a.name, a.description
+FROM
+	(SELECT resources.*, resourcesdata.* FROM resources INNER JOIN resourcesdata ON resources.id = resourcesdata.resourceid 
+		WHERE resourcesdata.publishstate IN ('NOTPUBLISHED','DEVELOPER', 'NIGHTLY', 'BETA', 'RELEASE')) a
+GROUP BY a.id
+ORDER BY a.id ASC
