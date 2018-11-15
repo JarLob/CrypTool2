@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 namespace VoluntLib2
 {
     /// <summary>
-    /// This class containts all constants used by VoluntLib2
+    /// This class contains all constants used by VoluntLib2
     /// Do not change UNLESS YOU EXACTLY KNOW what you do
     /// </summary>
     internal class Constants

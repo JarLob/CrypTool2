@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 namespace CrypToolStoreLib
 {
     /// <summary>
-    /// This class containts all constants used by the CrypToolStoreLib
+    /// This class contains all constants used by the CrypToolStoreLib
     /// Do not change UNLESS YOU EXACTLY KNOW what you do
     /// </summary>
     public class Constants
