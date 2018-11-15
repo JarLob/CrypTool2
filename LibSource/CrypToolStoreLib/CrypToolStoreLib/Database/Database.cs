@@ -602,6 +602,72 @@ namespace CrypToolStoreLib.Database
         }
 
         /// <summary>
+        /// Returns a list of PluginAndSource which are in publishstate (or lower)
+        /// </summary>
+        /// <param name="publishstate"></param>
+        /// <returns></returns>
+        public List<PluginAndSource> GetPublishedPlugins(PublishState publishstate)
+        {
+            string query = "SELECT "+
+                "a.id, MAX(a.pluginversion) AS pluginversion, a.buildversion, a.publishstate, a.name, a.shortdescription, a.longdescription, a.authornames, a.authoremails, a.authorinstitutes, icon "+
+                "FROM (SELECT plugins.*, sources.* FROM plugins INNER JOIN sources ON plugins.id = sources.pluginid WHERE sources.publishstate IN (@list)) "+
+                "a GROUP BY a.id ORDER BY a.id ASC";      
+
+            DatabaseConnection connection = GetConnection();
+
+            string list = "'DEVELOPER'";
+
+            switch (publishstate)
+            {
+                case PublishState.DEVELOPER:
+                    list = "'DEVELOPER'";
+                    break;
+
+                case PublishState.NIGHTLY:
+                    list = "'DEVELOPER', 'NIGHTLY'";
+                    break;
+
+                case PublishState.BETA:
+                    list = "'DEVELOPER', 'NIGHTLY','BETA'";
+                    break;
+
+                case PublishState.RELEASE:
+                    list = "'DEVELOPER', 'NIGHTLY','BETA','RELEASE'";
+                    break;            
+            }                                  
+
+            object[][] parameters = new object[][]{
+            new object[]{"@list", list}
+            };
+
+            var resultset = connection.ExecutePreparedStatement(query, parameters);
+            List<PluginAndSource> pluginsAndSources = new List<PluginAndSource>();
+
+            foreach (var entry in resultset)
+            {
+                Plugin plugin = new Plugin();
+                plugin.Id = (int)entry["id"];
+                plugin.Username = (string)entry["username"];
+                plugin.Name = (string)entry["name"];
+                plugin.ShortDescription = (string)entry["shortdescription"];
+                plugin.LongDescription = (string)entry["longdescription"];
+                plugin.Authornames = (string)entry["authornames"];
+                plugin.Authoremails = (string)entry["authoremails"];
+                plugin.Authorinstitutes = (string)entry["authorinstitutes"];
+
+                Source source = new Source();
+                source.BuildVersion = (int)entry["buildversion"];
+                source.PluginId = plugin.Id;
+                source.PluginVersion = (int)entry["pluginversion"];
+
+                PluginAndSource pluginAndSource = new PluginAndSource();
+                pluginAndSource.Plugin = plugin;
+                pluginAndSource.Source = source;
+            }
+            return pluginsAndSources;
+        }
+
+        /// <summary>
         /// Creates a new source entry in the database
         /// </summary>
         /// <param name="source"></param>

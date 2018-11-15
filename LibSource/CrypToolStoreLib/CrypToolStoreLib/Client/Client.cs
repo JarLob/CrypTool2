@@ -1012,6 +1012,26 @@ namespace CrypToolStoreLib.Client
             }
         }
 
+        /// <summary>
+        /// Returns a list of all published plugins available for download in the CrypToolStore
+        /// </summary>
+        /// <returns></returns>
+        public DataModificationOrRequestResult GetPublishedPluginList(PublishState publishstate)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Returns the newest version of the plugin with the given id
+        /// Returns null if none is available
+        /// </summary>
+        /// <param name="pluginid"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult GetPlugin_CT2(PublishState publishstate)
+        {
+            return null;
+        }
+        
         #endregion
 
         #region Methods for working with sources

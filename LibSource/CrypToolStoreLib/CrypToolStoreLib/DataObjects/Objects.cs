@@ -354,6 +354,88 @@ namespace CrypToolStoreLib.DataObjects
     }
 
     /// <summary>
+    /// Simple object to store one plugin and one source
+    /// </summary>
+    public class PluginAndSource: ICrypToolStoreSerializable{
+
+        public Plugin Plugin { get; set; }
+        public Source Source { get; set; }
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public PluginAndSource()
+        {
+            Plugin = new Plugin();
+            Source = new Source();
+        }
+
+        /// <summary>
+        /// Serializes this pluginsource into a byte array
+        /// </summary>
+        /// <returns></returns>
+        public byte[] Serialize()
+        {
+            try
+            {
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    using (BinaryWriter writer = new BinaryWriter(stream))
+                    {
+                        //1. serialize plugin
+                        byte[] pluginbytes = Plugin.Serialize();                        
+                        writer.Write((Int32)pluginbytes.Length);
+                        writer.Write(pluginbytes);
+
+                        //2. serialize source
+                        byte[] sourcebytes = Source.Serialize();
+                        writer.Write((Int32)sourcebytes.Length);
+                        writer.Write(sourcebytes);
+                        return stream.ToArray();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new SerializationException(String.Format("Exception during serialization of pluginsource: {0}", ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Deserializes a pluginsource from the byte array
+        /// </summary>
+        /// <param name="bytes"></param>
+        public void Deserialize(byte[] bytes)
+        {
+            try
+            {
+                using (MemoryStream stream = new MemoryStream(bytes))
+                {
+                    using (BinaryReader reader = new BinaryReader(stream))
+                    {
+                        //1. deserialize plugin
+                        int pluginbyteslength = reader.ReadInt32();
+                        byte[] pluginbytes = new byte[pluginbyteslength];
+                        reader.Read(pluginbytes, 0, pluginbyteslength);
+                        Plugin.Deserialize(pluginbytes);
+
+                        //2. deserialize source
+                        int sourcebyteslength = reader.ReadInt32();
+                        byte[] sourcebytes = new byte[sourcebyteslength];
+                        reader.Read(sourcebytes, 0, sourcebyteslength);
+                        Plugin.Deserialize(sourcebytes);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new DeserializationException(String.Format("Exception during deserialization of pluginsource: {0}", ex.Message));
+            }
+        }
+    }
+
+
+    /// <summary>
     /// Simple object to store resource data
     /// </summary>
     public class Resource : ICrypToolStoreSerializable
