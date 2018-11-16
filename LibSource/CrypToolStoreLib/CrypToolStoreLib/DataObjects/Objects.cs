@@ -28,11 +28,11 @@ namespace CrypToolStoreLib.DataObjects
     /// </summary>
     public enum BuildState
     {
-        CREATED,
-        UPLOADED,
-        BUILDING,
-        SUCCESS,
-        ERROR
+        CREATED = 0,
+        UPLOADED = 1,
+        BUILDING = 2,
+        SUCCESS = 3,
+        ERROR = 4
     }
 
     /// <summary>
@@ -40,11 +40,11 @@ namespace CrypToolStoreLib.DataObjects
     /// </summary>
     public enum PublishState
     {
-        NOTPUBLISHED,
-        DEVELOPER,
-        NIGHTLY,
-        BETA,
-        RELEASE
+        NOTPUBLISHED = 0,
+        DEVELOPER = 1,
+        NIGHTLY = 2,
+        BETA = 3,
+        RELEASE = 4
     }
 
     /// <summary>
@@ -423,7 +423,7 @@ namespace CrypToolStoreLib.DataObjects
                         int sourcebyteslength = reader.ReadInt32();
                         byte[] sourcebytes = new byte[sourcebyteslength];
                         reader.Read(sourcebytes, 0, sourcebyteslength);
-                        Plugin.Deserialize(sourcebytes);
+                        Source.Deserialize(sourcebytes);
                     }
                 }
             }
@@ -432,6 +432,11 @@ namespace CrypToolStoreLib.DataObjects
                 throw new DeserializationException(String.Format("Exception during deserialization of pluginsource: {0}", ex.Message));
             }
         }
+
+        public override string ToString()
+        {
+            return String.Format("PluginAndSource{{Plugin{{{0}}}, Source{{{1}}}}}", Plugin.ToString(), Source.ToString());
+        }        
     }
 
 

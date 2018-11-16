@@ -1060,7 +1060,7 @@ namespace CrypToolStoreLib.Server
         /// <param name="sslStream"></param>
         private void HandleRequestPublishedPluginListMessage(RequestPublishedPluginListMessage requestPublishedPluginListMessage, SslStream sslStream)
         {
-            Logger.LogText(String.Format("User {0} requested a list of plugins", Username), this, Logtype.Debug);
+            Logger.LogText(String.Format("User {0} requested a list of plugins for publishstate=", Username, requestPublishedPluginListMessage.PublishState.ToString()), this, Logtype.Debug);
 
             try
             {
