@@ -18,3 +18,12 @@ FROM
 		WHERE resourcesdata.publishstate IN ('NOTPUBLISHED','DEVELOPER', 'NIGHTLY', 'BETA', 'RELEASE')) a
 GROUP BY a.id
 ORDER BY a.id ASC
+
+#3) select statement to get a single plugin/source that are in a given publishstate (here all states) and only that with the highest version number identified by its id
+
+SELECT a.id, MAX(a.pluginversion) AS pluginversion, a.publishstate, a.name, a.shortdescription, a.longdescription, a.authornames, a.authoremails, a.authorinstitutes, icon 
+FROM
+	(SELECT plugins.*, sources.* FROM plugins INNER JOIN sources ON plugins.id = sources.pluginid 
+		WHERE sources.publishstate IN ('NOTPUBLISHED','DEVELOPER', 'NIGHTLY', 'BETA', 'RELEASE') and plugins.id=42) a
+GROUP BY a.id
+ORDER BY a.id ASC

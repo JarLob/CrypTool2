@@ -53,6 +53,10 @@ namespace CrypToolStoreLib.Tools
         ResponsePluginModification = 205,
         RequestPlugin = 206,
         ResponsePlugin = 207,
+        RequestPublishedPluginList = 208,
+        ResponsePublishedPluginList = 209,
+        RequestPublishedPlugin = 210,
+        ResponsePublishedPlugin = 211,
 
         //Messages for "Sources"
         RequestSourceList = 300,
@@ -247,6 +251,10 @@ namespace CrypToolStoreLib.Tools
             MessageTypeDictionary.Add(MessageType.ResponsePluginModification, typeof(ResponsePluginModificationMessage));
             MessageTypeDictionary.Add(MessageType.RequestPlugin, typeof(RequestPluginMessage));
             MessageTypeDictionary.Add(MessageType.ResponsePlugin, typeof(ResponsePluginMessage));
+            MessageTypeDictionary.Add(MessageType.RequestPublishedPluginList, typeof(RequestPublishedPluginListMessage));
+            MessageTypeDictionary.Add(MessageType.ResponsePublishedPluginList, typeof(ResponsePublishedPluginListMessage));
+            MessageTypeDictionary.Add(MessageType.RequestPublishedPlugin, typeof(RequestPublishedPluginMessage));
+            MessageTypeDictionary.Add(MessageType.ResponsePublishedPlugin, typeof(ResponsePublishedPluginMessage));
 
             //source
             MessageTypeDictionary.Add(MessageType.RequestSourceList, typeof(RequestSourceListMessage));
@@ -399,6 +407,9 @@ namespace CrypToolStoreLib.Tools
                             byte[] valuebytes = new byte[0];
                             switch (fieldInfo.FieldType.Name)
                             {
+                                case "PublishState":
+                                    valuebytes = BitConverter.GetBytes((Int32)(PublishState)fieldInfo.GetValue(this));
+                                    break;
                                 case "Boolean":
                                     valuebytes = BitConverter.GetBytes((bool)fieldInfo.GetValue(this));
                                     break;
@@ -485,6 +496,9 @@ namespace CrypToolStoreLib.Tools
                             byte[] valuebytes = new byte[0];
                             switch (propertyInfo.PropertyType.Name)
                             {
+                                case "PublishState":
+                                    valuebytes = BitConverter.GetBytes((Int32)(PublishState)propertyInfo.GetValue(this));
+                                    break;
                                 case "Boolean":
                                     valuebytes = BitConverter.GetBytes((bool)propertyInfo.GetValue(this));
                                     break;
@@ -613,6 +627,9 @@ namespace CrypToolStoreLib.Tools
                             {
                                 switch (fieldInfo.FieldType.Name)
                                 {
+                                    case "PublishState":
+                                        fieldInfo.SetValue(this, (PublishState)BitConverter.ToInt32(valuebytes, 0));
+                                        break;
                                     case "Boolean":
                                         fieldInfo.SetValue(this, BitConverter.ToBoolean(valuebytes, 0));
                                         break;
@@ -685,6 +702,9 @@ namespace CrypToolStoreLib.Tools
                             {
                                 switch (propertyInfo.PropertyType.Name)
                                 {
+                                    case "PublishState":
+                                        propertyInfo.SetValue(this, (PublishState)BitConverter.ToInt32(valuebytes, 0));
+                                        break;
                                     case "Boolean":
                                         propertyInfo.SetValue(this, BitConverter.ToBoolean(valuebytes, 0));
                                         break;
@@ -1259,6 +1279,96 @@ namespace CrypToolStoreLib.Tools
         public ResponsePluginMessage()
         {
             Plugin = new Plugin();
+        }
+    }
+
+    /// <summary>
+    /// Message to request a list of published plugins
+    /// </summary>
+    public class RequestPublishedPluginListMessage : Message
+    {
+        [MessageDataField]
+        public PublishState PublishState { get; set; }
+
+        public RequestPublishedPluginListMessage()
+        {
+            PublishState = PublishState.NOTPUBLISHED;
+        }
+    }
+
+    /// <summary>
+    /// Message to response to RequestPluginListMessages
+    /// </summary>
+    public class ResponsePublishedPluginListMessage : Message
+    {
+        [MessageDataField]
+        public string Message { get; set; }
+
+        [MessageDataField]
+        public List<PluginAndSource> PluginsAndSources { get; set; }
+
+        public ResponsePublishedPluginListMessage()
+        {
+            PluginsAndSources = new List<PluginAndSource>();
+        }
+    }
+
+
+    /// <summary>
+    /// Message for requesting a published plugin
+    /// </summary>
+    public class RequestPublishedPluginMessage : Message
+    {
+        [MessageDataField]
+        public int Id
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
+        public PublishState PublishState
+        {
+            get;
+            set;
+        }
+
+        public RequestPublishedPluginMessage()
+        {            
+            Id = -1;
+            PublishState = PublishState.NOTPUBLISHED;
+        }
+    }
+
+    /// <summary>
+    /// Message to response to ResponsePublishedPluginMessage
+    /// </summary>
+    public class ResponsePublishedPluginMessage : Message
+    {
+        [MessageDataField]
+        public String Message
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
+        public bool PluginAndSourceExist
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
+        public PluginAndSource PluginAndSource
+        {
+            get;
+            set;
+        }
+
+        public ResponsePublishedPluginMessage()
+        {
+            PluginAndSource = new PluginAndSource();
         }
     }
 

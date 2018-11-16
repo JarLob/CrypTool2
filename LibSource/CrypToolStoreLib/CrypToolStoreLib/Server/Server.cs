@@ -347,6 +347,12 @@ namespace CrypToolStoreLib.Server
                 case MessageType.RequestPlugin:
                     HandleRequestPluginMessage((RequestPluginMessage)message, sslStream);
                     break;
+                case MessageType.RequestPublishedPluginList:
+                    HandleRequestPublishedPluginListMessage((RequestPublishedPluginListMessage)message, sslStream);
+                    break;
+                case MessageType.RequestPublishedPlugin:
+                    HandleRequestPublishedPluginMessage((RequestPublishedPluginMessage)message, sslStream);
+                    break;
                 case MessageType.DeletePlugin:
                     HandleDelePluginMessage((DeletePluginMessage)message,sslStream);
                     break;
@@ -427,8 +433,8 @@ namespace CrypToolStoreLib.Server
                     HandleUnknownMessage(message, sslStream);
                     break;
             }
-        }
-
+        }      
+       
         /// <summary>
         /// Handles messages of unknown message type
         /// Sends that we do not know the type of message to the client
@@ -1042,6 +1048,79 @@ namespace CrypToolStoreLib.Server
                 ResponsePluginMessage response = new ResponsePluginMessage();
                 Logger.LogText(String.Format("User {0} tried to get a plugin list. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
                 response.Message = "Exception during request of source list";
+                SendMessage(response, sslStream);
+            }
+        }
+
+        /// <summary>
+        /// Handles RequestPublishedPluginListMessage
+        /// responses with lists of published plugins
+        /// </summary>
+        /// <param name="requestPluginListMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleRequestPublishedPluginListMessage(RequestPublishedPluginListMessage requestPublishedPluginListMessage, SslStream sslStream)
+        {
+            Logger.LogText(String.Format("User {0} requested a list of plugins", Username), this, Logtype.Debug);
+
+            try
+            {
+                List<PluginAndSource> pluginsAndSources = Database.GetPublishedPlugins(requestPublishedPluginListMessage.PublishState);                
+                ResponsePublishedPluginListMessage response = new ResponsePublishedPluginListMessage();
+                response.PluginsAndSources = pluginsAndSources;
+                string message = String.Format("Responding with published plugin list containing {0} elements", pluginsAndSources.Count);
+                Logger.LogText(message, this, Logtype.Debug);
+                response.Message = message;
+                SendMessage(response, sslStream);
+            }
+            catch (Exception ex)
+            {
+                //request failed; logg to logfile and return exception to client
+                ResponsePluginMessage response = new ResponsePluginMessage();
+                Logger.LogText(String.Format("User {0} tried to get a published plugin list. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during request of source list";
+                SendMessage(response, sslStream);
+            }
+        }
+
+        /// <summary>
+        /// Handles RequestPublishedPluginMessages
+        /// Returns the plugin and source if it exists in the database
+        /// </summary>
+        /// <param name="requestPublishedPluginMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleRequestPublishedPluginMessage(RequestPublishedPluginMessage requestPublishedPluginMessage, SslStream sslStream)
+        {
+            Logger.LogText(String.Format("User {0} tries to request a plugin={1}", Username, requestPublishedPluginMessage.Id), this, Logtype.Debug);
+
+            try
+            {
+                PluginAndSource pluginAndSource = Database.GetPublishedPlugin(requestPublishedPluginMessage.Id, requestPublishedPluginMessage.PublishState);
+                if (pluginAndSource == null)
+                {
+                    ResponsePublishedPluginMessage response = new ResponsePublishedPluginMessage();
+                    response.PluginAndSourceExist = false;
+                    Logger.LogText(String.Format("User {0} tried to get a non-existing published plugin", Username), this, Logtype.Warning);
+                    response.Message = String.Format("Published plugin {0} does not exist", requestPublishedPluginMessage.Id);
+                    SendMessage(response, sslStream);
+                }
+                else
+                {
+                    ResponsePublishedPluginMessage response = new ResponsePublishedPluginMessage();
+                    response.PluginAndSource = pluginAndSource;
+                    response.PluginAndSourceExist = true;
+                    string message = String.Format("Responding with plugin={0}", pluginAndSource.Plugin.Id);
+                    Logger.LogText(message, this, Logtype.Debug);
+                    response.Message = message;
+                    SendMessage(response, sslStream);
+                  
+                }
+            }
+            catch (Exception ex)
+            {
+                //request failed; logg to logfile and return exception to client
+                ResponsePluginMessage response = new ResponsePluginMessage();
+                Logger.LogText(String.Format("User {0} tried to get a published plugin. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during request of published plugin";
                 SendMessage(response, sslStream);
             }
         }

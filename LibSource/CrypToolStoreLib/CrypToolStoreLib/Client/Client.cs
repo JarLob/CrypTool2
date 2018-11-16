@@ -1018,18 +1018,130 @@ namespace CrypToolStoreLib.Client
         /// <returns></returns>
         public DataModificationOrRequestResult GetPublishedPluginList(PublishState publishstate)
         {
-            return null;
+            lock (this)
+            {
+                //we can only receive plugin lists when we are connected
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to get plugins for publishstate: {0}", publishstate.ToString()), this, Logtype.Info);
+
+                //1. Step: Send RequestPluginListMessage to server
+                RequestPublishedPluginListMessage message = new RequestPublishedPluginListMessage();
+                message.PublishState = publishstate;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponsePublishedPluginList
+                if (response_message.MessageHeader.MessageType == MessageType.ResponsePublishedPluginList)
+                {
+                    //received a response, forward it to user
+                    ResponsePublishedPluginListMessage responsePublishedPluginListMessage = (ResponsePublishedPluginListMessage)response_message;
+                    logger.LogText(String.Format("Received a published plugin list. Message was: {0}", responsePublishedPluginListMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responsePublishedPluginListMessage.Message,
+                        DataObject = responsePublishedPluginListMessage.PluginsAndSources
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to request a plugin list was not a ResponsePublishedPluginList. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
 
         /// <summary>
-        /// Returns the newest version of the plugin with the given id
+        /// Returns the newest version (PluginAndSource) of the plugin with the given id
         /// Returns null if none is available
         /// </summary>
         /// <param name="pluginid"></param>
         /// <returns></returns>
-        public DataModificationOrRequestResult GetPlugin_CT2(PublishState publishstate)
+        public DataModificationOrRequestResult GetPublishedPlugin(int pluginId, PublishState publishState)
         {
-            return null;
+            lock (this)
+            {
+                //we can only receive plugins when we are connected
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to get a published plugin: {0}", pluginId), this, Logtype.Info);
+
+                //1. Step: Send RequestPublishedPluginMessage to server
+                RequestPublishedPluginMessage message = new RequestPublishedPluginMessage();
+                message.Id = pluginId;
+                message.PublishState = publishState;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponsePublishedPlugin
+                if (response_message.MessageHeader.MessageType == MessageType.ResponsePublishedPlugin)
+                {
+                    //received a response, forward it to user
+                    ResponsePublishedPluginMessage responsePublishedPluginMessage = (ResponsePublishedPluginMessage)response_message;
+                    logger.LogText(String.Format("{0} a published plugin. Return message was: {1}", responsePublishedPluginMessage.PluginAndSourceExist == true ? "Successfully received" : "Did not receive", responsePublishedPluginMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responsePublishedPluginMessage.Message,
+                        Success = responsePublishedPluginMessage.PluginAndSourceExist,
+                        DataObject = responsePublishedPluginMessage.PluginAndSource
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to request an existing plugin was not a ResponsePublishedPlugin. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
         }
         
         #endregion
