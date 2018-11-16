@@ -1030,7 +1030,7 @@ namespace CrypToolStoreLib.Client
                     };
                 }
 
-                logger.LogText(String.Format("Trying to get plugins for publishstate: {0}", publishstate.ToString()), this, Logtype.Info);
+                logger.LogText(String.Format("Trying to get plugins in publishstate={0} (or higher)", publishstate.ToString()), this, Logtype.Info);
 
                 //1. Step: Send RequestPluginListMessage to server
                 RequestPublishedPluginListMessage message = new RequestPublishedPluginListMessage();

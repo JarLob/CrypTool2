@@ -609,7 +609,7 @@ namespace CrypToolStoreLib.Database
         public List<PluginAndSource> GetPublishedPlugins(PublishState publishstate)
         {
             string query = "SELECT "+
-                "a.id, a.username, MAX(a.pluginversion) AS pluginversion, a.buildversion, a.publishstate, a.name, a.shortdescription, a.longdescription, a.authornames, a.authoremails, a.authorinstitutes, icon "+
+                "a.id, a.username, MAX(a.pluginversion) AS pluginversion, a.buildversion, a.publishstate, a.name, a.shortdescription, a.longdescription, a.authornames, a.authoremails, a.authorinstitutes, a.icon, a.builddate "+
                 "FROM (SELECT plugins.*, sources.* FROM plugins INNER JOIN sources ON plugins.id = sources.pluginid WHERE sources.publishstate IN ($LIST$)) "+
                 "a GROUP BY a.id ORDER BY a.id ASC";      
 
@@ -625,11 +625,9 @@ namespace CrypToolStoreLib.Database
                 case PublishState.NIGHTLY:
                     list = "'NIGHTLY','BETA','RELEASE'";
                     break;
-
                 case PublishState.BETA:
                     list = "'BETA','RELEASE'";
                     break;
-
                 case PublishState.RELEASE:
                     list = "'RELEASE'";
                     break;            
@@ -658,6 +656,8 @@ namespace CrypToolStoreLib.Database
                 source.BuildVersion = (int)entry["buildversion"];
                 source.PluginId = plugin.Id;
                 source.PluginVersion = (int)entry["pluginversion"];
+                source.BuildDate = (DateTime)entry["builddate"];
+                source.PublishState = (string)entry["publishstate"];
 
                 PluginAndSource pluginAndSource = new PluginAndSource();
                 pluginAndSource.Plugin = plugin;
@@ -676,7 +676,7 @@ namespace CrypToolStoreLib.Database
         public PluginAndSource GetPublishedPlugin(int id, PublishState publishstate)
         {
             string query = "SELECT " +
-                "a.id, a.username, MAX(a.pluginversion) AS pluginversion, a.buildversion, a.publishstate, a.name, a.shortdescription, a.longdescription, a.authornames, a.authoremails, a.authorinstitutes, icon " +
+                "a.id, a.username, MAX(a.pluginversion) AS pluginversion, a.buildversion, a.publishstate, a.name, a.shortdescription, a.longdescription, a.authornames, a.authoremails, a.authorinstitutes, a.icon, a.builddate " +
                 "FROM (SELECT plugins.*, sources.* FROM plugins INNER JOIN sources ON plugins.id = sources.pluginid WHERE sources.publishstate IN ($LIST$) AND plugins.id=@id) " +
                 "a GROUP BY a.id ORDER BY a.id ASC";      
 
@@ -688,16 +688,13 @@ namespace CrypToolStoreLib.Database
             {
                 case PublishState.DEVELOPER:
                     list = "'DEVELOPER', 'NIGHTLY','BETA','RELEASE'";
-
                     break;
                 case PublishState.NIGHTLY:
                     list = "'NIGHTLY','BETA','RELEASE'";
                     break;
-
                 case PublishState.BETA:
                     list = "'BETA','RELEASE'";
                     break;
-
                 case PublishState.RELEASE:
                     list = "'RELEASE'";
                     break;
@@ -728,6 +725,8 @@ namespace CrypToolStoreLib.Database
             source.BuildVersion = (int)resultset[0]["buildversion"];
             source.PluginId = plugin.Id;
             source.PluginVersion = (int)resultset[0]["pluginversion"];
+            source.BuildDate = (DateTime)resultset[0]["builddate"];
+            source.PublishState = (string)resultset[0]["publishstate"];
 
             PluginAndSource pluginAndSource = new PluginAndSource();
             pluginAndSource.Plugin = plugin;

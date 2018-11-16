@@ -1108,7 +1108,7 @@ namespace CrypToolStoreLib.Server
                     ResponsePublishedPluginMessage response = new ResponsePublishedPluginMessage();
                     response.PluginAndSource = pluginAndSource;
                     response.PluginAndSourceExist = true;
-                    string message = String.Format("Responding with plugin={0}", pluginAndSource.Plugin.Id);
+                    string message = String.Format("Responding with plugin={0}, source={1}-{2}", pluginAndSource.Plugin.Id, pluginAndSource.Source.PluginId, pluginAndSource.Source.PluginVersion);
                     Logger.LogText(message, this, Logtype.Debug);
                     response.Message = message;
                     SendMessage(response, sslStream);
