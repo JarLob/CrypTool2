@@ -1014,6 +1014,7 @@ namespace CrypToolStoreLib.Client
 
         /// <summary>
         /// Returns a list of all published plugins available for download in the CrypToolStore
+        /// being in the given publishstate or higher
         /// </summary>
         /// <returns></returns>
         public DataModificationOrRequestResult GetPublishedPluginList(PublishState publishstate)

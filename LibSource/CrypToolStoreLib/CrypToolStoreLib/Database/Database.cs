@@ -619,6 +619,7 @@ namespace CrypToolStoreLib.Database
 
             switch (publishstate)
             {
+                default:
                 case PublishState.DEVELOPER:
                     list = "'DEVELOPER', 'NIGHTLY','BETA','RELEASE'";                    
                     break;
@@ -686,6 +687,7 @@ namespace CrypToolStoreLib.Database
             
             switch (publishstate)
             {
+                default:
                 case PublishState.DEVELOPER:
                     list = "'DEVELOPER', 'NIGHTLY','BETA','RELEASE'";
                     break;

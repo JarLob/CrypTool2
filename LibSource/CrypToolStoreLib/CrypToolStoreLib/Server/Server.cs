@@ -1064,13 +1064,26 @@ namespace CrypToolStoreLib.Server
 
             try
             {
-                List<PluginAndSource> pluginsAndSources = Database.GetPublishedPlugins(requestPublishedPluginListMessage.PublishState);                
-                ResponsePublishedPluginListMessage response = new ResponsePublishedPluginListMessage();
-                response.PluginsAndSources = pluginsAndSources;
-                string message = String.Format("Responding with published plugin list containing {0} elements", pluginsAndSources.Count);
-                Logger.LogText(message, this, Logtype.Debug);
-                response.Message = message;
-                SendMessage(response, sslStream);
+                if (requestPublishedPluginListMessage.PublishState == PublishState.NOTPUBLISHED)
+                {
+                    List<PluginAndSource> pluginsAndSources = new List<PluginAndSource>();
+                    ResponsePublishedPluginListMessage response = new ResponsePublishedPluginListMessage();
+                    response.PluginsAndSources = pluginsAndSources;
+                    string message = String.Format("Requesting unpublished plugins is not possible");
+                    Logger.LogText(message, this, Logtype.Debug);
+                    response.Message = message;
+                    SendMessage(response, sslStream);
+                }
+                else
+                {
+                    List<PluginAndSource> pluginsAndSources = Database.GetPublishedPlugins(requestPublishedPluginListMessage.PublishState);
+                    ResponsePublishedPluginListMessage response = new ResponsePublishedPluginListMessage();
+                    response.PluginsAndSources = pluginsAndSources;
+                    string message = String.Format("Responding with published plugin list containing {0} elements", pluginsAndSources.Count);
+                    Logger.LogText(message, this, Logtype.Debug);
+                    response.Message = message;
+                    SendMessage(response, sslStream);
+                }
             }
             catch (Exception ex)
             {
