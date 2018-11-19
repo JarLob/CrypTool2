@@ -81,6 +81,7 @@ namespace CrypToolStoreDeveloperClient.Views
             try
             {
                 CrypToolStoreClient client = new CrypToolStoreClient();
+                client.ServerCertificate = MainWindow.ServerCertificate;
                 client.ServerAddress = Config.GetConfigEntry("ServerAddress");
                 client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
@@ -128,6 +129,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 try
                 {
                     CrypToolStoreClient client = new CrypToolStoreClient();
+                    client.ServerCertificate = MainWindow.ServerCertificate;
                     client.ServerAddress = Config.GetConfigEntry("ServerAddress");
                     client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
                     client.Connect();
@@ -211,6 +213,7 @@ namespace CrypToolStoreDeveloperClient.Views
             try
             {
                 CrypToolStoreClient client = new CrypToolStoreClient();
+                client.ServerCertificate = MainWindow.ServerCertificate;
                 client.ServerAddress = Config.GetConfigEntry("ServerAddress");
                 client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
@@ -248,6 +251,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
                     CrypToolStoreClient client = new CrypToolStoreClient();
+                    client.ServerCertificate = MainWindow.ServerCertificate;
                     client.ServerAddress = Config.GetConfigEntry("ServerAddress");
                     client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
                     client.Connect();

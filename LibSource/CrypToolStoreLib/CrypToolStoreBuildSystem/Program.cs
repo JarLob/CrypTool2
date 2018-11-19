@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,7 +29,19 @@ namespace CrypToolStoreBuildSystem
         {
             Logger.LogFilePrefix = "CrypToolStoreBuildSystem";
             Logger.EnableFileLog = true;
-            CrypToolStoreBuildServer server = new CrypToolStoreBuildServer();
+            X509Certificate2 serverCertificate;
+            try
+            {
+                serverCertificate = new X509Certificate2(Configuration.GetConfiguration().GetConfigEntry("ServerCertificate"));
+
+            }
+            catch (Exception ex)
+            {
+                Logger.GetLogger().LogText(String.Format("Exception while loading server certificate", ex.Message), null, Logtype.Error);
+                return;
+            }
+
+            CrypToolStoreBuildServer server = new CrypToolStoreBuildServer(serverCertificate);
             server.Start();
             Console.ReadLine();
         }

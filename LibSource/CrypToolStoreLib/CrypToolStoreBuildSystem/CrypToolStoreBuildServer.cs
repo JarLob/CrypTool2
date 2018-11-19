@@ -20,6 +20,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,12 +40,14 @@ namespace CrypToolStoreBuildSystem
         private bool IsRunning { get; set; }
         private ConcurrentBag<BuildWorker> workers = new ConcurrentBag<BuildWorker>();
 
+        public X509Certificate2 ServerCertificate { get; set; }
+
         /// <summary>
         /// Creates a new instance of the BuildServer
         /// </summary>
-        public CrypToolStoreBuildServer()
+        public CrypToolStoreBuildServer(X509Certificate2 serverCertificate)
         {
-
+            ServerCertificate = ServerCertificate;
         }
 
         /// <summary>
@@ -129,6 +132,8 @@ namespace CrypToolStoreBuildSystem
 
             //get all sources from the CrypToolStore
             CrypToolStoreClient client = new CrypToolStoreClient();
+            client.ServerCertificate = ServerCertificate;
+
             client.ServerAddress = Config.GetConfigEntry("ServerAddress");
             client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
@@ -145,7 +150,7 @@ namespace CrypToolStoreBuildSystem
                 {
 
                     Logger.LogText(String.Format("Creating and starting worker to build source {0}-{1}", source.PluginId, source.PluginVersion), this, Logtype.Info);
-                    BuildWorker worker = new BuildWorker(source);
+                    BuildWorker worker = new BuildWorker(source, ServerCertificate);
                     workers.Add(worker);
                     worker.Start();
                     Thread.Sleep(1000);

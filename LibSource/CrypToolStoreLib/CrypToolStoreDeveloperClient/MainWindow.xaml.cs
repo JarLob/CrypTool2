@@ -1,4 +1,5 @@
-﻿/*
+﻿using CrypToolStoreLib.Tools;
+/*
    Copyright 2018 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -48,6 +49,7 @@ namespace CrypToolStoreDeveloperClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        public X509Certificate2 ServerCertificate;
         public string Password;
         public string Username;
         public bool IsLoggedIn;
@@ -74,7 +76,8 @@ namespace CrypToolStoreDeveloperClient
             ResourceManagementView.MainWindow = this;
             ResourceDataManagementView.MainWindow = this;
 
-            ChangeScreen(UiState.LoginScreen);            
+            ChangeScreen(UiState.LoginScreen);
+            ServerCertificate = new X509Certificate2(Configuration.GetConfiguration().GetConfigEntry("ServerCertificate"));
         }
 
         /// <summary>

@@ -86,6 +86,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     }
 
                     CrypToolStoreClient client = new CrypToolStoreClient();
+                    client.ServerCertificate = MainWindow.ServerCertificate;
                     client.ServerAddress = Config.GetConfigEntry("ServerAddress");
                     client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
                     client.Connect();

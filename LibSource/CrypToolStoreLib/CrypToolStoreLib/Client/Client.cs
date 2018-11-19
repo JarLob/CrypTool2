@@ -25,6 +25,7 @@ using System.Net.Security;
 using System.Net;
 using System.IO;
 using CrypToolStoreLib.Network;
+using System.Security.Cryptography.X509Certificates;
 
 namespace CrypToolStoreLib.Client
 {
@@ -102,6 +103,15 @@ namespace CrypToolStoreLib.Client
         }
 
         /// <summary>
+        /// Sets the server certificate which is used for validating the TLS connection
+        /// </summary>
+        public X509Certificate2 ServerCertificate
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Default constructor
         /// </summary>
         public CrypToolStoreClient()
@@ -128,9 +138,45 @@ namespace CrypToolStoreLib.Client
             logger.LogText("Connected to server", this, Logtype.Info);
         }
 
+        /// <summary>
+        /// Check, if public keys match
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="certificate"></param>
+        /// <param name="chain"></param>
+        /// <param name="sslPolicyErrors"></param>
+        /// <returns></returns>
         private bool ValidateServerCert(object sender, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Security.Cryptography.X509Certificates.X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
-            //todo: create server certificate validation
+            //we use certificate pinning to verify, that we are talking to the correct server
+            byte[] remotePublicKey = certificate.GetPublicKey();
+            byte[] serverPublicKey = ServerCertificate.GetPublicKey();
+            if (ByteArrayEqualityCheck(remotePublicKey, serverPublicKey))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Checks, if both byte arrays are equal
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        private bool ByteArrayEqualityCheck(byte[] a, byte[] b)
+        {
+            if (a.Length != b.Length)
+            {
+                return false;
+            }
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (a[i] != b[i])
+                {
+                    return false;
+                }
+            }
             return true;
         }
 

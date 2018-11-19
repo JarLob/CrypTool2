@@ -22,6 +22,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,6 +40,7 @@ namespace CrypToolStoreBuildSystem
 
         private BuildLogger Logger = new BuildLogger();
         private Configuration Config = Configuration.GetConfiguration();
+        private X509Certificate2 ServerCertificate { get; set; }
 
         /// <summary>
         /// Reference to source to build
@@ -98,8 +100,9 @@ namespace CrypToolStoreBuildSystem
         /// Constructor
         /// </summary>
         /// <param name="source"></param>
-        public BuildWorker(Source source)
+        public BuildWorker(Source source, X509Certificate2 serverCetificate)
         {
+            ServerCertificate = serverCetificate;
             Source = source;
         }
 
@@ -334,6 +337,7 @@ namespace CrypToolStoreBuildSystem
             Logger.LogText(String.Format("(Buildstep 0) Set source-{0}-{1} to state: {2}", Source.PluginId, Source.PluginVersion, BuildState.BUILDING.ToString()), this, Logtype.Info);
 
             CrypToolStoreClient client = new CrypToolStoreClient();
+            client.ServerCertificate = ServerCertificate;
             client.ServerAddress = Config.GetConfigEntry("ServerAddress");
             client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
@@ -458,6 +462,7 @@ namespace CrypToolStoreBuildSystem
         {
             Logger.LogText(String.Format("(Buildstep 3) Start downloading source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             CrypToolStoreClient client = new CrypToolStoreClient();
+            client.ServerCertificate = ServerCertificate;
             client.ServerAddress = Config.GetConfigEntry("ServerAddress");
             client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
@@ -746,6 +751,7 @@ namespace CrypToolStoreBuildSystem
             string metafilename = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\build_output\pluginmetainfo.xml";
 
             CrypToolStoreClient client = new CrypToolStoreClient();
+            client.ServerCertificate = ServerCertificate;
             client.ServerAddress = Config.GetConfigEntry("ServerAddress");
             client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
@@ -808,6 +814,7 @@ namespace CrypToolStoreBuildSystem
         {
             Logger.LogText(String.Format("(Buildstep 12) Start uploading assembly zipfile for source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             CrypToolStoreClient client = new CrypToolStoreClient();
+            client.ServerCertificate = ServerCertificate;
             client.ServerAddress = Config.GetConfigEntry("ServerAddress");
             client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
@@ -854,6 +861,7 @@ namespace CrypToolStoreBuildSystem
         {
             Logger.LogText(String.Format("(Buildstep 14) Set final build state of source-{0}-{1} and upload build log", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             CrypToolStoreClient client = new CrypToolStoreClient();
+            client.ServerCertificate = ServerCertificate;
             client.ServerAddress = Config.GetConfigEntry("ServerAddress");
             client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
