@@ -266,7 +266,21 @@ namespace Cryptool.CrypWin
         #region Init
 
         public MainWindow()
-        {            
+        {
+            //Enforce usage of TLS 1.2
+            try
+            {
+                //Enable TLS 1.2
+                ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
+
+                //Disable old SSL and TLS versions
+                ServicePointManager.SecurityProtocol &= ~(SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(string.Format("Error while enabling TLS 1.2 and disabling old protocols: {0}", ex), NotificationLevel.Error);
+            }
+
             SetLanguage();
 
             CheckEssentialComponents();
@@ -578,21 +592,7 @@ namespace Cryptool.CrypWin
             catch (Exception ex)
             {
                 GuiLogMessage(string.Format("Error while initializing the certificate callback: {0}", ex), NotificationLevel.Error);
-            }
-
-            //Enforce usage of TLS 1.2
-            try
-            {
-                //Enable TLS 1.2
-                ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
-
-                //Disable old SSL and TLS versions
-                ServicePointManager.SecurityProtocol &= ~(SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11);
-            }
-            catch (Exception ex)
-            {
-                GuiLogMessage(string.Format("Error while enabling TLS 1.2 and disabling old protocols: {0}", ex), NotificationLevel.Error);
-            }
+            }          
 
             InitCould();
         }
