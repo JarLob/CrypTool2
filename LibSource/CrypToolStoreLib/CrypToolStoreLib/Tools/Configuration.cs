@@ -72,7 +72,7 @@ namespace CrypToolStoreLib.Tools
                     }
                     else
                     {
-                        Logger.LogText(String.Format("Read config entry of in line {0} for {1}", line, keyvalue[0]), this, Logtype.Info);
+                        Logger.LogText(String.Format("Read config entry of line {0} for {1}", line, keyvalue[0]), this, Logtype.Info);
                         ConfigurationDictionary[keyvalue[0].ToLower()] = keyvalue[1];
                     }
                     line++;

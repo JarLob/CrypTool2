@@ -2850,32 +2850,24 @@ namespace CrypToolStoreLib.Server
             DateTime downloadStartTime = DateTime.Now;
             Logger.LogText(String.Format("User {0} starts downloading an assembly zipfile for source={1}-{2}", Username, requestDownloadAssemblyZipfileMessage.Source.PluginId, requestDownloadAssemblyZipfileMessage.Source.PluginVersion), this, Logtype.Info);
 
-            //Only authenticated users are allowed to download a zipfile
-            if (!ClientIsAuthenticated)
-            {
-                ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
-                response.Success = false;
-                response.Message = "Unauthorized to download an assembly zipfile. Please authenticate yourself";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to download an assembly zipfile for source={1}-{2} from IP={3}", Username, requestDownloadAssemblyZipfileMessage.Source.PluginId, requestDownloadAssemblyZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
-                SendMessage(response, sslStream);
-                return;
-            }
             try
             {
                 Plugin plugin = Database.GetPlugin(requestDownloadAssemblyZipfileMessage.Source.PluginId);
-                //check, if user is admin or plugin is owned by user
-                if (!ClientIsAdmin && !(Username == plugin.Username))
+
+                //check, if plugin exists                
+                if (plugin == null)
                 {
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
-                    response.Message = "Unauthorized to download assembly zipfile for that source";
-                    Logger.LogText(String.Format("Unauthorized user {0} tried to download an assembly zipfile for source={1}-{2} from IP={3}", Username, requestDownloadAssemblyZipfileMessage.Source.PluginId, requestDownloadAssemblyZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                    response.Message = "Assembly does not exist";
+                    Logger.LogText(String.Format("User {0} tried to download an assembly zipfile for a non-existing plugin={1} from IP={2}", Username, requestDownloadAssemblyZipfileMessage.Source.PluginId, IPAddress), this, Logtype.Warning);
                     SendMessage(response, sslStream);
                     return;
                 }
 
-                //check, if source exists
                 Source source = Database.GetSource(requestDownloadAssemblyZipfileMessage.Source.PluginId, requestDownloadAssemblyZipfileMessage.Source.PluginVersion);
+
+                //check, if source exists                
                 if (source == null)
                 {
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
@@ -2886,6 +2878,16 @@ namespace CrypToolStoreLib.Server
                     return;
                 }
 
+                //check, if user is admin or plugin is owned by user or plugin is published (publishstate != NOTPUBLISED)
+                if (!ClientIsAdmin && !(Username == plugin.Username) && source.PublishState.ToLower().Equals(PublishState.NOTPUBLISHED.ToString().ToLower()))
+                {
+                    ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                    response.Success = false;
+                    response.Message = "Unauthorized to download assembly zipfile for that source";
+                    Logger.LogText(String.Format("Unauthorized user {0} tried to download an assembly zipfile for source={1}-{2} from IP={3}", Username, requestDownloadAssemblyZipfileMessage.Source.PluginId, requestDownloadAssemblyZipfileMessage.Source.PluginVersion, IPAddress), this, Logtype.Warning);
+                    SendMessage(response, sslStream);
+                    return;
+                }                              
                 string filename = source.AssemblyFileName;
 
                 //no zipfile previously uploaded
