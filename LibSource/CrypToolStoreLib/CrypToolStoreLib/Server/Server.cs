@@ -15,6 +15,7 @@
 */
 using CrypToolStoreLib.Database;
 using CrypToolStoreLib.DataObjects;
+using CrypToolStoreLib.Network;
 using CrypToolStoreLib.Tools;
 using System;
 using System.Collections.Concurrent;
@@ -391,6 +392,12 @@ namespace CrypToolStoreLib.Server
                     break;
                 case MessageType.RequestResourceList:
                     HandleRequestResourceListMessage((RequestResourceListMessage)message, sslStream);
+                    break;
+                case MessageType.RequestPublishedResourceList:
+                    HandleRequestPublishedResourceListMessage((RequestPublishedResourceListMessage)message, sslStream);
+                    break;
+                case MessageType.RequestPublishedResource:
+                    HandleRequestPublishedResourceMessage((RequestPublishedResourceMessage)message, sslStream);
                     break;
                 case MessageType.CreateNewResourceData:
                     HandleCreateNewResourceDataMessage((CreateNewResourceDataMessage)message, sslStream);
@@ -1088,7 +1095,7 @@ namespace CrypToolStoreLib.Server
             catch (Exception ex)
             {
                 //request failed; logg to logfile and return exception to client
-                ResponsePluginMessage response = new ResponsePluginMessage();
+                ResponsePublishedPluginListMessage response = new ResponsePublishedPluginListMessage();
                 Logger.LogText(String.Format("User {0} tried to get a published plugin list. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
                 response.Message = "Exception during request of source list";
                 SendMessage(response, sslStream);
@@ -1131,7 +1138,7 @@ namespace CrypToolStoreLib.Server
             catch (Exception ex)
             {
                 //request failed; logg to logfile and return exception to client
-                ResponsePluginMessage response = new ResponsePluginMessage();
+                ResponsePublishedPluginMessage response = new ResponsePublishedPluginMessage();
                 Logger.LogText(String.Format("User {0} tried to get a published plugin. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
                 response.Message = "Exception during request of published plugin";
                 SendMessage(response, sslStream);
@@ -1831,7 +1838,93 @@ namespace CrypToolStoreLib.Server
                 SendMessage(response, sslStream);
             }
         }
+        
+        /// <summary>
+        /// Handles RequestPublishedResourceListMessage
+        /// responses with lists of published resources
+        /// </summary>
+        /// <param name="requestResourceListMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleRequestPublishedResourceListMessage(RequestPublishedResourceListMessage requestPublishedResourceListMessage, SslStream sslStream)
+        {
+            Logger.LogText(String.Format("User {0} requested a list of resources for publishstate=", Username, requestPublishedResourceListMessage.PublishState.ToString()), this, Logtype.Debug);
 
+            try
+            {
+                if (requestPublishedResourceListMessage.PublishState == PublishState.NOTPUBLISHED)
+                {
+                    List<ResourceAndResourceData> resourcesAndResourceDatas = new List<ResourceAndResourceData>();
+                    ResponsePublishedResourceListMessage response = new ResponsePublishedResourceListMessage();
+                    response.ResourcesAndResourceDatas = resourcesAndResourceDatas;
+                    string message = String.Format("Requesting unpublished resources is not possible");
+                    Logger.LogText(message, this, Logtype.Debug);
+                    response.Message = message;
+                    SendMessage(response, sslStream);
+                }
+                else
+                {
+                    List<ResourceAndResourceData> resourcesAndResourceDatas = Database.GetPublishedResources(requestPublishedResourceListMessage.PublishState);
+                    ResponsePublishedResourceListMessage response = new ResponsePublishedResourceListMessage();
+                    response.ResourcesAndResourceDatas = resourcesAndResourceDatas;
+                    string message = String.Format("Responding with published resource list containing {0} elements", resourcesAndResourceDatas.Count);
+                    Logger.LogText(message, this, Logtype.Debug);
+                    response.Message = message;
+                    SendMessage(response, sslStream);
+                }
+            }
+            catch (Exception ex)
+            {
+                //request failed; logg to logfile and return exception to client
+                ResponsePublishedResourceListMessage response = new ResponsePublishedResourceListMessage();
+                Logger.LogText(String.Format("User {0} tried to get a published resource list. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during request of source list";
+                SendMessage(response, sslStream);
+            }
+        }
+
+        /// <summary>
+        /// Handles RequestPublishedResourceMessages
+        /// Returns the resource and source if it exists in the database
+        /// </summary>
+        /// <param name="requestPublishedResourceMessage"></param>
+        /// <param name="sslStream"></param>
+        private void HandleRequestPublishedResourceMessage(RequestPublishedResourceMessage requestPublishedResourceMessage, SslStream sslStream)
+        {
+            Logger.LogText(String.Format("User {0} tries to request a resource={1}", Username, requestPublishedResourceMessage.Id), this, Logtype.Debug);
+
+            try
+            {
+                ResourceAndResourceData resourceAndResourceData = Database.GetPublishedResource(requestPublishedResourceMessage.Id, requestPublishedResourceMessage.PublishState);
+                if (resourceAndResourceData == null)
+                {
+                    ResponsePublishedResourceMessage response = new ResponsePublishedResourceMessage();
+                    response.ResourceAndResourceDataExist = false;
+                    Logger.LogText(String.Format("User {0} tried to get a non-existing published resource", Username), this, Logtype.Warning);
+                    response.Message = String.Format("Published resource {0} does not exist", requestPublishedResourceMessage.Id);
+                    SendMessage(response, sslStream);
+                }
+                else
+                {
+                    ResponsePublishedResourceMessage response = new ResponsePublishedResourceMessage();
+                    response.ResourceAndResourceData = resourceAndResourceData;
+                    response.ResourceAndResourceDataExist = true;
+                    string message = String.Format("Responding with resource={0}, source={1}-{2}", resourceAndResourceData.Resource.Id, resourceAndResourceData.ResourceData.ResourceId, resourceAndResourceData.ResourceData.ResourceVersion);
+                    Logger.LogText(message, this, Logtype.Debug);
+                    response.Message = message;
+                    SendMessage(response, sslStream);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                //request failed; logg to logfile and return exception to client
+                ResponsePublishedResourceMessage response = new ResponsePublishedResourceMessage();
+                Logger.LogText(String.Format("User {0} tried to get a published resource. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                response.Message = "Exception during request of published resource";
+                SendMessage(response, sslStream);
+            }
+        }
+        
         /// <summary>
         /// Handles CreateNewResourceDataMessages
         /// If the user is authenticated, it tries to create a new resource data in the database        
@@ -3010,26 +3103,15 @@ namespace CrypToolStoreLib.Server
             DateTime downloadStartTime = DateTime.Now;
             Logger.LogText(String.Format("User {0} starts downloading a resourcedata file for resourcedata={1}-{2}", Username, requestDownloadResourceDataFileMessage.ResourceData.ResourceId, requestDownloadResourceDataFileMessage.ResourceData.ResourceVersion), this, Logtype.Info);
 
-            //Only authenticated users are allowed to download a file
-            if (!ClientIsAuthenticated)
-            {
-                ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
-                response.Success = false;
-                response.Message = "Unauthorized to download a resourcedata file. Please authenticate yourself";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to download an  resourcedata file for resourcedata={1}-{2} from IP={3}", Username, requestDownloadResourceDataFileMessage.ResourceData.ResourceId, requestDownloadResourceDataFileMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
-                SendMessage(response, sslStream);
-                return;
-            }
             try
             {
                 Resource resource = Database.GetResource(requestDownloadResourceDataFileMessage.ResourceData.ResourceId);
-                //check, if user is admin or resource is owned by user
-                if (!ClientIsAdmin && !(Username == resource.Username))
+                if (resource == null)
                 {
                     ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                     response.Success = false;
-                    response.Message = "Unauthorized to download file for that resourcedata";
-                    Logger.LogText(String.Format("Unauthorized user {0} tried to download a resourcedata file for resourcedata={1}-{2} from IP={3}", Username, requestDownloadResourceDataFileMessage.ResourceData.ResourceId, requestDownloadResourceDataFileMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
+                    response.Message = "Resource does not exist";
+                    Logger.LogText(String.Format("User {0} tried to download resourcedata file for a non-existing resource={1} from IP={2}", Username, requestDownloadResourceDataFileMessage.ResourceData.ResourceId, IPAddress), this, Logtype.Warning);
                     SendMessage(response, sslStream);
                     return;
                 }
@@ -3045,6 +3127,18 @@ namespace CrypToolStoreLib.Server
                     SendMessage(response, sslStream);
                     return;
                 }
+
+
+                //check, if user is admin or resource is owned by user or plugin is published (publishstate != NOTPUBLISED)
+                if (!ClientIsAdmin && !(Username == resource.Username) && resourceData.PublishState.ToLower().Equals(PublishState.NOTPUBLISHED.ToString().ToLower()))
+                {
+                    ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
+                    response.Success = false;
+                    response.Message = "Unauthorized to download file for that resourcedata";
+                    Logger.LogText(String.Format("Unauthorized user {0} tried to download a resourcedata file for resourcedata={1}-{2} from IP={3}", Username, requestDownloadResourceDataFileMessage.ResourceData.ResourceId, requestDownloadResourceDataFileMessage.ResourceData.ResourceVersion, IPAddress), this, Logtype.Warning);
+                    SendMessage(response, sslStream);
+                    return;
+                }                
 
                 string filename = resourceData.DataFilename;
 

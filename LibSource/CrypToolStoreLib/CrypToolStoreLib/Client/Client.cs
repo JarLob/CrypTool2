@@ -24,6 +24,7 @@ using System.Net.Sockets;
 using System.Net.Security;
 using System.Net;
 using System.IO;
+using CrypToolStoreLib.Network;
 
 namespace CrypToolStoreLib.Client
 {
@@ -1723,7 +1724,7 @@ namespace CrypToolStoreLib.Client
                 //Step 2: Download file
                 try
                 {
-                    return DoDownloadFile(filename, ref deleteFile, ref stop);
+                    return DoFileDownload(filename, ref deleteFile, ref stop);
                 }
                 finally
                 {
@@ -1785,7 +1786,7 @@ namespace CrypToolStoreLib.Client
                 //Step 2: Download file
                 try
                 {
-                    return DoDownloadFile(filename, ref deleteFile, ref stop);
+                    return DoFileDownload(filename, ref deleteFile, ref stop);
                 }
                 finally
                 {
@@ -2163,6 +2164,139 @@ namespace CrypToolStoreLib.Client
 
                 //Received another (wrong) message
                 string msg = String.Format("Response message to request a resource list was not a ResponseResourceListMessage. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of all published resources available for download in the CrypToolStore
+        /// being in the given publishstate or higher
+        /// </summary>
+        /// <returns></returns>
+        public DataModificationOrRequestResult GetPublishedResourceList(PublishState publishstate)
+        {
+            lock (this)
+            {
+                //we can only receive resource lists when we are connected
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to get resources in publishstate={0} (or higher)", publishstate.ToString()), this, Logtype.Info);
+
+                //1. Step: Send RequestResourceListMessage to server
+                RequestPublishedResourceListMessage message = new RequestPublishedResourceListMessage();
+                message.PublishState = publishstate;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponsePublishedResourceList
+                if (response_message.MessageHeader.MessageType == MessageType.ResponsePublishedResourceList)
+                {
+                    //received a response, forward it to user
+                    ResponsePublishedResourceListMessage responsePublishedResourceListMessage = (ResponsePublishedResourceListMessage)response_message;
+                    logger.LogText(String.Format("Received a published resource list. Message was: {0}", responsePublishedResourceListMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responsePublishedResourceListMessage.Message,
+                        DataObject = responsePublishedResourceListMessage.ResourcesAndResourceDatas
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to request a resource list was not a ResponsePublishedResourceList. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
+                logger.LogText(msg, this, Logtype.Info);
+                return new DataModificationOrRequestResult()
+                {
+                    Message = msg,
+                    Success = false
+                };
+            }
+        }
+
+        /// <summary>
+        /// Returns the newest version (ResourceAndResourceData) of the resource with the given id
+        /// Returns null if none is available
+        /// </summary>
+        /// <param name="resourceid"></param>
+        /// <returns></returns>
+        public DataModificationOrRequestResult GetPublishedResource(int resourceId, PublishState publishState)
+        {
+            lock (this)
+            {
+                //we can only receive resources when we are connected
+                if (!IsConnected)
+                {
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Not connected to server",
+                        Success = false
+                    };
+                }
+
+                logger.LogText(String.Format("Trying to get a published resource: {0}", resourceId), this, Logtype.Info);
+
+                //1. Step: Send RequestPublishedResourceMessage to server
+                RequestPublishedResourceMessage message = new RequestPublishedResourceMessage();
+                message.Id = resourceId;
+                message.PublishState = publishState;
+                SendMessage(message);
+
+                //2. Step: Receive response message from server
+                var response_message = ReceiveMessage();
+
+                //Received null = connection closed
+                if (response_message == null)
+                {
+                    logger.LogText("Received null. Connection closed by server", this, Logtype.Info);
+                    sslStream.Close();
+                    Client.Close();
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = "Connection to server lost",
+                        Success = false
+                    };
+                }
+                //Received ResponsePublishedResource
+                if (response_message.MessageHeader.MessageType == MessageType.ResponsePublishedResource)
+                {
+                    //received a response, forward it to user
+                    ResponsePublishedResourceMessage responsePublishedResourceMessage = (ResponsePublishedResourceMessage)response_message;
+                    logger.LogText(String.Format("{0} a published resource. Return message was: {1}", responsePublishedResourceMessage.ResourceAndResourceDataExist == true ? "Successfully received" : "Did not receive", responsePublishedResourceMessage.Message), this, Logtype.Info);
+                    return new DataModificationOrRequestResult()
+                    {
+                        Message = responsePublishedResourceMessage.Message,
+                        Success = responsePublishedResourceMessage.ResourceAndResourceDataExist,
+                        DataObject = responsePublishedResourceMessage.ResourceAndResourceData
+                    };
+                }
+
+                //Received another (wrong) message
+                string msg = String.Format("Response message to request an existing resource was not a ResponsePublishedResource. Message was: {0}", response_message.MessageHeader.MessageType.ToString());
                 logger.LogText(msg, this, Logtype.Info);
                 return new DataModificationOrRequestResult()
                 {
@@ -2710,7 +2844,7 @@ namespace CrypToolStoreLib.Client
                 //Step 2: Download file
                 try
                 {
-                    return DoDownloadFile(filename, ref deleteFile, ref stop);
+                    return DoFileDownload(filename, ref deleteFile, ref stop);
                 }
                 finally
                 {
@@ -2915,7 +3049,7 @@ namespace CrypToolStoreLib.Client
         /// <param name="deleteFile"></param>
         /// <param name="stop"></param>
         /// <returns></returns>
-        private DataModificationOrRequestResult DoDownloadFile(string filename, ref bool deleteFile, ref bool stop)
+        private DataModificationOrRequestResult DoFileDownload(string filename, ref bool deleteFile, ref bool stop)
         {
             long writtenData = 0;
             long lastWrittenData = 0;

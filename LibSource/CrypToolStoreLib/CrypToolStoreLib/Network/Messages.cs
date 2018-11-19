@@ -14,6 +14,7 @@
    limitations under the License.
 */
 using CrypToolStoreLib.DataObjects;
+using CrypToolStoreLib.Tools;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,7 +23,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CrypToolStoreLib.Tools
+namespace CrypToolStoreLib.Network
 {
     /// <summary>
     /// Message types of the network protocol
@@ -78,6 +79,10 @@ namespace CrypToolStoreLib.Tools
         ResponseResourceModification = 405,
         RequestResource = 406,
         ResponseResource = 407,
+        RequestPublishedResourceList = 408,
+        ResponsePublishedResourceList = 409,
+        RequestPublishedResource = 410,
+        ResponsePublishedResource = 411,
 
         //Messages for "ResourcesDatas"
         RequestResourceDataList = 500,
@@ -276,6 +281,10 @@ namespace CrypToolStoreLib.Tools
             MessageTypeDictionary.Add(MessageType.ResponseResourceModification, typeof(ResponseResourceModificationMessage));
             MessageTypeDictionary.Add(MessageType.RequestResource, typeof(RequestResourceMessage));
             MessageTypeDictionary.Add(MessageType.ResponseResource, typeof(ResponseResourceMessage));
+            MessageTypeDictionary.Add(MessageType.RequestPublishedResourceList, typeof(RequestPublishedResourceListMessage));
+            MessageTypeDictionary.Add(MessageType.ResponsePublishedResourceList, typeof(ResponsePublishedResourceListMessage));
+            MessageTypeDictionary.Add(MessageType.RequestPublishedResource, typeof(RequestPublishedResourceMessage));
+            MessageTypeDictionary.Add(MessageType.ResponsePublishedResource, typeof(ResponsePublishedResourceMessage));
 
             //resource data
             MessageTypeDictionary.Add(MessageType.RequestResourceDataList, typeof(RequestResourceDataListMessage));
@@ -852,12 +861,12 @@ namespace CrypToolStoreLib.Tools
                     if (fieldType != null)
                     {
                         object value = fieldType.GetValue(this);
-                        builder.Append(fieldType.Name + "=" + (value.GetType().Name.Equals("Byte[]") ? Tools.ByteArrayToHexString((byte[])value) : value) + ", ");
+                        builder.Append(fieldType.Name + "=" + (value.GetType().Name.Equals("Byte[]") ? Tools.Tools.ByteArrayToHexString((byte[])value) : value) + ", ");
                     }
                     if (propertyInfo != null)
                     {
                         object value = propertyInfo.GetValue(this);
-                        builder.Append(propertyInfo.Name + "=" + (value.GetType().Name.Equals("Byte[]") ? Tools.ByteArrayToHexString((byte[])value) : value) + ", ");
+                        builder.Append(propertyInfo.Name + "=" + (value.GetType().Name.Equals("Byte[]") ? Tools.Tools.ByteArrayToHexString((byte[])value) : value) + ", ");
                     }
                 }
             }
@@ -1313,7 +1322,6 @@ namespace CrypToolStoreLib.Tools
         }
     }
 
-
     /// <summary>
     /// Message for requesting a published plugin
     /// </summary>
@@ -1753,6 +1761,95 @@ namespace CrypToolStoreLib.Tools
         public ResponseResourceMessage()
         {
             Resource = new Resource();
+        }
+    }
+
+    /// <summary>
+    /// Message to request a list of published resources
+    /// </summary>
+    public class RequestPublishedResourceListMessage : Message
+    {
+        [MessageDataField]
+        public PublishState PublishState { get; set; }
+
+        public RequestPublishedResourceListMessage()
+        {
+            PublishState = PublishState.NOTPUBLISHED;
+        }
+    }
+
+    /// <summary>
+    /// Message to response to RequestResourceListMessages
+    /// </summary>
+    public class ResponsePublishedResourceListMessage : Message
+    {
+        [MessageDataField]
+        public string Message { get; set; }
+
+        [MessageDataField]
+        public List<ResourceAndResourceData> ResourcesAndResourceDatas { get; set; }
+
+        public ResponsePublishedResourceListMessage()
+        {
+            ResourcesAndResourceDatas = new List<ResourceAndResourceData>();
+        }
+    }
+
+    /// <summary>
+    /// Message for requesting a published resource
+    /// </summary>
+    public class RequestPublishedResourceMessage : Message
+    {
+        [MessageDataField]
+        public int Id
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
+        public PublishState PublishState
+        {
+            get;
+            set;
+        }
+
+        public RequestPublishedResourceMessage()
+        {
+            Id = -1;
+            PublishState = PublishState.NOTPUBLISHED;
+        }
+    }
+
+    /// <summary>
+    /// Message to response to ResponsePublishedResourceMessage
+    /// </summary>
+    public class ResponsePublishedResourceMessage : Message
+    {
+        [MessageDataField]
+        public String Message
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
+        public bool ResourceAndResourceDataExist
+        {
+            get;
+            set;
+        }
+
+        [MessageDataField]
+        public ResourceAndResourceData ResourceAndResourceData
+        {
+            get;
+            set;
+        }
+
+        public ResponsePublishedResourceMessage()
+        {
+            ResourceAndResourceData = new ResourceAndResourceData();
         }
     }
 

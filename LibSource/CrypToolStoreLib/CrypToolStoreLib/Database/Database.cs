@@ -737,7 +737,6 @@ namespace CrypToolStoreLib.Database
             return pluginAndSource;
         }
 
-
         /// <summary>
         /// Creates a new source entry in the database
         /// </summary>
@@ -1152,6 +1151,128 @@ namespace CrypToolStoreLib.Database
                 resources.Add(resource);
             }
             return resources;
+        }
+
+        /// <summary>
+        /// Returns a list of ResourceAndResourceData which are in publishstate (or lower)
+        /// </summary>
+        /// <param name="publishstate"></param>
+        /// <returns></returns>
+        public List<ResourceAndResourceData> GetPublishedResources(PublishState publishstate)
+        {
+            string query = "SELECT " +
+                "a.id, MAX(a.version) AS resourceversion, a.publishstate, a.name, a.description, a.username " +
+                "FROM (SELECT resources.*, resourcesdata.* FROM resources INNER JOIN resourcesdata ON resources.id = resourcesdata.resourceid WHERE resourcesdata.publishstate IN ($LIST$)) a " +
+                "GROUP BY a.id ORDER BY a.id ASC";
+
+            DatabaseConnection connection = GetConnection();
+
+            string list = "'DEVELOPER'";
+
+            switch (publishstate)
+            {
+                default:
+                case PublishState.DEVELOPER:
+                    list = "'DEVELOPER', 'NIGHTLY','BETA','RELEASE'";
+                    break;
+                case PublishState.NIGHTLY:
+                    list = "'NIGHTLY','BETA','RELEASE'";
+                    break;
+                case PublishState.BETA:
+                    list = "'BETA','RELEASE'";
+                    break;
+                case PublishState.RELEASE:
+                    list = "'RELEASE'";
+                    break;
+            }
+            query = query.Replace("$LIST$", list);
+
+            object[][] parameters = new object[][]{                
+            };
+
+            var resultset = connection.ExecutePreparedStatement(query, parameters);
+            List<ResourceAndResourceData> resourcesAndResourceDatas = new List<ResourceAndResourceData>();
+
+            foreach (var entry in resultset)
+            {
+                Resource resource = new Resource();
+                resource.Id = (int)entry["id"];
+                resource.Username = (string)entry["username"];
+                resource.Name = (string)entry["name"];
+
+                ResourceData resourceData = new ResourceData();
+                resourceData.ResourceId = resource.Id;
+                resourceData.ResourceVersion = (int)entry["resourceversion"];
+                resourceData.PublishState = (string)entry["publishstate"];
+
+                ResourceAndResourceData resourceAndResourceData = new ResourceAndResourceData();
+                resourceAndResourceData.Resource = resource;
+                resourceAndResourceData.ResourceData = resourceData;
+                resourcesAndResourceDatas.Add(resourceAndResourceData);
+            }
+            return resourcesAndResourceDatas;
+        }
+
+        /// <summary>
+        /// Returns the newest plugin and source from the database identified by its id and its publishState
+        /// If the plugin does not exist returns null
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ResourceAndResourceData GetPublishedResource(int id, PublishState publishstate)
+        {
+            string query = "SELECT " +
+                "a.id, MAX(a.version) AS version, a.publishstate, a.name, a.description, a.username " +
+                "FROM (SELECT resources.*, resourcesdata.* FROM resources INNER JOIN resourcesdata ON resources.id = resourcesdata.resourceid WHERE resourcesdata.publishstate IN ($LIST$) and resources.id=@id) a " +
+                "GROUP BY a.id ORDER BY a.id ASC";
+
+            DatabaseConnection connection = GetConnection();
+
+            string list = "'DEVELOPER'";
+
+            switch (publishstate)
+            {
+                default:
+                case PublishState.DEVELOPER:
+                    list = "'DEVELOPER', 'NIGHTLY','BETA','RELEASE'";
+                    break;
+                case PublishState.NIGHTLY:
+                    list = "'NIGHTLY','BETA','RELEASE'";
+                    break;
+                case PublishState.BETA:
+                    list = "'BETA','RELEASE'";
+                    break;
+                case PublishState.RELEASE:
+                    list = "'RELEASE'";
+                    break;
+            }
+            query = query.Replace("$LIST$", list);
+
+            object[][] parameters = new object[][]{
+                new object[]{"@id", id}
+            };
+
+            var resultset = connection.ExecutePreparedStatement(query, parameters);
+            if (resultset.Count == 0)
+            {
+                return null;
+            }
+
+            Resource resource = new Resource();
+            resource.Id = (int)resultset[0]["id"];
+            resource.Username = (string)resultset[0]["username"];
+            resource.Name = (string)resultset[0]["name"];    
+
+            ResourceData resourceData = new ResourceData();
+            resourceData.ResourceId = resource.Id;
+            resourceData.ResourceVersion = (int)resultset[0]["version"];
+            resourceData.PublishState = (string)resultset[0]["publishstate"];
+
+            ResourceAndResourceData resourceAndResourceData = new ResourceAndResourceData();
+            resourceAndResourceData.Resource = resource;
+            resourceAndResourceData.ResourceData = resourceData;
+
+            return resourceAndResourceData;
         }
 
         /// <summary>

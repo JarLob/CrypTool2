@@ -613,6 +613,92 @@ namespace CrypToolStoreLib.DataObjects
         }
     }
 
+    /// <summary>
+    /// Simple object to store one resource and resourcedata
+    /// </summary>
+    public class ResourceAndResourceData : ICrypToolStoreSerializable
+    {
+        public Resource Resource { get; set; }
+        public ResourceData ResourceData { get; set; }
+
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public ResourceAndResourceData()
+        {
+            Resource = new Resource();
+            ResourceData = new ResourceData();
+        }
+
+        /// <summary>
+        /// Serializes resourceandresourcedata into a byte array
+        /// </summary>
+        /// <returns></returns>
+        public byte[] Serialize()
+        {
+            try
+            {
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    using (BinaryWriter writer = new BinaryWriter(stream))
+                    {
+                        //1. serialize resource
+                        byte[] resourcebytes = Resource.Serialize();
+                        writer.Write((Int32)resourcebytes.Length);
+                        writer.Write(resourcebytes);
+
+                        //2. serialize resourcedata
+                        byte[] resourcedatabytes = ResourceData.Serialize();
+                        writer.Write((Int32)resourcedatabytes.Length);
+                        writer.Write(resourcedatabytes);
+                        return stream.ToArray();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new SerializationException(String.Format("Exception during serialization of resourceandrosourcedata: {0}", ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Deserializes a resourceandresourcedata from the byte array
+        /// </summary>
+        /// <param name="bytes"></param>
+        public void Deserialize(byte[] bytes)
+        {
+            try
+            {
+                using (MemoryStream stream = new MemoryStream(bytes))
+                {
+                    using (BinaryReader reader = new BinaryReader(stream))
+                    {
+                        //1. deserialize resource
+                        int resourcebyteslength = reader.ReadInt32();
+                        byte[] resoucebytes = new byte[resourcebyteslength];
+                        reader.Read(resoucebytes, 0, resourcebyteslength);
+                        Resource.Deserialize(resoucebytes);
+
+                        //2. deserialize resourcedata
+                        int resourcedatabyteslength = reader.ReadInt32();
+                        byte[] resourcedatabytes = new byte[resourcedatabyteslength];
+                        reader.Read(resourcedatabytes, 0, resourcedatabyteslength);
+                        ResourceData.Deserialize(resourcedatabytes);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new DeserializationException(String.Format("Exception during deserialization of resourceandrosourcedata: {0}", ex.Message));
+            }
+        }
+
+        public override string ToString()
+        {
+            return String.Format("ResourceAndResourceData{{Resource{{{0}}}, ResourceData{{{1}}}}}", Resource.ToString(), ResourceData.ToString());
+        }
+    }
 
     /// <summary>
     /// A PasswordTry memorizes the number of username/password tries and the last time of the last try
