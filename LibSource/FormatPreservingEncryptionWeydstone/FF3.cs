@@ -201,7 +201,7 @@ namespace FormatPreservingEncryptionWeydstone
             // 4. For i from 7 to 0:
             for (int i = 7; i >= 0; i--)
             {
-                OnProgressChanged(new ProgressChangedEventArgs(8-i / 8));
+                OnProgressChanged(new ProgressChangedEventArgs(8-i /8d));
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     OnOutputChanged(new OutputChangedEventArgs("Round #" + i));
@@ -381,7 +381,7 @@ namespace FormatPreservingEncryptionWeydstone
             // 4. For i from 0 to 7:
             for (int i = 0; i < 8; i++)
             {
-                OnProgressChanged(new ProgressChangedEventArgs(i / 8));
+                OnProgressChanged(new ProgressChangedEventArgs(i / 8d));
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     OnOutputChanged(new OutputChangedEventArgs("Round #" + i));

@@ -189,11 +189,11 @@ namespace FormatPreservingEncryptionWeydstone
             if (X.Length < minlen || X.Length > maxlen)
                 throw new ArgumentException("The length of X is not within the permitted range of "
                         + minlen + ".." + maxlen + ": " + X.Length);
-            /* if (Math.Pow(radix, X.Length) < 100)
+            if (Math.Pow(radix, X.Length) < 100)
                  throw new ArgumentException(
                          "The length of X must be such that radix ^ length > 100 (radix ^ length ="
                                  + Math.Pow(radix, X.Length));
-                                 */
+                                 
 
             // Converts the Tweak byte array to an integer array, to be able to use integer specific methodes of the class Common (e.g. num(int[],int)).
             // Alternativly these methods could be overloaded to process byte[] inputs. This conversion only occurs once per encryption, hence it shouldnt have a noticeable effect on the performance.
@@ -287,7 +287,7 @@ namespace FormatPreservingEncryptionWeydstone
 
             for (int i = 9; i >= 0; i--)
             {
-                OnProgressChanged(new ProgressChangedEventArgs(10-i / 10));
+                OnProgressChanged(new ProgressChangedEventArgs(10-i / 10d));
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     OnOutputChanged(new OutputChangedEventArgs("Round #" + i));
@@ -420,11 +420,11 @@ namespace FormatPreservingEncryptionWeydstone
             if (X.Length < minlen || X.Length > maxlen)
                 throw new ArgumentException("The length of X is not within the permitted range of "
                         + minlen + ".." + maxlen + ": " + X.Length);
-           /* if (Math.Pow(radix, X.Length) < 100)
+            if (Math.Pow(radix, X.Length) < 100)
                 throw new ArgumentException(
                         "The length of X must be such that radix ^ length > 100 (radix ^ length ="
                                 + Math.Pow(radix, X.Length));
-                                */
+                                
 
             // Converts the Tweak byte array to an integer array, to be able to use integer specific methodes of the class Common (e.g. num(int[], int)).
             // Alternativly these methods could be overloaded to process byte[] inputs. Since this conversion only occurs once per encryption, it shouldnt have a noticeable affect on the performance.
@@ -516,7 +516,7 @@ namespace FormatPreservingEncryptionWeydstone
 
             for (int i = 0; i < 10; i++)
             {
-                OnProgressChanged(new ProgressChangedEventArgs(i/10));
+                OnProgressChanged(new ProgressChangedEventArgs(i/10d));
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     OnOutputChanged(new OutputChangedEventArgs("Round #" + i));

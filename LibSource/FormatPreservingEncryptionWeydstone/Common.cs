@@ -153,7 +153,7 @@ namespace FormatPreservingEncryptionWeydstone
             // convert x to an array of bytes
             byte[] xBytes = x.ToByteArray();
 
-            //TODO because of little-Endian representation the bytes have to be reversed
+            //because of little-Endian representation the bytes have to be reversed
             Array.Reverse(xBytes);
 
             // copy the bytes to the rightmost portion of the result

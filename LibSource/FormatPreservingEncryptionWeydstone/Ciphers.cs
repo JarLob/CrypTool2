@@ -140,20 +140,6 @@ namespace FormatPreservingEncryptionWeydstone
 
                 ICryptoTransform encryptor = mAesEcbCipher.CreateEncryptor();
                 Y = encryptor.TransformFinalBlock(Common.xor(Y, Xj), 0, 16);
-                //using (MemoryStream msEncrypt = new MemoryStream())
-                //{
-                //    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-                //    {
-                //        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-                //        {
-
-
-                //            swEncrypt.Write(Common.xor(Y, Xj));
-                //        }
-                //        Y = msEncrypt.ToArray();
-                //    }
-                //}
-
 
             }
 

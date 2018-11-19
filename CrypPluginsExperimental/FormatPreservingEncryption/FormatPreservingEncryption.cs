@@ -17,25 +17,19 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Text;
 using System.Windows.Controls;
 using System.Xml;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using FormatPreservingEncryptionWeydstone;
-
-/*
- * Das Plugin ist momentan nur ein Prototyp und wird im Anschluss der Abgabe fertiggestellt.
- * Die Funktionalität ist aber bei korrekten Eingaben gegeben.
- */
+using System.Globalization;
 
 namespace Cryptool.Plugins.FormatPreservingEncryption
 {
-    // HOWTO: Change author name, email address, organization and URL.
-    [Author("Alexander Hirsch", "a.hirsch.ks@arcor.de", "Universität Kassel", "https://www.uni-kassel.de/uni/")]
-    // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
+    [Author("Alexander Hirsch", "alexander.hirsch@cryptool.org", "Universität Kassel", "https://www.cryptool.org")]
     // You can (and should) provide a user documentation as XML file and an own icon.
-    [PluginInfo("Format Preserving Encryption", "Provides the FF1, FF2 and FF3 encryption standards", "FormatPreservingEncryption/userdoc.xml", new[] { "FormatPreservingEncryption/Images/FormatPreservingEncryptionIcon.png" })]
-
+    [PluginInfo("FormatPreservingEncryption.Properties.Resources", "PluginCaption", "PluginTooltip", "FormatPreservingEncryption/userdoc.xml", new[] { "FormatPreservingEncryption/Images/FormatPreservingEncryptionIcon.png" })]
 
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class FormatPreservingEncryption : ICrypComponent
@@ -43,59 +37,58 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
         #region Private Variables
 
         private readonly FormatPreservingEncryptionSettings settings = new FormatPreservingEncryptionSettings();
+        private StringBuilder logBuilder = new StringBuilder();
+        private readonly char TASK_SEPERATOR = ';';
+        private readonly char ALPHABET_SEPERATOR = '#';
+        
 
         #endregion
 
         #region Data Properties
-
-
-        [PropertyInfo(Direction.InputData, "Alphabet", "The Alphabet", true)]
+        [PropertyInfo(Direction.InputData, "AlphabetCaption", "AlphabetTooltip", true)]
         public string Alphabet
         {
             get;
             set;
         }
 
-        //TODO rename
-        [PropertyInfo(Direction.InputData, "Plaintext", "The Plaintext as String", true)]
-        public string Plaintext
+        [PropertyInfo(Direction.InputData, "InputCaption", "InputTooltip", true)]
+        public string Input
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.InputData, "Key", "The Key", true)]
+        [PropertyInfo(Direction.InputData, "KeyCaption", "KeyTooltip", true)]
         public byte[] Key
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.InputData, "Tweak", "The Tweak", false)]
+        [PropertyInfo(Direction.InputData, "TweakCaption", "TweakTooltip", false)]
         public byte[] Tweak
         {
             get;
             set;
-        }
+        } = new byte[] { };
 
-        [PropertyInfo(Direction.InputData, "Tweak Radix", "The Tweak Radix", false)]
+        [PropertyInfo(Direction.InputData, "TweakRadixCaption", "TweakRadixTooltip", false)]
         public int TweakRadix
         {
             get;
             set;
         }
 
-        //TODO rename
-        [PropertyInfo(Direction.OutputData, "Ciphertext", "Ciphertext as String")]
-        public string Ciphertext
+        [PropertyInfo(Direction.OutputData, "OutputCaption", "OutputTooltip")]
+        public string Output
         {
             get;
             set;
         }
 
-        //TODO rename
-        [PropertyInfo(Direction.OutputData, "Info", "Info")]
-        public string Info
+        [PropertyInfo(Direction.OutputData, "Log", "Log")]
+        public string Log
         {
             get;
             set;
@@ -125,6 +118,8 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
         /// </summary>
         public void PreExecution()
         {
+            //Clear log from previous operations.
+            logBuilder.Clear();
         }
 
         /// <summary>
@@ -132,368 +127,161 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
         /// </summary>
         public void Execute()
         {
-            // HOWTO: Use this to show the progress of a plugin algorithm execution in the editor.
             ProgressChanged(0, 1);
-            //check Key
 
-            //check Tweak
-            if(Tweak == null)
+            //check Key
+            if(Key.Length != 16)
             {
-                Tweak = new byte[] { };
+                GuiLogMessage("Key must be 128bit.", NotificationLevel.Error);
+                return;
             }
-            //check Plaintext
+
 
             //switch mode
             if (settings.Mode == (int)Modes.Normal)
             {
                 GuiLogMessage("Normal Mode", NotificationLevel.Debug);
-                //validate Alphabet and create mapping
-                if (Alphabet == null || Alphabet.Length < 2) {
-                    GuiLogMessage("Alphabet is missing or too short (length < 2)", NotificationLevel.Error);
-                    return;
-                }
-
-                if (!validateAlphabet(Alphabet))
+                if (!ValidateAlphabet(Alphabet))
                 {
-                    //TODO Error
                     return;
                 }
 
                 char[] mapping = Alphabet.ToCharArray();
-
                 int radix = mapping.Length;
                 GuiLogMessage("Radix is " + radix, NotificationLevel.Debug);
 
-                //validate Plaintext
-                if (Plaintext == null || Plaintext.Length < 2)
+                if (!ValidateInput(Input))
                 {
-                    GuiLogMessage("Plaintext is missing or too short (length < 2)", NotificationLevel.Error);
                     return;
                 }
 
-                //Convert Plaintext
-                int[] intPlaintext = new int[Plaintext.Length];
-
-                for(int i = 0; i < Plaintext.Length; i++)
+                //string -> int[]
+                int[] intInput = StringToIntArray(Input, Alphabet);
+                int[] intOutput;
+                try
                 {
-                    int index = Alphabet.IndexOf(Plaintext[i]);
-
-                    if(index < 0)
-                    {
-                        GuiLogMessage("Something went wrong during plaintext conversion", NotificationLevel.Error);
-                        return;
-                    }
-
-                    intPlaintext[i] = index;
+                    intOutput = Crypt(intInput, radix, true);
                 }
-                int[] intCiphertext = { };
-
-                switch (settings.Algorithm)
+                catch (Exception e)
                 {
-                    case (int)Algorithms.FF1:
-                        {
-
-                            GuiLogMessage("FF1", NotificationLevel.Debug);
-
-                            FF1 ff1 = new FF1(radix, Constants.MAXLEN);
-                            ff1.OutputChanged += OutputChanged;
-                            if (settings.Action == (int)Actions.Encrypt)
-                            {
-                                intCiphertext = ff1.encrypt(Key, Tweak, intPlaintext);
-                            }
-                            else if (settings.Action == (int)Actions.Decrypt)
-                            {
-                                intCiphertext = ff1.decrypt(Key, Tweak, intPlaintext);
-                            }
-                            string stringCiphertext = "";
-                            for (int i = 0; i < intCiphertext.Length; i++)
-                            {
-                                int value = intCiphertext[i];
-                                stringCiphertext += mapping[value];
-                            }
-                            GuiLogMessage("string ciphertext is " + stringCiphertext, NotificationLevel.Debug);
-                            Ciphertext = stringCiphertext;
-                            break;
-                        }
-                    case (int)Algorithms.FF2:
-                        {
-
-                            GuiLogMessage("FF2", NotificationLevel.Debug);
-                            
-
-                            FF2 ff2 = new FF2(radix, TweakRadix);
-                            ff2.OutputChanged += OutputChanged;
-                            //ff2.OutputChanged += OutputChanged;
-                            if (settings.Action == (int)Actions.Encrypt)
-                            {
-                                intCiphertext = ff2.encrypt(Key, Tweak, intPlaintext);
-                            }
-                            else if (settings.Action == (int)Actions.Decrypt)
-                            {
-                                intCiphertext = ff2.decrypt(Key, Tweak, intPlaintext);
-                            }
-                            string stringCiphertext = "";
-                            for (int i = 0; i < intCiphertext.Length; i++)
-                            {
-                                int value = intCiphertext[i];
-                                stringCiphertext += mapping[value];
-                            }
-                            GuiLogMessage("string ciphertext is " + stringCiphertext, NotificationLevel.Debug);
-                            Ciphertext = stringCiphertext;
-                            break;
-                        }
-                    case (int)Algorithms.FF3:
-                        {
-                            GuiLogMessage("FF3", NotificationLevel.Debug);
-                            FF3 ff3 = new FF3(radix);
-                            ff3.OutputChanged += OutputChanged;
-
-                            if (settings.Action == (int)Actions.Encrypt) {
-                                intCiphertext = ff3.encrypt(Key, Tweak, intPlaintext);
-                            }
-                            else if (settings.Action == (int)Actions.Decrypt)
-                            {
-                                intCiphertext = ff3.decrypt(Key, Tweak, intPlaintext);
-                            }
-                            
-                            string stringCiphertext = "";
-                            for (int i = 0; i < intCiphertext.Length; i++)
-                            {
-                                int value = intCiphertext[i];
-                                stringCiphertext += mapping[value];
-                            }
-                            GuiLogMessage("string ciphertext is " + stringCiphertext, NotificationLevel.Debug);
-                            Ciphertext = stringCiphertext;
-                            break;
-                        }
-                    default:
-                        {
-                            GuiLogMessage("Something went wrong. Algorithm not supported", NotificationLevel.Error);
-                            break;
-                        }
+                    GuiLogMessage(e.Message, NotificationLevel.Error);
+                    return;
                 }
+                //int[] -> string
+                Output = IntArrayToString(intOutput, mapping);
+
+                OnPropertyChanged("Output");
+                ProgressChanged(1, 1);
+
             }
             else if(settings.Mode == (int)Modes.XML)
             {
 
                 StringWriter sws = new StringWriter();
                 XmlDocument xmlDo = new XmlDocument();
-                xmlDo.LoadXml(Plaintext);
+                xmlDo.LoadXml(Input);
                 xmlDo.Save(sws);
-                Ciphertext = sws.ToString();
-                OnPropertyChanged("Ciphertext");
-
-
-                string[] tasks = Alphabet.Split(new char[]{';'});
-                foreach(string task in tasks)
+                if (settings.PassPlaintext)
                 {
-                    if(task.Length<=1 || !task.Contains("#"))
+                    Output = sws.ToString();
+                    OnPropertyChanged("Output");
+                }
+
+                string[] tasks = Alphabet.Split(new char[]{TASK_SEPERATOR}, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string task in tasks)
+                {
+                    //GuiLogMessage("task: " + task, NotificationLevel.Debug);
+                    if (task.Length <= 1 || !task.Contains(ALPHABET_SEPERATOR.ToString()))
                     {
                         GuiLogMessage("Task is invalid. Too short or Alphabet missing", NotificationLevel.Error);
                         return;
                     }
-                    string[] splits = task.Split(new char[] { '#' });
+                    string[] splits = task.Split(new char[] {ALPHABET_SEPERATOR});
                     string xpath = splits[0];
-                    GuiLogMessage("xpath is: " + xpath, NotificationLevel.Debug);
-                    string alphabet = splits[1];
-                    GuiLogMessage("Alphabet is: " + alphabet, NotificationLevel.Debug);
-
+                    //GuiLogMessage("xpath is: " + xpath, NotificationLevel.Debug); //TODO REMOVE
+                    string taskAlphabet = splits[1];
+                    //GuiLogMessage("Alphabet is: " + taskAlphabet, NotificationLevel.Debug); //TODO REMOVE
 
                     //validate Alphabet and create mapping
-                    if (alphabet == null || alphabet.Length < 2)
+                    if (!ValidateAlphabet(taskAlphabet))
                     {
-                        GuiLogMessage("Alphabet is missing or too short (length < 2)", NotificationLevel.Error);
                         continue;
                     }
 
-                    if (!validateAlphabet(alphabet))
-                    {
-                        //TODO Error
-                        continue;
-                    }
-
-                    char[] mapping = alphabet.ToCharArray();
-
+                    char[] mapping = taskAlphabet.ToCharArray();
                     int radix = mapping.Length;
                     GuiLogMessage("Radix is " + radix, NotificationLevel.Debug);
 
 
-
-                    //validate Plaintext
-                    if (Plaintext == null || Plaintext.Length < 2)
-                    {
-                        GuiLogMessage("Plaintext is missing or too short (length < 2)", NotificationLevel.Error);
-                        return;
-                    }
-
-                    string xmlString = Plaintext; 
-
-                    //xmlString = xmlString.Replace(" ", "");
+                    //TODO validate XML
+                    string xmlString = Input; 
                     try
                     {
-
-
                         XmlDocument xmlDoc = new XmlDocument();
                         xmlDoc.LoadXml(xmlString);
                         XmlNodeList nodes = xmlDoc.SelectNodes(xpath);
                         foreach (XmlNode node in nodes)
                         {
-                            if (node.InnerText.Length > 0)
+                            //validate Plaintext
+                            if (!ValidateInput(node.InnerText))
                             {
-                                GuiLogMessage("Innertext is: ", NotificationLevel.Debug);
-                                GuiLogMessage(node.InnerText, NotificationLevel.Debug);
-
-
-
-                                int[] intPlaintext = new int[node.InnerText.Length];
-
-                                for (int i = 0; i < node.InnerText.Length; i++)
-                                {
-                                    int index = alphabet.IndexOf(node.InnerText[i]);
-                                    if (index < 0)
-                                    {
-                                        GuiLogMessage("Something went wrong during plaintext conversion", NotificationLevel.Error);
-                                        return;
-                                    }
-
-                                    intPlaintext[i] = index;
-                                }
-
-                                int[] intCiphertext = { };
-
-                                switch (settings.Algorithm)
-                                {
-                                    case (int)Algorithms.FF1:
-                                        {
-
-                                            GuiLogMessage("FF1", NotificationLevel.Debug);
-
-
-                                            FF1 ff1 = new FF1(radix, Constants.MAXLEN);
-                                            ff1.OutputChanged += OutputChanged;
-
-                                            if (settings.Action == (int)Actions.Encrypt)
-                                            {
-                                                intCiphertext = ff1.encrypt(Key, Tweak, intPlaintext);
-                                            }
-                                            else if (settings.Action == (int)Actions.Decrypt)
-                                            {
-                                                intCiphertext = ff1.decrypt(Key, Tweak, intPlaintext);
-                                            }
-
-                                            string stringCiphertext = "";
-                                            for (int i = 0; i < intCiphertext.Length; i++)
-                                            {
-                                                int value = intCiphertext[i];
-                                                stringCiphertext += mapping[value];
-                                            }
-                                            GuiLogMessage("string ciphertext is " + stringCiphertext, NotificationLevel.Debug);
-                                            node.InnerText = stringCiphertext;
-
-                                            xmlDoc.ImportNode(node, true);
-
-                                            break;
-                                        }
-                                    case (int)Algorithms.FF3:
-                                        {
-                                            GuiLogMessage("FF3", NotificationLevel.Debug);
-
-
-                                            FF3 ff3 = new FF3(radix);
-                                            ff3.OutputChanged += OutputChanged;
-
-                                            if (settings.Action == (int)Actions.Encrypt)
-                                            {
-                                                intCiphertext = ff3.encrypt(Key, Tweak, intPlaintext);
-                                            }
-                                            else if (settings.Action == (int)Actions.Decrypt)
-                                            {
-                                                intCiphertext = ff3.decrypt(Key, Tweak, intPlaintext);
-                                            }
-
-                                            string stringCiphertext = "";
-                                            for (int i = 0; i < intCiphertext.Length; i++)
-                                            {
-                                                int value = intCiphertext[i];
-                                                stringCiphertext += mapping[value];
-                                            }
-                                            GuiLogMessage("string ciphertext is " + stringCiphertext, NotificationLevel.Debug);
-                                            node.InnerText = stringCiphertext;
-
-                                            xmlDoc.ImportNode(node, true);
-                                            break;
-                                        }
-                                    case (int)Algorithms.FF2:
-                                        {
-                                            GuiLogMessage("FF2", NotificationLevel.Debug);
-
-
-                                            FF2 ff2 = new FF2(radix, TweakRadix);
-                                            ff2.OutputChanged += OutputChanged;
-
-                                            if (settings.Action == (int)Actions.Encrypt)
-                                            {
-                                                intCiphertext = ff2.encrypt(Key, Tweak, intPlaintext);
-                                            }
-                                            else if (settings.Action == (int)Actions.Decrypt)
-                                            {
-                                                intCiphertext = ff2.decrypt(Key, Tweak, intPlaintext);
-                                            }
-
-                                            string stringCiphertext = "";
-                                            for (int i = 0; i < intCiphertext.Length; i++)
-                                            {
-                                                int value = intCiphertext[i];
-                                                stringCiphertext += mapping[value];
-                                            }
-                                            GuiLogMessage("string ciphertext is " + stringCiphertext, NotificationLevel.Debug);
-                                            node.InnerText = stringCiphertext;
-
-                                            xmlDoc.ImportNode(node, true);
-                                            break;
-                                        }
-
-
-                                    default:
-                                        {
-                                            GuiLogMessage("Something went wrong. Algorithm not supported", NotificationLevel.Error);
-                                            break;
-                                        }
-                                }
+                                continue;
                             }
-                        }
 
-                        GuiLogMessage("new xml doc is: " + xmlDoc.ToString(), NotificationLevel.Debug);
+                            //GuiLogMessage("XML Node is: " + node.InnerText, NotificationLevel.Debug);
 
-                        nodes = xmlDoc.SelectNodes(xpath);
-                        foreach (XmlNode node in nodes)
-                        {
-                            if (node.InnerText.Length > 0)
-                            {
-                                GuiLogMessage("NEW Innertext is: ", NotificationLevel.Debug);
-                                GuiLogMessage(node.InnerText, NotificationLevel.Debug);
+                            //string -> int[]
+                            int[] intInput = StringToIntArray(node.InnerText, taskAlphabet);
+                            int[] intOutput;
+                            try {
+                                intOutput = Crypt(intInput, radix, false);
+                            } catch (Exception e) {
+                                GuiLogMessage(e.Message, NotificationLevel.Error);
+                                return;
                             }
-                        }
+                            //int[] -> string
+                            string stringOutput = IntArrayToString(intOutput, mapping);
+                            //GuiLogMessage("string ciphertext is " + stringOutput, NotificationLevel.Debug);
+                            node.InnerText = stringOutput;
 
+                            xmlDoc.ImportNode(node, true); 
+                        }
+                        ////TODOvvvvvvvvvvvvRemovevvvvvvvvvvvvvvvv
+                        //GuiLogMessage("new xml doc is: " + xmlDoc.ToString(), NotificationLevel.Debug);
+                        //nodes = xmlDoc.SelectNodes(xpath);
+                        //foreach (XmlNode node in nodes)
+                        //{
+                        //    if (node.InnerText.Length > 0)
+                        //    {
+                        //        GuiLogMessage("NEW Innertext is: ", NotificationLevel.Debug);
+                        //        GuiLogMessage(node.InnerText, NotificationLevel.Debug);
+                        //    }
+                        //}
+                        ////TODO^^^^^^^^^^^^Remove^^^^^^^^^^^^^^
                         StringWriter sw = new StringWriter();
                         xmlDoc.Save(sw);
-                        Ciphertext = sw.ToString();
-                        Plaintext = sw.ToString();
+                        Output = sw.ToString();
+                        Input = sw.ToString();
 
                     }
                     catch (Exception e)
                     {
+                        GuiLogMessage("Couldn't process XML-Document", NotificationLevel.Error);
                         GuiLogMessage("source: " + e.Source + "text: " + e.Message, NotificationLevel.Debug);
                     }
                 }
+
+            OnPropertyChanged("Output");
+            ProgressChanged(1, 1);
             }
             else
             {
-                GuiLogMessage("Mode not supported", NotificationLevel.Error);
+                GuiLogMessage("ErrorMode", NotificationLevel.Error);
             }
 
-            OnPropertyChanged("Ciphertext");
-            ProgressChanged(1, 1);
+            Log = logBuilder.ToString();
+            OnPropertyChanged("Log");
+
         }
 
         /// <summary>
@@ -501,7 +289,6 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
         /// </summary>
         public void PostExecution()
         {
-            GuiLogMessage("FPE: PostExecution called", NotificationLevel.Debug);
         }
 
         /// <summary>
@@ -517,7 +304,6 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
         /// </summary>
         public void Initialize()
         {
-            GuiLogMessage("FPE: Initialize called", NotificationLevel.Debug);
         }
 
         /// <summary>
@@ -554,24 +340,230 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
             EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
         }
 
+        private void UpdateProgressValue(object sender, FormatPreservingEncryptionWeydstone.ProgressChangedEventArgs e)
+        {
+            GuiLogMessage("ProgressChanged : "+ e.Progress, NotificationLevel.Debug);
+            ProgressChanged(e.Progress, 1);
+        }
+
+        /// <summary>
+        /// Eventhandler to log strings.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OutputChanged(object sender, OutputChangedEventArgs e)
         {
-            AddToInfoString(e.Text);
+            logBuilder.Append(e.Text+ Environment.NewLine);
+
+            //TODO isnt working
+            //GuiLogMessage("Log changed: : " + e.Text, NotificationLevel.Debug);
+            //Log = e.Text;
+            //OnPropertyChanged("Log");
+        }
+
+        /// <summary>
+        /// Encrypts or decrypts the input. This method works only with integer values. 
+        /// </summary>
+        /// <param name="intInput"> The value to encrypt or decrypt.</param>
+        /// <param name="radix">The radix.</param>
+        /// <param name="updateProgressValue">Indicates if the progress property should be updated.</param>
+        /// <returns>The result of the operation as integer[]</returns>
+        private int[] Crypt(int[] intInput, int radix, bool updateProgressValue)
+        {
+            int[] intOutput = { };
+            switch (settings.Algorithm)
+            {
+                case (int)Algorithms.FF1:
+                    {
+                        GuiLogMessage("FF1", NotificationLevel.Debug);
+                        //validate Tweak
+                        int maxTweakLength = Constants.MAXLEN;
+                        if(Tweak.Length > maxTweakLength)
+                        {
+                            GuiLogMessage("Tweak is too long (" + Tweak.Length + " > " + maxTweakLength + ").", NotificationLevel.Warning);
+                            byte[] newTweak = new byte[maxTweakLength];
+                            Array.Copy(Tweak, 0, newTweak, 0, maxTweakLength);
+                            Tweak = newTweak;
+                            GuiLogMessage("New Tweak is: "+ Common.byteArrayToHexString(Tweak), NotificationLevel.Warning);
+                        }
+
+                        FF1 ff1 = new FF1(radix, Constants.MAXLEN);
+                        ff1.OutputChanged += OutputChanged;
+                        if(updateProgressValue) ff1.ProgressChanged += UpdateProgressValue;
+                        if (settings.Action == (int)Actions.Encrypt)
+                        {
+                            intOutput = ff1.encrypt(Key, Tweak, intInput);
+                        }
+                        else if (settings.Action == (int)Actions.Decrypt)
+                        {
+                            intOutput = ff1.decrypt(Key, Tweak, intInput);
+                        }
+                        return intOutput;
+                    }
+                case (int)Algorithms.FF2:
+                    {
+
+                        GuiLogMessage("FF2", NotificationLevel.Debug);
+                        if (TweakRadix < Constants.MINRADIX_FF2 || TweakRadix > Constants.MAXRADIX_FF2)
+                        {
+                            GuiLogMessage("Tweak radix must be in the range [" + Constants.MINRADIX_FF2 + ".." + Constants.MAXRADIX_FF2 + "]: " + TweakRadix, NotificationLevel.Error);
+                            return intOutput;
+                        }
+                        int maxTlen = Common.floor(104 / (Math.Log(TweakRadix) / Math.Log(2))) - 1;
+                        if (Tweak == null || Tweak.Length == 0)
+                        {
+                            GuiLogMessage("Tweak is empty.", NotificationLevel.Warning);
+                            Tweak = new byte[] { 0x00 };
+                            GuiLogMessage("New Tweak is: " + Common.byteArrayToHexString(Tweak), NotificationLevel.Warning);
+                        }
+                        if (Tweak.Length > maxTlen)
+                        {
+                            GuiLogMessage("Tweak is too long (" + Tweak.Length + " > " + maxTlen + ").", NotificationLevel.Warning);
+                            byte[] newTweak = new byte[maxTlen];
+                            Array.Copy(Tweak, 0, newTweak, 0, maxTlen);
+                            Tweak = newTweak;
+                            GuiLogMessage("New Tweak is: " + Common.byteArrayToHexString(Tweak), NotificationLevel.Warning);
+                        }
+
+                        FF2 ff2 = new FF2(radix, TweakRadix);
+                        ff2.OutputChanged += OutputChanged;
+                        if (updateProgressValue) ff2.ProgressChanged += UpdateProgressValue;
+
+                        if (settings.Action == (int)Actions.Encrypt)
+                        {
+                            intOutput = ff2.encrypt(Key, Tweak, intInput);
+                        }
+                        else if (settings.Action == (int)Actions.Decrypt)
+                        {
+                            intOutput = ff2.decrypt(Key, Tweak, intInput);
+                        }
+                        return intOutput;
+                    }
+                case (int)Algorithms.FF3:
+                    {
+                        GuiLogMessage("FF3", NotificationLevel.Debug);
+                        int expectedTweakLength = 8;
+                        if(Tweak == null || Tweak.Length < expectedTweakLength)
+                        {
+                            GuiLogMessage("Tweak is too small (" + Tweak.Length + " < " + 8 + ").", NotificationLevel.Warning);
+                            byte[] newTweak = new byte[expectedTweakLength];
+                            for (int i = 0; i<expectedTweakLength; i++)
+                            {
+                                newTweak[i] = i < Tweak.Length ? Tweak[i] : (byte)0x00; 
+                            }
+                            Tweak = newTweak;
+                            GuiLogMessage("New Tweak is: " + Common.byteArrayToHexString(Tweak), NotificationLevel.Warning);
+                        }
+                        if (Tweak.Length > expectedTweakLength)
+                        {
+                            GuiLogMessage("Tweak is too long (" + Tweak.Length + " > " + expectedTweakLength + ").", NotificationLevel.Warning);
+                            byte[] newTweak = new byte[expectedTweakLength];
+                            Array.Copy(Tweak, 0, newTweak, 0, expectedTweakLength);
+                            Tweak = newTweak;
+                            GuiLogMessage("New Tweak is: " + Common.byteArrayToHexString(Tweak), NotificationLevel.Warning);
+                        }
+
+
+                        FF3 ff3 = new FF3(radix);
+                        ff3.OutputChanged += OutputChanged;
+                        if (updateProgressValue) ff3.ProgressChanged += UpdateProgressValue;
+
+                        if (settings.Action == (int)Actions.Encrypt)
+                        {
+                            intOutput = ff3.encrypt(Key, Tweak, intInput);
+                        }
+                        else if (settings.Action == (int)Actions.Decrypt)
+                        {
+                            intOutput = ff3.decrypt(Key, Tweak, intInput);
+                        }
+                        return intOutput;
+                    }
+                case (int)Algorithms.DFF: //case (int)Algorithms.FF2:
+                    {
+                        GuiLogMessage("DFF", NotificationLevel.Debug);
+
+                        if (TweakRadix < Constants.MINRADIX_FF2 || TweakRadix > Constants.MAXRADIX_FF2)
+                        {
+                            GuiLogMessage("Tweak radix must be in the range [" + Constants.MINRADIX_FF2 + ".." + Constants.MAXRADIX_FF2 + "]: " + TweakRadix, NotificationLevel.Error);
+                            return intOutput;
+                        }
+                        int maxTlen = Common.floor(104 / (Math.Log(TweakRadix) / Math.Log(2))) - 1;
+                        if (Tweak == null || Tweak.Length == 0)
+                        {
+                            GuiLogMessage("Tweak is empty.", NotificationLevel.Warning);
+                            Tweak = new byte[] { 0x00 };
+                            GuiLogMessage("New Tweak is: " + Common.byteArrayToHexString(Tweak), NotificationLevel.Warning);
+                        }
+                        if (Tweak.Length > maxTlen)
+                        {
+                            GuiLogMessage("Tweak is too long (" + Tweak.Length + " > " + maxTlen + ").", NotificationLevel.Warning);
+                            byte[] newTweak = new byte[maxTlen];
+                            Array.Copy(Tweak, 0, newTweak, 0, maxTlen);
+                            Tweak = newTweak;
+                            GuiLogMessage("New Tweak is: " + Common.byteArrayToHexString(Tweak), NotificationLevel.Warning);
+                        }
+
+                        DFF dff =  new DFF(radix, TweakRadix, new OFF2());
+                        dff.OutputChanged += OutputChanged;
+                        if (updateProgressValue) dff.ProgressChanged += UpdateProgressValue;
+
+                        if (settings.Action == (int)Actions.Encrypt)
+                        {
+                            intOutput = dff.encrypt(Key, Tweak, intInput);
+                        }
+                        else if (settings.Action == (int)Actions.Decrypt)
+                        {
+                            intOutput = dff.decrypt(Key, Tweak, intInput);
+                        }
+                        return intOutput;
+                    }
+                default:
+                    {
+                        GuiLogMessage("Something went wrong. Algorithm not supported", NotificationLevel.Error);
+                        return Array.Empty<int>();
+                    }
+            }
+        }
+        /// <summary>
+        /// Converts the given string into an array of integers determined by the alphabet.
+        /// </summary>
+        /// <param name="stringInput"></param>
+        /// <param name="alphabet"></param>
+        /// <returns></returns>
+        private int[] StringToIntArray(string stringInput, string alphabet)
+        {
+            GuiLogMessage("StringToIntArray: string "+stringInput+" alphabet: "+alphabet, NotificationLevel.Debug);
+            int[] intPlaintext = new int[stringInput.Length];
+            for (int i = 0; i < stringInput.Length; i++)
+            {
+                int index = alphabet.IndexOf(stringInput[i]);
+
+                if (index < 0)
+                {
+                    GuiLogMessage("Character '"+ stringInput[i]+ "' does not exist in Alphabet", NotificationLevel.Error);
+                    return Array.Empty<int>();
+                }
+
+                intPlaintext[i] = index;
+            }
+            return intPlaintext;
         }
 
         #endregion
         #region methods
-
-        private void AddToInfoString(string s)
+        /// <summary>
+        /// Validates the given Alphabet. The Alphabet must consist of distinct values.
+        /// </summary>
+        /// <param name="Alphabet"> The Alphabet as a String</param>
+        /// <returns>True if valid, false otherwise.</returns>
+        private bool ValidateAlphabet(string Alphabet)
         {
-            Info = s;
-            OnPropertyChanged("Info");
-        }
-
-        private bool validateAlphabet(string Alphabet)
-        {
+            if (Alphabet == null || Alphabet.Length < Constants.MINLEN)
+            {
+                GuiLogMessage("Alphabet is missing or too short (length < " + Constants.MINLEN + ")", NotificationLevel.Error);
+                return false;
+            }
             char[] mapping = Alphabet.ToCharArray();
-
                 //validate each char is unique
                 for (int i = 0; i<mapping.Length-1; i++)
                 {
@@ -583,9 +575,47 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
                             GuiLogMessage("Alphabet must consist of distinct values. Found multiple occurrences of character '" + c + "' in Alphabet " + mapping.ToString(), NotificationLevel.Error);
                             return false;
                         }
-}
+                    }
                 }
             return true;
+        }
+
+        /// <summary>
+        /// Validates the Input.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>True if valid, false otherwise.</returns>
+        private bool ValidateInput(string input)
+        {
+            if (input == null || input.Length < Constants.MINLEN)
+            {
+                GuiLogMessage("Input is missing or too short (length < 2)", NotificationLevel.Error);
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Converts an integer Array into a String under the provided mapping.
+        /// Each integer x is mapped to the corresponding character c at position x of the given mapping.
+        /// </summary>
+        /// <param name="intArray"></param>
+        /// <param name="mapping"></param>
+        /// <returns></returns>
+        private string IntArrayToString(int[] intArray, char[] mapping)
+        {
+            StringBuilder result = new StringBuilder();
+            for (int i = 0; i < intArray.Length; i++)
+            {
+                int value = intArray[i];
+                if (value > mapping.Length) {
+                    //This should not happen because of the previous validation.
+                    GuiLogMessage("Conversion Error.", NotificationLevel.Error);
+                    return String.Empty;
+                }
+                result.Append(mapping[value]);
+            }
+            return result.ToString();
         }
 
 

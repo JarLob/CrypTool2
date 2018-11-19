@@ -40,7 +40,7 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
 
         #region TaskPane Settings
 
-        [TaskPane("Operation", "Operation", null, 1, false, ControlType.ComboBox, new string[] { "Encrypt", "Decrypt"})]
+        [TaskPane("ActionCaption", "ActionTooltip", null, 1, false, ControlType.ComboBox, new string[] { "Encrypt", "Decrypt"})]
         public int Action
         {
             get { return this.action; }
@@ -54,7 +54,7 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
             }
         }
 
-        [TaskPane("Algorithm", "Algorithm", null, 2, false, ControlType.ComboBox, new string[] { "FF1", "FF2", "FF3", "DFF" })]
+        [TaskPane("AlgorithmCaption", "AlgorithmTooltip", null, 2, false, ControlType.ComboBox, new string[] { "FF1", "FF2", "FF3", "DFF" })]
         public int Algorithm
         {
             get { return this.algorithm; }
@@ -69,7 +69,7 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
         }
 
 
-        [TaskPane("Mode", "Mode", null, 3, false, ControlType.ComboBox, new string[] { "Normal", "XML" })]
+        [TaskPane("ModeCaption", "ModeTooltip", null, 3, false, ControlType.ComboBox, new string[] { "Normal", "XML" })]
         public int Mode
         {
             get { return this.mode; }
@@ -83,7 +83,7 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
             }
         }
 
-        [TaskPane("Übergebe den Wert Input an den Ausgang Output", "Übergebe den Wert Input an den Ausgang Output", null, 3, false, ControlType.CheckBox, new string[] {"Pass plaintext to ciphertext output"})]
+        [TaskPane("PassPlaintextCaption", "PassPlaintextTooltip", null, 3, false, ControlType.CheckBox, new string[] {"Pass plaintext to ciphertext output"})]
         public bool PassPlaintext
         {
             get { return this.passPlaintext; }
@@ -97,27 +97,6 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
             }
         }
 
-        /// <summary>
-        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
-        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
-        /// </summary>
-        /*[TaskPane("SomeParameter", "This is a parameter tooltip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
-        public int SomeParameter
-        {
-            get
-            {
-                return someParameter;
-            }
-            set
-            {
-                if (someParameter != value)
-                {
-                    someParameter = value;
-                    // HOWTO: MUST be called every time a property value changes with correct parameter name
-                    OnPropertyChanged("SomeParameter");
-                }
-            }
-        }*/
 
         #endregion
 

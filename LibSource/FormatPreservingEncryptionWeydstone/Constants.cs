@@ -74,21 +74,20 @@ namespace FormatPreservingEncryptionWeydstone
         public static int MAXRADIX = 65536;
 
         /**
-        * Minimum radix for FF2.
+        * Minimum radix for FF2 and DFF.
        */
         public static int MINRADIX_FF2 = 2;
 
         /**
-         * Maximum radix for FF2.
+         * Maximum radix for FF2 and DFF.
          */
         public static int MAXRADIX_FF2 = 256;
 
         /**
          * Non-instantiable class.
          */
-        Constants()
+        private Constants()
         {
-            throw new SystemException("The Constants class cannot be instantiated.");
         }
     }
 }

@@ -52,6 +52,7 @@
     <Compile Include="FF2.cs" />
     <Compile Include="FF2Parameters.cs" />
     <Compile Include="Offset.cs" />
+    <Compile Include="UnitTests\DFFTest.cs" />
     <Compile Include="UnitTests\FF2Test.cs" />
     <Compile Include="FF3.cs" />
     <Compile Include="FF3Parameters.cs" />

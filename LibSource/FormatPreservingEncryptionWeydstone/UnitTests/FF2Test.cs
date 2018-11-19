@@ -91,6 +91,8 @@ namespace FPETests
                         PT = Common.concatenate(PT, PExtension);
                     }
 
+                    //skip if format is too small 
+                    if (Math.Pow(radix, testLength) < 100) continue;
                     // encrypt the plaintext
                     int[] CT = ff2.encrypt(validKey, T, PT);
 

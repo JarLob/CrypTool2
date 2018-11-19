@@ -56,6 +56,7 @@ namespace FormatPreservingEncryptionWeydstone
 
         protected virtual void OnProgressChanged(ProgressChangedEventArgs e)
         {
+            Console.WriteLine("OnProgressChanged: " + e.Progress);
             if (ProgressChanged != null)
                 ProgressChanged(this, e);
         }
@@ -230,7 +231,7 @@ namespace FormatPreservingEncryptionWeydstone
             // 6. For i from 9 to 0:
             for (int i = 9; i >= 0; i--)
             {
-                OnProgressChanged(new ProgressChangedEventArgs(10-i/10));
+                OnProgressChanged(new ProgressChangedEventArgs((10-i)/10d));
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     OnOutputChanged(new OutputChangedEventArgs("Round #" + i));
@@ -461,7 +462,7 @@ namespace FormatPreservingEncryptionWeydstone
             // 6. For i from 0 to 9:
             for (int i = 0; i < 10; i++)
             {
-                OnProgressChanged(new ProgressChangedEventArgs(10 - i / 10));
+                OnProgressChanged(new ProgressChangedEventArgs(i / 10d));
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     OnOutputChanged(new OutputChangedEventArgs("Round #" + i));
