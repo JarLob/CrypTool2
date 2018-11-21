@@ -356,7 +356,7 @@
     <value>N</value>
   </data>
   <data name="FL_Letter_Wizard" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="FL_Tutorial" xml:space="preserve">
     <value>Crypto tutorials</value>
@@ -369,5 +369,8 @@
   </data>
   <data name="PseudoRandomFunction_based_KeyDerivationFunctions" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\StaticDocs\PseudoRandomFunction_based_KeyDerivationFunctions.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="LanguageSelector" xml:space="preserve">
+    <value>языковой переключатель</value>
   </data>
 </root>

@@ -123,6 +123,8 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                     return Resources.Text_box__hidden_;
                 case ControlType.KeyTextBox:
                     return Resources.Key_text_box;
+                case ControlType.LanguageSelector:
+                    return Resources.LanguageSelector;
                 default:
                     throw new ArgumentOutOfRangeException("controlType");
             }

@@ -370,4 +370,7 @@
   <data name="PseudoRandomFunction_based_KeyDerivationFunctions" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\StaticDocs\PseudoRandomFunction_based_KeyDerivationFunctions.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="LanguageSelector" xml:space="preserve">
+    <value>Language Selector</value>
+  </data>
 </root>
