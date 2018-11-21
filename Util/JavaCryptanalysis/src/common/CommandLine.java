@@ -36,13 +36,13 @@ public class CommandLine {
                 "Number of processing threads",
                 "Number of threads, for multithreading. 1 for no multithreading.",
                 false,
-                1, 15, 7));
+                1, 20, 7));
 
         add(new CommandLineArgument(
                 Flag.CYCLES,
                 "n",
                 "Number of cycles",
-                "Number of cycles for simulated annealing. 0 for infinite.",
+                "Number of cycles for key search. 0 for infinite.",
                 false,
                 0, 1000, 0));
     }
@@ -199,6 +199,26 @@ public class CommandLine {
                             arg, currentArgument.flagString, currentArgument.shortDesc, currentArgument.stringArrayList.get(0));
                     currentArgument.stringArrayList.clear();
                 }
+                if (currentArgument.validStringValues != null) {
+                    boolean valid = false;
+                    for (String validStringValue : currentArgument.validStringValues) {
+                        if (arg.equals(validStringValue)) {
+                            valid = true;
+                            break;
+                        }
+
+                    }
+                    if (!valid) {
+                        CtAPI.printf("Invalid value >%s< for -%s (%s). \n" +
+                                        "Should be one of %s (default is %s).\n%s\n",
+                                arg, currentArgument.flagString, currentArgument.shortDesc,
+                                currentArgument.validStringValuesString, currentArgument.defaultStringValue,
+                                currentArgument.longDesc);
+
+                        return false;
+                    }
+                }
+
                 currentArgument.stringArrayList.add(arg);
                 currentArgument = null;
             }
@@ -310,9 +330,9 @@ public class CommandLine {
                     } else if (currentArgument.required) {
                         CtAPI.printf("%s  (required).\n\t\t%s\n", currentArgument.longDesc);
                     } else if (currentArgument.multiple) {
-                        CtAPI.printf("%s  (argumental, one or more).\n\t\t%s\n", prefix, currentArgument.longDesc);
+                        CtAPI.printf("%s  (optional, one or more).\n\t\t%s\n", prefix, currentArgument.longDesc);
                     } else {
-                        CtAPI.printf("%s  (argumental).\n\t\t%s\n", prefix, currentArgument.longDesc);
+                        CtAPI.printf("%s  (optional).\n\t\t%s\n", prefix, currentArgument.longDesc);
                     }
                     break;
                 case NUMERIC:
@@ -329,12 +349,12 @@ public class CommandLine {
                                 currentArgument.maxIntValue,
                                 currentArgument.longDesc);
                     } else if (currentArgument.multiple) {
-                        CtAPI.printf("%s \n\t\tShould specify a value between %d and %d (argumental, one or more).\n\t\t%s\n",
+                        CtAPI.printf("%s \n\t\tShould specify a value between %d and %d (optional, one or more).\n\t\t%s\n",
                                 prefix,
                                 currentArgument.minIntValue, currentArgument.maxIntValue,
                                 currentArgument.longDesc);
                     } else {
-                        CtAPI.printf("%s \n\t\tShould specify a value between %d and %d (argumental, default is %d).\n\t\t%s\n",
+                        CtAPI.printf("%s \n\t\tShould specify a value between %d and %d (optional, default is %d).\n\t\t%s\n",
                                 prefix,
                                 currentArgument.minIntValue, currentArgument.maxIntValue,
                                 currentArgument.defaultIntValue,
@@ -342,18 +362,25 @@ public class CommandLine {
                     }
                     break;
                 case STRING:
+                    String validValuesAddition = "";
+                    if (currentArgument.validStringValuesString != null && !currentArgument.validStringValuesString.isEmpty()) {
+                        validValuesAddition = " \n\t\tShould specify one of " + currentArgument.validStringValuesString;
+                    }
                     if (currentArgument.required && currentArgument.multiple) {
-                        CtAPI.printf("%s  (required, one or more).\n\t\t%s\n", prefix, currentArgument.longDesc);
+                        CtAPI.printf("%s %s (required, one or more).\n\t\t%s\n", prefix, validValuesAddition, currentArgument.longDesc);
                     } else if (currentArgument.required) {
-                        CtAPI.printf("%s  (required).\n\t\t%s\n", prefix, currentArgument.longDesc);
+                        CtAPI.printf("%s %s (required).\n\t\t%s\n", prefix, validValuesAddition, currentArgument.longDesc);
                     } else if (currentArgument.multiple) {
-                        CtAPI.printf("%s  (argumental, one or more).\n\t\t%s\n", prefix, currentArgument.longDesc);
+                        CtAPI.printf("%s %s (optional, one or more).\n\t\t%s\n", prefix, validValuesAddition, currentArgument.longDesc);
                     } else {
-                        CtAPI.printf("%s  (argumental, default is \"%s\").\n\t\t%s\n",
+                        CtAPI.printf("%s %s (optional, default is \"%s\").\n\t\t%s\n",
                                 prefix,
+                                validValuesAddition,
                                 currentArgument.defaultStringValue,
                                 currentArgument.longDesc);
                     }
+
+
                     break;
                 default:
                     break;

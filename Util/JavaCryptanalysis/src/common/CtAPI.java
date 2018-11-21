@@ -185,29 +185,48 @@ public class CtAPI {
         updateOutput(OUTPUT_BEST_RESULTS, bestList);
     }
 
+    public static String plaintextCapped(String plaintext) {
+        if (plaintext.length() <= 100) {
+            return plaintext;
+        }
+        return plaintext.substring(0, Math.min(100, plaintext.length())) + "...";
+    }
+
+
     public static void displayBestResult(Result result) {
         updateOutput(OUTPUT_SCORE, String.format("%,d", result.score));
         updateOutput(OUTPUT_KEY, result.keyString);
         updateOutput(OUTPUT_PLAINTEXT, result.plaintextString);
-        printf("Best: %,12d %s %s %s\n", result.score, result.keyString, result.plaintextString, result.commentString);
+        printf("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyString);
     }
 
     public static void displayBestResult(Result result, Result original) {
-        updateOutput(OUTPUT_KEY, result.keyString + " (Original:" + original.keyString + ")");
+        if (original.keyString.isEmpty()) {
+            updateOutput(OUTPUT_KEY, result.keyString);
+        } else {
+            updateOutput(OUTPUT_KEY, result.keyString + " (Original:" + original.keyString + ")");
+        }
+
         updateOutput(OUTPUT_SCORE, String.format("%,d (Original:%,d)", result.score, original.score));
-        updateOutput(OUTPUT_PLAINTEXT, result.plaintextString + " (Original:" + original.plaintextString + ")");
-        printf("Best: %,12d %s %s %s\n", result.score, result.keyString, result.plaintextString, result.commentString);
-        printf("      %,12d %s %s %s\n", original.score, original.keyString, original.plaintextString, original.commentString);
+
+        if (original.plaintextString.isEmpty()) {
+            updateOutput(OUTPUT_PLAINTEXT, result.plaintextString);
+        } else {
+            updateOutput(OUTPUT_PLAINTEXT, result.plaintextString + " (Original:" + original.plaintextString + ")");
+        }
+        printf("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyString);
+        printf("      %,12d %s %s %s\n", original.score, plaintextCapped(original.plaintextString), original.commentString,original.keyString );
     }
 
 
-    public static void goodbye(int exitCode, String message) {
+    public static synchronized void goodbye(int exitCode, String message) {
         if (exitCode != 0) {
             logError(String.format("Completed with error code %s (%s)- shutting down\n", exitCode, message));
         } else {
             printf(message);
         }
 
+        BestResults.display();
         long start = System.currentTimeMillis();
         while (System.currentTimeMillis() - start < 5_000) {
             try {

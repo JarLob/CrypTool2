@@ -20,6 +20,8 @@ public class CommandLineArgument {
     int defaultIntValue;
 
     String defaultStringValue = "";
+    String[] validStringValues = null;
+    String validStringValuesString = null;
 
     // Values
     boolean booleanValue = false;
@@ -110,8 +112,38 @@ public class CommandLineArgument {
         this.multiple = false;
 
         this.defaultStringValue = defaultStringValue;
+        this.validStringValues = null;
 
 
+    }
+    public CommandLineArgument(Flag flag,
+                               String flagString,
+                               String shortDesc,
+                               String longDesc,
+
+                               boolean required,
+
+                               String defaultStringValue,
+                               String[] validStringValues) {
+        this.flag = flag;
+        this.flagString = flagString;
+        this.type = Type.STRING;
+        this.longDesc = longDesc;
+        this.shortDesc = shortDesc;
+
+        this.required = required;
+        this.multiple = false;
+
+        this.defaultStringValue = defaultStringValue;
+        this.validStringValues = validStringValues;
+
+        validStringValuesString = "";
+        for (String validStringValue : validStringValues) {
+            if (validStringValuesString.length() > 0) {
+                validStringValuesString += ", ";
+            }
+            validStringValuesString += validStringValue;
+        }
     }
 
 

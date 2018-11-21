@@ -1,14 +1,14 @@
 package common;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.ShortBuffer;
 
 
 public class Stats {
 
+    public static long[] monogramStats = new long[Utils.TEXT_ALPHABET_SIZE];
+    public static long[] bigramStats = new long[Utils.TEXT_ALPHABET_SIZE * 32];
     private static short[] hexagramStats = null;
     public static long evaluations = 0;
 
@@ -68,7 +68,6 @@ public class Stats {
 
     }
 
-
     public static long evalPlaintextHexagram(int[] plaintext) {
         CtAPI.shutdownIfNeeded();
         return evalPlaintextHexagram(plaintext, plaintext.length);
@@ -78,6 +77,187 @@ public class Stats {
         long elapsed = Utils.getElapsedMillis();
         return String.format("[%,d sec.][%,dK decryptions (%,dK/sec.)]", elapsed / 1000, Stats.evaluations / 1000, Stats.evaluations / elapsed);
     }
+
+    static int readBigramFile(String fileName) {
+
+        String line = "";
+        int items = 0;
+
+        try {
+            FileReader fileReader = new FileReader(fileName);
+
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            while ((line = bufferedReader.readLine()) != null) {
+
+                line = line.toUpperCase();
+                String[] split = line.split("[ ]+");
+                int l1 = Utils.TEXT_ALPHABET.indexOf(split[0].charAt(0));
+                int l2 = Utils.TEXT_ALPHABET.indexOf(split[0].charAt(1));
+                if (l1 < 0 || l2 < 0) {
+                    continue;
+                }
+                long freq = Long.valueOf(split[1]);
+
+                bigramStats[(l1 << 5) + l2] += freq;
+                items++;
+            }
+
+            bufferedReader.close();
+        } catch (FileNotFoundException ex) {
+            CtAPI.goodbye(-1, "Unable to open bigram file '" + fileName + "'");
+        } catch (IOException ex) {
+            CtAPI.goodbye(-1, "Error reading bigram file '" + fileName + "'");
+        }
+
+        CtAPI.printf("Bigram file read: %s, items  = %d  \n", fileName, items);
+
+        convertToLog(bigramStats);
+
+        return items;
+
+    }
+
+    static int readMonogramFile(String fileName, boolean m209) {
+
+        String line;
+        int items = 0;
+
+        try {
+            FileReader fileReader = new FileReader(fileName);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            while ((line = bufferedReader.readLine()) != null) {
+
+                line = line.toUpperCase();
+                String[] split = line.split("[ ]+");
+                int l1 = Utils.TEXT_ALPHABET.indexOf(split[0].charAt(0));
+                if (l1 < 0) {
+                    continue;
+                }
+                long freq = Long.valueOf(split[1]);
+
+                monogramStats[l1] += freq;
+                items++;
+            }
+
+            bufferedReader.close();
+        } catch (FileNotFoundException ex) {
+            CtAPI.goodbye(-1, "Unable to open mono file '" + fileName + "'");
+        } catch (IOException ex) {
+            CtAPI.goodbye(-1, "Error reading mono file '" + fileName + "'");
+        }
+
+        CtAPI.printf("mono file read: %s, items  = %d  \n", fileName, items);
+
+        convertToLog(monogramStats);
+
+        return items;
+
+    }
+
+    static int readFileForStats(String fileName, boolean m209) {
+
+
+        String line;
+        int length = 0;
+        String from = "èéìùòàëáöæëüãþôâäíûóšøůěňïçñíàçèìåáßŕúµýˆ^άλêéąîőčžâªªºžńάλληφοράθęźðöżõřáěšďťˇי".toUpperCase();
+        String to = "eeiuoaeaoaeuapoaaiuosouenicniaceiaasrupyxxageeaioczaaaoznxxxxxxxxxxzoozoraesdtxe".toUpperCase();
+
+
+        try {
+            FileReader fileReader = new FileReader(fileName);
+
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            int l2 = -1;
+            while ((line = bufferedReader.readLine()) != null) {
+
+                for (char c : line.toUpperCase().toCharArray()) {
+
+                    if (m209) {
+                        if (c == ' ' || c == ',' || c == '.') {
+                            c = 'Z';
+                        }
+                    }
+
+                    int rep = from.indexOf(c);
+                    if (rep != -1) {
+                        c = to.charAt(rep);
+                    }
+                    int l1 = l2;
+                    l2 = Utils.TEXT_ALPHABET.indexOf(c);
+                    if (l1 != -1 && l2 != -1) {
+                        monogramStats[l1]++;
+                        bigramStats[(l1 << 5) + l2]++;
+                        length++;
+                    }
+                }
+            }
+
+            // Always close files.
+            bufferedReader.close();
+        } catch (FileNotFoundException ex) {
+            CtAPI.goodbye(-1, "Unable to open text file for stats '" + fileName + "'");
+        } catch (IOException ex) {
+            CtAPI.goodbye(-1, "Error reading text file for stats '" + fileName + "'");
+        }
+
+        convertToLog(bigramStats);
+        convertToLog(monogramStats);
+
+        CtAPI.printf("Text file read for stats %s, length = %d \n", fileName, length);
+
+        return length;
+    }
+
+    private static void convertToLog(long[] stats) {
+        long minVal = Long.MAX_VALUE;
+        for (long stat : stats) {
+            if ((stat > 0) && (stat < minVal)) {
+                minVal = stat;
+            }
+        }
+
+        for (int i = 0; i < stats.length; i++) {
+            if (stats[i] > 0) {
+                stats[i] = (long) (10000.0 * Math.log((1.0 * stats[i]) / (1.0 * minVal)));
+            }
+        }
+
+    }
+
+    public static boolean load(String dirname, Language language, boolean m209) {
+        int n = 1;
+        switch (language) {
+            case ENGLISH:
+                //n *= readFileForStats("book.txt", m209);
+                n *= readBigramFile(dirname + "/" + "english_bigrams.txt");
+                n *= readMonogramFile(dirname + "/" + "english_monograms.txt", m209);
+                break;
+            case FRENCH:
+                n *= readBigramFile(dirname + "/" + "french_bigrams.txt");
+                n *= readMonogramFile(dirname + "/" + "french_monograms.txt", m209);
+                break;
+            case ITALIAN:
+                n *= readFileForStats(dirname + "/" + "italianbook.txt", m209);
+                break;
+            case GERMAN:
+                n *= readFileForStats(dirname + "/" + "germanbook.txt", m209);
+                //n *= readBigramFile(dirname + "/" + "german_bigrams.txt");
+                //n *= readMonogramFile(dirname + "/" + "german_monograms.txt", m209);
+                break;
+        }
+        if (m209) {
+            monogramStats['E' - 'A'] = Math.max(60000, monogramStats['E' - 'A']);
+            monogramStats['Z' - 'A'] = Math.max(80000, monogramStats['Z' - 'A']);
+        }
+
+        if (n == 0) {
+            CtAPI.goodbye(-1, "Cannot load stats - language: " + language);
+        }
+        return true;
+    }
+
 }
 
 

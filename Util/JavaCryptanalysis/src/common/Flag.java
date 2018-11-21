@@ -10,4 +10,7 @@ public enum Flag {
     CYCLES,
     MODEL,
     SIMULATION,
+    VERSION,
+    LANGUAGE,
+    SIMULATION_OVERLAPS
 }
