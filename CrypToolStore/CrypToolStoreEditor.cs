@@ -16,6 +16,7 @@
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Attributes;
 using Cryptool.PluginBase.Editor;
+using Cryptool.PluginBase.Miscellaneous;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,14 +32,14 @@ namespace Cryptool.CrypToolStore
     [PluginInfo("Cryptool.CrypToolStore.Properties.Resources", "PluginCaption", "PluginTooltip", null, "CrypToolStore/icon_small.png")]
     public class CrypToolStoreEditor : IEditor
     {
-        private CrypToolStorePresentation _presentation = new CrypToolStorePresentation();
+        private CrypToolStorePresentation _presentation;
 
         /// <summary>
         /// Default Constructor
         /// </summary>
         public CrypToolStoreEditor()
         {
-
+            _presentation  = new CrypToolStorePresentation(this);
         }
 
         /// <summary>
@@ -61,6 +62,17 @@ namespace Cryptool.CrypToolStore
         {
             get { return _presentation; }
         }
+
+        /// <summary>
+        /// Logs to CT2 gui log
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="logLevel"></param>
+        internal void GuiLogMessage(string message, NotificationLevel logLevel)
+        {
+            EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
+        }
+
 
         #region unused methods
 
@@ -238,7 +250,7 @@ namespace Cryptool.CrypToolStore
             
         }
 
-#endregion
+        #endregion
 
         #region events
 
