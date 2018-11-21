@@ -131,8 +131,11 @@ namespace OnlineDocumentationGenerator.Generators.LaTeXGenerator
                     return Resources.Text_box__hidden_;
                 case ControlType.KeyTextBox:
                     return Resources.Key_text_box;
+                case ControlType.LanguageSelector:
+                    return Resources.LanguageSelector;
                 default:
-                    throw new ArgumentOutOfRangeException("controlType");
+                    throw new ArgumentOutOfRangeException(String.Format("ControlType \"{0}\" is unknown. Please add it to the \"GetControlTypeString(ControlType controlType)\"-method in OnlineDocumentationGenerator.Generators.LaTeXGenerator.ObjectConverter.cs", controlType.ToString()));
+
             }
         }
 
@@ -180,7 +183,7 @@ namespace OnlineDocumentationGenerator.Generators.LaTeXGenerator
                 case Direction.ControlMaster:
                     return string.Format(@"$\blacktriangledown$ {0}", Resources.Control_master);
                 default:
-                    throw new ArgumentOutOfRangeException("direction");
+                    throw new ArgumentOutOfRangeException(String.Format("Unknown direction \"{0}\" in GetDirectionString method in OnlineDocumentationGenerator.Generators.LaTeXGenerator.ObjectConverter.cs", direction.ToString()));
             }
         }
 
@@ -398,7 +401,6 @@ namespace OnlineDocumentationGenerator.Generators.LaTeXGenerator
             {
                 return docPage.Localizations["en"].Name;
             }
-            return null;
         }
     }
 }

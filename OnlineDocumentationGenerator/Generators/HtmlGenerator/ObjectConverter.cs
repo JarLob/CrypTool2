@@ -126,7 +126,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                 case ControlType.LanguageSelector:
                     return Resources.LanguageSelector;
                 default:
-                    throw new ArgumentOutOfRangeException("controlType");
+                    throw new ArgumentOutOfRangeException(String.Format("ControlType \"{0}\" is unknown. Please add it to the \"GetControlTypeString(ControlType controlType)\"-method in OnlineDocumentationGenerator.Generators.HtmlGenerator.ObjectConverter.cs", controlType.ToString()));
             }
         }
 
@@ -173,7 +173,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                 case Direction.ControlMaster:
                     return string.Format("▼ {0}", Resources.Control_master);
                 default:
-                    throw new ArgumentOutOfRangeException("direction");
+                    throw new ArgumentOutOfRangeException(String.Format("Unknown direction \"{0}\" in GetDirectionString method in OnlineDocumentationGenerator.Generators.HtmlGenerator.ObjectConverter.cs", direction.ToString()));
             }
         }
 
@@ -446,7 +446,6 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
             {
                 return docPage.Localizations["en"].FilePath;
             }
-            return null;
         }
 
         private string GetEntityName(EntityDocumentationPage docPage)
@@ -460,7 +459,6 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
             {
                 return docPage.Localizations["en"].Name;
             }
-            return null;
         }
     }
 }
