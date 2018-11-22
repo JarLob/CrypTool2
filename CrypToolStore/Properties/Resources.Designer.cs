@@ -81,6 +81,33 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Authors: ähnelt.
+        /// </summary>
+        internal static string Authors {
+            get {
+                return ResourceManager.GetString("Authors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Authors&apos; Emails: ähnelt.
+        /// </summary>
+        internal static string AuthorsEmails {
+            get {
+                return ResourceManager.GetString("AuthorsEmails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Author&apos;s Institutes: ähnelt.
+        /// </summary>
+        internal static string AuthorsInstitutes {
+            get {
+                return ResourceManager.GetString("AuthorsInstitutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap download {

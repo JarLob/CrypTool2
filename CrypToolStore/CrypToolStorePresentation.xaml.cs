@@ -21,6 +21,7 @@ using CrypToolStoreLib.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -60,6 +61,7 @@ namespace Cryptool.CrypToolStore
             PluginListView.ItemsSource = Plugins;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(PluginListView.ItemsSource);
             view.Filter = UserFilter;
+            view.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
         }
 
         /// <summary>
@@ -218,6 +220,9 @@ namespace Cryptool.CrypToolStore
                         SelectedPluginShortDescription.Text = plugin.ShortDescription;
                         SelectedPluginLongDescription.Text = plugin.LongDescription;
                         SelectedPluginIcon.Source = plugin.Icon;
+                        SelectedPluginAuthorsName.Content = plugin.Authornames;
+                        SelectedPluginAuthorsEmail.Content = plugin.Authoremails;
+                        SelectedPluginAuthorsInstitutes.Content = plugin.Authorinstitutes;
                     }
                     catch (Exception ex)
                     {

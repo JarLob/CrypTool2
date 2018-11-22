@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="1200" Background="#FFEBEFF6" Loaded="UserControl_Loaded">
+             d:DesignHeight="700" d:DesignWidth="1500" Background="#FFEBEFF6" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -39,7 +39,7 @@
                 <Border Grid.Row="0" Background="#FFEBEFF6" Margin="3,30,0,5">
                     <ListView Name="PluginListView" Height="Auto" Width="Auto" MinWidth="700" BorderBrush="#FFEBEFF6" Background="#FFEBEFF6"  Margin="8,5,5,5"
                               ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
-                              ScrollViewer.VerticalScrollBarVisibility="Visible"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
                               DataContext="{Binding}"
                               SelectionMode="Single"
                               SelectionChanged="PluginListView_SelectionChanged">
@@ -75,25 +75,39 @@
                     </ListView>
                 </Border>
                 <Border Grid.Column="1">
-                    <Grid Height="Auto">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="300"/>
-                        </Grid.RowDefinitions>
-                        <Image Grid.Row="0" Grid.RowSpan="2" Name="SelectedPluginIcon" Width="40" Height="40" Margin="2,2,2,2" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                        <Label Grid.Row="0" Height="30" Margin="40,0,0,0" Width="Auto" FontWeight="Bold" Name="SelectedPluginName"/>
-                        <Label Grid.Row="1" Margin="40,0,0,0" Width="Auto" Height="30" VerticalAlignment="Top">
-                            <Label.Content>
-                                <AccessText TextWrapping="Wrap" Name="SelectedPluginShortDescription" FontStyle="Italic"/>
-                            </Label.Content>
-                        </Label>
-                        <Label Grid.Row="2" Margin="40,0,0,0" Width="Auto">
-                            <Label.Content>
-                                <AccessText TextWrapping="Wrap"  Name="SelectedPluginLongDescription"/>
-                            </Label.Content>
-                        </Label>
-                    </Grid>
+                    <ScrollViewer Height="Auto" Margin="3,3,3,3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                        <Grid Height="Auto">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Grid.Row="0" Grid.RowSpan="2" Name="SelectedPluginIcon" Width="40" Height="40" Margin="2,2,2,2" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                            <Label Grid.Row="0" Height="30" Margin="45,0,0,0" Width="Auto" FontWeight="Bold" Name="SelectedPluginName"/>
+                            <Label Grid.Row="1" Margin="45,0,0,0" Width="700" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" BorderBrush="LightSeaGreen" BorderThickness="1">
+                                <Label.Content>
+                                    <AccessText TextWrapping="Wrap" Name="SelectedPluginShortDescription" FontStyle="Italic"/>
+                                </Label.Content>
+                            </Label>
+                            <Label Grid.Row="2" Margin="45,0,0,0" Width="Auto" Height="30" VerticalAlignment="Top" Content="{Loc Authors}" FontWeight="Bold"/>
+                            <Label Grid.Row="3" Margin="45,0,0,0" Width="Auto" Height="30" VerticalAlignment="Top" Content="{Loc AuthorsEmails}" FontWeight="Bold"/>
+                            <Label Grid.Row="4" Margin="45,0,0,0" Width="Auto" Height="30" VerticalAlignment="Top" Content="{Loc AuthorsInstitutes}" FontWeight="Bold"/>
+                            <Label Grid.Row="2" Margin="200,0,0,0" Name="SelectedPluginAuthorsName" Width="Auto" Height="30" VerticalAlignment="Top" FontWeight="Bold"/>
+                            <Label Grid.Row="3" Margin="200,0,0,0" Name="SelectedPluginAuthorsEmail" Width="Auto" Height="30" VerticalAlignment="Top" FontWeight="Bold"/>
+                            <Label Grid.Row="4" Margin="200,0,0,0" Name="SelectedPluginAuthorsInstitutes" Width="Auto" Height="30" VerticalAlignment="Top" FontWeight="Bold"/>
+                            <Label Grid.Row="5" Margin="45,10,0,0" Width="700" Height="300" HorizontalAlignment="Left" BorderBrush="LightSeaGreen" BorderThickness="1">
+                                <Label.Content>
+                                    <AccessText TextWrapping="Wrap"  Name="SelectedPluginLongDescription"/>
+                                </Label.Content>
+                            </Label>
+                            <Button Grid.Row="6"  Margin="45,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Name="InstallButton" Width="60" Height="30" Background="White">Install</Button>
+                            <Button Grid.Row="6"  Margin="120,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Name="DeleteButton" Width="60" Height="30" Background="White">Uninstall</Button>
+                        </Grid>
+                    </ScrollViewer>
                 </Border>
             </Grid>
         </Grid>
