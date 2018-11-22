@@ -46,7 +46,7 @@ namespace Cryptool.CrypToolStore
     public partial class CrypToolStorePresentation : UserControl
     {
         private CrypToolStoreEditor CrypToolStoreEditor;
-        private ObservableCollection<PluginAndSource> Plugins { get; set; }
+        private ObservableCollection<PluginWrapper> Plugins { get; set; }
 
         /// <summary>
         /// Constructor
@@ -55,8 +55,8 @@ namespace Cryptool.CrypToolStore
         public CrypToolStorePresentation(CrypToolStoreEditor crypToolStoreEditor)
         {
             InitializeComponent();
-            CrypToolStoreEditor = crypToolStoreEditor;            
-            Plugins = new ObservableCollection<PluginAndSource>();
+            CrypToolStoreEditor = crypToolStoreEditor;
+            Plugins = new ObservableCollection<PluginWrapper>();
             PluginListView.ItemsSource = Plugins;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(PluginListView.ItemsSource);
             view.Filter = UserFilter;
@@ -77,12 +77,12 @@ namespace Cryptool.CrypToolStore
             }
             else
             {
-                PluginAndSource pluginAndSource = (PluginAndSource)item;
-                string searchtext = pluginAndSource.Plugin.Name +
-                                    pluginAndSource.Plugin.ShortDescription +
-                                    pluginAndSource.Plugin.LongDescription +
-                                    pluginAndSource.Plugin.Authornames +
-                                    pluginAndSource.Plugin.Authorinstitutes;
+                PluginWrapper plugin = (PluginWrapper)item;
+                string searchtext = plugin.Name +
+                                    plugin.ShortDescription +
+                                    plugin.LongDescription +
+                                    plugin.Authornames +
+                                    plugin.Authorinstitutes;
                 return (searchtext.IndexOf(Filter.Text, StringComparison.OrdinalIgnoreCase) >= 0);
             }
         }
@@ -150,10 +150,23 @@ namespace Cryptool.CrypToolStore
                     {
                         try
                         {
+                            int oldSelectedIndex = PluginListView.SelectedIndex;     
+                       
                             Plugins.Clear();
                             foreach (PluginAndSource pluginAndSource in pluginsAndSources)
                             {
-                                Plugins.Add(pluginAndSource);
+                                Plugins.Add(new PluginWrapper(pluginAndSource));
+                            }
+
+                            //we select the first plugin in list if nothing has been selected before
+                            //otherwise, we restore the selected index
+                            if (oldSelectedIndex != -1)
+                            {
+                                PluginListView.SelectedIndex = oldSelectedIndex;
+                            }
+                            else
+                            {
+                                PluginListView.SelectedIndex = 0;
                             }
                         }
                         catch (Exception ex)
@@ -181,6 +194,39 @@ namespace Cryptool.CrypToolStore
         private void Filter_TextChanged(object sender, TextChangedEventArgs e)
         {
             CollectionViewSource.GetDefaultView(PluginListView.ItemsSource).Refresh();
+        }
+
+        /// <summary>
+        /// Selection in the PluginListView changed, i.e., the user selected a plugin
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PluginListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count == 1)
+            {
+                //the user selected a new plugin in the PluginListView
+                PluginWrapper plugin = (PluginWrapper)e.AddedItems[0];
+
+
+                //Show selected plugin in the right box of the CrypToolStore UI
+                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    try
+                    {
+                        SelectedPluginName.Content = plugin.Name;
+                        SelectedPluginShortDescription.Text = plugin.ShortDescription;
+                        SelectedPluginLongDescription.Text = plugin.LongDescription;
+                        SelectedPluginIcon.Source = plugin.Icon;
+                    }
+                    catch (Exception ex)
+                    {
+                        CrypToolStoreEditor.GuiLogMessage(String.Format("Exception occured during showing of selected plugin in the right box of the CrypToolStore UI: {0}", ex.Message), NotificationLevel.Error);
+                    }
+                }, null);
+
+
+            }
         }
     }
 }

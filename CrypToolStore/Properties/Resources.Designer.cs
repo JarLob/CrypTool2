@@ -61,12 +61,42 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _default {
+            get {
+                object obj = ResourceManager.GetObject("_default", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
         /// </summary>
         internal static byte[] anonymous {
             get {
                 object obj = ResourceManager.GetObject("anonymous", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap download {
+            get {
+                object obj = ResourceManager.GetObject("download", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap downloaded {
+            get {
+                object obj = ResourceManager.GetObject("downloaded", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -107,7 +137,7 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Welcome to the CrypToolStore! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Welcome to the CrypTool Store! ähnelt.
         /// </summary>
         internal static string Welcome_To_CrypToolStore {
             get {
