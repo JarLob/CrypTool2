@@ -652,6 +652,7 @@ namespace CrypToolStoreLib.Database
                 plugin.Authornames = (string)entry["authornames"];
                 plugin.Authoremails = (string)entry["authoremails"];
                 plugin.Authorinstitutes = (string)entry["authorinstitutes"];
+                plugin.Icon = (byte[])entry["icon"];
 
                 Source source = new Source();
                 source.BuildVersion = (int)entry["buildversion"];

@@ -1109,7 +1109,8 @@ namespace CrypToolStoreLib.Client
                     return new DataModificationOrRequestResult()
                     {
                         Message = responsePublishedPluginListMessage.Message,
-                        DataObject = responsePublishedPluginListMessage.PluginsAndSources
+                        DataObject = responsePublishedPluginListMessage.PluginsAndSources,
+                        Success = true
                     };
                 }
 
@@ -2269,7 +2270,8 @@ namespace CrypToolStoreLib.Client
                     return new DataModificationOrRequestResult()
                     {
                         Message = responsePublishedResourceListMessage.Message,
-                        DataObject = responsePublishedResourceListMessage.ResourcesAndResourceDatas
+                        DataObject = responsePublishedResourceListMessage.ResourcesAndResourceDatas,
+                        Success = true
                     };
                 }
 
