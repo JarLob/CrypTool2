@@ -128,6 +128,15 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die You have recently installed or uninstalled components from the CrypTool Store. For the changes to take effect please restart CrypTool 2. ähnelt.
+        /// </summary>
+        internal static string PendingChanges {
+            get {
+                return ResourceManager.GetString("PendingChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die CrypTool Store ähnelt.
         /// </summary>
         internal static string PluginCaption {
@@ -151,6 +160,15 @@ namespace Cryptool.CrypToolStore.Properties {
         internal static string PluginTooltip {
             get {
                 return ResourceManager.GetString("PluginTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restart Cryptool 2 now ähnelt.
+        /// </summary>
+        internal static string RestartCrypTool2 {
+            get {
+                return ResourceManager.GetString("RestartCrypTool2", resourceCulture);
             }
         }
         

@@ -16,6 +16,7 @@
 using Cryptool.Core;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Attributes;
+using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
 using CrypToolStoreLib.Client;
 using CrypToolStoreLib.DataObjects;
@@ -23,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -47,7 +49,7 @@ namespace Cryptool.CrypToolStore
     /// Interaktionslogik für CrypToolStorePresentation.xaml
     /// </summary>
     [Cryptool.PluginBase.Attributes.Localization("CrypTool.CrypToolStore.Properties.Resources")]
-    public partial class CrypToolStorePresentation : UserControl
+    public partial class CrypToolStorePresentation : UserControl, INotifyPropertyChanged
     {
         private CrypToolStoreEditor CrypToolStoreEditor;
         private ObservableCollection<PluginWrapper> Plugins { get; set; }
@@ -71,11 +73,12 @@ namespace Cryptool.CrypToolStore
             view.Filter = UserFilter;
             view.SortDescriptions.Add(new SortDescription("IsInstalled", ListSortDirection.Descending));
             view.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            DataContext = this;
         }
 
         /// <summary>
-        /// Filter the plugin list
-        /// Only show plugins that contain the search text in
+        /// Filters the plugin list
+        /// Only shows plugins that have the search text (given by user in search field) in
         /// Name, ShortDescription, LongDescription, Authornames, or Authorinstitutes
         /// </summary>
         /// <param name="item"></param>
@@ -154,7 +157,6 @@ namespace Cryptool.CrypToolStore
                 if (result.Success)
                 {
                     List<PluginAndSource> pluginsAndSources = ((List<PluginAndSource>)result.DataObject);
-                    CrypToolStoreEditor.GuiLogMessage(String.Format("Retrieved {0} plugins from store", pluginsAndSources.Count), NotificationLevel.Info);                    
 
                     //add elements to observed list to show them in the UI
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -430,6 +432,9 @@ namespace Cryptool.CrypToolStore
                 File.Delete(filename);
 
                 MessageBox.Show(String.Format("\"{0}\" has been successfully downloaded and installed.", SelectedPlugin.Name), "Installation succeeded.", MessageBoxButton.OK);
+
+                PendingChanges = true;
+                OnStaticPropertyChanged("PendingChanges");                
             }
             catch (Exception ex)
             {                
@@ -452,7 +457,7 @@ namespace Cryptool.CrypToolStore
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //wtf?
                 }
@@ -499,13 +504,88 @@ namespace Cryptool.CrypToolStore
                 {
                     Directory.Delete(folder, true);
                 }
-
+                
                 MessageBox.Show(String.Format("\"{0}\" has been successfully uninstalled.", SelectedPlugin.Name), "Uninstallation succeeded.", MessageBoxButton.OK);
+
+                PendingChanges = true;
+                OnStaticPropertyChanged("PendingChanges");
 
                 //update StorePluginList
                 Task updateStorePluginListTask = new Task(UpdateStorePluginList);
                 updateStorePluginListTask.Start();
             }
+        }
+
+        /// <summary>
+        /// User pressed RestartButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RestartButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int processID = Process.GetCurrentProcess().Id;
+                string exePath = Process.GetCurrentProcess().MainModule.FileName;
+                string cryptoolFolderPath = System.IO.Path.GetDirectoryName(exePath);
+                string updaterPath = System.IO.Path.Combine(DirectoryHelper.BaseDirectory, "CrypUpdater.exe");
+                string parameters = "\"dummy\" " + "\"" + cryptoolFolderPath + "\" " + "\"" + exePath + "\" " + "\"" + processID + "\" -JustRestart";
+                Process.Start(updaterPath, parameters);
+                Application.Current.Shutdown();
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("Exception occured while trying to restart CrypTool 2: {0}", ex.Message);
+                CrypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
+                MessageBox.Show(message, "Exception during restart.", MessageBoxButton.OK);
+            }
+        }
+
+        /// <summary>
+        /// Property changed
+        /// </summary>
+        /// <param name="name"></param>
+        private void OnPropertyChanged(string name)
+        {
+            EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
+        }
+
+        /// <summary>
+        /// Static property changed
+        /// </summary>
+        /// <param name="name"></param>
+        private void OnStaticPropertyChanged(string name)
+        {
+            EventsHelper.PropertyChanged(StaticPropertyChanged, this, new PropertyChangedEventArgs(name));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public static event PropertyChangedEventHandler StaticPropertyChanged;
+    }
+
+    /// <summary>
+    /// Converts a boolean to Visibility (inverse)
+    /// false => Visible
+    /// true => Collapsed
+    /// </summary>
+    public class InverseBooleanToVisibility : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value is Boolean && (bool)value)
+            {
+                return Visibility.Collapsed;
+            }
+            return Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value is Visibility && (Visibility)value == Visibility.Visible)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

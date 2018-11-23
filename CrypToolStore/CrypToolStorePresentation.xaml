@@ -3,8 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:a="clr-namespace:Cryptool.CrypToolStore"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="1500" Background="#FFEBEFF6" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+        <a:InverseBooleanToVisibility x:Key="InverseBooleanToVisibility"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -23,11 +28,19 @@
 
         <Image Grid.Row="0" Source="/CrypToolStore;component/header_logo.png"/>
 
-        <Label Grid.Row="1" MinHeight="20" VerticalContentAlignment="Center" Margin="21,0,12,0">
+        <Label Grid.Row="1" MinHeight="20" VerticalContentAlignment="Center" Margin="21,0,12,0" Visibility="{Binding Path=(a:CrypToolStorePresentation.PendingChanges), Converter={StaticResource InverseBooleanToVisibility}}">
             <Label.Content>
                 <TextBlock TextWrapping="Wrap" Text="{Loc Welcome_To_CrypToolStore}" />
             </Label.Content>
-        </Label>        
+        </Label>
+        <Grid Grid.Row="1" MinHeight="20" Margin="21,0,12,0" Visibility="{Binding Path=(a:CrypToolStorePresentation.PendingChanges), Converter={StaticResource BooleanToVisibility}}">
+            <Label Margin="205,0,0,0" VerticalContentAlignment="Center">
+                <Label.Content>
+                    <TextBlock TextWrapping="Wrap" Text="{Loc PendingChanges}" />
+                </Label.Content>
+            </Label>
+            <Button Width="200" Height="20" Name="RestartButton" Content="{Loc RestartCrypTool2}" HorizontalAlignment="Left" Background="LightGreen" BorderBrush="Green" Click="RestartButton_Click"/>
+        </Grid>
         <Grid Grid.Row="2" Height="Auto">
             <Grid>                
                 <Grid.ColumnDefinitions>
