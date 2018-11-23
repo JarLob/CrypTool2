@@ -67,7 +67,7 @@
                                                 <AccessText TextWrapping="Wrap" Text="{Binding Path=ShortDescription}"/>              
                                             </Label.Content>
                                         </Label>
-                                        <Image Grid.Row="1" Source="{Binding Path=InstallationIcon}" Width="32" Height="32" Margin="2,2,2,2" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
+                                        <Image Grid.Row="1" Source="{Binding Path=InstallationIcon}" Width="45" Height="45" Margin="2,2,2,2" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
                                     </Grid>
                                 </Border>
                             </DataTemplate>
