@@ -41,9 +41,9 @@ namespace Cryptool.Core
         private const string PluginDirectory = "CrypPlugins";
 
         /// <summary>
-        /// Subdirectory in which plugins of CrypStore are stored and loaded from
+        /// Subdirectory in which plugins of CrypToolStore are stored and loaded from
         /// </summary>
-        private const string CrypStorePluginDirectory = @"CrypTool2\CrypStorePlugins";
+        public const string CrypToolStorePluginDirectory = @"CrypTool2\CrypStorePlugins";
 
         /// <summary>
         /// Fires if an exception occurs
@@ -86,13 +86,17 @@ namespace Cryptool.Core
         private Dictionary<string, Assembly> foundAssemblies = new Dictionary<string, Assembly>();
 
         /// <summary>
-        /// cTor
+        /// Loads all assemblies from CrypPlugins and the given CrypToolStore sub folder
         /// </summary>
-        public PluginManager(HashSet<string> disabledAssemblies)
+        /// <param name="disabledAssemblies"></param>
+        /// <param name="crypToolStoreSubFolder"></param>
+        public PluginManager(HashSet<string> disabledAssemblies, string crypToolStoreSubFolder)
         {
             this.disabledAssemblies = disabledAssemblies;
             this.crypPluginsFolder = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), PluginDirectory);
-            this.crypToolStorePluginFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), CrypStorePluginDirectory);
+            this.crypToolStorePluginFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), CrypToolStorePluginDirectory);
+            this.crypToolStorePluginFolder = Path.Combine(crypToolStorePluginFolder, crypToolStoreSubFolder);
+            this.crypToolStorePluginFolder = Path.Combine(crypToolStorePluginFolder, "plugins");
             //create folder for CrypToolStore if it does not exsit
             if (!Directory.Exists(crypToolStorePluginFolder))
             {
@@ -125,9 +129,9 @@ namespace Cryptool.Core
         public Dictionary<string, Type> LoadTypes(AssemblySigningRequirement state)
         {
             availablePluginsApproximation = AvailablePluginsApproximation(new DirectoryInfo(crypPluginsFolder));
-            availablePluginsApproximation += AvailablePluginsApproximation(new DirectoryInfo(crypToolStorePluginFolder));
+            availablePluginsApproximation += AvailablePluginsApproximation(new DirectoryInfo(crypToolStorePluginFolder), true);
             int currentPosition = FindAssemblies(new DirectoryInfo(crypPluginsFolder), state, foundAssemblies, 0);
-            FindAssemblies(new DirectoryInfo(crypToolStorePluginFolder), state, foundAssemblies, currentPosition);
+            FindAssemblies(new DirectoryInfo(crypToolStorePluginFolder), state, foundAssemblies, currentPosition, true);
             LoadTypes(foundAssemblies);
             return this.loadedTypes;
         }
@@ -137,14 +141,17 @@ namespace Cryptool.Core
         /// </summary>
         /// <param name="directory"></param>
         /// <returns></returns>
-        private int AvailablePluginsApproximation(DirectoryInfo directory)
+        private int AvailablePluginsApproximation(DirectoryInfo directory, bool recursive = false)
         {
             int count = 0;
-            foreach (DirectoryInfo subDirectory in directory.GetDirectories())
+            if (recursive)
             {
-                count = AvailablePluginsApproximation(subDirectory);
+                foreach (DirectoryInfo subDirectory in directory.GetDirectories())
+                {
+                    count += AvailablePluginsApproximation(subDirectory, recursive);
+                }
             }
-            return directory.GetFiles("*.dll").Length;
+            return count + directory.GetFiles("*.dll").Length;
         }
 
         /// <summary>
@@ -153,7 +160,7 @@ namespace Cryptool.Core
         /// <param name="directory">directory</param>
         /// <param name="state">Search for all or only for signed assemblies</param>
         /// <param name="foundAssemblies">list of found assemblies</param>
-        private int FindAssemblies(DirectoryInfo directory, AssemblySigningRequirement state, Dictionary<string, Assembly> foundAssemblies, int currentPosition = 0)
+        private int FindAssemblies(DirectoryInfo directory, AssemblySigningRequirement state, Dictionary<string, Assembly> foundAssemblies, int currentPosition = 0, bool recursive = false)
         {
             foreach (FileInfo fileInfo in directory.GetFiles("*.dll"))
             {
@@ -192,7 +199,7 @@ namespace Cryptool.Core
                         {
                             OnPluginLoaded(this, new PluginLoadedEventArgs(currentPosition, this.availablePluginsApproximation, string.Format("{0} Version={1}", asm.GetName().Name, GetVersion(asm))));
                         }
-                    }
+                    }                   
                 }
                 catch (BadImageFormatException)
                 {
@@ -203,6 +210,16 @@ namespace Cryptool.Core
                     SendExceptionMessage(ex);
                 }
             }
+
+            if (recursive)
+            {
+                //search all subfolders for assemblies
+                foreach (DirectoryInfo dir in directory.GetDirectories())
+                {
+                    FindAssemblies(dir, state, foundAssemblies, currentPosition);
+                }
+            }
+
             return currentPosition;
         }
 

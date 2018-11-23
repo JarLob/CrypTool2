@@ -938,11 +938,35 @@ namespace Cryptool.CrypWin
 
             HashSet<string> disabledAssemblies = new HashSet<string>();
             if (Settings.Default.DisabledPlugins != null)
+            {
                 foreach (PluginInformation disabledPlugin in Settings.Default.DisabledPlugins)
                 {
                     disabledAssemblies.Add(disabledPlugin.Assemblyname);
                 }
-            this.pluginManager = new PluginManager(disabledAssemblies);
+            }
+            
+            //Translate the Ct2BuildType to a folder name for CrypToolStore plugins                
+            string crypToolStoreSubFolder = "";
+            switch (AssemblyHelper.BuildType)
+            {
+                case Ct2BuildType.Developer:
+                    crypToolStoreSubFolder="Developer";
+                    break;
+                case Ct2BuildType.Nightly:
+                    crypToolStoreSubFolder="Nightly";
+                    break;
+                case Ct2BuildType.Beta:
+                    crypToolStoreSubFolder="Beta";
+                    break;
+                case Ct2BuildType.Stable:
+                    crypToolStoreSubFolder="Release";
+                    break;
+                default: //if no known version is given, we assume developer
+                    crypToolStoreSubFolder="Developer";
+                    break;
+            }
+
+            this.pluginManager = new PluginManager(disabledAssemblies, crypToolStoreSubFolder);
             this.pluginManager.OnExceptionOccured += pluginManager_OnExceptionOccured;
             this.pluginManager.OnDebugMessageOccured += pluginManager_OnDebugMessageOccured;
             this.pluginManager.OnPluginLoaded += pluginManager_OnPluginLoaded;

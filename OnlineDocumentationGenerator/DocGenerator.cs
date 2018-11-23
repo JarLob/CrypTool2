@@ -17,6 +17,7 @@ using OnlineDocumentationGenerator.DocInformations;
 using OnlineDocumentationGenerator.DocInformations.Utils;
 using OnlineDocumentationGenerator.Generators;
 using OnlineDocumentationGenerator.Generators.HtmlGenerator;
+using Cryptool.PluginBase.Attributes;
 
 namespace OnlineDocumentationGenerator
 {
@@ -142,7 +143,27 @@ namespace OnlineDocumentationGenerator
 
         private void ReadPlugins(Generator generator)
         {
-            var pluginManager = new PluginManager(null);
+            //Translate the Ct2BuildType to a folder name for CrypToolStore plugins                
+            string crypToolStoreSubFolder = "";
+            switch (AssemblyHelper.BuildType)
+            {
+                case Ct2BuildType.Developer:
+                    crypToolStoreSubFolder = "Developer";
+                    break;
+                case Ct2BuildType.Nightly:
+                    crypToolStoreSubFolder = "Nightly";
+                    break;
+                case Ct2BuildType.Beta:
+                    crypToolStoreSubFolder = "Beta";
+                    break;
+                case Ct2BuildType.Stable:
+                    crypToolStoreSubFolder = "Release";
+                    break;
+                default: //if no known version is given, we assume developer
+                    crypToolStoreSubFolder = "Developer";
+                    break;
+            }
+            var pluginManager = new PluginManager(null, crypToolStoreSubFolder);
             foreach (Type type in pluginManager.LoadTypes(AssemblySigningRequirement.LoadAllAssemblies).Values)
             {
                 if (type.GetPluginInfoAttribute() != null)
