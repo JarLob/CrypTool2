@@ -491,28 +491,38 @@ namespace Cryptool.CrypToolStore
         /// <param name="e"></param>
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
+            
             if (SelectedPlugin == null)
             {
                 return;
             }
-            MessageBoxResult result = MessageBox.Show(String.Format("Do you really want to uninstall \"{0}\" from CrypTool Store?", SelectedPlugin.Name), String.Format("Start download and installation of \"{0}\"?", SelectedPlugin.Name), MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.Yes)
+            try
             {
-                //uninstallation/deletion is a simple delete of the folder of the plugin
-                string folder = GetPluginFolder(SelectedPlugin);
-                if (Directory.Exists(folder))
+                MessageBoxResult result = MessageBox.Show(String.Format("Do you really want to uninstall \"{0}\" from CrypTool Store?", SelectedPlugin.Name), String.Format("Start download and installation of \"{0}\"?", SelectedPlugin.Name), MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
                 {
-                    Directory.Delete(folder, true);
+                    //uninstallation/deletion is a simple delete of the folder of the plugin
+                    string folder = GetPluginFolder(SelectedPlugin);
+                    if (Directory.Exists(folder))
+                    {
+                        Directory.Delete(folder, true);
+                    }
+
+                    MessageBox.Show(String.Format("\"{0}\" has been successfully uninstalled.", SelectedPlugin.Name), "Uninstallation succeeded.", MessageBoxButton.OK);
+
+                    PendingChanges = true;
+                    OnStaticPropertyChanged("PendingChanges");
+
+                    //update StorePluginList
+                    Task updateStorePluginListTask = new Task(UpdateStorePluginList);
+                    updateStorePluginListTask.Start();
                 }
-                
-                MessageBox.Show(String.Format("\"{0}\" has been successfully uninstalled.", SelectedPlugin.Name), "Uninstallation succeeded.", MessageBoxButton.OK);
-
-                PendingChanges = true;
-                OnStaticPropertyChanged("PendingChanges");
-
-                //update StorePluginList
-                Task updateStorePluginListTask = new Task(UpdateStorePluginList);
-                updateStorePluginListTask.Start();
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("Could not uninstall. Exception was: {0}", ex.Message);
+                CrypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
+                MessageBox.Show(message, "Exception during uninstallation.", MessageBoxButton.OK);
             }
         }
 
