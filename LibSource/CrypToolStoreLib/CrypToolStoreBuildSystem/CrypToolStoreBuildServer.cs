@@ -47,7 +47,7 @@ namespace CrypToolStoreBuildSystem
         /// </summary>
         public CrypToolStoreBuildServer(X509Certificate2 serverCertificate)
         {
-            ServerCertificate = ServerCertificate;
+            ServerCertificate = serverCertificate;
         }
 
         /// <summary>

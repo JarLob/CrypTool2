@@ -33,7 +33,6 @@ namespace CrypToolStoreBuildSystem
             try
             {
                 serverCertificate = new X509Certificate2(Configuration.GetConfiguration().GetConfigEntry("ServerCertificate"));
-
             }
             catch (Exception ex)
             {
