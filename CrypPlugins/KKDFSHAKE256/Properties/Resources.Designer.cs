@@ -205,7 +205,7 @@ namespace KKDFSHAKE256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Calculationphase ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Calculation phase ähnelt.
         /// </summary>
         internal static string PresCalculationSectionHeading {
             get {
@@ -214,7 +214,7 @@ namespace KKDFSHAKE256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 3. Calculationphase ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3. Calculation phase ähnelt.
         /// </summary>
         internal static string PresCalculationSectionHeadingNum {
             get {
@@ -255,7 +255,7 @@ namespace KKDFSHAKE256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The two phases are called &lt;Bold&gt;absorbing&lt;/Bold&gt; and &lt;Bold&gt;squeezing phase&lt;/Bold&gt;. In the &lt;Bold&gt;absorbing phase&lt;/Bold&gt;, the input is read and various operations are performed ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The two phases are called &lt;Bold&gt;absorbing&lt;/Bold&gt; and &lt;Bold&gt;squeezing phase&lt;/Bold&gt;. In the &lt;Bold&gt;absorbing phase&lt;/Bold&gt;, the input is read and various operations are performed. ähnelt.
         /// </summary>
         internal static string PresConstructionPart3Text {
             get {
@@ -282,7 +282,7 @@ namespace KKDFSHAKE256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Construction KKDF SHA-256 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Construction ähnelt.
         /// </summary>
         internal static string PresConstructionSectionHeading {
             get {
@@ -291,7 +291,7 @@ namespace KKDFSHAKE256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 2. Construction of KKDF SHA-256 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 2. Construction of KKDF SHAKE256 ähnelt.
         /// </summary>
         internal static string PresConstructionSectionHeadingNum {
             get {
@@ -328,7 +328,10 @@ namespace KKDFSHAKE256.Properties {
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die To repeat the calculation, there are 3 alternatives:
-        ///Either stop the execution and start it again, change one of the inputs or click on the &quot;Restart&quot; button. Then the calculation will restart automatically. ähnelt.
+        ///
+        ///- either stop the execution and start it again
+        ///- or change one of the inputs 
+        ///- or click on the &quot;Restart&quot; button (then the calculation will restart automatically) ähnelt.
         /// </summary>
         internal static string PresFinishedText {
             get {
@@ -346,7 +349,7 @@ namespace KKDFSHAKE256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The function KKDF SHAKE256 is a key derivation function (kdf). It uses a keyed hash function as pseudorandom function (prf). The key will be prefixed to the input. It uses the SHAKE256 hash function. This hash function is part of the SHA-3 family. Characteristic for the SHAKE256 is the determination of the outputlength in dependency of a parameter. This makes it easy to generate keys with a specific length without additional construction around the prf.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The function KKDF SHAKE256 is a key derivation function (KDF). It uses a keyed hash function as pseudorandom function (PRF). The key will be prefixed to the input. It uses the SHAKE256 hash function. This hash function is part of the SHA-3 family. Characteristic for the SHAKE256 is the determination of the outputlength in dependency of a parameter. This makes it easy to generate keys with a specific length without additional construction around the PRF.
         ///
         ///The SHA-3 family can be viewed in the template Kecc [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
@@ -393,15 +396,15 @@ namespace KKDFSHAKE256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;Bold&gt;Inputs:&lt;/Bold&gt;
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;Bold&gt;&lt;Underline&gt;Inputs:&lt;/Underline&gt;&lt;/Bold&gt;
         ///&lt;Bold&gt;Source Key Material:&lt;/Bold&gt; Specifies the source key material (SKM).
         ///
         ///&lt;Bold&gt;Key:&lt;/Bold&gt; Specifies the secret key for the calculation. 
         ///
         ///&lt;Bold&gt;Length of the key material (in byte):&lt;/Bold&gt; Specifies the length of the key material (KM) in byte.
         ///
-        ///&lt;Bold&gt;Outputs:&lt;/Bold&gt;
-        ///&lt;Bold&gt;Key Material:&lt;/Bold&gt; After the calculation, the result is visible in the textfield. ähnelt.
+        ///&lt;Bold&gt;&lt;Underline&gt;Outputs:&lt;/Underline&gt;&lt;/Bold&gt;
+        ///&lt;Bold&gt;Key Material:&lt;/Bold&gt; After the calculation, the result is visible in the text field. ähnelt.
         /// </summary>
         internal static string PresSectionIntroductionText {
             get {
@@ -429,6 +432,7 @@ namespace KKDFSHAKE256.Properties {
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die KKDF SHAKE256
+        ///--
         ///a Key Derivation Function with extendable output length ähnelt.
         /// </summary>
         internal static string PresTitleHeading {

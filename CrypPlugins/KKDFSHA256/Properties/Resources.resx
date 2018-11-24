@@ -148,7 +148,7 @@
     <value>Input of source key material</value>
   </data>
   <data name="KeyMaterialDebugTextTemplate" xml:space="preserve">
-    <value>Output of the {0}. Calculationround:
+    <value>Output of the {0}{ord} calculation round:
 
 Byte 1 - 8:     {1}
 Byte 9 - 16:   {2}
@@ -205,32 +205,32 @@ Byte 25 - 32: {4}</value>
 As inputs, the hash function uses the key, a counter that is incremented after each execution, as well as the source key material. By incrementing the counter, the input of the hash function changes on each execution.</value>
   </data>
   <data name="PresConstructionSectionHeading" xml:space="preserve">
-    <value>Construction KKDF SHA-256</value>
+    <value>Construction</value>
   </data>
   <data name="PresIntroductionPart1Text" xml:space="preserve">
-    <value>The function KKDF SHA-256 is a key derivation function (KDF). It uses a keyed hashfunction as pseudorandom function (PRF). The key will be prefixed to the input. It uses the SHA-256 hashfunction. In this implementation, the counter-mode is used for iteration.
+    <value>The function KKDF SHA-256 is a key derivation function (KDF). It uses a keyed hashfunction as pseudorandom function (PRF). The key will be prefixed to the input. It uses the SHA-256 hashfunction. In this implementation, the counter mode is used for iteration.
 
 &lt;Bold&gt;ATTENTION:&lt;/Bold&gt;
-The SHA-256 should not be used as an PRF because of a problem of the Merkle-Damgard construction. &lt;Bold&gt; This implementation is only for demonstration purpose.</value>
+The SHA-256 should not be used as an PRF because of a problem of the Merkle-Damgard construction. &lt;Bold&gt; This implementation is only for demonstration purposes.</value>
   </data>
   <data name="PresIterationSectionHeading" xml:space="preserve">
-    <value>Calculationphase</value>
+    <value>Calculation phase</value>
   </data>
   <data name="PresExplanationSectionHeading" xml:space="preserve">
     <value>KKDF SHA-256</value>
   </data>
   <data name="PresSectionIntroductionText" xml:space="preserve">
-    <value>&lt;Bold&gt;Inputs:&lt;/Bold&gt;
+    <value>&lt;Bold&gt;&lt;Underline&gt;Inputs:&lt;/Underline&gt;&lt;/Bold&gt;
 &lt;Bold&gt;Source Key Material:&lt;/Bold&gt; Specifies the Source Key Material (SKM).
 
 &lt;Bold&gt;Key:&lt;/Bold&gt; Specifies the secret key for the calculation. 
 
 &lt;Bold&gt;Length of the key material (in byte):&lt;/Bold&gt; Specifies the length of the key material in byte.
 
-&lt;Bold&gt;Outputs:&lt;/Bold&gt;
-&lt;Bold&gt;Key Material:&lt;/Bold&gt; After the calculation, the key material (KM) is visible in the textfield.
+&lt;Bold&gt;&lt;Underline&gt;Outputs:&lt;/Underline&gt;&lt;/Bold&gt;
+&lt;Bold&gt;Key Material:&lt;/Bold&gt; After the calculation, the key material (KM) is visible in the text field.
 
-&lt;Bold&gt;Debug:&lt;/Bold&gt; The key material will be calculated in multiple steps. Each subresult will be visible in this textfield.</value>
+&lt;Bold&gt;Debug:&lt;/Bold&gt; The key material will be calculated in multiple steps. Each subresult will be visible in this text field.</value>
   </data>
   <data name="PresConstructionPart3Text" xml:space="preserve">
     <value>The following picture shows the scheme of the calculation:</value>
@@ -239,7 +239,7 @@ The SHA-256 should not be used as an PRF because of a problem of the Merkle-Damg
     <value>KM = H(K || 1 || SKM) || H(K || 2 || SKM) ||...|| H(K || n || SKM)</value>
   </data>
   <data name="PresIterationRounds" xml:space="preserve">
-    <value>Calculationround {0} of {1}
+    <value>Calculation round {0} of {1}
 
 SKM: {2} 
 Counter: {3}
@@ -265,16 +265,19 @@ Key: {4}</value>
   </data>
   <data name="PresFinishedText" xml:space="preserve">
     <value>To repeat the calculation, there are 3 alternatives:
-Either stop the execution and start it again, change one of the inputs or click on the "Restart" button. Then the calculation will restart automatically.</value>
+
+- either stop the execution and start it again
+- or change one of the inputs 
+- or click on the "Restart" button (then the calculation will restart automatically)</value>
   </data>
   <data name="PresIntroductionSectionHeadingNum" xml:space="preserve">
     <value>1. Introduction</value>
   </data>
   <data name="PresIterationSectionHeadingNum" xml:space="preserve">
-    <value>3. Calculationphase</value>
+    <value>3. Calculation phase</value>
   </data>
   <data name="PresKeyMaterialDebugTextTemplate" xml:space="preserve">
-    <value>Output of the {0}. Calculationround:
+    <value>Output of the {0}{ord} calculation round:
 
 Byte 1 - 8:   {1}
 Byte 9 - 16:  {2}
@@ -283,6 +286,7 @@ Byte 25 - 32: {4}</value>
   </data>
   <data name="PresTitleHeading" xml:space="preserve">
     <value>KKDF SHA-256
+--
 a Key Derivation Function with extendable output length</value>
   </data>
   <data name="ExSystemOutOfMemory" xml:space="preserve">

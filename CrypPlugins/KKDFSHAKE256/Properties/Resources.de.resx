@@ -172,7 +172,7 @@
     <value>Weiter</value>
   </data>
   <data name="PresSectionIntroductionText" xml:space="preserve">
-    <value>&lt;Bold&gt;Eingaben:&lt;/Bold&gt;
+    <value>&lt;Bold&gt;&lt;Underline&gt;Eingaben:&lt;/Underline&gt;&lt;/Bold&gt;
 &lt;Bold&gt;Quellschlüssel-Material:&lt;/Bold&gt; Spezifiziert das Quellschlüssel-
 Material (Source Key Material, SKM).
 
@@ -180,11 +180,12 @@ Material (Source Key Material, SKM).
 
 &lt;Bold&gt;Länge des Schlüsselmaterials (in Byte):&lt;/Bold&gt; Spezifiziert die Länge des Schlüsselmaterials in Byte.
 
-&lt;Bold&gt;Ausgaben:&lt;/Bold&gt;
+&lt;Bold&gt;&lt;Underline&gt;Ausgaben:&lt;/Underline&gt;&lt;/Bold&gt;
 &lt;Bold&gt;Schlüsselmaterial:&lt;/Bold&gt; Nach der Berechnung ist das generierte Schlüsselmaterial (Key Material, KM) im Textfeld zu sehen.</value>
   </data>
   <data name="PresTitleHeading" xml:space="preserve">
     <value>KKDF SHAKE256
+--
 Eine Schlüsselgenerierungs-Funktion mit erweiterbarer Ausgabelänge
 </value>
   </data>
@@ -235,10 +236,10 @@ Die Berechnung findet vollständig innerhalb der Hashfunktion SHAKE256 statt.</v
     <value>KM = H(K || SKM)</value>
   </data>
   <data name="PresConstructionSectionHeading" xml:space="preserve">
-    <value>Konstruktion KKDF SHA-256</value>
+    <value>Konstruktion</value>
   </data>
   <data name="PresConstructionSectionHeadingNum" xml:space="preserve">
-    <value>2. Konstruktion KKDF SHA-256</value>
+    <value>2. Konstruktion KKDF SHAKE256</value>
   </data>
   <data name="PresErrorText" xml:space="preserve">
     <value>Es ist ein Fehler aufgetreten. Weitere Informationen sind im Protokoll des CrypTool2 zu finden.</value>
@@ -248,7 +249,10 @@ Die Berechnung findet vollständig innerhalb der Hashfunktion SHAKE256 statt.</v
   </data>
   <data name="PresFinishedText" xml:space="preserve">
     <value>Zum Wiederholen der Berechnung gibt es 3 Alternativen: 
-Entweder die Ausführung stoppen und wieder starten, eine der Eingaben ändern oder auf den Button "Neustart" klicken. Dann startet die Berechnung automatisch neu.</value>
+
+- Entweder die Ausführung stoppen und wieder starten
+- Eine der Eingaben ändern
+- Auf den Button "Neustart" klicken (dann startet die Berechnung automatisch neu)</value>
   </data>
   <data name="PresIntroductionPart1Text" xml:space="preserve">
     <value>Die Funktion KKDF SHAKE256 ist eine Schlüsselgenerierungs-

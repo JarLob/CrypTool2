@@ -8,19 +8,19 @@
 
   <description lang="en">
     <section headline="Basics and background">
-      Cryptographic methods and application should not use user-specified keys, because these keys do not match the conditions of cryptographic keys. With a key derivation function (KDF), you can generate keys with pseudorandom characters. An integral part of a KDF is a pseudorandom function (PRF). These functions are often based on hashfunctions or stream ciphers. <newline /> A PRF generates strings with pseudorandom chars. Frequently, hashfunctions were used as PRF. But the objective of a hash function is not the generation of pseudorandom strings. A secret key is essential for a PRF.
+      Cryptographic methods and application should not use user-specified keys, because these keys do not match the conditions of cryptographic keys. With a key derivation function (KDF), you can generate keys with pseudorandom characters. An integral part of a KDF is a pseudorandom function (PRF). These functions are often based on hash functions or stream ciphers. <newline /> A PRF generates strings with pseudorandom chars. Frequently, hash functions were used as PRF. But the objective of a hash function is not the generation of pseudorandom strings. A secret key is essential for a PRF.
     </section>
     <section headline="Traditional approach of a PRF" >
       It is possible to extend a hash function with a secret key. A intuitive way is to use the key as prefix to the input of the hash function. In the literature, this construction is called a traditional approach. However, this approach is problematic if the used hash function is based on the Merkle-Damgård construction. Due to a weakness in the design, such a constructed PRF can be weakened with an extension attack [3][4]. Therefore, in practice no Merkle-Damgård based hash function should be used with the traditional approach.
     </section>
     <section headline="Modern approach of a PRF">
-      A more modern and secure approach is to use the Keyed-Hash Message Authentication Code (HMAC), if the used hash function is based on the Merkle-Damgård construction. The HMAC is not vulnerable to the extension attack. The HKDF function is HMAC based KDF. This approach is recommended by the american National Institute of Standards and Technology (NIST) [1].<newline /><newline />
+      A more modern and secure approach is to use the Keyed-Hash Message Authentication Code (HMAC), if the used hash function is based on the Merkle-Damgård construction. The HMAC is not vulnerable to the extension attack. The HKDF function is HMAC based KDF. This approach is recommended by the American National Institute of Standards and Technology (NIST) [1].<newline /><newline />
     </section>
     <section headline="Extension of the output">
-      The length of the output is limited to a fixed size. To extend the length, the used PRF must be called multiple times and its ouputs combined into one single output. There exist multiple modes of operation for such a setting. Two possible and often used are the counter-mode and the feedback-mode. These two modes of operation are recommended by the NIST to construct kdfs [1].
+      The length of the output is limited to a fixed size. To extend the length, the used PRF must be called multiple times and its outputs combined into one single output. There exist multiple modes of operation for such a setting. Two possible and often used are the counter-mode and the feedback-mode. These two modes of operation are recommended by the NIST to construct KDFs [1].
     </section>
     <section headline="SHA-3">
-      In the context of the SHA-3 competition many interesting submissions were made. Some of the candidates such as Blake, Skein and Keccak are no longer based on the Merkle- Damgård construction. In addition, some hash functions also provide an integrated arbitrary choice of the output length of the hash value. Therefore, these hash functions can be used with the key prefix (traditional PRF approach) and do not require any auxiliary operation modes to achieve any output length.
+      In the context of the SHA-3 competition many interesting submissions were made. Some of the candidates such as Blake, Skein and Keccak are no longer based on the Merkle-Damgård construction. In addition, some hash functions also provide an integrated arbitrary choice of the output length of the hash value. Therefore, these hash functions can be used with the key prefix (traditional PRF approach) and do not require any auxiliary operation modes to achieve any output length.
     </section>
   </description>
 

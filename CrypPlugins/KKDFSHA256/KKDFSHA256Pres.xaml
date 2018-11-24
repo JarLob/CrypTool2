@@ -60,7 +60,7 @@
             <!-- Section introduction-->
             <!-- <Label Name="lblIntroductionHeading" Content="{Loc PresIntroductionSectionHeading}" FontFamily="Courier New" FontSize="30" FontWeight="Bold" Height="40" Width="640" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="Hidden"/>
             <TextBlock Name="txtIntroductionText" TextWrapping="Wrap" Width="640" FontFamily="Courier New" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0,60,0,0" Visibility="Hidden"/> -->
-            <RichTextBox Name="lblIntroductionHeading" Margin="230,-10,0,0" FontFamily="Courier New" FontSize="30" FontWeight="Bold" Height="40" Width="210" IsReadOnly="true" Background="Transparent" BorderThickness="0" Visibility="Hidden" >
+            <RichTextBox Name="lblIntroductionHeading" Margin="230,-10,0,0" FontFamily="Courier New" FontSize="30" FontWeight="Bold" Height="40" Width="230" IsReadOnly="true" Background="Transparent" BorderThickness="0" Visibility="Hidden" >
                 <RichTextBox.Resources>
                     <Style TargetType="{x:Type Paragraph}">
                         <Setter Property="Margin" Value="0"/>

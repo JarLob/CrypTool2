@@ -60,7 +60,7 @@
             <!-- Section introduction-->
             <!-- <Label Name="lblIntroductionHeading" Content="{Loc PresIntroductionSectionHeading}" FontFamily="Courier New" FontSize="30" FontWeight="Bold" Height="40" Width="640" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="Hidden"/> -->
             <!-- <TextBlock Name="txtIntroductionText" TextWrapping="Wrap" Text="{Loc PresIntroductionPart1Text}" Width="640" FontFamily="Courier New" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0,60,0,0" Visibility="Hidden"/> -->
-            <RichTextBox Name="lblIntroductionHeading" Margin="230,-10,0,0" FontFamily="Courier New" FontSize="30" FontWeight="Bold" Height="40" Width="210" IsReadOnly="true" Background="Transparent" BorderThickness="0" Visibility="Hidden" >
+            <RichTextBox Name="lblIntroductionHeading" Margin="230,-10,0,0" FontFamily="Courier New" FontSize="30" FontWeight="Bold" Height="40" Width="230" IsReadOnly="true" Background="Transparent" BorderThickness="0" Visibility="Hidden" >
                 <RichTextBox.Resources>
                     <Style TargetType="{x:Type Paragraph}">
                         <Setter Property="Margin" Value="0"/>
@@ -79,7 +79,7 @@
 
             <!-- Heading of section construction -->
             <!-- <Label Name="lblConstructionSectionHeading" Content="{Loc PresConstructionSectionHeadingNum}" FontFamily="Courier New" FontSize="35" FontWeight="Bold" Height="400" Width="640" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="Hidden"/> -->
-            <RichTextBox Name="lblConstructionSectionHeading" Margin="60,150,0,0" FontFamily="Courier New" FontSize="30" FontWeight="Bold" Height="40" Width="550" IsReadOnly="true" Background="Transparent" BorderThickness="0" Visibility="Hidden" >
+            <RichTextBox Name="lblConstructionSectionHeading" Margin="20,150,0,0" FontFamily="Courier New" FontSize="30" FontWeight="Bold" Height="40" Width="600" IsReadOnly="true" Background="Transparent" BorderThickness="0" Visibility="Hidden" >
                 <RichTextBox.Resources>
                     <Style TargetType="{x:Type Paragraph}">
                         <Setter Property="Margin" Value="0"/>
@@ -93,7 +93,7 @@
             <TextBlock Name="txtConstructionText1" TextWrapping="Wrap" Width="640" Text="{Loc PresConstructionPart1Text}" FontFamily="Courier New" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0,60,0,0" Visibility="Hidden"/>
             <TextBlock Name="txtConstructionScheme" Text="{Loc PresConstructionScheme}" Width="640" Height="250" FontWeight="Bold" FontFamily="Courier New" FontSize="17" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="240,120,0,0" Visibility="Hidden"/>
             <TextBlock Name="txtConstructionText2" TextWrapping="Wrap" Width="640" Text="{Loc PresConstructionPart2Text}" FontFamily="Courier New" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0,160,0,0" Visibility="Hidden"/> -->
-            <RichTextBox Name="lblConstructionHeading" Margin="230,-10,0,0" FontFamily="Courier New" FontSize="30" FontWeight="Bold" Height="40" Width="240" IsReadOnly="true" Background="Transparent" BorderThickness="0" Visibility="Hidden" >
+            <RichTextBox Name="lblConstructionHeading" Margin="200,-10,0,0" FontFamily="Courier New" FontSize="30" FontWeight="Bold" Height="40" Width="240" IsReadOnly="true" Background="Transparent" BorderThickness="0" Visibility="Hidden" >
                 <RichTextBox.Resources>
                     <Style TargetType="{x:Type Paragraph}">
                         <Setter Property="Margin" Value="0"/>
@@ -160,7 +160,7 @@
             <!-- Section iteration -->
             <!-- <Label Name="lblCalculationHeading" Content="{Loc PresCalculationSectionHeading}" FontFamily="Courier New" FontSize="30" FontWeight="Bold" Height="40" Width="640" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="Hidden"/>
             <TextBlock Name="txtCalculationRounds" TextWrapping="Wrap" Width="640" FontFamily="Courier New" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0,50,0,0" Visibility="Hidden"/> -->
-            <RichTextBox Name="lblCalculationHeading" Margin="230,-10,0,0" FontFamily="Courier New" FontSize="30" FontWeight="Bold" Height="40" Width="240" IsReadOnly="true" Background="Transparent" BorderThickness="0" Visibility="Hidden" >
+            <RichTextBox Name="lblCalculationHeading" Margin="80,-10,0,0" FontFamily="Courier New" FontSize="30" FontWeight="Bold" Height="40" Width="500" IsReadOnly="true" Background="Transparent" BorderThickness="0" Visibility="Hidden" >
                 <RichTextBox.Resources>
                     <Style TargetType="{x:Type Paragraph}">
                         <Setter Property="Margin" Value="0"/>

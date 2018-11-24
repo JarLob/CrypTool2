@@ -187,7 +187,7 @@
     <value>Specifies the output file for the generated key material, if you want to save it to a file</value>
   </data>
   <data name="PresConstructionSectionHeading" xml:space="preserve">
-    <value>Construction HKDF SHA-256</value>
+    <value>Construction</value>
   </data>
   <data name="PresConstructionSectionHeadingNum" xml:space="preserve">
     <value>2. Construction of HKDF SHA-256</value>
@@ -205,7 +205,7 @@
     <value>1. Introduction</value>
   </data>
   <data name="PresSectionIntroductionText" xml:space="preserve">
-    <value>&lt;Bold&gt;Inputs:&lt;/Bold&gt;
+    <value>&lt;Bold&gt;&lt;Underline&gt;Inputs:&lt;/Underline&gt;&lt;/Bold&gt;
 &lt;Bold&gt;Source Key Material:&lt;/Bold&gt; Specifies the source key material (SKM)
 
 &lt;Bold&gt;Salt:&lt;/Bold&gt; Specifies the salt value for the calculation of the pseudorandom key (PRK). Does not have to be secret.
@@ -214,13 +214,14 @@
 
 &lt;Bold&gt;Length of the key material (in byte):&lt;/Bold&gt; Specifies the length of the key material in byte.
 
-&lt;Bold&gt;Outputs:&lt;/Bold&gt;
-&lt;Bold&gt;Key Material:&lt;/Bold&gt; After the calculation, the resulting key material (KM) is visible in the textfield.
+&lt;Bold&gt;&lt;Underline&gt;Outputs:&lt;/Underline&gt;&lt;/Bold&gt;
+&lt;Bold&gt;Key Material:&lt;/Bold&gt; After the calculation, the resulting key material (KM) is visible in the text field.
 
-&lt;Bold&gt;Debug:&lt;/Bold&gt; The key material will be calculated in multiple steps. Each subresult will be visible in this textfield.</value>
+&lt;Bold&gt;Debug:&lt;/Bold&gt; The key material will be calculated in multiple steps. Each subresult will be visible in this text field.</value>
   </data>
   <data name="PresTitleHeading" xml:space="preserve">
     <value>HKDF SHA-256
+--
 a Key Derivation Function with extendable output length</value>
   </data>
   <data name="ExToMuchOutputRequested" xml:space="preserve">
@@ -233,7 +234,7 @@ a Key Derivation Function with extendable output length</value>
     <value>Input of the applicationspecific constant CTXInfo</value>
   </data>
   <data name="KeyMaterialDebugTextTemplate" xml:space="preserve">
-    <value>Output of the {0}. Calculationround:
+    <value>Output of the {0}{ord} calculation round:
 
 Byte 1 - 8:     {1}
 Byte 9 - 16:   {2}
@@ -247,7 +248,7 @@ Byte 25 - 32: {4}</value>
     <value>The HKDF procedure consists of two steps. In the first step, a pseudo random key (PRK) is generated. It is calculated on the basis of the SKM and an optional salt.</value>
   </data>
   <data name="PresConstructionPart3Text" xml:space="preserve">
-    <value>In step 2, the key material is calculated. For this purpose, the prk from step 1 is used as a secret key for the hmac. The KM is calculated step by step. The HKDF method uses a feedback loop and a counter for this purpose: The respective precalculated value is used as input for the subsequent calculation. The counter is incremendet in each step. The input CTXinfo is an application-specific constant, which can also be empty.</value>
+    <value>In step 2, the key material is calculated. For this purpose, the prk from step 1 is used as a secret key for the HMAC. The KM is calculated step by step. The HKDF method uses a feedback loop and a counter for this purpose: The respective precalculated value is used as input for the subsequent calculation. The counter is incremented in each step. The input CTXinfo is an application-specific constant, which can also be empty.</value>
   </data>
   <data name="PresConstructionPart4Text" xml:space="preserve">
     <value>The following picture shows the second step:</value>
@@ -270,7 +271,7 @@ SKM: {0}
 Salt: {1}</value>
   </data>
   <data name="PresIterationRounds" xml:space="preserve">
-    <value>Step 2: Calculationround {0} of {1}
+    <value>Step 2: Calculation round {0} of {1}
 
 PRK: {2} 
 SKM: {3}
@@ -278,7 +279,7 @@ CTXInfo: {4}
 Counter: {5}</value>
   </data>
   <data name="PresKeyMaterialDebugTextTemplate" xml:space="preserve">
-    <value>Output of the {0}. Calculationround:
+    <value>Output of the {0}{ord} calculation round:
 
 Byte 1 - 8: {1}
 Byte 9 - 16: {2}
@@ -312,7 +313,10 @@ Byte 25 - 32: {4}</value>
   </data>
   <data name="PresFinishedText" xml:space="preserve">
     <value>To repeat the calculation, there are 3 alternatives:
-Either stop the execution and start it again, change one of the inputs or click on the "Restart" button. Then the calculation will restart automatically.</value>
+
+- either stop the execution and start it again
+- or change one of the inputs 
+- or click on the "Restart" button (then the calculation will restart automatically)</value>
   </data>
   <data name="PresIterationSectionHeading" xml:space="preserve">
     <value>Calculation</value>

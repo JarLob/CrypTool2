@@ -1397,6 +1397,25 @@ namespace Cryptool.Plugins.KKDFSHAKE256
             bool isBold = false;
             foreach (var part in parts)
             {
+                if (part.Contains("<Underline>"))
+                {
+                    var underlinedParts = part.Split(new[] { "<Underline>", "</Underline>" }, StringSplitOptions.None);
+                    bool isUnderlined = false;
+                    foreach (var underlinePart in underlinedParts)
+                    {
+                        if (isUnderlined)
+                        {
+                            p.Inlines.Add(new Underline(new Bold((new Run(underlinePart)))));
+                        }
+                        else
+                        {
+                            p.Inlines.Add(new Run(underlinePart));
+                        }
+                        isUnderlined = !isUnderlined;
+                        isBold = !isBold;
+                    }
+                    continue;
+                }
                 if (isBold)
                 {
                     p.Inlines.Add(new Bold(new Run(part)));

@@ -28,6 +28,7 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using KKDFSHA256.Properties;
 using Org.BouncyCastle.Crypto.Digests;
+using System.Globalization;
 
 namespace Cryptool.Plugins.KKDFSHA256
 {
@@ -101,8 +102,8 @@ namespace Cryptool.Plugins.KKDFSHA256
                 System.Buffer.BlockCopy(km, i * sha256.GetDigestSize(), tmp_result, 0, tmp_result.Length);
                 StringBuilder strBuilderDebug = new StringBuilder();
                 StringBuilder strBuilderPres = new StringBuilder();
-                strBuilderDebug.Append(Resources.KeyMaterialDebugTextTemplate.Replace("{0}", (i + 1).ToString()));
-                strBuilderPres.Append(Resources.PresKeyMaterialDebugTextTemplate.Replace("{0}", (i + 1).ToString()));
+                strBuilderDebug.Append(Resources.KeyMaterialDebugTextTemplate.Replace("{0}", (i + 1).ToString()).Replace("{ord}", calcOrdinalNum(i + 1)));
+                strBuilderPres.Append(Resources.PresKeyMaterialDebugTextTemplate.Replace("{0}", (i + 1).ToString()).Replace("{ord}", calcOrdinalNum(i + 1)));
 
                 //Generate formatted output for debug output textfield
                 string tmp = "";
@@ -234,8 +235,8 @@ namespace Cryptool.Plugins.KKDFSHA256
                 System.Buffer.BlockCopy(km, i * sha256.GetDigestSize(), tmp_result, 0, tmp_result.Length);
                 StringBuilder strBuilderDebug = new StringBuilder();
                 StringBuilder strBuilderPres = new StringBuilder();
-                strBuilderDebug.Append(Resources.KeyMaterialDebugTextTemplate.Replace("{0}", (i + 1).ToString()));
-                strBuilderPres.Append(Resources.PresKeyMaterialDebugTextTemplate.Replace("{0}", (i + 1).ToString()));
+                strBuilderDebug.Append(Resources.KeyMaterialDebugTextTemplate.Replace("{0}", (i + 1).ToString()).Replace("{ord}", calcOrdinalNum(i + 1)));
+                strBuilderPres.Append(Resources.PresKeyMaterialDebugTextTemplate.Replace("{0}", (i + 1).ToString()).Replace("{ord}", calcOrdinalNum(i + 1)));
 
                 //Generate formatted output for debug output textfield
                 string tmp = "";
@@ -318,6 +319,42 @@ namespace Cryptool.Plugins.KKDFSHA256
             //truncat output
             System.Buffer.BlockCopy(km, 0, result, 0, outputBytes);
             return result;
+        }
+
+        /// <summary>
+        /// Calculates the ordinal numbers
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        private string calcOrdinalNum(int num)
+        {
+            if (CultureInfo.CurrentUICulture.Name == "en-US")
+            {
+                if (num <= 0) return num.ToString();
+
+                switch (num % 100)
+                {
+                    case 11:
+                    case 12:
+                    case 13:
+                        return "th";
+                }
+                switch (num % 10)
+                {
+                    case 1:
+                        return "st";
+                    case 2:
+                        return "nd";
+                    case 3:
+                        return "rd";
+                    default:
+                        return "th";
+                }
+            }
+            else
+            {
+                return ".";
+            }
         }
 
         /// <summary>
@@ -1658,9 +1695,28 @@ namespace Cryptool.Plugins.KKDFSHA256
             //for formatting the text 
             var parts = Resources.PresSectionIntroductionText.Split(new[] { "<Bold>", "</Bold>" }, StringSplitOptions.None);
             p = new Paragraph();
-            bool isBold = false; 
+            bool isBold = false;
             foreach (var part in parts)
             {
+                if (part.Contains("<Underline>"))
+                {
+                    var underlinedParts = part.Split(new[] { "<Underline>", "</Underline>" }, StringSplitOptions.None);
+                    bool isUnderlined = false;
+                    foreach (var underlinePart in underlinedParts)
+                    {
+                        if (isUnderlined)
+                        {
+                            p.Inlines.Add(new Underline(new Bold((new Run(underlinePart)))));
+                        }
+                        else
+                        {
+                            p.Inlines.Add(new Run(underlinePart));
+                        }
+                        isUnderlined = !isUnderlined;
+                        isBold = !isBold;
+                    }
+                    continue;
+                }
                 if (isBold)
                 {
                     p.Inlines.Add(new Bold(new Run(part)));
@@ -1670,6 +1726,7 @@ namespace Cryptool.Plugins.KKDFSHA256
                     p.Inlines.Add(new Run(part));
                 }
                 isBold = !isBold;
+
             }
             pres.txtExplanationSectionText.Document.Blocks.Add(p);
             pres.txtExplanationSectionText.Document.Blocks.Remove(pres.txtExplanationSectionText.Document.Blocks.FirstBlock);

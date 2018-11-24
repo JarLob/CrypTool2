@@ -190,7 +190,7 @@
     <value>Spezifiziert die Datei, in der das Schlüsselmaterial gespeichert werden kann</value>
   </data>
   <data name="PresConstructionSectionHeading" xml:space="preserve">
-    <value>Konstruktion HKDF SHA-256</value>
+    <value>Konstruktion</value>
   </data>
   <data name="PresConstructionSectionHeadingNum" xml:space="preserve">
     <value>2. Konstruktion HKDF SHA-256</value>
@@ -209,7 +209,7 @@ funktion (Key Derivation Function, KDF). Als Pseudozufallsfunktion (Pseudorandom
     <value>1. Einführung</value>
   </data>
   <data name="PresSectionIntroductionText" xml:space="preserve">
-    <value>&lt;Bold&gt;Eingaben:&lt;/Bold&gt;
+    <value>&lt;Bold&gt;&lt;Underline&gt;Eingaben:&lt;/Underline&gt;&lt;/Bold&gt;
 &lt;Bold&gt;Quellschlüssel-Material:&lt;/Bold&gt; Spezifiziert das Quellschlüssel-
 Material (Source Key Material, SKM).
 
@@ -219,13 +219,14 @@ Material (Source Key Material, SKM).
 
 &lt;Bold&gt;Länge des Schlüsselmaterials (in Byte):&lt;/Bold&gt; Spezifiziert die Länge des Schlüsselmaterials in Byte.
 
-&lt;Bold&gt;Ausgaben:&lt;/Bold&gt;
+&lt;Bold&gt;&lt;Underline&gt;Ausgaben:&lt;/Underline&gt;&lt;/Bold&gt;
 &lt;Bold&gt;Schlüsselmaterial:&lt;/Bold&gt; Nach der Berechnung ist das generierte Schlüsselmaterial (Key Material, KM) im Textfeld zu sehen.
 
 &lt;Bold&gt;Debug:&lt;/Bold&gt; Das Schlüsselmaterial wird sukzessive in mehreren Schritten berechnet. Die Ergebnisse der jeweiligen Teilschritte sind in der Debugausgabe zu sehen.</value>
   </data>
   <data name="PresTitleHeading" xml:space="preserve">
     <value>HKDF SHA-256
+--
 Eine Schlüsselgenerierungs-Funktion mit erweiterbarer Ausgabelänge
 </value>
   </data>
@@ -239,7 +240,7 @@ Eine Schlüsselgenerierungs-Funktion mit erweiterbarer Ausgabelänge
     <value>Eingabe der anwendungsspezifischen Konstante CTXInfo</value>
   </data>
   <data name="KeyMaterialDebugTextTemplate" xml:space="preserve">
-    <value>Ausgabe der {0}. Berechnungsrunde:
+    <value>Ausgabe der {0}{ord} Berechnungsrunde:
 
 Byte 1 - 8:   {1}
 Byte 9 - 16:  {2}
@@ -290,7 +291,7 @@ Counter: {5}</value>
     <value>3. Berechnung</value>
   </data>
   <data name="PresKeyMaterialDebugTextTemplate" xml:space="preserve">
-    <value>Ausgabe der {0}. Berechnungsrunde:
+    <value>Ausgabe der {0}{ord} Berechnungsrunde:
 
 Byte 1 - 8:   {1}
 Byte 9 - 16:  {2}
@@ -326,7 +327,10 @@ Ausgabelänge.</value>
   </data>
   <data name="PresFinishedText" xml:space="preserve">
     <value>Zum Wiederholen der Berechnung gibt es 3 Alternativen: 
-Entweder die Ausführung stoppen und wieder starten, eine der Eingaben ändern oder auf den Button "Neustart" klicken. Dann startet die Berechnung automatisch neu.</value>
+
+- Entweder die Ausführung stoppen und wieder starten
+- Eine der Eingaben ändern
+- Auf den Button "Neustart" klicken (dann startet die Berechnung automatisch neu)</value>
   </data>
   <data name="PresRestart" xml:space="preserve">
     <value>Neustart</value>

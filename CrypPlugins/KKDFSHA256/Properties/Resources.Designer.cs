@@ -19,7 +19,7 @@ namespace KKDFSHA256.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -187,7 +187,7 @@ namespace KKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output of the {0}. Calculationround:
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output of the {0}{ord} calculation round:
         ///
         ///Byte 1 - 8:     {1}
         ///Byte 9 - 16:   {2}
@@ -301,7 +301,7 @@ namespace KKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Construction KKDF SHA-256 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Construction ähnelt.
         /// </summary>
         internal static string PresConstructionSectionHeading {
             get {
@@ -347,7 +347,10 @@ namespace KKDFSHA256.Properties {
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die To repeat the calculation, there are 3 alternatives:
-        ///Either stop the execution and start it again, change one of the inputs or click on the &quot;Restart&quot; button. Then the calculation will restart automatically. ähnelt.
+        ///
+        ///- either stop the execution and start it again
+        ///- or change one of the inputs 
+        ///- or click on the &quot;Restart&quot; button (then the calculation will restart automatically) ähnelt.
         /// </summary>
         internal static string PresFinishedText {
             get {
@@ -365,10 +368,10 @@ namespace KKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The function KKDF SHA-256 is a key derivation function (KDF). It uses a keyed hashfunction as pseudorandom function (PRF). The key will be prefixed to the input. It uses the SHA-256 hashfunction. In this implementation, the counter-mode is used for iteration.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The function KKDF SHA-256 is a key derivation function (KDF). It uses a keyed hashfunction as pseudorandom function (PRF). The key will be prefixed to the input. It uses the SHA-256 hashfunction. In this implementation, the counter mode is used for iteration.
         ///
         ///&lt;Bold&gt;ATTENTION:&lt;/Bold&gt;
-        ///The SHA-256 should not be used as an PRF because of a problem of the Merkle-Damgard construction. &lt;Bold&gt; This implementation is only for demonstration purpose. ähnelt.
+        ///The SHA-256 should not be used as an PRF because of a problem of the Merkle-Damgard construction. &lt;Bold&gt; This implementation is only for demonstration purposes. ähnelt.
         /// </summary>
         internal static string PresIntroductionPart1Text {
             get {
@@ -395,7 +398,7 @@ namespace KKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Calculationround {0} of {1}
+        ///   Sucht eine lokalisierte Zeichenfolge, die Calculation round {0} of {1}
         ///
         ///SKM: {2} 
         ///Counter: {3}
@@ -408,7 +411,7 @@ namespace KKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Calculationphase ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Calculation phase ähnelt.
         /// </summary>
         internal static string PresIterationSectionHeading {
             get {
@@ -417,7 +420,7 @@ namespace KKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 3. Calculationphase ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3. Calculation phase ähnelt.
         /// </summary>
         internal static string PresIterationSectionHeadingNum {
             get {
@@ -426,7 +429,7 @@ namespace KKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output of the {0}. Calculationround:
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output of the {0}{ord} calculation round:
         ///
         ///Byte 1 - 8:   {1}
         ///Byte 9 - 16:  {2}
@@ -458,17 +461,17 @@ namespace KKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;Bold&gt;Inputs:&lt;/Bold&gt;
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;Bold&gt;&lt;Underline&gt;Inputs:&lt;/Underline&gt;&lt;/Bold&gt;
         ///&lt;Bold&gt;Source Key Material:&lt;/Bold&gt; Specifies the Source Key Material (SKM).
         ///
         ///&lt;Bold&gt;Key:&lt;/Bold&gt; Specifies the secret key for the calculation. 
         ///
         ///&lt;Bold&gt;Length of the key material (in byte):&lt;/Bold&gt; Specifies the length of the key material in byte.
         ///
-        ///&lt;Bold&gt;Outputs:&lt;/Bold&gt;
-        ///&lt;Bold&gt;Key Material:&lt;/Bold&gt; After the calculation, the key material (KM) is visible in the textfield.
+        ///&lt;Bold&gt;&lt;Underline&gt;Outputs:&lt;/Underline&gt;&lt;/Bold&gt;
+        ///&lt;Bold&gt;Key Material:&lt;/Bold&gt; After the calculation, the key material (KM) is visible in the text field.
         ///
-        ///&lt;Bold&gt;Debug:&lt;/Bold&gt; The key material will be calculated in multiple steps. Each subresult will be visible in this [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///&lt;Bold&gt;Debug:&lt;/Bold&gt; The key material will be calculated in multipl [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string PresSectionIntroductionText {
             get {
@@ -505,6 +508,7 @@ namespace KKDFSHA256.Properties {
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die KKDF SHA-256
+        ///--
         ///a Key Derivation Function with extendable output length ähnelt.
         /// </summary>
         internal static string PresTitleHeading {

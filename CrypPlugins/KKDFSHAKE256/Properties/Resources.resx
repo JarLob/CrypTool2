@@ -172,18 +172,19 @@
     <value>Next</value>
   </data>
   <data name="PresSectionIntroductionText" xml:space="preserve">
-    <value>&lt;Bold&gt;Inputs:&lt;/Bold&gt;
+    <value>&lt;Bold&gt;&lt;Underline&gt;Inputs:&lt;/Underline&gt;&lt;/Bold&gt;
 &lt;Bold&gt;Source Key Material:&lt;/Bold&gt; Specifies the source key material (SKM).
 
 &lt;Bold&gt;Key:&lt;/Bold&gt; Specifies the secret key for the calculation. 
 
 &lt;Bold&gt;Length of the key material (in byte):&lt;/Bold&gt; Specifies the length of the key material (KM) in byte.
 
-&lt;Bold&gt;Outputs:&lt;/Bold&gt;
-&lt;Bold&gt;Key Material:&lt;/Bold&gt; After the calculation, the result is visible in the textfield.</value>
+&lt;Bold&gt;&lt;Underline&gt;Outputs:&lt;/Underline&gt;&lt;/Bold&gt;
+&lt;Bold&gt;Key Material:&lt;/Bold&gt; After the calculation, the result is visible in the text field.</value>
   </data>
   <data name="PresTitleHeading" xml:space="preserve">
     <value>KKDF SHAKE256
+--
 a Key Derivation Function with extendable output length</value>
   </data>
   <data name="PrintToFileGroup" xml:space="preserve">
@@ -202,10 +203,10 @@ a Key Derivation Function with extendable output length</value>
     <value>While requesting memory from your system, there was an exception. Please try a smaller value for the output bytes.</value>
   </data>
   <data name="PresCalculationSectionHeading" xml:space="preserve">
-    <value>Calculationphase</value>
+    <value>Calculation phase</value>
   </data>
   <data name="PresCalculationSectionHeadingNum" xml:space="preserve">
-    <value>3. Calculationphase</value>
+    <value>3. Calculation phase</value>
   </data>
   <data name="PresCalculationText" xml:space="preserve">
     <value>Inputs:
@@ -222,7 +223,7 @@ The calculation takes place completely within the hash function SHAKE256...</val
     <value>The key material is calculated by executing the hash function with the key as prefix. The hash function gets the length of the output as parameter. Compared to hash functions with fixed output length, the SHAKE256 does not require any additional design to allow any length of output. The generation of a hash value in the SHAKE256 is divided into two phases, wich are shown in the following diagram.</value>
   </data>
   <data name="PresConstructionPart3Text" xml:space="preserve">
-    <value>The two phases are called &lt;Bold&gt;absorbing&lt;/Bold&gt; and &lt;Bold&gt;squeezing phase&lt;/Bold&gt;. In the &lt;Bold&gt;absorbing phase&lt;/Bold&gt;, the input is read and various operations are performed</value>
+    <value>The two phases are called &lt;Bold&gt;absorbing&lt;/Bold&gt; and &lt;Bold&gt;squeezing phase&lt;/Bold&gt;. In the &lt;Bold&gt;absorbing phase&lt;/Bold&gt;, the input is read and various operations are performed.</value>
   </data>
   <data name="PresConstructionPart4Text" xml:space="preserve">
     <value>In the &lt;Bold&gt;squeezing phase&lt;/Bold&gt;, depending on the length parameter, the function f is executed often and the desired length of the hash value is generated.</value>
@@ -231,10 +232,10 @@ The calculation takes place completely within the hash function SHAKE256...</val
     <value>KM = H(K || SKM)</value>
   </data>
   <data name="PresConstructionSectionHeading" xml:space="preserve">
-    <value>Construction KKDF SHA-256</value>
+    <value>Construction</value>
   </data>
   <data name="PresConstructionSectionHeadingNum" xml:space="preserve">
-    <value>2. Construction of KKDF SHA-256</value>
+    <value>2. Construction of KKDF SHAKE256</value>
   </data>
   <data name="PresErrorText" xml:space="preserve">
     <value>An error occured. Please find detailed information in the log of Cryptool2.</value>
@@ -244,12 +245,15 @@ The calculation takes place completely within the hash function SHAKE256...</val
   </data>
   <data name="PresFinishedText" xml:space="preserve">
     <value>To repeat the calculation, there are 3 alternatives:
-Either stop the execution and start it again, change one of the inputs or click on the "Restart" button. Then the calculation will restart automatically.</value>
+
+- either stop the execution and start it again
+- or change one of the inputs 
+- or click on the "Restart" button (then the calculation will restart automatically)</value>
   </data>
   <data name="PresIntroductionPart1Text" xml:space="preserve">
-    <value>The function KKDF SHAKE256 is a key derivation function (kdf). It uses a keyed hash function as pseudorandom function (prf). The key will be prefixed to the input. It uses the SHAKE256 hash function. This hash function is part of the SHA-3 family. Characteristic for the SHAKE256 is the determination of the outputlength in dependency of a parameter. This makes it easy to generate keys with a specific length without additional construction around the prf.
+    <value>The function KKDF SHAKE256 is a key derivation function (KDF). It uses a keyed hash function as pseudorandom function (PRF). The key will be prefixed to the input. It uses the SHAKE256 hash function. This hash function is part of the SHA-3 family. Characteristic for the SHAKE256 is the determination of the outputlength in dependency of a parameter. This makes it easy to generate keys with a specific length without additional construction around the PRF.
 
-The SHA-3 family can be viewed in the template Keccak-Hash.</value>
+The SHA-3 family can be viewed in the template Keccak as hash function.</value>
   </data>
   <data name="PresIntroductionSectionHeading" xml:space="preserve">
     <value>Introduction</value>

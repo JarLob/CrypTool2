@@ -148,7 +148,7 @@
     <value>Eingabe des Quellschlüssel-Material</value>
   </data>
   <data name="KeyMaterialDebugTextTemplate" xml:space="preserve">
-    <value>Ausgabe der {0}. Berechnungsrunde:
+    <value>Ausgabe der {0}{ord} Berechnungsrunde:
 
 Byte 1 - 8:     {1}
 Byte 9 - 16:   {2}
@@ -204,7 +204,7 @@ Byte 25 - 32: {4}</value>
     <value>Die Berechnung des Schlüsselmaterials kann formal wie folgt beschrieben werden:</value>
   </data>
   <data name="PresConstructionSectionHeading" xml:space="preserve">
-    <value>Konstruktion KKDF SHA-256</value>
+    <value>Konstruktion</value>
   </data>
   <data name="PresIntroductionPart1Text" xml:space="preserve">
     <value>Die Funktion KKDF SHA-256 ist eine Schlüsselgenerierungs-
@@ -220,7 +220,7 @@ Der SHA-256 sollte aufgrund eines Problems der Merkle-Damgard-Konstruktion nicht
     <value>KKDF SHA-256</value>
   </data>
   <data name="PresSectionIntroductionText" xml:space="preserve">
-    <value>&lt;Bold&gt;Eingaben:&lt;/Bold&gt;
+    <value>&lt;Bold&gt;&lt;Underline&gt;Eingaben:&lt;/Underline&gt;&lt;/Bold&gt;
 &lt;Bold&gt;Quellschlüssel-Material:&lt;/Bold&gt; Spezifiziert das Quellschlüssel-
 Material (Source Key Material, SKM).
 
@@ -228,7 +228,7 @@ Material (Source Key Material, SKM).
 
 &lt;Bold&gt;Länge des Schlüsselmaterials (in Byte):&lt;/Bold&gt; Spezifiziert die Länge des Schlüsselmaterials in Byte.
 
-&lt;Bold&gt;Ausgaben:&lt;/Bold&gt;
+&lt;Bold&gt;&lt;Underline&gt;Ausgaben:&lt;/Underline&gt;&lt;/Bold&gt;
 &lt;Bold&gt;Schlüsselmaterial:&lt;/Bold&gt; Nach der Berechnung ist das generierte Schlüsselmaterial (Key Material, KM) im Textfeld zu sehen.
 
 &lt;Bold&gt;Debug:&lt;/Bold&gt; Das Schlüsselmaterial wird sukzessive in mehreren Schritten berechnet. Die Ergebnisse der jeweiligen Teilschritte sind in der Debug-Ausgabe zu sehen.</value>
@@ -255,6 +255,7 @@ Key: {4}</value>
   </data>
   <data name="PresTitleHeading" xml:space="preserve">
     <value>KKDF SHA-256
+--
 Eine Schlüsselgenerierungs-Funktion mit erweiterbarer Ausgabelänge
 </value>
   </data>
@@ -272,7 +273,10 @@ Eine Schlüsselgenerierungs-Funktion mit erweiterbarer Ausgabelänge
   </data>
   <data name="PresFinishedText" xml:space="preserve">
     <value>Zum Wiederholen der Berechnung gibt es 3 Alternativen: 
-Entweder die Ausführung stoppen und wieder starten, eine der Eingaben ändern oder auf den Button "Neustart" klicken. Dann startet die Berechnung automatisch neu.</value>
+
+- Entweder die Ausführung stoppen und wieder starten
+- Eine der Eingaben ändern
+- Auf den Button "Neustart" klicken (dann startet die Berechnung automatisch neu)</value>
   </data>
   <data name="PresIntroductionSectionHeadingNum" xml:space="preserve">
     <value>1. Einführung</value>
@@ -281,7 +285,7 @@ Entweder die Ausführung stoppen und wieder starten, eine der Eingaben ändern o
     <value>3. Berechnungsphase</value>
   </data>
   <data name="PresKeyMaterialDebugTextTemplate" xml:space="preserve">
-    <value>Ausgabe der {0}. Berechnungsrunde:
+    <value>Ausgabe der {0}{ord} Berechnungsrunde:
 
 Byte 1 - 8:   {1}
 Byte 9 - 16:  {2}

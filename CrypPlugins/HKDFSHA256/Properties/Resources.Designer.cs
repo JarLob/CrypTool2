@@ -214,7 +214,7 @@ namespace HKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output of the {0}. Calculationround:
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output of the {0}{ord} calculation round:
         ///
         ///Byte 1 - 8:     {1}
         ///Byte 9 - 16:   {2}
@@ -300,7 +300,7 @@ namespace HKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In step 2, the key material is calculated. For this purpose, the prk from step 1 is used as a secret key for the hmac. The KM is calculated step by step. The HKDF method uses a feedback loop and a counter for this purpose: The respective precalculated value is used as input for the subsequent calculation. The counter is incremendet in each step. The input CTXinfo is an application-specific constant, which can also be empty. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In step 2, the key material is calculated. For this purpose, the prk from step 1 is used as a secret key for the HMAC. The KM is calculated step by step. The HKDF method uses a feedback loop and a counter for this purpose: The respective precalculated value is used as input for the subsequent calculation. The counter is incremented in each step. The input CTXinfo is an application-specific constant, which can also be empty. ähnelt.
         /// </summary>
         internal static string PresConstructionPart3Text {
             get {
@@ -335,7 +335,7 @@ namespace HKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Construction HKDF SHA-256 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Construction ähnelt.
         /// </summary>
         internal static string PresConstructionSectionHeading {
             get {
@@ -381,7 +381,10 @@ namespace HKDFSHA256.Properties {
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die To repeat the calculation, there are 3 alternatives:
-        ///Either stop the execution and start it again, change one of the inputs or click on the &quot;Restart&quot; button. Then the calculation will restart automatically. ähnelt.
+        ///
+        ///- either stop the execution and start it again
+        ///- or change one of the inputs 
+        ///- or click on the &quot;Restart&quot; button (then the calculation will restart automatically) ähnelt.
         /// </summary>
         internal static string PresFinishedText {
             get {
@@ -438,7 +441,7 @@ namespace HKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Step 2: Calculationround {0} of {1}
+        ///   Sucht eine lokalisierte Zeichenfolge, die Step 2: Calculation round {0} of {1}
         ///
         ///PRK: {2} 
         ///SKM: {3}
@@ -470,7 +473,7 @@ namespace HKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output of the {0}. Calculationround:
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output of the {0}{ord} calculation round:
         ///
         ///Byte 1 - 8: {1}
         ///Byte 9 - 16: {2}
@@ -516,7 +519,7 @@ namespace HKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;Bold&gt;Inputs:&lt;/Bold&gt;
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;Bold&gt;&lt;Underline&gt;Inputs:&lt;/Underline&gt;&lt;/Bold&gt;
         ///&lt;Bold&gt;Source Key Material:&lt;/Bold&gt; Specifies the source key material (SKM)
         ///
         ///&lt;Bold&gt;Salt:&lt;/Bold&gt; Specifies the salt value for the calculation of the pseudorandom key (PRK). Does not have to be secret.
@@ -525,8 +528,7 @@ namespace HKDFSHA256.Properties {
         ///
         ///&lt;Bold&gt;Length of the key material (in byte):&lt;/Bold&gt; Specifies the length of the key material in byte.
         ///
-        ///&lt;Bold&gt;Outputs:&lt;/Bold&gt;
-        ///&lt;Bold&gt;Key Material:&lt;/Bold&gt; After th [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///&lt;Bold&gt;&lt;Underline&gt;Outputs:&lt;/Underlin [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string PresSectionIntroductionText {
             get {
@@ -554,6 +556,7 @@ namespace HKDFSHA256.Properties {
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die HKDF SHA-256
+        ///--
         ///a Key Derivation Function with extendable output length ähnelt.
         /// </summary>
         internal static string PresTitleHeading {

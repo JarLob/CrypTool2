@@ -17,6 +17,8 @@
 
 using System;
 using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows;
@@ -256,7 +258,7 @@ namespace Cryptool.Plugins.HKDFSHA256
                 pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
                 {
                     Paragraph p = new Paragraph();
-                    p.Inlines.Add(new Run(strBuilderPresDebug.ToString().Replace("{0}", "1")));
+                    p.Inlines.Add(new Run(strBuilderPresDebug.ToString().Replace("{0}", "1").Replace("{ord}", calcOrdinalNum(1))));
                     p.TextAlignment = TextAlignment.Left;
                     pres.txtIterationDebugOutput.Document.Blocks.Clear();
                     pres.txtIterationDebugOutput.Document.Blocks.Add(p);
@@ -270,7 +272,7 @@ namespace Cryptool.Plugins.HKDFSHA256
             curStep++;
             refreshStepState();
 
-            _keyMaterialDebug = Encoding.UTF8.GetBytes(strBuilderDebug.ToString().Replace("{0}", "1"));
+            _keyMaterialDebug = Encoding.UTF8.GetBytes(strBuilderDebug.ToString().Replace("{0}", "1").Replace("{ord}", calcOrdinalNum(1)));
             OnPropertyChanged("KeyMaterialDebug");
 
             if (show && !pres.SkipChapter)
@@ -350,7 +352,7 @@ namespace Cryptool.Plugins.HKDFSHA256
                         pres.txtIterationRounds.Document.Blocks.Add(p);
 
                         p = new Paragraph();
-                        p.Inlines.Add(new Run(strBuilderPresDebug.ToString().Replace("{0}", (i + 1).ToString())));
+                        p.Inlines.Add(new Run(strBuilderPresDebug.ToString().Replace("{0}", (i + 1).ToString()).Replace("{ord}", calcOrdinalNum(i + 1))));
                         p.TextAlignment = TextAlignment.Left;
                         pres.txtIterationDebugOutput.Document.Blocks.Clear();
                         pres.txtIterationDebugOutput.Document.Blocks.Add(p);
@@ -358,7 +360,7 @@ namespace Cryptool.Plugins.HKDFSHA256
                     }, null);
                 }
 
-                _keyMaterialDebug = Encoding.UTF8.GetBytes(strBuilderDebug.ToString().Replace("{0}", (i + 1).ToString()));
+                _keyMaterialDebug = Encoding.UTF8.GetBytes(strBuilderDebug.ToString().Replace("{0}", (i + 1).ToString()).Replace("{ord}", calcOrdinalNum(i + 1)));
                 OnPropertyChanged("KeyMaterialDebug");
 
                 if (show && !pres.SkipChapter)
@@ -573,7 +575,7 @@ namespace Cryptool.Plugins.HKDFSHA256
                 pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
                 {
                     Paragraph p = new Paragraph();
-                    p.Inlines.Add(new Run(strBuilderPresDebug.ToString().Replace("{0}", "1")));
+                    p.Inlines.Add(new Run(strBuilderPresDebug.ToString().Replace("{0}", "1").Replace("{ord}", calcOrdinalNum(1))));
                     p.TextAlignment = TextAlignment.Left;
                     pres.txtIterationDebugOutput.Document.Blocks.Clear();
                     pres.txtIterationDebugOutput.Document.Blocks.Add(p);
@@ -581,7 +583,7 @@ namespace Cryptool.Plugins.HKDFSHA256
 
             }
 
-            _keyMaterialDebug = Encoding.UTF8.GetBytes(strBuilderDebug.ToString().Replace("{0}", "1"));
+            _keyMaterialDebug = Encoding.UTF8.GetBytes(strBuilderDebug.ToString().Replace("{0}", "1").Replace("{ord}", calcOrdinalNum(1)));
             OnPropertyChanged("KeyMaterialDebug");
 
             curVal += incVal;
@@ -658,7 +660,7 @@ namespace Cryptool.Plugins.HKDFSHA256
                         pres.txtIterationRounds.Document.Blocks.Add(p);
 
                         p = new Paragraph();
-                        p.Inlines.Add(new Run(strBuilderPresDebug.ToString().Replace("{0}", (i + 1).ToString())));
+                        p.Inlines.Add(new Run(strBuilderPresDebug.ToString().Replace("{0}", (i + 1).ToString()).Replace("{ord}", calcOrdinalNum(i + 1))));
                         p.TextAlignment = TextAlignment.Left;
                         pres.txtIterationDebugOutput.Document.Blocks.Clear();
                         pres.txtIterationDebugOutput.Document.Blocks.Add(p);
@@ -667,7 +669,7 @@ namespace Cryptool.Plugins.HKDFSHA256
 
                 }
 
-                _keyMaterialDebug = Encoding.UTF8.GetBytes(strBuilderDebug.ToString().Replace("{0}", (i + 1).ToString()));
+                _keyMaterialDebug = Encoding.UTF8.GetBytes(strBuilderDebug.ToString().Replace("{0}", (i + 1).ToString()).Replace("{ord}", calcOrdinalNum(i + 1)));
                 OnPropertyChanged("KeyMaterialDebug");
 
                 if (show && !pres.SkipChapter)
@@ -699,6 +701,42 @@ namespace Cryptool.Plugins.HKDFSHA256
             //Console.WriteLine("KM: " + BitConverter.ToString(result).Replace("-", ""));
 
             return result;
+        }
+
+        /// <summary>
+        /// Calculates the ordinal numbers
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        private string calcOrdinalNum(int num)
+        {
+            if (CultureInfo.CurrentUICulture.Name == "en-US")
+            {
+                if (num <= 0) return num.ToString();
+
+                switch (num % 100)
+                {
+                    case 11:
+                    case 12:
+                    case 13:
+                        return "th";
+                }
+                switch (num % 10)
+                {
+                    case 1:
+                        return "st";
+                    case 2:
+                        return "nd";
+                    case 3:
+                        return "rd";
+                    default:
+                        return "th";
+                }
+            }
+            else
+            {
+                return ".";
+            }
         }
 
         /// <summary>
@@ -2090,6 +2128,25 @@ namespace Cryptool.Plugins.HKDFSHA256
             bool isBold = false;
             foreach (var part in parts)
             {
+                if (part.Contains("<Underline>"))
+                {
+                    var underlinedParts = part.Split(new[] { "<Underline>", "</Underline>" }, StringSplitOptions.None);
+                    bool isUnderlined = false;
+                    foreach (var underlinePart in underlinedParts)
+                    {
+                        if (isUnderlined)
+                        {
+                            p.Inlines.Add(new Underline(new Bold((new Run(underlinePart)))));
+                        }
+                        else
+                        {
+                            p.Inlines.Add(new Run(underlinePart));
+                        }
+                        isUnderlined = !isUnderlined;
+                        isBold = !isBold;
+                    }
+                    continue;
+                }
                 if (isBold)
                 {
                     //pres.txtExplanationSectionText.Inlines.Add(new Bold(new Run(part)));
