@@ -1,4 +1,5 @@
-﻿/*
+﻿using Cryptool.PluginBase.Miscellaneous;
+/*
    Copyright 2018 Nils Kopal <Nils.Kopal<at>CrypTool.org
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,7 +32,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
         public const string GETRECORDLIST = "GetRecordsList";
         public const string GETRECORDSTRING = "GetRecordString";
-        public const string GETDATA = "GetData";        
+        public const string GETDATA = "GetData";
+        public const string USER_AGENT = "CrypTool 2";
 
         public event DownloadDataCompletedEventHandler DownloadDataCompleted;
         public event DownloadStringCompletedEventHandler DownloadStringCompleted;
@@ -131,6 +133,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             {
                 WebClient.Headers.Add("Accept", "application/json");
                 WebClient.Headers.Add("Accept", "text/plain");
+                WebClient.Headers.Add("user-agent", USER_AGENT + ";" + AssemblyHelper.InstallationType.ToString() + ";" + AssemblyHelper.Version);
                 WebClient.DownloadDataAsync(new Uri(url), GETRECORDLIST);
             }
             catch (Exception ex)
@@ -159,6 +162,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             {
                 WebClient.Headers.Add("Accept", "application/json");
                 WebClient.Headers.Add("Accept", "text/plain");
+                WebClient.Headers.Add("user-agent", USER_AGENT + ";" + AssemblyHelper.InstallationType.ToString() + ";" + AssemblyHelper.Version);
                 string url = DOWNLOAD_URL + "/" + record.record_id;
                 WebClient.DownloadStringAsync(new Uri(url), "GetRecordString");
             }
