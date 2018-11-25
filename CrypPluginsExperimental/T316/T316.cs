@@ -42,6 +42,7 @@ namespace Cryptool.Plugins.T316
         private const uint maxMessageSize = 1000;
         private const byte figs = 0x1B; // A CCITT-2 control character, indicates a figure is following
         private const byte ltrs = 0x1F; // A CCITT-2 control character, indicates a letter is following
+        private static readonly byte[] charPadding = new byte[] { 0x24, 0x24, 0x24, 0x24 }; // represents $ in ASCII
 
         /*
          * Lookup and reverse lookup tables for converting between ASCII and CCITT-2
@@ -231,7 +232,7 @@ namespace Cryptool.Plugins.T316
             get { return null; }
         }
 
- 
+
         public void PreExecution()
         {
             // empty
@@ -253,7 +254,7 @@ namespace Cryptool.Plugins.T316
                 PrepareAndEncrypt();
             else
                 PrepareAndDecrypt();
-            
+
         }
 
         /// <summary>
@@ -279,7 +280,6 @@ namespace Cryptool.Plugins.T316
         {
             rng = RandomNumberGenerator.Create();
             iV = new byte[Lambda1.BlockSize];
-            rng.GetBytes(iV); 
         }
 
         /// <summary>
@@ -303,26 +303,9 @@ namespace Cryptool.Plugins.T316
         {
             InputData = RemoveUnicode(InputData);
             MemoryStream outputStream = new MemoryStream();
-            byte[] invalidCharacters;
+            byte[] invalidCharacters, paddedCharacters, chunks;
             byte[] convertedChars = AsciiToCcitt2(InputData, out invalidCharacters);
-
-            /*********************************|
-            |       DEBUG CODE HERE           |
-            |*********************************/
-
-            //Lambda1 small = new Lambda1(InputKey, OperationMode.Encrypt);
-            //byte[] outputBlock, resultBlock;
-            //byte[] inputBlock = { 0x11, 0x22, 0x33, 0x44, 0xAA, 0xBB, 0xCC, 0xDD };
-            //byte[] fixedCiphertext = { 0x03, 0x43 , 0xba, 0x7a, 0x5b, 0xd4, 0x65, 0x64 };
-            //small.ProcessBlock(inputBlock, out outputBlock);
-
-            //small = new Lambda1(InputKey, OperationMode.Decrypt);
-            //small.ProcessBlock(outputBlock, out resultBlock);
-            //small.ProcessBlock(fixedCiphertext, out resultBlock);
-            //return;
-            /*********************************|
-            |       DEBUG CODE ENDS           |
-            |*********************************/
+            rng.GetBytes(iV);
 
             // if necessary, communicate truncated characters to the user
             if (invalidCharacters != null && invalidCharacters.Length > 0)
@@ -335,12 +318,16 @@ namespace Cryptool.Plugins.T316
                 return;
             }
 
+            // Make "chunks" (Concatenating the ASCII size CCITT-2 letters to 6-bit chunks)
+            PadCharacters(convertedChars, out paddedCharacters);
+            ContractChunks(paddedCharacters, out chunks);
+
             Lambda1 lambda1 = new Lambda1(InputKey, settings.Mode);
             byte[] tmpBlock = new byte[Lambda1.BlockSize];
             byte[] oldBlock = new byte[Lambda1.BlockSize];
             byte[] currentBlock = new byte[Lambda1.BlockSize];
 
-            byte[] inputData = BlockCipherHelper.AppendPadding(convertedChars, BlockCipherHelper.PaddingType.Zeros, Lambda1.BlockSize);
+            byte[] inputData = BlockCipherHelper.AppendPadding(chunks, BlockCipherHelper.PaddingType.Zeros, Lambda1.BlockSize);
             Array.Copy(iV, oldBlock, Lambda1.BlockSize);
             outputStream.Write(iV, 0, Lambda1.BlockSize);
 
@@ -373,6 +360,12 @@ namespace Cryptool.Plugins.T316
 
             Array.Copy(InputData, oldBlock, Lambda1.BlockSize);
 
+            if (InputData.Length % Lambda1.BlockSize != 0)
+            {
+                GuiLogMessage("Input is not a multiple of block length", NotificationLevel.Error);
+                return;
+            }
+
             // Decryption Loop with CBC mode
             for (int i = Lambda1.BlockSize; i < InputData.Length && !stopPressed; i += Lambda1.BlockSize)
             {
@@ -382,9 +375,18 @@ namespace Cryptool.Plugins.T316
                 Array.Copy(currentBlock, oldBlock, Lambda1.BlockSize);
                 ProgressChanged(i, InputData.Length - 1);
             }
-    
+
             //Strip padding and convert back to ASCII
             decryptionBuffer = BlockCipherHelper.StripPadding(decryptionBuffer, BlockCipherHelper.PaddingType.Zeros, Lambda1.BlockSize);
+
+            // Expand the chunks from 6 to 8 bit
+            byte[] buffer;
+            ExpandChunks(decryptionBuffer, out buffer);
+
+            // Strip the character padding (don't confuse with the encryption padding)
+            StripCharacterPadding(buffer, out decryptionBuffer);
+
+
             ProgressChanged(1, 1);
             OutputData = Ccitt2ToAscii(decryptionBuffer);
             OnPropertyChanged("OutputData");
@@ -516,6 +518,7 @@ namespace Cryptool.Plugins.T316
             return encodedBytes.ToArray();
         }
 
+
         /// <summary>
         /// Maps an array of CCITT-2 characters to ASCII characters
         /// </summary>
@@ -553,6 +556,120 @@ namespace Cryptool.Plugins.T316
             }
 
             return encodedBytes.ToArray();
+        }
+
+
+        /// <summary>
+        /// Pad an ASCII-Message to a multiple of 4 characters, as they are pulled together to a group 
+        /// </summary>
+        /// <param name="characters">A character array</param>
+        /// <param name="paddedCharacters">A character array padded to a multiple of length 4</param>
+        /// In the further encryption process, groups of 4 ASCII characters are converted to CCITT-2 and then
+        /// encrypted. Therefore we need an extra padding here (Fill character is 0x24 = $)
+        private void PadCharacters(byte[] characters, out byte[] paddedCharacters)
+        {
+            if (characters.Length % 4 != 0)
+            {
+                paddedCharacters = new byte[characters.Length + (4 - (characters.Length % 4))];
+                int len1 = paddedCharacters.Length - (4 - (characters.Length % 4));
+                int len2 = 4 - (characters.Length % 4);
+                //Array.Copy(charPadding, 0, paddedCharacters, paddedCharacters.Length -  (characters.Length % 4), 4 - ((characters.Length % 4) - 1));
+                Array.Copy(charPadding, 0, paddedCharacters, len1, len2);
+                Array.Copy(characters, paddedCharacters, characters.Length);
+            }
+            else
+            {
+                paddedCharacters = new byte[characters.Length];
+                Array.Copy(characters, paddedCharacters, characters.Length);
+            }
+        }
+
+
+        /// <summary>
+        /// Contracts an array with length multiple of 4 bytes with 4 characters to 3 bytes.
+        /// Counterpart function to MakeChunks(). Call PadCharacters() beforehand.
+        /// </summary>
+        /// <param name="ccittCharacters">CCITT-2 encoded byte[] with one character per byte and padding</param>
+        /// <param name="chunks">CCITT-2 encoded byte[] with 1 and a 1/4th character per byte</param>
+        /// This function omits the high bits 7 and 8 and pulls together the array, saving 1/4th of spacee
+        private void ContractChunks(byte[] ccittCharacters, out byte[] chunks)
+        {
+            UInt32 tmp = ccittCharacters[0];
+
+            chunks = new byte[ccittCharacters.Length / 4 * 3];
+
+            for (int i = 1, k = 0; i < ccittCharacters.Length; ++i)
+            {
+                tmp <<= 6;
+                tmp |= ccittCharacters[i];
+
+                if ((i + 1) % 4 == 0)
+                {
+                    Array.Copy(IntToByte3(tmp), 0, chunks, k, 3);
+                    tmp = 0;
+                    k += 3;
+                }
+            }
+        }
+
+
+        /// <summary>
+        ///  Expands an array with length multiple of 3 bytes with 4 characters to 4 bytes. Counterpart function to MakeChunks().
+        /// </summary>
+        /// <param name="chunkedBytes"></param>
+        /// <param name="ccittCharacters"></param>
+        private void ExpandChunks(byte[] chunkedBytes, out byte[] ccittCharacters)
+        {
+            UInt32 buffer = chunkedBytes[0];
+            ccittCharacters = new byte[(chunkedBytes.Length / 3) * 4];
+
+            for (int i = 1, k = 3, tmp = 0; i < chunkedBytes.Length; ++i)
+            {
+
+                buffer <<= 8;
+                buffer |= chunkedBytes[i];
+
+
+                if ((i + 1) % 3 == 0)
+                {
+                    for (int j = 3; k >= tmp; --k, --j)
+                        ccittCharacters[tmp + (3 - j)] = (byte)((buffer >> (j * 6)) & 0x3F);
+                    tmp += 4;
+                    k = tmp + 3;
+                    buffer = 0;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Strips the 0x24 ($) character padding from the 4 character chunks
+        /// </summary>
+        /// <param name="ccittCharacters">CCITT-2 encoded byte[] with one character per byte and padding</param>
+        /// <param name="strippedCharacters">CCITT-2 encoded byte[] with one character per byte WITHOUT padding</param>
+        private void StripCharacterPadding(byte[] ccittCharacters, out byte[] strippedCharacters)
+        {
+            int i = ccittCharacters.Length - 1;
+            for (; ccittCharacters[i] == 0x24; --i) ;
+
+            strippedCharacters = new byte[++i];
+            Array.Copy(ccittCharacters, strippedCharacters, i);
+        }
+
+
+        /// <summary>
+        /// Converts an 32 bit Integer to a byte[] of length 3.
+        /// High bits of the integer are the low bits of the byte[]
+        /// </summary>
+        /// <param name="a">an Integer which gets converted</param>
+        /// <returns>a byte[] of length 3.</returns>
+        private byte[] IntToByte3(UInt32 a)
+        {
+            byte[] array = new byte[3];
+            for (int i = 2, k = 0; i >= 0; --i, ++k)
+                array[k] = (byte)((a >> (i * 8)) & 0xFF);
+
+            return array;
         }
 
         /// <summary>

@@ -168,8 +168,11 @@ namespace Cryptool.Plugins.T316
                 }
 
                 // then we invert the keys 17 and 18
-                roundKeys[16] = ModularAddition(one, roundKeys[17] ^ mask);
-                roundKeys[17] = ModularAddition(one, roundKeys[16] ^ mask);
+                tmp = roundKeys[16];
+                //roundKeys[16] = ModularAddition(one, roundKeys[17] ^ mask);
+                //roundKeys[17] = ModularAddition(one, tmp ^ mask);
+                roundKeys[16] = roundKeys[17] ^ mask;
+                roundKeys[17] = tmp ^ mask;
             }
 
 
@@ -250,18 +253,17 @@ namespace Cryptool.Plugins.T316
                     tmpBlock |= tmpBit << ((k - 1) * 4);
                 }
 
+                rBlock = tmpBlock ^ lBlock;
+                lBlock = rOld;
+                tmpBlock = 0;
+
                 // In the 8th round (half of the rounds) we additionally add the bonus round keys
                 // operation is a modular addition
                 if (round == 7)
                 {
-                    // Commented lines for Debug-Purpose THEY DO BELONG INTO THE ALGORITHM
-                    //rOld = ModularAddition(rOld, roundKeys[16]);
-                    //tmpBlock = ModularAddition(tmpBlock, roundKeys[17]);
+                    lBlock = ModularAddition(lBlock, roundKeys[16]);
+                    rBlock = ModularAddition(rBlock, roundKeys[17]);
                 }
-
-                rBlock = tmpBlock ^ lBlock;
-                lBlock = rOld;
-                tmpBlock = 0;
 
             }
 
