@@ -190,16 +190,16 @@ public class Lugs {
     public String getLugsString() {
 
         StringBuilder s = new StringBuilder();
-        for (int w = 1; w <= Key.WHEELS; w++) {
-            for (int i = 0; i < typeCount[getTypeCountIndex(w)]; i++) {
-                s.append("0-").append(w).append(" ");
-            }
-        }
         for (int w1 = 1; w1 <= Key.WHEELS; w1++) {
             for (int w2 = w1 + 1; w2 <= Key.WHEELS; w2++) {
                 for (int i = 0; i < typeCount[getTypeCountIndex(w1, w2)]; i++) {
                     s.append(w1).append("-").append(w2).append(" ");
                 }
+            }
+        }
+        for (int w = 1; w <= Key.WHEELS; w++) {
+            for (int i = 0; i < typeCount[getTypeCountIndex(w)]; i++) {
+                s.append("0-").append(w).append(" ");
             }
         }
         return s.toString();

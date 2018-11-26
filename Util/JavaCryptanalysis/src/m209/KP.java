@@ -125,6 +125,8 @@ public class KP {
     }
     public static void solveMultithreaded(String cipher, String crib, Key simulationKey, int cycles, int threads) {
 
+        ReportResult.knownPlaintext = true;
+
         if (cipher == null || cipher.isEmpty()) {
             CtAPI.goodbye(-1, "cipher is empty");
         }

@@ -122,10 +122,10 @@ public class CtAPI {
         goodbye(-1, e.getMessage());
     }
 
-    public static synchronized void displayProgress(int progress, int maxValue) {
+    public static synchronized void displayProgress(long progress, long maxValue) {
         try {
             if (maxValue <= 0) {
-                displayProgress(progress % 100, 95);
+                Ct2Connector.encodeProgress(progress % 100, 95);
             } else {
                 Ct2Connector.encodeProgress(progress, maxValue);
             }
@@ -150,6 +150,10 @@ public class CtAPI {
         String s = String.format(format, objects);
         print(s);
     }
+    public static void logInfoFormatted(String format, Object... objects) {
+        String s = String.format(format, objects);
+        logInfo(s);
+    }
 
     public static void print(String s) {
         logInfo(s);
@@ -162,6 +166,9 @@ public class CtAPI {
     }
 
     private static void logInfo(String s) {
+        if (s.length() > 300) {
+            s = s.substring(0, 300) + " ..... (truncated)";
+        }
         log(s, Ct2IpcMessages.Ct2LogEntry.LogLevel.CT2INFO);
     }
 
@@ -197,8 +204,12 @@ public class CtAPI {
         updateOutput(OUTPUT_SCORE, String.format("%,d", result.score));
         updateOutput(OUTPUT_KEY, result.keyString);
         updateOutput(OUTPUT_PLAINTEXT, result.plaintextString);
-        printf("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyString);
+        logInfoFormatted("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyStringShort);
+        System.out.printf("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyString);
     }
+    public static void displayPlaintext(String plaintextString) {
+        updateOutput(OUTPUT_PLAINTEXT, plaintextString);
+   }
 
     public static void displayBestResult(Result result, Result original) {
         if (original.keyString.isEmpty()) {
@@ -214,8 +225,10 @@ public class CtAPI {
         } else {
             updateOutput(OUTPUT_PLAINTEXT, result.plaintextString + " (Original:" + original.plaintextString + ")");
         }
-        printf("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyString);
-        printf("      %,12d %s %s %s\n", original.score, plaintextCapped(original.plaintextString), original.commentString,original.keyString );
+        logInfoFormatted("Best: %,12d %s %s \n%s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyStringShort);
+        System.out.printf("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyString);
+        logInfoFormatted("      %,12d %s %s \n%s\n", original.score, plaintextCapped(original.plaintextString), original.commentString, original.keyStringShort);
+        System.out.printf("      %,12d %s %s %s\n", original.score, plaintextCapped(original.plaintextString), original.commentString, original.keyString );
     }
 
 
@@ -243,6 +256,10 @@ public class CtAPI {
 
         java.awt.Toolkit.getDefaultToolkit().beep();
         System.exit(exitCode);
+    }
+
+    public static synchronized void goodbyeError(String format, Object... objects) {
+        goodbye(-1, String.format(format, objects));
     }
 
     public static void goodbye() {

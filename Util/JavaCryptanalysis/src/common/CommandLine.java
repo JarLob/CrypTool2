@@ -129,7 +129,15 @@ public class CommandLine {
         CtAPI.goodbye(-1, "No such flag " + flag.toString());
         return false;
     }
-
+    public static boolean isSet(Flag flag) {
+        for (CommandLineArgument argument : arguments) {
+            if (argument.flag == flag) {
+                return argument.set;
+            }
+        }
+        CtAPI.goodbye(-1, "No such flag " + flag.toString());
+        return false;
+    }
     public static void add(CommandLineArgument argument) {
         arguments.add(argument);
     }
@@ -158,6 +166,7 @@ public class CommandLine {
                 }
                 if (currentArgument.type == CommandLineArgument.Type.BOOLEAN) {
                     currentArgument.booleanValue = true;
+                    currentArgument.set = true;
                     currentArgument = null;
                 }
                 continue;
@@ -175,6 +184,7 @@ public class CommandLine {
                             currentArgument.integerArrayList.clear();
                         }
                         currentArgument.integerArrayList.add(value);
+                        currentArgument.set = true;
                         currentArgument = null;
                         continue;
                     } else {
@@ -220,6 +230,7 @@ public class CommandLine {
                 }
 
                 currentArgument.stringArrayList.add(arg);
+                currentArgument.set = true;
                 currentArgument = null;
             }
         }
@@ -314,7 +325,22 @@ public class CommandLine {
         }
         return currentArgument;
     }
-
+    public static String getShortDesc(Flag flag) {
+        for (CommandLineArgument mainMenuArgument : arguments) {
+            if (mainMenuArgument.flag == flag) {
+                return mainMenuArgument.shortDesc;
+            }
+        }
+        return null;
+    }
+    public static String getFlagString(Flag flag) {
+        for (CommandLineArgument mainMenuArgument : arguments) {
+            if (mainMenuArgument.flag == flag) {
+                return mainMenuArgument.flagString;
+            }
+        }
+        return null;
+    }
     public static void printUsage() {
 
         CtAPI.print("\nUsage: java -jar <jarname>.jar [arguments]\nArguments:\n");

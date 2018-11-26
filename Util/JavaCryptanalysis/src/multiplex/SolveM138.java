@@ -59,7 +59,7 @@ class SolveM138 {
         CtAPI.printf("Encryption key for simulation: %s\n", encryptionKey.toString());
 
         long realMultiplexScore = encryptionKey.score();
-        BestResults.setOriginal(realMultiplexScore, encryptionKey.toString(), Utils.getString(encryptionKey.decryption), "Original");
+        BestResults.setOriginal(realMultiplexScore, encryptionKey.toString(), encryptionKey.toString(), Utils.getString(encryptionKey.decryption), "Original");
 
         ArrayList<Integer> offset = new ArrayList<>();
         if (offsetKnown) {

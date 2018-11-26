@@ -77,6 +77,10 @@ public class Main {
 
 
         createCommandLineArguments();
+        BestResults.setScoreThreshold(1_800_000);
+        BestResults.setDiscardSamePlaintexts(true);
+        BestResults.setThrottle(false);
+
         //CommandLineArgument.printUsage();
 
         CtAPI.open("Playfair", "1.0");
@@ -138,7 +142,7 @@ public class Main {
             simulationKey.setCipher(cipherText);
             simulationKey.eval();
             CtAPI.printf("Original score: %,d\n", simulationKey.score);
-            BestResults.setOriginal(simulationKey.score, simulationKey.toString(), Utils.getString(plainText), "Original");
+            BestResults.setOriginal(simulationKey.score, simulationKey.toString(), simulationKey.toString(), Utils.getString(plainText), "Original");
         } else {
             if ((CIPHERTEXT == null || CIPHERTEXT.isEmpty())) {
                 CtAPI.goodbye(-1, "Ciphertext or ciphertext file required when not in simulation mode");

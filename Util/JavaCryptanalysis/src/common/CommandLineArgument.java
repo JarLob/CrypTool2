@@ -28,7 +28,7 @@ public class CommandLineArgument {
     ArrayList<Integer> integerArrayList = new ArrayList<>();
     ArrayList<String> stringArrayList = new ArrayList<>();
 
-    // Long desc;
+    boolean set = false;
 
 
     public CommandLineArgument(Flag flag,
@@ -145,6 +145,7 @@ public class CommandLineArgument {
             validStringValuesString += validStringValue;
         }
     }
+
 
 
 }

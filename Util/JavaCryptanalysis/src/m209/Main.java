@@ -53,6 +53,8 @@ public class Main {
     public static void main(String[] args) {
 
         createCommandLineArguments();
+        BestResults.setDiscardSamePlaintexts(false);
+        BestResults.setThrottle(true);
         //CommandLineArgument.printUsage();
 
         CtAPI.open("M209 attacks", "1.0");
@@ -88,6 +90,7 @@ public class Main {
         Global.initVersion(VERSION);
 
         if (SIMULATION != 0) {
+            ReportResult.simulation = true;
             Key simulationKey = Simulation.simulation(RESOURCE_PATH, LANGUAGE, SIMULATION_TEXT_LENGTH, SIMULATION_OVERLAPS);
             if (SIMULATION == 2) {
                 KP.solveMultithreaded(simulationKey.cipher, simulationKey.crib, simulationKey, CYCLES, THREADS);
@@ -95,14 +98,6 @@ public class Main {
                 CO.solveMultithreaded(RESOURCE_PATH, LANGUAGE, simulationKey.cipher, simulationKey, CYCLES, THREADS);
             }
         } else {
-            /*
-            if (SIMULATION_OVERLAPS > 0) {
-                CtAPI.goodbye(-1, "Simulation lugs overlaps (-o) alloed only in simulation mode\n");
-            }
-            if (SIMULATION_TEXT_LENGTH > 0) {
-                CtAPI.goodbye(-1, "Simulation text length (-l) alloed only in simulation mode\n");
-            }
-            */
             if (CIPHERTEXT == null || CIPHERTEXT.isEmpty()) {
                 CtAPI.goodbye(-1, "Ciphertext or ciphertext file required when not in simulation mode\n");
             }

@@ -34,6 +34,7 @@ public class Key {
 
     long eval() {
         decrypt();
+
         long hexa = Stats.evalPlaintextHexagram(decryptionRemoveNulls, decryptionRemoveNullsLength);
         if (crib == null) {
             score = hexa;
@@ -43,6 +44,9 @@ public class Key {
                 if (crib[i] == fullDecryption[i]) {
                     cribMatch++;
                 }
+            }
+            if (crib.length == cipher.length) {
+                return 3_000_000 * cribMatch/cipher.length;
             }
             score = ((3_000_000 * cribMatch) + (hexa * (cipher.length - crib.length))) / cipher.length;
         }

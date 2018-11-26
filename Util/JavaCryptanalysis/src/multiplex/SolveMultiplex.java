@@ -31,6 +31,7 @@ class SolveMultiplex {
                         if (BestResults.shouldPushResult(newScore)) {
                             BestResults.pushResult(newScore,
                                     multiplex.toString(),
+                                    multiplex.toString(),
                                     Utils.getString(multiplex.decryption),
                                     Stats.evaluationsSummary() +
                                              String.format("[SA Cycle: %,5d, Round: %,5d]", saCycle, round));

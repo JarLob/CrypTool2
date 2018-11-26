@@ -97,7 +97,7 @@ class SolveM94 {
         encryptionKey.encrypt(p, c);
         encryptionKey.setCipher(c);
         long realMultiplexScore = encryptionKey.score();
-        BestResults.setOriginal(encryptionKey.score(), encryptionKey.toString(), Utils.getString(encryptionKey.decryption), "Original");
+        BestResults.setOriginal(encryptionKey.score(), encryptionKey.toString(), encryptionKey.toString(), Utils.getString(encryptionKey.decryption), "Original");
         CtAPI.printf("Simulation with M94\n%s\n%s\n%s\nLength: %,d\nOriginal Score: %,d\nOffsets are %s\n",
                 Utils.getString(p),
                 Utils.getString(c), encryptionKey.toString(),

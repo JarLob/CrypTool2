@@ -50,7 +50,7 @@ public class Utils {
         for (int i = 0; i < textString.length(); i++) {
             int c = getTextSymbol(textString.charAt(i));
             if (c == -1) {
-                continue;
+                //continue;
             }
             text[len++] = c;
         }

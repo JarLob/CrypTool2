@@ -41,6 +41,7 @@ public class SolvePlayfair {
                     if (BestResults.shouldPushResult(newScore)) {
                         BestResults.pushResult(newScore,
                                 newKey.toString(),
+                                newKey.toString(),
                                 Utils.getString(newKey.fullDecryption),
                                 Stats.evaluationsSummary() +
                                     String.format("[%d/%d}[Task: %2d][Mult.: %,d]",
@@ -59,16 +60,11 @@ public class SolvePlayfair {
         final Key simulationKey_ = simulationKey;
         for (int t_ = 0; t_ < threads; t_++) {
             final int t = t_;
-            double factor = 0.5 + r.nextDouble();
-            factor = 1.0;
-            int multiplier = (int) (factor* 150_000)/cipherText.length;
+            final double factor = (cribString.length() > cipherText.length/2) ? 0.1 : 1.0;
+            final int multiplier = (int) (factor* 150_000)/cipherText.length;
+
             new Thread(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            solve(t, cycles, 200_000, multiplier, cipherText, cribString, simulationKey_);
-                        }
-                    }
+                    () -> solve(t, cycles, 200_000, multiplier, cipherText, cribString, simulationKey_)
             ).start();
         }
     }

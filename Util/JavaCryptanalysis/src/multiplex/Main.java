@@ -49,8 +49,12 @@ class Main {
 
         createCommandLineArguments();
         //CommandLineArgument.printUsage();
+        BestResults.setScoreThreshold(1_800_000);
+        BestResults.setDiscardSamePlaintexts(true);
+        BestResults.setThrottle(false);
 
         CtAPI.open("Multiplex", "1.0");
+        BestResults.setScoreThreshold(1_800_000);
 
         String[] ctArgs = CtAPI.getArgs();
         if (!CommandLine.parseArguments(ctArgs, false)) {

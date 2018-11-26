@@ -5,34 +5,54 @@ import java.util.ArrayList;
 public class BestResults {
 
     private static ArrayList<Result> bestResults = new ArrayList<>();
-    private static int maxNumberOfResults = 10;
     private static Result originalResult = null;
-    private static long scoreThreshold = 1_800_000;
     private static long lastBestListUpdateMillis = 0;
     private static boolean shouldUpdateBestList = false;
+
+    private static int maxNumberOfResults = 10;
+    private static long scoreThreshold = 0;
+    private static boolean discardSamePlaintexts = false;
+    private static boolean throttle = false;
+
 
     public static synchronized void setMaxNumberOfResults(int maxNumberOfResults) {
         BestResults.maxNumberOfResults = maxNumberOfResults;
         clean();
     }
+
     public static synchronized void setScoreThreshold(long scoreThreshold) {
         BestResults.scoreThreshold = scoreThreshold;
         clean();
     }
+
+    public static synchronized void setDiscardSamePlaintexts(boolean discardSamePlaintexts) {
+        BestResults.discardSamePlaintexts = discardSamePlaintexts;
+        clean();
+    }
+
+    public static synchronized void setThrottle(boolean throttle) {
+        BestResults.throttle = throttle;
+        clean();
+    }
+
     public static synchronized void clear() {
         bestResults.clear();
         CtAPI.displayBestList("-");
     }
-    public static synchronized void setOriginal(long score, String keyString, String plaintextString, String commentString) {
-        originalResult = new Result(score, keyString, plaintextString, commentString);
-    }
-    public static synchronized boolean shouldPushResult(long score) {
-        if (shouldUpdateBestList && System.currentTimeMillis() - lastBestListUpdateMillis > 1000) {
-            lastBestListUpdateMillis = System.currentTimeMillis();
-            shouldUpdateBestList = false;
-            display();
-        }
 
+    public static synchronized void setOriginal(long score, String keyString, String keyStringShort,String plaintextString, String commentString) {
+        originalResult = new Result(score, keyString, keyStringShort, plaintextString, commentString);
+    }
+
+    public static synchronized boolean shouldPushResult(long score) {
+
+        if (throttle) {
+            if (shouldUpdateBestList && System.currentTimeMillis() - lastBestListUpdateMillis > 1000) {
+                lastBestListUpdateMillis = System.currentTimeMillis();
+                shouldUpdateBestList = false;
+                display();
+            }
+        }
 
         if (score < scoreThreshold) {
             return false;
@@ -40,27 +60,31 @@ public class BestResults {
         int size = bestResults.size();
         return size < maxNumberOfResults || score > bestResults.get(size - 1).score;
     }
-    public static synchronized void pushResult(long score, String keyString, String plaintextString, String commentString) {
+
+    public static synchronized boolean pushResult(long score, String keyString, String keyStringShort, String plaintextString, String commentString) {
+        if (discardSamePlaintexts) {
+            for (Result be : bestResults) {
+                if (be.plaintextString.equals(plaintextString)) {
+                    return false;
+                }
+            }
+        }
         for (Result be : bestResults) {
-            if (be.plaintextString.equals(plaintextString)) {
-                return;
+            if (be.keyString.equals(keyString)) {
+                return false;
             }
         }
         int size = bestResults.size();
         boolean bestChanged = false;
-        if (size > 0 && score > bestResults.get(0).score) {
+        if (size == 0 || score > bestResults.get(0).score) {
             bestChanged = true;
         }
         if (size < maxNumberOfResults) {
-            bestResults.add(new Result(score, keyString, plaintextString, commentString));
+            bestResults.add(new Result(score, keyString, keyStringShort, plaintextString, commentString));
         } else if (score > bestResults.get(size - 1).score) {
-            Result last = bestResults.get(size - 1);
-            last.score = score;
-            last.keyString = keyString;
-            last.plaintextString = plaintextString;
-            last.commentString = commentString;
+            bestResults.get(size - 1).set(score, keyString, keyStringShort, plaintextString, commentString);
         } else {
-            return;
+            return false;
         }
         sort();
         if (bestChanged) {
@@ -71,8 +95,12 @@ public class BestResults {
                 CtAPI.displayBestResult(bestResult, originalResult);
             }
         }
-        shouldUpdateBestList = true;
-        //display(bestChanged);
+        if (throttle) {
+            shouldUpdateBestList = true;
+        } else {
+            display();
+        }
+        return true;
     }
 
     private static synchronized void clean() {
@@ -84,15 +112,19 @@ public class BestResults {
             bestResults.remove(bestResults.size() - 1);
         }
     }
-    private static synchronized void sort(){
+
+    private static synchronized void sort() {
         bestResults.sort((o1, o2) -> (int) (o2.score - o1.score));
     }
-    public static synchronized void display(){
+
+    public static synchronized void display() {
         StringBuilder s = new StringBuilder();
         sort();
         for (int i = 0; i < bestResults.size(); i++) {
-            bestResults.get(i).append(s, i + 1);
+            Result r = bestResults.get(i);
+            s.append(String.format("%2d;%,12d;%s;%s;%s\n", i + 1, r.score, r.keyStringShort, r.plaintextString, r.commentString));
         }
         CtAPI.displayBestList(s.toString());
     }
+
 }
