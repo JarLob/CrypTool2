@@ -61,7 +61,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Add. Info: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add. info: ähnelt.
         /// </summary>
         internal static string AddInfo {
             get {
@@ -79,7 +79,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher Type: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher type: ähnelt.
         /// </summary>
         internal static string CipherType {
             get {
@@ -97,7 +97,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cleartext Language: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cleartext language: ähnelt.
         /// </summary>
         internal static string CleartextLanguage {
             get {
@@ -223,7 +223,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die File Type ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die File type ähnelt.
         /// </summary>
         internal static string FileTypeHeader {
             get {
@@ -277,7 +277,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Inline Cleartext: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Inline cleartext: ähnelt.
         /// </summary>
         internal static string InlineCleartext {
             get {
@@ -286,7 +286,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Inline Plaintext: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Inline plaintext: ähnelt.
         /// </summary>
         internal static string InlinePlaintext {
             get {
@@ -322,7 +322,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Number of Pages: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of pages: ähnelt.
         /// </summary>
         internal static string NumberOfPages {
             get {
@@ -385,7 +385,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext Language: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext language: ähnelt.
         /// </summary>
         internal static string PlaintextLanguage {
             get {
@@ -430,7 +430,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Symbol Set: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Symbol set: ähnelt.
         /// </summary>
         internal static string SymbolSet {
             get {
@@ -457,7 +457,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Upload Date ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Upload date ähnelt.
         /// </summary>
         internal static string UploadDateHeader {
             get {

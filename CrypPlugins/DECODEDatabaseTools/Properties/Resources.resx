@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddInfo" xml:space="preserve">
-    <value>Add. Info:</value>
+    <value>Add. info:</value>
   </data>
   <data name="Author" xml:space="preserve">
     <value>Author:</value>
   </data>
   <data name="CipherType" xml:space="preserve">
-    <value>Cipher Type:</value>
+    <value>Cipher type:</value>
   </data>
   <data name="City" xml:space="preserve">
     <value>City:</value>
   </data>
   <data name="CleartextLanguage" xml:space="preserve">
-    <value>Cleartext Language:</value>
+    <value>Cleartext language:</value>
   </data>
   <data name="Content" xml:space="preserve">
     <value>Content:</value>
@@ -172,7 +172,7 @@
     <value>Documents:</value>
   </data>
   <data name="FileTypeHeader" xml:space="preserve">
-    <value>File Type</value>
+    <value>File type</value>
   </data>
   <data name="Filter" xml:space="preserve">
     <value>Filter:</value>
@@ -190,10 +190,10 @@
     <value>Ink Type:</value>
   </data>
   <data name="InlineCleartext" xml:space="preserve">
-    <value>Inline Cleartext:</value>
+    <value>Inline cleartext:</value>
   </data>
   <data name="InlinePlaintext" xml:space="preserve">
-    <value>Inline Plaintext:</value>
+    <value>Inline plaintext:</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name:</value>
@@ -205,7 +205,7 @@
     <value>Name</value>
   </data>
   <data name="NumberOfPages" xml:space="preserve">
-    <value>Number of Pages:</value>
+    <value>Number of pages:</value>
   </data>
   <data name="Origin" xml:space="preserve">
     <value>Origin:</value>
@@ -226,7 +226,7 @@
     <value>Paper:</value>
   </data>
   <data name="PlaintextLanguage" xml:space="preserve">
-    <value>Plaintext Language:</value>
+    <value>Plaintext language:</value>
   </data>
   <data name="Receiver" xml:space="preserve">
     <value>Receiver:</value>
@@ -241,7 +241,7 @@
     <value>Size</value>
   </data>
   <data name="SymbolSet" xml:space="preserve">
-    <value>Symbol Set:</value>
+    <value>Symbol set:</value>
   </data>
   <data name="TitleHeader" xml:space="preserve">
     <value>Title</value>
@@ -250,6 +250,6 @@
     <value>Type:</value>
   </data>
   <data name="UploadDateHeader" xml:space="preserve">
-    <value>Upload Date</value>
+    <value>Upload date</value>
   </data>
 </root>

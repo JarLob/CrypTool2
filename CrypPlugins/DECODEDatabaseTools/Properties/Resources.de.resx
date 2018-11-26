@@ -124,7 +124,7 @@
     <value>Autor:</value>
   </data>
   <data name="CipherType" xml:space="preserve">
-    <value>Chiffrentyp:</value>
+    <value>Chiffre-Typ:</value>
   </data>
   <data name="City" xml:space="preserve">
     <value>Stadt:</value>
@@ -166,7 +166,7 @@
     <value>DECODE-Betrachter</value>
   </data>
   <data name="DecodeViewerPluginTooltip" xml:space="preserve">
-    <value>Komponente um heruntergeladene DECODE-Daten zu Visualisieren</value>
+    <value>Komponente um heruntergeladene DECODE-Daten zu visualisieren</value>
   </data>
   <data name="Documents" xml:space="preserve">
     <value>Dokumente:</value>
@@ -214,13 +214,13 @@
     <value>Dokument</value>
   </data>
   <data name="OutputDocumentTooltip" xml:space="preserve">
-    <value>Heruntergeladenes Dokument der DECODE-Datenbank</value>
+    <value>Heruntergeladenes Dokument aus der DECODE-Datenbank</value>
   </data>
   <data name="OutputImageCaption" xml:space="preserve">
     <value>Bild</value>
   </data>
   <data name="OutputImageTooltip" xml:space="preserve">
-    <value>Heruntergeladenes Bild der DECODE-Datenbank </value>
+    <value>Heruntergeladenes Bild aus der DECODE-Datenbank </value>
   </data>
   <data name="Paper" xml:space="preserve">
     <value>Papier:</value>
@@ -250,6 +250,6 @@
     <value>Typ:</value>
   </data>
   <data name="UploadDateHeader" xml:space="preserve">
-    <value>Hochladedatum</value>
+    <value>Hochlade-Datum</value>
   </data>
 </root>
