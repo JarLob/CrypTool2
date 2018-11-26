@@ -61,6 +61,105 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add. Info: ähnelt.
+        /// </summary>
+        internal static string AddInfo {
+            get {
+                return ResourceManager.GetString("AddInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Author: ähnelt.
+        /// </summary>
+        internal static string Author {
+            get {
+                return ResourceManager.GetString("Author", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher Type: ähnelt.
+        /// </summary>
+        internal static string CipherType {
+            get {
+                return ResourceManager.GetString("CipherType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die City: ähnelt.
+        /// </summary>
+        internal static string City {
+            get {
+                return ResourceManager.GetString("City", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cleartext Language: ähnelt.
+        /// </summary>
+        internal static string CleartextLanguage {
+            get {
+                return ResourceManager.GetString("CleartextLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Content: ähnelt.
+        /// </summary>
+        internal static string Content {
+            get {
+                return ResourceManager.GetString("Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy all data ähnelt.
+        /// </summary>
+        internal static string Copy_all {
+            get {
+                return ResourceManager.GetString("Copy_all", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy content data ähnelt.
+        /// </summary>
+        internal static string Copy_content {
+            get {
+                return ResourceManager.GetString("Copy_content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy format data ähnelt.
+        /// </summary>
+        internal static string Copy_format {
+            get {
+                return ResourceManager.GetString("Copy_format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy origin data ähnelt.
+        /// </summary>
+        internal static string Copy_origin {
+            get {
+                return ResourceManager.GetString("Copy_origin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Dating: ähnelt.
+        /// </summary>
+        internal static string Dating {
+            get {
+                return ResourceManager.GetString("Dating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die DECODE Downloader ähnelt.
         /// </summary>
         internal static string DecodeDownloaderPluginCaption {
@@ -115,11 +214,128 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Documents: ähnelt.
+        /// </summary>
+        internal static string Documents {
+            get {
+                return ResourceManager.GetString("Documents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die File Type ähnelt.
+        /// </summary>
+        internal static string FileTypeHeader {
+            get {
+                return ResourceManager.GetString("FileTypeHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Filter: ähnelt.
+        /// </summary>
+        internal static string Filter {
+            get {
+                return ResourceManager.GetString("Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Format: ähnelt.
+        /// </summary>
+        internal static string Format {
+            get {
+                return ResourceManager.GetString("Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Id: ähnelt.
+        /// </summary>
+        internal static string Id {
+            get {
+                return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Images: ähnelt.
+        /// </summary>
+        internal static string Images {
+            get {
+                return ResourceManager.GetString("Images", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ink Type: ähnelt.
+        /// </summary>
+        internal static string InkType {
+            get {
+                return ResourceManager.GetString("InkType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Inline Cleartext: ähnelt.
+        /// </summary>
+        internal static string InlineCleartext {
+            get {
+                return ResourceManager.GetString("InlineCleartext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Inline Plaintext: ähnelt.
+        /// </summary>
+        internal static string InlinePlaintext {
+            get {
+                return ResourceManager.GetString("InlinePlaintext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Name: ähnelt.
+        /// </summary>
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Name ähnelt.
         /// </summary>
         internal static string NameHeader {
             get {
                 return ResourceManager.GetString("NameHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Name ähnelt.
+        /// </summary>
+        internal static string NameHeader1 {
+            get {
+                return ResourceManager.GetString("NameHeader1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of Pages: ähnelt.
+        /// </summary>
+        internal static string NumberOfPages {
+            get {
+                return ResourceManager.GetString("NumberOfPages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Origin: ähnelt.
+        /// </summary>
+        internal static string Origin {
+            get {
+                return ResourceManager.GetString("Origin", resourceCulture);
             }
         }
         
@@ -156,6 +372,96 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         internal static string OutputImageTooltip {
             get {
                 return ResourceManager.GetString("OutputImageTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Paper: ähnelt.
+        /// </summary>
+        internal static string Paper {
+            get {
+                return ResourceManager.GetString("Paper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext Language: ähnelt.
+        /// </summary>
+        internal static string PlaintextLanguage {
+            get {
+                return ResourceManager.GetString("PlaintextLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Receiver: ähnelt.
+        /// </summary>
+        internal static string Receiver {
+            get {
+                return ResourceManager.GetString("Receiver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Region: ähnelt.
+        /// </summary>
+        internal static string Region {
+            get {
+                return ResourceManager.GetString("Region", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sender: ähnelt.
+        /// </summary>
+        internal static string Sender {
+            get {
+                return ResourceManager.GetString("Sender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Size ähnelt.
+        /// </summary>
+        internal static string SizeHeader {
+            get {
+                return ResourceManager.GetString("SizeHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Symbol Set: ähnelt.
+        /// </summary>
+        internal static string SymbolSet {
+            get {
+                return ResourceManager.GetString("SymbolSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Title ähnelt.
+        /// </summary>
+        internal static string TitleHeader {
+            get {
+                return ResourceManager.GetString("TitleHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Type: ähnelt.
+        /// </summary>
+        internal static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Upload Date ähnelt.
+        /// </summary>
+        internal static string UploadDateHeader {
+            get {
+                return ResourceManager.GetString("UploadDateHeader", resourceCulture);
             }
         }
     }

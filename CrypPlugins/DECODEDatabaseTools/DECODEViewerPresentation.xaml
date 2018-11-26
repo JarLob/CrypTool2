@@ -4,13 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="500" MinHeight="600" MinWidth="550">
+             d:DesignHeight="600" d:DesignWidth="500" MinHeight="600" MinWidth="550">    
     <Grid>
+        <Grid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="{Loc Copy_content}" Tag="copy_content" Click="ContextMenuHandler" />
+                <MenuItem Header="{Loc Copy_origin}" Tag="copy_origin" Click="ContextMenuHandler" />
+                <MenuItem Header="{Loc Copy_format}" Tag="copy_format" Click="ContextMenuHandler" />
+                <MenuItem Header="{Loc Copy_all}" Tag="copy_all" Click="ContextMenuHandler" />
+            </ContextMenu>
+        </Grid.ContextMenu>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="82"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="27"/>
             <RowDefinition Height="27"/>
             <RowDefinition Height="104"/>
             <RowDefinition Height="81"/>
@@ -20,18 +29,20 @@
             <RowDefinition Height="150*"/>
         </Grid.RowDefinitions>
         
-        <Label Content="Name:" Grid.Column="0" Grid.Row="0" Background="White" FontSize="14"/>
-        <Label Content="Content:" Grid.Column="0" Grid.Row="1" Background="LightGray" FontSize="14"/>
-        <Label Content="Origin:" Grid.Column="0" Grid.Row="2"  Background="White" FontSize="14"/>
-        <Label Content="Format:" Grid.Column="0" Grid.Row="3"  Background="LightGray" FontSize="14"/>
-        <Label Content="Add. Info:" Grid.RowSpan="2" Grid.Column="0" Grid.Row="4"  Background="White" FontSize="14"/>
+        <Label Content="{Loc Name}" Grid.Column="0" Grid.Row="0" Background="White" FontSize="14"/>
+        <Label Content="{Loc Id}" Grid.Column="0" Grid.Row="1" Background="White" FontSize="14"/>
+        <Label Content="{Loc Content}" Grid.Column="0" Grid.Row="2" Background="LightGray" FontSize="14"/>
+        <Label Content="{Loc Origin}" Grid.Column="0" Grid.Row="3"  Background="White" FontSize="14"/>
+        <Label Content="{Loc Format}" Grid.Column="0" Grid.Row="4"  Background="LightGray" FontSize="14"/>
+        <Label Content="{Loc AddInfo}" Grid.RowSpan="2" Grid.Column="0" Grid.Row="5"  Background="White" FontSize="14"/>
         
         <Label Content="{Binding Path=Record.metadata.name}" Grid.Column="1" Grid.Row="0" Background="White"/>
-        <Label Content="Images:" Grid.Row="5" Grid.Column="0"  FontSize="14" Background="LightGray"/>
-        <Label Content="Documents:" Grid.Row="6" Grid.Column="0"  FontSize="14" Background="White"/>
+        <Label Content="{Binding Path=Record.record_id}" Grid.Column="1" Grid.Row="1" Background="White"/>
+        <Label Content="{Loc Images}" Grid.Row="6" Grid.Column="0"  FontSize="14" Background="LightGray"/>
+        <Label Content="{Loc Documents}" Grid.Row="7" Grid.Column="0"  FontSize="14" Background="White"/>
         
         <!-- metadata.content -->
-        <Grid Grid.Column="1" Grid.Row="1">
+        <Grid Grid.Column="1" Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="115"/>
                 <ColumnDefinition Width="120*"/>
@@ -44,15 +55,15 @@
                 <RowDefinition Height="27"/>
                 <RowDefinition Height="27"/>
             </Grid.RowDefinitions>
-            <Label Content="Type:" Grid.Column="0" Grid.Row="0" Background="LightGray"/>
-            <Label Content="Cipher Type:" Grid.Column="0" Grid.Row="1" Background="LightGray"/>
-            <Label Content="Symbol Set:" Grid.Column="0" Grid.Row="2"  Background="LightGray"/>
-            <Label Content="Number of Pages:" Grid.Column="0" Grid.Row="3"  Background="LightGray"/>
+            <Label Content="{Loc Type}" Grid.Column="0" Grid.Row="0" Background="LightGray"/>
+            <Label Content="{Loc CipherType}" Grid.Column="0" Grid.Row="1" Background="LightGray"/>
+            <Label Content="{Loc SymbolSet}" Grid.Column="0" Grid.Row="2"  Background="LightGray"/>
+            <Label Content="{Loc NumberOfPages}" Grid.Column="0" Grid.Row="3"  Background="LightGray"/>
             
-            <Label Content="Inline Plaintext:" Grid.Column="2" Grid.Row="0"  Background="LightGray"/>
-            <Label Content="Inline Cleartext:" Grid.Column="2" Grid.Row="1" Background="LightGray"/>
-            <Label Content="Cleartext Language:" Grid.Column="2" Grid.Row="2" Background="LightGray"/>
-            <Label Content="Plaintext Language:" Grid.Column="2" Grid.Row="3"  Background="LightGray"/>
+            <Label Content="{Loc InlinePlaintext}" Grid.Column="2" Grid.Row="0"  Background="LightGray"/>
+            <Label Content="{Loc InlineCleartext}" Grid.Column="2" Grid.Row="1" Background="LightGray"/>
+            <Label Content="{Loc CleartextLanguage}" Grid.Column="2" Grid.Row="2" Background="LightGray"/>
+            <Label Content="{Loc PlaintextLanguage}" Grid.Column="2" Grid.Row="3"  Background="LightGray"/>
 
             <Label Content="{Binding Path=Record.metadata.content.type}" Grid.Column="1" Grid.Row="0"  Background="LightGray"/>
             <Label Content="{Binding Path=Record.metadata.content.cipher_type}" Grid.Column="1" Grid.Row="1"  Background="LightGray"/>
@@ -67,7 +78,7 @@
 
         <!-- metadata.origin -->
         
-        <Grid Grid.Column="1" Grid.Row="2">
+        <Grid Grid.Column="1" Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="115"/>
                 <ColumnDefinition Width="120*"/>
@@ -79,13 +90,13 @@
                 <RowDefinition Height="27"/>
                 <RowDefinition Height="27"/> 
             </Grid.RowDefinitions>
-            <Label Content="Author:" Grid.Column="0" Grid.Row="0" Background="White"/>
-            <Label Content="Sender:" Grid.Column="0" Grid.Row="1" Background="White"/>
-            <Label Content="Receiver:" Grid.Column="0" Grid.Row="2"  Background="White"/>
+            <Label Content="{Loc Author}" Grid.Column="0" Grid.Row="0" Background="White"/>
+            <Label Content="{Loc Sender}" Grid.Column="0" Grid.Row="1" Background="White"/>
+            <Label Content="{Loc Receiver}" Grid.Column="0" Grid.Row="2"  Background="White"/>
             
-            <Label Content="Dating:" Grid.Column="2" Grid.Row="0"  Background="White"/>
-            <Label Content="Region:" Grid.Column="2" Grid.Row="1"  Background="White"/>
-            <Label Content="City:" Grid.Column="2" Grid.Row="2" Background="White"/>
+            <Label Content="{Loc Dating}" Grid.Column="2" Grid.Row="0"  Background="White"/>
+            <Label Content="{Loc Region}" Grid.Column="2" Grid.Row="1"  Background="White"/>
+            <Label Content="{Loc City}" Grid.Column="2" Grid.Row="2" Background="White"/>
 
             <Label Content="{Binding Path=Record.metadata.origin.author}" Grid.Column="1" Grid.Row="0"  Background="White"/>
             <Label Content="{Binding Path=Record.metadata.origin.sender}" Grid.Column="1" Grid.Row="1"  Background="White"/>
@@ -97,7 +108,7 @@
         </Grid>
 
         <!-- metadata.format-->
-        <Grid Grid.Column="1" Grid.Row="3">
+        <Grid Grid.Column="1" Grid.Row="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="115"/>
                 <ColumnDefinition Width="*"/>
@@ -106,16 +117,16 @@
                 <RowDefinition Height="27"/>
                 <RowDefinition Height="27"/>
             </Grid.RowDefinitions>
-            <Label Content="Paper:" Grid.Column="0" Grid.Row="0" Background="LightGray"/>
-            <Label Content="Ink Type:" Grid.Column="0" Grid.Row="1" Background="LightGray"/>
+            <Label Content="{Loc Paper}" Grid.Column="0" Grid.Row="0" Background="LightGray"/>
+            <Label Content="{Loc InkType}" Grid.Column="0" Grid.Row="1" Background="LightGray"/>
 
             <Label Content="{Binding Path=Record.metadata.format.paper}" Grid.Column="1" Grid.Row="0"  Background="LightGray"/>
             <Label Content="{Binding Path=Record.metadata.format.ink_type}" Grid.Column="1" Grid.Row="1"  Background="LightGray"/>
            
         </Grid>
-        <Label Content="{Binding Path=Record.metadata.additional_information}" Grid.Column="1" Grid.Row="4"  Background="White"/>
+        <Label Content="{Binding Path=Record.metadata.additional_information}" Grid.Column="1" Grid.Row="5"  Background="White"/>
 
-        <ScrollViewer Grid.Row="5" Grid.Column="1" CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Row="6" Grid.Column="1" CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <ListView Name="ImageList" FontSize="12" Height="Auto" Foreground="LightGray" Background="LightGray" PreviewMouseWheel="ImageList_PreviewMouseWheel">
                 <ListView.Resources>
                     <Style TargetType="GridViewColumnHeader">
@@ -140,7 +151,7 @@
             </ListView.View>
         </ListView>
         </ScrollViewer>
-        <ListView Grid.Row="6" Grid.Column="1"  Name="DocumentList" FontSize="12" Height="Auto" Background="White" Foreground="Black" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <ListView Grid.Row="7" Grid.Column="1"  Name="DocumentList" FontSize="12" Height="Auto" Background="White" Foreground="Black" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <EventSetter Event="MouseDoubleClick" Handler="DocumentListHandleDoubleClick" />
@@ -155,28 +166,28 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn  Header="Title" DisplayMemberBinding="{Binding Path=title}" Width="168">
+                    <GridViewColumn Header="{Loc TitleHeader}" DisplayMemberBinding="{Binding Path=title}" Width="168">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn  Header="Upload Date" DisplayMemberBinding="{Binding Path=upload_date}" Width="80">
+                    <GridViewColumn  Header="{Loc UploadDateHeader}" DisplayMemberBinding="{Binding Path=upload_date}" Width="80">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn  Header="Size" DisplayMemberBinding="{Binding Path=size}" Width="80">
+                    <GridViewColumn  Header="{Loc SizeHeader}" DisplayMemberBinding="{Binding Path=size}" Width="80">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn  Header="File Type" DisplayMemberBinding="{Binding Path=file_type}" Width="80">
+                    <GridViewColumn  Header="{Loc FileTypeHeader}" DisplayMemberBinding="{Binding Path=file_type}" Width="80">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>

@@ -117,8 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddInfo" xml:space="preserve">
+    <value>Информация:</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>Автор:</value>
+  </data>
+  <data name="CipherType" xml:space="preserve">
+    <value>Тип шифрования:</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Город:</value>
+  </data>
+  <data name="CleartextLanguage" xml:space="preserve">
+    <value>Cleartext Language:</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>Содержание:</value>
+  </data>
+  <data name="Copy_all" xml:space="preserve">
+    <value>Скопировать все данные</value>
+  </data>
+  <data name="Copy_content" xml:space="preserve">
+    <value>Копировать данные контента</value>
+  </data>
+  <data name="Copy_format" xml:space="preserve">
+    <value>Данные формата копирования</value>
+  </data>
+  <data name="Copy_origin" xml:space="preserve">
+    <value>Копировать исходные данные</value>
+  </data>
+  <data name="Dating" xml:space="preserve">
+    <value>Знакомства:</value>
+  </data>
   <data name="DecodeDownloaderPluginCaption" xml:space="preserve">
-    <value>DECODE Downloader</value>
+    <value>DECODE Загрузчик</value>
   </data>
   <data name="DecodeDownloaderPluginTooltip" xml:space="preserve">
     <value>Компонент для загрузки данных из базы данных DECODE</value>
@@ -130,13 +163,52 @@
     <value>Запись DECODE (набор данных) в формате json</value>
   </data>
   <data name="DecodeViewerPluginCaption" xml:space="preserve">
-    <value>DECODE Viewer</value>
+    <value>DECODE зритель</value>
   </data>
   <data name="DecodeViewerPluginTooltip" xml:space="preserve">
     <value>Компонент для просмотра данных из базы данных DECODE</value>
   </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Документы:</value>
+  </data>
+  <data name="FileTypeHeader" xml:space="preserve">
+    <value>Тип файла</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Фильтр:</value>
+  </data>
+  <data name="Format" xml:space="preserve">
+    <value>Формат:</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Я бы:</value>
+  </data>
+  <data name="Images" xml:space="preserve">
+    <value>Изображений:</value>
+  </data>
+  <data name="InkType" xml:space="preserve">
+    <value>Тип чернил:</value>
+  </data>
+  <data name="InlineCleartext" xml:space="preserve">
+    <value>Inline Cleartext:</value>
+  </data>
+  <data name="InlinePlaintext" xml:space="preserve">
+    <value>Inline Plaintext:</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>название:</value>
+  </data>
   <data name="NameHeader" xml:space="preserve">
     <value>имя</value>
+  </data>
+  <data name="NameHeader1" xml:space="preserve">
+    <value>название</value>
+  </data>
+  <data name="NumberOfPages" xml:space="preserve">
+    <value>Количество страниц:</value>
+  </data>
+  <data name="Origin" xml:space="preserve">
+    <value>Происхождение:</value>
   </data>
   <data name="OutputDocumentCaption" xml:space="preserve">
     <value>Документ</value>
@@ -149,5 +221,35 @@
   </data>
   <data name="OutputImageTooltip" xml:space="preserve">
     <value>Загруженное изображение из базы данных DECODE</value>
+  </data>
+  <data name="Paper" xml:space="preserve">
+    <value>Бумага:</value>
+  </data>
+  <data name="PlaintextLanguage" xml:space="preserve">
+    <value>Plaintext Language:</value>
+  </data>
+  <data name="Receiver" xml:space="preserve">
+    <value>Получатель:</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Область, край:</value>
+  </data>
+  <data name="Sender" xml:space="preserve">
+    <value>Отправитель:</value>
+  </data>
+  <data name="SizeHeader" xml:space="preserve">
+    <value>Размер</value>
+  </data>
+  <data name="SymbolSet" xml:space="preserve">
+    <value>Набор символов:</value>
+  </data>
+  <data name="TitleHeader" xml:space="preserve">
+    <value>заглавие</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Тип:</value>
+  </data>
+  <data name="UploadDateHeader" xml:space="preserve">
+    <value>Дата загрузки</value>
   </data>
 </root>

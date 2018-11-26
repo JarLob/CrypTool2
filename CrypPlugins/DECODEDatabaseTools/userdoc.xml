@@ -4,6 +4,7 @@
 <documentation>
   <language culture="en"/>
   <language culture="de-DE"/>
+  <language culture="ru"/>
 
   <introduction lang="en">    
   </introduction>
@@ -11,10 +12,16 @@
   <introduction lang="de-DE">    
   </introduction>
 
+  <introduction lang="ru">
+  </introduction>
+
   <usage lang="en">
   </usage>
 
   <usage lang="de-DE">
+  </usage>
+
+  <usage lang="ru">
   </usage>
   
   <presentation lang="en">
@@ -22,7 +29,10 @@
   
   <presentation lang="de-DE">
   </presentation>
-  
+
+  <presentation lang="ru">
+  </presentation>
+
   <references>
   </references>
 </documentation>
