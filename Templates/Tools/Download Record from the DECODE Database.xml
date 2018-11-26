@@ -4,9 +4,9 @@
   <title lang="ru">Загрузите документы из базы данных DECODE</title>
   <title lang="de">Dokumente aus der DECODE-Datenbank herunterladen</title>
   
-  <summary lang="en">Simple <i>Video and Audio Chat</i> using <i>AES</i> encryption</summary>
-  <summary lang="ru">Простой видео и аудио-чат с использованием AES-шифрования</summary>
-  <summary lang="de">Einfacher <i>Video-Audio-Chat</i> mit <i>AES</i>-Verschlüsselung</summary>
+  <summary lang="en">Download documents from the DECODE database</summary>
+  <summary lang="ru">Загрузите документы из базы данных DECODE</summary>
+  <summary lang="de">Dokumente aus der DECODE-Datenbank herunterladen</summary>
   
   <description lang="en">This template allows users to download documents from the DECODE database.</description>
   <description lang="ru">Этот шаблон позволяет пользователям загружать документы из базы данных DECODE.</description>
