@@ -12,11 +12,11 @@ public class Indicators1938Search {
         int Z = Utils.getIndex('Z');
         if ((lowKey.lMesg != A) || (lowKey.mMesg != A) || (lowKey.rMesg != A) ||
                 (highKey.lMesg != Z) || (highKey.mMesg != Z) || (highKey.rMesg != Z)) {
-            System.out.print("WARNING: Z. Sheets TrigramICSearch (-D): Ignoring Message Key settings. \n\n");
+            System.out.print("WARNING: Z. Sheets Search (-D): Ignoring Message Key settings. \n\n");
         }
 
         if (steckerS.length() != 0) {
-            System.out.print("WARNING: Z. Sheets TrigramICSearch (-D): Ignoring Stecker Settings. \n\n");
+            System.out.print("WARNING: Z. Sheets Search (-D): Ignoring Stecker Settings. \n\n");
             lowKey.setStecker("");
             highKey.setStecker("");
         }
@@ -26,16 +26,16 @@ public class Indicators1938Search {
         if (INDICATORS_FILE.length() != 0)
             flen = Utils.loadCipherText(INDICATORS_FILE, indicData, false);
         if ((flen < 9) || (flen % 9 != 0)) {
-            CtAPI.goodbyeError("Z. Sheets TrigramICSearch (-%s INDICATORS1938): Failed to load indicators data from file %s (%d characters found).\n",
+            CtAPI.goodbyeError("Z. Sheets Search (-%s INDICATORS1938): Failed to load indicators data from file %s (%d characters found).\n",
                     CommandLine.getFlagString(Flag.MODE), INDICATORS_FILE, flen);
         }
-        CtAPI.printf("Zygalski Sheets TrigramICSearch: Read database - File %s Indicators %d \nFirst Indicator: %s\n",
+        CtAPI.printf("Zygalski Sheets Search: Read database - File %s Indicators %d \nFirst Indicator: %s\n",
                 INDICATORS_FILE, flen / 9, Utils.getString(indicData, 9));
 
         key = searchZSheets(indicData, flen, lowKey, highKey, ciphertext, clen);
 
         if (key == null) {
-            CtAPI.print("\nZ. Sheets TrigramICSearch: No match found. \n");
+            CtAPI.print("\nZ. Sheets Search: No match found. \n");
             CtAPI.goodbyeError("Zygalski Sheets search failed");
         }
     }
@@ -79,9 +79,9 @@ public class Indicators1938Search {
 
         int nRingsToTest = (to.lRing - from.lRing + 1) * (to.mRing - from.mRing + 1) * (to.rRing - from.rRing + 1);
         if ((indicsWithFemales < 5) || ((indicsWithFemales < 10) && (nRingsToTest > 10))) {
-            CtAPI.printf("\n\nINDICATORS1938 Zygalski Sheets TrigramICSearch: Only %d indicators with 'females' (out of %d) were found - not enough (best 10 or more) or will take too much time.... \n\n", indicsWithFemales, nIndics);
+            CtAPI.printf("\n\nINDICATORS1938 Zygalski Sheets Search: Only %d indicators with 'females' (out of %d) were found - not enough (best 10 or more) or will take too much time.... \n\n", indicsWithFemales, nIndics);
         }
-        CtAPI.printf("\n\nINDICATORS1938 Zygalski Sheets TrigramICSearch: %d indicators with 'females' (out of %d) - Starting search.... \n\n", indicsWithFemales, nIndics);
+        CtAPI.printf("\n\nINDICATORS1938 Zygalski Sheets Search: %d indicators with 'females' (out of %d) - Starting search.... \n\n", indicsWithFemales, nIndics);
 
 
         Key ckey = new Key(from);
@@ -154,16 +154,16 @@ public class Indicators1938Search {
                                                     String all = indics1938String(indicCiphertext, indicMsgKeys, nIndics, ckey);
 
                                                     if (ckey.score > 700) {
-                                                        CtAPI.printf("\nINDICATORS1938 Zygalski Sheets TrigramICSearch: Found Wheels Order (%d%d%d) and Ring Settings (%s) which matches the female cases (%d keys tested)\n\n",
+                                                        CtAPI.printf("\nINDICATORS1938 Zygalski Sheets Search: Found Wheels Order (%d%d%d) and Ring Settings (%s) which matches the female cases (%d keys tested)\n\n",
                                                                 ckey.lSlot, ckey.mSlot, ckey.rSlot,
                                                                 "" + Utils.getChar(ckey.lRing) + Utils.getChar(ckey.mRing) + Utils.getChar(ckey.rRing),
                                                                 counterKeys);
-                                                        CtAPI.printf("\nINDICATORS1938 Zygalski Sheets TrigramICSearch: Found Stecker Board settings matching (score %d) the double-encrypted indicators: %s\n\n", ckey.score, ckey.stbString());
+                                                        CtAPI.printf("\nINDICATORS1938 Zygalski Sheets Search: Found Stecker Board settings matching (score %d) the double-encrypted indicators: %s\n\n", ckey.score, ckey.stbString());
 
-                                                        CtAPI.printf("\nINDICATORS1938 Zygalski Sheets TrigramICSearch: Showing only deciphered indicators with females (%d):\n\n", indicsWithFemales);
+                                                        CtAPI.printf("\nINDICATORS1938 Zygalski Sheets Search: Showing only deciphered indicators with females (%d):\n\n", indicsWithFemales);
                                                         String withFemales = indics1938String(indicCiphertextWithFemales, indicMsgKeysWithFemales, indicsWithFemales, ckey);
                                                         CtAPI.printf(withFemales);
-                                                        CtAPI.printf("\nINDICATORS1938 Zygalski Sheets TrigramICSearch: Showing all deciphered indicators (%d):\n\n", nIndics);
+                                                        CtAPI.printf("\nINDICATORS1938 Zygalski Sheets Search: Showing all deciphered indicators (%d):\n\n", nIndics);
                                                         CtAPI.printf(all);
                                                     }
                                                     ckey.lMesg = ckey.mMesg = ckey.rMesg = 0;
@@ -180,30 +180,30 @@ public class Indicators1938Search {
                                                         indicKey.mMesg = indicData[1];
                                                         indicKey.rMesg = indicData[2];
                                                         indicKey.score = 0;
-                                                        CtAPI.printf("\nINDICATORS1938 Zygalski Sheets TrigramICSearch: Using the non-encrypted indicator (%s) of the first indicator set (%s) in the the original file to decipher the (double encrypted) message key.\n\n",
+                                                        CtAPI.printf("\nINDICATORS1938 Zygalski Sheets Search: Using the non-encrypted indicator (%s) of the first indicator set (%s) in the the original file to decipher the (double encrypted) message key.\n\n",
                                                                 "" + Utils.getChar(indicKey.lMesg) + Utils.getChar(indicKey.mMesg) + Utils.getChar(indicKey.rMesg),
                                                                 Utils.getString(indicData, 9));
                                                         indicKey.printKeyString("");
                                                         byte doubleKeyText[] = new byte[6];
                                                         System.arraycopy(indicData, 3, doubleKeyText, 0, 6);
                                                         indicKey.encipherDecipherAll(doubleKeyText, indicPlaintext, 6);
-                                                        CtAPI.printf("\nINDICATORS1938 Zygalski Sheets TrigramICSearch: Message Key deciphered  - Making sure it is doubled .... (%s) \n",
+                                                        CtAPI.printf("\nINDICATORS1938 Zygalski Sheets Search: Message Key deciphered  - Making sure it is doubled .... (%s) \n",
                                                                 Utils.getString(indicPlaintext, 6));
 
                                                         if ((indicPlaintext[0] != indicPlaintext[3]) ||
                                                                 (indicPlaintext[1] != indicPlaintext[4]) ||
                                                                 (indicPlaintext[2] != indicPlaintext[5])) {
-                                                            CtAPI.print("\n\nINDICATORS1938 Zygalski Sheets TrigramICSearch: Problem - the first indicator is not doubled \n");
+                                                            CtAPI.print("\n\nINDICATORS1938 Zygalski Sheets Search: Problem - the first indicator is not doubled \n");
                                                             continue;
                                                         }
 
                                                         ckey.lMesg = indicPlaintext[0];
                                                         ckey.mMesg = indicPlaintext[1];
                                                         ckey.rMesg = indicPlaintext[2];
-                                                        CtAPI.printf("\nINDICATORS1938 Zygalski Sheets TrigramICSearch: Obtained the message key for the message (%s after decryption) - Updating the key.\n\n",
+                                                        CtAPI.printf("\nINDICATORS1938 Zygalski Sheets Search: Obtained the message key for the message (%s after decryption) - Updating the key.\n\n",
                                                                 "" + Utils.getChar(ckey.lMesg) + Utils.getChar(ckey.mMesg) + Utils.getChar(ckey.rMesg));
 
-                                                        ckey.printKeyString("INDICATORS1938 Zygalski Sheets TrigramICSearch: Key to decipher the message");
+                                                        ckey.printKeyString("INDICATORS1938 Zygalski Sheets Search: Key to decipher the message");
 
                                                         byte[] plaintext = new byte[Key.MAXLEN];
 
@@ -213,7 +213,7 @@ public class Indicators1938Search {
 
                                                         plainS = Utils.getString(plaintext, clen);
 
-                                                        CtAPI.printf("Z. Sheets TrigramICSearch Successful - Plaintext is: \n\n%s\n", plainS);
+                                                        CtAPI.printf("Z. Sheets Search Successful - Plaintext is: \n\n%s\n", plainS);
                                                         byte[] steppings = new byte[Key.MAXLEN];
                                                         ckey.showSteppings(steppings, clen);
                                                         String steppingsS = Utils.getCiphertextStringNoXJ(steppings, clen);
@@ -242,7 +242,7 @@ public class Indicators1938Search {
         long elapsed = (System.currentTimeMillis() - startTime + 1);
 
 
-        CtAPI.printf("INDICATORS1938 Zygalski Sheets TrigramICSearch: No matching keys found \n %d Total Keys Tested in %.1f Seconds(%d/sec)\n\n",
+        CtAPI.printf("INDICATORS1938 Zygalski Sheets Search: No matching keys found \n %d Total Keys Tested in %.1f Seconds(%d/sec)\n\n",
                 counterKeys, elapsed / 1000.0, 1000 * counterKeys / elapsed);
 
         return null;

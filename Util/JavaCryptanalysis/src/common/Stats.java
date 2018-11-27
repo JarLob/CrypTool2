@@ -41,11 +41,10 @@ public class Stats {
             is.close();
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
+        } catch (IOException ex) {
+            CtAPI.goodbyeError("Unable to read hexa file %s - %s", filename, ex.toString());
         }
-        CtAPI.printf("Hexagram stats file %s loaded successfully (%f seconds), size = %,d bytes (%,d free bytes after loading)\n",
+      CtAPI.printf("Hexagram stats file %s loaded successfully (%f seconds), size = %,d bytes (%,d free bytes after loading)\n",
                 filename, (System.currentTimeMillis() - start) / 1_000.0, totalShortRead * 2, Runtime.getRuntime().freeMemory());
         CtAPI.println("");
         CtAPI.println("");
@@ -104,10 +103,8 @@ public class Stats {
             }
 
             bufferedReader.close();
-        } catch (FileNotFoundException ex) {
-            CtAPI.goodbyeError("Unable to open bigram file '" + fileName + "'");
         } catch (IOException ex) {
-            CtAPI.goodbyeError("Error reading bigram file '" + fileName + "'");
+            CtAPI.goodbyeError("Unable to read bigram file %s - %s", fileName, ex.toString());
         }
 
         CtAPI.printf("Bigram file read: %s, items  = %d  \n", fileName, items);
@@ -142,10 +139,8 @@ public class Stats {
             }
 
             bufferedReader.close();
-        } catch (FileNotFoundException ex) {
-            CtAPI.goodbyeError("Unable to open mono file '" + fileName + "'");
         } catch (IOException ex) {
-            CtAPI.goodbyeError("Error reading mono file '" + fileName + "'");
+            CtAPI.goodbyeError("Unable to read mono file %s - %s", fileName, ex.toString());
         }
 
         CtAPI.printf("mono file read: %s, items  = %d  \n", fileName, items);
@@ -196,10 +191,8 @@ public class Stats {
 
             // Always close files.
             bufferedReader.close();
-        } catch (FileNotFoundException ex) {
-            CtAPI.goodbyeError("Unable to open text file for stats '" + fileName + "'");
         } catch (IOException ex) {
-            CtAPI.goodbyeError("Error reading text file for stats '" + fileName + "'");
+            CtAPI.goodbyeError("Unable to read text file for stats  %s - %s", fileName, ex.toString());
         }
 
         convertToLog(bigramStats);

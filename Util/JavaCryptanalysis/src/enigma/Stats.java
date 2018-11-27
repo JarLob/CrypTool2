@@ -68,13 +68,8 @@ class Stats {
 
             // Always close files.
             bufferedReader.close();
-        } catch (FileNotFoundException ex) {
-            CtAPI.println("Unable to open bigram file '" + fileName + "'");
-            return 0;
         } catch (IOException ex) {
-            CtAPI.println("Error reading bigram file '" + fileName + "'");
-            return 0;
-
+            CtAPI.goodbyeError("Unable to read bigram file %s - %s", fileName, ex.toString());
         }
 
         if (print)
@@ -140,13 +135,8 @@ class Stats {
 
             // Always close files.
             bufferedReader.close();
-        } catch (FileNotFoundException ex) {
-            CtAPI.println("Unable to open trigram file '" + fileName + "'");
-            return 0;
         } catch (IOException ex) {
-            CtAPI.println("Error reading trigram file '" + fileName + "'");
-            return 0;
-
+            CtAPI.goodbyeError("Unable to read trigram file %s - %s", fileName, ex.toString());
         }
 
         if (print)
@@ -212,13 +202,8 @@ class Stats {
 
             // Always close files.
             bufferedReader.close();
-        } catch (FileNotFoundException ex) {
-            CtAPI.println("Unable to open trigram file '" + fileName + "'");
-            return 0;
         } catch (IOException ex) {
-            CtAPI.println("Error reading trigram file '" + fileName + "'");
-            return 0;
-
+            CtAPI.goodbyeError("Unable to read trigram file %s - %s", fileName, ex.toString());
         }
 
         if (minNonZero < 1000) {
@@ -276,13 +261,8 @@ class Stats {
 
             // Always close files.
             bufferedReader.close();
-        } catch (FileNotFoundException ex) {
-            CtAPI.println("Unable to open bigram  file '" + fileName + "'");
-            return 0;
         } catch (IOException ex) {
-            CtAPI.println("Error reading bigram file '" + fileName + "'");
-            return 0;
-
+            CtAPI.goodbyeError("Unable to read bigram file %s - %s", fileName, ex.toString());
         }
 
 

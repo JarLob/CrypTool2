@@ -166,17 +166,13 @@ class Utils {
 
             // Always close files.
             bufferedReader.close();
-        } catch (FileNotFoundException ex) {
-            CtAPI.println("Unable to open ciphertext file '" + fileName + "'");
-            return 0;
         } catch (IOException ex) {
-            CtAPI.println("Error reading ciphertext file '" + fileName + "'");
-            return 0;
+            CtAPI.goodbyeError("Unable to read file %s - %s", fileName, ex.toString());
         }
 
 
         if (print)
-            CtAPI.printf("Ciphertext file %s read \n", fileName);
+            CtAPI.printf("Read file %s\n", fileName);
 
         return k;
     }
@@ -220,12 +216,8 @@ class Utils {
 
             // Always close files.
             bufferedReader.close();
-        } catch (FileNotFoundException ex) {
-            CtAPI.println("Unable to open input text file '" + fileName + "'");
-            return 0;
         } catch (IOException ex) {
-            CtAPI.println("Error reading input text file '" + fileName + "'");
-            return 0;
+            CtAPI.goodbyeError("Failed to read %s - %s", fileName, ex.toString());
         }
 
         if (len >= k) {
@@ -256,9 +248,7 @@ class Utils {
 
 
         if ((end - start) < len / 2) {
-            CtAPI.println("Could not create a coherent message (from X to X, or from beginning of a line to end of another line) with " + len + " characters from " + fileName + "'");
-            return 0;
-
+            CtAPI.goodbyeError("Could not create a coherent message (from X to X, or from beginning of a line to end of another line) with " + len + " characters from " + fileName + "'");
         }
 
 
@@ -298,37 +288,21 @@ class Utils {
     }
 
     public static void saveToFile(String fileName, String string) {
-        BufferedWriter bufferedWriter = null;
-
 
         try {
             // Assume default encoding.
             FileWriter fileWriter = new FileWriter(fileName);
             // Always wrap FileWriter in BufferedWriter.
-            bufferedWriter = new BufferedWriter(fileWriter);
-        } catch (IOException ex) {
-            CtAPI.printf("Error opening file '" + fileName + "'");
-        }
-
-
-        try {
-            // Assume default encoding.
-
-            assert bufferedWriter != null;
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             bufferedWriter.write(string);
             bufferedWriter.newLine();
             bufferedWriter.flush();
-
-        } catch (IOException ex) {
-            CtAPI.printf("Error writing file %s\n", fileName);
-        }
-
-
-        try {
             bufferedWriter.close();
-        } catch (IOException ex) {
-            CtAPI.printf("Error closing file %s\n", fileName);
+
+        } catch (IOException | NullPointerException ex) {
+            CtAPI.goodbyeError("Error writing file %s - %s\n", fileName, ex.toString());
         }
+
     }
 
     public static boolean isTextEncrypted(Key key, byte[] text1, int clen, String indicatorS) {

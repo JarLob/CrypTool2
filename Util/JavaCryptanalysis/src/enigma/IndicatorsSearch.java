@@ -14,7 +14,7 @@ public class IndicatorsSearch {
             /*
             if ((lowKey.l_ring != Z)|| (lowKey.m_ring != Z) || (lowKey.r_ring != Z) ||
                 (highKey.l_ring != Z) || (highKey.m_ring != Z) || (highKey.r_ring != Z)) {
-                CtAPI.printf("WARNING: Cycle Match TrigramICSearch (-O): Ignoring range ring settings. Will use ZZZ instead.\n\n");
+                CtAPI.printf("WARNING: Cycle Match Search (-O): Ignoring range ring settings. Will use ZZZ instead.\n\n");
 //                lowKey.l_ring = lowKey.m_ring = lowKey.r_ring = Z;
 //                highKey.l_ring = highKey.m_ring = highKey.r_ring = Z;
                 lowKey.l_ring = lowKey.m_ring = lowKey.r_ring = A;
@@ -23,7 +23,7 @@ public class IndicatorsSearch {
             }
             */
         if (steckerS.length() != 0) {
-            System.out.print("INDICATORS WARNING: Cycle Match TrigramICSearch (-O): Ignoring Stecker Settings. \n\n");
+            System.out.print("INDICATORS WARNING: Cycle Match Search (-O): Ignoring Stecker Settings. \n\n");
             lowKey.setStecker("");
             highKey.setStecker("");
         }
@@ -33,10 +33,10 @@ public class IndicatorsSearch {
         if (INDICATORS_FILE.length() != 0)
             flen = Utils.loadCipherText(INDICATORS_FILE, indicData, false);
         if ((flen < 6) || (flen % 6 != 0)) {
-            CtAPI.goodbyeError("INDICATORS Cycle Match TrigramICSearch (-%s INDICATORS): Failed to load indicators data from file %s (%d characters found).\n",
+            CtAPI.goodbyeError("INDICATORS Cycle Match Search (-%s INDICATORS): Failed to load indicators data from file %s (%d characters found).\n",
                     CommandLine.getFlagString(Flag.MODE), INDICATORS_FILE, flen);
         }
-        CtAPI.printf("INDICATORS Cycle Match TrigramICSearch: Read database file %s, %d Indicator groups found\nFirst Indicator: %s\n",
+        CtAPI.printf("INDICATORS Cycle Match Search: Read database file %s, %d Indicator groups found\nFirst Indicator: %s\n",
                 INDICATORS_FILE, flen / 6, Utils.getString(indicData, 6));
 
         searchCycleMatch(indicData, flen, lowKey, highKey, HILLCLIMBING_CYCLES, THREADS, ciphertext, clen, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING);
@@ -61,7 +61,7 @@ public class IndicatorsSearch {
                 int letterAtPos = indicData[i * 6 + pos];
                 int letterAtPosPlus3 = indicData[i * 6 + pos + 3];
                 if ((links[pos][letterAtPos] != -1) && (links[pos][letterAtPos] != letterAtPosPlus3)) {
-                    CtAPI.printf("Cycle Match TrigramICSearch: Conflict with Indicator #%d with letter [%s] (position %d) and letter [%s] (position %d)\n",
+                    CtAPI.printf("Cycle Match Search: Conflict with Indicator #%d with letter [%s] (position %d) and letter [%s] (position %d)\n",
                             i, Utils.getChar(letterAtPos), pos, Utils.getChar(letterAtPosPlus3), pos + 3);
                 } else {
                     links[pos][letterAtPos] = letterAtPosPlus3;
@@ -82,15 +82,15 @@ public class IndicatorsSearch {
 
         boolean hillClimbOnly = false;
         if (!Key.buildCycles(links, dbCycleSizes, true)) {
-            CtAPI.print("Cycle Match TrigramICSearch: Not enough indicators/cycles are not complete.\n");
-            CtAPI.print("Cycle Match TrigramICSearch: Cycles are ignored - searching only via Hill Climbing.\n");
+            CtAPI.print("Cycle Match Search: Not enough indicators/cycles are not complete.\n");
+            CtAPI.print("Cycle Match Search: Cycles are ignored - searching only via Hill Climbing.\n");
             hillClimbOnly = true;
         }
 
         if (lo.mRing == high.mRing)
             lRingSettingScope = MRingScope.ALL;
 
-        CtAPI.print("\nCycle Match TrigramICSearch: Starting ....\n\n");
+        CtAPI.print("\nCycle Match Search: Starting ....\n\n");
         int matchingKeys = 0;
         long startTime = System.currentTimeMillis();
 
@@ -186,12 +186,12 @@ public class IndicatorsSearch {
                                                                         ReportResult.reportResult(0, ckey, ckey.score, allIndicsPlaintext.toString(), desc);
                                                                     }
 
-                                                                    CtAPI.printf("\nINDICATORS Cycle Match TrigramICSearch: Found Message Key settings (%s) which matches the cycle patterns of the indicators (%d keys tested)\n\n",
+                                                                    CtAPI.printf("\nINDICATORS Cycle Match Search: Found Message Key settings (%s) which matches the cycle patterns of the indicators (%d keys tested)\n\n",
                                                                             "" + Utils.getChar(ckey.lMesg) + Utils.getChar(ckey.mMesg) + Utils.getChar(ckey.rMesg),
                                                                             counterKeys);
-                                                                    CtAPI.printf("INDICATORS Cycle Match TrigramICSearch: Found Stecker Board settings - Score %d/1000 (%d runs) - Stecker Settings: %s (%d plugs)\n\n",
+                                                                    CtAPI.printf("INDICATORS Cycle Match Search: Found Stecker Board settings - Score %d/1000 (%d runs) - Stecker Settings: %s (%d plugs)\n\n",
                                                                             ckey.score, runs + 1, ckey.stbString(), ckey.stbString().length() / 2);
-                                                                    System.out.print("INDICATORS Cycle Match TrigramICSearch: Showing the deciphered double indicators:\n\n");
+                                                                    System.out.print("INDICATORS Cycle Match Search: Showing the deciphered double indicators:\n\n");
 
                                                                     StringBuilder allIndicsWithNewlines = new StringBuilder();
                                                                     for (int i = 0; i < nIndics; i++) {
@@ -213,7 +213,7 @@ public class IndicatorsSearch {
                                                                             ckey.lMesg = indicPlaintext[0];
                                                                             ckey.mMesg = indicPlaintext[1];
                                                                             ckey.rMesg = indicPlaintext[2];
-                                                                            CtAPI.printf("\nINDICATORS Cycle Match TrigramICSearch: Using the first indicator (%s after decryption) as the Message Key (still need to find out the Ring Settings - not yet correct) \n\n",
+                                                                            CtAPI.printf("\nINDICATORS Cycle Match Search: Using the first indicator (%s after decryption) as the Message Key (still need to find out the Ring Settings - not yet correct) \n\n",
                                                                                     "" + Utils.getChar(indicPlaintext[0]) + Utils.getChar(indicPlaintext[1]) + Utils.getChar(indicPlaintext[2]));
                                                                             ckey.score = 0;
                                                                             ckey.printKeyString("");
@@ -223,7 +223,7 @@ public class IndicatorsSearch {
                                                                             lowKey.lRing = lowKey.mRing = lowKey.rRing = Utils.getIndex('A');
                                                                             Key highKey = new Key(ckey);
                                                                             highKey.lRing = highKey.mRing = highKey.rRing = Utils.getIndex('Z');
-                                                                            CtAPI.print("\nINDICATORS Cycle Match TrigramICSearch: Running a Trigram TrigramICSearch to find the exact Ring Settings and decipher the message.\n");
+                                                                            CtAPI.print("\nINDICATORS Cycle Match Search: Running a Trigram Search to find the exact Ring Settings and decipher the message.\n");
                                                                             TrigramICSearch.searchTrigramIC(lowKey, highKey, false, MRingScope.ALL, 1, false, HILLCLIMBING_CYCLES, 10000, THREADS, ciphertext, clen, "", "");
                                                                             ReportResult.displayProgress(counterKeys, totalKeys);
 
@@ -257,7 +257,7 @@ public class IndicatorsSearch {
 
         long elapsed = (System.currentTimeMillis() - startTime + 1);
 
-        CtAPI.printf("INDICATORS End of Cycle TrigramICSearch - %d matching keys found \n %d Total Keys Tested in %.1f Seconds(%d/sec)\n\n",
+        CtAPI.printf("INDICATORS End of Cycle Search - %d matching keys found \n %d Total Keys Tested in %.1f Seconds(%d/sec)\n\n",
                 matchingKeys, counterKeys, elapsed / 1000.0, 1000 * counterKeys / elapsed);
 
     }

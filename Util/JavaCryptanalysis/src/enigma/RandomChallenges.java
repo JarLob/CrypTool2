@@ -94,10 +94,7 @@ class RandomChallenges {
             CtAPI.goodbyeError("RANDOM SCENARIO: INVALID OPTIONS %s , Percentage of garbled letters should be 0 to 50\n", randomCryptOptions);
             return;
         }
-        if ((garbledLettersPercentage > 0) && (opFormat == 0)) {
-            CtAPI.goodbyeError("RANDOM SCENARIO: INVALID OPTIONS %s , Percentage of garbled letters should be 0 when format is 0 (non-random text)\n", randomCryptOptions);
-            return;
-        }
+
 
         boolean MessageKeyFullValueRange = true;
 
@@ -202,7 +199,7 @@ class RandomChallenges {
         }
 
         for (int i = 0; i < nMessageKeys; i++) {
-            if (opFormat != 3) {
+            if (opFormat == 3) {
                 // plain indicators are full random....
                 // could add herivel tip on multiple part messages
                 key.setRandomMesg();
@@ -324,7 +321,7 @@ class RandomChallenges {
         solutionFileS += "Full plain text:\n" + Utils.getCiphertextStringNoXJ(plaintext, actualLen) + "\n\n\n";
 
 
-        if (opFormat != 3)
+        if (opFormat == 3)
             dailyKey.rMesg = dailyKey.lMesg = dailyKey.mMesg = -1;
         solutionFileS += "Daily Key: " + dailyKey.getKeyStringLong() + "\n\n";
 
@@ -339,12 +336,12 @@ class RandomChallenges {
 
             if (opFormat == 1) {
                 challengeIndicS = " Indicator: " + plainIndicator[split] + " " + encipheredDoubledMessageKeys[split].substring(0, 3);
-            } else if (opFormat == 2) {
+            } else if (opFormat == 3) {
                 challengeIndicS = " Indicator: " + plainIndicator[split] + " " + encipheredDoubledMessageKeys[split].substring(0, 3) + " " +
                         encipheredDoubledMessageKeys[split].substring(3, 6);
                 challengeIndicS += "(=<Plain Indicator> + <Message Key Encrypted twice by plain indicator>)\n";
 
-            } else if (opFormat == 3) {
+            } else if (opFormat == 2) {
                 challengeIndicS = " Indicator: " + encipheredDoubledMessageKeys[split].substring(0, 3) + " " + encipheredDoubledMessageKeys[split].substring(3, 6);
                 challengeIndicS += "(=<Message Key encrypted twice using daily Message Key>)\n";
 
@@ -388,13 +385,13 @@ class RandomChallenges {
 
         if (opFormat != 1) {
             for (int i = 0; i < nMessageKeys; i++) {
-                if (opFormat == 2)
+                if (opFormat == 3)
                     indicatorFileS += plainIndicator[i] + " ";
                 indicatorFileS += encipheredDoubledMessageKeys[i] + "     ";
                 if (((i % 10) == 9) || (i == (nMessageKeys - 1)))
                     indicatorFileS += "\n";
 
-                if (opFormat != 3)
+                if (opFormat == 3)
                     solutionFileS += plainIndicator[i] + " ";
                 solutionFileS += messageKeys[i] + "    ";
                 if (((i % 10) == 9) || (i == (nMessageKeys - 1)))
@@ -426,13 +423,13 @@ class RandomChallenges {
         CtAPI.displayPlaintext("Saved " + cipherFilePath + ", "+ plaintextFilePath + ", "
                 + ((opFormat > 1) ? indicatorsFilePath + ", " : "") + challengeFilePath + ", "+ solutionFilePath + ", \n" +  "Crib at pos 0: " + cribS);
 
-        if (opFormat == 3) {
+        if (opFormat == 2) {
             byte[] steppings = new byte[Key.MAXLEN];
             dailyKey.showSteppings(steppings, 6);
             String steppingsS = Utils.getCiphertextStringNoXJ(steppings, 6);
             System.out.printf("123456\n%s\n", steppingsS);
             dailyKey.printKeyString("Daily Key: ");
-        } else if (opFormat == 2) {
+        } else if (opFormat == 3) {
             dailyKey.printKeyString("Daily Key: ");
         }
     }

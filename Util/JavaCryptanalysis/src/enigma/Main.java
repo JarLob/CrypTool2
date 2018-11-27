@@ -441,27 +441,27 @@ public class Main {
                 "Key range or key",
                 "Range of keys, or specific key. Examples: range of M3 keys B:532:AAC:AAA-B:532:AAC:ZZZ,\n" +
                         "\t\tsingle M4 key B:B532:AAAC:AJKH, single H key with stecker B:532:AAC:JKH|ACFEHJKOLZ, \n " +
-                        "\t\tkey range with stecker B:532:AAC:AAA-B:532:AAC:ZZZ|ACFEHJKOLZ  When a range is specified, \n" +
+                        "\t\tkey range with stecker B:532:AAC:AAA-B:532:AAC:ZZZ|ACFEHJKOLZ. When a range is specified, \n" +
                         "\t\tthe program will sweep for each field in the key (right to left), from the value specified on the left side of the range \n" +
                         "\t\tuntil it reaches the upper value specified in the right side of the range.\n" +
                         "\t\tFor example, to sweep all ring settings from AAA to AZZ (Model H): \n" +
                         "\t\t-" + KEY_FLAG_STRING + " C:321:AAA:AAA-C:321:AZZ:AAA\n" +
                         "\t\tOr, to test all wheel combinations -" + KEY_FLAG_STRING + " A:111:AAA:AAA-C:555:AZZ:ZZZ\n" +
                         "\t\tOr, to sweep only values for the middle message settings: -" + KEY_FLAG_STRING + " C:321:ABC:HAK-C:321:ABC:HZK\n" +
-                        "\t\tOr, to sweep only values for the middle and right wheels (other settings known): -" + KEY_FLAG_STRING + " C:511:ABC:DEF-C:544:ABC:DEF\n" +
-                        "\t\tNote that in a range, wheel numbers can be repeated (e.g. -" + KEY_FLAG_STRING + " B:B111:AAAA:AAAA)\n" +
-                        "\t\twhile in a single key (-" + KEY_FLAG_STRING + " B:532:AAC:JKH) this is not allowed.\n" +
+                        "\t\tOr, to sweep only values for the middle and right wheels (other settings known): -" + KEY_FLAG_STRING + " C:521:ABC:DEF-C:521:ABC:DEF\n" +
+                        "\t\tNote that in a range, wheel numbers can be repeated (e.g. -" + KEY_FLAG_STRING + " B:B111:AAAA:AAAA-B:B555:AAAA:ZZZZ)\n" +
+                        "\t\twhile in a single key this is not allowed (-" + KEY_FLAG_STRING + " B:522:AAC:JKH is invalid).\n" +
                         "\t\tKey format for Model H: u:www:rrr:mmm\n" +
-                        "\t\t    where u is the reflector (B or C), www are the wheels from left to right (1 to 5, e.g. 321)  \n" +
-                        "\t\t    rrr are the ring settings in letters (e.g. AZC) and mmm are the message settings \n" +
-                        "\t\tFor Model M3 = u:www:rrr:mmm " +
-                        "\t\t    where u is the reflector (B or C), www are the wheels from left to right (1 to 8, e.g. 851)  \n" +
-                        "\t\t   rrr are the ring settings in letters (e.g. AZC) and mmm are the message settings \n" +
+                        "\t\t    where u is the reflector (A, B, or C), www are the 3 wheels from left to right (1 to 5, e.g. 321)  \n" +
+                        "\t\t    rrr are the ring settings (e.g. AZC) and mmm are the message settings \n" +
+                        "\t\tFor Model M3 = u:www:rrr:mmm \n" +
+                        "\t\t    where u is the reflector (B or C), www are the 3 wheels from left to right (1 to 8, e.g. 851)  \n" +
+                        "\t\t    rrr are the ring settings (e.g. AZC) and mmm are the message settings \n" +
                         "\t\tfor Model H4 = u:gwww:rrrr:mmmm \n" +
                         "\t\t    where u is the reflector (B), g is the greek wheel (B or G) \n" +
                         "\t\t    www are the wheels from left to right (1 to 8, e.g. 821)  \n" +
-                        "\t\t    rrrr are the ring settings in letters (e.g. AAZC) and mmmm are the message settings \n" +
-                        "\t\tNote: For models H and M3, it is also possible to specify rings settings with numbers 01 (for a) to 26 (for z).    \n" +
+                        "\t\t    rrrr are the ring settings (e.g. AAZC) and mmmm are the message settings \n" +
+                        "\t\tNote: For models H and M3, it is also possible to specify rings settings with numbers 01 to 26 (instead of A to Z).    \n" +
                         "\t\t    for example, -" + KEY_FLAG_STRING + " b:413:021221:abc is equivalent to -" + KEY_FLAG_STRING + " b:413:BLU:abc.   \n" +
                         " ",
                 true,
@@ -479,15 +479,17 @@ public class Main {
         CommandLine.add(new CommandLineArgument(
                 Flag.MODE,
                 "o",
-                "TrigramICSearch mode",
-                "TrigramICSearch mode (for the case these is no crib). \n" +
-                        "\t\t\tHC for hillclimbing to search for best steckers at each possible rotor setting\n" +
-                        "\t\t\tIC or TRIGRAMS for Index of Coincidence/trigram measurements at each possible rotor setting. \n" +
-                        "\t\t\t(For IC or TRIGRAMS, the steckers must be specificed in -" + KEY_FLAG_STRING + ").\n" +
-                        "\t\t\tBOMBE for an implementation of the Turing Bombe, crib attack. \n" +
+                "Search mode",
+                "Search mode (for the case these is no crib). \n" +
+                        "\t\t\tHC for hillclimbing to search for best steckers at each possible rotor setting (Weierud/Krah's method).\n" +
+                        "\t\t\tTRIGRAMS look for rotor settings with best trigram score. The steckers must be specificed in -" + KEY_FLAG_STRING + ",\n" +
+                        "\t\t\t   e.g. -" + KEY_FLAG_STRING + "B:132:AAC:AAA-B:132:AAC:ZZZ|ACFEHJKOLZ.\n" +
+                        "\t\t\tIC look for rotor settings with best Index of Coincidence. For cryptograms less than 500 letters, \n" +
+                        "\t\t\t   the steckers must be specificed in -" + KEY_FLAG_STRING + ", e.g. -" + KEY_FLAG_STRING + "B:132:AAC:AAA-B:132:AAC:ZZZ|ACFEHJKOLZ.\n" +
+                        "\t\t\tBOMBE for crib/known-plaintext attach (extension of the Turing Bombe). \n" +
                         "\t\t\tINDICATORS for an attack on 1930-1938 double indicators (extension of Rejewski's method).\n" +
                         "\t\t\tINDICATORS1938 for an attack on 1938-1940 double indicators (extension of Zygalski's method).\n" +
-                        "\t\t\tSCENARIO to create simulated scenarios (see -" + SCENARIO_FLAG_STRING + "AND -" +  SCENARIO_PATH_FLAG_STRING +" options).\n" +
+                        "\t\t\tSCENARIO to create a simulated ciphertext/plaintext/indicators scenario (see -" + SCENARIO_FLAG_STRING + "and -" +  SCENARIO_PATH_FLAG_STRING +" options).\n" +
                         "\t\t\tDECRYPT for simple decryption.\n",
                 false,
                 "DECRYPT",
@@ -507,9 +509,9 @@ public class Main {
                 "Crib (known plaintext)",
                 "Known plaintext (crib) for attack using extended Turing Bombe.\n" +
                         "\t\tThe position of the crib may be specified with -" + CRIB_POSITION_FLAG_STRING + ". \n" +
-                        "\t\tTo exclude one or more of the letters from menus, replace the crib letter with a ? \n" +
-                        "\t\tFor example -" + CRIB_FLAG_STRING + " eins???zwo still specifies a crib of 10 letters but no menu links will be created for the 3 letters marked as ?.\n" +
-                        "\t\tThe details of the menus can be printed using-" + VERBOSE_FLAG_STRING + " (but only if a single key is given with -" + KEY_FLAG_STRING + ", and not a range).",
+                        "\t\tTo exclude one or more of the letters from menus, replace each unknown crib letter with a ? symbol\n" +
+                        "\t\tFor example -" + CRIB_FLAG_STRING + " eins???zwo specifies a crib of 10 letters but no menu links will be created for the 3 letters marked as ?.\n" +
+                        "\t\tThe details of the menus can be printed using-" + VERBOSE_FLAG_STRING + " (only if a single key is given with -" + KEY_FLAG_STRING + ", and not a range).",
                 false,
                 ""));
 
@@ -517,7 +519,7 @@ public class Main {
                 Flag.CRIB_POSITION,
                 CRIB_POSITION_FLAG_STRING,
                 "Crib start position",
-                "Starting position of crib, or range of starting positions. 0 means first letter. Examples: \n" +
+                "Starting position of crib, or range of possible starting positions. 0 means first letter. Examples: \n" +
                         "\t\t\t-" + CRIB_POSITION_FLAG_STRING + " 0 if crib starts at first letter,\n" +
                         "\t\t\t-" + CRIB_POSITION_FLAG_STRING + " 10 if crib starts at the 11th letter, \n+" +
                         "\t\t\t-" + CRIB_POSITION_FLAG_STRING + " 0-9 if crib may start at any of the first 10 positions,\n" +
@@ -529,21 +531,18 @@ public class Main {
         CommandLine.add(new CommandLineArgument(
                 Flag.INDICATORS_FILE,
                 "d",
-                "File with indicators",
-                "File with set of indicators. The file should contain either groups of 6 letters, or group of 9 letters. \n" +
-                        "\t\tIf groups of encrypted double indicators with 6 letters are given, searches key according to the Cycle Characteristic method developed by the Poles before WWII.\n" +
-                        "\t\tAssumption: the basic daily key included a basic message key, used to encrypt doubled indicators. A database of such  encrypted double indicators is required.\n" +
-                        "\t\tFinds the Ring/Wheel order and the message key which creates cycles which match those of the database. Then Hill Climbs to find stecker plugs which match the all indicators \n" +
-                        "\t\t(after decryption, will show them doubled). The last step is to take the first (decrypted) indicator as the Message Key for the message  \n" +
-                        "\t\titself and perform a Trigram based search to find the Ring Settings and to decipher it. \n" +
-                        "                \n" +
+                "Full file path for indicators file.",
+                "File with set of indicators. The file should contain either groups of 6 letters (INDICATORS mode), or groups of 9 letters (INIDCATORS1938 mode). \n" +
+                        "\t\tIf groups of encrypted double indicators with 6 letters are given, searches key according to the Cycle Characteristic method developed by the Rejewski before WWII.\n" +
+                        "\t\t  Finds the daily key which creates cycles which match those of the database. Then finds stecker plugs which match the all indicators \n" +
+                        "\t\t  If a ciphertext is provided, using the first (decrypted) indicator as the Message Key for that message  \n" +
+                        "\t\t  perform a trigram-based search to find the Ring Settings and to decipher the message. \n" +
                         "\t\tIf groups of encrypted double indicators with of 3+6=9 letters are given, \n" +
-                        "\t\tfinds full key according to the Zygalski's Sheets method developed by the Poles before WWII.\n" +
-                        "\t\tIndicators include 3 letters for the key to encrypt the double message key, and 6 letters of the doubled encrypted message.\n" +
-                        "\t\tWill search for keys (Wheel order, Ring settings) which together with the keys in the indicator groups,\n" +
-                        "\t\tcreate 'female' patterns which match the database (those keys with females), as it was done with the original Zygalski's Sheets\n" +
-                        "\t\tAfter ring settings are found, Stecker Board settings are also detected, and the first key indicator (from the file)\n" +
-                        "\t\tis used to decipher the message.\n",
+                        "\t\t  finds daily key according to the Zygalski's Sheets method developed by the Poles before WWII.\n" +
+                        "\t\t  Indicators include 3 letters for the key to encrypt the double message key, and 6 letters of the doubled encrypted message.\n" +
+                        "\t\t  Will search for keys (wheel order, wing settings) which together with the keys in the indicator groups,\n" +
+                        "\t\t  create 'female' patterns which match the database (those keys with females). Stecker settings are also detected, and the first key indicator (from the file)\n" +
+                        "\t\t is used to decipher the ciphertext (if a ciphertext was provided).\n",
                 false,
                 ""));
 
@@ -552,10 +551,10 @@ public class Main {
                 MESSAGE_INDICATOR_FLAG_STRING,
                 "Message indicator options",
                 "Indicator sent with the ciphertext. Has two distinct purposes and forms: \n" +
-                        "\t\t-w {Encrypted Indicator} e.g.-" + MESSAGE_INDICATOR_FLAG_STRING + " STG.  This must be used together with a single key in -" + KEY_FLAG_STRING + " in which the steckers were specified (e.g. -" + KEY_FLAG_STRING + " B:532:AAC:JKH:ACFEHJKOLZ). \n" +
+                        "\t\t-w {3-letter encrypted indicator} e.g.-" + MESSAGE_INDICATOR_FLAG_STRING + " STG.  This must be used together with a single key in -" + KEY_FLAG_STRING + " in which the steckers were specified (e.g. -" + KEY_FLAG_STRING + " B:532:AAC:JKH:ACFEHJKOLZ). \n" +
                         "\t\t    First, this indicator is decrypted using the given key (daily key), then the decrypted indicator is used as the message key to decrypt the full message. \n" +
-                        "\t\t-w {Indicator Message Key}:{Encrypted Indicator} e.g.-" + MESSAGE_INDICATOR_FLAG_STRING + " OWL:STG. In this form, this is used as an additional filter when searching for the best key (except for hillclimbing).\n" +
-                        "\t\t   Only messages keys which are a result of decrypting the Encrypted Indicator with the given Indicator Message key are considered for the search\n" +
+                        "\t\t-w {3-letter message key}:{3-letter encrypted indicator} e.g.-" + MESSAGE_INDICATOR_FLAG_STRING + " OWL:STG. In this form, this is used as an additional filter when searching for the best key (except for hillclimbing).\n" +
+                        "\t\t   Only messages keys which are a result of decrypting the encrypted indicator with the given message key are considered for the search.\n" +
                         "\t\t   Stecker board settings must be known and specified (e.g. B:532:AAA:AAA-B:532:AAZ:ZZZ|ACFEHJKOLZ). Not compatible with HILLCLIMBING mode\n",
 
                 false,
@@ -598,17 +597,16 @@ public class Main {
                 Flag.VERBOSE,
                 VERBOSE_FLAG_STRING,
                 "Verbose",
-                "Show details of attack"));
+                "Show details of crib attack."));
 
         CommandLine.add(new CommandLineArgument(
                 Flag.RIGHT_ROTOR_SAMPLING,
                 RIGHT_ROTOR_SAMPLING_FLAG_STRING,
                 "Left rotor sampling interval.",
                 "Check only a sample of left rotor positions.-" + RIGHT_ROTOR_SAMPLING_FLAG_STRING + " {right rotor interval value} {default - 1 - no sampling, check all positions in range}.\n" +
-                        "\t\tIf the interval > 1, allows for skipping some right rotor positions in searches.\n" +
-                        "\t\tFor example -X 3 means that only one in three Right Rotor positions will be tested.  \n" +
-                        "\t\tDue to redundant states in the Enigma encryption process, this is likely to still produce a key\n" +
-                        "\t\twhich will decrypt most of the text. \n" +
+                        "\t\tIf the interval > 1, test only a sample of right rotor positions in search.\n" +
+                        "\t\tFor example -" + RIGHT_ROTOR_SAMPLING_FLAG_STRING + " 3 means that only one in three right rotor positions will be tested.  \n" +
+                        "\t\tDue to redundant states in the Enigma encryption process, this is likely to still produce a partial or full decryption. \n" +
                         "\t\tShould be used with caution together with mode BOMBE (Bombe search for menu stops) as this may cause stops to be missed. \n",
                 false,
                 1, 5, 1));
@@ -616,20 +614,20 @@ public class Main {
                 Flag.MIDDLE_RING_SCOPE,
                 MIDDLE_RING_SCOPE_FLAG_STRING,
                 "Optimize middle rotor moves",
-                "Optimize middle rotor moves.-" + MIDDLE_RING_SCOPE_FLAG_STRING + " {option} {default - 0 - no stepping optimization}.\n" +
-                        "\t\tReduce the number of middle rotor settings (which generates stepping of left rotor) to be tested. \n" +
-                        "\t\t-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 0 - No reduction, all Middle Rotors settings specified in the range will be tested.\n" +
-                        "\t\t-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 1 - Test all Middle Rotor settings which generate a stepping of the Left Rotor, plus one settings which doesn't. \n" +
+                "Optimize middle rotor moves.-" + MIDDLE_RING_SCOPE_FLAG_STRING + " {option} {default - 0 - no optimization}.\n" +
+                        "\t\tReduce the number of middle rotor settings to be tested. \n" +
+                        "\t\t-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 0 - No reduction, all middle rotor settings specified in the range will be tested.\n" +
+                        "\t\t-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 1 - Test all middle rotor settings which generate a stepping of the left rotor, plus one settings which does NOT. \n" +
                         "\t\t       Reliable, no valid solutions will be missed, and reduces scope from 26 to {message length}/26+1 \n" +
-                        "\t\t-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 2 - Test all Middle Rotor settings which generate a stepping of the Left Rotor affecting the first 1/5 or last 1/5 of the message, plus one more \n" +
-                        "\t\t       settings which is not generating a stepping. This is good compromise between speed and accuracy. Reduces scope from 26 to {message length}*0.40/26+1 \n" +
-                        "\t\t-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 3 - Test a single Middle Rotor settings which DOES NOT generate a stepping of the Left Rotor. Fastest and most agressive option since only one Middle Rotor setting\n" +
-                        "\t\t       will be tested, but part of the message may be garbled is there was such a stepping originally. Good for short messages since probablity \n" +
-                        "\t\t       for Left Rotor stepping is {message length}/676. -Z 3 can save a lot of time if successful. \n" +
-                        "\t\t-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 4 - Test only all Middle Rotor settings which generate a stepping of the Left Rotor. \n" +
+                        "\t\t-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 2 - Test all middle rotor settings which generate a stepping of the left rotor affecting the first 1/5 or last 1/5 of the message, plus one more \n" +
+                        "\t\t       setting which is not generating a stepping. This is a good compromise between speed and accuracy. Reduces scope from 26 to {message length}*0.40/26+1 \n" +
+                        "\t\t-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 3 - Test one middle rotor setting which does NOT generate a stepping of the left rotor. Fastest and most agressive option since only one middle rotor setting\n" +
+                        "\t\t       will be tested, but part of the message may be garbled if there was such a stepping originally. Good for short messages since probablity \n" +
+                        "\t\t       for left rotor stepping is {message length}/676. Can save a lot of search time if successful. \n" +
+                        "\t\t-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 4 - Test only all middle rotor settings which generate a stepping of the left rotor. \n" +
                         "\t\t       Usually not needed except for testing purposes. Reduces scope from 26 to {message length}/26 \n" +
-                        "\t\t-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 5 - Test all Middle Rotor settings which do NOT generate a stepping of the Left Rotor. \n" +
-                        "\t\tNote: If a range is specified with a low position different from A, and high position different from Z, only-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 0 is allowed. \n",
+                        "\t\t-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 5 - Test all middle rotor settings which do NOT generate a stepping of the left rotor. \n" +
+                        "\t\tNote: The key range should specify the full range (A to Z) for the middle rotor, for any option other then 0. \n",
                 false,
                 0, 5, 0));
 
@@ -637,27 +635,31 @@ public class Main {
                 Flag.SCENARIO,
                 SCENARIO_FLAG_STRING,
                 "Generate random scenario",
-                "Generates simulated indicators and cryptogram(s).\n" +
-                        "\t\tA range of keys must be selected (-" + KEY_FLAG_STRING + ") from which a key within the range is randomly selected for simulation. \n" +
-                        "\t\tUsage: -"+ SCENARIO_FLAG_STRING + " is: {f}:{l}:{n}:{s}:{g}:{c}. \n" +
-                        "\t\t{f} = format: 1 for regular post 1940 format , 2 for 1938-40 format with doubled indicator (Solvable with Zygalski's Sheets method), 3 for pre-1938 with same key for all day \n" +
-                        "\t\t    solvable with the Cycle Pattern match method.  Default is 1. Formats (2) and (3) are not compatible with split messages\n" +
-                        "\t\t{l} is the total length of the random messages (default 150). For format 0 (non-random this is the length of each message. \n" +
-                        "\t\t{n} is the number of messages (text will be split) for Format 1, for format 2&3 this is the number of indicators\n" +
-                        "\t\t{s} is the number of Stecker Plugs (default 10) {g} is the percentage of garbled letters (default 0).\n"+
-                        "\t\t{c} is the length of a crib at the beginning of the (first) message.\n" +
+                "Generate simulated ciphertext and indicators.\n" +
+                        "\t\tA range of keys must be selected (-" + KEY_FLAG_STRING + ") from which a key is randomly selected for simulation. \n" +
+                        "\t\tUsage: -"+ SCENARIO_FLAG_STRING + " {f}:{l}:{n}:{s}:{g}:{c}. \n" +
+                        "\t\t{f} is the selected scenario: 1 to only generate a ciphertext, 2 for pre-1938 indicators (and a ciphertext), 3 to generate post 1938 doubled indicators (and a ciphertext). \n" +
+                        "\t\t    Default is 1. Scenario 2 and 3 are not compatible with the {n} option.\n" +
+                        "\t\t{l} is the length of the random ciphertext, or the combined length of all ciphertexts (default 150).\n" +
+                        "\t\t{n} is the number of messages (a longer text will be split) for scenario 1, for scenario 2  and 3 this is the number of indicators to be generated.\n" +
+                        "\t\t{s} is the number of Stecker Plugs (default 10).\n"+
+                        "\t\t{g} is the percentage of garbled letters (default 0).\n"+
+                        "\t\t{c} is the length of a crib (the plaintext at the beginning of the message).\n" +
                         "\t\t\n" +
-                        "\t\tThe following files are created (<xxxxx> is the scenario id): \n" +
-                        "\t\t(1) 'S<xxxxx>cipher.txt' ciphertext for a single message (not split)  \n" +
-                        "\t\t    In case of message split messages several files (S<xxxxx>cipher1.txt, S<xxxxx>cipher2.txt etc.. will also be created). \n" +
-                        "\t\t(2) if format is 2 (1938-1940 or 2 (pre 1938) the file S<xxxxx>indicators.txt is created. \n" +
-                        "\t\t    The indicator used for the message in (1) is the first. In format 3, groups of 6 letters (encrypted doubled keys)  \n" +
-                        "\t\t    are kept. In format 3, groups of 9 letters (indicator plus encrypted doubled key) are kept \n" +
-                        "\t\t(3) a file named S<xxxxx>plaintext.txt which containts the message plaintext (or of the first message if there are sereval)  \n" +
-                        "\t\t(4) a file named S<xxxxx>challenge.txt which containts all elements of the challenge (messages with headers, crib, etc)   \n" +
-                        "\t\t(5) a file named S<xxxxx>solution.txt which contains all the elements of the solution.  \n" +
-                        "\t\tExample -" + SCENARIO_FLAG_STRING + " 1:500:3:10:3: means post 1940 format, total length 500 split into 3 messages, 10 plugs, 3 percent garbled letters, no crib (default)\n" +
-                        "\t\tExample -" + SCENARIO_FLAG_STRING + " :::::25 means post-1940 format (default), length 150 (default), no split(default), 10 plugs (the default), crib of length 25\n",
+                        "\t\tThe following files are created (<id> is the randomly generated scenario id): \n" +
+                        "\t\t -'S<id>cipher.txt' ciphertext for a single message (not split)  \n" +
+                        "\t\t   In case of long message which has been split several files (S<id>cipher1.txt, S<id>cipher2.txt etc.. will also be created). \n" +
+                        "\t\t - S<id>indicators.txt with indicators, for scenario 2 (1938-1940) or 3 (pre-1938). \n" +
+                        "\t\t   With scenario 2, the file contains groups of 6 letters (encrypted doubled keys).  \n" +
+                        "\t\t   With scenario 3, it contains groups of 9 letters (indicator plus encrypted doubled key) are kept \n" +
+                        "\t\t   The indicator used for the generated ciphertext is the first in that set. \n" +
+                        "\t\t - S<id>plaintext.txt contains the plaintext. \n" +
+                        "\t\t - S<id>challenge.txt contains all the elements of the challenge (messages with headers, crib, etc) without the solution.\n" +
+                        "\t\t - S<id>solution.txt contains all the elements of the solution. \n" +
+                        "\t\tExample: -" + SCENARIO_FLAG_STRING + " 1:500:3:10:3:25 - generate plaintexts/ciphertexts, with total length of 500 split into 3 messages.\n" +
+                        "\t\t   The stecker board has 10 plugs, 3 percent of the letters are garbled, a crib of 25 letters is given\n" +
+                        "\t\tExample: -" + SCENARIO_FLAG_STRING + " 2:50::6::0 - generate 50 pre-1938 doubled indicators, a single plaintext/ciphertext with 150 letters (default). \n" +
+                        "\t\t   The stecker board has 6 plugs, no letters are garbled (default), no crib is given.\n",
 
                 false,
                 ""));
