@@ -14,66 +14,6 @@ public class Main {
         DECRYPT
     }
 
-    private static void incompatible(Mode mode, Flag[] flags) {
-        for (Flag flag : flags) {
-            if (CommandLine.isSet(flag)) {
-                CtAPI.goodbyeError("Option -%s (%s) not supported for mode %s\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag), mode);
-            }
-        }
-    }
-
-    private static void required(Mode mode, Key.Model currentModel, Key.Model[] models) {
-        for (Key.Model model : models) {
-            if (model == currentModel) {
-                return;
-            }
-        }
-        CtAPI.goodbyeError("Mode %s not supported for model %s\n", mode, currentModel);
-    }
-
-    private static void required(Mode mode, Flag[] flags) {
-        for (Flag flag : flags) {
-            if (!CommandLine.isSet(flag)) {
-                CtAPI.goodbyeError("Option -%s (%s) is mandatory with mode %s\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag), mode);
-            }
-        }
-    }
-
-    private static void incompatibleWithRangeOkKeys(Flag[] flags) {
-        for (Flag flag : flags) {
-            if (CommandLine.isSet(flag)) {
-                CtAPI.goodbyeError("Option -%s (%s) not supported for key range\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag));
-            }
-        }
-    }
-
-    private static void incompatibleWithSingleKey(Flag[] flags) {
-        for (Flag flag : flags) {
-            if (CommandLine.isSet(flag)) {
-                CtAPI.goodbyeError("Option -%s (%s) requires a key range\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag));
-            }
-        }
-    }
-
-
-    private static void incompatibleWithRangeOkKeys(Mode currentMode, Mode[] modes) {
-        for (Mode mode : modes) {
-            if (mode == currentMode) {
-                CtAPI.goodbyeError("Mode %s is not allowed with a key range\n", mode);
-            }
-        }
-
-    }
-
-    private static void incompatibleWithSingleKey(Mode currentMode, Mode[] modes) {
-        for (Mode mode : modes) {
-            if (mode == currentMode) {
-                CtAPI.goodbyeError("Mode %s requires a key range\n", mode);
-            }
-        }
-    }
-
-
     public static void main(String[] args) {
 
         createCommandLineArguments();
@@ -115,7 +55,7 @@ public class Main {
         boolean range = keyParts.length == 2;
         String rangeLowS = keyParts[0];
         String rangeHighS = range ? keyParts[1] : "";
-        ;
+
         String keyS = range ? "" : rangeLowS;
 
         String indicatorS = "";
@@ -387,98 +327,24 @@ public class Main {
 
 
         if (MODE == Mode.BOMBE) {
-            bombeSearch(HILLCLIMBING_CYCLES, CRIB, RIGHT_ROTOR_SAMPLING, MIDDLE_RING_SCOPE, VERBOSE, CRIB_POSITION, MODE, range, THREADS, indicatorS, indicatorMessageKeyS, ciphertext, clen, lowKey, highKey, key);
+            BombeSearch.bombeSearch(CRIB, ciphertext, clen, range, lowKey, highKey, key, indicatorS, indicatorMessageKeyS, HILLCLIMBING_CYCLES, RIGHT_ROTOR_SAMPLING, MIDDLE_RING_SCOPE, VERBOSE, CRIB_POSITION, THREADS);
         } else if (MODE == Mode.DECRYPT && !range) {
             encryptDecrypt(indicatorS, plaintext, ciphertext, clen, key);
         } else if (MODE == Mode.IC) {
-            Search.searchTrigramIC(lowKey, highKey, true, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, false, HILLCLIMBING_CYCLES, 0, THREADS, ciphertext, clen, indicatorS, indicatorMessageKeyS);
+            TrigramICSearch.searchTrigramIC(lowKey, highKey, true, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, false, HILLCLIMBING_CYCLES, 0, THREADS, ciphertext, clen, indicatorS, indicatorMessageKeyS);
         } else if (MODE == Mode.TRIGRAMS) {
-            Search.searchTrigramIC(lowKey, highKey, false, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, false, HILLCLIMBING_CYCLES, 0, THREADS, ciphertext, clen, indicatorS, indicatorMessageKeyS);
+            TrigramICSearch.searchTrigramIC(lowKey, highKey, false, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, false, HILLCLIMBING_CYCLES, 0, THREADS, ciphertext, clen, indicatorS, indicatorMessageKeyS);
         } else if (MODE == Mode.HILLCLIMBING) {
             HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HILLCLIMBING_CYCLES, THREADS, 0, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen);
         } else if (MODE == Mode.SCENARIO) {
             new RandomChallenges(SCENARIO_PATH, RESOURCE_PATH + "\\faust.txt", lowKey, highKey, SCENARIO);
         } else if (MODE == Mode.INDICATORS) { // cycles
-            indicatorsSearch(INDICATORS_FILE, RIGHT_ROTOR_SAMPLING, MIDDLE_RING_SCOPE, steckerS, HILLCLIMBING_CYCLES, THREADS, ciphertext, clen, lowKey, highKey);
+            IndicatorsSearch.indicatorsSearch(INDICATORS_FILE, lowKey, highKey, steckerS, ciphertext, clen, RIGHT_ROTOR_SAMPLING, MIDDLE_RING_SCOPE, HILLCLIMBING_CYCLES, THREADS);
         } else if (MODE == Mode.INDICATORS1938) {
-            indicators1938Search(INDICATORS_FILE, steckerS, plaintext, ciphertext, clen, lowKey, highKey);
+            Indicators1938Search.indicators1938Search(INDICATORS_FILE, lowKey, highKey, steckerS, ciphertext, clen);
         }
 
         CtAPI.goodbye();
-
-    }
-
-    private static void indicators1938Search(String INDICATORS_FILE, String steckerS, byte[] plaintext, byte[] ciphertext, int clen, Key lowKey, Key highKey) {
-        Key key;
-        int A = Utils.getIndex('A');
-        int Z = Utils.getIndex('Z');
-        if ((lowKey.lMesg != A) || (lowKey.mMesg != A) || (lowKey.rMesg != A) ||
-                (highKey.lMesg != Z) || (highKey.mMesg != Z) || (highKey.rMesg != Z)) {
-            System.out.print("WARNING: Z. Sheets Search (-D): Ignoring Message Key settings. \n\n");
-        }
-
-        if (steckerS.length() != 0) {
-            System.out.print("WARNING: Z. Sheets Search (-D): Ignoring Stecker Settings. \n\n");
-            lowKey.setStecker("");
-            highKey.setStecker("");
-        }
-
-        byte indicData[] = new byte[Key.MAXLEN];
-        int flen = -1;
-        if (INDICATORS_FILE.length() != 0)
-            flen = Utils.loadCipherText(INDICATORS_FILE, indicData, false);
-        if ((flen < 9) || (flen % 9 != 0)) {
-            CtAPI.goodbyeError("Z. Sheets Search (-%s INDICATORS1938): Failed to load indicators data from file %s (%d characters found).\n",
-                    CommandLine.getFlagString(Flag.MODE), INDICATORS_FILE, flen);
-        }
-        CtAPI.printf("Zygalski Sheets Search: Read database - File %s Indicators %d \nFirst Indicator: %s\n",
-                INDICATORS_FILE, flen / 9, Utils.getString(indicData, 9));
-
-        key = Search.searchZSheets(indicData, flen, lowKey, highKey, ciphertext, clen);
-
-        if (key == null) {
-            CtAPI.print("\nZ. Sheets Search: No match found. \n");
-            CtAPI.goodbyeError("Zygalski Sheets search failed");
-        }
-    }
-
-    private static void indicatorsSearch(String INDICATORS_FILE, int RIGHT_ROTOR_SAMPLING, MRingScope MIDDLE_RING_SCOPE, String steckerS, int HILLCLIMBING_CYCLES, int THREADS, byte[] ciphertext, int clen, Key lowKey, Key highKey) {
-        Key key;
-        int A = Utils.getIndex('A');
-        int Z = Utils.getIndex('Z');
-            /*
-            if ((lowKey.l_ring != Z)|| (lowKey.m_ring != Z) || (lowKey.r_ring != Z) ||
-                (highKey.l_ring != Z) || (highKey.m_ring != Z) || (highKey.r_ring != Z)) {
-                CtAPI.printf("WARNING: Cycle Match Search (-O): Ignoring range ring settings. Will use ZZZ instead.\n\n");
-//                lowKey.l_ring = lowKey.m_ring = lowKey.r_ring = Z;
-//                highKey.l_ring = highKey.m_ring = highKey.r_ring = Z;
-                lowKey.l_ring = lowKey.m_ring = lowKey.r_ring = A;
-                highKey.r_ring = Z;
-                highKey.l_ring = highKey.m_ring = A;
-            }
-            */
-        if (steckerS.length() != 0) {
-            System.out.print("INDICATORS WARNING: Cycle Match Search (-O): Ignoring Stecker Settings. \n\n");
-            lowKey.setStecker("");
-            highKey.setStecker("");
-        }
-
-        byte indicData[] = new byte[Key.MAXLEN];
-        int flen = -1;
-        if (INDICATORS_FILE.length() != 0)
-            flen = Utils.loadCipherText(INDICATORS_FILE, indicData, false);
-        if ((flen < 6) || (flen % 6 != 0)) {
-            CtAPI.goodbyeError("INDICATORS Cycle Match Search (-%s INDICATORS): Failed to load indicators data from file %s (%d characters found).\n",
-                    CommandLine.getFlagString(Flag.MODE), INDICATORS_FILE, flen);
-        }
-        CtAPI.printf("INDICATORS Cycle Match Search: Read database file %s, %d Indicator groups found\nFirst Indicator: %s\n",
-                INDICATORS_FILE, flen / 6, Utils.getString(indicData, 6));
-
-        key = Search.searchCycleMatch(indicData, flen, lowKey, highKey, HILLCLIMBING_CYCLES, THREADS, ciphertext, clen, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING);
-        if (key == null) {
-            CtAPI.printf("\nINDICATORS Cycle Match Search: No match found. \n");
-        }
-
 
     }
 
@@ -556,70 +422,6 @@ public class Main {
         }
     }
 
-    private static boolean bombeSearch(int HILLCLIMBING_CYCLES, String CRIB, int RIGHT_ROTOR_SAMPLING, MRingScope MIDDLE_RING_SCOPE, boolean VERBOSE, String CRIB_POSITION, Mode MODE, boolean range, int THREADS, String indicatorS, String indicatorMessageKeyS, byte[] ciphertext, int clen, Key lowKey, Key highKey, Key key) {
-        byte[] crib = new byte[BombeCrib.MAXCRIBL];
-        int maxCribLen = Math.min(BombeCrib.MAXCRIBL, clen);
-        if (CRIB.length() > maxCribLen) {
-            CtAPI.goodbyeError("Crib too long (%d letters) - should not be longer than %d letters\n", CRIB.length(), maxCribLen);
-        }
-        int crlen = Utils.getText(CRIB, crib);
-
-        int minPos = 0;
-        int maxPos = (clen - crlen);
-        if (CRIB_POSITION.length() != 0 && !CRIB_POSITION.equalsIgnoreCase("*")) {
-            int separator = CRIB_POSITION.indexOf("-");
-            if (separator == -1) {
-                minPos = getIntValue(CRIB_POSITION, 0, maxPos, Flag.CRIB_POSITION);
-                if (minPos == -1)
-                    return true;
-                else
-                    maxPos = minPos;
-            } else {
-                minPos = getIntValue(CRIB_POSITION.substring(0, separator), 0, maxPos, Flag.CRIB_POSITION);
-                if (minPos == -1)
-                    return true;
-                maxPos = getIntValue(CRIB_POSITION.substring(separator + 1), minPos, maxPos, Flag.CRIB_POSITION);
-                if (maxPos == -1)
-                    return true;
-
-
-            }
-        }
-
-        int pos = minPos;
-
-        BombeMenu menus[] = new BombeMenu[1000];
-        int nMenus = 0;
-
-        while (((pos = BombeCrib.nextValidPosition(ciphertext, clen, crib, crlen, pos)) != -1) && (pos <= maxPos)) {
-
-            BombeCrib bombeCrib = new BombeCrib(ciphertext, crib, crlen, pos, VERBOSE && (minPos == maxPos));
-
-            if ((bombeCrib.menu.score < BombeCrib.BADSCORE) || ((minPos == maxPos))) {
-                menus[nMenus++] = bombeCrib.menu;
-                CtAPI.printf("Creating Bombe Menu at Position %d (Links: %d, Closures:%d, Score:%.3f)\n",
-                        bombeCrib.menu.cribStartPos, bombeCrib.menu.totalItems, bombeCrib.menu.totalClosures, bombeCrib.menu.score);
-                if (bombeCrib.menu.score > BombeCrib.BADSCORE)
-                    CtAPI.printf("Warning: Turing Score (%.3f) is high (higher means worse) for Bombe menu. This may create many false stops. A longer crib may help.\n",
-                            bombeCrib.menu.score);
-
-
-            }
-            pos++;
-        }
-        if (nMenus > 0) {
-            CtAPI.printf("\n %d Bombe menus created - Starting search using Turing Bombe\n\n", nMenus);
-            if (!range) {
-                lowKey = highKey = key;
-            }
-            Search.searchCribMenus(menus, nMenus, lowKey, highKey, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING,
-                        HILLCLIMBING_CYCLES, THREADS, ciphertext, clen, VERBOSE, indicatorS, indicatorMessageKeyS);
-
-        } else
-            CtAPI.printf("No good Bombe menu (Turing Score less than %.3f) found for Crib - Either not enough links/closures, or letters encrypted to themselves\n", BombeCrib.BADSCORE);
-        return false;
-    }
-
     private static void createCommandLineArguments() {
 
         final String KEY_FLAG_STRING = "k";
@@ -677,8 +479,8 @@ public class Main {
         CommandLine.add(new CommandLineArgument(
                 Flag.MODE,
                 "o",
-                "Search mode",
-                "Search mode (for the case these is no crib). \n" +
+                "TrigramICSearch mode",
+                "TrigramICSearch mode (for the case these is no crib). \n" +
                         "\t\t\tHC for hillclimbing to search for best steckers at each possible rotor setting\n" +
                         "\t\t\tIC or TRIGRAMS for Index of Coincidence/trigram measurements at each possible rotor setting. \n" +
                         "\t\t\t(For IC or TRIGRAMS, the steckers must be specificed in -" + KEY_FLAG_STRING + ").\n" +
@@ -877,22 +679,65 @@ public class Main {
 
     }
 
-    private static int getIntValue(String s, int min, int max, Flag flag) {
 
-        for (int i = 0; i < s.length(); i++) {
-            if (Utils.getDigitIndex(s.charAt(i)) == -1) {
-                CtAPI.goodbyeError("Invalid %s (%s) for %s - Expecting number from %d to %d \n", s, CommandLine.getShortDesc(flag), CommandLine.getFlagString(flag), min, max);
+    private static void incompatible(Mode mode, Flag[] flags) {
+        for (Flag flag : flags) {
+            if (CommandLine.isSet(flag)) {
+                CtAPI.goodbyeError("Option -%s (%s) not supported for mode %s\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag), mode);
+            }
+        }
+    }
+
+    private static void required(Mode mode, Key.Model currentModel, Key.Model[] models) {
+        for (Key.Model model : models) {
+            if (model == currentModel) {
+                return;
+            }
+        }
+        CtAPI.goodbyeError("Mode %s not supported for model %s\n", mode, currentModel);
+    }
+
+    private static void required(Mode mode, Flag[] flags) {
+        for (Flag flag : flags) {
+            if (!CommandLine.isSet(flag)) {
+                CtAPI.goodbyeError("Option -%s (%s) is mandatory with mode %s\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag), mode);
+            }
+        }
+    }
+
+    private static void incompatibleWithRangeOkKeys(Flag[] flags) {
+        for (Flag flag : flags) {
+            if (CommandLine.isSet(flag)) {
+                CtAPI.goodbyeError("Option -%s (%s) not supported for key range\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag));
+            }
+        }
+    }
+
+    private static void incompatibleWithSingleKey(Flag[] flags) {
+        for (Flag flag : flags) {
+            if (CommandLine.isSet(flag)) {
+                CtAPI.goodbyeError("Option -%s (%s) requires a key range\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag));
+            }
+        }
+    }
+
+    private static void incompatibleWithRangeOkKeys(Mode currentMode, Mode[] modes) {
+        for (Mode mode : modes) {
+            if (mode == currentMode) {
+                CtAPI.goodbyeError("Mode %s is not allowed with a key range\n", mode);
             }
         }
 
-        int intValue = Integer.parseInt(s);
-
-        if ((intValue >= min) && (intValue <= max)) {
-            return intValue;
-        }
-        CtAPI.goodbyeError("Invalid %s (%s) for %s - Expecting number from %d to %d \n", s, CommandLine.getShortDesc(flag), CommandLine.getFlagString(flag), min, max);
-        return -1;
-
     }
+
+    private static void incompatibleWithSingleKey(Mode currentMode, Mode[] modes) {
+        for (Mode mode : modes) {
+            if (mode == currentMode) {
+                CtAPI.goodbyeError("Mode %s requires a key range\n", mode);
+            }
+        }
+    }
+
+
 
 }

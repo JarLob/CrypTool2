@@ -154,7 +154,7 @@ class HillClimb {
 
         if (totalKeysPerPass != 1) {
             CtAPI.printf("\n\nSTARTING HILL CLIMBING SEARCH: Number of Keys: %d, Passes: %d, Total to Check: %d\n\n", totalKeysPerPass, hcMaxPass, hcMaxPass * totalKeysPerPass);
-            CtAPI.printf("Estimated Search Time: %s per pass.\n\n", Utils.getEstimatedTimeString(normalizedNkeys, minRate, maxRate));
+            CtAPI.printf("Estimated TrigramICSearch Time: %s per pass.\n\n", Utils.getEstimatedTimeString(normalizedNkeys, minRate, maxRate));
         }
 
         final int MAXKEYS = 26 * 26;
