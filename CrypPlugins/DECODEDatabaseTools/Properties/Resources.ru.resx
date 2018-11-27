@@ -123,6 +123,9 @@
   <data name="Author" xml:space="preserve">
     <value>Автор:</value>
   </data>
+  <data name="Available" xml:space="preserve">
+    <value>доступный</value>
+  </data>
   <data name="CipherType" xml:space="preserve">
     <value>Тип шифрования:</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="Dating" xml:space="preserve">
     <value>Знакомства:</value>
+  </data>
+  <data name="Decipherment" xml:space="preserve">
+    <value>дешифрование</value>
   </data>
   <data name="DecodeDownloaderPluginCaption" xml:space="preserve">
     <value>DECODE Загрузчик</value>
@@ -240,11 +246,20 @@
   <data name="SizeHeader" xml:space="preserve">
     <value>Размер</value>
   </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>статистика</value>
+  </data>
   <data name="SymbolSet" xml:space="preserve">
     <value>Набор символов:</value>
   </data>
   <data name="TitleHeader" xml:space="preserve">
     <value>заглавие</value>
+  </data>
+  <data name="Transcription" xml:space="preserve">
+    <value>транскрипция</value>
+  </data>
+  <data name="Translation" xml:space="preserve">
+    <value>перевод</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Тип:</value>

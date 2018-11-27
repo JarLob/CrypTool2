@@ -79,6 +79,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Available ähnelt.
+        /// </summary>
+        internal static string Available {
+            get {
+                return ResourceManager.GetString("Available", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Cipher type: ähnelt.
         /// </summary>
         internal static string CipherType {
@@ -156,6 +165,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         internal static string Dating {
             get {
                 return ResourceManager.GetString("Dating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Decipherment ähnelt.
+        /// </summary>
+        internal static string Decipherment {
+            get {
+                return ResourceManager.GetString("Decipherment", resourceCulture);
             }
         }
         
@@ -430,6 +448,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Statistics ähnelt.
+        /// </summary>
+        internal static string Statistics {
+            get {
+                return ResourceManager.GetString("Statistics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Symbol set: ähnelt.
         /// </summary>
         internal static string SymbolSet {
@@ -444,6 +471,24 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         internal static string TitleHeader {
             get {
                 return ResourceManager.GetString("TitleHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Transcription ähnelt.
+        /// </summary>
+        internal static string Transcription {
+            get {
+                return ResourceManager.GetString("Transcription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Translation ähnelt.
+        /// </summary>
+        internal static string Translation {
+            get {
+                return ResourceManager.GetString("Translation", resourceCulture);
             }
         }
         

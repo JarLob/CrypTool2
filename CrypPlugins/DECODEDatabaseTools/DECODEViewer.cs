@@ -163,6 +163,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     {
                         presentation.DocumentList.Items.Add(document);
                     }
+                    //set checkboxes
+                    //transcription
+                    presentation.HasTranscriptionCheckbox.IsChecked = record.documents.transcription.Count > 0;
+                    //cryptanalysis_statistics
+                    presentation.HasStatisticsCheckbox.IsChecked = record.documents.cryptanalysis_statistics.Count > 0;
+                    //deciphered_text
+                    presentation.HasDeciphermentCheckbox.IsChecked = record.documents.deciphered_text.Count > 0;
+                    ///translation
+                    presentation.HasTranslationCheckbox.IsChecked = record.documents.translation.Count > 0;
                 }
                 catch (Exception ex)
                 {

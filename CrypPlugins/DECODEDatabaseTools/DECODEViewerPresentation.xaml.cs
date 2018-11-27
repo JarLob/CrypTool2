@@ -53,6 +53,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             }
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="plugin"></param>
         public DECODEViewerPresentation(DECODEViewer plugin)
         {
             InitializeComponent();
@@ -79,7 +83,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //wtf?
             }
@@ -104,7 +108,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //wtf?
             }
@@ -218,7 +222,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 if (tag == "copy_format"|| tag == "copy_all")
                 {
                     builder.AppendLine();
-                    builder.AppendLine(" " + Properties.Resources.Format);
+                    builder.AppendLine(Properties.Resources.Format);
 
                     builder.Append(Properties.Resources.Paper);
                     builder.AppendLine(" " + Record.metadata.format.paper);

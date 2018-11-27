@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="500" MinHeight="600" MinWidth="550">    
+             d:DesignHeight="550" d:DesignWidth="500" MinHeight="700" MinWidth="550">    
     <Grid>
         <Grid.ContextMenu>
             <ContextMenu>
@@ -26,6 +26,7 @@
             <RowDefinition Height="54"/>
             <RowDefinition Height="27"/>
             <RowDefinition Height="150*"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="150*"/>
         </Grid.RowDefinitions>
         
@@ -39,7 +40,8 @@
         <Label Content="{Binding Path=Record.metadata.name}" Grid.Column="1" Grid.Row="0" Background="White"/>
         <Label Content="{Binding Path=Record.record_id}" Grid.Column="1" Grid.Row="1" Background="White"/>
         <Label Content="{Loc Images}" Grid.Row="6" Grid.Column="0"  FontSize="14" Background="LightGray"/>
-        <Label Content="{Loc Documents}" Grid.Row="7" Grid.Column="0"  FontSize="14" Background="White"/>
+        <Label Content="{Loc Available}" Grid.Row="7" Grid.Column="0"  FontSize="14" Background="White"/>
+        <Label Content="{Loc Documents}" Grid.Row="8" Grid.Column="0"  FontSize="14" Background="LightGray"/>
         
         <!-- metadata.content -->
         <Grid Grid.Column="1" Grid.Row="2">
@@ -125,7 +127,7 @@
            
         </Grid>
         <Label Content="{Binding Path=Record.metadata.additional_information}" Grid.Column="1" Grid.Row="5"  Background="White"/>
-
+        
         <ScrollViewer Grid.Row="6" Grid.Column="1" CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <ListView Name="ImageList" FontSize="12" Height="Auto" Foreground="LightGray" Background="LightGray" PreviewMouseWheel="ImageList_PreviewMouseWheel">
                 <ListView.Resources>
@@ -151,7 +153,25 @@
             </ListView.View>
         </ListView>
         </ScrollViewer>
-        <ListView Grid.Row="7" Grid.Column="1"  Name="DocumentList" FontSize="12" Height="Auto" Background="White" Foreground="Black" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+        
+        <Grid Grid.Row="7" Grid.Column="1" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <CheckBox Name="HasTranscriptionCheckbox" IsEnabled="False" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Content="Transcription"/>
+            <CheckBox Name="HasStatisticsCheckbox" IsEnabled="False" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Content="Statistics"/>
+            <CheckBox Name="HasDeciphermentCheckbox" IsEnabled="False" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Content="Decipherment"/>
+            <CheckBox Name="HasTranslationCheckbox" IsEnabled="False" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Content="Translation"/>            
+            
+        </Grid>
+        
+        <ListView Grid.Row="8" Grid.Column="1"  Name="DocumentList" FontSize="12" Height="Auto" Background="LightGray" Foreground="Black" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <EventSetter Event="MouseDoubleClick" Handler="DocumentListHandleDoubleClick" />

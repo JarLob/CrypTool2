@@ -123,6 +123,9 @@
   <data name="Author" xml:space="preserve">
     <value>Autor:</value>
   </data>
+  <data name="Available" xml:space="preserve">
+    <value>Verfügbar</value>
+  </data>
   <data name="CipherType" xml:space="preserve">
     <value>Chiffre-Typ:</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="Dating" xml:space="preserve">
     <value>Datierung:</value>
+  </data>
+  <data name="Decipherment" xml:space="preserve">
+    <value>Entschlüsselung</value>
   </data>
   <data name="DecodeDownloaderPluginCaption" xml:space="preserve">
     <value>DECODE-Downloader</value>
@@ -240,11 +246,20 @@
   <data name="SizeHeader" xml:space="preserve">
     <value>Größe</value>
   </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Statistiken</value>
+  </data>
   <data name="SymbolSet" xml:space="preserve">
     <value>Symbolmenge:</value>
   </data>
   <data name="TitleHeader" xml:space="preserve">
     <value>Titel</value>
+  </data>
+  <data name="Transcription" xml:space="preserve">
+    <value>Transkription</value>
+  </data>
+  <data name="Translation" xml:space="preserve">
+    <value>Übersetzung</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Typ:</value>
