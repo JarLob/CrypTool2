@@ -56,18 +56,8 @@ class Main {
         CtAPI.open("Multiplex", "1.0");
         BestResults.setScoreThreshold(1_800_000);
 
-        String[] ctArgs = CtAPI.getArgs();
-        if (!CommandLine.parseArguments(ctArgs, false)) {
-            CommandLine.printUsage();
-            return;
-        }
+        CommandLine.parseAndPrintCommandLineArgs(args);
 
-        if (!CommandLine.parseArguments(args, true)) {
-            CommandLine.printUsage();
-            return;
-        }
-
-        CommandLine.printArguments();
 
         final String RESOURCE_PATH = CommandLine.getStringValue(Flag.RESOURCE_PATH);
         final int CYCLES = CommandLine.getIntegerValue(Flag.CYCLES);
@@ -84,11 +74,11 @@ class Main {
         final int SIMULATION_TEXT_LENGTH = CommandLine.getIntegerValue(Flag.SIMULATION_TEXT_LENGTH);
 
         if (!Stats.readHexagramStatsFile(RESOURCE_PATH + "/" + Utils.HEXA_FILE)) {
-            CtAPI.goodbye(-1, "Could not read hexa file .... " + RESOURCE_PATH + "/" + Utils.HEXA_FILE);
+            CtAPI.goodbyeError("Could not read hexa file .... " + RESOURCE_PATH + "/" + Utils.HEXA_FILE);
         }
 
         if ((CIPHERTEXT == null || CIPHERTEXT.isEmpty()) && SIMULATION == 0) {
-            CtAPI.goodbye(-1, "Ciphertext or ciphertext file required when not in simulation mode\n");
+            CtAPI.goodbyeError("Ciphertext or ciphertext file required when not in simulation mode\n");
         }
 
         if (IS_M138) {

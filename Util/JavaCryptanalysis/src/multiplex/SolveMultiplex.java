@@ -36,7 +36,8 @@ class SolveMultiplex {
                                     Stats.evaluationsSummary() +
                                              String.format("[SA Cycle: %,5d, Round: %,5d]", saCycle, round));
                             if (currentScore == realMultiplexScore || multiplex.matchesFullCrib()) {
-                                CtAPI.goodbye(0, "Found key ...");
+                                CtAPI.printf("Key found");
+                                CtAPI.goodbye();
                             }
                         }
                     } else {

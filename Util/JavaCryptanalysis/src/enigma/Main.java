@@ -17,7 +17,7 @@ public class Main {
     private static void incompatible(Mode mode, Flag[] flags) {
         for (Flag flag : flags) {
             if (CommandLine.isSet(flag)) {
-                CtAPI.goodbyeError("Flag -%s (%s) is incompatible with mode %s\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag), mode);
+                CtAPI.goodbyeError("Option -%s (%s) not supported for mode %s\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag), mode);
             }
         }
     }
@@ -28,13 +28,13 @@ public class Main {
                 return;
             }
         }
-        CtAPI.goodbyeError("Mode %s is incompatible with model %s\n", mode, currentModel);
+        CtAPI.goodbyeError("Mode %s not supported for model %s\n", mode, currentModel);
     }
 
     private static void required(Mode mode, Flag[] flags) {
         for (Flag flag : flags) {
             if (!CommandLine.isSet(flag)) {
-                CtAPI.goodbyeError("Flag -%s (%s) is mandatory with mode %s\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag), mode);
+                CtAPI.goodbyeError("Option -%s (%s) is mandatory with mode %s\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag), mode);
             }
         }
     }
@@ -42,7 +42,7 @@ public class Main {
     private static void incompatibleWithRangeOkKeys(Flag[] flags) {
         for (Flag flag : flags) {
             if (CommandLine.isSet(flag)) {
-                CtAPI.goodbyeError("Flag -%s (%s) is not allowed with a key range\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag));
+                CtAPI.goodbyeError("Option -%s (%s) not supported for key range\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag));
             }
         }
     }
@@ -50,7 +50,7 @@ public class Main {
     private static void incompatibleWithSingleKey(Flag[] flags) {
         for (Flag flag : flags) {
             if (CommandLine.isSet(flag)) {
-                CtAPI.goodbyeError("Flag -%s (%s) requires a key range\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag));
+                CtAPI.goodbyeError("Option -%s (%s) requires a key range\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag));
             }
         }
     }
@@ -80,24 +80,14 @@ public class Main {
         //CommandLineArgument.printUsage();
         BestResults.setDiscardSamePlaintexts(false);
         BestResults.setThrottle(false);
-        BestResults.setMaxNumberOfResults(100);
+        BestResults.setMaxNumberOfResults(10);
 
         CtAPI.open("Enigma attacks", "1.0");
 
-        String[] ctArgs = CtAPI.getArgs();
-        if (!CommandLine.parseArguments(ctArgs, false)) {
-            CommandLine.printUsage();
-            return;
-        }
-
-        if (!CommandLine.parseArguments(args, true)) {
-            CommandLine.printUsage();
-            return;
-        }
-
-        CommandLine.printArguments();
+        CommandLine.parseAndPrintCommandLineArgs(args);
 
         final String RESOURCE_PATH = CommandLine.getStringValue(Flag.RESOURCE_PATH);
+        final String SCENARIO_PATH = CommandLine.getStringValue(Flag.SCENARIO_PATH);
         final int HILLCLIMBING_CYCLES = CommandLine.getIntegerValue(Flag.HILLCLIMBING_CYCLES);
         final int THREADS = CommandLine.getIntegerValue(Flag.THREADS);
         final String CRIB = CommandLine.getStringValue(Flag.CRIB);
@@ -407,15 +397,14 @@ public class Main {
         } else if (MODE == Mode.HILLCLIMBING) {
             HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HILLCLIMBING_CYCLES, THREADS, 0, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen);
         } else if (MODE == Mode.SCENARIO) {
-            new RandomChallenges("faust.txt", lowKey, highKey, SCENARIO);
+            new RandomChallenges(SCENARIO_PATH, RESOURCE_PATH + "\\faust.txt", lowKey, highKey, SCENARIO);
         } else if (MODE == Mode.INDICATORS) { // cycles
             indicatorsSearch(INDICATORS_FILE, RIGHT_ROTOR_SAMPLING, MIDDLE_RING_SCOPE, steckerS, HILLCLIMBING_CYCLES, THREADS, ciphertext, clen, lowKey, highKey);
         } else if (MODE == Mode.INDICATORS1938) {
             indicators1938Search(INDICATORS_FILE, steckerS, plaintext, ciphertext, clen, lowKey, highKey);
         }
 
-        CtAPI.goodbye(0, "Ending ....");
-        java.awt.Toolkit.getDefaultToolkit().beep();
+        CtAPI.goodbye();
 
     }
 
@@ -635,6 +624,7 @@ public class Main {
 
         final String KEY_FLAG_STRING = "k";
         final String SCENARIO_FLAG_STRING = "z";
+        final String SCENARIO_PATH_FLAG_STRING = "f";
         final String CRIB_FLAG_STRING = "p";
         final String CRIB_POSITION_FLAG_STRING = "j";
         final String VERBOSE_FLAG_STRING = "u";
@@ -695,8 +685,8 @@ public class Main {
                         "\t\t\tBOMBE for an implementation of the Turing Bombe, crib attack. \n" +
                         "\t\t\tINDICATORS for an attack on 1930-1938 double indicators (extension of Rejewski's method).\n" +
                         "\t\t\tINDICATORS1938 for an attack on 1938-1940 double indicators (extension of Zygalski's method).\n" +
-                        "\t\t\tSCENARIO to create siumlated scenarios (see -" + SCENARIO_FLAG_STRING + ").\n" +
-                        "\t\t\tDECRYPT (or ommit) for simple decryption mode.\n",
+                        "\t\t\tSCENARIO to create simulated scenarios (see -" + SCENARIO_FLAG_STRING + "AND -" +  SCENARIO_PATH_FLAG_STRING +" options).\n" +
+                        "\t\t\tDECRYPT for simple decryption.\n",
                 false,
                 "DECRYPT",
                 new String[]{"HILLCLIMBING", "IC", "TRIGRAMS", "BOMBE", "INDICATORS", "INDICATORS1938", "SCENARIO", "DECRYPT",}));
@@ -725,7 +715,7 @@ public class Main {
                 Flag.CRIB_POSITION,
                 CRIB_POSITION_FLAG_STRING,
                 "Crib start position",
-                "Starting position of crib, or range of starting positions. 0 means first letter. Examples: " +
+                "Starting position of crib, or range of starting positions. 0 means first letter. Examples: \n" +
                         "\t\t\t-" + CRIB_POSITION_FLAG_STRING + " 0 if crib starts at first letter,\n" +
                         "\t\t\t-" + CRIB_POSITION_FLAG_STRING + " 10 if crib starts at the 11th letter, \n+" +
                         "\t\t\t-" + CRIB_POSITION_FLAG_STRING + " 0-9 if crib may start at any of the first 10 positions,\n" +
@@ -753,7 +743,7 @@ public class Main {
                         "\t\tAfter ring settings are found, Stecker Board settings are also detected, and the first key indicator (from the file)\n" +
                         "\t\tis used to decipher the message.\n",
                 false,
-                "indicators.txt"));
+                ""));
 
         CommandLine.add(new CommandLineArgument(
                 Flag.MESSAGE_INDICATOR,
@@ -803,20 +793,6 @@ public class Main {
                 new String[]{"GERMAN", "ENGLISH",}));
 
         CommandLine.add(new CommandLineArgument(
-                Flag.SIMULATION,
-                "s",
-                "Simulation",
-                "Create ciphertext from random key and plaintext from book file."));
-
-        CommandLine.add(new CommandLineArgument(
-                Flag.SIMULATION_TEXT_LENGTH,
-                "l",
-                "Length of text for simulation",
-                "Length of random plaintext encrypted for simulation.",
-                false,
-                10, 1000, 100));
-
-        CommandLine.add(new CommandLineArgument(
                 Flag.VERBOSE,
                 VERBOSE_FLAG_STRING,
                 "Verbose",
@@ -860,32 +836,42 @@ public class Main {
                 SCENARIO_FLAG_STRING,
                 "Generate random scenario",
                 "Generates simulated indicators and cryptogram(s).\n" +
-                        "\t\tA range of keys must be selected (-" + KEY_FLAG_STRING + ") and a random key within the range will be selected. \n" +
-                        "\t\tThe format for the options is: {f}:{l}:{n}:{s}:{g}:{c}. \n" +
+                        "\t\tA range of keys must be selected (-" + KEY_FLAG_STRING + ") from which a key within the range is randomly selected for simulation. \n" +
+                        "\t\tUsage: -"+ SCENARIO_FLAG_STRING + " is: {f}:{l}:{n}:{s}:{g}:{c}. \n" +
                         "\t\t{f} = format: 1 for regular post 1940 format , 2 for 1938-40 format with doubled indicator (Solvable with Zygalski's Sheets method), 3 for pre-1938 with same key for all day \n" +
                         "\t\t    solvable with the Cycle Pattern match method.  Default is 1. Formats (2) and (3) are not compatible with split messages\n" +
                         "\t\t{l} is the total length of the random messages (default 150). For format 0 (non-random this is the length of each message. \n" +
                         "\t\t{n} is the number of messages (text will be split) for Format 1, for format 2&3 this is the number of indicators\n" +
-                        "\t\t{s} is the number of Stecker Plugs (default 10) {g} is the percentage of garbled letters (default 0) {c} is the length of a random crib   \n" +
+                        "\t\t{s} is the number of Stecker Plugs (default 10) {g} is the percentage of garbled letters (default 0).\n"+
+                        "\t\t{c} is the length of a crib at the beginning of the (first) message.\n" +
                         "\t\t\n" +
-                        "\t\tThe following files are created: \n" +
-                        "\t\t(1) 'cipher.txt' ciphertext for a single message (not split)  \n" +
-                        "\t\t    In case of message split messages several files (cipher1.txt, cipher2.txt etc.. will be created). \n" +
-                        "\t\t(2) if format is 2 (1938-1940 or 2 (pre 1938) a file named 'indicators.txt' is created. \n" +
+                        "\t\tThe following files are created (<xxxxx> is the scenario id): \n" +
+                        "\t\t(1) 'S<xxxxx>cipher.txt' ciphertext for a single message (not split)  \n" +
+                        "\t\t    In case of message split messages several files (S<xxxxx>cipher1.txt, S<xxxxx>cipher2.txt etc.. will also be created). \n" +
+                        "\t\t(2) if format is 2 (1938-1940 or 2 (pre 1938) the file S<xxxxx>indicators.txt is created. \n" +
                         "\t\t    The indicator used for the message in (1) is the first. In format 3, groups of 6 letters (encrypted doubled keys)  \n" +
                         "\t\t    are kept. In format 3, groups of 9 letters (indicator plus encrypted doubled key) are kept \n" +
-                        "\t\t(3) a file named 'challenge.txt' which containts all elements of the challenge (messages with headers, crib, etc)   \n" +
-                        "\t\t(4) a file named 'solution.txt' which contains all elements of the solution.  \n" +
-                        "\t\tExample -" + SCENARIO_FLAG_STRING + " 1:500:3:10:3: means post 1940 format, total length 500 split into 3 messages, 10 plugs, 3 precent garbled letters, no crib (default)\n" +
-                        "\t\tExample -" + SCENARIO_FLAG_STRING + " :::::25 means post 1940 format (default), length 150 (default), no split(default), 10 plugs (the default), crib of length 25\n",
+                        "\t\t(3) a file named S<xxxxx>plaintext.txt which containts the message plaintext (or of the first message if there are sereval)  \n" +
+                        "\t\t(4) a file named S<xxxxx>challenge.txt which containts all elements of the challenge (messages with headers, crib, etc)   \n" +
+                        "\t\t(5) a file named S<xxxxx>solution.txt which contains all the elements of the solution.  \n" +
+                        "\t\tExample -" + SCENARIO_FLAG_STRING + " 1:500:3:10:3: means post 1940 format, total length 500 split into 3 messages, 10 plugs, 3 percent garbled letters, no crib (default)\n" +
+                        "\t\tExample -" + SCENARIO_FLAG_STRING + " :::::25 means post-1940 format (default), length 150 (default), no split(default), 10 plugs (the default), crib of length 25\n",
 
                 false,
                 ""));
         CommandLine.add(new CommandLineArgument(
+                Flag.SCENARIO_PATH,
+                SCENARIO_PATH_FLAG_STRING,
+                "Directory for scenario output files",
+                "Full path of directory for files created in SCENARIO mode (using the -" + SCENARIO_FLAG_STRING + " option to specify the parameters).",
+                false,
+                "."));
+
+        CommandLine.add(new CommandLineArgument(
                 Flag.CYCLES,
                 "n",
                 "Reserved",
-                "Reserved.",
+                "",
                 false,
                 0, 1000, 0));
 

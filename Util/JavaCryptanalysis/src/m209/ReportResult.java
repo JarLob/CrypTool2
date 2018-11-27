@@ -50,7 +50,8 @@ public class ReportResult {
         }
         if (currScore == key.originalScore) {
             long elapsedSec = (System.currentTimeMillis() - ReportResult.startTimeMillis)/1000;
-            CtAPI.goodbye(0, String.format("Found key - Task %d - %,d decryptions - elapsed %,d seconds - reported %d results\n", task, Key.evaluations, elapsedSec, pushed));
+            CtAPI.printf("Found key - Task %d - %,d decryptions - elapsed %,d seconds - reported %d results\n", task, Key.evaluations, elapsedSec, pushed);
+            CtAPI.goodbye();
         }
     }
 

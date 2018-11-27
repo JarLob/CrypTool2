@@ -23,5 +23,6 @@ public enum Flag {
     MIDDLE_RING_SCOPE,
     HILLCLIMBING_CYCLES,
     SCENARIO,
+    SCENARIO_PATH,
 
 }

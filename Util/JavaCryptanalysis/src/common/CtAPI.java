@@ -119,7 +119,7 @@ public class CtAPI {
     private static void displayExceptionAndGoodbye(Exception e) {
         logError(e.getMessage());
         e.printStackTrace();
-        goodbye(-1, e.getMessage());
+        goodbyeError(e.getMessage());
     }
 
     public static synchronized void displayProgress(long progress, long maxValue) {
@@ -207,9 +207,12 @@ public class CtAPI {
         logInfoFormatted("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyStringShort);
         System.out.printf("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyString);
     }
+    public static void displayKey(String keyString) {
+        updateOutput(OUTPUT_KEY, keyString);
+    }
     public static void displayPlaintext(String plaintextString) {
         updateOutput(OUTPUT_PLAINTEXT, plaintextString);
-   }
+    }
 
     public static void displayBestResult(Result result, Result original) {
         if (original.keyString.isEmpty()) {
@@ -232,9 +235,11 @@ public class CtAPI {
     }
 
 
-    public static synchronized void goodbye(int exitCode, String message) {
+    private static synchronized void goodbye(int exitCode, String message) {
         if (exitCode != 0) {
-            logError(String.format("Completed with error code %s (%s)- shutting down\n", exitCode, message));
+            String fullMessage = String.format("Shutting down (%d) - %s\n", exitCode, message);
+            logError(fullMessage);
+            CtAPI.displayPlaintext(fullMessage);
         } else {
             printf(message);
         }

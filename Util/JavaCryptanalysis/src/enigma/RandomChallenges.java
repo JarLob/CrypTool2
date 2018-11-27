@@ -1,5 +1,7 @@
 package enigma;
 
+import common.CtAPI;
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -16,23 +18,23 @@ class RandomChallenges {
 
     int nMessageKeys;
 
-    RandomChallenges(String cipherFile, Key lowKey, Key highKey, String randomCryptOptions) {
+    RandomChallenges(String SCENARIO_PATH, String plainInputFile, Key lowKey, Key highKey, String randomCryptOptions) {
         
-        int values[] = new int[6];
+        int values[] = new int[15];
         Arrays.fill(values, -1);
 
-        randomCryptOptions += ":"; // to simplify parsing
+        randomCryptOptions += "::::::::::"; // to simplify parsing
 
-        int items = 0;
-        for (int i = 0; ((i < randomCryptOptions.length()) && (items < 6)); i++) {
-            int d = Utils.getDigitIndex(randomCryptOptions.charAt(i));
-            if (d == -1) {
-                items++;
-            } else {
-                if (values[items] == -1)
-                    values[items] = d;
-                else
-                    values[items] = values[items] * 10 + d;
+        String[] parts = randomCryptOptions.split(":");
+        for (int i = 0; i < parts.length; i++) {
+            if (parts[i].isEmpty()) {
+                values[i] = -1;
+                continue;
+            }
+            try {
+                values[i] = Integer.valueOf(parts[i]);
+            } catch (NumberFormatException e) {
+                CtAPI.goodbyeError("RANDOM SCENARIO: %s - invalid - should include numbers separated by\n", randomCryptOptions);
             }
         }
         if (values[0] != -1)
@@ -56,44 +58,44 @@ class RandomChallenges {
         }
 
 
-        System.out.printf("RANDOM SCENARIO: Format = %d, Len = %d, Split = %d, Plugs = %d, Garbled = %d, Crib = %d\n",
+        CtAPI.printf("RANDOM SCENARIO: Format = %d, Len = %d, Split = %d, Plugs = %d, Garbled Percent = %d, Crib. length= %d\n",
                 opFormat, opLen, opSplit, opPlugs, garbledLettersPercentage, opCrib);
         
         if ((opFormat < 1) || (opFormat > 3)) {
-            System.out.printf("RANDOM SCENARIO: INVALID OPTIONS %s , Format must be 0, 1, 2 or 3\n", randomCryptOptions);
+            CtAPI.goodbyeError("RANDOM SCENARIO: INVALID OPTIONS %s , Format must be 0, 1, 2 or 3\n", randomCryptOptions);
             return;
         }
         if ((opLen < 5) || (opLen > 2500)) {
-            System.out.printf("RANDOM SCENARIO: INVALID OPTIONS %s , Length must be 5 to 2500\n", randomCryptOptions);
+            CtAPI.goodbyeError("RANDOM SCENARIO: INVALID OPTIONS %s , Length must be 5 to 2500\n", randomCryptOptions);
             return;
         }
         if ((opFormat == 1) || (opFormat == 0)) {
             if ((opSplit < 1) || (opSplit > 5)) {
-                System.out.printf("RANDOM SCENARIO: INVALID OPTIONS %s , Number of (split) messages must be 1 to 5 (in Format 1)\n", randomCryptOptions);
+                CtAPI.goodbyeError("RANDOM SCENARIO: INVALID OPTIONS %s , Number of (split) messages must be 1 to 5 (in Format 1)\n", randomCryptOptions);
                 return;
             }
         } else {
             if ((opSplit < 1) || (opSplit > 500)) {
-                System.out.printf("RANDOM SCENARIO: INVALID OPTIONS %s , Number of indicators must be between 1 to 500 (in Format 2 and 3)\n", randomCryptOptions);
+                CtAPI.goodbyeError("RANDOM SCENARIO: INVALID OPTIONS %s , Number of indicators must be between 1 to 500 (in Format 2 and 3)\n", randomCryptOptions);
                 return;
             }
         }
 
         if ((opPlugs < 0) || (opPlugs > 13)) {
-            System.out.printf("RANDOM SCENARIO: INVALID OPTIONS %s , Number of plugs must be 0 to 13\n", randomCryptOptions);
+            CtAPI.goodbyeError("RANDOM SCENARIO: INVALID OPTIONS %s , Number of plugs must be 0 to 13\n", randomCryptOptions);
             return;
         }
         if ((opCrib < 0) || (opCrib > 50)) {
-            System.out.printf("RANDOM SCENARIO: INVALID OPTIONS %s , Crib length must be 0 to 50\n", randomCryptOptions);
+            CtAPI.goodbyeError("RANDOM SCENARIO: INVALID OPTIONS %s , Crib length must be 0 to 50\n", randomCryptOptions);
             return;
         }
 
         if ((garbledLettersPercentage < 0) || (garbledLettersPercentage > 50)) {
-            System.out.printf("RANDOM SCENARIO: INVALID OPTIONS %s , Percentage of garbled letters should be 0 to 50\n", randomCryptOptions);
+            CtAPI.goodbyeError("RANDOM SCENARIO: INVALID OPTIONS %s , Percentage of garbled letters should be 0 to 50\n", randomCryptOptions);
             return;
         }
         if ((garbledLettersPercentage > 0) && (opFormat == 0)) {
-            System.out.printf("RANDOM SCENARIO: INVALID OPTIONS %s , Percentage of garbled letters should be 0 when format is 0 (non-random text)\n", randomCryptOptions);
+            CtAPI.goodbyeError("RANDOM SCENARIO: INVALID OPTIONS %s , Percentage of garbled letters should be 0 when format is 0 (non-random text)\n", randomCryptOptions);
             return;
         }
 
@@ -107,7 +109,7 @@ class RandomChallenges {
             MessageKeyFullValueRange = false;
 
         if ((opFormat != 1) && !MessageKeyFullValueRange) {
-            System.out.print("RANDOM CIPHER: For formats 2 and 3, the full range of values for Message Key should be specified (aaa to zzz) \n");
+            CtAPI.goodbyeError("RANDOM CIPHER: For formats 2 and 3, the full range of values for Message Key should be specified (aaa to zzz) \n");
             return;
 
         }
@@ -120,24 +122,19 @@ class RandomChallenges {
             MessageKeySingleValueInRange = true;
 
         if ((opSplit > 1) && MessageKeySingleValueInRange) {
-            System.out.print("RANDOM CIPHER: A range of values for Message Key should be specified, if Split Number is more than 1\n");
+            CtAPI.goodbyeError("RANDOM CIPHER: A range of values for Message Key should be specified, if Split Number is more than 1\n");
             return;
 
         }
 
 
         byte[] plaintext = new byte[Key.MAXLEN];
+        
+       int actualLen;
 
-
-        if (cipherFile.length() == 0) {
-            System.out.print("INPUT FILE (-R) MISSING - Mandatory for -Y - Random cryptogram generation mode\n");
-            return;
-        }
-        int actualLen;
-
-        actualLen = Utils.loadRandomText(cipherFile, plaintext, opLen, true /*boolean generateXs */, garbledLettersPercentage);
+        actualLen = Utils.loadRandomText(plainInputFile, plaintext, opLen, true /*boolean generateXs */, garbledLettersPercentage);
         if (actualLen == 0) {
-            System.out.print("ERROR in Random cryptogram generation mode\n");
+            CtAPI.goodbyeError("ERROR in Random cryptogram generation mode\n");
             return;
         }
 
@@ -171,9 +168,6 @@ class RandomChallenges {
         String plainIndicator[] = new String[500]; // also used for the message/message splits
         String encipheredDoubledMessageKeys[] = new String[500]; // for modes 2 and 3. (3 - all enciphered using daily key)
         String cribS = "";
-        int cribPos = 0;
-
-        int id = (int) (System.currentTimeMillis() % 1000000);
 
         Key dailyKey = new Key();  // format 1 & 2 - it does not contain message settings
         dailyKey.initRandom(lowKey, highKey, opPlugs);// generate the daily key for all cases
@@ -263,11 +257,8 @@ class RandomChallenges {
             if (opCrib > opLen)
                 opCrib = opLen;
 
-            cribPos = random.nextInt(messageLength[0] - opCrib);
-            while ((plaintext[cribPos] != Utils.getIndex('X')) && (cribPos > 0))
-                    cribPos--;
             for (int i = 0; i < opCrib; i++)
-                cribS += Utils.getChar(plaintext[cribPos + i]);
+                cribS += Utils.getChar(plaintext[i]);
         }
 
 
@@ -299,6 +290,9 @@ class RandomChallenges {
                     lastNewLinePos = p;
                 }
             }
+            if (i == 0) {
+                CtAPI.displayKey(key.getKeyStringLong());
+            }
         }
 
         String challengeFileS = "";
@@ -313,6 +307,13 @@ class RandomChallenges {
         else if (opFormat == 3)
             formatStr = "DOUBLED encrypted Message Key (encrypted using a daily Message Key) - in use until 1938. Can be solved using Cycle Patterns";
 
+        int id = (int) (System.currentTimeMillis() % 1000000);
+        String cipherFilePath = SCENARIO_PATH + "\\"+"S" + id +"cipher.txt";
+        String indicatorsFilePath = SCENARIO_PATH + "\\"+ "S" + id + "indicators.txt";;
+        String plaintextFilePath = SCENARIO_PATH + "\\"+"S" + id +"plaintext.txt";;
+        String challengeFilePath = SCENARIO_PATH + "\\"+"S" + id +"challenge.txt";;
+        String solutionFilePath = SCENARIO_PATH + "\\"+"S" + id +"solution.txt";;
+
         solutionFileS +=
                 "Challenge ID: " + id + " \n" +
                         "Indicator Procedure: " + formatStr + "\n" +
@@ -321,6 +322,7 @@ class RandomChallenges {
         if (opCrib > 0)
             solutionFileS += "Crib for first message using " + opCrib + " numbers in words followed by X\nCrib: " + cribS + "\n";
         solutionFileS += "Full plain text:\n" + Utils.getCiphertextStringNoXJ(plaintext, actualLen) + "\n\n\n";
+
 
         if (opFormat != 3)
             dailyKey.rMesg = dailyKey.lMesg = dailyKey.mMesg = -1;
@@ -365,14 +367,19 @@ class RandomChallenges {
             challengeFileS += "\n\n";
 
             if ((opCrib > 0) && (split == 0)) {
-                challengeFileS += "\nCrib provided for this message (message 1): " + cribS + " at position: " + (cribPos + 1) + "\n\n\n";
-                solutionFileS += "\nCrib: " + cribS + " at position: " + (cribPos + 1) + "\n\n";
+                challengeFileS += "\nCrib provided for this message (message 1): " + cribS + " at position: 0\n\n\n";
+                solutionFileS += "\nCrib: " + cribS + " at position: 0\n\n";
             }
 
 
-            if (split == 0)
-                Utils.saveToFile("cipher.txt", messageCipherInGroups[split]);
-            Utils.saveToFile("cipher" + ("" + (split + 1)) + ".txt", messageCipherInGroups[split]);
+            if (split == 0) {
+                Utils.saveToFile(cipherFilePath, messageCipherInGroups[split]);
+                Utils.saveToFile(plaintextFilePath, messagePlainTextInLines[split].replaceAll("\n", ""));
+                Utils.saveToFile(cipherFilePath, messageCipherInGroups[split]);
+            }
+
+            String cipherSplitFilePath = SCENARIO_PATH + "\\"+ "S" + id + "cipher" + ("" + (split + 1)) + ".txt";
+            Utils.saveToFile(cipherSplitFilePath, messageCipherInGroups[split]);
 
 
         }
@@ -398,22 +405,26 @@ class RandomChallenges {
         }
 
         if (opFormat > 1)
-            Utils.saveToFile("indicators.txt", indicatorFileS);
-
-        if (opFormat > 1)
-            System.out.printf("\n======= solution\n\n%s\n====== end of solution\n\n\n=======challenge\n%s\n\n\n======== end of challenge.txt\n\n\n======= indicators.txt\n\n%s\n\n======= end of indicators\n",
+            CtAPI.printf("\n======= solution\n\n%s\n====== end of solution\n\n\n=======challenge\n%s\n\n\n======== end of challenge\n\n\n======= indicators\n\n%s\n\n======= end of indicators\n",
                     solutionFileS, challengeFileS, indicatorFileS);
         else
-            System.out.printf("\n======= solution\n\n%s\n====== end of solution\n\n\n=======challenge\n%s\n\n\n======== end of challenge.txt\n\n",
+            CtAPI.printf("\n======= solution\n\n%s\n====== end of solution\n\n\n=======challenge\n%s\n\n\n======== end of challenge.txt\n\n",
                     solutionFileS, challengeFileS);
 
-        Utils.saveToFile("challenge" + id + ".txt", challengeFileS);
+        Utils.saveToFile(challengeFilePath, challengeFileS);
         if (opFormat > 1)
-            Utils.saveToFile("indicators" + id + ".txt", indicatorFileS);
+            Utils.saveToFile(indicatorsFilePath, indicatorFileS);
 
-        Utils.saveToFile("solution" + id + ".txt", solutionFileS + challengeFileS + indicatorFileS);
+        Utils.saveToFile(solutionFilePath, solutionFileS + challengeFileS + indicatorFileS);
 
-        System.out.printf("\nSaved %s, %s and %s file\n", "challenge" + id + ".txt", "indicators" + id + ".txt", "solution" + id + ".txt");
+        CtAPI.printf("Saved %s\n", cipherFilePath);
+        CtAPI.printf("Saved %s\n", plaintextFilePath);
+        if (opFormat > 1)
+            CtAPI.printf("Saved %s\n", indicatorsFilePath);
+        CtAPI.printf("Saved %s\n", challengeFilePath);
+        CtAPI.printf("Saved %s\n", solutionFilePath);
+        CtAPI.displayPlaintext("Saved " + cipherFilePath + ", "+ plaintextFilePath + ", "
+                + ((opFormat > 1) ? indicatorsFilePath + ", " : "") + challengeFilePath + ", "+ solutionFilePath + ", \n" +  "Crib at pos 0: " + cribS);
 
         if (opFormat == 3) {
             byte[] steppings = new byte[Key.MAXLEN];

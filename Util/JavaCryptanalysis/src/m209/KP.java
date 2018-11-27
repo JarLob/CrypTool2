@@ -128,10 +128,10 @@ public class KP {
         ReportResult.knownPlaintext = true;
 
         if (cipher == null || cipher.isEmpty()) {
-            CtAPI.goodbye(-1, "cipher is empty");
+            CtAPI.goodbyeError("cipher is empty");
         }
         if (crib == null || crib.isEmpty()) {
-            CtAPI.goodbye(-1, "crib is empty");
+            CtAPI.goodbyeError("crib is empty");
         }
         ReportResult.setThreshold(EvalType.CRIB);
 

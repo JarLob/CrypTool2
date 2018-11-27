@@ -26,7 +26,7 @@ class SolveM138 {
     static void solve(ArrayList<Integer> offset, String cipherStr, String cribStr, int maxCycles, long realMultiplexScore) {
 
         if (offset.size() > 1) {
-            CtAPI.goodbye(-1, "Too many offsets for M138");
+            CtAPI.goodbyeError("Too many offsets for M138");
         }
 
         CtAPI.printf("Ciphertext: %s\n", cipherStr);

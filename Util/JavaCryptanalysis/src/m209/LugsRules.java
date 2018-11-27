@@ -83,7 +83,7 @@ public class LugsRules {
                     validLugCountSequences.addAll(readCountsFromTable(groupB));
                 }
                 if (Global.ONLY_TABLE_GROUP_A && Global.ONLY_TABLE_GROUP_B) {
-                    CtAPI.goodbye(-1, "Cannot exclude both groups A and B");
+                    CtAPI.goodbyeError("Cannot exclude both groups A and B");
                 }
             } else {
                 validLugCountSequences = getValidLugCountSequences();

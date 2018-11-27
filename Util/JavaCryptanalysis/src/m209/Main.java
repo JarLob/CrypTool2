@@ -59,18 +59,7 @@ public class Main {
 
         CtAPI.open("M209 attacks", "1.0");
 
-        String[] ctArgs = CtAPI.getArgs();
-        if (!CommandLine.parseArguments(ctArgs, false)) {
-            CommandLine.printUsage();
-            return;
-        }
-
-        if (!CommandLine.parseArguments(args, true)) {
-            CommandLine.printUsage();
-            return;
-        }
-
-        CommandLine.printArguments();
+        CommandLine.parseAndPrintCommandLineArgs(args);
 
         final String RESOURCE_PATH = CommandLine.getStringValue(Flag.RESOURCE_PATH);
         final int CYCLES = CommandLine.getIntegerValue(Flag.CYCLES);
@@ -99,7 +88,7 @@ public class Main {
             }
         } else {
             if (CIPHERTEXT == null || CIPHERTEXT.isEmpty()) {
-                CtAPI.goodbye(-1, "Ciphertext or ciphertext file required when not in simulation mode\n");
+                CtAPI.goodbyeError("Ciphertext or ciphertext file required when not in simulation mode\n");
             }
             if (CRIB != null && !CRIB.isEmpty()) {
                 KP.solveMultithreaded(CIPHERTEXT, CRIB, null, CYCLES, THREADS);

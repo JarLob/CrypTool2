@@ -91,7 +91,7 @@ public class Key {
             inverseKey[value] = position;
         }
         if (!good) {
-            CtAPI.goodbye(-1, "Invalid key " + toString());
+            CtAPI.goodbyeError("Invalid key " + toString());
         }
     }
 

@@ -85,18 +85,7 @@ public class Main {
 
         CtAPI.open("Playfair", "1.0");
 
-        String[] ctArgs = CtAPI.getArgs();
-        if (!CommandLine.parseArguments(ctArgs, false)) {
-            CommandLine.printUsage();
-            return;
-        }
-
-        if (!CommandLine.parseArguments(args, true)) {
-            CommandLine.printUsage();
-            return;
-        }
-
-        CommandLine.printArguments();
+        CommandLine.parseAndPrintCommandLineArgs(args);
 
         final String CRIB = CommandLine.getStringValue(Flag.CRIB);
         final int THREADS = CommandLine.getIntegerValue(Flag.THREADS);
@@ -111,7 +100,7 @@ public class Main {
         final int SIMULATION_TEXT_LENGTH = CommandLine.getIntegerValue(Flag.SIMULATION_TEXT_LENGTH);
 
         if (!Stats.readHexagramStatsFile(RESOURCE_PATH + "/" + Utils.HEXA_FILE)) {
-            CtAPI.goodbye(-1, "Could not read hexa file .... " + RESOURCE_PATH + "/" + Utils.HEXA_FILE);
+            CtAPI.goodbyeError("Could not read hexa file .... " + RESOURCE_PATH + "/" + Utils.HEXA_FILE);
         }
         Transformations.printTransformationsCounts();
 
@@ -126,7 +115,7 @@ public class Main {
             simulationKey.random();
             cipherText = new int[SIMULATION_TEXT_LENGTH];
             if (cipherText.length % 2 != 0) {
-                CtAPI.goodbye(-1, "Ciphertext length must be even - found " + cipherText.length + " characters");
+                CtAPI.goodbyeError("Ciphertext length must be even - found " + cipherText.length + " characters");
             }
             int cipherTextLengthFull = simulationKey.encrypt(plainText, cipherText);
             if (debug) {
@@ -145,11 +134,11 @@ public class Main {
             BestResults.setOriginal(simulationKey.score, simulationKey.toString(), simulationKey.toString(), Utils.getString(plainText), "Original");
         } else {
             if ((CIPHERTEXT == null || CIPHERTEXT.isEmpty())) {
-                CtAPI.goodbye(-1, "Ciphertext or ciphertext file required when not in simulation mode");
+                CtAPI.goodbyeError("Ciphertext or ciphertext file required when not in simulation mode");
             }
             cipherText = Utils.getText(CIPHERTEXT);
             if (cipherText.length % 2 != 0) {
-                CtAPI.goodbye(-1, "Ciphertext length must be even - found " + cipherText.length + " characters");
+                CtAPI.goodbyeError("Ciphertext length must be even - found " + cipherText.length + " characters");
             }
             CtAPI.printf("Ciphertext: %s Length: %d\n", Utils.getString(cipherText), cipherText.length);
         }

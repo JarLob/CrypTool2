@@ -87,9 +87,9 @@ public class Utils {
 
             bufferedReader.close();
         } catch (FileNotFoundException ex) {
-            CtAPI.goodbye(-1, "Unable to open text file '" + fileName + "'");
+            CtAPI.goodbyeError("Unable to open text file '" + fileName + "'");
         } catch (IOException ex) {
-            CtAPI.goodbye(-1, "Error reading text file '" + fileName + "'");
+            CtAPI.goodbyeError("Error reading text file '" + fileName + "'");
         }
 
         String cipherStr = getString(Arrays.copyOf(text, len));
@@ -131,9 +131,9 @@ public class Utils {
 
             bufferedReader.close();
         } catch (FileNotFoundException ex) {
-            CtAPI.goodbye(-1, "Unable to open file '" + filename + "'");
+            CtAPI.goodbyeError("Unable to open file '" + filename + "'");
         } catch (IOException ex) {
-            CtAPI.goodbye(-1, "Unable to read file '" + filename + "'");
+            CtAPI.goodbyeError("Unable to read file '" + filename + "'");
         }
         printf("Read segment from file: %s, Position: %d , Length: %d\n", filename, startPost, length);
         printf("%s\n\n", getString(text));
@@ -266,7 +266,7 @@ public class Utils {
         int position = 0;
         int fileLength = (int) (new File(fileName).length());
         if (fileLength == 0) {
-            CtAPI.goodbye(-1, "Cannot open file " + fileName);
+            CtAPI.goodbyeError("Cannot open file " + fileName);
         }
         if (startPosition < 0) {
             startPosition = randomNextInt(80 * fileLength / 100);
@@ -309,9 +309,9 @@ public class Utils {
             // Always close files.
             bufferedReader.close();
         } catch (FileNotFoundException ex) {
-            CtAPI.goodbye(-1, "Cannot open book file '" + fileName + "'");
+            CtAPI.goodbyeError("Cannot open book file '" + fileName + "'");
         } catch (IOException ex) {
-            CtAPI.goodbye(-1, "Cannot read book file '" + fileName + "'");
+            CtAPI.goodbyeError("Cannot read book file '" + fileName + "'");
         }
 
         printf("Generated Random Plaintext - Book: %s, Position: %d , Length: %d\n", fileName, startPosition, text.length());

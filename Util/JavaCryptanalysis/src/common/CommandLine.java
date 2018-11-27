@@ -51,18 +51,18 @@ public class CommandLine {
         for (CommandLineArgument argument : arguments) {
             if (argument.flag == flag) {
                 if (argument.type != CommandLineArgument.Type.NUMERIC) {
-                    CtAPI.goodbye(-1, "Not a numeric flag " + flag.toString());
+                    CtAPI.goodbyeError("Not a numeric flag " + flag.toString());
                 }
                 if (argument.multiple) {
-                    CtAPI.goodbye(-1, "Multiple value numeric flag " + flag.toString());
+                    CtAPI.goodbyeError("Multiple value numeric flag " + flag.toString());
                 }
                 if (argument.integerArrayList.isEmpty()) {
-                    CtAPI.goodbye(-1, "No value for numeric flag " + flag.toString());
+                    CtAPI.goodbyeError("No value for numeric flag " + flag.toString());
                 }
                 return argument.integerArrayList.get(0);
             }
         }
-        CtAPI.goodbye(-1, "No such flag " + flag.toString());
+        CtAPI.goodbyeError("No such flag " + flag.toString());
         return -1;
     }
 
@@ -70,15 +70,15 @@ public class CommandLine {
         for (CommandLineArgument argument : arguments) {
             if (argument.flag == flag) {
                 if (argument.type != CommandLineArgument.Type.NUMERIC) {
-                    CtAPI.goodbye(-1, "Not a numeric flag " + flag.toString());
+                    CtAPI.goodbyeError("Not a numeric flag " + flag.toString());
                 }
                 if (!argument.multiple) {
-                    CtAPI.goodbye(-1, "Single value numeric flag " + flag.toString());
+                    CtAPI.goodbyeError("Single value numeric flag " + flag.toString());
                 }
                 return argument.integerArrayList;
             }
         }
-        CtAPI.goodbye(-1, "No such flag " + flag.toString());
+        CtAPI.goodbyeError("No such flag " + flag.toString());
         return null;
     }
 
@@ -86,18 +86,18 @@ public class CommandLine {
         for (CommandLineArgument argument : arguments) {
             if (argument.flag == flag) {
                 if (argument.type != CommandLineArgument.Type.STRING) {
-                    CtAPI.goodbye(-1, "Not a string flag " + flag.toString());
+                    CtAPI.goodbyeError("Not a string flag " + flag.toString());
                 }
                 if (argument.multiple) {
-                    CtAPI.goodbye(-1, "Multiple value string flag " + flag.toString());
+                    CtAPI.goodbyeError("Multiple value string flag " + flag.toString());
                 }
                 if (argument.stringArrayList.isEmpty()) {
-                    CtAPI.goodbye(-1, "No value for string flag " + flag.toString());
+                    CtAPI.goodbyeError("No value for string flag " + flag.toString());
                 }
                 return argument.stringArrayList.get(0);
             }
         }
-        CtAPI.goodbye(-1, "No such flag " + flag.toString());
+        CtAPI.goodbyeError("No such flag " + flag.toString());
         return null;
     }
 
@@ -105,15 +105,15 @@ public class CommandLine {
         for (CommandLineArgument argument : arguments) {
             if (argument.flag == flag) {
                 if (argument.type != CommandLineArgument.Type.STRING) {
-                    CtAPI.goodbye(-1, "Not a string flag " + flag.toString());
+                    CtAPI.goodbyeError("Not a string flag " + flag.toString());
                 }
                 if (!argument.multiple) {
-                    CtAPI.goodbye(-1, "Single value string flag " + flag.toString());
+                    CtAPI.goodbyeError("Single value string flag " + flag.toString());
                 }
                 return argument.stringArrayList;
             }
         }
-        CtAPI.goodbye(-1, "No such flag " + flag.toString());
+        CtAPI.goodbyeError("No such flag " + flag.toString());
         return null;
     }
 
@@ -121,48 +121,56 @@ public class CommandLine {
         for (CommandLineArgument argument : arguments) {
             if (argument.flag == flag) {
                 if (argument.type != CommandLineArgument.Type.BOOLEAN) {
-                    CtAPI.goodbye(-1, "Not a boolean flag " + flag.toString());
+                    CtAPI.goodbyeError("Not a boolean flag " + flag.toString());
                 }
                 return argument.booleanValue;
             }
         }
-        CtAPI.goodbye(-1, "No such flag " + flag.toString());
+        CtAPI.goodbyeError("No such flag " + flag.toString());
         return false;
     }
+
     public static boolean isSet(Flag flag) {
         for (CommandLineArgument argument : arguments) {
             if (argument.flag == flag) {
                 return argument.set;
             }
         }
-        CtAPI.goodbye(-1, "No such flag " + flag.toString());
+        CtAPI.goodbyeError("No such flag " + flag.toString());
         return false;
     }
+
     public static void add(CommandLineArgument argument) {
         arguments.add(argument);
     }
 
-    public static boolean parseArguments(String[] args, boolean setDefaults) {
+    private static void parseArguments(String[] args, boolean setDefaults) {
+        String error = parseArgumentsAndReturnError(args, setDefaults);
+        if (error != null) {
+            printUsage();
+            CtAPI.goodbyeError(error);
+        }
+    }
+
+    private static String parseArgumentsAndReturnError(String[] args, boolean setDefaults) {
         CommandLineArgument currentArgument = null;
 
         for (String arg : args) {
             if (arg.toUpperCase().startsWith("-V")) {
-                return false;
+                printUsage();
+                return null;
             }
             if (arg.startsWith("-") && currentArgument != null) {
-                CtAPI.printf("Invalid argument >%s<. Parameter missing for -%s (%s)\n",
+                return String.format("Invalid argument >%s<. Parameter missing for -%s (%s)\n",
                         arg, currentArgument.flagString, currentArgument.shortDesc);
-                return false;
             }
             if (!arg.startsWith("-") && currentArgument == null) {
-                CtAPI.printf("Invalid argument >%s<.\n", arg);
-                return false;
+                return String.format("Invalid argument >%s<.\n", arg);
             }
             if (arg.startsWith("-")) {
                 currentArgument = getMainArgument(arg);
                 if (currentArgument == null) {
-                    CtAPI.printf("Invalid argument >%s<.\n", arg);
-                    return false;
+                    return String.format("Invalid argument >%s<.\n", arg);
                 }
                 if (currentArgument.type == CommandLineArgument.Type.BOOLEAN) {
                     currentArgument.booleanValue = true;
@@ -179,9 +187,8 @@ public class CommandLine {
                     value = Integer.valueOf(arg);
                     if (value >= currentArgument.minIntValue && value <= currentArgument.maxIntValue) {
                         if (!currentArgument.multiple && currentArgument.integerArrayList.size() > 0) {
-                            CtAPI.printf("Warning: duplicate value >%s< for -%s (%s).\nPrevious value >%d< discarded.\n",
+                            return String.format("Duplicate value >%s< for -%s (%s).\nPrevious value >%d<.\n",
                                     arg, currentArgument.flagString, currentArgument.shortDesc, currentArgument.integerArrayList.get(0));
-                            currentArgument.integerArrayList.clear();
                         }
                         currentArgument.integerArrayList.add(value);
                         currentArgument.set = true;
@@ -193,21 +200,18 @@ public class CommandLine {
                 } catch (NumberFormatException ignored) {
                 }
                 if (value == null) {
-                    CtAPI.printf("Invalid value >%s< for -%s (%s). \n" +
+                    return String.format("Invalid value >%s< for -%s (%s). \n" +
                                     "Should be between %d and %d (default is %d).\n%s\n",
                             arg, currentArgument.flagString, currentArgument.shortDesc,
                             currentArgument.minIntValue, currentArgument.maxIntValue, currentArgument.defaultIntValue,
                             currentArgument.longDesc);
-
-                    return false;
                 }
             }
 
             if (currentArgument.type == CommandLineArgument.Type.STRING) {
                 if (currentArgument.stringArrayList.size() > 0 && !currentArgument.multiple) {
-                    CtAPI.printf("Invalid duplicate value >%s< for -%s (%s).\nPrevious value %s discarded.\n",
+                    return String.format("Duplicate value >%s< for -%s (%s).\nPrevious value %s.\n",
                             arg, currentArgument.flagString, currentArgument.shortDesc, currentArgument.stringArrayList.get(0));
-                    currentArgument.stringArrayList.clear();
                 }
                 if (currentArgument.validStringValues != null) {
                     boolean valid = false;
@@ -219,13 +223,11 @@ public class CommandLine {
 
                     }
                     if (!valid) {
-                        CtAPI.printf("Invalid value >%s< for -%s (%s). \n" +
+                        return String.format("Invalid value >%s< for -%s (%s). \n" +
                                         "Should be one of %s (default is %s).\n%s\n",
                                 arg, currentArgument.flagString, currentArgument.shortDesc,
                                 currentArgument.validStringValuesString, currentArgument.defaultStringValue,
                                 currentArgument.longDesc);
-
-                        return false;
                     }
                 }
 
@@ -236,38 +238,35 @@ public class CommandLine {
         }
 
         if (currentArgument != null) {
-            CtAPI.printf("Parameter missing for -%s (%s)\n", currentArgument.flagString, currentArgument.shortDesc);
-            return false;
+            return String.format("Parameter missing for -%s (%s)\n", currentArgument.flagString, currentArgument.shortDesc);
         }
 
         if (setDefaults) {
             for (CommandLineArgument arguments : arguments) {
                 if (arguments.type == CommandLineArgument.Type.NUMERIC && arguments.integerArrayList.isEmpty() && !arguments.multiple) {
                     if (arguments.required) {
-                        CtAPI.printf("Flag -%s is mandatory but missing (%s)\n" +
+                        return String.format("Flag -%s is mandatory but missing (%s)\n" +
                                         "Should speficiy a value between %d and %d (default is %d).\n%s\n",
                                 arguments.flagString, arguments.shortDesc, arguments.minIntValue,
                                 arguments.maxIntValue, arguments.defaultIntValue, arguments.longDesc);
-                        return false;
                     } else {
                         arguments.integerArrayList.add(arguments.defaultIntValue);
                     }
                 } else if (arguments.type == CommandLineArgument.Type.STRING && arguments.stringArrayList.isEmpty() && !arguments.multiple) {
                     if (arguments.required) {
-                        CtAPI.printf("Flag -%s is mandatory but missing (%s).\n%s\n",
+                        return String.format("Flag -%s is mandatory but missing (%s).\n%s\n",
                                 arguments.flagString, arguments.shortDesc, arguments.longDesc);
-                        return false;
                     } else {
                         arguments.stringArrayList.add(arguments.defaultStringValue);
                     }
                 }
             }
         }
-        return true;
+        return null;
 
     }
 
-    public static void printArguments() {
+    private static void printArguments() {
 
         CtAPI.println("Input Parameters\n");
 
@@ -325,6 +324,7 @@ public class CommandLine {
         }
         return currentArgument;
     }
+
     public static String getShortDesc(Flag flag) {
         for (CommandLineArgument mainMenuArgument : arguments) {
             if (mainMenuArgument.flag == flag) {
@@ -333,6 +333,7 @@ public class CommandLine {
         }
         return null;
     }
+
     public static String getFlagString(Flag flag) {
         for (CommandLineArgument mainMenuArgument : arguments) {
             if (mainMenuArgument.flag == flag) {
@@ -341,9 +342,10 @@ public class CommandLine {
         }
         return null;
     }
-    public static void printUsage() {
 
-        CtAPI.print("\nUsage: java -jar <jarname>.jar [arguments]\nArguments:\n");
+    private static void printUsage() {
+
+        System.out.print("\nUsage: java -jar <jarname>.jar [arguments]\nArguments:\n");
 
         for (CommandLineArgument currentArgument : arguments) {
 
@@ -352,35 +354,35 @@ public class CommandLine {
             switch (currentArgument.type) {
                 case BOOLEAN:
                     if (currentArgument.required && currentArgument.multiple) {
-                        CtAPI.printf("%s  (required, one or more).\n\t\t%s\n", prefix, currentArgument.longDesc);
+                        System.out.printf("%s  (required, one or more).\n\t\t%s\n", prefix, currentArgument.longDesc);
                     } else if (currentArgument.required) {
-                        CtAPI.printf("%s  (required).\n\t\t%s\n", currentArgument.longDesc);
+                        System.out.printf("%s  (required).\n\t\t%s\n", prefix, currentArgument.longDesc);
                     } else if (currentArgument.multiple) {
-                        CtAPI.printf("%s  (optional, one or more).\n\t\t%s\n", prefix, currentArgument.longDesc);
+                        System.out.printf("%s  (optional, one or more).\n\t\t%s\n", prefix, currentArgument.longDesc);
                     } else {
-                        CtAPI.printf("%s  (optional).\n\t\t%s\n", prefix, currentArgument.longDesc);
+                        System.out.printf("%s  (optional).\n\t\t%s\n", prefix, currentArgument.longDesc);
                     }
                     break;
                 case NUMERIC:
                     if (currentArgument.required && currentArgument.multiple) {
-                        CtAPI.printf("%s \n\t\tShould specify a value between %d and %d (required, one or more).\n\t\t%s\n",
+                        System.out.printf("%s \n\t\tShould specify a value between %d and %d (required, one or more).\n\t\t%s\n",
                                 prefix,
                                 currentArgument.minIntValue,
                                 currentArgument.maxIntValue,
                                 currentArgument.longDesc);
                     } else if (currentArgument.required) {
-                        CtAPI.printf("%s \n\t\tShould specify a value between %d and %d (required).\n\t\t%s\n",
+                        System.out.printf("%s \n\t\tShould specify a value between %d and %d (required).\n\t\t%s\n",
                                 prefix,
                                 currentArgument.minIntValue,
                                 currentArgument.maxIntValue,
                                 currentArgument.longDesc);
                     } else if (currentArgument.multiple) {
-                        CtAPI.printf("%s \n\t\tShould specify a value between %d and %d (optional, one or more).\n\t\t%s\n",
+                        System.out.printf("%s \n\t\tShould specify a value between %d and %d (optional, one or more).\n\t\t%s\n",
                                 prefix,
                                 currentArgument.minIntValue, currentArgument.maxIntValue,
                                 currentArgument.longDesc);
                     } else {
-                        CtAPI.printf("%s \n\t\tShould specify a value between %d and %d (optional, default is %d).\n\t\t%s\n",
+                        System.out.printf("%s \n\t\tShould specify a value between %d and %d (optional, default is %d).\n\t\t%s\n",
                                 prefix,
                                 currentArgument.minIntValue, currentArgument.maxIntValue,
                                 currentArgument.defaultIntValue,
@@ -393,13 +395,13 @@ public class CommandLine {
                         validValuesAddition = " \n\t\tShould specify one of " + currentArgument.validStringValuesString;
                     }
                     if (currentArgument.required && currentArgument.multiple) {
-                        CtAPI.printf("%s %s (required, one or more).\n\t\t%s\n", prefix, validValuesAddition, currentArgument.longDesc);
+                        System.out.printf("%s %s (required, one or more).\n\t\t%s\n", prefix, validValuesAddition, currentArgument.longDesc);
                     } else if (currentArgument.required) {
-                        CtAPI.printf("%s %s (required).\n\t\t%s\n", prefix, validValuesAddition, currentArgument.longDesc);
+                        System.out.printf("%s %s (required).\n\t\t%s\n", prefix, validValuesAddition, currentArgument.longDesc);
                     } else if (currentArgument.multiple) {
-                        CtAPI.printf("%s %s (optional, one or more).\n\t\t%s\n", prefix, validValuesAddition, currentArgument.longDesc);
+                        System.out.printf("%s %s (optional, one or more).\n\t\t%s\n", prefix, validValuesAddition, currentArgument.longDesc);
                     } else {
-                        CtAPI.printf("%s %s (optional, default is \"%s\").\n\t\t%s\n",
+                        System.out.printf("%s %s (optional, default is \"%s\").\n\t\t%s\n",
                                 prefix,
                                 validValuesAddition,
                                 currentArgument.defaultStringValue,
@@ -412,5 +414,12 @@ public class CommandLine {
                     break;
             }
         }
+    }
+
+    public static void parseAndPrintCommandLineArgs(String[] args) {
+        String[] ctArgs = CtAPI.getArgs();
+        parseArguments(ctArgs, false);
+        parseArguments(args, true);
+        printArguments();
     }
 }

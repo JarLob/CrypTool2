@@ -105,9 +105,9 @@ public class Stats {
 
             bufferedReader.close();
         } catch (FileNotFoundException ex) {
-            CtAPI.goodbye(-1, "Unable to open bigram file '" + fileName + "'");
+            CtAPI.goodbyeError("Unable to open bigram file '" + fileName + "'");
         } catch (IOException ex) {
-            CtAPI.goodbye(-1, "Error reading bigram file '" + fileName + "'");
+            CtAPI.goodbyeError("Error reading bigram file '" + fileName + "'");
         }
 
         CtAPI.printf("Bigram file read: %s, items  = %d  \n", fileName, items);
@@ -143,9 +143,9 @@ public class Stats {
 
             bufferedReader.close();
         } catch (FileNotFoundException ex) {
-            CtAPI.goodbye(-1, "Unable to open mono file '" + fileName + "'");
+            CtAPI.goodbyeError("Unable to open mono file '" + fileName + "'");
         } catch (IOException ex) {
-            CtAPI.goodbye(-1, "Error reading mono file '" + fileName + "'");
+            CtAPI.goodbyeError("Error reading mono file '" + fileName + "'");
         }
 
         CtAPI.printf("mono file read: %s, items  = %d  \n", fileName, items);
@@ -197,9 +197,9 @@ public class Stats {
             // Always close files.
             bufferedReader.close();
         } catch (FileNotFoundException ex) {
-            CtAPI.goodbye(-1, "Unable to open text file for stats '" + fileName + "'");
+            CtAPI.goodbyeError("Unable to open text file for stats '" + fileName + "'");
         } catch (IOException ex) {
-            CtAPI.goodbye(-1, "Error reading text file for stats '" + fileName + "'");
+            CtAPI.goodbyeError("Error reading text file for stats '" + fileName + "'");
         }
 
         convertToLog(bigramStats);
@@ -253,7 +253,7 @@ public class Stats {
         }
 
         if (n == 0) {
-            CtAPI.goodbye(-1, "Cannot load stats - language: " + language);
+            CtAPI.goodbyeError("Cannot load stats - language: " + language);
         }
         return true;
     }
