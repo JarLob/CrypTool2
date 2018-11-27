@@ -72,7 +72,7 @@ namespace CrypToolStoreBuildSystem
         /// <summary>
         /// Filename/path of code signing certificate
         /// </summary>
-        public string CertificatePfxFile
+        public string SigningCertificatePfxFile
         {
             get;
             set;
@@ -81,7 +81,7 @@ namespace CrypToolStoreBuildSystem
         /// <summary>
         /// Password of code signing certificate
         /// </summary>
-        public string CertificatePassword
+        public string SigningCertificatePassword
         {
             get;
             set;
@@ -666,7 +666,7 @@ namespace CrypToolStoreBuildSystem
             string buildfoldername = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion;
 
             ProcessStartInfo info = new ProcessStartInfo("msbuild.exe");
-            info.Arguments = buildfoldername + String.Format("\\build_plugin.xml /p:Platform=x86 /p:Configuration=Release /p:CertificatePfxFile=\"{0}\" /p:CertificatePassword=\"{1}\"", CertificatePfxFile, CertificatePassword);
+            info.Arguments = buildfoldername + String.Format("\\build_plugin.xml /p:Platform=x86 /p:Configuration=Release /p:CertificatePfxFile=\"{0}\" /p:CertificatePassword=\"{1}\"", SigningCertificatePfxFile, SigningCertificatePassword);
             info.CreateNoWindow = false;
             info.UseShellExecute = false;
             info.RedirectStandardOutput = true;
