@@ -1,13 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-
-<!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
 <documentation>
   <language culture="en"/>
   <language culture="de-DE"/>
   <language culture="ru"/>
 
   <introduction lang="en">
-    The DECODE database <ref id="decodedatabasewebsite" /> contains a collection of digitized images of ciphertexts and encryption keys along with metadata information about their provenance, location, transcription, and possible cryptanalysis or commentary. 
+    The DECODE database <ref id="decodedatabasewebsite" /> contains a collection of digitized images of historical ciphertexts and encryption keys along with metadata information about their provenance, location, transcription, and possible cryptanalysis or commentary. 
     The database enables search and the user can upload and download ciphertexts and keys with metadata information. 
     The transcriptions can be used for training automatic cryptology tools. Due to license restrictions, some images cannot be downloaded but are shown as miniature.
     <newline/><newline/>
@@ -15,14 +13,21 @@
   </introduction>
 
   <introduction lang="de-DE">
-    Die DECODE-Datenbank <ref id="decodedatabasewebsite" /> enthält eine Sammlung digitalisierter Bilder von Geheimtexten und Verschlüsselungsschlüsseln sowie Metadateninformationen zu Herkunft, Ort, Transkription und möglicher Kryptoanalyse sowie Kommentare.
-    Die Datenbank ermöglicht die Suche und der Benutzer kann Geheimtexte und Schlüssel mit Metadateninformationen hochladen und herunterladen.
-    Die Transkriptionen können für das Training von automatischen Kryptologietools verwendet werden. Aufgrund von Lizenzbeschränkungen können einige Bilder nicht heruntergeladen werden, sondern werden nur als Miniatur angezeigt.
+    Die DECODE-Datenbank <ref id="decodedatabasewebsite" /> enthält eine Sammlung digitalisierter Bilder von historischen Geheimtexten und Verschlüsselungsschlüsseln sowie Metadateninformationen zu Herkunft, Ort, Transkription und möglicher Kryptoanalyse sowie Kommentare.
+    Die Datenbank ermöglicht es Ihnen, sie zu durchsuchen und Geheimtexte und Schlüssel mit Metadateninformationen hoch- und herunterzuladen.
+    Die Transkriptionen können für das Training von automatischen Kryptologietools verwendet werden.
+    Aufgrund von Lizenzbeschränkungen können einige Bilder nicht heruntergeladen, sondern werden nur als Miniatur angezeigt werden.
     <newline/><newline/>
-    Mit den DEOCDE-Downloader und -Betrachter-Komponenten in CrypTool 2 können Sie die DECODE-Datenbank direkt durchsuchen.
+    Mit den CT2-Komponenten DECODE-Downloader und -Betrachter können Sie die DECODE-Datenbank direkt durchsuchen.
   </introduction>
 
   <introduction lang="ru">
+    База данных DECODE <ref id = "decodedatabasewebsite" /> содержит набор оцифрованных изображений исторических ключей шифрования и шифрования, а также информацию метаданных о происхождении, местоположении, транскрипции и возможном криптоанализе и комментариях.
+    База данных позволяет вам искать и загружать и загружать зашифрованные тексты и ключи с информацией метаданных.
+    Транскрипции могут использоваться для обучения автоматических инструментов криптографии.
+    Из-за ограничений лицензий некоторые изображения могут не загружаться, но отображаются только в миниатюре.
+    <newline/><newline/>
+    С компонентами CT2 DECODE Downloader и Viewer вы можете напрямую искать базу данных DECODE.
   </introduction>
 
   <usage lang="en">
@@ -30,7 +35,8 @@
     Put both onto an empty CrypTool 2 workspace.
     Then, connect the "Record" output of the downloader with the "Record" input of the viewer.    
     For viewing images, connect the "Image" output of the viewer with an PictureOutput component.
-    For viewing txt-files, connect the "Document" output of the viewer to a StringEncoder component. Then, connect the StringEncoder to a TextOutput. Set the encoding of the StringEncoder to UTF-8.
+    For viewing txt-files, connect the "Document" output of the viewer to a StringEncoder component. 
+    Then, connect the StringEncoder to a TextOutput. Set the encoding of the StringEncoder to UTF-8.
   </usage>
 
   <usage lang="de-DE">
@@ -38,10 +44,17 @@
     Legen Sie beide auf eine leere CrypTool 2-Arbeitsfläche.
     Verbinden Sie dann den "Datensatz"-Ausgang des Downloaders mit dem "Datensatz"-Eingang des Betrachters.
     Verbinden Sie zum Anzeigen von Bildern den Ausgang "Bild" des Betrachters mit einer BildAusgabe-Komponente.
-    Verbinden Sie zum Anzeigen von TXT-Dateien den Ausgang "Dokument" des Betrachters mit einer ZeichenkettenCodierer-Komponente. Verbinden Sie dann den ZeichenkettenCodierer mit einer TextAusgabe. Stellen Sie die Codierung des ZeichenkettenCodierer auf UTF-8 ein.
+    Verbinden Sie zum Anzeigen von TXT-Dateien den Ausgang "Dokument" des Betrachters mit einer ZeichenkettenCodierer-Komponente. 
+    Verbinden Sie dann den ZeichenkettenCodierer mit einer TextAusgabe. Stellen Sie die Codierung des ZeichenkettenCodierer auf UTF-8 ein.
   </usage>
-
+   
   <usage lang="ru">
+    Вы должны использовать загрузчик DECODE и средство просмотра DECODE в CrypTool 2 для поиска базы данных DECODE.
+    Поместите оба на пустой рабочий стол CrypTool 2.
+    Затем подключите «запись» вывода загрузчика к «записи» входа средства просмотра.
+    Чтобы отображать изображения, подключите вывод изображения «Изображение» к компоненту вывода изображения.
+    Чтобы просмотреть файлы TXT, подключите вывод документа Viewer к компоненту String Encoder.
+    Затем подключите строковый кодер к текстовому выходу. Установите кодировку строкового кодировщика в UTF-8.
   </usage>
   
   <presentation lang="en">
@@ -77,8 +90,23 @@
     Um andere Dateitypen anzuzeigen, verwenden Sie eine DateiAusgabe-Komponente, um die Datei auf Ihrer Festplatte zu speichern.
     Dann können Sie ein Programm Ihrer Wahl verwenden, um die anderen Formate zu öffnen. Z.B Ein PDF-Reader zum Lesen von PDF-Dateien.
   </presentation>
-
+    
   <presentation lang="ru">
+    Чтобы загрузить данные из базы данных, сначала используйте загрузчик, чтобы получить список всех записей DECODE, хранящихся в базе данных.
+    Просто запустите рабочее пространство CrypTool 2.
+    Вы можете отфильтровать список, набрав строку поиска в текстовом поле фильтра загрузчика.
+    После извлечения списка записей в Downloader вы можете просто загрузить запись, дважды щелкнув запись в списке.
+    Затем загрузчик загружает запись в формате json.
+    Чтобы просмотреть содержимое загрузчика, вам необходимо подключить его к средству просмотра DECODE.
+    <newline/><newline/>
+    Зритель отображает содержимое записи в удобочитаемой форме.
+    Здесь вы также можете скачать прикрепленные документы и прикрепленные фотографии.
+    Просто дважды щелкните его в средстве просмотра.
+    Для просмотра изображений вам нужен компонент вывода изображения, как описано выше.
+    Для документов вы должны использовать компонент текстового вывода, а также компонент строкового кодировщика, как описано выше.
+    Обратите внимание, что только текстовые файлы можно визуализировать непосредственно в CrypTool 2.
+    Чтобы просмотреть другие типы файлов, используйте компонент FileSource для сохранения файла на жесткий диск.
+    Затем вы можете использовать программу по вашему выбору, чтобы открыть другие форматы. Например, читатель PDF для чтения PDF-файлов.
   </presentation>
 
   <references>
@@ -86,6 +114,7 @@
       <link url="https://stp.lingfil.uu.se/decode/database/login" lang="en" />
       <caption lang="en">DECODE Database</caption>
       <caption lang="de">DECODE Datenbank</caption>
+      <caption lang="ru">DECODE база данных</caption>
     </linkReference>
   </references>
 </documentation>
