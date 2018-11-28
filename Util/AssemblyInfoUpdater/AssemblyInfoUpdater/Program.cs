@@ -25,7 +25,6 @@ namespace AssemblyInfoUpdater
     class Program
     {
         const string COMPANY = "CrypTool 2 Team";
-        const string PRODUCT = "CrypTool 2.1 (Developer Build)";
         const string COPYRIGHT = "Copyright © CrypTool 2 Team";
         const string VERSION = "2.1.0.0";
         const string BUILDTYPE = "Ct2BuildType.Developer";
@@ -54,33 +53,37 @@ namespace AssemblyInfoUpdater
             }
         }
 
+        /// <summary>
+        /// Updates a single AssemblyInfo.cs file
+        /// </summary>
+        /// <param name="file"></param>
         private static void UpdateAssemblyInfo(string file)
         {
             string[] lines = File.ReadAllLines(file);
             for (int i = 0; i < lines.Length; i++)
             {
-                string line = lines[i];
-                if (line.Contains("AssemblyCompany"))
+                if (lines[i].TrimStart().StartsWith("//"))
+                {
+                    //we dont change outcommented lines
+                    continue;
+                }
+                if (lines[i].Contains("AssemblyCompany"))
                 {
                     lines[i] = String.Format("[assembly: AssemblyCompany(\"{0}\")]", COMPANY);
                 }
-                else if (line.Contains("AssemblyProduct"))
-                {
-                    lines[i] = String.Format("[assembly: AssemblyProduct(\"{0}\")]", PRODUCT);
-                }
-                else if (line.Contains("AssemblyCopyright"))
+                else if (lines[i].Contains("AssemblyCopyright"))
                 {
                     lines[i] = String.Format("[assembly: AssemblyCopyright(\"{0}\")]", COPYRIGHT);
                 }
-                else if (line.Contains("AssemblyVersion"))
+                else if (lines[i].Contains("AssemblyVersion"))
                 {
                     lines[i] = String.Format("[assembly: AssemblyVersion(\"{0}\")]", VERSION);
                 }
-                else if (line.Contains("AssemblyCt2BuildType"))
+                else if (lines[i].Contains("AssemblyCt2BuildType"))
                 {
                     lines[i] = String.Format("[assembly: AssemblyCt2BuildType({0})]", BUILDTYPE);
                 }
-                else if (line.Contains("AssemblyCt2InstallationType"))
+                else if (lines[i].Contains("AssemblyCt2InstallationType"))
                 {
                     lines[i] = String.Format("[assembly: AssemblyCt2InstallationType({0})]", INSTALLATIONTYPE);
                 }
