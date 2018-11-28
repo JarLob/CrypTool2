@@ -37,6 +37,7 @@ namespace CrypToolStoreBuildSystem
     {
         private const string BUILD_FOLDER = "Build";
         private const string SOURCE_FILE_NAME = "Source";
+        private const string TIMESTAMP_SERVER = "http://timestamp.verisign.com/scripts/timstamp.dll";
 
         private BuildLogger Logger = new BuildLogger();
         private Configuration Config = Configuration.GetConfiguration();
@@ -91,6 +92,15 @@ namespace CrypToolStoreBuildSystem
         /// Will contain std out and err fo msbuild
         /// </summary>
         private StringBuilder msbuild_Log
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Will contain std out and err fo msbuild
+        /// </summary>
+        private StringBuilder signtool_Log
         {
             get;
             set;
@@ -240,7 +250,6 @@ namespace CrypToolStoreBuildSystem
 
                 // 8) Worker starts "msbuild.exe" (hint: set correct password for signtool to allow it opening signing certificate)
                 // --> msbuild compiles the plugin
-                // --> signtool is also started and signs the builded assembly file
                 if (!BuildPlugin())
                 {
                     return;
@@ -264,7 +273,19 @@ namespace CrypToolStoreBuildSystem
                     return;
                 }
 
-                // 10) Create meta file containing meta information
+                // 10) Worker calls signtool to sign the created assembly/assemblies
+                if (!SignPlugin())
+                {
+                    return;
+                }
+              
+                //check, if stop has been called
+                if (!IsRunning)
+                {
+                    return;
+                }
+
+                // 11) Create meta file containing meta information
                 if (!CreateMetaFile())
                 {
                     return;
@@ -276,7 +297,7 @@ namespace CrypToolStoreBuildSystem
                     return;
                 }
 
-                // 11)  Worker zips everything located in "build_output" -- this also includes "de/ru" etc subfolders of the plugin
+                // 12)  Worker zips everything located in "build_output" -- this also includes "de/ru" etc subfolders of the plugin
                 // --> zip name is "Assembly-1-1.zip, = Assembly-PluginId-SourceId")
                 if (!CreateAssemblyZip())
                 {
@@ -289,7 +310,7 @@ namespace CrypToolStoreBuildSystem
                     return;
                 }
 
-                // 12) Worker uploads assembly zip file to CrypToolStore Server, and also updates source data in database
+                // 13) Worker uploads assembly zip file to CrypToolStore Server, and also updates source data in database
                 if (!UploadAssemblyZip())
                 {
                     return;
@@ -327,7 +348,7 @@ namespace CrypToolStoreBuildSystem
                 }
                 IsRunning = false;
             }
-        }
+        }       
 
         /// <summary>
         ///  0) Worker sets source to building state
@@ -432,21 +453,11 @@ namespace CrypToolStoreBuildSystem
             {
                 using (StreamWriter writer = new StreamWriter(stream))
                 {
-                    writer.WriteLine("<Project DefaultTargets=\"BuildAndSign\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">");
+                    writer.WriteLine("<Project DefaultTargets=\"BuildCrypPlugin\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">");
                     writer.WriteLine("  <Import Project=\"..\\..\\CustomBuildTasks\\CustomBuildTasks.Targets\"/>");
-                    writer.WriteLine("  <PropertyGroup>");
-                    writer.WriteLine("    <QM>\"</QM>");
-                    writer.WriteLine("  </PropertyGroup>");
                     writer.WriteLine("  <Target Name=\"BuildCrypPlugin\">");
                     writer.WriteLine("    <MSBuild Projects=\"$PROJECT$\" Targets=\"Build\" />");
                     writer.WriteLine("  </Target>");
-                    writer.WriteLine("  <Target Name=\"SignCrypPlugin\">");
-                    writer.WriteLine("    <ItemGroup>");
-                    writer.WriteLine("      <SignFiles Include=\"build_output\\Release\\*.dll\"/>");
-                    writer.WriteLine("    </ItemGroup>");
-                    writer.WriteLine("    <SilentExec Command=\"signtool.exe\" Arguments=\"sign /f $(CertificatePfxFile) /p $(CertificatePassword) /t http://timestamp.verisign.com/scripts/timstamp.dll $(QM)%(SignFiles.Identity)$(QM)\" />");
-                    writer.WriteLine("  </Target>");
-                    writer.WriteLine("  <Target Name=\"BuildAndSign\" DependsOnTargets=\"BuildCrypPlugin;SignCrypPlugin\" />");
                     writer.WriteLine("</Project>");
                 }
             }
@@ -673,8 +684,8 @@ namespace CrypToolStoreBuildSystem
             info.RedirectStandardError = true;
             Process process = new Process();
             process.StartInfo = info;            
-            process.OutputDataReceived += CaptureOutput;
-            process.ErrorDataReceived += CaptureError;
+            process.OutputDataReceived += CaptureOutput_msbuild;
+            process.ErrorDataReceived += CaptureError_msbuild;
             msbuild_Log = new StringBuilder();
             process.Start();
             process.BeginOutputReadLine();
@@ -696,7 +707,7 @@ namespace CrypToolStoreBuildSystem
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CaptureOutput(object sender, DataReceivedEventArgs e)
+        private void CaptureOutput_msbuild(object sender, DataReceivedEventArgs e)
         {
             if (e.Data != null)
             {
@@ -711,7 +722,7 @@ namespace CrypToolStoreBuildSystem
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CaptureError(object sender, DataReceivedEventArgs e)
+        private void CaptureError_msbuild(object sender, DataReceivedEventArgs e)
         {
             if (e.Data != null)
             {
@@ -741,12 +752,91 @@ namespace CrypToolStoreBuildSystem
         }
 
         /// <summary>
-        ///  10) Create meta file containing meta information
+        ///  10) Worker calls signtool to sign the created assembly/assemblies
+        /// </summary>
+        /// <returns></returns>
+        private bool SignPlugin()
+        {
+            if (string.IsNullOrEmpty(SigningCertificatePfxFile))
+            {
+                Logger.LogText("(Buildstep 10) No signing certificate given. Omit the signing build step now", this, Logtype.Warning);
+                return true;
+            }
+            Logger.LogText("(Buildstep 10) Signing created assembly/assemblies now", this, Logtype.Info);
+
+            string path = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\build_output\";
+            StringBuilder filenames = new StringBuilder();
+            foreach (var filename in Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories))
+            {
+                filenames.Append(" ");
+                filenames.Append(filename);
+            }
+
+            ProcessStartInfo info = new ProcessStartInfo("signtool.exe");
+            info.Arguments = String.Format("sign /f {0} /p {1} /t {2} {3}", SigningCertificatePfxFile, SigningCertificatePassword, TIMESTAMP_SERVER, filenames.ToString());
+            info.CreateNoWindow = false;
+            info.UseShellExecute = false;
+            info.RedirectStandardOutput = true;
+            info.RedirectStandardError = true;
+            Process process = new Process();
+            process.StartInfo = info;
+            process.OutputDataReceived += CaptureOutput_signtool;
+            process.ErrorDataReceived += CaptureError_signtool;
+            signtool_Log = new StringBuilder();
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+            process.WaitForExit();
+
+            Logger.LogText(String.Format("(Buildstep 10) Output of signtool:\r\n{0}",signtool_Log.ToString()), this, process.ExitCode == 0 ? Logtype.Info : Logtype.Error);
+
+            if (process.ExitCode != 0)
+            {
+                Logger.LogText("(Buildstep 10) Signing failed", this, Logtype.Error);
+                return false;
+            }
+            Logger.LogText("(Buildstep 10) Created assembly/assemblies signed", this, Logtype.Info);
+            return true;
+        }
+
+        /// <summary>
+        /// Redirects outputstream to signtool_Log
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CaptureOutput_signtool(object sender, DataReceivedEventArgs e)
+        {
+            if (e.Data != null)
+            {
+                //we remove absolute directory infos from the messages since these are "confidential"
+                string message = e.Data.Replace(Directory.GetCurrentDirectory(), "");
+                signtool_Log.AppendLine(message);
+            }
+        }
+
+        /// <summary>
+        /// Redirects errorstream to signtool_Log
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CaptureError_signtool(object sender, DataReceivedEventArgs e)
+        {
+            if (e.Data != null)
+            {
+                //we remove absolute directory infos from the messages since these are "confidential"
+                string message = e.Data.Replace(Directory.GetCurrentDirectory(), "");
+                signtool_Log.AppendLine(message);
+            }
+        }
+
+
+        /// <summary>
+        ///  11) Create meta file containing meta information
         /// </summary>
         /// <returns></returns>
         private bool CreateMetaFile()
         {
-            Logger.LogText(String.Format("(Buildstep 10) Start creating pluginmetainfo.xml for assembly-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("(Buildstep 11) Start creating pluginmetainfo.xml for assembly-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
 
             string metafilename = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\build_output\pluginmetainfo.xml";
 
@@ -778,18 +868,18 @@ namespace CrypToolStoreBuildSystem
                 }
             }
 
-            Logger.LogText(String.Format("(Buildstep 10) Created pluginmetainfo.xml for assembly-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("(Buildstep 11) Created pluginmetainfo.xml for assembly-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             return true;
         }
 
         /// <summary>
-        ///  11)  Worker zips everything located in "build_output" -- this also includes "de/ru" etc subfolders of the plugin
+        ///  12)  Worker zips everything located in "build_output" -- this also includes "de/ru" etc subfolders of the plugin
         ///  --> zip name is "assembly-1-1.zip, = assembly-PluginId-SourceId")
         /// </summary>
         /// <returns></returns>
         private bool CreateAssemblyZip()
         {           
-            Logger.LogText(String.Format("(Buildstep 11) Start creating assembly-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("(Buildstep 12) Start creating assembly-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
 
             //remove pdb-files since these are not needed in the zip file
             DirectoryInfo DirectoryInfo = new DirectoryInfo(BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\" + "build_output\\");
@@ -802,17 +892,17 @@ namespace CrypToolStoreBuildSystem
             string zipfile_path_and_name = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\assembly-" + Source.PluginId + "-" + Source.PluginVersion + ".zip";
             ZipFile.CreateFromDirectory(BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\" + "build_output\\", zipfile_path_and_name, CompressionLevel.Optimal, false);
 
-            Logger.LogText(String.Format("(Buildstep 11) Created assembly-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("(Buildstep 12) Created assembly-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             return true;
         }
 
         /// <summary>
-        /// 12) Worker uploads assembly zip file to CrypToolStore Server, and also updates source data in database
+        /// 13) Worker uploads assembly zip file to CrypToolStore Server, and also updates source data in database
         /// </summary>
         /// <returns></returns>
         private bool UploadAssemblyZip()
         {
-            Logger.LogText(String.Format("(Buildstep 12) Start uploading assembly zipfile for source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("(Buildstep 13) Start uploading assembly zipfile for source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             CrypToolStoreClient client = new CrypToolStoreClient();
             client.ServerCertificate = ServerCertificate;
             client.ServerAddress = Config.GetConfigEntry("ServerAddress");
@@ -830,18 +920,18 @@ namespace CrypToolStoreBuildSystem
 
             if (result.Success)
             {
-                Logger.LogText(String.Format("(Buildstep 12) Uploaded assembly zipfile of source-{0}-{1}.zip in {2}", Source.PluginId, Source.PluginVersion, DateTime.Now.Subtract(startTime)), this, Logtype.Info);
+                Logger.LogText(String.Format("(Buildstep 13) Uploaded assembly zipfile of source-{0}-{1}.zip in {2}", Source.PluginId, Source.PluginVersion, DateTime.Now.Subtract(startTime)), this, Logtype.Info);
                 return true;
             }
             else
             {
-                Logger.LogText(String.Format("(Buildstep 12) Upload of assembly zipfile of source-{0}-{1}.zip failed. Message was: {2}", Source.PluginId, Source.PluginVersion, result.Message), this, Logtype.Error);
+                Logger.LogText(String.Format("(Buildstep 13) Upload of assembly zipfile of source-{0}-{1}.zip failed. Message was: {2}", Source.PluginId, Source.PluginVersion, result.Message), this, Logtype.Error);
                 return false;
             }            
         }
 
         /// <summary>
-        /// 13) Worker cleans up by deleting build folder (also in case of an error)
+        /// 14) Worker cleans up by deleting build folder (also in case of an error)
         /// </summary>
         private void CleanUp()
         {
@@ -849,17 +939,17 @@ namespace CrypToolStoreBuildSystem
             if (Directory.Exists(buildfoldername))
             {
                 Directory.Delete(buildfoldername, true);
-                Logger.LogText(String.Format("(Buildstep 13) Deleted build folder for source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, buildfoldername), this, Logtype.Info);                
+                Logger.LogText(String.Format("(Buildstep 14) Deleted build folder for source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, buildfoldername), this, Logtype.Info);                
             }            
         }
 
         /// <summary>
-        ///  14) Set state of source in database to BUILDED or ERROR
+        ///  15) Set state of source in database to BUILDED or ERROR
         ///      also upload build_log to CrypToolStore database
         /// </summary>
         private void SetFinalBuildStateAndUploadBuildlog(bool buildError)
         {
-            Logger.LogText(String.Format("(Buildstep 14) Set final build state of source-{0}-{1} and upload build log", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(String.Format("(Buildstep 15) Set final build state of source-{0}-{1} and upload build log", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             CrypToolStoreClient client = new CrypToolStoreClient();
             client.ServerCertificate = ServerCertificate;
             client.ServerAddress = Config.GetConfigEntry("ServerAddress");
@@ -872,7 +962,7 @@ namespace CrypToolStoreBuildSystem
 
             if (buildError)
             {
-                Logger.LogText(String.Format("(Buildstep 14) Set state of source-{0}-{1} to ERROR", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
+                Logger.LogText(String.Format("(Buildstep 15) Set state of source-{0}-{1} to ERROR", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
                 source.BuildState = BuildState.ERROR.ToString();
             }
             else
@@ -880,7 +970,7 @@ namespace CrypToolStoreBuildSystem
                 //increment build version only if there was not error
                 source.BuildVersion++;
 
-                Logger.LogText(String.Format("(Buildstep 14) Set state of source-{0}-{1} to SUCCESS", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+                Logger.LogText(String.Format("(Buildstep 15) Set state of source-{0}-{1} to SUCCESS", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
                 source.BuildState = BuildState.SUCCESS.ToString();
             }
 
@@ -893,11 +983,11 @@ namespace CrypToolStoreBuildSystem
 
             if (result.Success)
             {
-                Logger.LogText(String.Format("(Buildstep 14) Uploaded build log of source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+                Logger.LogText(String.Format("(Buildstep 15) Uploaded build log of source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             }
             else
             {
-                Logger.LogText(String.Format("(Buildstep 14) Setting final build state of source-{0}-{1} and upload build log failed. Message was: {2}", Source.PluginId, Source.PluginVersion, result.Message), this, Logtype.Error);
+                Logger.LogText(String.Format("(Buildstep 15) Setting final build state of source-{0}-{1} and upload build log failed. Message was: {2}", Source.PluginId, Source.PluginVersion, result.Message), this, Logtype.Error);
             }           
         }
     }
