@@ -9,9 +9,9 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle("")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("CrypTool 2 Team")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("Copyright © 2016 CrypTool 2 Team")]
+[assembly: AssemblyCopyright("Copyright © CrypTool 2 Team")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]		
 
@@ -26,7 +26,7 @@ using System.Runtime.CompilerServices;
 // Sie k�nnen alle Werte oder die standardm��ige Revision und Buildnummer 
 // mit '*' angeben:
 
-[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyVersion("2.1.0.0")]
 
 //
 // Um die Assembly zu signieren, m�ssen Sie einen Schl�ssel angeben. Weitere Informationen 

@@ -19,11 +19,11 @@ using System.Runtime.InteropServices;
 using Cryptool.PluginBase.Attributes;
 
 [assembly: AssemblyTitle("CrypTool Plugin Base")]
-[assembly: AssemblyCompany("Lehrstuhl Verteilte Systeme - Universität Duisburg-Essen")]
+[assembly: AssemblyCompany("CrypTool 2 Team")]
 [assembly: AssemblyProduct("CrypTool 2.1 (Developer Build)")]
-[assembly: AssemblyCopyright("Copyright © 2016 CrypTool 2 Team")]
+[assembly: AssemblyCopyright("Copyright © CrypTool 2 Team")]
 [assembly: ComVisible(false)]
-[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyVersion("2.1.0.0")]
 
 [assembly: AssemblyCt2BuildType(Ct2BuildType.Developer)]
 [assembly: AssemblyCt2InstallationType(Ct2InstallationType.Developer)]

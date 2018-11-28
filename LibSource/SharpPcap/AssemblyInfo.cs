@@ -8,9 +8,9 @@ using System.Reflection;
 [assembly: AssemblyTitle("SharpPcap")]
 [assembly: AssemblyDescription("A packet capture framework for .NET")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("http://sharppcap.sf.net")]
+[assembly: AssemblyCompany("CrypTool 2 Team")]
 [assembly: AssemblyProduct("SharpPcap")]
-[assembly: AssemblyCopyright("Tamir Gal, Chris Morgan and others")]
+[assembly: AssemblyCopyright("Copyright © CrypTool 2 Team")]
 [assembly: AssemblyTrademark("SharpPcap")]
 [assembly: AssemblyCulture("")]
 
@@ -25,7 +25,7 @@ using System.Reflection;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("4.0.0")]
+[assembly: AssemblyVersion("2.1.0.0")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 

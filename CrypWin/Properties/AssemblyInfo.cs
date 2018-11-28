@@ -7,9 +7,9 @@ using System.Windows;
 [assembly: AssemblyTitle("CrypTool 2")]
 [assembly: AssemblyDescription("CrypTool 2")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("CrypTool 2")] // this attribute is being used to determine the local directory for the user.config
+[assembly: AssemblyCompany("CrypTool 2 Team")]
 [assembly: AssemblyProduct("CrypTool 2.1 (Developer Build)")]
-[assembly: AssemblyCopyright("Copyright © 2016 CrypTool 2 Team")]
+[assembly: AssemblyCopyright("Copyright © CrypTool 2 Team")]
 [assembly: AssemblyTrademark("Copyright © 2016 CrypTool 2 Team")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
