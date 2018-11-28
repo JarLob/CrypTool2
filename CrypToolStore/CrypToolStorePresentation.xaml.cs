@@ -121,7 +121,8 @@ namespace Cryptool.CrypToolStore
             {
                 CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = new X509Certificate2(Properties.Resources.anonymous);
-                client.ServerAddress = "localhost";                
+                client.ServerAddress = Cryptool.CrypToolStore.Constants.ServerAddress;
+                client.ServerPort = Cryptool.CrypToolStore.Constants.ServerPort;
 
                 //Translate the Ct2BuildType to PublishState
                 PublishState publishState;
@@ -372,7 +373,8 @@ namespace Cryptool.CrypToolStore
 
                 CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = new X509Certificate2(Properties.Resources.anonymous);
-                client.ServerAddress = "localhost";
+                client.ServerAddress = Cryptool.CrypToolStore.Constants.ServerAddress;
+                client.ServerPort = Cryptool.CrypToolStore.Constants.ServerPort;
 
                 //Translate the Ct2BuildType to PublishState
                 PublishState publishState;

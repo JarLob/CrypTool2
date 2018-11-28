@@ -48,6 +48,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="CrypToolStoreEditor.cs" />
     <Compile Include="CrypToolStorePresentation.xaml.cs">
       <DependentUpon>CrypToolStorePresentation.xaml</DependentUpon>
