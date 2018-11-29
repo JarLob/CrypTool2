@@ -115,6 +115,15 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die CrypTool Store ähnelt.
+        /// </summary>
+        internal static string CrypToolStore {
+            get {
+                return ResourceManager.GetString("CrypToolStore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Watch videos about CrypTool 2. ähnelt.
         /// </summary>
         internal static string CrypTutorials {
@@ -210,6 +219,15 @@ namespace Startcenter.Properties {
         internal static string Open_the_ct_book_ {
             get {
                 return ResourceManager.GetString("Open_the_ct_book_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open CrypTool Store ähnelt.
+        /// </summary>
+        internal static string OpenCrypToolStore {
+            get {
+                return ResourceManager.GetString("OpenCrypToolStore", resourceCulture);
             }
         }
         

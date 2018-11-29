@@ -130,6 +130,11 @@
     <Compile Include="LicensesTab.xaml.cs">
       <DependentUpon>LicensesTab.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.ru.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.ru.resx</DependentUpon>
+    </Compile>
     <Compile Include="TemplatesAnalyzer.cs" />
     <Compile Include="GeneratingWindow.xaml.cs">
       <DependentUpon>GeneratingWindow.xaml</DependentUpon>
@@ -452,6 +457,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.ru.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -499,6 +505,10 @@
     <ProjectReference Include="..\CrypPlugins\WorkspaceManager\WorkspaceManager.csproj">
       <Project>{949B4294-2894-43B4-BD73-E0B031F5434F}</Project>
       <Name>WorkspaceManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CrypToolStore\CrypToolStore.csproj">
+      <Project>{0182e69c-7f75-4b4f-953d-748d9a6d168e}</Project>
+      <Name>CrypToolStore</Name>
     </ProjectReference>
     <ProjectReference Include="..\LibSource\HtmlTextBlock\HtmlTextBlock.csproj">
       <Project>{8E67C36F-4403-4724-96D4-AF6E05744688}</Project>

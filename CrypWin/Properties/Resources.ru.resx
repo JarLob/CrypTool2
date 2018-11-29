@@ -967,4 +967,7 @@
   <data name="SI_CommandLine" xml:space="preserve">
     <value>Командная строка</value>
   </data>
+  <data name="CrypToolStore" xml:space="preserve">
+    <value>CrypToolStore</value>
+  </data>
 </root>

@@ -118,32 +118,32 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PluginCaption" xml:space="preserve">
-    <value>CrypTool Store</value>
+    <value>CrypTool-Store</value>
   </data>
   <data name="PluginsOverview" xml:space="preserve">
-    <value>Plugins Overview</value>
+    <value>Plugins-Übersicht</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>CrypTool Store allows the download of additional CrypTool 2 components</value>
+    <value>CrypTool Store ermöglicht das Herunterladen zusätzlicher CrypTool 2-Komponenten</value>
   </data>
   <data name="Welcome_To_CrypToolStore" xml:space="preserve">
-    <value>Welcome to the CrypTool Store!</value>
+    <value>Willkommen im CrypTool Store!</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="anonymous" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\anonymous.crt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Search:</value>
+    <value>Suche:</value>
   </data>
   <data name="Authors" xml:space="preserve">
-    <value>Authors:</value>
+    <value>Autoren:</value>
   </data>
   <data name="AuthorsEmails" xml:space="preserve">
-    <value>Authors' Emails:</value>
+    <value>Autoren-Emails</value>
   </data>
   <data name="AuthorsInstitutes" xml:space="preserve">
-    <value>Author's Institutes:</value>
+    <value>Autoren-Institute:</value>
   </data>
   <data name="download" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\download.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -152,78 +152,78 @@
     <value>..\downloaded.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PendingChanges" xml:space="preserve">
-    <value>You have recently installed or uninstalled components from the CrypTool Store. For the changes to take effect please restart CrypTool 2.</value>
+    <value>Sie haben kürzlich Komponenten aus dem CrypTool Store installiert oder deinstalliert. Damit die Änderungen wirksam werden, starten Sie CrypTool 2 neu.</value>
   </data>
   <data name="RestartCrypTool2" xml:space="preserve">
-    <value>Restart Cryptool 2 now</value>
+    <value>Cryptool 2 jetzt neustarten</value>
   </data>
   <data name="_default" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\default.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Install" xml:space="preserve">
-    <value>Install</value>
+    <value>Installieren</value>
   </data>
   <data name="Uninstall" xml:space="preserve">
-    <value>Uninstall</value>
-  </data>
-  <data name="CrypToolStorePresentation_UpdateStorePluginList_Exception_occured_during_adding_of_current_list_of_plugins_to_the_user_interface___0_" xml:space="preserve">
-    <value>Exception occured during adding of current list of plugins to the user interface: {0}</value>
-  </data>
-  <data name="CrypToolStorePresentation_UpdateStorePluginList_Error_occured_during_retrieval_of_current_list_of_plugins_from_CrypToolStore___0_" xml:space="preserve">
-    <value>Error occured during retrieval of current list of plugins from CrypToolStore: {0}</value>
-  </data>
-  <data name="CrypToolStorePresentation_UpdateStorePluginList_Exception_occured_during_retrieval_of_current_list_of_plugins_from_CrypToolStore___0_" xml:space="preserve">
-    <value>Exception occured during retrieval of current list of plugins from CrypToolStore: {0}</value>
-  </data>
-  <data name="CrypToolStorePresentation_PluginListView_SelectionChanged_Exception_occured_during_showing_of_selected_plugin_in_the_right_box_of_the_CrypToolStore_UI___0_" xml:space="preserve">
-    <value>Exception occured during showing of selected plugin in the right box of the CrypToolStore UI: {0}</value>
-  </data>
-  <data name="CrypToolStorePresentation_InstallButton_Click_Do_you_really_want_to_download_and_install___0___from_CrypTool_Store_" xml:space="preserve">
-    <value>Do you really want to download and install "{0}" from CrypTool Store?</value>
-  </data>
-  <data name="CrypToolStorePresentation_InstallPlugin_Exception_occured_while_deleting_old_installation_files___0_" xml:space="preserve">
-    <value>Exception occured while deleting old installation files: {0}</value>
-  </data>
-  <data name="CrypToolStorePresentation_InstallPlugin_Exception_occured_while_locking_of_everything___0_" xml:space="preserve">
-    <value>Exception occured while locking of everything: {0}</value>
-  </data>
-  <data name="CrypToolStorePresentation_InstallPlugin_Could_not_download_from_CrypToolStore_Server__Message_was___0_" xml:space="preserve">
-    <value>Could not download from CrypToolStore Server. Message was: {0}</value>
-  </data>
-  <data name="CrypToolStorePresentation_InstallPlugin_Error_during_download_" xml:space="preserve">
-    <value>Error during download.</value>
-  </data>
-  <data name="CrypToolStorePresentation_InstallPlugin___0___has_been_successfully_downloaded__You_need_to_restart_CrypTool_2_to_complete_installation_" xml:space="preserve">
-    <value>"{0}" has been successfully downloaded. You need to restart CrypTool 2 to complete installation.</value>
-  </data>
-  <data name="CrypToolStorePresentation_InstallPlugin_Exception_occured_while_downloading_and_installing___0_" xml:space="preserve">
-    <value>Exception occured while downloading and installing: {0}</value>
-  </data>
-  <data name="CrypToolStorePresentation_InstallPlugin_Exception_occured_" xml:space="preserve">
-    <value>Exception occured.</value>
-  </data>
-  <data name="CrypToolStorePresentation_InstallPlugin_Exception_occured_while_unlocking_of_everything___0_" xml:space="preserve">
-    <value>Exception occured while unlocking of everything: {0}</value>
-  </data>
-  <data name="CrypToolStorePresentation_DeleteButton_Click_Do_you_really_want_to_uninstall___0___from_CrypTool_Store_" xml:space="preserve">
-    <value>Do you really want to uninstall "{0}"?</value>
-  </data>
-  <data name="CrypToolStorePresentation_DeleteButton_Click___0___has_been_marked_for_uninstallation__You_need_to_restart_CrypTool_2_to_complete_installation_" xml:space="preserve">
-    <value>"{0}" has been marked for uninstallation. You need to restart CrypTool 2 to complete uninstallation.</value>
+    <value>Deinstallieren</value>
   </data>
   <data name="CrypToolStorePresentation_DeleteButton_Click_Could_not_uninstall__Exception_was___0_" xml:space="preserve">
-    <value>Could not uninstall. Exception was: {0}</value>
+    <value>Deinstallation nicht möglich. Fehlermeldung: {0}</value>
+  </data>
+  <data name="CrypToolStorePresentation_DeleteButton_Click_Do_you_really_want_to_uninstall___0___from_CrypTool_Store_" xml:space="preserve">
+    <value>Möchten Sie "{0}" wirklich deinstallieren?</value>
   </data>
   <data name="CrypToolStorePresentation_DeleteButton_Click_Exception_during_uninstallation_" xml:space="preserve">
-    <value>Exception during uninstallation.</value>
+    <value>Ausnahme bei der Deinstallation.</value>
   </data>
-  <data name="CrypToolStorePresentation_RestartButton_Click_Exception_occured_while_trying_to_restart_CrypTool_2___0_" xml:space="preserve">
-    <value>Exception occured while trying to restart CrypTool 2: {0}</value>
+  <data name="CrypToolStorePresentation_DeleteButton_Click___0___has_been_marked_for_uninstallation__You_need_to_restart_CrypTool_2_to_complete_installation_" xml:space="preserve">
+    <value>"{0}" wurde zur Deinstallation markiert. Sie müssen CrypTool 2 neu starten, um die Deinstallation abzuschließen.</value>
+  </data>
+  <data name="CrypToolStorePresentation_InstallButton_Click_Do_you_really_want_to_download_and_install___0___from_CrypTool_Store_" xml:space="preserve">
+    <value>Möchten Sie "{0}" wirklich vom CrypTool Store herunterladen und installieren?</value>
+  </data>
+  <data name="CrypToolStorePresentation_InstallPlugin_Could_not_download_from_CrypToolStore_Server__Message_was___0_" xml:space="preserve">
+    <value>Herunterladen von CrypToolStore Server nicht möglich. Nachricht lautete: {0}</value>
+  </data>
+  <data name="CrypToolStorePresentation_InstallPlugin_Error_during_download_" xml:space="preserve">
+    <value>Fehler während des Downloads.</value>
+  </data>
+  <data name="CrypToolStorePresentation_InstallPlugin_Exception_occured_" xml:space="preserve">
+    <value>Ausnahme aufgetreten.</value>
+  </data>
+  <data name="CrypToolStorePresentation_InstallPlugin_Exception_occured_while_deleting_old_installation_files___0_" xml:space="preserve">
+    <value>Beim Löschen alter Installationsdateien ist eine Ausnahme aufgetreten: {0}</value>
+  </data>
+  <data name="CrypToolStorePresentation_InstallPlugin_Exception_occured_while_downloading_and_installing___0_" xml:space="preserve">
+    <value>Beim Herunterladen und Installieren ist eine Ausnahme aufgetreten: {0}</value>
+  </data>
+  <data name="CrypToolStorePresentation_InstallPlugin_Exception_occured_while_locking_of_everything___0_" xml:space="preserve">
+    <value>Ausnahme beim Sperren von allem aufgetreten: {0}</value>
+  </data>
+  <data name="CrypToolStorePresentation_InstallPlugin_Exception_occured_while_unlocking_of_everything___0_" xml:space="preserve">
+    <value>Ausnahme beim Entsperren von allem aufgetreten: {0}</value>
+  </data>
+  <data name="CrypToolStorePresentation_InstallPlugin___0___has_been_successfully_downloaded__You_need_to_restart_CrypTool_2_to_complete_installation_" xml:space="preserve">
+    <value>"{0}" wurde erfolgreich heruntergeladen. Sie müssen CrypTool 2 neu starten, um die Installation abzuschließen.</value>
+  </data>
+  <data name="CrypToolStorePresentation_PluginListView_SelectionChanged_Exception_occured_during_showing_of_selected_plugin_in_the_right_box_of_the_CrypToolStore_UI___0_" xml:space="preserve">
+    <value>Ausnahme beim Anzeigen des ausgewählten Plugins im rechten Feld der CrypToolStore-Benutzeroberfläche aufgetreten: {0}</value>
   </data>
   <data name="CrypToolStorePresentation_RestartButton_Click_Exception_during_restart_" xml:space="preserve">
-    <value>Exception during restart.</value>
+    <value>Ausnahme beim Neustart aufgetreten.</value>
+  </data>
+  <data name="CrypToolStorePresentation_RestartButton_Click_Exception_occured_while_trying_to_restart_CrypTool_2___0_" xml:space="preserve">
+    <value>Beim Neustart von CrypTool 2 ist eine Ausnahme aufgetreten: {0}</value>
+  </data>
+  <data name="CrypToolStorePresentation_UpdateStorePluginList_Error_occured_during_retrieval_of_current_list_of_plugins_from_CrypToolStore___0_" xml:space="preserve">
+    <value>Fehler beim Abrufen der aktuellen Liste der Plugins aus CrypToolStore aufgetreten: {0}</value>
+  </data>
+  <data name="CrypToolStorePresentation_UpdateStorePluginList_Exception_occured_during_adding_of_current_list_of_plugins_to_the_user_interface___0_" xml:space="preserve">
+    <value>Ausnahme beim Hinzufügen der aktuellen Liste der Plugins zur Benutzeroberfläche aufgetreten: {0}</value>
+  </data>
+  <data name="CrypToolStorePresentation_UpdateStorePluginList_Exception_occured_during_retrieval_of_current_list_of_plugins_from_CrypToolStore___0_" xml:space="preserve">
+    <value>Ausnahme beim Abrufen der aktuellen Liste der Plugins aus CrypToolStore aufgetreten: {0}</value>
   </data>
   <data name="CrypToolStorePresentation_DeleteButton_Click_Unistallation_" xml:space="preserve">
-    <value>Unistallation?</value>
+    <value>Deinstallation?</value>
   </data>
 </root>

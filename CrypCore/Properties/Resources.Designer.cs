@@ -19,7 +19,7 @@ namespace Cryptool.Core.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -84,6 +84,115 @@ namespace Cryptool.Core.Properties {
         public static string Close {
             get {
                 return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Do you really want to download and install &quot;{0}&quot; from CrypTool Store? ähnelt.
+        /// </summary>
+        public static string CrypToolStorePresentation_InstallButton_Click_Do_you_really_want_to_download_and_install___0___from_CrypTool_Store_ {
+            get {
+                return ResourceManager.GetString("CrypToolStorePresentation_InstallButton_Click_Do_you_really_want_to_download_and_" +
+                        "install___0___from_CrypTool_Store_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;{0}&quot; has been successfully downloaded. You need to restart CrypTool 2 to complete installation. ähnelt.
+        /// </summary>
+        public static string CrypToolStorePresentation_InstallPlugin___0___has_been_successfully_downloaded__You_need_to_restart_CrypTool_2_to_complete_installation_ {
+            get {
+                return ResourceManager.GetString("CrypToolStorePresentation_InstallPlugin___0___has_been_successfully_downloaded__Y" +
+                        "ou_need_to_restart_CrypTool_2_to_complete_installation_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not download from CrypToolStore Server. Message was: {0} ähnelt.
+        /// </summary>
+        public static string CrypToolStorePresentation_InstallPlugin_Could_not_download_from_CrypToolStore_Server__Message_was___0_ {
+            get {
+                return ResourceManager.GetString("CrypToolStorePresentation_InstallPlugin_Could_not_download_from_CrypToolStore_Ser" +
+                        "ver__Message_was___0_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error during download. ähnelt.
+        /// </summary>
+        public static string CrypToolStorePresentation_InstallPlugin_Error_during_download_ {
+            get {
+                return ResourceManager.GetString("CrypToolStorePresentation_InstallPlugin_Error_during_download_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Exception occured while deleting old installation files: {0} ähnelt.
+        /// </summary>
+        public static string CrypToolStorePresentation_InstallPlugin_Exception_occured_while_deleting_old_installation_files___0_ {
+            get {
+                return ResourceManager.GetString("CrypToolStorePresentation_InstallPlugin_Exception_occured_while_deleting_old_inst" +
+                        "allation_files___0_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Exception occured while downloading and installing: {0} ähnelt.
+        /// </summary>
+        public static string CrypToolStorePresentation_InstallPlugin_Exception_occured_while_downloading_and_installing___0_ {
+            get {
+                return ResourceManager.GetString("CrypToolStorePresentation_InstallPlugin_Exception_occured_while_downloading_and_i" +
+                        "nstalling___0_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Exception occured while locking of everything: {0} ähnelt.
+        /// </summary>
+        public static string CrypToolStorePresentation_InstallPlugin_Exception_occured_while_locking_of_everything___0_ {
+            get {
+                return ResourceManager.GetString("CrypToolStorePresentation_InstallPlugin_Exception_occured_while_locking_of_everyt" +
+                        "hing___0_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Exception occured during showing of selected plugin in the right box of the CrypToolStore UI: {0} ähnelt.
+        /// </summary>
+        public static string CrypToolStorePresentation_PluginListView_SelectionChanged_Exception_occured_during_showing_of_selected_plugin_in_the_right_box_of_the_CrypToolStore_UI___0_ {
+            get {
+                return ResourceManager.GetString("CrypToolStorePresentation_PluginListView_SelectionChanged_Exception_occured_durin" +
+                        "g_showing_of_selected_plugin_in_the_right_box_of_the_CrypToolStore_UI___0_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error occured during retrieval of current list of plugins from CrypToolStore: {0} ähnelt.
+        /// </summary>
+        public static string CrypToolStorePresentation_UpdateStorePluginList_Error_occured_during_retrieval_of_current_list_of_plugins_from_CrypToolStore___0_ {
+            get {
+                return ResourceManager.GetString("CrypToolStorePresentation_UpdateStorePluginList_Error_occured_during_retrieval_of" +
+                        "_current_list_of_plugins_from_CrypToolStore___0_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Exception occured during adding of current list of plugins to the user interface: {0} ähnelt.
+        /// </summary>
+        public static string CrypToolStorePresentation_UpdateStorePluginList_Exception_occured_during_adding_of_current_list_of_plugins_to_the_user_interface___0_ {
+            get {
+                return ResourceManager.GetString("CrypToolStorePresentation_UpdateStorePluginList_Exception_occured_during_adding_o" +
+                        "f_current_list_of_plugins_to_the_user_interface___0_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Exception occured during retrieval of current list of plugins from CrypToolStore: {0} ähnelt.
+        /// </summary>
+        public static string CrypToolStorePresentation_UpdateStorePluginList_Exception_occured_during_retrieval_of_current_list_of_plugins_from_CrypToolStore___0_ {
+            get {
+                return ResourceManager.GetString("CrypToolStorePresentation_UpdateStorePluginList_Exception_occured_during_retrieva" +
+                        "l_of_current_list_of_plugins_from_CrypToolStore___0_", resourceCulture);
             }
         }
         

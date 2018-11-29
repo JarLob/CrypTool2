@@ -514,6 +514,16 @@ namespace Cryptool.CrypWin
             AddEditorDispatched(typeof(StartcenterEditor));
         }
 
+        private void CrypToolStore_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void CrypToolStore_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            AddEditorDispatched(typeof(CrypToolStore.CrypToolStoreEditor));
+        }
+
         # endregion Startcenter
 
         # region AutoUpdater

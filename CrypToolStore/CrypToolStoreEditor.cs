@@ -27,7 +27,7 @@ using System.Windows.Controls;
 namespace Cryptool.CrypToolStore
 {
     [TabColor("LightSeaGreen")]
-    [EditorInfo("cryptoolstore", true, true, false, true, false, false)]
+    [EditorInfo("cryptoolstore", false, true, false, true, false, false)]
     [Author("Nils Kopal", "kopal@cryptool.org", "CrypTool Team", "http://www.cryptool.org")]
     [PluginInfo("Cryptool.CrypToolStore.Properties.Resources", "PluginCaption", "PluginTooltip", null, "CrypToolStore/icon_small.png")]
     public class CrypToolStoreEditor : IEditor
@@ -38,8 +38,8 @@ namespace Cryptool.CrypToolStore
         /// Default Constructor
         /// </summary>
         public CrypToolStoreEditor()
-        {
-            _presentation  = new CrypToolStorePresentation(this);
+        {            
+            _presentation  = new CrypToolStorePresentation(this);  
         }
 
         /// <summary>

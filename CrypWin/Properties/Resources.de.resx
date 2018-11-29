@@ -952,4 +952,7 @@
   <data name="Java_Version" xml:space="preserve">
     <value>Java-Version</value>
   </data>
+  <data name="CrypToolStore" xml:space="preserve">
+    <value>CrypTool-Store</value>
+  </data>
 </root>

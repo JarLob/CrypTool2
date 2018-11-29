@@ -225,4 +225,10 @@
   <data name="OpenTemplate" xml:space="preserve">
     <value>открытый шаблон</value>
   </data>
+  <data name="OpenCrypToolStore" xml:space="preserve">
+    <value>Откройте CrypTool Store</value>
+  </data>
+  <data name="CrypToolStore" xml:space="preserve">
+    <value>CrypTool Store</value>
+  </data>
 </root>

@@ -6,6 +6,8 @@ using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
 using OnlineDocumentationGenerator.Generators.HtmlGenerator;
+using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace Startcenter
 {
@@ -62,6 +64,15 @@ namespace Startcenter
         private void BookButton_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, Properties.Resources.CTBookFilename));
+        }
+
+        private void CrypToolStoreButton_Click(object sender, RoutedEventArgs e)
+        {            
+            OnOpenEditor(typeof(Cryptool.CrypToolStore.CrypToolStoreEditor), new TabInfo()
+            {
+                Title = Properties.Resources.CrypToolStore,
+                Tooltip = new Span(new Run(Properties.Resources.CrypToolStore))
+            });
         }
     }
 }

@@ -117,8 +117,8 @@
                                     <AccessText TextWrapping="Wrap"  Name="SelectedPluginLongDescription"/>
                                 </Label.Content>
                             </Label>
-                            <Button Grid.Row="6"  Margin="45,10,0,0" Click="InstallButton_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Name="InstallButton" Width="60" Height="30" Background="White">Install</Button>
-                            <Button Grid.Row="6"  Margin="120,10,0,0" Click="DeleteButton_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Name="DeleteButton" Width="60" Height="30" Background="White">Uninstall</Button>
+                            <Button Grid.Row="6"  Margin="45,10,0,0" Click="InstallButton_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Name="InstallButton" Width="100" Height="30" Background="White" Content="{Loc Install}"/>
+                            <Button Grid.Row="6"  Margin="150,10,0,0" Click="DeleteButton_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Name="DeleteButton" Width="100" Height="30" Background="White" Content="{Loc Uninstall}"/>
                         </Grid>
                     </ScrollViewer>
                 </Border>

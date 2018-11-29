@@ -219,4 +219,10 @@
   <data name="OpenTemplate" xml:space="preserve">
     <value>Öffne Vorlage</value>
   </data>
+  <data name="CrypToolStore" xml:space="preserve">
+    <value>CrypTool-Store</value>
+  </data>
+  <data name="OpenCrypToolStore" xml:space="preserve">
+    <value>Öffne den CrypTool-Store</value>
+  </data>
 </root>

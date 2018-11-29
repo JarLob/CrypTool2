@@ -554,6 +554,15 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die CrypToolStore ähnelt.
+        /// </summary>
+        internal static string CrypToolStore {
+            get {
+                return ResourceManager.GetString("CrypToolStore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Crypto Tutorials ähnelt.
         /// </summary>
         internal static string CrypTutorial {
