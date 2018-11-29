@@ -326,7 +326,7 @@ namespace Cryptool.CrypToolStore
             {
                 return;
             }
-            MessageBoxResult result = MessageBox.Show(String.Format(Properties.Resources.CrypToolStorePresentation_InstallButton_Click_Do_you_really_want_to_download_and_install___0___from_CrypTool_Store_, SelectedPlugin.Name), String.Format("Start download and installation of \"{0}\"?", SelectedPlugin.Name), MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show(Application.Current.MainWindow,String.Format(Properties.Resources.CrypToolStorePresentation_InstallButton_Click_Do_you_really_want_to_download_and_install___0___from_CrypTool_Store_, SelectedPlugin.Name), String.Format("Start download and installation of \"{0}\"?", SelectedPlugin.Name), MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
                 Task InstallationTask = new Task(InstallPlugin);
@@ -417,8 +417,8 @@ namespace Cryptool.CrypToolStore
                 {
                     client.Disconnect();
                     string message = String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Could_not_download_from_CrypToolStore_Server__Message_was___0_, result.Message);
-                    CrypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
-                    MessageBox.Show(message, Properties.Resources.CrypToolStorePresentation_InstallPlugin_Error_during_download_, MessageBoxButton.OK);
+                    CrypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);                    
+                    MessageBox.Show(Application.Current.MainWindow,message, Properties.Resources.CrypToolStorePresentation_InstallPlugin_Error_during_download_, MessageBoxButton.OK);
                     errorOccured = true;
                     return;
                 }
@@ -432,7 +432,7 @@ namespace Cryptool.CrypToolStore
                     client.Disconnect();
                     string message = String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Could_not_download_from_CrypToolStore_Server__Message_was___0_, result.Message);
                     CrypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
-                    MessageBox.Show(message, Properties.Resources.CrypToolStorePresentation_InstallPlugin_Error_during_download_, MessageBoxButton.OK);
+                    MessageBox.Show(Application.Current.MainWindow,message, Properties.Resources.CrypToolStorePresentation_InstallPlugin_Error_during_download_, MessageBoxButton.OK);
                     errorOccured = true;
                     return;
                 }
@@ -451,7 +451,7 @@ namespace Cryptool.CrypToolStore
                 }
 
                 //Step 4: Notify user
-                MessageBox.Show(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin___0___has_been_successfully_downloaded__You_need_to_restart_CrypTool_2_to_complete_installation_, SelectedPlugin.Name), "Download succeeded.", MessageBoxButton.OK);
+                MessageBox.Show(Application.Current.MainWindow,String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin___0___has_been_successfully_downloaded__You_need_to_restart_CrypTool_2_to_complete_installation_, SelectedPlugin.Name), "Download succeeded.", MessageBoxButton.OK);
                 PendingChanges = true;                
                 OnStaticPropertyChanged("PendingChanges");                
             }
@@ -459,7 +459,7 @@ namespace Cryptool.CrypToolStore
             {                
                 string message = String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_downloading_and_installing___0_, ex.Message);
                 CrypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
-                MessageBox.Show(message,Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_,MessageBoxButton.OK);
+                MessageBox.Show(Application.Current.MainWindow,message,Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_,MessageBoxButton.OK);
                 errorOccured = true;
             }
             finally
@@ -520,7 +520,7 @@ namespace Cryptool.CrypToolStore
             }
             try
             {
-                MessageBoxResult result = MessageBox.Show(String.Format(Properties.Resources.CrypToolStorePresentation_DeleteButton_Click_Do_you_really_want_to_uninstall___0___from_CrypTool_Store_, SelectedPlugin.Name), Properties.Resources.CrypToolStorePresentation_DeleteButton_Click_Unistallation_, MessageBoxButton.YesNo);                
+                MessageBoxResult result = MessageBox.Show(Application.Current.MainWindow,String.Format(Properties.Resources.CrypToolStorePresentation_DeleteButton_Click_Do_you_really_want_to_uninstall___0___from_CrypTool_Store_, SelectedPlugin.Name), Properties.Resources.CrypToolStorePresentation_DeleteButton_Click_Unistallation_, MessageBoxButton.YesNo);                
                 if (result == MessageBoxResult.Yes)
                 {
                     string assemblyfilename = System.IO.Path.Combine(GetPluginsFolder(SelectedPlugin), String.Format("assembly-{0}-{1}.zip", SelectedPlugin.PluginId, SelectedPlugin.PluginVersion));
@@ -556,7 +556,7 @@ namespace Cryptool.CrypToolStore
                         xmlfile.WriteLine("</installation>");
                     }
 
-                    MessageBox.Show(String.Format(Properties.Resources.CrypToolStorePresentation_DeleteButton_Click___0___has_been_marked_for_uninstallation__You_need_to_restart_CrypTool_2_to_complete_installation_, SelectedPlugin.Name), "Marked for uninstallation.", MessageBoxButton.OK);
+                    MessageBox.Show(Application.Current.MainWindow,String.Format(Properties.Resources.CrypToolStorePresentation_DeleteButton_Click___0___has_been_marked_for_uninstallation__You_need_to_restart_CrypTool_2_to_complete_installation_, SelectedPlugin.Name), "Marked for uninstallation.", MessageBoxButton.OK);
 
                     PendingChanges = true;
                     OnStaticPropertyChanged("PendingChanges");
@@ -570,7 +570,7 @@ namespace Cryptool.CrypToolStore
             {
                 string message = String.Format(Properties.Resources.CrypToolStorePresentation_DeleteButton_Click_Could_not_uninstall__Exception_was___0_, ex.Message);
                 CrypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
-                MessageBox.Show(message, Properties.Resources.CrypToolStorePresentation_DeleteButton_Click_Exception_during_uninstallation_, MessageBoxButton.OK);
+                MessageBox.Show(Application.Current.MainWindow,message, Properties.Resources.CrypToolStorePresentation_DeleteButton_Click_Exception_during_uninstallation_, MessageBoxButton.OK);
             }
         }
 
@@ -595,7 +595,7 @@ namespace Cryptool.CrypToolStore
             {
                 string message = String.Format(Properties.Resources.CrypToolStorePresentation_RestartButton_Click_Exception_occured_while_trying_to_restart_CrypTool_2___0_, ex.Message);
                 CrypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
-                MessageBox.Show(message, Properties.Resources.CrypToolStorePresentation_RestartButton_Click_Exception_during_restart_, MessageBoxButton.OK);
+                MessageBox.Show(Application.Current.MainWindow,message, Properties.Resources.CrypToolStorePresentation_RestartButton_Click_Exception_during_restart_, MessageBoxButton.OK);
             }
         }      
 
