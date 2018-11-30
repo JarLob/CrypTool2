@@ -226,4 +226,7 @@
   <data name="CrypToolStorePresentation_DeleteButton_Click_Unistallation_" xml:space="preserve">
     <value>Unistallation?</value>
   </data>
+  <data name="CrypToolStorePresentation_InstallPlugin_Download_succeeded_" xml:space="preserve">
+    <value>Download succeeded.</value>
+  </data>
 </root>

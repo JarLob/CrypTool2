@@ -186,6 +186,15 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Download succeeded. ähnelt.
+        /// </summary>
+        internal static string CrypToolStorePresentation_InstallPlugin_Download_succeeded_ {
+            get {
+                return ResourceManager.GetString("CrypToolStorePresentation_InstallPlugin_Download_succeeded_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Error during download. ähnelt.
         /// </summary>
         internal static string CrypToolStorePresentation_InstallPlugin_Error_during_download_ {
