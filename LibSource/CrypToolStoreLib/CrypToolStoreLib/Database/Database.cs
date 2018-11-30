@@ -657,7 +657,7 @@ namespace CrypToolStoreLib.Database
                 Source source = new Source();
                 source.BuildVersion = (int)entry["buildversion"];
                 source.PluginId = plugin.Id;
-                source.PluginVersion = (int)entry["pluginversion"];
+                source.PluginVersion = Convert.ToInt32(entry["pluginversion"]); // somehow, MAX() in MySQL does not return int32; thus we use convert
                 source.BuildDate = (DateTime)entry["builddate"];
                 source.PublishState = (string)entry["publishstate"];
 
@@ -727,7 +727,7 @@ namespace CrypToolStoreLib.Database
             Source source = new Source();
             source.BuildVersion = (int)resultset[0]["buildversion"];
             source.PluginId = plugin.Id;
-            source.PluginVersion = (int)resultset[0]["pluginversion"];
+            source.PluginVersion = Convert.ToInt32(resultset[0]["pluginversion"]); // somehow, MAX() in MySQL does not return int32; thus we use convert
             source.BuildDate = (DateTime)resultset[0]["builddate"];
             source.PublishState = (string)resultset[0]["publishstate"];
 
