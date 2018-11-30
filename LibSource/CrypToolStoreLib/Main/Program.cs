@@ -43,9 +43,29 @@ namespace CrpyStoreLib
         {
             Logger.LogFilePrefix = "CrypToolStoreServer";
             Logger.EnableFileLog = true;
-            logger = Logger.GetLogger();
 
             Logger.SetLogLevel(Logtype.Info);
+            string logtype = Config.GetConfigEntry("logtype");
+            if (logtype != null)
+            {
+                switch (logtype.ToLower())
+                {
+                    case "debug":
+                        Logger.SetLogLevel(Logtype.Debug);
+                        break;
+                    case "info":
+                        Logger.SetLogLevel(Logtype.Info);
+                        break;
+                    case "warning":
+                        Logger.SetLogLevel(Logtype.Warning);
+                        break;
+                    case "error":
+                        Logger.SetLogLevel(Logtype.Error);
+                        break;
+                }                    
+            }
+            logger = Logger.GetLogger();
+            
             CrypToolStoreDatabase database = CrypToolStoreDatabase.GetDatabase();
             if (!database.InitAndConnect(Config.GetConfigEntry("DB_Server"), Config.GetConfigEntry("DB_Name"), Config.GetConfigEntry("DB_User"), Config.GetConfigEntry("DB_Password"), int.Parse(Config.GetConfigEntry("DB_Connections"))))
             {
