@@ -5,6 +5,9 @@ import common.*;
 public class Main {
     private enum Mode {
         HILLCLIMBING,
+        ANNEALING,
+        ANNEALING2,
+        ANNEALING5,
         IC,
         TRIGRAMS,
         BOMBE,
@@ -28,7 +31,7 @@ public class Main {
 
         final String RESOURCE_PATH = CommandLine.getStringValue(Flag.RESOURCE_PATH);
         final String SCENARIO_PATH = CommandLine.getStringValue(Flag.SCENARIO_PATH);
-        final int HILLCLIMBING_CYCLES = CommandLine.getIntegerValue(Flag.HILLCLIMBING_CYCLES);
+        final int HC_SA_CYCLES = CommandLine.getIntegerValue(Flag.HC_SA_CYCLES);
         final int THREADS = CommandLine.getIntegerValue(Flag.THREADS);
         final String CRIB = CommandLine.getStringValue(Flag.CRIB);
         String CIPHERTEXT = CommandLine.getStringValue(Flag.CIPHERTEXT);
@@ -90,7 +93,7 @@ public class Main {
                 break;
             case SCENARIO:
                 required(MODE, new Flag[]{Flag.SCENARIO});
-                incompatible(MODE, new Flag[]{Flag.LANGUAGE, Flag.HILLCLIMBING_CYCLES, Flag.CRIB, Flag.CRIB_POSITION, Flag.INDICATORS_FILE, Flag.MESSAGE_INDICATOR, Flag.MIDDLE_RING_SCOPE, Flag.RIGHT_ROTOR_SAMPLING});
+                incompatible(MODE, new Flag[]{Flag.LANGUAGE, Flag.HC_SA_CYCLES, Flag.CRIB, Flag.CRIB_POSITION, Flag.INDICATORS_FILE, Flag.MESSAGE_INDICATOR, Flag.MIDDLE_RING_SCOPE, Flag.RIGHT_ROTOR_SAMPLING});
                 break;
             case DECRYPT:
                 incompatible(MODE, new Flag[]{Flag.CRIB, Flag.CRIB_POSITION, Flag.INDICATORS_FILE, Flag.MESSAGE_INDICATOR, Flag.MIDDLE_RING_SCOPE, Flag.RIGHT_ROTOR_SAMPLING});
@@ -246,7 +249,7 @@ public class Main {
                 CtAPI.goodbyeError("Invalid key range:  %s-%s  - Invalid key format, or first has higher value than last \n", rangeLowS, rangeHighS);
             }
 
-            if ((lowKey.lRing != highKey.lRing) && (indicatorS.length() == 0) && (MODE == Mode.HILLCLIMBING))
+            if ((lowKey.lRing != highKey.lRing) && (indicatorS.length() == 0) && (MODE == Mode.HILLCLIMBING || MODE == Mode.ANNEALING || MODE == Mode.ANNEALING2 || MODE == Mode.ANNEALING5))
                 System.out.print("\n\n\nWARNING: Setting a range (different values) for the Left Ring settings is usually not necessary and will significant slow Hill Climbing searche\n\n\n");
 
             if (steckerS.length() != 0) {
@@ -276,9 +279,9 @@ public class Main {
                 if (steckerS.length() == 0) {
                     CtAPI.goodbyeError("Stecker board settings mandatory for -%s  \n", CommandLine.getFlagString(Flag.MESSAGE_INDICATOR));
                 }
-                if (HILLCLIMBING_CYCLES > 0) {
-                    CtAPI.goodbyeError("Invalid settings - When specifying -%s , -%s 0 (no Hill Climbing on search results) must also be selected. \n",
-                            CommandLine.getFlagString(Flag.MESSAGE_INDICATOR), CommandLine.getFlagString(Flag.HILLCLIMBING_CYCLES));
+                if (HC_SA_CYCLES > 0) {
+                    CtAPI.goodbyeError("Invalid settings - When specifying -%s , -%s 0 (no hillclimbing/simulated annealing on search results) must also be selected. \n",
+                            CommandLine.getFlagString(Flag.MESSAGE_INDICATOR), CommandLine.getFlagString(Flag.HC_SA_CYCLES));
                 }
             }
 
@@ -327,19 +330,25 @@ public class Main {
 
 
         if (MODE == Mode.BOMBE) {
-            BombeSearch.bombeSearch(CRIB, ciphertext, clen, range, lowKey, highKey, key, indicatorS, indicatorMessageKeyS, HILLCLIMBING_CYCLES, RIGHT_ROTOR_SAMPLING, MIDDLE_RING_SCOPE, VERBOSE, CRIB_POSITION, THREADS);
+            BombeSearch.bombeSearch(CRIB, ciphertext, clen, range, lowKey, highKey, key, indicatorS, indicatorMessageKeyS, HC_SA_CYCLES, RIGHT_ROTOR_SAMPLING, MIDDLE_RING_SCOPE, VERBOSE, CRIB_POSITION, THREADS);
         } else if (MODE == Mode.DECRYPT && !range) {
             encryptDecrypt(indicatorS, plaintext, ciphertext, clen, key);
         } else if (MODE == Mode.IC) {
-            TrigramICSearch.searchTrigramIC(lowKey, highKey, true, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, false, HILLCLIMBING_CYCLES, 0, THREADS, ciphertext, clen, indicatorS, indicatorMessageKeyS);
+            TrigramICSearch.searchTrigramIC(lowKey, highKey, true, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, false, HC_SA_CYCLES, 0, THREADS, ciphertext, clen, indicatorS, indicatorMessageKeyS);
         } else if (MODE == Mode.TRIGRAMS) {
-            TrigramICSearch.searchTrigramIC(lowKey, highKey, false, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, false, HILLCLIMBING_CYCLES, 0, THREADS, ciphertext, clen, indicatorS, indicatorMessageKeyS);
+            TrigramICSearch.searchTrigramIC(lowKey, highKey, false, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, false, HC_SA_CYCLES, 0, THREADS, ciphertext, clen, indicatorS, indicatorMessageKeyS);
         } else if (MODE == Mode.HILLCLIMBING) {
-            HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HILLCLIMBING_CYCLES, THREADS, 0, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen);
+            HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HC_SA_CYCLES, THREADS, 0, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.HC, 1);
+        } else if (MODE == Mode.ANNEALING) {
+            HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HC_SA_CYCLES, THREADS, 0, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.SA, 1);
+        } else if (MODE == Mode.ANNEALING2) {
+            HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HC_SA_CYCLES, THREADS, 0, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.SA, 2);
+        } else if (MODE == Mode.ANNEALING5) {
+            HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HC_SA_CYCLES, THREADS, 0, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.SA, 5);
         } else if (MODE == Mode.SCENARIO) {
             new RandomChallenges(SCENARIO_PATH, RESOURCE_PATH + "\\faust.txt", lowKey, highKey, SCENARIO);
         } else if (MODE == Mode.INDICATORS) { // cycles
-            IndicatorsSearch.indicatorsSearch(INDICATORS_FILE, lowKey, highKey, steckerS, ciphertext, clen, RIGHT_ROTOR_SAMPLING, MIDDLE_RING_SCOPE, HILLCLIMBING_CYCLES, THREADS);
+            IndicatorsSearch.indicatorsSearch(INDICATORS_FILE, lowKey, highKey, steckerS, ciphertext, clen, RIGHT_ROTOR_SAMPLING, MIDDLE_RING_SCOPE, HC_SA_CYCLES, THREADS);
         } else if (MODE == Mode.INDICATORS1938) {
             Indicators1938Search.indicators1938Search(INDICATORS_FILE, lowKey, highKey, steckerS, ciphertext, clen);
         }
@@ -481,7 +490,10 @@ public class Main {
                 "o",
                 "Search mode",
                 "Search mode (for the case these is no crib). \n" +
-                        "\t\t\tHC for hillclimbing to search for best steckers at each possible rotor setting (Weierud/Krah's method).\n" +
+                        "\t\t\tHILLCLIMBING for hillclimbing search for steckers at each possible rotor setting - about 2-3,000 keys/sec. Effective with ciphertext with 125 or more letters\n" +
+                        "\t\t\tANNEALING for simulated annealing search - much slower than HILLCLIMBING (about 80 keys/sec), effective with short ciphertexts between 75 and 150 letters.\n" +
+                        "\t\t\tANNEALING2 for slower simulated annealing (about 40 keys/sec), use for short ciphertexts between 50 to 100 letters.\n" +
+                        "\t\t\tANNEALING5 for very slow simulated annealing (about 10 keys/sec), use for very ciphertexts between 30 to 75 letters.\n" +
                         "\t\t\tTRIGRAMS look for rotor settings with best trigram score. The steckers must be specified in -" + KEY_FLAG_STRING + ",\n" +
                         "\t\t\t   e.g. -" + KEY_FLAG_STRING + " B:132:AAC:AAA-B:132:AAC:ZZZ|ACFEHJKOLZ.\n" +
                         "\t\t\tIC look for rotor settings with best Index of Coincidence. For cryptograms less than 500 letters, \n" +
@@ -493,7 +505,7 @@ public class Main {
                         "\t\t\tDECRYPT for simple decryption.\n",
                 false,
                 "DECRYPT",
-                new String[]{"HILLCLIMBING", "IC", "TRIGRAMS", "BOMBE", "INDICATORS", "INDICATORS1938", "SCENARIO", "DECRYPT",}));
+                new String[]{"HILLCLIMBING", "IC", "TRIGRAMS", "BOMBE", "INDICATORS", "INDICATORS1938", "SCENARIO", "DECRYPT", "ANNEALING", "ANNEALING2", "ANNEALING5"}));
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.CIPHERTEXT,
@@ -553,9 +565,9 @@ public class Main {
                 "Indicator sent with the ciphertext. Has two distinct purposes and forms: \n" +
                         "\t\t-w {3-letter encrypted indicator} e.g.-" + MESSAGE_INDICATOR_FLAG_STRING + " STG.  This must be used together with a single key in -" + KEY_FLAG_STRING + " in which the steckers were specified (e.g. -" + KEY_FLAG_STRING + " B:532:AAC:JKH:ACFEHJKOLZ). \n" +
                         "\t\t    First, this indicator is decrypted using the given key (daily key), then the decrypted indicator is used as the message key to decrypt the full message. \n" +
-                        "\t\t-w {3-letter message key}:{3-letter encrypted indicator} e.g.-" + MESSAGE_INDICATOR_FLAG_STRING + " OWL:STG. In this form, this is used as an additional filter when searching for the best key (except for hillclimbing).\n" +
+                        "\t\t-w {3-letter message key}:{3-letter encrypted indicator} e.g.-" + MESSAGE_INDICATOR_FLAG_STRING + " OWL:STG. In this form, this is used as an additional filter when searching for the best key.\n" +
                         "\t\t   Only messages keys which are a result of decrypting the encrypted indicator with the given message key are considered for the search.\n" +
-                        "\t\t   Stecker board settings must be known and specified (e.g. B:532:AAA:AAA-B:532:AAZ:ZZZ|ACFEHJKOLZ). Not compatible with HILLCLIMBING mode\n",
+                        "\t\t   Stecker board settings must be known and specified (e.g. B:532:AAA:AAA-B:532:AAZ:ZZZ|ACFEHJKOLZ). Not compatible with HILLCLIMBING/ANNEALING modes\n",
 
                 false,
                 ""));
@@ -577,10 +589,10 @@ public class Main {
                 1, 20, 7));
 
         CommandLine.add(new CommandLine.Argument(
-                Flag.HILLCLIMBING_CYCLES,
+                Flag.HC_SA_CYCLES,
                 HILLCLIMBING_CYCLES_FLAG_STRING,
-                "Number of hillclimbing cycles",
-                "Number of hillclimbing cycles. 0 for no hillclimbing.",
+                "Number of hillclimbing/simulated annealing cycles",
+                "Number of hillclimbing/simulated annealing cycles. 0 for no cycles.",
                 false,
                 0, 1000, 2));
 

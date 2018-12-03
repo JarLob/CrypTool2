@@ -125,9 +125,9 @@ class Utils {
 
     public static String getEstimatedTimeString(long cases, int minRate, int maxRate) {
 
-        long minSeconds = cases / maxRate + 2;
+        long minSeconds = cases / maxRate;
 
-        long maxSeconds = cases / minRate + 4;
+        long maxSeconds = cases / minRate;
 
         if (maxSeconds < 10)
             return "Less than 10 seconds";

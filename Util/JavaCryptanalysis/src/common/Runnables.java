@@ -35,7 +35,7 @@ public class Runnables {
             }
         }
         long end = System.currentTimeMillis();
-        CtAPI.printf("Elapsed %10d millis for %6d tasks on %d threads\n", end - start, runnables.size(), threads);
+        //CtAPI.printf("Elapsed %10d millis for %6d tasks on %d threads\n", end - start, runnables.size(), threads);
 
     }
 }

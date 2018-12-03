@@ -323,7 +323,7 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
     public int rMesg;
     public int score;      /* HillClimbing score */
     public byte lookup[];
-    private int counter = 0;
+    private static int counter = 0;
     //Warning - this will not work if several threads use icscore
     private int f[] = new int[26];
 
@@ -883,11 +883,11 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
         return sb.toString();
     }
 
-    public void resetCounter() {
+    public static void resetCounter() {
         counter = 0;
     }
 
-    public int getCounter() {
+    public static int getCounter() {
         return counter;
     }
 
@@ -1075,16 +1075,18 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
 
     }
 
+
     public int eval(EVAL eval, byte[] ciphertext, int len) {
+        counter++;
         switch (eval) {
             case IC:
                 return (int) (1000000.0 * icscore(ciphertext, len));
             case BI:
-                return biscore(ciphertext, len);
+                return (int) (biscore(ciphertext, len) *0.50);
             case TRI:
                 return triscore(ciphertext, len);
             case UNI:
-                return uniscore(ciphertext, len);
+                return 30 * uniscore(ciphertext, len);
             default:
                 throw new RuntimeException("Invalid eval type");
         }
@@ -1342,6 +1344,25 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
             s += "|";
             for (int i = 0; i < stbCount; i++)
                 s += Utils.getChar(sf[i]);
+        }
+        return s;
+
+    }
+
+    public String getRotorSettingsString() {
+
+        String s = "";
+
+        if (model != Model.M4) {
+            s += "" + Utils.getChar(ukwNum) + ":" + lSlot + mSlot + rSlot + ":" +
+                    Utils.getChar(lRing) + Utils.getChar(mRing) + Utils.getChar(rRing) + ":" +
+                    Utils.getChar(lMesg) + Utils.getChar(mMesg) + Utils.getChar(rMesg);
+
+        } else {
+            s += "" + (ukwNum == 3 ? "B" : "C") + ":" + (gSlot == 9 ? "B" : "G") +
+                    lSlot + mSlot + rSlot + ":" +
+                    Utils.getChar(gRing) + Utils.getChar(lRing) + Utils.getChar(mRing) + Utils.getChar(rRing) + ":" +
+                    Utils.getChar(gMesg) + Utils.getChar(lMesg) + Utils.getChar(mMesg) + Utils.getChar(rMesg);
         }
         return s;
 

@@ -157,7 +157,7 @@ public class IndicatorsSearch {
                                                                     }
                                                                     int prevScore = ckey.score = 0;
                                                                     while (true) {
-                                                                        HillClimb.hillClimbIndicator(ckey, null, indicCiphertext, nIndics, false);
+                                                                        hillClimbIndicator(ckey, null, indicCiphertext, nIndics, false);
 
                                                                         if ((ckey.score <= prevScore) || (ckey.score == 1000)) {
                                                                             break;
@@ -262,4 +262,285 @@ public class IndicatorsSearch {
 
     }
 
+    public static void hillClimbIndicator(Key ckey, byte[][] indicMsgKeys, byte[][] indicCiphertext, int nIndics, boolean print) {
+
+
+        int[] var = new int[26];
+        for (int i = 0; i < 26; i++) {
+            var[i] = i;
+        }
+        Key.randVar(var);
+
+        double bestindic, indic;
+
+        final double DBL_EPSILON = 0.000000001;
+
+        SearchAction action;
+
+        if (print)
+            System.out.print("Indicator Deciphering Hill Climbing\n");
+
+        bestindic = ckey.indicScore(indicMsgKeys, indicCiphertext, nIndics);
+        double prev = bestindic;
+        for (int i = 0; i < 26; i++) {
+            int vi = var[i];
+            for (int k = i + 1; k < 26; k++) {
+                int vk = var[k];
+                int vsk = ckey.stbrett[vk];
+                int vsi = ckey.stbrett[vi]; // not an invariant
+
+                action = SearchAction.NO_CHANGE;
+
+                if (vi == vsi && vk == vsk) {
+                    //ckey.swap(vi, vk);
+                    ckey.stbMatch(vi, vk);
+                    indic = ckey.indicScore(indicMsgKeys, indicCiphertext, nIndics);
+                    if (indic - bestindic > DBL_EPSILON) {
+                        bestindic = indic;
+                        action = SearchAction.IandK;
+
+                    }
+                    if (action == SearchAction.NO_CHANGE)
+                        //ckey.swap(vi, vk);
+                        ckey.stbSelf(vi, vk);
+                } else if (vi == vsi && vk != vsk) {
+                    //ckey.swap(vk, vsk);
+                    ckey.stbSelf(vk, vsk);
+
+                    // all self
+                    //ckey.swap(vi, vk);
+                    ckey.stbMatch(vi, vk);
+
+                    indic = ckey.indicScore(indicMsgKeys, indicCiphertext, nIndics);
+                    if (indic - bestindic > DBL_EPSILON) {
+                        bestindic = indic;
+                        action = SearchAction.IandK;
+                    }
+                    //ckey.swap(vi, vk);
+                    ckey.stbSelf(vi, vk);
+                    // all self now
+
+                    //ckey.swap(vi, vsk);
+                    ckey.stbMatch(vi, vsk);
+
+                    indic = ckey.indicScore(indicMsgKeys, indicCiphertext, nIndics);
+                    if (indic - bestindic > DBL_EPSILON) {
+                        bestindic = indic;
+                        action = SearchAction.IandSK;
+                    }
+                    //ckey.swap(vi, vsk);
+                    ckey.stbSelf(vi, vsk);
+                    // all self now
+
+                    switch (action) {
+                        case IandK:
+                            //ckey.swap(vi, vk);
+                            ckey.stbMatch(vi, vk);
+                            break;
+                        case IandSK:
+                            //ckey.swap(vi, vsk);
+                            ckey.stbMatch(vi, vsk);
+                            break;
+                        case NO_CHANGE:
+                            //ckey.swap(vk, vsk);
+                            ckey.stbMatch(vk, vsk);
+                            break;
+                        default:
+                            break;
+                    }
+                } else if (vk == vsk && vi != vsi) {
+                    //ckey.swap(vi, vsi);
+                    ckey.stbSelf(vi, vsi);
+                    // all self
+
+                    //ckey.swap(vk, vi);
+                    ckey.stbMatch(vk, vi);
+
+                    indic = ckey.indicScore(indicMsgKeys, indicCiphertext, nIndics);
+                    if (indic - bestindic > DBL_EPSILON) {
+                        bestindic = indic;
+                        action = SearchAction.IandK;
+                    }
+                    //ckey.swap(vk, vi);
+                    ckey.stbSelf(vk, vi);
+                    // all self
+
+                    //ckey.swap(vk, vsi);
+                    ckey.stbMatch(vk, vsi);
+
+                    indic = ckey.indicScore(indicMsgKeys, indicCiphertext, nIndics);
+                    if (indic - bestindic > DBL_EPSILON) {
+                        bestindic = indic;
+                        action = SearchAction.KandSI;
+                    }
+                    //ckey.swap(vk, vsi);
+                    ckey.stbSelf(vk, vsi);
+                    // all self
+
+                    switch (action) {
+                        case IandK:
+                            //ckey.swap(vi, vk);
+                            ckey.stbMatch(vi, vk);
+                            break;
+                        case KandSI:
+                            //ckey.swap(vk, vsi);
+                            ckey.stbMatch(vk, vsi);
+                            break;
+                        case NO_CHANGE:
+                            //ckey.swap(vi, vsi);
+                            ckey.stbMatch(vi, vsi);
+                            break;
+                        default:
+                            break;
+                    }
+                } else if (vi != vsi && vk != vsk) {
+                    //ckey.swap(vi, vsi);
+                    ckey.stbSelf(vi, vsi);
+
+                    indic = ckey.indicScore(indicMsgKeys, indicCiphertext, nIndics);
+                    if (indic - bestindic > DBL_EPSILON) {
+                        bestindic = indic;
+                        action = SearchAction.KandSK;
+                    }
+                    //ckey.swap(vk, vsk);
+                    ckey.stbSelf(vk, vsk);
+                    // all Self now
+
+                    //ckey.swap(vi, vsi);
+                    ckey.stbMatch(vi, vsi);
+
+                    indic = ckey.indicScore(indicMsgKeys, indicCiphertext, nIndics);
+                    if (indic - bestindic > DBL_EPSILON) {
+                        bestindic = indic;
+                        action = SearchAction.IandSI;
+                    }
+                    //ckey.swap(vi, vsi);
+                    ckey.stbSelf(vi, vsi);
+
+                    // all Self now
+
+                    //ckey.swap(vi, vk);
+                    ckey.stbMatch(vi, vk);
+
+                    indic = ckey.indicScore(indicMsgKeys, indicCiphertext, nIndics);
+                    if (indic - bestindic > DBL_EPSILON) {
+                        bestindic = indic;
+                        action = SearchAction.IandK;
+                    }
+
+                    //ckey.swap(vsi, vsk);
+                    ckey.stbMatch(vsi, vsk);
+
+                    indic = ckey.indicScore(indicMsgKeys, indicCiphertext, nIndics);
+                    if (indic - bestindic > DBL_EPSILON) {
+                        bestindic = indic;
+                        action = SearchAction.IandK_SIandSK;
+                    }
+                    //ckey.swap(vi, vk);
+                    ckey.stbSelf(vi, vk);
+
+
+                    indic = ckey.indicScore(indicMsgKeys, indicCiphertext, nIndics);
+                    if (indic - bestindic > DBL_EPSILON) {
+                        bestindic = indic;
+                        action = SearchAction.SIandSK;
+                    }
+
+                    //ckey.swap(vsi, vsk);
+                    ckey.stbSelf(vsi, vsk);
+
+                    // all Self now
+
+
+                    //ckey.swap(vi, vsk);
+                    ckey.stbMatch(vi, vsk);
+
+                    indic = ckey.indicScore(indicMsgKeys, indicCiphertext, nIndics);
+                    if (indic - bestindic > DBL_EPSILON) {
+                        bestindic = indic;
+                        action = SearchAction.IandSK;
+                    }
+                    //ckey.swap(vsi, vk);
+                    ckey.stbMatch(vsi, vk);
+
+                    indic = ckey.indicScore(indicMsgKeys, indicCiphertext, nIndics);
+                    if (indic - bestindic > DBL_EPSILON) {
+                        bestindic = indic;
+                        action = SearchAction.IandSK_KandSI;
+                    }
+                    //ckey.swap(vi, vsk);
+                    ckey.stbSelf(vi, vsk);
+
+
+                    indic = ckey.indicScore(indicMsgKeys, indicCiphertext, nIndics);
+                    if (indic - bestindic > DBL_EPSILON) {
+                        bestindic = indic;
+                        action = SearchAction.KandSI;
+                    }
+
+                    //ckey.swap(vsi, vk);
+                    ckey.stbSelf(vsi, vk);
+
+                    // all Self now
+
+
+                    switch (action) {
+                        case KandSK:
+                            //ckey.swap(vk, vsk);
+                            ckey.stbMatch(vk, vsk);
+                            break;
+                        case IandSI:
+                            //ckey.swap(vi, vsi);
+                            ckey.stbMatch(vi, vsi);
+                            break;
+                        case IandK:
+                            //ckey.swap(vi, vk);
+                            ckey.stbMatch(vi, vk);
+                            break;
+                        case IandSK:
+                            //ckey.swap(vi, vsk);
+                            ckey.stbMatch(vi, vsk);
+                            break;
+                        case KandSI:
+                            //ckey.swap(vk, vsi);
+                            ckey.stbMatch(vk, vsi);
+                            break;
+                        case IandK_SIandSK:
+                            //ckey.swap(vi, vk);
+                            //ckey.swap(vsi, vsk);
+                            ckey.stbMatch(vi, vk);
+                            ckey.stbMatch(vsi, vsk);
+                            break;
+                        case SIandSK:
+                            //ckey.swap(vsi, vsk);
+                            ckey.stbMatch(vsi, vsk);
+                            break;
+                        case IandSK_KandSI:
+                            //ckey.swap(vi, vsk);
+                            //ckey.swap(vsi, vk);
+                            ckey.stbMatch(vi, vsk);
+                            ckey.stbMatch(vsi, vk);
+                            break;
+                        case NO_CHANGE:
+                            //ckey.swap(vi, vsi);
+                            //ckey.swap(vk, vsk);
+                            ckey.stbMatch(vi, vsi);
+                            ckey.stbMatch(vk, vsk);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                if (print && (action != SearchAction.NO_CHANGE))
+
+                    System.out.printf("INDIC HC  - \tI [%s] SI [%s] K [%s] SK [%s] \tSCORE \t%f (%f) \t>%s<\t" + action + "\n",
+                            Utils.getChar(vi), Utils.getChar(vsi), Utils.getChar(vk), Utils.getChar(vsk), bestindic, bestindic - prev, ckey.stbString());
+
+
+            }
+        }
+
+        ckey.score = (int) bestindic;
+
+    }
 }

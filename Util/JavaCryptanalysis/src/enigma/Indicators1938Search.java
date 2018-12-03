@@ -139,7 +139,7 @@ public class Indicators1938Search {
                                                     }
                                                     int prevScore = ckey.score = 0;
                                                     while (true) {
-                                                        HillClimb.hillClimbIndicator(ckey, indicMsgKeys, indicCiphertext, nIndics, false);
+                                                        IndicatorsSearch.hillClimbIndicator(ckey, indicMsgKeys, indicCiphertext, nIndics, false);
                                                         if ((ckey.score <= prevScore) || (ckey.score == 1000)) {
                                                             break;
                                                         }

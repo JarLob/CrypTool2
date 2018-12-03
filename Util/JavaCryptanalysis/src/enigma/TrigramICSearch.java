@@ -103,7 +103,7 @@ class TrigramICSearch {
                                                                 if ((hcEveryBest) && (hcMaxPass > 0)) {
                                                                     if ((findSettingsIc && (ckey.score > 3500)) || (!findSettingsIc && (ckey.score > 10000))) {
                                                                         HillClimb.hillClimbRange(bestKey, bestKey, hcMaxPass, THREADS,
-                                                                                minTrigramsScoreToPrint, MRingScope.ALL, 1, ciphertext, len);
+                                                                                minTrigramsScoreToPrint, MRingScope.ALL, 1, ciphertext, len, HcSaRunnable.Mode.SA, 5);
 
                                                                     }
                                                                 }
@@ -142,7 +142,7 @@ class TrigramICSearch {
 
         if ((bestKey != null) && (hcMaxPass > 0))
             HillClimb.hillClimbRange(bestKey, bestKey, hcMaxPass, THREADS,
-                    findSettingsIc ? 0 : minTrigramsScoreToPrint, MRingScope.ALL, 1, ciphertext, len);
+                    findSettingsIc ? 0 : minTrigramsScoreToPrint, MRingScope.ALL, 1, ciphertext, len, HcSaRunnable.Mode.SA, 5);
 
     }
 
