@@ -40,10 +40,10 @@ namespace Cryptool.CrypToolStore
         public string Authoremails { get; set; }
         public string Authorinstitutes { get; set; }
         public int BuildVersion { get; set; }
-
         public bool IsInstalled { get; set; }
+        public bool UpdateAvailable { get; set; }
 
-        private byte[] iconData { get; set; }
+        private byte[] IconData { get; set; }
 
         public PublishState PublishState { get; set; }
 
@@ -65,7 +65,7 @@ namespace Cryptool.CrypToolStore
             Authoremails = plugin.Authoremails;
             Authorinstitutes = plugin.Authorinstitutes;
             BuildVersion = pluginAndSource.Source.BuildVersion;
-            iconData = plugin.Icon;
+            IconData = plugin.Icon;
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Cryptool.CrypToolStore
             get
             {
                 byte[] data;
-                if (iconData == null || iconData.Length == 0)
+                if (IconData == null || IconData.Length == 0)
                 {
                     //we have no icon, thus, we display the default icon
                     MemoryStream stream = new MemoryStream();
@@ -88,9 +88,9 @@ namespace Cryptool.CrypToolStore
                 }
                 else
                 {
-                    data = iconData;
+                    data = IconData;
                 }
-                BitmapDecoder decoder = PngBitmapDecoder.Create(new MemoryStream(data),
+                BitmapDecoder decoder = BitmapDecoder.Create(new MemoryStream(data),
                                         BitmapCreateOptions.PreservePixelFormat,
                                         BitmapCacheOption.None);
                 if (decoder.Frames.Count > 0)
@@ -116,18 +116,23 @@ namespace Cryptool.CrypToolStore
                 MemoryStream stream = new MemoryStream();
                 if (IsInstalled)
                 {
-                    Properties.Resources.downloaded.Save(stream, ImageFormat.Png);
-                    
+                    if (UpdateAvailable)
+                    {
+                        Properties.Resources.updateavailable.Save(stream, ImageFormat.Png);
+                    }
+                    else
+                    {
+                        Properties.Resources.downloaded.Save(stream, ImageFormat.Png);
+                    }
                 }
                 else
                 {
-
                     Properties.Resources.download.Save(stream, ImageFormat.Png);
                 }
                 stream.Position = 0;
                 data = stream.ToArray();
                 stream.Close();
-                BitmapDecoder decoder = PngBitmapDecoder.Create(new MemoryStream(data),
+                BitmapDecoder decoder = BitmapDecoder.Create(new MemoryStream(data),
                                         BitmapCreateOptions.PreservePixelFormat,
                                         BitmapCacheOption.None);
                 if (decoder.Frames.Count > 0)

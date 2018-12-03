@@ -122,9 +122,11 @@
                                 </Label.Content>
                             </Label>
                             <Button Grid.Row="7" Margin="45,10,0,0" Click="InstallButton_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Name="InstallButton" Width="100" Height="30" Background="White" Content="{Loc Install}"/>
-                            <Button Grid.Row="7" Margin="150,10,0,0" Click="DeleteButton_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Name="DeleteButton" Width="100" Height="30" Background="White" Content="{Loc Uninstall}"/>
-                            <ProgressBar Name="InstallationProgressBar" Grid.Row="7" Margin="260,10,0,0" Width="300" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Background="White" Visibility="Collapsed" />
-                            <Label Name="InstallationProgressText" Grid.Row="7" Margin="260,10,0,0" Width="300" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Visibility="Collapsed" />
+                            <!-- Installation and update are the same; thus, we call the same event handler-->
+                            <Button Grid.Row="7" Margin="150,10,0,0" Click="InstallButton_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Name="UpdateButton" Width="100" Height="30" Background="White" Content="{Loc Update}"/>
+                            <Button Grid.Row="7" Margin="255,10,0,0" Click="DeleteButton_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Name="DeleteButton" Width="100" Height="30" Background="White" Content="{Loc Uninstall}"/>
+                            <ProgressBar Name="InstallationProgressBar" Grid.Row="7" Margin="375,10,0,0" Width="300" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Background="White" Visibility="Collapsed" />
+                            <Label Name="InstallationProgressText" Grid.Row="7" Margin="375,10,0,0" Width="300" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Visibility="Collapsed" />
                         </Grid>
                     </ScrollViewer>
                 </Border>

@@ -33,6 +33,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Threading;
+using System.Xml;
 using CrypToolStoreLib.Tools;
 
 namespace Cryptool.CrypToolStore
@@ -69,6 +70,7 @@ namespace Cryptool.CrypToolStore
             PluginListView.ItemsSource = Plugins;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(PluginListView.ItemsSource);
             view.Filter = UserFilter;
+            view.SortDescriptions.Add(new SortDescription("UpdateAvailable", ListSortDirection.Descending));
             view.SortDescriptions.Add(new SortDescription("IsInstalled", ListSortDirection.Descending));
             view.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             DataContext = this;
@@ -168,7 +170,7 @@ namespace Cryptool.CrypToolStore
                             foreach (PluginAndSource pluginAndSource in pluginsAndSources)
                             {
                                 PluginWrapper wrapper = new PluginWrapper(pluginAndSource);
-                                CheckIfAlreadyInstalled(wrapper);
+                                CheckIfAlreadyInstalled(wrapper);                                
                                 Plugins.Add(wrapper);
                             }
 
@@ -255,6 +257,14 @@ namespace Cryptool.CrypToolStore
                             InstallButton.IsEnabled = true;
                             DeleteButton.IsEnabled = false;
                         }
+                        if (SelectedPlugin.UpdateAvailable)
+                        {
+                            UpdateButton.IsEnabled = true;
+                        }
+                        else
+                        {
+                            UpdateButton.IsEnabled = false;
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -270,10 +280,32 @@ namespace Cryptool.CrypToolStore
         /// <param name="plugin"></param>
         private void CheckIfAlreadyInstalled(PluginWrapper plugin)
         {
-            string xmlfile = System.IO.Path.Combine(GetPluginsFolder(plugin), String.Format("install-{0}-{1}.xml", plugin.PluginId, plugin.PluginVersion));
-
-            if (Directory.Exists(GetPluginFolder(plugin)) || File.Exists(xmlfile))
+            string xmlfilename = System.IO.Path.Combine(GetPluginsFolder(plugin), String.Format("install-{0}-{1}.xml", plugin.PluginId, plugin.PluginVersion));
+            if (Directory.Exists(GetPluginFolder(plugin)) || File.Exists(xmlfilename))
             {
+                try
+                {
+                    string metaxmlfilename = System.IO.Path.Combine(GetPluginFolder(plugin), "pluginmetainfo.xml");
+                    XmlDocument xml = new XmlDocument();
+                    xml.Load(metaxmlfilename);
+
+                    XmlNode rootNode = xml.SelectSingleNode("xml");
+                    XmlNode pluginNode = rootNode.SelectSingleNode("Plugin");
+                    XmlNode versionNode = pluginNode.SelectSingleNode("Version");
+                    XmlNode buildVersionNode = pluginNode.SelectSingleNode("BuildVersion");
+
+                    int pluginversion = Int32.Parse(versionNode.InnerText);
+                    int buildversion = Int32.Parse(buildVersionNode.InnerText);
+
+                    if (plugin.PluginVersion != pluginversion || plugin.BuildVersion != buildversion)
+                    {
+                        plugin.UpdateAvailable = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_CheckIfAlreadyInstalled_Exception_occured_during_check_of__0__for_updates___1_,plugin.Name,ex.Message),NotificationLevel.Error);
+                }
                 plugin.IsInstalled = true;
             }
             else
@@ -326,7 +358,7 @@ namespace Cryptool.CrypToolStore
         }
 
         /// <summary>
-        /// User clicked Install-Button
+        /// User clicked InstallButton
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -336,13 +368,13 @@ namespace Cryptool.CrypToolStore
             {
                 return;
             }
-            MessageBoxResult result = MessageBox.Show(_windowToBlockForMessageBoxes,String.Format(Properties.Resources.CrypToolStorePresentation_InstallButton_Click_Do_you_really_want_to_download_and_install___0___from_CrypTool_Store_, SelectedPlugin.Name), String.Format("Start download and installation of \"{0}\"?", SelectedPlugin.Name), MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show(_windowToBlockForMessageBoxes, String.Format(Properties.Resources.CrypToolStorePresentation_InstallButton_Click_Do_you_really_want_to_download_and_install___0___from_CrypTool_Store_, SelectedPlugin.Name), String.Format(Properties.Resources.CrypToolStorePresentation_InstallButton_Click_Start_download_and_installation_of___0___, SelectedPlugin.Name), MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
                 
                 Task.Run(() => InstallPlugin());
             }
-        }
+        }     
 
         /// <summary>
         /// Installs the plugin in an own thread
@@ -651,7 +683,7 @@ namespace Cryptool.CrypToolStore
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public static event PropertyChangedEventHandler StaticPropertyChanged;
+        public static event PropertyChangedEventHandler StaticPropertyChanged;       
     }
 
     /// <summary>

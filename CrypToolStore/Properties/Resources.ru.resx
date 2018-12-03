@@ -232,4 +232,10 @@
   <data name="Version" xml:space="preserve">
     <value>версия:</value>
   </data>
+  <data name="CrypToolStorePresentation_CheckIfAlreadyInstalled_Exception_occured_during_check_of__0__for_updates___1_" xml:space="preserve">
+    <value>Исключение произошло во время проверки «{0}» для обновлений: {1}</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
 </root>

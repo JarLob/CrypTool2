@@ -108,6 +108,16 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Exception occured during check of &quot;{0}&quot; for updates: {1} ähnelt.
+        /// </summary>
+        internal static string CrypToolStorePresentation_CheckIfAlreadyInstalled_Exception_occured_during_check_of__0__for_updates___1_ {
+            get {
+                return ResourceManager.GetString("CrypToolStorePresentation_CheckIfAlreadyInstalled_Exception_occured_during_check_" +
+                        "of__0__for_updates___1_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die &quot;{0}&quot; has been marked for uninstallation. You need to restart CrypTool 2 to complete uninstallation. ähnelt.
         /// </summary>
         internal static string CrypToolStorePresentation_DeleteButton_Click___0___has_been_marked_for_uninstallation__You_need_to_restart_CrypTool_2_to_complete_installation_ {
@@ -162,6 +172,16 @@ namespace Cryptool.CrypToolStore.Properties {
             get {
                 return ResourceManager.GetString("CrypToolStorePresentation_InstallButton_Click_Do_you_really_want_to_download_and_" +
                         "install___0___from_CrypTool_Store_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start download and installation of &quot;{0}&quot;? ähnelt.
+        /// </summary>
+        internal static string CrypToolStorePresentation_InstallButton_Click_Start_download_and_installation_of___0___ {
+            get {
+                return ResourceManager.GetString("CrypToolStorePresentation_InstallButton_Click_Start_download_and_installation_of_" +
+                        "__0___", resourceCulture);
             }
         }
         
@@ -400,6 +420,25 @@ namespace Cryptool.CrypToolStore.Properties {
         internal static string Uninstall {
             get {
                 return ResourceManager.GetString("Uninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Update ähnelt.
+        /// </summary>
+        internal static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap updateavailable {
+            get {
+                object obj = ResourceManager.GetObject("updateavailable", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
