@@ -229,4 +229,7 @@
   <data name="CrypToolStorePresentation_InstallPlugin_Download_succeeded_" xml:space="preserve">
     <value>Download succeeded.</value>
   </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version:</value>
+  </data>
 </root>

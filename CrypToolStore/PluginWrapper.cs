@@ -39,6 +39,7 @@ namespace Cryptool.CrypToolStore
         public string Authornames { get; set; }
         public string Authoremails { get; set; }
         public string Authorinstitutes { get; set; }
+        public int BuildVersion { get; set; }
 
         public bool IsInstalled { get; set; }
 
@@ -63,6 +64,7 @@ namespace Cryptool.CrypToolStore
             Authornames = plugin.Authornames;
             Authoremails = plugin.Authoremails;
             Authorinstitutes = plugin.Authorinstitutes;
+            BuildVersion = pluginAndSource.Source.BuildVersion;
             iconData = plugin.Icon;
         }
 

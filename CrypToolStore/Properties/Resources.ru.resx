@@ -229,4 +229,7 @@
   <data name="CrypToolStorePresentation_InstallPlugin_Download_succeeded_" xml:space="preserve">
     <value>Скачать преемник.</value>
   </data>
+  <data name="Version" xml:space="preserve">
+    <value>версия:</value>
+  </data>
 </root>

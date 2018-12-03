@@ -404,6 +404,15 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Version: ähnelt.
+        /// </summary>
+        internal static string Version {
+            get {
+                return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Welcome to the CrypTool Store! ähnelt.
         /// </summary>
         internal static string Welcome_To_CrypToolStore {
