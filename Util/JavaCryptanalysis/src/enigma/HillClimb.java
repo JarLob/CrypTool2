@@ -10,7 +10,7 @@ import java.util.Date;
 
 class HillClimb {
 
-    public static int hillClimbRange(Key from, Key to, int hcMaxPass, int THREADS,
+    public static int hillClimbRange(Key from, Key to, int cycles, int THREADS,
                                      int minScoreToPrint, MRingScope lRingSettingScope, int rRingSpacing,
                                      byte[] ciphertext, int len, HcSaRunnable.Mode mode, int rounds) {
 
@@ -31,7 +31,7 @@ class HillClimb {
 
         if (low.mRing == high.mRing)
             lRingSettingScope = MRingScope.ALL;
-        long totalKeysPerPass = Key.numberOfPossibleKeys(low, high, len, lRingSettingScope, rRingSpacing, false);
+        long totalKeysPerCycle = Key.numberOfPossibleKeys(low, high, len, lRingSettingScope, rRingSpacing, false);
 
         int maxRate = 2800;
         int minRate = 2000;
@@ -42,12 +42,13 @@ class HillClimb {
             modeString = "ANNEALING" + rounds;
         }
 
-        long normalizedNkeys = totalKeysPerPass * rounds;
+        long normalizedNkeys = totalKeysPerCycle * rounds;
 
-        if (totalKeysPerPass != 1) {
-            CtAPI.printf("\n\nSTARTING %s SEARCH: Number of Keys: %,d, Passes: %,d, Total to Check: %,d\n\n", modeString, totalKeysPerPass, hcMaxPass, hcMaxPass * totalKeysPerPass);
-            CtAPI.printf("Estimated Search Time: %s per pass.\n\n", Utils.getEstimatedTimeString(normalizedNkeys, minRate, maxRate));
-        }
+        String message = String.format("\n\nStarting %s search: Number of settings: %,d x %,d cycles = %,d total settings to check.    \n\nEstimated search time: %s per cycle.\n\n",
+                modeString, totalKeysPerCycle, cycles, cycles * totalKeysPerCycle, Utils.getEstimatedTimeString(normalizedNkeys, minRate, maxRate));
+        CtAPI.displayPlaintext(message);
+        CtAPI.print(message);
+
 
         final int MAXKEYS = 26 * 26;
 
@@ -62,12 +63,12 @@ class HillClimb {
         long startTime = System.currentTimeMillis();
 
 
-        for (int pass = 0; pass < hcMaxPass; pass++) {
+        for (int cycle = 0; cycle < cycles; cycle++) {
 
-            long keyCountInPass = 0;
-            if (((pass >= 100) && (pass % 100 == 0) && (globalscore > minScoreToPrint)) || (normalizedNkeys > 1000000))
-                CtAPI.printf("%s PASS %,d Best %,d (elapsed %,d seconds)\n", modeString,
-                        pass + 1, globalscore, (System.currentTimeMillis() - startTime) / 1000);
+            long keyCountInCycle = 0;
+            if (((cycle >= 100) && (cycle % 100 == 0) && (globalscore > minScoreToPrint)) || (normalizedNkeys > 1000000))
+                CtAPI.printf("%s Cycle %,d best %,d (elapsed %,d seconds)\n", modeString,
+                        cycle + 1, globalscore, (System.currentTimeMillis() - startTime) / 1000);
 
 
             for (ckey.ukwNum = low.ukwNum; ckey.ukwNum <= high.ukwNum; ckey.ukwNum++) {
@@ -81,13 +82,13 @@ class HillClimb {
                                     continue;
                                 for (ckey.gRing = low.gRing; ckey.gRing <= high.gRing; ckey.gRing++) {
                                     for (ckey.lRing = low.lRing; ckey.lRing <= high.lRing; ckey.lRing++) {
-                                        if (pass < 2) {
+                                        if (cycle < 2) {
                                             String g_mesgS = "";
                                             if (ckey.model == Key.Model.M4)
                                                 g_mesgS = "" + Utils.getChar(ckey.gMesg);
-                                            CtAPI.printf("%s PASS %,d: %s:%s:%s%s%s:%s (elapsed %,d seconds) - Best %,d\n",
+                                            CtAPI.printf("%s cycle %,d: %s:%s:%s%s%s:%s (elapsed %,d seconds) - Best %,d\n",
                                                     modeString,
-                                                    pass + 1,
+                                                    cycle + 1,
                                                     Utils.getChar(ckey.ukwNum),
                                                     "" + ckey.lSlot + ckey.mSlot + ckey.rSlot,
                                                     Utils.getChar(ckey.lRing), Utils.getChar(ckey.mRing), Utils.getChar(ckey.rRing),
@@ -96,7 +97,7 @@ class HillClimb {
                                                     globalscore);
                                         }
                                         for (ckey.mRing = low.mRing; ckey.mRing <= high.mRing; ckey.mRing++) {
-                                            if (pass < 2) {
+                                            if (cycle < 2) {
                                                 System.out.print(".");
                                             }
                                             //      if (ckey.m_slot > 5 && ckey.m_ring > 12) continue;
@@ -121,11 +122,11 @@ class HillClimb {
                                                                     }
                                                                 }
 
-                                                                processes[numberOfKeys].setup(ckey, from.stbrett, ciphertext, len, (pass == 0), mode, rounds);
+                                                                processes[numberOfKeys].setup(ckey, from.stbrett, ciphertext, len, (cycle == 0), mode, rounds);
                                                                 runnables.addRunnable(processes[numberOfKeys]);
 
                                                                 numberOfKeys++;
-                                                                keyCountInPass ++;
+                                                                keyCountInCycle ++;
                                                             }
                                                         }
 
@@ -136,7 +137,7 @@ class HillClimb {
 
                                                         runnables.run(THREADS);
 
-                                                        ReportResult.displayProgress(keyCountInPass, totalKeysPerPass);
+                                                        ReportResult.displayProgress(keyCountInCycle, totalKeysPerCycle);
                                                         for (int k = 0; k < numberOfKeys; k++) {
 
                                                             count++;
@@ -159,7 +160,7 @@ class HillClimb {
 
                                                                     long elapsed = System.currentTimeMillis() - startTime;
                                                                     String desc = String.format("%s [%,6dK][%2d: %,5dK/%,5dK][%,4d/sec][%,4d/sec][%,4d Sec][%s]", modeString,
-                                                                            count/1000, pass + 1, keyCountInPass/1000, totalKeysPerPass/1000, count  * 1000/ elapsed, (count + rejected)  * 1000/ elapsed, elapsed / 1000, timeStr);
+                                                                            count/1000, cycle + 1, keyCountInCycle/1000, totalKeysPerCycle/1000, count  * 1000/ elapsed, (count + rejected)  * 1000/ elapsed, elapsed / 1000, timeStr);
 
                                                                     //ckey.printKeyString("Hillclimbing " + desc);
                                                                     ReportResult.reportResult(0, ckey, ckey.score, plainStr, desc);
@@ -187,11 +188,11 @@ class HillClimb {
             long elapsed = System.currentTimeMillis() - startTime;
 
             if (elapsed > 1000)
-                CtAPI.printf("\n%s - FINISHED AFTER %,d PASSES - Best: %,d Rate: %,d/sec Total Checked: %,d in %.1f Seconds (%,d filtered)\n", modeString,
-                        hcMaxPass, globalscore, 1000 * count / elapsed, count, elapsed / 1000.0, rejected);
+                CtAPI.printf("\n%s - FINISHED AFTER %,d cycles - Best: %,d Rate: %,d/sec Total Checked: %,d in %.1f Seconds (%,d filtered)\n", modeString,
+                        cycles, globalscore, 1000 * count / elapsed, count, elapsed / 1000.0, rejected);
             else
-                CtAPI.printf("\n%s - FINISHED AFTER %,d PASSES - Best: %,d Total Checked: %,d (%,d filtered)\n", modeString, 
-                        hcMaxPass, globalscore, count, rejected);
+                CtAPI.printf("\n%s - FINISHED AFTER %,d cycles - Best: %,d Total Checked: %,d (%,d filtered)\n", modeString,
+                        cycles, globalscore, count, rejected);
 
         }
 
