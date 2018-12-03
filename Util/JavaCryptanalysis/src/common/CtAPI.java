@@ -21,6 +21,41 @@ public class CtAPI {
 
     private static Map<Integer, String> params = new HashMap<>();
 
+    public static void open(String algorithmName, String algorithmVersion) {
+        long start = System.currentTimeMillis();
+        int received = 0;
+        String prevReceiverState = "";
+        String prevSenderState = "";
+        try {
+            Ct2Connector.start(algorithmName, algorithmVersion, null);
+            do {
+                shutdownIfNeeded();
+                int previousReceived = received;
+                if (Ct2Connector.hasValues()) {
+                    Map<Integer, String> values = Ct2Connector.getValues();
+                    for (int input : values.keySet()) {
+                        params.put(input, values.get(input));
+                        printf("Received value for %d: %s\n", input, params.get(input));
+                        received++;
+                    }
+                }
+                String newReceiverState = Ct2Connector.getReceiverState().toString();
+                String newSenderState = Ct2Connector.getSenderState().toString();
+                if (!newReceiverState.equals(prevReceiverState) || !newSenderState.equals(prevSenderState) || received > previousReceived) {
+                    System.out.printf("Receiver: %-15s, Sender: %-15s, Read: %d inputs\n", newReceiverState, newSenderState, received);
+                    prevSenderState = newSenderState;
+                    prevReceiverState = newReceiverState;
+                }
+            } while (System.currentTimeMillis() - start < 1000);
+            if (received > 0) {
+                CtAPI.println("Available processors (cores): " + Runtime.getRuntime().availableProcessors());
+                CtAPI.printf("Free memory (bytes): %,d\n\n", Runtime.getRuntime().freeMemory());
+            }
+            displayBestList("-");
+        } catch (Exception e) {
+            displayExceptionAndGoodbye(e);
+        }
+    }
     public static String[] getRemoteCommandLineArguments() {
 
         String args = params.get(INPUT_ARGS);
@@ -71,62 +106,6 @@ public class CtAPI {
         return args.split(" ");
 
     }
-    public static void shutdownIfNeeded() {
-        if (Ct2Connector.getShutdownRequested()) {
-            println("Received request to shutdown ....");
-            java.awt.Toolkit.getDefaultToolkit().beep();
-            System.exit(0);
-        }
-    }
-    public static void goodbye() {
-        goodbye(0, "Shutting down ... ");
-    }
-    public static void open(String algorithmName, String algorithmVersion) {
-        long start = System.currentTimeMillis();
-        int received = 0;
-        String prevReceiverState = "";
-        String prevSenderState = "";
-        try {
-            Ct2Connector.start(algorithmName, algorithmVersion, null);
-            do {
-                shutdownIfNeeded();
-                int previousReceived = received;
-                if (Ct2Connector.hasValues()) {
-                    Map<Integer, String> values = Ct2Connector.getValues();
-                    for (int input : values.keySet()) {
-                        params.put(input, values.get(input));
-                        printf("Received value for %d: %s\n", input, params.get(input));
-                        received++;
-                    }
-                }
-                String newReceiverState = Ct2Connector.getReceiverState().toString();
-                String newSenderState = Ct2Connector.getSenderState().toString();
-                if (!newReceiverState.equals(prevReceiverState) || !newSenderState.equals(prevSenderState) || received > previousReceived) {
-                    System.out.printf("Receiver: %-15s, Sender: %-15s, Read: %d inputs\n", newReceiverState, newSenderState, received);
-                    prevSenderState = newSenderState;
-                    prevReceiverState = newReceiverState;
-                }
-            } while (System.currentTimeMillis() - start < 1000);
-            if (received > 0) {
-                CtAPI.println("Available processors (cores): " + Runtime.getRuntime().availableProcessors());
-                CtAPI.printf("Free memory (bytes): %,d\n\n", Runtime.getRuntime().freeMemory());
-            }
-            displayBestList("-");
-        } catch (Exception e) {
-            displayExceptionAndGoodbye(e);
-        }
-    }
-    public static synchronized void displayProgress(long progress, long maxValue) {
-        try {
-            if (maxValue <= 0) {
-                Ct2Connector.encodeProgress(progress % 100, 95);
-            } else {
-                Ct2Connector.encodeProgress(progress, maxValue);
-            }
-        } catch (Exception e) {
-            displayExceptionAndGoodbye(e);
-        }
-    }
     public static void printf(String format, Object... objects) {
         String s = String.format(format, objects);
         print(s);
@@ -139,15 +118,19 @@ public class CtAPI {
         logInfo(s);
         System.out.println(s);
     }
+    public static synchronized void displayProgress(long progress, long maxValue) {
+        try {
+            if (maxValue <= 0) {
+                Ct2Connector.encodeProgress(progress % 100, 95);
+            } else {
+                Ct2Connector.encodeProgress(progress, maxValue);
+            }
+        } catch (Exception e) {
+            displayExceptionAndGoodbye(e);
+        }
+    }
     public static void displayBestList(String bestList) {
         updateOutput(OUTPUT_BEST_RESULTS, bestList);
-    }
-    public static void displayBestResult(BestResults.Result result) {
-        updateOutput(OUTPUT_SCORE, String.format("%,d", result.score));
-        updateOutput(OUTPUT_KEY, result.keyString);
-        updateOutput(OUTPUT_PLAINTEXT, result.plaintextString);
-        logInfoFormatted("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyStringShort);
-        System.out.printf("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyString);
     }
     public static void displayKey(String keyString) {
         updateOutput(OUTPUT_KEY, keyString);
@@ -174,8 +157,25 @@ public class CtAPI {
         logInfoFormatted("      %,12d %s %s \n%s\n", original.score, plaintextCapped(original.plaintextString), original.commentString, original.keyStringShort);
         System.out.printf("      %,12d %s %s %s\n", original.score, plaintextCapped(original.plaintextString), original.commentString, original.keyString );
     }
+    public static void displayBestResult(BestResults.Result result) {
+        updateOutput(OUTPUT_SCORE, String.format("%,d", result.score));
+        updateOutput(OUTPUT_KEY, result.keyString);
+        updateOutput(OUTPUT_PLAINTEXT, result.plaintextString);
+        logInfoFormatted("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyStringShort);
+        System.out.printf("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyString);
+    }
     public static synchronized void goodbyeError(String format, Object... objects) {
         goodbye(-1, String.format(format, objects));
+    }
+    public static void goodbye() {
+        goodbye(0, "Shutting down ... ");
+    }
+    public static void shutdownIfNeeded() {
+        if (Ct2Connector.getShutdownRequested()) {
+            println("Received request to shutdown ....");
+            java.awt.Toolkit.getDefaultToolkit().beep();
+            System.exit(0);
+        }
     }
 
     private static void logInfoFormatted(String format, Object... objects) {
