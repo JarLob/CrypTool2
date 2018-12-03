@@ -11,7 +11,7 @@ class Main {
 
         CommandLine.createCommonArguments();
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.MODEL,
                 "m",
                 "Model",
@@ -19,7 +19,7 @@ class Main {
                 false,
                 "M94"));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.OFFSET,
                 "o",
                 "Offset(s)",
@@ -27,7 +27,7 @@ class Main {
                 false,
                 0, 25));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.SIMULATION,
                 "s",
                 "Simulation",
@@ -35,7 +35,7 @@ class Main {
                 false,
                 0, 2, 0));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.SIMULATION_TEXT_LENGTH,
                 "l",
                 "Length of text for simulation",
@@ -48,7 +48,7 @@ class Main {
     public static void main(String[] args) {
 
         createCommandLineArguments();
-        //CommandLineArgument.printUsage();
+        //Argument.printUsage();
         BestResults.setScoreThreshold(1_800_000);
         BestResults.setDiscardSamePlaintexts(true);
         BestResults.setThrottle(false);

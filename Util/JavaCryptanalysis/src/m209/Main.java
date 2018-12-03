@@ -7,7 +7,7 @@ public class Main {
 
         CommandLine.createCommonArguments();
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.LANGUAGE,
                 "g",
                 "Language",
@@ -16,7 +16,7 @@ public class Main {
                 "ENGLISH",
                 new String[]{"ENGLISH", "FRENCH", "ITALIAN", "GERMAN",}));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.VERSION,
                 "y",
                 "Version",
@@ -25,7 +25,7 @@ public class Main {
                 "V1947",
                 new String[]{"V1942", "V1944", "V1947", "V1953", "UNRESTRICTED",}));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.SIMULATION,
                 "s",
                 "Simulation",
@@ -33,7 +33,7 @@ public class Main {
                 false,
                 0, 2, 0));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.SIMULATION_TEXT_LENGTH,
                 "l",
                 "Length of text for simulation",
@@ -41,7 +41,7 @@ public class Main {
                 false,
                 1, 5000, 1500));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.SIMULATION_OVERLAPS,
                 "o",
                 "Number of lug overlaps for simulation key",
@@ -55,7 +55,7 @@ public class Main {
         createCommandLineArguments();
         BestResults.setDiscardSamePlaintexts(false);
         BestResults.setThrottle(true);
-        //CommandLineArgument.printUsage();
+        //Argument.printUsage();
 
         CtAPI.open("M209 attacks", "1.0");
 

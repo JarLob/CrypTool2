@@ -125,20 +125,20 @@ public class Lugs {
 
     void setLugsString(String lugsString, boolean checkRules) {
 
-        typeCount = new int[TYPE_COUNT_ARRAY_SIZE];
+        Arrays.fill(typeCount, 0);
 
         while (lugsString.contains("  ")) {
             lugsString = lugsString.replace("  ", " ");
         }
 
         String[] barsString = lugsString.split(" ");
-        if (barsString.length != Key.BARS) {
-            CtAPI.goodbyeError("Wrong lug string: " + lugsString);
+        if (barsString.length > Key.BARS || ( barsString.length < Key.BARS && Global.VERSION != Version.UNRESTRICTED)) {
+            CtAPI.goodbyeError("Wrong lug string: " + lugsString + " has " + barsString.length + " bars");
         }
-        for (int b = 1; b <= Key.BARS; b++) {
-            String[] barSplit = barsString[b - 1].split("-");
+        for (String barString : barsString) {
+            String[] barSplit = barString.split("-");
             if (barSplit.length != Key.LUGS_PER_BAR) {
-                CtAPI.goodbyeError("Wrong lug settings - too many lugs on one bar: " + barsString[b]);
+                CtAPI.goodbyeError("Wrong lug settings - too many lugs on one bar: " + barString);
             }
 
             try {
@@ -148,15 +148,15 @@ public class Lugs {
 
 
                 if ((w1 > Key.WHEELS) || (w2 > Key.WHEELS)) {
-                    CtAPI.goodbyeError("Wrong lug settings - wrong wheel number: " + barsString[b]);
+                    CtAPI.goodbyeError("Wrong lug settings - wrong wheel number: " + barString);
                 }
                 if ((w1 == w2) && (w1 != 0)) {
-                    CtAPI.goodbyeError("Wrong lug settings - wheel appears twice on same bar: " + barsString[b]);
+                    CtAPI.goodbyeError("Wrong lug settings - wheel appears twice on same bar: " + barString);
                 }
 
                 if (w2 == 0) {
                     if (Global.VERSION != Version.UNRESTRICTED) {
-                        CtAPI.goodbyeError("Wrong lug settings - 0-0 not valid: " + barsString[b]);
+                        CtAPI.goodbyeError("Wrong lug settings - 0-0 not valid: " + barString);
                     } else {
                         continue;
                     }
@@ -174,7 +174,7 @@ public class Lugs {
                 }
 
             } catch (NumberFormatException e) {
-                CtAPI.goodbyeError("Wrong lug settings - wrong wheel: " + barsString[b]);
+                CtAPI.goodbyeError("Wrong lug settings - wrong wheel: " + barString);
             }
         }
 

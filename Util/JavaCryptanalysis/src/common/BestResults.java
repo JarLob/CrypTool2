@@ -3,6 +3,27 @@ package common;
 import java.util.ArrayList;
 
 public class BestResults {
+    static class Result {
+        long score;
+        String keyString;
+        String keyStringShort;
+        String plaintextString;
+        String commentString;
+        Result(long score, String keyString,String keyStringShort, String plaintextString, String commentString) {
+            set(score, keyString, keyStringShort, plaintextString, commentString);
+        }
+        void set(long score, String keyString,String keyStringShort, String plaintextString, String commentString) {
+            this.score = score;
+            this.keyString = keyString;
+            this.keyStringShort = keyStringShort;
+            this.plaintextString = plaintextString;
+            this.commentString = commentString;
+        }
+        public String toString(int rank) {
+            return String.format("%2d;%,12d;%s;%s;%s\n", rank, score, keyStringShort, plaintextString, commentString);
+        }
+
+    }
 
     private static ArrayList<Result> bestResults = new ArrayList<>();
     private static Result originalResult = null;
@@ -14,36 +35,29 @@ public class BestResults {
     private static boolean discardSamePlaintexts = false;
     private static boolean throttle = false;
 
-
     public static synchronized void setMaxNumberOfResults(int maxNumberOfResults) {
         BestResults.maxNumberOfResults = maxNumberOfResults;
         clean();
     }
-
     public static synchronized void setScoreThreshold(long scoreThreshold) {
         BestResults.scoreThreshold = scoreThreshold;
         clean();
     }
-
     public static synchronized void setDiscardSamePlaintexts(boolean discardSamePlaintexts) {
         BestResults.discardSamePlaintexts = discardSamePlaintexts;
         clean();
     }
-
     public static synchronized void setThrottle(boolean throttle) {
         BestResults.throttle = throttle;
         clean();
     }
-
     public static synchronized void clear() {
         bestResults.clear();
         CtAPI.displayBestList("-");
     }
-
     public static synchronized void setOriginal(long score, String keyString, String keyStringShort,String plaintextString, String commentString) {
         originalResult = new Result(score, keyString, keyStringShort, plaintextString, commentString);
     }
-
     public static synchronized boolean shouldPushResult(long score) {
 
         if (throttle) {
@@ -60,7 +74,6 @@ public class BestResults {
         int size = bestResults.size();
         return size < maxNumberOfResults || score > bestResults.get(size - 1).score;
     }
-
     public static synchronized boolean pushResult(long score, String keyString, String keyStringShort, String plaintextString, String commentString) {
         if (discardSamePlaintexts) {
             for (Result be : bestResults) {
@@ -102,6 +115,14 @@ public class BestResults {
         }
         return true;
     }
+    public static synchronized void display() {
+        StringBuilder s = new StringBuilder();
+        sort();
+        for (int i = 0; i < bestResults.size(); i++) {
+            s.append(bestResults.get(i).toString(i + 1));
+        }
+        CtAPI.displayBestList(s.toString());
+    }
 
     private static synchronized void clean() {
         sort();
@@ -112,19 +133,7 @@ public class BestResults {
             bestResults.remove(bestResults.size() - 1);
         }
     }
-
     private static synchronized void sort() {
         bestResults.sort((o1, o2) -> (int) (o2.score - o1.score));
     }
-
-    public static synchronized void display() {
-        StringBuilder s = new StringBuilder();
-        sort();
-        for (int i = 0; i < bestResults.size(); i++) {
-            Result r = bestResults.get(i);
-            s.append(String.format("%2d;%,12d;%s;%s;%s\n", i + 1, r.score, r.keyStringShort, r.plaintextString, r.commentString));
-        }
-        CtAPI.displayBestList(s.toString());
-    }
-
 }

@@ -57,13 +57,13 @@ public class Main {
 
         CommandLine.createCommonArguments();
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.SIMULATION,
                 "s",
                 "Simulation",
                 "Create ciphertext from random key and plaintext from book file."));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.SIMULATION_TEXT_LENGTH,
                 "l",
                 "Length of text for simulation",
@@ -81,7 +81,7 @@ public class Main {
         BestResults.setDiscardSamePlaintexts(true);
         BestResults.setThrottle(false);
 
-        //CommandLineArgument.printUsage();
+        //Argument.printUsage();
 
         CtAPI.open("Playfair", "1.0");
 

@@ -1015,20 +1015,19 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
         Arrays.fill(f, 0);
 
         double S = 0;
-        int i;
         int c;
 
         if (len < 2)
             return 0;
 
-        for (i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             c = stbrett[ciphertext[i]];
             c = lookup[(i << 5) + c];
-            c = stbrett[c];
+            //c = stbrett[c];
             f[c]++;
         }
 
-        for (i = 0; i < 26; i++) {
+        for (int i = 0; i < 26; i++) {
             int fi = f[i];
             S += fi * (fi - 1);
         }

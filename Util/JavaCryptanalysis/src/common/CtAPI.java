@@ -71,7 +71,6 @@ public class CtAPI {
         return args.split(" ");
 
     }
-
     public static void shutdownIfNeeded() {
         if (Ct2Connector.getShutdownRequested()) {
             println("Received request to shutdown ....");
@@ -79,7 +78,9 @@ public class CtAPI {
             System.exit(0);
         }
     }
-
+    public static void goodbye() {
+        goodbye(0, "Shutting down ... ");
+    }
     public static void open(String algorithmName, String algorithmVersion) {
         long start = System.currentTimeMillis();
         int received = 0;
@@ -115,13 +116,6 @@ public class CtAPI {
             displayExceptionAndGoodbye(e);
         }
     }
-
-    private static void displayExceptionAndGoodbye(Exception e) {
-        logError(e.getMessage());
-        e.printStackTrace();
-        goodbyeError(e.getMessage());
-    }
-
     public static synchronized void displayProgress(long progress, long maxValue) {
         try {
             if (maxValue <= 0) {
@@ -133,74 +127,22 @@ public class CtAPI {
             displayExceptionAndGoodbye(e);
         }
     }
-
-    private static void log(String s, Ct2IpcMessages.Ct2LogEntry.LogLevel level) {
-
-        try {
-            while (!s.isEmpty() && (s.charAt(s.length() - 1) == '\n' || s.charAt(s.length() - 1) == '\r')) {
-                s = s.substring(0, s.length() - 1);
-            }
-            Ct2Connector.encodeLogEntry(s, level);
-        } catch (Exception e) {
-            displayExceptionAndGoodbye(e);
-        }
-    }
-
     public static void printf(String format, Object... objects) {
         String s = String.format(format, objects);
         print(s);
     }
-    public static void logInfoFormatted(String format, Object... objects) {
-        String s = String.format(format, objects);
-        logInfo(s);
-    }
-
     public static void print(String s) {
         logInfo(s);
         System.out.print(s);
     }
-
     public static void println(String s) {
         logInfo(s);
         System.out.println(s);
     }
-
-    private static void logInfo(String s) {
-        if (s.length() > 300) {
-            s = s.substring(0, 300) + " ..... (truncated)";
-        }
-        log(s, Ct2IpcMessages.Ct2LogEntry.LogLevel.CT2INFO);
-    }
-
-    private static void logError(String message) {
-        log(message, Ct2IpcMessages.Ct2LogEntry.LogLevel.CT2ERROR);
-        System.out.println("Error: " + message);
-    }
-
-    private static void updateOutput(int i, String value) {
-
-        try {
-            Map<Integer, String> valuemap = new HashMap<>();
-            valuemap.put(i, value);
-            Ct2Connector.enqueueValues(valuemap);
-        } catch (Exception e) {
-            displayExceptionAndGoodbye(e);
-        }
-    }
-
     public static void displayBestList(String bestList) {
         updateOutput(OUTPUT_BEST_RESULTS, bestList);
     }
-
-    public static String plaintextCapped(String plaintext) {
-        if (plaintext.length() <= 100) {
-            return plaintext;
-        }
-        return plaintext.substring(0, Math.min(100, plaintext.length())) + "...";
-    }
-
-
-    public static void displayBestResult(Result result) {
+    public static void displayBestResult(BestResults.Result result) {
         updateOutput(OUTPUT_SCORE, String.format("%,d", result.score));
         updateOutput(OUTPUT_KEY, result.keyString);
         updateOutput(OUTPUT_PLAINTEXT, result.plaintextString);
@@ -213,8 +155,7 @@ public class CtAPI {
     public static void displayPlaintext(String plaintextString) {
         updateOutput(OUTPUT_PLAINTEXT, plaintextString);
     }
-
-    public static void displayBestResult(Result result, Result original) {
+    public static void displayBestResult(BestResults.Result result, BestResults.Result original) {
         if (original.keyString.isEmpty()) {
             updateOutput(OUTPUT_KEY, result.keyString);
         } else {
@@ -233,8 +174,20 @@ public class CtAPI {
         logInfoFormatted("      %,12d %s %s \n%s\n", original.score, plaintextCapped(original.plaintextString), original.commentString, original.keyStringShort);
         System.out.printf("      %,12d %s %s %s\n", original.score, plaintextCapped(original.plaintextString), original.commentString, original.keyString );
     }
+    public static synchronized void goodbyeError(String format, Object... objects) {
+        goodbye(-1, String.format(format, objects));
+    }
 
-
+    private static void logInfoFormatted(String format, Object... objects) {
+        String s = String.format(format, objects);
+        logInfo(s);
+    }
+    private static String plaintextCapped(String plaintext) {
+        if (plaintext.length() <= 100) {
+            return plaintext;
+        }
+        return plaintext.substring(0, Math.min(100, plaintext.length())) + "...";
+    }
     private static synchronized void goodbye(int exitCode, String message) {
         if (exitCode != 0) {
             String fullMessage = String.format("Shutting down (%d) - %s\n", exitCode, message);
@@ -262,12 +215,40 @@ public class CtAPI {
         java.awt.Toolkit.getDefaultToolkit().beep();
         System.exit(exitCode);
     }
-
-    public static synchronized void goodbyeError(String format, Object... objects) {
-        goodbye(-1, String.format(format, objects));
+    private static void displayExceptionAndGoodbye(Exception e) {
+        logError(e.getMessage());
+        e.printStackTrace();
+        goodbyeError(e.getMessage());
     }
+    private static void log(String s, Ct2IpcMessages.Ct2LogEntry.LogLevel level) {
 
-    public static void goodbye() {
-        goodbye(0, "Shutting down ... ");
+        try {
+            while (!s.isEmpty() && (s.charAt(s.length() - 1) == '\n' || s.charAt(s.length() - 1) == '\r')) {
+                s = s.substring(0, s.length() - 1);
+            }
+            Ct2Connector.encodeLogEntry(s, level);
+        } catch (Exception e) {
+            displayExceptionAndGoodbye(e);
+        }
+    }
+    private static void logInfo(String s) {
+        if (s.length() > 300) {
+            s = s.substring(0, 300) + " ..... (truncated)";
+        }
+        log(s, Ct2IpcMessages.Ct2LogEntry.LogLevel.CT2INFO);
+    }
+    private static void logError(String message) {
+        log(message, Ct2IpcMessages.Ct2LogEntry.LogLevel.CT2ERROR);
+        System.out.println("Error: " + message);
+    }
+    private static void updateOutput(int i, String value) {
+
+        try {
+            Map<Integer, String> valuemap = new HashMap<>();
+            valuemap.put(i, value);
+            Ct2Connector.enqueueValues(valuemap);
+        } catch (Exception e) {
+            displayExceptionAndGoodbye(e);
+        }
     }
 }

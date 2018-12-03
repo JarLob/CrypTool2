@@ -17,7 +17,7 @@ public class Main {
     public static void main(String[] args) {
 
         createCommandLineArguments();
-        //CommandLineArgument.printUsage();
+        //Argument.printUsage();
         BestResults.setDiscardSamePlaintexts(false);
         BestResults.setThrottle(false);
         BestResults.setMaxNumberOfResults(10);
@@ -435,11 +435,11 @@ public class Main {
         final String MIDDLE_RING_SCOPE_FLAG_STRING = "y";
         final String HILLCLIMBING_CYCLES_FLAG_STRING = "h";
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.KEY,
                 KEY_FLAG_STRING,
                 "Key range or key",
-                "Range of keys, or specific key. Examples: range of M3 keys B:532:AAC:AAA-B:532:AAC:ZZZ,\n" +
+                "Range of keys, or specifi key. Examples: range of M3 keys B:532:AAC:AAA-B:532:AAC:ZZZ,\n" +
                         "\t\tsingle M4 key B:B532:AAAC:AJKH, single H key with stecker B:532:AAC:JKH|ACFEHJKOLZ, \n " +
                         "\t\tkey range with stecker B:532:AAC:AAA-B:532:AAC:ZZZ|ACFEHJKOLZ. When a range is specified, \n" +
                         "\t\tthe program will sweep for each field in the key (right to left), from the value specified on the left side of the range \n" +
@@ -467,7 +467,7 @@ public class Main {
                 true,
                 ""));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.MODEL,
                 "m",
                 "Enigma model",
@@ -476,16 +476,16 @@ public class Main {
                 "H",
                 new String[]{"H", "M3", "M4",}));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.MODE,
                 "o",
                 "Search mode",
                 "Search mode (for the case these is no crib). \n" +
                         "\t\t\tHC for hillclimbing to search for best steckers at each possible rotor setting (Weierud/Krah's method).\n" +
-                        "\t\t\tTRIGRAMS look for rotor settings with best trigram score. The steckers must be specificed in -" + KEY_FLAG_STRING + ",\n" +
-                        "\t\t\t   e.g. -" + KEY_FLAG_STRING + "B:132:AAC:AAA-B:132:AAC:ZZZ|ACFEHJKOLZ.\n" +
+                        "\t\t\tTRIGRAMS look for rotor settings with best trigram score. The steckers must be specified in -" + KEY_FLAG_STRING + ",\n" +
+                        "\t\t\t   e.g. -" + KEY_FLAG_STRING + " B:132:AAC:AAA-B:132:AAC:ZZZ|ACFEHJKOLZ.\n" +
                         "\t\t\tIC look for rotor settings with best Index of Coincidence. For cryptograms less than 500 letters, \n" +
-                        "\t\t\t   the steckers must be specificed in -" + KEY_FLAG_STRING + ", e.g. -" + KEY_FLAG_STRING + "B:132:AAC:AAA-B:132:AAC:ZZZ|ACFEHJKOLZ.\n" +
+                        "\t\t\t   the steckers must be specified in -" + KEY_FLAG_STRING + ", e.g. -" + KEY_FLAG_STRING + " B:132:AAC:AAA-B:132:AAC:ZZZ|ACFEHJKOLZ.\n" +
                         "\t\t\tBOMBE for crib/known-plaintext attach (extension of the Turing Bombe). \n" +
                         "\t\t\tINDICATORS for an attack on 1930-1938 double indicators (extension of Rejewski's method).\n" +
                         "\t\t\tINDICATORS1938 for an attack on 1938-1940 double indicators (extension of Zygalski's method).\n" +
@@ -495,7 +495,7 @@ public class Main {
                 "DECRYPT",
                 new String[]{"HILLCLIMBING", "IC", "TRIGRAMS", "BOMBE", "INDICATORS", "INDICATORS1938", "SCENARIO", "DECRYPT",}));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.CIPHERTEXT,
                 "i",
                 "Ciphertext or ciphertext file",
@@ -503,7 +503,7 @@ public class Main {
                 false,
                 ""));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.CRIB,
                 CRIB_FLAG_STRING,
                 "Crib (known plaintext)",
@@ -515,7 +515,7 @@ public class Main {
                 false,
                 ""));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.CRIB_POSITION,
                 CRIB_POSITION_FLAG_STRING,
                 "Crib start position",
@@ -528,7 +528,7 @@ public class Main {
                 false,
                 "0"));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.INDICATORS_FILE,
                 "d",
                 "Full file path for indicators file.",
@@ -546,7 +546,7 @@ public class Main {
                 false,
                 ""));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.MESSAGE_INDICATOR,
                 MESSAGE_INDICATOR_FLAG_STRING,
                 "Message indicator options",
@@ -560,7 +560,7 @@ public class Main {
                 false,
                 ""));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.RESOURCE_PATH,
                 "r",
                 "Resource directory",
@@ -568,7 +568,7 @@ public class Main {
                 false,
                 "."));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.THREADS,
                 "t",
                 "Number of processing threads",
@@ -576,7 +576,7 @@ public class Main {
                 false,
                 1, 20, 7));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.HILLCLIMBING_CYCLES,
                 HILLCLIMBING_CYCLES_FLAG_STRING,
                 "Number of hillclimbing cycles",
@@ -584,7 +584,7 @@ public class Main {
                 false,
                 0, 1000, 2));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.LANGUAGE,
                 "g",
                 "Language",
@@ -593,13 +593,13 @@ public class Main {
                 "GERMAN",
                 new String[]{"GERMAN", "ENGLISH",}));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.VERBOSE,
                 VERBOSE_FLAG_STRING,
                 "Verbose",
                 "Show details of crib attack."));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.RIGHT_ROTOR_SAMPLING,
                 RIGHT_ROTOR_SAMPLING_FLAG_STRING,
                 "Left rotor sampling interval.",
@@ -610,7 +610,7 @@ public class Main {
                         "\t\tShould be used with caution together with mode BOMBE (Bombe search for menu stops) as this may cause stops to be missed. \n",
                 false,
                 1, 5, 1));
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.MIDDLE_RING_SCOPE,
                 MIDDLE_RING_SCOPE_FLAG_STRING,
                 "Optimize middle rotor moves",
@@ -631,7 +631,7 @@ public class Main {
                 false,
                 0, 5, 0));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.SCENARIO,
                 SCENARIO_FLAG_STRING,
                 "Generate random scenario",
@@ -663,7 +663,7 @@ public class Main {
 
                 false,
                 ""));
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.SCENARIO_PATH,
                 SCENARIO_PATH_FLAG_STRING,
                 "Directory for scenario output files",
@@ -671,7 +671,7 @@ public class Main {
                 false,
                 "."));
 
-        CommandLine.add(new CommandLineArgument(
+        CommandLine.add(new CommandLine.Argument(
                 Flag.CYCLES,
                 "n",
                 "Reserved",

@@ -3,10 +3,159 @@ package common;
 import java.util.ArrayList;
 
 public class CommandLine {
-    private static ArrayList<CommandLineArgument> arguments = new ArrayList<>();
+
+    public static class Argument {
+
+        enum Type {BOOLEAN, NUMERIC, STRING}
+
+        Flag flag;
+        String flagString;
+        Type type;
+        String shortDesc;
+        String longDesc;
+
+        boolean required;
+        boolean multiple;
+
+        int minIntValue;
+        int maxIntValue;
+        int defaultIntValue;
+
+        String defaultStringValue = "";
+        String[] validStringValues = null;
+        String validStringValuesString = null;
+
+        // Values
+        boolean booleanValue = false;
+        ArrayList<Integer> integerArrayList = new ArrayList<>();
+        ArrayList<String> stringArrayList = new ArrayList<>();
+
+        boolean set = false;
+
+
+        public Argument(Flag flag,
+                        String flagString,
+                        String shortDesc,
+                        String longDesc) {
+            this.flag = flag;
+            this.flagString = flagString;
+            this.type = Type.BOOLEAN;
+            this.longDesc = longDesc;
+            this.shortDesc = shortDesc;
+
+            this.required = false;
+            this.multiple = false;
+
+        }
+
+        public Argument(Flag flag,
+                        String flagString,
+                        String shortDesc,
+                        String longDesc,
+
+                        boolean required,
+
+                        int minIntValue,
+                        int maxIntValue,
+                        int defaultIntValue) {
+            this.flag = flag;
+            this.flagString = flagString;
+            this.type = Type.NUMERIC;
+            this.longDesc = longDesc;
+            this.shortDesc = shortDesc;
+
+            this.required = required;
+            this.multiple = false;
+
+            this.minIntValue = minIntValue;
+            this.maxIntValue = maxIntValue;
+            this.defaultIntValue = defaultIntValue;
+
+        }
+
+        public Argument(Flag flag,
+                        String flagString,
+                        String shortDesc,
+                        String longDesc,
+
+                        boolean required,
+
+                        int minIntValue,
+                        int maxIntValue) {
+            this.flag = flag;
+            this.flagString = flagString;
+            this.type = Type.NUMERIC;
+            this.longDesc = longDesc;
+            this.shortDesc = shortDesc;
+
+            this.required = required;
+            this.multiple = true;
+
+            this.minIntValue = minIntValue;
+            this.maxIntValue = maxIntValue;
+        }
+
+
+        public Argument(Flag flag,
+                        String flagString,
+                        String shortDesc,
+                        String longDesc,
+
+                        boolean required,
+
+                        String defaultStringValue) {
+            this.flag = flag;
+            this.flagString = flagString;
+            this.type = Type.STRING;
+            this.longDesc = longDesc;
+            this.shortDesc = shortDesc;
+
+            this.required = required;
+            this.multiple = false;
+
+            this.defaultStringValue = defaultStringValue;
+            this.validStringValues = null;
+
+
+        }
+        public Argument(Flag flag,
+                        String flagString,
+                        String shortDesc,
+                        String longDesc,
+
+                        boolean required,
+
+                        String defaultStringValue,
+                        String[] validStringValues) {
+            this.flag = flag;
+            this.flagString = flagString;
+            this.type = Type.STRING;
+            this.longDesc = longDesc;
+            this.shortDesc = shortDesc;
+
+            this.required = required;
+            this.multiple = false;
+
+            this.defaultStringValue = defaultStringValue;
+            this.validStringValues = validStringValues;
+
+            validStringValuesString = "";
+            for (String validStringValue : validStringValues) {
+                if (validStringValuesString.length() > 0) {
+                    validStringValuesString += ", ";
+                }
+                validStringValuesString += validStringValue;
+            }
+        }
+
+
+
+    }
+
+    private static ArrayList<Argument> arguments = new ArrayList<>();
 
     public static void createCommonArguments() {
-        add(new CommandLineArgument(
+        add(new Argument(
                 Flag.CIPHERTEXT,
                 "i",
                 "Ciphertext or ciphertext file",
@@ -14,7 +163,7 @@ public class CommandLine {
                 false,
                 ""));
 
-        add(new CommandLineArgument(
+        add(new Argument(
                 Flag.CRIB,
                 "p",
                 "Crib (known-plaintext)",
@@ -22,7 +171,7 @@ public class CommandLine {
                 false,
                 ""));
 
-        add(new CommandLineArgument(
+        add(new Argument(
                 Flag.RESOURCE_PATH,
                 "r",
                 "Resource directory",
@@ -30,7 +179,7 @@ public class CommandLine {
                 false,
                 "."));
 
-        add(new CommandLineArgument(
+        add(new Argument(
                 Flag.THREADS,
                 "t",
                 "Number of processing threads",
@@ -38,7 +187,7 @@ public class CommandLine {
                 false,
                 1, 20, 7));
 
-        add(new CommandLineArgument(
+        add(new Argument(
                 Flag.CYCLES,
                 "n",
                 "Number of cycles",
@@ -46,11 +195,19 @@ public class CommandLine {
                 false,
                 0, 1000, 0));
     }
-
+    public static void parseAndPrintCommandLineArgs(String[] args) {
+        String[] ctArgs = CtAPI.getArgs();
+        parseArguments(ctArgs, false);
+        parseArguments(args, true);
+        printArguments();
+    }
+    public static void add(Argument argument) {
+        arguments.add(argument);
+    }
     public static int getIntegerValue(Flag flag) {
-        for (CommandLineArgument argument : arguments) {
+        for (Argument argument : arguments) {
             if (argument.flag == flag) {
-                if (argument.type != CommandLineArgument.Type.NUMERIC) {
+                if (argument.type != Argument.Type.NUMERIC) {
                     CtAPI.goodbyeError("Not a numeric flag " + flag.toString());
                 }
                 if (argument.multiple) {
@@ -65,11 +222,10 @@ public class CommandLine {
         CtAPI.goodbyeError("No such flag " + flag.toString());
         return -1;
     }
-
     public static ArrayList<Integer> getIntegerValues(Flag flag) {
-        for (CommandLineArgument argument : arguments) {
+        for (Argument argument : arguments) {
             if (argument.flag == flag) {
-                if (argument.type != CommandLineArgument.Type.NUMERIC) {
+                if (argument.type != Argument.Type.NUMERIC) {
                     CtAPI.goodbyeError("Not a numeric flag " + flag.toString());
                 }
                 if (!argument.multiple) {
@@ -81,11 +237,10 @@ public class CommandLine {
         CtAPI.goodbyeError("No such flag " + flag.toString());
         return null;
     }
-
     public static String getStringValue(Flag flag) {
-        for (CommandLineArgument argument : arguments) {
+        for (Argument argument : arguments) {
             if (argument.flag == flag) {
-                if (argument.type != CommandLineArgument.Type.STRING) {
+                if (argument.type != Argument.Type.STRING) {
                     CtAPI.goodbyeError("Not a string flag " + flag.toString());
                 }
                 if (argument.multiple) {
@@ -100,11 +255,10 @@ public class CommandLine {
         CtAPI.goodbyeError("No such flag " + flag.toString());
         return null;
     }
-
     public static ArrayList<String> getStringValues(Flag flag) {
-        for (CommandLineArgument argument : arguments) {
+        for (Argument argument : arguments) {
             if (argument.flag == flag) {
-                if (argument.type != CommandLineArgument.Type.STRING) {
+                if (argument.type != Argument.Type.STRING) {
                     CtAPI.goodbyeError("Not a string flag " + flag.toString());
                 }
                 if (!argument.multiple) {
@@ -116,11 +270,10 @@ public class CommandLine {
         CtAPI.goodbyeError("No such flag " + flag.toString());
         return null;
     }
-
     public static boolean getBooleanValue(Flag flag) {
-        for (CommandLineArgument argument : arguments) {
+        for (Argument argument : arguments) {
             if (argument.flag == flag) {
-                if (argument.type != CommandLineArgument.Type.BOOLEAN) {
+                if (argument.type != Argument.Type.BOOLEAN) {
                     CtAPI.goodbyeError("Not a boolean flag " + flag.toString());
                 }
                 return argument.booleanValue;
@@ -129,9 +282,8 @@ public class CommandLine {
         CtAPI.goodbyeError("No such flag " + flag.toString());
         return false;
     }
-
     public static boolean isSet(Flag flag) {
-        for (CommandLineArgument argument : arguments) {
+        for (Argument argument : arguments) {
             if (argument.flag == flag) {
                 return argument.set;
             }
@@ -139,9 +291,21 @@ public class CommandLine {
         CtAPI.goodbyeError("No such flag " + flag.toString());
         return false;
     }
-
-    public static void add(CommandLineArgument argument) {
-        arguments.add(argument);
+    public static String getShortDesc(Flag flag) {
+        for (Argument mainMenuArgument : arguments) {
+            if (mainMenuArgument.flag == flag) {
+                return mainMenuArgument.shortDesc;
+            }
+        }
+        return null;
+    }
+    public static String getFlagString(Flag flag) {
+        for (Argument mainMenuArgument : arguments) {
+            if (mainMenuArgument.flag == flag) {
+                return mainMenuArgument.flagString;
+            }
+        }
+        return null;
     }
 
     private static void parseArguments(String[] args, boolean setDefaults) {
@@ -151,9 +315,8 @@ public class CommandLine {
             CtAPI.goodbyeError(error);
         }
     }
-
     private static String parseArgumentsAndReturnError(String[] args, boolean setDefaults) {
-        CommandLineArgument currentArgument = null;
+        Argument currentArgument = null;
 
         for (String arg : args) {
             if (arg.toUpperCase().startsWith("-V")) {
@@ -172,7 +335,7 @@ public class CommandLine {
                 if (currentArgument == null) {
                     return String.format("Invalid argument >%s<.\n", arg);
                 }
-                if (currentArgument.type == CommandLineArgument.Type.BOOLEAN) {
+                if (currentArgument.type == Argument.Type.BOOLEAN) {
                     currentArgument.booleanValue = true;
                     currentArgument.set = true;
                     currentArgument = null;
@@ -181,7 +344,7 @@ public class CommandLine {
             }
 
             // Handle string or numeric values.
-            if (currentArgument.type == CommandLineArgument.Type.NUMERIC) {
+            if (currentArgument.type == Argument.Type.NUMERIC) {
                 Integer value = null;
                 try {
                     value = Integer.valueOf(arg);
@@ -208,7 +371,7 @@ public class CommandLine {
                 }
             }
 
-            if (currentArgument.type == CommandLineArgument.Type.STRING) {
+            if (currentArgument.type == Argument.Type.STRING) {
                 if (currentArgument.stringArrayList.size() > 0 && !currentArgument.multiple) {
                     return String.format("Duplicate value >%s< for -%s (%s).\nPrevious value %s.\n",
                             arg, currentArgument.flagString, currentArgument.shortDesc, currentArgument.stringArrayList.get(0));
@@ -242,8 +405,8 @@ public class CommandLine {
         }
 
         if (setDefaults) {
-            for (CommandLineArgument arguments : arguments) {
-                if (arguments.type == CommandLineArgument.Type.NUMERIC && arguments.integerArrayList.isEmpty() && !arguments.multiple) {
+            for (Argument arguments : arguments) {
+                if (arguments.type == Argument.Type.NUMERIC && arguments.integerArrayList.isEmpty() && !arguments.multiple) {
                     if (arguments.required) {
                         return String.format("Flag -%s is mandatory but missing (%s)\n" +
                                         "Should speficiy a value between %d and %d (default is %d).\n%s\n",
@@ -252,7 +415,7 @@ public class CommandLine {
                     } else {
                         arguments.integerArrayList.add(arguments.defaultIntValue);
                     }
-                } else if (arguments.type == CommandLineArgument.Type.STRING && arguments.stringArrayList.isEmpty() && !arguments.multiple) {
+                } else if (arguments.type == Argument.Type.STRING && arguments.stringArrayList.isEmpty() && !arguments.multiple) {
                     if (arguments.required) {
                         return String.format("Flag -%s is mandatory but missing (%s).\n%s\n",
                                 arguments.flagString, arguments.shortDesc, arguments.longDesc);
@@ -265,12 +428,11 @@ public class CommandLine {
         return null;
 
     }
-
     private static void printArguments() {
 
         CtAPI.println("Input Parameters\n");
 
-        for (CommandLineArgument arguments : arguments) {
+        for (Argument arguments : arguments) {
 
             StringBuilder s = new StringBuilder(String.format("%-80s (-%s): \t", arguments.shortDesc, arguments.flagString));
 
@@ -313,10 +475,9 @@ public class CommandLine {
         CtAPI.println("");
 
     }
-
-    private static CommandLineArgument getMainArgument(String arg) {
-        CommandLineArgument currentArgument = null;
-        for (CommandLineArgument mainMenuArgument : arguments) {
+    private static Argument getMainArgument(String arg) {
+        Argument currentArgument = null;
+        for (Argument mainMenuArgument : arguments) {
             if (mainMenuArgument.flagString.equalsIgnoreCase(arg.substring(1))) {
                 currentArgument = mainMenuArgument;
                 break;
@@ -324,30 +485,11 @@ public class CommandLine {
         }
         return currentArgument;
     }
-
-    public static String getShortDesc(Flag flag) {
-        for (CommandLineArgument mainMenuArgument : arguments) {
-            if (mainMenuArgument.flag == flag) {
-                return mainMenuArgument.shortDesc;
-            }
-        }
-        return null;
-    }
-
-    public static String getFlagString(Flag flag) {
-        for (CommandLineArgument mainMenuArgument : arguments) {
-            if (mainMenuArgument.flag == flag) {
-                return mainMenuArgument.flagString;
-            }
-        }
-        return null;
-    }
-
     private static void printUsage() {
 
         System.out.print("\nUsage: java -jar <jarname>.jar [arguments]\nArguments:\n");
 
-        for (CommandLineArgument currentArgument : arguments) {
+        for (Argument currentArgument : arguments) {
 
             String prefix = String.format("\t-%s \t%s", currentArgument.flagString, currentArgument.shortDesc);
 
@@ -416,10 +558,5 @@ public class CommandLine {
         }
     }
 
-    public static void parseAndPrintCommandLineArgs(String[] args) {
-        String[] ctArgs = CtAPI.getArgs();
-        parseArguments(ctArgs, false);
-        parseArguments(args, true);
-        printArguments();
-    }
+
 }
