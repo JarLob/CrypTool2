@@ -123,8 +123,8 @@
                             </Label>
                             <Button Grid.Row="7" Margin="45,10,0,0" Click="InstallButton_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Name="InstallButton" Width="100" Height="30" Background="White" Content="{Loc Install}"/>
                             <Button Grid.Row="7" Margin="150,10,0,0" Click="DeleteButton_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Name="DeleteButton" Width="100" Height="30" Background="White" Content="{Loc Uninstall}"/>
-                            <ProgressBar Name="InstallationProgressBar" Grid.Row="6" Margin="260,10,0,0" Width="300" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Background="White" Visibility="Collapsed" />
-                            <Label Name="InstallationProgressText" Grid.Row="6" Margin="260,10,0,0" Width="300" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Visibility="Collapsed" />
+                            <ProgressBar Name="InstallationProgressBar" Grid.Row="7" Margin="260,10,0,0" Width="300" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Background="White" Visibility="Collapsed" />
+                            <Label Name="InstallationProgressText" Grid.Row="7" Margin="260,10,0,0" Width="300" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Visibility="Collapsed" />
                         </Grid>
                     </ScrollViewer>
                 </Border>
