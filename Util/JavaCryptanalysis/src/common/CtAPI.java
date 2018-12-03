@@ -21,7 +21,7 @@ public class CtAPI {
 
     private static Map<Integer, String> params = new HashMap<>();
 
-    public static String[] getArgs() {
+    public static String[] getRemoteCommandLineArguments() {
 
         String args = params.get(INPUT_ARGS);
         if (args != null && args.trim().length() > 0) {

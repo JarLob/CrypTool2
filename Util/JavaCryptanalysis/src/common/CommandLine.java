@@ -196,7 +196,7 @@ public class CommandLine {
                 0, 1000, 0));
     }
     public static void parseAndPrintCommandLineArgs(String[] args) {
-        String[] ctArgs = CtAPI.getArgs();
+        String[] ctArgs = CtAPI.getRemoteCommandLineArguments();
         parseArguments(ctArgs, false);
         parseArguments(args, true);
         printArguments();
