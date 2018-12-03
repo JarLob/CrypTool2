@@ -48,5 +48,60 @@ namespace CrypToolStoreLib.Tools
             }
             return bytes;
         }
+
+        /// <summary>
+        /// Returns a formatted time left string
+        /// Shows remaning hours, minutes, and seconds
+        /// </summary>
+        /// <param name="bytepersec"></param>
+        /// <param name="totalbytes"></param>
+        /// <param name="downloadedbytes"></param>
+        /// <returns></returns>
+        public static string RemainingTime(long bytepersec, long totalbytes, long downloadedbytes)
+        {
+            if (bytepersec <= 0)
+            {
+                return "-";
+            }
+            long remainingSeconds = (totalbytes - downloadedbytes) / bytepersec;
+            string formatted = "";
+            if (remainingSeconds > (60 * 60))//hours
+            {
+                long hours = remainingSeconds / (60 * 60);
+                formatted += hours + " h";
+                remainingSeconds = remainingSeconds % (60 * 60);
+            }
+            if (remainingSeconds > 60) //minutes
+            {
+                long minutes = remainingSeconds / 60;
+                formatted += minutes + " min";
+                remainingSeconds = remainingSeconds % 60;
+            }
+            formatted += remainingSeconds + " sec";
+            return formatted;
+        }
+
+        /// <summary>
+        /// Returns a formatted speed string based on byte/sec
+        /// Shows speed in GB/sec, MB/sec, KB/sec, and byte/sec
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        public static string FormatSpeedString(long bytes)
+        {
+            if (bytes > (1024 * 1024 * 1024)) //GiB / sec
+            {
+                return Math.Round(bytes / (1024 * 1024 * 1024.0), 2) + " GB/sec";
+            }
+            if (bytes > (1024 * 1024))
+            {
+                return Math.Round(bytes / (1024 * 1024.0), 2) + " MB/sec";
+            }
+            if (bytes > 1024)
+            {
+                return bytes / 1024.0 + " KB/sec";
+            }
+            return bytes + " byte/sec";
+        }
     }
 }
