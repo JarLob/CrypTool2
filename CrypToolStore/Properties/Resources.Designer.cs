@@ -341,7 +341,7 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die You have recently installed or uninstalled components from the CrypTool Store. For the changes to take effect please restart CrypTool 2. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die You have recently installed or uninstalled components from the CrypTool Store. For the changes to take effect you have to restart CrypTool 2. ähnelt.
         /// </summary>
         internal static string PendingChanges {
             get {
