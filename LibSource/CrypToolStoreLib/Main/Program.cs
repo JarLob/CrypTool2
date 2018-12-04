@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using CrypToolStoreLib.Client;
 using System.Security.Cryptography.X509Certificates;
 using System.Net;
+using CrypToolStoreLib;
 
 namespace CrpyStoreLib
 {
@@ -43,9 +44,18 @@ namespace CrpyStoreLib
         {
             Logger.LogFilePrefix = "CrypToolStoreServer";
             Logger.EnableFileLog = true;
+            string logdirectory = Config.GetConfigEntry("Logdirectory");
+            if (string.IsNullOrEmpty(logdirectory))
+            {
+                Logger.LogDirectory = logdirectory;
+            }
+            else
+            {
+                Logger.LogDirectory = "Logs";
+            }
 
             Logger.SetLogLevel(Logtype.Info);
-            string logtype = Config.GetConfigEntry("logtype");
+            string logtype = Config.GetConfigEntry("Logtype");
             if (logtype != null)
             {
                 switch (logtype.ToLower())
@@ -69,8 +79,7 @@ namespace CrpyStoreLib
             CrypToolStoreDatabase database = CrypToolStoreDatabase.GetDatabase();
             if (!database.InitAndConnect(Config.GetConfigEntry("DB_Server"), Config.GetConfigEntry("DB_Name"), Config.GetConfigEntry("DB_User"), Config.GetConfigEntry("DB_Password"), int.Parse(Config.GetConfigEntry("DB_Connections"))))
             {
-                logger.LogText("Shutting down as we could not connect to mysql database", this, Logtype.Error);
-                return;
+                logger.LogText("Could not connect to mysql database at startup... retrying it later", this, Logtype.Error);
             }
 
             CrypToolStoreServer server = null;

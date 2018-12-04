@@ -608,10 +608,11 @@ namespace CrypToolStoreLib.Database
         /// <returns></returns>
         public List<PluginAndSource> GetPublishedPlugins(PublishState publishstate)
         {
-            string query = "SELECT "+
-                "a.id, a.username, MAX(a.pluginversion) AS pluginversion, a.buildversion, a.publishstate, a.name, a.shortdescription, a.longdescription, a.authornames, a.authoremails, a.authorinstitutes, a.icon, a.builddate "+
-                "FROM (SELECT plugins.*, sources.* FROM plugins INNER JOIN sources ON plugins.id = sources.pluginid WHERE sources.publishstate IN ($LIST$)) "+
-                "a GROUP BY a.id ORDER BY a.id ASC";      
+            string query = "SELECT a.id, a.username, a.pluginversion, a.buildversion, a.publishstate, a.name, a.shortdescription, a.longdescription, a.authornames, a.authoremails, " +
+                           "a.authorinstitutes, a.icon, a.builddate FROM (SELECT p.id, p.username, p.name, p.shortdescription, p.longdescription, p.authornames, p.authoremails, " +
+                           "p.authorinstitutes, p.icon, s.pluginid, s.pluginversion, s.publishstate, s.builddate, s.buildversion FROM plugins p " +
+                           "INNER JOIN sources s ON p.id = s.pluginid WHERE s.publishstate IN ($LIST$) AND " +
+                           "s.pluginversion = (select MAX(pluginversion) from sources where pluginid=p.id)) a GROUP BY a.id ORDER BY a.id ASC";
 
             DatabaseConnection connection = GetConnection();
 
@@ -655,7 +656,7 @@ namespace CrypToolStoreLib.Database
                 plugin.Icon = (byte[])entry["icon"];
 
                 Source source = new Source();
-                source.BuildVersion = (int)entry["buildversion"];
+                source.BuildVersion = Convert.ToInt32(entry["buildversion"]);
                 source.PluginId = plugin.Id;
                 source.PluginVersion = Convert.ToInt32(entry["pluginversion"]); // somehow, MAX() in MySQL does not return int32; thus we use convert
                 source.BuildDate = (DateTime)entry["builddate"];
@@ -677,10 +678,11 @@ namespace CrypToolStoreLib.Database
         /// <returns></returns>
         public PluginAndSource GetPublishedPlugin(int id, PublishState publishstate)
         {
-            string query = "SELECT " +
-                "a.id, a.username, MAX(a.pluginversion) AS pluginversion, a.buildversion, a.publishstate, a.name, a.shortdescription, a.longdescription, a.authornames, a.authoremails, a.authorinstitutes, a.icon, a.builddate " +
-                "FROM (SELECT plugins.*, sources.* FROM plugins INNER JOIN sources ON plugins.id = sources.pluginid WHERE sources.publishstate IN ($LIST$) AND plugins.id=@id) " +
-                "a GROUP BY a.id ORDER BY a.id ASC";      
+            string query = "SELECT a.id, a.username, a.pluginversion, a.buildversion, a.publishstate, a.name, a.shortdescription, a.longdescription, a.authornames, a.authoremails, " +
+                           "a.authorinstitutes, a.icon, a.builddate FROM (SELECT p.id, p.username, p.name, p.shortdescription, p.longdescription, p.authornames, p.authoremails, " +
+                           "p.authorinstitutes, p.icon, s.pluginid, s.pluginversion, s.publishstate, s.builddate, s.buildversion FROM plugins p " +
+                           "INNER JOIN sources s ON p.id = s.pluginid WHERE s.publishstate IN ($LIST$) AND p.id=@id AND " +
+                           "s.pluginversion = (select MAX(pluginversion) from sources where pluginid=p.id)) a GROUP BY a.id ORDER BY a.id ASC";
 
             DatabaseConnection connection = GetConnection();
 
@@ -725,7 +727,7 @@ namespace CrypToolStoreLib.Database
             plugin.Authorinstitutes = (string)resultset[0]["authorinstitutes"];
 
             Source source = new Source();
-            source.BuildVersion = (int)resultset[0]["buildversion"];
+            source.BuildVersion = Convert.ToInt32(resultset[0]["buildversion"]);
             source.PluginId = plugin.Id;
             source.PluginVersion = Convert.ToInt32(resultset[0]["pluginversion"]); // somehow, MAX() in MySQL does not return int32; thus we use convert
             source.BuildDate = (DateTime)resultset[0]["builddate"];
