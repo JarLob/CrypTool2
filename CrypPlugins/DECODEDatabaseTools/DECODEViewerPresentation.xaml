@@ -164,10 +164,10 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             
-            <CheckBox Name="HasTranscriptionCheckbox" IsEnabled="False" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Content="Transcription"/>
-            <CheckBox Name="HasStatisticsCheckbox" IsEnabled="False" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Content="Statistics"/>
-            <CheckBox Name="HasDeciphermentCheckbox" IsEnabled="False" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Content="Decipherment"/>
-            <CheckBox Name="HasTranslationCheckbox" IsEnabled="False" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Content="Translation"/>            
+            <CheckBox Name="HasTranscriptionCheckbox" IsEnabled="False" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Content="{Loc Transcription}"/>
+            <CheckBox Name="HasStatisticsCheckbox" IsEnabled="False" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Content="{Loc Statistics}"/>
+            <CheckBox Name="HasDeciphermentCheckbox" IsEnabled="False" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Content="{Loc Decipherment}"/>
+            <CheckBox Name="HasTranslationCheckbox" IsEnabled="False" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Content="{Loc Translation}"/>            
             
         </Grid>
         
