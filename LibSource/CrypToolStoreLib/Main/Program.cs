@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using CrypToolStoreLib.Client;
 using System.Security.Cryptography.X509Certificates;
 using System.Net;
+using System.Threading;
 using CrypToolStoreLib;
 
 namespace CrpyStoreLib
@@ -93,8 +94,8 @@ namespace CrpyStoreLib
                 server.Start();
 
                 while (true)
-                {                 
-                    Console.ReadLine();
+                {
+                    Thread.Sleep(1000);
                 }
             }
             catch (Exception ex)

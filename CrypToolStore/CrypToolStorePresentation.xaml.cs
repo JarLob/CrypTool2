@@ -286,20 +286,23 @@ namespace Cryptool.CrypToolStore
                 try
                 {
                     string metaxmlfilename = System.IO.Path.Combine(GetPluginFolder(plugin), "pluginmetainfo.xml");
-                    XmlDocument xml = new XmlDocument();
-                    xml.Load(metaxmlfilename);
-
-                    XmlNode rootNode = xml.SelectSingleNode("xml");
-                    XmlNode pluginNode = rootNode.SelectSingleNode("Plugin");
-                    XmlNode versionNode = pluginNode.SelectSingleNode("Version");
-                    XmlNode buildVersionNode = pluginNode.SelectSingleNode("BuildVersion");
-
-                    int pluginversion = Int32.Parse(versionNode.InnerText);
-                    int buildversion = Int32.Parse(buildVersionNode.InnerText);
-
-                    if (plugin.PluginVersion != pluginversion || plugin.BuildVersion != buildversion)
+                    if (File.Exists(metaxmlfilename))
                     {
-                        plugin.UpdateAvailable = true;
+                        XmlDocument xml = new XmlDocument();
+                        xml.Load(metaxmlfilename);
+
+                        XmlNode rootNode = xml.SelectSingleNode("xml");
+                        XmlNode pluginNode = rootNode.SelectSingleNode("Plugin");
+                        XmlNode versionNode = pluginNode.SelectSingleNode("Version");
+                        XmlNode buildVersionNode = pluginNode.SelectSingleNode("BuildVersion");
+
+                        int pluginversion = Int32.Parse(versionNode.InnerText);
+                        int buildversion = Int32.Parse(buildVersionNode.InnerText);
+
+                        if (plugin.PluginVersion != pluginversion || plugin.BuildVersion != buildversion)
+                        {
+                            plugin.UpdateAvailable = true;
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -498,7 +501,16 @@ namespace Cryptool.CrypToolStore
                 }
 
                 //Step 4: Notify user
-                _context.Send(callback => MessageBox.Show(_windowToBlockForMessageBoxes, String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin___0___has_been_successfully_downloaded__You_need_to_restart_CrypTool_2_to_complete_installation_, SelectedPlugin.Name), Properties.Resources.CrypToolStorePresentation_InstallPlugin_Download_succeeded_, MessageBoxButton.OK), null);
+                _context.Send(callback => 
+                {
+                    //set progress bar to 100%
+                    InstallationProgressBar.Maximum = 1;
+                    InstallationProgressBar.Value = 1;
+                    InstallationProgressText.Content = "100 %";
+                    //show messagebox
+                    MessageBox.Show(_windowToBlockForMessageBoxes, String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin___0___has_been_successfully_downloaded__You_need_to_restart_CrypTool_2_to_complete_installation_, SelectedPlugin.Name), Properties.Resources.CrypToolStorePresentation_InstallPlugin_Download_succeeded_, MessageBoxButton.OK);
+                }, null);
+
                 PendingChanges = true;                
                 OnStaticPropertyChanged("PendingChanges");                
             }
