@@ -288,7 +288,7 @@ class RandomChallenges {
                 }
             }
             if (i == 0) {
-                CtAPI.displayKey(key.getKeyStringLong());
+                CtAPI.displayBestKey(key.getKeyStringLong());
             }
         }
 
@@ -420,7 +420,7 @@ class RandomChallenges {
             CtAPI.printf("Saved %s\n", indicatorsFilePath);
         CtAPI.printf("Saved %s\n", challengeFilePath);
         CtAPI.printf("Saved %s\n", solutionFilePath);
-        CtAPI.displayPlaintext("Saved " + cipherFilePath + ", "+ plaintextFilePath + ", "
+        CtAPI.displayBestPlaintext("Saved " + cipherFilePath + ", "+ plaintextFilePath + ", "
                 + ((opFormat > 1) ? indicatorsFilePath + ", " : "") + challengeFilePath + ", "+ solutionFilePath + ", \n" +  "Crib at pos 0: " + cribS);
 
         if (opFormat == 2) {

@@ -110,13 +110,13 @@ public class CtAPI {
     }
 
     /**
-     * Update the value bar.
+     * Update the progress bar.
      *
      * @param value    - progress value. Should be > 0 and <= maxValue (unless maxValue == 0, see below).
      * @param maxValue - maximum value. 0 should be specified if the max value is unknown, in which case
      *                 a default maxValue of 100 is used, and value modulo 100 is used.
      */
-    public static synchronized void displayProgress(long value, long maxValue) {
+    public static synchronized void updateProgress(long value, long maxValue) {
         try {
             if (maxValue <= 0) {
                 Ct2Connector.encodeProgress(value % 100, 100);
@@ -133,7 +133,7 @@ public class CtAPI {
      *
      * @param keyString - string representing the best key so far (highest score).
      */
-    public static void displayKey(String keyString) {
+    public static void displayBestKey(String keyString) {
         updateOutput(OUTPUT_VALUE_KEY, keyString);
     }
 
@@ -143,7 +143,7 @@ public class CtAPI {
      *
      * @param plaintextString - plaintext obtained after decrypting with best key (or fatal error message).
      */
-    public static void displayPlaintext(String plaintextString) {
+    public static void displayBestPlaintext(String plaintextString) {
         updateOutput(OUTPUT_VALUE_PLAINTEXT, plaintextString);
     }
 
@@ -240,9 +240,18 @@ public class CtAPI {
         if (exitCode != 0) {
             String fullMessage = String.format("Shutting down (%d) - %s\n", exitCode, message);
             logError(fullMessage);
-            CtAPI.displayPlaintext(fullMessage);
+            CtAPI.displayBestPlaintext(fullMessage);
         } else {
-            printf(message);
+            printf(message + "\n");
+        }
+
+        //TODO: remove.
+        for (int i = 30; i > 0; i--) {
+            printf("Shutting down in %2d seconds ...\n", i);
+            try {
+                Thread.sleep(1_000);
+            } catch (InterruptedException ignored) {
+            }
         }
 
         CtBestList.display();

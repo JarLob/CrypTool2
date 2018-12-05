@@ -21,7 +21,7 @@ public class SolvePlayfair {
         for (int cycle = 0; cycle < saCycles || saCycles == 0; cycle++) {
 
             if (taskNumber == 0) {
-                CtAPI.displayProgress(cycle, saCycles);
+                CtAPI.updateProgress(cycle, saCycles);
             }
 
             Transformations.randomize();

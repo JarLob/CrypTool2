@@ -46,7 +46,7 @@ class HillClimb {
 
         String message = String.format("\n\nStarting %s search: Number of settings: %,d x %,d cycles = %,d total settings to check.    \n\nEstimated search time: %s per cycle.\n\n",
                 modeString, totalKeysPerCycle, cycles, cycles * totalKeysPerCycle, Utils.getEstimatedTimeString(normalizedNkeys, minRate, maxRate));
-        CtAPI.displayPlaintext(message);
+        CtAPI.displayBestPlaintext(message);
         CtAPI.print(message);
 
 

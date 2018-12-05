@@ -40,11 +40,11 @@ public class ReportResult {
                 pushed++;
                 if (simulation) {
                     int error = key.getCountIncorrectLugs() * 5 + key.getCountIncorrectPins();
-                    CtAPI.displayProgress(Math.max(100 - error, 0), 100);
+                    CtAPI.updateProgress(Math.max(100 - error, 0), 100);
                 } else if (knownPlaintext) {
-                    CtAPI.displayProgress(currScore - 120000, 10000);
+                    CtAPI.updateProgress(currScore - 120000, 10000);
                 } else {
-                    CtAPI.displayProgress(currScore, 58000);
+                    CtAPI.updateProgress(currScore, 58000);
                 }
             }
         }

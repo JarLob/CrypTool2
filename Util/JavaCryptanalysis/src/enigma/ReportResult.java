@@ -14,7 +14,7 @@ public class ReportResult {
     public static synchronized void displayProgress(long count, long max) {
         long now = System.currentTimeMillis();
         if (now > lastProgressUpdate + 100) {
-            CtAPI.displayProgress(count, max);
+            CtAPI.updateProgress(count, max);
             lastProgressUpdate = now;
         }
     }

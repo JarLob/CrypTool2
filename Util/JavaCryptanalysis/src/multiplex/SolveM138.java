@@ -17,7 +17,7 @@ class SolveM138 {
                 m138.setOffset(saCycle % m138.STRIP_LENGTH);
             }
             bestScore = Math.max(bestScore, SolveMultiplex.simulatedAnnealingCycle(m138, realMultiplexScore, 120, 1_500, saCycle));
-            CtAPI.displayProgress(saCycle, saCycles + 1);
+            CtAPI.updateProgress(saCycle, saCycles + 1);
         }
         return bestScore;
     }

@@ -17,7 +17,7 @@ class SolveM94 {
         for (int saCycle = 0; saCycle < saCycles || saCycles == 0; saCycle++) {
             bestScore = SolveMultiplex.simulatedAnnealingCycle(m94, realMultiplexScore, 200, 2_000, saCycle);
             if (displayProgress) {
-                CtAPI.displayProgress(saCycle, saCycles);
+                CtAPI.updateProgress(saCycle, saCycles);
             }
         }
 
@@ -44,7 +44,7 @@ class SolveM94 {
                 }
                 CtAPI.printf("Completed offsets starting with %s, best score: %,8d \n", m94.offsetString(0) + ",..,.. ", bestScore);
                 synchronized (countOffsetsChecked) {
-                    CtAPI.displayProgress(countOffsetsChecked.incrementAndGet(), 25);
+                    CtAPI.updateProgress(countOffsetsChecked.incrementAndGet(), 25);
                 }
 
             });
@@ -53,7 +53,7 @@ class SolveM94 {
 
         for (int saCycle = 0; (saCycle < saCycles) || (saCycles == 0); saCycle++) {
             countOffsetsChecked.set(0);
-            CtAPI.displayProgress(countOffsetsChecked.intValue(), 25);
+            CtAPI.updateProgress(countOffsetsChecked.intValue(), 25);
             runnables.run(threads);
         }
     }
