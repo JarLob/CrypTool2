@@ -216,26 +216,26 @@ public class CommandLine {
         }
         String crib = inputValuesMap.get(CtAPI.INPUT_VALUE_CRIB);
         if (crib != null && crib.trim().length() > 0) {
-            args += " -p " + crib;
+            args += " -" + Flag.CRIB + " " + crib;
             CtAPI.println("Received remote crib: " + crib);
         }
 
         String resourcePath = inputValuesMap.get(CtAPI.INPUT_VALUE_RESOURCES);
         if (resourcePath != null && resourcePath.trim().length() > 0) {
-            args += " -r " + resourcePath;
+            args += " -" + Flag.RESOURCE_PATH + " " + resourcePath;
             CtAPI.println("Received resource path: " + resourcePath);
         }
 
         String threads = inputValuesMap.get(CtAPI.INPUT_VALUE_THREADS);
         if (threads != null && threads.trim().length() > 0) {
-            args += " -t " + threads;
+            args += " -" + Flag.THREADS + " " + threads;
             CtAPI.println("Received threads: " + threads);
         }
 
         String cycles = inputValuesMap.get(CtAPI.INPUT_VALUE_CYCLES);
         if (cycles != null && cycles.trim().length() > 0) {
-            args += " -n " + cycles;
-            CtAPI.println("Received threads: " + cycles);
+            args += " -" + Flag.CYCLES + " " + cycles;
+            CtAPI.println("Received cycles: " + cycles);
         }
 
 

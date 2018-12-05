@@ -246,13 +246,14 @@ public class CtAPI {
         }
 
         //TODO: remove.
+        printf("Shutting down in 30 seconds ...\n");
         for (int i = 30; i > 0; i--) {
-            printf("Shutting down in %2d seconds ...\n", i);
             try {
                 Thread.sleep(1_000);
             } catch (InterruptedException ignored) {
             }
         }
+        printf("Shutting down in 5 seconds ...\n");
 
         CtBestList.display();
         long start = System.currentTimeMillis();
