@@ -210,8 +210,14 @@ namespace Cryptool.ProcessExecutor
                 else
                 {
                     _Process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                }                                
-                _Process.Start();
+                }
+
+                if (!_Process.Start())
+                {
+                    GuiLogMessage("Could not start process. It returned false.", NotificationLevel.Error);
+                    return;
+                }                
+
                 //Step 2: Create named pipes with processID of process
                 string serverPipeName = "clientToServer" + _Process.Id;
                 string clientPipeName = "serverToClient" + _Process.Id;
@@ -223,7 +229,7 @@ namespace Cryptool.ProcessExecutor
                 _PipeClient.BeginWaitForConnection(connectionClientCallback, _PipeClient);
 
                 int time = 0;
-                while (!_PipeServer.IsConnected || !_PipeClient.IsConnected)
+                while (!_Process.HasExited && (!_PipeServer.IsConnected || !_PipeClient.IsConnected))
                 {
                     Thread.Sleep(100);
                     time++;
@@ -236,6 +242,11 @@ namespace Cryptool.ProcessExecutor
                     {
                         return;
                     }
+                }
+
+                if (_Process.HasExited)
+                {
+                    return;
                 }
 
                 //Step 5:
@@ -330,6 +341,11 @@ namespace Cryptool.ProcessExecutor
                             GuiLogMessage("Could not kill process: " + ex.Message, NotificationLevel.Error);
                         }
                     }                    
+                }
+
+                if (_Process.HasExited)
+                {
+                    GuiLogMessage(String.Format("Process exited with exit code: {0}", _Process.ExitCode), _Process.ExitCode != 0 ? NotificationLevel.Error : NotificationLevel.Info);
                 }
 
                 //set end time in presentation
