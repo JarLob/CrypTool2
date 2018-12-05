@@ -9,7 +9,6 @@ public class Main {
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.LANGUAGE,
-                "g",
                 "Language",
                 "Language used for statistics and for simulation random text.",
                 false,
@@ -18,7 +17,6 @@ public class Main {
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.VERSION,
-                "y",
                 "Version",
                 "Version of operating instructions.",
                 false,
@@ -27,7 +25,6 @@ public class Main {
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.SIMULATION,
-                "s",
                 "Simulation",
                 "Create ciphertext from random key and plaintext. Simulation modes: 0 (default) - no simulation, 1 - ciphertext only, 2 - with crib.",
                 false,
@@ -35,7 +32,6 @@ public class Main {
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.SIMULATION_TEXT_LENGTH,
-                "l",
                 "Length of text for simulation",
                 "Length of random plaintext encrypted for simulation.",
                 false,
@@ -43,7 +39,6 @@ public class Main {
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.SIMULATION_OVERLAPS,
-                "o",
                 "Number of lug overlaps for simulation key",
                 "Number of lug overlaps for simulation key i.e. bars involving two wheels.",
                 false,
@@ -53,11 +48,11 @@ public class Main {
     public static void main(String[] args) {
 
         createCommandLineArguments();
-        BestResults.setDiscardSamePlaintexts(false);
-        BestResults.setThrottle(true);
+        CtBestList.setDiscardSamePlaintexts(false);
+        CtBestList.setThrottle(true);
         //Argument.printUsage();
 
-        CtAPI.open("M209 attacks", "1.0");
+        CtAPI.openAndReadInputValues("M209 attacks", "1.0");
 
         CommandLine.parseAndPrintCommandLineArgs(args);
 
@@ -88,7 +83,7 @@ public class Main {
             }
         } else {
             if (CIPHERTEXT == null || CIPHERTEXT.isEmpty()) {
-                CtAPI.goodbyeError("Ciphertext or ciphertext file required when not in simulation mode\n");
+                CtAPI.goodbyeFatalError("Ciphertext or ciphertext file required when not in simulation mode\n");
             }
             if (CRIB != null && !CRIB.isEmpty()) {
                 KP.solveMultithreaded(CIPHERTEXT, CRIB, null, CYCLES, THREADS);

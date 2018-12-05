@@ -1,7 +1,7 @@
 package multiplex;
 
 
-import common.BestResults;
+import common.CtBestList;
 import common.CtAPI;
 import common.Utils;
 
@@ -26,7 +26,7 @@ class SolveM138 {
     static void solve(ArrayList<Integer> offset, String cipherStr, String cribStr, int maxCycles, long realMultiplexScore) {
 
         if (offset.size() > 1) {
-            CtAPI.goodbyeError("Too many offsets for M138");
+            CtAPI.goodbyeFatalError("Too many offsets for M138");
         }
 
         CtAPI.printf("Ciphertext: %s\n", cipherStr);
@@ -59,7 +59,7 @@ class SolveM138 {
         CtAPI.printf("Encryption key for simulation: %s\n", encryptionKey.toString());
 
         long realMultiplexScore = encryptionKey.score();
-        BestResults.setOriginal(realMultiplexScore, encryptionKey.toString(), encryptionKey.toString(), Utils.getString(encryptionKey.decryption), "Original");
+        CtBestList.setOriginal(realMultiplexScore, encryptionKey.toString(), encryptionKey.toString(), Utils.getString(encryptionKey.decryption), "Original");
 
         ArrayList<Integer> offset = new ArrayList<>();
         if (offsetKnown) {

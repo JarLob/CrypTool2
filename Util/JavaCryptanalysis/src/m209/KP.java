@@ -1,8 +1,6 @@
 package m209;
 
-import common.BestResults;
 import common.CtAPI;
-import common.Language;
 import common.Runnables;
 
 public class KP {
@@ -128,10 +126,10 @@ public class KP {
         ReportResult.knownPlaintext = true;
 
         if (cipher == null || cipher.isEmpty()) {
-            CtAPI.goodbyeError("cipher is empty");
+            CtAPI.goodbyeFatalError("cipher is empty");
         }
         if (crib == null || crib.isEmpty()) {
-            CtAPI.goodbyeError("crib is empty");
+            CtAPI.goodbyeFatalError("crib is empty");
         }
         ReportResult.setThreshold(EvalType.CRIB);
 

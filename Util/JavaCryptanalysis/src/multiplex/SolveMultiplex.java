@@ -28,8 +28,8 @@ class SolveMultiplex {
                         if (currentScore > bestScore) {
                             bestScore = currentScore;
                         }
-                        if (BestResults.shouldPushResult(newScore)) {
-                            BestResults.pushResult(newScore,
+                        if (CtBestList.shouldPushResult(newScore)) {
+                            CtBestList.pushResult(newScore,
                                     multiplex.toString(),
                                     multiplex.toString(),
                                     Utils.getString(multiplex.decryption),

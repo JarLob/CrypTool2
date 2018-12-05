@@ -133,12 +133,12 @@ public class Lugs {
 
         String[] barsString = lugsString.split(" ");
         if (barsString.length > Key.BARS || ( barsString.length < Key.BARS && Global.VERSION != Version.UNRESTRICTED)) {
-            CtAPI.goodbyeError("Wrong lug string: " + lugsString + " has " + barsString.length + " bars");
+            CtAPI.goodbyeFatalError("Wrong lug string: " + lugsString + " has " + barsString.length + " bars");
         }
         for (String barString : barsString) {
             String[] barSplit = barString.split("-");
             if (barSplit.length != Key.LUGS_PER_BAR) {
-                CtAPI.goodbyeError("Wrong lug settings - too many lugs on one bar: " + barString);
+                CtAPI.goodbyeFatalError("Wrong lug settings - too many lugs on one bar: " + barString);
             }
 
             try {
@@ -148,15 +148,15 @@ public class Lugs {
 
 
                 if ((w1 > Key.WHEELS) || (w2 > Key.WHEELS)) {
-                    CtAPI.goodbyeError("Wrong lug settings - wrong wheel number: " + barString);
+                    CtAPI.goodbyeFatalError("Wrong lug settings - wrong wheel number: " + barString);
                 }
                 if ((w1 == w2) && (w1 != 0)) {
-                    CtAPI.goodbyeError("Wrong lug settings - wheel appears twice on same bar: " + barString);
+                    CtAPI.goodbyeFatalError("Wrong lug settings - wheel appears twice on same bar: " + barString);
                 }
 
                 if (w2 == 0) {
                     if (Global.VERSION != Version.UNRESTRICTED) {
-                        CtAPI.goodbyeError("Wrong lug settings - 0-0 not valid: " + barString);
+                        CtAPI.goodbyeFatalError("Wrong lug settings - 0-0 not valid: " + barString);
                     } else {
                         continue;
                     }
@@ -174,13 +174,13 @@ public class Lugs {
                 }
 
             } catch (NumberFormatException e) {
-                CtAPI.goodbyeError("Wrong lug settings - wrong wheel: " + barString);
+                CtAPI.goodbyeFatalError("Wrong lug settings - wrong wheel: " + barString);
             }
         }
 
         if (!LugsRules.isTypeCountCompliant(typeCount)) {
             if (checkRules) {
-                CtAPI.goodbyeError("Lug settings do not match the lug count rules: " + lugsString);
+                CtAPI.goodbyeFatalError("Lug settings do not match the lug count rules: " + lugsString);
             }
         }
 
@@ -217,7 +217,7 @@ public class Lugs {
     public boolean set(int[] typeCount, boolean checkRules) {
         /*
         if (typeCount.length != TYPE_COUNT_ARRAY_SIZE) {
-            CtAPI.goodbyeError("Invalid length of simpleCount array");
+            CtAPI.goodbyeFatalError("Invalid length of simpleCount array");
         }
         */
         int overlaps = overlaps(typeCount);
@@ -233,12 +233,12 @@ public class Lugs {
         int bars = 0;
         for (int typeCountEntry : typeCount) {
             if ((typeCountEntry < 0) || (typeCountEntry > Global.MAX_KICK)) {
-                CtAPI.goodbyeError("Invalid kick in simpleCount array");
+                CtAPI.goodbyeFatalError("Invalid kick in simpleCount array");
             }
             bars += typeCountEntry;
         }
         if (bars != Key.BARS) {
-            CtAPI.goodbyeError("Wrong number of bars: " + bars);
+            CtAPI.goodbyeFatalError("Wrong number of bars: " + bars);
         }
         */
 
@@ -438,7 +438,7 @@ public class Lugs {
         }
 
         if ((requiredOverlap != 0) && ((requiredOverlap > Global.MAX_OVERLAP) || (requiredOverlap < Global.MIN_OVERLAP))) {
-            CtAPI.goodbyeError("Failure generating random lugs. Overlap outside limits" + requiredOverlap);
+            CtAPI.goodbyeFatalError("Failure generating random lugs. Overlap outside limits" + requiredOverlap);
         }
 
         int lugCountSeqOverlaps;
@@ -479,11 +479,11 @@ public class Lugs {
             }
 
             if (w2 == 0) {
-                CtAPI.goodbyeError("Failure generating random lugs (2)");
+                CtAPI.goodbyeFatalError("Failure generating random lugs (2)");
                 //break;
             }
             if (barsCount >= Key.BARS) {
-                CtAPI.goodbyeError("Failure generating random lugs (3)");
+                CtAPI.goodbyeFatalError("Failure generating random lugs (3)");
             }
             barsCount++;
 
@@ -505,10 +505,10 @@ public class Lugs {
 
         int actualOverlaps = overlaps(typeCount);
         if (requiredOverlap != 0 && actualOverlaps != requiredOverlap) {
-            CtAPI.goodbyeError("Failure generating random lugs (4).  Required overlaps: " + requiredOverlap + " Actual: "+ actualOverlaps);
+            CtAPI.goodbyeFatalError("Failure generating random lugs (4).  Required overlaps: " + requiredOverlap + " Actual: "+ actualOverlaps);
         }
         if (barsCount > Key.BARS) {
-            CtAPI.goodbyeError("Failure generating random lugs (5)");
+            CtAPI.goodbyeFatalError("Failure generating random lugs (5)");
         }
 
         computeVector();

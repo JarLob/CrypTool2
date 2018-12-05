@@ -195,7 +195,7 @@ public class CO {
         ReportResult.setThreshold(EvalType.MONO);
 
         if (cipher == null || cipher.isEmpty()) {
-            CtAPI.goodbyeError("cipher is empty");
+            CtAPI.goodbyeFatalError("cipher is empty");
         }
         if (simulationKey != null) {
             ReportResult.setOriginalKey(simulationKey, EvalType.MONO);

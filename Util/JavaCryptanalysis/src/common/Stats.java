@@ -42,7 +42,7 @@ public class Stats {
 
 
         } catch (IOException ex) {
-            CtAPI.goodbyeError("Unable to read hexa file %s - %s", filename, ex.toString());
+            CtAPI.goodbyeFatalError("Unable to read hexa file %s - %s", filename, ex.toString());
         }
       CtAPI.printf("Hexagram stats file %s loaded successfully (%f seconds), size = %,d bytes (%,d free bytes after loading)\n",
                 filename, (System.currentTimeMillis() - start) / 1_000.0, totalShortRead * 2, Runtime.getRuntime().freeMemory());
@@ -68,7 +68,6 @@ public class Stats {
     }
 
     public static long evalPlaintextHexagram(int[] plaintext) {
-        CtAPI.shutdownIfNeeded();
         return evalPlaintextHexagram(plaintext, plaintext.length);
     }
 
@@ -104,7 +103,7 @@ public class Stats {
 
             bufferedReader.close();
         } catch (IOException ex) {
-            CtAPI.goodbyeError("Unable to read bigram file %s - %s", fileName, ex.toString());
+            CtAPI.goodbyeFatalError("Unable to read bigram file %s - %s", fileName, ex.toString());
         }
 
         CtAPI.printf("Bigram file read: %s, items  = %d  \n", fileName, items);
@@ -140,7 +139,7 @@ public class Stats {
 
             bufferedReader.close();
         } catch (IOException ex) {
-            CtAPI.goodbyeError("Unable to read mono file %s - %s", fileName, ex.toString());
+            CtAPI.goodbyeFatalError("Unable to read mono file %s - %s", fileName, ex.toString());
         }
 
         CtAPI.printf("mono file read: %s, items  = %d  \n", fileName, items);
@@ -192,7 +191,7 @@ public class Stats {
             // Always close files.
             bufferedReader.close();
         } catch (IOException ex) {
-            CtAPI.goodbyeError("Unable to read text file for stats  %s - %s", fileName, ex.toString());
+            CtAPI.goodbyeFatalError("Unable to read text file for stats  %s - %s", fileName, ex.toString());
         }
 
         convertToLog(bigramStats);
@@ -246,7 +245,7 @@ public class Stats {
         }
 
         if (n == 0) {
-            CtAPI.goodbyeError("Cannot load stats - language: " + language);
+            CtAPI.goodbyeFatalError("Cannot load stats - language: " + language);
         }
         return true;
     }

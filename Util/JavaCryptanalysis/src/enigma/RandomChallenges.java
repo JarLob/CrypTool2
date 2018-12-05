@@ -34,7 +34,7 @@ class RandomChallenges {
             try {
                 values[i] = Integer.valueOf(parts[i]);
             } catch (NumberFormatException e) {
-                CtAPI.goodbyeError("RANDOM SCENARIO: %s - invalid - should include numbers separated by\n", randomCryptOptions);
+                CtAPI.goodbyeFatalError("RANDOM SCENARIO: %s - invalid - should include numbers separated by\n", randomCryptOptions);
             }
         }
         if (values[0] != -1)
@@ -62,36 +62,36 @@ class RandomChallenges {
                 opFormat, opLen, opSplit, opPlugs, garbledLettersPercentage, opCrib);
         
         if ((opFormat < 1) || (opFormat > 3)) {
-            CtAPI.goodbyeError("RANDOM SCENARIO: INVALID OPTIONS %s , Format must be 0, 1, 2 or 3\n", randomCryptOptions);
+            CtAPI.goodbyeFatalError("RANDOM SCENARIO: INVALID OPTIONS %s , Format must be 0, 1, 2 or 3\n", randomCryptOptions);
             return;
         }
         if ((opLen < 5) || (opLen > 2500)) {
-            CtAPI.goodbyeError("RANDOM SCENARIO: INVALID OPTIONS %s , Length must be 5 to 2500\n", randomCryptOptions);
+            CtAPI.goodbyeFatalError("RANDOM SCENARIO: INVALID OPTIONS %s , Length must be 5 to 2500\n", randomCryptOptions);
             return;
         }
         if ((opFormat == 1) || (opFormat == 0)) {
             if ((opSplit < 1) || (opSplit > 5)) {
-                CtAPI.goodbyeError("RANDOM SCENARIO: INVALID OPTIONS %s , Number of (split) messages must be 1 to 5 (in Format 1)\n", randomCryptOptions);
+                CtAPI.goodbyeFatalError("RANDOM SCENARIO: INVALID OPTIONS %s , Number of (split) messages must be 1 to 5 (in Format 1)\n", randomCryptOptions);
                 return;
             }
         } else {
             if ((opSplit < 1) || (opSplit > 500)) {
-                CtAPI.goodbyeError("RANDOM SCENARIO: INVALID OPTIONS %s , Number of indicators must be between 1 to 500 (in Format 2 and 3)\n", randomCryptOptions);
+                CtAPI.goodbyeFatalError("RANDOM SCENARIO: INVALID OPTIONS %s , Number of indicators must be between 1 to 500 (in Format 2 and 3)\n", randomCryptOptions);
                 return;
             }
         }
 
         if ((opPlugs < 0) || (opPlugs > 13)) {
-            CtAPI.goodbyeError("RANDOM SCENARIO: INVALID OPTIONS %s , Number of plugs must be 0 to 13\n", randomCryptOptions);
+            CtAPI.goodbyeFatalError("RANDOM SCENARIO: INVALID OPTIONS %s , Number of plugs must be 0 to 13\n", randomCryptOptions);
             return;
         }
         if ((opCrib < 0) || (opCrib > 50)) {
-            CtAPI.goodbyeError("RANDOM SCENARIO: INVALID OPTIONS %s , Crib length must be 0 to 50\n", randomCryptOptions);
+            CtAPI.goodbyeFatalError("RANDOM SCENARIO: INVALID OPTIONS %s , Crib length must be 0 to 50\n", randomCryptOptions);
             return;
         }
 
         if ((garbledLettersPercentage < 0) || (garbledLettersPercentage > 50)) {
-            CtAPI.goodbyeError("RANDOM SCENARIO: INVALID OPTIONS %s , Percentage of garbled letters should be 0 to 50\n", randomCryptOptions);
+            CtAPI.goodbyeFatalError("RANDOM SCENARIO: INVALID OPTIONS %s , Percentage of garbled letters should be 0 to 50\n", randomCryptOptions);
             return;
         }
 
@@ -106,7 +106,7 @@ class RandomChallenges {
             MessageKeyFullValueRange = false;
 
         if ((opFormat != 1) && !MessageKeyFullValueRange) {
-            CtAPI.goodbyeError("RANDOM CIPHER: For formats 2 and 3, the full range of values for Message Key should be specified (aaa to zzz) \n");
+            CtAPI.goodbyeFatalError("RANDOM CIPHER: For formats 2 and 3, the full range of values for Message Key should be specified (aaa to zzz) \n");
             return;
 
         }
@@ -119,7 +119,7 @@ class RandomChallenges {
             MessageKeySingleValueInRange = true;
 
         if ((opSplit > 1) && MessageKeySingleValueInRange) {
-            CtAPI.goodbyeError("RANDOM CIPHER: A range of values for Message Key should be specified, if Split Number is more than 1\n");
+            CtAPI.goodbyeFatalError("RANDOM CIPHER: A range of values for Message Key should be specified, if Split Number is more than 1\n");
             return;
 
         }
@@ -131,7 +131,7 @@ class RandomChallenges {
 
         actualLen = Utils.loadRandomText(plainInputFile, plaintext, opLen, true /*boolean generateXs */, garbledLettersPercentage);
         if (actualLen == 0) {
-            CtAPI.goodbyeError("ERROR in Random cryptogram generation mode\n");
+            CtAPI.goodbyeFatalError("ERROR in Random cryptogram generation mode\n");
             return;
         }
 

@@ -13,7 +13,6 @@ class Main {
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.MODEL,
-                "m",
                 "Model",
                 "Multiplex system model. M138 or M94.",
                 false,
@@ -21,7 +20,6 @@ class Main {
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.OFFSET,
-                "o",
                 "Offset(s)",
                 "Known offset(s), from 0 to 25. If offset(s) is(are) unknown, will look for all possible offsets.",
                 false,
@@ -29,7 +27,6 @@ class Main {
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.SIMULATION,
-                "s",
                 "Simulation",
                 "Create ciphertext from random key. Simulation modes: 0 (default) - no simulation, 1 - offset(s) unknown, 2 - - offset(s) known.",
                 false,
@@ -37,7 +34,6 @@ class Main {
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.SIMULATION_TEXT_LENGTH,
-                "l",
                 "Length of text for simulation",
                 "Length of random plaintext encrypted for simulation.",
                 false,
@@ -49,12 +45,12 @@ class Main {
 
         createCommandLineArguments();
         //Argument.printUsage();
-        BestResults.setScoreThreshold(1_800_000);
-        BestResults.setDiscardSamePlaintexts(true);
-        BestResults.setThrottle(false);
+        CtBestList.setScoreThreshold(1_800_000);
+        CtBestList.setDiscardSamePlaintexts(true);
+        CtBestList.setThrottle(false);
 
-        CtAPI.open("Multiplex", "1.0");
-        BestResults.setScoreThreshold(1_800_000);
+        CtAPI.openAndReadInputValues("Multiplex", "1.0");
+        CtBestList.setScoreThreshold(1_800_000);
 
         CommandLine.parseAndPrintCommandLineArgs(args);
 
@@ -74,11 +70,11 @@ class Main {
         final int SIMULATION_TEXT_LENGTH = CommandLine.getIntegerValue(Flag.SIMULATION_TEXT_LENGTH);
 
         if (!Stats.readHexagramStatsFile(RESOURCE_PATH + "/" + Utils.HEXA_FILE)) {
-            CtAPI.goodbyeError("Could not read hexa file .... " + RESOURCE_PATH + "/" + Utils.HEXA_FILE);
+            CtAPI.goodbyeFatalError("Could not read hexa file .... " + RESOURCE_PATH + "/" + Utils.HEXA_FILE);
         }
 
         if ((CIPHERTEXT == null || CIPHERTEXT.isEmpty()) && SIMULATION == 0) {
-            CtAPI.goodbyeError("Ciphertext or ciphertext file required when not in simulation mode\n");
+            CtAPI.goodbyeFatalError("Ciphertext or ciphertext file required when not in simulation mode\n");
         }
 
         if (IS_M138) {

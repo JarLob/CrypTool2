@@ -3,7 +3,6 @@ package enigma;
 import common.CtAPI;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -69,7 +68,7 @@ class Stats {
             // Always close files.
             bufferedReader.close();
         } catch (IOException ex) {
-            CtAPI.goodbyeError("Unable to read bigram file %s - %s", fileName, ex.toString());
+            CtAPI.goodbyeFatalError("Unable to read bigram file %s - %s", fileName, ex.toString());
         }
 
         if (print)
@@ -136,7 +135,7 @@ class Stats {
             // Always close files.
             bufferedReader.close();
         } catch (IOException ex) {
-            CtAPI.goodbyeError("Unable to read trigram file %s - %s", fileName, ex.toString());
+            CtAPI.goodbyeFatalError("Unable to read trigram file %s - %s", fileName, ex.toString());
         }
 
         if (print)
@@ -172,9 +171,12 @@ class Stats {
 
     public static int loadTridict(String fileName) {
 
+        boolean special = fileName.endsWith("3WH.txt");
+
         long minNonZero = Long.MAX_VALUE;
 
         String line;
+        int items = 0;
         try {
             // FileReader reads text files in the default encoding.
             FileReader fileReader = new FileReader(fileName);
@@ -194,6 +196,7 @@ class Stats {
                         freq = freq * 10 + dig;
                 }
 
+                items++;
                 triflat[(((l1 << 5) + l2) << 5) + l3] = freq;
                 if ((freq > 0) && (freq < minNonZero))
                     minNonZero = freq;
@@ -203,26 +206,26 @@ class Stats {
             // Always close files.
             bufferedReader.close();
         } catch (IOException ex) {
-            CtAPI.goodbyeError("Unable to read trigram file %s - %s", fileName, ex.toString());
+            CtAPI.goodbyeFatalError("Unable to read trigram file %s - %s", fileName, ex.toString());
         }
 
         if (minNonZero < 1000) {
             for (int l1 = 0; l1 < 26; l1++)
                 for (int l2 = 0; l2 < 26; l2++)
                     for (int l3 = 0; l3 < 26; l3++) {
-                        long freq = triflat[(((l1 << 5) + l2) << 5) + l3];
+                        int freq = triflat[(((l1 << 5) + l2) << 5) + l3];
                         if (freq != 0) {
                             if (freq == minNonZero) {
                                 freq = 1000;
                             } else {
-                                freq = (freq * 1000) / minNonZero;
+                                freq = (int) ((freq * 1000) / minNonZero);
                             }
                         }  //do nothing
 
-                        triflat[(((l1 << 5) + l2) << 5) + l3] = (int) freq;
+                        triflat[(((l1 << 5) + l2) << 5) + l3] = special ? ((int) (freq * 1.5)) : freq;
                     }
         }
-        CtAPI.printf("Trigram file read: %s  \n", fileName);
+        CtAPI.printf("Trigram file read: %s  (%,d items)\n", fileName, items);
 
 
         return 1;
@@ -262,7 +265,7 @@ class Stats {
             // Always close files.
             bufferedReader.close();
         } catch (IOException ex) {
-            CtAPI.goodbyeError("Unable to read bigram file %s - %s", fileName, ex.toString());
+            CtAPI.goodbyeFatalError("Unable to read bigram file %s - %s", fileName, ex.toString());
         }
 
 

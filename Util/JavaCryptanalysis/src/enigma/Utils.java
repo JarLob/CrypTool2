@@ -167,7 +167,7 @@ class Utils {
             // Always close files.
             bufferedReader.close();
         } catch (IOException ex) {
-            CtAPI.goodbyeError("Unable to read file %s - %s", fileName, ex.toString());
+            CtAPI.goodbyeFatalError("Unable to read file %s - %s", fileName, ex.toString());
         }
 
 
@@ -217,7 +217,7 @@ class Utils {
             // Always close files.
             bufferedReader.close();
         } catch (IOException ex) {
-            CtAPI.goodbyeError("Failed to read %s - %s", fileName, ex.toString());
+            CtAPI.goodbyeFatalError("Failed to read %s - %s", fileName, ex.toString());
         }
 
         if (len >= k) {
@@ -248,7 +248,7 @@ class Utils {
 
 
         if ((end - start) < len / 2) {
-            CtAPI.goodbyeError("Could not create a coherent message (from X to X, or from beginning of a line to end of another line) with " + len + " characters from " + fileName + "'");
+            CtAPI.goodbyeFatalError("Could not create a coherent message (from X to X, or from beginning of a line to end of another line) with " + len + " characters from " + fileName + "'");
         }
 
 
@@ -300,7 +300,7 @@ class Utils {
             bufferedWriter.close();
 
         } catch (IOException | NullPointerException ex) {
-            CtAPI.goodbyeError("Error writing file %s - %s\n", fileName, ex.toString());
+            CtAPI.goodbyeFatalError("Error writing file %s - %s\n", fileName, ex.toString());
         }
 
     }

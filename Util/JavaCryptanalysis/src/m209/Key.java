@@ -198,7 +198,7 @@ public class Key {
             case MONO:
                 return evalMono();
             default:
-                CtAPI.goodbyeError("Unsupported eval type " + evalType);
+                CtAPI.goodbyeFatalError("Unsupported eval type " + evalType);
                 return 0;
         }
 

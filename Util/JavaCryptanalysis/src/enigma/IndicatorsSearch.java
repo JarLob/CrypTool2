@@ -1,7 +1,6 @@
 package enigma;
 
-import common.BestResults;
-import common.CommandLine;
+import common.CtBestList;
 import common.CtAPI;
 import common.Flag;
 
@@ -33,8 +32,8 @@ public class IndicatorsSearch {
         if (INDICATORS_FILE.length() != 0)
             flen = Utils.loadCipherText(INDICATORS_FILE, indicData, false);
         if ((flen < 6) || (flen % 6 != 0)) {
-            CtAPI.goodbyeError("INDICATORS Cycle Match Search (-%s INDICATORS): Failed to load indicators data from file %s (%d characters found).\n",
-                    CommandLine.getFlagString(Flag.MODE), INDICATORS_FILE, flen);
+            CtAPI.goodbyeFatalError("INDICATORS Cycle Match Search (-%s INDICATORS): Failed to load indicators data from file %s (%d characters found).\n",
+                    Flag.MODE, INDICATORS_FILE, flen);
         }
         CtAPI.printf("INDICATORS Cycle Match Search: Read database file %s, %d Indicator groups found\nFirst Indicator: %s\n",
                 INDICATORS_FILE, flen / 6, Utils.getString(indicData, 6));
@@ -182,7 +181,7 @@ public class IndicatorsSearch {
                                                                         ckey.encipherDecipherAll(indicCiphertext[i], indicPlaintext, 6);
                                                                         allIndicsPlaintext.append(Utils.getString(indicPlaintext, 6)).append("   ");
                                                                     }
-                                                                    if (BestResults.shouldPushResult(ckey.score)) {
+                                                                    if (CtBestList.shouldPushResult(ckey.score)) {
                                                                         ReportResult.reportResult(0, ckey, ckey.score, allIndicsPlaintext.toString(), desc);
                                                                     }
 

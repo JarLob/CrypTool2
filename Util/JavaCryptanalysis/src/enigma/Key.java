@@ -1080,11 +1080,13 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
         counter++;
         switch (eval) {
             case IC:
-                return (int) (1000000.0 * icscore(ciphertext, len));
+                return (int) (300000.0 * icscore(ciphertext, len));
             case BI:
                 return (int) (biscore(ciphertext, len) *0.50);
+                //return (int) (biscore(ciphertext, len) *1.20);
             case TRI:
-                return triscore(ciphertext, len);
+                return (int) (triscore(ciphertext, len));
+                //return (int) (triscore(ciphertext, len) * 1.4);
             case UNI:
                 return 30 * uniscore(ciphertext, len);
             default:

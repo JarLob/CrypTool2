@@ -8,34 +8,43 @@ import java.util.Map;
 
 public class CtAPI {
 
-    private static int INPUT_CIPHERTEXT = 1;
-    private static int INPUT_CRIB = 2;
-    private static int INPUT_ARGS = 3;
-    private static int INPUT_THREADS = 100;
-    private static int INPUT_CYCLES = 200;
-    private static int INPUT_RESOURCES = 300;
-    private static int OUTPUT_PLAINTEXT = 1;
-    private static int OUTPUT_KEY = 2;
-    private static int OUTPUT_SCORE = 3;
-    private static int OUTPUT_BEST_RESULTS = 1000;
+    static int INPUT_VALUE_CIPHERTEXT = 1;
+    static int INPUT_VALUE_CRIB = 2;
+    static int INPUT_VALUE_ARGS = 3;
+    static int INPUT_VALUE_THREADS = 100;
+    static int INPUT_VALUE_CYCLES = 200;
+    static int INPUT_VALUE_RESOURCES = 300;
 
-    private static Map<Integer, String> params = new HashMap<>();
+    private static int OUTPUT_VALUE_PLAINTEXT = 1;
+    private static int OUTPUT_VALUE_KEY = 2;
+    private static int OUTPUT_VALUE_SCORE = 3;
+    private static int OUTPUT_VALUE_BEST_RESULTS = 1000;
 
-    public static void open(String algorithmName, String algorithmVersion) {
+    private static Map<Integer, String> inputValuesMap = new HashMap<>();
+
+    // Public methods.
+
+    /**
+     * Open the connector, amd read the input values.
+     *
+     * @param attackName    - Name of attack
+     * @param attackVersion - Attack version
+     */
+    public static void openAndReadInputValues(String attackName, String attackVersion) {
         long start = System.currentTimeMillis();
         int received = 0;
         String prevReceiverState = "";
         String prevSenderState = "";
         try {
-            Ct2Connector.start(algorithmName, algorithmVersion, null);
+            Ct2Connector.start(attackName, attackVersion, null);
             do {
                 shutdownIfNeeded();
                 int previousReceived = received;
                 if (Ct2Connector.hasValues()) {
                     Map<Integer, String> values = Ct2Connector.getValues();
                     for (int input : values.keySet()) {
-                        params.put(input, values.get(input));
-                        printf("Received value for %d: %s\n", input, params.get(input));
+                        inputValuesMap.put(input, values.get(input));
+                        printf("Received value for %d: %s\n", input, inputValuesMap.get(input));
                         received++;
                     }
                 }
@@ -56,121 +65,158 @@ public class CtAPI {
             displayExceptionAndGoodbye(e);
         }
     }
-    public static String[] getRemoteCommandLineArguments() {
 
-        String args = params.get(INPUT_ARGS);
-        if (args != null && args.trim().length() > 0) {
-            println("Received remote args:" + args);
-        } else {
-            args = "";
-        }
-        String ciphertext = params.get(INPUT_CIPHERTEXT);
-        if (ciphertext != null && ciphertext.trim().length() > 0) {
-            args += " -i " + ciphertext;
-            println("Received remote ciphertext: " + ciphertext);
-        }
-        String crib = params.get(INPUT_CRIB);
-        if (crib != null && crib.trim().length() > 0) {
-            args += " -p " + crib;
-            println("Received remote crib: " + crib);
-        }
-
-        String resourcePath = params.get(INPUT_RESOURCES);
-        if (resourcePath != null && resourcePath.trim().length() > 0) {
-            args += " -r " + resourcePath;
-            println("Received resource path: " + resourcePath);
-        }
-
-        String threads = params.get(INPUT_THREADS);
-        if (threads != null && threads.trim().length() > 0) {
-            args += " -t " + threads;
-            println("Received threads: " + threads);
-        }
-
-        String cycles = params.get(INPUT_CYCLES);
-        if (cycles != null && cycles.trim().length() > 0) {
-            args += " -n " + cycles;
-            println("Received threads: " + cycles);
-        }
-
-
-        if (args.isEmpty()) {
-            return new String[]{};
-        }
-
-        args = args.replaceAll("[\\n\\r]+", " ");
-        args = args.replaceAll(" +", " ");
-        args = args.trim();
-        println("Summary of remote args: " + args);
-
-        return args.split(" ");
-
+    /**
+     * Fetch the input values.
+     * @return a Map<Integer, String> with input values.
+     */
+    public static Map<Integer, String> getInputValuesMap() {
+        // return a copy.
+        return new HashMap<>(inputValuesMap);
     }
+
+    /**
+     * Replacement of System.out.printf, so that output is displayed in the terminal
+     * as well as in Cryptool.
+     *
+     * @param format  - format, e.g. "%s", or "%3d %s\n"
+     * @param objects - list of object to print.
+     */
     public static void printf(String format, Object... objects) {
         String s = String.format(format, objects);
         print(s);
     }
+
+    /**
+     * Replacement of System.out.print, so that output is displayed in the terminal
+     * as well as in Cryptool.
+     *
+     * @param s - String to be printed.
+     */
     public static void print(String s) {
         logInfo(s);
         System.out.print(s);
     }
+
+    /**
+     * Replacement of System.out.println, so that output is displayed in the terminal
+     * as well as in Cryptool.
+     *
+     * @param s - String to be printed.
+     */
     public static void println(String s) {
         logInfo(s);
         System.out.println(s);
     }
-    public static synchronized void displayProgress(long progress, long maxValue) {
+
+    /**
+     * Update the value bar.
+     *
+     * @param value    - progress value. Should be > 0 and <= maxValue (unless maxValue == 0, see below).
+     * @param maxValue - maximum value. 0 should be specified if the max value is unknown, in which case
+     *                 a default maxValue of 100 is used, and value modulo 100 is used.
+     */
+    public static synchronized void displayProgress(long value, long maxValue) {
         try {
             if (maxValue <= 0) {
-                Ct2Connector.encodeProgress(progress % 100, 95);
+                Ct2Connector.encodeProgress(value % 100, 100);
             } else {
-                Ct2Connector.encodeProgress(progress, maxValue);
+                Ct2Connector.encodeProgress(value, maxValue);
             }
         } catch (Exception e) {
             displayExceptionAndGoodbye(e);
         }
     }
-    public static void displayBestList(String bestList) {
-        updateOutput(OUTPUT_BEST_RESULTS, bestList);
-    }
+
+    /**
+     * Update the template best key box.
+     *
+     * @param keyString - string representing the best key so far (highest score).
+     */
     public static void displayKey(String keyString) {
-        updateOutput(OUTPUT_KEY, keyString);
+        updateOutput(OUTPUT_VALUE_KEY, keyString);
     }
+
+    /**
+     * Display the best decryption. Also used to display error messages in case of exiting the program with
+     * fatal errors, such as errors in the command line options.
+     *
+     * @param plaintextString - plaintext obtained after decrypting with best key (or fatal error message).
+     */
     public static void displayPlaintext(String plaintextString) {
-        updateOutput(OUTPUT_PLAINTEXT, plaintextString);
+        updateOutput(OUTPUT_VALUE_PLAINTEXT, plaintextString);
     }
-    public static void displayBestResult(BestResults.Result result, BestResults.Result original) {
-        if (original.keyString.isEmpty()) {
-            updateOutput(OUTPUT_KEY, result.keyString);
-        } else {
-            updateOutput(OUTPUT_KEY, result.keyString + " (Original:" + original.keyString + ")");
-        }
 
-        updateOutput(OUTPUT_SCORE, String.format("%,d (Original:%,d)", result.score, original.score));
-
-        if (original.plaintextString.isEmpty()) {
-            updateOutput(OUTPUT_PLAINTEXT, result.plaintextString);
-        } else {
-            updateOutput(OUTPUT_PLAINTEXT, result.plaintextString + " (Original:" + original.plaintextString + ")");
-        }
-        logInfoFormatted("Best: %,12d %s %s \n%s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyStringShort);
-        System.out.printf("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyString);
-        logInfoFormatted("      %,12d %s %s \n%s\n", original.score, plaintextCapped(original.plaintextString), original.commentString, original.keyStringShort);
-        System.out.printf("      %,12d %s %s %s\n", original.score, plaintextCapped(original.plaintextString), original.commentString, original.keyString );
-    }
-    public static void displayBestResult(BestResults.Result result) {
-        updateOutput(OUTPUT_SCORE, String.format("%,d", result.score));
-        updateOutput(OUTPUT_KEY, result.keyString);
-        updateOutput(OUTPUT_PLAINTEXT, result.plaintextString);
-        logInfoFormatted("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyStringShort);
-        System.out.printf("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyString);
-    }
-    public static synchronized void goodbyeError(String format, Object... objects) {
+    /**
+     * Shutdown the attack after fatal error. Error message is printed and displayed in the best plaintext box.
+     * @param format - format as in System.out.format, for the error message.
+     * @param objects - Items to be formatted and printed.
+     */
+    public static synchronized void goodbyeFatalError(String format, Object... objects) {
         goodbye(-1, String.format(format, objects));
     }
+
+    /**
+     * Shutdown attack without error.
+     */
     public static void goodbye() {
         goodbye(0, "Shutting down ... ");
     }
-    public static void shutdownIfNeeded() {
+
+    // Package private - to be used only by common/ code.
+
+    /**
+     * Update the best list.
+     *
+     * @param bestList - the baest list, formatted.
+     */
+    static void displayBestList(String bestList) {
+        updateOutput(OUTPUT_VALUE_BEST_RESULTS, bestList);
+    }
+
+    /**
+     * Display the best result in the best plaintext, best key and best score output boxed. Also prints the details.
+     * @param result - best result.
+     */
+    static void displayBestResult(CtBestList.Result result) {
+        updateOutput(OUTPUT_VALUE_SCORE, String.format("%,d", result.score));
+        updateOutput(OUTPUT_VALUE_KEY, result.keyString);
+        updateOutput(OUTPUT_VALUE_PLAINTEXT, result.plaintextString);
+        // In Cryptool log, we only show a short version of the key.
+        logInfoFormatted("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyStringShort);
+        // but we print the longer one in the terminal.
+        System.out.printf("Best: %,12d %s %s %s\n", result.score, plaintextCapped(result.plaintextString), result.commentString, result.keyString);
+    }
+
+    /**
+     * Display the best result key in the key box as well as the original key used (e.g. key used for
+     * simulation).
+     * @param bestResult - best result
+     * @param original   - original (correct) result if known.
+     */
+    static void displayBestResult(CtBestList.Result bestResult, CtBestList.Result original) {
+        if (original.keyString.isEmpty()) {
+            updateOutput(OUTPUT_VALUE_KEY, bestResult.keyString);
+        } else {
+            updateOutput(OUTPUT_VALUE_KEY, bestResult.keyString + " (Original:" + original.keyString + ")");
+        }
+
+        updateOutput(OUTPUT_VALUE_SCORE, String.format("%,d (Original:%,d)", bestResult.score, original.score));
+
+        if (original.plaintextString.isEmpty()) {
+            updateOutput(OUTPUT_VALUE_PLAINTEXT, bestResult.plaintextString);
+        } else {
+            updateOutput(OUTPUT_VALUE_PLAINTEXT, bestResult.plaintextString + " (Original:" + original.plaintextString + ")");
+        }
+        logInfoFormatted("Best: %,12d %s %s \n%s\n", bestResult.score, plaintextCapped(bestResult.plaintextString), bestResult.commentString, bestResult.keyStringShort);
+        System.out.printf("Best: %,12d %s %s %s\n", bestResult.score, plaintextCapped(bestResult.plaintextString), bestResult.commentString, bestResult.keyString);
+        logInfoFormatted("      %,12d %s %s \n%s\n", original.score, plaintextCapped(original.plaintextString), original.commentString, original.keyStringShort);
+        System.out.printf("      %,12d %s %s %s\n", original.score, plaintextCapped(original.plaintextString), original.commentString, original.keyString);
+    }
+
+    // Private.
+
+    private static void shutdownIfNeeded() {
         if (Ct2Connector.getShutdownRequested()) {
             println("Received request to shutdown ....");
             java.awt.Toolkit.getDefaultToolkit().beep();
@@ -182,12 +228,14 @@ public class CtAPI {
         String s = String.format(format, objects);
         logInfo(s);
     }
+
     private static String plaintextCapped(String plaintext) {
         if (plaintext.length() <= 100) {
             return plaintext;
         }
         return plaintext.substring(0, Math.min(100, plaintext.length())) + "...";
     }
+
     private static synchronized void goodbye(int exitCode, String message) {
         if (exitCode != 0) {
             String fullMessage = String.format("Shutting down (%d) - %s\n", exitCode, message);
@@ -197,7 +245,7 @@ public class CtAPI {
             printf(message);
         }
 
-        BestResults.display();
+        CtBestList.display();
         long start = System.currentTimeMillis();
         while (System.currentTimeMillis() - start < 5_000) {
             try {
@@ -215,11 +263,13 @@ public class CtAPI {
         java.awt.Toolkit.getDefaultToolkit().beep();
         System.exit(exitCode);
     }
+
     private static void displayExceptionAndGoodbye(Exception e) {
         logError(e.getMessage());
         e.printStackTrace();
-        goodbyeError(e.getMessage());
+        goodbyeFatalError(e.getMessage());
     }
+
     private static void log(String s, Ct2IpcMessages.Ct2LogEntry.LogLevel level) {
 
         try {
@@ -231,16 +281,19 @@ public class CtAPI {
             displayExceptionAndGoodbye(e);
         }
     }
+
     private static void logInfo(String s) {
         if (s.length() > 300) {
             s = s.substring(0, 300) + " ..... (truncated)";
         }
         log(s, Ct2IpcMessages.Ct2LogEntry.LogLevel.CT2INFO);
     }
+
     private static void logError(String message) {
         log(message, Ct2IpcMessages.Ct2LogEntry.LogLevel.CT2ERROR);
         System.out.println("Error: " + message);
     }
+
     private static void updateOutput(int i, String value) {
 
         try {

@@ -103,6 +103,7 @@ class HcSaRunnable implements Runnable {
                 }
             }
         }
+
         key.setStecker(bestStb);
         key.score = key.eval(Key.EVAL.TRI, ciphertext, len);
     }
@@ -425,6 +426,9 @@ class HcSaRunnable implements Runnable {
 
         SearchAction action;
 
+        String bestStb = key.stbString();
+        long bestScore = key.eval(eval, ciphertext, len);
+
         long newScore;
         long currScore = key.eval(eval, ciphertext, len);
 
@@ -464,6 +468,10 @@ class HcSaRunnable implements Runnable {
                         if (accept(newScore, currScore, temp)) {
                             currScore = newScore;
                             changed = true;
+                            if (newScore > bestScore) {
+                                bestScore = newScore;
+                                bestStb = key.stbString();
+                            }
                         } else {
                             key.stbSelf(vi, vk);
                         }
@@ -482,6 +490,10 @@ class HcSaRunnable implements Runnable {
                             currScore = newScore;
                             changed = true;
                             action = SearchAction.IandK;
+                            if (newScore > bestScore) {
+                                bestScore = newScore;
+                                bestStb = key.stbString();
+                            }
                         }
                         key.stbSelf(vi, vk);
                         // all self
@@ -492,6 +504,10 @@ class HcSaRunnable implements Runnable {
                             currScore = newScore;
                             changed = true;
                             action = SearchAction.IandSK;
+                            if (newScore > bestScore) {
+                                bestScore = newScore;
+                                bestStb = key.stbString();
+                            }
                         }
                         key.stbSelf(vi, vsk);
                         // all self now
@@ -525,6 +541,10 @@ class HcSaRunnable implements Runnable {
                             currScore = newScore;
                             changed = true;
                             action = SearchAction.IandK;
+                            if (newScore > bestScore) {
+                                bestScore = newScore;
+                                bestStb = key.stbString();
+                            }
                         }
                         key.stbSelf(vk, vi);
                         // all self
@@ -534,6 +554,10 @@ class HcSaRunnable implements Runnable {
                             currScore = newScore;
                             changed = true;
                             action = SearchAction.KandSI;
+                            if (newScore > bestScore) {
+                                bestScore = newScore;
+                                bestStb = key.stbString();
+                            }
                         }
                         key.stbSelf(vk, vsi);
                         // all self
@@ -563,8 +587,12 @@ class HcSaRunnable implements Runnable {
         if (key.eval(eval, ciphertext, len) != currScore) {
             throw new RuntimeException("Best result is not consistent");
         }
+
+        key.setStecker(bestStb);
+
         hillClimbStepComplex(eval, -1, -1);
         key.score = key.eval(eval, ciphertext, len);
+
     }
     private static Random random = new Random();
     private static boolean accept(long newScore, long currLocalScore, double temperature) {

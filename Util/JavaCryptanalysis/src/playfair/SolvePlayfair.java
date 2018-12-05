@@ -38,8 +38,8 @@ public class SolvePlayfair {
                     currentKey.copy(newKey);
                     currentScore = newScore;
 
-                    if (BestResults.shouldPushResult(newScore)) {
-                        BestResults.pushResult(newScore,
+                    if (CtBestList.shouldPushResult(newScore)) {
+                        CtBestList.pushResult(newScore,
                                 newKey.toString(),
                                 newKey.toString(),
                                 Utils.getString(newKey.fullDecryption),

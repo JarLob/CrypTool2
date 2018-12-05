@@ -1,6 +1,6 @@
 package enigma;
 
-import common.BestResults;
+import common.CtBestList;
 import common.CtAPI;
 import common.Runnables;
 
@@ -25,7 +25,7 @@ class HillClimb {
         Key high = new Key(to);
 
         if ((low.lRing != high.lRing || low.mRing != high.mRing || low.rRing != high.rRing) && mode == HcSaRunnable.Mode.SA) {
-            CtAPI.goodbyeError("Range of ring settings not allowed for simulated annealing. %s - %s", from.getRotorSettingsString(), to.getRotorSettingsString());
+            CtAPI.goodbyeFatalError("Range of ring settings not allowed for simulated annealing. %s - %s", from.getRotorSettingsString(), to.getRotorSettingsString());
 
         }
 
@@ -149,7 +149,7 @@ class HillClimb {
                                                             }
                                                             if (globalscore > minScoreToPrint) {
 
-                                                                if (BestResults.shouldPushResult(ckey.score)) {
+                                                                if (CtBestList.shouldPushResult(ckey.score)) {
                                                                     ckey.initPathLookupAll(len);
 
                                                                     String plainStr = ckey.plaintextString(ciphertext, len);
@@ -252,7 +252,7 @@ class HillClimb {
 
                     if (ckey.score > minScoreToPrint) {
 
-                        if (BestResults.shouldPushResult(ckey.score)) {
+                        if (CtBestList.shouldPushResult(ckey.score)) {
                             ckey.initPathLookupAll(len);
 
                             String plainStr = ckey.plaintextString(ciphertext, len);

@@ -1,6 +1,6 @@
 package multiplex;
 
-import common.BestResults;
+import common.CtBestList;
 import common.CtAPI;
 import common.Runnables;
 import common.Utils;
@@ -26,7 +26,7 @@ class SolveM94 {
 
     static void saUnknownOffsets(final int[] cipher, final String cribStr, final int saCycles, final int internalSaCycles, final int threads, final long realMultiplexScore) {
         if (cipher.length > 75) {
-            CtAPI.goodbyeError("With M94 and unknown offsets, search works only for ciphertext with exactly 75 symbols)");
+            CtAPI.goodbyeFatalError("With M94 and unknown offsets, search works only for ciphertext with exactly 75 symbols)");
         }
         final AtomicInteger countOffsetsChecked = new AtomicInteger();
         final Runnables runnables = new Runnables();
@@ -66,7 +66,7 @@ class SolveM94 {
 
         int requiredOffsets = (cipherStr.length() + 24) / 25;
         if (offsets.size() < requiredOffsets) {
-            CtAPI.goodbyeError("Not enough known offsets - need " + requiredOffsets + " only got " + offsets.size());
+            CtAPI.goodbyeFatalError("Not enough known offsets - need " + requiredOffsets + " only got " + offsets.size());
         }
         for (int i = 0; i < offsets.size(); i++) {
             m94.setOffset(i, offsets.get(i));
@@ -84,7 +84,7 @@ class SolveM94 {
 
     static void solveSimulation(String bookFile, int len, boolean knownOffsets, int saCycles, int threads) {
         if (!knownOffsets && len != 75) {
-            CtAPI.goodbyeError("Length must be 75 when 'knownOffsets' is true");
+            CtAPI.goodbyeFatalError("Length must be 75 when 'knownOffsets' is true");
         }
 
         int[] p = new int[len];
@@ -97,7 +97,7 @@ class SolveM94 {
         encryptionKey.encrypt(p, c);
         encryptionKey.setCipher(c);
         long realMultiplexScore = encryptionKey.score();
-        BestResults.setOriginal(encryptionKey.score(), encryptionKey.toString(), encryptionKey.toString(), Utils.getString(encryptionKey.decryption), "Original");
+        CtBestList.setOriginal(encryptionKey.score(), encryptionKey.toString(), encryptionKey.toString(), Utils.getString(encryptionKey.decryption), "Original");
         CtAPI.printf("Simulation with M94\n%s\n%s\n%s\nLength: %,d\nOriginal Score: %,d\nOffsets are %s\n",
                 Utils.getString(p),
                 Utils.getString(c), encryptionKey.toString(),

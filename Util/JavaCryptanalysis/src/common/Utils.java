@@ -87,7 +87,7 @@ public class Utils {
 
             bufferedReader.close();
         } catch (IOException ex) {
-            CtAPI.goodbyeError("Unable to read text file %s - %s", fileName, ex.toString());
+            CtAPI.goodbyeFatalError("Unable to read text file %s - %s", fileName, ex.toString());
         }
 
         String cipherStr = getString(Arrays.copyOf(text, len));
@@ -129,7 +129,7 @@ public class Utils {
 
             bufferedReader.close();
         } catch (IOException ex) {
-            CtAPI.goodbyeError("Unable to read text file %s - %s", filename, ex.toString());
+            CtAPI.goodbyeFatalError("Unable to read text file %s - %s", filename, ex.toString());
         }
        printf("Read segment from file: %s, Position: %d , Length: %d\n", filename, startPost, length);
         printf("%s\n\n", getString(text));
@@ -262,7 +262,7 @@ public class Utils {
         int position = 0;
         int fileLength = (int) (new File(fileName).length());
         if (fileLength == 0) {
-            CtAPI.goodbyeError("Cannot open file " + fileName);
+            CtAPI.goodbyeFatalError("Cannot open file " + fileName);
         }
         if (startPosition < 0) {
             startPosition = randomNextInt(80 * fileLength / 100);
@@ -305,7 +305,7 @@ public class Utils {
             // Always close files.
             bufferedReader.close();
         } catch (IOException ex) {
-            CtAPI.goodbyeError("Unable to read book file %s - %s", fileName, ex.toString());
+            CtAPI.goodbyeFatalError("Unable to read book file %s - %s", fileName, ex.toString());
         }
 
         printf("Generated Random Plaintext - Book: %s, Position: %d , Length: %d\n", fileName, startPosition, text.length());

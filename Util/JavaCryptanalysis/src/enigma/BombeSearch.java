@@ -1,6 +1,6 @@
 package enigma;
 
-import common.BestResults;
+import common.CtBestList;
 import common.CommandLine;
 import common.CtAPI;
 import common.Flag;
@@ -11,7 +11,7 @@ public class BombeSearch {
         byte[] crib = new byte[BombeCrib.MAXCRIBL];
         int maxCribLen = Math.min(BombeCrib.MAXCRIBL, clen);
         if (CRIB.length() > maxCribLen) {
-            CtAPI.goodbyeError("Crib too long (%d letters) - should not be longer than %d letters\n", CRIB.length(), maxCribLen);
+            CtAPI.goodbyeFatalError("Crib too long (%d letters) - should not be longer than %d letters\n", CRIB.length(), maxCribLen);
         }
         int crlen = Utils.getText(CRIB, crib);
 
@@ -352,7 +352,7 @@ public class BombeSearch {
         String desc = String.format("BOMBE [Pos: %3d][%,5dK/%,5dK][%,4dK/sec][%,4d Sec]",
                 bombeMenu.cribStartPos, counterKeys / 1000, totalKeys / 1000, counterKeys / elapsed, elapsed / 1000);
 
-        if (BestResults.shouldPushResult(ckey.score)) {
+        if (CtBestList.shouldPushResult(ckey.score)) {
             ReportResult.reportResult(0, ckey, ckey.score, plains, desc);
 
             CtAPI.printf("MENU STOP NEW BEST - Pos: %d Stop Score: %d (Tri: %d IC: %.5f) - Crib Length: %d, Crib: %s\n",
@@ -372,7 +372,7 @@ public class BombeSearch {
 
         for (int i = 0; i < s.length(); i++) {
             if (Utils.getDigitIndex(s.charAt(i)) == -1) {
-                CtAPI.goodbyeError("Invalid %s (%s) for %s - Expecting number from %d to %d \n", s, CommandLine.getShortDesc(flag), CommandLine.getFlagString(flag), min, max);
+                CtAPI.goodbyeFatalError("Invalid %s (%s) for %s - Expecting number from %d to %d \n", s, CommandLine.getShortDesc(flag), flag, min, max);
             }
         }
 
@@ -381,7 +381,7 @@ public class BombeSearch {
         if ((intValue >= min) && (intValue <= max)) {
             return intValue;
         }
-        CtAPI.goodbyeError("Invalid %s (%s) for %s - Expecting number from %d to %d \n", s, CommandLine.getShortDesc(flag), CommandLine.getFlagString(flag), min, max);
+        CtAPI.goodbyeFatalError("Invalid %s (%s) for %s - Expecting number from %d to %d \n", s, CommandLine.getShortDesc(flag), flag, min, max);
         return -1;
 
     }

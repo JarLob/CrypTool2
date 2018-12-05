@@ -1,7 +1,7 @@
 package enigma;
 
 
-import common.BestResults;
+import common.CtBestList;
 import common.CtAPI;
 
 class TrigramICSearch {
@@ -110,7 +110,7 @@ class TrigramICSearch {
                                                             }
 
 
-                                                            if (BestResults.shouldPushResult(ckey.score)) {
+                                                            if (CtBestList.shouldPushResult(ckey.score)) {
                                                                 ckey.encipherDecipherAll(ciphertext, plaintext, len);
                                                                 String plains = Utils.getString(plaintext, len);
 

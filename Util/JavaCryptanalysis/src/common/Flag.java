@@ -1,28 +1,35 @@
 package common;
 
 public enum Flag {
-    RESOURCE_PATH,
-    CIPHERTEXT,
-    CRIB,
-    SIMULATION_TEXT_LENGTH,
-    THREADS,
-    OFFSET,
-    CYCLES,
-    MODEL,
-    SIMULATION,
-    VERSION,
-    LANGUAGE,
-    SIMULATION_OVERLAPS,
-    INDICATORS_FILE,
-    KEY,
-    MODE,
-    CRIB_POSITION,
-    VERBOSE,
-    MESSAGE_INDICATOR,
-    RIGHT_ROTOR_SAMPLING,
-    MIDDLE_RING_SCOPE,
-    HC_SA_CYCLES,
-    SCENARIO,
-    SCENARIO_PATH,
-
+    RESOURCE_PATH("r"),
+    CIPHERTEXT("i"),
+    CRIB("p"),
+    SIMULATION_TEXT_LENGTH("l"),
+    THREADS("t"),
+    OFFSET("o"),
+    CYCLES("n"),
+    MODEL("m"),
+    SIMULATION("s"),
+    VERSION("y"),
+    LANGUAGE("g"),
+    SIMULATION_OVERLAPS("o"),
+    INDICATORS_FILE("d"),
+    KEY("k"),
+    MODE("o"),
+    CRIB_POSITION("j"),
+    VERBOSE("u"),
+    MESSAGE_INDICATOR("w"),
+    RIGHT_ROTOR_SAMPLING("x"),
+    MIDDLE_RING_SCOPE("y"),
+    HC_SA_CYCLES("h"),
+    SCENARIO("z"),
+    SCENARIO_PATH("f");
+    String string;
+    private Flag(String string) {
+        this.string = string;
+    }
+    @Override
+    public String toString() {
+        return string;
+    }
 }

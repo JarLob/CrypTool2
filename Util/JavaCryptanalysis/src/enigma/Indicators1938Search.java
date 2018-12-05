@@ -26,8 +26,8 @@ public class Indicators1938Search {
         if (INDICATORS_FILE.length() != 0)
             flen = Utils.loadCipherText(INDICATORS_FILE, indicData, false);
         if ((flen < 9) || (flen % 9 != 0)) {
-            CtAPI.goodbyeError("Z. Sheets Search (-%s INDICATORS1938): Failed to load indicators data from file %s (%d characters found).\n",
-                    CommandLine.getFlagString(Flag.MODE), INDICATORS_FILE, flen);
+            CtAPI.goodbyeFatalError("Z. Sheets Search (-%s INDICATORS1938): Failed to load indicators data from file %s (%d characters found).\n",
+                    Flag.MODE, INDICATORS_FILE, flen);
         }
         CtAPI.printf("Zygalski Sheets Search: Read database - File %s Indicators %d \nFirst Indicator: %s\n",
                 INDICATORS_FILE, flen / 9, Utils.getString(indicData, 9));
@@ -36,7 +36,7 @@ public class Indicators1938Search {
 
         if (key == null) {
             CtAPI.print("\nZ. Sheets Search: No match found. \n");
-            CtAPI.goodbyeError("Zygalski Sheets search failed");
+            CtAPI.goodbyeFatalError("Zygalski Sheets search failed");
         }
     }
 

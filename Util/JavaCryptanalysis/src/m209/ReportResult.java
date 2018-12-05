@@ -1,6 +1,6 @@
 package m209;
 
-import common.BestResults;
+import common.CtBestList;
 import common.CtAPI;
 
 public class ReportResult {
@@ -10,7 +10,7 @@ public class ReportResult {
     private static int pushed = 0;
 
     public static void reportResult(int task, int[] roundLayers, int layers, Key key, int currScore, String desc) {
-        if (BestResults.shouldPushResult(currScore)) {
+        if (CtBestList.shouldPushResult(currScore)) {
             String decryption = key.encryptDecrypt(key.cipher, false);
 
             long elapsedMillis = System.currentTimeMillis() - ReportResult.startTimeMillis;
@@ -36,7 +36,7 @@ public class ReportResult {
 
             }
 
-            if (BestResults.pushResult(currScore, key.toString(), key.lugs.getLugsString(), decryption, comment)) {
+            if (CtBestList.pushResult(currScore, key.toString(), key.lugs.getLugsString(), decryption, comment)) {
                 pushed++;
                 if (simulation) {
                     int error = key.getCountIncorrectLugs() * 5 + key.getCountIncorrectPins();
@@ -56,19 +56,19 @@ public class ReportResult {
     }
 
     public static void setOriginalKey(Key simulationKey, EvalType evalType) {
-        BestResults.setOriginal(simulationKey.eval(evalType), simulationKey.toString(), simulationKey.toString(), simulationKey.encryptDecrypt(simulationKey.cipher, false),
+        CtBestList.setOriginal(simulationKey.eval(evalType), simulationKey.toString(), simulationKey.toString(), simulationKey.encryptDecrypt(simulationKey.cipher, false),
                 "                                                        ");
     }
     public static void setDummyOriginalKeyForCrib(String crib) {
-        BestResults.setOriginal(130_000, "", "", crib, "");
+        CtBestList.setOriginal(130_000, "", "", crib, "");
     }
     public static void setThreshold(EvalType evalType) {
         switch (evalType) {
             case CRIB:
-                BestResults.setScoreThreshold(127_500);
+                CtBestList.setScoreThreshold(127_500);
                 break;
             case MONO:
-                BestResults.setScoreThreshold(40_000);
+                CtBestList.setScoreThreshold(40_000);
                 break;
         }
     }

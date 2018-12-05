@@ -2,11 +2,14 @@ package common;
 
 import java.util.ArrayList;
 
-public class BestResults {
+public class CtBestList {
+    /**
+     * Class encapulating a result in best list.
+     */
     static class Result {
         long score;
         String keyString;
-        String keyStringShort;
+        String keyStringShort;   // short version of the key
         String plaintextString;
         String commentString;
         Result(long score, String keyString,String keyStringShort, String plaintextString, String commentString) {
@@ -35,29 +38,72 @@ public class BestResults {
     private static boolean discardSamePlaintexts = false;
     private static boolean throttle = false;
 
-    public static synchronized void setMaxNumberOfResults(int maxNumberOfResults) {
-        BestResults.maxNumberOfResults = maxNumberOfResults;
+    /**
+     * Set best list size.
+     * @param size - max number of elements in best list.
+     */
+    public static synchronized void setSize(int size) {
+        CtBestList.maxNumberOfResults = size;
         clean();
     }
+
+    /**
+     * Set a score threshold, below which result will not be included in best list.
+     * @param scoreThreshold - threshold value
+     */
     public static synchronized void setScoreThreshold(long scoreThreshold) {
-        BestResults.scoreThreshold = scoreThreshold;
+        CtBestList.scoreThreshold = scoreThreshold;
         clean();
     }
+
+    /**
+     * If set to yes, ignore results with plaintext already seen (possibly with a different key).
+     * @param discardSamePlaintexts
+     */
     public static synchronized void setDiscardSamePlaintexts(boolean discardSamePlaintexts) {
-        BestResults.discardSamePlaintexts = discardSamePlaintexts;
+        CtBestList.discardSamePlaintexts = discardSamePlaintexts;
         clean();
     }
+
+    /**
+     * If set to true, best list will be send to Cryptool no more than once every second.
+     * This is useful in case there are many new results, in a short period of time, that would be one of the top best.
+     * This can happen very often in hillclimbing processes which slowly progress.
+     * @param throttle - if yes, throttle updates to Cryptool.
+     */
     public static synchronized void setThrottle(boolean throttle) {
-        BestResults.throttle = throttle;
+        CtBestList.throttle = throttle;
         clean();
     }
+
+    /**
+     * If known, keep the original key and/or plaintext, as well as the score value expected when decrypting with the
+     * correct (original) key. If a new result has exactly this score value, the attack with stop.
+     * @param score - expected score with the correct key.
+     * @param keyString - the correct key.
+     * @param keyStringShort - the correct key, short format.
+     * @param plaintextString - the expected/original plaintext.
+     * @param commentString - a comment
+     */
+    public static synchronized void setOriginal(long score, String keyString, String keyStringShort,String plaintextString, String commentString) {
+        originalResult = new Result(score, keyString, keyStringShort, plaintextString, commentString);
+    }
+
+    /**
+     * Resets the best list.
+     */
     public static synchronized void clear() {
         bestResults.clear();
         CtAPI.displayBestList("-");
     }
-    public static synchronized void setOriginal(long score, String keyString, String keyStringShort,String plaintextString, String commentString) {
-        originalResult = new Result(score, keyString, keyStringShort, plaintextString, commentString);
-    }
+
+    /**
+     * Check whether a new result has a score that would allow it to be added to the best list.
+     * Useful when some processing is required before pushing the result (e.g. formatting the key string). After formatting, then
+     * pushResult should be called to push the result.
+     * @param score - score of a new result.
+     * @return - score is higher than the lower score in the best list.
+     */
     public static synchronized boolean shouldPushResult(long score) {
 
         if (throttle) {
@@ -74,6 +120,17 @@ public class BestResults {
         int size = bestResults.size();
         return size < maxNumberOfResults || score > bestResults.get(size - 1).score;
     }
+
+    /**
+     * Push a new result to the task list, if its score is highes that the lowest score in the best list.
+     * Discard duplicate keys (and if the relevant option is set, keyes resulting in an already seen plaintext).
+     * @param score
+     * @param keyString
+     * @param keyStringShort
+     * @param plaintextString
+     * @param commentString
+     * @return
+     */
     public static synchronized boolean pushResult(long score, String keyString, String keyStringShort, String plaintextString, String commentString) {
         if (discardSamePlaintexts) {
             for (Result be : bestResults) {
@@ -115,7 +172,9 @@ public class BestResults {
         }
         return true;
     }
-    public static synchronized void display() {
+
+    // Package private.
+    static synchronized void display() {
         StringBuilder s = new StringBuilder();
         sort();
         for (int i = 0; i < bestResults.size(); i++) {
@@ -124,6 +183,7 @@ public class BestResults {
         CtAPI.displayBestList(s.toString());
     }
 
+    // Private.
     private static synchronized void clean() {
         sort();
         while (bestResults.size() > maxNumberOfResults) {

@@ -21,11 +21,11 @@ public class Main {
 
         createCommandLineArguments();
         //Argument.printUsage();
-        BestResults.setDiscardSamePlaintexts(false);
-        BestResults.setThrottle(false);
-        BestResults.setMaxNumberOfResults(10);
+        CtBestList.setDiscardSamePlaintexts(false);
+        CtBestList.setThrottle(false);
+        CtBestList.setSize(10);
 
-        CtAPI.open("Enigma attacks", "1.0");
+        CtAPI.openAndReadInputValues("Enigma attacks", "1.0");
 
         CommandLine.parseAndPrintCommandLineArgs(args);
 
@@ -151,14 +151,14 @@ public class Main {
             }
 
             if (indicatorError) {
-                CtAPI.goodbyeError("Invalid Indicator (-%s): Either XXX or XXX:YYY for Model H/M3, or XXXX:YYYY for Model M4\n", CommandLine.getFlagString(Flag.MESSAGE_INDICATOR));
+                CtAPI.goodbyeFatalError("Invalid Indicator (-%s): Either XXX or XXX:YYY for Model H/M3, or XXXX:YYYY for Model M4\n", Flag.MESSAGE_INDICATOR);
             } else if (indicatorMessageKeyS.length() == 0) { // xxx format
                 if (range) {
-                    CtAPI.goodbyeError("Invalid Indicator: When range of keys selected, then only -%s XXX:YYY or XXXX:YYYY (for M4) is allowed \n", CommandLine.getFlagString(Flag.MESSAGE_INDICATOR));
+                    CtAPI.goodbyeFatalError("Invalid Indicator: When range of keys selected, then only -%s XXX:YYY or XXXX:YYYY (for M4) is allowed \n", Flag.MESSAGE_INDICATOR);
                 }
             } else {// xxx:yyy format
                 if (!range) {
-                    CtAPI.goodbyeError("Invalid Indicator (-w): If single key selected, then only -%s XXX (or XXXX for M4) is allowed \n", CommandLine.getFlagString(Flag.MESSAGE_INDICATOR));
+                    CtAPI.goodbyeFatalError("Invalid Indicator (-w): If single key selected, then only -%s XXX (or XXXX for M4) is allowed \n", Flag.MESSAGE_INDICATOR);
                 }
             }
         }
@@ -172,8 +172,10 @@ public class Main {
         Key highKey = new Key();
         Key key = new Key();
 
-        String bigramFile = "enigma_logbigrams.txt";
         String trigramFile = "enigma_logtrigrams.txt";
+        String bigramFile = "enigma_logbigrams.txt";
+        //String trigramFile = "3WH.txt";
+        //String bigramFile = "2WH.txt";
         if (LANGUAGE == Language.ENGLISH) {
             bigramFile = "english_logbigrams.txt";
             trigramFile = "english_logtrigrams.txt";
@@ -182,11 +184,11 @@ public class Main {
         trigramFile = RESOURCE_PATH +"\\" +trigramFile;
         res = Stats.loadTridict(trigramFile);
         if (res != 1) {
-            CtAPI.goodbyeError("Load (log) trigrams file %s failed\n", trigramFile);
+            CtAPI.goodbyeFatalError("Load (log) trigrams file %s failed\n", trigramFile);
         }
         res = Stats.loadBidict(bigramFile);
         if (res != 1) {
-            CtAPI.goodbyeError("Load (log) bigrams file %s failed\n", bigramFile);
+            CtAPI.goodbyeFatalError("Load (log) bigrams file %s failed\n", bigramFile);
         }
 
         if (!CommandLine.isSet(Flag.SCENARIO)) {
@@ -197,22 +199,22 @@ public class Main {
         if (!range) {
             res = key.setKey(keyS, MODEL, false);
             if (res != 1) {
-                CtAPI.goodbyeError("Invalid key: %s\n", keyS);
+                CtAPI.goodbyeFatalError("Invalid key: %s\n", keyS);
             }
 
             res = key.setStecker(steckerS);
             if (res != 1) {
-                CtAPI.goodbyeError("invalid stecker board settings: %s - Should include pairs of letters with no repetitions, or may be omitted\n", steckerS);
+                CtAPI.goodbyeFatalError("invalid stecker board settings: %s - Should include pairs of letters with no repetitions, or may be omitted\n", steckerS);
             }
 
             if (indicatorS.length() != 0) {
                 Key dumpKey = new Key(key);
                 res = dumpKey.setMesg(indicatorS);
                 if (res == 0) {
-                    CtAPI.goodbyeError("Invalid message message_indicator: %s \n", indicatorS);
+                    CtAPI.goodbyeFatalError("Invalid message message_indicator: %s \n", indicatorS);
                 }
                 if (steckerS.length() == 0) {
-                    CtAPI.goodbyeError("Stecker board mandatory when -%s is specified\n", CommandLine.getFlagString(Flag.MESSAGE_INDICATOR));
+                    CtAPI.goodbyeFatalError("Stecker board mandatory when -%s is specified\n", Flag.MESSAGE_INDICATOR);
                 }
             }
 
@@ -246,7 +248,7 @@ public class Main {
 
             res = Key.setRange(lowKey, highKey, rangeLowS, rangeHighS, MODEL);
             if (res != 1) {
-                CtAPI.goodbyeError("Invalid key range:  %s-%s  - Invalid key format, or first has higher value than last \n", rangeLowS, rangeHighS);
+                CtAPI.goodbyeFatalError("Invalid key range:  %s-%s  - Invalid key format, or first has higher value than last \n", rangeLowS, rangeHighS);
             }
 
             if ((lowKey.lRing != highKey.lRing) && (indicatorS.length() == 0) && (MODE == Mode.HILLCLIMBING || MODE == Mode.ANNEALING || MODE == Mode.ANNEALING2 || MODE == Mode.ANNEALING5))
@@ -255,7 +257,7 @@ public class Main {
             if (steckerS.length() != 0) {
                 res = lowKey.setStecker(steckerS) * highKey.setStecker(steckerS);
                 if (res != 1) {
-                    CtAPI.goodbyeError("Invalid steckers: %s - Should include pairs of letters with no repetitions, or be omitted\n", steckerS);
+                    CtAPI.goodbyeFatalError("Invalid steckers: %s - Should include pairs of letters with no repetitions, or be omitted\n", steckerS);
                 }
             }
 
@@ -264,24 +266,24 @@ public class Main {
 
 
                 if ((indicatorS.length() == 0) || (indicatorMessageKeyS.length() == 0)) {
-                    CtAPI.goodbyeError("Invalid message_indicator (-%s) - Only XXX:YYY (or XXXX:YYYY for M4), which must include the Message Key for encrypting the Indicator, is allowed for this mode %s\n",
-                            CommandLine.getFlagString(Flag.MESSAGE_INDICATOR), MODE);
+                    CtAPI.goodbyeFatalError("Invalid message_indicator (-%s) - Only XXX:YYY (or XXXX:YYYY for M4), which must include the Message Key for encrypting the Indicator, is allowed for this mode %s\n",
+                            Flag.MESSAGE_INDICATOR, MODE);
                 }
                 Key tempKey = new Key(lowKey);
                 res = tempKey.setMesg(indicatorS);
                 if (res == 0) {
-                    CtAPI.goodbyeError("Invalid message indicator (-%s): %s \n", CommandLine.getFlagString(Flag.MESSAGE_INDICATOR), indicatorS);
+                    CtAPI.goodbyeFatalError("Invalid message indicator (-%s): %s \n", Flag.MESSAGE_INDICATOR, indicatorS);
                 }
                 res = tempKey.setMesg(indicatorMessageKeyS);
                 if (res == 0) {
-                    CtAPI.goodbyeError("Invalid message key for message_indicator (-%s): %s \n", CommandLine.getFlagString(Flag.MESSAGE_INDICATOR), indicatorMessageKeyS);
+                    CtAPI.goodbyeFatalError("Invalid message key for message_indicator (-%s): %s \n", Flag.MESSAGE_INDICATOR, indicatorMessageKeyS);
                 }
                 if (steckerS.length() == 0) {
-                    CtAPI.goodbyeError("Stecker board settings mandatory for -%s  \n", CommandLine.getFlagString(Flag.MESSAGE_INDICATOR));
+                    CtAPI.goodbyeFatalError("Stecker board settings mandatory for -%s  \n", Flag.MESSAGE_INDICATOR);
                 }
                 if (HC_SA_CYCLES > 0) {
-                    CtAPI.goodbyeError("Invalid settings - When specifying -%s , -%s 0 (no hillclimbing/simulated annealing on search results) must also be selected. \n",
-                            CommandLine.getFlagString(Flag.MESSAGE_INDICATOR), CommandLine.getFlagString(Flag.HC_SA_CYCLES));
+                    CtAPI.goodbyeFatalError("Invalid settings - When specifying -%s , -%s 0 (no hillclimbing/simulated annealing on search results) must also be selected. \n",
+                            Flag.MESSAGE_INDICATOR, Flag.HC_SA_CYCLES);
                 }
             }
 
@@ -290,19 +292,19 @@ public class Main {
                 boolean fullRangeMRing = (lowKey.mRing == Utils.getIndex('A')) &&
                         (highKey.mRing == Utils.getIndex('Z'));
                 if (!sameLowHighMRing && !fullRangeMRing) {
-                    CtAPI.goodbyeError("Range of middle ring (%s-%s) imcompatible with -%s selection: Only -%s 0 (or not specifying -%s and leaving the default 0) is allowed \n" +
+                    CtAPI.goodbyeFatalError("Range of middle ring (%s-%s) imcompatible with -%s selection: Only -%s 0 (or not specifying -%s and leaving the default 0) is allowed \n" +
                                     " when a specifying a partial range. Either use A to Z, or same value for low Middle Ring and high Middle Ring, or use -%s 0.\n",
                             Utils.getChar(lowKey.mRing),
                             Utils.getChar(highKey.mRing),
-                            CommandLine.getFlagString(Flag.MIDDLE_RING_SCOPE),
-                            CommandLine.getFlagString(Flag.MIDDLE_RING_SCOPE),
-                            CommandLine.getFlagString(Flag.MIDDLE_RING_SCOPE),
-                            CommandLine.getFlagString(Flag.MIDDLE_RING_SCOPE)
+                            Flag.MIDDLE_RING_SCOPE,
+                            Flag.MIDDLE_RING_SCOPE,
+                            Flag.MIDDLE_RING_SCOPE,
+                            Flag.MIDDLE_RING_SCOPE
                     );
                 }
                 if (clen > 400) {
-                    CtAPI.goodbyeError("Message too long for -%s selection - Length is %d, -%s allowed only for messages shorter than 400\n",
-                            CommandLine.getFlagString(Flag.MIDDLE_RING_SCOPE), clen, CommandLine.getFlagString(Flag.MIDDLE_RING_SCOPE));
+                    CtAPI.goodbyeFatalError("Message too long for -%s selection - Length is %d, -%s allowed only for messages shorter than 400\n",
+                            Flag.MIDDLE_RING_SCOPE, clen, Flag.MIDDLE_RING_SCOPE);
                 }
             }
 
@@ -312,15 +314,15 @@ public class Main {
                 boolean sameLowHighRRing = (lowKey.rRing == highKey.rRing);
                 boolean fullRangeRRing = (lowKey.rRing == Utils.getIndex('A')) && (highKey.rRing == Utils.getIndex('Z'));
                 if (!sameLowHighRRing && !fullRangeRRing) {
-                    CtAPI.goodbyeError("Right ring range (%s to %s) imcompatible with -%s %d: Only -%s 1 (or not specifying -%s and leaving the default 1) is allowed \n" +
+                    CtAPI.goodbyeFatalError("Right ring range (%s to %s) imcompatible with -%s %d: Only -%s 1 (or not specifying -%s and leaving the default 1) is allowed \n" +
                                     " when a specifying a partial range. Either use A to Z, or same value for low Middle Ring and high Middle Ring, or use -%s 1.\n",
                             Utils.getChar(lowKey.rRing),
                             Utils.getChar(highKey.rRing),
-                            CommandLine.getFlagString(Flag.RIGHT_ROTOR_SAMPLING),
+                            Flag.RIGHT_ROTOR_SAMPLING,
                             RIGHT_ROTOR_SAMPLING,
-                            CommandLine.getFlagString(Flag.MIDDLE_RING_SCOPE),
-                            CommandLine.getFlagString(Flag.RIGHT_ROTOR_SAMPLING),
-                            CommandLine.getFlagString(Flag.MIDDLE_RING_SCOPE)
+                            Flag.MIDDLE_RING_SCOPE,
+                            Flag.RIGHT_ROTOR_SAMPLING,
+                            Flag.MIDDLE_RING_SCOPE
                     );
                 }
 
@@ -338,13 +340,17 @@ public class Main {
         } else if (MODE == Mode.TRIGRAMS) {
             TrigramICSearch.searchTrigramIC(lowKey, highKey, false, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, false, HC_SA_CYCLES, 0, THREADS, ciphertext, clen, indicatorS, indicatorMessageKeyS);
         } else if (MODE == Mode.HILLCLIMBING) {
-            HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HC_SA_CYCLES, THREADS, 0, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.HC, 1);
+            HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HC_SA_CYCLES, THREADS, 0,
+                    MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.HC, 1);
         } else if (MODE == Mode.ANNEALING) {
-            HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HC_SA_CYCLES, THREADS, 0, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.SA, 1);
+            HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HC_SA_CYCLES, THREADS, 0,
+                    MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.SA, 1);
         } else if (MODE == Mode.ANNEALING2) {
-            HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HC_SA_CYCLES, THREADS, 0, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.SA, 2);
+            HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HC_SA_CYCLES, THREADS, 0,
+                    MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.SA, 2);
         } else if (MODE == Mode.ANNEALING5) {
-            HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HC_SA_CYCLES, THREADS, 0, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.SA, 5);
+            HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HC_SA_CYCLES, THREADS, 0,
+                    MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.SA, 5);
         } else if (MODE == Mode.SCENARIO) {
             new RandomChallenges(SCENARIO_PATH, RESOURCE_PATH + "\\faust.txt", lowKey, highKey, SCENARIO);
         } else if (MODE == Mode.INDICATORS) { // cycles
@@ -432,34 +438,22 @@ public class Main {
     }
 
     private static void createCommandLineArguments() {
-
-        final String KEY_FLAG_STRING = "k";
-        final String SCENARIO_FLAG_STRING = "z";
-        final String SCENARIO_PATH_FLAG_STRING = "f";
-        final String CRIB_FLAG_STRING = "p";
-        final String CRIB_POSITION_FLAG_STRING = "j";
-        final String VERBOSE_FLAG_STRING = "u";
-        final String MESSAGE_INDICATOR_FLAG_STRING = "w";
-        final String RIGHT_ROTOR_SAMPLING_FLAG_STRING = "x";
-        final String MIDDLE_RING_SCOPE_FLAG_STRING = "y";
-        final String HILLCLIMBING_CYCLES_FLAG_STRING = "h";
-
+        
         CommandLine.add(new CommandLine.Argument(
                 Flag.KEY,
-                KEY_FLAG_STRING,
                 "Key range or key",
-                "Range of keys, or specifi key. Examples: range of M3 keys B:532:AAC:AAA-B:532:AAC:ZZZ,\n" +
+                "Range of keys, or specific key. Examples: range of M3 keys B:532:AAC:AAA-B:532:AAC:ZZZ,\n" +
                         "\t\tsingle M4 key B:B532:AAAC:AJKH, single H key with stecker B:532:AAC:JKH|ACFEHJKOLZ, \n " +
                         "\t\tkey range with stecker B:532:AAC:AAA-B:532:AAC:ZZZ|ACFEHJKOLZ. When a range is specified, \n" +
                         "\t\tthe program will sweep for each field in the key (right to left), from the value specified on the left side of the range \n" +
                         "\t\tuntil it reaches the upper value specified in the right side of the range.\n" +
                         "\t\tFor example, to sweep all ring settings from AAA to AZZ (Model H): \n" +
-                        "\t\t-" + KEY_FLAG_STRING + " C:321:AAA:AAA-C:321:AZZ:AAA\n" +
-                        "\t\tOr, to test all wheel combinations -" + KEY_FLAG_STRING + " A:111:AAA:AAA-C:555:AZZ:ZZZ\n" +
-                        "\t\tOr, to sweep only values for the middle message settings: -" + KEY_FLAG_STRING + " C:321:ABC:HAK-C:321:ABC:HZK\n" +
-                        "\t\tOr, to sweep only values for the middle and right wheels (other settings known): -" + KEY_FLAG_STRING + " C:521:ABC:DEF-C:521:ABC:DEF\n" +
-                        "\t\tNote that in a range, wheel numbers can be repeated (e.g. -" + KEY_FLAG_STRING + " B:B111:AAAA:AAAA-B:B555:AAAA:ZZZZ)\n" +
-                        "\t\twhile in a single key this is not allowed (-" + KEY_FLAG_STRING + " B:522:AAC:JKH is invalid).\n" +
+                        "\t\t-" + Flag.KEY + " C:321:AAA:AAA-C:321:AZZ:AAA\n" +
+                        "\t\tOr, to test all wheel combinations -" + Flag.KEY + " A:111:AAA:AAA-C:555:AZZ:ZZZ\n" +
+                        "\t\tOr, to sweep only values for the middle message settings: -" + Flag.KEY + " C:321:ABC:HAK-C:321:ABC:HZK\n" +
+                        "\t\tOr, to sweep only values for the middle and right wheels (other settings known): -" + Flag.KEY + " C:521:ABC:DEF-C:521:ABC:DEF\n" +
+                        "\t\tNote that in a range, wheel numbers can be repeated (e.g. -" + Flag.KEY + " B:B111:AAAA:AAAA-B:B555:AAAA:ZZZZ)\n" +
+                        "\t\twhile in a single key this is not allowed (-" + Flag.KEY + " B:522:AAC:JKH is invalid).\n" +
                         "\t\tKey format for Model H: u:www:rrr:mmm\n" +
                         "\t\t    where u is the reflector (A, B, or C), www are the 3 wheels from left to right (1 to 5, e.g. 321)  \n" +
                         "\t\t    rrr are the ring settings (e.g. AZC) and mmm are the message settings \n" +
@@ -471,14 +465,13 @@ public class Main {
                         "\t\t    www are the wheels from left to right (1 to 8, e.g. 821)  \n" +
                         "\t\t    rrrr are the ring settings (e.g. AAZC) and mmmm are the message settings \n" +
                         "\t\tNote: For models H and M3, it is also possible to specify rings settings with numbers 01 to 26 (instead of A to Z).    \n" +
-                        "\t\t    for example, -" + KEY_FLAG_STRING + " b:413:021221:abc is equivalent to -" + KEY_FLAG_STRING + " b:413:BLU:abc.   \n" +
+                        "\t\t    for example, -" + Flag.KEY + " b:413:021221:abc is equivalent to -" + Flag.KEY + " b:413:BLU:abc.   \n" +
                         " ",
                 true,
                 ""));
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.MODEL,
-                "m",
                 "Enigma model",
                 "Enigma Model. H (Army Model), M3 (Navy 3 rotors) or M4 (Navy 4 rotors).",
                 false,
@@ -487,21 +480,20 @@ public class Main {
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.MODE,
-                "o",
                 "Search mode",
                 "Search mode (for the case these is no crib). \n" +
                         "\t\t\tHILLCLIMBING for hillclimbing search for steckers at each possible rotor setting - about 2-3,000 keys/sec. Effective with ciphertext with 125 or more letters\n" +
                         "\t\t\tANNEALING for simulated annealing search - much slower than HILLCLIMBING (about 80 keys/sec), effective with short ciphertexts between 75 and 150 letters.\n" +
                         "\t\t\tANNEALING2 for slower simulated annealing (about 40 keys/sec), use for short ciphertexts between 50 to 100 letters.\n" +
                         "\t\t\tANNEALING5 for very slow simulated annealing (about 10 keys/sec), use for very ciphertexts between 30 to 75 letters.\n" +
-                        "\t\t\tTRIGRAMS look for rotor settings with best trigram score. The steckers must be specified in -" + KEY_FLAG_STRING + ",\n" +
-                        "\t\t\t   e.g. -" + KEY_FLAG_STRING + " B:132:AAC:AAA-B:132:AAC:ZZZ|ACFEHJKOLZ.\n" +
+                        "\t\t\tTRIGRAMS look for rotor settings with best trigram score. The steckers must be specified in -" + Flag.KEY + ",\n" +
+                        "\t\t\t   e.g. -" + Flag.KEY + " B:132:AAC:AAA-B:132:AAC:ZZZ|ACFEHJKOLZ.\n" +
                         "\t\t\tIC look for rotor settings with best Index of Coincidence. For cryptograms less than 500 letters, \n" +
-                        "\t\t\t   the steckers must be specified in -" + KEY_FLAG_STRING + ", e.g. -" + KEY_FLAG_STRING + " B:132:AAC:AAA-B:132:AAC:ZZZ|ACFEHJKOLZ.\n" +
+                        "\t\t\t   the steckers must be specified in -" + Flag.KEY + ", e.g. -" + Flag.KEY + " B:132:AAC:AAA-B:132:AAC:ZZZ|ACFEHJKOLZ.\n" +
                         "\t\t\tBOMBE for crib/known-plaintext attach (extension of the Turing Bombe). \n" +
                         "\t\t\tINDICATORS for an attack on 1930-1938 double indicators (extension of Rejewski's method).\n" +
                         "\t\t\tINDICATORS1938 for an attack on 1938-1940 double indicators (extension of Zygalski's method).\n" +
-                        "\t\t\tSCENARIO to create a simulated ciphertext/plaintext/indicators scenario (see -" + SCENARIO_FLAG_STRING + "and -" +  SCENARIO_PATH_FLAG_STRING +" options).\n" +
+                        "\t\t\tSCENARIO to create a simulated ciphertext/plaintext/indicators scenario (see -" + Flag.SCENARIO + "and -" +  Flag.SCENARIO_PATH +" options).\n" +
                         "\t\t\tDECRYPT for simple decryption.\n",
                 false,
                 "DECRYPT",
@@ -509,7 +501,6 @@ public class Main {
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.CIPHERTEXT,
-                "i",
                 "Ciphertext or ciphertext file",
                 "Ciphertext string, or full path for the file with the cipher, ending with .txt.",
                 false,
@@ -517,32 +508,29 @@ public class Main {
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.CRIB,
-                CRIB_FLAG_STRING,
                 "Crib (known plaintext)",
                 "Known plaintext (crib) for attack using extended Turing Bombe.\n" +
-                        "\t\tThe position of the crib may be specified with -" + CRIB_POSITION_FLAG_STRING + ". \n" +
+                        "\t\tThe position of the crib may be specified with -" + Flag.CRIB_POSITION + ". \n" +
                         "\t\tTo exclude one or more of the letters from menus, replace each unknown crib letter with a ? symbol\n" +
-                        "\t\tFor example -" + CRIB_FLAG_STRING + " eins???zwo specifies a crib of 10 letters but no menu links will be created for the 3 letters marked as ?.\n" +
-                        "\t\tThe details of the menus can be printed using-" + VERBOSE_FLAG_STRING + " (only if a single key is given with -" + KEY_FLAG_STRING + ", and not a range).",
+                        "\t\tFor example -" + Flag.CRIB + " eins???zwo specifies a crib of 10 letters but no menu links will be created for the 3 letters marked as ?.\n" +
+                        "\t\tThe details of the menus can be printed using-" + Flag.VERBOSE + " (only if a single key is given with -" + Flag.KEY + ", and not a range).",
                 false,
                 ""));
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.CRIB_POSITION,
-                CRIB_POSITION_FLAG_STRING,
                 "Crib start position",
                 "Starting position of crib, or range of possible starting positions. 0 means first letter. Examples: \n" +
-                        "\t\t\t-" + CRIB_POSITION_FLAG_STRING + " 0 if crib starts at first letter,\n" +
-                        "\t\t\t-" + CRIB_POSITION_FLAG_STRING + " 10 if crib starts at the 11th letter, \n+" +
-                        "\t\t\t-" + CRIB_POSITION_FLAG_STRING + " 0-9 if crib may start at any of the first 10 positions,\n" +
-                        "\t\t\t-" + CRIB_POSITION_FLAG_STRING + " * if crib may start at any position.\n" +
+                        "\t\t\t-" + Flag.CRIB_POSITION + " 0 if crib starts at first letter,\n" +
+                        "\t\t\t-" + Flag.CRIB_POSITION + " 10 if crib starts at the 11th letter, \n+" +
+                        "\t\t\t-" + Flag.CRIB_POSITION + " 0-9 if crib may start at any of the first 10 positions,\n" +
+                        "\t\t\t-" + Flag.CRIB_POSITION + " * if crib may start at any position.\n" +
                         "\t\tPosition(s) generating a menu conflict (letter encrypted to itself) are discarded. \n",
                 false,
                 "0"));
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.INDICATORS_FILE,
-                "d",
                 "Full file path for indicators file.",
                 "File with set of indicators. The file should contain either groups of 6 letters (INDICATORS mode), or groups of 9 letters (INIDCATORS1938 mode). \n" +
                         "\t\tIf groups of encrypted double indicators with 6 letters are given, searches key according to the Cycle Characteristic method developed by the Rejewski before WWII.\n" +
@@ -560,12 +548,11 @@ public class Main {
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.MESSAGE_INDICATOR,
-                MESSAGE_INDICATOR_FLAG_STRING,
                 "Message indicator options",
                 "Indicator sent with the ciphertext. Has two distinct purposes and forms: \n" +
-                        "\t\t-w {3-letter encrypted indicator} e.g.-" + MESSAGE_INDICATOR_FLAG_STRING + " STG.  This must be used together with a single key in -" + KEY_FLAG_STRING + " in which the steckers were specified (e.g. -" + KEY_FLAG_STRING + " B:532:AAC:JKH:ACFEHJKOLZ). \n" +
+                        "\t\t-w {3-letter encrypted indicator} e.g.-" + Flag.MESSAGE_INDICATOR + " STG.  This must be used together with a single key in -" + Flag.KEY + " in which the steckers were specified (e.g. -" + Flag.KEY + " B:532:AAC:JKH:ACFEHJKOLZ). \n" +
                         "\t\t    First, this indicator is decrypted using the given key (daily key), then the decrypted indicator is used as the message key to decrypt the full message. \n" +
-                        "\t\t-w {3-letter message key}:{3-letter encrypted indicator} e.g.-" + MESSAGE_INDICATOR_FLAG_STRING + " OWL:STG. In this form, this is used as an additional filter when searching for the best key.\n" +
+                        "\t\t-w {3-letter message key}:{3-letter encrypted indicator} e.g.-" + Flag.MESSAGE_INDICATOR + " OWL:STG. In this form, this is used as an additional filter when searching for the best key.\n" +
                         "\t\t   Only messages keys which are a result of decrypting the encrypted indicator with the given message key are considered for the search.\n" +
                         "\t\t   Stecker board settings must be known and specified (e.g. B:532:AAA:AAA-B:532:AAZ:ZZZ|ACFEHJKOLZ). Not compatible with HILLCLIMBING/ANNEALING modes\n",
 
@@ -574,7 +561,6 @@ public class Main {
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.RESOURCE_PATH,
-                "r",
                 "Resource directory",
                 "Full path of directory for resources (e.g. stats files).",
                 false,
@@ -582,7 +568,6 @@ public class Main {
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.THREADS,
-                "t",
                 "Number of processing threads",
                 "Number of threads, for multithreading. 1 for no multithreading.",
                 false,
@@ -590,7 +575,6 @@ public class Main {
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.HC_SA_CYCLES,
-                HILLCLIMBING_CYCLES_FLAG_STRING,
                 "Number of hillclimbing/simulated annealing cycles",
                 "Number of hillclimbing/simulated annealing cycles. 0 for no cycles.",
                 false,
@@ -598,7 +582,6 @@ public class Main {
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.LANGUAGE,
-                "g",
                 "Language",
                 "Language used for statistics and for simulation random text.",
                 false,
@@ -607,49 +590,45 @@ public class Main {
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.VERBOSE,
-                VERBOSE_FLAG_STRING,
                 "Verbose",
                 "Show details of crib attack."));
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.RIGHT_ROTOR_SAMPLING,
-                RIGHT_ROTOR_SAMPLING_FLAG_STRING,
                 "Left rotor sampling interval.",
-                "Check only a sample of left rotor positions.-" + RIGHT_ROTOR_SAMPLING_FLAG_STRING + " {right rotor interval value} {default - 1 - no sampling, check all positions in range}.\n" +
+                "Check only a sample of left rotor positions.-" + Flag.RIGHT_ROTOR_SAMPLING + " {right rotor interval value} {default - 1 - no sampling, check all positions in range}.\n" +
                         "\t\tIf the interval > 1, test only a sample of right rotor positions in search.\n" +
-                        "\t\tFor example -" + RIGHT_ROTOR_SAMPLING_FLAG_STRING + " 3 means that only one in three right rotor positions will be tested.  \n" +
+                        "\t\tFor example -" + Flag.RIGHT_ROTOR_SAMPLING + " 3 means that only one in three right rotor positions will be tested.  \n" +
                         "\t\tDue to redundant states in the Enigma encryption process, this is likely to still produce a partial or full decryption. \n" +
                         "\t\tShould be used with caution together with mode BOMBE (Bombe search for menu stops) as this may cause stops to be missed. \n",
                 false,
                 1, 5, 1));
         CommandLine.add(new CommandLine.Argument(
                 Flag.MIDDLE_RING_SCOPE,
-                MIDDLE_RING_SCOPE_FLAG_STRING,
                 "Optimize middle rotor moves",
-                "Optimize middle rotor moves.-" + MIDDLE_RING_SCOPE_FLAG_STRING + " {option} {default - 0 - no optimization}.\n" +
+                "Optimize middle rotor moves.-" + Flag.MIDDLE_RING_SCOPE + " {option} {default - 0 - no optimization}.\n" +
                         "\t\tReduce the number of middle rotor settings to be tested. \n" +
-                        "\t\t-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 0 - No reduction, all middle rotor settings specified in the range will be tested.\n" +
-                        "\t\t-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 1 - Test all middle rotor settings which generate a stepping of the left rotor, plus one settings which does NOT. \n" +
+                        "\t\t-" + Flag.MIDDLE_RING_SCOPE + " 0 - No reduction, all middle rotor settings specified in the range will be tested.\n" +
+                        "\t\t-" + Flag.MIDDLE_RING_SCOPE + " 1 - Test all middle rotor settings which generate a stepping of the left rotor, plus one settings which does NOT. \n" +
                         "\t\t       Reliable, no valid solutions will be missed, and reduces scope from 26 to {message length}/26+1 \n" +
-                        "\t\t-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 2 - Test all middle rotor settings which generate a stepping of the left rotor affecting the first 1/5 or last 1/5 of the message, plus one more \n" +
+                        "\t\t-" + Flag.MIDDLE_RING_SCOPE + " 2 - Test all middle rotor settings which generate a stepping of the left rotor affecting the first 1/5 or last 1/5 of the message, plus one more \n" +
                         "\t\t       setting which is not generating a stepping. This is a good compromise between speed and accuracy. Reduces scope from 26 to {message length}*0.40/26+1 \n" +
-                        "\t\t-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 3 - Test one middle rotor setting which does NOT generate a stepping of the left rotor. Fastest and most agressive option since only one middle rotor setting\n" +
+                        "\t\t-" + Flag.MIDDLE_RING_SCOPE + " 3 - Test one middle rotor setting which does NOT generate a stepping of the left rotor. Fastest and most agressive option since only one middle rotor setting\n" +
                         "\t\t       will be tested, but part of the message may be garbled if there was such a stepping originally. Good for short messages since probablity \n" +
                         "\t\t       for left rotor stepping is {message length}/676. Can save a lot of search time if successful. \n" +
-                        "\t\t-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 4 - Test only all middle rotor settings which generate a stepping of the left rotor. \n" +
+                        "\t\t-" + Flag.MIDDLE_RING_SCOPE + " 4 - Test only all middle rotor settings which generate a stepping of the left rotor. \n" +
                         "\t\t       Usually not needed except for testing purposes. Reduces scope from 26 to {message length}/26 \n" +
-                        "\t\t-" + MIDDLE_RING_SCOPE_FLAG_STRING + " 5 - Test all middle rotor settings which do NOT generate a stepping of the left rotor. \n" +
+                        "\t\t-" + Flag.MIDDLE_RING_SCOPE + " 5 - Test all middle rotor settings which do NOT generate a stepping of the left rotor. \n" +
                         "\t\tNote: The key range should specify the full range (A to Z) for the middle rotor, for any option other then 0. \n",
                 false,
                 0, 5, 0));
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.SCENARIO,
-                SCENARIO_FLAG_STRING,
                 "Generate random scenario",
                 "Generate simulated ciphertext and indicators.\n" +
-                        "\t\tA range of keys must be selected (-" + KEY_FLAG_STRING + ") from which a key is randomly selected for simulation. \n" +
-                        "\t\tUsage: -"+ SCENARIO_FLAG_STRING + " {f}:{l}:{n}:{s}:{g}:{c}. \n" +
+                        "\t\tA range of keys must be selected (-" + Flag.KEY + ") from which a key is randomly selected for simulation. \n" +
+                        "\t\tUsage: -"+ Flag.SCENARIO + " {f}:{l}:{n}:{s}:{g}:{c}. \n" +
                         "\t\t{f} is the selected scenario: 1 to only generate a ciphertext, 2 for pre-1938 indicators (and a ciphertext), 3 to generate post 1938 doubled indicators (and a ciphertext). \n" +
                         "\t\t    Default is 1. Scenario 2 and 3 are not compatible with the {n} option.\n" +
                         "\t\t{l} is the length of the random ciphertext, or the combined length of all ciphertexts (default 150).\n" +
@@ -668,24 +647,22 @@ public class Main {
                         "\t\t - S<id>plaintext.txt contains the plaintext. \n" +
                         "\t\t - S<id>challenge.txt contains all the elements of the challenge (messages with headers, crib, etc) without the solution.\n" +
                         "\t\t - S<id>solution.txt contains all the elements of the solution. \n" +
-                        "\t\tExample: -" + SCENARIO_FLAG_STRING + " 1:500:3:10:3:25 - generate plaintexts/ciphertexts, with total length of 500 split into 3 messages.\n" +
+                        "\t\tExample: -" + Flag.SCENARIO + " 1:500:3:10:3:25 - generate plaintexts/ciphertexts, with total length of 500 split into 3 messages.\n" +
                         "\t\t   The stecker board has 10 plugs, 3 percent of the letters are garbled, a crib of 25 letters is given\n" +
-                        "\t\tExample: -" + SCENARIO_FLAG_STRING + " 2:50::6::0 - generate 50 pre-1938 doubled indicators, a single plaintext/ciphertext with 150 letters (default). \n" +
+                        "\t\tExample: -" + Flag.SCENARIO + " 2:50::6::0 - generate 50 pre-1938 doubled indicators, a single plaintext/ciphertext with 150 letters (default). \n" +
                         "\t\t   The stecker board has 6 plugs, no letters are garbled (default), no crib is given.\n",
 
                 false,
                 ""));
         CommandLine.add(new CommandLine.Argument(
                 Flag.SCENARIO_PATH,
-                SCENARIO_PATH_FLAG_STRING,
                 "Directory for scenario output files",
-                "Full path of directory for files created in SCENARIO mode (using the -" + SCENARIO_FLAG_STRING + " option to specify the parameters).",
+                "Full path of directory for files created in SCENARIO mode (using the -" + Flag.SCENARIO + " option to specify the parameters).",
                 false,
                 "."));
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.CYCLES,
-                "n",
                 "Reserved",
                 "",
                 false,
@@ -697,7 +674,7 @@ public class Main {
     private static void incompatible(Mode mode, Flag[] flags) {
         for (Flag flag : flags) {
             if (CommandLine.isSet(flag)) {
-                CtAPI.goodbyeError("Option -%s (%s) not supported for mode %s\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag), mode);
+                CtAPI.goodbyeFatalError("Option -%s (%s) not supported for mode %s\n", flag, CommandLine.getShortDesc(flag), mode);
             }
         }
     }
@@ -708,13 +685,13 @@ public class Main {
                 return;
             }
         }
-        CtAPI.goodbyeError("Mode %s not supported for model %s\n", mode, currentModel);
+        CtAPI.goodbyeFatalError("Mode %s not supported for model %s\n", mode, currentModel);
     }
 
     private static void required(Mode mode, Flag[] flags) {
         for (Flag flag : flags) {
             if (!CommandLine.isSet(flag)) {
-                CtAPI.goodbyeError("Option -%s (%s) is mandatory with mode %s\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag), mode);
+                CtAPI.goodbyeFatalError("Option -%s (%s) is mandatory with mode %s\n", flag, CommandLine.getShortDesc(flag), mode);
             }
         }
     }
@@ -722,7 +699,7 @@ public class Main {
     private static void incompatibleWithRangeOkKeys(Flag[] flags) {
         for (Flag flag : flags) {
             if (CommandLine.isSet(flag)) {
-                CtAPI.goodbyeError("Option -%s (%s) not supported for key range\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag));
+                CtAPI.goodbyeFatalError("Option -%s (%s) not supported for key range\n", flag, CommandLine.getShortDesc(flag));
             }
         }
     }
@@ -730,7 +707,7 @@ public class Main {
     private static void incompatibleWithSingleKey(Flag[] flags) {
         for (Flag flag : flags) {
             if (CommandLine.isSet(flag)) {
-                CtAPI.goodbyeError("Option -%s (%s) requires a key range\n", CommandLine.getFlagString(flag), CommandLine.getShortDesc(flag));
+                CtAPI.goodbyeFatalError("Option -%s (%s) requires a key range\n", flag, CommandLine.getShortDesc(flag));
             }
         }
     }
@@ -738,7 +715,7 @@ public class Main {
     private static void incompatibleWithRangeOkKeys(Mode currentMode, Mode[] modes) {
         for (Mode mode : modes) {
             if (mode == currentMode) {
-                CtAPI.goodbyeError("Mode %s is not allowed with a key range\n", mode);
+                CtAPI.goodbyeFatalError("Mode %s is not allowed with a key range\n", mode);
             }
         }
 
@@ -747,7 +724,7 @@ public class Main {
     private static void incompatibleWithSingleKey(Mode currentMode, Mode[] modes) {
         for (Mode mode : modes) {
             if (mode == currentMode) {
-                CtAPI.goodbyeError("Mode %s requires a key range\n", mode);
+                CtAPI.goodbyeFatalError("Mode %s requires a key range\n", mode);
             }
         }
     }

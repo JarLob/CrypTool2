@@ -189,13 +189,13 @@ public class Pins {
 
     private void set(String[] absolutePinsStringArray, String indicator) {
         if (indicator.length() != Key.WHEELS) {
-            CtAPI.goodbyeError("Wrong indicator length: " + indicator);
+            CtAPI.goodbyeFatalError("Wrong indicator length: " + indicator);
         }
         for (int w = 1; w <= Key.WHEELS; w++) {
             char ic = indicator.charAt(w - 1);
             int indicatorIndex = Key.WHEEL_LETTERS[w].indexOf(ic);
             if (indicatorIndex == -1) {
-                CtAPI.goodbyeError("Invalid indicator letter [" + ic + " ] for wheel: " + w + " - Does not appear in Wheel letters");
+                CtAPI.goodbyeFatalError("Invalid indicator letter [" + ic + " ] for wheel: " + w + " - Does not appear in Wheel letters");
             }
         }
 
@@ -219,18 +219,18 @@ public class Pins {
                     }
                 }
                 if (pinw.length() > Key.WHEELS_SIZE[w]) {
-                    CtAPI.goodbyeError("Too many isoPinsReal for wheel: " + w + " (" + absolutePinsStringArray[w] + ")");
+                    CtAPI.goodbyeFatalError("Too many isoPinsReal for wheel: " + w + " (" + absolutePinsStringArray[w] + ")");
                 }
                 for (char c : pinw.toString().toCharArray()) {
                     int index = Key.WHEEL_LETTERS[w].indexOf(c);
                     if (index == -1) {
-                        CtAPI.goodbyeError("Invalid letter [" + c + " ]for wheel: " + w + " (" + absolutePinsStringArray[w] + ")");
+                        CtAPI.goodbyeFatalError("Invalid letter [" + c + " ]for wheel: " + w + " (" + absolutePinsStringArray[w] + ")");
                     }
 
                     int isoIndex = isoIndex(w, index);
 
                     if (isoPins[w][isoIndex]) {
-                        CtAPI.goodbyeError("Duplicate letter [" + c + " ]for wheel: " + w + " (" + absolutePinsStringArray[w] + ")");
+                        CtAPI.goodbyeFatalError("Duplicate letter [" + c + " ]for wheel: " + w + " (" + absolutePinsStringArray[w] + ")");
                     }
                     isoPins[w][isoIndex] = true;
                 }
@@ -249,24 +249,24 @@ public class Pins {
                 }
 
                 if (pinw.length() > Key.WHEELS_SIZE[w]) {
-                    CtAPI.goodbyeError("Too many isoPinsReal for wheel: " + w + " (" + pinw + ")");
+                    CtAPI.goodbyeFatalError("Too many isoPinsReal for wheel: " + w + " (" + pinw + ")");
                 }
                 for (char c : pinw.toString().toCharArray()) {
                     int index = Key.WHEEL_LETTERS[w].indexOf(c);
                     if (index == -1) {
-                        CtAPI.goodbyeError("Invalid letter [" + c + " ]for wheel: " + w + " (" + pinw + ")");
+                        CtAPI.goodbyeFatalError("Invalid letter [" + c + " ]for wheel: " + w + " (" + pinw + ")");
                     }
 
                     int isoIndex = isoIndex(w, index);
 
                     if (isoPins[w][isoIndex]) {
-                        CtAPI.goodbyeError("Duplicate letter [" + c + " ]for wheel: " + w + " (" + pinw + ")");
+                        CtAPI.goodbyeFatalError("Duplicate letter [" + c + " ]for wheel: " + w + " (" + pinw + ")");
                     }
                     isoPins[w][isoIndex] = true;
                 }
             }
         } else {
-            CtAPI.goodbyeError("Wrong pins - size of array : " + absolutePinsStringArray.length);
+            CtAPI.goodbyeFatalError("Wrong pins - size of array : " + absolutePinsStringArray.length);
         }
         if (parentKey != null){
             parentKey.invalidateDecryption();
