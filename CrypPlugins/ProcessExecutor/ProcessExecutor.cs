@@ -552,6 +552,13 @@ namespace Cryptool.ProcessExecutor
         /// <param name="value"></param>
         private void HandleIncomingBestList(string value)
         {
+            // it is allowed to send an empty string as well as a -
+            // if we receive that, we just ignore it
+            if (String.IsNullOrEmpty(value) || value.Equals("-"))
+            {
+                return;
+            }
+
             try
             {                
                 _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -569,6 +576,11 @@ namespace Cryptool.ProcessExecutor
                 foreach (string line in lines)
                 {
                     string[] values = line.Trim().Split(';');
+                    if (values.Length != 5)
+                    {
+                        GuiLogMessage(String.Format("Received invalid best list entry: {0}", line), NotificationLevel.Warning);
+                        continue;
+                    }
                     ResultEntry resultEntry = new ResultEntry();
                     resultEntry.Ranking = values[0];
                     resultEntry.Value = values[1];
