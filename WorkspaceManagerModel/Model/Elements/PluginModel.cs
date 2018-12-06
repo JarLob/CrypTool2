@@ -153,6 +153,7 @@ namespace WorkspaceManager.Model
                 }
                 if (this.PluginTypeName != null)
                 {
+                    //1. check, if assembly has already been loaded for this type
                     var assemblies = AppDomain.CurrentDomain.GetAssemblies();
                     foreach (Assembly assembly in assemblies)
                     {
@@ -163,12 +164,15 @@ namespace WorkspaceManager.Model
                             return type;
                         }
                     }
-                    return null;
-                }
-                else
-                {
-                    return null;
-                }
+                    //2. try to load the type
+                    if (this.PluginTypeName != null)
+                    {
+                        Assembly assembly = Assembly.Load(PluginTypeAssemblyName);
+                        Type t = assembly.GetType(PluginTypeName);
+                        return t;
+                    }
+                }               
+                return null;
             }
             internal set
             {

@@ -15,6 +15,7 @@
   <!-- This is the step's description. -->
   <task lang="en">Select a classic encryption algorithm.</task>
   <task lang="ru">Выберите классический алгоритм шифрования.</task>
+  <task lang="ru">Выберите классический алгоритм шифрования.</task>
   <task lang="de">Wählen Sie ein klassisches Verschlüsselungsverfahren.</task>
   <!-- Caesar input -->
   <input image="Caesar">
@@ -272,7 +273,7 @@ Wählen Sie diesen Punkt, um einen mit der Enigma verschlüsselten Text zu analy
       <description lang="de">Geheimtext:</description>
       <defaultvalue>Mc gsaqxpisbqva b twftxmxwxmpc gmqvhs mt b ohxvpj pl hcgsaqxmpc fa dvmgv wcmxt pl qnbmcxhzx bsh shqnbghj dmxv gmqvhsxhzx bggpsjmci xp b shiwnbs tatxho xvh wcmxt oba fh tmcinh nhxxhst xvh optx gpoopc qbmst pl nhxxhst xsmqnhxt pl nhxxhst omzxwsht pl xvh bfpuh bcj tp lpsxv Xvh shghmuhs jhgmqvhst xvh xhzx fa qhslpsomci bc mcuhsth twftxmxwxmpc</defaultvalue>
     </inputBox>
-    <comboBox plugin="$Cryptanalysis$" property="Alphabet" defaultValue="0" width="20%" alignment="Left">
+    <comboBox plugin="$Cryptanalysis$" property="Language" defaultValue="0" width="20%" alignment="Left">
       <description lang="en">Language of the cleartext message:</description>
       <description lang="ru">Язык открытого текста:</description>
       <description lang="de">Sprache der Klartext-Nachricht:</description>

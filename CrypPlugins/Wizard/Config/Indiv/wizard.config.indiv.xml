@@ -248,7 +248,7 @@
         <newline />
       </description>
     </label>
-    <inputBox plugin="$Random input$" property="Bytes" alignment="Stretch" visibleLines="1">
+    <inputBox plugin="$Random input$" property="OutputLength" alignment="Stretch" visibleLines="1">
       <description lang="en">Number of generated random bytes used as the foundation for generating the random decimal number:</description>
       <description lang="ru">Число генерируемых случайных байтов, используемых в качестве основы для генерации случайного десятичного числа:</description>
       <description lang="de">Anzahl erzeugter Zufallsbytes als Basis für die Berechnung der dezimalen Zufallszahl:</description>

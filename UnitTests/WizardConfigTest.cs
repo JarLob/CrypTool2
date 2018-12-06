@@ -11,6 +11,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Wizard;
 using WorkspaceManager.Model;
 using ValidationType = System.Xml.ValidationType;
+using System.Reflection;
+using Cryptool.Core;
 
 namespace Tests
 {

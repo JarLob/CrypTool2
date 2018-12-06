@@ -58,7 +58,7 @@ namespace Tests
             
             //Bigrams: log 2
             target = 4989.51650232229;
-            string path = Path.Combine(Environment.CurrentDirectory, "CrypPlugins\\Data\\StatisticsCorpusDE"); // TODO: not platform specific (x64/x86)            
+            string path = Path.Combine(Environment.CurrentDirectory, "Data\\StatisticsCorpusDE");
             this.testContextInstance.WriteLine(path);
             cf.setDataPath(path);
             cf.Initialize();
