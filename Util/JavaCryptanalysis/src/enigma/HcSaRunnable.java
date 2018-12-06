@@ -7,8 +7,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 
-
 class HcSaRunnable implements Runnable {
+
+    enum Action {NO_CHANGE, IandK, SIandSK, IandSK, KandSI, IandK_SIandSK, IandSK_KandSI}
 
     private static final int[] FREQUENT = {4, 13, 23, 17, 18, 0, 8, 19, 20, 14, 11, 3, 5, 6, 12, 1, 7, 10, 25, 22, 16, 21, 2, 15, 9, 24};
 
@@ -103,7 +104,6 @@ class HcSaRunnable implements Runnable {
                 }
             }
         }
-
         key.setStecker(bestStb);
         key.score = key.eval(Key.EVAL.TRI, ciphertext, len);
     }
@@ -148,7 +148,7 @@ class HcSaRunnable implements Runnable {
 
     private void hillClimbStepComplex(Key.EVAL eval, int firstLetter, int secondLetter) {
 
-        SearchAction action;
+        Action action;
 
         long newScore;
         long bestScore = key.eval(eval, ciphertext, len);
@@ -178,7 +178,7 @@ class HcSaRunnable implements Runnable {
                     int sk = invVar[vsk];
                     int si = invVar[vsi];
 
-                    action = SearchAction.NO_CHANGE;
+                    action = Action.NO_CHANGE;
 
                     if (vi == vsi && vk == vsk) {
 
@@ -191,9 +191,9 @@ class HcSaRunnable implements Runnable {
                         if (newScore > bestScore) {
                             bestScore = newScore;
                             improved = true;
-                            action = SearchAction.IandK;
+                            action = Action.IandK;
                         }
-                        if (action == SearchAction.NO_CHANGE) {
+                        if (action == Action.NO_CHANGE) {
                             key.stbSelf(vi, vk);
                         }
                     } else if (vi == vsi) {
@@ -209,7 +209,7 @@ class HcSaRunnable implements Runnable {
                         if (newScore > bestScore) {
                             bestScore = newScore;
                             improved = true;
-                            action = SearchAction.IandK;
+                            action = Action.IandK;
                         }
                         key.stbSelf(vi, vk);
                         // all self
@@ -219,7 +219,7 @@ class HcSaRunnable implements Runnable {
                         if (newScore > bestScore) {
                             bestScore = newScore;
                             improved = true;
-                            action = SearchAction.IandSK;
+                            action = Action.IandSK;
                         }
                         key.stbSelf(vi, vsk);
                         // all self now
@@ -246,7 +246,7 @@ class HcSaRunnable implements Runnable {
                         if (newScore > bestScore) {
                             bestScore = newScore;
                             improved = true;
-                            action = SearchAction.IandK;
+                            action = Action.IandK;
                         }
                         key.stbSelf(vk, vi);
                         // all self
@@ -255,7 +255,7 @@ class HcSaRunnable implements Runnable {
                         if (newScore > bestScore) {
                             bestScore = newScore;
                             improved = true;
-                            action = SearchAction.KandSI;
+                            action = Action.KandSI;
                         }
                         key.stbSelf(vk, vsi);
                         // all self
@@ -282,13 +282,13 @@ class HcSaRunnable implements Runnable {
                         newScore = key.eval(eval, ciphertext, len);
                         if (newScore > bestScore) {
                             bestScore = newScore;
-                            action = SearchAction.IandK;
+                            action = Action.IandK;
                         }
                         key.stbMatch(vsi, vsk);
                         newScore = key.eval(eval, ciphertext, len);
                         if (newScore > bestScore) {
                             bestScore = newScore;
-                            action = SearchAction.IandK_SIandSK;
+                            action = Action.IandK_SIandSK;
                         }
                         key.stbSelf(vi, vk);
                         key.stbSelf(vsi, vsk);
@@ -297,13 +297,13 @@ class HcSaRunnable implements Runnable {
                         newScore = key.eval(eval, ciphertext, len);
                         if (newScore > bestScore) {
                             bestScore = newScore;
-                            action = SearchAction.IandSK;
+                            action = Action.IandSK;
                         }
                         key.stbMatch(vsi, vk);
                         newScore = key.eval(eval, ciphertext, len);
                         if (newScore > bestScore) {
                             bestScore = newScore;
-                            action = SearchAction.IandSK_KandSI;
+                            action = Action.IandSK_KandSI;
                         }
                         key.stbSelf(vi, vsk);
                         key.stbSelf(vsi, vk);
@@ -424,7 +424,7 @@ class HcSaRunnable implements Runnable {
 
     private void SAStep(Key.EVAL eval) {
 
-        SearchAction action;
+        Action action;
 
         String bestStb = key.stbString();
         long bestScore = key.eval(eval, ciphertext, len);
@@ -432,15 +432,11 @@ class HcSaRunnable implements Runnable {
         long newScore;
         long currScore = key.eval(eval, ciphertext, len);
 
-        byte[] invVar = new byte[26];
         boolean changed;
         int roundsWithoutChange = 0;
         int ROUNDS = 200;
         for (int round = 0; round < ROUNDS && roundsWithoutChange < 10; round++) {
             Key.randVar(var);
-            for (byte i = 0; i < 26; i++) {
-                invVar[var[i]] = i;
-            }
 
             double temp = 290;
             changed = false;
@@ -457,7 +453,7 @@ class HcSaRunnable implements Runnable {
                         continue;
                     }
 
-                    action = SearchAction.NO_CHANGE;
+                    action = Action.NO_CHANGE;
 
                     if (vi == vsi && vk == vsk) {
                         if (key.stbCount() == Key.MAX_STB_PLUGS) {
@@ -477,8 +473,7 @@ class HcSaRunnable implements Runnable {
                         }
                     } else if (vi == vsi) { // vk != vsk
 
-                        int sk = invVar[vsk];
-                        if ((sk > i) && (sk < k)) {
+                        if (vsk < vk) {
                             continue;
                         }
 
@@ -489,7 +484,7 @@ class HcSaRunnable implements Runnable {
                         if (accept(newScore, currScore, temp)) {
                             currScore = newScore;
                             changed = true;
-                            action = SearchAction.IandK;
+                            action = Action.IandK;
                             if (newScore > bestScore) {
                                 bestScore = newScore;
                                 bestStb = key.stbString();
@@ -503,7 +498,7 @@ class HcSaRunnable implements Runnable {
                         if (accept(newScore, currScore, temp)) {
                             currScore = newScore;
                             changed = true;
-                            action = SearchAction.IandSK;
+                            action = Action.IandSK;
                             if (newScore > bestScore) {
                                 bestScore = newScore;
                                 bestStb = key.stbString();
@@ -528,32 +523,31 @@ class HcSaRunnable implements Runnable {
 
                     } else if (vk == vsk) {
 
-                        int si = invVar[vsi];
-                        if ((si < k) && (si < i)) {
+                        if (vsi < vi) {
                             continue;
                         }
                         key.stbSelf(vi, vsi);
                         // all self
                         key.stbMatch(vk, vi);
-
                         newScore = key.eval(eval, ciphertext, len);
                         if (accept(newScore, currScore, temp)) {
                             currScore = newScore;
                             changed = true;
-                            action = SearchAction.IandK;
+                            action = Action.IandK;
                             if (newScore > bestScore) {
                                 bestScore = newScore;
                                 bestStb = key.stbString();
                             }
                         }
                         key.stbSelf(vk, vi);
+
                         // all self
                         key.stbMatch(vk, vsi);
                         newScore = key.eval(eval, ciphertext, len);
                         if (accept(newScore, currScore, temp)) {
                             currScore = newScore;
                             changed = true;
-                            action = SearchAction.KandSI;
+                            action = Action.KandSI;
                             if (newScore > bestScore) {
                                 bestScore = newScore;
                                 bestStb = key.stbString();
@@ -573,6 +567,99 @@ class HcSaRunnable implements Runnable {
                                 break;
                             default:
                                 break;
+                        }
+                    } else {
+
+                        if ((vsi < vi) || (vsk < vk)) {
+                            continue;
+                        }
+
+                        key.stbSelf(vi, vsi);
+                        key.stbSelf(vk, vsk);
+                        // all Self now
+
+                        key.stbMatch(vi, vk);
+                        newScore = key.eval(eval, ciphertext, len);
+                        if (accept(newScore, currScore, temp)) {
+                            currScore = newScore;
+                            changed = true;
+                            action = Action.IandK;
+                            if (newScore > bestScore) {
+                                bestScore = newScore;
+                                bestStb = key.stbString();
+                            }
+                        }
+
+
+                        key.stbMatch(vsi, vsk);
+                        newScore = key.eval(eval, ciphertext, len);
+                        if (accept(newScore, currScore, temp)) {
+                            currScore = newScore;
+                            changed = true;
+                            action = Action.IandK_SIandSK;
+                            if (newScore > bestScore) {
+                                bestScore = newScore;
+                                bestStb = key.stbString();
+                            }
+                        }
+                        key.stbSelf(vsi, vsk);
+
+
+                        key.stbSelf(vi, vk);
+                        // all Self now
+                        key.stbMatch(vi, vsk);
+                        newScore = key.eval(eval, ciphertext, len);
+                        if (accept(newScore, currScore, temp)) {
+                            currScore = newScore;
+                            changed = true;
+                            action = Action.IandSK;
+                            if (newScore > bestScore) {
+                                bestScore = newScore;
+                                bestStb = key.stbString();
+                            }
+                        }
+
+
+                        key.stbMatch(vsi, vk);
+                        newScore = key.eval(eval, ciphertext, len);
+                        if (accept(newScore, currScore, temp)) {
+                            currScore = newScore;
+                            changed = true;
+                            action = Action.IandSK_KandSI;
+                            if (newScore > bestScore) {
+                                bestScore = newScore;
+                                bestStb = key.stbString();
+                            }
+                        }
+                        key.stbSelf(vi, vsk);
+                        key.stbSelf(vsi, vk);
+
+                        // all Self now
+
+                        switch (action) {
+                            case IandK:
+                                key.stbMatch(vi, vk);
+                                break;
+                            case IandSK:
+                                key.stbMatch(vi, vsk);
+                                break;
+                            case SIandSK:
+                                key.stbMatch(vsi, vsk);
+                                break;
+                            case IandK_SIandSK:
+                                key.stbMatch(vi, vk);
+                                key.stbMatch(vsi, vsk);
+                                break;
+                            case IandSK_KandSI:
+                                key.stbMatch(vi, vsk);
+                                key.stbMatch(vsi, vk);
+                                break;
+                            case NO_CHANGE:
+                                key.stbMatch(vi, vsi);
+                                key.stbMatch(vk, vsk);
+                                break;
+                            default:
+                                throw new RuntimeException("Impossible change " + action);
                         }
                     }
                 }
@@ -720,9 +807,9 @@ class HcSaRunnable implements Runnable {
         }
         /*
          */
-        for (int len : new int[]{30, 50, 75}) {
+        for (int len : new int[]{75}) {
             for (Mode mode : new Mode[]{Mode.SA}) {
-                for (int rounds : new int[]{2, 3}) {
+                for (int rounds : new int[]{1}) {
 
                     for (int garbles : new int[]{15, 5}) {
                         if (garbles == 15) {
@@ -862,4 +949,5 @@ class HcSaRunnable implements Runnable {
 
  */
 }
+
 

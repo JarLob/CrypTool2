@@ -37,8 +37,8 @@ class HillClimb {
         int minRate = 2000;
         String modeString = "HILLCLIMBING";
         if (mode == HcSaRunnable.Mode.SA) {
-            maxRate = 100;
-            minRate = 70;
+            maxRate = 50;
+            minRate = 35;
             modeString = "ANNEALING" + rounds;
         }
 
@@ -46,7 +46,9 @@ class HillClimb {
 
         String message = String.format("\n\nStarting %s search: Number of settings: %,d x %,d cycles = %,d total settings to check.    \n\nEstimated search time: %s per cycle.\n\n",
                 modeString, totalKeysPerCycle, cycles, cycles * totalKeysPerCycle, Utils.getEstimatedTimeString(normalizedNkeys, minRate, maxRate));
-        CtAPI.displayBestPlaintext(message);
+        if (totalKeysPerCycle > 1) {
+            CtAPI.displayBestPlaintext(message);
+        }
         CtAPI.print(message);
 
 

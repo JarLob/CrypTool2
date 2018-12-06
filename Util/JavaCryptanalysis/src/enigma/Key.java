@@ -597,7 +597,7 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
                         linksS += '?';
                 }
 
-                System.out.printf("\nCycle Match TrigramICSearch: Links for position %d: \n", pos);
+                System.out.printf("\nCycle Match Search: Links for position %d: \n", pos);
 
                 for (int l = 0; l < 26; l++)
                     System.out.printf("%s", Utils.getChar(l));
@@ -618,7 +618,7 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
             }
 
             if (missingCount > 2) {
-                System.out.printf("Cycle Match TrigramICSearch: Too many missing links (%d) for pos %d - cannot autocorrect\n", missingCount, pos);
+                System.out.printf("Cycle Match Search: Too many missing links (%d) for pos %d - cannot autocorrect\n", missingCount, pos);
 
                 return false;
 
@@ -632,7 +632,7 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
                     }
                 }
                 links[pos][missing] = free;
-                System.out.printf("\nCycle Match TrigramICSearch: Broken cycle for letter: [%s] in pos %d has been auto-corrected with [%s]\n",
+                System.out.printf("\nCycle Match Search: Broken cycle for letter: [%s] in pos %d has been auto-corrected with [%s]\n",
                         Utils.getChar(missing), pos, Utils.getChar(free));
             }
             int startLetter = 0;
@@ -676,7 +676,7 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
                         cyclesS += keyCycleSizes[pos][i] + "x" + i + ",";
 
 
-                System.out.printf("\nCycle Match TrigramICSearch: Cycles for pos %d: %s\n", pos, cyclesS);
+                System.out.printf("\nCycle Match Search: Cycles for pos %d: %s\n", pos, cyclesS);
                 System.out.printf("Detailed cycled for pos %d: %s\n", pos, cycles);
             }
         /*

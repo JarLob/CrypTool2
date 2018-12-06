@@ -192,7 +192,7 @@ public class BombeSearch {
                                                                         nStops++;
                                                                         if (nStops == (MAXTOPS - 1)) {
                                                                             CtAPI.printf("\n\nWARNING: Too many stops - Only the top %d keys (sorted by IC and Trigrams) will be kept for Hill Climbing\n", MAXTOPS);
-                                                                            CtAPI.print("TrigramICSearch with the current crib parameters (crib string and position/position range) may be inefficient and/or miss the right key.\n");
+                                                                            CtAPI.print("Bombe search with the current crib parameters (crib string and position/position range) may be inefficient and/or miss the right key.\n");
                                                                             CtAPI.print("It is recommended to either reduce the key range, use a longer crib, or specify fewer positions to search for the crib.\n\n");
                                                                         }
                                                                         boolean sort = false;
@@ -272,19 +272,19 @@ public class BombeSearch {
 
 
         if (nMenus == 1)
-            CtAPI.printf("End of Bombe TrigramICSearch >>%s<< at Position: %d (Turing Score: %.3f Closures: %d Links: %d) \n\nFOUND %d STOP(s) \n\n%d Total Keys Tested in %.1f Seconds(%d/sec)\n\n",
+            CtAPI.printf("End of Bombe Search >>%s<< at Position: %d (Turing Score: %.3f Closures: %d Links: %d) \n\nFOUND %d STOP(s) \n\n%d Total Keys Tested in %.1f Seconds(%d/sec)\n\n",
                     Utils.getString(bombeMenus[0].crib, bombeMenus[0].cribLen),
                     bombeMenus[0].cribStartPos, bombeMenus[0].score, bombeMenus[0].totalClosures, bombeMenus[0].totalItems,
                     nStops, counter, elapsed / 1000.0, 1000 * counter / elapsed);
         else if (nStops > 0)
-            CtAPI.printf("End of Bombe TrigramICSearch >>%s<< for %d Menus - Best menu found for Position: %d (Turing Score: %.3f Closures: %d Links: %d) \n\nFOUND %d STOP(S) \n %d Total Keys/Menu Combinations Tested in %.1f Seconds(%d/sec)\n\n",
+            CtAPI.printf("End of Bombe Search >>%s<< for %d Menus - Best menu found for Position: %d (Turing Score: %.3f Closures: %d Links: %d) \n\nFOUND %d STOP(S) \n %d Total Keys/Menu Combinations Tested in %.1f Seconds(%d/sec)\n\n",
                     Utils.getString(bombeMenus[bestMenu].crib, bombeMenus[bestMenu].cribLen),
                     nMenus,
                     bombeMenus[bestMenu].cribStartPos, bombeMenus[bestMenu].score, bombeMenus[bestMenu].totalClosures, bombeMenus[bestMenu].totalItems,
                     nStops, counter, elapsed / 1000.0, 1000 * counter / elapsed);
 
         else
-            CtAPI.printf("End of Bombe TrigramICSearch >>%s<< for %d Menus \n\nNO STOP FOUND! \n\n%d Keys&Menu Combinations Tested in %.1f Seconds(%d/sec)\n\n",
+            CtAPI.printf("End of Bombe Search >>%s<< for %d Menus \n\nNO STOP FOUND! \n\n%d Keys&Menu Combinations Tested in %.1f Seconds(%d/sec)\n\n",
                     Utils.getString(bombeMenus[0].crib, bombeMenus[0].cribLen),
                     nMenus, counter, elapsed / 1000.0, 1000 * counter / elapsed);
 
@@ -316,7 +316,7 @@ public class BombeSearch {
             maxRate = 50000;
         }
 
-        CtAPI.printf("Estimated TrigramICSearch Time: %s for a small number of stops (more if many stops are found)\n\n", Utils.getEstimatedTimeString(nMenus * normalizedNkeys1, minRate, maxRate));
+        CtAPI.printf("Estimated Search Time: %s for a small number of stops (more if many stops are found)\n\n", Utils.getEstimatedTimeString(nMenus * normalizedNkeys1, minRate, maxRate));
     }
 
     private static void printStop(BombeMenu bombeMenu, byte[] ciphertext, int len, Key ckey, double ic, int tri, byte[] plaintext, byte[] assumedSteckers, byte[] strength, long startTime, long totalKeys, long counterKeys) {
