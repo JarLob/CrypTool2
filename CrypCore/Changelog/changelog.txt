@@ -1,52 +1,27 @@
-[b]CrypTool Release[b]
+[b]CrypTool 2 Release 2018.3[b]
 
 Dear CrypTool 2 users,
 
-many new components found their way into this new release version of CrypTool 2.1.
-For a detailed overview of the new components please have a look at the list beneath this text. 
-We hope you have as much fun using CrypTool 2.1 Stable as we had creating it. If you find any bugs 
-please do not hesitate using our bug reporting form at https://www.cryptool.org/trac/CrypTool2/newticket, 
-or use the contact form on the upper right side under the "About" menu in the CrypTool 2 application.
+In December 2018, we publish our last release of CrypTool 2 this year, the CrypTool 2 2018.3 release. We added new components to CrypTool 2 as well as we made existing components more robust. Also, we polished many templates and parts of the online help. CrypTool 2 is created by professional volunteers and by students from universities in different countries. We hope that you have as much fun and value using CrypTool 2 2018.3 as we had making it.
 
 Sincerly yours,
-The CrypTool 2 Developer Team, April 2018
+The CrypTool 2 Developer Team, December 2018
 
 Changelog:
 
-We updated CrypTool 2.1 to .NET Framework 4.7.1. So please download the current .NET Framework before starting 
-the update (if you haven't got this Framework already with an update of Windows)
-Download Link: https://www.microsoft.com/net/download/dotnet-framework-runtime
+- General:
+We translated CrypTool 2 to Russian. This was done using the Cloud Translation API. We appreciate feedback from our users from Russia.
+For future releases we plan to implement additional languages. Right now, CrypTool 2 is translated to English, German, and Russian.
 
-New components:
-
-Ciphers:
-- AES visualization
-- DES visualization
-- Blake
-- Groestl
-- M-138 cipher
-- Fialka Machine
-
-Cryptanalysis components:
-- New powerful Vigenère analyzer
-- M-138 analyzer
-- Enigma analyzer (separated the Enigma analysis from the Enigma cipher component)
-
-Components for the topic "Image Processing":
-- Image processor
-- Watermark creator
-- Robust hash function
-- Transcriptor
-
-Other Components:
-- Avalanche effekt visualization
-- Audio input & output components
-- Huffman compression algorithm
-- Levenshtein distance
-
-Updates:
-- Monoalphabetic substitution analyzer (additional languages; arbitrary input alphabets).
-- CrypTool 2 book (English & German).
+New and updated components:
+- DECODE Database tools: We are proud to anounce that we implemented components in CrypTool 2 (namely the DECODE Downloader and the DECODE Viewer) which enable the user to retrieve data from the DECODE database. The university of Uppsala created over the past few years the DECODE database with more than 800 historical documents containing known and unknown ciphertexts from different countries. In detail, the DECODE database contains a collection of digitized images of historical documents with ciphertexts and encryption keys along with metadata information about their provenance, location, transcriptions of the texts, and possible cryptanalysis results or commentary. The database enables search and the user can upload and download the public content. The transcriptions can be used for training automatic cryptology tools. Due to license restrictions, some images cannot be downloaded but are shown as miniature. CrypTool 2 (CT2) makes the download and cryptanalysis of these documents much more convenient. With the DEOCDE downloader and viewer components in CrypTool 2, you are able to directly query the DECODE database.
+The Process Executor component has been newly added. It implements the CrypTool 2 inter-process control protocol (CT2IPC). Using CT2IPC, developers may implement Java applications that are able to communicate with CrypTool 2. Based on that, we plan to publish the cryptanalysis suite from George Lasry in 2019.
+- The T-310 cipher machine component has been completely reworked.
+- A Playfair analyzer component was created newly. It enables CrypTool 2 users to break Playfair ciphers.
+- Three different standardized key derivation functions (KDF) have been newly added in CrypTool 2. All KDF components (HKDF SHA-256, KKDF SHA-256, and KKDF SHAKE256) contain helpful visualizations making it easier to understand each function in detail.
+- In the Random Number Generator component, new random number generators have been added and the existing ones have been updated.
+- The new Shared Prime attack template shows how to break RSA keys sharing a same prime factor.
+- The shortcut Ctrl+i has been added to the Workspace Manager to toggle the settings bar.
 
 And:
 Many bugs fixed...
