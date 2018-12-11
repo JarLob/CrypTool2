@@ -16,7 +16,7 @@ using System.Windows.Media.Animation;
 using System.Threading;
 using System.Windows.Threading;
 using System.ComponentModel;
-
+using Cryptool.PluginBase;
 
 
 namespace Cryptool.Enigma
@@ -27,6 +27,8 @@ namespace Cryptool.Enigma
     public partial class EnigmaPresentation : UserControl
     {
         #region Variables
+
+        private Enigma Enigma;
 
         private int test = 0;
 
@@ -730,7 +732,7 @@ namespace Cryptool.Enigma
         #region Constructor
         public EnigmaPresentation(Enigma facade)
         {
-            
+            Enigma = facade;
             ars = new AutoResetEvent(false);
             storyboard = new Storyboard();
             storyboard.Completed += tasteClick2;
@@ -3146,790 +3148,898 @@ namespace Cryptool.Enigma
 
         private void List_MouseLeftButtonDown(object sender, EventArgs e)
         {
-            // Debug.Text = "test";
-            everythingblack();
-            if (merken == -1)
+            try
             {
-                Button button = sender as Button;
-                merken = Int32.Parse(button.Uid);
-                if (!button.Uid.Equals(button.Content.ToString()))
-                { switchbuttons(Int32.Parse(button.Content.ToString()), Int32.Parse(button.Uid)); }
+                // Debug.Text = "test";
+                everythingblack();
+                if (merken == -1)
+                {
+                    Button button = sender as Button;
+                    merken = Int32.Parse(button.Uid);
+                    if (!button.Uid.Equals(button.Content.ToString()))
+                    {
+                        switchbuttons(Int32.Parse(button.Content.ToString()), Int32.Parse(button.Uid));
+                    }
 
-                button.Background = Brushes.LawnGreen;
-            }
-
-            else
-            {
-
-                Button button = sender as Button;
-                bList[merken].Background = Brushes.LightBlue;
-                if ((button.Content.ToString().Equals(button.Uid) || Int32.Parse(button.Content.ToString()).Equals(merken)))
-                { switchbuttons(Int32.Parse(button.Uid), merken); Debug.Text = "test1"; }
+                    button.Background = Brushes.LawnGreen;
+                }
 
                 else
                 {
-                    Debug.Text = "test1";
-                    switchbuttons(Int32.Parse(button.Content.ToString()), merken);
-                    switchbuttons(Int32.Parse(button.Uid), Int32.Parse(button.Content.ToString()));
+
+                    Button button = sender as Button;
+                    bList[merken].Background = Brushes.LightBlue;
+                    if ((button.Content.ToString().Equals(button.Uid) ||
+                         Int32.Parse(button.Content.ToString()).Equals(merken)))
+                    {
+                        switchbuttons(Int32.Parse(button.Uid), merken);
+                        Debug.Text = "test1";
+                    }
+
+                    else
+                    {
+                        Debug.Text = "test1";
+                        switchbuttons(Int32.Parse(button.Content.ToString()), merken);
+                        switchbuttons(Int32.Parse(button.Uid), Int32.Parse(button.Content.ToString()));
+                    }
+
+                    //switchbuttons(Int32.Parse(button.Uid), merken);
+                    merken = -1;
                 }
-                //switchbuttons(Int32.Parse(button.Uid), merken);
-                merken = -1;
+
+                syncPluboardSettings();
             }
-
-            syncPluboardSettings();
+            catch (Exception ex)
+            {
+                Enigma.LogMessage(String.Format("Exception in List_MouseLeftButtonDown: {0}", ex.Message), NotificationLevel.Warning);
+            }
         }
-
+        
         Boolean justme = true;
         private void List_MouseMove(object sender, MouseEventArgs e)
         {
-
-            // Get the current mouse position
-            Point mousePos = e.GetPosition(null);
-            Vector diff = startPoint - mousePos;
-            Button button = sender as Button;
-            Button button2 = new Button();
-            button2.Width = button.Width;
-            button2.Height = button.Height;
-            button2.Opacity = 0.0;
-
-
-
-            if (e.LeftButton == MouseButtonState.Pressed &&
-                Math.Abs(diff.X) + 4 > SystemParameters.MinimumHorizontalDragDistance &&
-                Math.Abs(diff.Y) + 4 > SystemParameters.MinimumVerticalDragDistance && button.IsPressed)
+            try
             {
-                // Get the dragged ListViewItem
-
-                everythingblack();
-                //lList[Int32.Parse(button.Uid)].X2 = mousePos.X;
-                // Find the data behind the ListViewItem
-
-                // Let's define our DragScope .. In this case it is every thing inside our main window .. 
-                DragScope = Application.Current.MainWindow.Content as FrameworkElement;
-                System.Diagnostics.Debug.Assert(DragScope != null);
-
-                // We enable Drag & Drop in our scope ...  We are not implementing Drop, so it is OK, but this allows us to get DragOver 
-                bool previousDrop = DragScope.AllowDrop;
-                //DragScope.AllowDrop = true;
-                maingrid.AllowDrop = true;
+                // Get the current mouse position
+                Point mousePos = e.GetPosition(null);
+                Vector diff = startPoint - mousePos;
+                Button button = sender as Button;
+                Button button2 = new Button();
+                button2.Width = button.Width;
+                button2.Height = button.Height;
+                button2.Opacity = 0.0;
 
 
-                // Let's wire our usual events.. 
-                // GiveFeedback just tells it to use no standard cursors..  
 
-                //GiveFeedbackEventHandler feedbackhandler = new GiveFeedbackEventHandler(DragSource_GiveFeedback);
-                //this.DragSource.GiveFeedback += feedbackhandler;
+                if (e.LeftButton == MouseButtonState.Pressed &&
+                    Math.Abs(diff.X) + 4 > SystemParameters.MinimumHorizontalDragDistance &&
+                    Math.Abs(diff.Y) + 4 > SystemParameters.MinimumVerticalDragDistance && button.IsPressed)
+                {
+                    // Get the dragged ListViewItem
 
-                // The DragOver event ... 
-                DragEventHandler draghandler = new DragEventHandler(Window1_DragOver);
-                DragScope.PreviewDragOver += draghandler;
-                DragScope.PreviewMouseLeftButtonUp += aktuellupdate;
+                    everythingblack();
+                    //lList[Int32.Parse(button.Uid)].X2 = mousePos.X;
+                    // Find the data behind the ListViewItem
 
-                // Drag Leave is optional, but write up explains why I like it .. 
-                //DragEventHandler dragleavehandler = new DragEventHandler(DragScope_DragLeave);
-                //DragScope.DragLeave += dragleavehandler;
+                    // Let's define our DragScope .. In this case it is every thing inside our main window .. 
+                    DragScope = Application.Current.MainWindow.Content as FrameworkElement;
+                    System.Diagnostics.Debug.Assert(DragScope != null);
 
-                // QueryContinue Drag goes with drag leave... 
-                //QueryContinueDragEventHandler queryhandler = new QueryContinueDragEventHandler(DragScope_QueryContinueDrag);
-                //DragScope.QueryContinueDrag += queryhandler;
-                steckerbrett.Children.Remove(button);
-                steckerbrett.Children.Insert(Int32.Parse(button.Uid), button2);
-
-                //Here we create our adorner.. 
-                _adorner = new DragAdorner(DragScope, (UIElement)button, true, 1, this.ActualWidth, this.ActualHeight);
-
-                _layer = AdornerLayer.GetAdornerLayer(DragScope as Visual);
-                _layer.Add(_adorner);
+                    // We enable Drag & Drop in our scope ...  We are not implementing Drop, so it is OK, but this allows us to get DragOver 
+                    bool previousDrop = DragScope.AllowDrop;
+                    //DragScope.AllowDrop = true;
+                    maingrid.AllowDrop = true;
 
 
-                IsDragging = true;
-                //_dragHasLeftScope = false;
-                //Finally lets drag drop 
-                if (!button.Uid.Equals(button.Content.ToString()))
-                    switchbuttons(Int32.Parse(button.Content.ToString()), Int32.Parse(button.Uid));
-                aktuell = Int32.Parse(button.Content.ToString());
+                    // Let's wire our usual events.. 
+                    // GiveFeedback just tells it to use no standard cursors..  
 
-                DataObject data = new DataObject("myFormat", button.Uid);
-                DragDropEffects de = DragDrop.DoDragDrop(maingrid, data, DragDropEffects.Move);
-                maingrid.AllowDrop = false;
-                steckerbrett.Children.Remove(button2);
-                steckerbrett.Children.Insert(Int32.Parse(button.Uid), button);
-                // Clean up our mess :) 
-                //DragScope.AllowDrop = previousDrop;
-                if (_adorner != null)
-                    AdornerLayer.GetAdornerLayer(DragScope).Remove(_adorner);
+                    //GiveFeedbackEventHandler feedbackhandler = new GiveFeedbackEventHandler(DragSource_GiveFeedback);
+                    //this.DragSource.GiveFeedback += feedbackhandler;
 
-                _adorner = null;
-                lList[Int32.Parse(button.Content.ToString())].X2 = 15 + Int32.Parse(button.Content.ToString()) * 30;
-                lList[Int32.Parse(button.Content.ToString())].Y2 = 200;
-                //           DragSource.GiveFeedback -= feedbackhandler;
-                //         DragScope.DragLeave -= dragleavehandler;
-                //       DragScope.QueryContinueDrag -= queryhandler;
-                DragScope.PreviewDragOver -= draghandler;
+                    // The DragOver event ... 
+                    DragEventHandler draghandler = new DragEventHandler(Window1_DragOver);
+                    DragScope.PreviewDragOver += draghandler;
+                    DragScope.PreviewMouseLeftButtonUp += aktuellupdate;
 
-                syncPluboardSettings();
+                    // Drag Leave is optional, but write up explains why I like it .. 
+                    //DragEventHandler dragleavehandler = new DragEventHandler(DragScope_DragLeave);
+                    //DragScope.DragLeave += dragleavehandler;
 
-                //IsDragging = false;
+                    // QueryContinue Drag goes with drag leave... 
+                    //QueryContinueDragEventHandler queryhandler = new QueryContinueDragEventHandler(DragScope_QueryContinueDrag);
+                    //DragScope.QueryContinueDrag += queryhandler;
+                    steckerbrett.Children.Remove(button);
+                    steckerbrett.Children.Insert(Int32.Parse(button.Uid), button2);
+
+                    //Here we create our adorner.. 
+                    _adorner = new DragAdorner(DragScope, (UIElement) button, true, 1, this.ActualWidth,
+                        this.ActualHeight);
+
+                    _layer = AdornerLayer.GetAdornerLayer(DragScope as Visual);
+                    _layer.Add(_adorner);
 
 
-                // Initialize the drag & drop operation
-                //DataObject dragData = new DataObject("myFormat", button.Uid);
+                    IsDragging = true;
+                    //_dragHasLeftScope = false;
+                    //Finally lets drag drop 
+                    if (!button.Uid.Equals(button.Content.ToString()))
+                        switchbuttons(Int32.Parse(button.Content.ToString()), Int32.Parse(button.Uid));
+                    aktuell = Int32.Parse(button.Content.ToString());
 
-                //DragDrop.DoDragDrop(button, dragData , DragDropEffects.Move);
+                    DataObject data = new DataObject("myFormat", button.Uid);
+                    DragDropEffects de = DragDrop.DoDragDrop(maingrid, data, DragDropEffects.Move);
+                    maingrid.AllowDrop = false;
+                    steckerbrett.Children.Remove(button2);
+                    steckerbrett.Children.Insert(Int32.Parse(button.Uid), button);
+                    // Clean up our mess :) 
+                    //DragScope.AllowDrop = previousDrop;
+                    if (_adorner != null)
+                        AdornerLayer.GetAdornerLayer(DragScope).Remove(_adorner);
+
+                    _adorner = null;
+                    lList[Int32.Parse(button.Content.ToString())].X2 = 15 + Int32.Parse(button.Content.ToString()) * 30;
+                    lList[Int32.Parse(button.Content.ToString())].Y2 = 200;
+                    //           DragSource.GiveFeedback -= feedbackhandler;
+                    //         DragScope.DragLeave -= dragleavehandler;
+                    //       DragScope.QueryContinueDrag -= queryhandler;
+                    DragScope.PreviewDragOver -= draghandler;
+
+                    syncPluboardSettings();
+
+                    //IsDragging = false;
+
+
+                    // Initialize the drag & drop operation
+                    //DataObject dragData = new DataObject("myFormat", button.Uid);
+
+                    //DragDrop.DoDragDrop(button, dragData , DragDropEffects.Move);
+                }
+            }
+            catch (Exception ex)
+            {
+                Enigma.LogMessage(String.Format("Exception in List_MouseMove: {0}", ex.Message), NotificationLevel.Warning);
             }
         }
 
         private void Rotor_MouseMove(object sender, MouseEventArgs e)
         {
-            // Get the current mouse position
-            Point mousePos = e.GetPosition(null);
-            Vector diff = startPoint - mousePos;
-            Rotor2 rotor = sender as Rotor2;
-
-
-
-            if (e.LeftButton == MouseButtonState.Pressed &&
-                Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance &&
-                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+            try
             {
-                // Get the dragged ListViewItem
+                // Get the current mouse position
+                Point mousePos = e.GetPosition(null);
+                Vector diff = startPoint - mousePos;
+                Rotor2 rotor = sender as Rotor2;
 
-                everythingblack();
-                //lList[Int32.Parse(button.Uid)].X2 = mousePos.X;
-                // Find the data behind the ListViewItem
 
-                // Let's define our DragScope .. In this case it is every thing inside our main window .. 
-                //DragScope = dropBox as FrameworkElement;
-                DragScope = Application.Current.MainWindow.Content as FrameworkElement;
-                System.Diagnostics.Debug.Assert(DragScope != null);
 
-                // We enable Drag & Drop in our scope ...  We are not implementing Drop, so it is OK, but this allows us to get DragOver 
-                bool previousDrop = DragScope.AllowDrop;
-                //DragScope.AllowDrop = true;
-
-                // Let's wire our usual events.. 
-                // GiveFeedback just tells it to use no standard cursors..  
-
-                //GiveFeedbackEventHandler feedbackhandler = new GiveFeedbackEventHandler(DragSource_GiveFeedback);
-                //this.DragSource.GiveFeedback += feedbackhandler;
-
-                // The DragOver event ... 
-                DragEventHandler draghandler = new DragEventHandler(Window1_DragOver2);
-                DragScope.PreviewDragOver += draghandler;
-                DragScope.PreviewMouseLeftButtonUp += aktuellupdate;
-
-                // Drag Leave is optional, but write up explains why I like it .. 
-                //DragEventHandler dragleavehandler = new DragEventHandler(DragScope_DragLeave);
-                //DragScope.DragLeave += dragleavehandler;
-
-                // QueryContinue Drag goes with drag leave... 
-                //QueryContinueDragEventHandler queryhandler = new QueryContinueDragEventHandler(DragScope_QueryContinueDrag);
-                //DragScope.QueryContinueDrag += queryhandler;
-                rotorarea.Children.Remove(rotor);
-                Rectangle dummy = new Rectangle();
-
-                dummy.Width = 200;
-                dummy.Height = 900;
-                dummy.Opacity = 0.0;
-                dummy.Stroke = Brushes.Green;
-                dummy.StrokeThickness = 5;
-                dummy.Fill = Brushes.LawnGreen;
-                //dummy.AllowDrop = true;
-                rotorarea.AllowDrop = true;
-                dropBoxCanvas.AllowDrop = true;
-
-                Canvas.SetLeft(dummy, Canvas.GetLeft(rotor));
-                int helpint = 5;
-                rotor.PreviewMouseLeftButtonDown -= List_PreviewMouseLeftButtonDown;
-                rotorarea.Children.Add(dummy);
-
-                if (rotorarray[0] == rotor)
+                if (e.LeftButton == MouseButtonState.Pressed &&
+                    Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance &&
+                    Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
                 {
-                    dummy.Drop += List_Drop30;
-                    dummyrec[0] = dummy;
-                    rotorarray[0] = null;
-                    helpint = 0;
-                }
+                    // Get the dragged ListViewItem
 
+                    everythingblack();
+                    //lList[Int32.Parse(button.Uid)].X2 = mousePos.X;
+                    // Find the data behind the ListViewItem
 
-                if (rotorarray[1] == rotor)
-                {
-                    dummy.Drop += List_Drop31;
+                    // Let's define our DragScope .. In this case it is every thing inside our main window .. 
+                    //DragScope = dropBox as FrameworkElement;
+                    DragScope = Application.Current.MainWindow.Content as FrameworkElement;
+                    System.Diagnostics.Debug.Assert(DragScope != null);
 
-                    dummyrec[1] = dummy;
-                    rotorarray[1] = null;
-                    helpint = 1;
-                }
+                    // We enable Drag & Drop in our scope ...  We are not implementing Drop, so it is OK, but this allows us to get DragOver 
+                    bool previousDrop = DragScope.AllowDrop;
+                    //DragScope.AllowDrop = true;
 
-                if (rotorarray[2] == rotor)
-                {
-                    dummy.Drop += List_Drop32;
-                    dummyrec[2] = dummy;
-                    rotorarray[2] = null;
-                    helpint = 2;
-                }
+                    // Let's wire our usual events.. 
+                    // GiveFeedback just tells it to use no standard cursors..  
 
-                if (rotorarray[3] == rotor)
-                {
-                    dummy.Drop += List_Drop33;
-                    dummyrec[3] = dummy;
-                    rotorarray[3] = null;
-                    helpint = 3;
-                }
+                    //GiveFeedbackEventHandler feedbackhandler = new GiveFeedbackEventHandler(DragSource_GiveFeedback);
+                    //this.DragSource.GiveFeedback += feedbackhandler;
 
-                //steckerbrett.Children.Insert(Int32.Parse(button.Uid), button2);
+                    // The DragOver event ... 
+                    DragEventHandler draghandler = new DragEventHandler(Window1_DragOver2);
+                    DragScope.PreviewDragOver += draghandler;
+                    DragScope.PreviewMouseLeftButtonUp += aktuellupdate;
 
-                //Here we create our adorner.. 
-                _adorner = new DragAdorner(DragScope, (UIElement)rotor.iAm, true, 1, this.ActualWidth, this.ActualHeight);
+                    // Drag Leave is optional, but write up explains why I like it .. 
+                    //DragEventHandler dragleavehandler = new DragEventHandler(DragScope_DragLeave);
+                    //DragScope.DragLeave += dragleavehandler;
 
-                _layer = AdornerLayer.GetAdornerLayer(DragScope as Visual);
-                _layer.Add(_adorner);
+                    // QueryContinue Drag goes with drag leave... 
+                    //QueryContinueDragEventHandler queryhandler = new QueryContinueDragEventHandler(DragScope_QueryContinueDrag);
+                    //DragScope.QueryContinueDrag += queryhandler;
+                    rotorarea.Children.Remove(rotor);
+                    Rectangle dummy = new Rectangle();
 
-                suc = false;
-                IsDragging = true;
+                    dummy.Width = 200;
+                    dummy.Height = 900;
+                    dummy.Opacity = 0.0;
+                    dummy.Stroke = Brushes.Green;
+                    dummy.StrokeThickness = 5;
+                    dummy.Fill = Brushes.LawnGreen;
+                    //dummy.AllowDrop = true;
+                    rotorarea.AllowDrop = true;
+                    dropBoxCanvas.AllowDrop = true;
 
-                //_dragHasLeftScope = false;
-                //Finally lets drag drop 
-                //if (!button.Uid.Equals(button.Content.ToString()))
-                //  switchbuttons(Int32.Parse(button.Content.ToString()), Int32.Parse(button.Uid));
+                    Canvas.SetLeft(dummy, Canvas.GetLeft(rotor));
+                    int helpint = 5;
+                    rotor.PreviewMouseLeftButtonDown -= List_PreviewMouseLeftButtonDown;
+                    rotorarea.Children.Add(dummy);
 
-
-                DataObject data = new DataObject("myFormat", rotor.returnMap() + "");
-                justme = false;
-                DragDropEffects de = DragDrop.DoDragDrop(rotorarea, data, DragDropEffects.Move);
-                justme = true;
-
-                Debug.Text += "k";
-
-
-
-                if (!suc)
-                {
-                    if (0 == helpint)
+                    if (rotorarray[0] == rotor)
                     {
-                        dummy.Drop -= List_Drop30;
-                        dummyrec[0] = null;
-                        rotorarray[0] = rotor;
-                    }
-                    if (1 == helpint)
-                    {
-                        dummy.Drop -= List_Drop31;
-                        dummyrec[1] = null;
-                        rotorarray[1] = rotor;
-
+                        dummy.Drop += List_Drop30;
+                        dummyrec[0] = dummy;
+                        rotorarray[0] = null;
+                        helpint = 0;
                     }
 
-                    if (2 == helpint)
+
+                    if (rotorarray[1] == rotor)
                     {
-                        dummy.Drop -= List_Drop32;
-                        dummyrec[2] = null;
-                        rotorarray[2] = rotor;
+                        dummy.Drop += List_Drop31;
+
+                        dummyrec[1] = dummy;
+                        rotorarray[1] = null;
+                        helpint = 1;
                     }
 
-                    rotorarea.Children.Remove(dummy);
-                    rotorarea.Children.Add(rotor);
+                    if (rotorarray[2] == rotor)
+                    {
+                        dummy.Drop += List_Drop32;
+                        dummyrec[2] = dummy;
+                        rotorarray[2] = null;
+                        helpint = 2;
+                    }
 
-                    dropBoxCanvas.AllowDrop = false;
+                    if (rotorarray[3] == rotor)
+                    {
+                        dummy.Drop += List_Drop33;
+                        dummyrec[3] = dummy;
+                        rotorarray[3] = null;
+                        helpint = 3;
+                    }
+
+                    //steckerbrett.Children.Insert(Int32.Parse(button.Uid), button2);
+
+                    //Here we create our adorner.. 
+                    _adorner = new DragAdorner(DragScope, (UIElement) rotor.iAm, true, 1, this.ActualWidth,
+                        this.ActualHeight);
+
+                    _layer = AdornerLayer.GetAdornerLayer(DragScope as Visual);
+                    _layer.Add(_adorner);
+
+                    suc = false;
+                    IsDragging = true;
+
+                    //_dragHasLeftScope = false;
+                    //Finally lets drag drop 
+                    //if (!button.Uid.Equals(button.Content.ToString()))
+                    //  switchbuttons(Int32.Parse(button.Content.ToString()), Int32.Parse(button.Uid));
+
+
+                    DataObject data = new DataObject("myFormat", rotor.returnMap() + "");
+                    justme = false;
+                    DragDropEffects de = DragDrop.DoDragDrop(rotorarea, data, DragDropEffects.Move);
+                    justme = true;
+
+                    Debug.Text += "k";
+
+
+
+                    if (!suc)
+                    {
+                        if (0 == helpint)
+                        {
+                            dummy.Drop -= List_Drop30;
+                            dummyrec[0] = null;
+                            rotorarray[0] = rotor;
+                        }
+
+                        if (1 == helpint)
+                        {
+                            dummy.Drop -= List_Drop31;
+                            dummyrec[1] = null;
+                            rotorarray[1] = rotor;
+
+                        }
+
+                        if (2 == helpint)
+                        {
+                            dummy.Drop -= List_Drop32;
+                            dummyrec[2] = null;
+                            rotorarray[2] = rotor;
+                        }
+
+                        rotorarea.Children.Remove(dummy);
+                        rotorarea.Children.Add(rotor);
+
+                        dropBoxCanvas.AllowDrop = false;
+                    }
+
+                    rotorarea.AllowDrop = false;
+
+                    // Clean up our mess :) 
+                    //DragScope.AllowDrop = previousDrop;
+                    if (_adorner != null)
+                        AdornerLayer.GetAdornerLayer(DragScope).Remove(_adorner);
+
+                    _adorner = null;
+
+                    //           DragSource.GiveFeedback -= feedbackhandler;
+                    //         DragScope.DragLeave -= dragleavehandler;
+                    //       DragScope.QueryContinueDrag -= queryhandler;
+                    DragScope.PreviewDragOver -= draghandler;
+
+                    //IsDragging = false;
+
+
+                    // Initialize the drag & drop operation
+                    //DataObject dragData = new DataObject("myFormat", button.Uid);
+
+                    //DragDrop.DoDragDrop(button, dragData , DragDropEffects.Move);
+
                 }
-
-                rotorarea.AllowDrop = false;
-
-                // Clean up our mess :) 
-                //DragScope.AllowDrop = previousDrop;
-                if (_adorner != null)
-                    AdornerLayer.GetAdornerLayer(DragScope).Remove(_adorner);
-
-                _adorner = null;
-
-                //           DragSource.GiveFeedback -= feedbackhandler;
-                //         DragScope.DragLeave -= dragleavehandler;
-                //       DragScope.QueryContinueDrag -= queryhandler;
-                DragScope.PreviewDragOver -= draghandler;
-
-                //IsDragging = false;
-
-
-                // Initialize the drag & drop operation
-                //DataObject dragData = new DataObject("myFormat", button.Uid);
-
-                //DragDrop.DoDragDrop(button, dragData , DragDropEffects.Move);
-
+            }
+            catch (Exception ex)
+            {
+                Enigma.LogMessage(String.Format("Exception in Rotor_MouseMove: {0}", ex.Message), NotificationLevel.Warning);
             }
         }
 
         private void Walze_MouseMove(object sender, MouseEventArgs e)
         {
-            // Get the current mouse position
-            Point mousePos = e.GetPosition(null);
-            Vector diff = startPoint - mousePos;
-            Walze rotor = sender as Walze;
-
-
-            if (e.LeftButton == MouseButtonState.Pressed &&
-                Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance &&
-                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+            try
             {
-                // Get the dragged ListViewItem
-
-                everythingblack();
-                //lList[Int32.Parse(button.Uid)].X2 = mousePos.X;
-                // Find the data behind the ListViewItem
-
-                // Let's define our DragScope .. In this case it is every thing inside our main window .. 
-                DragScope = Application.Current.MainWindow.Content as FrameworkElement;
-                System.Diagnostics.Debug.Assert(DragScope != null);
-
-                // We enable Drag & Drop in our scope ...  We are not implementing Drop, so it is OK, but this allows us to get DragOver 
-                bool previousDrop = DragScope.AllowDrop;
-                //DragScope.AllowDrop = true;
-
-                // Let's wire our usual events.. 
-                // GiveFeedback just tells it to use no standard cursors..  
-
-                //GiveFeedbackEventHandler feedbackhandler = new GiveFeedbackEventHandler(DragSource_GiveFeedback);
-                //this.DragSource.GiveFeedback += feedbackhandler;
-
-                // The DragOver event ... 
-                DragEventHandler draghandler = new DragEventHandler(Window1_DragOver2);
-                DragScope.PreviewDragOver += draghandler;
-                DragScope.PreviewMouseLeftButtonUp += aktuellupdate;
-
-                // Drag Leave is optional, but write up explains why I like it .. 
-                //DragEventHandler dragleavehandler = new DragEventHandler(DragScope_DragLeave);
-                //DragScope.DragLeave += dragleavehandler;
-
-                // QueryContinue Drag goes with drag leave... 
-                //QueryContinueDragEventHandler queryhandler = new QueryContinueDragEventHandler(DragScope_QueryContinueDrag);
-                //DragScope.QueryContinueDrag += queryhandler;
-                walzenarea.Children.Remove(rotor);
-                Rectangle dummy = new Rectangle();
-
-                dummy.Width = 260;
-                dummy.Height = 900;
-                dummy.Opacity = 0.0;
-                dummy.Stroke = Brushes.Green;
-                dummy.StrokeThickness = 5;
-                dummy.Fill = Brushes.LawnGreen;
-                //dummy.AllowDrop = true;
-                walzenarea.AllowDrop = true;
-                dropBoxCanvasWalze.AllowDrop = true;
-
-                Canvas.SetLeft(dummy, Canvas.GetLeft(rotor));
-
-                rotor.PreviewMouseLeftButtonDown -= List_PreviewMouseLeftButtonDown;
-                walzenarea.Children.Add(dummy);
-
-                dummy.Drop += List_Drop4;
-                walze = null;
-
-                dummyrec[3] = dummy;
-
-                //Here we create our adorner.. 
-                _adorner = new DragAdorner(DragScope, (UIElement)rotor.iAm, true, 1, this.ActualWidth, this.ActualHeight);
-
-                _layer = AdornerLayer.GetAdornerLayer(DragScope as Visual);
-                _layer.Add(_adorner);
-
-                suc = false;
-                IsDragging = true;
-
-                //_dragHasLeftScope = false;
-                //Finally lets drag drop 
-
-                DataObject data = new DataObject("myFormat", rotor.typ + "");
-                DragDropEffects de = DragDrop.DoDragDrop(rotorarea, data, DragDropEffects.Move);
-                Debug.Text += "k";
+                // Get the current mouse position
+                Point mousePos = e.GetPosition(null);
+                Vector diff = startPoint - mousePos;
+                Walze rotor = sender as Walze;
 
 
-
-                if (!suc)
+                if (e.LeftButton == MouseButtonState.Pressed &&
+                    Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance &&
+                    Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
                 {
-                    dummyrec[3] = null;
-                    dummy.Drop -= List_Drop4;
-                    walzenarea.Children.Remove(dummy);
-                    walzenarea.Children.Add(rotor);
-                    dropBoxCanvas.AllowDrop = false;
-                    walze = rotor;
+                    // Get the dragged ListViewItem
+
+                    everythingblack();
+                    //lList[Int32.Parse(button.Uid)].X2 = mousePos.X;
+                    // Find the data behind the ListViewItem
+
+                    // Let's define our DragScope .. In this case it is every thing inside our main window .. 
+                    DragScope = Application.Current.MainWindow.Content as FrameworkElement;
+                    System.Diagnostics.Debug.Assert(DragScope != null);
+
+                    // We enable Drag & Drop in our scope ...  We are not implementing Drop, so it is OK, but this allows us to get DragOver 
+                    bool previousDrop = DragScope.AllowDrop;
+                    //DragScope.AllowDrop = true;
+
+                    // Let's wire our usual events.. 
+                    // GiveFeedback just tells it to use no standard cursors..  
+
+                    //GiveFeedbackEventHandler feedbackhandler = new GiveFeedbackEventHandler(DragSource_GiveFeedback);
+                    //this.DragSource.GiveFeedback += feedbackhandler;
+
+                    // The DragOver event ... 
+                    DragEventHandler draghandler = new DragEventHandler(Window1_DragOver2);
+                    DragScope.PreviewDragOver += draghandler;
+                    DragScope.PreviewMouseLeftButtonUp += aktuellupdate;
+
+                    // Drag Leave is optional, but write up explains why I like it .. 
+                    //DragEventHandler dragleavehandler = new DragEventHandler(DragScope_DragLeave);
+                    //DragScope.DragLeave += dragleavehandler;
+
+                    // QueryContinue Drag goes with drag leave... 
+                    //QueryContinueDragEventHandler queryhandler = new QueryContinueDragEventHandler(DragScope_QueryContinueDrag);
+                    //DragScope.QueryContinueDrag += queryhandler;
+                    walzenarea.Children.Remove(rotor);
+                    Rectangle dummy = new Rectangle();
+
+                    dummy.Width = 260;
+                    dummy.Height = 900;
+                    dummy.Opacity = 0.0;
+                    dummy.Stroke = Brushes.Green;
+                    dummy.StrokeThickness = 5;
+                    dummy.Fill = Brushes.LawnGreen;
+                    //dummy.AllowDrop = true;
+                    walzenarea.AllowDrop = true;
+                    dropBoxCanvasWalze.AllowDrop = true;
+
+                    Canvas.SetLeft(dummy, Canvas.GetLeft(rotor));
+
+                    rotor.PreviewMouseLeftButtonDown -= List_PreviewMouseLeftButtonDown;
+                    walzenarea.Children.Add(dummy);
+
+                    dummy.Drop += List_Drop4;
+                    walze = null;
+
+                    dummyrec[3] = dummy;
+
+                    //Here we create our adorner.. 
+                    _adorner = new DragAdorner(DragScope, (UIElement) rotor.iAm, true, 1, this.ActualWidth,
+                        this.ActualHeight);
+
+                    _layer = AdornerLayer.GetAdornerLayer(DragScope as Visual);
+                    _layer.Add(_adorner);
+
+                    suc = false;
+                    IsDragging = true;
+
+                    //_dragHasLeftScope = false;
+                    //Finally lets drag drop 
+
+                    DataObject data = new DataObject("myFormat", rotor.typ + "");
+                    DragDropEffects de = DragDrop.DoDragDrop(rotorarea, data, DragDropEffects.Move);
+                    Debug.Text += "k";
+
+
+
+                    if (!suc)
+                    {
+                        dummyrec[3] = null;
+                        dummy.Drop -= List_Drop4;
+                        walzenarea.Children.Remove(dummy);
+                        walzenarea.Children.Add(rotor);
+                        dropBoxCanvas.AllowDrop = false;
+                        walze = rotor;
+                    }
+
+                    // Clean up our mess :) 
+                    //DragScope.AllowDrop = previousDrop;
+                    if (_adorner != null)
+                        AdornerLayer.GetAdornerLayer(DragScope).Remove(_adorner);
+
+                    _adorner = null;
+
+                    DragScope.PreviewDragOver -= draghandler;
+
+                    //IsDragging = false;
+
+
+                    // Initialize the drag & drop operation
+                    //DataObject dragData = new DataObject("myFormat", button.Uid);
+
+                    //DragDrop.DoDragDrop(button, dragData , DragDropEffects.Move);
+
                 }
-
-                // Clean up our mess :) 
-                //DragScope.AllowDrop = previousDrop;
-                if (_adorner != null)
-                    AdornerLayer.GetAdornerLayer(DragScope).Remove(_adorner);
-
-                _adorner = null;
-
-                DragScope.PreviewDragOver -= draghandler;
-
-                //IsDragging = false;
-
-
-                // Initialize the drag & drop operation
-                //DataObject dragData = new DataObject("myFormat", button.Uid);
-
-                //DragDrop.DoDragDrop(button, dragData , DragDropEffects.Move);
-
+            }
+            catch (Exception ex)
+            {
+                Enigma.LogMessage(String.Format("Exception in Walze_MouseMove: {0}", ex.Message), NotificationLevel.Warning);
             }
         }
 
         private void Walze_MouseMove1(object sender, MouseEventArgs e)
         {
-            // Get the current mouse position
-            Point mousePos = e.GetPosition(null);
-            Vector diff = startPoint - mousePos;
-            Image rotor = sender as Image;
-
-
-            if (e.LeftButton == MouseButtonState.Pressed &&
-                Math.Abs(diff.X) - 4 > SystemParameters.MinimumHorizontalDragDistance &&
-                Math.Abs(diff.Y) - 4 > SystemParameters.MinimumVerticalDragDistance)
+            try
             {
-                // Get the dragged ListViewItem
-
-                everythingblack();
-                //lList[Int32.Parse(button.Uid)].X2 = mousePos.X;
-                // Find the data behind the ListViewItem
-
-                // Let's define our DragScope .. In this case it is every thing inside our main window .. 
-                DragScope = mainCanvas as FrameworkElement;
-                System.Diagnostics.Debug.Assert(DragScope != null);
-
-                // We enable Drag & Drop in our scope ...  We are not implementing Drop, so it is OK, but this allows us to get DragOver 
-                bool previousDrop = DragScope.AllowDrop;
-                walzenarea.AllowDrop = true;
-                dropBoxCanvasWalze.AllowDrop = true;
-                //DragScope.AllowDrop = true;
-
-                // Let's wire our usual events.. 
-                // GiveFeedback just tells it to use no standard cursors..  
-
-                //GiveFeedbackEventHandler feedbackhandler = new GiveFeedbackEventHandler(DragSource_GiveFeedback);
-                //this.DragSource.GiveFeedback += feedbackhandler;
-
-                // The DragOver event ... 
-                DragEventHandler draghandler = new DragEventHandler(Window1_DragOver2);
-                DragScope.PreviewDragOver += draghandler;
-                DragScope.PreviewMouseLeftButtonUp += aktuellupdate;
-
-                // Drag Leave is optional, but write up explains why I like it .. 
-                //DragEventHandler dragleavehandler = new DragEventHandler(DragScope_DragLeave);
-                //DragScope.DragLeave += dragleavehandler;
-
-                // QueryContinue Drag goes with drag leave... 
-                //QueryContinueDragEventHandler queryhandler = new QueryContinueDragEventHandler(DragScope_QueryContinueDrag);
-                //DragScope.QueryContinueDrag += queryhandler;
-                dropBoxCanvasWalze.Children.Remove(rotor);
-
-                //steckerbrett.Children.Insert(Int32.Parse(button.Uid), button2);
-
-                //Here we create our adorner.. 
-                _adorner = new DragAdorner(DragScope, (UIElement)rotor, true, 1, this.ActualWidth, this.ActualHeight);
-
-                _layer = AdornerLayer.GetAdornerLayer(DragScope as Visual);
-                _layer.Add(_adorner);
+                // Get the current mouse position
+                Point mousePos = e.GetPosition(null);
+                Vector diff = startPoint - mousePos;
+                Image rotor = sender as Image;
 
 
-                suc = false;
-                IsDragging = true;
-                //_dragHasLeftScope = false;
-                //Finally lets drag drop 
-                //if (!button.Uid.Equals(button.Content.ToString()))
-                //  switchbuttons(Int32.Parse(button.Content.ToString()), Int32.Parse(button.Uid));
-
-
-
-                DataObject data = new DataObject("myFormat", rotor.Uid);
-                DragDropEffects de = DragDrop.DoDragDrop(mainmainmain, data, DragDropEffects.Move);
-
-
-                if (!suc)
+                if (e.LeftButton == MouseButtonState.Pressed &&
+                    Math.Abs(diff.X) - 4 > SystemParameters.MinimumHorizontalDragDistance &&
+                    Math.Abs(diff.Y) - 4 > SystemParameters.MinimumVerticalDragDistance)
                 {
-                    dropBoxCanvasWalze.Children.Add(rotor);
-                    rotorarea.AllowDrop = false;
-                    dropBoxCanvasWalze.AllowDrop = false;
+                    // Get the dragged ListViewItem
+
+                    everythingblack();
+                    //lList[Int32.Parse(button.Uid)].X2 = mousePos.X;
+                    // Find the data behind the ListViewItem
+
+                    // Let's define our DragScope .. In this case it is every thing inside our main window .. 
+                    DragScope = mainCanvas as FrameworkElement;
+                    System.Diagnostics.Debug.Assert(DragScope != null);
+
+                    // We enable Drag & Drop in our scope ...  We are not implementing Drop, so it is OK, but this allows us to get DragOver 
+                    bool previousDrop = DragScope.AllowDrop;
+                    walzenarea.AllowDrop = true;
+                    dropBoxCanvasWalze.AllowDrop = true;
+                    //DragScope.AllowDrop = true;
+
+                    // Let's wire our usual events.. 
+                    // GiveFeedback just tells it to use no standard cursors..  
+
+                    //GiveFeedbackEventHandler feedbackhandler = new GiveFeedbackEventHandler(DragSource_GiveFeedback);
+                    //this.DragSource.GiveFeedback += feedbackhandler;
+
+                    // The DragOver event ... 
+                    DragEventHandler draghandler = new DragEventHandler(Window1_DragOver2);
+                    DragScope.PreviewDragOver += draghandler;
+                    DragScope.PreviewMouseLeftButtonUp += aktuellupdate;
+
+                    // Drag Leave is optional, but write up explains why I like it .. 
+                    //DragEventHandler dragleavehandler = new DragEventHandler(DragScope_DragLeave);
+                    //DragScope.DragLeave += dragleavehandler;
+
+                    // QueryContinue Drag goes with drag leave... 
+                    //QueryContinueDragEventHandler queryhandler = new QueryContinueDragEventHandler(DragScope_QueryContinueDrag);
+                    //DragScope.QueryContinueDrag += queryhandler;
+                    dropBoxCanvasWalze.Children.Remove(rotor);
+
+                    //steckerbrett.Children.Insert(Int32.Parse(button.Uid), button2);
+
+                    //Here we create our adorner.. 
+                    _adorner = new DragAdorner(DragScope, (UIElement) rotor, true, 1, this.ActualWidth,
+                        this.ActualHeight);
+
+                    _layer = AdornerLayer.GetAdornerLayer(DragScope as Visual);
+                    _layer.Add(_adorner);
+
+
+                    suc = false;
+                    IsDragging = true;
+                    //_dragHasLeftScope = false;
+                    //Finally lets drag drop 
+                    //if (!button.Uid.Equals(button.Content.ToString()))
+                    //  switchbuttons(Int32.Parse(button.Content.ToString()), Int32.Parse(button.Uid));
+
+
+
+                    DataObject data = new DataObject("myFormat", rotor.Uid);
+                    DragDropEffects de = DragDrop.DoDragDrop(mainmainmain, data, DragDropEffects.Move);
+
+
+                    if (!suc)
+                    {
+                        dropBoxCanvasWalze.Children.Add(rotor);
+                        rotorarea.AllowDrop = false;
+                        dropBoxCanvasWalze.AllowDrop = false;
+                    }
+
+                    // Clean up our mess :) 
+                    //DragScope.AllowDrop = previousDrop;
+                    if (_adorner != null)
+                        AdornerLayer.GetAdornerLayer(DragScope).Remove(_adorner);
+
+                    _adorner = null;
+
+                    //           DragSource.GiveFeedback -= feedbackhandler;
+                    //         DragScope.DragLeave -= dragleavehandler;
+                    //       DragScope.QueryContinueDrag -= queryhandler;
+                    DragScope.PreviewDragOver -= draghandler;
+
+                    IsDragging = false;
+
+
+                    // Initialize the drag & drop operation
+                    //DataObject dragData = new DataObject("myFormat", button.Uid);
+
+                    //DragDrop.DoDragDrop(button, dragData , DragDropEffects.Move);
+
                 }
-
-                // Clean up our mess :) 
-                //DragScope.AllowDrop = previousDrop;
-                if (_adorner != null)
-                    AdornerLayer.GetAdornerLayer(DragScope).Remove(_adorner);
-
-                _adorner = null;
-
-                //           DragSource.GiveFeedback -= feedbackhandler;
-                //         DragScope.DragLeave -= dragleavehandler;
-                //       DragScope.QueryContinueDrag -= queryhandler;
-                DragScope.PreviewDragOver -= draghandler;
-
-                IsDragging = false;
-
-
-                // Initialize the drag & drop operation
-                //DataObject dragData = new DataObject("myFormat", button.Uid);
-
-                //DragDrop.DoDragDrop(button, dragData , DragDropEffects.Move);
-
+            }
+            catch (Exception ex)
+            {
+                Enigma.LogMessage(String.Format("Exception in Walze_MouseMove1: {0}", ex.Message),
+                    NotificationLevel.Warning);
             }
         }
 
         private void Rotor_MouseMove1(object sender, MouseEventArgs e)
         {
-            // Get the current mouse position
-            Point mousePos = e.GetPosition(null);
-            Vector diff = startPoint - mousePos;
-            Image rotor = sender as Image;
-
-
-            if (e.LeftButton == MouseButtonState.Pressed &&
-                Math.Abs(diff.X) - 4 > SystemParameters.MinimumHorizontalDragDistance &&
-                Math.Abs(diff.Y) - 4 > SystemParameters.MinimumVerticalDragDistance)
+            try
             {
-                // Get the dragged ListViewItem
-
-                everythingblack();
-                //lList[Int32.Parse(button.Uid)].X2 = mousePos.X;
-                // Find the data behind the ListViewItem
-
-                // Let's define our DragScope .. In this case it is every thing inside our main window .. 
-                //DragScope = rotorarea as FrameworkElement;
-                DragScope = mainCanvas as FrameworkElement;
-
-                System.Diagnostics.Debug.Assert(DragScope != null);
-
-                // We enable Drag & Drop in our scope ...  We are not implementing Drop, so it is OK, but this allows us to get DragOver 
-                bool previousDrop = DragScope.AllowDrop;
-                rotorarea.AllowDrop = true;
-                dropBoxCanvas.AllowDrop = true;
-                //DragScope.AllowDrop = true;
-
-                // Let's wire our usual events.. 
-                // GiveFeedback just tells it to use no standard cursors..  
-
-                //GiveFeedbackEventHandler feedbackhandler = new GiveFeedbackEventHandler(DragSource_GiveFeedback);
-                //this.DragSource.GiveFeedback += feedbackhandler;
-
-                // The DragOver event ... 
-                //DragEventHandler draghandler = new DragEventHandler(Window1_DragOver);
-                //DragScope.PreviewDragOver += draghandler;
-
-                DragEventHandler draghandler = new DragEventHandler(Window1_DragOver2);
-                DragScope.PreviewDragOver += draghandler;
-                DragScope.PreviewMouseLeftButtonUp += aktuellupdate;
-
-                // Drag Leave is optional, but write up explains why I like it .. 
-                //DragEventHandler dragleavehandler = new DragEventHandler(DragScope_DragLeave);
-                //DragScope.DragLeave += dragleavehandler;
-
-                // QueryContinue Drag goes with drag leave... 
-                //QueryContinueDragEventHandler queryhandler = new QueryContinueDragEventHandler(DragScope_QueryContinueDrag);
-                //DragScope.QueryContinueDrag += queryhandler;
-                dropBoxCanvas.Children.Remove(rotor);
-
-                //steckerbrett.Children.Insert(Int32.Parse(button.Uid), button2);
-
-                //Here we create our adorner.. 
-                _adorner = new DragAdorner(DragScope, (UIElement)rotor, true, 1, this.ActualWidth, this.ActualHeight);
-
-                _layer = AdornerLayer.GetAdornerLayer(DragScope as Visual);
-                _layer.Add(_adorner);
-
-                //maingrid.AllowDrop = true;
-
-                suc = false;
-                IsDragging = true;
-                //_dragHasLeftScope = false;
-                //Finally lets drag drop 
-                //if (!button.Uid.Equals(button.Content.ToString()))
-                //  switchbuttons(Int32.Parse(button.Content.ToString()), Int32.Parse(button.Uid));
+                // Get the current mouse position
+                Point mousePos = e.GetPosition(null);
+                Vector diff = startPoint - mousePos;
+                Image rotor = sender as Image;
 
 
-                DataObject data = new DataObject("myFormat", rotor.Uid);
-                justme = false;
-                DragDropEffects de = DragDrop.DoDragDrop(mainmainmain, data, DragDropEffects.Move);
-
-
-
-                if (!suc)
+                if (e.LeftButton == MouseButtonState.Pressed &&
+                    Math.Abs(diff.X) - 4 > SystemParameters.MinimumHorizontalDragDistance &&
+                    Math.Abs(diff.Y) - 4 > SystemParameters.MinimumVerticalDragDistance)
                 {
-                    dropBoxCanvas.Children.Add(rotor);
-                    rotorarea.AllowDrop = false;
-                    dropBoxCanvas.AllowDrop = false;
+                    // Get the dragged ListViewItem
+
+                    everythingblack();
+                    //lList[Int32.Parse(button.Uid)].X2 = mousePos.X;
+                    // Find the data behind the ListViewItem
+
+                    // Let's define our DragScope .. In this case it is every thing inside our main window .. 
+                    //DragScope = rotorarea as FrameworkElement;
+                    DragScope = mainCanvas as FrameworkElement;
+
+                    System.Diagnostics.Debug.Assert(DragScope != null);
+
+                    // We enable Drag & Drop in our scope ...  We are not implementing Drop, so it is OK, but this allows us to get DragOver 
+                    bool previousDrop = DragScope.AllowDrop;
+                    rotorarea.AllowDrop = true;
+                    dropBoxCanvas.AllowDrop = true;
+                    //DragScope.AllowDrop = true;
+
+                    // Let's wire our usual events.. 
+                    // GiveFeedback just tells it to use no standard cursors..  
+
+                    //GiveFeedbackEventHandler feedbackhandler = new GiveFeedbackEventHandler(DragSource_GiveFeedback);
+                    //this.DragSource.GiveFeedback += feedbackhandler;
+
+                    // The DragOver event ... 
+                    //DragEventHandler draghandler = new DragEventHandler(Window1_DragOver);
+                    //DragScope.PreviewDragOver += draghandler;
+
+                    DragEventHandler draghandler = new DragEventHandler(Window1_DragOver2);
+                    DragScope.PreviewDragOver += draghandler;
+                    DragScope.PreviewMouseLeftButtonUp += aktuellupdate;
+
+                    // Drag Leave is optional, but write up explains why I like it .. 
+                    //DragEventHandler dragleavehandler = new DragEventHandler(DragScope_DragLeave);
+                    //DragScope.DragLeave += dragleavehandler;
+
+                    // QueryContinue Drag goes with drag leave... 
+                    //QueryContinueDragEventHandler queryhandler = new QueryContinueDragEventHandler(DragScope_QueryContinueDrag);
+                    //DragScope.QueryContinueDrag += queryhandler;
+                    dropBoxCanvas.Children.Remove(rotor);
+
+                    //steckerbrett.Children.Insert(Int32.Parse(button.Uid), button2);
+
+                    //Here we create our adorner.. 
+                    _adorner = new DragAdorner(DragScope, (UIElement) rotor, true, 1, this.ActualWidth,
+                        this.ActualHeight);
+
+                    _layer = AdornerLayer.GetAdornerLayer(DragScope as Visual);
+                    _layer.Add(_adorner);
+
+                    //maingrid.AllowDrop = true;
+
+                    suc = false;
+                    IsDragging = true;
+                    //_dragHasLeftScope = false;
+                    //Finally lets drag drop 
+                    //if (!button.Uid.Equals(button.Content.ToString()))
+                    //  switchbuttons(Int32.Parse(button.Content.ToString()), Int32.Parse(button.Uid));
+
+
+                    DataObject data = new DataObject("myFormat", rotor.Uid);
+                    justme = false;
+                    DragDropEffects de = DragDrop.DoDragDrop(mainmainmain, data, DragDropEffects.Move);
+
+
+
+                    if (!suc)
+                    {
+                        dropBoxCanvas.Children.Add(rotor);
+                        rotorarea.AllowDrop = false;
+                        dropBoxCanvas.AllowDrop = false;
+                    }
+
+                    // Clean up our mess :) 
+                    DragScope.AllowDrop = previousDrop;
+                    if (_adorner != null)
+                        AdornerLayer.GetAdornerLayer(DragScope).Remove(_adorner);
+
+                    _adorner = null;
+
+                    //           DragSource.GiveFeedback -= feedbackhandler;
+                    //         DragScope.DragLeave -= dragleavehandler;
+                    //       DragScope.QueryContinueDrag -= queryhandler;
+                    DragScope.PreviewDragOver -= draghandler;
+
+                    justme = true;
+                    //IsDragging = false;
+
+
+                    // Initialize the drag & drop operation
+                    //DataObject dragData = new DataObject("myFormat", button.Uid);
+
+                    //DragDrop.DoDragDrop(button, dragData , DragDropEffects.Move);
+
                 }
-
-                // Clean up our mess :) 
-                DragScope.AllowDrop = previousDrop;
-                if (_adorner != null)
-                    AdornerLayer.GetAdornerLayer(DragScope).Remove(_adorner);
-
-                _adorner = null;
-
-                //           DragSource.GiveFeedback -= feedbackhandler;
-                //         DragScope.DragLeave -= dragleavehandler;
-                //       DragScope.QueryContinueDrag -= queryhandler;
-                DragScope.PreviewDragOver -= draghandler;
-
-                justme = true;
-                //IsDragging = false;
-
-
-                // Initialize the drag & drop operation
-                //DataObject dragData = new DataObject("myFormat", button.Uid);
-
-                //DragDrop.DoDragDrop(button, dragData , DragDropEffects.Move);
-
+            }
+            catch (Exception ex)
+            {
+                Enigma.LogMessage(String.Format("Exception in Rotor_MouseMove1: {0}", ex.Message),
+                    NotificationLevel.Warning);
             }
         }
 
         private void List_Drop(object sender, DragEventArgs e)
         {
-
-
-
-            maingrid.AllowDrop = false;
-
-            aktuell = -1;
-            Button dummy = new Button();
-
-            String uID = e.Data.GetData("myFormat") as String;
-            Button button = sender as Button;
-            int myInteger1 = Int32.Parse(uID);
-            int myInteger2 = Int32.Parse(button.Uid);
-
-            if (b && (button.Content.ToString().Equals(button.Uid) || Int32.Parse(button.Content.ToString()).Equals(myInteger1)))
+            try
             {
-                switchbuttons(myInteger1, myInteger2);
-            }
 
-            else if (b && !button.Content.ToString().Equals(button.Uid))
+
+                maingrid.AllowDrop = false;
+
+                aktuell = -1;
+                Button dummy = new Button();
+
+                String uID = e.Data.GetData("myFormat") as String;
+                Button button = sender as Button;
+                int myInteger1 = Int32.Parse(uID);
+                int myInteger2 = Int32.Parse(button.Uid);
+
+                if (b && (button.Content.ToString().Equals(button.Uid) ||
+                          Int32.Parse(button.Content.ToString()).Equals(myInteger1)))
+                {
+                    switchbuttons(myInteger1, myInteger2);
+                }
+
+                else if (b && !button.Content.ToString().Equals(button.Uid))
+                {
+                    switchbuttons(Int32.Parse(button.Content.ToString()), myInteger2);
+                    switchbuttons(myInteger1, myInteger2);
+                }
+
+
+                else
+                    b = true;
+
+                syncPluboardSettings();
+            }
+            catch (Exception ex)
             {
-                switchbuttons(Int32.Parse(button.Content.ToString()), myInteger2);
-                switchbuttons(myInteger1, myInteger2);
+                Enigma.LogMessage(String.Format("Exception in List_Drop: {0}", ex.Message), NotificationLevel.Warning);
             }
-
-
-            else
-                b = true;
-
-            syncPluboardSettings();
-
         }
 
         private void List_Drop2(object sender, DragEventArgs e)
         {
-            suc = true;
-            String uID = e.Data.GetData("myFormat") as String;
-            dropBoxCanvas.AllowDrop = false;
+            try
+            {
+                suc = true;
+                String uID = e.Data.GetData("myFormat") as String;
+                dropBoxCanvas.AllowDrop = false;
 
-            int urint = Int32.Parse(uID);
-            setImage(true,urint-1);
+                int urint = Int32.Parse(uID);
+                setImage(true, urint - 1);
+            }
+            catch (Exception ex)
+            {
+                Enigma.LogMessage(String.Format("Exception in List_Drop2: {0}", ex.Message), NotificationLevel.Warning);
+            }
 
         }
 
         private void List_Drop21(object sender, DragEventArgs e)
         {
+            try
+            {
+                suc = true;
 
-            suc = true;
+                String uID = e.Data.GetData("myFormat") as String;
 
-            String uID = e.Data.GetData("myFormat") as String;
-            
-            dropBoxCanvasWalze.AllowDrop = false;
-            walzenarea.AllowDrop = false;
-            int urint = Int32.Parse(uID);
+                dropBoxCanvasWalze.AllowDrop = false;
+                walzenarea.AllowDrop = false;
+                int urint = Int32.Parse(uID);
 
-            setImage(false, urint - 1);
+                setImage(false, urint - 1);
+            }
+            catch (Exception ex)
+            {
+                Enigma.LogMessage(String.Format("Exception in List_Drop21: {0}", ex.Message), NotificationLevel.Warning);
+            }
         }
 
         private void List_Drop31(object sender, DragEventArgs e)
         {
-            suc = true;
-            rotorarea.AllowDrop = false;
-
-            dropBoxCanvas.AllowDrop = false;
-            String uID = e.Data.GetData("myFormat") as String;
-
-            int urint = Int32.Parse(uID);
-       
-            rotorarea.Children.Remove(dummyrec[1]);
-            if (settings.Rotor2 == urint - 1)
+            try
             {
-                setRotor(1);
+                suc = true;
+                rotorarea.AllowDrop = false;
+
+                dropBoxCanvas.AllowDrop = false;
+                String uID = e.Data.GetData("myFormat") as String;
+
+                int urint = Int32.Parse(uID);
+
+                rotorarea.Children.Remove(dummyrec[1]);
+                if (settings.Rotor2 == urint - 1)
+                {
+                    setRotor(1);
+                }
+                else
+                {
+                    settings.Rotor2 = urint - 1;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                settings.Rotor2 = urint - 1;
+                Enigma.LogMessage(String.Format("Exception in List_Drop31: {0}", ex.Message), NotificationLevel.Warning);
             }
-            
-       
+
         }
 
         private void List_Drop32(object sender, DragEventArgs e)
         {
-            suc = true;
-            rotorarea.AllowDrop = false;
-            dropBoxCanvas.AllowDrop = false;
-            String uID = e.Data.GetData("myFormat") as String;
+            try
+            {
+                suc = true;
+                rotorarea.AllowDrop = false;
+                dropBoxCanvas.AllowDrop = false;
+                String uID = e.Data.GetData("myFormat") as String;
 
-            int urint = Int32.Parse(uID);
-    
-            rotorarea.Children.Remove(dummyrec[2]);
-            if (settings.Rotor1 == urint - 1)
-            {
-                setRotor(2);
+                int urint = Int32.Parse(uID);
+
+                rotorarea.Children.Remove(dummyrec[2]);
+                if (settings.Rotor1 == urint - 1)
+                {
+                    setRotor(2);
+                }
+                else
+                {
+                    settings.Rotor1 = urint - 1;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                settings.Rotor1 = urint - 1;
+                Enigma.LogMessage(String.Format("Exception in List_Drop32: {0}", ex.Message), NotificationLevel.Warning);
             }
         }
 
         private void List_Drop33(object sender, DragEventArgs e)
         {
-            suc = true;
-            rotorarea.AllowDrop = false;
-            dropBoxCanvas.AllowDrop = false;
-            String uID = e.Data.GetData("myFormat") as String;
+            try
+            {
+                suc = true;
+                rotorarea.AllowDrop = false;
+                dropBoxCanvas.AllowDrop = false;
+                String uID = e.Data.GetData("myFormat") as String;
 
-            int urint = Int32.Parse(uID);
-            
-            rotorarea.Children.Remove(dummyrec[3]);
-            settings.Rotor4 = urint - 1;
-            
+                int urint = Int32.Parse(uID);
+
+                rotorarea.Children.Remove(dummyrec[3]);
+                settings.Rotor4 = urint - 1;
+            }
+            catch (Exception ex)
+            {
+                Enigma.LogMessage(String.Format("Exception in List_Drop33: {0}", ex.Message), NotificationLevel.Warning);
+            }
         }
 
         private void List_Drop30(object sender, DragEventArgs e)
         {
-            suc = true;
-            rotorarea.AllowDrop = false;
-            dropBoxCanvas.AllowDrop = false;
-            String uID = e.Data.GetData("myFormat") as String;
+            try
+            {
+                suc = true;
+                rotorarea.AllowDrop = false;
+                dropBoxCanvas.AllowDrop = false;
+                String uID = e.Data.GetData("myFormat") as String;
 
-            int urint = Int32.Parse(uID);
-            rotorarea.Children.Remove(dummyrec[0]);
-            if (settings.Rotor3 == urint - 1)
-            {
-                setRotor(0);
+                int urint = Int32.Parse(uID);
+                rotorarea.Children.Remove(dummyrec[0]);
+                if (settings.Rotor3 == urint - 1)
+                {
+                    setRotor(0);
+                }
+                else
+                {
+                    settings.Rotor3 = urint - 1;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                settings.Rotor3 = urint - 1;
+                Enigma.LogMessage(String.Format("Exception in List_Drop30: {0}", ex.Message), NotificationLevel.Warning);
             }
         }
 
         private void List_Drop4(object sender, DragEventArgs e)
         {
-            suc = true;
-            walzenarea.AllowDrop = false;
-            dropBoxCanvasWalze.AllowDrop = false;
-            String uID = e.Data.GetData("myFormat") as String;
-            int urint = Int32.Parse(uID);
-            walzenarea.Children.Remove(dummyrec[3]);
-            if (settings.Reflector == urint - 1)
+            try
             {
-                setReflector();
+                suc = true;
+                walzenarea.AllowDrop = false;
+                dropBoxCanvasWalze.AllowDrop = false;
+                String uID = e.Data.GetData("myFormat") as String;
+                int urint = Int32.Parse(uID);
+                walzenarea.Children.Remove(dummyrec[3]);
+                if (settings.Reflector == urint - 1)
+                {
+                    setReflector();
+                }
+                else
+                {
+                    settings.Reflector = urint - 1;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                settings.Reflector = urint - 1;
+                Enigma.LogMessage(String.Format("Exception in List_Drop4: {0}", ex.Message), NotificationLevel.Warning);
             }
         }
 
@@ -4013,11 +4123,6 @@ namespace Cryptool.Enigma
             t.Start();
         }
 
-        private void thelp(object sender, EventArgs e)
-        {
-            //justme = true;
-        }
-
         private void changeSettings(object sender, EventArgs e)
         {
             justme = false;
@@ -4093,22 +4198,6 @@ namespace Cryptool.Enigma
             
         }
 
-        private void List_DragEnter(object sender, DragEventArgs e)
-        {
-
-            if (!e.Data.GetDataPresent("String") || sender == e.Source)
-            {
-                e.Effects = DragDropEffects.None;
-
-            }
-
-        }
-
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
         private Point _startPoint;
         private bool _isDragging;
         FrameworkElement _dragScope;
@@ -4129,63 +4218,51 @@ namespace Cryptool.Enigma
 
         void Window1_DragOver(object sender, DragEventArgs args)
         {
-
-            if (_adorner != null)
+            try
             {
-                if (aktuell != -1)
+                if (_adorner != null)
                 {
-                    lList[aktuell].X2 = args.GetPosition(mainmain).X * 800 / this.mainmain.ActualWidth;
-                    lList[aktuell].Y2 = args.GetPosition(mainmain).Y * 1000 / this.mainmain.ActualHeight - 520; /* 1250 / this.ActualHeight - 380 * 1250 / this.ActualHeight */ ;
-                }
-                _adorner.LeftOffset = args.GetPosition(DragScope).X /* - _startPoint.X */ ;
-                _adorner.TopOffset = args.GetPosition(DragScope).Y /* - _startPoint.Y */ ;
+                    if (aktuell != -1)
+                    {
+                        lList[aktuell].X2 = args.GetPosition(mainmain).X * 800 / this.mainmain.ActualWidth;
+                        lList[aktuell].Y2 =
+                            args.GetPosition(mainmain).Y * 1000 / this.mainmain.ActualHeight -
+                            520; /* 1250 / this.ActualHeight - 380 * 1250 / this.ActualHeight */
+                        ;
+                    }
 
+                    _adorner.LeftOffset = args.GetPosition(DragScope).X /* - _startPoint.X */;
+                    _adorner.TopOffset = args.GetPosition(DragScope).Y /* - _startPoint.Y */;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Enigma.LogMessage(String.Format("Exception in Window1_DragOver: {0}", ex.Message), NotificationLevel.Warning);
             }
         }
 
         void Window1_DragOver2(object sender, DragEventArgs args)
         {
-
-            if (_adorner != null)
+            try
             {
+                if (_adorner != null)
+                {
 
-                _adorner.LeftOffset = args.GetPosition(DragScope).X /* - _startPoint.X */ ;
-                _adorner.TopOffset = args.GetPosition(DragScope).Y /* - _startPoint.Y */ ;
+                    _adorner.LeftOffset = args.GetPosition(DragScope).X /* - _startPoint.X */;
+                    _adorner.TopOffset = args.GetPosition(DragScope).Y /* - _startPoint.Y */;
 
+                }
+            }
+            catch (Exception ex)
+            {
+                Enigma.LogMessage(String.Format("Exception in Window1_DragOver2: {0}", ex.Message), NotificationLevel.Warning);
             }
         }
 
         void aktuellupdate(object sender, MouseButtonEventArgs args)
         {
             aktuell = -1;
-        }
-
-        void DragSource_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            _startPoint = e.GetPosition(null);
-        }
-
-        void DragSource_PreviewMouseMove(object sender, MouseEventArgs e)
-        {
-            Point position0 = e.GetPosition(null);
-            lList[0].X2 = position0.X;
-            lList[0].Y2 = position0.Y;
-            if (e.LeftButton == MouseButtonState.Pressed && !IsDragging)
-            {
-                Point position = e.GetPosition(null);
-
-                if (Math.Abs(position.X - _startPoint.X) > SystemParameters.MinimumHorizontalDragDistance ||
-                    Math.Abs(position.Y - _startPoint.Y) > SystemParameters.MinimumVerticalDragDistance)
-                {
-                    StartDragInProcAdorner(e);
-                }
-            }
-        }
-
-        private void StartDragInProcAdorner(MouseEventArgs e)
-        {
-
-
         }
 
         #endregion
