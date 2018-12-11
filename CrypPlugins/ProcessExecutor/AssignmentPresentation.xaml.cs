@@ -87,7 +87,7 @@ namespace Cryptool.ProcessExecutor
             var lvi = sender as ListViewItem;
             var r = lvi.Content as ResultEntry;
 
-            if (r != null)
+            if (r != null && _updateOutputFromUserChoice != null)
             {
                 _updateOutputFromUserChoice(r.Key, r.Text);
             }
