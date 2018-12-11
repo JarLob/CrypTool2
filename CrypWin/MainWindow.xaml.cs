@@ -398,18 +398,25 @@ namespace Cryptool.CrypWin
                 Environment.Exit(0);
             }
 
-            // check whether update is available to be installed
-            if (IsUpdaterEnabled
-                && CheckCommandProjectFileGiven().Count == 0 // NO project file given as command line argument
-                && IsUpdateFileAvailable()) // update file ready for install
+            try
             {
-                // really start the update process?
-                if (Settings.Default.AutoInstall || AskForInstall())
+                // check whether update is available to be installed
+                if (IsUpdaterEnabled
+                    && CheckCommandProjectFileGiven().Count == 0 // NO project file given as command line argument
+                    && IsUpdateFileAvailable()) // update file ready for install
                 {
-                    // start update and check whether it seems to succeed
-                    if (OnUpdate())
-                        return; // looking good, exit CrypWin constructor now
+                    // really start the update process?
+                    if (Settings.Default.AutoInstall || AskForInstall())
+                    {
+                        // start update and check whether it seems to succeed
+                        if (OnUpdate())
+                            return; // looking good, exit CrypWin constructor now
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception occured during check for update: {0}", ex.Message), NotificationLevel.Warning);
             }
 
             //upgrade the config
