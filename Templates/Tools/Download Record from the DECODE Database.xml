@@ -57,7 +57,7 @@
 	<replacement key="$downloaded_document$" value="Heruntergeladenes Dokument" />
 	<replacement key="$memo$" value="Diese Vorlage zeigt, wie Sie verschlüsselte historische Dokumente aus der DECODE-Datenbank herunterladen: \line
 1) Starten Sie die Vorlage (Play-Button). \line
-2) Im DECODE-Downloader wird eine Liste der Datenbanksätze angezeigt. Diese Datensätze können durch Eingabe eines Filtertextes eingeschränkt werden, z.B. &quot;Copiale&quot;.\line
+2) Im DECODE-Downloader wird eine Liste der Datenbankeinträge angezeigt. Diese Datensätze können durch Eingabe eines Filtertextes eingeschränkt werden, z.B. &quot;Copiale&quot;.\line
 3) Durch Doppelklick auf einen Eintrag in der DECODE-Downloader-Liste werden die Metadaten des Datensatzes in dem DECODE-Betrachter angezeigt.\line
 4) Im DECODE-Betrachter können zusätzliche Dokumente und Bilder heruntergeladen werden: Doppelklicken Sie dazu in den Listen auf den jeweiligen Bild- oder Dokumenteintrag. Diese Downloads werden in den Komponenten &quot; Heruntergeladenes Dokument &quot; und &quot;Heruntergeladenes Bild &quot; angezeigt. \line"/>
   </replacements>
