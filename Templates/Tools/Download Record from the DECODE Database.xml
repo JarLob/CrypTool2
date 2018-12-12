@@ -29,12 +29,11 @@
 	<replacement key="$string_encoder$" value="String Encoder" />
 	<replacement key="$downloaded_image$" value="Downloaded Image" />
 	<replacement key="$downloaded_document$" value="Downloaded Document" />
-	<replacement key="$memo$" value="This template shows how to download data from the DECODE database:\line
-1) Start the template.\line
-2) The DOCDE Downloader will show a list of database records. These can be filtered by entering a filter text, e.g. &quot;Copiale&quot;.\line
-3) To download a record, double click on an entry in the DECODE Downloader list. Then, the DECODE Viewer will present the downloaded record data.\line
-4) In the DECODE Viewer, additional documents and images can be downloaded.\line
-5) To download an image or a document, double click in the DECODE Viewer on the specific image or document entry in the lists. The viewer will download these and they will be shown in the &quot;Downloaded Document&quot; or &quot;Downloaded Image&quot; component.\line" />  
+	<replacement key="$memo$" value="This template shows how to download encrypted historical documents from the DECODE database:\line
+1) Start the template (Play button).\line
+2) Within the DECODE Downloader a list of database records is shown. These records can be limited by entering a filter text, e.g. &quot;Copiale&quot;.\line
+3) Via double click on an entry in the DECODE Downloader list, the record's meta data are shown in the DECODE Viewer.\line
+4) In the DECODE Viewer, additional documents and images can be downloaded: To do so, double click on the specific image or document entry in the lists. These downloads are shown in the components &quot;Downloaded Document&quot; and &quot;Downloaded Image&quot;.\line"/>
   </replacements>
   
   <replacements lang="ru">
@@ -43,12 +42,11 @@
 	<replacement key="$string_encoder$" value="Строка-Codierer" />
 	<replacement key="$downloaded_image$" value="Загружено изображение" />
 	<replacement key="$downloaded_document$" value="Загруженный документ" />
-	<replacement key="$memo$" value="Этот шаблон показывает, как загружать данные из базы данных DECODE: \line
-1) Запустите шаблон. \line
-2) DOCDE Downloader отобразит список записей базы данных. Их можно фильтровать, введя текст фильтра, например. «Copiale». \line
-3) Чтобы загрузить запись, дважды щелкните запись в списке DECODE Downloader. Затем DECODE Viewer представит загруженные данные записи. \line
-4) В DECODE Viewer можно загрузить дополнительные документы и изображения. \line
-5) Чтобы загрузить изображение или документ, дважды щелкните в средстве просмотра DECODE на конкретном изображении или записи документа в списках. Зритель загрузит их, и они будут показаны в «Загруженном документе». или «Скачанное изображение» компонент. \line" /> 
+	<replacement key="$memo$" value="Этот шаблон показывает, как загрузить зашифрованные исторические документы из базы данных DECODE: \line
+1) Запустить шаблон (кнопка Play). \line
+2) В DECODE Downloader отображается список записей базы данных. Эти записи могут быть ограничены путем ввода текста фильтра, например, «Copiale». \line
+3) Двойным щелчком по записи в списке DECODE Downloader метаданные записи отображаются в DECODE Viewer. \line
+4) В DECODE Viewer можно загружать дополнительные документы и изображения: для этого дважды щелкните конкретное изображение или запись документа в списках. Эти загрузки показаны в компонентах «Загруженный документ». и «Загруженное изображение»." /> 
   </replacements>
   
   <replacements lang="de">
@@ -57,12 +55,11 @@
 	<replacement key="$string_encoder$" value="String-Codierer" />
 	<replacement key="$downloaded_image$" value="Heruntergeladenes Bild" />
 	<replacement key="$downloaded_document$" value="Heruntergeladenes Dokument" />
-	<replacement key="$memo$" value="Diese Vorlage zeigt, wie Daten aus der DECODE-Datenbank heruntergeladen werden:\line
-1) Starten Sie die Vorlage.\line
-2) Der DOCDE-Downloader zeigt eine Liste der Datenbankeinträge an. Diese können durch Eingabe eines Filtertextes, z.B. &quot;Copiale&quot;, gefilter werden.\line
-3) Zum Herunterladen eines Datensatzes klicken Sie doppelt auf einen Eintrag in der DECODE-Downloader-Liste. Im DECODE-Betracher wird dann der heruntergeladene Datensatz angezeigt.\line
-4) Im DECODE-Betrachter können dann zusätzliche Dokumente und Bilder heruntergeladen werden. \line
-5) Um ein Bild oder Dokument herunterzuladen, klicken Sie im DECODE-Betrachter doppelt auf den entsprechenden Bild- oder Dokumenteintrag in der jeweiligen Liste. Der Betrachter lädt diese dann herunter und sie werden in &quot;Heruntergeladenes Bild&quot; bzw &quot;Heruntergeladenes Dokument&quot; angezeigt. \line" />
+	<replacement key="$memo$" value="Diese Vorlage zeigt, wie Sie verschlüsselte historische Dokumente aus der DECODE-Datenbank herunterladen: \line
+1) Starten Sie die Vorlage (Play-Button). \line
+2) Im DECODE-Downloader wird eine Liste der Datenbanksätze angezeigt. Diese Datensätze können durch Eingabe eines Filtertextes eingeschränkt werden, z.B. &quot;Copiale&quot;.\line
+3) Durch Doppelklick auf einen Eintrag in der DECODE-Downloader-Liste werden die Metadaten des Datensatzes in dem DECODE-Betrachter angezeigt.\line
+4) Im DECODE-Betrachter können zusätzliche Dokumente und Bilder heruntergeladen werden: Doppelklicken Sie dazu in den Listen auf den jeweiligen Bild- oder Dokumenteintrag. Diese Downloads werden in den Komponenten &quot; Heruntergeladenes Dokument &quot; und &quot;Heruntergeladenes Bild &quot; angezeigt. \line"/>
   </replacements>
   
 </sample>
