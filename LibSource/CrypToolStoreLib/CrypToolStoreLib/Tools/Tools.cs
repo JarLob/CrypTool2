@@ -99,9 +99,32 @@ namespace CrypToolStoreLib.Tools
             }
             if (bytes > 1024)
             {
-                return bytes / 1024.0 + " KB/sec";
+                return Math.Round(bytes / 1024.0, 2) + " KB/sec";
             }
             return bytes + " byte/sec";
+        }
+
+        /// <summary>
+        /// Returns a formatted string for a file size based on bytes
+        /// Shows GB, MB, KB, and byte
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        public static string FormatFileSizeString(long bytes)
+        {
+            if (bytes > (1024 * 1024 * 1024)) //GiB 
+            {
+                return Math.Round(bytes / (1024 * 1024 * 1024.0), 2) + " GB";
+            }
+            if (bytes > (1024 * 1024))
+            {
+                return Math.Round(bytes / (1024 * 1024.0), 2) + " MB";
+            }
+            if (bytes > 1024)
+            {
+                return Math.Round(bytes / 1024.0, 2) + " KB";
+            }
+            return bytes + " byte";
         }
     }
 }

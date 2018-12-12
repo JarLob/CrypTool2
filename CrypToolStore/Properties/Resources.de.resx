@@ -241,4 +241,7 @@
   <data name="Update" xml:space="preserve">
     <value>Updaten</value>
   </data>
+  <data name="FileSize" xml:space="preserve">
+    <value>Dateigröße:</value>
+  </data>
 </root>

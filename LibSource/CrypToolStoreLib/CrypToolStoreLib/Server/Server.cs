@@ -1063,7 +1063,7 @@ namespace CrypToolStoreLib.Server
         /// Handles RequestPublishedPluginListMessage
         /// responses with lists of published plugins
         /// </summary>
-        /// <param name="requestPluginListMessage"></param>
+        /// <param name="requestPublishedPluginListMessage"></param>
         /// <param name="sslStream"></param>
         private void HandleRequestPublishedPluginListMessage(RequestPublishedPluginListMessage requestPublishedPluginListMessage, SslStream sslStream)
         {
@@ -1084,6 +1084,19 @@ namespace CrypToolStoreLib.Server
                 else
                 {
                     List<PluginAndSource> pluginsAndSources = Database.GetPublishedPlugins(requestPublishedPluginListMessage.PublishState);
+                    foreach (PluginAndSource pluginAndSource in pluginsAndSources)
+                    {
+                        try
+                        {
+                            string filename = Constants.CLIENTHANDLER_PLUGIN_ASSEMBLIES_FOLDER + Path.DirectorySeparatorChar + "Assembly-" + pluginAndSource.Plugin.Id + "-" + pluginAndSource.Source.PluginVersion + ".zip";
+                            FileInfo fileInfo = new FileInfo(filename);
+                            pluginAndSource.FileSize = fileInfo.Length;
+                        }
+                        catch (Exception)
+                        {
+                            pluginAndSource.FileSize = 0;
+                        }
+                    }
                     ResponsePublishedPluginListMessage response = new ResponsePublishedPluginListMessage();
                     response.PluginsAndSources = pluginsAndSources;
                     string message = String.Format("Responding with published plugin list containing {0} elements", pluginsAndSources.Count);

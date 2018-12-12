@@ -97,6 +97,7 @@
                                 <RowDefinition Height="20"/>
                                 <RowDefinition Height="20"/>
                                 <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
@@ -111,22 +112,24 @@
                             <Label Grid.Row="3" Margin="45,0,0,0" Width="Auto" Height="30" VerticalAlignment="Top" Content="{Loc AuthorsEmails}" FontWeight="Bold"/>
                             <Label Grid.Row="4" Margin="45,0,0,0" Width="Auto" Height="30" VerticalAlignment="Top" Content="{Loc AuthorsInstitutes}" FontWeight="Bold"/>
                             <Label Grid.Row="5" Margin="45,0,0,0" Width="Auto" Height="30" VerticalAlignment="Top" Content="{Loc Version}" FontWeight="Bold"/>
+                            <Label Grid.Row="6" Margin="45,0,0,0" Width="Auto" Height="30" VerticalAlignment="Top" Content="{Loc FileSize}" FontWeight="Bold"/>
                             <Label Grid.Row="2" Margin="200,0,0,0" Name="SelectedPluginAuthorsName" Width="Auto" Height="30" VerticalAlignment="Top" FontWeight="Bold"/>
                             <Label Grid.Row="3" Margin="200,0,0,0" Name="SelectedPluginAuthorsEmail" Width="Auto" Height="30" VerticalAlignment="Top" FontWeight="Bold"/>
                             <Label Grid.Row="4" Margin="200,0,0,0" Name="SelectedPluginAuthorsInstitutes" Width="Auto" Height="30" VerticalAlignment="Top" FontWeight="Bold"/>
                             <Label Grid.Row="5"  Margin="200,0,0,0" Name="SelectedPluginVersion" Width="Auto" Height="30" VerticalAlignment="Top" FontWeight="Bold"/>
+                            <Label Grid.Row="6"  Margin="200,0,0,0" Name="SelectedPluginFileSize" Width="Auto" Height="30" VerticalAlignment="Top" FontWeight="Bold"/>
 
-                            <Label Grid.Row="6" Margin="45,10,0,0" Width="700" Height="300" HorizontalAlignment="Left" BorderBrush="LightSeaGreen" BorderThickness="1">
+                            <Label Grid.Row="7" Margin="45,10,0,0" Width="700" Height="300" HorizontalAlignment="Left" BorderBrush="LightSeaGreen" BorderThickness="1">
                                 <Label.Content>
                                     <AccessText TextWrapping="Wrap"  Name="SelectedPluginLongDescription"/>
                                 </Label.Content>
                             </Label>
-                            <Button Grid.Row="7" Margin="45,10,0,0" Click="InstallButton_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Name="InstallButton" Width="100" Height="30" Background="White" Content="{Loc Install}"/>
+                            <Button Grid.Row="8" Margin="45,10,0,0" Click="InstallButton_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Name="InstallButton" Width="100" Height="30" Background="White" Content="{Loc Install}"/>
                             <!-- Installation and update are the same; thus, we call the same event handler-->
-                            <Button Grid.Row="7" Margin="150,10,0,0" Click="InstallButton_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Name="UpdateButton" Width="100" Height="30" Background="White" Content="{Loc Update}"/>
-                            <Button Grid.Row="7" Margin="255,10,0,0" Click="DeleteButton_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Name="DeleteButton" Width="100" Height="30" Background="White" Content="{Loc Uninstall}"/>
-                            <ProgressBar Name="InstallationProgressBar" Grid.Row="7" Margin="375,10,0,0" Width="300" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Background="White" Visibility="Collapsed" />
-                            <Label Name="InstallationProgressText" Grid.Row="7" Margin="375,10,0,0" Width="300" Height="25" HorizontalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" Visibility="Collapsed"/>
+                            <Button Grid.Row="8" Margin="150,10,0,0" Click="InstallButton_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Name="UpdateButton" Width="100" Height="30" Background="White" Content="{Loc Update}"/>
+                            <Button Grid.Row="8" Margin="255,10,0,0" Click="DeleteButton_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Name="DeleteButton" Width="100" Height="30" Background="White" Content="{Loc Uninstall}"/>
+                            <ProgressBar Name="InstallationProgressBar" Grid.Row="8" Margin="375,10,0,0" Width="300" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Background="White" Visibility="Collapsed" />
+                            <Label Name="InstallationProgressText" Grid.Row="8" Margin="375,10,0,0" Width="300" Height="25" HorizontalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" Visibility="Collapsed"/>
                         </Grid>
                     </ScrollViewer>
                 </Border>

@@ -42,7 +42,7 @@ namespace Cryptool.CrypToolStore
         public int BuildVersion { get; set; }
         public bool IsInstalled { get; set; }
         public bool UpdateAvailable { get; set; }
-
+        public string FileSize { get; set; }
         private byte[] IconData { get; set; }
 
         public PublishState PublishState { get; set; }
@@ -64,8 +64,9 @@ namespace Cryptool.CrypToolStore
             Authornames = plugin.Authornames;
             Authoremails = plugin.Authoremails;
             Authorinstitutes = plugin.Authorinstitutes;
-            BuildVersion = pluginAndSource.Source.BuildVersion;
+            BuildVersion = pluginAndSource.Source.BuildVersion;            
             IconData = plugin.Icon;
+            FileSize = CrypToolStoreLib.Tools.Tools.FormatFileSizeString(pluginAndSource.FileSize);
         }
 
         /// <summary>

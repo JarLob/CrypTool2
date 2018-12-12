@@ -247,6 +247,7 @@ namespace Cryptool.CrypToolStore
                         SelectedPluginAuthorsEmail.Content = plugin.Authoremails;
                         SelectedPluginAuthorsInstitutes.Content = plugin.Authorinstitutes;
                         SelectedPluginVersion.Content = plugin.PluginVersion + "." + plugin.BuildVersion;
+                        SelectedPluginFileSize.Content = plugin.FileSize;
                         if (SelectedPlugin.IsInstalled)
                         {
                             InstallButton.IsEnabled = false;

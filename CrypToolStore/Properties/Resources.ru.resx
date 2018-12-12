@@ -238,4 +238,7 @@
   <data name="Update" xml:space="preserve">
     <value>Обновить</value>
   </data>
+  <data name="FileSize" xml:space="preserve">
+    <value>Размер файла:</value>
+  </data>
 </root>

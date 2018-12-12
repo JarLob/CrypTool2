@@ -352,6 +352,15 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die File size: ähnelt.
+        /// </summary>
+        internal static string FileSize {
+            get {
+                return ResourceManager.GetString("FileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Install ähnelt.
         /// </summary>
         internal static string Install {

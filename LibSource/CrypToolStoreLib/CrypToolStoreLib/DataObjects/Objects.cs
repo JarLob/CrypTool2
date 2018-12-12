@@ -360,6 +360,7 @@ namespace CrypToolStoreLib.DataObjects
 
         public Plugin Plugin { get; set; }
         public Source Source { get; set; }
+        public long FileSize { get; set; }
 
         /// <summary>
         /// Default constructor
@@ -368,6 +369,7 @@ namespace CrypToolStoreLib.DataObjects
         {
             Plugin = new Plugin();
             Source = new Source();
+            FileSize = 0;
         }
 
         /// <summary>
@@ -391,6 +393,10 @@ namespace CrypToolStoreLib.DataObjects
                         byte[] sourcebytes = Source.Serialize();
                         writer.Write((Int32)sourcebytes.Length);
                         writer.Write(sourcebytes);
+
+                        //3. serialize files ize of assembly zip
+                        writer.Write(FileSize);
+
                         return stream.ToArray();
                     }
                 }
@@ -424,6 +430,9 @@ namespace CrypToolStoreLib.DataObjects
                         byte[] sourcebytes = new byte[sourcebyteslength];
                         reader.Read(sourcebytes, 0, sourcebyteslength);
                         Source.Deserialize(sourcebytes);
+
+                        //3. serialize files ize of assembly zip
+                        FileSize = reader.ReadInt64();
                     }
                 }
             }

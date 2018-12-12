@@ -230,11 +230,8 @@ namespace CrypToolStoreLib.Database
 
             byte[] hash_bytes;
             byte[] salt_bytes = Tools.Tools.HexStringToByteArray(salt_from_database);
-            using (RNGCryptoServiceProvider rngCryptoServiceProvider = new RNGCryptoServiceProvider())
-            {
-                Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, salt_bytes, password_iterations_from_database);
-                hash_bytes = rfc2898DeriveBytes.GetBytes(hash_from_database.Length / 2);
-            }
+            Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, salt_bytes, password_iterations_from_database);
+            hash_bytes = rfc2898DeriveBytes.GetBytes(hash_from_database.Length / 2);
             string hash_string = Tools.Tools.ByteArrayToHexString(hash_bytes);
             //finally return true, if hashes match; otherwise return false
             return hash_string.Equals(hash_from_database);
@@ -492,14 +489,6 @@ namespace CrypToolStoreLib.Database
         /// Deletes the dedicated plugin identified by its id
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="username"></param>
-        /// <param name="name"></param>
-        /// <param name="shortdescription"></param>
-        /// <param name="longdescription"></param>
-        /// <param name="authornames"></param>
-        /// <param name="authoremails"></param>
-        /// <param name="authorinstitutes"></param>
-        /// <param name="icon"></param>
         public void DeletePlugin(int id)
         {
             logger.LogText(String.Format("Deleting plugin: id={0}", id), this, Logtype.Debug);
@@ -557,7 +546,7 @@ namespace CrypToolStoreLib.Database
         /// If username is set, it only returns plugins of that user
         /// icons are NOT included to save bandwith for this request
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="username"></param>
         /// <returns></returns>
         public List<Plugin> GetPlugins(string username = null)
         {
