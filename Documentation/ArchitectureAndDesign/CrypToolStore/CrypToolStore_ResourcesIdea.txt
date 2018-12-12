@@ -1,0 +1,29 @@
+"Concept for "resources" from CrypToolStore in CrypTool 2:"
+
+"Algorithm":
+
+Step 1)
+Developer uploads the resource file(e) he needs using the CrypToolStoreDeveloperClient. Here, he uploads a zip containing all his files.
+
+Step 2)
+Developer obtains via CrypToolStoreDeveloperClient the resource id and resource version, which are the "key" to his resources
+
+Step 3)
+
+Developer uses a public static method in CrypPluginBase to get the path to his resource directory:
+method: public static string CrypToolStoreResource.GetResourcePath(resourceId, resourceVersion);
+
+the method checks, whether the resource directory exists or not:
+if not => method prompts a messagebox asking the user to download the file
+  if user wants to download
+    after downloading and unzipping the resources (or NOT downloading it; depending on user's choice):
+
+method returns the path OR method returns null; depending on the existance of the resource folder
+
+Step 5)
+
+if return value was null => developer has to tell the user, that his component can not work without the resource
+if return value was a string => developer can use the path to find his files
+
+
+
