@@ -90,7 +90,7 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Authors&apos; Emails: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Authors&apos; Email(s): ähnelt.
         /// </summary>
         internal static string AuthorsEmails {
             get {
@@ -99,7 +99,7 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Author&apos;s Institutes: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Author&apos;s Institute(s): ähnelt.
         /// </summary>
         internal static string AuthorsInstitutes {
             get {
