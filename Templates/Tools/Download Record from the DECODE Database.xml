@@ -33,7 +33,7 @@
 1) Start the template (Play button).\line
 2) Within the DECODE Downloader a list of database records is shown. These records can be limited by entering a filter text, e.g. &quot;Copiale&quot;.\line
 3) Via double click on an entry in the DECODE Downloader list, the record's meta data are shown in the DECODE Viewer.\line
-4) In the DECODE Viewer, additional documents and images can be downloaded: To do so, double click on the specific image or document entry in the lists. These downloads are shown in the components &quot;Downloaded Document&quot; and &quot;Downloaded Image&quot;.\line"/>
+4) In the DECODE Viewer, additional documents and images can be downloaded: To do so, double click on the specific image or document entry in the lists. These downloads are shown in the components &quot;Downloaded Document&quot; and &quot;Downloaded Image&quot;."/>
   </replacements>
   
   <replacements lang="ru">
@@ -59,7 +59,7 @@
 1) Starten Sie die Vorlage (Play-Button). \line
 2) Im DECODE-Downloader wird eine Liste der Datenbankeinträge angezeigt. Diese Datensätze können durch Eingabe eines Filtertextes eingeschränkt werden, z.B. &quot;Copiale&quot;.\line
 3) Durch Doppelklick auf einen Eintrag in der DECODE-Downloader-Liste werden die Metadaten des Datensatzes in dem DECODE-Betrachter angezeigt.\line
-4) Im DECODE-Betrachter können zusätzliche Dokumente und Bilder heruntergeladen werden: Doppelklicken Sie dazu in den Listen auf den jeweiligen Bild- oder Dokumenteintrag. Diese Downloads werden in den Komponenten &quot; Heruntergeladenes Dokument &quot; und &quot;Heruntergeladenes Bild &quot; angezeigt. \line"/>
+4) Im DECODE-Betrachter können zusätzliche Dokumente und Bilder heruntergeladen werden: Doppelklicken Sie dazu in den Listen auf den jeweiligen Bild- oder Dokumenteintrag. Diese Downloads werden in den Komponenten &quot; Heruntergeladenes Dokument &quot; und &quot;Heruntergeladenes Bild &quot; angezeigt."/>
   </replacements>
   
 </sample>
