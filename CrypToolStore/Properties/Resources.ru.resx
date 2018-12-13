@@ -155,7 +155,7 @@
     <value>Недавно вы установили или удалили компоненты из CrypTool Store. Вы должны перезапустить CrypTool 2, чтобы изменения вступили в силу.</value>
   </data>
   <data name="RestartCrypTool2" xml:space="preserve">
-    <value>Перезапустить Cryptool 2 сейчас</value>
+    <value>Перезапустить CrypTool 2 сейчас</value>
   </data>
   <data name="_default" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\default.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

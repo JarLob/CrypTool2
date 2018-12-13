@@ -406,7 +406,7 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Restart Cryptool 2 now ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restart CrypTool 2 now ähnelt.
         /// </summary>
         internal static string RestartCrypTool2 {
             get {
