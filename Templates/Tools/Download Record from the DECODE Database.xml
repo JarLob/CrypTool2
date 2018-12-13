@@ -4,13 +4,13 @@
   <title lang="ru">Загрузите документы из базы данных DECODE</title>
   <title lang="de">Dokumente aus der DECODE-Datenbank herunterladen</title>
   
-  <summary lang="en">Download documents from the DECODE database</summary>
-  <summary lang="ru">Загрузите документы из базы данных DECODE</summary>
-  <summary lang="de">Dokumente aus der DECODE-Datenbank herunterladen</summary>
+  <summary lang="en">Download encrypted historical documents from the DECODE database and view them.</summary>
+  <summary lang="ru">Загрузите зашифрованные исторические документы из базы данных DECODE и просмотрите их.</summary>
+  <summary lang="de">Laden Sie verschlüsselte historische Dokumente aus der DECODE-Datenbank herunter und betrachten Sie sie.</summary>
   
-  <description lang="en">This template allows users to download documents from the DECODE database.</description>
-  <description lang="ru">Этот шаблон позволяет пользователям загружать документы из базы данных DECODE.</description>
-  <description lang="de">Mit dieser Vorlage können Benutzer Dokumente aus der DECODE-Datenbank herunterladen.</description>
+  <description lang="en">This template allows to download documents from the DECODE database, get an overview about their metadata in the viewer and show the details (photos, transcripts, etc) of documents selected in the viewer.</description>
+  <description lang="ru">Этот шаблон позволяет загружать документы из базы данных DECODE, получать обзор их метаданных в программе просмотра и отображать детали (фотографии, стенограммы и т. Д.) Документов, выбранных в программе просмотра.</description>
+  <description lang="de">Diese Vorlage ermöglicht das Herunterladen von Dokumenten aus der DECODE-Datenbank, einen Überblick über ihre Metadaten im DECODE-Betrachter und das Anzeigen der Details (Fotos, Transkripte usw.) der im DECODE-Betrachter ausgewählten Dokumente.</description>
   
   <keywords>DECODE, classical ciphers, database, download</keywords>
   <keywords lang="ru">DECODE, классические шифры, база данных, скачать</keywords>
