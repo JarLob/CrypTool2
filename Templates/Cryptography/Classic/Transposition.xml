@@ -26,6 +26,7 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Transposition_(Kryptographie
     <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext" />
     <replacement key="$Transposition (Encryption)$" value="Transposition (Verschlüsselung)" />
     <replacement key="$Transposition (Decryption)$" value="Transposition (Entschlüsselung)" />
+	<replacement key="$text$" value="Wir wurden entdeckt, flieh wenn du kannst" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Plaintext$" value="обычный текст" />
@@ -35,6 +36,7 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Transposition_(Kryptographie
     <replacement key="$Decrypted Ciphertext$" value="Расшифрованный зашифрованный текст" />
     <replacement key="$Transposition (Encryption)$" value="Транспонирование (шифрование)" />
     <replacement key="$Transposition (Decryption)$" value="Транспонирование (дешифрование)" />
+	<replacement key="$text$" value="Мы были обнаружены, беги, если сможешь" />
   </replacements>
   <replacements lang="en">
     <replacement key="$Plaintext$" value="Plaintext" />
@@ -44,5 +46,6 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Transposition_(Kryptographie
     <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext" />
     <replacement key="$Transposition (Encryption)$" value="Transposition (Encryption)" />
     <replacement key="$Transposition (Decryption)$" value="Transposition (Decryption)" />
+	<replacement key="$text$" value="We were discovered, flee if you can" />
   </replacements>
 </sample>
