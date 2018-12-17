@@ -445,7 +445,7 @@
     <value>Komponenten-Konnektoren-Statistik zurücksetzen</value>
   </data>
   <data name="ComponentConnection_Delay" xml:space="preserve">
-    <value>Verzögerung des Komponenten-Verbindungsvorschlag</value>
+    <value>Verzögerung des Komponenten-Verbindungsvorschlags</value>
   </data>
   <data name="ComponentConnection_Delay_Tooltip" xml:space="preserve">
     <value>Wie lange soll die Maus gehalten werden, damit das Vorschlagsfenster hochkommt?</value>

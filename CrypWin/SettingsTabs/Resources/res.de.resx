@@ -202,7 +202,7 @@
     <value>Im Hintergrund verstecken, wenn beim Schließen Projekte ausgeführt werden</value>
   </data>
   <data name="BackgroundingLabelContent" xml:space="preserve">
-    <value>Hintergrund-ausführung:</value>
+    <value>Hintergrund-Ausführung:</value>
   </data>
   <data name="BackgroundingToolTip" xml:space="preserve">
     <value>Markieren, um auch nach dem Schließen laufende Projekte im Hintergrund weiter auszuführen.</value>
