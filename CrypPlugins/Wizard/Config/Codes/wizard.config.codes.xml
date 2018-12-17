@@ -141,7 +141,7 @@
     </description>
     <description lang="ru">Код Морзе - это метод передачи букв и символов. Для этого постоянный сигнал включается и выключается. Он состоит из трех символов: короткий сигнал, длинный сигнал и пауза.</description>
     <description lang="de">
-      Der Morsecode oder Morsecode, manchmal auch Morsealphabet genannt, ist ein Verfahren zur Übermittlung von Buchstaben und Zeichen.<newline /> Dabei wird ein konstantes Signal ein- und ausgeschaltet.<newline /> Es besteht aus drei Symbolen: kurzes Signal, langes Signal und Pause.
+      Der Morsecode, manchmal auch Morsealphabet genannt, ist ein Verfahren zur Übermittlung von Buchstaben und Zeichen.<newline /> Dabei wird ein konstantes Signal, z.B. ein Ton, ein- und ausgeschaltet.<newline /> Es besteht aus drei Symbolen: kurzes Signal, langes Signal und Pause.
     </description>
     <comboBox plugin="$Morse Encoder$" property="Action" alignment="Left" width="20%">
       <description lang="en">Encode or decode:</description>
@@ -219,7 +219,7 @@
   <input image="VisualCode">
     <name lang="en">Create visual code</name>
     <name lang="ru">Создать визуальный код</name>
-    <name lang="de">Erstelle Visuellen Code</name>
+    <name lang="de">Erstelle visuellen Code</name>
     <description lang="en">
       A visual code is a one or two dimensional code which can be read for example by a smart phone or special code scanners.      
     </description>
@@ -295,18 +295,18 @@
   <input image="VisualCode">
     <name lang="en">Decode visual code</name>
     <name lang="ru">Декодировать визуальный код</name>
-    <name lang="de">Decodiere Visuellen Code</name>
+    <name lang="de">Decodiere visuellen Code</name>
     <description lang="en">
-      A visual code is a one or two dimensional code which can be read for example by a smart phone or special code scanners.
+      A visual code is a one or two dimensional graphic, which can be read for example by a smart phone or special code scanners.
     </description>
     <description lang="ru">Визуальный код представляет собой одномерный или двухмерный код, который можно читать, например, смартфоном или специальными сканерами кода.</description>
     <description lang="de">
-      Ein visueller Code ist ein ein- oder zweidimensionaler Code welcher z.B. von einem Smartphone oder von Code Scannern gelesen werden kann.
+      Ein visueller Code ist eine ein- oder zwei-dimensionale Grafik, die z.B. von einem Smartphone oder von Code-Scannern gelesen werden kann.
     </description>
     <comboBox plugin="$Visual Decoder$" property="DecodingType" alignment="Left" width="20%" defaultValue="5">
       <description lang="en">Type of the visual code:</description>
       <description lang="ru">Тип визуального кода:</description>
-      <description lang="de">Art des Visuellen Codes:</description>
+      <description lang="de">Art des Visuellen-Codes:</description>
       <!-- AUTO, EAN13, EAN8, Code39, Code128, QRCode, DataMatrix, PDF417, MaxiCode, Aztec, CodaBar, RSS, UPC_A, UPC_E-->
       <item lang="en" content="AUTO" />
       <item lang="ru" content="АВТО" />

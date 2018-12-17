@@ -7,7 +7,7 @@
   <name lang="de-DE">Klassische Verschlüsselungsverfahren</name>
   <description lang="en">Selecting <b>this</b> allows you to encrypt a plaintext or decrypt a ciphertext with a classic algorithm. You can choose which algorithm you want to use for doing this.</description>
   <description lang="ru">Выбор этого позволяет зашифровать открытый текст или расшифровать зашифрованный текст классическим алгоритмом. Вы можете выбрать, какой алгоритм вы хотите использовать для этого.</description>
-  <description lang="de-DE">Wählen Sie <b>diesen</b> Punkt, um mit Hilfe eines klassischen Verschlüsselungsverfahrens einen Klartext zu verschlüsseln oder einen Geheimtext zu entschlüsseln. Das zu verwendende Verfahren kann von Ihnen ausgewählt werden.</description>
+  <description lang="de-DE">Wählen Sie diesen Punkt, um mit Hilfe eines klassischen Verschlüsselungsverfahrens einen Klartext zu verschlüsseln oder einen Geheimtext zu entschlüsseln. Das zu verwendende Verfahren kann von Ihnen ausgewählt werden.</description>
   <!-- This is the step's headline. It should be short, but precise. -->
   <headline lang="en">Algorithm Selection</headline>
   <headline lang="ru">Выбор алгоритма</headline>
@@ -63,9 +63,9 @@
       <defaultvalue lang="de">Geben Sie Ihre Nachricht hier ein.</defaultvalue>
     </inputBox>
     <inputBox plugin="Caesar" property="ShiftKey" alignment="Left" width="5%" visibleLines="1" group="input1" regex="[0-9]+">
-      <description lang="en">Shift Value (an integer):</description>
+      <description lang="en">Shift Value (integer):</description>
       <description lang="ru">Значение сдвига (целое число):</description>
-      <description lang="de">Verschiebewert (eine ganze Zahl):</description>
+      <description lang="de">Verschiebewert (Zahl):</description>
       <defaultvalue>3</defaultvalue>
     </inputBox>
     <sampleViewer image="Caesar" file="Cryptography\Classic\Caesar.cwm" showCreateButton="true">

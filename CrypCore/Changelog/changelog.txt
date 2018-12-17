@@ -22,6 +22,7 @@ The Process Executor component has been newly added. It implements the CrypTool 
 - In the Random Number Generator component, new random number generators have been added and the existing ones have been updated.
 - The new Shared Prime attack template shows how to break RSA keys sharing a same prime factor.
 - The shortcut Ctrl+i has been added to the Workspace Manager to toggle the settings bar.
+- A CWM file now can be dragged from the Windows file
 
 And:
 Many bugs fixed...

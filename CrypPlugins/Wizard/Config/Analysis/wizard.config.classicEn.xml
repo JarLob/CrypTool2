@@ -7,7 +7,7 @@
   <name lang="de">Klassische Verschlüsselung</name>
   <description lang="en">Selecting this allows you to analyze a ciphertext that was encrypted by a classic algorithm. You can choose which algorithm you want to use for doing this.</description>
   <description lang="ru">Выбор этого позволяет проанализировать зашифрованный текст, который был зашифрован классическим алгоритмом. Вы можете выбрать, какой алгоритм вы хотите использовать для этого.</description>
-  <description lang="de-DE">Wählen Sie diesen Punkt, um einen Geheimtext, der mit einem klassischen Algorithmus verschlüsselt wurde, zu analysieren. Das zu verwendende Verschlüsselungsverfahren kann von Ihnen ausgewählt werden.</description>
+  <description lang="de-DE"> Wählen Sie diesen Punkt, um einen Geheimtext, der mit einem klassischen Algorithmus verschlüsselt wurde, zu analysieren. In den folgenden beiden Schritten können Sie dann auswählen, welches Verschlüsselungsverfahren Sie verwenden möchten.</description>
   <!-- This is the step's headline. It should be short, but precise. -->
   <headline lang="en">Algorithm Selection</headline>
   <headline lang="ru">Выбор алгоритма</headline>

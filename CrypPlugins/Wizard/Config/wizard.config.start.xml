@@ -14,7 +14,7 @@
   <!-- This is the step's description. -->
   <task lang="en">Please select the kind of task you want to fulfill and click "Next" to proceed.</task>
   <task lang="ru">Выберите вид задачи, которую вы хотите выполнить, и нажмите «Далее», чтобы продолжить.</task>
-  <task lang="de">Bitte wählen Sie die Art der Aufgabe, die Sie ausführen wollen, und klicken Sie dann auf 'Weiter'.</task>
+  <task lang="de">Bitte wählen Sie links die Art der Aufgabe, die Sie ausführen wollen, und klicken Sie dann unten auf 'Weiter'.</task>
   <!-- Encryption/Decryption Category -->
   <file resource="Wizard.Config.EnDeCrypt.wizard.config.enDe.xml" />
   <!-- Cryptanalysis Category -->

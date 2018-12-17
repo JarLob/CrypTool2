@@ -187,7 +187,7 @@
     <value>Monoalphabetische Substitutionsanalyse</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Kryptoanlayse der monoalphabetischen Substitution</value>
+    <value>Kryptoanalyse der monoalphabetischen Substitution</value>
   </data>
   <data name="CiphertextAlphabetCaption" xml:space="preserve">
     <value>Geheimtextalphabet</value>
