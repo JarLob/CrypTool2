@@ -306,7 +306,7 @@
     <comboBox plugin="$Visual Decoder$" property="DecodingType" alignment="Left" width="20%" defaultValue="5">
       <description lang="en">Type of the visual code:</description>
       <description lang="ru">Тип визуального кода:</description>
-      <description lang="de">Art des Visuellen-Codes:</description>
+      <description lang="de">Art des visuellen Codes:</description>
       <!-- AUTO, EAN13, EAN8, Code39, Code128, QRCode, DataMatrix, PDF417, MaxiCode, Aztec, CodaBar, RSS, UPC_A, UPC_E-->
       <item lang="en" content="AUTO" />
       <item lang="ru" content="АВТО" />

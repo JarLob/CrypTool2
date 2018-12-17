@@ -133,7 +133,7 @@
     <value>Dem Arbeitsbereich ein Memofeld (für Beschreibungen) hinzufügen</value>
   </data>
   <data name="BBox_Fit_to_Screen_Tooltip" xml:space="preserve">
-    <value>An Arbeitsbereichgröße anpassen (Ctrl+F)</value>
+    <value>An Arbeitsbereichgröße anpassen (Strg+F)</value>
   </data>
   <data name="BBox_Sort_Caption" xml:space="preserve">
     <value>Sortieren</value>
@@ -421,7 +421,7 @@
     <value>Zeige Komponenten-Verbindungsvorschläge</value>
   </data>
   <data name="Show_ComponentConnection_Proposition_Tooltip" xml:space="preserve">
-    <value>Zeigt die meist verwendeten Komponenten wenn eine Verbindungslinie gehalten wird.</value>
+    <value>Zeigt die meist-verwendeten Komponenten, wenn eine Verbindungslinie gehalten wird</value>
   </data>
   <data name="ComponentAppearanceBehaviourGroupHeader" xml:space="preserve">
     <value>Standardmäßige Darstellung von Komponenten</value>
@@ -445,7 +445,7 @@
     <value>Komponenten-Konnektoren-Statistik zurücksetzen</value>
   </data>
   <data name="ComponentConnection_Delay" xml:space="preserve">
-    <value>Verzögerung des Komponentenverbindungsvorschlags</value>
+    <value>Verzögerung des Komponenten-Verbindungsvorschlag</value>
   </data>
   <data name="ComponentConnection_Delay_Tooltip" xml:space="preserve">
     <value>Wie lange soll die Maus gehalten werden, damit das Vorschlagsfenster hochkommt?</value>

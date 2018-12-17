@@ -63,7 +63,7 @@
       <defaultvalue lang="de">Geben Sie Ihre Nachricht hier ein.</defaultvalue>
     </inputBox>
     <inputBox plugin="Caesar" property="ShiftKey" alignment="Left" width="5%" visibleLines="1" group="input1" regex="[0-9]+">
-      <description lang="en">Shift Value (integer):</description>
+      <description lang="en">Shift value (integer):</description>
       <description lang="ru">Значение сдвига (целое число):</description>
       <description lang="de">Verschiebewert (Zahl):</description>
       <defaultvalue>3</defaultvalue>

@@ -190,7 +190,7 @@
     <value>Markieren Sie dies, um Fehlernachrichten in der Trayicon-Sprechblase anzuzeigen!</value>
   </data>
   <data name="Reopen_last_opened_file" xml:space="preserve">
-    <value>Öffne die letzten offenen Projekte beim Start</value>
+    <value>Öffne die letzten offenen Projekte (Vorlagen, CWM-Dateien) beim Start von CrypTool 2</value>
   </data>
   <data name="Reopen_last_opened_file_tooltip" xml:space="preserve">
     <value>Markieren Sie dies, um die letzten offenen Projekte beim nächsten Start von CrypTool 2 wieder zu öffnen.</value>
@@ -202,13 +202,13 @@
     <value>Im Hintergrund verstecken, wenn beim Schließen Projekte ausgeführt werden</value>
   </data>
   <data name="BackgroundingLabelContent" xml:space="preserve">
-    <value>Hintergrundausführungseinstellungen:</value>
+    <value>Hintergrund-ausführung:</value>
   </data>
   <data name="BackgroundingToolTip" xml:space="preserve">
     <value>Markieren, um auch nach dem Schließen laufende Projekte im Hintergrund weiter auszuführen.</value>
   </data>
   <data name="PowerModeLabelContent" xml:space="preserve">
-    <value>Energiesparoptionen:</value>
+    <value>Energiespar-Optionen:</value>
   </data>
   <data name="SavePowerContent" xml:space="preserve">
     <value>Workspaces anhalten bei Batteriebetrieb</value>
@@ -268,7 +268,7 @@
     <value>Auswahl invertieren</value>
   </data>
   <data name="RecentFileListLength" xml:space="preserve">
-    <value>Länge der Liste zuletzt geöffneter Dateien</value>
+    <value>Länge der Liste zuletzt geöffneten Projekte</value>
   </data>
   <data name="seconds_" xml:space="preserve">
     <value>Sekunden lang!</value>
