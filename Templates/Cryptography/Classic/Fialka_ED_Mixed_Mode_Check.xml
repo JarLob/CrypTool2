@@ -18,11 +18,23 @@
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$Plaintext$" value="Klartext" />
+    <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext" />
+    <replacement key="$Fialka Encrypt$" value="Fialka Verschlüsselung" />
+    <replacement key="$Fialka Decrypt$" value="Fialka Entschlüsselung" />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Plaintext$" value="обычный текст" />
+    <replacement key="$Ciphertext$" value="шифротекста" />
+    <replacement key="$Decrypted Ciphertext$" value="Расшифрованный зашифрованный текст" />
+    <replacement key="$Fialka Encrypt$" value="Шифрование Fialka" />
+    <replacement key="$Fialka Decrypt$" value="Расшифровка Fialka" />
   </replacements>
   <replacements lang="en">
     <replacement key="$Plaintext$" value="Plaintext" />
+    <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext" />
+    <replacement key="$Fialka Encrypt$" value="Fialka Encrypt" />
+    <replacement key="$Fialka Decrypt$" value="Fialka Decrypt" />
   </replacements>
 </sample>
