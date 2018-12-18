@@ -80,7 +80,7 @@ namespace Cryptool.CrypToolStore
         {
             try
             {
-                CrypToolStoreClient client = new CrypToolStoreClient();
+                /*CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = new X509Certificate2(Properties.Resources.anonymous);
                 client.ServerAddress = Config.GetConfigEntry("ServerAddress");
                 client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
@@ -132,7 +132,7 @@ namespace Cryptool.CrypToolStore
                     {
                         MessageBox.Show(String.Format("Could not download ResourceData file: {0}", result.Message), "ResourceData file download not possible");
                     }
-                }
+                }*/
             }
             catch (Exception ex)
             {
