@@ -142,13 +142,13 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
 
             foreach (var group in groups)
             {
-                stringBuilder.AppendLine(string.Format("<tr><td><h2 id=\"{0}\">{0}</h2></td><td></td></tr>", group.Key));
+                stringBuilder.AppendLine(string.Format("<tr class=\"letter\"><td><h2 id=\"{0}\">{0}</h2></td><td></td></tr>", group.Key));
                 foreach (var templateDocumentationPage in group)
                 {
                     var locTemplate = templateDocumentationPage.CurrentLocalization;
                     var description = _objectConverter.Convert(locTemplate.SummaryOrDescription, templateDocumentationPage);
                     description = description.Replace("../", ""); //correct relative paths in images                
-                    stringBuilder.AppendLine(string.Format("<tr><td>&nbsp;</td><td><div class=\"boximage\"><img src=\"{0}\"></div></td><td><a href=\"{1}\">{2}</a></td><td>{3}</td></tr>", 
+                    stringBuilder.AppendLine(string.Format("<tr class=\"filterable\"><td>&nbsp;</td><td><div class=\"boximage\"><img src=\"{0}\"></div></td><td><a href=\"{1}\">{2}</a></td><td>{3}</td></tr>", 
                         templateDocumentationPage.Icon, locTemplate.FilePath, locTemplate.Name, description));
                 }
             }
@@ -239,12 +239,12 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
 
             foreach (var pagegroup in query)
             {
-                stringBuilder.AppendLine(string.Format("<tr><td colspan=2><h2 id=\"{0}\">{0}</h2></td></tr>", pagegroup.Key));
+                stringBuilder.AppendLine(string.Format("<tr class=\"letter\"><td colspan=2><h2 id=\"{0}\">{0}</h2></td></tr>", pagegroup.Key));
                 foreach (var page in pagegroup)
                 {
                     var linkedLang = page.Localizations.ContainsKey(lang) ? lang : "en";
                     var pp = (LocalizedComponentDocumentationPage)page.Localizations[linkedLang];
-                    stringBuilder.AppendLine(string.Format("<tr><td><a href=\"{0}\">{1}</a></td><td>{2}</td></tr>",
+                    stringBuilder.AppendLine(string.Format("<tr class=\"filterable\"><td><a href=\"{0}\">{1}</a></td><td>{2}</td></tr>",
                         OnlineHelp.GetPluginDocFilename(pp.PluginType, linkedLang), pp.Name, pp.ToolTip));
                 }
             }

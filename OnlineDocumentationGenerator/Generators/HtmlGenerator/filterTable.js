@@ -7,6 +7,7 @@
 
 var localizedStrings = {
 	"en": [ "Filter", " matches" ],
+	"ru": [ "фильтр", " результаты" ],
 	"de": [ "Filter", " Treffer" ]
 }
 
@@ -18,7 +19,12 @@ function setCounter(table)
 	var cnt=0;
 
 	for (var r = 0; r < table.rows.length; r++) {
-		if( table.rows[r].style.display == '' ) cnt++;
+		var row = table.rows[r];
+		if( row.attributes
+		  	&& row.attributes['class']
+			&& row.attributes['class'].value == 'filterable'
+			&& row.style.display == '' )
+			cnt++;
 	}
 
 	document.getElementById("countmatches").innerHTML = '&nbsp;('+cnt+strings[1]+')';
