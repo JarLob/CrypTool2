@@ -38,7 +38,7 @@ namespace Cryptool.CrypToolStore
         /// <param name="resourceId"></param>
         /// <param name="resourceVersion"></param>
         /// <returns>the path if it exists; otherwise returns null</returns>
-        public static string GetResourceFolderPath(int resourceId, int resourceVersion, IPlugin plugin)
+        public static string GetResourceFile(int resourceId, int resourceVersion, IPlugin plugin)
         {
             lock (LockObject)
             {
@@ -51,14 +51,14 @@ namespace Cryptool.CrypToolStore
                         Directory.CreateDirectory(resourcesFolder);
                     }
 
-                    //now, we check, if the requested resource folder exists
-                    resourcesFolder = Path.Combine(resourcesFolder, String.Format("resource-{0}-{1}", resourceId, resourceVersion));
-                    if (Directory.Exists(resourcesFolder))
+                    //now, we check, if the requested resource folder and file exist
+                    string file = Path.Combine(resourcesFolder, String.Format("resource-{0}-{1}", resourceId, resourceVersion));
+                    file = Path.Combine(file, String.Format("Resource-{0}-{1}.bin", resourceId, resourceVersion));
+                    if (File.Exists(file))
                     {
-                        return resourcesFolder;
+                        return file;
                     }
-
-                    //the resources folder does not exists; thus, we download the resource from CrypToolStoreServer
+                    //the resource file does not exists; thus, we download the resource from CrypToolStoreServer
                     return DownloadResource(resourceId, resourceVersion, plugin);
                 }
                 catch (Exception)
@@ -66,6 +66,28 @@ namespace Cryptool.CrypToolStore
                     //wtf?
                     return null;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Deletes the file (=> complete folder) of the resource identified by resourceId and resourceVersion
+        /// </summary>
+        /// <param name="resourceId"></param>
+        /// <param name="resourceVersion"></param>
+        public static void DeleteResourceFile(int resourceId, int resourceVersion)
+        {
+            string resourcesFolder = GetResourcesFolder();
+            //we create the resources folder if it does not exist
+            if (!Directory.Exists(resourcesFolder))
+            {
+                Directory.CreateDirectory(resourcesFolder);
+            }
+
+            //now, we check, if the requested resource folder exists
+            resourcesFolder = Path.Combine(resourcesFolder, String.Format("resource-{0}-{1}", resourceId, resourceVersion));
+            if (Directory.Exists(resourcesFolder))
+            {
+                Directory.Delete(resourcesFolder);
             }
         }
 

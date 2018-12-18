@@ -68,13 +68,13 @@ namespace CrypToolStoreLib.Tools
             if (remainingSeconds > (60 * 60))//hours
             {
                 long hours = remainingSeconds / (60 * 60);
-                formatted += hours + " h";
+                formatted += hours + " h ";
                 remainingSeconds = remainingSeconds % (60 * 60);
             }
             if (remainingSeconds > 60) //minutes
             {
                 long minutes = remainingSeconds / 60;
-                formatted += minutes + " min";
+                formatted += minutes + " min ";
                 remainingSeconds = remainingSeconds % 60;
             }
             formatted += remainingSeconds + " sec";

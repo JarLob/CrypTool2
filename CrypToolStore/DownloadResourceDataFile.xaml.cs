@@ -145,6 +145,18 @@ namespace Cryptool.CrypToolStore
                     {
                         MessageBox.Show(String.Format("Could not download resource file: {0}", result.Message), "Resource file download not possible");
                     }
+                    try
+                    {
+                        string dir = System.IO.Path.Combine(ResourceHelper.GetResourcesFolder(), String.Format("resource-{0}-{1}", ResourceId, ResourceVersion));
+                        if (Directory.Exists(dir))
+                        {
+                            Directory.Delete(dir, true);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        //wtf?
+                    }
                 }
             }
             catch (Exception ex)
@@ -153,8 +165,7 @@ namespace Cryptool.CrypToolStore
 
                 try
                 {
-                    string dir = System.IO.Path.Combine(ResourceHelper.GetResourcesFolder(),
-                        String.Format("resource-{0}-{1}", ResourceId, ResourceVersion));
+                    string dir = System.IO.Path.Combine(ResourceHelper.GetResourcesFolder(), String.Format("resource-{0}-{1}", ResourceId, ResourceVersion));
                     if (Directory.Exists(dir))
                     {
                         Directory.Delete(dir, true);
