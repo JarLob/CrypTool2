@@ -45,7 +45,7 @@
     <replacement key="$Random Key$" value="Random Key" />
     <replacement key="$Random IV$" value="Random IV" />
     <replacement key="$StringEncoder$" value="StringEncoder" />
-    <replacement key="$Decrypted_Ciphertext$" value="Decrypted Ciphertext" />
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext" />
     <replacement key="$PRESENT Encrypt$" value="PRESENT Encrypt" />
     <replacement key="$PRESENT Decrypt$" value="PRESENT Decrypt" />
     <replacement key="$text$" value="In cryptography, a cipher is an algorithm for performing encryption or decryption  a series of well-defined steps that can be followed as a procedure. An alternative, less common term is encipherment. In non-technical usage, a cipher is the same thing as a code; however, the concepts are distinct in cryptography. In classical cryptography, ciphers were distinguished from codes. Codes operated by substituting according to a large codebook which linked a random string of characters or numbers to a word or phrase. For example, UQJHSE could be the code for Proceed to the following coordinates. When using a cipher the original information is known as plaintext, and the encrypted form as ciphertext. The ciphertext message contains all the information of the plaintext message, but is not in a format readable by a human or computer without the proper mechanism to decrypt it; it should resemble random gibberish to those not intended to read it.&#xD;&#xA;&#xD;&#xA;[source http://en.wikipedia.org/wiki/Cipher]" />
