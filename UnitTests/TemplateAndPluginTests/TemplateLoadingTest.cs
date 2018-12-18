@@ -30,6 +30,9 @@ namespace UnitTests
         {
         }
 
+        /// <summary>
+        /// This test tests if each template can be loaded and if each type (component) used inside the template can be instantiated
+        /// </summary>
         [TestMethod]
         public void TemplateLoadingTestMethod()
         {
