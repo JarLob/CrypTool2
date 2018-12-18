@@ -12,6 +12,7 @@
   <summary lang="de">Benutzung der <i>Fialka M-125</i> im gemischten Modus</summary>
   <description lang="de">Diese Vorlage zeigt die Benutzung der Chiffriermaschine Fialka.</description>
   <keywords lang="de">Fialka, Proton</keywords>
+  <icon file="FialkaRot.png" />
   <relevantPlugins>
     <plugin name="Fialka" />
   </relevantPlugins>
