@@ -45,7 +45,7 @@ namespace Cryptool.Core
         /// <summary>
         /// Subdirectory in which plugins of CrypToolStore are stored and loaded from
         /// </summary>
-        public const string CrypToolStorePluginDirectory = @"CrypTool2\CrypStorePlugins";
+        public const string CrypToolStoreDirectory = @"CrypTool2\CrypToolStore";
 
         /// <summary>
         /// Fires if an exception occurs
@@ -94,7 +94,7 @@ namespace Cryptool.Core
         /// <param name="crypToolStoreSubFolder"></param>
         public PluginManager(HashSet<string> disabledAssemblies, string crypToolStoreSubFolder)
         {
-            this.crypToolStorePluginFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), CrypToolStorePluginDirectory);
+            this.crypToolStorePluginFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), CrypToolStoreDirectory);
             this.crypToolStorePluginFolder = Path.Combine(crypToolStorePluginFolder, crypToolStoreSubFolder);
             this.crypToolStorePluginFolder = Path.Combine(crypToolStorePluginFolder, "plugins");  
 

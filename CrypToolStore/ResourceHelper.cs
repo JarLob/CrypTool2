@@ -15,11 +15,11 @@
 */
 using System;
 using System.IO;
-using System.Security.Cryptography.X509Certificates;
 using Cryptool.Core;
+using Cryptool.PluginBase;
 using Cryptool.PluginBase.Attributes;
 using Cryptool.PluginBase.Miscellaneous;
-using CrypToolStoreLib.Client;
+using System.Windows;
 
 namespace Cryptool.CrypToolStore
 {
@@ -38,26 +38,34 @@ namespace Cryptool.CrypToolStore
         /// <param name="resourceId"></param>
         /// <param name="resourceVersion"></param>
         /// <returns>the path if it exists; otherwise returns null</returns>
-        public static string GetResourceFolderPath(int resourceId, int resourceVersion)
+        public static string GetResourceFolderPath(int resourceId, int resourceVersion, IPlugin plugin)
         {
             lock (LockObject)
             {
-                string resourcesFolder = GetResourcesFolder();
-                //we create the resources folder if it does not exist
-                if (!Directory.Exists(resourcesFolder))
+                try
                 {
-                    Directory.CreateDirectory(resourcesFolder);
-                }
+                    string resourcesFolder = GetResourcesFolder();
+                    //we create the resources folder if it does not exist
+                    if (!Directory.Exists(resourcesFolder))
+                    {
+                        Directory.CreateDirectory(resourcesFolder);
+                    }
 
-                //now, we check, if the requested resource folder exists
-                resourcesFolder = Path.Combine(resourcesFolder, String.Format("resource-{0}-{1}", resourceId, resourceVersion));
-                if (Directory.Exists(resourcesFolder))
+                    //now, we check, if the requested resource folder exists
+                    resourcesFolder = Path.Combine(resourcesFolder, String.Format("resource-{0}-{1}", resourceId, resourceVersion));
+                    if (Directory.Exists(resourcesFolder))
+                    {
+                        return resourcesFolder;
+                    }
+
+                    //the resources folder does not exists; thus, we download the resource from CrypToolStoreServer
+                    return DownloadResource(resourceId, resourceVersion, plugin);
+                }
+                catch (Exception)
                 {
-                    return resourcesFolder;
+                    //wtf?
+                    return null;
                 }
-
-                //the resources folder does not exists; thus, we download the resource from CrypToolStoreServer
-                return DownloadResource(resourceId, resourceVersion);
             }
         }
 
@@ -66,14 +74,31 @@ namespace Cryptool.CrypToolStore
         /// </summary>
         /// <param name="resourceId"></param>
         /// <param name="resourceVersion"></param>
+        /// <param name="plugin"></param>
         /// <returns></returns>
-        private static string DownloadResource(int resourceId, int resourceVersion)
+        private static string DownloadResource(int resourceId, int resourceVersion, IPlugin plugin)
         {
             //check CrypToolStore if resource exists
-           
-
-
-            return null;
+            string path = null;
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                try
+                {
+                    DownloadResourceDataFileWindow downloadResourceDataFileWindow =
+                        new DownloadResourceDataFileWindow(resourceId, resourceVersion, plugin);
+                    //position download window in the middle of CrypTool 2:
+                    downloadResourceDataFileWindow.Left = Application.Current.MainWindow.Width / 2 - downloadResourceDataFileWindow.Width / 2;
+                    downloadResourceDataFileWindow.Top = Application.Current.MainWindow.Height / 2 - downloadResourceDataFileWindow.Height / 2;
+                    //show download dialog
+                    downloadResourceDataFileWindow.ShowDialog();
+                    path = downloadResourceDataFileWindow.Path;
+                }
+                catch (Exception ex)
+                {
+                    //wtf?
+                }
+            }));
+            return path;
         }
 
         /// <summary>
@@ -102,7 +127,7 @@ namespace Cryptool.CrypToolStore
                     crypToolStoreSubFolder = "Developer";
                     break;
             }
-            string crypToolStorePluginFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), PluginManager.CrypToolStorePluginDirectory);
+            string crypToolStorePluginFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), PluginManager.CrypToolStoreDirectory);
             crypToolStorePluginFolder = System.IO.Path.Combine(crypToolStorePluginFolder, crypToolStoreSubFolder);
             crypToolStorePluginFolder = System.IO.Path.Combine(crypToolStorePluginFolder, "resources");
             return crypToolStorePluginFolder;

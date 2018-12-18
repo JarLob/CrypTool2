@@ -17,32 +17,37 @@ using CrypToolStoreLib.Client;
 using CrypToolStoreLib.DataObjects;
 using CrypToolStoreLib.Tools;
 using System;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Windows;
+using Cryptool.PluginBase;
 
 namespace Cryptool.CrypToolStore
 {
     public partial class DownloadResourceDataFileWindow : Window
-    {
-        private Configuration Config = Configuration.GetConfiguration();
-
+    {        
         private int ResourceId { get; set; }
         private int ResourceVersion { get; set; }
+        private IPlugin Plugin { get; set; }
+
+        public string Path { get; set; }
 
         private bool Stop = false;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public DownloadResourceDataFileWindow(int pluginid, int pluginversion)
+        public DownloadResourceDataFileWindow(int resourceId, int resourceVersion, IPlugin plugin)
         {
             InitializeComponent();
             ResizeMode = ResizeMode.NoResize;
-            ResourceId = pluginid;
-            ResourceVersion = pluginversion;
+            ResourceId = resourceId;
+            ResourceVersion = resourceVersion;
+            Plugin = plugin;
             Closing += DownloadResourceDataFileWindow_Closing;
-            this.Title = String.Format("Download ResourceData File: ResourceData-{0}-{1}.bin", pluginid, pluginversion);
+            Title = String.Format("A {0} component requested to download a resource file", plugin.GetType().Name);
+            Path = null;
         }
 
         /// <summary>
@@ -65,9 +70,9 @@ namespace Cryptool.CrypToolStore
         {
 
             //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
-            Thread UploadSourceZipFileThread = new Thread(DownloadAssembyZipFile);
-            UploadSourceZipFileThread.IsBackground = true;
-            UploadSourceZipFileThread.Start();
+            Thread uploadSourceZipFileThread = new Thread(DownloadResourceZipFile);
+            uploadSourceZipFileThread.IsBackground = true;
+            uploadSourceZipFileThread.Start();
 
             DownloadButton.IsEnabled = false;
         }
@@ -76,26 +81,33 @@ namespace Cryptool.CrypToolStore
         /// Downloads the selected zip file
         /// stops, if the window is closed
         /// </summary>
-        private void DownloadAssembyZipFile()
+        private void DownloadResourceZipFile()
         {
             try
             {
-                /*CrypToolStoreClient client = new CrypToolStoreClient();
+                CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = new X509Certificate2(Properties.Resources.anonymous);
-                client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                client.ServerAddress = Constants.ServerAddress;
+                client.ServerPort = Constants.ServerPort;
                 client.Connect();
 
                 ResourceData resourceData = new ResourceData();
                 resourceData.ResourceId = ResourceId;
                 resourceData.ResourceVersion = ResourceVersion;
-
-                string filename = "ResourceData-" + ResourceId + "-" + ResourceVersion + ".bin";
-                string path = System.IO.Path.Combine(
-
+                //delete all old versions including the current version
+                for (int i = 0; i <= ResourceVersion; i++)
+                {
+                    string dir = System.IO.Path.Combine(ResourceHelper.GetResourcesFolder(), String.Format("resource-{0}-{1}", ResourceId, i));
+                    if (Directory.Exists(dir))
+                    {
+                        Directory.Delete(dir, true);
+                    }
+                }
+                string filename = System.IO.Path.Combine(ResourceHelper.GetResourcesFolder(), String.Format("resource-{0}-{1}", ResourceId, ResourceVersion));
+                Directory.CreateDirectory(filename);
+                filename = System.IO.Path.Combine(filename, String.Format("Resource-{0}-{1}.bin", ResourceId, ResourceVersion));
                 client.UploadDownloadProgressChanged += client_UploadDownloadProgressChanged;
-                DataModificationOrRequestResult result = client.DownloadResourceDataFile(resourceData, Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + filename, ref Stop);
-
+                DataModificationOrRequestResult result = client.DownloadResourceDataFile(resourceData, filename, ref Stop);
                 client.Disconnect();
 
                 if (result.Success)
@@ -113,7 +125,8 @@ namespace Cryptool.CrypToolStore
                             //wtf?
                         }
                     }));
-                    MessageBox.Show("Successfully download ResourceData file", "ResourceData file downloaded");
+                    MessageBox.Show("Successfully download resource file", "Resource file downloaded");
+                    Path = filename;
                     Dispatcher.BeginInvoke(new ThreadStart(() =>
                     {
                         try
@@ -130,13 +143,27 @@ namespace Cryptool.CrypToolStore
                 {
                     if (result.Message != "USERSTOP")
                     {
-                        MessageBox.Show(String.Format("Could not download ResourceData file: {0}", result.Message), "ResourceData file download not possible");
+                        MessageBox.Show(String.Format("Could not download resource file: {0}", result.Message), "Resource file download not possible");
                     }
-                }*/
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during download of ResourceData zip file: {0}", ex.Message), "Exception");
+                MessageBox.Show(String.Format("Exception during download of resource zip file: {0}", ex.Message), "Exception");
+
+                try
+                {
+                    string dir = System.IO.Path.Combine(ResourceHelper.GetResourcesFolder(),
+                        String.Format("resource-{0}-{1}", ResourceId, ResourceVersion));
+                    if (Directory.Exists(dir))
+                    {
+                        Directory.Delete(dir, true);
+                    }
+                }
+                catch (Exception)
+                {
+                    //wtf?
+                }
             }
 
             Dispatcher.BeginInvoke(new ThreadStart(() =>

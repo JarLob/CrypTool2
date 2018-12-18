@@ -355,7 +355,7 @@ namespace Cryptool.CrypToolStore
                     crypToolStoreSubFolder = "Developer";
                     break;
             }
-            string crypToolStorePluginFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), PluginManager.CrypToolStorePluginDirectory);
+            string crypToolStorePluginFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), PluginManager.CrypToolStoreDirectory);
             crypToolStorePluginFolder = System.IO.Path.Combine(crypToolStorePluginFolder, crypToolStoreSubFolder);
             crypToolStorePluginFolder = System.IO.Path.Combine(crypToolStorePluginFolder, "plugins");
             return crypToolStorePluginFolder;
