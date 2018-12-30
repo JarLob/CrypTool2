@@ -349,6 +349,15 @@ namespace Cryptool.Plugins.BlockmodeVisualizer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The selected blockmode is not yet implemented. ähnelt.
+        /// </summary>
+        internal static string not_yet_implemented_exception {
+            get {
+                return ResourceManager.GetString("not_yet_implemented_exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Output Feedback Mode (OFB) ähnelt.
         /// </summary>
         internal static string ofb {
@@ -412,6 +421,114 @@ namespace Cryptool.Plugins.BlockmodeVisualizer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die CBC ähnelt.
+        /// </summary>
+        internal static string pres_headline_cbc {
+            get {
+                return ResourceManager.GetString("pres_headline_cbc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die CCM ähnelt.
+        /// </summary>
+        internal static string pres_headline_ccm {
+            get {
+                return ResourceManager.GetString("pres_headline_ccm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die CFB ähnelt.
+        /// </summary>
+        internal static string pres_headline_cfb {
+            get {
+                return ResourceManager.GetString("pres_headline_cfb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  in the  ähnelt.
+        /// </summary>
+        internal static string pres_headline_conjunction {
+            get {
+                return ResourceManager.GetString("pres_headline_conjunction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die CTR ähnelt.
+        /// </summary>
+        internal static string pres_headline_ctr {
+            get {
+                return ResourceManager.GetString("pres_headline_ctr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  decryption ähnelt.
+        /// </summary>
+        internal static string pres_headline_decryption {
+            get {
+                return ResourceManager.GetString("pres_headline_decryption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ECB ähnelt.
+        /// </summary>
+        internal static string pres_headline_ecb {
+            get {
+                return ResourceManager.GetString("pres_headline_ecb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  encryption ähnelt.
+        /// </summary>
+        internal static string pres_headline_encryption {
+            get {
+                return ResourceManager.GetString("pres_headline_encryption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die GCM ähnelt.
+        /// </summary>
+        internal static string pres_headline_gcm {
+            get {
+                return ResourceManager.GetString("pres_headline_gcm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  mode ähnelt.
+        /// </summary>
+        internal static string pres_headline_mode {
+            get {
+                return ResourceManager.GetString("pres_headline_mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die OFB ähnelt.
+        /// </summary>
+        internal static string pres_headline_ofb {
+            get {
+                return ResourceManager.GetString("pres_headline_ofb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die XTS ähnelt.
+        /// </summary>
+        internal static string pres_headline_xts {
+            get {
+                return ResourceManager.GetString("pres_headline_xts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die The provided associated data are too short and have been padded with zeros:  ähnelt.
         /// </summary>
         internal static string short_ad_warning {
@@ -444,15 +561,6 @@ namespace Cryptool.Plugins.BlockmodeVisualizer.Properties {
         internal static string short_key_warning {
             get {
                 return ResourceManager.GetString("short_key_warning", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This should not have happened! ähnelt.
-        /// </summary>
-        internal static string should_not_happen_exception {
-            get {
-                return ResourceManager.GetString("should_not_happen_exception", resourceCulture);
             }
         }
         

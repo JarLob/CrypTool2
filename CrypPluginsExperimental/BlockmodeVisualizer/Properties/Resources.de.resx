@@ -246,8 +246,8 @@
   <data name="short_key_warning" xml:space="preserve">
     <value>Der Schlüssel ist zu kurz und wurde entsprechend mit Nullen aufgefüllt: </value>
   </data>
-  <data name="should_not_happen_exception" xml:space="preserve">
-    <value>Das hätte nicht passieren dürfen!</value>
+  <data name="not_yet_implemented_exception" xml:space="preserve">
+    <value>Der ausgewählte Betriebsmodus wurde noch nicht implementiert.</value>
   </data>
   <data name="tag_input_caption" xml:space="preserve">
     <value>Nachrichten-Tag Eingabe</value>
@@ -287,5 +287,41 @@
   </data>
   <data name="zeros" xml:space="preserve">
     <value>Nullen</value>
+  </data>
+  <data name="pres_headline_conjunction" xml:space="preserve">
+    <value> im </value>
+  </data>
+  <data name="pres_headline_mode" xml:space="preserve">
+    <value>-Modus</value>
+  </data>
+  <data name="pres_headline_cbc" xml:space="preserve">
+    <value>CBC</value>
+  </data>
+  <data name="pres_headline_ccm" xml:space="preserve">
+    <value>CCM</value>
+  </data>
+  <data name="pres_headline_cfb" xml:space="preserve">
+    <value>CFB</value>
+  </data>
+  <data name="pres_headline_ctr" xml:space="preserve">
+    <value>CTR</value>
+  </data>
+  <data name="pres_headline_decryption" xml:space="preserve">
+    <value>-Entschlüsselung</value>
+  </data>
+  <data name="pres_headline_ecb" xml:space="preserve">
+    <value>ECB</value>
+  </data>
+  <data name="pres_headline_encryption" xml:space="preserve">
+    <value>-Verschlüsselung</value>
+  </data>
+  <data name="pres_headline_gcm" xml:space="preserve">
+    <value>GCM</value>
+  </data>
+  <data name="pres_headline_ofb" xml:space="preserve">
+    <value>OFB</value>
+  </data>
+  <data name="pres_headline_xts" xml:space="preserve">
+    <value>XTS</value>
   </data>
 </root>

@@ -15,7 +15,7 @@ Quellen:<newline />
 <external ref="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf"/>
   </description>
   <description lang="en">
-In connection with the Data Encryption Standard DES, the first four modes of operation, Electronic Codebook Mode, Cipher Block Chaining Mode, Cipher Feedback Mode and Output Feedback Mode, have been standardized in 1980 by the National Institute for Standards and Technology (NIST). After DES has been classified as too unsafe and replaced by the Advanced Encryption Standard AES another mode of operation, the Counter Mode, has been added to the canon. The component "Blockmode Visualizer" also provides a mode for encrypting hard disks, the XTS Mode.<newline /><newline />
+In connection with the Data Encryption Standard DES, the first four modes of operation, Electronic Codebook Mode, Cipher Block Chaining Mode, Cipher Feedback Mode, and Output Feedback Mode, have been standardized in 1980 by the National Institute for Standards and Technology (NIST). After DES has been classified as too unsafe and replaced by the Advanced Encryption Standard AES another mode of operation, the Counter Mode, has been added to the canon. The component "Blockmode Visualizer" also provides a mode for encrypting hard disks, the XTS Mode.<newline /><newline />
 Another functionality of modes of operation is the so called <i>authenticated encryption</i>. In this algorithm class the Counter Mode with CBC-MAC and the Galois/Counter Mode are the state of the art.
 Sources:<newline />
 <external ref="https://csrc.nist.gov/csrc/media/publications/fips/81/archive/1980-12-02/documents/fips81.pdf"/><newline />

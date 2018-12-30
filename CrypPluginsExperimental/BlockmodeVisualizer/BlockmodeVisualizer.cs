@@ -18,7 +18,9 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using BlockmodeVisualizer;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Control;
@@ -37,14 +39,14 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         #region Fields
 
         public readonly BlockmodeVisualizerSettings settings = new BlockmodeVisualizerSettings();
-        private BVPresentation presentation;
+        private readonly BVPresentation presentation;
 
         // Constants
         private readonly string INPUT = "input";
         private readonly string ASSOCIATED_DATA = "ad";
         private readonly string KEY = "key";
         private readonly string INITIALIZATION_VECTOR = "iv";
-        public readonly string FAIL = Properties.Resources.ResourceManager.GetString("authentication_error".ToString());
+        public readonly string FAIL = Properties.Resources.authentication_error;
 
         // Blockcipher attributes
         public string ciphername;
@@ -140,19 +142,19 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             // Results: results[0] = plain- or ciphertext, results[1] = message tag
             byte[][] results = new byte[2][];
 
-            // Execution started.
-            ProgressChanged(0, 1);
-
             // If no blockcipher has been selected, the inputs will be simply passed to the outputs...
             if (Blockcipher == null)
             {
-                GuiLogMessage(Properties.Resources.ResourceManager.GetString("missing_blockcipher_warning".ToString()), NotificationLevel.Warning);
+                GuiLogMessage(Properties.Resources.missing_blockcipher_warning, NotificationLevel.Warning);
                 results[0] = BlockCipherHelper.StreamToByteArray(TextInput);
                 results[1] = TagInput;
             }
             // ...otherwise run the selected mode of operation.
             else
             {
+                // Execution started.
+                ProgressChanged(0, 1);
+
                 switch (settings.Blockmode)
                 {
                     case Blockmodes.ECB:
@@ -180,13 +182,27 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
                         results = GCM(BlockCipherHelper.StreamToByteArray(TextInput), BlockCipherHelper.StreamToByteArray(AssociatedData), TagInput, Key, InitializationVector, settings.TagLength);
                         break;
                     default:
-                        throw new InvalidOperationException(Properties.Resources.ResourceManager.GetString("should_not_happen_exception".ToString()));
+                        string message = Properties.Resources.not_yet_implemented_exception;
+                        throw new NotImplementedException(message);
                 }
+
+                // Execution finished
+                ProgressChanged(1, 1);
             }
 
-            // Execution finished
-            ProgressChanged(1, 1);
-
+            // Create presentation
+            presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
+            {
+                try
+                {
+                    presentation.CreatePresentation();
+                }
+                catch (Exception e)
+                {
+                    GuiLogMessage(e.Message, NotificationLevel.Error);
+                }
+            }, null);
+            
             // Write results to the output
             TextOutput = new CStreamWriter(results[0]);
             ((CStreamWriter)TextOutput).Close();
@@ -201,7 +217,18 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         /// </summary>
         public void Stop()
         {
-            // TODO Clear presentation
+            // Clear current presentation
+            presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
+            {
+                try
+                {
+                    presentation.ClearPresentation();
+                }
+                catch (Exception e)
+                {
+                    GuiLogMessage(e.Message, NotificationLevel.Error);
+                }
+            }, null);
         }
 
         /// <summary>
@@ -361,14 +388,14 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         public byte[][] CFB(byte[] input, byte[] key, byte[] iv, int s)
         {
             byte[][] results = new byte[2][];
-            results[0] = (byte[])input.Clone();
+            results[0] = (byte[]) input.Clone();
             results[1] = Encoding.UTF8.GetBytes("");
 
             // Ensure that s is not greater than the blocksize.
             if (s > blocksize)
             {
                 s %= blocksize;
-                string message = Properties.Resources.ResourceManager.GetString("data_segment_overflow_warning".ToString());
+                string message = Properties.Resources.data_segment_overflow_warning;
                 GuiLogMessage(message + s, NotificationLevel.Warning);
             }
 
@@ -427,7 +454,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         public byte[][] OFB(byte[] input, byte[] key, byte[] iv)
         {
             byte[][] results = new byte[2][];
-            results[0] = (byte[])input.Clone();
+            results[0] = (byte[]) input.Clone();
             results[1] = Encoding.UTF8.GetBytes("");
 
             // Check key length. Shorten or pad if necessary.
@@ -437,7 +464,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             iv = CheckLength(iv, blocksize, blocksize, INITIALIZATION_VECTOR);
 
             // Encrypt/Decrypt
-            int numberOfBlocks = (int)Math.Ceiling((double) results[0].Length / blocksize);
+            int numberOfBlocks = (int) Math.Ceiling((double) results[0].Length / blocksize);
             byte[] currentBlock = new byte[blocksize];
             byte[] cipherOutput = iv;
             for (int i = 0; i < numberOfBlocks; i++)
@@ -482,7 +509,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         /// <returns>The encrypted plaintext or decrypted ciphertext.</returns>
         private byte[] CTR(byte[] input, byte[] key, byte[] iv, bool ae, int counterLength)
         {
-            byte[] result = (byte[])input.Clone();
+            byte[] result = (byte[]) input.Clone();
 
             // Check key length. Shorten or pad if necessary.
             key = CheckLength(key, keysize, keysize, KEY);
@@ -491,7 +518,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             iv = CheckLength(iv, blocksize, blocksize, INITIALIZATION_VECTOR);
 
             // Encrypt/Decrypt
-            int numberOfBlocks = (int)Math.Ceiling((double)result.Length / blocksize);
+            int numberOfBlocks = (int) Math.Ceiling((double) result.Length / blocksize);
             byte[] currentBlock = new byte[blocksize];
             byte[] counter = iv;
             for (int i = 0; i < numberOfBlocks; i++)
@@ -522,13 +549,13 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         public byte[][] XTS(byte[] input, byte[] key, byte[] iv)
         {
             byte[][] results = new byte[2][];
-            results[0] = (byte[])input.Clone();
+            results[0] = (byte[]) input.Clone();
             results[1] = Encoding.UTF8.GetBytes("");
 
             // Encryption or Decryption is only possible, if the length of the input is at least equals the blocksize.
             if (results[0].Length < blocksize)
             {
-                GuiLogMessage(Properties.Resources.ResourceManager.GetString("short_input_warning".ToString()), NotificationLevel.Warning);
+                GuiLogMessage(Properties.Resources.short_input_warning, NotificationLevel.Warning);
                 results[0] = Encoding.UTF8.GetBytes("");
                 return results;
             }
@@ -552,7 +579,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             bool cts = results[0].Length % blocksize != 0;
 
             // Encrypt/Decrypt
-            int numberOfBlocks = (int)Math.Ceiling((double)results[0].Length / blocksize);
+            int numberOfBlocks = (int) Math.Ceiling((double) results[0].Length / blocksize);
 
             // If ciphertext stealing is necessary, the last two blocks will be treated specially.
             if (cts) numberOfBlocks -= 2;
@@ -640,7 +667,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             // Check the length of the input text. Shorten if necessary.
             input = CheckLength(input, 0, Math.Pow(2, 8 * q), INPUT);
             byte[][] results = new byte[2][];
-            results[0] = (byte[])input.Clone();
+            results[0] = (byte[]) input.Clone();
             
             // Check the length of the associated data. Shorten, if necessary.
             a = CheckLength(a, 0, Math.Pow(2, 4 * blocksize), ASSOCIATED_DATA);
@@ -744,13 +771,13 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         public byte[][] GCM(byte[] input, byte[] a, byte[] tag, byte[] key, byte[] iv, int t)
         {
             byte[][] results = new byte[2][];
-            results[0] = (byte[])input.Clone();
+            results[0] = (byte[]) input.Clone();
 
             // Ensure that t is not greater than the blocksize.
             if (t > blocksize)
             {
                 t %= blocksize;
-                string message = Properties.Resources.ResourceManager.GetString("tag_length_overflow_warning".ToString());
+                string message = Properties.Resources.tag_length_overflow_warning;
                 GuiLogMessage(message + t, NotificationLevel.Warning);
             }
 

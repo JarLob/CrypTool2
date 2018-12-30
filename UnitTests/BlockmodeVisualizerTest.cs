@@ -9,7 +9,7 @@ using BV = Cryptool.Plugins.BlockmodeVisualizer.BlockmodeVisualizer;
 namespace UnitTests
 {
     /*
-     * Source of the test values:
+     * Sources of the test values:
      * ECB, CBC, CFB, OFB, CTR: https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38a.pdf
      * XTS: https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Algorithm-Validation-Program/documents/aes/XTSTestVectors.zip
      * CCM: https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-38c.pdf
@@ -19,7 +19,7 @@ namespace UnitTests
     public class BlockmodeVisualizerTest
     {
         // Error message for failed authentication in CCM and GCM mode.
-        private readonly string FAIL = Properties.Resources.ResourceManager.GetString("authentication_error".ToString()).ToHex();
+        private readonly string FAIL = Properties.Resources.authentication_error.ToHex();
 
         // Test components
         private readonly BV instance;
