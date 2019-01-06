@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+  <title lang="en">T-310/50 Cipher Machine</title>
+  <summary lang="en">Usage of the <i>T-310/51</i> cipher machine plugin</summary>
+  <description lang="en">This template shows the usage of the <i>T-310</i> cipher machine in the mode <i>T-310/50</i>. This variant could
+  only encrypt characters by the telex standard CCITT-2, which consists of 50 printable characters including upper case letters, numbers, and some special characters.</description>
+  <keywords>Machine, DDR, GDR</keywords>
+
+  <title lang="de">T-310/50 Chiffriermaschine</title>
+  <summary lang="de">Benutzung des Plugins <i>T-310/50</i>-Chiffriermaschine</summary>
+  <description lang="de">Diese Vorlage zeigt die Benutzung der <i>T-310</i>-Chiffriermaschine im Modus <i>T-310/50</i>. Diese Variante konnte
+  nur Zeichen in der Kodierung nach dem Fernschreib-Standard CCITT-2 verschlüsseln. Diese Kodierung besteht aus 50 druckbaren Zeichen,
+  die aus Großbuchstaben, Ziffern und einigen Sonderzeichen bestehen.</description>
+  <keywords lang="de">Maschine, DDR</keywords>
+
+  <icon file="T310-50.png" />
+  <relevantPlugins>
+    <plugin name="T310" />
+  </relevantPlugins>
+
+<replacements lang="de">
+    <replacement key="$InputData" value="Eingabedaten (ASCII)"/>
+	<replacement key="$OpenMessage" value="FRANZ JAGT IM KOMPLETT VERWAHRLOSTEN TAXI QUER DURCH BAYERN.
+	
+	ACHTUNG, ES KANN WEGEN DER KODIERUNG IN CCITT-2 NUR EIN BEGRENZTER ZEICHENSATZ VERWENDET WERDEN."/>
+    <replacement key="$Subkey1" value="Teilschlüssel 1"/>
+	<replacement key="$Subkey2" value="Teilschlüssel 2"/>
+	<replacement key="$Key1" value="FB CD E6 E2 53 B1 1D 24 8C 29 98 A5 24 D7 B0"/>
+	<replacement key="$Key2" value="34 2F DE 34 DF 2B 44 B2 96 D9 76 3A E6 68 FF"/>
+	<replacement key="$MessageDecoder" value="Eingabe-Dekodierer"/>
+	<replacement key="$KeyDecoder" value="Dekodierer"/>
+	<replacement key="$Machine" value="T-310/50 Fernschreibchiffiermaschine"/>
+	<replacement key="$OutputEncoder" value="Ausgabe-Enkodierer"/>
+	<replacement key="$Output" value="Ausgabe"/>
+	<replacement key="$Text" value="Mit dieser Vorlage können Sie einen Text nach dem Kodierungsstandard CCITT-2, der in das Feld {\b Eingabedaten} auf der linken Seite eingegeben wird, mit der {\b T-310}-Komponente verschlüsseln. Dieser Kodierungsstandard umfasst 50 druckbare Zeichen, bestehend aus Großbuchstaben, Ziffern und einigen Sonderzeichen. Nicht gültige Zeichen werden vor dem Verschlüsseln entfernt Der resultierende Geheimtext wird im Feld {\b Ausgabedaten} auf der rechten Seite in hexadezimaler Darstellung ausgegeben. Die T-310 arbeitet mit einer Wortlänge von 5 Bit, weil sie den Zeichensatz CCITT-2 verwendet, und kann nur Textnachrichten verschlüsseln.\line\line Diese Vorlage kann auch zur Entschlüsselung von Nachrichten verwendet werden. Dazu müssen zuerst die verschlüsselten hexadezimalen Werte in das Feld {\b Eingabedaten} kopiert werden. Dann müssen folgende Anpassungen vorgenommen werden: (1) Das Eingabeformat im Feld {\b Eingabe-Dekodierer} muss auf &quot;Hexadezimal&quot; gesetzt werden; (2) In der {\b T-310}-Komponente muss die Aktion auf &quot;Entschlüsselung&quot; gesetzt werden; (3) Das Format im Feld {\b Ausgabe-Enkodierer} muss auf Text und die Kodierung auf den Wert des ursprünglichen Klartexts gesetzt werden."/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$InputData" value="Input data"/>
+	<replacement key="$OpenMessage" value="THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG.
+	
+	NOTE THAT THE USABLE CHARACTERS ARE RESTRICTED BY THE CCITT-2 ENCODING"/>
+    <replacement key="$Subkey1" value="Subkey 1"/>
+    <replacement key="$Subkey2" value="Subkey 2"/>
+	<replacement key="$Key1" value="FB CD E6 E2 53 B1 1D 24 8C 29 98 A5 24 D7 B0"/>
+	<replacement key="$Key2" value="34 2F DE 34 DF 2B 44 B2 96 D9 76 3A E6 68 FF"/>
+	<replacement key="$MessageDecoder" value="Input decoder"/>
+	<replacement key="$KeyDecoder" value="Decoder"/>
+	<replacement key="$Machine" value="T-310/50 telex encryption machine"/>
+	<replacement key="$OutputEncoder" value="Output encoder"/>
+	<replacement key="$Output" value="Output"/>
+	<replacement key="$Text" value="With this template you can use the {\b T-310} component to encrypt a text after the encoding standard CCITT-2 entered in the box {\b Input data} on the left side. The used encoding consists of 50 printable characters, including upper case letters, numbers, and some special characters. The resulting encrypted text is displayed as hexadecimal string in the box {\b Output} on the right side. Because CCITT-2 uses 5 bits to encode a character The T-310/50 internally works with 5 bit words and can only encrypt text messages.\line\lineNote that you can also decrypt messages with this template. To do so, first copy the encrypted hexadecimal values to the box {\b Input data}. Then change the following: (1) Set Input format of the {\b Input decoder} to Hexadecimal; (2) Set Action of the {\b T-310} to Decrypt; (3) Set Format of the {\b Output encoder} to Text and the Encoding to the value of the original plaintext."/>
+ </replacements>
+</sample>

@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>T_310</RootNamespace>
-    <AssemblyName>T-310</AssemblyName>
+    <AssemblyName>T310</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -96,9 +96,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ControlUnit.cs" />
+    <Compile Include="SynchronizationUnit.cs" />
     <Compile Include="T310.cs" />
+    <Compile Include="ComplexUnit.cs" />
     <Compile Include="T310Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EncryptionUnit.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CrypPluginBase\CrypPluginBase.csproj">
