@@ -14,9 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using static ADFGVXAnalyzer.ADFGVXAnalyzer;
 
-namespace ADFGVXAnalyzer
+namespace Cryptool.ADFGVXAnalyzer
 {
     /// <summary>
     /// Interaktionslogik für ADFGVXAnalyzerPresentation.xaml

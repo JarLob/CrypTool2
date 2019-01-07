@@ -20,26 +20,21 @@ using Cryptool.PluginBase.Miscellaneous;
 using System;
 using System.Windows.Threading;
 using System.Threading;
-using common;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using ADFGVXAnalyzer.Common;
 
-namespace ADFGVXAnalyzer
+namespace Cryptool.ADFGVXAnalyzer
 {
-    // HOWTO: Change author name, email address, organization and URL.
     [Author("Dominik Vogt", "dvogt@posteo.de", null, null)]
-    // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
-    // You can (and should) provide a user documentation as XML file and an own icon.
-    [PluginInfo("ADFGVXAnalyzerCaption", "ADFGVXAnalyzerToolTip", "ADFGVXAnalyzer/userdoc.xml", new[] { "CrypWin/images/default.png" })]
-    // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
-    [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
+    [PluginInfo("Cryptool.ADFGVXAnalyzer.Properties.Resources", "PluginCaption", "PluginTooltip", "ADFGVXAnalyzer/userdoc.xml", "ADFGVXAnalyzer/icon.png")]
+    [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class ADFGVXAnalyzer : ICrypComponent
     {
         #region Private Variables
 
-        // HOWTO: You need to adapt the settings class as well, see the corresponding file.
-        private readonly ADFGVXANalyzerSettings settings;
+        private readonly ADFGVXAnalyzerSettings settings;
         private ADFGVXAnalyzerPresentation myPresentation;
         private readonly Logger log;
 
@@ -60,7 +55,7 @@ namespace ADFGVXAnalyzer
         /// </summary>
         public ADFGVXAnalyzer()
         {
-            settings = new ADFGVXANalyzerSettings();
+            settings = new ADFGVXAnalyzerSettings();
             myPresentation = new ADFGVXAnalyzerPresentation();
             Presentation = myPresentation;
             log = new Logger();
@@ -69,9 +64,9 @@ namespace ADFGVXAnalyzer
 
         private bool CheckAlphabetLength()
         {
-            if(!(settings.Alphabet.Length == Math.Pow(settings.EncryptAlphabet.Length, 2)))
+            if(!(settings.PlaintextAlphabet.Length == Math.Pow(settings.CiphertextAlphabet.Length, 2)))
             {
-                GuiLogMessage("Die Längen passen nicht zusammen",NotificationLevel.Error);
+                GuiLogMessage(String.Format("The set alphabet length (={0} letters) does not match the given alphabet's length (={1} letters)",settings.PlaintextAlphabet.Length,Math.Pow(settings.CiphertextAlphabet.Length, 2)),NotificationLevel.Error);
                 return false;
             }
             return true;
@@ -79,23 +74,15 @@ namespace ADFGVXAnalyzer
 
         #region Data Properties
 
-        /// <summary>
-        /// HOWTO: Input interface to read the input data. 
-        /// You can add more input properties of other type if needed.
-        /// </summary>
-        [PropertyInfo(Direction.InputData, "Messages", "decryptMessages")]
+        [PropertyInfo(Direction.InputData, "CiphertextCaption", "CiphertextTooltip")]
         public string Messages
         {
             get;
             set;
         }
 
-        /// <summary>
-        /// HOWTO: Output interface to write the output data.
-        /// You can add more output properties ot other type if needed.
-        /// </summary>
         private string plaintext;
-        [PropertyInfo(Direction.OutputData, "Output name", "Output tooltip description")]
+        [PropertyInfo(Direction.OutputData, "PlaintextCaption", "PlaintextTooltip")]
         public string Plaintext
         {
             get
@@ -107,25 +94,10 @@ namespace ADFGVXAnalyzer
                 this.plaintext = value;
                 OnPropertyChanged("Plaintext");
             }
-        }
-
-        private string logText;
-        [PropertyInfo(Direction.OutputData, "Output name", "Output tooltip description")]
-        public string LogText
-        {
-            get
-            {
-                return this.logText;
-            }
-            set
-            {
-                this.logText = value;
-                OnPropertyChanged("LogText");
-            }
-        }
+        }       
 
         private string transpositionkey;
-        [PropertyInfo(Direction.OutputData, "Output name", "Output tooltip description")]
+        [PropertyInfo(Direction.OutputData, "BestKeyCaption", "BestKeyTooltip")]
         public string Transpositionkey
         {
             get
@@ -136,6 +108,21 @@ namespace ADFGVXAnalyzer
             {
                 this.transpositionkey = value;
                 OnPropertyChanged("Transpositionkey");
+            }
+        }
+
+        private string logText;
+        [PropertyInfo(Direction.OutputData, "LogoutputCaption", "LogoutputTooltip")]
+        public string LogText
+        {
+            get
+            {
+                return this.logText;
+            }
+            set
+            {
+                this.logText = value;
+                OnPropertyChanged("LogText");
             }
         }
 
@@ -168,12 +155,26 @@ namespace ADFGVXAnalyzer
         {
             startTime = new DateTime();
             endTime = new DateTime();
-            separator = settings.Separator;
+            switch (settings.Separator)
+            {
+                case 0:
+                    separator = ',';
+                    break;
+                case 1:
+                    separator = ';';
+                    break;
+                case 2:
+                    separator = '.';
+                    break;
+                default:
+                    separator = ',';
+                    break;
+
+            }
             keylengthmin = settings.KeyLengthFrom;
             keylengthmax = settings.KeyLengthTo;
             threads = settings.Threads;
             ThreadList = new List<Thread>();
-
         }
 
         /// <summary>
@@ -278,9 +279,6 @@ namespace ADFGVXAnalyzer
                 }
             }, null);
         }
-
-
-
 
         /// <summary>
         /// Clear the UI
@@ -387,25 +385,25 @@ namespace ADFGVXAnalyzer
             EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
         }
 
-        #endregion
-
-        #region Helper Classes
-
-        public class ResultEntry
-        {
-            public int Ranking { get; set; }
-            public double Score { get; set; }
-            public double Ic1 { get; set; }
-            public double Ic2 { get; set; }
-            public string TransKey { get; set; }
-            public string SubsKey { get; set; }
-            public string Plaintext { get; set; }
-
-        }
-
-        #endregion
+        #endregion       
 
     }
+
+    #region Helper Classes
+
+    public class ResultEntry
+    {
+        public int Ranking { get; set; }
+        public double Score { get; set; }
+        public double Ic1 { get; set; }
+        public double Ic2 { get; set; }
+        public string TransKey { get; set; }
+        public string SubsKey { get; set; }
+        public string Plaintext { get; set; }
+
+    }
+
+    #endregion
 }
 
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace common
+namespace ADFGVXAnalyzer.Common
 {
     public class TranspositionTransformations
     {

@@ -17,130 +17,148 @@ using System;
 using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
+using System.Collections.ObjectModel;
 
-namespace ADFGVXAnalyzer
+namespace Cryptool.ADFGVXAnalyzer
 {
-    // HOWTO: rename class (click name, press F2)
-    public class ADFGVXANalyzerSettings : ISettings
+    public class ADFGVXAnalyzerSettings : ISettings
     {
         #region Private Variables
 
-        private int keyLengthFrom = 13;
-        private int keyLengthTo = 13;
-        private int threads = 1;
-        private char separator = ',';
+        private int _keyLengthFrom = 13;
+        private int _keyLengthTo = 13;
+        private int _threads = 1;
+        private int _separator = 0;
+        private string _plaintextAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        private ObservableCollection<string> _coresAvailable = new ObservableCollection<string>();
 
         #endregion
 
-        #region TaskPane Settings
+        public ADFGVXAnalyzerSettings()
+        {
+            CoresAvailable.Clear();
+            for (int i = 0; i < Environment.ProcessorCount; i++)
+            {
+                CoresAvailable.Add((i + 1).ToString());
+            }
+        }
 
         /// <summary>
-        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
-        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
+        /// Get the number of cores in a collection, used for the selection of cores
         /// </summary>
-        [TaskPane("KeyLengthFrom", "KeyLengthFromToolTip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
+        public ObservableCollection<string> CoresAvailable
+        {
+            get { return _coresAvailable; }
+            set
+            {
+                if (value != _coresAvailable)
+                {
+                    _coresAvailable = value;
+                    OnPropertyChanged("CoresAvailable");
+                }
+            }
+        }
+
+
+        #region TaskPane Settings
+
+        [TaskPane("FromKeylengthCaption", "FromKeylengthTooltip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
         public int KeyLengthFrom
         {
             get
             {
-                return keyLengthFrom;
+                return _keyLengthFrom;
             }
             set
             {
-                if (keyLengthFrom != value)
+                if (_keyLengthFrom != value)
                 {
-                    keyLengthFrom = value;
-                    // HOWTO: MUST be called every time a property value changes with correct parameter name
+                    _keyLengthFrom = value;
                     OnPropertyChanged("KeyLengthFrom");
                 }
             }
         }
 
-        [TaskPane("KeyLengthTo", "KeyLengthToToolTip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
+        [TaskPane("ToKeylengthCaption", "ToKeylengthTooltip", null, 2, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
         public int KeyLengthTo
         {
             get
             {
-                return keyLengthTo;
+                return _keyLengthTo;
             }
             set
             {
-                if (keyLengthTo != value)
+                if (_keyLengthTo != value)
                 {
-                    keyLengthTo = value;
-                    // HOWTO: MUST be called every time a property value changes with correct parameter name
+                    _keyLengthTo = value;
                     OnPropertyChanged("KeyLengthTo");
                 }
             }
         }
 
-        [TaskPane("Threads", "ThreadsToolTip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
+        [TaskPane("ThreadsCaption", "ThreadsTooltip", null, 3, false, ControlType.DynamicComboBox, new string[] { "CoresAvailable" })]
         public int Threads
         {
             get
             {
-                return threads;
+                return _threads;
             }
             set
             {
-                if (threads != value)
+                if (_threads != value)
                 {
-                    threads = value;
-                    // HOWTO: MUST be called every time a property value changes with correct parameter name
+                    _threads = value;
                     OnPropertyChanged("Threads");
                 }
             }
         }
 
-        [TaskPane("Separator", "SeparatorToolTip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
-        public char Separator
+        [TaskPane("SeparatorCaption", "SeparatorTooltip", null, 4, false, ControlType.ComboBox,new string[]{",",";","."})]
+        public int Separator
         {
             get
             {
-                return separator;
+                return _separator;
             }
             set
             {
-                if (separator != value)
+                if (_separator != value)
                 {
-                    separator = value;
-                    // HOWTO: MUST be called every time a property value changes with correct parameter name
+                    _separator = value;
                     OnPropertyChanged("Separator");
                 }
             }
-        }
+        }        
 
-        private string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-        [TaskPane("Alphabet", "Alphabet", null, 3, false, ControlType.TextBox, ValidationType.RegEx, 0, Int32.MaxValue)]
-        public string Alphabet
+        [TaskPane("PlaintextAlphabetCaption", "PlaintextAlphabetTooltip", null, 3, false, ControlType.TextBox)]
+        public string PlaintextAlphabet
         {
-            get { return this.alphabet; }
+            get { return this._plaintextAlphabet; }
             set
             {
-                if (value != alphabet)
+                if (value != _plaintextAlphabet)
                 {
 
-                    this.alphabet = value;
-                    OnPropertyChanged("Alphabet");
+                    _plaintextAlphabet = value;
+                    OnPropertyChanged("PlaintextAlphabet");
 
 
                 }
             }
         }
 
-        private string encryptAlphabet = "ADFGVX";
+        private string _ciphertextAlphabet = "ADFGVX";
 
-        [TaskPane("EncryptAlphabet", "EncryptAlphabet", null, 3, false, ControlType.TextBox, ValidationType.RegEx, 0, Int32.MaxValue)]
-        public string EncryptAlphabet
+        [TaskPane("CiphertextAlphabetCaption", "CiphertextAlphabetTooltip", null, 3, false, ControlType.TextBox)]
+        public string CiphertextAlphabet
         {
-            get { return this.encryptAlphabet; }
+            get { return _ciphertextAlphabet; }
             set
             {
-                if (value != encryptAlphabet)
+                if (value != _ciphertextAlphabet)
                 {
-                    this.encryptAlphabet = value;
-                    OnPropertyChanged("EncryptAlphabet");
+                    this._ciphertextAlphabet = value;
+                    OnPropertyChanged("CiphertextAlphabet");
 
                 }
             }
