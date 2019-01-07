@@ -1,15 +1,15 @@
-﻿using ADFGVXAnalyzer.Common;
+﻿using common;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Cryptool.ADFGVXAnalyzer
+namespace ADFGVXAnalyzer
 {
     public class Alphabet36Vector : Vector
     {
-        private static readonly ADFGVXAnalyzerSettings settings = new ADFGVXAnalyzerSettings();
-        static String ALPHABET = settings.PlaintextAlphabet;
+        private static readonly ADFGVXANalyzerSettings settings = new ADFGVXANalyzerSettings();
+        static String ALPHABET = settings.Alphabet;
         static int ALPHABET_SIZE = ALPHABET.Length;
         private static StringBuilder ALPHABET_BUILDER = new StringBuilder(ALPHABET);
 

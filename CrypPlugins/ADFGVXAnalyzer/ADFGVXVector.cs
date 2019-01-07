@@ -1,14 +1,14 @@
-﻿using ADFGVXAnalyzer.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using common;
 
-namespace Cryptool.ADFGVXAnalyzer
+namespace ADFGVXAnalyzer
 {
     public class ADFGVXVector : Vector
     {
-        private static readonly ADFGVXAnalyzerSettings settings = new ADFGVXAnalyzerSettings();
-        static String ALPHABET = settings.CiphertextAlphabet;
+        private static readonly ADFGVXANalyzerSettings settings = new ADFGVXANalyzerSettings();
+        static String ALPHABET = settings.EncryptAlphabet;
         //static String ALPHABET = "ADFGVXZ";
         static StringBuilder ALPHABET_BUILDER = new StringBuilder(ALPHABET);
 

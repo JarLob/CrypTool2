@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ADFGVXAnalyzer.Common
+namespace common
 {
     public class AlphabetVector : Vector
     {

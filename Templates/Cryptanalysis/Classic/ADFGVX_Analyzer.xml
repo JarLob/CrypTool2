@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">ADFGVX heurisitc analysis</title>
+  <summary lang="en">Heuristic analysis of <i>ADFGVX</i> with simulated annealing</summary>
+  <description lang="en">For centuries, news, especially in times of war, transmitted encrypted - including during the First World War in Germany. The news analyst Fritz Nebel developed the ADFGVX book in two steps in order to encrypt radio messages from the army. The first variant contained the letters ADFGX, later the V was added as the sixth letter. With this template, ADFGVX messages can be decrypted thanks to the heuristic method Simulated Annealing.</description>
+  <keywords>ADFGVX, Lasry, Simulated Annealing</keywords>
+
+  <title lang="de">ADFGVX heuristische Analyse</title>
+  <summary lang="de">Heuristische Analyse der <i>ADFGVX</i> mit Simulated Annealing</summary>
+  <description lang="de">Seit Jahrhunderten werden Nachrichten, vor allem in Kriegszeiten, verschlüsselt übermittelt – so auch während des Ersten Weltkrieges in Deutschland. Der Nachrichtenoffizier Fritz Nebel entwickelte die ADFGVX-Chiffre in zwei Schritten, um Funksprüche des Heeres zu verschlüsseln. Die erste Variante beinhaltete die Buchstaben ADFGX, später kam das V als sechster Buchstabe hinzu. Mit diesem Template können ADFGVX Nachrichten, dank dem heuristischen Verfahren Simulated Annealing, entschlüsselt werden.</description>
+  <keywords lang="de">ADFGVX, Lasry, Simulated Annealing</keywords>
+
+  <icon file="ADFGVX_Analyzer.png" />
+  <relevantPlugins>
+    <plugin name="ADFGVXAnalyzer" />
+    <plugin name="AnalysisMonoalphabeticSubstitution" />
+  </relevantPlugins>
+
+  <replacements lang="de">
+	<replacement key="$textbox$" value="Geben Sie die verschlüsselten Nachrichten in die Eingabemaske ein, es können auch mehrere Nachrichten zusammen eingegeben werden. In den Einstellungen der ADFGVX-Analyse-Komponente wählt man zum Beispiel aus, welches Trennzeichen zwischen den Nachrichten benutzt wird oder welche Buchstaben die Verschlüsselten Nachrichten enthalten.\line\line Weiter wird die angenommene Schlüssellänge der Transposition sowie die natürliche Sprache der Nachrichten angegeben. Zusätzlich können die Anzahl der Neustarts und die Anzahl der parallelen Threads eingestellt werden. Über die Abweichung kann reguliert werden, ab wann automatisch das Transpositionsergebnis an die Monoalphabetische Substitutionsanalyse weitergereicht wird. \line\line Die Nachrichten werden von der ADFGVX-Analyse-Komponente entgegen genommen und mittels Simulated Annealing wird die Transposition rückgängig gemacht. Das Ergebnis wird an die Monoalphabetische Substitutionsanalyse weitergereicht, womit die Nachricht vollständig entschlüsselt wird. \line\line Durch einen Doppelklick auf eine selektierte Zeile in der ADFGVX-Analyse.Komponente kann jedes Zwischenergebnis aus der Bestenliste an die Substitutionsanalyse weitergereicht werden. \line\line Detailierte Informationen zur ADFGVX oder Simulated Annealing können unter anderem hier nachgelesen werden: \line https://de.wikipedia.org/wiki/ADFGX \line https://de.wikipedia.org/wiki/Simulated_Annealing"/>
+
+	<replacement key="$messages$" value="Verschlüsselte Nachrichten"/>
+  <replacement key="$adfgvxAnalyzer$" value="ADFGVX-Analyse-Komponente"/>
+  <replacement key="$adfgvxAnalyzerTranspositionkey$" value="Transpositionsschlüssel"/>
+  <replacement key="$adfgvxAnalyzerLogger$" value="Vollständiger Log"/>
+  <replacement key="$monoAnalyzer$" value="Monoalphabetische Substitutionsanalyse"/>
+  <replacement key="$monoAnalyzerKey$" value="Substitutionsschlüssel"/>
+  <replacement key="$monoAnalyzerAlphabet$" value="Substitutionsalphabet"/>
+  <replacement key="$monoAnalyzerResult$" value="Ergebnis der Substitution"/>
+
+ </replacements>
+ <replacements lang="en">
+	<replacement key="$textbox$" value="Enter the encrypted messages in the input mask, you can also enter several messages together. In the settings of the ADFGVX analysis component, for example, you can select which separator is used between the messages or which letters contain the encrypted messages. \line\line The assumed key length of the transposition and the natural language of the messages are also specified. In addition, the number of restarts and the number of parallel threads can be set. About the deviation can be regulated, from when automatically the transposition result is passed on to the monoalphabetische substitution analysis. \line\line The messages are accepted by the ADFGVX analysis component and simulated annealing reverses the transposition. The result is passed to the mono-alphabetical substitution analysis, which completely decrypts the message. \line\line By double-clicking on a selected row in the ADFGVX analysis component, any intermediate result from the bestlist can be passed on to the substitution analysis. \line\line Detailed information about ADFGVX or Simulated Annealing can be found here: \line https://en.wikipedia.org/wiki/ADFGX \line https://en.wikipedia.org/wiki/Simulated_Annealing"/>
+	
+  <replacement key="$messages$" value="Decrypted messages"/>
+  <replacement key="$adfgvxAnalyzer$" value="ADFGVX Analyzer"/>
+  <replacement key="$adfgvxAnalyzerTranspositionkey$" value="Transpositionkey"/>
+  <replacement key="$adfgvxAnalyzerLogger$" value="Complete log"/>
+  <replacement key="$monoAnalyzer$" value="Monoalphabetic Substitution Analyzer"/>
+  <replacement key="$monoAnalyzerKey$" value="Substitutionkey"/>
+  <replacement key="$monoAnalyzerAlphabet$" value="Substitutionalphabet"/>
+  <replacement key="$monoAnalyzerResult$" value="Result of the substitution"/>
+ </replacements>
+
+</sample>

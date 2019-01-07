@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ADFGVXAnalyzer.Common;
+using common;
 
-namespace Cryptool.ADFGVXAnalyzer
+
+namespace ADFGVXAnalyzer
 {
     public class ADFGVX
     {

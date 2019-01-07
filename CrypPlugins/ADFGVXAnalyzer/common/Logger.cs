@@ -22,7 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ADFGVXAnalyzer.Common
+namespace common
 {
     /// <summary>
     /// Log types (debug, info, warning, and error).

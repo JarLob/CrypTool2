@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace ADFGVXAnalyzer.Common
+namespace common
 {
     public abstract class Vector
     {

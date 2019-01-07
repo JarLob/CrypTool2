@@ -1,20 +1,45 @@
-﻿using ADFGVXAnalyzer.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using common;
 
-namespace Cryptool.ADFGVXAnalyzer
+namespace ADFGVXAnalyzer
 {
     public class IndexOfCoinzidenz
     {
 
         public const double GERMAN = 7.6;
-        public const double ITALIA = 7.6;
-        public const double FRANCE = 7.8;
-        public const double SPAIN = 7.5;
         public const double ENGLISH = 6.5;
+        public const double FRANCE = 7.8;
+        public const double ITALIA = 7.6;
+        public const double SPAIN = 7.5;
+
+        public static double Getlanguage(int language)
+        {
+            switch (language)
+            {
+                case 0:
+                    return GERMAN;
+                    break;
+                case 1:
+                    return ENGLISH;
+                    break;
+                case 2:
+                    return FRANCE;
+                    break;
+                case 3:
+                    return ITALIA;
+                    break;
+                case 4:
+                    return SPAIN;
+                    break;
+                default: 
+                    return ENGLISH;
+                    break;
+            }
+        }
 
     }
 
@@ -46,6 +71,9 @@ namespace Cryptool.ADFGVXAnalyzer
     public class Algorithm
     {
         private int keyLength;
+        private int language;
+        private int restarts;
+        private int deviation;
         private ADFGVXVector[] ciphers;
         private Alphabet36Vector allPlain;
         private Alphabet36Vector plain;
@@ -54,16 +82,18 @@ namespace Cryptool.ADFGVXAnalyzer
         private ThreadingHelper threadingHelper;
         private ADFGVXAnalyzer analyzer;
 
-
         private int taskId;
 
 
-        public Algorithm(int keyLength, String[] messages, Logger log, int taskId, ThreadingHelper threadingHelper, ADFGVXAnalyzer analyzer)
+        public Algorithm(int keyLength, String[] messages, Logger log, int taskId, ThreadingHelper threadingHelper, ADFGVXANalyzerSettings settings, ADFGVXAnalyzer analyzer)
         {
             this.analyzer = analyzer;
             this.threadingHelper = threadingHelper;
             this.taskId = taskId;
             this.log = log;
+            this.language = settings.Language;
+            this.deviation = settings.Deviation;
+            this.restarts = settings.Restarts;
             this.keyLength = keyLength;
             ciphers = new ADFGVXVector[messages.Length];
             int totalPlainLength = 0;
@@ -101,9 +131,8 @@ namespace Cryptool.ADFGVXAnalyzer
 
             ADFGVX key = new ADFGVX("", keyLength);
             TranspositionTransformations transforms = new TranspositionTransformations(keyLength, true, true, true);
-            int zyklen = 100;
 
-            for (int cycles = 1; cycles <= zyklen; cycles++)
+            for (int cycles = 1; cycles <= restarts; cycles++)
             {
                 if (cycles % 10 == 0)
                 {
@@ -133,7 +162,7 @@ namespace Cryptool.ADFGVXAnalyzer
                             score = newScore;
                             if (score > threadingHelper.bestOverall)
                             {
-                                printIfBest(key, cycles, step, score, temp);
+                                printIfBest(key, cycles, step, score, temp, deviation);
                             }
                         }
                         else
@@ -149,8 +178,8 @@ namespace Cryptool.ADFGVXAnalyzer
                         {
                             alldecryptions += d;
                         }
+                        threadingHelper.UpdateDisplayEnd(keyLength, alldecryptions, restarts * (long)(startTemp / delta) * size + restarts);
                     }
-                    threadingHelper.UpdateDisplayEnd(keyLength, alldecryptions, zyklen * (long)(startTemp / delta) * size + zyklen);
                 }
             }
 
@@ -158,25 +187,26 @@ namespace Cryptool.ADFGVXAnalyzer
         }
 
 
-        private void printIfBest(ADFGVX key, int cycles, int step, double score, double temp)
+        private void printIfBest(ADFGVX key, int cycles, int step, double score, double temp, int deviation)
         {
 
             lock (threadingHelper.bestOverallLock)
             {
+
                 if (score > threadingHelper.bestOverall)
                 {
                     threadingHelper.bestOverall = score;
-                    analyzer.AddNewBestListEntry(Math.Round(threadingHelper.bestOverall, 2),
+                    analyzer.AddNewBestListEntry(Math.Round(threadingHelper.bestOverall, 0),
                         Math.Round(allPlain.IoC1, 2), Math.Round(allPlain.IoC2, 2), key.transpositionKey.ToString(), allPlain.ToString());
-                    if (allPlain.IoC1 >= IndexOfCoinzidenz.GERMAN * 0.9)
+                    if (allPlain.IoC1 >= IndexOfCoinzidenz.Getlanguage(language) * ((float)(100-deviation)/100))
                     {
-                        analyzer.Plaintext = allPlain.ToString();
-                        analyzer.Transpositionkey = key.transpositionKey.ToString();
-                        analyzer.LogText += Environment.NewLine + "Task: " + taskId + Environment.NewLine + "cycle: " + cycles +
-                                            Environment.NewLine + "temp: " + temp + Environment.NewLine + "trans key: " + key.transpositionKey +
-                                            Environment.NewLine + "bestOverall: " + threadingHelper.bestOverall +
-                                            Environment.NewLine + "IoC1 and IoC2: " + allPlain.IoC1 + " " + allPlain.IoC2;
+                        analyzer.TranspositionResult = allPlain.ToString();
                     }
+                    analyzer.Transpositionkey = key.transpositionKey.ToString();
+                    analyzer.LogText += Environment.NewLine + "Task: " + taskId + Environment.NewLine + "cycle: " + cycles +
+                                        Environment.NewLine + "temp: " + temp + Environment.NewLine + "trans key: " + key.transpositionKey +
+                                        Environment.NewLine + "bestOverall: " + threadingHelper.bestOverall +
+                                        Environment.NewLine + "IoC1 and IoC2: " + allPlain.IoC1 + " " + allPlain.IoC2;
                 }
             }
         }

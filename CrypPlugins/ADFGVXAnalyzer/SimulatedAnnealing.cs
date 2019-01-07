@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using common;
 
-namespace Cryptool.ADFGVXAnalyzer
+namespace ADFGVXAnalyzer
 {
     public class SimulatedAnnealing
     {

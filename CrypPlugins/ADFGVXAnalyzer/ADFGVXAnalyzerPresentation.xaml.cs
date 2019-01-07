@@ -15,15 +15,17 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace Cryptool.ADFGVXAnalyzer
+namespace ADFGVXAnalyzer
 {
     /// <summary>
     /// Interaktionslogik für ADFGVXAnalyzerPresentation.xaml
     /// </summary>
+    [Cryptool.PluginBase.Attributes.Localization("ADFGVXAnalyzer.Properties.Resources")]
     public partial class ADFGVXAnalyzerPresentation : UserControl
     {
 
         public ObservableCollection<ResultEntry> BestList = new ObservableCollection<ResultEntry>();
+        public event EventHandler getTranspositionResult;
 
         public ADFGVXAnalyzerPresentation()
         {
@@ -47,17 +49,6 @@ namespace Cryptool.ADFGVXAnalyzer
             }, null);
         }
 
-        public void HandleDoubleClick(Object sender, EventArgs eventArgs)
-        {
-            var lvi = sender as ListViewItem;
-            var r = lvi.Content as ResultEntry;
-        }
-
-        public void HandleSingleClick(Object sender, EventArgs eventArgs)
-        {
-
-        }
-
         // Strings with nul characters are not displayed correctly in the clipboard
         string removeNuls(string s)
         {
@@ -67,10 +58,11 @@ namespace Cryptool.ADFGVXAnalyzer
         string entryToText(ResultEntry entry)
         {
             return "Ranking: " + entry.Ranking + Environment.NewLine +
+                   "Score: " + entry.Score + Environment.NewLine + 
                    "Ic1: " + entry.Ic1 + Environment.NewLine +
                    "Ic2: " + entry.Ic2 + Environment.NewLine +
                    "TransKey: " + entry.TransKey + Environment.NewLine +
-                   "Plaintext: " + removeNuls(entry.Plaintext);
+                   "Plaintext: " + removeNuls(entry.TranspositionResult);
         }
 
         public void ContextMenuHandler(Object sender, EventArgs eventArgs)
@@ -84,7 +76,7 @@ namespace Cryptool.ADFGVXAnalyzer
 
                 if (tag == "copy_plaintext")
                 {
-                    Clipboard.SetText(removeNuls(entry.Plaintext));
+                    Clipboard.SetText(removeNuls(entry.TranspositionResult));
                 }
                 else if (tag == "copy_score")
                 {
@@ -117,6 +109,11 @@ namespace Cryptool.ADFGVXAnalyzer
             {
                 Clipboard.SetText("");
             }
+        }
+
+        public void HandleDoubleClick(Object sender, EventArgs eventArgs)
+        {
+            getTranspositionResult(sender, eventArgs);
         }
     }
 }

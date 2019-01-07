@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
+<documentation>
+  <language culture="en"/>
+  <language culture="de-DE"/>
+
+  <introduction lang="en">
+    For centuries, news, especially in times of war, transmitted encrypted - including during the First World War in Germany.
+    The news analyst Fritz Nebel developed the ADFGVX book in two steps in order to encrypt radio messages from the army.
+    The first variant contained the letters ADFGX, later the V was added as the sixth letter. With this template, ADFGVX
+    messages can be decrypted thanks to the heuristic method Simulated Annealing.
+
+    This component can only decrypt the transposition of an encrypted ADFGVX message. George Lasry developed in 2016 an algorithm 
+    based on the heuristic method Simulated Annealing, which approximates the correct transposition key. This algorithm 
+    has been implemented in this component.
+  </introduction>
+
+  <introduction lang="de-DE">
+    Seit Jahrhunderten werden Nachrichten, vor allem in Kriegszeiten, verschlüsselt übermittelt – so auch während des Ersten Weltkrieges in Deutschland. 
+    Der Nachrichtenoﬃzier Fritz Nebel entwickelte die ADFGVX-Chiﬀre in zwei Schritten, um Funksprüche des Heeres zu verschlüsseln. Die erste Variante 
+    beinhaltete die Buchstaben ADFGX, später kam das V als sechster Buchstabe hinzu. Mit diesem Template können ADFGVX Nachrichten, dank dem heuristischen 
+    Verfahren Simulated Annealing, entschlüsselt werden.
+
+    Diese Komponente kann nur die Transposition einer verschlüsselten ADFGVX-Nachricht entschlüsseln. George Lasry entwickelte im Jahr 2016 einen Algorithmus, 
+    basierend auf dem heuristischen Verfahren Simulated Annealing, welcher sich näherungsweise dem richtigen Transpositionsschlüssel annähern kann. 
+    Dieser Algorithmus wurde in dieser Komponente implementiert.
+  </introduction>
+
+  <usage lang="en">
+    The component has an input, via which the encrypted messages are entered. In the settings you can set the letters of the encrypted messages. 
+    Care must be taken to ensure that the number of characters in the plain-text alphabet is the square of the number of characters in the cipher. 
+    Otherwise the algorithm will not start. To successfully decrypt the messages, one must know the length of the transposition key. The algorithm 
+    will be restarted several times, how often this should be done is given by the number of restarts. In addition, you can start the algorithm 
+    several times in parallel. It should be noted that each set thread performs the set restarts. The restarts are not split on the threads.
+  </usage>
+
+  <usage lang="de-DE">
+    Die Komponente hat einen Eingang, über diesen werden die verschlüsselten Nachrichten eingegeben. In den Einstellungen lässt sich einstellen, 
+    aus welchen Buchstaben die verschlüsselten Nachrichten bestehen. Dabei muss darauf geachtet werden, dass die Anzahl Zeichen im Klartextalphabet 
+    das Quadrat der Anzahl Zeichen in der Geheimschrift bilden. Sonst startet der Algorithmus nicht. Um die Nachrichten erfolgreich zu entschlüsseln, 
+    muss man die Länge des Transpositionsschlüssels kennen. Der Algorithmus wird mehrmals neu gestartet, wie oft dies geschehen soll, wird über die 
+    Anzahl der Neustarts angegeben. Darüber hinaus kann man den Algorithmus mehrfach parallel starten. Dabei ist zu beachten, das jeder eingestellte 
+    Thread die eingestellten Neustarts durchführt. Die Neustarts werden nicht auf die Threads aufgeteilt.
+  </usage>
+  
+  <presentation lang="en">
+    There are two interactive features in the presentation, both of which are in the bestlist. With a right-click, a context menu opens in which you 
+    want to copy individual values, entire lines or the entire contents of the bestlist. Double-clicking on one of the rows routes the information 
+    from that row to the output connectors of the component.
+  </presentation>
+  
+  <presentation lang="de-DE">
+    In der Präsentation gibt es zwei interaktive Funktionen, beide befinden sich in der Bestenliste. Mit einem Rechtsklick öffnet sich ein Contextmenü,
+    indem man einzelne Werte, ganze Zeilen oder den kompletten Inhalt der Bestenliste kopieren möchte. Mit einem Doppelklick auf eine der Zeilen werden
+    die Informationen aus dieser Zeile an die Ausgabe-Konnektoren der Komponente weitergeleitet.
+  </presentation>
+
+  <references>
+    <linkReference>
+      <link url="https://en.wikipedia.org/wiki/ADFGVX_cipher" lang="en" />
+      <caption lang="en">More information about the ADFGVX cipher</caption>
+      <link url="https://de.wikipedia.org/wiki/ADFGX" lang="de-DE" />
+      <caption lang="de-DE">Weitere Informationen über die ADFGVX-Chiffre</caption>
+    </linkReference>
+    <linkReference>
+      <link url="https://en.wikipedia.org/wiki/Simulated_annealing" lang="en" />
+      <caption lang="en">More information about simulated annealing</caption>
+      <link url="https://de.wikipedia.org/wiki/Simulated_Annealing" lang="de-DE" />
+      <caption lang="de-DE">Weitere Informationen über Simulated Annealing</caption>
+    </linkReference>
+  </references>
+</documentation>

@@ -117,70 +117,184 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BestKeyCaption" xml:space="preserve">
-    <value>Best Key</value>
+  <data name="Copy_all" xml:space="preserve">
+    <value>Copy all lines</value>
   </data>
-  <data name="BestKeyTooltip" xml:space="preserve">
-    <value>The best revealed key obtained by the cryptanalysis.</value>
+  <data name="Copy_transkey" xml:space="preserve">
+    <value>Copy transpositionkey</value>
   </data>
-  <data name="CiphertextAlphabetCaption" xml:space="preserve">
-    <value>Ciphertext alphabet</value>
+  <data name="Copy_line" xml:space="preserve">
+    <value>Copy selected line</value>
   </data>
-  <data name="CiphertextAlphabetTooltip" xml:space="preserve">
-    <value>Sets the letters used as indices of the polybius square.</value>
+  <data name="Copy_ic1" xml:space="preserve">
+    <value>Copy IoC1</value>
+  </data>
+  <data name="Copy_ic2" xml:space="preserve">
+    <value>Copy IoC2</value>
   </data>
   <data name="CiphertextCaption" xml:space="preserve">
     <value>Ciphertext</value>
   </data>
   <data name="CiphertextTooltip" xml:space="preserve">
-    <value>The ciphertext(s) which should be cryptanalyzed.</value>
+    <value>The ciphertext that should be analyzed.</value>
   </data>
-  <data name="FromKeylengthCaption" xml:space="preserve">
-    <value>Lower bound of keylength</value>
+  <data name="ElapsedLabel" xml:space="preserve">
+    <value>Elapsed Time:</value>
   </data>
-  <data name="FromKeylengthTooltip" xml:space="preserve">
-    <value>Start from this keylength when analyzing the given ciphertext.</value>
+  <data name="EndLabel" xml:space="preserve">
+    <value>End Time:</value>
   </data>
-  <data name="LogoutputCaption" xml:space="preserve">
-    <value>Log Output</value>
+  <data name="StartLabel" xml:space="preserve">
+    <value>Start Time:</value>
   </data>
-  <data name="LogoutputTooltip" xml:space="preserve">
-    <value>Shows the internal log of the cryptanalysis algorithm.</value>
+  <data name="KeyLengthLabel" xml:space="preserve">
+    <value>Analyzed keylength:</value>
   </data>
-  <data name="PlaintextAlphabetCaption" xml:space="preserve">
-    <value>Plaintext alphabet</value>
+  <data name="LocalLabel" xml:space="preserve">
+    <value>Analysis</value>
   </data>
-  <data name="PlaintextAlphabetTooltip" xml:space="preserve">
-    <value>Sets the plaintext alphabet used in the polybius square.</value>
+  <data name="TopTenLabel" xml:space="preserve">
+    <value>Bestlist</value>
   </data>
-  <data name="PlaintextCaption" xml:space="preserve">
-    <value>Plaintext</value>
+  <data name="ChooseAlphabetList1" xml:space="preserve">
+    <value>German</value>
   </data>
-  <data name="PlaintextTooltip" xml:space="preserve">
-    <value>Plaintext revealed by cryptanalysis. This plaintext is still monoalphabetic encrypted.</value>
+  <data name="ChooseAlphabetList2" xml:space="preserve">
+    <value>English</value>
   </data>
-  <data name="PluginCaption" xml:space="preserve">
+  <data name="ChooseAlphabetList3" xml:space="preserve">
+    <value>France</value>
+  </data>
+  <data name="ChooseAlphabetList4" xml:space="preserve">
+    <value>Italia</value>
+  </data>
+  <data name="ChooseAlphabetList5" xml:space="preserve">
+    <value>Spain</value>
+  </data>
+  <data name="ADFGVXAnalyzerCaption" xml:space="preserve">
     <value>ADFGVX Analyzer</value>
   </data>
-  <data name="PluginTooltip" xml:space="preserve">
-    <value>Cryptanalysis of the ADFGVX cipher using hillclimbing.</value>
+  <data name="AlphabetGroup" xml:space="preserve">
+    <value>Language</value>
   </data>
-  <data name="SeparatorCaption" xml:space="preserve">
-    <value>Ciphertexts separator</value>
+  <data name="ChooseAlphabetCaption" xml:space="preserve">
+    <value>Language</value>
   </data>
-  <data name="SeperatorTooltip" xml:space="preserve">
-    <value>Sets the character which seperates different messages for analysis 'in depth'.</value>
+  <data name="ChooseAlphabetTooltip" xml:space="preserve">
+    <value>Language of messages</value>
   </data>
-  <data name="ThreadsCaption" xml:space="preserve">
+  <data name="ChooseSeparatorList1" xml:space="preserve">
+    <value>Newline</value>
+  </data>
+  <data name="ChooseSeparatorList2" xml:space="preserve">
+    <value>Comma</value>
+  </data>
+  <data name="ChooseSeparatorList3" xml:space="preserve">
+    <value>Semicolon</value>
+  </data>
+  <data name="ChooseSeparatorList4" xml:space="preserve">
+    <value>Blank</value>
+  </data>
+  <data name="AlphabetCaption" xml:space="preserve">
+    <value>Plaintext alphabet</value>
+  </data>
+  <data name="AlphabetTooltip" xml:space="preserve">
+    <value>Characters contained in plaintext</value>
+  </data>
+  <data name="ChooseSeparatorCaption" xml:space="preserve">
+    <value>Separator</value>
+  </data>
+  <data name="ChooseSeparatorTooltip" xml:space="preserve">
+    <value>Character to separate the messages.</value>
+  </data>
+  <data name="EncryptAlphabetCaption" xml:space="preserve">
+    <value>Ciphertext alphabet</value>
+  </data>
+  <data name="EncryptAlphabetTooltip" xml:space="preserve">
+    <value>Characters contained in cipher text</value>
+  </data>
+  <data name="KeyLength" xml:space="preserve">
+    <value>Keylength</value>
+  </data>
+  <data name="KeyLengthToolTip" xml:space="preserve">
+    <value>Keylength of the transpositionkey</value>
+  </data>
+  <data name="MessageGroup" xml:space="preserve">
+    <value>Messages</value>
+  </data>
+  <data name="Copy_score" xml:space="preserve">
+    <value>Copy Score</value>
+  </data>
+  <data name="Copy_plaintext" xml:space="preserve">
+    <value>Copy transposition result</value>
+  </data>
+  <data name="IoC1Header" xml:space="preserve">
+    <value>IoC 1</value>
+  </data>
+  <data name="IoC2Header" xml:space="preserve">
+    <value>IoC 2</value>
+  </data>
+  <data name="KeysLabel" xml:space="preserve">
+    <value>keys / sec:</value>
+  </data>
+  <data name="MessagesLabel" xml:space="preserve">
+    <value>Number of messages:</value>
+  </data>
+  <data name="ParametersGroup" xml:space="preserve">
+    <value>Additional Options</value>
+  </data>
+  <data name="PlaintextHeader" xml:space="preserve">
+    <value>Transposition result</value>
+  </data>
+  <data name="Restarts" xml:space="preserve">
+    <value>Restarts</value>
+  </data>
+  <data name="RestartsToolTip" xml:space="preserve">
+    <value>How often should the algorithm restart</value>
+  </data>
+  <data name="ScoreHeader" xml:space="preserve">
+    <value>Score</value>
+  </data>
+  <data name="Threads" xml:space="preserve">
     <value>Threads</value>
   </data>
-  <data name="ThreadsTooltip" xml:space="preserve">
-    <value>Sets how many threads should be started in parallel for the cryptanalysis.</value>
+  <data name="ThreadsToolTip" xml:space="preserve">
+    <value>How many threads should be started in parallel</value>
   </data>
-  <data name="ToKeylengthCaption" xml:space="preserve">
-    <value>Upper bound of keylength</value>
+  <data name="TranskeyHeader" xml:space="preserve">
+    <value>Transposition key</value>
   </data>
-  <data name="ToKeylengthTooltip" xml:space="preserve">
-    <value>Stop the analysis after evaluating this keylength.</value>
+  <data name="LogTextCaption" xml:space="preserve">
+    <value>Logger</value>
+  </data>
+  <data name="LogTextToolTip" xml:space="preserve">
+    <value>Complete log of the analysis component</value>
+  </data>
+  <data name="MessagesCaption" xml:space="preserve">
+    <value>Messages</value>
+  </data>
+  <data name="MessagesToolTip" xml:space="preserve">
+    <value>Encrypted messages, multiple messages separated by a delimiter</value>
+  </data>
+  <data name="TranspositionkeyCaption" xml:space="preserve">
+    <value>Transposition key</value>
+  </data>
+  <data name="TranspositionkeyToolTip" xml:space="preserve">
+    <value>A permutation of the transposition key expressed in letters</value>
+  </data>
+  <data name="TranspositionResultCaption" xml:space="preserve">
+    <value>Transposition result</value>
+  </data>
+  <data name="TranspositionResultToolTip" xml:space="preserve">
+    <value>Interim result of ADFGVX, result requires a monoalphabetic substitution</value>
+  </data>
+  <data name="ADFGVXAnalyzerToolTip" xml:space="preserve">
+    <value>This component analyzes the transposition key of the ADFGVX cipher</value>
+  </data>
+  <data name="Deviation" xml:space="preserve">
+    <value>Deviation</value>
+  </data>
+  <data name="DeviationToolTip" xml:space="preserve">
+    <value>Deviation in percent of the ideal cost value, from when the substitution analysis is to be carried out.</value>
   </data>
 </root>

@@ -8,7 +8,7 @@
     <ProjectGuid>{5D78E3B5-2DFA-45B3-B125-62A7CF623657}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CrypTool.ADFGVXAnalyzer</RootNamespace>
+    <RootNamespace>ADFGVXAnalyzer</RootNamespace>
     <AssemblyName>ADFGVXAnalyzer</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -131,7 +131,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="userdoc.xml" />
+    <Resource Include="userdoc.xml">
+      <SubType>Designer</SubType>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Page Include="ADFGVXAnalyzerPresentation.xaml">
