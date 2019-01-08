@@ -24,7 +24,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
-using static FormatPreservingEncryptionWeydstone.Common;
 
 namespace FormatPreservingEncryptionWeydstone
 {
@@ -40,9 +39,9 @@ namespace FormatPreservingEncryptionWeydstone
         {
             this.radix = radix;
 
-            // 2 <= minlen <= maxlen <= 2 * floor(log(2^96)/log(radix))
-            minlen = Math.Max(2, ceiling(Math.Log(100) / Math.Log(radix)));
-            maxlen = Math.Max(minlen, 2 * floor(Math.Log(Math.Pow(2, 96)) / Math.Log(radix)));
+            // 2 <= minlen <= maxlen <= 2 * Common.floor(log(2^96)/log(radix))
+            minlen = Math.Max(2, Common.ceiling(Math.Log(100) / Math.Log(radix)));
+            maxlen = Math.Max(minlen, 2 * Common.floor(Math.Log(Math.Pow(2, 96)) / Math.Log(radix)));
 
             ciphers = new Ciphers();
             ff3Round = new FF3RoundFunction(radix, ciphers);
@@ -113,11 +112,11 @@ namespace FormatPreservingEncryptionWeydstone
 			     * 
 			     * vi. Let C = REV(STR m radix (c)).
 			     */
-                BigInteger x = num(rev(X), radix);
-                BigInteger y = num(Y, radix);
-                BigInteger z = mod(x - y, BigInteger.Pow(radix, X.Length));
-                int[] Z = str(z, radix, X.Length);
-                return rev(Z);
+                BigInteger x = Common.num(Common.rev(X), radix);
+                BigInteger y = Common.num(Y, radix);
+                BigInteger z = Common.mod(x - y, BigInteger.Pow(radix, X.Length));
+                int[] Z = Common.str(z, radix, X.Length);
+                return Common.rev(Z);
             }
 
             public int[] Add(int[] X, int[] Y)
@@ -130,11 +129,11 @@ namespace FormatPreservingEncryptionWeydstone
 			     * 
 			     * Step 6.vi. Let C = REV(STR m radix (c)).
 			     */
-                BigInteger x = num(rev(X), radix);
-                BigInteger y = num(Y, radix);
-                BigInteger z = mod(x + y, BigInteger.Pow(radix, X.Length));
-                int[] Z = str(z, radix, X.Length);
-                return rev(Z);
+                BigInteger x = Common.num(Common.rev(X), radix);
+                BigInteger y = Common.num(Y, radix);
+                BigInteger z = Common.mod(x + y, BigInteger.Pow(radix, X.Length));
+                int[] Z = Common.str(z, radix, X.Length);
+                return Common.rev(Z);
             }
         };
 
@@ -160,7 +159,7 @@ namespace FormatPreservingEncryptionWeydstone
                 if (n < minlen || n > maxlen)
                     throw new ArgumentException("n must be in the range [" + minlen + ".." + maxlen + "].");
 
-                return ceiling(n / 2.0);
+                return Common.ceiling(n / 2.0);
             }
         };
 
@@ -211,11 +210,11 @@ namespace FormatPreservingEncryptionWeydstone
                 }
 
                 // value of REVB(K) for readability
-                byte[] revK = revb(K);
+                byte[] revK = Common.revb(K);
 
 
-                // 1. Let u = ceiling(n/2); v = n â€“ u.
-                int u = ceiling(n / 2.0);
+                // 1. Let u = Common.ceiling(n/2); v = n â€“ u.
+                int u = Common.ceiling(n / 2.0);
                 int v = n - u;
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
@@ -238,7 +237,7 @@ namespace FormatPreservingEncryptionWeydstone
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     Console.WriteLine(
-                            "Step 3\n\tT_L is " + byteArrayToHexString(T_L) + "\n\tT_R is " + byteArrayToHexString(T_R));
+                            "Step 3\n\tT_L is " + Common.byteArrayToHexString(T_L) + "\n\tT_R is " + Common.byteArrayToHexString(T_R));
                 }
 
                 // i. If i is even, let m = u and W = T_R ,
@@ -247,25 +246,25 @@ namespace FormatPreservingEncryptionWeydstone
                 byte[] W = i % 2 == 0 ? T_R : T_L;
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
-                    Console.WriteLine("Step 4.i\n\tm is <" + m + ">\n\tW is " + byteArrayToHexString(W));
+                    Console.WriteLine("Step 4.i\n\tm is <" + m + ">\n\tW is " + Common.byteArrayToHexString(W));
                 }
 
                 // ii. Let P = W xor [i] 4 || [NUMradix (REV(B))] 12 .
-                byte[] P = concatenate(xor(W, bytestring(i, 4)), bytestring(num(rev(B), radix), 12));
+                byte[] P = Common.concatenate(Common.xor(W, Common.bytestring(i, 4)), Common.bytestring(Common.num(Common.rev(B), radix), 12));
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     Console.WriteLine("Step 4.ii\n\tP is " + Common.unsignedByteArrayToString(P));
                 }
 
                 // iii Let S = REVB(CIPH REVB(K) REVB(P)).
-                byte[] S = revb(ciphers.ciph(revK, revb(P)));
+                byte[] S = Common.revb(ciphers.ciph(revK, Common.revb(P)));
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
-                    Console.WriteLine("Step 4.iii\n\tS is " + byteArrayToHexString(S));
+                    Console.WriteLine("Step 4.iii\n\tS is " + Common.byteArrayToHexString(S));
                 }
 
                 // iv. Let y = NUM(S).
-                BigInteger y = num(S);
+                BigInteger y = Common.num(S);
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     Console.WriteLine("Step 4.iv\n\ty is " + y);
@@ -275,7 +274,7 @@ namespace FormatPreservingEncryptionWeydstone
                 y = Common.mod(y, BigInteger.Pow(radix, m));
 
                 // 5. Let Y = STR m radix (y).
-                int[] Y = str(y, radix, m);
+                int[] Y = Common.str(y, radix, m);
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     Console.WriteLine("Step 5.\n\tY is " + Common.intArrayToString(Y) + "\n");

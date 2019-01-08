@@ -398,7 +398,7 @@ namespace FormatPreservingEncryptionWeydstone
 
         /**
          * Given a real number x and a positive integer m, returns the remainder of
-         * x modulo m, denoted by x mod m, which is x - m * floor(x/m).
+         * x modulo m, denoted by x mod m, which is x - m * Common.floor(x/m).
          * <p>
          * NIST SP 800-38G describes the input as a "real" number, but provides only
          * integer values as input. We have defined the input as a BigInteger to
@@ -422,7 +422,7 @@ namespace FormatPreservingEncryptionWeydstone
             if (m <= 0)
                 throw new ArithmeticException("m must be a positive integer");
 
-            // return x - m * floor(x / m);
+            // return x - m * Common.floor(x / m);
             /*
              * return x.subtract(m.multiply(new BigDecimal(x).divide(new
              * BigDecimal(m), RoundingMode.FLOOR).toBigInteger()));
@@ -436,7 +436,7 @@ namespace FormatPreservingEncryptionWeydstone
 
         /**
          * Given a real number x and a positive integer m, returns the remainder of
-         * x modulo m, denoted by x mod m, which is x - m * floor(x/m).
+         * x modulo m, denoted by x mod m, which is x - m * Common.floor(x/m).
          * <p>
          * NIST SP 800-38G describes the input as a "real" number, but provides only
          * integer values as input. We have defined the input as an int to avoid
@@ -460,8 +460,8 @@ namespace FormatPreservingEncryptionWeydstone
             if (m < 1)
                 throw new ArithmeticException("m must be a positive integer");
 
-            // x - m * floor(x / m);
-            return x - m * floor(x / (double)m);
+            // x - m * Common.floor(x / m);
+            return x - m * Common.floor(x / (double)m);
         }
 
         /**
@@ -754,7 +754,7 @@ namespace FormatPreservingEncryptionWeydstone
                 //TODO
                 X[m - i] = (int)mod(x, r);
 
-                // ii. x = floor(x/radix).
+                // ii. x = Common.floor(x/radix).
                 //TODO
                 x = x / r;
                 /*

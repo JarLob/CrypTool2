@@ -506,7 +506,7 @@ namespace FPETests
             // null input
             try
             {
-                Common.revb(null);
+                Common.rev(null);
                 Assert.Fail();
             }
             catch (Exception e)

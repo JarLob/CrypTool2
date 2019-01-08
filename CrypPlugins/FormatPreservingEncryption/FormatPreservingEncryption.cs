@@ -71,7 +71,7 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
         {
             get;
             set;
-        } = new byte[] { };
+        }
 
         [PropertyInfo(Direction.InputData, "TweakRadixCaption", "TweakRadixTooltip", false)]
         public int TweakRadix
@@ -304,6 +304,7 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
         /// </summary>
         public void Initialize()
         {
+            Tweak = new byte[] { };
         }
 
         /// <summary>
@@ -354,11 +355,6 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
         private void OutputChanged(object sender, OutputChangedEventArgs e)
         {
             logBuilder.Append(e.Text+ Environment.NewLine);
-
-            //TODO isnt working
-            //GuiLogMessage("Log changed: : " + e.Text, NotificationLevel.Debug);
-            //Log = e.Text;
-            //OnPropertyChanged("Log");
         }
 
         /// <summary>

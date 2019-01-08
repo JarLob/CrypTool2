@@ -24,7 +24,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
-using static FormatPreservingEncryptionWeydstone.Common;
 
 namespace FormatPreservingEncryptionWeydstone
 {
@@ -90,9 +89,9 @@ namespace FormatPreservingEncryptionWeydstone
                 throw new ArgumentException("Radix must be in the range 2..65536: " + radix);
             this.radix = radix;
 
-            // 2 <= minlen <= maxlen <= 2 * floor(log(2^96)/log(radix))
-            minlen = Math.Max(2, ceiling(Math.Log(100) / Math.Log(radix)));
-            maxlen = Math.Max(minlen, 2 * floor(Math.Log(Math.Pow(2, 96)) / Math.Log(radix)));
+            // 2 <= minlen <= maxlen <= 2 * Common.floor(log(2^96)/log(radix))
+            minlen = Math.Max(2, Common.ceiling(Math.Log(100) / Math.Log(radix)));
+            maxlen = Math.Max(minlen, 2 * Common.floor(Math.Log(Math.Pow(2, 96)) / Math.Log(radix)));
 
             mCiphers = new Ciphers();
         }
@@ -156,17 +155,17 @@ namespace FormatPreservingEncryptionWeydstone
             {
                 OnOutputChanged(new OutputChangedEventArgs("FF3.Decrypt()\n"));
                 OnOutputChanged(new OutputChangedEventArgs("X is " + Common.intArrayToString(X)));
-                OnOutputChanged(new OutputChangedEventArgs("Tweak is " + byteArrayToHexString(T) + "\n"));
+                OnOutputChanged(new OutputChangedEventArgs("Tweak is " + Common.byteArrayToHexString(T) + "\n"));
             }
 
             // value of n for readability
             int n = X.Length;
 
             // value of REVB(K) for readability
-            byte[] revK = revb(K);
+            byte[] revK = Common.revb(K);
 
-            // 1. Let u = ceiling(n/2); v = n - u.
-            int u = ceiling(n / 2.0);
+            // 1. Let u = Common.ceiling(n/2); v = n - u.
+            int u = Common.ceiling(n / 2.0);
             int v = n - u;
             if (Constants.CONFORMANCE_OUTPUT)
             {
@@ -195,7 +194,7 @@ namespace FormatPreservingEncryptionWeydstone
             if (Constants.CONFORMANCE_OUTPUT)
             {
                 OnOutputChanged(new OutputChangedEventArgs(
-                        "Step 3\n\tT_L is " + byteArrayToHexString(T_L) + "\n\tT_R is " + byteArrayToHexString(T_R) + "\n"));
+                        "Step 3\n\tT_L is " + Common.byteArrayToHexString(T_L) + "\n\tT_R is " + Common.byteArrayToHexString(T_R) + "\n"));
             }
 
             // 4. For i from 7 to 0:
@@ -213,39 +212,39 @@ namespace FormatPreservingEncryptionWeydstone
                 byte[] W = i % 2 == 0 ? T_R : T_L;
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
-                    OnOutputChanged(new OutputChangedEventArgs("\tStep 4.i\n\t\tm is <" + m + ">\n\t\tW is " + byteArrayToHexString(W)));
+                    OnOutputChanged(new OutputChangedEventArgs("\tStep 4.i\n\t\tm is <" + m + ">\n\t\tW is " + Common.byteArrayToHexString(W)));
                 }
 
                 // ii. Let P = W xor [i]^4 || [NUMradix (REV(A))]^12 .
-                byte[] P = concatenate(xor(W, bytestring(i, 4)), bytestring(num(rev(A), radix), 12));
+                byte[] P = Common.concatenate(Common.xor(W, Common.bytestring(i, 4)), Common.bytestring(Common.num(Common.rev(A), radix), 12));
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     OnOutputChanged(new OutputChangedEventArgs("\tStep 4.ii\n\t\tP is " + Common.unsignedByteArrayToString(P)));
                 }
 
                 // iii Let S = REVB(CIPH REVB(K) REVB(P)).
-                byte[] S = revb(mCiphers.ciph(revK, revb(P)));
+                byte[] S = Common.revb(mCiphers.ciph(revK, Common.revb(P)));
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
-                    OnOutputChanged(new OutputChangedEventArgs("\tStep 4.iii\n\t\tS is " + byteArrayToHexString(S)));
+                    OnOutputChanged(new OutputChangedEventArgs("\tStep 4.iii\n\t\tS is " + Common.byteArrayToHexString(S)));
                 }
 
                 // iv. Let y = NUM(S).
-                BigInteger y = num(S);
+                BigInteger y = Common.num(S);
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     OnOutputChanged(new OutputChangedEventArgs("\tStep 4.iv\n\t\ty is " + y));
                 }
 
                 // v. Let c = (NUMradix (REV(B))-y) mod radix m .
-                BigInteger c = mod(num(rev(B), radix) - y, BigInteger.Pow(radix, m));
+                BigInteger c = Common.mod(Common.num(Common.rev(B), radix) - y, BigInteger.Pow(radix, m));
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     OnOutputChanged(new OutputChangedEventArgs("\tStep 4.v\n\t\tc is " + c));
                 }
 
                 // vi. Let C = REV(STR m radix (c)).
-                int[] C = rev(str(c, radix, m));
+                int[] C = Common.rev(Common.str(c, radix, m));
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     OnOutputChanged(new OutputChangedEventArgs("\tStep 4.vi\n\t\tC is " + Common.intArrayToString(C)));
@@ -266,7 +265,7 @@ namespace FormatPreservingEncryptionWeydstone
                 }
             }
             // 5. Return A || B.
-            int[] AB = concatenate(A, B);
+            int[] AB = Common.concatenate(A, B);
             if (Constants.CONFORMANCE_OUTPUT)
             {
                 OnOutputChanged(new OutputChangedEventArgs("Step 5\n\tA || B is " + Common.intArrayToString(AB)));
@@ -333,20 +332,20 @@ namespace FormatPreservingEncryptionWeydstone
             {
                 OnOutputChanged(new OutputChangedEventArgs("FF3.Encrypt()\n"));
                 OnOutputChanged(new OutputChangedEventArgs("X is " + Common.intArrayToString(X)));
-                OnOutputChanged(new OutputChangedEventArgs("Tweak is " + byteArrayToHexString(T) + "\n"));
+                OnOutputChanged(new OutputChangedEventArgs("Tweak is " + Common.byteArrayToHexString(T) + "\n"));
             }
 
             // value of n for readability
             int n = X.Length;
 
             // value of REVB(K) for readability
-            byte[] revK = revb(K);
+            byte[] revK = Common.revb(K);
             /*
 		     * Note that this only works if K is in RAW format.
 		     */
 
-            // 1. Let u = ceiling(n/2); v = n - u.
-            int u = ceiling(n / 2.0);
+            // 1. Let u = Common.ceiling(n/2); v = n - u.
+            int u = Common.ceiling(n / 2.0);
             int v = n - u;
             if (Constants.CONFORMANCE_OUTPUT)
             {
@@ -375,7 +374,7 @@ namespace FormatPreservingEncryptionWeydstone
             if (Constants.CONFORMANCE_OUTPUT)
             {
                 OnOutputChanged(new OutputChangedEventArgs(
-                        "Step 3\n\tT_L is " + byteArrayToHexString(T_L) + "\n\tT_R is " + byteArrayToHexString(T_R) + "\n"));
+                        "Step 3\n\tT_L is " + Common.byteArrayToHexString(T_L) + "\n\tT_R is " + Common.byteArrayToHexString(T_R) + "\n"));
             }
 
             // 4. For i from 0 to 7:
@@ -393,39 +392,39 @@ namespace FormatPreservingEncryptionWeydstone
                 byte[] W = i % 2 == 0 ? T_R : T_L;
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
-                    OnOutputChanged(new OutputChangedEventArgs("\tStep 4.i\n\t\tm is <" + m + ">\n\t\tW is " + byteArrayToHexString(W)));
+                    OnOutputChanged(new OutputChangedEventArgs("\tStep 4.i\n\t\tm is <" + m + ">\n\t\tW is " + Common.byteArrayToHexString(W)));
                 }
 
                 // ii. Let P = W xor [i] 4 || [NUMradix (REV(B))] 12 .
-                byte[] P = concatenate(xor(W, bytestring(i, 4)), bytestring(num(rev(B), radix), 12));
+                byte[] P = Common.concatenate(Common.xor(W, Common.bytestring(i, 4)), Common.bytestring(Common.num(Common.rev(B), radix), 12));
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     OnOutputChanged(new OutputChangedEventArgs("\tStep 4.ii\n\t\tP is " + Common.unsignedByteArrayToString(P)));
                 }
 
                 // iii Let S = REVB(CIPH REVB(K) REVB(P)).
-                byte[] S = revb(mCiphers.ciph(revK, revb(P)));
+                byte[] S = Common.revb(mCiphers.ciph(revK, Common.revb(P)));
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
-                    OnOutputChanged(new OutputChangedEventArgs("\tStep 4.iii\n\t\tS is " + byteArrayToHexString(S)));
+                    OnOutputChanged(new OutputChangedEventArgs("\tStep 4.iii\n\t\tS is " + Common.byteArrayToHexString(S)));
                 }
 
                 // iv. Let y = NUM(S).
-                BigInteger y = num(S);
+                BigInteger y = Common.num(S);
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     OnOutputChanged(new OutputChangedEventArgs("\tStep 4.iv\n\t\ty is " + y));
                 }
 
                 // v. Let c = (NUMradix (REV(A)) + y) mod radix m .
-                BigInteger c = mod(num(rev(A), radix) + y, BigInteger.Pow(radix, m));
+                BigInteger c = Common.mod(Common.num(Common.rev(A), radix) + y, BigInteger.Pow(radix, m));
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     OnOutputChanged(new OutputChangedEventArgs("\tStep 4.v\n\t\tc is " + c));
                 }
 
                 // vi. Let C = REV(STR m radix (c)).
-                int[] C = rev(str(c, radix, m));
+                int[] C = Common.rev(Common.str(c, radix, m));
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     OnOutputChanged(new OutputChangedEventArgs("\tStep 4.vi\n\t\tC is " + Common.intArrayToString(C)));
@@ -446,7 +445,7 @@ namespace FormatPreservingEncryptionWeydstone
                 }
             }
             // 5. Return A || B.
-            int[] AB = concatenate(A, B);
+            int[] AB = Common.concatenate(A, B);
             if (Constants.CONFORMANCE_OUTPUT)
             {
                 OnOutputChanged(new OutputChangedEventArgs("Step 5\n\tA || B is " + Common.intArrayToString(AB)));

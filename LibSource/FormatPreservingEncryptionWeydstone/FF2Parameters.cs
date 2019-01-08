@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
-using static FormatPreservingEncryptionWeydstone.Common;
 
 namespace FormatPreservingEncryptionWeydstone
 {
@@ -52,7 +51,7 @@ namespace FormatPreservingEncryptionWeydstone
                 if (n < Constants.MINLEN || n > Constants.MAXLEN)
                     throw new ArgumentException(
                             "n must be in the range [" + Constants.MINLEN + ".." + Constants.MAXLEN + "].");
-                return floor(n / 2.0);
+                return Common.floor(n / 2.0);
             }
         }
 
@@ -102,7 +101,7 @@ namespace FormatPreservingEncryptionWeydstone
             {
 
                 /* The FF2 Encrypt Algorithm
-                 * 1.  Let  u =  floor( n /2 ) ;  v  =  n  –  u . 
+                 * 1.  Let  u =  Common.floor( n /2 ) ;  v  =  n  –  u . 
                  * 2.   Let  A  =  X [1 ..  u ]; B  =   X [ u  + 1 ..  n ] .  
                  * 3.  If  t >0,  P = [ radix ] 1  || [ t ] 1  || [ n ] 1  || [ NUM tweak radix ( T )] 13 ; else P = [ radix ] 1  || [ 0] 1  || [ n ] 1  || [ 0] 13 .  
                  * 4.  Let  J =   CIPH K ( P )  
@@ -119,7 +118,7 @@ namespace FormatPreservingEncryptionWeydstone
                  * 
                  */
 
-                // Converts the Tweak byte array to an integer array, to be able to use integer specific methodes of the class Common (e.g. num(int[],int)).
+                // Converts the Tweak byte array to an integer array, to be able to use integer specific methodes of the class Common (e.g. Common.num(int[],int)).
                 // Alternativly these methods could be overloaded to process byte[] inputs. This conversion only occurs once per encryption, hence it shouldnt have a noticeable effect on the performance.
                 int[] Ti = Array.ConvertAll(T, c => (int)c);
                 int t = T.Length;
@@ -129,8 +128,8 @@ namespace FormatPreservingEncryptionWeydstone
                     Console.WriteLine("Round #" + i + "\n");
                 }
 
-                // 1. Let u = floor(n/2); v = n - u.
-                int u = floor(n / 2.0);
+                // 1. Let u = Common.floor(n/2); v = n - u.
+                int u = Common.floor(n / 2.0);
                 int v = n - u;
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
@@ -145,20 +144,20 @@ namespace FormatPreservingEncryptionWeydstone
 
                 // 3.If  t > 0,  P = [radix]^1 || [t]^1 || [n]^1 || [NUM tweakRadix(T)]^13
                 //          else P = [radix]^1 || [0]^1 || [n]^1 || [0]^13 . 
-                byte[] tbr = bytestring(radix, 1);
-                byte[] fbn = bytestring(n, 1);
+                byte[] tbr = Common.bytestring(radix, 1);
+                byte[] fbn = Common.bytestring(n, 1);
 
                 byte[] P = { tbr[0] };
                 if (T.Length > 0)
                 {
-                    byte[] fbt = bytestring(t, 1);
-                    P = concatenate(P, new byte[] { fbt[0], fbn[0] });
-                    P = concatenate(P, bytestring(num(Ti, tweakRadix), 13));
+                    byte[] fbt = Common.bytestring(t, 1);
+                    P = Common.concatenate(P, new byte[] { fbt[0], fbn[0] });
+                    P = Common.concatenate(P, Common.bytestring(Common.num(Ti, tweakRadix), 13));
                 }
                 else
                 {
-                    P = concatenate(P, new byte[] { (byte)0x00, fbn[0] });
-                    P = concatenate(P, new byte[] { (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00
+                    P = Common.concatenate(P, new byte[] { (byte)0x00, fbn[0] });
+                    P = Common.concatenate(P, new byte[] { (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00
                 , (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00});
                 }
 
@@ -178,8 +177,8 @@ namespace FormatPreservingEncryptionWeydstone
                 }
 
                     // i. Let  Q ←  [ i ] 1  ||  [ NUM  radix  ( B )]^15 
-                    byte[] Q = bytestring(i, 1);
-                    Q = concatenate(Q, bytestring(num(B, radix), 15));
+                    byte[] Q = Common.bytestring(i, 1);
+                    Q = Common.concatenate(Q, Common.bytestring(Common.num(B, radix), 15));
                     if (Constants.CONFORMANCE_OUTPUT)
                     {
                         Console.WriteLine("\tStep 4.ii\n\t\tQ is " + Common.unsignedByteArrayToString(Q));
@@ -193,7 +192,7 @@ namespace FormatPreservingEncryptionWeydstone
                     }
 
                     // iii  Let  y  ←  NUM 2 ( Y ).  
-                    BigInteger y = num(Y);
+                    BigInteger y = Common.num(Y);
                     if (Constants.CONFORMANCE_OUTPUT)
                     {
                         Console.WriteLine("\tStep 4.iii\n\t\ty is " + y);
@@ -211,7 +210,7 @@ namespace FormatPreservingEncryptionWeydstone
 
 
                 // 5.  Let  C  =  STR m radix ( y ). 
-                int[] C = str(y, radix, m);
+                int[] C = Common.str(y, radix, m);
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
                     Console.WriteLine("\tStep 4.vi\n\t\tC is " + Common.intArrayToString(C));

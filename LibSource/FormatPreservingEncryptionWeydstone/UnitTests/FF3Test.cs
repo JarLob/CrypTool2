@@ -25,7 +25,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FormatPreservingEncryptionWeydstone;
-using static FormatPreservingEncryptionWeydstone.Common;
 
 namespace FPETests
 {
@@ -66,7 +65,7 @@ namespace FPETests
 
                 Assert.IsTrue(2 <= minlen);
                 Assert.IsTrue(minlen <= maxlen);
-                Assert.IsTrue(maxlen <= 2 * floor(Math.Log(Math.Pow(2, 96)) / Math.Log(radixValues[i])));
+                Assert.IsTrue(maxlen <= 2 * Common.floor(Math.Log(Math.Pow(2, 96)) / Math.Log(radixValues[i])));
                 Assert.AreEqual(expectedMinlen[i], minlen);
                 Assert.AreEqual(expectedMaxlen[i], maxlen);
             }
