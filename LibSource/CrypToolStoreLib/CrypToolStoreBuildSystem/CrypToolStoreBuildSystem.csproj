@@ -48,6 +48,7 @@
     <Compile Include="BuildLogger.cs" />
     <Compile Include="BuildWorker.cs" />
     <Compile Include="CrypToolStoreBuildServer.cs" />
+    <Compile Include="MailClient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

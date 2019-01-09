@@ -700,8 +700,8 @@ namespace CrypToolStoreLib.Server
             //Only authenticated admins are allowed to request any user; users may only request their data
             if (!ClientIsAuthenticated || (!ClientIsAdmin && Username != requestDeveloperMessage.Username))
             {
-                ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
-                response.ModifiedDeveloper = false;
+                ResponseDeveloperMessage response = new ResponseDeveloperMessage();
+                response.DeveloperExists = false;
                 response.Message = "Unauthorized to get developer. Please authenticate yourself as admin";
                 Logger.LogText(String.Format("Unauthorized user {0} tried to request developer={1} from IP={2}", Username, requestDeveloperMessage.Username, IPAddress), this, Logtype.Warning);
                 SendMessage(response, sslStream);

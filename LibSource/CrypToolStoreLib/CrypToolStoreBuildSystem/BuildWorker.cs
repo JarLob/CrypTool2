@@ -22,6 +22,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
@@ -326,7 +327,7 @@ namespace CrypToolStoreBuildSystem
             }
             finally
             {
-                // 13) Worker cleans up by deleting build folder (also in case of an error)
+                // 14) Worker cleans up by deleting build folder (also in case of an error)
                 try
                 {                    
                     CleanUp();
@@ -336,7 +337,7 @@ namespace CrypToolStoreBuildSystem
                     Logger.LogText(String.Format("(General) Exception occured during cleanup of source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, ex.Message), this, Logtype.Error);
                 }
 
-                // 14) Set state of source in database to BUILDED or ERROR
+                // 15) Set state of source in database to BUILDED or ERROR
                 //     also put build_log in database
                 try
                 {
@@ -347,8 +348,18 @@ namespace CrypToolStoreBuildSystem
                     Logger.LogText(String.Format("(General) Exception occured during SetFinalBuildStateAndUploadBuildlog of source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, ex.Message), this, Logtype.Error);
                 }
                 IsRunning = false;
+
+                // 16) Send email to developer
+                try
+                {
+                    SendEmailToDeveloper(buildError);
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogText(String.Format("(General) Exception occured during SendEmailToDeveloper of source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, ex.Message), this, Logtype.Error);
+                }
             }
-        }       
+        }
 
         /// <summary>
         ///  0) Worker sets source to building state
@@ -989,6 +1000,81 @@ namespace CrypToolStoreBuildSystem
             {
                 Logger.LogText(String.Format("(Buildstep 15) Setting final build state of source-{0}-{1} and upload build log failed. Message was: {2}", Source.PluginId, Source.PluginVersion, result.Message), this, Logtype.Error);
             }           
+        }
+
+        /// <summary>
+        /// 16) Send email to developer
+        /// </summary>
+        private void SendEmailToDeveloper(bool buildError)
+        {
+            Logger.LogText(String.Format("(Buildstep 16) Send email to developer of source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            //Get email of developer
+            CrypToolStoreClient client = new CrypToolStoreClient();
+            client.ServerCertificate = ServerCertificate;
+            client.ServerAddress = Config.GetConfigEntry("ServerAddress");
+            client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+            client.Connect();
+            client.Login(Config.GetConfigEntry("Username"), Config.GetConfigEntry("Password"));
+            Plugin plugin = (Plugin)client.GetPlugin(Source.PluginId).DataObject;
+            Developer developer = (Developer)client.GetDeveloper(plugin.Username).DataObject;
+            client.Disconnect();
+
+            //check, if email is valid
+            if (String.IsNullOrEmpty(developer.Email) || !IsValidEmail(developer.Email))
+            {
+                Logger.LogText(String.Format("(Buildstep 16) Can not send build email to {0} since we have no valid email address (={1}) of this developer!", plugin.Username, developer.Email), this, Logtype.Warning);
+                return;
+            }
+            MailClient mailClient = new MailClient(Config.GetConfigEntry("EmailServerAddress"), int.Parse(Config.GetConfigEntry("EmailServerPort")));
+
+            MailAddress from = new MailAddress(Config.GetConfigEntry("BuildServer_MailAddress"),Config.GetConfigEntry("BuildServer_MailName"));
+            MailAddress to = new MailAddress(developer.Email, developer.Username);
+
+            string subject;
+            StringBuilder bodyBuilder = new StringBuilder(); //yes, its a string builder for a mail body... thus, it is a body builder :-)
+
+            if (buildError)
+            {
+                subject = String.Format("[CrypToolStore Build System] Build Error occured while building your Source-{0}-{1}", Source.PluginId, Source.PluginVersion);
+                bodyBuilder.AppendLine(String.Format("Dear {0},", plugin.Username));
+                bodyBuilder.AppendLine();
+                bodyBuilder.AppendLine(String.Format("The build of Source-{0}-{1} was erroneous.", Source.PluginId, Source.PluginVersion));
+                bodyBuilder.AppendLine("Please see attached buildlog.txt for additional information.");
+                bodyBuilder.AppendLine();
+                bodyBuilder.AppendLine("Kind Regards,");
+                bodyBuilder.AppendLine("The CrypToolStore Build System");             
+            }
+            else
+            {
+                subject = String.Format("[CrypToolStore Build System] Build of your Source-{0}-{1} successfully finished", Source.PluginId, Source.PluginVersion);
+                bodyBuilder.AppendLine(String.Format("Dear {0},", plugin.Username));
+                bodyBuilder.AppendLine();
+                bodyBuilder.AppendLine(String.Format("The build of Source-{0}-{1} was a success.", Source.PluginId, Source.PluginVersion));
+                bodyBuilder.AppendLine("Please see attached buildlog.txt for additional information.");
+                bodyBuilder.AppendLine();
+                bodyBuilder.AppendLine("Kind Regards,");
+                bodyBuilder.AppendLine("The CrypToolStore Build System");
+            }
+            mailClient.SendEmail(from, to, subject, bodyBuilder.ToString(), "buildlog.txt", Logger.ToString());
+            Logger.LogText(String.Format("(Buildstep 16) Successfully sent email to developer of Source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+        }
+
+        /// <summary>
+        /// Checks, if the given emailaddress is valid
+        /// </summary>
+        /// <param name="emailaddress"></param>
+        /// <returns></returns>
+        public static bool IsValidEmail(string emailaddress)
+        {
+            try
+            {
+                MailAddress m = new MailAddress(emailaddress);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
         }
     }
 }

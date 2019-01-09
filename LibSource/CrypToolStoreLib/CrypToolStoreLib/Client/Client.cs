@@ -598,13 +598,13 @@ namespace CrypToolStoreLib.Client
                 if (response_message.MessageHeader.MessageType == MessageType.ResponseDeveloper)
                 {
                     //received a response, forward it to user
-                    ResponseDeveloperMessage responseDeveloperModificationMessage = (ResponseDeveloperMessage)response_message;
-                    logger.LogText(String.Format("{0} an existing developer. Return message was: {1}", responseDeveloperModificationMessage.DeveloperExists == true ? "Successfully received" : "Did not receive", responseDeveloperModificationMessage.Message), this, Logtype.Info);
+                    ResponseDeveloperMessage responseDeveloperMessage = (ResponseDeveloperMessage)response_message;
+                    logger.LogText(String.Format("{0} an existing developer. Return message was: {1}", responseDeveloperMessage.DeveloperExists == true ? "Successfully received" : "Did not receive", responseDeveloperMessage.Message), this, Logtype.Info);
                     return new DataModificationOrRequestResult()
                     {
-                        Message = responseDeveloperModificationMessage.Message,
-                        Success = responseDeveloperModificationMessage.DeveloperExists,
-                        DataObject = responseDeveloperModificationMessage.Developer
+                        Message = responseDeveloperMessage.Message,
+                        Success = responseDeveloperMessage.DeveloperExists,
+                        DataObject = responseDeveloperMessage.Developer
                     };
                 }
 
