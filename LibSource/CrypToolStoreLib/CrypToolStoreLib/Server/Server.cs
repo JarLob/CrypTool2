@@ -36,6 +36,7 @@ namespace CrypToolStoreLib.Server
     public class CrypToolStoreServer
     {        
         private Logger logger = Logger.GetLogger();
+        private ConcurrentBag<ClientHandler> _registeredClientHandlers = new ConcurrentBag<ClientHandler>();
 
         /// <summary>
         /// Server key used for the ssl stream
@@ -117,17 +118,27 @@ namespace CrypToolStoreLib.Server
                         logger.LogText(String.Format("New client connected from IP/Port={0}", client.Client.RemoteEndPoint), this, Logtype.Info);
                         Task handlertask = new Task(() =>
                         {
-                            try
-                            {
+                            try 
+                            { 
                                 ClientHandler handler = new ClientHandler();
+                                RegisterClientHandler(handler);
                                 handler.CrypToolStoreServer = this;
-                                handler.HandleClient(client);
+                                try
+                                {                                    
+                                    handler.HandleClient(client);
+                                }
+                                catch (Exception ex)
+                                {
+                                    logger.LogText(String.Format("Exception during handling of client from IP/Port={0} : {1}", client.Client.RemoteEndPoint, ex.Message), this, Logtype.Error);
+                                }                            
+                                UnregisterClientHandler(handler);
                             }
                             catch (Exception ex)
                             {
                                 logger.LogText(String.Format("Exception during handling of client from IP/Port={0} : {1}", client.Client.RemoteEndPoint, ex.Message), this, Logtype.Error);
-                            }
-                        });
+                            }    
+                        });                        
+
                         handlertask.Start();
                     }
                     catch (Exception ex)
@@ -142,9 +153,38 @@ namespace CrypToolStoreLib.Server
             }
             catch (Exception ex)
             {
-                logger.LogText(String.Format("Exception in ListenThread: {0}", ex.Message), this, Logtype.Error);
+                if (Running)
+                {
+                    logger.LogText(String.Format("Exception in ListenThread: {0}", ex.Message), this, Logtype.Error);
+                }
             }
-        }      
+        }
+
+        /// <summary>
+        /// Registers a client handler
+        /// needed for checking, how many handlers are running during shutdown
+        /// </summary>
+        /// <param name="handler"></param>
+        public void RegisterClientHandler(ClientHandler handler)
+        {
+            lock (this)
+            {
+                _registeredClientHandlers.Add(handler);
+            }
+        }
+
+        /// <summary>
+        /// Unregisters a client handler
+        /// needed for checking, how many handlers are running during shutdown
+        /// </summary>
+        /// <param name="handler"></param>
+        public void UnregisterClientHandler(ClientHandler handler)
+        {
+            lock (this)
+            {
+                _registeredClientHandlers.TryTake(out handler);
+            }
+        }
 
         /// <summary>
         /// Stops the server
@@ -159,12 +199,33 @@ namespace CrypToolStoreLib.Server
             {
                 logger.LogText("Stopping server", this, Logtype.Info);
                 Running = false;
+
+                logger.LogText("Stopping TCPListener", this, Logtype.Info);
                 TCPListener.Stop();
+                logger.LogText("TCPListener stopped", this, Logtype.Info);
+
+                logger.LogText("Waiting for all ClientHandlers to go down", this, Logtype.Info);
+                //we wait 5 seconds for all handlers to go down... then we just move on
+                int waitcounter = 0;
+                while (_registeredClientHandlers.Count > 0 && waitcounter < 100)
+                {
+                    Thread.Sleep(50);
+                    waitcounter++;
+                }
+
+                if (_registeredClientHandlers.Count == 0)
+                {
+                    logger.LogText("All ClientHandlers are down", this, Logtype.Info);
+                }
+                else
+                {
+                    logger.LogText(String.Format("We still had {0} ClientHandlers runnning... but we go on with the stopping of the server",_registeredClientHandlers.Count), this, Logtype.Error);
+                }
                 logger.LogText("Server stopped", this, Logtype.Info);
             }
             catch (Exception ex)
             {
-                logger.LogText(String.Format("Exception during stopping of TCPListener: {0}", ex.Message), this, Logtype.Error);
+                logger.LogText(String.Format("Exception during stopping of Server: {0}", ex.Message), this, Logtype.Error);
             }
         }
     }

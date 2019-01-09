@@ -30,7 +30,18 @@ using CrypToolStoreLib;
 
 namespace CrpyStoreLib
 {
-    class Program
+    /// <summary>
+    /// Main program of the CrypToolStore Server
+    ///
+    /// To create a new server, you need
+    /// - create a new database containing the CrypToolStore tables/database
+    /// - compile "Main" project
+    /// - put assemblies on a linux server
+    /// - adapt the config file on that server
+    /// - start :-)
+    /// 
+    /// </summary>
+    public class Program
     {
         private static Logger logger;
         private static Configuration Config = Configuration.GetConfiguration();
@@ -95,12 +106,29 @@ namespace CrpyStoreLib
 
                 while (true)
                 {
-                    Thread.Sleep(1000);
+                    //you have to enter quit to go down
+                    string line = Console.ReadLine();
+                    if (String.IsNullOrEmpty(line))
+                    {
+                        Thread.Sleep(1000);
+                    }
+                    else
+                    {
+                        if (line.ToLower().Equals("quit"))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine(String.Format(
+                                "Command >{0}< unknown... you can only enter >quit< to stop the server...", line));
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
-                logger.LogText(String.Format("Exception while running the server: {0}", ex.Message), this, Logtype.Error);
+                logger.LogText(String.Format("Exception while starting/running the server: {0}", ex.Message), this, Logtype.Error);
             }
             finally
             {
