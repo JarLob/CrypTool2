@@ -261,7 +261,7 @@ namespace VoluntLib2.ConnectionLayer.Messages
             }
             if (data[10] > Constants.MESSAGE_VOLUNTLIB2_VERSION)
             {
-                throw new VoluntLibSerializationException(String.Format("Expected a VoluntLib2 version <= {0}. Received a version {1}. Please update!", Constants.MESSAGE_VOLUNTLIB2, magicnumber));
+                throw new VoluntLibSerializationException(String.Format("Expected a VoluntLib2 version <= {0}. Received version = {1}. Please update your VoluntLib2 or the application using it!", Constants.MESSAGE_VOLUNTLIB2_VERSION, data[10]));
             }
 
             MessageHeader = new MessageHeader();
