@@ -134,7 +134,7 @@ namespace VoluntLib2.ConnectionLayer
             Client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             Client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.IpTimeToLive, 255);
             Client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, 1);
-            Client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontRoute, 1);
+            Client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontRoute, 1);            
 
             //Set Running to true; thus, threads know we are alive
             Running = true;
@@ -433,7 +433,7 @@ namespace VoluntLib2.ConnectionLayer
                                 {
                                     if (uip.Address.AddressFamily == AddressFamily.InterNetwork)
                                     {
-                                        IPEndPoint target = new IPEndPoint(IPAddress.Broadcast, 10000);
+                                        IPEndPoint target = new IPEndPoint(IPAddress.Broadcast, Port);
                                         Client.Send(data, data.Length, target);
                                     }
                                 }

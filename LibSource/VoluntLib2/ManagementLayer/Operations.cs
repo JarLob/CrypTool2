@@ -445,7 +445,7 @@ namespace VoluntLib2.ManagementLayer
         {
             foreach (Job job in JobManager.Jobs.Values)
             {
-                if (!job.HasPayload && DateTime.Now > job.LastPayloadRequestTime.AddMilliseconds(Constants.CHECKJOBSPAYLOADOPERATION_REQUEST_INTERVAL))
+                if (!job.HasPayload &&!job.IsDeleted && DateTime.Now > job.LastPayloadRequestTime.AddMilliseconds(Constants.CHECKJOBSPAYLOADOPERATION_REQUEST_INTERVAL))
                 {
                     Logger.LogText(String.Format("Do not have payload for job {0}. Asking my neighbors now", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Debug);
                     JobManager.SendRequestJobMessage(null, job.JobId);
@@ -487,11 +487,15 @@ namespace VoluntLib2.ManagementLayer
                 RequestJobMessage requestJobMessage = (RequestJobMessage)message;
                 if (!JobManager.Jobs.ContainsKey(requestJobMessage.JobId) || !JobManager.Jobs[requestJobMessage.JobId].HasPayload)
                 {
+                    Logger.LogText(String.Format("Peer {0} request job payload for job with jobId = {1}. But we don't have it!", BitConverter.ToString(message.PeerId), BitConverter.ToString(requestJobMessage.JobId.ToByteArray())), this, Logtype.Debug);
                     return;
                 }
-                //2. we have the job AND the payload; thus, we send an answer
-                Logger.LogText(String.Format("Peer {0} request job payload for job with jobId = {1}. Send it now!", BitConverter.ToString(message.PeerId), BitConverter.ToString(requestJobMessage.JobId.ToByteArray())), this, Logtype.Debug);
-                JobManager.SendResponseJobMessage(message.PeerId, JobManager.Jobs[requestJobMessage.JobId]);
+                else 
+                { 
+                    //2. we have the job AND the payload; thus, we send an answer
+                    Logger.LogText(String.Format("Peer {0} request job payload for job with jobId = {1}. Send it now!", BitConverter.ToString(message.PeerId), BitConverter.ToString(requestJobMessage.JobId.ToByteArray())), this, Logtype.Debug);
+                    JobManager.SendResponseJobMessage(message.PeerId, JobManager.Jobs[requestJobMessage.JobId]);
+                }
             }
         }
     }

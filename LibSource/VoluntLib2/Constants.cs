@@ -28,7 +28,7 @@ namespace VoluntLib2
     internal class Constants
     {
         //Bitmask class
-        public const int BITMASK_MAX_MASKSIZE = 35840; //35 kiB
+        public const int BITMASK_MAX_MASKSIZE = 30720; //30 kiB
 
         //ComputationManager class
         public const int COMPUTATIONMANAGER_MAX_TERMINATION_WAIT_TIME = 5000; //5 s
