@@ -162,5 +162,39 @@ namespace VoluntLib2.ComputationLayer
             }
             return size;
         }
+
+        /// <summary>
+        /// Compares all fields of given EpochState with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            EpochState epochstate = value as EpochState;
+            if (epochstate != null)
+            {
+                //check, if result lists are equal
+                var lista = epochstate.ResultList.ToArray();
+                var listb = ResultList.ToArray();
+                if (lista.Length != listb.Length)
+                {
+                    return false;
+                }
+
+                for (int i = 0; i < lista.Length; i++)
+                {
+                    if (!lista[i].SequenceEqual(listb[i]))
+                    {
+                        return false;
+                    }
+                }
+
+                return epochstate.Bitmask.Equals(this.Bitmask) &&
+                       epochstate.EpochNumber.Equals(this.EpochNumber);
+
+            }
+
+            return false;
+        }
     }      
 }

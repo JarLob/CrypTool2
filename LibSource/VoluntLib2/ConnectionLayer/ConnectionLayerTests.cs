@@ -33,7 +33,7 @@ namespace VoluntLib2.ConnectionLayer
         /// This test method tests the serialization and deserialization of all messages of the ConnectionLayer
         /// </summary>
         [TestMethod()]
-        public void TestMessagesSerializationDeserialization()
+        public void ConLayer_TestMessagesSerializationDeserialization()
         {
             byte[] bytes; // helper variable for serialized data
 
@@ -93,7 +93,6 @@ namespace VoluntLib2.ConnectionLayer
             //Test #5: Test ResponseNeighborListMessage (with 0 to 10 contacts in list)
             for (int i = 0; i < 11; i++) 
             { 
-
                 ResponseNeighborListMessage responseNeighborListMessage = new ResponseNeighborListMessage();
                 responseNeighborListMessage.MessageHeader.ReceiverIPAddress = new byte[] { 100, 200, 50, 0 };
                 responseNeighborListMessage.MessageHeader.SenderIPAddress = new byte[] { 0, 50, 100, 200 };

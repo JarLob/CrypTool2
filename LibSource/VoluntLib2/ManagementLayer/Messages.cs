@@ -218,6 +218,27 @@ namespace VoluntLib2.ManagementLayer.Messages
 
             return builder.ToString();
         }
+
+        /// <summary>
+        /// Compares all fields of given message header with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            MessageHeader header = value as MessageHeader;
+            if (header != null)
+            {
+                return header.CertificateData.SequenceEqual(this.CertificateData) &&
+                       header.MessageId.SequenceEqual(this.MessageId) &&
+                       header.MessageType.Equals(this.MessageType) &&
+                       header.PayloadLength.Equals(this.PayloadLength) &&
+                       header.SenderName.Equals(this.SenderName) &&
+                       header.SignatureData.SequenceEqual(this.SignatureData) &&
+                       header.WorldName.Equals(this.WorldName);
+            }
+            return false;
+        }
     }
 
     /// <summary>
@@ -226,9 +247,9 @@ namespace VoluntLib2.ManagementLayer.Messages
     /// </summary>
     public class Message
     {
-        public byte[] PeerId;                           //set by receiving thread; will not be serialized
+        public byte[] PeerId = new byte[0];             //set by receiving thread; will not be serialized
         public MessageHeader MessageHeader;
-        public byte[] Payload;                          //length defined by header.PayloadLength
+        public byte[] Payload = new byte[0];            //length defined by header.PayloadLength
         public byte VoluntLibVersion = Constants.MGM_MESSAGE_VOLUNTLIB2_VERSION;
 
         public Message()
@@ -324,10 +345,25 @@ namespace VoluntLib2.ManagementLayer.Messages
             Payload = new byte[MessageHeader.PayloadLength];
             Array.Copy(data, data.Length - Payload.Length, Payload, 0, Payload.Length);
         }
+
+        /// <summary>
+        /// Compares all fields of given Message with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            Message message = value as Message;
+            if (message != null)
+            {
+                return message.MessageHeader.Equals(this.MessageHeader) &&
+                       message.Payload.SequenceEqual(this.Payload) &&
+                       message.VoluntLibVersion.Equals(this.VoluntLibVersion);
+            }
+            return false;
+        }
     }
-
-   
-
+  
     /// <summary>
     /// Message to request the job lists of a neighbor
     /// </summary>
@@ -337,6 +373,21 @@ namespace VoluntLib2.ManagementLayer.Messages
             : base()
         {
             MessageHeader.MessageType = MessageType.RequestJobListMessage;
+        }
+
+        /// <summary>
+        /// Compares all fields of given RequestJobListMessage with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            RequestJobListMessage requestJobListMessage = value as RequestJobListMessage;
+            if (requestJobListMessage != null)
+            {
+                return base.Equals(requestJobListMessage);
+            }
+            return false;
         }
     }
 
@@ -417,6 +468,38 @@ namespace VoluntLib2.ManagementLayer.Messages
             }
             return jobList;
         }
+
+        /// <summary>
+        /// Compares all fields of given ResponseJobListMessage with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            ResponseJobListMessage responseJobListMessage = value as ResponseJobListMessage;
+            if (responseJobListMessage != null)
+            {
+                //check, if number of jobs in list are equal
+                if (responseJobListMessage.Jobs.Count != this.Jobs.Count)
+                {
+                    return false;
+                }
+
+                for (int i = 0; i < this.Jobs.Count; i++)
+                {
+                    Job joba = responseJobListMessage.Jobs[i];
+                    Job jobb = this.Jobs[i];
+                    if (!joba.Equals(jobb))
+                    {
+                        return false;
+                    }
+                }
+
+                return base.Equals(responseJobListMessage);
+            }
+
+            return false;
+        }
     }
 
     /// <summary>
@@ -443,6 +526,22 @@ namespace VoluntLib2.ManagementLayer.Messages
             base.Deserialize(data);
             JobId = new BigInteger(Payload);
         }
+
+        /// <summary>
+        /// Compares all fields of given RequestJobMessage with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            RequestJobMessage requestJobMessage = value as RequestJobMessage;
+            if (requestJobMessage != null)
+            {
+                return base.Equals(requestJobMessage) &&
+                    requestJobMessage.JobId.Equals(this.JobId);
+            }
+            return false;
+        }
     }
 
     /// <summary>
@@ -455,6 +554,7 @@ namespace VoluntLib2.ManagementLayer.Messages
         public ResponseJobMessage()
             : base()
         {
+            Job = new Job(0);
             MessageHeader.MessageType = MessageType.ResponseJobMessage;
         }
 
@@ -467,8 +567,23 @@ namespace VoluntLib2.ManagementLayer.Messages
         public override void Deserialize(byte[] data)
         {
             base.Deserialize(data);
-            Job = new Job(0);
             Job.Deserialize(Payload);
+        }
+
+        /// <summary>
+        /// Compares all fields of given ResponseJobMessage with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            ResponseJobMessage responseJobMessage = value as ResponseJobMessage;
+            if (responseJobMessage != null)
+            {
+                return base.Equals(responseJobMessage) &&
+                       responseJobMessage.Job.Equals(this.Job);
+            }
+            return false;
         }
     }
 }

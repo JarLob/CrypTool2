@@ -209,7 +209,7 @@ namespace VoluntLib2.ConnectionLayer.Messages
     internal class Message
     {
         public MessageHeader MessageHeader;
-        public byte[] Payload;                              //length defined by header.PayloadLength
+        public byte[] Payload = new byte[0];                 //length defined by header.PayloadLength
         public byte VoluntLibVersion = Constants.MESSAGE_VOLUNTLIB2_VERSION;
 
         public Message()
@@ -471,6 +471,11 @@ namespace VoluntLib2.ConnectionLayer.Messages
             ResponseNeighborListMessage responseNeighborListMessage = value as ResponseNeighborListMessage;
             if (responseNeighborListMessage != null)
             {
+                //check, if number of contacts is equal
+                if (Neighbors.Count != responseNeighborListMessage.Neighbors.Count)
+                {
+                    return false;
+                }
                 //check if all contacts are equal
                 for (int i = 0; i < Neighbors.Count; i++)
                 {

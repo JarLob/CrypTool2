@@ -253,5 +253,21 @@ namespace VoluntLib2.ComputationLayer
         {
             mask[offset] = value;
         }
+
+        /// <summary>
+        /// Compares all fields of given Bitmask with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            Bitmask bitmask = value as Bitmask;
+            if (bitmask != null)
+            {
+                return bitmask.MaskSize.Equals(this.MaskSize) &&
+                       bitmask.mask.SequenceEqual(this.mask);
+            }
+            return false;
+        }
     }
 }

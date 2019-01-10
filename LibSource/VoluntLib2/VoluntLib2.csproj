@@ -67,6 +67,7 @@
     <Compile Include="ConnectionLayer\Contact.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ManagementLayer\JobManager.cs" />
+    <Compile Include="ManagementLayer\ManagementLayerTests.cs" />
     <Compile Include="ManagementLayer\Messages.cs" />
     <Compile Include="ManagementLayer\Operations.cs" />
     <Compile Include="Tools\CertificateService.cs" />
