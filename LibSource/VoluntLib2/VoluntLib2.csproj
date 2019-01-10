@@ -44,6 +44,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -62,6 +63,7 @@
     <Compile Include="ComputationLayer\Bitmask.cs" />
     <Compile Include="ComputationLayer\ComputationManager.cs" />
     <Compile Include="ComputationLayer\Operations.cs" />
+    <Compile Include="ConnectionLayer\ConnectionLayerTests.cs" />
     <Compile Include="ConnectionLayer\Contact.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ManagementLayer\JobManager.cs" />
@@ -85,7 +87,9 @@
     <Compile Include="Tools\ObservableItemsCollection.cs" />
     <Compile Include="VoluntLib2.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

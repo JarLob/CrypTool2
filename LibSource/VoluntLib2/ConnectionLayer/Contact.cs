@@ -183,5 +183,22 @@ namespace VoluntLib2.ConnectionLayer
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        /// <summary>
+        /// Compares fields (PeerId, IPAddress, and Port) of given Contact with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            Contact contact = value as Contact;
+            if (contact != null)
+            {
+                return contact.PeerId.SequenceEqual(this.PeerId) &&
+                       contact.IPAddress.Equals(this.IPAddress) &&
+                       contact.Port.Equals(this.Port);
+            }
+            return false;
+        }
     }
 }

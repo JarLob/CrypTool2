@@ -177,6 +177,29 @@ namespace VoluntLib2.ConnectionLayer.Messages
 
             return builder.ToString();
         }
+
+        /// <summary>
+        /// Compares all fields of given message header with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            MessageHeader header = value as MessageHeader;
+            if (header != null)
+            {
+                return header.MessageId.SequenceEqual(this.MessageId) &&
+                       header.MessageType.Equals(this.MessageType) &&
+                       header.PayloadLength.Equals(this.PayloadLength) &&
+                       header.ReceiverExternalPort.Equals(this.ReceiverExternalPort) &&
+                       header.ReceiverIPAddress.SequenceEqual(this.ReceiverIPAddress) &&
+                       header.ReceiverPeerId.SequenceEqual(this.ReceiverPeerId) &&
+                       header.SenderExternalPort.Equals(this.SenderExternalPort) &&
+                       header.SenderIPAddress.SequenceEqual(this.SenderIPAddress) &&
+                       header.SenderPeerId.SequenceEqual(this.SenderPeerId);
+            }
+            return false;
+        }
     }
 
     /// <summary>
@@ -194,6 +217,7 @@ namespace VoluntLib2.ConnectionLayer.Messages
             MessageHeader = new MessageHeader();
             MessageHeader.MessageType = MessageType.Undefined;
             MessageHeader.MessageId = Guid.NewGuid().ToByteArray();
+            Payload = new byte[0];
         }
 
         public virtual byte[] Serialize()
@@ -216,10 +240,10 @@ namespace VoluntLib2.ConnectionLayer.Messages
 
             Array.Copy(magicNumber, 0, messagebytes, 0, 10);
             messagebytes[10] = Constants.MESSAGE_VOLUNTLIB2_VERSION;
-            Array.Copy(headerbytes, 0, messagebytes, 11, 62);
+            Array.Copy(headerbytes, 0, messagebytes, 11, 63);
             if (Payload != null && Payload.Length > 0)
             {
-                Array.Copy(Payload, 0, messagebytes, 73, Payload.Length);
+                Array.Copy(Payload, 0, messagebytes, 74, Payload.Length);
             }
 
             return messagebytes;
@@ -246,7 +270,24 @@ namespace VoluntLib2.ConnectionLayer.Messages
             Array.Copy(data, 11, messageheaderbytes, 0, 63);
             MessageHeader.Deserialize(messageheaderbytes);
             Payload = new byte[MessageHeader.PayloadLength];
-            Array.Copy(data, 73, Payload, 0, Payload.Length);
+            Array.Copy(data, 74, Payload, 0, Payload.Length);
+        }
+
+        /// <summary>
+        /// Compares all fields of given Message with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            Message message = value as Message;
+            if (message != null)
+            {
+                return message.MessageHeader.Equals(this.MessageHeader) &&
+                       message.Payload.SequenceEqual(this.Payload) &&
+                       message.VoluntLibVersion.Equals(this.VoluntLibVersion);
+            }
+            return false;
         }
     }
 
@@ -271,6 +312,22 @@ namespace VoluntLib2.ConnectionLayer.Messages
         {
             base.Deserialize(data);
             HelloNonce = Payload;
+        }
+
+        /// <summary>
+        /// Compares all fields of given HelloMessage with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            HelloMessage helloMessage = value as HelloMessage;
+            if (helloMessage != null)
+            {
+                return base.Equals(helloMessage) &&
+                       helloMessage.HelloNonce.SequenceEqual(this.HelloNonce);
+            }
+            return false;
         }
     }
 
@@ -299,6 +356,22 @@ namespace VoluntLib2.ConnectionLayer.Messages
             base.Deserialize(data);
             HelloResponseNonce = Payload;
         }
+
+        /// <summary>
+        /// Compares all fields of given HelloResponseMessage with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            HelloResponseMessage helloResponseMessage = value as HelloResponseMessage;
+            if (helloResponseMessage != null)
+            {
+                return base.Equals(helloResponseMessage) &&
+                       helloResponseMessage.HelloResponseNonce.SequenceEqual(this.HelloResponseNonce);
+            }
+            return false;
+        }
     }
 
     /// <summary>
@@ -323,6 +396,22 @@ namespace VoluntLib2.ConnectionLayer.Messages
         {
             base.Deserialize(data);
             RequestNeighborListNonce = Payload;
+        }
+
+        /// <summary>
+        /// Compares all fields of given RequestNeighborListMessage with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            RequestNeighborListMessage requestNeighborListMessage = value as RequestNeighborListMessage;
+            if (requestNeighborListMessage != null)
+            {
+                return base.Equals(requestNeighborListMessage) &&
+                       requestNeighborListMessage.RequestNeighborListNonce.SequenceEqual(this.RequestNeighborListNonce);
+            }
+            return false;
         }
     }
 
@@ -370,7 +459,31 @@ namespace VoluntLib2.ConnectionLayer.Messages
                 contact.Deserialize(array);
                 Neighbors.Add(contact);
             }
-            Payload = data;
+        }
+
+        /// <summary>
+        /// Compares all fields of given ResponseNeighborListMessage with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            ResponseNeighborListMessage responseNeighborListMessage = value as ResponseNeighborListMessage;
+            if (responseNeighborListMessage != null)
+            {
+                //check if all contacts are equal
+                for (int i = 0; i < Neighbors.Count; i++)
+                {
+                    Contact a = Neighbors[i];
+                    Contact b = responseNeighborListMessage.Neighbors[i];
+                    if (!a.Equals(b))
+                    {
+                        return false;
+                    }
+                }
+                return base.Equals(responseNeighborListMessage);
+            }
+            return false;
         }
     }
 
@@ -380,7 +493,7 @@ namespace VoluntLib2.ConnectionLayer.Messages
     internal class HelpMeConnectMessage : Message
     {
         public ushort Port = 0;
-        public IPAddress IPAddress;
+        public IPAddress IPAddress = new IPAddress(new byte[] {0, 0, 0, 0});
 
         /// <summary>
         /// Creates a HelpMeConnectMessage
@@ -413,6 +526,23 @@ namespace VoluntLib2.ConnectionLayer.Messages
             IPAddress = new IPAddress(new byte[] { Payload[0], Payload[1], Payload[2], Payload[3]});
             Port = BitConverter.ToUInt16(Payload, 4);
         }
+
+        /// <summary>
+        /// Compares all fields of given HelpMeConnectMessage with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            HelpMeConnectMessage helpMeConnectMessage = value as HelpMeConnectMessage;
+            if (helpMeConnectMessage != null)
+            {
+                return base.Equals(helpMeConnectMessage) &&
+                       helpMeConnectMessage.IPAddress.Equals(this.IPAddress) &&
+                       helpMeConnectMessage.Port.Equals(this.Port);
+            }
+            return false;
+        }
     }
 
     /// <summary>
@@ -421,7 +551,7 @@ namespace VoluntLib2.ConnectionLayer.Messages
     internal class WantsConnectionMessage : Message
     {
         public ushort Port = 0;
-        public IPAddress IPAddress;
+        public IPAddress IPAddress = new IPAddress(new byte[] {0, 0, 0, 0});
 
         /// <summary>
         /// Creates a WantsConnectionMessage
@@ -454,6 +584,23 @@ namespace VoluntLib2.ConnectionLayer.Messages
             IPAddress = new IPAddress(new byte[] { Payload[0], Payload[1], Payload[2], Payload[3]});
             Port = BitConverter.ToUInt16(Payload, 4);
         }
+
+        /// <summary>
+        /// Compares all fields of given WantsConnectionMessage with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            WantsConnectionMessage wantsConnectionMessage = value as WantsConnectionMessage;
+            if (wantsConnectionMessage != null)
+            {
+                return base.Equals(wantsConnectionMessage) &&
+                       wantsConnectionMessage.IPAddress.Equals(this.IPAddress) &&
+                       wantsConnectionMessage.Port.Equals(this.Port);
+            }
+            return false;
+        }
     }
 
     /// <summary>
@@ -465,6 +612,21 @@ namespace VoluntLib2.ConnectionLayer.Messages
         {
             MessageHeader.MessageType = MessageType.DataMessage;
         }
+
+        /// <summary>
+        /// Compares all fields of given DataMessage with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            DataMessage dataMessage = value as DataMessage;
+            if (dataMessage != null)
+            {
+                return base.Equals(dataMessage) ;
+            }
+            return false;
+        }
     }
 
     /// <summary>
@@ -475,6 +637,21 @@ namespace VoluntLib2.ConnectionLayer.Messages
         public GoingOfflineMessage()
         {
             MessageHeader.MessageType = MessageType.GoingOfflineMessage;
+        }
+
+        /// <summary>
+        /// Compares all fields of given GoingOfflineMessage with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
+        {
+            GoingOfflineMessage goingOfflineMessage = value as GoingOfflineMessage;
+            if (goingOfflineMessage != null)
+            {
+                return base.Equals(goingOfflineMessage) ;
+            }
+            return false;
         }
     }   
 }

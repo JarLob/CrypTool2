@@ -45,7 +45,7 @@ namespace VoluntLib2
 
         //ConnectionLayer.Message class
         public const string MESSAGE_VOLUNTLIB2 = "VoluntLib2";  //Magic number to identify voluntlib protocol messages
-        public const byte MESSAGE_VOLUNTLIB2_VERSION = 0x01;    //Protocol version number
+        public const byte MESSAGE_VOLUNTLIB2_VERSION = 0x02;    //Protocol version number
 
         //HelloOperation class
         public const long HELLOOPERATION_TIMEOUT = 30000;
