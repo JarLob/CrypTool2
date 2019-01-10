@@ -334,7 +334,7 @@ namespace VoluntLib2.ManagementLayer.Messages
             }
             if (data[10] > Constants.MGM_MESSAGE_VOLUNTLIB2_VERSION)
             {
-                throw new VoluntLibSerializationException(String.Format("Expected a VoluntLib2 version <= {0}. Received a version {1}. Please update!", Constants.MESSAGE_VLIB2MNGMT, magicnumber));
+                throw new VoluntLibSerializationException(String.Format("Expected a VoluntLib2 version <= {0}. Received a version = {1}. Please update your VoluntLib2 or the application using it!", Constants.MGM_MESSAGE_VOLUNTLIB2_VERSION, (int)data[10]));
             }
 
             MessageHeader = new MessageHeader();
