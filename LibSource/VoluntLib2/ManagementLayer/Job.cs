@@ -125,7 +125,6 @@ namespace VoluntLib2.ManagementLayer
         }
         public bool IsDeleted { get; set; }
 
-
         /// <summary>
         /// Compares all fields of given Job with this one
         /// </summary>
@@ -136,23 +135,32 @@ namespace VoluntLib2.ManagementLayer
             Job job = value as Job;
             if (job != null)
             {
-                return job.CreationDate.Equals(this.CreationDate) &&
-                       job.CreatorCertificateData.SequenceEqual(this.CreatorCertificateData) &&
-                       job.CreatorName.Equals(this.CreatorName) &&
-                       job.JobCreatorSignatureData.SequenceEqual(this.JobCreatorSignatureData) &&
-                       job.JobDeletionSignatureData.SequenceEqual(this.JobDeletionSignatureData) &&
-                       job.JobDescription.Equals(this.JobDescription) &&
-                       job.JobEpochState.Equals(this.JobEpochState) &&
-                       job.JobId.Equals(this.JobId) &&
-                       job.JobName.Equals(this.JobName) &&
-                       job.JobPayload.SequenceEqual(this.JobPayload) &&
-                       job.JobPayloadHash.SequenceEqual(this.JobPayloadHash) &&
-                       job.JobType.Equals(this.JobType) &&
-                       job.WorldName.Equals(this.WorldName);
+                return job.JobId.Equals(this.JobId);                       
             }
             return false;
         }
 
+        /// <summary>
+        /// Only used for testing serialization/deserialization of jobs
+        /// </summary>
+        /// <param name="job"></param>
+        /// <returns></returns>
+        internal bool Equals_Test(Job job)
+        {
+            return job.CreationDate.Equals(this.CreationDate) &&
+                   job.CreatorCertificateData.SequenceEqual(this.CreatorCertificateData) &&
+                   job.CreatorName.Equals(this.CreatorName) &&
+                   job.JobCreatorSignatureData.SequenceEqual(this.JobCreatorSignatureData) &&
+                   job.JobDeletionSignatureData.SequenceEqual(this.JobDeletionSignatureData) &&
+                   job.JobDescription.Equals(this.JobDescription) &&
+                   job.JobEpochState.Equals(this.JobEpochState) &&
+                   job.JobId.Equals(this.JobId) &&
+                   job.JobName.Equals(this.JobName) &&
+                   job.JobPayload.SequenceEqual(this.JobPayload) &&
+                   job.JobPayloadHash.SequenceEqual(this.JobPayloadHash) &&
+                   job.JobType.Equals(this.JobType) &&
+                   job.WorldName.Equals(this.WorldName);
+        }
 
         public bool HasPayload        
         {

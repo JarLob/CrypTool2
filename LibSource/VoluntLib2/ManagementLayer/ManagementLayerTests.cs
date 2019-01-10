@@ -113,7 +113,7 @@ namespace VoluntLib2.ManagementLayer
             bytes = job.Serialize();
             Job job_deserialized = new Job(0);
             job_deserialized.Deserialize(bytes);
-            Assert.AreEqual(job, job_deserialized, "Test #1: Deserialized Job not equals original Job");
+            Assert.IsTrue(job.Equals_Test(job_deserialized), "Test #1: Deserialized Job not equals original Job");
         }
     }
 }
