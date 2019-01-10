@@ -62,6 +62,13 @@
                                         <Label/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
+                            </GridViewColumn>                           
+                            <GridViewColumn Header="HasPayload" DisplayMemberBinding="{Binding Path=HasPayload}" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                         </GridView>
                     </ListView.View>
