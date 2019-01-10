@@ -601,6 +601,7 @@ namespace VoluntLib2.ManagementLayer
         /// if peerID == null it sends the message to every neighbor
         /// </summary>
         /// <param name="peerID"></param>
+        /// <param name="jobId"></param>
         internal void SendRequestJobMessage(byte[] peerID, BigInteger jobId)
         {
             RequestJobMessage requestJobMessage = new RequestJobMessage();
@@ -617,6 +618,7 @@ namespace VoluntLib2.ManagementLayer
         /// if peerID == null it sends the message to every neighbor
         /// </summary>
         /// <param name="peerID"></param>
+        /// <param name="job"></param>
         internal void SendResponseJobMessage(byte[] peerID, Job job)
         {
             ResponseJobMessage responseJobMessage = new ResponseJobMessage();

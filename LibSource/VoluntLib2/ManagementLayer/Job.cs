@@ -31,10 +31,14 @@ using VoluntLib2.Tools;
 
 namespace VoluntLib2.ManagementLayer
 {
-    public class Job : IEquatable<Job>, IComparable<Job>, INotifyPropertyChanged, IVoluntLibSerializable
+    public class Job : IComparable<Job>, INotifyPropertyChanged, IVoluntLibSerializable
     {        
         private Logger Logger = Logger.GetLogger();
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="jobID"></param>
         public Job(BigInteger jobID)
         {
             JobId = jobID;
@@ -94,6 +98,9 @@ namespace VoluntLib2.ManagementLayer
             }
         }
 
+        /// <summary>
+        /// Returns the size of this job in bytes
+        /// </summary>
         public long JobSize
         {
             get
@@ -117,10 +124,36 @@ namespace VoluntLib2.ManagementLayer
             }
         }
         public bool IsDeleted { get; set; }
-        public bool Equals(Job other)
+
+
+        /// <summary>
+        /// Compares all fields of given Job with this one
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool Equals(object value)
         {
-            return other.JobId.Equals(JobId);
+            Job job = value as Job;
+            if (job != null)
+            {
+                return job.CreationDate.Equals(this.CreationDate) &&
+                       job.CreatorCertificateData.SequenceEqual(this.CreatorCertificateData) &&
+                       job.CreatorName.Equals(this.CreatorName) &&
+                       job.JobCreatorSignatureData.SequenceEqual(this.JobCreatorSignatureData) &&
+                       job.JobDeletionSignatureData.SequenceEqual(this.JobDeletionSignatureData) &&
+                       job.JobDescription.Equals(this.JobDescription) &&
+                       job.JobEpochState.Equals(this.JobEpochState) &&
+                       job.JobId.Equals(this.JobId) &&
+                       job.JobName.Equals(this.JobName) &&
+                       job.JobPayload.SequenceEqual(this.JobPayload) &&
+                       job.JobPayloadHash.SequenceEqual(this.JobPayloadHash) &&
+                       job.JobType.Equals(this.JobType) &&
+                       job.WorldName.Equals(this.WorldName);
+            }
+            return false;
         }
+
+
         public bool HasPayload        
         {
             get { return JobPayload != null && JobPayload.Length > 0; }

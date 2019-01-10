@@ -88,5 +88,32 @@ namespace VoluntLib2.ManagementLayer
             Assert.AreEqual(responseJobMessage, responseJobMessage_deserialized, "Test #5: Deserialized ResponseJobMessage not equals original ResponseJobMessage");
 
         }
+
+        /// <summary>
+        /// This test method tests the serialization and deserialization of all messages of the ConnectionLayer
+        /// </summary>
+        [TestMethod()]
+        public void TestJobClass()
+        {
+            byte[] bytes; // helper variable for serialized data
+
+            //Test #1: Test Message class serialization/deserialization
+            Job job = new Job(1000);
+            job.JobCreatorSignatureData = new byte[] {1, 2, 3, 4, 5, 6, 7, 8, 9};
+            job.JobDeletionSignatureData = new byte[] { 11, 12, 13, 14, 15, 16, 17, 18, 19 };
+            job.JobDescription = "this is a test description";
+            job.JobName = "Jobtestname";
+            job.JobPayload = new byte[] {1, 2, 3, 4, 5, 6, 7, 8, 9};
+            job.JobPayloadHash = new byte[] {1, 2, 3};
+            job.JobType = "Testtype";
+            job.WorldName = "Testworld";
+            job.CreationDate = DateTime.MinValue;
+            job.CreatorCertificateData = new byte[] {13, 14, 15, 16, 17, 18, 19, 20};
+            job.CreatorName = "Job Creator";
+            bytes = job.Serialize();
+            Job job_deserialized = new Job(0);
+            job_deserialized.Deserialize(bytes);
+            Assert.AreEqual(job, job_deserialized, "Test #1: Deserialized Job not equals original Job");
+        }
     }
 }
