@@ -90,7 +90,7 @@ namespace VoluntLib2.ManagementLayer
         }
 
         /// <summary>
-        /// This test method tests the serialization and deserialization of all messages of the ConnectionLayer
+        /// This test method tests the job class
         /// </summary>
         [TestMethod()]
         public void TestJobClass()
