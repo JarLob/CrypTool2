@@ -225,7 +225,7 @@ namespace CrypToolStoreLib.Server
             }
             catch (Exception ex)
             {
-                logger.LogText(String.Format("Exception during stopping of Server: {0}", ex.Message), this, Logtype.Error);
+                logger.LogText(String.Format("Exception during stopping of server: {0}", ex.Message), this, Logtype.Error);
             }
         }
     }

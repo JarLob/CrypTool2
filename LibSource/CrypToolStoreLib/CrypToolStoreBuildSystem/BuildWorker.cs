@@ -1022,7 +1022,7 @@ namespace CrypToolStoreBuildSystem
             //check, if email is valid
             if (String.IsNullOrEmpty(developer.Email) || !IsValidEmail(developer.Email))
             {
-                Logger.LogText(String.Format("(Buildstep 16) Can not send build email to {0} since we have no valid email address (={1}) of this developer!", plugin.Username, developer.Email), this, Logtype.Warning);
+                Logger.LogText(String.Format("(Buildstep 16) Cannot send build email to {0} since we have no valid email address (={1}) of this developer!", plugin.Username, developer.Email), this, Logtype.Warning);
                 return;
             }
             MailClient mailClient = new MailClient(Config.GetConfigEntry("EmailServerAddress"), int.Parse(Config.GetConfigEntry("EmailServerPort")));
@@ -1041,7 +1041,7 @@ namespace CrypToolStoreBuildSystem
                 bodyBuilder.AppendLine(String.Format("The build of Source-{0}-{1} was erroneous.", Source.PluginId, Source.PluginVersion));
                 bodyBuilder.AppendLine("Please see attached buildlog.txt for additional information.");
                 bodyBuilder.AppendLine();
-                bodyBuilder.AppendLine("Kind Regards,");
+                bodyBuilder.AppendLine("Kind regards,");
                 bodyBuilder.AppendLine("The CrypToolStore Build System");             
             }
             else
@@ -1052,7 +1052,7 @@ namespace CrypToolStoreBuildSystem
                 bodyBuilder.AppendLine(String.Format("The build of Source-{0}-{1} was a success.", Source.PluginId, Source.PluginVersion));
                 bodyBuilder.AppendLine("Please see attached buildlog.txt for additional information.");
                 bodyBuilder.AppendLine();
-                bodyBuilder.AppendLine("Kind Regards,");
+                bodyBuilder.AppendLine("Kind regards,");
                 bodyBuilder.AppendLine("The CrypToolStore Build System");
             }
             mailClient.SendEmail(from, to, subject, bodyBuilder.ToString(), "buildlog.txt", Logger.ToString());

@@ -487,13 +487,13 @@ namespace VoluntLib2.ManagementLayer
                 RequestJobMessage requestJobMessage = (RequestJobMessage)message;
                 if (!JobManager.Jobs.ContainsKey(requestJobMessage.JobId) || !JobManager.Jobs[requestJobMessage.JobId].HasPayload)
                 {
-                    Logger.LogText(String.Format("Peer {0} request job payload for job with jobId = {1}. But we don't have it!", BitConverter.ToString(message.PeerId), BitConverter.ToString(requestJobMessage.JobId.ToByteArray())), this, Logtype.Debug);
+                    Logger.LogText(String.Format("Peer {0} requests job payload for job with jobId = {1}. But we don't have it!", BitConverter.ToString(message.PeerId), BitConverter.ToString(requestJobMessage.JobId.ToByteArray())), this, Logtype.Debug);
                     return;
                 }
                 else 
                 { 
                     //2. we have the job AND the payload; thus, we send an answer
-                    Logger.LogText(String.Format("Peer {0} request job payload for job with jobId = {1}. Send it now!", BitConverter.ToString(message.PeerId), BitConverter.ToString(requestJobMessage.JobId.ToByteArray())), this, Logtype.Debug);
+                    Logger.LogText(String.Format("Peer {0} requests job payload for job with jobId = {1}. Send it now!", BitConverter.ToString(message.PeerId), BitConverter.ToString(requestJobMessage.JobId.ToByteArray())), this, Logtype.Debug);
                     JobManager.SendResponseJobMessage(message.PeerId, JobManager.Jobs[requestJobMessage.JobId]);
                 }
             }
