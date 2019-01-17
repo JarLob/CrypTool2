@@ -331,7 +331,7 @@ namespace Cryptool.Plugins.FEAL
                         }
 
                         //check if it is the last block and we decrypt, thus, we have to remove the padding
-                        if (reader.Position == reader.Length && _FEALSettings.Action == Action.Decrypt)
+                        if (reader.Position == reader.Length && _FEALSettings.Action == Action.Decrypt && _FEALSettings.Padding != BlockCipherHelper.PaddingType.None)
                         {
                             int valid = BlockCipherHelper.StripPadding(outputblock, 8, _FEALSettings.Padding, 8);
                             if (valid != 8)
