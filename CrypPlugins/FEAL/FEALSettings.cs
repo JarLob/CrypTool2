@@ -39,7 +39,6 @@ namespace Cryptool.Plugins.FEAL
         CBC,
         CFB,
         OFB,
-        EAX
     }
 
     public class FEALSettings : ISettings
@@ -86,7 +85,7 @@ namespace Cryptool.Plugins.FEAL
         }
 
         [TaskPane("BlockModeCaption", "BlockModeTooltip", null, 3, false, ControlType.ComboBox,
-            new string[] {"ECB", "CBC", "CFB", "OFB", "EAX"})]
+            new string[] {"ECB", "CBC", "CFB", "OFB"})]
         public BlockMode BlockMode
         {
             get { return _blockMode; }
