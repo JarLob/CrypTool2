@@ -23,6 +23,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using CrypCloud.Core;
+using Cryptool.PluginBase;
 
 namespace Cryptool.CrypWin
 {
@@ -33,11 +34,19 @@ namespace Cryptool.CrypWin
             DependencyProperty.Register("P2PButtonVisibility",typeof(Visibility),typeof(MainWindow),
                 new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.AffectsRender, null));
 
-        private void InitCould()
+        private void InitCloud()
         {
-            CrypCloudCore.Instance.ApplicationLog += OnGuiLogNotificationOccured;
-            CrypCloudCore.Instance.ConnectionStateChanged += UpdateIcons;
-            UpdateIcons(connected: false);
+            try
+            {
+                CrypCloudCore.Instance.ApplicationLog += OnGuiLogNotificationOccured;
+                CrypCloudCore.Instance.ConnectionStateChanged += UpdateIcons;
+                UpdateIcons(connected: false);
+                GuiLogMessage("Cloud initialized", NotificationLevel.Debug);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception occured during initialization of cloud: {0}", ex.Message), NotificationLevel.Error);
+            }
         }
 
         [TypeConverter(typeof(Visibility))]

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2008-2018 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2008-2019 CrypTool 2 Team <ct2contact@cryptool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -68,6 +68,7 @@ using System.Net;
 using System.Net.Security;
 using CrypCloud.Core;
 using CrypCloud.Manager;
+using Exception = System.Exception;
 
 namespace Cryptool.CrypWin
 {
@@ -265,21 +266,13 @@ namespace Cryptool.CrypWin
 
         #region Init
 
+        /// <summary>
+        /// Default constructor of the MainWindow of CrypTool 2
+        /// </summary>
         public MainWindow()
         {
-            //Enforce usage of TLS 1.2
-            try
-            {
-                //Enable TLS 1.2
-                ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
-
-                //Disable old SSL and TLS versions
-                ServicePointManager.SecurityProtocol &= ~(SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11);
-            }
-            catch (Exception ex)
-            {
-                GuiLogMessage(string.Format("Error while enabling TLS 1.2 and disabling old protocols: {0}", ex), NotificationLevel.Error);
-            }
+            GuiLogMessage("Start creation of MainWindow", NotificationLevel.Debug);
+            EnforceTLS12();
 
             SetLanguage();
 
@@ -287,97 +280,34 @@ namespace Cryptool.CrypWin
 
             LoadResources();
 
-            // systemInfos and licenses must be initialized after the language has been set, otherwise they are initialized with the wrong language
-            systemInfos = new SystemInfos();
-            licenses = new LicensesTab();
-
-            if (AssemblyHelper.InstallationType == Ct2InstallationType.ZIP)
-            {
-                UnblockDLLs();
-            }
-
+            CreateSystemInfosAndLicencesTabs();
+            
+            UnblockDLLs();
+            
             // will exit application after doc has been generated
             if (IsCommandParameterGiven("-GenerateDoc"))
             {
-                try
-                {
-                    var generatingDocWindow = new GeneratingWindow();
-                    generatingDocWindow.Message.Content = Properties.Resources.GeneratingWaitMessage;
-                    generatingDocWindow.Title = Properties.Resources.Generating_Documentation_Title;
-                    generatingDocWindow.Show();
-                    var docGenerator = new OnlineDocumentationGenerator.DocGenerator();
-                    docGenerator.Generate(DirectoryHelper.BaseDirectory, new HtmlGenerator());
-                    generatingDocWindow.Close();
-                }
-                catch(Exception ex)
-                {
-                    //wtf?    
-                }
-                Environment.Exit(0);
+                GenerateDoc();
             }
 
+            // will exit application after doc has been generated
             if (IsCommandParameterGiven("-GenerateDocLaTeX"))
             {
-                try
-                {
-                    var noIcons = IsCommandParameterGiven("-NoIcons");
-                    var showAuthors = IsCommandParameterGiven("-ShowAuthors");
-                    var generatingDocWindow = new GeneratingWindow();
-                    generatingDocWindow.Message.Content = Properties.Resources.GeneratingLaTeXWaitMessage;
-                    generatingDocWindow.Title = Properties.Resources.Generating_Documentation_Title;                                                              
-                    generatingDocWindow.Show();
-                    var docGenerator = new OnlineDocumentationGenerator.DocGenerator();
-                    docGenerator.Generate(DirectoryHelper.BaseDirectory, new LaTeXGenerator(noIcons, showAuthors));
-                    generatingDocWindow.Close();                    
-                }
-                catch(Exception ex)
-                {
-                    //wtf?    
-                }
-                Environment.Exit(0);
+                GenerateLatexDoc();
             }
 
+            // will exit application after list has been generated
             if (IsCommandParameterGiven("-GenerateFunctionList"))
             {
-                try
-                {
-                    var generatingDocWindow = new GeneratingWindow();
-                    generatingDocWindow.Message.Content = Properties.Resources.GeneratingFunctionListWaitMessage;
-                    generatingDocWindow.Title = Properties.Resources.Generating_Documentation_Title;
-                    generatingDocWindow.Show();
-                    var docGenerator = new OnlineDocumentationGenerator.DocGenerator();
-                    docGenerator.Generate(DirectoryHelper.BaseDirectory, new FunctionListGenerator());
-                    generatingDocWindow.Close();
-                }
-                catch (Exception ex)
-                {  
-                }
-                Environment.Exit(0);
+                GenerateFunctionList();
             }
 
-            defaultTemplatesDirectory = Path.Combine(DirectoryHelper.BaseDirectory, Settings.Default.SamplesDir);
-            if (!Directory.Exists(defaultTemplatesDirectory))
-            {
-                GuiLogMessage("Directory with project templates not found", NotificationLevel.Debug);
-                defaultTemplatesDirectory = personalDir;
-            }
+            SetDefaultTemplatesDir();
 
+            // will exit application after list has been generated
             if (IsCommandParameterGiven("-GenerateComponentConnectionStatistics"))
             {
-                try
-                {
-                    var generatingComponentConnectionStatistic = new GeneratingWindow();
-                    generatingComponentConnectionStatistic.Message.Content = Properties.Resources.StatisticsWaitMessage;
-                    generatingComponentConnectionStatistic.Title = Properties.Resources.Generating_Statistics_Title;
-                    generatingComponentConnectionStatistic.Show();
-                    TemplatesAnalyzer.GenerateStatisticsFromTemplate(defaultTemplatesDirectory);
-                    SaveComponentConnectionStatistics();
-                    generatingComponentConnectionStatistic.Close();
-                }catch(Exception ex)
-                {
-                    //wtf?
-                }
-                Environment.Exit(0);
+                GenerateComponentConnectionStatistics();
             }
 
             // Do not replace the place holders in templates.
@@ -398,6 +328,399 @@ namespace Cryptool.CrypWin
                 Environment.Exit(0);
             }
 
+            //if true, exists the constructor
+            if (CheckForUpdate())
+            {
+                return;
+            }
+
+            UpgradeConfig();
+
+            SetStartcenterStartupBehaviourEventHandler();
+
+            CreateAndSetPersonalProjectsDirectory();           
+
+            SaveSettingsSavely();
+
+            SetEventHandlers();
+
+            CreateDemoController();
+
+            GuiLogMessage("Call InitializeComponent now", NotificationLevel.Debug);
+            InitializeComponent();
+            GuiLogMessage("InitializeComponent successfully called", NotificationLevel.Debug);
+
+            UpdateSomeUIElements();
+
+            InitializeDemoModeIfRequested();
+
+            SetWindowState();
+
+            RecentFileListChanged();
+
+            CreateNotifyIcon();
+
+            CheckUpdater();
+
+            SetAdditionalEventHandlers();
+
+            if (IsCommandParameterGiven("-ResetConfig"))
+            {
+                ResetConfig();
+            }
+
+            SetServerCertificateValidationCallback();
+              
+            InitCloud();
+            GuiLogMessage("Finished creation of MainWindow", NotificationLevel.Debug);
+        }
+
+        /// <summary>
+        /// Sets the callback for the validation check of tls certificates
+        /// </summary>
+        private void SetServerCertificateValidationCallback()
+        {
+            //Load our certificates &
+            //Install validation callback
+            try
+            {
+                ServicePointManager.ServerCertificateValidationCallback = UpdateServerCertificateValidationCallback;
+                GuiLogMessage("Successfully set validation callback for certificate validation", NotificationLevel.Debug);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(string.Format("Error while initializing the certificate callback: {0}", ex), NotificationLevel.Error);
+            }        
+        }
+
+        /// <summary>
+        /// Resets config files to default values
+        /// </summary>
+        private void ResetConfig()
+        {
+            GuiLogMessage("\"ResetConfig\" startup parameter set. Resetting configuration of CrypTool 2 to default configuration", NotificationLevel.Info);
+            try
+            {
+                //Reset all plugins settings
+                Cryptool.PluginBase.Properties.Settings.Default.Reset();
+                //Reset WorkspaceManagerModel settings
+                WorkspaceManagerModel.Properties.Settings.Default.Reset();
+                //reset Crypwin settings
+                Cryptool.CrypWin.Properties.Settings.Default.Reset();
+                //reset Crypcore settings
+                Cryptool.Core.Properties.Settings.Default.Reset();
+                //reset MainWindow settings
+                Settings.Default.Reset();
+                GuiLogMessage("Settings successfully set to default configuration", NotificationLevel.Info);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(string.Format("Error occured while resetting configuration: {0}", ex), NotificationLevel.Error);
+            }                
+        }
+
+        /// <summary>
+        /// Sets some additional event handlers
+        /// </summary>
+        private void SetAdditionalEventHandlers()
+        {
+            try
+            {
+                OnlineHelp.ShowDocPage += ShowHelpPage;
+
+                SettingsPresentation.GetSingleton().OnGuiLogNotificationOccured += new GuiLogNotificationEventHandler(OnGuiLogNotificationOccured);
+                Settings.Default.PropertyChanged += delegate(Object sender, PropertyChangedEventArgs e)
+                {
+                    try
+                    {
+                        //Always save everything immediately:
+                        SaveSettingsSavely();
+
+                        //Set new button image when needed:
+                        CheckPreferredButton(e);
+
+                        //Set lastPath to personal directory when lastPath is disabled:
+                        if (e.PropertyName == "useLastPath" && !Settings.Default.useLastPath)
+                        {
+                            Settings.Default.LastPath = personalDir;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //wtf?
+                    }
+                };
+
+                SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
+                SystemEvents.SessionEnding += SystemEvents_SessionEnding;
+
+                hasChangesCheckTimer = new System.Windows.Forms.Timer();
+                hasChangesCheckTimer.Tick += new EventHandler(delegate
+                {
+                    try
+                    {
+                        if (ActiveEditor != null)
+                        {
+                            ((CTTabItem)(contentToTabMap[ActiveEditor])).HasChanges = ActiveEditor.HasChanges ? true : false;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //wtf?
+                    }
+                });
+                hasChangesCheckTimer.Interval = 800;                
+                hasChangesCheckTimer.Start();
+                GuiLogMessage("Additionaly event handlers succesfully set", NotificationLevel.Debug);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception occured during setting of additional event handlers: {0}", ex.Message), NotificationLevel.Error);
+            }
+        }
+
+        /// <summary>
+        /// Checks and inits the updater
+        /// </summary>
+        private void CheckUpdater()
+        {
+            try
+            {
+                if (IsUpdaterEnabled)
+                {
+                    InitUpdater();
+                    GuiLogMessage("Update successfully initialized", NotificationLevel.Debug);
+                }
+                else
+                {
+                    autoUpdateButton.Visibility = Visibility.Collapsed; // hide update button in ribbon
+                }
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception occured during checking of update: {0}", ex.Message), NotificationLevel.Error);
+            }
+        }
+
+        /// <summary>
+        /// Resets the window state of the window
+        /// </summary>
+        private void SetWindowState()
+        {
+            try
+            {
+                VisibilityStart = true;
+                oldWindowState = WindowState;
+                GuiLogMessage("Window state successfully set", NotificationLevel.Debug);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception occured during setting of window state: {0}", ex.Message), NotificationLevel.Error);
+            }
+        }
+
+        /// <summary>
+        /// Initialized demo mode if requested
+        /// </summary>
+        private void InitializeDemoModeIfRequested()
+        {
+            try
+            {
+                if (IsCommandParameterGiven("-demo") || IsCommandParameterGiven("-test"))
+                {
+                    ribbonDemoMode.Visibility = Visibility.Visible;
+                    PluginExtension.IsTestMode = true;
+                    LocExtension.OnGuiLogMessageOccured += GuiLogMessage;
+                    GuiLogMessage("Demo mode initialized", NotificationLevel.Debug);
+                }
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception occured during initializing of demo mode: {0}", ex.Message), NotificationLevel.Error);
+            }
+        }
+
+        /// <summary>
+        /// Updates some ui elements
+        /// </summary>
+        private void UpdateSomeUIElements()
+        {
+            try
+            {
+                SettingBTN.IsChecked = false;
+                dockWindowAlgorithmSettings.Close();
+
+                if ((System.Windows.Visibility)Enum.Parse(typeof(System.Windows.Visibility), Properties.Settings.Default.PluginVisibility) == System.Windows.Visibility.Visible)
+                {
+                    PluginBTN.IsChecked = true;
+                    dockWindowNaviPaneAlgorithms.Open();
+                }
+                else
+                {
+                    PluginBTN.IsChecked = false;
+                    dockWindowNaviPaneAlgorithms.Close();
+                }
+
+                if ((System.Windows.Visibility)Enum.Parse(typeof(System.Windows.Visibility), Properties.Settings.Default.LogVisibility) == System.Windows.Visibility.Visible)
+                {
+                    LogBTN.IsChecked = true;
+                    dockWindowLogMessages.Open();
+                }
+                else
+                {
+                    LogBTN.IsChecked = false;
+                    dockWindowLogMessages.Close();
+                }
+
+                if (!Settings.Default.ShowRibbonBar)
+                {
+                    AppRibbon.IsEnabled = false;
+                }
+
+                if (!Settings.Default.ShowAlgorithmsNavigation)
+                {
+                    splitPanelNaviPaneAlgorithms.Visibility = Visibility.Collapsed;
+                }
+
+                if (!Settings.Default.ShowAlgorithmsSettings)
+                {
+                    splitPanelAlgorithmSettings.Visibility = Visibility.Collapsed;
+                }
+
+                GuiLogMessage("Successfully updated some ui elements", NotificationLevel.Debug);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception occured during update of some ui elements: {0}", ex.Message), NotificationLevel.Error);
+            }
+        }
+
+        /// <summary>
+        /// Creates the demo controller
+        /// </summary>
+        private void CreateDemoController()
+        {
+            try
+            {
+                demoController = new DemoController(this);
+                GuiLogMessage("Successfully created demo controller", NotificationLevel.Debug);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception occured during creation of demo controller: {0}", ex.Message), NotificationLevel.Error);
+            }
+        }
+
+        /// <summary>
+        /// Set some event handlers
+        /// </summary>
+        private void SetEventHandlers()
+        {
+            try
+            {
+                ComponentConnectionStatistics.OnGuiLogMessageOccured += GuiLogMessage;
+                ComponentConnectionStatistics.OnStatisticReset += GenerateStatisticsFromTemplates;
+                recentFileList.ListChanged += RecentFileListChanged;
+                Activated += MainWindow_Activated;
+                Initialized += MainWindow_Initialized;
+                Loaded += MainWindow_Loaded;
+                Closing += MainWindow_Closing;
+                GuiLogMessage("Event handlers successfully set", NotificationLevel.Debug);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception occured during setting of event hanlders: {0}", ex.Message), NotificationLevel.Error);
+            }
+        }
+
+        /// <summary>
+        /// Creates and sets the personal directory
+        /// </summary>
+        private void CreateAndSetPersonalProjectsDirectory()
+        {
+            try
+            {
+                personalDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "CrypTool 2 Projects");
+                if (!Directory.Exists(personalDir))
+                {
+                    Directory.CreateDirectory(personalDir);
+                    GuiLogMessage("Personal folder created", NotificationLevel.Debug);
+                }
+
+                if (string.IsNullOrEmpty(Settings.Default.LastPath) || !Settings.Default.useLastPath || !Directory.Exists(Settings.Default.LastPath))
+                {
+                    Settings.Default.LastPath = personalDir;
+                }                
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage("Exception occured during creation of personal folder: " + ex.Message, NotificationLevel.Error);
+            }
+        }
+
+        /// <summary>
+        /// Sets an event handler for the StartCenter.StartcenterEditor.StartupBehaviourChanged
+        /// </summary>
+        private void SetStartcenterStartupBehaviourEventHandler()
+        {
+            try
+            {
+                StartCenter.StartcenterEditor.StartupBehaviourChanged += (showOnStartup) =>
+                {
+                    try
+                    {
+                        Properties.Settings.Default.ShowStartcenter = showOnStartup;
+                    }
+                    catch (Exception ex)
+                    {
+                        GuiLogMessage(String.Format("Exception occured during setting of Properties.Settings.Default.ShowStartcenter: {0}", ex.Message), NotificationLevel.Error);
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception occured during SetStartcenterStartupBehaviourEventHandler: {0}", ex.Message), NotificationLevel.Error);
+            }
+        }
+
+        /// <summary>
+        /// Updgrades the config
+        /// </summary>
+        private void UpgradeConfig()
+        {
+            try
+            {
+                //upgrade the config
+                //and fill some defaults
+                if (Settings.Default.UpdateFlag)
+                {
+                    Settings.Default.Upgrade();
+                    Cryptool.PluginBase.Properties.Settings.Default.Upgrade();
+                    //upgrade WorkspaceManagerModel settings
+                    WorkspaceManagerModel.Properties.Settings.Default.Upgrade();
+                    //upgrade Crypwin settings
+                    Cryptool.CrypWin.Properties.Settings.Default.Upgrade();
+                    //upgrade Crypcore settings
+                    Cryptool.Core.Properties.Settings.Default.Upgrade();
+                    //upgrade MainWindow settings
+                    Settings.Default.Upgrade();
+                    //remove UpdateFlag
+                    Settings.Default.UpdateFlag = false;
+                    GuiLogMessage(String.Format("Config successfully upgrade"), NotificationLevel.Debug);
+                }
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception during upgrade of config: {0}", ex.Message), NotificationLevel.Error);
+            }
+        }
+
+        /// <summary>
+        /// Checks for and starts updates
+        /// </summary>
+        /// <returns></returns>
+        private bool CheckForUpdate()
+        {
             try
             {
                 // check whether update is available to be installed
@@ -410,7 +733,9 @@ namespace Cryptool.CrypWin
                     {
                         // start update and check whether it seems to succeed
                         if (OnUpdate())
-                            return; // looking good, exit CrypWin constructor now
+                        {
+                            return true; // looking good, exit CrypWin constructor now
+                        }
                     }
                 }
             }
@@ -418,190 +743,157 @@ namespace Cryptool.CrypWin
             {
                 GuiLogMessage(String.Format("Exception occured during check for update: {0}", ex.Message), NotificationLevel.Warning);
             }
+            return false;
+        }
 
-            //upgrade the config
-            //and fill some defaults
-
-            if (Settings.Default.UpdateFlag)
-            {
-                Console.WriteLine("Upgrading config ...");
-                Settings.Default.Upgrade();                
-                Cryptool.PluginBase.Properties.Settings.Default.Upgrade();
-                //upgrade WorkspaceManagerModel settings
-                WorkspaceManagerModel.Properties.Settings.Default.Upgrade();
-                //upgrade Crypwin settings
-                Cryptool.CrypWin.Properties.Settings.Default.Upgrade();
-                //upgrade Crypcore settings
-                Cryptool.Core.Properties.Settings.Default.Upgrade();
-                //upgrade MainWindow settings
-                Settings.Default.Upgrade();
-                //remove UpdateFlag
-                Settings.Default.UpdateFlag = false;
-            }
-
-            StartCenter.StartcenterEditor.StartupBehaviourChanged += (showOnStartup) =>
-            {
-                Properties.Settings.Default.ShowStartcenter = showOnStartup;
-            };
-
+        /// <summary>
+        /// Generates the statistics of component connections
+        /// </summary>
+        private void GenerateComponentConnectionStatistics()
+        {
             try
             {
-                personalDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "CrypTool 2 Projects");
-                if (!Directory.Exists(personalDir))
-                {
-                    Directory.CreateDirectory(personalDir);
-                }
+                var generatingComponentConnectionStatistic = new GeneratingWindow();
+                generatingComponentConnectionStatistic.Message.Content = Properties.Resources.StatisticsWaitMessage;
+                generatingComponentConnectionStatistic.Title = Properties.Resources.Generating_Statistics_Title;
+                generatingComponentConnectionStatistic.Show();
+                TemplatesAnalyzer.GenerateStatisticsFromTemplate(defaultTemplatesDirectory);
+                SaveComponentConnectionStatistics();
+                generatingComponentConnectionStatistic.Close();
             }
             catch (Exception ex)
             {
-                // minor error, ignore
-                GuiLogMessage("Could not create personal dir: " + ex.Message, NotificationLevel.Debug);
+                //wtf?
             }
+            Environment.Exit(0);
+        }
 
-            if (string.IsNullOrEmpty(Settings.Default.LastPath) || !Settings.Default.useLastPath || !Directory.Exists(Settings.Default.LastPath))
-            {
-                Settings.Default.LastPath = personalDir;
-            }
-
-            SaveSettingsSavely();
-
-            ComponentConnectionStatistics.OnGuiLogMessageOccured += GuiLogMessage;
-            ComponentConnectionStatistics.OnStatisticReset += GenerateStatisticsFromTemplates;
-
-            recentFileList.ListChanged += RecentFileListChanged;
-
-            this.Activated += MainWindow_Activated;
-            this.Initialized += MainWindow_Initialized;
-            this.Loaded += MainWindow_Loaded;
-            this.Closing += MainWindow_Closing;
-
-            this.demoController = new DemoController(this);
-            this.InitializeComponent();
-
-            //if ((System.Windows.Visibility)Enum.Parse(typeof(System.Windows.Visibility), Properties.Settings.Default.SettingVisibility) == System.Windows.Visibility.Visible)
-            //{
-            //    SettingBTN.IsChecked = true;
-            //    dockWindowAlgorithmSettings.Open();
-            //}
-            //else
-            //{
-            SettingBTN.IsChecked = false;
-            dockWindowAlgorithmSettings.Close();
-            //}
-
-            if ((System.Windows.Visibility)Enum.Parse(typeof(System.Windows.Visibility), Properties.Settings.Default.PluginVisibility) == System.Windows.Visibility.Visible)
-            {
-                PluginBTN.IsChecked = true;
-                dockWindowNaviPaneAlgorithms.Open();
-            }
-            else
-            {
-                PluginBTN.IsChecked = false;
-                dockWindowNaviPaneAlgorithms.Close();
-            }
-
-            if ((System.Windows.Visibility)Enum.Parse(typeof(System.Windows.Visibility), Properties.Settings.Default.LogVisibility) == System.Windows.Visibility.Visible)
-            {
-                LogBTN.IsChecked = true;
-                dockWindowLogMessages.Open();
-            }
-            else
-            {
-                LogBTN.IsChecked = false;
-                dockWindowLogMessages.Close();
-            }
-
-            if (IsCommandParameterGiven("-demo") || IsCommandParameterGiven("-test"))
-            {
-                ribbonDemoMode.Visibility = Visibility.Visible;
-                PluginExtension.IsTestMode = true;
-                LocExtension.OnGuiLogMessageOccured += GuiLogMessage;
-            }
-
-            VisibilityStart = true;
-
-            oldWindowState = WindowState;
-
-            RecentFileListChanged();
-
-            CreateNotifyIcon();
-
-            if (IsUpdaterEnabled)
-                InitUpdater();
-            else
-                autoUpdateButton.Visibility = Visibility.Collapsed; // hide update button in ribbon
-                
-
-            if (!Settings.Default.ShowRibbonBar)
-                AppRibbon.IsEnabled = false;
-            if (!Settings.Default.ShowAlgorithmsNavigation)
-                splitPanelNaviPaneAlgorithms.Visibility = Visibility.Collapsed;
-            if (!Settings.Default.ShowAlgorithmsSettings)
-                splitPanelAlgorithmSettings.Visibility = Visibility.Collapsed;
-      
-            OnlineHelp.ShowDocPage += ShowHelpPage;
-
-            SettingsPresentation.GetSingleton().OnGuiLogNotificationOccured += new GuiLogNotificationEventHandler(OnGuiLogNotificationOccured);
-            Settings.Default.PropertyChanged += delegate(Object sender, PropertyChangedEventArgs e)
-            {
-                //Always save everything immediately:
-                SaveSettingsSavely();
-
-                //Set new button image when needed:
-                CheckPreferredButton(e);
-
-                //Set lastPath to personal directory when lastPath is disabled:
-                if (e.PropertyName == "useLastPath" && !Settings.Default.useLastPath)
-                    Settings.Default.LastPath = personalDir;
-            };
-
-            SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
-            SystemEvents.SessionEnding += SystemEvents_SessionEnding;
-
-            hasChangesCheckTimer = new System.Windows.Forms.Timer(); 
-            hasChangesCheckTimer.Tick += new EventHandler(delegate 
- 		    { 
- 		        if (ActiveEditor != null)
-                    ((CTTabItem)(contentToTabMap[ActiveEditor])).HasChanges = ActiveEditor.HasChanges ? true : false; 
- 		    }); 
-            hasChangesCheckTimer.Interval = 800; 
-            hasChangesCheckTimer.Start();
-
-            if (IsCommandParameterGiven("-ResetConfig"))
-            {
-                GuiLogMessage("\"ResetConfig\" startup parameter set. Resetting configuration of CrypTool 2 to default configuration", NotificationLevel.Info);
-                try
-                {
-                    //Reset all plugins settings
-                    Cryptool.PluginBase.Properties.Settings.Default.Reset();
-                    //Reset WorkspaceManagerModel settings
-                    WorkspaceManagerModel.Properties.Settings.Default.Reset();
-                    //reset Crypwin settings
-                    Cryptool.CrypWin.Properties.Settings.Default.Reset();
-                    //reset Crypcore settings
-                    Cryptool.Core.Properties.Settings.Default.Reset();
-                    //reset MainWindow settings
-                    Settings.Default.Reset();                    
-                    GuiLogMessage("Settings successfully set to default configuration", NotificationLevel.Info);
-                }
-                catch (Exception ex)
-                {
-                    GuiLogMessage(string.Format("Error occured while resetting configration: {0}",ex), NotificationLevel.Info);
-                }                
-            }
-
-            //Load our certificates &
-            //Install validation callback
+        /// <summary>
+        /// Sets the default templates directory
+        /// </summary>
+        private void SetDefaultTemplatesDir()
+        {
             try
             {
-                ServicePointManager.ServerCertificateValidationCallback = UpdateServerCertificateValidationCallback;
+                defaultTemplatesDirectory = Path.Combine(DirectoryHelper.BaseDirectory, Settings.Default.SamplesDir);
+                if (!Directory.Exists(defaultTemplatesDirectory))
+                {
+                    GuiLogMessage("Directory with project templates not found", NotificationLevel.Debug);
+                    defaultTemplatesDirectory = personalDir;
+                }
+
+                GuiLogMessage(String.Format("Set default templates dir to: {0}", defaultTemplatesDirectory), NotificationLevel.Debug);
             }
             catch (Exception ex)
             {
-                GuiLogMessage(string.Format("Error while initializing the certificate callback: {0}", ex), NotificationLevel.Error);
-            }          
+                GuiLogMessage(String.Format("Exception occured during setting of default templates dir: {0}", ex.Message), NotificationLevel.Error);
+            }
+        }
 
-            InitCould();
+        /// <summary>
+        /// Generates a function list
+        /// </summary>
+        private void GenerateFunctionList()
+        {
+            try
+            {
+                var generatingDocWindow = new GeneratingWindow();
+                generatingDocWindow.Message.Content = Properties.Resources.GeneratingFunctionListWaitMessage;
+                generatingDocWindow.Title = Properties.Resources.Generating_Documentation_Title;
+                generatingDocWindow.Show();
+                var docGenerator = new OnlineDocumentationGenerator.DocGenerator();
+                docGenerator.Generate(DirectoryHelper.BaseDirectory, new FunctionListGenerator());
+                generatingDocWindow.Close();
+            }
+            catch (Exception ex)
+            {
+            }
+            Environment.Exit(0);
+        }
+
+        /// <summary>
+        /// Generates a LaTeX documentation
+        /// </summary>
+        private void GenerateLatexDoc()
+        {
+            try
+            {
+                var noIcons = IsCommandParameterGiven("-NoIcons");
+                var showAuthors = IsCommandParameterGiven("-ShowAuthors");
+                var generatingDocWindow = new GeneratingWindow();
+                generatingDocWindow.Message.Content = Properties.Resources.GeneratingLaTeXWaitMessage;
+                generatingDocWindow.Title = Properties.Resources.Generating_Documentation_Title;
+                generatingDocWindow.Show();
+                var docGenerator = new OnlineDocumentationGenerator.DocGenerator();
+                docGenerator.Generate(DirectoryHelper.BaseDirectory, new LaTeXGenerator(noIcons, showAuthors));
+                generatingDocWindow.Close();
+            }
+            catch (Exception ex)
+            {
+                //wtf?    
+            }
+            Environment.Exit(0);
+        }
+
+        /// <summary>
+        /// Generates a html documentation
+        /// </summary>
+        private void GenerateDoc()
+        {
+            try
+            {
+                var generatingDocWindow = new GeneratingWindow();
+                generatingDocWindow.Message.Content = Properties.Resources.GeneratingWaitMessage;
+                generatingDocWindow.Title = Properties.Resources.Generating_Documentation_Title;
+                generatingDocWindow.Show();
+                var docGenerator = new OnlineDocumentationGenerator.DocGenerator();
+                docGenerator.Generate(DirectoryHelper.BaseDirectory, new HtmlGenerator());
+                generatingDocWindow.Close();
+            }
+            catch (Exception ex)
+            {
+                //wtf?    
+            }
+            Environment.Exit(0);
+        }
+
+        /// <summary>
+        /// Creates the system info tab and licenses tab
+        /// </summary>
+        private void CreateSystemInfosAndLicencesTabs()
+        {
+            try
+            {
+                // systemInfos and licenses must be initialized after the language has been set, otherwise they are initialized with the wrong language
+                systemInfos = new SystemInfos();
+                GuiLogMessage("Created SystemInfos tab", NotificationLevel.Debug);
+                licenses = new LicensesTab();
+                GuiLogMessage("Created LicensesTab tab", NotificationLevel.Debug);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception occured during creation of SystemInfos tab and LicensesTab tab:{0}", ex.Message), NotificationLevel.Error);
+            }
+        }
+
+        /// <summary>
+        /// Encorces the usage of TLS 1.2
+        /// </summary>
+        private void EnforceTLS12()
+        {
+            //Enforce usage of TLS 1.2
+            try
+            {
+                //Enable TLS 1.2
+                ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
+                //Disable old SSL and TLS versions
+                ServicePointManager.SecurityProtocol &= ~(SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11);
+                GuiLogMessage("TLS 1.2 enabled and disabed old protocols", NotificationLevel.Debug);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(string.Format("Exception while enabling TLS 1.2 and disabling old protocols: {0}", ex), NotificationLevel.Error);
+            }
         }
         
         /// <summary>
@@ -613,33 +905,45 @@ namespace Cryptool.CrypWin
         /// </summary>
         private void CheckEssentialComponents()
         {
-            //List of components that have to be available
-            //add new essential compoents if needed
-            //Warning: If a component is not available; CT2 WONT START!
-            var essentialComponents = new List<string>();
-            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\CrypCore.dll");
-            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\CrypPluginBase.dll");
-            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\CrypProprietary.dll");
-            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\DevComponents.WpfDock.dll");
-            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\DevComponents.WpfEditors.dll");
-            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\DevComponents.WpfRibbon.dll");
-            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\OnlineDocumentationGenerator.dll");
-            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\WorkspaceManager.dll");
-            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\WorkspaceManagerModel.dll");
-            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\CrypPlugins\WorkspaceManager.dll");
-            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\CrypPlugins\Wizard.dll");
+            try 
+            { 
+                //List of components that have to be available
+                //add new essential compoents if needed
+                //Warning: If a component is not available; CT2 WONT START!
+                var essentialComponents = new List<string>();
+                essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\CrypCore.dll");
+                essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\CrypPluginBase.dll");
+                essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\CrypProprietary.dll");
+                essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\DevComponents.WpfDock.dll");
+                essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\DevComponents.WpfEditors.dll");
+                essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\DevComponents.WpfRibbon.dll");
+                essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\OnlineDocumentationGenerator.dll");
+                essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\WorkspaceManager.dll");
+                essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\WorkspaceManagerModel.dll");
+                essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\CrypPlugins\WorkspaceManager.dll");
+                essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\CrypPlugins\Wizard.dll");
 
-            foreach(var file in essentialComponents)
-            {
-                if (!File.Exists(file))
+                foreach(var file in essentialComponents)
                 {
-                    MessageBox.Show(String.Format("Missing essential component of CrypTool 2:\r\n{0}\r\nEither completely unzip the zip installation of CrypTool 2 or reinstall CrypTool 2 if not running zip installation",file),
-                        "CrypTool 2 Essential Component not Found!", MessageBoxButton.OK,MessageBoxImage.Error);
-                    System.Environment.Exit(-1);
+                    if (!File.Exists(file))
+                    {
+                        MessageBox.Show(String.Format("Missing essential component of CrypTool 2:\r\n{0}\r\nEither completely unzip the zip installation of CrypTool 2 or reinstall CrypTool 2 if not running zip installation",file),
+                            "CrypTool 2 Essential Component not Found!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        System.Environment.Exit(-1);
+                    }
                 }
+
+                GuiLogMessage("Essential components checked successfully", NotificationLevel.Debug);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception occured during checking of essential components: {0}",ex.Message), NotificationLevel.Error);
             }
         }
 
+        /// <summary>
+        /// Loads the component connection statistics
+        /// </summary>
         private void LoadIndividualComponentConnectionStatistics()
         {
             //Load component connection statistics if available, or generate them:
@@ -661,6 +965,9 @@ namespace Cryptool.CrypWin
             }
         }
 
+        /// <summary>
+        /// Generates statistics from a template
+        /// </summary>
         private void GenerateStatisticsFromTemplates()
         {
             var generatingComponentConnectionStatistic = new GeneratingWindow();
@@ -681,6 +988,10 @@ namespace Cryptool.CrypWin
             generatingComponentConnectionStatistic.ShowDialog();
         }
 
+        /// <summary>
+        /// Establishes CrypTool as singleton
+        /// </summary>
+        /// <returns></returns>
         private bool EstablishSingleInstance()
         {
             try
@@ -719,7 +1030,7 @@ namespace Cryptool.CrypWin
             }
             catch(Exception ex)
             {
-                GuiLogMessage(String.Format("Error during EstablishSingleInstance: {0}",ex.Message),NotificationLevel.Warning);
+                GuiLogMessage(String.Format("Exception occured during EstablishSingleInstance: {0}", ex.Message),NotificationLevel.Warning);
                 return false;
             }
         }
@@ -816,35 +1127,46 @@ namespace Cryptool.CrypWin
             return true;
         }
 
+        /// <summary>
+        /// Sets the language of CrypTool 2
+        /// </summary>
         private void SetLanguage()
         {
-            var lang = GetCommandParameter("-lang");    //Check if language parameter is given
-            if (lang != null)
+            try
             {
-                switch (lang.ToLower())
+                var lang = GetCommandParameter("-lang"); //Check if language parameter is given
+                if (lang != null)
                 {
-                    case "de":
-                        Settings.Default.Culture = CultureInfo.CreateSpecificCulture("de-DE").TextInfo.CultureName;
-                        break;
-                    case "en":
-                        Settings.Default.Culture = CultureInfo.CreateSpecificCulture("en-US").TextInfo.CultureName;
-                        break;
+                    switch (lang.ToLower())
+                    {
+                        case "de":
+                            Settings.Default.Culture = CultureInfo.CreateSpecificCulture("de-DE").TextInfo.CultureName;
+                            break;
+                        case "en":
+                            Settings.Default.Culture = CultureInfo.CreateSpecificCulture("en-US").TextInfo.CultureName;
+                            break;
+                    }
                 }
-            }
 
-            var culture = Settings.Default.Culture;
-            if (!string.IsNullOrEmpty(culture))
+                var culture = Settings.Default.Culture;
+                if (!string.IsNullOrEmpty(culture))
+                {
+                    try
+                    {
+                        Thread.CurrentThread.CurrentCulture = new CultureInfo(culture);
+                        Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
+                        this.currentculture = Thread.CurrentThread.CurrentCulture;
+                        this.currentuiculture = Thread.CurrentThread.CurrentUICulture;
+                        GuiLogMessage(String.Format("Set language to: {0}", culture), NotificationLevel.Debug);
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }                
+            }
+            catch (Exception ex)
             {
-                try
-                {
-                    Thread.CurrentThread.CurrentCulture = new CultureInfo(culture);
-                    Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
-                    this.currentculture = Thread.CurrentThread.CurrentCulture;
-                    this.currentuiculture = Thread.CurrentThread.CurrentUICulture;
-                }
-                catch (Exception)
-                {
-                }
+                GuiLogMessage(String.Format("Exception while setting language: {0}", ex.Message), NotificationLevel.Error);
             }
         }
 
@@ -902,21 +1224,28 @@ namespace Cryptool.CrypWin
 
         private void LoadResources()
         {
-            Application.Current.Resources.MergedDictionaries.Add((ResourceDictionary)Application.LoadComponent(
-            new Uri("/CrypWin;Component/Resources/GridViewStyle.xaml", UriKind.Relative)));
+            try
+            {
+                Application.Current.Resources.MergedDictionaries.Add((ResourceDictionary)Application.LoadComponent(
+                new Uri("/CrypWin;Component/Resources/GridViewStyle.xaml", UriKind.Relative)));
 
-            Application.Current.Resources.MergedDictionaries.Add((ResourceDictionary)Application.LoadComponent(
-            new Uri("/CrypWin;Component/Resources/ValidationRules.xaml", UriKind.Relative)));
+                Application.Current.Resources.MergedDictionaries.Add((ResourceDictionary)Application.LoadComponent(
+                new Uri("/CrypWin;Component/Resources/ValidationRules.xaml", UriKind.Relative)));
 
-            Application.Current.Resources.MergedDictionaries.Add((ResourceDictionary)Application.LoadComponent(
-            new Uri("/CrypWin;Component/Resources/BlackTheme.xaml", UriKind.Relative)));
+                Application.Current.Resources.MergedDictionaries.Add((ResourceDictionary)Application.LoadComponent(
+                new Uri("/CrypWin;Component/Resources/BlackTheme.xaml", UriKind.Relative)));
 
-            Application.Current.Resources.MergedDictionaries.Add((ResourceDictionary)Application.LoadComponent(
-            new Uri("/CrypWin;Component/Resources/Expander.xaml", UriKind.Relative)));
+                Application.Current.Resources.MergedDictionaries.Add((ResourceDictionary)Application.LoadComponent(
+                new Uri("/CrypWin;Component/Resources/Expander.xaml", UriKind.Relative)));
 
-            Application.Current.Resources.MergedDictionaries.Add((ResourceDictionary)Application.LoadComponent(
-            new Uri("/CrypWin;Component/Resources/ToggleButton.xaml", UriKind.Relative)));
-
+                Application.Current.Resources.MergedDictionaries.Add((ResourceDictionary)Application.LoadComponent(
+                new Uri("/CrypWin;Component/Resources/ToggleButton.xaml", UriKind.Relative)));
+                GuiLogMessage("Resources loaded", NotificationLevel.Debug);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception during loading of resources: {0}", ex.Message), NotificationLevel.Debug);
+            }
         }
 
         /// <summary>
@@ -1019,14 +1348,24 @@ namespace Cryptool.CrypWin
 
         private bool IsCommandParameterGiven(string parameter)
         {
-            string[] args = Environment.GetCommandLineArgs();
-            for (int i = 1; i < args.Length; i++)
+            try
             {
-                if (args[i].Equals(parameter, StringComparison.InvariantCultureIgnoreCase))
-                    return true;
-            }
+                string[] args = Environment.GetCommandLineArgs();
+                for (int i = 1; i < args.Length; i++)
+                {
+                    if (args[i].Equals(parameter, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
 
-            return false;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception during checking for command parameter: {0}", ex.Message), NotificationLevel.Error);
+                return false;
+            }
         }
 
         private string GetCommandParameter(string parameter)
@@ -2394,7 +2733,15 @@ namespace Cryptool.CrypWin
 
         private void RecentFileListChanged()
         {
-            RecentFileListChanged(recentFileList.GetRecentFiles());
+            try
+            {
+                RecentFileListChanged(recentFileList.GetRecentFiles());
+                GuiLogMessage("Called successfully RecentFileListChanged", NotificationLevel.Debug);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception occured in RecentFileListChanged: {0}", ex.Message), NotificationLevel.Error);
+            }
         }
 
         private void PluginSearchInputChanged(object sender, TextChangedEventArgs e)

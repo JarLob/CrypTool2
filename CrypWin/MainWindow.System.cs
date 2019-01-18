@@ -34,6 +34,7 @@ using Microsoft.Win32;
 using Trinet.Core.IO.Ntfs;
 using MessageBox = System.Windows.MessageBox;
 using PowerLineStatus = System.Windows.Forms.PowerLineStatus;
+using Cryptool.PluginBase.Attributes;
 
 namespace Cryptool.CrypWin
 {
@@ -145,97 +146,107 @@ namespace Cryptool.CrypWin
 
         private void CreateNotifyIcon()
         {
-            notifyIcon = new System.Windows.Forms.NotifyIcon();
-            notifyIcon.Text = "CrypTool 2";
-            notifyIcon.Icon = Properties.Resources.cryptool;
-            notifyIcon.Visible = true;
-
-            var notifyContextMenu = new System.Windows.Forms.ContextMenu();
-            notifyIcon.ContextMenu = notifyContextMenu;
-
-            var openMenuItem = new System.Windows.Forms.MenuItem(Properties.Resources._Open_CrypTool_2_0);
-            openMenuItem.Click += new EventHandler(notifyIcon_DoubleClick);
-
-            var normalPriority = new System.Windows.Forms.MenuItem(Properties.Resources._Normal_Priority);
-            normalPriority.Checked = true;
-            normalPriority.Click += new EventHandler(delegate
+            try
             {
-                Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Normal;
-            });
-            normalPriority.Tag = ProcessPriorityClass.Normal;
+                notifyIcon = new System.Windows.Forms.NotifyIcon();
+                notifyIcon.Text = "CrypTool 2";
+                notifyIcon.Icon = Properties.Resources.cryptool;
+                notifyIcon.Visible = true;
 
-            var idlePriority = new System.Windows.Forms.MenuItem(Properties.Resources._Idle_Priority);
-            idlePriority.Click += new EventHandler(delegate
-            {
-                Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Idle;
-            });
-            idlePriority.Tag = ProcessPriorityClass.Idle;
+                var notifyContextMenu = new System.Windows.Forms.ContextMenu();
+                notifyIcon.ContextMenu = notifyContextMenu;
 
-            var highPriority = new System.Windows.Forms.MenuItem(Properties.Resources._High_Priority);
-            highPriority.Click += new EventHandler(delegate
-            {
-                Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
-            });
-            highPriority.Tag = ProcessPriorityClass.High;
+                var openMenuItem = new System.Windows.Forms.MenuItem(Properties.Resources._Open_CrypTool_2_0);
+                openMenuItem.Click += new EventHandler(notifyIcon_DoubleClick);
 
-            var realtimePriority = new System.Windows.Forms.MenuItem(Properties.Resources._Realtime_Priority);
-            realtimePriority.Click += new EventHandler(delegate
-            {
-                Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.RealTime;
-            });
-            realtimePriority.Tag = ProcessPriorityClass.RealTime;
-
-            var belowNormalPriority = new System.Windows.Forms.MenuItem(Properties.Resources._Below_Normal_Priority);
-            belowNormalPriority.Click += new EventHandler(delegate
-            {
-                Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.BelowNormal;
-            });
-            belowNormalPriority.Tag = ProcessPriorityClass.BelowNormal;
-
-            var aboveNormalPriority = new System.Windows.Forms.MenuItem(Properties.Resources._Above_Normal_Priority);
-            aboveNormalPriority.Click += new EventHandler(delegate
-            {
-                Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.AboveNormal;
-            });
-            aboveNormalPriority.Tag = ProcessPriorityClass.AboveNormal;
-
-            var exitMenuItem = new System.Windows.Forms.MenuItem(Properties.Resources._Exit);
-            exitMenuItem.Click += new EventHandler(exitMenuItem_Click);
-
-            var priorityItems = new System.Windows.Forms.MenuItem(Properties.Resources.Change__Priority);
-
-            playStopMenuItem = new System.Windows.Forms.MenuItem();
-            playStopMenuItem.Click += new EventHandler(PlayStopMenuItemClicked);
-            playStopMenuItem.Text = "Play";
-            playStopMenuItem.Tag = true;
-
-            notifyContextMenu.MenuItems.Add(openMenuItem);
-            notifyContextMenu.MenuItems.Add("-");
-            notifyContextMenu.MenuItems.Add(playStopMenuItem);
-            notifyContextMenu.MenuItems.Add("-");
-            notifyContextMenu.MenuItems.Add(priorityItems);
-            notifyContextMenu.MenuItems.Add("-");
-            notifyContextMenu.MenuItems.Add(exitMenuItem);
-
-            priorityItems.MenuItems.Add(realtimePriority);
-            priorityItems.MenuItems.Add(highPriority);
-            priorityItems.MenuItems.Add(aboveNormalPriority);
-            priorityItems.MenuItems.Add(normalPriority);
-            priorityItems.MenuItems.Add(belowNormalPriority);
-            priorityItems.MenuItems.Add(idlePriority);
-
-            notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);
-
-            PriorityChangedListener.PriorityChanged += delegate(ProcessPriorityClass newPriority)
-            {
-                GuiLogMessage(string.Format("Changed CrypTool 2 process priority to '{0}'!", newPriority), NotificationLevel.Info);
-
-                foreach (System.Windows.Forms.MenuItem item in priorityItems.MenuItems)
+                var normalPriority = new System.Windows.Forms.MenuItem(Properties.Resources._Normal_Priority);
+                normalPriority.Checked = true;
+                normalPriority.Click += new EventHandler(delegate
                 {
-                    if (item.Tag != null && item.Tag is ProcessPriorityClass)
-                        item.Checked = ((ProcessPriorityClass)item.Tag == newPriority);
-                }
-            };
+                    Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Normal;
+                });
+                normalPriority.Tag = ProcessPriorityClass.Normal;
+
+                var idlePriority = new System.Windows.Forms.MenuItem(Properties.Resources._Idle_Priority);
+                idlePriority.Click += new EventHandler(delegate
+                {
+                    Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Idle;
+                });
+                idlePriority.Tag = ProcessPriorityClass.Idle;
+
+                var highPriority = new System.Windows.Forms.MenuItem(Properties.Resources._High_Priority);
+                highPriority.Click += new EventHandler(delegate
+                {
+                    Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
+                });
+                highPriority.Tag = ProcessPriorityClass.High;
+
+                var realtimePriority = new System.Windows.Forms.MenuItem(Properties.Resources._Realtime_Priority);
+                realtimePriority.Click += new EventHandler(delegate
+                {
+                    Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.RealTime;
+                });
+                realtimePriority.Tag = ProcessPriorityClass.RealTime;
+
+                var belowNormalPriority = new System.Windows.Forms.MenuItem(Properties.Resources._Below_Normal_Priority);
+                belowNormalPriority.Click += new EventHandler(delegate
+                {
+                    Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.BelowNormal;
+                });
+                belowNormalPriority.Tag = ProcessPriorityClass.BelowNormal;
+
+                var aboveNormalPriority = new System.Windows.Forms.MenuItem(Properties.Resources._Above_Normal_Priority);
+                aboveNormalPriority.Click += new EventHandler(delegate
+                {
+                    Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.AboveNormal;
+                });
+                aboveNormalPriority.Tag = ProcessPriorityClass.AboveNormal;
+
+                var exitMenuItem = new System.Windows.Forms.MenuItem(Properties.Resources._Exit);
+                exitMenuItem.Click += new EventHandler(exitMenuItem_Click);
+
+                var priorityItems = new System.Windows.Forms.MenuItem(Properties.Resources.Change__Priority);
+
+                playStopMenuItem = new System.Windows.Forms.MenuItem();
+                playStopMenuItem.Click += new EventHandler(PlayStopMenuItemClicked);
+                playStopMenuItem.Text = "Play";
+                playStopMenuItem.Tag = true;
+
+                notifyContextMenu.MenuItems.Add(openMenuItem);
+                notifyContextMenu.MenuItems.Add("-");
+                notifyContextMenu.MenuItems.Add(playStopMenuItem);
+                notifyContextMenu.MenuItems.Add("-");
+                notifyContextMenu.MenuItems.Add(priorityItems);
+                notifyContextMenu.MenuItems.Add("-");
+                notifyContextMenu.MenuItems.Add(exitMenuItem);
+
+                priorityItems.MenuItems.Add(realtimePriority);
+                priorityItems.MenuItems.Add(highPriority);
+                priorityItems.MenuItems.Add(aboveNormalPriority);
+                priorityItems.MenuItems.Add(normalPriority);
+                priorityItems.MenuItems.Add(belowNormalPriority);
+                priorityItems.MenuItems.Add(idlePriority);
+
+                notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);
+
+                PriorityChangedListener.PriorityChanged += delegate(ProcessPriorityClass newPriority)
+                {
+                    GuiLogMessage(string.Format("Changed CrypTool 2 process priority to '{0}'!", newPriority), NotificationLevel.Info);
+
+                    foreach (System.Windows.Forms.MenuItem item in priorityItems.MenuItems)
+                    {
+                        if (item.Tag != null && item.Tag is ProcessPriorityClass)
+                        {
+                            item.Checked = ((ProcessPriorityClass)item.Tag == newPriority);
+                        }
+                    }
+                };
+                GuiLogMessage("NotifiyIcon successfully created", NotificationLevel.Debug);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception occured during creation of NotifyIcon: {0}", ex.Message), NotificationLevel.Error);
+            }
         }
 
         #endregion
@@ -535,6 +546,10 @@ namespace Cryptool.CrypWin
         {
             try
             {
+                if (AssemblyHelper.InstallationType != Ct2InstallationType.ZIP)
+                {
+                    return;
+                }               
                 var files = Directory.EnumerateFiles(DirectoryHelper.BaseDirectory, "*", SearchOption.AllDirectories);
                 foreach (var file in files)
                 {
@@ -553,11 +568,11 @@ namespace Cryptool.CrypWin
                         FileSystem.DeleteAlternateDataStream(file, ZoneName);
                     }
                 }
+                GuiLogMessage("DLLs unblocked", NotificationLevel.Debug);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //If unblocking fails, there is a big chance that it isn't needed anyway.
-                //So do nothing.
+                GuiLogMessage("Exception during unblocking of DLLs. If everything works fine, exception can be ignored", NotificationLevel.Warning);
             }
         }
     }
