@@ -19,6 +19,9 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.PluginBase.IO;
 using System;
+using System.Windows.Threading;
+using System.Threading;
+using Cryptool.Plugins.FEAL.Properties;
 
 namespace Cryptool.Plugins.FEAL
 {
@@ -30,12 +33,18 @@ namespace Cryptool.Plugins.FEAL
         #region Private Variables
 
         private FEALSettings _FEALSettings = new FEALSettings();
+        private UserControl _presentation = new FEALPresentation();
+
         private byte[] _InputKey;
         private byte[] _InputIV;
         private ICryptoolStream _OutputStreamWriter;
         private ICryptoolStream _InputStream;
-        private bool _stop = false;        
+        
+        private bool _stop = false;
+        
         private delegate byte[] CryptoFunction(byte[] text, byte[] key);
+        
+        private byte[] _lastInputBlock = null; //needed for the visualization of the cipher; we only show the last encrypted/decrypted block
 
         #endregion
 
@@ -95,12 +104,61 @@ namespace Cryptool.Plugins.FEAL
 
         #endregion
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public FEAL()
+        {
+            _FEALSettings.PropertyChanged += _FEALSettings_PropertyChanged;
+            UpdatePresentation();
+        }
+
+        /// <summary>
+        /// Called, when a property of the settings changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _FEALSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            //shows the visualization of the selected FEAL algorithm type
+            if (e.PropertyName.Equals("FealAlgorithmType"))
+            {
+                UpdatePresentation();
+            }
+        }
+
+        /// <summary>
+        /// Updates the presentation by only showing the selected presentation
+        /// </summary>
+        private void UpdatePresentation()
+        {
+            FEALPresentation fealPresentation = (FEALPresentation)_presentation;
+
+            fealPresentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                try
+                {
+                    if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL4)
+                    {
+                        fealPresentation.ShowFEAL4Presentation();
+                    }
+                    else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL8)
+                    {
+                        fealPresentation.ShowFEAL8Presentation();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(String.Format("Exception occured during updating of visualization: {0}", ex.Message), NotificationLevel.Error);
+                }
+            }, null);        
+        }
+
         #region IPlugin Members
       
-     
         public UserControl Presentation
         {
-            get { return null; }
+            get { return _presentation; }
         }
 
         /// <summary>
@@ -116,7 +174,8 @@ namespace Cryptool.Plugins.FEAL
         public void Execute()
         {
             ProgressChanged(0, 1);
-
+            
+            _lastInputBlock = null;
             _OutputStreamWriter = null;
             _stop = false;
 
@@ -125,18 +184,18 @@ namespace Cryptool.Plugins.FEAL
             {
                 byte[] key = new byte[8];
                 Array.Copy(_InputKey, 0, key, 0, _InputKey.Length);
-                GuiLogMessage(String.Format("Key length = {0} is too short. Fill it with zeros to key length = 8",_InputKey.Length), NotificationLevel.Warning);
+                GuiLogMessage(String.Format(Resources.FEAL_Execute_Key_too_short,_InputKey.Length), NotificationLevel.Warning);
                 _InputKey = key;
             }
             if (_InputKey.Length > 8)
             {
                 byte[] key = new byte[8];
                 Array.Copy(_InputKey, 0, key, 0, 8);
-                GuiLogMessage(String.Format("Key length = {0} is too long. Cut it to key length = 8", _InputKey.Length), NotificationLevel.Warning);
+                GuiLogMessage(String.Format(Resources.FEAL_Execute_Key_too_long, _InputKey.Length), NotificationLevel.Warning);
                 _InputKey = key;
             }
 
-            //Select crypto function based on algorithm and action
+            //Select crypto function based on algorithm, blockmode, and action
             CryptoFunction cryptoFunction = null;
             if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL4 && _FEALSettings.BlockMode == BlockMode.CFB)
             {
@@ -172,6 +231,8 @@ namespace Cryptool.Plugins.FEAL
             }            
 
             //Check, if we found a crypto function that we can use
+            //this error should NEVER occur. Only in case someone adds functionality and misses
+            //to create a valid configuration
             if (cryptoFunction == null)
             {
                 GuiLogMessage("No crypto function could be selected based on your settings", NotificationLevel.Error);
@@ -207,7 +268,29 @@ namespace Cryptool.Plugins.FEAL
                     Execute_OFB(cryptoFunction);
                     break;               
             }
-            
+
+            if (_lastInputBlock != null)
+            {
+                FEALPresentation fealPresentation = (FEALPresentation) _presentation;
+                fealPresentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    try
+                    {
+                        if (_FEALSettings.Action == Action.Encrypt)
+                        {
+                            fealPresentation.VisualizeEncryptBlock(_lastInputBlock, _InputKey);
+                        }
+                        else
+                        {
+                            fealPresentation.VisualizeDecryptBlock(_lastInputBlock, _InputKey);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        GuiLogMessage(String.Format("Exception occured during building of visualization: {0}", ex.Message), NotificationLevel.Error);
+                    }
+                }, null);
+            }
             OnPropertyChanged("OutputStream");
 
             ProgressChanged(1, 1);
@@ -228,14 +311,14 @@ namespace Cryptool.Plugins.FEAL
             {
                 byte[] iv = new byte[8];
                 Array.Copy(_InputIV, 0, iv, 0, _InputIV.Length);
-                GuiLogMessage(String.Format("IV length = {0} is too short. Fill it with zeros to IV length = 8", _InputIV.Length), NotificationLevel.Warning);
+                GuiLogMessage(String.Format(Resources.FEAL_CheckIV_IV_too_short, _InputIV.Length), NotificationLevel.Warning);
                 _InputIV = iv;
             }
             if (_InputIV.Length > 8)
             {
                 byte[] iv = new byte[8];
                 Array.Copy(_InputIV, 0, iv, 0, 8);
-                GuiLogMessage(String.Format("IV length = {0} is too long. Cut it to IV length = 8", _InputIV.Length), NotificationLevel.Warning);
+                GuiLogMessage(String.Format(Resources.FEAL_CheckIV_IV_too_long, _InputIV.Length), NotificationLevel.Warning);
                 _InputIV = iv;
             }
         }
@@ -302,6 +385,8 @@ namespace Cryptool.Plugins.FEAL
                         if (outputblock != null)
                         {
                             writer.Write(outputblock, 0, outputblock.Length);
+                            //if we wrote to the stream, we memorize the last input block for the visualization
+                            _lastInputBlock = inputBlock;
                         }
                     }
 
@@ -396,6 +481,8 @@ namespace Cryptool.Plugins.FEAL
                         if (outputblock != null)
                         {
                             writer.Write(outputblock, 0, outputblock.Length);
+                            //if we wrote to the stream, we memorize the last input block for the visualization
+                            _lastInputBlock = inputBlock;
                         }
                     }
 
@@ -491,6 +578,8 @@ namespace Cryptool.Plugins.FEAL
                         if (outputblock != null)
                         {
                             writer.Write(outputblock, 0, outputblock.Length);
+                            //if we wrote to the stream, we memorize the last input block for the visualization
+                            _lastInputBlock = inputBlock;
                         }
                     }
 
@@ -586,6 +675,8 @@ namespace Cryptool.Plugins.FEAL
                         if (outputblock != null)
                         {
                             writer.Write(outputblock, 0, outputblock.Length);
+                            //if we wrote to the stream, we memorize the last input block for the visualization
+                            _lastInputBlock = inputBlock;
                         }
                     }
 
@@ -643,11 +734,20 @@ namespace Cryptool.Plugins.FEAL
             EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
         }
 
+        /// <summary>
+        /// Helper method to invoke property change event
+        /// </summary>
+        /// <param name="name"></param>
         private void OnPropertyChanged(string name)
         {
             EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
         }
 
+        /// <summary>
+        /// Helper method to invoke progress changed event
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="max"></param>
         private void ProgressChanged(double value, double max)
         {
             EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));

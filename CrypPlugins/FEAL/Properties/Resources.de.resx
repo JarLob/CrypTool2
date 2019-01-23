@@ -117,29 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FEAL_CheckIV_IV_too_long" xml:space="preserve">
+    <value>Die IV-Länge = {0} ist zu lang. Kürze ihn zu Länge = 8</value>
+  </data>
+  <data name="FEAL_CheckIV_IV_too_short" xml:space="preserve">
+    <value>Die IV-Länge = {0} ist zu kurz. Fülle ihn mit Nullen auf Länge = 8</value>
+  </data>
+  <data name="FEAL_Execute_Key_too_long" xml:space="preserve">
+    <value>Die Schlüssellänge = {0} ist zu lang. Kürze ihn zu Länge = 8</value>
+  </data>
+  <data name="FEAL_Execute_Key_too_short" xml:space="preserve">
+    <value>Die Schlüssellänge = {0} ist zu kurz. Fülle ihn mit Nullen auf Länge = 8</value>
+  </data>
   <data name="InputIVCaption" xml:space="preserve">
-    <value>Initialization vector</value>
+    <value>Initialisierungsvektor</value>
   </data>
   <data name="InputIVTooltip" xml:space="preserve">
-    <value>The initialization vector (IV) which is used in chaining modes. It must be the same as the blocksize.</value>
+    <value>Der Initialisierungsvektor (IV) der in den Blockmodi verwendet wird. Er muss die selbe größe wie die Blockgröße haben.</value>
   </data>
   <data name="InputKeyCaption" xml:space="preserve">
-    <value>Key</value>
+    <value>Schlüssel</value>
   </data>
   <data name="InputKeyTooltip" xml:space="preserve">
-    <value>The provided key should be 8 bytes. Too short or too long keys will be extended or truncated.</value>
+    <value>Der bereitgestellte Schlüssel sollte 8 Bytes lang sein. Zu kurze oder lange Schlüssel werden verlängert bzw. gekürzt.</value>
   </data>
   <data name="InputStreamCaption" xml:space="preserve">
-    <value>Input stream</value>
+    <value>Eingabestrom</value>
   </data>
   <data name="InputStreamTooltip" xml:space="preserve">
-    <value>Data to be encrypted or decrypted.</value>
+    <value>Daten die ver- oder entschlüsselt werden sollen.</value>
   </data>
   <data name="OutputStreamCaption" xml:space="preserve">
-    <value>Output stream</value>
+    <value>Ausgabestrom</value>
   </data>
   <data name="OutputStreamTooltip" xml:space="preserve">
-    <value>Encrypted or decrypted output data.</value>
+    <value>Ver- oder entschlüsselte Ausgabedaten.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>FEAL</value>
@@ -148,39 +160,27 @@
     <value>Fast Data Encipherment Algorithm</value>
   </data>
   <data name="Round1" xml:space="preserve">
-    <value>Round 1</value>
+    <value>Runde 1</value>
   </data>
   <data name="Round2" xml:space="preserve">
-    <value>Round 2</value>
+    <value>Runde 2</value>
   </data>
   <data name="Round3" xml:space="preserve">
-    <value>Round 3</value>
+    <value>Runde 3</value>
   </data>
   <data name="Round4" xml:space="preserve">
-    <value>Round 4</value>
+    <value>Runde 4</value>
   </data>
   <data name="Round5" xml:space="preserve">
-    <value>Round 5</value>
+    <value>Runde 5</value>
   </data>
   <data name="Round6" xml:space="preserve">
-    <value>Round 6</value>
+    <value>Runde 6</value>
   </data>
   <data name="Round7" xml:space="preserve">
-    <value>Round 7</value>
+    <value>Runde 7</value>
   </data>
   <data name="Round8" xml:space="preserve">
-    <value>Round 8</value>
-  </data>
-  <data name="FEAL_Execute_Key_too_short" xml:space="preserve">
-    <value>Key length = {0} is too short. Fill it with zeros to key length = 8</value>
-  </data>
-  <data name="FEAL_Execute_Key_too_long" xml:space="preserve">
-    <value>Key length = {0} is too long. Cut it to key length = 8</value>
-  </data>
-  <data name="FEAL_CheckIV_IV_too_short" xml:space="preserve">
-    <value>IV length = {0} is too short. Fill it with zeros to IV length = 8</value>
-  </data>
-  <data name="FEAL_CheckIV_IV_too_long" xml:space="preserve">
-    <value>IV length = {0} is too long. Cut it to IV length = 8</value>
+    <value>Runde 8</value>
   </data>
 </root>

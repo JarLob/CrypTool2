@@ -61,6 +61,42 @@ namespace Cryptool.Plugins.FEAL.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die IV length = {0} is too long. Cut it to IV length = 8 ähnelt.
+        /// </summary>
+        internal static string FEAL_CheckIV_IV_too_long {
+            get {
+                return ResourceManager.GetString("FEAL_CheckIV_IV_too_long", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die IV length = {0} is too short. Fill it with zeros to IV length = 8 ähnelt.
+        /// </summary>
+        internal static string FEAL_CheckIV_IV_too_short {
+            get {
+                return ResourceManager.GetString("FEAL_CheckIV_IV_too_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key length = {0} is too long. Cut it to key length = 8 ähnelt.
+        /// </summary>
+        internal static string FEAL_Execute_Key_too_long {
+            get {
+                return ResourceManager.GetString("FEAL_Execute_Key_too_long", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key length = {0} is too short. Fill it with zeros to key length = 8 ähnelt.
+        /// </summary>
+        internal static string FEAL_Execute_Key_too_short {
+            get {
+                return ResourceManager.GetString("FEAL_Execute_Key_too_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Initialization vector ähnelt.
         /// </summary>
         internal static string InputIVCaption {
@@ -88,7 +124,7 @@ namespace Cryptool.Plugins.FEAL.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The provided key should be 8 bytes. Too short/long keys will be extended/truncated! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The provided key should be 8 bytes. Too short or too long keys will be extended or truncated. ähnelt.
         /// </summary>
         internal static string InputKeyTooltip {
             get {
@@ -97,7 +133,7 @@ namespace Cryptool.Plugins.FEAL.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input stream ähnelt.
         /// </summary>
         internal static string InputStreamCaption {
             get {
@@ -106,7 +142,7 @@ namespace Cryptool.Plugins.FEAL.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Data to be encrypted or decrypted ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Data to be encrypted or decrypted. ähnelt.
         /// </summary>
         internal static string InputStreamTooltip {
             get {
@@ -124,7 +160,7 @@ namespace Cryptool.Plugins.FEAL.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Encrypted or decrypted output data ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Encrypted or decrypted output data. ähnelt.
         /// </summary>
         internal static string OutputStreamTooltip {
             get {
@@ -142,11 +178,83 @@ namespace Cryptool.Plugins.FEAL.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Fast Encipherment Algorithm ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Fast Data Encipherment Algorithm ähnelt.
         /// </summary>
         internal static string PluginTooltip {
             get {
                 return ResourceManager.GetString("PluginTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 1 ähnelt.
+        /// </summary>
+        internal static string Round1 {
+            get {
+                return ResourceManager.GetString("Round1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 2 ähnelt.
+        /// </summary>
+        internal static string Round2 {
+            get {
+                return ResourceManager.GetString("Round2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 3 ähnelt.
+        /// </summary>
+        internal static string Round3 {
+            get {
+                return ResourceManager.GetString("Round3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 4 ähnelt.
+        /// </summary>
+        internal static string Round4 {
+            get {
+                return ResourceManager.GetString("Round4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 5 ähnelt.
+        /// </summary>
+        internal static string Round5 {
+            get {
+                return ResourceManager.GetString("Round5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 6 ähnelt.
+        /// </summary>
+        internal static string Round6 {
+            get {
+                return ResourceManager.GetString("Round6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 7 ähnelt.
+        /// </summary>
+        internal static string Round7 {
+            get {
+                return ResourceManager.GetString("Round7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 8 ähnelt.
+        /// </summary>
+        internal static string Round8 {
+            get {
+                return ResourceManager.GetString("Round8", resourceCulture);
             }
         }
     }
