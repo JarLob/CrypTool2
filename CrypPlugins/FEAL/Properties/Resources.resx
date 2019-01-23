@@ -217,7 +217,7 @@
     <value>Output Feedback (OFB)</value>
   </data>
   <data name="BlockModeTooltip" xml:space="preserve">
-    <value>Select the block cipher mode of operation.</value>
+    <value>Selects the block cipher mode of operation.</value>
   </data>
   <data name="EnableKeyParityBitsCaption" xml:space="preserve">
     <value>Enable key parity bits</value>
@@ -247,6 +247,6 @@
     <value>1-0 padding</value>
   </data>
   <data name="PaddingTooltip" xml:space="preserve">
-    <value>Select a mode to fill partial data blocks.</value>
+    <value>Selects a mode to fill partial data blocks.</value>
   </data>
 </root>

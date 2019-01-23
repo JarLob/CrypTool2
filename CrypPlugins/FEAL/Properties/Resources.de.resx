@@ -151,7 +151,7 @@
     <value>Output Feedback (OFB)</value>
   </data>
   <data name="BlockModeTooltip" xml:space="preserve">
-    <value>Stell die Art der Blockverkettung ein.</value>
+    <value>Stellt die Art der Blockverkettung ein.</value>
   </data>
   <data name="EnableKeyParityBitsCaption" xml:space="preserve">
     <value>Aktiviere Schlüsselparitätsbits</value>

@@ -160,7 +160,7 @@ namespace Cryptool.Plugins.FEAL.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select the block cipher mode of operation. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Selects the block cipher mode of operation. ähnelt.
         /// </summary>
         internal static string BlockModeTooltip {
             get {
@@ -358,7 +358,7 @@ namespace Cryptool.Plugins.FEAL.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select a mode to fill partial data blocks. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Selects a mode to fill partial data blocks. ähnelt.
         /// </summary>
         internal static string PaddingTooltip {
             get {

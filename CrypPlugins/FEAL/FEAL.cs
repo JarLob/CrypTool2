@@ -275,7 +275,10 @@ namespace Cryptool.Plugins.FEAL
                 case BlockMode.OFB:
                     CheckIV();
                     Execute_OFB(cryptoFunction);
-                    break;               
+                    break;   
+                default:
+                    throw new NotImplementedException(String.Format("The mode {0} has not been implemented.", _FEALSettings.BlockMode));
+                    break;
             }
 
             if (_lastInputBlock != null)
@@ -310,12 +313,12 @@ namespace Cryptool.Plugins.FEAL
         /// </summary>
         private void CheckIV()
         {
-            //if no IV is give, we set it to an array with length 0
+            //if no IV is given, we set it to an array with length 0
             if (_InputIV == null)
             {
                 _InputIV = new byte[0];
             }
-            //Extend or cut key to length 8
+            //Extend or cut IV to length 8
             if (_InputIV.Length < 8)
             {
                 byte[] iv = new byte[8];
