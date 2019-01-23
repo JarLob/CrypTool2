@@ -117,6 +117,48 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActionCaption" xml:space="preserve">
+    <value>действие</value>
+  </data>
+  <data name="ActionList1" xml:space="preserve">
+    <value>шифровать</value>
+  </data>
+  <data name="ActionList2" xml:space="preserve">
+    <value>расшифровывать</value>
+  </data>
+  <data name="ActionTooltip" xml:space="preserve">
+    <value>Вы хотите, чтобы входные данные были зашифрованы или расшифрованы?</value>
+  </data>
+  <data name="AlgorithmTypeCaption" xml:space="preserve">
+    <value>Тип алгоритма</value>
+  </data>
+  <data name="AlgorithmTypeTooltip" xml:space="preserve">
+    <value>Устанавливает тип алгоритма FEAL.</value>
+  </data>
+  <data name="BlockModeCaption" xml:space="preserve">
+    <value>Режим цепочки</value>
+  </data>
+  <data name="BlockModeList1" xml:space="preserve">
+    <value>Electronic Code Book (ECB)</value>
+  </data>
+  <data name="BlockModeList2" xml:space="preserve">
+    <value>Cipher Block Chaining (CBC)</value>
+  </data>
+  <data name="BlockModeList3" xml:space="preserve">
+    <value>Cipher Feedback (CFB)</value>
+  </data>
+  <data name="BlockModeList4" xml:space="preserve">
+    <value>Output Feedback (OFB)</value>
+  </data>
+  <data name="BlockModeTooltip" xml:space="preserve">
+    <value>Выберите режим работы блочного шифра.</value>
+  </data>
+  <data name="EnableKeyParityBitsCaption" xml:space="preserve">
+    <value>Включить биты четности ключа</value>
+  </data>
+  <data name="EnableKeyParityBitsTooltio" xml:space="preserve">
+    <value>Если биты четности включены, каждый 8-й бит в ключе устанавливается на ноль.</value>
+  </data>
   <data name="FEAL_CheckIV_IV_too_long" xml:space="preserve">
     <value>Длина IV = {0} слишком длинная. Укоротить до длины = 8</value>
   </data>
@@ -152,6 +194,30 @@
   </data>
   <data name="OutputStreamTooltip" xml:space="preserve">
     <value>Зашифрованные или расшифрованные выходные данные.</value>
+  </data>
+  <data name="PaddingCaption" xml:space="preserve">
+    <value>Режим заполнения</value>
+  </data>
+  <data name="PaddingList1" xml:space="preserve">
+    <value>Никто</value>
+  </data>
+  <data name="PaddingList2" xml:space="preserve">
+    <value>нули</value>
+  </data>
+  <data name="PaddingList3" xml:space="preserve">
+    <value>PKCS7</value>
+  </data>
+  <data name="PaddingList4" xml:space="preserve">
+    <value>ANSIX923</value>
+  </data>
+  <data name="PaddingList5" xml:space="preserve">
+    <value>ISO10126</value>
+  </data>
+  <data name="PaddingList6" xml:space="preserve">
+    <value>1-0 обивка</value>
+  </data>
+  <data name="PaddingTooltip" xml:space="preserve">
+    <value>Выберите режим для заполнения частичных блоков данных.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>FEAL</value>

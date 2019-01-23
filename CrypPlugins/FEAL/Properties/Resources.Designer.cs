@@ -61,6 +61,132 @@ namespace Cryptool.Plugins.FEAL.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Action ähnelt.
+        /// </summary>
+        internal static string ActionCaption {
+            get {
+                return ResourceManager.GetString("ActionCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Encrypt ähnelt.
+        /// </summary>
+        internal static string ActionList1 {
+            get {
+                return ResourceManager.GetString("ActionList1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Decrypt ähnelt.
+        /// </summary>
+        internal static string ActionList2 {
+            get {
+                return ResourceManager.GetString("ActionList2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Do you want the input data to be encrypted or decrypted? ähnelt.
+        /// </summary>
+        internal static string ActionTooltip {
+            get {
+                return ResourceManager.GetString("ActionTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Algorithm type ähnelt.
+        /// </summary>
+        internal static string AlgorithmTypeCaption {
+            get {
+                return ResourceManager.GetString("AlgorithmTypeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sets the type of the FEAL algorithm. ähnelt.
+        /// </summary>
+        internal static string AlgorithmTypeTooltip {
+            get {
+                return ResourceManager.GetString("AlgorithmTypeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Chaining mode ähnelt.
+        /// </summary>
+        internal static string BlockModeCaption {
+            get {
+                return ResourceManager.GetString("BlockModeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Electronic Code Book (ECB) ähnelt.
+        /// </summary>
+        internal static string BlockModeList1 {
+            get {
+                return ResourceManager.GetString("BlockModeList1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher Block Chaining (CBC) ähnelt.
+        /// </summary>
+        internal static string BlockModeList2 {
+            get {
+                return ResourceManager.GetString("BlockModeList2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher Feedback (CFB) ähnelt.
+        /// </summary>
+        internal static string BlockModeList3 {
+            get {
+                return ResourceManager.GetString("BlockModeList3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output Feedback (OFB) ähnelt.
+        /// </summary>
+        internal static string BlockModeList4 {
+            get {
+                return ResourceManager.GetString("BlockModeList4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select the block cipher mode of operation. ähnelt.
+        /// </summary>
+        internal static string BlockModeTooltip {
+            get {
+                return ResourceManager.GetString("BlockModeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enable key parity bits ähnelt.
+        /// </summary>
+        internal static string EnableKeyParityBitsCaption {
+            get {
+                return ResourceManager.GetString("EnableKeyParityBitsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die If parity bits are enabled, each 8th bit in the key is set to zero. ähnelt.
+        /// </summary>
+        internal static string EnableKeyParityBitsTooltio {
+            get {
+                return ResourceManager.GetString("EnableKeyParityBitsTooltio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die IV length = {0} is too long. Cut it to IV length = 8 ähnelt.
         /// </summary>
         internal static string FEAL_CheckIV_IV_too_long {
@@ -124,7 +250,7 @@ namespace Cryptool.Plugins.FEAL.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The provided key should be 8 bytes. Too short or too long keys will be extended or truncated. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The provided key must be 8 bytes. Too short or too long keys will be extended or truncated. ähnelt.
         /// </summary>
         internal static string InputKeyTooltip {
             get {
@@ -160,11 +286,83 @@ namespace Cryptool.Plugins.FEAL.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Encrypted or decrypted output data. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This connector outputs encrypted or decrypted data. ähnelt.
         /// </summary>
         internal static string OutputStreamTooltip {
             get {
                 return ResourceManager.GetString("OutputStreamTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Padding mode ähnelt.
+        /// </summary>
+        internal static string PaddingCaption {
+            get {
+                return ResourceManager.GetString("PaddingCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die None ähnelt.
+        /// </summary>
+        internal static string PaddingList1 {
+            get {
+                return ResourceManager.GetString("PaddingList1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Zeros ähnelt.
+        /// </summary>
+        internal static string PaddingList2 {
+            get {
+                return ResourceManager.GetString("PaddingList2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die PKCS7 ähnelt.
+        /// </summary>
+        internal static string PaddingList3 {
+            get {
+                return ResourceManager.GetString("PaddingList3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ANSIX923 ähnelt.
+        /// </summary>
+        internal static string PaddingList4 {
+            get {
+                return ResourceManager.GetString("PaddingList4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ISO10126 ähnelt.
+        /// </summary>
+        internal static string PaddingList5 {
+            get {
+                return ResourceManager.GetString("PaddingList5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1-0 padding ähnelt.
+        /// </summary>
+        internal static string PaddingList6 {
+            get {
+                return ResourceManager.GetString("PaddingList6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select a mode to fill partial data blocks. ähnelt.
+        /// </summary>
+        internal static string PaddingTooltip {
+            get {
+                return ResourceManager.GetString("PaddingTooltip", resourceCulture);
             }
         }
         

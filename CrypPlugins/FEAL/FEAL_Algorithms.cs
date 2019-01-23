@@ -34,7 +34,8 @@ namespace Cryptool.Plugins.FEAL
     /// Test vector for standard FEAL8 rounds:
     ///  P = 00 00 00 00 00 00 00 00
     ///  K = 01 23 45 67 89 AB CD EF
-    ///  C = CE EF 2C 86 F2 49 07 52      
+    ///  C = CE EF 2C 86 F2 49 07 52   (without parity bits set in key)
+    ///  C = 6A 72 2D 1C 46 B3 93 36   (with parity bits set in key)
     /// </summary>
     public class FEAL_Algorithms
     {

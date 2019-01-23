@@ -49,6 +49,7 @@ namespace Cryptool.Plugins.FEAL
         private Action _action = Action.Encrypt;
         private BlockMode _blockMode = BlockMode.ECB;
         private BlockCipherHelper.PaddingType _padding = BlockCipherHelper.PaddingType.None;
+        private bool _enableKeyParityBits = false;
         #endregion
 
         #region TaskPane Settings
@@ -70,7 +71,7 @@ namespace Cryptool.Plugins.FEAL
         }
 
         [TaskPane("ActionCaption", "ActionTooltip", null, 2, false, ControlType.ComboBox,
-            new string[] {"Encrypt", "Decrypt"})]
+            new string[] {"ActionList1", "ActionList2"})]
         public Action Action
         {
             get { return _action; }
@@ -84,8 +85,22 @@ namespace Cryptool.Plugins.FEAL
             }
         }
 
-        [TaskPane("BlockModeCaption", "BlockModeTooltip", null, 3, false, ControlType.ComboBox,
-            new string[] {"ECB", "CBC", "CFB", "OFB"})]
+        [TaskPane("EnableKeyParityBitsCaption", "EnableKeyParityBitsTooltip", null, 3, false, ControlType.CheckBox)]
+        public bool EnableKeyParityBits
+        {
+            get { return _enableKeyParityBits; }
+            set
+            {
+                if (_enableKeyParityBits != value)
+                {
+                    _enableKeyParityBits = value;
+                    OnPropertyChanged("EnableKeyParityBits");
+                }
+            }
+        }
+
+        [TaskPane("BlockModeCaption", "BlockModeTooltip", null, 4, false, ControlType.ComboBox,
+            new string[] { "BlockModeList1", "BlockModeList2", "BlockModeList3", "BlockModeList4" })]
         public BlockMode BlockMode
         {
             get { return _blockMode; }
@@ -99,7 +114,7 @@ namespace Cryptool.Plugins.FEAL
             }
         }
 
-        [TaskPane("PaddingCaption", "PaddingTooltip", null, 4, false, ControlType.ComboBox, new string[] {"None", "Zeros", "PKCS7", "ANSIX932", "ISO10126", "OneZeros"})]
+        [TaskPane("PaddingCaption", "PaddingTooltip", null, 5, false, ControlType.ComboBox, new string[] { "PaddingList1", "PaddingList2", "PaddingList3", "PaddingList4", "PaddingList5", "PaddingList6" })]
         public BlockCipherHelper.PaddingType Padding
         {
             get { return _padding; }

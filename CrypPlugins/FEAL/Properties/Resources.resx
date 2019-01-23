@@ -127,7 +127,7 @@
     <value>Key</value>
   </data>
   <data name="InputKeyTooltip" xml:space="preserve">
-    <value>The provided key should be 8 bytes. Too short or too long keys will be extended or truncated.</value>
+    <value>The provided key must be 8 bytes. Too short or too long keys will be extended or truncated.</value>
   </data>
   <data name="InputStreamCaption" xml:space="preserve">
     <value>Input stream</value>
@@ -139,7 +139,7 @@
     <value>Output stream</value>
   </data>
   <data name="OutputStreamTooltip" xml:space="preserve">
-    <value>Encrypted or decrypted output data.</value>
+    <value>This connector outputs encrypted or decrypted data.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>FEAL</value>
@@ -182,5 +182,71 @@
   </data>
   <data name="FEAL_CheckIV_IV_too_long" xml:space="preserve">
     <value>IV length = {0} is too long. Cut it to IV length = 8</value>
+  </data>
+  <data name="ActionCaption" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="ActionList1" xml:space="preserve">
+    <value>Encrypt</value>
+  </data>
+  <data name="ActionList2" xml:space="preserve">
+    <value>Decrypt</value>
+  </data>
+  <data name="ActionTooltip" xml:space="preserve">
+    <value>Do you want the input data to be encrypted or decrypted?</value>
+  </data>
+  <data name="AlgorithmTypeCaption" xml:space="preserve">
+    <value>Algorithm type</value>
+  </data>
+  <data name="AlgorithmTypeTooltip" xml:space="preserve">
+    <value>Sets the type of the FEAL algorithm.</value>
+  </data>
+  <data name="BlockModeCaption" xml:space="preserve">
+    <value>Chaining mode</value>
+  </data>
+  <data name="BlockModeList1" xml:space="preserve">
+    <value>Electronic Code Book (ECB)</value>
+  </data>
+  <data name="BlockModeList2" xml:space="preserve">
+    <value>Cipher Block Chaining (CBC)</value>
+  </data>
+  <data name="BlockModeList3" xml:space="preserve">
+    <value>Cipher Feedback (CFB)</value>
+  </data>
+  <data name="BlockModeList4" xml:space="preserve">
+    <value>Output Feedback (OFB)</value>
+  </data>
+  <data name="BlockModeTooltip" xml:space="preserve">
+    <value>Select the block cipher mode of operation.</value>
+  </data>
+  <data name="EnableKeyParityBitsCaption" xml:space="preserve">
+    <value>Enable key parity bits</value>
+  </data>
+  <data name="EnableKeyParityBitsTooltio" xml:space="preserve">
+    <value>If parity bits are enabled, each 8th bit in the key is set to zero.</value>
+  </data>
+  <data name="PaddingCaption" xml:space="preserve">
+    <value>Padding mode</value>
+  </data>
+  <data name="PaddingList1" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="PaddingList2" xml:space="preserve">
+    <value>Zeros</value>
+  </data>
+  <data name="PaddingList3" xml:space="preserve">
+    <value>PKCS7</value>
+  </data>
+  <data name="PaddingList4" xml:space="preserve">
+    <value>ANSIX923</value>
+  </data>
+  <data name="PaddingList5" xml:space="preserve">
+    <value>ISO10126</value>
+  </data>
+  <data name="PaddingList6" xml:space="preserve">
+    <value>1-0 padding</value>
+  </data>
+  <data name="PaddingTooltip" xml:space="preserve">
+    <value>Select a mode to fill partial data blocks.</value>
   </data>
 </root>

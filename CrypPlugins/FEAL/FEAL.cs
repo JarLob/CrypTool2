@@ -250,6 +250,15 @@ namespace Cryptool.Plugins.FEAL
                 _InputStream = InputStream;
             }
 
+            //parity rule is: if parity is used, zero the least significant bit of each byte
+            if (_FEALSettings.EnableKeyParityBits == true)
+            {
+                for (int i = 0; i < _InputKey.Length; i++)
+                {
+                    _InputKey[i] = (byte)(_InputKey[i] & 254);
+                }
+            }
+
             switch (_FEALSettings.BlockMode)
             {
                 case BlockMode.ECB:
