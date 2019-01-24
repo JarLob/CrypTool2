@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4781E947-50B4-4E79-921C-05BF76AC3D3B}</ProjectGuid>
+    <ProjectGuid>{CC765107-4794-4ADD-9D87-6378D985C4BC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.ProcessExecutor</RootNamespace>
-    <AssemblyName>ProcessExecutor</AssemblyName>
+    <RootNamespace>Cryptool.PlayfairAnalyzer</RootNamespace>
+    <AssemblyName>PlayfairAnalyzer</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>false</SignAssembly>
@@ -100,6 +100,7 @@
     <Compile Include="AssignmentPresentation.xaml.cs">
       <DependentUpon>AssignmentPresentation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ct2Ipc.cs" />
     <Compile Include="Properties\Resources.de.Designer.cs">
       <DependentUpon>Resources.de.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -110,9 +111,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ProcessExecutor.cs" />
+    <Compile Include="PlayfairAnalyzer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProcessExecutorSettings.cs" />
+    <Compile Include="PlayfairAnalyzerSettings.cs" />
     <Compile Include="Properties\Resources.ru.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -150,9 +151,9 @@
       <Name>CrypPluginBase</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\LibSource\CT2IPC\CT2IPC.csproj">
-      <Project>{539863ec-3333-489f-a315-c1ec8340dd40}</Project>
-      <Name>CT2IPC</Name>
+    <ProjectReference Include="..\..\CrypToolStore\CrypToolStore.csproj">
+      <Project>{0182e69c-7f75-4b4f-953d-748d9a6d168e}</Project>
+      <Name>CrypToolStore</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
