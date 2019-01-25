@@ -70,24 +70,6 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Arguments ähnelt.
-        /// </summary>
-        public static string ArgumentsCaption {
-            get {
-                return ResourceManager.GetString("ArgumentsCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Arguments which should be given to the program. ähnelt.
-        /// </summary>
-        public static string ArgumentsTooltip {
-            get {
-                return ResourceManager.GetString("ArgumentsTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext ähnelt.
         /// </summary>
         public static string CiphertextCaption {
@@ -232,11 +214,29 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Best Key ähnelt.
+        /// </summary>
+        public static string KeyCaption {
+            get {
+                return ResourceManager.GetString("KeyCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Key ähnelt.
         /// </summary>
         public static string KeyHeader {
             get {
                 return ResourceManager.GetString("KeyHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The best key which was found during the analysis. ähnelt.
+        /// </summary>
+        public static string KeyTooltip {
+            get {
+                return ResourceManager.GetString("KeyTooltip", resourceCulture);
             }
         }
         
@@ -309,6 +309,24 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         public static string ResourceDirectoryTooltip {
             get {
                 return ResourceManager.GetString("ResourceDirectoryTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Score ähnelt.
+        /// </summary>
+        public static string ScoreCaption {
+            get {
+                return ResourceManager.GetString("ScoreCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The highest score value which was found during the analysis. ähnelt.
+        /// </summary>
+        public static string ScoreTooltip {
+            get {
+                return ResourceManager.GetString("ScoreTooltip", resourceCulture);
             }
         }
         
