@@ -25,6 +25,7 @@ using System.Collections.Concurrent;
 using Cryptool.Plugins.Ipc.Messages;
 using Google.Protobuf;
 using System.Windows.Threading;
+using Cryptool.PluginBase.IO;
 
 namespace Cryptool.PlayfairAnalyzer
 {
@@ -35,11 +36,7 @@ namespace Cryptool.PlayfairAnalyzer
     [PluginInfo("Cryptool.PlayfairAnalyzer.Properties.Resources", "PluginCaption", "PluginTooltip", "PlayfairAnalyzer/DetailedDescription/doc.xml", "PlayfairAnalyzer/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class PlayfairAnalyzer : ICrypComponent
-    {
-        //java.exe call and path to playfair jar file
-        private const string FILENAME = "java.exe";
-        private const string ARGUMENTS = "-jar ..\\Jars\\playfair.jar";
-
+    {    
         public event StatusChangedEventHandler OnPluginStatusChanged;
         public event PluginProgressChangedEventHandler OnPluginProgressChanged;
         public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
@@ -53,6 +50,8 @@ namespace Cryptool.PlayfairAnalyzer
         private Process _Process = null;      
 
         private string _Plaintext = null;
+        private string _Key = null;
+        private string _Score = null;
 
         private ConcurrentQueue<OutgoingData> _SendingQueue;
         private PlayfairAnalyzerSettings _settings = new PlayfairAnalyzerSettings();
@@ -97,6 +96,33 @@ namespace Cryptool.PlayfairAnalyzer
                 }
             }
         }
+
+        [PropertyInfo(Direction.OutputData, "KeyCaption", "KeyTooltip", false)]
+        public string Key
+        {
+            get { return _Key; }
+            set
+            {
+                if (!String.IsNullOrEmpty(value))
+                {
+                    _Key = value;
+                }
+            }
+        }
+
+        [PropertyInfo(Direction.OutputData, "ScoreCaption", "ScoreTooltip", false)]
+        public string Score
+        {
+            get { return _Score; }
+            set
+            {
+                if (!String.IsNullOrEmpty(value))
+                {
+                    _Score = value;
+                }
+            }
+        }
+
         public void PreExecution()
         {          
             //reset inputs, outputs, and sending queue
@@ -134,13 +160,13 @@ namespace Cryptool.PlayfairAnalyzer
             try
             {
                 // Step -1: Download and reference language statistics file
-                string filename = null;
+                string hexfilename = null;
                 switch(_settings.Language)
                 {
                     case Language.English:
                         // Current English file is Resource-1-1
-                        filename = CrypToolStore.ResourceHelper.GetResourceFile(1, 1, this);
-                        if (string.IsNullOrEmpty(filename))
+                        hexfilename = CrypToolStore.ResourceHelper.GetResourceFile(1, 1, this);
+                        if (string.IsNullOrEmpty(hexfilename))
                         {
                             GuiLogMessage("The Playfair Analyzer cannot work without English hexagram statistics. " +
                                           "Please download the statics first. " +
@@ -172,9 +198,10 @@ namespace Cryptool.PlayfairAnalyzer
                 }, null);
 
                 //Step 1: Create process                
+                string jarfilename = DirectoryHelper.BaseDirectory + @"\Jars\playfair.jar";                
                 _Process = new Process();
-                _Process.StartInfo.FileName = FILENAME;
-                _Process.StartInfo.Arguments = ARGUMENTS;
+                _Process.StartInfo.FileName = "java.exe";
+                _Process.StartInfo.Arguments = String.Format("-jar {0} -h {1}", jarfilename, hexfilename);
                 _Process.StartInfo.CreateNoWindow = true;
                 if (_settings.ShowWindow)
                 {
@@ -500,7 +527,15 @@ namespace Cryptool.PlayfairAnalyzer
                     case 1:
                         Plaintext = value;
                         OnPropertyChanged("Plaintext");
-                        break;                   
+                        break;
+                    case 2:
+                        Key = value;
+                        OnPropertyChanged("Key");
+                        break;
+                    case 3:
+                        Score = value;
+                        OnPropertyChanged("Score");
+                        break;
                     case 1000:
                         HandleIncomingBestList(value);
                         break;
