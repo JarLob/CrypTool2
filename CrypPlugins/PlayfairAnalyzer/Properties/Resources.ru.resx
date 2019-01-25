@@ -118,31 +118,43 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AlreadyExecuted" xml:space="preserve">
-    <value>«Исполнитель криптоаналитического процесса», уже выполненный во время этого запуска рабочей области. Пожалуйста, остановите и запустите рабочее пространство, чтобы перезапустить «Исполнитель криптоаналитического процесса»!</value>
+    <value>«Анализ Playfair» уже был запущен один раз. Перезапустите компонент Playfair Analyzse, приостановив и перезапустив рабочее пространство.</value>
+  </data>
+  <data name="CiphertextCaption" xml:space="preserve">
+    <value>шифротекста</value>
+  </data>
+  <data name="CiphertextTooltip" xml:space="preserve">
+    <value>Зашифрованный текст для анализа.</value>
   </data>
   <data name="Copy_all" xml:space="preserve">
-    <value>Скопировать все строки</value>
+    <value>Скопируйте все записи</value>
   </data>
   <data name="Copy_key" xml:space="preserve">
-    <value>Копировать ключ</value>
+    <value>Копировать ключи</value>
   </data>
   <data name="Copy_line" xml:space="preserve">
-    <value>Копировать выбранную строку</value>
+    <value>Скопировать выбранную запись</value>
   </data>
   <data name="Copy_text" xml:space="preserve">
-    <value>Копировать текст</value>
+    <value>Скопировать текст</value>
   </data>
   <data name="Copy_value" xml:space="preserve">
-    <value>Копировать значение</value>
+    <value>Стоимость копирования</value>
+  </data>
+  <data name="CribCaption" xml:space="preserve">
+    <value>Crib</value>
+  </data>
+  <data name="CribTooltip" xml:space="preserve">
+    <value>«Crib», которая используется в криптоанализе.</value>
   </data>
   <data name="CyclesCaption" xml:space="preserve">
     <value>циклы</value>
   </data>
   <data name="CyclesTooltip" xml:space="preserve">
-    <value>Сколько циклов допускается криптоанализ?</value>
+    <value>станавливает количество циклов криптоанализа, которые должны быть выполнены во время анализа.</value>
   </data>
   <data name="ElapsedLabel" xml:space="preserve">
-    <value>Пройденное время:</value>
+    <value>Прошлое время:</value>
   </data>
   <data name="EndLabel" xml:space="preserve">
     <value>Время окончания:</value>
@@ -150,46 +162,61 @@
   <data name="InfoHeader" xml:space="preserve">
     <value>информация</value>
   </data>
+  <data name="KeyCaption" xml:space="preserve">
+    <value>Лучший ключ</value>
+  </data>
   <data name="KeyHeader" xml:space="preserve">
     <value>ключ</value>
   </data>
-  <data name="LocalLabel" xml:space="preserve">
-    <value>Анализ</value>
+  <data name="KeyTooltip" xml:space="preserve">
+    <value>Лучший ключ, найденный во время анализа.</value>
   </data>
-  <data name="NoFilenameOrProgramGiven" xml:space="preserve">
-    <value>Нет Имя файла программы, чтобы начать дано!</value>
+  <data name="LocalLabel" xml:space="preserve">
+    <value>анализ</value>
+  </data>
+  <data name="PlaintextCaption" xml:space="preserve">
+    <value>Лучший текст</value>
+  </data>
+  <data name="PlaintextTooltip" xml:space="preserve">
+    <value>Лучший открытый текст, найденный во время анализа.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Исполнитель криптоаналитического процесса</value>
+    <value>Playfair анализ</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Компонент для запуска внешнего процесса и связи с ним.</value>
+    <value>Криптоанализ на основе Java шифра Playfair.</value>
   </data>
-  <data name="ResourceDirectoryCaption" xml:space="preserve">
-    <value>каталог ресурсов</value>
+  <data name="ScoreCaption" xml:space="preserve">
+    <value>себестоимость</value>
   </data>
-  <data name="ResourceDirectoryTooltip" xml:space="preserve">
-    <value>Каталог, содержащий файлы ресурсов (например, статистика языка)</value>
+  <data name="ScoreTooltip" xml:space="preserve">
+    <value>Наибольшее значение стоимости найдено во время анализа.</value>
+  </data>
+  <data name="ShowWindowCaption" xml:space="preserve">
+    <value>Показать окна</value>
+  </data>
+  <data name="ShowWindowTooltip" xml:space="preserve">
+    <value>Должно ли окно java программы отображаться во время анализа или нет?</value>
   </data>
   <data name="SpeedLabel" xml:space="preserve">
-    <value>Ключи / второй:</value>
+    <value>Ключ / второй:</value>
   </data>
   <data name="StartLabel" xml:space="preserve">
     <value>Время начала:</value>
   </data>
   <data name="TextHeader" xml:space="preserve">
-    <value>Текст</value>
+    <value>текст</value>
   </data>
   <data name="ThreadsCaption" xml:space="preserve">
     <value>Потоки</value>
   </data>
   <data name="ThreadsTooltip" xml:space="preserve">
-    <value>Сколько потоков может начаться для выполнения криптоанализа?</value>
+    <value>Сколько потоков должно быть запущено для криптоанализа?</value>
   </data>
   <data name="TopTenLabel" xml:space="preserve">
-    <value>Топ список</value>
+    <value>Bestlist</value>
   </data>
   <data name="ValueHeader" xml:space="preserve">
-    <value>Стоимость</value>
+    <value>себестоимость</value>
   </data>
 </root>

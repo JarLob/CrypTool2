@@ -187,24 +187,6 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Filename ähnelt.
-        /// </summary>
-        public static string FilenameCaption {
-            get {
-                return ResourceManager.GetString("FilenameCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Filename of program to start. ähnelt.
-        /// </summary>
-        public static string FilenameTooltip {
-            get {
-                return ResourceManager.GetString("FilenameTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Info ähnelt.
         /// </summary>
         public static string InfoHeader {
@@ -250,15 +232,6 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Filename of program to start is missing. ähnelt.
-        /// </summary>
-        public static string NoFilenameOrProgramGiven {
-            get {
-                return ResourceManager.GetString("NoFilenameOrProgramGiven", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Best Plaintext ähnelt.
         /// </summary>
         public static string PlaintextCaption {
@@ -295,24 +268,6 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Resource directory ähnelt.
-        /// </summary>
-        public static string ResourceDirectoryCaption {
-            get {
-                return ResourceManager.GetString("ResourceDirectoryCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Directory where resource files (e.g. language statistics) are located ähnelt.
-        /// </summary>
-        public static string ResourceDirectoryTooltip {
-            get {
-                return ResourceManager.GetString("ResourceDirectoryTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Score ähnelt.
         /// </summary>
         public static string ScoreCaption {
@@ -340,7 +295,7 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Should the program&apos;s window be shown or not? ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Should the java program&apos;s window be shown or not? ähnelt.
         /// </summary>
         public static string ShowWindowTooltip {
             get {

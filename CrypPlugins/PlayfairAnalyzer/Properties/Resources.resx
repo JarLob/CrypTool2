@@ -159,12 +159,6 @@
   <data name="EndLabel" xml:space="preserve">
     <value>End Time:</value>
   </data>
-  <data name="FilenameCaption" xml:space="preserve">
-    <value>Filename</value>
-  </data>
-  <data name="FilenameTooltip" xml:space="preserve">
-    <value>Filename of program to start.</value>
-  </data>
   <data name="InfoHeader" xml:space="preserve">
     <value>Info</value>
   </data>
@@ -180,9 +174,6 @@
   <data name="LocalLabel" xml:space="preserve">
     <value>Analysis</value>
   </data>
-  <data name="NoFilenameOrProgramGiven" xml:space="preserve">
-    <value>Filename of program to start is missing.</value>
-  </data>
   <data name="PlaintextCaption" xml:space="preserve">
     <value>Best Plaintext</value>
   </data>
@@ -195,12 +186,6 @@
   <data name="PluginTooltip" xml:space="preserve">
     <value>Java-based analysis tool to break short Playfair ciphers.</value>
   </data>
-  <data name="ResourceDirectoryCaption" xml:space="preserve">
-    <value>Resource directory</value>
-  </data>
-  <data name="ResourceDirectoryTooltip" xml:space="preserve">
-    <value>Directory where resource files (e.g. language statistics) are located</value>
-  </data>
   <data name="ScoreCaption" xml:space="preserve">
     <value>Score</value>
   </data>
@@ -211,7 +196,7 @@
     <value>Show window</value>
   </data>
   <data name="ShowWindowTooltip" xml:space="preserve">
-    <value>Should the program's window be shown or not?</value>
+    <value>Should the java program's window be shown or not?</value>
   </data>
   <data name="SpeedLabel" xml:space="preserve">
     <value>Keys/second:</value>
