@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{DEA133FC-42E5-4C93-A561-35E10D6C2ABD}</ProjectGuid>
+    <ProjectGuid>{CC765107-4794-4ADD-9D87-6378D985C4BC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Cryptool.Plugins.PlayfairAnalyzer</RootNamespace>
