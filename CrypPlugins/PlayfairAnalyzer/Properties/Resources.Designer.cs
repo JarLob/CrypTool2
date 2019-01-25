@@ -295,7 +295,7 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Should the java program&apos;s window be shown or not? ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Should the Java program&apos;s window be shown or not? ähnelt.
         /// </summary>
         public static string ShowWindowTooltip {
             get {

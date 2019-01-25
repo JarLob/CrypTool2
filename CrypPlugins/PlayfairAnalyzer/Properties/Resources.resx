@@ -196,7 +196,7 @@
     <value>Show window</value>
   </data>
   <data name="ShowWindowTooltip" xml:space="preserve">
-    <value>Should the java program's window be shown or not?</value>
+    <value>Should the Java program's window be shown or not?</value>
   </data>
   <data name="SpeedLabel" xml:space="preserve">
     <value>Keys/second:</value>

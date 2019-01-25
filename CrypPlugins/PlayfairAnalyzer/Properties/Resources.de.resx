@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AlreadyExecuted" xml:space="preserve">
-    <value>Die "Playfair Analyse" wurde bereits einmal gestartet. Starten Sie die Komponente "Playfair Analyzse" neu, indem sie den Arbeitsbereich anhalten und neustarten.</value>
+    <value>Die Komponente "Playfair Analyse" wurde bereits einmal gestartet. Starten Sie die Komponente neu, indem Sie den Arbeitsbereich anhalten und neu starten.</value>
   </data>
   <data name="CiphertextCaption" xml:space="preserve">
     <value>Geheimtext</value>
@@ -145,13 +145,13 @@
     <value>Crib</value>
   </data>
   <data name="CribTooltip" xml:space="preserve">
-    <value>Ein Crib, welcher bei der Kryptoanalyse genutzt wird.</value>
+    <value>Ein Crib, der bei der Kryptoanalyse genutzt wird.</value>
   </data>
   <data name="CyclesCaption" xml:space="preserve">
     <value>Zyklen</value>
   </data>
   <data name="CyclesTooltip" xml:space="preserve">
-    <value>Stellt die Anzahl der Kryptoanalysezyklen ein, welche während der Analyse ausgeführt werden.</value>
+    <value>Stellt die Anzahl ein, wie viele Zyklen während der Kryptoanalyse ausgeführt werden.</value>
   </data>
   <data name="ElapsedLabel" xml:space="preserve">
     <value>Vergangene Zeit:</value>
@@ -169,7 +169,7 @@
     <value>Schlüssel</value>
   </data>
   <data name="KeyTooltip" xml:space="preserve">
-    <value>Der beste Schlüssel, welcher während der Analyse gefunden wurde.</value>
+    <value>Der beste Schlüssel, der während der Analyse gefunden wurde.</value>
   </data>
   <data name="LocalLabel" xml:space="preserve">
     <value>Analyse</value>
@@ -178,10 +178,10 @@
     <value>Bester Klartext</value>
   </data>
   <data name="PlaintextTooltip" xml:space="preserve">
-    <value>Der beste Klartext, welcher während der Analyse gefunden wurde.</value>
+    <value>Der beste Klartext, der während der Analyse gefunden wurde.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Playfair Analyse</value>
+    <value>Playfair-Analyse</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Java-basierte Kryptoanalyse der Playfair-Chiffre.</value>
@@ -190,13 +190,13 @@
     <value>Kostenwert</value>
   </data>
   <data name="ScoreTooltip" xml:space="preserve">
-    <value>Der höchste Kostenwert, welcher während der Analyse gefunden wurde.</value>
+    <value>Der höchste Kostenwert, der während der Analyse gefunden wurde.</value>
   </data>
   <data name="ShowWindowCaption" xml:space="preserve">
     <value>Zeige Fenster</value>
   </data>
   <data name="ShowWindowTooltip" xml:space="preserve">
-    <value>Soll das Fenster des Javaprogramms während der Analyse gezeigt werden oder nicht?</value>
+    <value>Soll das Fenster des Java-Programms während der Analyse angezeigt werden oder nicht?</value>
   </data>
   <data name="SpeedLabel" xml:space="preserve">
     <value>Schlüssel/Sekunde:</value>
