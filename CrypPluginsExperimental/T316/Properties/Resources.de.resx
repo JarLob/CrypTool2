@@ -120,6 +120,9 @@
   <data name="ErrorEmptyConversion" xml:space="preserve">
     <value>Nachdem die Nachricht nach CCITT-2 konvertiert wurde, sind keine Zeichen für die Aktion übrig geblieben. (Die Nachricht besteht nur aus ungültigen Zeichen)</value>
   </data>
+  <data name="ErrorInputBlockLength" xml:space="preserve">
+    <value>Entschlüsselungsvorgang kann nicht gestartet werden; das eingegebene Chiffrat ({0} Byte) ist kein Vielfaches der LAMBDA1-Blocklänge {1}. Möglicherweise wurde das Eingabe-Chiffrat unabsichtlich abgeschnitten.</value>
+  </data>
   <data name="ErrorInputDataEmpty" xml:space="preserve">
     <value>Keine Eingabedaten vorhanden. Die Länge der Eingabedaten ist {0}</value>
   </data>
@@ -137,6 +140,18 @@
   </data>
   <data name="ErrorKeyOverlength" xml:space="preserve">
     <value>Der eingegebene Schlüssel ist zu kurz ({0} Byte). Es wird ein Schlüssel der Länge  {1} Bytes benötigt. Die überzähligen Bytes werden abgeschnitten.</value>
+  </data>
+  <data name="ErrorUnconvertableBeginningPlural" xml:space="preserve">
+    <value>Es waren {0} nicht konvertierbare Zeichen in den Eingabedaten</value>
+  </data>
+  <data name="ErrorUnconvertableBeginningSingular" xml:space="preserve">
+    <value>Es war {0} nicht konvertierbares Zeichen in den Eingabedaten</value>
+  </data>
+  <data name="ErrorUnconvertableEndPlural" xml:space="preserve">
+    <value>; sie wurden vor dem Verschlüsseln entfernt.</value>
+  </data>
+  <data name="ErrorUnconvertableEndSingular" xml:space="preserve">
+    <value>; es wurde vor dem Verschlüsseln entfernt.</value>
   </data>
   <data name="InputData" xml:space="preserve">
     <value>Eingabedaten</value>

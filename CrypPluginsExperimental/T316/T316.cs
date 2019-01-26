@@ -27,7 +27,7 @@ using Cryptool.PluginBase.Miscellaneous;
 namespace Cryptool.Plugins.T316
 {
     [Author("Michael Altenhuber", "michael@altenhuber.net", "CrypTool 2 Team", "http://cryptool2.vs.uni-due.de")]
-    [PluginInfo("Properties.Resources", "PluginCaption", "PluginTooltip", "T316/userdoc.xml", "T316/images/contact.png")]
+    [PluginInfo("Cryptool.Plugins.T316.Properties.Resources", "PluginCaption", "PluginTooltip", "T316/userdoc.xml", "T316/images/t316_icon.png")]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class T316 : ICrypComponent
     {
@@ -358,13 +358,13 @@ namespace Cryptool.Plugins.T316
             byte[] oldBlock = new byte[Lambda1.BlockSize];
             byte[] currentBlock = new byte[Lambda1.BlockSize];
 
-            Array.Copy(InputData, oldBlock, Lambda1.BlockSize);
-
             if (InputData.Length % Lambda1.BlockSize != 0)
             {
-                GuiLogMessage("Input is not a multiple of block length", NotificationLevel.Error);
+                GuiLogMessage(String.Format(Properties.Resources.ErrorInputBlockLength, InputData.Length, Lambda1.BlockSize), NotificationLevel.Error);
                 return;
             }
+
+            Array.Copy(InputData, oldBlock, Lambda1.BlockSize);
 
             // Decryption Loop with CBC mode
             for (int i = Lambda1.BlockSize; i < InputData.Length && !stopPressed; i += Lambda1.BlockSize)
@@ -573,7 +573,6 @@ namespace Cryptool.Plugins.T316
                 paddedCharacters = new byte[characters.Length + (4 - (characters.Length % 4))];
                 int len1 = paddedCharacters.Length - (4 - (characters.Length % 4));
                 int len2 = 4 - (characters.Length % 4);
-                //Array.Copy(charPadding, 0, paddedCharacters, paddedCharacters.Length -  (characters.Length % 4), 4 - ((characters.Length % 4) - 1));
                 Array.Copy(charPadding, 0, paddedCharacters, len1, len2);
                 Array.Copy(characters, paddedCharacters, characters.Length);
             }
@@ -700,8 +699,8 @@ namespace Cryptool.Plugins.T316
         private void handleInvalidCharacters(byte[] invalidCharacters)
         {
             string truncatedMessage = invalidCharacters.Length == 1 ?
-                           "" ://string.Format(T316.Properties.Resources.ErrorUnconvertableBeginningSingular, invalidCharacters.Length) :
-                           "";//string.Format(T316.Properties.Resources.ErrorUnconvertableBeginningPlural, invalidCharacters.Length);
+                           string.Format(Properties.Resources.ErrorUnconvertableBeginningSingular, invalidCharacters.Length) :
+                           string.Format(Properties.Resources.ErrorUnconvertableBeginningPlural, invalidCharacters.Length);
 
             //we will only print the non-convertable characters if there are less than 10
             if (invalidCharacters.Length <= 10)
@@ -714,8 +713,8 @@ namespace Cryptool.Plugins.T316
                 truncatedMessage = truncatedMessage.Remove(truncatedMessage.Length - 2);
             }
             truncatedMessage += invalidCharacters.Length == 1 ?
-                "" ://T_310.Properties.Resources.ErrorUnconvertableEndSingular :
-                "";//T_310.Properties.Resources.ErrorUnconvertableEndPlural;
+                Properties.Resources.ErrorUnconvertableEndSingular :
+                Properties.Resources.ErrorUnconvertableEndPlural;
 
             GuiLogMessage(truncatedMessage, NotificationLevel.Warning);
         }

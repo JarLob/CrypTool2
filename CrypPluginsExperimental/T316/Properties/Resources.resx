@@ -120,6 +120,9 @@
   <data name="ErrorEmptyConversion" xml:space="preserve">
     <value>After converting the message into CCITT-2 character encoding, no characters of the messages were left. (The message consists completely of invalid characters)</value>
   </data>
+  <data name="ErrorInputBlockLength" xml:space="preserve">
+    <value>Could not start decrypting; the ciphertext input ({0} bytes) is not a multiple of the LAMBDA1 block length {1}. Check if you copied all bytes from the encryption process.</value>
+  </data>
   <data name="ErrorInputDataEmpty" xml:space="preserve">
     <value>No data provided. The length is {0}.</value>
   </data>
@@ -137,6 +140,18 @@
   </data>
   <data name="ErrorKeyOverlength" xml:space="preserve">
     <value>The given key is too long ({0} bytes). The required key length is {1}. Exceeding bytes will be truncated.</value>
+  </data>
+  <data name="ErrorUnconvertableBeginningPlural" xml:space="preserve">
+    <value>There were {0} unconvertable characters in the given message</value>
+  </data>
+  <data name="ErrorUnconvertableBeginningSingular" xml:space="preserve">
+    <value>There was {0} unconvertable character in the given message</value>
+  </data>
+  <data name="ErrorUnconvertableEndPlural" xml:space="preserve">
+    <value>; they were truncated before encrypting.</value>
+  </data>
+  <data name="ErrorUnconvertableEndSingular" xml:space="preserve">
+    <value>; it was truncated before encrypting.</value>
   </data>
   <data name="InputData" xml:space="preserve">
     <value>Input data</value>

@@ -70,6 +70,15 @@ namespace Cryptool.Plugins.T316.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not start decrypting; the ciphertext input ({0} bytes) is not a multiple of the LAMBDA1 block length {1}. Check if you copied all bytes from the encryption process..
+        /// </summary>
+        internal static string ErrorInputBlockLength {
+            get {
+                return ResourceManager.GetString("ErrorInputBlockLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No data provided. The length is {0}..
         /// </summary>
         internal static string ErrorInputDataEmpty {
@@ -120,6 +129,42 @@ namespace Cryptool.Plugins.T316.Properties {
         internal static string ErrorKeyOverlength {
             get {
                 return ResourceManager.GetString("ErrorKeyOverlength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There were {0} unconvertable characters in the given message.
+        /// </summary>
+        internal static string ErrorUnconvertableBeginningPlural {
+            get {
+                return ResourceManager.GetString("ErrorUnconvertableBeginningPlural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was {0} unconvertable character in the given message.
+        /// </summary>
+        internal static string ErrorUnconvertableBeginningSingular {
+            get {
+                return ResourceManager.GetString("ErrorUnconvertableBeginningSingular", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ; they were truncated before encrypting..
+        /// </summary>
+        internal static string ErrorUnconvertableEndPlural {
+            get {
+                return ResourceManager.GetString("ErrorUnconvertableEndPlural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ; it was truncated before encrypting..
+        /// </summary>
+        internal static string ErrorUnconvertableEndSingular {
+            get {
+                return ResourceManager.GetString("ErrorUnconvertableEndSingular", resourceCulture);
             }
         }
         
