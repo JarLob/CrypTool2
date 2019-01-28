@@ -202,7 +202,7 @@ namespace Cryptool.PlayfairAnalyzer
                 _Process = new Process();
                 _Process.StartInfo.WorkingDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CrypTool2");
                 _Process.StartInfo.FileName = "java.exe";
-                _Process.StartInfo.Arguments = String.Format("-jar {0} -h {1}", jarfilename, hexfilename);
+                _Process.StartInfo.Arguments = String.Format("-jar \"{0}\" -h \"{1}\"", jarfilename, hexfilename);
                 _Process.StartInfo.CreateNoWindow = true;
                 if (_settings.ShowWindow)
                 {
