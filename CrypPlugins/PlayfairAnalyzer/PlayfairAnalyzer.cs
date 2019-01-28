@@ -198,8 +198,9 @@ namespace Cryptool.PlayfairAnalyzer
                 }, null);
 
                 //Step 1: Create process                
-                string jarfilename = DirectoryHelper.BaseDirectory + @"\Jars\playfair.jar";                
+                string jarfilename = DirectoryHelper.BaseDirectory + @"\Jars\playfair.jar";                                
                 _Process = new Process();
+                _Process.StartInfo.WorkingDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CrypTool2");
                 _Process.StartInfo.FileName = "java.exe";
                 _Process.StartInfo.Arguments = String.Format("-jar {0} -h {1}", jarfilename, hexfilename);
                 _Process.StartInfo.CreateNoWindow = true;
@@ -211,6 +212,8 @@ namespace Cryptool.PlayfairAnalyzer
                 {
                     _Process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 }
+
+                GuiLogMessage(String.Format("Starting now {0} {1}", _Process.StartInfo.FileName, _Process.StartInfo.Arguments), NotificationLevel.Debug);
 
                 if (!_Process.Start())
                 {
