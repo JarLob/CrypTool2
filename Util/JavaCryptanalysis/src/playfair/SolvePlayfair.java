@@ -45,8 +45,8 @@ public class SolvePlayfair {
                     if (currentScore > bestScore) {
                         bestScore = currentScore;
                         bestKey.copy(currentKey);
-                        bestKey.alignAlphabet();
                         bestKey.decrypt();
+                        bestKey.alignAlphabet();
                     }
 
                 }

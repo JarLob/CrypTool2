@@ -136,7 +136,7 @@ public class Main {
 
 
 
-            int[] sentence = Utils.readRandomSentenceFromFile(RESOURCE_PATH + "/" + "shakespeare.txt", "", 8, true);
+            int[] sentence = Utils.readRandomSentenceFromFile(RESOURCE_PATH + "/" + "shakespeare.txt", "", 14, true);
             simulationKey.keyFromSentence(sentence);
             System.out.println(simulationKey);
             plainText = Utils.readRandomSentenceFromFile(RESOURCE_PATH + "/" + "shakespeare.txt", CRIB, SIMULATION_TEXT_LENGTH, true);
