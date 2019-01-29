@@ -227,7 +227,7 @@ public class Utils {
                             s.append(c);
                         }
                     } else if (c == '.' || c == ';' || c == ':'|| c == '\"') {
-                        if (s.length() >= 6 && s.length() <= 200 && s.charAt(0) >= 'A' && s.charAt(0) <= 'Z') {
+                        if (s.length() >= 6 && s.length() <= 1000 && s.charAt(0) >= 'A' && s.charAt(0) <= 'Z') {
                             String clean = prefix + s.toString().replaceAll(" ", "").toUpperCase();
 
                             if (clean.length() == length && (!playfair || !clean.contains("J"))) {
