@@ -119,7 +119,7 @@ class HCRunnable implements Runnable {
                     //ckey.assertStbSelfAndCount( vi, vsi, vk, vsk);
 
                     //ckey.swap(vi, vk);
-                    ckey.stbMatch(vi, vk);
+                    ckey.stbConnect(vi, vk);
 
                     newScore = ckey.eval(eval, ciphertext, len);
                     if (newScore > bestScore) {
@@ -128,7 +128,7 @@ class HCRunnable implements Runnable {
                     }
                     if (action == SearchAction.NO_CHANGE) {
                         //ckey.swap(vi, vk);
-                        ckey.stbSelf(vi, vk);
+                        ckey.stbDisconnect(vi, vk);
                         //ckey.assertStbSelfAndCount( vi, vsi, vk, vsk);
                     }
 
@@ -142,13 +142,13 @@ class HCRunnable implements Runnable {
                     }
 
                     //ckey.swap(vk, vsk);
-                    ckey.stbSelf(vk, vsk);
+                    ckey.stbDisconnect(vk, vsk);
 
                     //all self
                     //ckey.assertStbSelfAndCount( vi, vsi, vk, vsk);
 
                     //ckey.swap(vi, vk);
-                    ckey.stbMatch(vi, vk);
+                    ckey.stbConnect(vi, vk);
 
                     newScore = ckey.eval(eval, ciphertext, len);
                     if (newScore > bestScore) {
@@ -156,12 +156,12 @@ class HCRunnable implements Runnable {
                         action = SearchAction.IandK;
                     }
                     //ckey.swap(vi, vk);
-                    ckey.stbSelf(vi, vk);
+                    ckey.stbDisconnect(vi, vk);
                     // all self
                     //ckey.assertStbSelfAndCount( vi, vsi, vk, vsk);
 
                     //ckey.swap(vi, vsk);
-                    ckey.stbMatch(vi, vsk);
+                    ckey.stbConnect(vi, vsk);
 
                     newScore = ckey.eval(eval, ciphertext, len);
                     if (newScore > bestScore) {
@@ -169,22 +169,22 @@ class HCRunnable implements Runnable {
                         action = SearchAction.IandSK;
                     }
                     //ckey.swap(vi, vsk);
-                    ckey.stbSelf(vi, vsk);
+                    ckey.stbDisconnect(vi, vsk);
                     // all self now
                     //ckey.assertStbSelfAndCount( vi, vsi, vk, vsk);
 
                     switch (action) {
                         case IandK:
                             //ckey.swap(vi, vk);
-                            ckey.stbMatch(vi, vk);
+                            ckey.stbConnect(vi, vk);
                             break;
                         case IandSK:
                             //ckey.swap(vi, vsk);
-                            ckey.stbMatch(vi, vsk);
+                            ckey.stbConnect(vi, vsk);
                             break;
                         case NO_CHANGE:
                             //ckey.swap(vk, vsk);
-                            ckey.stbMatch(vk, vsk);
+                            ckey.stbConnect(vk, vsk);
                             break;
                         default:
                             break;
@@ -198,12 +198,12 @@ class HCRunnable implements Runnable {
                         continue;
                     }
                     //ckey.swap(vi, vsi);
-                    ckey.stbSelf(vi, vsi);
+                    ckey.stbDisconnect(vi, vsi);
                     // all self
                     //ckey.assertStbSelfAndCount( vi, vsi, vk, vsk);
 
                     //ckey.swap(vk, vi);
-                    ckey.stbMatch(vk, vi);
+                    ckey.stbConnect(vk, vi);
 
                     newScore = ckey.eval(eval, ciphertext, len);
                     if (newScore > bestScore) {
@@ -211,13 +211,13 @@ class HCRunnable implements Runnable {
                         action = SearchAction.IandK;
                     }
                     //ckey.swap(vk, vi);
-                    ckey.stbSelf(vk, vi);
+                    ckey.stbDisconnect(vk, vi);
 
                     // all self
                     //ckey.assertStbSelfAndCount( vi, vsi, vk, vsk);
 
                     //ckey.swap(vk, vsi);
-                    ckey.stbMatch(vk, vsi);
+                    ckey.stbConnect(vk, vsi);
 
                     newScore = ckey.eval(eval, ciphertext, len);
                     if (newScore > bestScore) {
@@ -225,22 +225,22 @@ class HCRunnable implements Runnable {
                         action = SearchAction.KandSI;
                     }
                     //ckey.swap(vk, vsi);
-                    ckey.stbSelf(vk, vsi);
+                    ckey.stbDisconnect(vk, vsi);
                     // all self
                     //ckey.assertStbSelfAndCount( vi, vsi, vk, vsk);
 
                     switch (action) {
                         case IandK:
                             //ckey.swap(vi, vk);
-                            ckey.stbMatch(vi, vk);
+                            ckey.stbConnect(vi, vk);
                             break;
                         case KandSI:
                             //ckey.swap(vk, vsi);
-                            ckey.stbMatch(vk, vsi);
+                            ckey.stbConnect(vk, vsi);
                             break;
                         case NO_CHANGE:
                             //ckey.swap(vi, vsi);
-                            ckey.stbMatch(vi, vsi);
+                            ckey.stbConnect(vi, vsi);
                             break;
                         default:
                             break;
@@ -254,26 +254,26 @@ class HCRunnable implements Runnable {
                     }
 
                     //ckey.swap(vi, vsi);
-                    ckey.stbSelf(vi, vsi);
+                    ckey.stbDisconnect(vi, vsi);
 
                     //ckey.swap(vk, vsk);
-                    ckey.stbSelf(vk, vsk);
+                    ckey.stbDisconnect(vk, vsk);
 
                     // all Self now
                     //ckey.assertStbSelfAndCount( vi, vsi, vk, vsk);
 
 
                     //ckey.swap(vi, vsi);
-                    ckey.stbMatch(vi, vsi);
+                    ckey.stbConnect(vi, vsi);
 
                     //ckey.swap(vi, vsi);
-                    ckey.stbSelf(vi, vsi);
+                    ckey.stbDisconnect(vi, vsi);
 
                     // all Self now
                     //ckey.assertStbSelfAndCount( vi, vsi, vk, vsk);
 
                     //ckey.swap(vi, vk);
-                    ckey.stbMatch(vi, vk);
+                    ckey.stbConnect(vi, vk);
 
                     newScore = ckey.eval(eval, ciphertext, len);
                     if (newScore > bestScore) {
@@ -281,7 +281,7 @@ class HCRunnable implements Runnable {
                         action = SearchAction.IandK;
                     }
                     //ckey.swap(vsi, vsk);
-                    ckey.stbMatch(vsi, vsk);
+                    ckey.stbConnect(vsi, vsk);
 
                     newScore = ckey.eval(eval, ciphertext, len);
                     if (newScore > bestScore) {
@@ -289,17 +289,17 @@ class HCRunnable implements Runnable {
                         action = SearchAction.IandK_SIandSK;
                     }
                     //ckey.swap(vi, vk);
-                    ckey.stbSelf(vi, vk);
+                    ckey.stbDisconnect(vi, vk);
 
                     //ckey.swap(vsi, vsk);
-                    ckey.stbSelf(vsi, vsk);
+                    ckey.stbDisconnect(vsi, vsk);
 
                     // all Self now
                     //ckey.assertStbSelfAndCount( vi, vsi, vk, vsk);
 
 
                     //ckey.swap(vi, vsk);
-                    ckey.stbMatch(vi, vsk);
+                    ckey.stbConnect(vi, vsk);
 
 
                     newScore = ckey.eval(eval, ciphertext, len);
@@ -308,7 +308,7 @@ class HCRunnable implements Runnable {
                         action = SearchAction.IandSK;
                     }
                     //ckey.swap(vsi, vk);
-                    ckey.stbMatch(vsi, vk);
+                    ckey.stbConnect(vsi, vk);
 
 
                     newScore = ckey.eval(eval, ciphertext, len);
@@ -317,10 +317,10 @@ class HCRunnable implements Runnable {
                         action = SearchAction.IandSK_KandSI;
                     }
                     //ckey.swap(vi, vsk);
-                    ckey.stbSelf(vi, vsk);
+                    ckey.stbDisconnect(vi, vsk);
 
                     //ckey.swap(vsi, vk);
-                    ckey.stbSelf(vsi, vk);
+                    ckey.stbDisconnect(vsi, vk);
 
                     // all Self now
                     //ckey.assertStbSelfAndCount( vi, vsi, vk, vsk);
@@ -330,29 +330,29 @@ class HCRunnable implements Runnable {
 
                         case IandK:
                             //ckey.swap(vi, vk);
-                            ckey.stbMatch(vi, vk);
+                            ckey.stbConnect(vi, vk);
                             break;
                         case IandSK:
                             //ckey.swap(vi, vsk);
-                            ckey.stbMatch(vi, vsk);
+                            ckey.stbConnect(vi, vsk);
                             break;
                         case IandK_SIandSK:
                             //ckey.swap(vi, vk);
                             //ckey.swap(vsi, vsk);
-                            ckey.stbMatch(vi, vk);
-                            ckey.stbMatch(vsi, vsk);
+                            ckey.stbConnect(vi, vk);
+                            ckey.stbConnect(vsi, vsk);
                             break;
                         case IandSK_KandSI:
                             //ckey.swap(vi, vsk);
                             //ckey.swap(vsi, vk);
-                            ckey.stbMatch(vi, vsk);
-                            ckey.stbMatch(vsi, vk);
+                            ckey.stbConnect(vi, vsk);
+                            ckey.stbConnect(vsi, vk);
                             break;
                         case NO_CHANGE:
                             //ckey.swap(vi, vsi);
                             //ckey.swap(vk, vsk);
-                            ckey.stbMatch(vi, vsi);
-                            ckey.stbMatch(vk, vsk);
+                            ckey.stbConnect(vi, vsi);
+                            ckey.stbConnect(vk, vsk);
                             break;
                         default:
                             break;
@@ -420,7 +420,7 @@ class HCRunnable implements Runnable {
                         continue;
                     }
 
-                    ckey.stbMatch(vi, vk);
+                    ckey.stbConnect(vi, vk);
                     score = ckey.eval(eval, ciphertext, len);
                     if (score - bestScore > 0) {
 
@@ -431,13 +431,13 @@ class HCRunnable implements Runnable {
                         bvk = vk;
 
                     }
-                    ckey.stbSelf(vi, vk);
+                    ckey.stbDisconnect(vi, vk);
 
                 }
             }
             switch (baction) {
                 case IandK:
-                    ckey.stbMatch(bvi, bvk);
+                    ckey.stbConnect(bvi, bvk);
                     break;
                 case NO_CHANGE:
                     break;

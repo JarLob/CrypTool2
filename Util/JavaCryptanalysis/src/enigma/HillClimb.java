@@ -6,6 +6,7 @@ import common.Runnables;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 
 class HillClimb {
@@ -24,8 +25,12 @@ class HillClimb {
         Key low = new Key(from);
         Key high = new Key(to);
 
-        if ((low.lRing != high.lRing || low.mRing != high.mRing || low.rRing != high.rRing) && mode == HcSaRunnable.Mode.SA) {
-            CtAPI.goodbyeFatalError("Range of ring settings not allowed for simulated annealing. %s - %s", from.getRotorSettingsString(), to.getRotorSettingsString());
+        if (low.lRing != high.lRing && mode == HcSaRunnable.Mode.SA) {
+            //CtAPI.goodbyeFatalError("Range of left ring settings not allowed for simulated annealing. %s - %s", from.getRotorSettingsString(), to.getRotorSettingsString());
+
+        }
+        if (low.mRing != high.mRing && mode == HcSaRunnable.Mode.SA) {
+            //CtAPI.goodbyeFatalError("Range of middle settings not allowed for simulated annealing. %s - %s", from.getRotorSettingsString(), to.getRotorSettingsString());
 
         }
 
@@ -35,11 +40,15 @@ class HillClimb {
 
         int maxRate = 2800;
         int minRate = 2000;
-        String modeString = "HILLCLIMBING";
+        String modeString = "HILLCLIMBING-" + rounds;
         if (mode == HcSaRunnable.Mode.SA) {
+            maxRate = 140;
+            minRate = 70;
+            modeString = "ANNEALING-" + rounds;
+        } else if (mode == HcSaRunnable.Mode.EStecker) {
             maxRate = 50;
             minRate = 35;
-            modeString = "ANNEALING" + rounds;
+            modeString = "OSTWALD-" + rounds;
         }
 
         long normalizedNkeys = totalKeysPerCycle * rounds;
@@ -112,7 +121,7 @@ class HillClimb {
                                                         int numberOfKeys = 0;
                                                         for (ckey.mMesg = low.mMesg; ckey.mMesg <= high.mMesg; ckey.mMesg++) {
                                                             for (ckey.rMesg = low.rMesg; ckey.rMesg <= high.rMesg; ckey.rMesg++) {
-                                                                if ((ckey.rRing % rRingSpacing) != 0) {
+                                                                if ((ckey.rRing % rRingSpacing) != (cycle % rRingSpacing)) {
                                                                     rejected++;
                                                                     continue;
                                                                 }
@@ -124,7 +133,7 @@ class HillClimb {
                                                                     }
                                                                 }
 
-                                                                processes[numberOfKeys].setup(ckey, from.stbrett, ciphertext, len, (cycle == 0), mode, rounds);
+                                                                processes[numberOfKeys].setup(ckey, from.stbrett, ciphertext, len, (cycle == 0), mode, rounds, rRingSpacing);
                                                                 runnables.addRunnable(processes[numberOfKeys]);
 
                                                                 numberOfKeys++;
@@ -152,6 +161,9 @@ class HillClimb {
                                                             if (globalscore > minScoreToPrint) {
 
                                                                 if (CtBestList.shouldPushResult(ckey.score)) {
+
+                                                                    ckey.addRightRotorOffset(processes[k].bestOffset);
+
                                                                     ckey.initPathLookupAll(len);
 
                                                                     String plainStr = ckey.plaintextString(ciphertext, len);
@@ -161,11 +173,12 @@ class HillClimb {
                                                                     String timeStr = ft.format(dNow);
 
                                                                     long elapsed = System.currentTimeMillis() - startTime;
-                                                                    String desc = String.format("%s [%,6dK][%2d: %,5dK/%,5dK][%,4d/sec][%,4d/sec][%,4d Sec][%s]", modeString,
-                                                                            count/1000, cycle + 1, keyCountInCycle/1000, totalKeysPerCycle/1000, count  * 1000/ elapsed, (count + rejected)  * 1000/ elapsed, elapsed / 1000, timeStr);
+                                                                    String desc = String.format("%s [%,6dK][%2d: %,5dK/%,5dK][%,4d/sec][%,4d/sec][%,4d Sec][%s][Offset: %,2d]", modeString,
+                                                                            count/1000, cycle + 1, keyCountInCycle/1000, totalKeysPerCycle/1000, count  * 1000/ elapsed, (count + rejected)  * 1000/ elapsed, elapsed / 1000, timeStr, processes[k].bestOffset);
 
                                                                     //ckey.printKeyString("Hillclimbing " + desc);
                                                                     ReportResult.reportResult(0, ckey, ckey.score, plainStr, desc);
+                                                                    ckey.substractRightRotorOffset(processes[k].bestOffset);
 
                                                                 }
                                                                 //String logs = "" + ft.format(dNow) + ckey.getKeyStringLong() + " " + ckey.plaintextString(ciphertext, len);
@@ -203,7 +216,7 @@ class HillClimb {
 
     }
 
-    public static int hillClimbBatch(Key[] keys, int nKeys, int hcMaxPass, int THREADS, int minScoreToPrint, byte[] ciphertext, int len) {
+    public static int hillClimbBatch(Key[] keys, int nKeys, int hcMaxPass, int THREADS, int minScoreToPrint, byte[] ciphertext, int len, int rRingSpacing) {
 
 
         int count = 0;
@@ -237,7 +250,7 @@ class HillClimb {
                 Runnables r = new Runnables();
 
                 for (int b = 0; b < actualBatchSize; b++) {
-                    processes[b].setup(keys[k + b], keys[k + b].stbrett, ciphertext, len, (pass == 0), HcSaRunnable.Mode.HC, 1);
+                    processes[b].setup(keys[k + b], keys[k + b].stbrett, ciphertext, len, (pass == 0), HcSaRunnable.Mode.SA, 1, rRingSpacing);
                     r.addRunnable(processes[b]);
                 }
 

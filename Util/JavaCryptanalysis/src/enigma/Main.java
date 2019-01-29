@@ -2,12 +2,13 @@ package enigma;
 
 import common.*;
 
+import java.util.Random;
+
 public class Main {
     private enum Mode {
         HILLCLIMBING,
         ANNEALING,
-        ANNEALING2,
-        ANNEALING5,
+        OSTWALD,
         IC,
         TRIGRAMS,
         BOMBE,
@@ -46,7 +47,8 @@ public class Main {
         final String MESSAGE_INDICATOR = CommandLine.getStringValue(Flag.MESSAGE_INDICATOR);
         final String SCENARIO = CommandLine.getStringValue(Flag.SCENARIO);
 
-        final int RIGHT_ROTOR_SAMPLING = CommandLine.getIntegerValue(Flag.RIGHT_ROTOR_SAMPLING);
+        final int STRENGTH = CommandLine.getIntegerValue(Flag.STRENGTH);
+        final int RIGHT_RING_SAMPLING = CommandLine.getIntegerValue(Flag.RIGHT_RING_SAMPLING);
         final MRingScope MIDDLE_RING_SCOPE = MRingScope.valueOf(CommandLine.getIntegerValue(Flag.MIDDLE_RING_SCOPE));
         final boolean VERBOSE = CommandLine.getBooleanValue(Flag.VERBOSE);
         final String CRIB_POSITION = CommandLine.getStringValue(Flag.CRIB_POSITION);
@@ -71,32 +73,32 @@ public class Main {
                 break;
             case IC:
                 required(MODE, new Flag[]{Flag.CIPHERTEXT});
-                incompatible(MODE, new Flag[]{Flag.SCENARIO, Flag.CRIB, Flag.CRIB_POSITION, Flag.INDICATORS_FILE});
+                incompatible(MODE, new Flag[]{Flag.SCENARIO, Flag.CRIB, Flag.CRIB_POSITION, Flag.INDICATORS_FILE, Flag.STRENGTH});
                 break;
             case TRIGRAMS:
                 required(MODE, new Flag[]{Flag.CIPHERTEXT});
-                incompatible(MODE, new Flag[]{Flag.SCENARIO, Flag.CRIB, Flag.CRIB_POSITION, Flag.INDICATORS_FILE});
+                incompatible(MODE, new Flag[]{Flag.SCENARIO, Flag.CRIB, Flag.CRIB_POSITION, Flag.INDICATORS_FILE, Flag.STRENGTH});
                 break;
             case BOMBE:
                 required(MODE, new Flag[]{Flag.CIPHERTEXT, Flag.CRIB});
-                incompatible(MODE, new Flag[]{Flag.SCENARIO, Flag.INDICATORS_FILE});
+                incompatible(MODE, new Flag[]{Flag.SCENARIO, Flag.INDICATORS_FILE, Flag.STRENGTH});
                 break;
             case INDICATORS:
                 required(MODE, new Flag[]{Flag.INDICATORS_FILE});
-                incompatible(MODE, new Flag[]{Flag.SCENARIO, Flag.CRIB, Flag.CRIB_POSITION, Flag.MESSAGE_INDICATOR});
+                incompatible(MODE, new Flag[]{Flag.SCENARIO, Flag.CRIB, Flag.CRIB_POSITION, Flag.MESSAGE_INDICATOR, Flag.STRENGTH});
                 required(MODE, MODEL, new Key.Model[]{Key.Model.H});
                 break;
             case INDICATORS1938:
                 required(MODE, new Flag[]{Flag.INDICATORS_FILE});
-                incompatible(MODE, new Flag[]{Flag.SCENARIO, Flag.CRIB, Flag.CRIB_POSITION, Flag.MESSAGE_INDICATOR, Flag.MIDDLE_RING_SCOPE, Flag.RIGHT_ROTOR_SAMPLING});
+                incompatible(MODE, new Flag[]{Flag.SCENARIO, Flag.CRIB, Flag.CRIB_POSITION, Flag.MESSAGE_INDICATOR, Flag.MIDDLE_RING_SCOPE, Flag.RIGHT_RING_SAMPLING, Flag.STRENGTH});
                 required(MODE, MODEL, new Key.Model[]{Key.Model.H});
                 break;
             case SCENARIO:
                 required(MODE, new Flag[]{Flag.SCENARIO});
-                incompatible(MODE, new Flag[]{Flag.LANGUAGE, Flag.HC_SA_CYCLES, Flag.CRIB, Flag.CRIB_POSITION, Flag.INDICATORS_FILE, Flag.MESSAGE_INDICATOR, Flag.MIDDLE_RING_SCOPE, Flag.RIGHT_ROTOR_SAMPLING});
+                incompatible(MODE, new Flag[]{Flag.LANGUAGE, Flag.HC_SA_CYCLES, Flag.CRIB, Flag.CRIB_POSITION, Flag.INDICATORS_FILE, Flag.MESSAGE_INDICATOR, Flag.MIDDLE_RING_SCOPE, Flag.RIGHT_RING_SAMPLING, Flag.STRENGTH});
                 break;
             case DECRYPT:
-                incompatible(MODE, new Flag[]{Flag.CRIB, Flag.CRIB_POSITION, Flag.INDICATORS_FILE, Flag.MESSAGE_INDICATOR, Flag.MIDDLE_RING_SCOPE, Flag.RIGHT_ROTOR_SAMPLING});
+                incompatible(MODE, new Flag[]{Flag.CRIB, Flag.CRIB_POSITION, Flag.INDICATORS_FILE, Flag.MESSAGE_INDICATOR, Flag.MIDDLE_RING_SCOPE, Flag.RIGHT_RING_SAMPLING, Flag.STRENGTH});
                 break;
         }
 
@@ -105,7 +107,7 @@ public class Main {
             incompatibleWithRangeOkKeys(MODE, new Mode[]{Mode.DECRYPT});
             incompatibleWithRangeOkKeys(new Flag[]{});
         } else {
-            incompatibleWithSingleKey(new Flag[]{Flag.MIDDLE_RING_SCOPE, Flag.RIGHT_ROTOR_SAMPLING});
+            incompatibleWithSingleKey(new Flag[]{Flag.MIDDLE_RING_SCOPE, Flag.RIGHT_RING_SAMPLING});
             incompatibleWithSingleKey(MODE, new Mode[]{Mode.IC, Mode.TRIGRAMS, Mode.INDICATORS, Mode.INDICATORS1938});
         }
 
@@ -193,6 +195,9 @@ public class Main {
 
         if (!CommandLine.isSet(Flag.SCENARIO)) {
             clen = Utils.getText(CIPHERTEXT, ciphertext);
+//            for (int i = 0; i < clen; i++) {
+//                ciphertext[i] = (byte) (new Random()).nextInt(26);
+//            }
             CtAPI.printf("Ciphertext (Length = %d) %s\n", clen, CIPHERTEXT);
         }
 
@@ -251,7 +256,7 @@ public class Main {
                 CtAPI.goodbyeFatalError("Invalid key range:  %s-%s  - Invalid key format, or first has higher value than last \n", rangeLowS, rangeHighS);
             }
 
-            if ((lowKey.lRing != highKey.lRing) && (indicatorS.length() == 0) && (MODE == Mode.HILLCLIMBING || MODE == Mode.ANNEALING || MODE == Mode.ANNEALING2 || MODE == Mode.ANNEALING5))
+            if ((lowKey.lRing != highKey.lRing) && (indicatorS.length() == 0) && (MODE == Mode.HILLCLIMBING || MODE == Mode.ANNEALING || MODE == Mode.OSTWALD))
                 System.out.print("\n\n\nWARNING: Setting a range (different values) for the Left Ring settings is usually not necessary and will significant slow Hill Climbing searche\n\n\n");
 
             if (steckerS.length() != 0) {
@@ -288,17 +293,17 @@ public class Main {
             }
 
             if (MIDDLE_RING_SCOPE != MRingScope.ALL) {
-                boolean sameLowHighMRing = (lowKey.mRing == highKey.mRing);
-                boolean fullRangeMRing = (lowKey.mRing == Utils.getIndex('A')) &&
-                        (highKey.mRing == Utils.getIndex('Z'));
-                if (!sameLowHighMRing && !fullRangeMRing) {
-                    CtAPI.goodbyeFatalError("Range of middle ring (%s-%s) imcompatible with -%s selection: Only -%s 0 (or not specifying -%s and leaving the default 0) is allowed \n" +
-                                    " when a specifying a partial range. Either use A to Z, or same value for low Middle Ring and high Middle Ring, or use -%s 0.\n",
+                boolean fullRangeMRing = (lowKey.mRing == Utils.getIndex('A')) && (highKey.mRing == Utils.getIndex('Z'));
+                if (!fullRangeMRing) {
+                    CtAPI.goodbyeFatalError("Range of middle ring (%s to %s) imcompatible with -%s %d selection: Only -%s 0 (or not specifying -%s and leaving the default 0) is allowed \n" +
+                                    " when specifying a partial range. Use range from A to Z for the middle ring, e.g. -%s b:231:aaa:aaa-b:231:azz:zzz, or use -%s 0.\n",
                             Utils.getChar(lowKey.mRing),
                             Utils.getChar(highKey.mRing),
                             Flag.MIDDLE_RING_SCOPE,
+                            MIDDLE_RING_SCOPE.ordinal(),
                             Flag.MIDDLE_RING_SCOPE,
                             Flag.MIDDLE_RING_SCOPE,
+                            Flag.KEY,
                             Flag.MIDDLE_RING_SCOPE
                     );
                 }
@@ -309,20 +314,35 @@ public class Main {
             }
 
 
-            if (RIGHT_ROTOR_SAMPLING != 1) {
+            if (RIGHT_RING_SAMPLING != 1) {
 
-                boolean sameLowHighRRing = (lowKey.rRing == highKey.rRing);
                 boolean fullRangeRRing = (lowKey.rRing == Utils.getIndex('A')) && (highKey.rRing == Utils.getIndex('Z'));
-                if (!sameLowHighRRing && !fullRangeRRing) {
-                    CtAPI.goodbyeFatalError("Right ring range (%s to %s) imcompatible with -%s %d: Only -%s 1 (or not specifying -%s and leaving the default 1) is allowed \n" +
-                                    " when a specifying a partial range. Either use A to Z, or same value for low Middle Ring and high Middle Ring, or use -%s 1.\n",
+                if (!fullRangeRRing) {
+                    CtAPI.goodbyeFatalError("Partial right ring range (%s to %s) incompatible with -%s %d. Only -%s 1 (or not specifying -%s and leaving the default 1) is allowed \n" +
+                                    " when specifying a partial range. Use range from A to Z for the right ring, e.g. -%s b:231:gta:xxa-b:231:gtz:xxz, or use -%s 1.\n",
                             Utils.getChar(lowKey.rRing),
                             Utils.getChar(highKey.rRing),
-                            Flag.RIGHT_ROTOR_SAMPLING,
-                            RIGHT_ROTOR_SAMPLING,
-                            Flag.MIDDLE_RING_SCOPE,
-                            Flag.RIGHT_ROTOR_SAMPLING,
-                            Flag.MIDDLE_RING_SCOPE
+                            Flag.RIGHT_RING_SAMPLING,
+                            RIGHT_RING_SAMPLING,
+                            Flag.RIGHT_RING_SAMPLING,
+                            Flag.RIGHT_RING_SAMPLING,
+                            Flag.KEY,
+                            Flag.RIGHT_RING_SAMPLING
+                    );
+                }
+
+                boolean fullRangeRMseg = (lowKey.rMesg == Utils.getIndex('A')) && (highKey.rMesg == Utils.getIndex('Z'));
+                if (!fullRangeRMseg) {
+                    CtAPI.goodbyeFatalError("Partial right rotor range (%s to %s) incompatible with -%s %d. Only -%s 1 (or not specifying -%s and leaving the default 1) is allowed \n" +
+                                    " when specifying a partial range. Use range from A to Z for the right rotor, e.g. -%s b:231:gta:xxa-b:231:gtz:xxz, or use -%s 1.\n",
+                            Utils.getChar(lowKey.rMesg),
+                            Utils.getChar(highKey.rMesg),
+                            Flag.RIGHT_RING_SAMPLING,
+                            RIGHT_RING_SAMPLING,
+                            Flag.RIGHT_RING_SAMPLING,
+                            Flag.RIGHT_RING_SAMPLING,
+                            Flag.KEY,
+                            Flag.RIGHT_RING_SAMPLING
                     );
                 }
 
@@ -332,29 +352,26 @@ public class Main {
 
 
         if (MODE == Mode.BOMBE) {
-            BombeSearch.bombeSearch(CRIB, ciphertext, clen, range, lowKey, highKey, key, indicatorS, indicatorMessageKeyS, HC_SA_CYCLES, RIGHT_ROTOR_SAMPLING, MIDDLE_RING_SCOPE, VERBOSE, CRIB_POSITION, THREADS);
+            BombeSearch.bombeSearch(CRIB, ciphertext, clen, range, lowKey, highKey, key, indicatorS, indicatorMessageKeyS, HC_SA_CYCLES, RIGHT_RING_SAMPLING, MIDDLE_RING_SCOPE, VERBOSE, CRIB_POSITION, THREADS);
         } else if (MODE == Mode.DECRYPT && !range) {
             encryptDecrypt(indicatorS, plaintext, ciphertext, clen, key);
         } else if (MODE == Mode.IC) {
-            TrigramICSearch.searchTrigramIC(lowKey, highKey, true, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, false, HC_SA_CYCLES, 0, THREADS, ciphertext, clen, indicatorS, indicatorMessageKeyS);
+            TrigramICSearch.searchTrigramIC(lowKey, highKey, true, MIDDLE_RING_SCOPE, RIGHT_RING_SAMPLING, false, HC_SA_CYCLES, 0, THREADS, ciphertext, clen, indicatorS, indicatorMessageKeyS);
         } else if (MODE == Mode.TRIGRAMS) {
-            TrigramICSearch.searchTrigramIC(lowKey, highKey, false, MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, false, HC_SA_CYCLES, 0, THREADS, ciphertext, clen, indicatorS, indicatorMessageKeyS);
+            TrigramICSearch.searchTrigramIC(lowKey, highKey, false, MIDDLE_RING_SCOPE, RIGHT_RING_SAMPLING, false, HC_SA_CYCLES, 0, THREADS, ciphertext, clen, indicatorS, indicatorMessageKeyS);
         } else if (MODE == Mode.HILLCLIMBING) {
             HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HC_SA_CYCLES, THREADS, 0,
-                    MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.HC, 1);
+                    MIDDLE_RING_SCOPE, RIGHT_RING_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.HC, STRENGTH);
         } else if (MODE == Mode.ANNEALING) {
             HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HC_SA_CYCLES, THREADS, 0,
-                    MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.SA, 1);
-        } else if (MODE == Mode.ANNEALING2) {
+                    MIDDLE_RING_SCOPE, RIGHT_RING_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.SA, STRENGTH);
+        } else if (MODE == Mode.OSTWALD) {
             HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HC_SA_CYCLES, THREADS, 0,
-                    MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.SA, 2);
-        } else if (MODE == Mode.ANNEALING5) {
-            HillClimb.hillClimbRange(range ? lowKey : key, range ? highKey : key, HC_SA_CYCLES, THREADS, 0,
-                    MIDDLE_RING_SCOPE, RIGHT_ROTOR_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.SA, 5);
+                    MIDDLE_RING_SCOPE, RIGHT_RING_SAMPLING, ciphertext, clen, HcSaRunnable.Mode.EStecker, STRENGTH);
         } else if (MODE == Mode.SCENARIO) {
             new RandomChallenges(SCENARIO_PATH, RESOURCE_PATH + "\\faust.txt", lowKey, highKey, SCENARIO);
         } else if (MODE == Mode.INDICATORS) { // cycles
-            IndicatorsSearch.indicatorsSearch(INDICATORS_FILE, lowKey, highKey, steckerS, ciphertext, clen, RIGHT_ROTOR_SAMPLING, MIDDLE_RING_SCOPE, HC_SA_CYCLES, THREADS);
+            IndicatorsSearch.indicatorsSearch(INDICATORS_FILE, lowKey, highKey, steckerS, ciphertext, clen, RIGHT_RING_SAMPLING, MIDDLE_RING_SCOPE, HC_SA_CYCLES, THREADS);
         } else if (MODE == Mode.INDICATORS1938) {
             Indicators1938Search.indicators1938Search(INDICATORS_FILE, lowKey, highKey, steckerS, ciphertext, clen);
         }
@@ -482,10 +499,12 @@ public class Main {
                 Flag.MODE,
                 "Search mode",
                 "Search mode (for the case these is no crib). \n" +
-                        "\t\t\tHILLCLIMBING for hillclimbing search for steckers at each possible rotor setting - about 2-3,000 keys/sec. Effective with ciphertext with 125 or more letters\n" +
-                        "\t\t\tANNEALING for simulated annealing search - much slower than HILLCLIMBING (about 80 keys/sec), effective with short ciphertexts between 75 and 150 letters.\n" +
-                        "\t\t\tANNEALING2 for slower simulated annealing (about 40 keys/sec), use for short ciphertexts between 50 to 100 letters.\n" +
-                        "\t\t\tANNEALING5 for very slow simulated annealing (about 10 keys/sec), use for very ciphertexts between 30 to 75 letters.\n" +
+                        "\t\t\tHILLCLIMBING for hillclimbing search for steckers at each possible rotor setting - about 2-3,000 keys/sec. Effective with ciphertext with 125 or more letters.\n" +
+                        "\t\t\t   Use -" + Flag.STRENGTH + " for a slower but more sensitive search.\n" +
+                        "\t\t\tANNEALING for simulated annealing search - much slower than HILLCLIMBING (about 70-130 keys/sec), effective with short ciphertexts between 50 and 150 letters.\n" +
+                        "\t\t\t   Use -" + Flag.STRENGTH + " for a slower but more sensitive search.\n" +
+                        "\t\t\tOSTWALD for Ostwald method (about 30-60 keys/sec), use for short ciphertexts between 30 to 100 letters.\n" +
+                        "\t\t\t   Use -" + Flag.STRENGTH + " for a slower but more sensitive search (1 for E-Stecker, 2 for N-Stecker, 3 for X-Stecker, 4 for R, 5 for S, 6 for I, 7 for A, 8 for T, 9 for O, 10 for U)\n" +
                         "\t\t\tTRIGRAMS look for rotor settings with best trigram score. The steckers must be specified in -" + Flag.KEY + ",\n" +
                         "\t\t\t   e.g. -" + Flag.KEY + " B:132:AAC:AAA-B:132:AAC:ZZZ|ACFEHJKOLZ.\n" +
                         "\t\t\tIC look for rotor settings with best Index of Coincidence. For cryptograms less than 500 letters, \n" +
@@ -497,7 +516,14 @@ public class Main {
                         "\t\t\tDECRYPT for simple decryption.\n",
                 false,
                 "DECRYPT",
-                new String[]{"HILLCLIMBING", "IC", "TRIGRAMS", "BOMBE", "INDICATORS", "INDICATORS1938", "SCENARIO", "DECRYPT", "ANNEALING", "ANNEALING2", "ANNEALING5"}));
+                new String[]{"HILLCLIMBING", "IC", "TRIGRAMS", "BOMBE", "INDICATORS", "INDICATORS1938", "SCENARIO", "DECRYPT", "ANNEALING", "OSTWALD"}));
+
+        CommandLine.add(new CommandLine.Argument(
+                Flag.STRENGTH,
+                "Strength of search",
+                "Strength of hillclimbing/annealing/Ostwald method search. A higher number means a deeper search, but slower.",
+                false,
+                1, 12, 1));
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.CIPHERTEXT,
@@ -594,15 +620,15 @@ public class Main {
                 "Show details of crib attack."));
 
         CommandLine.add(new CommandLine.Argument(
-                Flag.RIGHT_ROTOR_SAMPLING,
+                Flag.RIGHT_RING_SAMPLING,
                 "Left rotor sampling interval.",
-                "Check only a sample of left rotor positions.-" + Flag.RIGHT_ROTOR_SAMPLING + " {right rotor interval value} {default - 1 - no sampling, check all positions in range}.\n" +
-                        "\t\tIf the interval > 1, test only a sample of right rotor positions in search.\n" +
-                        "\t\tFor example -" + Flag.RIGHT_ROTOR_SAMPLING + " 3 means that only one in three right rotor positions will be tested.  \n" +
-                        "\t\tDue to redundant states in the Enigma encryption process, this is likely to still produce a partial or full decryption. \n" +
+                "Check only a sample of right ring positions.-" + Flag.RIGHT_RING_SAMPLING + " {right ring interval value} {default - 1 - no sampling, check all positions in range}.\n" +
+                        "\t\tIf the interval > 1, test only a sample of right ring positions in search.\n" +
+                        "\t\tFor example -" + Flag.RIGHT_RING_SAMPLING + " 3 means that only one in three right ring positions will be tested.  \n" +
+                        "\t\tThis is likely to still produce a partial or full decryption. \n" +
                         "\t\tShould be used with caution together with mode BOMBE (Bombe search for menu stops) as this may cause stops to be missed. \n",
                 false,
-                1, 5, 1));
+                1, 7, 1));
         CommandLine.add(new CommandLine.Argument(
                 Flag.MIDDLE_RING_SCOPE,
                 "Optimize middle rotor moves",
@@ -619,7 +645,7 @@ public class Main {
                         "\t\t-" + Flag.MIDDLE_RING_SCOPE + " 4 - Test only all middle rotor settings which generate a stepping of the left rotor. \n" +
                         "\t\t       Usually not needed except for testing purposes. Reduces scope from 26 to {message length}/26 \n" +
                         "\t\t-" + Flag.MIDDLE_RING_SCOPE + " 5 - Test all middle rotor settings which do NOT generate a stepping of the left rotor. \n" +
-                        "\t\tNote: The key range should specify the full range (A to Z) for the middle rotor, for any option other then 0. \n",
+                        "\t\tNote: The key range should specify the full range (A to Z) for the middle rotor, for any option other than 0. \n",
                 false,
                 0, 5, 0));
 

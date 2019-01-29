@@ -47,7 +47,7 @@ class TrigramICSearch {
             maxRate = 75000;
         }
 
-        CtAPI.printf("\n\nSTARTING %s SEARCH: Number of Keys to search: %d \n\n", findSettingsIc ? "IC" : "TRIGRAM", totalKeys);
+        CtAPI.printf("\n\nSTARTING %s SEARCH: Number of Keys to search: %,d \n\n", findSettingsIc ? "IC" : "TRIGRAM", totalKeys);
         CtAPI.printf("Estimated TrigramICSearch Time: %s\n\n", Utils.getEstimatedTimeString(normalizedNkeys, minRate, maxRate));
 
         long startTime = System.currentTimeMillis();
@@ -134,7 +134,7 @@ class TrigramICSearch {
                 }
             }
         }
-        CtAPI.printf("\n\nSEARCH ENDED: Total %d in %.1f Seconds (%d/Sec)\n\n\n",
+        CtAPI.printf("\n\nSEARCH ENDED: Total %,d in %.1f Seconds (%,d/Sec)\n\n\n",
                 counter,
                 (System.currentTimeMillis() - startTime) / 1000.0,
                 1000 * counter / (System.currentTimeMillis() - startTime + 1));

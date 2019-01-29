@@ -13,7 +13,7 @@ import static enigma.Key.Model.A16101;
 public class Key {
 
     public static final int MAXLEN = 1800;
-    public static final int MAX_STB_PLUGS = 20;
+    public static int MAX_STB_PLUGS = 20;
     private final static byte etw[] =
             {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
                     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
@@ -921,7 +921,7 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
         }
     }
 
-    public void stbMatch(int x, int y) {
+    public void stbConnect(int x, int y) {
 
         stbrett[x] = y;
         stbrett[y] = x;
@@ -932,12 +932,12 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
             if (stbrett[i] == -1)
                 continue;
             if (stbrett[stbrett[i]] != i)
-                System.out.append("SWAP: we have a big problem\n");
+                throw new RuntimeException("stbConnect: we have a big problem\n");
         }
- */
+*/
     }
 
-    public void stbSelf(int x, int y) {
+    public void stbDisconnect(int x, int y) {
         stbrett[x] = x;
         stbrett[y] = y;
         counter++;
@@ -947,7 +947,7 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
             if (stbrett[i] == -1)
                 continue;
             if (stbrett[stbrett[i]] != i)
-                System.out.append("stbSelf: we have a big problem\n");
+                throw new RuntimeException("stbDisconnect: we have a big problem\n");
         }
 */
     }
@@ -1011,14 +1011,12 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
     }
 
     public double icscore(byte[] ciphertext, int len) {
+        if (len < 2)
+            return 0;
 
         Arrays.fill(f, 0);
 
-        double S = 0;
         int c;
-
-        if (len < 2)
-            return 0;
 
         for (int i = 0; i < len; i++) {
             c = stbrett[ciphertext[i]];
@@ -1027,13 +1025,13 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
             f[c]++;
         }
 
-        for (int i = 0; i < 26; i++) {
-            int fi = f[i];
-            S += fi * (fi - 1);
+        double ic = 0;
+        for (int fi : f) {
+            ic += fi * (fi - 1);
         }
-        S /= len * (len - 1);
+        ic /= len * (len - 1);
 
-        return S;
+        return ic;
     }
 
     public int uniscore(byte[] ciphertext, int len) {
@@ -1083,10 +1081,8 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
                 return (int) (300000.0 * icscore(ciphertext, len));
             case BI:
                 return (int) (biscore(ciphertext, len) *0.50);
-                //return (int) (biscore(ciphertext, len) *1.20);
             case TRI:
                 return (int) (triscore(ciphertext, len));
-                //return (int) (triscore(ciphertext, len) * 1.4);
             case UNI:
                 return 30 * uniscore(ciphertext, len);
             default:
@@ -1124,6 +1120,7 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
         }
 
         return s / (len - 2);
+        //return s;
     }
 
     public int indicScore(byte[][] indicMsgKeys, byte[][] indicCiphertext, int nIndics) {
@@ -1150,6 +1147,17 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
         }
         return 1000 * newScore / (3 * nIndics);
     }
+
+    public void substractRightRotorOffset(int offset) {
+        rRing = (rRing - offset + 26) % 26;
+        rMesg = (rMesg - offset + 26) % 26;
+    }
+    public void addRightRotorOffset(int offset) {
+        rRing = (rRing + offset + 26) % 26;
+        rMesg = (rMesg + offset + 26) % 26;
+    }
+
+
 
     public boolean checkFemales(boolean[] indicFemales, boolean print) {
 
@@ -2381,12 +2389,12 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
             c = stbrett[c];
             c = etw[c];
             /* thru scramblers and back */
-            c = wal[rSlot][c + offsetR + 26];
+            c = wal[rSlot][c + offsetR];
             c = wal[mSlot][c - offsetR + offsetM + 26];
             c = wal[lSlot][c - offsetM + offsetL + 26];
             c = wal[gSlot][c - offsetL + offsetG + 26];
             c = ukw[ukwNum][c - offsetG + 26];
-            c = rev_wal[gSlot][c + offsetG + 26];
+            c = rev_wal[gSlot][c + offsetG];
             c = rev_wal[lSlot][c + offsetL - offsetG + 26];
             c = rev_wal[mSlot][c + offsetM - offsetL + 26];
             c = rev_wal[rSlot][c + offsetR - offsetM + 26];
@@ -2418,6 +2426,7 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
         }
 
         return s / (len - 2);
+        //return s;
 
     }
 

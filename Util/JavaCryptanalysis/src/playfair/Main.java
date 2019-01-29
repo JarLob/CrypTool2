@@ -56,6 +56,13 @@ public class Main {
     private static void createCommandLineArguments() {
 
         CommandLine.createCommonArguments();
+        CommandLine.add(new CommandLine.Argument(
+                Flag.HEXA_FILE,
+                "Hexagrams file",
+                "Hexagrams statistics file path.",
+                false,
+                ""));
+
 
         CommandLine.add(new CommandLine.Argument(
                 Flag.SIMULATION,
@@ -75,8 +82,10 @@ public class Main {
 
 
         createCommandLineArguments();
-        CtBestList.setScoreThreshold(1_800_000);
+        //CtBestList.setScoreThreshold(1_800_000);
+        CtBestList.setScoreThreshold(0);
         CtBestList.setDiscardSamePlaintexts(true);
+        CtBestList.setSize(10);
         CtBestList.setThrottle(false);
 
         //Argument.printUsage();
@@ -86,6 +95,7 @@ public class Main {
         CommandLine.parseAndPrintCommandLineArgs(args);
 
         final String CRIB = CommandLine.getStringValue(Flag.CRIB);
+        String HEXA_FILE = CommandLine.getStringValue(Flag.HEXA_FILE);
         final int THREADS = CommandLine.getIntegerValue(Flag.THREADS);
         final int CYCLES = CommandLine.getIntegerValue(Flag.CYCLES);
         final String RESOURCE_PATH = CommandLine.getStringValue(Flag.RESOURCE_PATH);
@@ -97,10 +107,22 @@ public class Main {
         final boolean SIMULATION = CommandLine.getBooleanValue(Flag.SIMULATION);
         final int SIMULATION_TEXT_LENGTH = CommandLine.getIntegerValue(Flag.SIMULATION_TEXT_LENGTH);
 
-        if (!Stats.readHexagramStatsFile(RESOURCE_PATH + "/" + Utils.HEXA_FILE)) {
-            CtAPI.goodbyeFatalError("Could not read hexa file .... " + RESOURCE_PATH + "/" + Utils.HEXA_FILE);
-        }
         Transformations.printTransformationsCounts();
+
+        if (HEXA_FILE == null || HEXA_FILE.isEmpty()) {
+            HEXA_FILE = RESOURCE_PATH + "/" + Utils.HEXA_FILE;
+        }
+        if (!Stats.readHexagramStatsFile(HEXA_FILE)) {
+            CtAPI.goodbyeFatalError("Could not read hexa file .... " + RESOURCE_PATH + "/" + HEXA_FILE);
+        }
+
+        //if (!NGrams.load(RESOURCE_PATH + "/" + Utils.NGRAMS7_FILE, 7)) {
+        //    CtAPI.goodbyeFatalError("Could not read 7-grams file .... " + RESOURCE_PATH + "/" + Utils.NGRAMS7_FILE);
+        //}
+        //if (!NGrams.load(RESOURCE_PATH + "/" + Utils.NGRAMS8_FILE, 8)) {
+        //    CtAPI.goodbyeFatalError("Could not read 8-grams file .... " + RESOURCE_PATH + "/" + Utils.NGRAMS8_FILE);
+        //}
+
 
         Key simulationKey = null;
         final boolean debug = false;
@@ -111,6 +133,15 @@ public class Main {
             Playfair.preparePlainText(plainText);
             simulationKey = new Key();
             simulationKey.random();
+
+
+
+            int[] sentence = Utils.readRandomSentenceFromFile(RESOURCE_PATH + "/" + "shakespeare.txt", "", 8, true);
+            simulationKey.keyFromSentence(sentence);
+            System.out.println(simulationKey);
+            plainText = Utils.readRandomSentenceFromFile(RESOURCE_PATH + "/" + "shakespeare.txt", CRIB, SIMULATION_TEXT_LENGTH, true);
+
+
             cipherText = new int[SIMULATION_TEXT_LENGTH];
             if (cipherText.length % 2 != 0) {
                 CtAPI.goodbyeFatalError("Ciphertext length must be even - found " + cipherText.length + " characters");
@@ -127,9 +158,11 @@ public class Main {
             CtAPI.printf("            %s Length: %d\n", Utils.getString(plainText), plainText.length);
             CtAPI.printf("Ciphertext: %s Length: %d\n", Utils.getString(cipherText), cipherText.length);
             simulationKey.setCipher(cipherText);
+            simulationKey.setCrib(CRIB);
             simulationKey.eval();
             CtAPI.printf("Original score: %,d\n", simulationKey.score);
-            CtBestList.setOriginal(simulationKey.score, simulationKey.toString(), simulationKey.toString(), Utils.getString(plainText), "Original");
+            CtBestList.setOriginal(simulationKey.score, simulationKey.toString(), simulationKey.toString(), Utils.getString(simulationKey.fullDecryption), "Original");
+
         } else {
             if ((CIPHERTEXT == null || CIPHERTEXT.isEmpty())) {
                 CtAPI.goodbyeFatalError("Ciphertext or ciphertext file required when not in simulation mode");

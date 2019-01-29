@@ -8,13 +8,16 @@ public class SolvePlayfair {
 
     static void solve(int taskNumber, int saCycles, int innerRounds /* 200000 */, int multiplier/*1500*/, int[] cipherText, String crib, Key simulationKey) {
 
-        long simulationOriginalScore = (simulationKey == null) ? 0 : simulationKey.score;
+        long simulationOriginalScore = (simulationKey == null) ? Long.MIN_VALUE : simulationKey.score;
         Key currentKey = new Key();
         Key newKey = new Key();
+        Key bestKey = new Key();
         currentKey.setCipher(cipherText);
         newKey.setCipher(cipherText);
+        bestKey.setCipher(cipherText);
         currentKey.setCrib(crib);
         newKey.setCrib(crib);
+        bestKey.setCrib(crib);
 
         long serialCounter = 0;
 
@@ -29,6 +32,8 @@ public class SolvePlayfair {
 
             long currentScore = currentKey.eval();
 
+            bestKey.copy(currentKey);
+            long bestScore = bestKey.eval();
             for (int innerRound = 0; innerRound < innerRounds; innerRound++) {
                 Transformations.apply(currentKey, newKey, serialCounter++);
 
@@ -37,20 +42,26 @@ public class SolvePlayfair {
                 if (SimulatedAnnealing.acceptHexaScore(newScore, currentScore, multiplier)) {
                     currentKey.copy(newKey);
                     currentScore = newScore;
-
-                    if (CtBestList.shouldPushResult(newScore)) {
-                        CtBestList.pushResult(newScore,
-                                newKey.toString(),
-                                newKey.toString(),
-                                Utils.getString(newKey.fullDecryption),
-                                Stats.evaluationsSummary() +
-                                    String.format("[%d/%d}[Task: %2d][Mult.: %,d]",
-                                            newKey.decryptionRemoveNullsLength, cipherText.length, taskNumber, multiplier));
-                        if (currentScore == simulationOriginalScore || newKey.matchesFullCrib()) {
-                            CtAPI.printf("Key found");
-                            CtAPI.goodbye();
-                        }
+                    if (currentScore > bestScore) {
+                        bestScore = currentScore;
+                        bestKey.copy(currentKey);
+                        bestKey.alignAlphabet();
+                        bestKey.decrypt();
                     }
+
+                }
+            }
+            if (CtBestList.shouldPushResult(bestScore)) {
+                CtBestList.pushResult(bestScore,
+                        bestKey.toString(),
+                        bestKey.toString(),
+                        Utils.getString(bestKey.fullDecryption),
+                        Stats.evaluationsSummary() +
+                                String.format("[%d/%d}[Task: %2d][Mult.: %,d]",
+                                        bestKey.decryptionRemoveNullsLength, cipherText.length, taskNumber, multiplier));
+                if (currentScore == simulationOriginalScore || newKey.matchesFullCrib()) {
+                    CtAPI.printf("Key found");
+                    CtAPI.goodbye();
                 }
             }
         }

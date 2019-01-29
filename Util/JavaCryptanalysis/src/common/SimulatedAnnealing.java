@@ -1,12 +1,18 @@
 package common;
 
+import churn.ChurnSimulatedAnnealing;
+import churn.FixedTemperatureSimulatedAnnealing;
+import churn.ImprovedFixedTemperatureSimulatedAnnealing;
+
 public class SimulatedAnnealing {
     public static boolean acceptHexaScore(long newScore, long currLocalScore, int multiplier) {
 
-        return accept(newScore, currLocalScore, 275.0 * multiplier / 20.0);
+        //return accept(newScore, currLocalScore, 275.0 * multiplier / 20.0);
+        return accept(newScore, currLocalScore, 13.75 * multiplier);
 
     }
 
+    private static double minRatio = Math.log(0.0085);
     public static boolean accept(long newScore, long currLocalScore, double temperature) {
 
         long diffScore = newScore - currLocalScore;
@@ -17,8 +23,7 @@ public class SimulatedAnnealing {
             return false;
         }
         double ratio = diffScore / temperature;
-        double prob = Math.pow(Math.E, ratio);
-        double probThreshold = Utils.randomNextDouble();
-        return prob > probThreshold && prob > 0.0085;
+        return ratio > minRatio && Math.pow(Math.E, ratio) > Utils.random.nextFloat();
+
     }
 }

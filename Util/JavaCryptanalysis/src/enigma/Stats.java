@@ -13,6 +13,10 @@ class Stats {
     public static final int unidict[] = {609, 220, 72, 290, 1291, 303, 281, 188, 616, 41, 199, 390, 272,
             841, 442, 147, 202, 687, 623, 541, 447, 138, 168, 698, 89, 205};
 
+    private static double triMult = 0;
+    private static boolean newTrigrams = false;
+
+
     public static void unidictConvertToLog() {
         int minUni = Integer.MAX_VALUE;
 
@@ -105,7 +109,7 @@ class Stats {
         for (int l1 = 0; l1 < 26; l1++) {
             for (int l2 = 0; l2 < 26; l2++) {
                 for (int l3 = 0; l3 < 26; l3++) {
-                    triflat[(((l1 << 5) + l2) << 5) + l3] = 0;
+                    triflat[triIndex(l1, l2, l3)] = 0;
                 }
             }
         }
@@ -127,7 +131,7 @@ class Stats {
                 for (int i = 4; i < line.length(); i++)
                     freq = freq * 10 + Utils.getDigitIndex(line.charAt(i));
 
-                triflat[(((l1 << 5) + l2) << 5) + l3] = freq;
+                triflat[triIndex(l1, l2, l3)] = freq;
 
                 items++;
             }
@@ -145,7 +149,7 @@ class Stats {
         for (int l1 = 0; l1 < 26; l1++) {
             for (int l2 = 0; l2 < 26; l2++) {
                 for (int l3 = 0; l3 < 26; l3++) {
-                    long currtri = triflat[(((l1 << 5) + l2) << 5) + l3];
+                    long currtri = triflat[triIndex(l1, l2, l3)];
                     if ((currtri != 0) && (currtri < mintri))
                         mintri = currtri;
                 }
@@ -154,10 +158,10 @@ class Stats {
         for (int l1 = 0; l1 < 26; l1++) {
             for (int l2 = 0; l2 < 26; l2++) {
                 for (int l3 = 0; l3 < 26; l3++) {
-                    long currtri = triflat[(((l1 << 5) + l2) << 5) + l3];
+                    long currtri = triflat[triIndex(l1, l2, l3)];
                     if (currtri != 0) {
 
-                        triflat[(((l1 << 5) + l2) << 5) + l3] = (int) (10000.0 * Math.log((Math.E * currtri) / mintri));
+                        triflat[triIndex(l1, l2, l3)] = (int) (10000.0 * Math.log((Math.E * currtri) / mintri));
 
                     }
                 }
@@ -171,7 +175,7 @@ class Stats {
 
     public static int loadTridict(String fileName) {
 
-        boolean special = fileName.endsWith("3WH.txt");
+        newTrigrams = fileName.endsWith("3WH.txt");
 
         long minNonZero = Long.MAX_VALUE;
 
@@ -197,7 +201,7 @@ class Stats {
                 }
 
                 items++;
-                triflat[(((l1 << 5) + l2) << 5) + l3] = freq;
+                triflat[triIndex(l1, l2, l3)] = freq;
                 if ((freq > 0) && (freq < minNonZero))
                     minNonZero = freq;
 
@@ -209,27 +213,54 @@ class Stats {
             CtAPI.goodbyeFatalError("Unable to read trigram file %s - %s", fileName, ex.toString());
         }
 
-        if (minNonZero < 1000) {
-            for (int l1 = 0; l1 < 26; l1++)
-                for (int l2 = 0; l2 < 26; l2++)
-                    for (int l3 = 0; l3 < 26; l3++) {
-                        int freq = triflat[(((l1 << 5) + l2) << 5) + l3];
-                        if (freq != 0) {
-                            if (freq == minNonZero) {
-                                freq = 1000;
-                            } else {
-                                freq = (int) ((freq * 1000) / minNonZero);
-                            }
-                        }  //do nothing
 
-                        triflat[(((l1 << 5) + l2) << 5) + l3] = special ? ((int) (freq * 1.5)) : freq;
+        if (minNonZero < 1000) {
+            triMult = (newTrigrams? 1500.0 : 1000.0)/minNonZero;
+            //triMult = 1;
+            for (int l1 = 0; l1 < 26; l1++) {
+                for (int l2 = 0; l2 < 26; l2++) {
+                    for (int l3 = 0; l3 < 26; l3++) {
+                        int freq = triflat[triIndex(l1, l2, l3)];
+                        if (freq != 0) {
+                            freq = (int) (freq * triMult);
+                            triflat[triIndex(l1, l2, l3)] = freq;
+                        }
                     }
+                }
+            }
         }
+
         CtAPI.printf("Trigram file read: %s  (%,d items)\n", fileName, items);
 
 
         return 1;
 
+    }
+
+    public static double triSchwelle(double length) {
+        //return triMult * 70 * Math.sqrt(length) / (length - 2);
+        //return triMult * 70 * Math.sqrt(length);
+
+        if (newTrigrams) {
+            if (length <= 50) {
+                return 13000;
+            }
+            if (length <= 75) {
+                return 11000;
+            }
+            if (length <= 100) {
+                return 11000;
+            }
+            return 10000;
+
+
+        }
+
+        return 10000;
+    }
+
+    private static int triIndex(int l1, int l2, int l3) {
+        return (((l1 << 5) + l2) << 5) + l3;
     }
 
     public static int loadBidict(String fileName) {

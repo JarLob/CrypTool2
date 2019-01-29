@@ -3,9 +3,7 @@ package enigma;
 import common.Runnables;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
 
 class HcSaRunnable implements Runnable {
 
@@ -14,6 +12,7 @@ class HcSaRunnable implements Runnable {
     private static final int[] FREQUENT = {4, 13, 23, 17, 18, 0, 8, 19, 20, 14, 11, 3, 5, 6, 12, 1, 7, 10, 25, 22, 16, 21, 2, 15, 9, 24};
 
     public final Key key = new Key();
+    public int bestOffset;
     private byte[] ciphertext = new byte[1000];
     private int len;
     private boolean firstPass;
@@ -21,8 +20,9 @@ class HcSaRunnable implements Runnable {
     private int[] var = Arrays.copyOf(FREQUENT, FREQUENT.length);
     private Mode mode;
     private int rounds;
+    private int rRingSpacing;
 
-    public void setup(Key key, int[] stb, byte[] ciphertext, int len, boolean firstPass, Mode mode, int rounds) {
+    public void setup(Key key, int[] stb, byte[] ciphertext, int len, boolean firstPass, Mode mode, int rounds, int rRingSpacing) {
         this.key.clone(key);
         System.arraycopy(ciphertext, 0, this.ciphertext, 0, len);
         System.arraycopy(stb, 0, this.stb, 0, 26);
@@ -31,10 +31,7 @@ class HcSaRunnable implements Runnable {
         this.key.score = -1; // to mark that no HC has been done on this one.
         this.rounds = rounds;
         this.mode = mode;
-    }
-    public void setup(Key key, int[] stb, byte[] ciphertext, int len, boolean firstPass) {
-        setup(key, stb, ciphertext, len, firstPass, Mode.SA, 1);
-
+        this.rRingSpacing = rRingSpacing;
     }
 
     @Override
@@ -49,7 +46,7 @@ class HcSaRunnable implements Runnable {
 
         key.setStecker(stb); // restore because the ones on key were changed in previous keys/passes
         if (firstPass && (key.stbCount != 0)) {
-            hillClimbStepComplex(Key.EVAL.TRI, -1, -1);
+            HCStep(Key.EVAL.TRI);
         } else {
             switch (mode) {
                 case HC:
@@ -63,50 +60,211 @@ class HcSaRunnable implements Runnable {
                     break;
             }
         }
-        key.score = key.eval(Key.EVAL.TRI, ciphertext, len);
     }
 
     private void EStecker() {
 
-        long best = 0;
+
+        //                      E   N  X    R  S   I  A  T    O  U
+        final int[] FREQUENT = {4, 13, 23, 17, 18, 8, 0, 19, 14, 20, 11, 3, 5, 6, 12, 1, 7, 10, 25, 22, 16, 21, 2, 15, 9, 24};
+
+
+        long bestScore = 0;
         String bestStb = "";
-        int scope = 4;
-        for (int i = 0; i < scope; i++) {
-            int firstLetter = FREQUENT[i];
-            for (int j = i + 1; j < scope; j++) {
-                int secondLetter = FREQUENT[j];
-                for (int k = 0; k < 26; k++) {
-                    if (k == firstLetter || k == secondLetter) {
-                        continue;
-                    }
-                    for (int l = 0; l < 26; l++) {
-                        if (l == firstLetter || l == secondLetter || l == k) {
-                            continue;
-                        }
 
-                        key.setStecker("");
-                        key.stbMatch(firstLetter, k);
-                        key.stbMatch(secondLetter, l);
-                        key.getSteckerToSf();
-                        String pair = key.stbString();
+        boolean debug = false;
+        for (int xIndexInMostFrequentLetters = 0; xIndexInMostFrequentLetters < Math.min(26, rounds); xIndexInMostFrequentLetters++) {
+            int x = FREQUENT[xIndexInMostFrequentLetters];
+            for (int yIndexInMostFrequentLetters = xIndexInMostFrequentLetters; yIndexInMostFrequentLetters < 26; yIndexInMostFrequentLetters++) {
+                int y = FREQUENT[yIndexInMostFrequentLetters];
+                key.setStecker("");
+                long currentScore = key.eval(Key.EVAL.IC, ciphertext, len);
+                if (debug)
+                    System.out.printf("(Start  %c%c) %-22s %,8d\n", Utils.getChar(x), Utils.getChar(y), key.stbString(), currentScore);
+                if (y != x) {
+                    key.stbConnect(x, y);
+                }
 
-                        hillClimbStepComplex(Key.EVAL.IC, firstLetter, secondLetter);
-                        hillClimbStepComplex(Key.EVAL.BI, firstLetter, secondLetter);
-                        hillClimbStepComplex(Key.EVAL.TRI, firstLetter, secondLetter);
-                        key.score = key.eval(Key.EVAL.TRI, ciphertext, len);
-                        if (key.score > best) {
-                            bestStb = key.stbString();
-                            best = key.score;
-                            //System.out.printf("%s %,d %s\n", pair, best, bestStb);
+                phiMarsch(debug);
+                currentScore = triSturm(debug, true);
+                currentScore = bereinigeBrett(debug, currentScore);
+
+                if (debug) {
+                    System.out.printf("(Summary  ) %-22s %,8d (%,8d) %s\n", key.stbString(), currentScore, (int) Stats.triSchwelle(len), currentScore > Stats.triSchwelle(len) ? "!!!!!" : "");
+                }
+
+                int bestOffsetForCycle = 0;
+
+                if (currentScore > Stats.triSchwelle(len)) {
+                    long bestOffsetScore = currentScore;
+                    for (int offset = -rRingSpacing + 1; offset < rRingSpacing; offset++) {
+                        key.addRightRotorOffset(offset);
+                        long score = key.triScoreWithoutLookupBuild(ciphertext, len);
+                        if (score > bestOffsetScore) {
+                            bestOffsetScore = score;
+                            bestOffsetForCycle = offset;
                         }
+                        key.substractRightRotorOffset(offset);
                     }
-                    key.setStecker(bestStb);
+                    key.addRightRotorOffset(bestOffsetForCycle);
+                    currentScore = triSturm(debug, false);
+                    key.substractRightRotorOffset(bestOffsetForCycle);
+
+                    if (debug) System.out.printf("(Krabben  ) %-22s %,8d\n", key.stbString(), currentScore);
+
+                }
+                if (currentScore > bestScore) {
+                    bestStb = key.stbString();
+                    bestScore = currentScore;
+                    bestOffset = bestOffsetForCycle;
                 }
             }
         }
         key.setStecker(bestStb);
-        key.score = key.eval(Key.EVAL.TRI, ciphertext, len);
+        if (bestOffset == 0) {
+            if (key.eval(Key.EVAL.TRI, ciphertext, len) != bestScore) {
+                throw new RuntimeException("Inconsistent!!! " + key.score + " != " + bestScore);
+            }
+        } else {
+            key.score = (int) bestScore;
+        }
+
+
     }
+
+    private long phiMarsch(boolean debug) {
+        long currentScore;
+        long newScore;
+        currentScore = key.eval(Key.EVAL.IC, ciphertext, len);
+        if (debug)  System.out.printf("(Start    ) %-22s %,8d\n", key.stbString(), currentScore);
+
+
+        for (int m = 0; m < 8; m++) {
+            int bestI = -1;
+            int bestJ = -1;
+            long bestIJScore = 0;
+            for (int i = 0; i < 26; i++) {
+                if (key.stbrett[i] != i) {
+                    continue;
+                }
+                for (int j = i + 1; j < 26; j++) {
+                    if (key.stbrett[j] != j) {
+                        continue;
+                    }
+                    key.stbConnect(i, j);
+                    newScore = key.eval(Key.EVAL.IC, ciphertext, len);
+                    if (newScore > bestIJScore) {
+                        bestI = i;
+                        bestJ = j;
+                        bestIJScore = newScore;
+                    }
+                    key.stbDisconnect(i, j);
+                }
+            }
+            if (bestIJScore <= currentScore) {
+                break;
+            }
+            key.stbConnect(bestI, bestJ);
+            currentScore = key.eval(Key.EVAL.IC, ciphertext, len);
+            if (debug)  System.out.printf("(Marsch %,2d) %-22s %,8d\n", m, key.stbString(), currentScore);
+        }
+        return currentScore;
+    }
+
+    private long bereinigeBrett(boolean debug, long currentScore) {
+        long newScore;
+        for (int c = 0; ; c++) {
+
+            boolean changed = false;
+            for (int i = 0; i < 26; i++) {
+                int partnerOfI = key.stbrett[i];
+                if (partnerOfI == i) {
+                    continue;
+                }
+                key.stbDisconnect(i, partnerOfI);
+                newScore = key.eval(Key.EVAL.TRI, ciphertext, len);
+                if (newScore > currentScore) {
+                    currentScore = newScore;
+                    if (debug)  System.out.printf("(Clean %,2d) %-22s %,8d\n", c, key.stbString(), currentScore);
+                    changed = true;
+                } else {
+                    key.stbConnect(i, partnerOfI);
+                }
+            }
+            if (!changed) {
+                break;
+            }
+        }
+        if (debug) {
+            System.out.printf("(Clean end) %-22s %,8d\n", key.stbString(), currentScore);
+        }
+
+        return currentScore;
+    }
+
+    private long triSturm(boolean debug, boolean useLookup) {
+        long currentScore;
+        long newScore;
+        currentScore = useLookup ? key.eval(Key.EVAL.TRI, ciphertext, len) : key.triScoreWithoutLookupBuild(ciphertext, len);
+        if (debug)  System.out.printf("(Tri      ) %-22s %,8d\n", key.stbString(), currentScore);
+
+        for (int s = 0; ; s++) {
+            int bestI = -1;
+            int bestJ = -1;
+            long bestIJScore = currentScore;
+            for (int i = 0; i < 26; i++) {
+                for (int j = i + 1; j < 26; j++) {
+                    int partnerOfI = key.stbrett[i];
+                    int partnerOfJ = key.stbrett[j];
+                    if (key.stbCount() == Key.MAX_STB_PLUGS && partnerOfI == i && partnerOfJ == j) {
+                        continue;
+                    }
+
+                    if (partnerOfI != i) {
+                        key.stbDisconnect(i, partnerOfI);
+                    }
+                    if (partnerOfJ != j) {
+                        key.stbDisconnect(j, partnerOfJ);
+                    }
+                    key.stbConnect(i, j);
+                    newScore = useLookup ? key.eval(Key.EVAL.TRI, ciphertext, len) : key.triScoreWithoutLookupBuild(ciphertext, len);
+                    if (newScore > bestIJScore) {
+                        bestI = i;
+                        bestJ = j;
+                        bestIJScore = newScore;
+                    }
+                    key.stbDisconnect(i, j);
+                    if (partnerOfJ != j) {
+                        key.stbConnect(j, partnerOfJ);
+                    }
+                    if (partnerOfI != i) {
+                        key.stbConnect(i, partnerOfI);
+                    }
+                }
+            }
+            if (bestI == -1) {
+                break;
+            }
+            int partnerOfBestI = key.stbrett[bestI];
+            int partnerOfBestJ = key.stbrett[bestJ];
+            if (partnerOfBestI != bestI) {
+                key.stbDisconnect(bestI, partnerOfBestI);
+            }
+            if (partnerOfBestJ != bestJ) {
+                key.stbDisconnect(bestJ, partnerOfBestJ);
+            }
+            key.stbConnect(bestI, bestJ);
+            currentScore = useLookup ? key.eval(Key.EVAL.TRI, ciphertext, len) : key.triScoreWithoutLookupBuild(ciphertext, len);
+            if (debug)  System.out.printf("(Sturm  %,2d) %-22s %,8d\n", s, key.stbString(), currentScore);
+            if (currentScore != bestIJScore) {
+                throw new RuntimeException("Inconsistent!!! " + currentScore + " != " + bestIJScore);
+            }
+        }
+
+        if (debug)  System.out.printf("(Sturm end) %-22s %,8d\n", key.stbString(), currentScore);
+        return currentScore;
+    }
+
     private void HC() {
 
         key.setStecker("");
@@ -115,9 +273,9 @@ class HcSaRunnable implements Runnable {
         int noImprove = 0;
         for (int i = 0; i < rounds * 2 && noImprove < 3; i++) {//Math.min(1, 1000/len)
 
-            hillClimbStepComplex(Key.EVAL.IC,-1, -1);
-            hillClimbStepComplex(Key.EVAL.BI, -1, -1);
-            hillClimbStepComplex(Key.EVAL.TRI, -1, -1);
+            HCStep(Key.EVAL.IC);
+            HCStep(Key.EVAL.BI);
+            HCStep(Key.EVAL.TRI);
             if (key.score > bestScore) {
                 bestScore = key.score;
                 bestStbS = key.stbString();
@@ -127,26 +285,43 @@ class HcSaRunnable implements Runnable {
             }
         }
         key.setStecker(bestStbS);
-        key.score = key.eval(Key.EVAL.TRI, ciphertext, len);
+        long currentScore = key.score = key.eval(Key.EVAL.TRI, ciphertext, len);
 
+        checkOffsets(currentScore);
+    }
+
+    private void checkOffsets(long currentScore) {
+        if (currentScore > Stats.triSchwelle(len)) {
+            long bestOffsetScore = currentScore;
+            int bestOffsetForCycle = 0;
+            for (int offset = -rRingSpacing + 1; offset < rRingSpacing; offset++) {
+                key.addRightRotorOffset(offset);
+                long score = key.triScoreWithoutLookupBuild(ciphertext, len);
+                if (score > bestOffsetScore) {
+                    bestOffsetScore = score;
+                    bestOffsetForCycle = offset;
+                }
+                key.substractRightRotorOffset(offset);
+            }
+            key.addRightRotorOffset(bestOffsetForCycle);
+            key.score = (int) triSturm(false, false);
+            key.substractRightRotorOffset(bestOffsetForCycle);
+            bestOffset = bestOffsetForCycle;
+        }
     }
 
     private void SA() {
         key.setStecker("");
-        String bestStbS = "";
-        long bestScore = 0;
         for (int i = 0; i < rounds * 2; i++) {
             SAStep(Key.EVAL.BI);
-            if (key.score > bestScore) {
-                bestScore = key.score;
-                bestStbS = key.stbString();
-            }
         }
-        key.setStecker(bestStbS);
         SAStep(Key.EVAL.TRI);
+
+        long currentScore = key.score = key.eval(Key.EVAL.TRI, ciphertext, len);
+        checkOffsets(currentScore);
     }
 
-    private void hillClimbStepComplex(Key.EVAL eval, int firstLetter, int secondLetter) {
+    private void HCStep(Key.EVAL eval) {
 
         Action action;
 
@@ -162,16 +337,10 @@ class HcSaRunnable implements Runnable {
             improved = false;
             for (int i = 0; i < 26; i++) {
                 int vi = var[i]; // invariant
-                if (vi == firstLetter || vi == secondLetter) {
-                    continue;
-                }
-                for (int k = i + 1; k < 26; k++) {
+               for (int k = i + 1; k < 26; k++) {
                     int vk = var[k];
                     int vsk = key.stbrett[vk];
                     int vsi = key.stbrett[vi]; // not an invariant
-                    if (vk == firstLetter || vk == secondLetter || vsi == firstLetter || vsi == secondLetter || vsk == firstLetter || vsk == secondLetter) {
-                        continue;
-                    }
                     if (vsk == vi) {
                         continue;
                     }
@@ -185,7 +354,7 @@ class HcSaRunnable implements Runnable {
                         if (key.stbCount() == Key.MAX_STB_PLUGS) {
                             continue;
                         }
-                        key.stbMatch(vi, vk);
+                        key.stbConnect(vi, vk);
 
                         newScore = key.eval(eval, ciphertext, len);
                         if (newScore > bestScore) {
@@ -194,16 +363,16 @@ class HcSaRunnable implements Runnable {
                             action = Action.IandK;
                         }
                         if (action == Action.NO_CHANGE) {
-                            key.stbSelf(vi, vk);
+                            key.stbDisconnect(vi, vk);
                         }
                     } else if (vi == vsi) {
 
                         if ((sk > i) && (sk < k)) {
                             continue;
                         }
-                        key.stbSelf(vk, vsk);
+                        key.stbDisconnect(vk, vsk);
                         //all self
-                        key.stbMatch(vi, vk);
+                        key.stbConnect(vi, vk);
 
                         newScore = key.eval(eval, ciphertext, len);
                         if (newScore > bestScore) {
@@ -211,9 +380,9 @@ class HcSaRunnable implements Runnable {
                             improved = true;
                             action = Action.IandK;
                         }
-                        key.stbSelf(vi, vk);
+                        key.stbDisconnect(vi, vk);
                         // all self
-                        key.stbMatch(vi, vsk);
+                        key.stbConnect(vi, vsk);
 
                         newScore = key.eval(eval, ciphertext, len);
                         if (newScore > bestScore) {
@@ -221,17 +390,17 @@ class HcSaRunnable implements Runnable {
                             improved = true;
                             action = Action.IandSK;
                         }
-                        key.stbSelf(vi, vsk);
+                        key.stbDisconnect(vi, vsk);
                         // all self now
                         switch (action) {
                             case IandK:
-                                key.stbMatch(vi, vk);
+                                key.stbConnect(vi, vk);
                                 break;
                             case IandSK:
-                                key.stbMatch(vi, vsk);
+                                key.stbConnect(vi, vsk);
                                 break;
                             case NO_CHANGE:
-                                key.stbMatch(vk, vsk);
+                                key.stbConnect(vk, vsk);
                                 break;
                         }
                     } else if (vk == vsk) {
@@ -239,35 +408,35 @@ class HcSaRunnable implements Runnable {
                         if ((si < k) && (si < i)) {
                             continue;
                         }
-                        key.stbSelf(vi, vsi);
+                        key.stbDisconnect(vi, vsi);
                         // all self
-                        key.stbMatch(vk, vi);
+                        key.stbConnect(vk, vi);
                         newScore = key.eval(eval, ciphertext, len);
                         if (newScore > bestScore) {
                             bestScore = newScore;
                             improved = true;
                             action = Action.IandK;
                         }
-                        key.stbSelf(vk, vi);
+                        key.stbDisconnect(vk, vi);
                         // all self
-                        key.stbMatch(vk, vsi);
+                        key.stbConnect(vk, vsi);
                         newScore = key.eval(eval, ciphertext, len);
                         if (newScore > bestScore) {
                             bestScore = newScore;
                             improved = true;
                             action = Action.KandSI;
                         }
-                        key.stbSelf(vk, vsi);
+                        key.stbDisconnect(vk, vsi);
                         // all self
                         switch (action) {
                             case IandK:
-                                key.stbMatch(vi, vk);
+                                key.stbConnect(vi, vk);
                                 break;
                             case KandSI:
-                                key.stbMatch(vk, vsi);
+                                key.stbConnect(vk, vsi);
                                 break;
                             case NO_CHANGE:
-                                key.stbMatch(vi, vsi);
+                                key.stbConnect(vi, vsi);
                                 break;
                         }
                     } else {
@@ -275,59 +444,59 @@ class HcSaRunnable implements Runnable {
                             continue;
                         }
 
-                        key.stbSelf(vi, vsi);
-                        key.stbSelf(vk, vsk);
+                        key.stbDisconnect(vi, vsi);
+                        key.stbDisconnect(vk, vsk);
                         // all Self now
-                        key.stbMatch(vi, vk);
+                        key.stbConnect(vi, vk);
                         newScore = key.eval(eval, ciphertext, len);
                         if (newScore > bestScore) {
                             bestScore = newScore;
                             action = Action.IandK;
                         }
-                        key.stbMatch(vsi, vsk);
+                        key.stbConnect(vsi, vsk);
                         newScore = key.eval(eval, ciphertext, len);
                         if (newScore > bestScore) {
                             bestScore = newScore;
                             action = Action.IandK_SIandSK;
                         }
-                        key.stbSelf(vi, vk);
-                        key.stbSelf(vsi, vsk);
+                        key.stbDisconnect(vi, vk);
+                        key.stbDisconnect(vsi, vsk);
                         // all Self now
-                        key.stbMatch(vi, vsk);
+                        key.stbConnect(vi, vsk);
                         newScore = key.eval(eval, ciphertext, len);
                         if (newScore > bestScore) {
                             bestScore = newScore;
                             action = Action.IandSK;
                         }
-                        key.stbMatch(vsi, vk);
+                        key.stbConnect(vsi, vk);
                         newScore = key.eval(eval, ciphertext, len);
                         if (newScore > bestScore) {
                             bestScore = newScore;
                             action = Action.IandSK_KandSI;
                         }
-                        key.stbSelf(vi, vsk);
-                        key.stbSelf(vsi, vk);
+                        key.stbDisconnect(vi, vsk);
+                        key.stbDisconnect(vsi, vk);
 
                         // all Self now
 
                         switch (action) {
                             case IandK:
-                                key.stbMatch(vi, vk);
+                                key.stbConnect(vi, vk);
                                 break;
                             case IandSK:
-                                key.stbMatch(vi, vsk);
+                                key.stbConnect(vi, vsk);
                                 break;
                             case IandK_SIandSK:
-                                key.stbMatch(vi, vk);
-                                key.stbMatch(vsi, vsk);
+                                key.stbConnect(vi, vk);
+                                key.stbConnect(vsi, vsk);
                                 break;
                             case IandSK_KandSI:
-                                key.stbMatch(vi, vsk);
-                                key.stbMatch(vsi, vk);
+                                key.stbConnect(vi, vsk);
+                                key.stbConnect(vsi, vk);
                                 break;
                             case NO_CHANGE:
-                                key.stbMatch(vi, vsi);
-                                key.stbMatch(vk, vsk);
+                                key.stbConnect(vi, vsi);
+                                key.stbConnect(vk, vsk);
                                 break;
                             default:
                                 break;
@@ -343,84 +512,6 @@ class HcSaRunnable implements Runnable {
         key.score = key.eval(eval, ciphertext, len);
 
     }
-    public void hillClimbStep(Key.EVAL eval, int firstLetter, int secondLetter, boolean complex) {
-
-        if (complex) {
-            hillClimbStepComplex(eval, firstLetter, secondLetter);
-            return;
-        }
-
-        long newScore;
-        long bestScore = key.eval(eval, ciphertext, len);
-
-
-        boolean improved;
-        do {
-            improved = false;
-            for (int i = 0; i < 26; i++) {
-                int vi = var[i]; // invariant
-                if (vi == firstLetter || vi == secondLetter) {
-                    continue;
-                }
-                for (int k = i + 1; k < 26; k++) {
-                    int vk = var[k];
-                    int vsk = key.stbrett[vk];
-                    int vsi = key.stbrett[vi]; // not an invariant
-                    if (vk == firstLetter || vk == secondLetter || vsi == firstLetter || vsi == secondLetter || vsk == firstLetter || vsk == secondLetter) {
-                        continue;
-                    }
-                    if (vsk == vi) {
-                        continue;
-                    }
-                    if (vi == vsi && vk == vsk) {
-                        if (key.stbCount() == Key.MAX_STB_PLUGS) {
-                            continue;
-                        }
-                        key.stbMatch(vi, vk);
-                        newScore = key.eval(eval, ciphertext, len);
-                        if (newScore > bestScore) {
-                            bestScore = newScore;
-                            improved = true;
-                        } else {
-                            key.stbSelf(vi, vk);
-                        }
-                    } else if (vi == vsi) { // vk != vsk
-
-                        key.stbSelf(vk, vsk);
-                        key.stbMatch(vi, vk);
-
-                        newScore = key.eval(eval, ciphertext, len);
-                        if (newScore > bestScore) {
-                            bestScore = newScore;
-                            improved = true;
-                        } else {
-                            key.stbSelf(vi, vk);
-                            key.stbMatch(vk, vsk);
-                        }
-
-                    } else if (vk == vsk) {
-
-                        key.stbSelf(vi, vsi);
-                        key.stbMatch(vk, vi);
-
-                        newScore = key.eval(eval, ciphertext, len);
-                        if (newScore > bestScore) {
-                            bestScore = newScore;
-                            improved = true;
-                        } else {
-                            key.stbSelf(vk, vi);
-                            key.stbMatch(vi, vsi);
-                        }
-                    }
-                }
-            }
-        } while (improved);
-
-        if (key.eval(eval, ciphertext, len) != bestScore) {
-            throw new RuntimeException("Best result is not consistent");
-        }
-
-    }
 
     private void SAStep(Key.EVAL eval) {
 
@@ -434,11 +525,24 @@ class HcSaRunnable implements Runnable {
 
         boolean changed;
         int roundsWithoutChange = 0;
+        double temp;
+        if (len <= 30) {
+            temp = 400.0;
+        } else if (len <= 50) {
+            temp = 400.0 - (400.0 - 315.0) * (len - 30)/(50 - 30);
+        } else if (len <= 75) {
+            temp = 315.0 - (315.0 - 240.0) * (len - 50)/(75 - 50);
+        } else if (len <= 100) {
+            temp = 240.0 - (240.0 - 220.0) * (len - 75)/(100 - 75);
+        } else if (len <= 150) {
+            temp = 220.0 - (220.0 - 200.0) * (len - 100)/(150 - 100);
+        }else {
+            temp = 200.0;
+        }
         int ROUNDS = 200;
         for (int round = 0; round < ROUNDS && roundsWithoutChange < 10; round++) {
             Key.randVar(var);
 
-            double temp = 290;
             changed = false;
             for (int i = 0; i < 26; i++) {
                 int vi = var[i]; // invariant
@@ -459,7 +563,7 @@ class HcSaRunnable implements Runnable {
                         if (key.stbCount() == Key.MAX_STB_PLUGS) {
                             continue;
                         }
-                        key.stbMatch(vi, vk);
+                        key.stbConnect(vi, vk);
                         newScore = key.eval(eval, ciphertext, len);
                         if (accept(newScore, currScore, temp)) {
                             currScore = newScore;
@@ -469,7 +573,7 @@ class HcSaRunnable implements Runnable {
                                 bestStb = key.stbString();
                             }
                         } else {
-                            key.stbSelf(vi, vk);
+                            key.stbDisconnect(vi, vk);
                         }
                     } else if (vi == vsi) { // vk != vsk
 
@@ -477,8 +581,8 @@ class HcSaRunnable implements Runnable {
                             continue;
                         }
 
-                        key.stbSelf(vk, vsk);
-                        key.stbMatch(vi, vk);
+                        key.stbDisconnect(vk, vsk);
+                        key.stbConnect(vi, vk);
 
                         newScore = key.eval(eval, ciphertext, len);
                         if (accept(newScore, currScore, temp)) {
@@ -490,9 +594,9 @@ class HcSaRunnable implements Runnable {
                                 bestStb = key.stbString();
                             }
                         }
-                        key.stbSelf(vi, vk);
+                        key.stbDisconnect(vi, vk);
                         // all self
-                        key.stbMatch(vi, vsk);
+                        key.stbConnect(vi, vsk);
 
                         newScore = key.eval(eval, ciphertext, len);
                         if (accept(newScore, currScore, temp)) {
@@ -504,18 +608,18 @@ class HcSaRunnable implements Runnable {
                                 bestStb = key.stbString();
                             }
                         }
-                        key.stbSelf(vi, vsk);
+                        key.stbDisconnect(vi, vsk);
                         // all self now
 
                         switch (action) {
                             case IandK:
-                                key.stbMatch(vi, vk);
+                                key.stbConnect(vi, vk);
                                 break;
                             case IandSK:
-                                key.stbMatch(vi, vsk);
+                                key.stbConnect(vi, vsk);
                                 break;
                             case NO_CHANGE:
-                                key.stbMatch(vk, vsk);
+                                key.stbConnect(vk, vsk);
                                 break;
                             default:
                                 break;
@@ -526,9 +630,9 @@ class HcSaRunnable implements Runnable {
                         if (vsi < vi) {
                             continue;
                         }
-                        key.stbSelf(vi, vsi);
+                        key.stbDisconnect(vi, vsi);
                         // all self
-                        key.stbMatch(vk, vi);
+                        key.stbConnect(vk, vi);
                         newScore = key.eval(eval, ciphertext, len);
                         if (accept(newScore, currScore, temp)) {
                             currScore = newScore;
@@ -539,10 +643,10 @@ class HcSaRunnable implements Runnable {
                                 bestStb = key.stbString();
                             }
                         }
-                        key.stbSelf(vk, vi);
+                        key.stbDisconnect(vk, vi);
 
                         // all self
-                        key.stbMatch(vk, vsi);
+                        key.stbConnect(vk, vsi);
                         newScore = key.eval(eval, ciphertext, len);
                         if (accept(newScore, currScore, temp)) {
                             currScore = newScore;
@@ -553,17 +657,17 @@ class HcSaRunnable implements Runnable {
                                 bestStb = key.stbString();
                             }
                         }
-                        key.stbSelf(vk, vsi);
+                        key.stbDisconnect(vk, vsi);
                         // all self
                         switch (action) {
                             case IandK:
-                                key.stbMatch(vi, vk);
+                                key.stbConnect(vi, vk);
                                 break;
                             case KandSI:
-                                key.stbMatch(vk, vsi);
+                                key.stbConnect(vk, vsi);
                                 break;
                             case NO_CHANGE:
-                                key.stbMatch(vi, vsi);
+                                key.stbConnect(vi, vsi);
                                 break;
                             default:
                                 break;
@@ -574,11 +678,11 @@ class HcSaRunnable implements Runnable {
                             continue;
                         }
 
-                        key.stbSelf(vi, vsi);
-                        key.stbSelf(vk, vsk);
+                        key.stbDisconnect(vi, vsi);
+                        key.stbDisconnect(vk, vsk);
                         // all Self now
 
-                        key.stbMatch(vi, vk);
+                        key.stbConnect(vi, vk);
                         newScore = key.eval(eval, ciphertext, len);
                         if (accept(newScore, currScore, temp)) {
                             currScore = newScore;
@@ -591,7 +695,7 @@ class HcSaRunnable implements Runnable {
                         }
 
 
-                        key.stbMatch(vsi, vsk);
+                        key.stbConnect(vsi, vsk);
                         newScore = key.eval(eval, ciphertext, len);
                         if (accept(newScore, currScore, temp)) {
                             currScore = newScore;
@@ -602,12 +706,12 @@ class HcSaRunnable implements Runnable {
                                 bestStb = key.stbString();
                             }
                         }
-                        key.stbSelf(vsi, vsk);
+                        key.stbDisconnect(vsi, vsk);
 
 
-                        key.stbSelf(vi, vk);
+                        key.stbDisconnect(vi, vk);
                         // all Self now
-                        key.stbMatch(vi, vsk);
+                        key.stbConnect(vi, vsk);
                         newScore = key.eval(eval, ciphertext, len);
                         if (accept(newScore, currScore, temp)) {
                             currScore = newScore;
@@ -620,7 +724,7 @@ class HcSaRunnable implements Runnable {
                         }
 
 
-                        key.stbMatch(vsi, vk);
+                        key.stbConnect(vsi, vk);
                         newScore = key.eval(eval, ciphertext, len);
                         if (accept(newScore, currScore, temp)) {
                             currScore = newScore;
@@ -631,32 +735,32 @@ class HcSaRunnable implements Runnable {
                                 bestStb = key.stbString();
                             }
                         }
-                        key.stbSelf(vi, vsk);
-                        key.stbSelf(vsi, vk);
+                        key.stbDisconnect(vi, vsk);
+                        key.stbDisconnect(vsi, vk);
 
                         // all Self now
 
                         switch (action) {
                             case IandK:
-                                key.stbMatch(vi, vk);
+                                key.stbConnect(vi, vk);
                                 break;
                             case IandSK:
-                                key.stbMatch(vi, vsk);
+                                key.stbConnect(vi, vsk);
                                 break;
                             case SIandSK:
-                                key.stbMatch(vsi, vsk);
+                                key.stbConnect(vsi, vsk);
                                 break;
                             case IandK_SIandSK:
-                                key.stbMatch(vi, vk);
-                                key.stbMatch(vsi, vsk);
+                                key.stbConnect(vi, vk);
+                                key.stbConnect(vsi, vsk);
                                 break;
                             case IandSK_KandSI:
-                                key.stbMatch(vi, vsk);
-                                key.stbMatch(vsi, vk);
+                                key.stbConnect(vi, vsk);
+                                key.stbConnect(vsi, vk);
                                 break;
                             case NO_CHANGE:
-                                key.stbMatch(vi, vsi);
-                                key.stbMatch(vk, vsk);
+                                key.stbConnect(vi, vsi);
+                                key.stbConnect(vk, vsk);
                                 break;
                             default:
                                 throw new RuntimeException("Impossible change " + action);
@@ -677,7 +781,7 @@ class HcSaRunnable implements Runnable {
 
         key.setStecker(bestStb);
 
-        hillClimbStepComplex(eval, -1, -1);
+        HCStep(eval);
         key.score = key.eval(eval, ciphertext, len);
 
     }
@@ -691,10 +795,8 @@ class HcSaRunnable implements Runnable {
         if (temperature == 0.0) {
             return false;
         }
-        double ratio = diffScore / temperature;
-        double prob = Math.pow(Math.E, ratio);
-        double probThreshold = random.nextDouble();
-        return prob > probThreshold && prob > 0.0085;
+        double prob = Math.pow(Math.E, diffScore / temperature);
+        return prob > 0.0085 && prob > random.nextFloat();
     }
 
 
@@ -720,7 +822,7 @@ class HcSaRunnable implements Runnable {
                 if (badSearchKey) {
                     key.initRandom(from, to, 10);
                 }
-                process.setup(key, key.stbrett, ciphertext, len, false, mode, rounds);
+                process.setup(key, key.stbrett, ciphertext, len, false, mode, rounds, 0);
             }
             boolean check(int pass, boolean print) {
                 String s1 = process.key.plaintextString(ciphertext, len);
@@ -737,8 +839,8 @@ class HcSaRunnable implements Runnable {
                     System.out.printf("Expected: %,8d Found: %,8d Errors: %,2d %s  \n", key.score, process.key.score, errors, process.key.score > key.score ? "!!!!!" : "");
                     if (errors < len / 3) {
                         if (errors > 0) {
-                            System.out.printf("%,8d %-20s %s\n", key.score, key.stbString(), s2);
-                            System.out.printf("%,8d %-20s %s\n", process.key.score, process.key.stbString(), s1);
+                            System.out.printf("%,8d %-22s %s\n", key.score, key.stbString(), s2);
+                            System.out.printf("%,8d %-22s %s\n", process.key.score, process.key.stbString(), s1);
                         }
 
                         System.out.printf("FOUND %d %s\n", (pass + 1), new SimpleDateFormat("kk:mm:ss").format(new Date()));

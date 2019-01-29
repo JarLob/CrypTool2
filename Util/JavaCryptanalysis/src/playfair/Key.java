@@ -1,6 +1,7 @@
 package playfair;
 
 import common.CtAPI;
+import common.NGrams;
 import common.Stats;
 import common.Utils;
 
@@ -15,7 +16,8 @@ public class Key {
     int[] decryptionRemoveNulls;
     int decryptionRemoveNullsLength;
     int[] fullDecryption;
-    long score = 0;
+    long score;
+    String keyword;
 
 
     Key() {
@@ -25,6 +27,8 @@ public class Key {
         decryptionRemoveNullsLength = 0;
         fullDecryption = null;
         decryptionRemoveNulls = null;
+        score = 0;
+        keyword = "";
     }
 
 
@@ -32,12 +36,33 @@ public class Key {
         System.arraycopy(key.key, 0, this.key, 0, Playfair.SQUARE);
     }
 
+    long evalNgrams() {
+        decrypt();
+
+        //long ngrams = Stats.evalPlaintextHexagram(decryptionRemoveNulls, decryptionRemoveNullsLength);
+        long ngrams = NGrams.eval8(decryptionRemoveNulls, decryptionRemoveNullsLength);
+        if (crib == null) {
+            score = ngrams;
+        } else {
+            long cribMismatch = 0;
+            for (int i = 0; i < crib.length; i++) {
+                if (crib[i] != fullDecryption[i]) {
+                    cribMismatch++;
+                }
+            }
+            if (crib.length == cipher.length) {
+                return 3_000_000 * (cipher.length - cribMismatch)/cipher.length;
+            }
+            score = - 100_000 * cribMismatch + ngrams;
+        }
+        return score;
+    }
     long eval() {
         decrypt();
 
-        long hexa = Stats.evalPlaintextHexagram(decryptionRemoveNulls, decryptionRemoveNullsLength);
+        long ngrams = Stats.evalPlaintextHexagram(decryptionRemoveNulls, decryptionRemoveNullsLength);
         if (crib == null) {
-            score = hexa;
+            score = ngrams;
         } else {
             long cribMatch = 0;
             for (int i = 0; i < crib.length; i++) {
@@ -46,9 +71,10 @@ public class Key {
                 }
             }
             if (crib.length == cipher.length) {
-                return 3_000_000 * cribMatch/cipher.length;
+                score = 3_000_000 * cribMatch/cipher.length;
+            } else {
+                score = ((3_000_000 * cribMatch) + (ngrams * (cipher.length - crib.length))) / cipher.length;
             }
-            score = ((3_000_000 * cribMatch) + (hexa * (cipher.length - crib.length))) / cipher.length;
         }
         return score;
     }
@@ -132,10 +158,14 @@ public class Key {
             }
             ps.append(s.substring(i, i + Playfair.DIM));
         }
-        return ps.toString();
+        if (keyword.isEmpty()) {
+            return ps.toString();
+        } else {
+            return ps.toString() + " (" + keyword + ")";
+        }
     }
 
-    private void decrypt() {
+    void decrypt() {
         decryptionRemoveNullsLength = Playfair.decrypt(this, cipher, fullDecryption, decryptionRemoveNulls);
     }
 
@@ -215,4 +245,67 @@ public class Key {
         }
     }
 
+    int[] buffer = new int[Playfair.SQUARE];
+    void alignAlphabet() {
+        int bestR = -1;
+        int bestC = -1;
+        int bestCount = 0;
+        for (int r = 0; r < Playfair.DIM; r++) {
+            for (int c = 0; c < Playfair.DIM; c++) {
+                int last = key[r * Playfair.DIM + c];
+                int count = 0;
+                internal:
+                for (int r1 = 0; r1 < Playfair.DIM; r1++) {
+                    for (int c1 = 0; c1 < Playfair.DIM; c1++) {
+                        int r2 = (r - r1 + Playfair.DIM) % Playfair.DIM;
+                        int c2 = (c - c1 + Playfair.DIM) % Playfair.DIM;
+                        int previous = key[r2 * Playfair.DIM + c2];
+                        if (previous > last) {
+                            break internal;
+                        }
+                        last = previous;
+                        count++;
+                        if (count > bestCount) {
+                            bestCount = count;
+                            bestC = c;
+                            bestR = r;
+                        }
+                    }
+                }
+            }
+        }
+        System.arraycopy(key, 0, buffer, 0, Playfair.SQUARE);
+        for (int r = 0; r < Playfair.DIM; r++) {
+            for (int c = 0; c < Playfair.DIM; c++) {
+                int r2 = (r - bestR - 1 + Playfair.DIM) % Playfair.DIM;
+                int c2 = (c - bestC - 1 + Playfair.DIM) % Playfair.DIM;
+                key[r2 * Playfair.DIM + c2] = buffer[r * Playfair.DIM + c];
+            }
+        }
+
+    }
+
+    boolean keyFromSentence(int[] phrase) {
+
+        boolean[] used = new boolean[26];
+        int length = 0;
+
+        for (int symbol : phrase) {
+            if (used[symbol]) {
+                continue;
+            }
+            key[length++] = symbol;
+            used[symbol] = true;
+        }
+
+        for (int symbol = 0; symbol < 26; symbol++) {
+            if (used[symbol] || symbol == Utils.getTextSymbol('J')) {
+                continue;
+            }
+            key[length++] = symbol;
+        }
+        computeInverse();
+        keyword = Utils.getString(phrase);
+        return length == 25;
+    }
 }

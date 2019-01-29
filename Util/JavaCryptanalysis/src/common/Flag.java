@@ -1,29 +1,30 @@
 package common;
 
 public enum Flag {
-    RESOURCE_PATH("r"),
-    CIPHERTEXT("i"),
-    CRIB("p"),
-    SIMULATION_TEXT_LENGTH("l"),
-    THREADS("t"),
-    OFFSET("o"),
-    CYCLES("n"),
-    MODEL("m"),
-    SIMULATION("s"),
-    VERSION("y"),
-    LANGUAGE("g"),
-    SIMULATION_OVERLAPS("o"),
     INDICATORS_FILE("d"),
-    KEY("k"),
-    MODE("o"),
-    CRIB_POSITION("j"),
-    VERBOSE("u"),
-    MESSAGE_INDICATOR("w"),
-    RIGHT_ROTOR_SAMPLING("x"),
-    MIDDLE_RING_SCOPE("y"),
+    STRENGTH("e"),
+    SCENARIO_PATH("f"),
+    LANGUAGE("g"),
     HC_SA_CYCLES("h"),
+    CIPHERTEXT("i"),
+    CRIB_POSITION("j"),
+    KEY("k"),
+    SIMULATION_TEXT_LENGTH("l"),
+    MODEL("m"),
+    CYCLES("n"),
+    OFFSET("o") /* multiplex*/, SIMULATION_OVERLAPS("o") /* M209 */, MODE("o") /* Enigma*/,
+    CRIB("p"),
+    RESOURCE_PATH("r"),
+    SIMULATION("s"),
+    THREADS("t"),
+    VERBOSE("u"),
+    HELP("v"),
+    MESSAGE_INDICATOR("w"),
+    VERSION("y") /* M209 */, MIDDLE_RING_SCOPE("y") /* Enigma */,
+    RIGHT_RING_SAMPLING("x"), HEXA_FILE("h"),
     SCENARIO("z"),
-    SCENARIO_PATH("f");
+    ;
+
     String string;
     private Flag(String string) {
         this.string = string;

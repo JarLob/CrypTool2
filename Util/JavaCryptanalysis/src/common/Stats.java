@@ -40,11 +40,23 @@ public class Stats {
             }
             is.close();
 
+            /*
+            int[] hist = new int[100000];
+            for (short h : hexagramStats) {
+                hist[h]++;
+            }
+            for (int i = 0; i < hist.length; i++) {
+                if (hist[i] > 0) {
+                    System.out.printf("%,8d %,10d/%,10d\n", i, hist[i], hexagramStats.length);
+                }
+            }
+            */
+
 
         } catch (IOException ex) {
             CtAPI.goodbyeFatalError("Unable to read hexa file %s - %s", filename, ex.toString());
         }
-      CtAPI.printf("Hexagram stats file %s loaded successfully (%f seconds), size = %,d bytes (%,d free bytes after loading)\n",
+        CtAPI.printf("Hexagram stats file %s loaded successfully (%f seconds), size = %,d bytes (%,d free bytes after loading)\n",
                 filename, (System.currentTimeMillis() - start) / 1_000.0, totalShortRead * 2, Runtime.getRuntime().freeMemory());
         CtAPI.println("");
         CtAPI.println("");
@@ -71,7 +83,7 @@ public class Stats {
         return evalPlaintextHexagram(plaintext, plaintext.length);
     }
 
-    public static String evaluationsSummary(){
+    public static String evaluationsSummary() {
         long elapsed = Utils.getElapsedMillis();
         return String.format("[%,d sec.][%,dK decryptions (%,dK/sec.)]", elapsed / 1000, Stats.evaluations / 1000, Stats.evaluations / elapsed);
     }

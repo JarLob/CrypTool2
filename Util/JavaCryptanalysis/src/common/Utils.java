@@ -2,14 +2,15 @@ package common;
 
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 
 import static common.CtAPI.printf;
 
 public class Utils {
 
     public static final String HEXA_FILE = "hexa.bin";
+    public static final String NGRAMS7_FILE = "english_7grams.bin";
+    public static final String NGRAMS8_FILE = "english_8grams.bin";
     public static final String BOOK_FILE = "book.txt";
 
     public static final int A = getTextSymbol('A');
@@ -131,10 +132,130 @@ public class Utils {
         } catch (IOException ex) {
             CtAPI.goodbyeFatalError("Unable to read text file %s - %s", filename, ex.toString());
         }
-       printf("Read segment from file: %s, Position: %d , Length: %d\n", filename, startPost, length);
+        printf("Read segment from file: %s, Position: %d , Length: %d\n", filename, startPost, length);
         printf("%s\n\n", getString(text));
 
         return length;
+    }
+
+    public static int readRandomSentenceFromFile(String filename) {
+
+
+        ArrayList<Set<String>> lists = new ArrayList<>();
+        for (int l = 0; l < 10000; l++) {
+            lists.add(new HashSet<>());
+        }
+        try {
+            FileReader fileReader = new FileReader(filename);
+
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            StringBuilder s = new StringBuilder();
+            String line = "";
+
+            while ((line = bufferedReader.readLine()) != null) {
+                line += ' ';
+                for (int i = 0; i < line.length(); i++) {
+                    char c = line.charAt(i);
+                    int rep = from.indexOf(c);
+                    if (rep != -1) {
+                        c = to.charAt(rep);
+                    }
+                    if (c == ' ') {
+                        if (s.length() > 0 && s.charAt(s.length() - 1) != ' ') {
+                            s.append(c);
+                        }
+                    } else if (c == '.' || c == ';' || c == ':'|| c == '\"') {
+                        if (s.length() >= 6 && s.length() <= 50 && s.charAt(0) >= 'A' && s.charAt(0) <= 'Z') {
+                            String clean = s.toString().replaceAll(" ", "").toUpperCase();
+                            lists.get(clean.length()).add(clean);
+                        }
+                        s.setLength(0);
+                    } else if (c >= 'a' && c <= 'z') {
+                        s.append(c);
+                    } else if (c >= 'A' && c <= 'Z') {
+                        s.append(c);
+                    }
+                }
+
+            }
+
+            bufferedReader.close();
+        } catch (IOException ex) {
+            CtAPI.goodbyeFatalError("Unable to read text file %s - %s", filename, ex.toString());
+        }
+        for (int l = 0; l < lists.size(); l++) {
+            if (lists.get(l).size() > 10) {
+                System.out.printf("%,5d %,5d\n", l, lists.get(l).size());
+            }
+            for (String s : lists.get(l)) {
+                int[] t = Utils.getText(s);
+                if (t.length >= 6) {
+                    long score = Stats.evalPlaintextHexagram(t);
+                    System.out.printf("%,5d %s %,d\n", l, s, score);
+                }
+
+            }
+
+        }
+        return 0;
+    }
+
+    public static int[] readRandomSentenceFromFile(String filename, String prefix, int length, boolean playfair) {
+
+
+        ArrayList<String> list = new ArrayList<>();
+
+        try {
+            FileReader fileReader = new FileReader(filename);
+
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            StringBuilder s = new StringBuilder();
+            String line = "";
+
+            while ((line = bufferedReader.readLine()) != null) {
+                line += ' ';
+                for (int i = 0; i < line.length(); i++) {
+                    char c = line.charAt(i);
+                    int rep = from.indexOf(c);
+                    if (rep != -1) {
+                        c = to.charAt(rep);
+                    }
+                    if (c == ' ') {
+                        if (s.length() > 0 && s.charAt(s.length() - 1) != ' ') {
+                            s.append(c);
+                        }
+                    } else if (c == '.' || c == ';' || c == ':'|| c == '\"') {
+                        if (s.length() >= 6 && s.length() <= 200 && s.charAt(0) >= 'A' && s.charAt(0) <= 'Z') {
+                            String clean = prefix + s.toString().replaceAll(" ", "").toUpperCase();
+
+                            if (clean.length() == length && (!playfair || !clean.contains("J"))) {
+                                int[] t = Utils.getText(clean);
+                                long score = Stats.evalPlaintextHexagram(t);
+                                if (score > 2_200_000) {
+                                    list.add(clean);
+                                }
+                            }
+                        }
+                        s.setLength(0);
+                    } else if (c >= 'a' && c <= 'z') {
+                        s.append(c);
+                    } else if (c >= 'A' && c <= 'Z') {
+                        s.append(c);
+                    }
+                }
+
+            }
+
+            bufferedReader.close();
+        } catch (IOException ex) {
+            CtAPI.goodbyeFatalError("Unable to read file %s - %s", filename, ex.toString());
+        }
+        if (list.isEmpty()) {
+            CtAPI.goodbyeFatalError("Unable to read sentence from text file %s with %d letters", filename, length);
+        }
+        return Utils.getText(list.get(new Random().nextInt(list.size())));
     }
 
     public static String getString(int[] text) {
@@ -163,6 +284,9 @@ public class Utils {
     }
     public static double randomNextDouble() {
         return random.nextDouble();
+    }
+    public static float randomNextFloat() {
+        return random.nextFloat();
     }
 
     public static int sum(int[] a) {

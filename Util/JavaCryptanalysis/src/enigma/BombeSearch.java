@@ -11,7 +11,7 @@ public class BombeSearch {
         byte[] crib = new byte[BombeCrib.MAXCRIBL];
         int maxCribLen = Math.min(BombeCrib.MAXCRIBL, clen);
         if (CRIB.length() > maxCribLen) {
-            CtAPI.goodbyeFatalError("Crib too long (%d letters) - should not be longer than %d letters\n", CRIB.length(), maxCribLen);
+            CtAPI.goodbyeFatalError("Crib too long (%,d letters) - should not be longer than %,d letters\n", CRIB.length(), maxCribLen);
         }
         int crlen = Utils.getText(CRIB, crib);
 
@@ -48,7 +48,7 @@ public class BombeSearch {
 
             if ((bombeCrib.menu.score < BombeCrib.BADSCORE) || ((minPos == maxPos))) {
                 menus[nMenus++] = bombeCrib.menu;
-                CtAPI.printf("Creating Bombe Menu at Position %d (Links: %d, Closures:%d, Score:%.3f)\n",
+                CtAPI.printf("Creating Bombe Menu at Position %,d (Links: %,d, Closures:%,d, Score:%.3f)\n",
                         bombeCrib.menu.cribStartPos, bombeCrib.menu.totalItems, bombeCrib.menu.totalClosures, bombeCrib.menu.score);
                 if (bombeCrib.menu.score > BombeCrib.BADSCORE)
                     CtAPI.printf("Warning: Turing Score (%.3f) is high (higher means worse) for Bombe menu. This may create many false stops. A longer crib may help.\n",
@@ -59,7 +59,7 @@ public class BombeSearch {
             pos++;
         }
         if (nMenus > 0) {
-            CtAPI.printf("\n %d Bombe menus created - Starting search using Turing Bombe\n\n", nMenus);
+            CtAPI.printf("\n %,d Bombe menus created - Starting search using Turing Bombe\n\n", nMenus);
             if (!range) {
                 lowKey = highKey = key;
             }
@@ -102,7 +102,7 @@ public class BombeSearch {
         int bestscore = 0;
         int bestMenu = 0;
 
-        final int MAXTOPS = 1000;
+        final int MAXTOPS = 100000;
         Key topKeys[] = new Key[MAXTOPS];
         int nTops = 0;
 
@@ -120,7 +120,7 @@ public class BombeSearch {
         if (lo.mRing == high.mRing)
             lRingSettingScope = MRingScope.ALL;
         long totalKeys = Key.numberOfPossibleKeys(lo, high, len, lRingSettingScope, rRingSpacing, checkForIndicatorMatch);
-        CtAPI.printf("\n\nStart Bombe search: Number of menus: %d, Number of keys: %d, Total to Check: %d\n\n", nMenus, totalKeys, nMenus * totalKeys);
+        CtAPI.printf("\n\nStart Bombe search: Number of menus: %,d, Number of keys: %,d, Total to Check: %,d\n\n", nMenus, totalKeys, nMenus * totalKeys);
 
         printEstimatedTimeBombeRun(totalKeys * bombeMenus[0].cribLen / 25, nMenus, lRingSettingScope);
 
@@ -191,7 +191,7 @@ public class BombeSearch {
                                                                     if (ckey.score > 0) {
                                                                         nStops++;
                                                                         if (nStops == (MAXTOPS - 1)) {
-                                                                            CtAPI.printf("\n\nWARNING: Too many stops - Only the top %d keys (sorted by IC and Trigrams) will be kept for Hill Climbing\n", MAXTOPS);
+                                                                            CtAPI.printf("\n\nWARNING: Too many stops - Only the top %,d keys (sorted by IC and Trigrams) will be kept for Hill Climbing\n", MAXTOPS);
                                                                             CtAPI.print("Bombe search with the current crib parameters (crib string and position/position range) may be inefficient and/or miss the right key.\n");
                                                                             CtAPI.print("It is recommended to either reduce the key range, use a longer crib, or specify fewer positions to search for the crib.\n\n");
                                                                         }
@@ -217,7 +217,7 @@ public class BombeSearch {
                                                                     if (ckey.score == bestscore) {
                                                                         counterSameMax++;
                                                                         if (counterSameMax == 100)
-                                                                            CtAPI.printf("WARNING: Too many stops with same score (%d). Only stops with higher scores will be displayed\n", bestscore);
+                                                                            CtAPI.printf("WARNING: Too many stops with same score (%,d). Only stops with higher scores will be displayed\n", bestscore);
 
 
                                                                     }
@@ -272,30 +272,30 @@ public class BombeSearch {
 
 
         if (nMenus == 1)
-            CtAPI.printf("End of Bombe Search >>%s<< at Position: %d (Turing Score: %.3f Closures: %d Links: %d) \n\nFOUND %d STOP(s) \n\n%d Total Keys Tested in %.1f Seconds(%d/sec)\n\n",
+            CtAPI.printf("End of Bombe Search >>%s<< at Position: %,d (Turing Score: %.3f Closures: %,d Links: %,d) \n\nFOUND %,d STOP(s) \n\n%,d Total Keys Tested in %.1f Seconds(%,d/sec)\n\n",
                     Utils.getString(bombeMenus[0].crib, bombeMenus[0].cribLen),
                     bombeMenus[0].cribStartPos, bombeMenus[0].score, bombeMenus[0].totalClosures, bombeMenus[0].totalItems,
                     nStops, counter, elapsed / 1000.0, 1000 * counter / elapsed);
         else if (nStops > 0)
-            CtAPI.printf("End of Bombe Search >>%s<< for %d Menus - Best menu found for Position: %d (Turing Score: %.3f Closures: %d Links: %d) \n\nFOUND %d STOP(S) \n %d Total Keys/Menu Combinations Tested in %.1f Seconds(%d/sec)\n\n",
+            CtAPI.printf("End of Bombe Search >>%s<< for %,d Menus - Best menu found for Position: %,d (Turing Score: %.3f Closures: %,d Links: %,d) \n\nFOUND %,d STOP(S) \n %,d Total Keys/Menu Combinations Tested in %.1f Seconds(%,d/sec)\n\n",
                     Utils.getString(bombeMenus[bestMenu].crib, bombeMenus[bestMenu].cribLen),
                     nMenus,
                     bombeMenus[bestMenu].cribStartPos, bombeMenus[bestMenu].score, bombeMenus[bestMenu].totalClosures, bombeMenus[bestMenu].totalItems,
                     nStops, counter, elapsed / 1000.0, 1000 * counter / elapsed);
 
         else
-            CtAPI.printf("End of Bombe Search >>%s<< for %d Menus \n\nNO STOP FOUND! \n\n%d Keys&Menu Combinations Tested in %.1f Seconds(%d/sec)\n\n",
+            CtAPI.printf("End of Bombe Search >>%s<< for %,d Menus \n\nNO STOP FOUND! \n\n%,d Keys&Menu Combinations Tested in %.1f Seconds(%,d/sec)\n\n",
                     Utils.getString(bombeMenus[0].crib, bombeMenus[0].cribLen),
                     nMenus, counter, elapsed / 1000.0, 1000 * counter / elapsed);
 
 
         if ((nTops >= 10) && (hcMaxPass > 0))
-            CtAPI.printf("Menu Bombe - Starting batch of %d Keys; Min Score : %d, Median Score: %d, Max Score: %d\n",
+            CtAPI.printf("Menu Bombe - Starting batch of %,d Keys; Min Score : %,d, Median Score: %,d, Max Score: %,d\n",
                     nTops, topKeys[nTops - 1].score, topKeys[nTops / 2].score, topKeys[0].score);
 
         if ((nTops > 0) && (hcMaxPass > 0))
 
-            HillClimb.hillClimbBatch(topKeys, nTops, hcMaxPass, THREADS, 10000, ciphertext, len);
+            HillClimb.hillClimbBatch(topKeys, nTops, hcMaxPass, THREADS, 10000, ciphertext, len, rRingSpacing);
 
 
     }
@@ -355,10 +355,10 @@ public class BombeSearch {
         if (CtBestList.shouldPushResult(ckey.score)) {
             ReportResult.reportResult(0, ckey, ckey.score, plains, desc);
 
-            CtAPI.printf("MENU STOP NEW BEST - Pos: %d Stop Score: %d (Tri: %d IC: %.5f) - Crib Length: %d, Crib: %s\n",
+            CtAPI.printf("MENU STOP NEW BEST - Pos: %,d Stop Score: %,d (Tri: %,d IC: %.5f) - Crib Length: %,d, Crib: %s\n",
                     bombeMenu.cribStartPos, ckey.score, tri, ic, bombeMenu.cribLen,
                     Utils.getString(bombeMenu.crib, bombeMenu.cribLen));
-            CtAPI.printf("Stecker: [ Pairs: %s (%d) Self: %s (%d) Total: %d ] - Confirmation Strength: Pairs: %s Self: %s\n",
+            CtAPI.printf("Stecker: [ Pairs: %s (%,d) Self: %s (%,d) Total: %,d ] - Confirmation Strength: Pairs: %s Self: %s\n",
                     stbs.toString(), stbs.length(), confirmedSelfS, confirmedSelfS.length(), (stbs.length() + confirmedSelfS.length()),
                     strengthStbs.toString(), strengthSelfS);
 
@@ -372,7 +372,7 @@ public class BombeSearch {
 
         for (int i = 0; i < s.length(); i++) {
             if (Utils.getDigitIndex(s.charAt(i)) == -1) {
-                CtAPI.goodbyeFatalError("Invalid %s (%s) for %s - Expecting number from %d to %d \n", s, CommandLine.getShortDesc(flag), flag, min, max);
+                CtAPI.goodbyeFatalError("Invalid %s (%s) for %s - Expecting number from %,d to %,d \n", s, CommandLine.getShortDesc(flag), flag, min, max);
             }
         }
 
@@ -381,7 +381,7 @@ public class BombeSearch {
         if ((intValue >= min) && (intValue <= max)) {
             return intValue;
         }
-        CtAPI.goodbyeFatalError("Invalid %s (%s) for %s - Expecting number from %d to %d \n", s, CommandLine.getShortDesc(flag), flag, min, max);
+        CtAPI.goodbyeFatalError("Invalid %s (%s) for %s - Expecting number from %,d to %,d \n", s, CommandLine.getShortDesc(flag), flag, min, max);
         return -1;
 
     }
