@@ -24,7 +24,7 @@
     <replacement key="$Revealed Key$" value="Entschlüsselter Klartext" />
     <replacement key="$Encrypt$" value="Verschlüsselung" />
     <replacement key="$PlayfairAnalyzer$" value="Playfair-Analyse" />
-    <replacement key="$memo$" value="Diese Vorlage demonstriert einen Ciphertext-Only-Angriff auf die Playfair-Chiffre. Der oben angegebene Klartext wird mit der Playfair-Komponente verschlüsselt und der resultierende Geheimtext wird an die Playfair-Analyse-Komponente geschickt.\line\line Bitte beachten Sie, dass bei Playfair für jeden Schlüssel mehrere äquivalente Schlüssel existieren. Wenn also der in diesem Beispiel verwendete Schlüssel (&quot;HISTORY&quot;) nicht in der gefundenen Schlüsselmatrix erscheint, so muss die Matrix horizontal oder vertikal rotiert werden, um das Schlüsselwort sehen zu können." />
+    <replacement key="$memo$" value="Diese Vorlage demonstriert einen Ciphertext-Only-Angriff auf die Playfair-Chiffre. Der oben angegebene Klartext wird mit der Playfair-Komponente verschlüsselt und der resultierende Geheimtext wird an die Playfair-Analyse-Komponente geschickt.\line\line Bitte beachten Sie, dass bei Playfair für jeden Schlüssel mehrere äquivalente Schlüssel existieren." />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Ciphertext$" value="шифротекста" />
@@ -33,7 +33,7 @@
     <replacement key="$Revealed Key$" value="Расшифрованный открытый текст" />
     <replacement key="$Encrypt$" value="кодирование" />
     <replacement key="$PlayfairAnalyzer$" value="Плайфаир-анализ" />
-    <replacement key="$memo$" value="Этот шаблон демонстрирует атаку только для шифрованного текста на шифр Playfair. Открытый текст выше зашифрован компонентом Playfair, и полученный зашифрованный текст отправляется в компонент анализа Playfair. \Line \line Обратите внимание, что у Playfair есть несколько эквивалентных ключей для каждого ключа. Поэтому, если ключ, используемый в этом примере («ИСТОРИЯ»), не отображается в найденной ключевой матрице, тогда матрица должна поворачиваться горизонтально или вертикально, чтобы увидеть ключевое слово." />
+    <replacement key="$memo$" value="Этот шаблон демонстрирует атаку только зашифрованным текстом на шифр Playfair. Открытый текст выше зашифрован с помощью компонента Playfair, а полученный зашифрованный текст отправляется компоненту Playfair Analysis. \line\line Обратите внимание, что Playfair имеет несколько эквивалентных ключей для каждого ключа." />
   </replacements>
   <replacements lang="en">
     <replacement key="$Ciphertext$" value="Ciphertext" />
@@ -42,6 +42,6 @@
     <replacement key="$Revealed Key$" value="Revealed Key" />
     <replacement key="$Encrypt$" value="Encrypt" />
     <replacement key="$PlayfairAnalyzer$" value="Playfair Analyzer" />
-    <replacement key="$memo$" value="This template demonstrates a ciphertext-only attack on the Playfair cipher. The plaintext above is encrypted with the Playfair component and the resulting ciphertext is sent to the Playfair Analyzer.\line\line Please note that in Playfair for every key there exist several equivalent keys that generate the same ciphertext. So if the keyword used in this example (&quot;HISTORY&quot;) does not seem to appear in the found key matrix, you may have to shift the matrix horizontally or vertically to see the keyword." />
+    <replacement key="$memo$" value="This template demonstrates a ciphertext-only attack on the Playfair cipher. The plaintext above is encrypted with the Playfair component and the resulting ciphertext is sent to the Playfair Analyzer.\line\line Please note that in Playfair for every key there exist several equivalent keys that generate the same ciphertext." />
   </replacements>
 </sample>
