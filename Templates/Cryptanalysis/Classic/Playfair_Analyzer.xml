@@ -24,7 +24,7 @@
     <replacement key="$Revealed Key$" value="Entschlüsselter Klartext" />
     <replacement key="$Encrypt$" value="Verschlüsselung" />
     <replacement key="$PlayfairAnalyzer$" value="Playfair-Analyse" />
-    <replacement key="$memo$" value="Diese Vorlage demonstriert einen Ciphertext-Only-Angriff auf die Playfair-Chiffre. Der oben angegebene Klartext wird mit der Playfair-Komponente verschlüsselt und der resultierende Geheimtext wird an die Playfair-Analyse-Komponente geschickt.\line\line Bitte beachten Sie, dass bei Playfair für jeden Schlüssel mehrere äquivalente Schlüssel existieren." />
+    <replacement key="$memo$" value="Diese Vorlage demonstriert einen Ciphertext-Only-Angriff auf die Playfair-Chiffre. Der oben angegebene Klartext wird mit der Playfair-Komponente verschlüsselt und der resultierende Geheimtext wird an die Playfair-Analyse-Komponente geschickt.\line\line Bitte beachten Sie, dass bei Playfair für jeden Schlüssel mehrere äquivalente Schlüssel existieren, die denselben Geheimtext erzeugen." />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Ciphertext$" value="шифротекста" />
