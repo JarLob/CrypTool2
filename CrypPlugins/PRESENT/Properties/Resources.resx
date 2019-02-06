@@ -318,4 +318,10 @@
   <data name="PaddingList6" xml:space="preserve">
     <value>1-0 padding</value>
   </data>
+  <data name="AboutText" xml:space="preserve">
+    <value>The visualization of the PRESENT cipher is independent from the actual data entered in the CrypTool 2 workspace. If you want to change the input data of the presentation please go to the settings tab.</value>
+  </data>
+  <data name="SettingsInfoText" xml:space="preserve">
+    <value>Here, you can change the key and input block that are used in the presentation. Exactly one block is encrypted, thus, no additional data, e.g. an initialization vector, is needed</value>
+  </data>
 </root>

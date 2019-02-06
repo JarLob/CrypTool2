@@ -6,12 +6,66 @@
     <Grid>
         <TabControl Name="tabControl">
             <TabItem x:Name="tabAbout" Header="{Loc About}">
-                <Grid>
-                    <Image Source="/PRESENT;component/Animation/resources/info.png" />
+                <Grid Width="640" Height="480" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="73*"/>
+                        <ColumnDefinition Width="567*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock  FontFamily="Times New Roman"
+                                FontSize="100"
+                                FontStretch="UltraExpanded"
+                                LineHeight="120"
+                                LineStackingStrategy="BlockLineHeight"
+                                Width="640"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center" 
+                                TextAlignment="Center"
+                                TextWrapping="WrapWithOverflow"
+                                Margin="0,-1,0,361" Text="Present Cipher" Grid.ColumnSpan="2"/>
+                    <TextBlock  FontFamily="Times New Roman"
+                                FontSize="50"
+                                FontStretch="UltraExpanded"
+                                LineHeight="60"
+                                LineStackingStrategy="BlockLineHeight"
+                                Width="500"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center" 
+                                TextAlignment="Center"
+                                TextWrapping="WrapWithOverflow"
+                                Margin="70,112,70,308" Text="80 Bit Key Encryption" Grid.ColumnSpan="2"/>
+                    <TextBlock  FontSize="15"
+                                Width="600"
+                                Height="150"
+                                VerticalAlignment="Center" 
+                                TextWrapping="WrapWithOverflow"
+                                Margin="30,177,10,153" Text="{Loc AboutText}" Grid.ColumnSpan="2"/>
+                    <TextBlock  FontSize="15"
+                                FontWeight="Bold"
+                                Width="640"
+                                VerticalAlignment="Center" 
+                                HorizontalAlignment="Center"
+                                TextAlignment="Center"
+                                TextWrapping="WrapWithOverflow"
+                                Margin="16,427,-16,33" Text="Horst Görtz Institute for IT Security, Ruhr University Bochum, Germany" Grid.ColumnSpan="2"/>
+                    <TextBlock  FontSize="15"
+                                FontWeight="Bold"
+                                Width="640"
+                                VerticalAlignment="Center" 
+                                HorizontalAlignment="Center"
+                                TextAlignment="Center"
+                                TextWrapping="WrapWithOverflow"
+                                Margin="0,446,0,14" Text="Animation by Timm Korte / korte-cryptool@easycrypt.de" Grid.ColumnSpan="2"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabSettings" Header="{Loc Settings}">
-                <Grid>
+                <Grid Width="640" Height="480">                    
+                    <TextBlock  FontSize="15"
+                                Width="600"
+                                Height="150"
+                                VerticalAlignment="Center" 
+                                TextWrapping="WrapWithOverflow"
+                                Margin="30,15,10,315" Text="{Loc SettingsInfoText}"/>
+
                     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
@@ -63,25 +117,25 @@
                 <Grid>
                     <Label FontWeight="Bold" FontSize="16" Name="lbl_KS_Text" VerticalAlignment="Top">Step Description</Label>
                     <Viewbox>
-                    <Viewport3D Name="KS_View3D" Width="640" Height="480">
-                        <ModelVisual3D>
-                            <ModelVisual3D.Content>
-                                <Model3DGroup x:Name="KS_Model3DLights">
-                                    <PointLight x:Name="KS_PointLight" Color="white" Position="20,60,30" Range="200"/>
-                                    <AmbientLight x:Name="KS_AmbientLight" Color="#404040"/>
-                                </Model3DGroup>
-                            </ModelVisual3D.Content>
-                        </ModelVisual3D>
-                        <ModelVisual3D>
-                            <ModelVisual3D.Content>
-                                <Model3DGroup x:Name="KS_Model3DGroup">
-                                </Model3DGroup>
-                            </ModelVisual3D.Content>
-                        </ModelVisual3D>
-                        <Viewport3D.Camera>
-                            <PerspectiveCamera x:Name="KS_Cam" Position="10,13,20" LookDirection="-0.7,-1,-2" FieldOfView="50"/>
-                        </Viewport3D.Camera>
-                    </Viewport3D>
+                        <Viewport3D Name="KS_View3D" Width="640" Height="480">
+                            <ModelVisual3D>
+                                <ModelVisual3D.Content>
+                                    <Model3DGroup x:Name="KS_Model3DLights">
+                                        <PointLight x:Name="KS_PointLight" Color="white" Position="20,60,30" Range="200"/>
+                                        <AmbientLight x:Name="KS_AmbientLight" Color="#404040"/>
+                                    </Model3DGroup>
+                                </ModelVisual3D.Content>
+                            </ModelVisual3D>
+                            <ModelVisual3D>
+                                <ModelVisual3D.Content>
+                                    <Model3DGroup x:Name="KS_Model3DGroup">
+                                    </Model3DGroup>
+                                </ModelVisual3D.Content>
+                            </ModelVisual3D>
+                            <Viewport3D.Camera>
+                                <PerspectiveCamera x:Name="KS_Cam" Position="10,13,20" LookDirection="-0.7,-1,-2" FieldOfView="50"/>
+                            </Viewport3D.Camera>
+                        </Viewport3D>
                     </Viewbox>
                     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Orientation="Horizontal" Width="Auto">
                         <Label FontWeight="Bold" FontSize="16" Content="{Loc Key_Schedule}" />
@@ -92,7 +146,7 @@
                         <Label FontWeight="Bold" FontSize="16" Content="{Loc Step_}" />
                         <Label FontWeight="Bold" FontSize="16" Name="lbl_KS_Step" Content="{Loc Key_XOR}" />
                     </StackPanel>
-                                        
+
                     <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
                         <Slider Name="sld_KS_Speed" Height="25" Width="100" Margin="0,0,10,0" Value="1" Minimum="0.5" Maximum="50" SmallChange="0.5" ToolTip="{Loc animation_speed}" />
                         <Button Name="btn_KS_PrevRound" Height="25" Width="50" Background="Transparent" Click="KS_Nav_Click" ToolTip="{Loc previous_round}">
@@ -117,27 +171,27 @@
                 <Grid>
                     <Label FontWeight="Bold" FontSize="16" Name="lbl_EC_Text" VerticalAlignment="Top">Text00</Label>
                     <Viewbox>
-                    <Viewport3D Name="EC_View3D" Width="640" Height="480">
-                        <ModelVisual3D>
-                            <ModelVisual3D.Content>
-                                <Model3DGroup x:Name="EC_Model3DLights">
-                                    <PointLight x:Name="EC_PointLight" Color="white" Position="20,60,30" Range="200"/>
-                                    <AmbientLight x:Name="EC_AmbientLight" Color="#404040"/>
-                                </Model3DGroup>
-                            </ModelVisual3D.Content>
-                        </ModelVisual3D>
-                        <ModelVisual3D>
-                            <ModelVisual3D.Content>
-                                <Model3DGroup x:Name="EC_Model3DGroup">
-                                </Model3DGroup>
-                            </ModelVisual3D.Content>
-                        </ModelVisual3D>
-                        <Viewport3D.Camera>
-                            <PerspectiveCamera x:Name="EC_Cam" Position="10,13,20" LookDirection="-0.7,-1,-2" FieldOfView="50"/>
-                        </Viewport3D.Camera>
-                    </Viewport3D>
+                        <Viewport3D Name="EC_View3D" Width="640" Height="480">
+                            <ModelVisual3D>
+                                <ModelVisual3D.Content>
+                                    <Model3DGroup x:Name="EC_Model3DLights">
+                                        <PointLight x:Name="EC_PointLight" Color="white" Position="20,60,30" Range="200"/>
+                                        <AmbientLight x:Name="EC_AmbientLight" Color="#404040"/>
+                                    </Model3DGroup>
+                                </ModelVisual3D.Content>
+                            </ModelVisual3D>
+                            <ModelVisual3D>
+                                <ModelVisual3D.Content>
+                                    <Model3DGroup x:Name="EC_Model3DGroup">
+                                    </Model3DGroup>
+                                </ModelVisual3D.Content>
+                            </ModelVisual3D>
+                            <Viewport3D.Camera>
+                                <PerspectiveCamera x:Name="EC_Cam" Position="10,13,20" LookDirection="-0.7,-1,-2" FieldOfView="50"/>
+                            </Viewport3D.Camera>
+                        </Viewport3D>
                     </Viewbox>
-                    
+
                     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Orientation="Horizontal" Width="Auto">
                         <Label FontWeight="Bold" FontSize="16" Content="{Loc Encryption}" />
                         <Image Height="25" Source="/PRESENT;component/Animation/resources/trenn.png"></Image>
@@ -165,7 +219,7 @@
                             <Image Source="/PRESENT;component/Animation/resources/go-last.png"></Image>
                         </Button>
                     </StackPanel>
-                    
+
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabTrace" Header="{Loc Trace}">

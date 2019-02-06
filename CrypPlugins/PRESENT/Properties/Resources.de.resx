@@ -318,4 +318,10 @@
   <data name="PaddingList6" xml:space="preserve">
     <value>1-0-Padding</value>
   </data>
+  <data name="AboutText" xml:space="preserve">
+    <value>Die Visualisierung der PRESENT-Chiffre ist unabhängig von den tatsächlichen Daten, die im CrypTool 2-Arbeitsbereich eingegeben werden. Wenn die Eingabedaten der Präsentation geändert werden sollen, muss die Registerkarte Einstellungen genutzt werden.</value>
+  </data>
+  <data name="SettingsInfoText" xml:space="preserve">
+    <value>Hier kann der Schlüssel und der Eingabeblock geändert werden, welche in der Präsentation verwendet werden. Genau ein Block wird verschlüsselt, somit werden keine zusätzlichen Daten, wie z.B. ein Initialisierungsvektor, benötigt</value>
+  </data>
 </root>
