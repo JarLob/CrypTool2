@@ -76,11 +76,11 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0" Height="26" Width="70" HorizontalContentAlignment="Right" Content="{Loc Key_}" />
-                        <ec:TextBoxHexOnly x:Name="txt_Key" Grid.Row="0" Grid.Column="1" Height="26" Width="180" HorizontalContentAlignment="Left" MaxLength="20">00000000000000000000</ec:TextBoxHexOnly>
-                        <Label Grid.Row="1" Grid.Column="0" Height="26" Width="70" HorizontalContentAlignment="Right" Content="{Loc Data_}" />
-                        <ec:TextBoxHexOnly x:Name="txt_Data" Grid.Row="1" Grid.Column="1" Height="26" Width="180" HorizontalContentAlignment="Left" MaxLength="16">0000000000000000</ec:TextBoxHexOnly>
-                        <Button Grid.Row="2" Grid.Column="1" Name="btn_Assign" Click="Assign_Click" Content="{Loc Assign}" />
+                        <Label FontSize="18" Grid.Row="0" Grid.Column="0" Height="35" Width="200" HorizontalContentAlignment="Right" Content="{Loc Key_}" />
+                        <ec:TextBoxHexOnly FontSize="18"  x:Name="txt_Key" Grid.Row="0" Grid.Column="1" Height="35" Width="220" HorizontalContentAlignment="Left" MaxLength="20">00000000000000000000</ec:TextBoxHexOnly>
+                        <Label FontSize="18"  Grid.Row="1" Grid.Column="0" Height="35" Width="200" HorizontalContentAlignment="Right" Content="{Loc Data_}" />
+                        <ec:TextBoxHexOnly FontSize="18"  x:Name="txt_Data" Grid.Row="1" Grid.Column="1" Height="35" Width="220" HorizontalContentAlignment="Left" MaxLength="16">0000000000000000</ec:TextBoxHexOnly>
+                        <Button FontSize="18"  Grid.Row="2" Grid.Column="1" Name="btn_Assign" Click="Assign_Click" Height="35" Content="{Loc Assign}" />
                     </Grid>
                 </Grid>
             </TabItem>

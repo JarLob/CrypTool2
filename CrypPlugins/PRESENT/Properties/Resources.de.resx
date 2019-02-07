@@ -205,7 +205,7 @@
     <value>Bitgruppe {0} (Bits {1:d2},{2:d2},{3:d2},{4:d2}) Schlüssel XOR : {5} XOR {6} = {7}</value>
   </data>
   <data name="Data_" xml:space="preserve">
-    <value>Daten:</value>
+    <value>Daten (8 Byte):</value>
   </data>
   <data name="Done" xml:space="preserve">
     <value>Fertig</value>
@@ -226,7 +226,7 @@
     <value>Erzeugung der 32 Rundenschlüssel beendet</value>
   </data>
   <data name="Key_" xml:space="preserve">
-    <value>Schlüssel:</value>
+    <value>Schlüssel (10 Byte):</value>
   </data>
   <data name="Key_Extraction" xml:space="preserve">
     <value>Schlüsselextraktion</value>
@@ -319,9 +319,9 @@
     <value>1-0-Padding</value>
   </data>
   <data name="AboutText" xml:space="preserve">
-    <value>Die Visualisierung der PRESENT-Chiffre ist unabhängig von den tatsächlichen Daten, die im CrypTool 2-Arbeitsbereich eingegeben werden. Wenn die Eingabedaten der Präsentation geändert werden sollen, muss die Registerkarte Einstellungen genutzt werden.</value>
+    <value>Die Visualisierung der PRESENT-Chiffre ist unabhängig von den Daten, die im CT2-Arbeitsbereich eingegeben werden. Die in der Präsentation zu nutzenden Eingabedaten können unter der Registerkarte "Einstellungen" geändert werden.</value>
   </data>
   <data name="SettingsInfoText" xml:space="preserve">
-    <value>Hier kann der Schlüssel und der Eingabeblock geändert werden, welche in der Präsentation verwendet werden. Genau ein Block wird verschlüsselt, somit werden keine zusätzlichen Daten, wie z.B. ein Initialisierungsvektor, benötigt</value>
+    <value>Hier können Schlüssel und Daten (Klartext in hex) zur Verwendung in der Präsentation geändert werden. Die Visualisierung verschlüsselt genau einen Block -- somit werden keine zusätzlichen Parameter (z.B. ein Initialisierungsvektor) benötigt.</value>
   </data>
 </root>

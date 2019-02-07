@@ -133,7 +133,7 @@
     <value>Key</value>
   </data>
   <data name="InputKeyTooltip" xml:space="preserve">
-    <value>Must be 10 or 16 bytes.</value>
+    <value>Must be 10 or 16 byte.</value>
   </data>
   <data name="InputIVCaption" xml:space="preserve">
     <value>Initialization vector</value>
@@ -205,7 +205,7 @@
     <value>bit group {0} (bits {1:d2},{2:d2},{3:d2},{4:d2}) key xor : {5} XOR {6} = {7}</value>
   </data>
   <data name="Data_" xml:space="preserve">
-    <value>Data:</value>
+    <value>Data (8 byte):</value>
   </data>
   <data name="Done" xml:space="preserve">
     <value>Done</value>
@@ -226,7 +226,7 @@
     <value>Finished generating 32 roundkeys</value>
   </data>
   <data name="Key_" xml:space="preserve">
-    <value>Key:</value>
+    <value>Key (10 byte):</value>
   </data>
   <data name="Key_Extraction" xml:space="preserve">
     <value>Key Extraction</value>
@@ -319,9 +319,9 @@
     <value>1-0 padding</value>
   </data>
   <data name="AboutText" xml:space="preserve">
-    <value>The visualization of the PRESENT cipher is independent from the actual data entered in the CrypTool 2 workspace. If you want to change the input data of the presentation please go to the settings tab.</value>
+    <value>The visualization of the PRESENT cipher is independent from the data entered in the CT2 workspace. Input data for the presentation can be entered below the tab "Settings".</value>
   </data>
   <data name="SettingsInfoText" xml:space="preserve">
-    <value>Here, you can change the key and input block that are used in the presentation. Exactly one block is encrypted, thus, no additional data, e.g. an initialization vector, is needed</value>
+    <value>Here, you can change key and input (plaintext in hex) that are used in the presentation. The visualization encrypts exactly one block, thus, no additional data (like an initialization vector) is needed.</value>
   </data>
 </root>
