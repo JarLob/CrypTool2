@@ -1,0 +1,54 @@
+﻿<Window x:Class="Cryptool.Plugins.HomophonicSubstitutionAnalyzer.HomophoneSubstitutionAnalyzerPresentation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="HillClimberPresentation">
+    <TabControl Width="Auto">
+        <TabItem Header="Analyzer" Width="Auto">
+            <Grid Width="Auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="95*"/>
+                    <ColumnDefinition Width="659*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="150*" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="150*" />
+                </Grid.RowDefinitions>
+                <TextBox Name="InfoTextBox" Grid.Row="0" FontSize="20" FontFamily="Courier New" IsEnabled="False" Grid.ColumnSpan="2"/>
+                <TextBox Name="CipherAlphabetTextBox" Grid.Row="1" FontSize="17" VerticalContentAlignment="Center" FontFamily="Courier New" IsEnabled="False" Grid.ColumnSpan="2" />
+                <TextBox Name="PlainAlphabetTextBox" Grid.Row="2" FontSize="17" VerticalContentAlignment="Center" FontFamily="Courier New" IsEnabled="False" Grid.ColumnSpan="2" />
+                <Grid Grid.Row="3" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="140"/>
+                    </Grid.ColumnDefinitions>
+                    <ProgressBar Name="ProgressBar" Grid.Column="0"/>
+                    <Label Name="ProgressText" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Width="200" Height="25"/>
+                    <TextBox Name="CostTextBox" Grid.Column="1" IsEnabled="False"/>
+                    <Button Name="AnalyzeButton" Grid.Column="2" Content="Analyze" Click="Analyze_Click" Width="120"/>
+                    <Button Name="ResetLockedLettersButton" Grid.Column="3" Content="Reset Locked Letters" Click="ResetLockedLettersButton_Click" Width="120" />
+                    <Button Name="FindLockWordsButton" Grid.Column="4" Content="Find/Lock Words" Click="FindLockWordsButton_OnClick" Width="120"/>
+                </Grid>
+                <Label Grid.Row="4" Grid.ColumnSpan="2">Ciphertext:</Label>
+                <ScrollViewer Grid.Row="5" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Width="Auto" Height="Auto" Grid.ColumnSpan="2">
+                    <Grid Name="CiphertextGrid" />
+                </ScrollViewer>
+                <Label Grid.Row="6" Grid.ColumnSpan="2">Plaintext:</Label>
+                <ScrollViewer Grid.Row="7" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Width="Auto" Height="Auto" Grid.ColumnSpan="2">
+                    <Grid  Name="PlaintextGrid"/>
+                </ScrollViewer>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Key Letter Distribution"  Width="Auto">
+            <ListView Name="KeyLetterListView" />
+        </TabItem>
+    </TabControl>
+</Window>
