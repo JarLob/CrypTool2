@@ -1,7 +1,8 @@
-﻿<Window x:Class="Cryptool.Plugins.HomophonicSubstitutionAnalyzer.HomophoneSubstitutionAnalyzerPresentation"
+﻿<UserControl x:Class="Cryptool.Plugins.HomophonicSubstitutionAnalyzer.HomophoneSubstitutionAnalyzerPresentation"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="HillClimberPresentation">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        MinWidth="1000" 
+        MinHeight="500">
     <TabControl Width="Auto">
         <TabItem Header="Analyzer" Width="Auto">
             <Grid Width="Auto">
@@ -51,4 +52,4 @@
             <ListView Name="KeyLetterListView" />
         </TabItem>
     </TabControl>
-</Window>
+</UserControl>

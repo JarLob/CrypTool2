@@ -38,12 +38,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
     /// <summary>
     /// Interaktionslogik für HomophoneSubstitutionAnalyzerPresentation.xaml
     /// </summary>
-    public partial class HomophoneSubstitutionAnalyzerPresentation : Window
+    public partial class HomophoneSubstitutionAnalyzerPresentation : UserControl
     {        
-        private int keylength = 0;
-        private const string PlainAlphabetText = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
-        //private const string PlainAlphabetText = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        private const string CipherAlphabetText = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖabcdefghijklmnopqrstuvwxyzäüöß1234567890ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩАБВГДЂЕЄЖЗЅИІЈКЛЉМНЊОПРСТЋУФХЦЧЏШЪЫЬЭЮЯ!§$%&=?#";
+        private int _keylength = 0;
+        private string PlainAlphabetText = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+        private string CipherAlphabetText = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖabcdefghijklmnopqrstuvwxyzäüöß1234567890ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩАБВГДЂЕЄЖЗЅИІЈКЛЉМНЊОПРСТЋУФХЦЧЏШЪЫЬЭЮЯ!§$%&=?#";
         private HillClimber _hillClimber;
         private WordFinder _wordFinder;
         private SymbolLabel[,] _ciphertextLabels;
@@ -51,25 +50,25 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private TextBox[] _minTextBoxes;
         private TextBox[] _maxTextBoxes;
         private AnalyzerConfiguration _analyzerConfiguration = null;
-
-        private const string text = "391509993129321099012337309921272945289902389940163499374131351825889932305248171112995038993915099903173716293199301199362925109904260799401534351812303688990947992911125005173099481610992434420818359929119939158899463036140745500809990601401629231705990615413505169948151099323650250206499930129939163499352925042799031738153031995037992442361318144999078835174309089911362925991650389935302310990137994015349902322938483024170599374106051838372936993930993804502840993188480935391610993629254252993425321835303699460137991302174138991941145041379906048838423515099945013799221723241007990349991650389929462699373027990336414041383717280534994815185299168899354114090899391510993629250226993425315035189904389942279901033730234140889909253210362935163499384106188837381241241449990530283341093610079952340235234999062925312418488899094136303210";
-
+        private string _ciphertext = null;
         private bool _running = false;
-
+        
         public HomophoneSubstitutionAnalyzerPresentation()
         {
             InitializeComponent();
+        }
 
-            Statistics.Load5GramsGZ("en-5gram-nocs-sp.gz");
-            //Statistics.Load5GramsGZ("en-5gram-nocs.gz");
+        /// <summary>
+        /// Initializes the ui with a new ciphertext
+        /// </summary>
+        /// <param name="ciphertext"></param>
+        public void Initialize(string ciphertext)
+        {
+            //Statistics.Load5GramsGZ("en-5gram-nocs-sp.gz");
+            _ciphertext = ciphertext;
+            _keylength = (int)(Tools.Distinct(Tools.MapHomophoneIntoNumberSpace(ciphertext)).Length * 1.3);
 
-            //Statistics.Load5GramsGZ("es-5gram-nocs.gz");
-            //Statistics.Load6GramsGZ("es-6gram-nocs.gz");            
-            //_wordFinder = new WordFinder("es-words.txt", 8, 10, PlainAlphabetText);
-
-            keylength = (int) (Tools.Distinct(Tools.MapHomophoneIntoNumberSpace(text)).Length * 1.3);
-
-            _analyzerConfiguration = new AnalyzerConfiguration(keylength, Tools.ChangeToConsecutiveNumbers(Tools.MapHomophoneIntoNumberSpace(text)));
+            _analyzerConfiguration = new AnalyzerConfiguration(_keylength, Tools.ChangeToConsecutiveNumbers(Tools.MapHomophoneIntoNumberSpace(ciphertext)));
             _analyzerConfiguration.PlaintextAlphabet = PlainAlphabetText;
             _analyzerConfiguration.CiphertextAlphabet = CipherAlphabetText;
             _analyzerConfiguration.TextColumns = 60;
@@ -118,6 +117,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 
             GenerateKeyLetterListView();
         }
+
 
         /// <summary>
         /// Generates the Grid for the ciphertext and fills in the symbols
@@ -394,7 +394,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 PlainAlphabetTextBox.Text = PlainAlphabetTextBox.Text.Insert(index, Tools.MapNumbersIntoTextSpace(new int[] { _hillClimber.AnalyzerConfiguration.LockedHomophoneMappings[index] }, PlainAlphabetText));
 
                 //decrypt text using the key
-                var ciphertext = Tools.ChangeToConsecutiveNumbers(Tools.MapHomophoneIntoNumberSpace(text));
+                var ciphertext = Tools.ChangeToConsecutiveNumbers(Tools.MapHomophoneIntoNumberSpace(_ciphertext));
                 var len = Tools.Distinct(ciphertext).Length;
                 for (var i = 0; i < ciphertext.Length; i++)
                 {
@@ -403,7 +403,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 var numkey = new HomophoneMapping[PlainAlphabetTextBox.Text.Length];
                 var cipheralphabet = Tools.MapIntoNumberSpace(CipherAlphabetTextBox.Text, CipherAlphabetText);
                 var plainalphabet = Tools.MapIntoNumberSpace(PlainAlphabetTextBox.Text, PlainAlphabetText);
-                for (var i = 0; i < keylength; i++)
+                for (var i = 0; i < _keylength; i++)
                 {
                     numkey[i] = new HomophoneMapping(ciphertext, cipheralphabet[i], plainalphabet[i]);
                 }

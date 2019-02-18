@@ -20,41 +20,31 @@ using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 {
-    // HOWTO: Change author name, email address, organization and URL.
-    [Author("Anonymous", "coredevs@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
-    // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
-    // You can (and should) provide a user documentation as XML file and an own icon.
-    [PluginInfo("Example Plugin", "Subtract one number from another", "HomophonicSubstitutionAnalyzer/userdoc.xml", new[] { "CrypWin/images/default.png" })]
-    // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
-    [ComponentCategory(ComponentCategory.ToolsMisc)]
+    [Author("Nils Kopal", "nils.kopal@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
+    [PluginInfo("PluginCaption", "PluginTooltip", "HomophonicSubstitutionAnalyzer/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class HomophonicSubstitutionAnalyzer : ICrypComponent
     {
         #region Private Variables
 
-        // HOWTO: You need to adapt the settings class as well, see the corresponding file.
-        private readonly ExamplePluginCT2Settings settings = new ExamplePluginCT2Settings();
+        private readonly ExamplePluginCT2Settings _settings = new ExamplePluginCT2Settings();
+
+        private readonly HomophoneSubstitutionAnalyzerPresentation _presentation = new HomophoneSubstitutionAnalyzerPresentation();
 
         #endregion
 
         #region Data Properties
-
-        /// <summary>
-        /// HOWTO: Input interface to read the input data. 
-        /// You can add more input properties of other type if needed.
+       
         /// </summary>
-        [PropertyInfo(Direction.InputData, "Input name", "Input tooltip description")]
-        public int SomeInput
+        [PropertyInfo(Direction.InputData, "CiphertextCaption", "CiphertextTooltip")]
+        public string Ciphertext
         {
             get;
             set;
         }
-
-        /// <summary>
-        /// HOWTO: Output interface to write the output data.
-        /// You can add more output properties ot other type if needed.
-        /// </summary>
-        [PropertyInfo(Direction.OutputData, "Output name", "Output tooltip description")]
-        public int SomeOutput
+  
+        [PropertyInfo(Direction.OutputData, "PlaintextCaption", "PlaintextTooltip")]
+        public string Plaintext
         {
             get;
             set;
@@ -69,7 +59,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         public ISettings Settings
         {
-            get { return settings; }
+            get { return _settings; }
         }
 
         /// <summary>
@@ -77,7 +67,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         public UserControl Presentation
         {
-            get { return null; }
+            get { return _presentation; }
         }
 
         /// <summary>
@@ -96,11 +86,10 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             ProgressChanged(0, 1);
 
             // HOWTO: After you have changed an output property, make sure you announce the name of the changed property to the CT2 core.
-            SomeOutput = SomeInput - settings.SomeParameter;
             OnPropertyChanged("SomeOutput");
 
             // HOWTO: You can pass error, warning, info or debug messages to the CT2 main window.
-            if (settings.SomeParameter < 0)
+            if (_settings.SomeParameter < 0)
             {
                 GuiLogMessage("SomeParameter is negative", NotificationLevel.Debug);
             }
