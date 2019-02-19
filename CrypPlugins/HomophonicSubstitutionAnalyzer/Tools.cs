@@ -28,7 +28,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        public static int[] MapHomophoneIntoNumberSpace(string text)
+        public static int[] MapHomophoneTextNumbersIntoNumberSpace(string text)
         {
             var numbers = new int[text.Length / 2];
             var position = 0;
@@ -113,6 +113,16 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 }
             }
             return builder.ToString();
+        }
+
+        public static int[] MapHomophonesIntoNumberSpace(string ciphertext)
+        {
+            int[] numbers = new int[ciphertext.Length];
+            for (int i = 0; i < ciphertext.Length; i++)
+            {
+                numbers[i] = (int) ciphertext[i];
+            }
+            return numbers;
         }
     }
 }

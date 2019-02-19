@@ -67,20 +67,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             var numbers = new List<int>();
             keyLetterDistributor.Init(AnalyzerConfiguration.KeyLetterLimits);
             for (var i = 0; i < AnalyzerConfiguration.Keylength; i++)
-            {
-                switch (AnalyzerConfiguration.KeyLettersDistributionType)
-                {
-                    case KeyLettersDistributionType.Random:
-                        numbers.Add(random.Next(AnalyzerConfiguration.PlaintextAlphabet.Length));
-                        break;
-                    case KeyLettersDistributionType.UniformDistribution:
-                        numbers.Add(i % AnalyzerConfiguration.PlaintextAlphabet.Length);
-                        break;
-                    case KeyLettersDistributionType.LetterLimits:
-                        numbers.Add(keyLetterDistributor.GetNextLetter());
-                        break;
-                }
-
+            {                
+                numbers.Add(keyLetterDistributor.GetNextLetter());             
             }
             var runkey = new HomophoneMapping[AnalyzerConfiguration.Keylength];
             for (var i = 0; i < AnalyzerConfiguration.Keylength; i++)
@@ -440,16 +428,6 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
     }
 
     /// <summary>
-    /// How should the letters be distributed in the key?
-    /// </summary>
-    public enum KeyLettersDistributionType
-    {
-        Random,     //letters are chosen Random
-        LetterLimits,     //letters are bettween min and max values
-        UniformDistribution     //letters are chosen using a UniformDistribution distribution
-    }
-
-    /// <summary>
     /// Configuration class containing all configuration parameters needed by the analyzer
     /// </summary>
     public class AnalyzerConfiguration
@@ -462,7 +440,6 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public int MinWordLength { get; set; }
         public int MaxWordLength { get; set; }
         public int WordCountToFind { get; set; }
-        public KeyLettersDistributionType KeyLettersDistributionType { get; set; }
         public List<LetterLimits> KeyLetterLimits { get; set; }
         public int[] LockedHomophoneMappings { get; set; }
         public int[] Ciphertext { get; private set; }

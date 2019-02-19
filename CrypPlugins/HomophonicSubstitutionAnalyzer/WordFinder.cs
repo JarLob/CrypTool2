@@ -43,7 +43,6 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             _minLength = minLength;
             _maxLength = maxLength;
             _alphabet = alphabet;
-
                       
             foreach (string word in words)
             {

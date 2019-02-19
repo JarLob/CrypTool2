@@ -29,7 +29,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
     {
         #region Private Variables
 
-        private readonly ExamplePluginCT2Settings _settings = new ExamplePluginCT2Settings();
+        private readonly HomophonicSubstitutionAnalyzerSettings _settings = new HomophonicSubstitutionAnalyzerSettings();
         private readonly HomophoneSubstitutionAnalyzerPresentation _presentation = new HomophoneSubstitutionAnalyzerPresentation();
         private bool _running = true;
 
@@ -94,11 +94,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         public void Execute()
         {            
-            ProgressChanged(0, 1);          
-
-            _presentation.LoadLangStatistics(_settings.Language, true);
-            _presentation.AddCiphertext(Ciphertext);
+            ProgressChanged(0, 1);
+            _presentation.LoadLangStatistics(_settings.Language, _settings.UseSpaces);
+            _presentation.AddCiphertext(Ciphertext, _settings.CiphertextFormat);
+            GenerateLetterLimits();
+            _presentation.AnalyzerConfiguration.WordCountToFind = _settings.WordCountToFind;
+            _presentation.AnalyzerConfiguration.MinWordLength = _settings.MinWordLength;
+            _presentation.AnalyzerConfiguration.MaxWordLength = _settings.MaxWordLength;
             _presentation.AddDictionary(Dictionary);
+
             _presentation.EnableUI();
             _running = true;
 
@@ -107,9 +111,48 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 Thread.Sleep(100);
             }
 
-            _presentation.DisableUI();
+            _presentation.DisableUIAndStop();
             
             ProgressChanged(1, 1);
+        }
+
+        /// <summary>
+        /// Generate the letter limits list based on language
+        /// </summary>
+        private void GenerateLetterLimits()
+        {
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Clear();
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 0, MinValue = 3, MaxValue = 5 });   //A
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 1, MinValue = 1, MaxValue = 2 });   //B
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 2, MinValue = 1, MaxValue = 2 });   //C
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 3, MinValue = 1, MaxValue = 2 });   //D
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 4, MinValue = 4, MaxValue = 6 });   //E
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 5, MinValue = 1, MaxValue = 2 });   //F
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 6, MinValue = 1, MaxValue = 2 });   //G
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 7, MinValue = 1, MaxValue = 2 });   //H
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 8, MinValue = 3, MaxValue = 5 });   //I
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 9, MinValue = 1, MaxValue = 2 });   //J
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 10, MinValue = 1, MaxValue = 2 });   //K
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 11, MinValue = 1, MaxValue = 2 });   //L
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 12, MinValue = 1, MaxValue = 2 });   //M
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 13, MinValue = 2, MaxValue = 3 });   //N
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 14, MinValue = 3, MaxValue = 5 });   //O
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 15, MinValue = 1, MaxValue = 2 });   //P
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 16, MinValue = 1, MaxValue = 2 });   //Q
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 17, MinValue = 1, MaxValue = 2 });   //R
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 18, MinValue = 1, MaxValue = 2 });   //S
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 19, MinValue = 3, MaxValue = 5 });   //T
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 20, MinValue = 3, MaxValue = 5 });   //U
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 21, MinValue = 1, MaxValue = 2 });   //V
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 22, MinValue = 1, MaxValue = 2 });   //W
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 23, MinValue = 1, MaxValue = 2 });   //X
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 24, MinValue = 1, MaxValue = 2 });   //Y
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 25, MinValue = 1, MaxValue = 2 });   //Z
+            if (_settings.UseSpaces)
+            {
+                _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 26, MinValue = 2, MaxValue = 3 });   //SPACE       
+            }
+            _presentation.GenerateKeyLetterLimitsListView();
         }
 
         /// <summary>
@@ -117,7 +160,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         public void PostExecution()
         {
-            _presentation.DisableUI();
+            _presentation.DisableUIAndStop();
         }
 
         /// <summary>
@@ -125,7 +168,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// Shall abort long-running execution.
         /// </summary>
         public void Stop()
-        {
+        {            
             _running = false;
         }
 

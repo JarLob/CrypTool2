@@ -43,94 +43,94 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
     {        
         private int _keylength = 0;
         private string PlainAlphabetText = null; //obtained by language statistics
-        private string CipherAlphabetText = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖabcdefghijklmnopqrstuvwxyzäüöß1234567890ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩАБВГДЂЕЄЖЗЅИІЈКЛЉМНЊОПРСТЋУФХЦЧЏШЪЫЬЭЮЯ!§$%&=?#";
+        private string CipherAlphabetText = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖabcdefghijklmnopqrstuvwxyzäüöß1234567890ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩАБВГДЂЕЄЖЗЅИІЈКЛЉМНЊОПРСТЋУФХЦЧЏШЪЫЬЭЮЯ!§$%&=?#ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㄲㄸㅃㅆㅉㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣㅐㅒㅔㅖㅚㅟㅢㅘㅝㅙㅞ";
         private HillClimber _hillClimber;
         private WordFinder _wordFinder;
         private SymbolLabel[,] _ciphertextLabels = new SymbolLabel[0,0];
         private SymbolLabel[,] _plaintextLabels = new SymbolLabel[0,0];
         private TextBox[] _minTextBoxes = new TextBox[0];
         private TextBox[] _maxTextBoxes = new TextBox[0];
-        private AnalyzerConfiguration _analyzerConfiguration = null;
+        public AnalyzerConfiguration AnalyzerConfiguration { get; private set; }
         private PentaGrams _pentagrams;
         private string _ciphertext = null;
+        private CiphertextFormat _ciphertextFormat;
         private bool _running = false;
         
         public HomophoneSubstitutionAnalyzerPresentation()
         {
             InitializeComponent();
-            DisableUI();
+            DisableUIAndStop();
         }      
 
         /// <summary>
         /// Initializes the ui with a new ciphertext
         /// </summary>
         /// <param name="ciphertext"></param>
-        public void AddCiphertext(string ciphertext)
+        public void AddCiphertext(string ciphertext, CiphertextFormat ciphertextFormat)
         {
-            //Statistics.Load5GramsGZ("en-5gram-nocs-sp.gz");
             _ciphertext = ciphertext;
-            _keylength = (int)(Tools.Distinct(Tools.MapHomophoneIntoNumberSpace(ciphertext)).Length * 1.3);
+            _ciphertextFormat = ciphertextFormat;
+            int[] numbers = ConvertCiphertextToNumbers(ciphertext);
+            //_keylength = (int)(Tools.Distinct(numbers).Length * 1.3);
+            _keylength = (int)(Tools.Distinct(numbers).Length);
+            AnalyzerConfiguration = new AnalyzerConfiguration(_keylength, Tools.ChangeToConsecutiveNumbers(numbers));
 
-            _analyzerConfiguration = new AnalyzerConfiguration(_keylength, Tools.ChangeToConsecutiveNumbers(Tools.MapHomophoneIntoNumberSpace(ciphertext)));
-            _analyzerConfiguration.PlaintextAlphabet = PlainAlphabetText;
-            _analyzerConfiguration.CiphertextAlphabet = CipherAlphabetText;
-            _analyzerConfiguration.TextColumns = 60;
-            _analyzerConfiguration.Cycles = 50000;
-            _analyzerConfiguration.KeyLetterLimits = new List<LetterLimits>();
-            _analyzerConfiguration.KeyLettersDistributionType = KeyLettersDistributionType.LetterLimits;
-            _analyzerConfiguration.MinWordLength = 8;
-            _analyzerConfiguration.MaxWordLength = 10;
-            _analyzerConfiguration.WordCountToFind = 3;
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 0, MinValue = 3, MaxValue = 5 });   //A
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 1, MinValue = 1, MaxValue = 2 });   //B
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 2, MinValue = 1, MaxValue = 2 });   //C
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 3, MinValue = 1, MaxValue = 2 });   //D
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 4, MinValue = 4, MaxValue = 6 });   //E
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 5, MinValue = 1, MaxValue = 2 });   //F
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 6, MinValue = 1, MaxValue = 2 });   //G
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 7, MinValue = 1, MaxValue = 2 });   //H
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 8, MinValue = 3, MaxValue = 5 });   //I
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 9, MinValue = 1, MaxValue = 2 });   //J
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 10, MinValue = 1, MaxValue = 2 });   //K
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 11, MinValue = 1, MaxValue = 2 });   //L
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 12, MinValue = 1, MaxValue = 2 });   //M
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 13, MinValue = 2, MaxValue = 3 });   //N
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 14, MinValue = 3, MaxValue = 5 });   //O
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 15, MinValue = 1, MaxValue = 2 });   //P
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 16, MinValue = 1, MaxValue = 2 });   //Q
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 17, MinValue = 1, MaxValue = 2 });   //R
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 18, MinValue = 1, MaxValue = 2 });   //S
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 19, MinValue = 3, MaxValue = 5 });   //T
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 20, MinValue = 3, MaxValue = 5 });   //U
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 21, MinValue = 1, MaxValue = 2 });   //V
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 22, MinValue = 1, MaxValue = 2 });   //W
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 23, MinValue = 1, MaxValue = 2 });   //X
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 24, MinValue = 1, MaxValue = 2 });   //Y
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 25, MinValue = 1, MaxValue = 2 });   //Z
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 26, MinValue = 2, MaxValue = 3 });   //SPACE                        
-
-            _hillClimber = new HillClimber(_analyzerConfiguration);
+            AnalyzerConfiguration.PlaintextAlphabet = PlainAlphabetText;
+            AnalyzerConfiguration.CiphertextAlphabet = CipherAlphabetText;
+            AnalyzerConfiguration.TextColumns = 60;
+            AnalyzerConfiguration.Cycles = 50000;
+            AnalyzerConfiguration.KeyLetterLimits = new List<LetterLimits>();
+            AnalyzerConfiguration.MinWordLength = 8;
+            AnalyzerConfiguration.MaxWordLength = 10;
+            AnalyzerConfiguration.WordCountToFind = 3;
+            _hillClimber = new HillClimber(AnalyzerConfiguration);
             _hillClimber.Pentagrams = _pentagrams;
             _hillClimber.NewBestValue += HillClimberNewBestValue;
             _hillClimber.Progress += HillClimberProgress;
 
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                GenerateCiphertextGrid(_analyzerConfiguration.Ciphertext, _analyzerConfiguration.TextColumns);
-                GeneratePlaintextGrid(_analyzerConfiguration.Ciphertext, _analyzerConfiguration.TextColumns);
-                GenerateKeyLetterListView();
+                GenerateCiphertextGrid(AnalyzerConfiguration.Ciphertext, AnalyzerConfiguration.TextColumns);
+                GeneratePlaintextGrid(AnalyzerConfiguration.Ciphertext, AnalyzerConfiguration.TextColumns);                
                 ProgressBar.Value = 0;
                 ProgressText.Content = String.Empty;
             }, null);          
         }
 
         /// <summary>
-        /// Creates the wordfinder that is used during the analysis
+        /// Converts string text into numbers depending on ciphertextformat
+        /// </summary>
+        /// <param name="ciphertext"></param>
+        /// <returns></returns>
+        private int[] ConvertCiphertextToNumbers(string ciphertext)
+        {
+            switch (_ciphertextFormat)
+            {
+                case CiphertextFormat.NumberGroups:
+                    return Tools.MapHomophoneTextNumbersIntoNumberSpace(ciphertext);
+                    break;
+                case CiphertextFormat.Letters:
+                default:
+                    return Tools.MapHomophonesIntoNumberSpace(ciphertext);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Creates the wordfinder that is used during the analysis using a given list of words from a dictionary
+        /// if list is null or empty, no wordfinder is created
         /// </summary>
         /// <param name="dictionary"></param>
         public void AddDictionary(string[] dictionary)
         {
-            _wordFinder = new WordFinder(dictionary, _analyzerConfiguration.MinWordLength, _analyzerConfiguration.MaxWordLength, PlainAlphabetText);
+            if (dictionary != null && dictionary.Length > 0)
+            {
+                _wordFinder = new WordFinder(dictionary, AnalyzerConfiguration.MinWordLength, AnalyzerConfiguration.MaxWordLength, PlainAlphabetText);
+            }
+            else
+            {
+                _wordFinder = null;
+            }
         }
 
         /// <summary>
@@ -172,13 +172,13 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     label.X = x;
                     label.Y = y;
                     label.SymbolOffset = offset;
-                    label.Symbol = "" + text[offset];
+                    label.Symbol = text.Substring(offset, 1);
                     _ciphertextLabels[x, y] = label;
                     label.Width = 30;
                     label.Height = 30;
                     label.FontSize = 20;
                     label.FontFamily = new FontFamily("Courier New");
-                    label.Content = text[offset];
+                    label.Content = text.Substring(offset, 1);
                     offset++;
                     Grid.SetRow(label, y);
                     Grid.SetColumn(label, x);
@@ -227,12 +227,12 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     label.X = x;
                     label.Y = y;
                     label.SymbolOffset = offset;
-                    label.Symbol = "" + text[offset];
+                    label.Symbol = text.Substring(offset, 1);
                     label.Width = 30;
                     label.Height = 30;
                     label.FontSize = 20;
                     label.FontFamily = new FontFamily("Courier New");
-                    label.Content = text[offset];
+                    label.Content = text.Substring(offset, 1);
                     offset++;
                     Grid.SetRow(label, y);
                     Grid.SetColumn(label, x);
@@ -245,56 +245,58 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// Generates the tab for the selection of the key letter distribution
         /// </summary>
         /// <param name="PlainAlphabetText"></param>
-        private void GenerateKeyLetterListView()
+        public void GenerateKeyLetterLimitsListView()
         {
-            KeyLetterListView.Items.Clear();
-
-            _minTextBoxes = new TextBox[_analyzerConfiguration.KeyLetterLimits.Count];
-            _maxTextBoxes = new TextBox[_analyzerConfiguration.KeyLetterLimits.Count];
-
-            int index = 0;
-            foreach (LetterLimits limits in _analyzerConfiguration.KeyLetterLimits)
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
             {
-                Grid grid = new Grid();
-                grid.Width = 500;
-                grid.ColumnDefinitions.Add(new ColumnDefinition());
-                grid.ColumnDefinitions.Add(new ColumnDefinition());
-                grid.ColumnDefinitions.Add(new ColumnDefinition());
+                KeyLetterListView.Items.Clear();
+                _minTextBoxes = new TextBox[AnalyzerConfiguration.KeyLetterLimits.Count];
+                _maxTextBoxes = new TextBox[AnalyzerConfiguration.KeyLetterLimits.Count];
 
-                Label label = new Label();
-                label.FontSize = 16;
-                label.Width = 50;
-                label.Content = String.Format("\"{0}\"", Tools.MapNumbersIntoTextSpace(new int[] {limits.Letter}, _analyzerConfiguration.PlaintextAlphabet));
-                Grid.SetRow(label, 0);
-                Grid.SetColumn(label, 0);
+                int index = 0;
+                foreach (LetterLimits limits in AnalyzerConfiguration.KeyLetterLimits)
+                {
+                    Grid grid = new Grid();
+                    grid.Width = 500;
+                    grid.ColumnDefinitions.Add(new ColumnDefinition());
+                    grid.ColumnDefinitions.Add(new ColumnDefinition());
+                    grid.ColumnDefinitions.Add(new ColumnDefinition());
 
-                TextBox minbox = new TextBox();
-                _minTextBoxes[index] = minbox;
-                minbox.Text = "" + limits.MinValue;
-                minbox.VerticalContentAlignment = VerticalAlignment.Center;
-                minbox.Width = 150;
-                minbox.Height = 25;
-                minbox.FontSize = 12;
-                Grid.SetRow(minbox, 0);
-                Grid.SetColumn(minbox, 1);
+                    Label label = new Label();
+                    label.FontSize = 16;
+                    label.Width = 50;
+                    label.Content = String.Format("\"{0}\"", Tools.MapNumbersIntoTextSpace(new int[] {limits.Letter}, AnalyzerConfiguration.PlaintextAlphabet));
+                    Grid.SetRow(label, 0);
+                    Grid.SetColumn(label, 0);
 
-                TextBox maxbox = new TextBox();
-                _maxTextBoxes[index] = maxbox;
-                maxbox.Text = "" + limits.MaxValue;
-                maxbox.VerticalContentAlignment = VerticalAlignment.Center;
-                maxbox.Width = 150;
-                maxbox.Height = 25;
-                maxbox.FontSize = 12;
-                Grid.SetRow(maxbox, 0);
-                Grid.SetColumn(maxbox, 2);
+                    TextBox minbox = new TextBox();
+                    _minTextBoxes[index] = minbox;
+                    minbox.Text = "" + limits.MinValue;
+                    minbox.VerticalContentAlignment = VerticalAlignment.Center;
+                    minbox.Width = 150;
+                    minbox.Height = 25;
+                    minbox.FontSize = 12;
+                    Grid.SetRow(minbox, 0);
+                    Grid.SetColumn(minbox, 1);
 
-                grid.Children.Add(label);
-                grid.Children.Add(minbox);
-                grid.Children.Add(maxbox);
+                    TextBox maxbox = new TextBox();
+                    _maxTextBoxes[index] = maxbox;
+                    maxbox.Text = "" + limits.MaxValue;
+                    maxbox.VerticalContentAlignment = VerticalAlignment.Center;
+                    maxbox.Width = 150;
+                    maxbox.Height = 25;
+                    maxbox.FontSize = 12;
+                    Grid.SetRow(maxbox, 0);
+                    Grid.SetColumn(maxbox, 2);
 
-                KeyLetterListView.Items.Add(grid);
-                index++;
-            }
+                    grid.Children.Add(label);
+                    grid.Children.Add(minbox);
+                    grid.Children.Add(maxbox);
+
+                    KeyLetterListView.Items.Add(grid);
+                    index++;
+                }
+            }, null);
         }
 
         /// <summary>
@@ -332,7 +334,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     _plaintextLabels[column, row].Content = letter;
                     _plaintextLabels[column, row].Symbol = "" + letter;
                     column++;
-                    if (column == _analyzerConfiguration.TextColumns)
+                    if (column == AnalyzerConfiguration.TextColumns)
                     {
                         column = 0;
                         row++;
@@ -341,10 +343,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 CipherAlphabetTextBox.Text = eventArgs.CiphertextAlphabet;
                 PlainAlphabetTextBox.Text = eventArgs.PlaintextAlphabet;
                 CostTextBox.Text = String.Format("Cost Value: {0}", Math.Round(eventArgs.CostValue, 2));
-
-                AutoLockWords(_analyzerConfiguration.WordCountToFind);
+                AutoLockWords(AnalyzerConfiguration.WordCountToFind);
                 MarkLockedHomophones();
-
             }, null);
         }
 
@@ -383,6 +383,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 //do nothing here
             }
+            mouseButtonEventArgs.Handled = true;
         }
 
         /// <summary>
@@ -412,7 +413,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 PlainAlphabetTextBox.Text = PlainAlphabetTextBox.Text.Insert(index, Tools.MapNumbersIntoTextSpace(new int[] { _hillClimber.AnalyzerConfiguration.LockedHomophoneMappings[index] }, PlainAlphabetText));
 
                 //decrypt text using the key
-                var ciphertext = Tools.ChangeToConsecutiveNumbers(Tools.MapHomophoneIntoNumberSpace(_ciphertext));
+                var ciphertext = Tools.ChangeToConsecutiveNumbers(ConvertCiphertextToNumbers(_ciphertext));
+
                 var len = Tools.Distinct(ciphertext).Length;
                 for (var i = 0; i < ciphertext.Length; i++)
                 {
@@ -434,7 +436,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     _plaintextLabels[column, row].Content = letter;
                     _plaintextLabels[column, row].Symbol = "" + letter;
                     column++;
-                    if (column == _analyzerConfiguration.TextColumns)
+                    if (column == AnalyzerConfiguration.TextColumns)
                     {
                         column = 0;
                         row++;
@@ -543,7 +545,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         private void UpdateKeyLetterLimits()
         {
-            for (int index = 0; index < _analyzerConfiguration.KeyLetterLimits.Count; index++)
+            for (int index = 0; index < AnalyzerConfiguration.KeyLetterLimits.Count; index++)
             {
                 int minvalue = 0;
                 int maxvalue = 0;
@@ -565,7 +567,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     //do nothing
                 }
 
-                LetterLimits limits = _analyzerConfiguration.KeyLetterLimits[index];
+                LetterLimits limits = AnalyzerConfiguration.KeyLetterLimits[index];
                 limits.MinValue = minvalue;
                 limits.MaxValue = maxvalue;
 
@@ -603,16 +605,20 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 return;
             }
-
             AutoLockWords(1);
-
         }
 
         /// <summary>
         /// Automatically locks words
+        /// Only works, if a WordFinder has previously been created
         /// </summary>
         private void AutoLockWords(int minCount)
         {
+            if (_wordFinder == null)
+            {
+                return;
+            }
+
             StringBuilder textBuilder = new StringBuilder();
 
             int column = 0;
@@ -625,7 +631,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 }
                 textBuilder.Append(_plaintextLabels[column, row].Symbol);
                 column++;
-                if (column == _analyzerConfiguration.TextColumns)
+                if (column == AnalyzerConfiguration.TextColumns)
                 {
                     column = 0;
                     row++;
@@ -703,15 +709,16 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     }
                     label.IsEnabled = true;
                 }
-
+                AnalyzeButton.Content = "Analyze";
             }, null);
         }
 
         /// <summary>
-        /// Disables editing, stops everything
+        /// Disables editing and stops everything
         /// </summary>
-        public void DisableUI()
+        public void DisableUIAndStop()
         {
+            _running = false;
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 AnalyzeButton.IsEnabled = false;
@@ -750,9 +757,13 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     }
                     label.IsEnabled = false;
                 }
-
+                AnalyzeButton.Content = "Stop";
             }, null);
-            _running = false;
+            
+            if (_hillClimber != null)
+            {
+                _hillClimber.Stop();
+            }
         }
 
         /// <summary>
@@ -771,7 +782,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <param name="useSpaces"></param>
         public void LoadLangStatistics(int language, bool useSpaces)
         {
-            _pentagrams = new PentaGrams(LanguageStatistics.LanguageCode(language), true);
+            _pentagrams = new PentaGrams(LanguageStatistics.LanguageCode(language), useSpaces);
             PlainAlphabetText = _pentagrams.Alphabet;
         }
     }
