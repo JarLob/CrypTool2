@@ -92,7 +92,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SimulatedAnnealing.cs" />
-    <Compile Include="Statistics.cs" />
     <Compile Include="Tools.cs" />
     <Compile Include="WordFinder.cs" />
   </ItemGroup>

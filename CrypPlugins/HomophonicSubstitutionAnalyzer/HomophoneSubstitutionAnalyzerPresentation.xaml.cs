@@ -32,6 +32,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Cryptool.PluginBase.Utils;
 
 namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 {
@@ -41,28 +42,30 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
     public partial class HomophoneSubstitutionAnalyzerPresentation : UserControl
     {        
         private int _keylength = 0;
-        private string PlainAlphabetText = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+        private string PlainAlphabetText = null; //obtained by language statistics
         private string CipherAlphabetText = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖabcdefghijklmnopqrstuvwxyzäüöß1234567890ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩАБВГДЂЕЄЖЗЅИІЈКЛЉМНЊОПРСТЋУФХЦЧЏШЪЫЬЭЮЯ!§$%&=?#";
         private HillClimber _hillClimber;
         private WordFinder _wordFinder;
-        private SymbolLabel[,] _ciphertextLabels;
-        private SymbolLabel[,] _plaintextLabels;
-        private TextBox[] _minTextBoxes;
-        private TextBox[] _maxTextBoxes;
+        private SymbolLabel[,] _ciphertextLabels = new SymbolLabel[0,0];
+        private SymbolLabel[,] _plaintextLabels = new SymbolLabel[0,0];
+        private TextBox[] _minTextBoxes = new TextBox[0];
+        private TextBox[] _maxTextBoxes = new TextBox[0];
         private AnalyzerConfiguration _analyzerConfiguration = null;
+        private PentaGrams _pentagrams;
         private string _ciphertext = null;
         private bool _running = false;
         
         public HomophoneSubstitutionAnalyzerPresentation()
         {
             InitializeComponent();
-        }
+            DisableUI();
+        }      
 
         /// <summary>
         /// Initializes the ui with a new ciphertext
         /// </summary>
         /// <param name="ciphertext"></param>
-        public void Initialize(string ciphertext)
+        public void AddCiphertext(string ciphertext)
         {
             //Statistics.Load5GramsGZ("en-5gram-nocs-sp.gz");
             _ciphertext = ciphertext;
@@ -104,20 +107,31 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 23, MinValue = 1, MaxValue = 2 });   //X
             _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 24, MinValue = 1, MaxValue = 2 });   //Y
             _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 25, MinValue = 1, MaxValue = 2 });   //Z
-            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 26, MinValue = 2, MaxValue = 3 });   //SPACE            
-
-            _wordFinder = new WordFinder("en-words.txt", _analyzerConfiguration.MinWordLength, _analyzerConfiguration.MaxWordLength, PlainAlphabetText);
+            _analyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 26, MinValue = 2, MaxValue = 3 });   //SPACE                        
 
             _hillClimber = new HillClimber(_analyzerConfiguration);
+            _hillClimber.Pentagrams = _pentagrams;
             _hillClimber.NewBestValue += HillClimberNewBestValue;
             _hillClimber.Progress += HillClimberProgress;
 
-            GenerateCiphertextGrid(_analyzerConfiguration.Ciphertext, _analyzerConfiguration.TextColumns);
-            GeneratePlaintextGrid(_analyzerConfiguration.Ciphertext, _analyzerConfiguration.TextColumns);
-
-            GenerateKeyLetterListView();
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                GenerateCiphertextGrid(_analyzerConfiguration.Ciphertext, _analyzerConfiguration.TextColumns);
+                GeneratePlaintextGrid(_analyzerConfiguration.Ciphertext, _analyzerConfiguration.TextColumns);
+                GenerateKeyLetterListView();
+                ProgressBar.Value = 0;
+                ProgressText.Content = String.Empty;
+            }, null);          
         }
 
+        /// <summary>
+        /// Creates the wordfinder that is used during the analysis
+        /// </summary>
+        /// <param name="dictionary"></param>
+        public void AddDictionary(string[] dictionary)
+        {
+            _wordFinder = new WordFinder(dictionary, _analyzerConfiguration.MinWordLength, _analyzerConfiguration.MaxWordLength, PlainAlphabetText);
+        }
 
         /// <summary>
         /// Generates the Grid for the ciphertext and fills in the symbols
@@ -126,6 +140,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <param name="columns"></param>
         private void GenerateCiphertextGrid(int[] ciphertext, int columns)
         {
+            CiphertextGrid.Children.Clear();
+            
             int rows = (int)Math.Ceiling((double)ciphertext.Length / columns);
             _ciphertextLabels = new SymbolLabel[columns, rows];
             string text = Tools.MapNumbersIntoTextSpace(ciphertext, CipherAlphabetText);
@@ -178,6 +194,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <param name="columns"></param>
         private void GeneratePlaintextGrid(int[] plaintext, int columns)
         {
+            PlaintextGrid.Children.Clear();
+
             int rows = (int)Math.Ceiling((double)plaintext.Length / columns);
             _plaintextLabels = new SymbolLabel[columns, rows];
             string text = Tools.MapNumbersIntoTextSpace(plaintext, CipherAlphabetText);
@@ -640,6 +658,121 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Enables the UI for the user to work with
+        /// </summary>
+        public void EnableUI()
+        {
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                AnalyzeButton.IsEnabled = true;
+                FindLockWordsButton.IsEnabled = true;
+                ResetLockedLettersButton.IsEnabled = true;
+
+                foreach (TextBox box in _minTextBoxes)
+                {
+                    if (box == null)
+                    {
+                        continue;
+                    }
+                    box.IsEnabled = true;
+                }
+                foreach (TextBox box in _maxTextBoxes)
+                {
+                    if (box == null)
+                    {
+                        continue;
+                    }
+                    box.IsEnabled = true;
+                }
+                foreach (SymbolLabel label in _plaintextLabels)
+                {
+                    if (label == null)
+                    {
+                        continue;
+                    }
+                    label.IsEnabled = true;
+                }
+                foreach (SymbolLabel label in _ciphertextLabels)
+                {
+                    if (label == null)
+                    {
+                        continue;
+                    }
+                    label.IsEnabled = true;
+                }
+
+            }, null);
+        }
+
+        /// <summary>
+        /// Disables editing, stops everything
+        /// </summary>
+        public void DisableUI()
+        {
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                AnalyzeButton.IsEnabled = false;
+                FindLockWordsButton.IsEnabled = false;
+                ResetLockedLettersButton.IsEnabled = false;
+
+                foreach (TextBox box in _minTextBoxes)
+                {
+                    if (box == null)
+                    {
+                        continue;
+                    }
+                    box.IsEnabled = false;
+                }
+                foreach (TextBox box in _maxTextBoxes)
+                {
+                    if (box == null)
+                    {
+                        continue;
+                    }
+                    box.IsEnabled = false;
+                }
+                foreach(SymbolLabel label in _plaintextLabels)
+                {
+                    if (label == null)
+                    {
+                        continue;
+                    }
+                    label.IsEnabled = false;
+                }
+                foreach(SymbolLabel label in _ciphertextLabels)
+                {
+                    if (label == null)
+                    {
+                        continue;
+                    }
+                    label.IsEnabled = false;
+                }
+
+            }, null);
+            _running = false;
+        }
+
+        /// <summary>
+        /// Returns, if the analyzer is running
+        /// </summary>
+        /// <returns></returns>
+        public bool IsRunning()
+        {
+            return _running;
+        }
+
+        /// <summary>
+        /// Loads the language statistics
+        /// </summary>
+        /// <param name="language"></param>
+        /// <param name="useSpaces"></param>
+        public void LoadLangStatistics(int language, bool useSpaces)
+        {
+            _pentagrams = new PentaGrams(LanguageStatistics.LanguageCode(language), true);
+            PlainAlphabetText = _pentagrams.Alphabet;
         }
     }
 

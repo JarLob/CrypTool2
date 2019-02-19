@@ -32,55 +32,49 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 
         /// <summary>
         /// Constructor
-        /// Generates a "word tree" for fast searching of words
+        /// Generates a "word tree" for fast search of words
         /// </summary>
-        /// <param name="filename"></param>
+        /// <param name="words"></param>
         /// <param name="minLength"></param>
         /// <param name="maxLength"></param>
         /// <param name="alphabet"></param>
-        public WordFinder(string filename, int minLength, int maxLength, string alphabet)
+        public WordFinder(string[] words, int minLength, int maxLength, string alphabet)
         {
             _minLength = minLength;
             _maxLength = maxLength;
             _alphabet = alphabet;
-            using (var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read))
-            {
-                using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
-                {
-                    while (!streamReader.EndOfStream)
-                    {
-                        string word = streamReader.ReadLine().ToUpper();
-                        var node = _rootLetterNode;
 
-                        if (word.Length < _minLength || word.Length > _maxLength)
+                      
+            foreach (string word in words)
+            {
+                if (word.Length < _minLength || word.Length > _maxLength)
+                {
+                    continue;
+                }
+                LetterNode node = _rootLetterNode;
+                int[] letters = Tools.MapIntoNumberSpace(word.ToUpper(), alphabet);
+                for (int i = 0; i < letters.Length; i++)
+                {
+                    bool found = false;
+                    foreach (var childLetterNode in node.nodes)
+                    {
+                        if (childLetterNode.Letter == letters[i])
                         {
-                            continue;
+                            node = childLetterNode;
+                            found = true;
+                            break;
                         }
-                        int[] letters = Tools.MapIntoNumberSpace(word, alphabet);
-                        for (int i = 0; i < letters.Length; i++)
-                        {
-                            bool found = false;
-                            foreach (var childLetterNode in node.nodes)
-                            {
-                                if (childLetterNode.Letter == letters[i])
-                                {
-                                    node = childLetterNode;
-                                    found = true;
-                                    break;
-                                }
-                            }
-                            if (!found)
-                            {
-                                LetterNode newNode = new LetterNode();
-                                newNode.Letter = letters[i];
-                                node.nodes.Add(newNode);
-                                node = newNode;
-                            }
-                        }
+                    }
+                    if (!found)
+                    {
+                        LetterNode newNode = new LetterNode();
+                        newNode.Letter = letters[i];
+                        node.nodes.Add(newNode);
+                        node = newNode;
                     }
                 }
             }
-        }         
+        }      
         
         /// <summary>
         /// Checks, if a given word is in the dictionary

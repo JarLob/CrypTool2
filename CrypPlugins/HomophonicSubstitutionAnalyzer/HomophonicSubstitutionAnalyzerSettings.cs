@@ -25,32 +25,17 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
     {
         #region Private Variables
 
-        private int someParameter = 0;
+        private int _language;
 
         #endregion
 
         #region TaskPane Settings
 
-        /// <summary>
-        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
-        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
-        /// </summary>
-        [TaskPane("SomeParameter", "This is a parameter tooltip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
-        public int SomeParameter
+        [TaskPane("LanguageCaption", "LanguageTooltip", null, 0, false, ControlType.LanguageSelector)]
+        public int Language
         {
-            get
-            {
-                return someParameter;
-            }
-            set
-            {
-                if (someParameter != value)
-                {
-                    someParameter = value;
-                    // HOWTO: MUST be called every time a property value changes with correct parameter name
-                    OnPropertyChanged("SomeParameter");
-                }
-            }
+            get { return _language; }
+            set { _language = value; }
         }
 
         #endregion

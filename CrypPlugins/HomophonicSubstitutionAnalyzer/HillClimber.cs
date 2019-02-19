@@ -1,4 +1,5 @@
-﻿/*
+﻿using Cryptool.PluginBase.Utils;
+/*
    Copyright 2019 Nils Kopal <Nils.Kopal<at>CrypTool.org
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,8 +32,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private double globalbestkeycost;
 
         public event EventHandler<ProgressChangedEventArgs> Progress;
-        public event EventHandler<NewBestValueEventArgs> NewBestValue;                       
-
+        public event EventHandler<NewBestValueEventArgs> NewBestValue;
+        public PentaGrams Pentagrams { get; set; }
         public AnalyzerConfiguration AnalyzerConfiguration { get; private set; }
 
         /// <summary>
@@ -126,7 +127,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                         DecryptHomophoneCipherInPlace(plaintext, runkey, i, j);
 
                         // compute cost value to rate the key (fitness)
-                        var costvalue = Statistics.Calculate5GramCost(plaintext) * AnalyzerConfiguration.CostFunctionMultiplicator;
+                        var costvalue = Pentagrams.CalculateCost(plaintext) * AnalyzerConfiguration.CostFunctionMultiplicator;
                         
                         // use Cowans churn to accept or refuse the new key
                         if (simulatedAnnealing.AcceptWithChurn(costvalue, bestkeycost))

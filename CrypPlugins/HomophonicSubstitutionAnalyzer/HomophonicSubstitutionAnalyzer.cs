@@ -17,6 +17,8 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
+using System.Threading;
+using Cryptool.PluginBase.Utils;
 
 namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 {
@@ -28,16 +30,24 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         #region Private Variables
 
         private readonly ExamplePluginCT2Settings _settings = new ExamplePluginCT2Settings();
-
         private readonly HomophoneSubstitutionAnalyzerPresentation _presentation = new HomophoneSubstitutionAnalyzerPresentation();
+        private bool _running = true;
 
         #endregion
 
         #region Data Properties
        
         /// </summary>
-        [PropertyInfo(Direction.InputData, "CiphertextCaption", "CiphertextTooltip")]
+        [PropertyInfo(Direction.InputData, "CiphertextCaption", "CiphertextTooltip", true)]
         public string Ciphertext
+        {
+            get;
+            set;
+        }
+
+        /// </summary>
+        [PropertyInfo(Direction.InputData, "DictionaryCaption", "DictionaryTooltip", false)]
+        public string[] Dictionary
         {
             get;
             set;
@@ -75,25 +85,30 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         public void PreExecution()
         {
+            Dictionary = null;
+            Ciphertext = null;
         }
 
         /// <summary>
         /// Called every time this plugin is run in the workflow execution.
         /// </summary>
         public void Execute()
-        {
-            // HOWTO: Use this to show the progress of a plugin algorithm execution in the editor.
-            ProgressChanged(0, 1);
+        {            
+            ProgressChanged(0, 1);          
 
-            // HOWTO: After you have changed an output property, make sure you announce the name of the changed property to the CT2 core.
-            OnPropertyChanged("SomeOutput");
+            _presentation.LoadLangStatistics(_settings.Language, true);
+            _presentation.AddCiphertext(Ciphertext);
+            _presentation.AddDictionary(Dictionary);
+            _presentation.EnableUI();
+            _running = true;
 
-            // HOWTO: You can pass error, warning, info or debug messages to the CT2 main window.
-            if (_settings.SomeParameter < 0)
+            while (_running)
             {
-                GuiLogMessage("SomeParameter is negative", NotificationLevel.Debug);
+                Thread.Sleep(100);
             }
-            // HOWTO: Make sure the progress bar is at maximum when your Execute() finished successfully.
+
+            _presentation.DisableUI();
+            
             ProgressChanged(1, 1);
         }
 
@@ -102,6 +117,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         public void PostExecution()
         {
+            _presentation.DisableUI();
         }
 
         /// <summary>
@@ -110,6 +126,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         public void Stop()
         {
+            _running = false;
         }
 
         /// <summary>
