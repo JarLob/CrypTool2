@@ -52,6 +52,10 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private TextBox[] _maxTextBoxes = new TextBox[0];
         public AnalyzerConfiguration AnalyzerConfiguration { get; private set; }
         private PentaGrams _pentagrams;
+
+        //cache for loaded pentagrams
+        private static Dictionary<string, PentaGrams> PentagramsCache = new Dictionary<string, PentaGrams>();
+
         private string _ciphertext = null;
         private CiphertextFormat _ciphertextFormat;
         private bool _running = false;
@@ -60,7 +64,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         {
             InitializeComponent();
             DisableUIAndStop();
-        }      
+        }
+ 
 
         /// <summary>
         /// Initializes the ui with a new ciphertext
@@ -71,8 +76,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             _ciphertext = ciphertext;
             _ciphertextFormat = ciphertextFormat;
             int[] numbers = ConvertCiphertextToNumbers(ciphertext);
-            //_keylength = (int)(Tools.Distinct(numbers).Length * 1.3);
-            _keylength = (int)(Tools.Distinct(numbers).Length);
+            _keylength = (int)(Tools.Distinct(numbers).Length * 1.3);
             AnalyzerConfiguration = new AnalyzerConfiguration(_keylength, Tools.ChangeToConsecutiveNumbers(numbers));
 
             AnalyzerConfiguration.PlaintextAlphabet = PlainAlphabetText;
@@ -222,7 +226,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                         break;
                     }
                     SymbolLabel label = new SymbolLabel();
-                    label.MouseDown += PlainTextBox_MouseDown;
+                    label.MouseLeftButtonDown += LabelOnMouseLeftButtonDown;
+                    label.MouseRightButtonDown += LabelOnMouseRightButtonDown;
                     _plaintextLabels[x, y] = label;
                     label.X = x;
                     label.Y = y;
@@ -240,7 +245,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 }
             }
         }
-
+       
         /// <summary>
         /// Generates the tab for the selection of the key letter distribution
         /// </summary>
@@ -349,11 +354,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         }
 
         /// <summary>
-        /// Mouse is down on a label of the plaintext
+        /// Left mouse button down
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="mouseButtonEventArgs"></param>
-        private void PlainTextBox_MouseDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        /// <param name="e"></param>
+        private void LabelOnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             if (_running)
             {
@@ -362,21 +367,37 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             try
             {
                 SymbolLabel label = (SymbolLabel)sender;
-                if (mouseButtonEventArgs.LeftButton == MouseButtonState.Pressed)
+                string symbol = _ciphertextLabels[label.X, label.Y].Symbol;
+                LockHomophone(symbol);
+            }
+            catch (Exception)
+            {
+                //do nothing here
+            }
+            mouseButtonEventArgs.Handled = true;
+        }
+
+        /// <summary>
+        /// Right mouse button down
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LabelOnMouseRightButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        {
+            if (_running)
+            {
+                return;
+            }
+            try
+            {
+                SymbolLabel label = (SymbolLabel) sender;
+                if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
                 {
-                    string symbol = _ciphertextLabels[label.X, label.Y].Symbol;
-                    LockHomophone(symbol);
+                    ChangeHomophone(_ciphertextLabels[label.X, label.Y].Symbol, -1);
                 }
-                if (mouseButtonEventArgs.RightButton == MouseButtonState.Pressed)
+                else
                 {
-                    if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
-                    {
-                        ChangeHomophone(_ciphertextLabels[label.X, label.Y].Symbol, -1);
-                    }
-                    else
-                    {
-                        ChangeHomophone(_ciphertextLabels[label.X, label.Y].Symbol, 1);
-                    }
+                    ChangeHomophone(_ciphertextLabels[label.X, label.Y].Symbol, 1);
                 }
             }
             catch (Exception)
@@ -428,7 +449,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     numkey[i] = new HomophoneMapping(ciphertext, cipheralphabet[i], plainalphabet[i]);
                 }
 
-                var plaintext = Tools.MapNumbersIntoTextSpace(HillClimber.DecryptHomophoneCipher(ciphertext, numkey), PlainAlphabetText);
+                var plaintext = Tools.MapNumbersIntoTextSpace(HillClimber.DecryptHomophonicSubstitution(ciphertext, numkey), PlainAlphabetText);
                 int column = 0;
                 int row = 0;
                 foreach (var letter in plaintext)
@@ -782,8 +803,18 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <param name="useSpaces"></param>
         public void LoadLangStatistics(int language, bool useSpaces)
         {
-            _pentagrams = new PentaGrams(LanguageStatistics.LanguageCode(language), useSpaces);
-            PlainAlphabetText = _pentagrams.Alphabet;
+            lock (this)
+            {
+                //we use a cache for each language, thus, we do not need to load and load it again
+                string key = String.Format("{0}-{1}", language, useSpaces);
+                if (!PentagramsCache.ContainsKey(key))
+                {
+                    PentaGrams pentaGrams = new PentaGrams(LanguageStatistics.LanguageCode(language), useSpaces);
+                    PentagramsCache.Add(key, pentaGrams);
+                }
+                _pentagrams = PentagramsCache[key];
+                PlainAlphabetText = _pentagrams.Alphabet;
+            }
         }
     }
 

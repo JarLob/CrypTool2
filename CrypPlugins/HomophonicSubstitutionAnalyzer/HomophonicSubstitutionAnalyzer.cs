@@ -101,6 +101,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             _presentation.AnalyzerConfiguration.WordCountToFind = _settings.WordCountToFind;
             _presentation.AnalyzerConfiguration.MinWordLength = _settings.MinWordLength;
             _presentation.AnalyzerConfiguration.MaxWordLength = _settings.MaxWordLength;
+            _presentation.AnalyzerConfiguration.Cycles = _settings.Cycles;
             _presentation.AddDictionary(Dictionary);
 
             _presentation.EnableUI();

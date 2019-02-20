@@ -1,5 +1,4 @@
-﻿using Cryptool.PluginBase.Utils;
-/*
+﻿/*
    Copyright 2019 Nils Kopal <Nils.Kopal<at>CrypTool.org
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using Cryptool.PluginBase.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -90,12 +90,19 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     numbers.RemoveAt(rnd);
                 }
             }
-            
+
+            //User may set cycles to 0; then, we have an infinityloop
+            bool infinityloop = false;
+            if (AnalyzerConfiguration.Cycles == 0)
+            {
+                infinityloop = true;
+            }
+
             //3) do hillcimbing
             do
             {
                 //3.1) permutate key
-                var plaintext = DecryptHomophoneCipher(AnalyzerConfiguration.Ciphertext, runkey);
+                var plaintext = DecryptHomophonicSubstitution(AnalyzerConfiguration.Ciphertext, runkey);
                 for (var i = 0; i < AnalyzerConfiguration.Keylength - 1; i++)
                 {
                     for (var j = i + 1; j < AnalyzerConfiguration.Keylength; j++)
@@ -112,7 +119,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                         runkey[j].PlainLetter = swap;
 
                         // decrypt the ciphertext inplace
-                        DecryptHomophoneCipherInPlace(plaintext, runkey, i, j);
+                        DecryptHomophonicSubstitutionInPlace(plaintext, runkey, i, j);
 
                         // compute cost value to rate the key (fitness)
                         var costvalue = Pentagrams.CalculateCost(plaintext) * AnalyzerConfiguration.CostFunctionMultiplicator;
@@ -129,7 +136,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                             //revert the key to the old one
                             runkey[j].PlainLetter = runkey[i].PlainLetter;
                             runkey[i].PlainLetter = swap;
-                            DecryptHomophoneCipherInPlace(plaintext, runkey, i, j);
+                            DecryptHomophonicSubstitutionInPlace(plaintext, runkey, i, j);
                         }
                     }                  
                 }
@@ -144,7 +151,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 {
                     globalbestkeycost = bestkeycost;
                     globalbestkey = CreateDeepKeyCopy(bestkey);
-                    globalbestplaintext = DecryptHomophoneCipher(AnalyzerConfiguration.Ciphertext, globalbestkey);
+                    globalbestplaintext = DecryptHomophonicSubstitution(AnalyzerConfiguration.Ciphertext, globalbestkey);
 
                     if (NewBestValue != null)
                     {
@@ -166,7 +173,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 cycle++;
 
                 //3.3) update progress in ui
-                if (DateTime.Now > lastUpdateTime.AddSeconds(1))
+                if (!infinityloop && DateTime.Now > lastUpdateTime.AddSeconds(1))
                 {
                     if (Progress != null && !_stop)
                     {
@@ -175,7 +182,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     lastUpdateTime = DateTime.Now;
                 }
 
-            } while (cycle < AnalyzerConfiguration.Cycles);
+            } while (cycle < AnalyzerConfiguration.Cycles || infinityloop);
 
             //set final progress to 1.0
             if (Progress != null && !_stop)
@@ -191,7 +198,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <param name="ciphertext"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static int[] DecryptHomophoneCipher(int[] ciphertext, HomophoneMapping[] key)
+        public static int[] DecryptHomophonicSubstitution(int[] ciphertext, HomophoneMapping[] key)
         {
             var ciphertextlength = ciphertext.Length;
             var plaintext = new int[ciphertextlength];
@@ -212,7 +219,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <param name="key"></param>
         /// <param name="i"></param>
         /// <param name="j"></param>
-        public static void DecryptHomophoneCipherInPlace(int[] plaintext, HomophoneMapping[] key, int i, int j)
+        public static void DecryptHomophonicSubstitutionInPlace(int[] plaintext, HomophoneMapping[] key, int i, int j)
         {
             foreach (var position in key[i].Positions)
             {

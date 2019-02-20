@@ -3,6 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         MinWidth="1000" 
         MinHeight="500">
+    <UserControl.ContextMenu>
+        <ContextMenu Visibility="Hidden"/>
+    </UserControl.ContextMenu>
     <TabControl Width="Auto">
         <TabItem Header="Analyzer" Width="Auto">
             <Grid Width="Auto">
@@ -43,8 +46,8 @@
                     <Grid Name="CiphertextGrid" />
                 </ScrollViewer>
                 <Label Grid.Row="6" Grid.ColumnSpan="2">Plaintext:</Label>
-                <ScrollViewer Grid.Row="7" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Width="Auto" Height="Auto" Grid.ColumnSpan="2">
-                    <Grid  Name="PlaintextGrid"/>
+                <ScrollViewer Grid.Row="7" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Width="Auto" Height="Auto" Grid.ColumnSpan="2">                    
+                    <Grid Name="PlaintextGrid" />
                 </ScrollViewer>
             </Grid>
         </TabItem>

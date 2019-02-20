@@ -32,11 +32,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 
         private int _language;
         private bool _useSpaces;
-
         private CiphertextFormat _ciphertextFormat = CiphertextFormat.Letters;
         private int _wordCountToFind = 5;
         private int _minWordLength = 8;
         private int _maxWordLength = 10;
+        private int _cycles = 0;
 
         #endregion
 
@@ -82,6 +82,13 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         {
             get { return _maxWordLength; }
             set { _maxWordLength = value; }
+        }
+
+        [TaskPane("CyclesCaption", "CyclesTooltip", "AlgorithmSettingsGroup", 6, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, int.MaxValue)]
+        public int Cycles
+        {
+            get { return _cycles; }
+            set { _cycles = value; }
         }
 
         #endregion
