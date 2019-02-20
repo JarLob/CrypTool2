@@ -35,6 +35,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 
         #endregion
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public HomophonicSubstitutionAnalyzer()
+        {
+            _presentation.NewBestValue += PresentationOnNewBestValue;
+            _presentation.Progress += PresentationOnProgress;
+        }
+
         #region Data Properties
        
         /// </summary>
@@ -155,6 +164,37 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             }
             _presentation.GenerateKeyLetterLimitsListView();
         }
+
+        /// <summary>
+        /// Progress of analyzer changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PresentationOnProgress(object sender, ProgressChangedEventArgs progressChangedEventArgs)
+        {
+            if(!_running)
+            {
+                return;
+            }
+            ProgressChanged(progressChangedEventArgs.Percentage, 1);
+        }
+
+        /// <summary>
+        /// Analyzer found a new best value
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PresentationOnNewBestValue(object sender, NewBestValueEventArgs newBestValueEventArgs)
+        {
+            if(!_running)
+            {
+                return;
+            }
+            Plaintext = newBestValueEventArgs.Plaintext;
+            OnPropertyChanged("Plaintext");
+        }
+
+
 
         /// <summary>
         /// Called once after workflow execution has stopped.

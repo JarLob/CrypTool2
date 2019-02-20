@@ -59,7 +59,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private string _ciphertext = null;
         private CiphertextFormat _ciphertextFormat;
         private bool _running = false;
-        
+
+        public event EventHandler<ProgressChangedEventArgs> Progress;
+        public event EventHandler<NewBestValueEventArgs> NewBestValue;
+
+
         public HomophoneSubstitutionAnalyzerPresentation()
         {
             InitializeComponent();
@@ -321,6 +325,10 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     AnalyzeButton.Content = "Analyze";
                 }
             }, null);
+            if (Progress != null)
+            {
+                Progress.Invoke(sender, eventArgs);
+            }
         }
 
         /// <summary>
@@ -351,6 +359,10 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 AutoLockWords(AnalyzerConfiguration.WordCountToFind);
                 MarkLockedHomophones();
             }, null);
+            if (NewBestValue != null)
+            {
+                NewBestValue.Invoke(sender, eventArgs);
+            }
         }
 
         /// <summary>
