@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HomophonicSubstitutionAnalyzer.Properties {
+namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace HomophonicSubstitutionAnalyzer.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("HomophonicSubstitutionAnalyzer.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,51 @@ namespace HomophonicSubstitutionAnalyzer.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy all lines ähnelt.
+        /// </summary>
+        internal static string Copy_all {
+            get {
+                return ResourceManager.GetString("Copy_all", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy key ähnelt.
+        /// </summary>
+        internal static string Copy_key {
+            get {
+                return ResourceManager.GetString("Copy_key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy selected line ähnelt.
+        /// </summary>
+        internal static string Copy_line {
+            get {
+                return ResourceManager.GetString("Copy_line", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy text ähnelt.
+        /// </summary>
+        internal static string Copy_text {
+            get {
+                return ResourceManager.GetString("Copy_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy value ähnelt.
+        /// </summary>
+        internal static string Copy_value {
+            get {
+                return ResourceManager.GetString("Copy_value", resourceCulture);
             }
         }
     }

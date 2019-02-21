@@ -33,14 +33,19 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Cryptool.PluginBase.Utils;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 {
     /// <summary>
     /// Interaktionslogik für HomophoneSubstitutionAnalyzerPresentation.xaml
     /// </summary>
+    [PluginBase.Attributes.Localization("Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties.Resources")]
     public partial class HomophoneSubstitutionAnalyzerPresentation : UserControl
-    {        
+    {
+        private const int MaxBestListEntries = 100;
         private int _keylength = 0;
         private string PlainAlphabetText = null; //obtained by language statistics
         private string CipherAlphabetText = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖabcdefghijklmnopqrstuvwxyzäüöß1234567890ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩАБВГДЂЕЄЖЗЅИІЈКЛЉМНЊОПРСТЋУФХЦЧЏШЪЫЬЭЮЯ!§$%&=?#ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㄲㄸㅃㅆㅉㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣㅐㅒㅔㅖㅚㅟㅢㅘㅝㅙㅞ";
@@ -51,7 +56,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private TextBox[] _minTextBoxes = new TextBox[0];
         private TextBox[] _maxTextBoxes = new TextBox[0];
         public AnalyzerConfiguration AnalyzerConfiguration { get; private set; }
-        private PentaGrams _pentagrams;
+        private PentaGrams _pentagrams;        
 
         //cache for loaded pentagrams
         private static Dictionary<string, PentaGrams> PentagramsCache = new Dictionary<string, PentaGrams>();
@@ -63,11 +68,12 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public event EventHandler<ProgressChangedEventArgs> Progress;
         public event EventHandler<NewBestValueEventArgs> NewBestValue;
 
+        private ObservableCollection<ResultEntry> BestList = new ObservableCollection<ResultEntry>();
 
         public HomophoneSubstitutionAnalyzerPresentation()
         {
             InitializeComponent();
-            DisableUIAndStop();
+            DisableUIAndStop();            
         }
  
 
@@ -102,6 +108,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 GeneratePlaintextGrid(AnalyzerConfiguration.Ciphertext, AnalyzerConfiguration.TextColumns);                
                 ProgressBar.Value = 0;
                 ProgressText.Content = String.Empty;
+                BestList.Clear();
+                BestListView.DataContext = BestList;
             }, null);          
         }
 
@@ -358,11 +366,56 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 CostTextBox.Text = String.Format("Cost Value: {0}", Math.Round(eventArgs.CostValue, 2));
                 AutoLockWords(AnalyzerConfiguration.WordCountToFind);
                 MarkLockedHomophones();
+                AddNewBestListEntry(eventArgs.PlaintextAlphabet, eventArgs.CostValue, eventArgs.Plaintext);
             }, null);
             if (NewBestValue != null)
             {
                 NewBestValue.Invoke(sender, eventArgs);
             }
+        }
+
+        /// <summary>
+        /// Adds a new entry to the bestlist
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="text"></param>
+        private void AddNewBestListEntry(string key, double value, string text)
+        {
+            var entry = new ResultEntry
+            {
+                Key = key,
+                Text = text,
+                Value = Math.Round(value, 2)
+            };
+           
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                try
+                {
+                    if (BestList.Count > 0 && entry.Value <= BestList.Last().Value)
+                    {
+                        return;
+                    }
+                    BestList.Add(entry);
+                    BestList = new ObservableCollection<ResultEntry>(BestList.OrderByDescending(i => i.Value));                    
+                    if (BestList.Count > MaxBestListEntries)
+                    {
+                        BestList.RemoveAt(MaxBestListEntries);
+                    }                    
+                    var ranking = 1;
+                    foreach (var e in BestList)
+                    {
+                        e.Ranking = ranking;
+                        ranking++;
+                    }
+                    BestListView.DataContext = BestList;
+                }               
+                catch (Exception e)
+                {
+                    //wtf?
+                }
+            }, null);
         }
 
         /// <summary>
@@ -742,7 +795,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     }
                     label.IsEnabled = true;
                 }
-                AnalyzeButton.Content = "Analyze";
+                AnalyzeButton.Content = "Analyze";                
             }, null);
         }
 
@@ -828,6 +881,72 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 PlainAlphabetText = _pentagrams.Alphabet;
             }
         }
+
+        /// <summary>
+        /// Handler for the copy-context menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ContextMenuHandler(object sender, RoutedEventArgs routedEventArgs)
+        {
+            try
+            {
+                MenuItem menu = (MenuItem)((RoutedEventArgs)routedEventArgs).Source;
+                ResultEntry entry = (ResultEntry)menu.CommandParameter;
+                if (entry == null) return;
+                string tag = (string)menu.Tag;
+
+                if (tag == "copy_text")
+                {
+                    Clipboard.SetText(entry.Text);
+                }
+                else if (tag == "copy_value")
+                {
+                    Clipboard.SetText("" + entry.Value);
+                }
+                else if (tag == "copy_key")
+                {
+                    Clipboard.SetText(entry.Key);
+                }
+                else if (tag == "copy_line")
+                {
+                    Clipboard.SetText(entryToText(entry));
+                }
+                else if (tag == "copy_all")
+                {
+                    List<string> lines = new List<string>();
+                    foreach (var e in BestList)
+                    {
+                        lines.Add(entryToText(e));
+
+                    }
+                    Clipboard.SetText(String.Join(Environment.NewLine, lines));
+                }
+            }
+            catch (Exception ex)
+            {
+                Clipboard.SetText("");
+            }
+        }
+    
+
+        /// <summary>
+        /// Converts an entry to text
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <returns></returns>
+        private string entryToText(ResultEntry entry)
+        {
+            return "Rank: " + entry.Ranking + Environment.NewLine +
+                   "Value: " + entry.Value + Environment.NewLine + 
+                   "Key: " + entry.Key + Environment.NewLine +
+                   "Text: " + entry.Text;
+        }
+
+        private void BestListDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            
+        }        
     }
 
     /// <summary>
@@ -841,4 +960,18 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public int X { get; set; }
         public int Y { get; set; }        
     }
+
+    /// <summary>
+    /// ResultEntry of best list
+    /// </summary>
+    public class ResultEntry 
+    {
+        private int _ranking = 0;
+
+        public int Ranking { get; set; }
+        public double Value { get; set; }
+        public string Key { get; set; }
+        public string Text { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+    }    
 }
