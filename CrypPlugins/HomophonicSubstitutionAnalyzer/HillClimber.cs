@@ -187,7 +187,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             //set final progress to 1.0
             if (Progress != null && !_stop)
             {
-                Progress.Invoke(this, new ProgressChangedEventArgs() { Percentage = 1 });
+                Progress.Invoke(this, new ProgressChangedEventArgs() { Percentage = 1, Terminated = true});
             }
             _stop = true;
         }
@@ -288,7 +288,14 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
     /// </summary>
     public class ProgressChangedEventArgs : EventArgs
     {
+        public bool Terminated { get; set; }
         public double Percentage { get; set; }
+
+        public ProgressChangedEventArgs()
+        {
+            Terminated = false;
+            Percentage = 0;
+        }
     }
 
     /// <summary>
@@ -438,12 +445,14 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
     /// Configuration class containing all configuration parameters needed by the analyzer
     /// </summary>
     public class AnalyzerConfiguration
-    {        
+    {
+        public AnalysisMode AnalysisMode { get; set; }
         public int Keylength { get; private set; }
         public string PlaintextAlphabet { get; set; }
         public string CiphertextAlphabet { get; set; }
         public int TextColumns { get; set; }
         public int Cycles { get; set; }
+        public int Iterations { get; set; }
         public int MinWordLength { get; set; }
         public int MaxWordLength { get; set; }
         public int WordCountToFind { get; set; }

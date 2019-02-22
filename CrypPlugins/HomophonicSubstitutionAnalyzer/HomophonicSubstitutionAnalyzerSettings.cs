@@ -26,6 +26,12 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         NumberGroups
     }
 
+    public enum AnalysisMode
+    {
+        SemiAutomatic,
+        FullAutomatic
+    }
+
     public class HomophonicSubstitutionAnalyzerSettings : ISettings
     {
         #region Private Variables
@@ -36,7 +42,9 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private int _wordCountToFind = 5;
         private int _minWordLength = 8;
         private int _maxWordLength = 10;
-        private int _cycles = 0;
+        private AnalysisMode _analysisMode;
+        private int _cycles = 50000;
+        private int _iterations = 1000;
 
         #endregion
 
@@ -84,11 +92,25 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             set { _maxWordLength = value; }
         }
 
-        [TaskPane("CyclesCaption", "CyclesTooltip", "AlgorithmSettingsGroup", 6, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, int.MaxValue)]
+        [TaskPane("AnalysisModeCaption", "AnalaysisModeTooltip", "AlgorithmSettingsGroup", 6, false, ControlType.ComboBox, new string[]{"SemiAutomatic", "FullAutomatic"})]
+        public AnalysisMode AnalysisMode
+        {
+            get { return _analysisMode; }
+            set { _analysisMode = value; }
+        }
+
+        [TaskPane("CyclesCaption", "CyclesTooltip", "AlgorithmSettingsGroup", 7, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, int.MaxValue)]
         public int Cycles
         {
             get { return _cycles; }
             set { _cycles = value; }
+        }
+
+        [TaskPane("IterationsCaption", "IterationsTooltip", "AlgorithmSettingsGroup", 8, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, int.MaxValue)]
+        public int Iterations
+        {
+            get { return _iterations; }
+            set { _iterations = value; }
         }
 
         #endregion

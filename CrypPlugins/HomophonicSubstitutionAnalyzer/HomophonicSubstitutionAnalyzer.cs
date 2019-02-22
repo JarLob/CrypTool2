@@ -111,10 +111,17 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             _presentation.AnalyzerConfiguration.MinWordLength = _settings.MinWordLength;
             _presentation.AnalyzerConfiguration.MaxWordLength = _settings.MaxWordLength;
             _presentation.AnalyzerConfiguration.Cycles = _settings.Cycles;
-            _presentation.AddDictionary(Dictionary);
+            _presentation.AnalyzerConfiguration.AnalysisMode = _settings.AnalysisMode;
+            _presentation.AnalyzerConfiguration.Iterations = _settings.Iterations;
+            _presentation.AddDictionary(Dictionary);                        
 
             _presentation.EnableUI();
             _running = true;
+
+            if (_settings.AnalysisMode == AnalysisMode.FullAutomatic)
+            {
+                _presentation.StartAnalysis();
+            }
 
             while (_running)
             {

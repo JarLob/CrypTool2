@@ -327,11 +327,28 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 ProgressBar.Value = eventArgs.Percentage * 100;
                 ProgressText.Content = String.Format("{0} %", Math.Round(eventArgs.Percentage, 2) * 100);
-                if (eventArgs.Percentage >= 1)
+                
+                if (eventArgs.Terminated && AnalyzerConfiguration.AnalysisMode == AnalysisMode.SemiAutomatic)
                 {
                     _running = false;
                     AnalyzeButton.Content = "Analyze";
                 }
+
+                //in fullautomatic analysis mode, with 100% we restart by resetting locked letters
+                if (eventArgs.Terminated && AnalyzerConfiguration.AnalysisMode == AnalysisMode.FullAutomatic)
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Normal,
+                    (SendOrPostCallback) delegate
+                    {
+                        //reset all locked letters
+                        for (int i = 0; i < _hillClimber.AnalyzerConfiguration.LockedHomophoneMappings.Length; i++)
+                        {
+                            _hillClimber.AnalyzerConfiguration.LockedHomophoneMappings[i] = -1;
+                        }
+                        MarkLockedHomophones();
+                    }, null);
+                }
+
             }, null);
             if (Progress != null)
             {
@@ -607,14 +624,9 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                         AnalyzeButton.Content = "Analyze";
                     }
                     else
-                    {
-                        _running = true;
+                    {                        
                         AnalyzeButton.Content = "Stop";
-                        UpdateKeyLetterLimits();
-                        ThreadStart threadStart = () => _hillClimber.Execute();
-                        var thread = new Thread(threadStart);
-                        thread.IsBackground = true;
-                        thread.Start();
+                        StartAnalysis();
                     }
                 }
             }
@@ -622,6 +634,50 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 //do nothing
                 _running = false;
+            }
+        }
+
+        /// <summary>
+        /// Starts the analysis
+        /// </summary>
+        public void StartAnalysis()
+        {
+            if (_running)
+            {
+                return;
+            }
+            _running = true;
+            
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                UpdateKeyLetterLimits();
+            },
+            null);
+
+            if (AnalyzerConfiguration.AnalysisMode == AnalysisMode.SemiAutomatic)
+            {              
+                ThreadStart threadStart = () => _hillClimber.Execute();
+                var thread = new Thread(threadStart);
+                thread.IsBackground = true;
+                thread.Start();
+            }
+            else
+            {
+                ThreadStart threadStart = () =>
+                {
+                    for (int iteration = 0; iteration < AnalyzerConfiguration.Iterations; iteration++)
+                    {
+                        _hillClimber.Execute();
+                        if (_running == false)
+                        {
+                            return;
+                        }
+                    }
+                    
+                };
+                var thread = new Thread(threadStart);
+                thread.IsBackground = true;
+                thread.Start();
             }
         }
 
@@ -757,28 +813,33 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         public void EnableUI()
         {
+            
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                AnalyzeButton.IsEnabled = true;
-                FindLockWordsButton.IsEnabled = true;
-                ResetLockedLettersButton.IsEnabled = true;
+                if (AnalyzerConfiguration.AnalysisMode == AnalysisMode.SemiAutomatic)
+                {
+                    AnalyzeButton.IsEnabled = true;
+                    FindLockWordsButton.IsEnabled = true;
+                    ResetLockedLettersButton.IsEnabled = true;
 
-                foreach (TextBox box in _minTextBoxes)
-                {
-                    if (box == null)
+                    foreach (TextBox box in _minTextBoxes)
                     {
-                        continue;
+                        if (box == null)
+                        {
+                            continue;
+                        }
+                        box.IsEnabled = true;
                     }
-                    box.IsEnabled = true;
-                }
-                foreach (TextBox box in _maxTextBoxes)
-                {
-                    if (box == null)
+                    foreach (TextBox box in _maxTextBoxes)
                     {
-                        continue;
+                        if (box == null)
+                        {
+                            continue;
+                        }
+                        box.IsEnabled = true;
                     }
-                    box.IsEnabled = true;
                 }
+
                 foreach (SymbolLabel label in _plaintextLabels)
                 {
                     if (label == null)
@@ -843,7 +904,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     }
                     label.IsEnabled = false;
                 }
-                AnalyzeButton.Content = "Stop";
+                AnalyzeButton.Content = "Analyze";
             }, null);
             
             if (_hillClimber != null)
@@ -946,7 +1007,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private void BestListDoubleClick(object sender, MouseButtonEventArgs e)
         {
             
-        }        
+        }
     }
 
     /// <summary>
