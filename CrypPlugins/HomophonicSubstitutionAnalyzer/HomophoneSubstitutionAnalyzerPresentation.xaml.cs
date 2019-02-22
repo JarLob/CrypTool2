@@ -69,6 +69,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public event EventHandler<NewBestValueEventArgs> NewBestValue;
 
         private ObservableCollection<ResultEntry> BestList = new ObservableCollection<ResultEntry>();
+        private int _iteration = 0;
 
         public HomophoneSubstitutionAnalyzerPresentation()
         {
@@ -334,7 +335,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     AnalyzeButton.Content = "Analyze";
                 }
 
-                //in fullautomatic analysis mode, with 100% we restart by resetting locked letters
+                //in fullautomatic analysis mode with 100% we restart by resetting locked letters
                 if (eventArgs.Terminated && AnalyzerConfiguration.AnalysisMode == AnalysisMode.FullAutomatic)
                 {
                     Dispatcher.Invoke(DispatcherPriority.Normal,
@@ -352,6 +353,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             }, null);
             if (Progress != null)
             {
+                if (AnalyzerConfiguration.AnalysisMode == AnalysisMode.FullAutomatic)
+                {
+                    //in fullautomatic analysis mode the progress is calculated using the iterations
+                    eventArgs.Percentage = (double) _iteration / (double) AnalyzerConfiguration.Iterations;
+                }
                 Progress.Invoke(sender, eventArgs);
             }
         }
@@ -391,7 +397,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             waitHandle.WaitOne();
 
             if (NewBestValue != null)
-            {
+            {               
                 eventArgs.NewTopEntry = newTopEntry;
                 NewBestValue.Invoke(sender, eventArgs);
             }
@@ -675,7 +681,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 ThreadStart threadStart = () =>
                 {
-                    for (int iteration = 0; iteration < AnalyzerConfiguration.Iterations; iteration++)
+                    for (_iteration = 0; _iteration < AnalyzerConfiguration.Iterations; _iteration++)
                     {
                         _hillClimber.Execute();
                         if (_running == false)
