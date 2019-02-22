@@ -303,6 +303,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
     /// </summary>
     public class NewBestValueEventArgs : EventArgs
     {
+        public bool NewTopEntry { get; set; }
         public string Plaintext{ get;set;}        
         public string PlaintextAlphabet{ get;set;}
         public string CiphertextAlphabet{ get;set;}

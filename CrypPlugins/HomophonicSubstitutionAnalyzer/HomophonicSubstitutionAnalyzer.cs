@@ -197,8 +197,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 return;
             }
-            Plaintext = newBestValueEventArgs.Plaintext;
-            OnPropertyChanged("Plaintext");
+            if (newBestValueEventArgs.NewTopEntry)
+            {
+                Plaintext = newBestValueEventArgs.Plaintext;
+                OnPropertyChanged("Plaintext");
+            }
         }
 
 

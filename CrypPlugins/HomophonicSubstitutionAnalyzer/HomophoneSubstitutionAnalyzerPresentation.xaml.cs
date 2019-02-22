@@ -363,6 +363,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <param name="eventArgs"></param>
         private void HillClimberNewBestValue(object sender, NewBestValueEventArgs eventArgs)
         {
+            AutoResetEvent waitHandle = new AutoResetEvent(false);
+            bool newTopEntry = false;
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 int column = 0;
@@ -383,10 +385,14 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 CostTextBox.Text = String.Format("Cost Value: {0}", Math.Round(eventArgs.CostValue, 2));
                 AutoLockWords(AnalyzerConfiguration.WordCountToFind);
                 MarkLockedHomophones();
-                AddNewBestListEntry(eventArgs.PlaintextAlphabet, eventArgs.CostValue, eventArgs.Plaintext);
+                newTopEntry = AddNewBestListEntry(eventArgs.PlaintextAlphabet, eventArgs.CostValue, eventArgs.Plaintext);
+                waitHandle.Set();
             }, null);
+            waitHandle.WaitOne();
+
             if (NewBestValue != null)
             {
+                eventArgs.NewTopEntry = newTopEntry;
                 NewBestValue.Invoke(sender, eventArgs);
             }
         }
@@ -397,43 +403,47 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <param name="text"></param>
-        private void AddNewBestListEntry(string key, double value, string text)
+        private bool AddNewBestListEntry(string key, double value, string text)
         {
             var entry = new ResultEntry
             {
                 Key = key,
                 Text = text,
                 Value = Math.Round(value, 2)
-            };
-           
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            };            
+            bool newTopEntry = false;         
+            try
             {
-                try
+                if (BestList.Count > 0 && entry.Value <= BestList.Last().Value)
                 {
-                    if (BestList.Count > 0 && entry.Value <= BestList.Last().Value)
-                    {
-                        return;
-                    }
-                    BestList.Add(entry);
-                    BestList = new ObservableCollection<ResultEntry>(BestList.OrderByDescending(i => i.Value));                    
-                    if (BestList.Count > MaxBestListEntries)
-                    {
-                        BestList.RemoveAt(MaxBestListEntries);
-                    }                    
-                    var ranking = 1;
-                    foreach (var e in BestList)
-                    {
-                        e.Ranking = ranking;
-                        ranking++;
-                    }
-                    BestListView.DataContext = BestList;
-                }               
-                catch (Exception e)
-                {
-                    //wtf?
+                    return false;
                 }
-            }, null);
+                if (BestList.Count > 0 && entry.Value > BestList.First().Value)
+                {
+                    newTopEntry = true;
+                }
+
+                BestList.Add(entry);
+                BestList = new ObservableCollection<ResultEntry>(BestList.OrderByDescending(i => i.Value));                    
+                if (BestList.Count > MaxBestListEntries)
+                {
+                    BestList.RemoveAt(MaxBestListEntries);
+                }                    
+                var ranking = 1;
+                foreach (var e in BestList)
+                {
+                    e.Ranking = ranking;
+                    ranking++;
+                }
+                BestListView.DataContext = BestList;                    
+            }               
+            catch (Exception e)
+            {
+                //wtf?
+            }        
+            return newTopEntry;
         }
+
 
         /// <summary>
         /// Left mouse button down
