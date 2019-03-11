@@ -7,6 +7,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO.Compression;
+using System.Runtime.CompilerServices;
 
 namespace LanguageStatisticsGenerator
 {
@@ -44,8 +45,8 @@ namespace LanguageStatisticsGenerator
             GetMaxAndSum(4);
         }
 
-        // create statistics from data file 
-        public NGrams(string alphabet, string filename, bool useSpace)
+        // create statistics from directory
+        public NGrams(string alphabet, string path, bool useSpace)
         {
             if (!useSpace) alphabet.Replace(" ", "");
             if (useSpace && !alphabet.Contains(" ")) alphabet += " ";
@@ -64,45 +65,72 @@ namespace LanguageStatisticsGenerator
             freq2 = new uint[alphabet.Length, alphabet.Length];
             freq1 = new uint[alphabet.Length];
 
-            using (FileStream fs = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            using (BufferedStream bs = new BufferedStream(fs))
-            using (StreamReader sr = new StreamReader(bs))
+            Console.WriteLine("Creating files list");
+            string[] files = Directory.GetFiles(path, "*.zip", SearchOption.AllDirectories);
+            Console.WriteLine("Files list created");
+
+            foreach (var filename in files)
             {
-                while ((line = sr.ReadLine()) != null)
+                try
                 {
-                    string w = line.Substring(line.IndexOf('\t') + 1).ToUpper();
-                    if (useSpace)
+                    Console.WriteLine(String.Format("Reading {0}", filename));
+                    using (ZipArchive zipfile = ZipFile.OpenRead(filename))
                     {
-                        w = " " + w + " ";
-                        w = Regex.Replace(w, pattern, "");
-                        w = Regex.Replace(w, " +", " ");
-                    }
-                    else
-                    {
-                        w = Regex.Replace(w, pattern, "");
-                    }
+                        foreach (ZipArchiveEntry entry in zipfile.Entries)
+                        {
+                            if (!entry.FullName.EndsWith("txt"))
+                            {
+                                continue;
+                            }
+                            using (var stream = entry.Open())
+                            {
+                                using (StreamReader sr = new StreamReader(stream))
+                                {
+                                    while ((line = sr.ReadLine()) != null)
+                                    {
+                                        string w = line.Substring(line.IndexOf('\t') + 1).ToUpper();
+                                        if (useSpace)
+                                        {
+                                            w = " " + w + " ";
+                                            w = Regex.Replace(w, pattern, "");
+                                            w = Regex.Replace(w, " +", " ");
+                                        }
+                                        else
+                                        {
+                                            w = Regex.Replace(w, pattern, "");
+                                        }
 
-                    var n = w.Select(c => char2num[c]).ToArray();
+                                        var n = w.Select(c => char2num[c]).ToArray();
 
-                    for (int i = 0; i + 5 <= n.Length; i++) freq5[n[i], n[i + 1], n[i + 2], n[i + 3], n[i + 4]]++;
-                    for (int i = 0; i + 4 <= n.Length; i++) freq4[n[i], n[i + 1], n[i + 2], n[i + 3]]++;
-                    for (int i = 0; i + 3 <= n.Length; i++) freq3[n[i], n[i + 1], n[i + 2]]++;
-                    for (int i = 0; i + 2 <= n.Length; i++) freq2[n[i], n[i + 1]]++;
-                    if (useSpace)
-                        for (int i = 1; i + 1 <= n.Length; i++) freq1[n[i]]++;
-                    else
-                        for (int i = 0; i + 1 <= n.Length; i++) freq1[n[i]]++;
+                                        for (int i = 0; i + 5 <= n.Length; i++) freq5[n[i], n[i + 1], n[i + 2], n[i + 3], n[i + 4]]++;
+                                        for (int i = 0; i + 4 <= n.Length; i++) freq4[n[i], n[i + 1], n[i + 2], n[i + 3]]++;
+                                        for (int i = 0; i + 3 <= n.Length; i++) freq3[n[i], n[i + 1], n[i + 2]]++;
+                                        for (int i = 0; i + 2 <= n.Length; i++) freq2[n[i], n[i + 1]]++;
+                                        if (useSpace)
+                                            for (int i = 1; i + 1 <= n.Length; i++) freq1[n[i]]++;
+                                        else
+                                            for (int i = 0; i + 1 <= n.Length; i++) freq1[n[i]]++;
 
-                    counter++;
-                    if (++j == 1000)
-                    {
-                        j = 0;
-                        Console.Write(counter + " lines read\r");
-                        Console.Out.Flush();
+                                        counter++;
+                                        if (++j == 1000)
+                                        {
+                                            j = 0;
+                                            Console.Write(counter + " lines read\r");
+                                            Console.Out.Flush();
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
+                    Console.WriteLine(String.Format("{0} successfully read", filename));
                 }
-            }
-
+                catch (Exception ex)
+                {
+                    Console.WriteLine(String.Format("Excption during read of {0}: ", ex.Message));
+                }
+            }                
+                
             GetMaxAndSum(4);
 
             Console.WriteLine(counter + " lines read");
@@ -337,7 +365,7 @@ namespace LanguageStatisticsGenerator
         {
             if(args.Length!=2)
             {
-                Console.WriteLine("Usage: {0} textcorpusfile (alphabetfile | language selector)", System.AppDomain.CurrentDomain.FriendlyName);
+                Console.WriteLine("Usage: {0} textcorpusdirectory (alphabetfile | language selector)", System.AppDomain.CurrentDomain.FriendlyName);
                 Console.WriteLine("\nSpecify a predefined language selector or a file, that\ncontains the alphabet as a single line of text (UTF-8).");
                 Console.WriteLine("The following alphabets are predefined:");
                 foreach (var a in alphabets.OrderBy(x => x.Key))

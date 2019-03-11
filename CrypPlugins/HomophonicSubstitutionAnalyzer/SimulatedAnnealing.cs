@@ -31,7 +31,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private Random _random = new Random();
 
         // Fixed temperature optimized for hexagram scoring
-        public const double FIXED_TEMPERATURE = 20000;
+        public const double FIXED_TEMPERATURE = 15000;
         // Size of degradation threshold lookup table.
         private const int LOOKUP_TABLE_SIZE = 100;
         // The churn algorithm lookup table of degradation thresholds.
@@ -55,23 +55,22 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         }
 
         /// <summary>
-        /// Simulated Annealing Acceptance Function – Constant Temperature
+        /// Simulated Annealing Acceptance Function – Constant _temperature
         /// </summary>
         /// <param name="newKeyScore"></param>
         /// <param name="currentKeyScore"></param>
         /// <returns></returns>
         public bool AcceptWithConstantTemperature(double newKeyScore, double currentKeyScore)
         {
-            // Always AcceptWithChurn better keys
+            // Always accept better keys
             if (newKeyScore > currentKeyScore)
             {
                 return true;
             }
-
-            // Degradation between current key and new key
+            // Degradation between current key and new key.
             double degradation = currentKeyScore - newKeyScore;
-            double acceptanceProbability = Math.Pow(Math.E, - degradation / FIXED_TEMPERATURE);
-            return _random.NextDouble() < acceptanceProbability;
+            double acceptanceProbability = Math.Pow(Math.E, -degradation / FIXED_TEMPERATURE);
+            return acceptanceProbability > 0.0085 && _random.NextDouble() < acceptanceProbability;
         }
 
         

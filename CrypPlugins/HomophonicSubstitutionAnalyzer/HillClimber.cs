@@ -98,11 +98,13 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 infinityloop = true;
             }
 
+            int noglobalbestcounter = 0;
+
             //3) do hillcimbing
+            var plaintext = DecryptHomophonicSubstitution(AnalyzerConfiguration.Ciphertext, runkey);
             do
             {
-                //3.1) permutate key
-                var plaintext = DecryptHomophonicSubstitution(AnalyzerConfiguration.Ciphertext, runkey);
+                //3.1) permutate key                
                 for (var i = 0; i < AnalyzerConfiguration.Keylength - 1; i++)
                 {
                     for (var j = i + 1; j < AnalyzerConfiguration.Keylength; j++)
@@ -125,7 +127,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                         var costvalue = Pentagrams.CalculateCost(plaintext) * AnalyzerConfiguration.CostFunctionMultiplicator;
                         
                         // use Cowans churn to accept or refuse the new key
-                        if (simulatedAnnealing.AcceptWithChurn(costvalue, bestkeycost))
+                        if (simulatedAnnealing.AcceptWithConstantTemperature(costvalue, bestkeycost))
                         {                            
                             //stay on the "better key"
                             bestkeycost = costvalue;
@@ -168,6 +170,18 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                                 CiphertextAlphabet = strciphertextalphabet,
                                 CostValue = costvalue
                             });
+                    }
+                    noglobalbestcounter = 0;
+                }
+                else
+                {
+                    noglobalbestcounter++;
+                    if (noglobalbestcounter == 100)
+                    {
+                        runkey[runkey.Length - 1].PlainLetter = random.Next(0, AnalyzerConfiguration.PlaintextAlphabet.Length-1);
+                        runkey[runkey.Length - 2].PlainLetter = random.Next(0, AnalyzerConfiguration.PlaintextAlphabet.Length - 1);
+                        runkey[runkey.Length - 3].PlainLetter = random.Next(0, AnalyzerConfiguration.PlaintextAlphabet.Length - 1);
+                        noglobalbestcounter = 0;
                     }
                 }
                 cycle++;
