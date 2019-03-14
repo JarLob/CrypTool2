@@ -86,9 +86,30 @@ namespace LanguageStatisticsGenerator
                             {
                                 using (StreamReader sr = new StreamReader(stream))
                                 {
-                                    while ((line = sr.ReadLine()) != null)
+                                    bool startfound = false;
+                                    bool endfound = false;
+
+                                    while ((line = sr.ReadLine()) != null && !endfound)
                                     {
                                         string w = line.Substring(line.IndexOf('\t') + 1).ToUpper();
+                                        
+                                        if (!startfound) // search for start line
+                                        {
+                                            if (w.StartsWith("*** START"))
+                                            {
+                                                startfound = true;
+                                            }
+                                            continue;
+                                        }
+                                        if (!endfound) // search for end line
+                                        {
+                                            if (w.StartsWith("*** END"))
+                                            {
+                                                endfound = true;
+                                                continue;
+                                            }                                            
+                                        }
+
                                         if (useSpace)
                                         {
                                             w = " " + w + " ";
@@ -107,9 +128,13 @@ namespace LanguageStatisticsGenerator
                                         for (int i = 0; i + 3 <= n.Length; i++) freq3[n[i], n[i + 1], n[i + 2]]++;
                                         for (int i = 0; i + 2 <= n.Length; i++) freq2[n[i], n[i + 1]]++;
                                         if (useSpace)
+                                        {
                                             for (int i = 1; i + 1 <= n.Length; i++) freq1[n[i]]++;
+                                        }
                                         else
+                                        {
                                             for (int i = 0; i + 1 <= n.Length; i++) freq1[n[i]]++;
+                                        }
 
                                         counter++;
                                         if (++j == 1000)
