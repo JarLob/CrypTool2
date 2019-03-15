@@ -126,7 +126,10 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 case CiphertextFormat.NumberGroups:
                     return Tools.MapHomophoneTextNumbersIntoNumberSpace(ciphertext);
                     break;
-                case CiphertextFormat.Letters:
+                case CiphertextFormat.CommaSeparated:
+                    return Tools.MapHomophoneCommaSeparatedIntoNumberSpace(ciphertext);
+                    break;
+                case CiphertextFormat.SingleLetters:
                 default:
                     return Tools.MapHomophonesIntoNumberSpace(ciphertext);
                     break;

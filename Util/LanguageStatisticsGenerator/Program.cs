@@ -110,6 +110,26 @@ namespace LanguageStatisticsGenerator
                                             }                                            
                                         }
 
+                                        w = w.Replace("Á", "A");
+                                        w = w.Replace("Â", "A");
+                                        w = w.Replace("À", "A");
+
+                                        w = w.Replace("É", "E");
+                                        w = w.Replace("Ê", "E");
+                                        w = w.Replace("È", "E");
+
+                                        w = w.Replace("Í", "I");
+                                        w = w.Replace("Î", "I");
+                                        w = w.Replace("Ì", "I");
+
+                                        w = w.Replace("Ó", "O");
+                                        w = w.Replace("Ô", "O");
+                                        w = w.Replace("Ò", "O");
+
+                                        w = w.Replace("Ú", "U");
+                                        w = w.Replace("Û", "U");
+                                        w = w.Replace("Ù", "U");
+
                                         if (useSpace)
                                         {
                                             w = " " + w + " ";
@@ -248,10 +268,19 @@ namespace LanguageStatisticsGenerator
             {
                 using (var gz = new GZipStream(fs, CompressionMode.Compress))
                 {
-                    bf.Serialize(gz, alphabet);
+                    var f5 = new float[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
+                    for (int a = 0; a < alphabet.Length; a++)
+                    for (int b = 0; b < alphabet.Length; b++)
+                    for (int c = 0; c < alphabet.Length; c++)
+                    for (int d = 0; d < alphabet.Length; d++)
+                    for (int e = 0; e < alphabet.Length; e++)
+                        f5[a, b, c, d, e] = (float)Math.Log((freq5[a, b, c, d, e] + 0.001) / max);
+                    max = 0;
+                    sum = 0;
+                    bf.Serialize(gz, alphabet);                    
                     bf.Serialize(gz, max);
                     bf.Serialize(gz, sum);
-                    bf.Serialize(gz, freq5);
+                    bf.Serialize(gz, f5);
                 }
             }
 
@@ -260,10 +289,18 @@ namespace LanguageStatisticsGenerator
             {
                 using (var gz = new GZipStream(fs, CompressionMode.Compress))
                 {
+                    var f4 = new float[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
+                    for (int a = 0; a < alphabet.Length; a++)
+                    for (int b = 0; b < alphabet.Length; b++)
+                    for (int c = 0; c < alphabet.Length; c++)
+                    for (int d = 0; d < alphabet.Length; d++)
+                        f4[a, b, c, d] = (float)Math.Log((freq4[a, b, c, d] + 0.001) / max);
+                    max = 0;
+                    sum = 0;
                     bf.Serialize(gz, alphabet);
                     bf.Serialize(gz, max);
                     bf.Serialize(gz, sum);
-                    bf.Serialize(gz, freq4);
+                    bf.Serialize(gz, f4);
                 }
             }
 
@@ -272,10 +309,17 @@ namespace LanguageStatisticsGenerator
             {
                 using (var gz = new GZipStream(fs, CompressionMode.Compress))
                 {
+                    var f3 = new float[alphabet.Length, alphabet.Length, alphabet.Length];
+                    for (int a = 0; a < alphabet.Length; a++)
+                    for (int b = 0; b < alphabet.Length; b++)
+                    for (int c = 0; c < alphabet.Length; c++)
+                        f3[a, b, c] = (float)Math.Log((freq3[a, b, c] + 0.001) / max);
+                    max = 0;
+                    sum = 0;
                     bf.Serialize(gz, alphabet);
                     bf.Serialize(gz, max);
                     bf.Serialize(gz, sum);
-                    bf.Serialize(gz, freq3);
+                    bf.Serialize(gz, f3);
                 }
             }
 
@@ -284,10 +328,16 @@ namespace LanguageStatisticsGenerator
             {
                 using (var gz = new GZipStream(fs, CompressionMode.Compress))
                 {
+                    var f2 = new float[alphabet.Length, alphabet.Length];
+                    for (int a = 0; a < alphabet.Length; a++)
+                    for (int b = 0; b < alphabet.Length; b++)
+                        f2[a, b] = (float)Math.Log((freq2[a, b] + 0.001) / max);
+                    max = 0;
+                    sum = 0;
                     bf.Serialize(gz, alphabet);
                     bf.Serialize(gz, max);
                     bf.Serialize(gz, sum);
-                    bf.Serialize(gz, freq2);
+                    bf.Serialize(gz, f2);
                 }
             }
 
@@ -296,10 +346,15 @@ namespace LanguageStatisticsGenerator
             {
                 using (var gz = new GZipStream(fs, CompressionMode.Compress))
                 {
+                    var f1 = new float[alphabet.Length];
+                    for (int a = 0; a < alphabet.Length; a++)
+                        f1[a] = (float)Math.Log((freq1[a] + 0.001) / max);
+                    max = 0;
+                    sum = 0;
                     bf.Serialize(gz, alphabet);
                     bf.Serialize(gz, max);
                     bf.Serialize(gz, sum);
-                    bf.Serialize(gz, freq1);
+                    bf.Serialize(gz, f1);
                 }
             }
         }
@@ -328,8 +383,8 @@ namespace LanguageStatisticsGenerator
                 {"en", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
                 {"de", "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß" },
                 {"fr", "ABCDEFGHIJKLMNOPQRSTUVWXYZÀÂŒÇÈÉÊËÎÏÔÙÛ" },
-                {"es", "ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÑÓÚÜ" },
-                {"it", "ABCDEFGHIJKLMNOPQRSTUVWXYZÀÈÌÒÙ" },
+                {"es", "ABCDEFGHIJKLMNOPQRSTUVWXYZÑ" },
+                {"it", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
                 {"hu", "ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÖŐÚÜŰ" },
                 {"ru", "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" },
                 {"cs", "AÁBCČDĎEÉĚFGHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYÝZŽ" },
@@ -426,7 +481,7 @@ namespace LanguageStatisticsGenerator
             var duplicates = alphabet.Distinct().Where(c => alphabet.Count(d => c == d) > 1);
             if (duplicates.Count() > 0)
             {
-                Console.WriteLine("Error: Alphabet contains duplicate characters: '" + String.Join("", duplicates.OrderBy(c => c)) + "'");
+                Console.WriteLine("Error: alphabet contains duplicate characters: '" + String.Join("", duplicates.OrderBy(c => c)) + "'");
                 return;
             }
 

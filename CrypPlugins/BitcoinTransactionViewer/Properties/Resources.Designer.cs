@@ -19,7 +19,7 @@ namespace BitcoinTransactionViewer.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -61,6 +61,24 @@ namespace BitcoinTransactionViewer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bitcoin Transaction Viewer ähnelt.
+        /// </summary>
+        internal static string BitcoinTransactionViewerCaption {
+            get {
+                return ResourceManager.GetString("BitcoinTransactionViewerCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die This component displays the contents of a bitcoin transaction ähnelt.
+        /// </summary>
+        internal static string BitcoinTransactionViewerTooltip {
+            get {
+                return ResourceManager.GetString("BitcoinTransactionViewerTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die transaction data ähnelt.
         /// </summary>
         internal static string InputTransactionDataInputCaption {
@@ -93,24 +111,6 @@ namespace BitcoinTransactionViewer.Properties {
         internal static string InputTransactionTXDataInputToolTip {
             get {
                 return ResourceManager.GetString("InputTransactionTXDataInputToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Bitcoin Transaction Viewer ähnelt.
-        /// </summary>
-        internal static string BitcoinTransactionViewerCaption {
-            get {
-                return ResourceManager.GetString("BitcoinTransactionViewerCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This component displays the contents of a bitcoin transaction ähnelt.
-        /// </summary>
-        internal static string BitcoinTransactionViewerTooltip {
-            get {
-                return ResourceManager.GetString("BitcoinTransactionViewerTooltip", resourceCulture);
             }
         }
     }

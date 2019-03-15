@@ -44,6 +44,12 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             return numbers;            
         }
 
+        /// <summary>
+        /// Maps an arry of numbers into text space usnig the given alphabet
+        /// </summary>
+        /// <param name="numbers"></param>
+        /// <param name="alphabet"></param>
+        /// <returns></returns>
         public static string MapNumbersIntoTextSpace(int[] numbers, string alphabet)
         {
             var builder = new StringBuilder();
@@ -61,6 +67,12 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             return builder.ToString();
         }
 
+        /// <summary>
+        /// Maps the given string into numberspace using the given alphabet
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="alphabet"></param>
+        /// <returns></returns>
         public static int[] MapIntoNumberSpace(string text, string alphabet)
         {
             var numbers = new int[text.Length];
@@ -73,7 +85,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             return numbers;
         }
 
-
+        /// <summary>
+        /// Returns a string only containing each letter once based on the given string
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static int[] Distinct(int[] text)
         {
             HashSet<int> symbols = new HashSet<int>();
@@ -88,6 +104,14 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             return symbols.ToArray();
         }
 
+        /// <summary>
+        /// Changes an integer array to "consecutive number"
+        /// for example
+        /// 9,5,6,6,1,1,1,5,3,3,9,9 is converted to
+        /// 0,1,2,2,3,3,3,1,4,4,0,0
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static int[] ChangeToConsecutiveNumbers(int[] text)
         {
             var number = 0;
@@ -106,6 +130,12 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             return newtext;
         }
 
+        /// <summary>
+        /// Removes all chars from the given string that are not in the given alphabet
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="alphabet"></param>
+        /// <returns></returns>
         public static string RemoveInvalidChars(string text, string alphabet)
         {
             var builder = new StringBuilder();
@@ -119,14 +149,46 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             return builder.ToString();
         }
 
-        public static int[] MapHomophonesIntoNumberSpace(string ciphertext)
+        /// <summary>
+        /// Maps the text into numberspace
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static int[] MapHomophonesIntoNumberSpace(string text)
         {
-            int[] numbers = new int[ciphertext.Length];
-            for (int i = 0; i < ciphertext.Length; i++)
+            int[] numbers = new int[text.Length];
+            for (int i = 0; i < text.Length; i++)
             {
-                numbers[i] = (int) ciphertext[i];
+                numbers[i] = (int) text[i];
             }
             return numbers;
+        }
+
+        /// <summary>
+        /// Maps a string containing "blocks" of homophones into numberspace separated by separator
+        /// </summary>
+        /// <param name="ciphertext"></param>
+        /// <returns></returns>
+        public static int[] MapHomophoneCommaSeparatedIntoNumberSpace(string text, char separator = ' ')
+        {
+            string[] blocks = text.Split(separator);
+            //list to generate number array
+            List<int> numbers = new List<int>();
+            //dictionary to memorize homophones
+            Dictionary<string, int> homophones = new Dictionary<string, int>();
+            int counter = 0;
+
+            foreach (var block in blocks)
+            {
+                string trimmedblock = block.Trim();
+                if (!homophones.ContainsKey(trimmedblock))
+                {
+                    homophones.Add(trimmedblock, counter);
+                    counter++;
+                }
+                numbers.Add(homophones[trimmedblock]);
+            }
+            return numbers.ToArray();
         }
     }    
 }

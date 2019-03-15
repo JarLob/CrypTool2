@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -109,9 +110,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 {
                     for (var j = i + 1; j < AnalyzerConfiguration.Keylength; j++)
                     {
-                        if (AnalyzerConfiguration.LockedHomophoneMappings[i] != -1 || AnalyzerConfiguration.LockedHomophoneMappings[j] != -1)
+                        if (AnalyzerConfiguration.LockedHomophoneMappings[i] != -1 || AnalyzerConfiguration.LockedHomophoneMappings[j] != -1 ||
+                            runkey[i].PlainLetter == runkey[j].PlainLetter)
                         {
                             //we don't change locked homophone mappings in the key
+                            //we don't exchange plainletters if they are equal
                             continue;
                         }
 
@@ -178,7 +181,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     noglobalbestcounter++;
                     if (noglobalbestcounter == 100)
                     {
-                        runkey[runkey.Length - 1].PlainLetter = random.Next(0, AnalyzerConfiguration.PlaintextAlphabet.Length-1);
+                        runkey[runkey.Length - 1].PlainLetter = random.Next(0, AnalyzerConfiguration.PlaintextAlphabet.Length - 1);
                         runkey[runkey.Length - 2].PlainLetter = random.Next(0, AnalyzerConfiguration.PlaintextAlphabet.Length - 1);
                         runkey[runkey.Length - 3].PlainLetter = random.Next(0, AnalyzerConfiguration.PlaintextAlphabet.Length - 1);
                         noglobalbestcounter = 0;
@@ -212,6 +215,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <param name="ciphertext"></param>
         /// <param name="key"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int[] DecryptHomophonicSubstitution(int[] ciphertext, HomophoneMapping[] key)
         {
             var ciphertextlength = ciphertext.Length;
@@ -233,6 +237,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <param name="key"></param>
         /// <param name="i"></param>
         /// <param name="j"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DecryptHomophonicSubstitutionInPlace(int[] plaintext, HomophoneMapping[] key, int i, int j)
         {
             foreach (var position in key[i].Positions)
@@ -250,6 +255,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private HomophoneMapping[] CreateDeepKeyCopy(HomophoneMapping[] key)
         {
             if (key == null)

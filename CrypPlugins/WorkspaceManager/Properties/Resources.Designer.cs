@@ -1313,7 +1313,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die SleepTime can not be &lt;=0; Use SleepTime = 0 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die SleepTime can not be &lt;0; Use SleepTime = 0 ähnelt.
         /// </summary>
         public static string WorkspaceManagerClass_Execute_SleepTime {
             get {

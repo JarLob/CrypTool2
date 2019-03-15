@@ -54,7 +54,7 @@ namespace Cryptool.PluginBase.Utils
             { "de", "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß" },
             { "es", "ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÑÓÚÜ" },
             { "fr", "ABCDEFGHIJKLMNOPQRSTUVWXYZÀÂŒÇÈÉÊËÎÏÔÙÛ" },
-            { "it", "ABCDEFGHIJKLMNOPQRSTUVWXYZÀÈÌÒÙ" },
+            { "it", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
             { "hu", "ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÖŐÚÜŰ" },
             { "ru", "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" },
             { "cs", "AÁBCČDĎEÉĚFGHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYÝZŽ" },
@@ -382,7 +382,7 @@ namespace Cryptool.PluginBase.Utils
 
     public class UniGrams
     {
-        public double[] Frequencies;
+        public float[] Frequencies;
         public string Alphabet { get; private set; }
 
         public UniGrams(string language, bool useSpaces = false)
@@ -405,13 +405,19 @@ namespace Cryptool.PluginBase.Utils
                 Alphabet = (string)bf.Deserialize(gz);
                 max = (uint)bf.Deserialize(gz);
                 sum = (ulong)bf.Deserialize(gz);
-                data = (uint[])bf.Deserialize(gz);
+                if (max == 0 && sum == 0)
+                {
+                    Frequencies = (float[]) bf.Deserialize(gz);
+                }
+                else
+                {
+                    data = (uint[])bf.Deserialize(gz);
+                    Frequencies = new float[Alphabet.Length];
+                    for (int a = 0; a < Alphabet.Length; a++)
+                        Frequencies[a] = (float)Math.Log((data[a] + 0.001) / max);
+                }
             }
 
-            Frequencies = new double[Alphabet.Length];
-
-            for (int a = 0; a < Alphabet.Length; a++)
-                Frequencies[a] = Math.Log((data[a] + 0.001) / max);
         }
 
         public double CalculateCost(int[] plaintext)
@@ -430,7 +436,7 @@ namespace Cryptool.PluginBase.Utils
 
     public class BiGrams
     {
-        public double[,] Frequencies;
+        public float[,] Frequencies;
         public string Alphabet { get; private set; }
 
         public BiGrams(string language, bool useSpaces = false)
@@ -453,14 +459,20 @@ namespace Cryptool.PluginBase.Utils
                 Alphabet = (string)bf.Deserialize(gz);
                 max = (uint)bf.Deserialize(gz);
                 sum = (ulong)bf.Deserialize(gz);
-                data = (uint[,])bf.Deserialize(gz);
-            }
+                if (max == 0 && sum == 0)
+                {
+                    Frequencies = (float[,])bf.Deserialize(gz);
+                }
+                else
+                {
+                    data = (uint[,])bf.Deserialize(gz);
+                    Frequencies = new float[Alphabet.Length, Alphabet.Length];
 
-            Frequencies = new double[Alphabet.Length, Alphabet.Length];
-
-            for (int a = 0; a < Alphabet.Length; a++)
-                for (int b = 0; b < Alphabet.Length; b++)
-                            Frequencies[a, b] = Math.Log((data[a, b] + 0.001) / max);
+                    for (int a = 0; a < Alphabet.Length; a++)
+                    for (int b = 0; b < Alphabet.Length; b++)
+                        Frequencies[a, b] = (float)Math.Log((data[a, b] + 0.001) / max);
+                }                                                
+            }            
         }
 
         public double CalculateCost(int[] plaintext)
@@ -479,7 +491,7 @@ namespace Cryptool.PluginBase.Utils
 
     public class TriGrams
     {
-        public double[,,] Frequencies;
+        public float[,,] Frequencies;
         public string Alphabet { get; private set; }
 
         public TriGrams(string language, bool useSpaces = false)
@@ -502,15 +514,22 @@ namespace Cryptool.PluginBase.Utils
                 Alphabet = (string)bf.Deserialize(gz);
                 max = (uint)bf.Deserialize(gz);
                 sum = (ulong)bf.Deserialize(gz);
-                data = (uint[,,])bf.Deserialize(gz);
-            }
+                if (max == 0 && sum == 0)
+                {
+                    Frequencies = (float[,,]) bf.Deserialize(gz);
+                }
+                else
+                {
+                    data = (uint[, ,])bf.Deserialize(gz);
+                    Frequencies = new float[Alphabet.Length, Alphabet.Length, Alphabet.Length];
 
-            Frequencies = new double[Alphabet.Length, Alphabet.Length, Alphabet.Length];
-
-            for (int a = 0; a < Alphabet.Length; a++)
-                for (int b = 0; b < Alphabet.Length; b++)
+                    for (int a = 0; a < Alphabet.Length; a++)
+                    for (int b = 0; b < Alphabet.Length; b++)
                     for (int c = 0; c < Alphabet.Length; c++)
-                        Frequencies[a, b, c] = Math.Log((data[a, b, c] + 0.001) / max);
+                        Frequencies[a, b, c] = (float)Math.Log((data[a, b, c] + 0.001) / max);
+                }
+                
+            }         
         }
 
         public double CalculateCost(int[] plaintext)
@@ -529,7 +548,7 @@ namespace Cryptool.PluginBase.Utils
 
     public class QuadGrams
     {
-        public double[,,,] Frequencies;
+        public float[,,,] Frequencies;
         public string Alphabet { get; private set; }
 
         public QuadGrams(string language, bool useSpaces = false)
@@ -551,17 +570,23 @@ namespace Cryptool.PluginBase.Utils
             {
                 Alphabet = (string)bf.Deserialize(gz);
                 max = (uint)bf.Deserialize(gz);
-                sum = (ulong)bf.Deserialize(gz);
-                data = (uint[,,,])bf.Deserialize(gz);
-            }
+                sum = (ulong)bf.Deserialize(gz);                
+                if (max == 0 && sum == 0)
+                {
+                    Frequencies = (float[,,,])bf.Deserialize(gz);
+                }
+                else
+                {
+                    data = (uint[, , ,])bf.Deserialize(gz);
+                    Frequencies = new float[Alphabet.Length, Alphabet.Length, Alphabet.Length, Alphabet.Length];
 
-            Frequencies = new double[Alphabet.Length, Alphabet.Length, Alphabet.Length, Alphabet.Length];
-
-            for (int a = 0; a < Alphabet.Length; a++)
-                for (int b = 0; b < Alphabet.Length; b++)
+                    for (int a = 0; a < Alphabet.Length; a++)
+                    for (int b = 0; b < Alphabet.Length; b++)
                     for (int c = 0; c < Alphabet.Length; c++)
-                        for (int d = 0; d < Alphabet.Length; d++)
-                            Frequencies[a, b, c, d] = Math.Log((data[a, b, c, d] + 0.001) / max);
+                    for (int d = 0; d < Alphabet.Length; d++)
+                        Frequencies[a, b, c, d] = (float)Math.Log((data[a, b, c, d] + 0.001) / max);
+                }
+            }        
         }
 
         public double CalculateCost(int[] plaintext)
@@ -580,7 +605,7 @@ namespace Cryptool.PluginBase.Utils
 
     public class PentaGrams
     {
-        public double[,,,,] Frequencies;
+        public float[,,,,] Frequencies;
         public string Alphabet { get; private set; }
 
         public PentaGrams(string language, bool useSpaces = false)
@@ -603,17 +628,24 @@ namespace Cryptool.PluginBase.Utils
                 Alphabet = (string)bf.Deserialize(gz);
                 max = (uint)bf.Deserialize(gz);
                 sum = (ulong)bf.Deserialize(gz);
-                data = (uint[,,,,])bf.Deserialize(gz);
-            }
+                
+                if (max == 0 && sum == 0)
+                {
+                    Frequencies = (float[,,,,]) bf.Deserialize(gz);
+                }
+                else
+                {
+                    data = (uint[, , , ,])bf.Deserialize(gz);
+                    Frequencies = new float[Alphabet.Length, Alphabet.Length, Alphabet.Length, Alphabet.Length, Alphabet.Length];
 
-            Frequencies = new double[Alphabet.Length, Alphabet.Length, Alphabet.Length, Alphabet.Length, Alphabet.Length];
-
-            for (int a = 0; a < Alphabet.Length; a++)
-                for (int b = 0; b < Alphabet.Length; b++)
+                    for (int a = 0; a < Alphabet.Length; a++)
+                    for (int b = 0; b < Alphabet.Length; b++)
                     for (int c = 0; c < Alphabet.Length; c++)
-                        for (int d = 0; d < Alphabet.Length; d++)
-                            for (int e = 0; e < Alphabet.Length; e++)
-                                Frequencies[a, b, c, d, e] = Math.Log((data[a, b, c, d, e] + 0.001) / max);
+                    for (int d = 0; d < Alphabet.Length; d++)
+                    for (int e = 0; e < Alphabet.Length; e++)
+                        Frequencies[a, b, c, d, e] = (float)Math.Log((data[a, b, c, d, e] + 0.001) / max);
+                }
+            }           
         }
 
         public double CalculateCost(int[] plaintext)

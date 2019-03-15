@@ -22,8 +22,9 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 {
     public enum CiphertextFormat
     {
-        Letters,
-        NumberGroups
+        SingleLetters,
+        NumberGroups,
+        CommaSeparated
     }
 
     public enum AnalysisMode
@@ -38,7 +39,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 
         private int _language;
         private bool _useSpaces;
-        private CiphertextFormat _ciphertextFormat = CiphertextFormat.Letters;
+        private CiphertextFormat _ciphertextFormat = CiphertextFormat.SingleLetters;
         private int _wordCountToFind = 5;
         private int _minWordLength = 8;
         private int _maxWordLength = 10;
@@ -64,7 +65,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             set { _useSpaces = value; }
         }
 
-        [TaskPane("CiphertextFormatCaption", "CiphertextFormatTooltip", "TextFormatGroup", 2, false, ControlType.ComboBox, new[] { "Letters", "NumberGroups" })]
+        [TaskPane("CiphertextFormatCaption", "CiphertextFormatTooltip", "TextFormatGroup", 2, false, ControlType.ComboBox, new[] { "SingleLetters", "NumberGroups", "CommaSeparated" })]
         public CiphertextFormat CiphertextFormat
         {
             get { return _ciphertextFormat; }

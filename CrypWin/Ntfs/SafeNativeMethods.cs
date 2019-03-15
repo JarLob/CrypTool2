@@ -6,12 +6,11 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Win32.SafeHandles;
+using Resources = Cryptool.CrypWin.Ntfs.Resources;
 
 namespace Trinet.Core.IO.Ntfs
 {
-	using Resources = Properties.Resources;
-
-	/// <summary>
+    /// <summary>
 	/// Safe native methods.
 	/// </summary>
 	internal static class SafeNativeMethods

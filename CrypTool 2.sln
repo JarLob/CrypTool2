@@ -496,6 +496,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CT2IPC", "LibSource\CT2IPC\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayfairAnalyzer", "CrypPlugins\PlayfairAnalyzer\PlayfairAnalyzer.csproj", "{CC765107-4794-4ADD-9D87-6378D985C4BC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomophonicSubstitutionAnalyzer", "CrypPlugins\HomophonicSubstitutionAnalyzer\HomophonicSubstitutionAnalyzer.csproj", "{9F5CA45D-BD0E-423A-81E3-EE19AD68A510}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -1949,6 +1951,12 @@ Global
 		{CC765107-4794-4ADD-9D87-6378D985C4BC}.Release|x86.Build.0 = Release|x86
 		{CC765107-4794-4ADD-9D87-6378D985C4BC}.Test|x86.ActiveCfg = Test|x86
 		{CC765107-4794-4ADD-9D87-6378D985C4BC}.Test|x86.Build.0 = Test|x86
+		{9F5CA45D-BD0E-423A-81E3-EE19AD68A510}.Debug|x86.ActiveCfg = Debug|x86
+		{9F5CA45D-BD0E-423A-81E3-EE19AD68A510}.Debug|x86.Build.0 = Debug|x86
+		{9F5CA45D-BD0E-423A-81E3-EE19AD68A510}.Release|x86.ActiveCfg = Release|x86
+		{9F5CA45D-BD0E-423A-81E3-EE19AD68A510}.Release|x86.Build.0 = Release|x86
+		{9F5CA45D-BD0E-423A-81E3-EE19AD68A510}.Test|x86.ActiveCfg = Debug|x86
+		{9F5CA45D-BD0E-423A-81E3-EE19AD68A510}.Test|x86.Build.0 = Debug|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2186,6 +2194,7 @@ Global
 		{67F284AB-E392-4395-B2E7-14ED18E5825F} = {88B851F6-9E3D-484F-A317-ECED5B98C618}
 		{539863EC-3333-489F-A315-C1EC8340DD40} = {1E472920-3A9C-413A-98B2-8372F0E283C5}
 		{CC765107-4794-4ADD-9D87-6378D985C4BC} = {88B851F6-9E3D-484F-A317-ECED5B98C618}
+		{9F5CA45D-BD0E-423A-81E3-EE19AD68A510} = {88B851F6-9E3D-484F-A317-ECED5B98C618}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {92042D62-2CDA-4393-9D74-4FB5AC571A2D}
