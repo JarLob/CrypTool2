@@ -166,14 +166,14 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 24, MinValue = 1, MaxValue = 2 });   //Y
             _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 25, MinValue = 1, MaxValue = 2 });   //Z
 
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 26, MinValue = 1, MaxValue = 1 });   //Ä
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 27, MinValue = 1, MaxValue = 1 });   //Ö
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 28, MinValue = 1, MaxValue = 1 });   //Ü
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 29, MinValue = 1, MaxValue = 1 });   //ß            
+            //_presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 26, MinValue = 1, MaxValue = 1 });   //Ä
+            //_presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 27, MinValue = 1, MaxValue = 1 });   //Ö
+            //_presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 28, MinValue = 1, MaxValue = 1 });   //Ü
+            //_presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 29, MinValue = 1, MaxValue = 1 });   //ß            
 
             if (_settings.UseSpaces)
             {
-                _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 30, MinValue = 2, MaxValue = 3 });   //SPACE       
+                _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 26, MinValue = 2, MaxValue = 3 });   //SPACE       
             }
             _presentation.GenerateKeyLetterLimitsListView();
         }
