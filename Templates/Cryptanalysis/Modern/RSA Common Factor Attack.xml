@@ -4,11 +4,11 @@
   <title lang="ru">Общая атака фактора на RSA</title>
   <title lang="de">RSA-Angriff auf gemeinsamen Faktor</title>
   
-  <summary lang="en">Attack on the <i>RSA</i> algorithm used with common factors</summary>
+  <summary lang="en">Attack on the <i>RSA</i> algorithm if using modules N with common factors (shared primes)</summary>
   <summary lang="ru">Атака на алгоритм <i>RSA</i>, используемый с общими факторами</summary>
   <summary lang="de">Angriff auf den <i>RSA</i>-Algorithmus, der mit gemeinsamen Faktoren verwendet wird</summary>
   
-  <description lang="en">Attack on the <i>RSA</i> algorithm used with common factors</description>
+  <description lang="en">Attack on the <i>RSA</i> algorithm if using modules N with common factors (shared primes)</description>
   <description lang="ru">така на алгоритм <i> RSA</i>, используемый с общими факторами</description>
   <description lang="de">Angriff auf den <i> RSA</i> Algorithmus, der mit gemeinsamen Primfaktoren verwendet wird</description>
   
