@@ -1139,7 +1139,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Java Version ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Java version ähnelt.
         /// </summary>
         internal static string Java_Version {
             get {
@@ -1914,7 +1914,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Administrative Rights ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Administrative rights ähnelt.
         /// </summary>
         internal static string SI_Administrative_Rights {
             get {
@@ -1923,7 +1923,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Build Time ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Build time ähnelt.
         /// </summary>
         internal static string SI_Build_Time {
             get {
@@ -1932,7 +1932,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Build Type ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Build type ähnelt.
         /// </summary>
         internal static string SI_Build_Type {
             get {
@@ -1950,7 +1950,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Command Line ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Command line ähnelt.
         /// </summary>
         internal static string SI_CommandLine {
             get {
@@ -1959,7 +1959,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Common Language Runtime Version (.NET Version) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Common language runtime version (.NET version) ähnelt.
         /// </summary>
         internal static string SI_Common_Language_Runtime_Version {
             get {
@@ -1968,7 +1968,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die CrypTool Version ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die CrypTool version ähnelt.
         /// </summary>
         internal static string SI_CrypTool_Version {
             get {
@@ -1977,7 +1977,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Current Culture ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Current culture ähnelt.
         /// </summary>
         internal static string SI_Current_Culture {
             get {
@@ -2013,7 +2013,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Installation Type ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Installation type ähnelt.
         /// </summary>
         internal static string SI_Installation_Type {
             get {
@@ -2067,7 +2067,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Operating System ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Operating system ähnelt.
         /// </summary>
         internal static string SI_Operating_System {
             get {
@@ -2112,7 +2112,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Runtime Path ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Runtime path ähnelt.
         /// </summary>
         internal static string SI_Runtime_Path {
             get {
@@ -2148,7 +2148,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die System Type ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die System type ähnelt.
         /// </summary>
         internal static string SI_System_Type {
             get {
@@ -2157,7 +2157,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 32-bit Operating System ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 32-bit operating system ähnelt.
         /// </summary>
         internal static string SI_System_Type_32 {
             get {
@@ -2193,7 +2193,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Valid Certificate ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Valid certificate ähnelt.
         /// </summary>
         internal static string SI_ValidCertificate {
             get {

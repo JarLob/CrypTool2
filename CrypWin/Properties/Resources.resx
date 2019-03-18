@@ -722,37 +722,37 @@
     <value>Sending failed</value>
   </data>
   <data name="SI_Administrative_Rights" xml:space="preserve">
-    <value>Administrative Rights</value>
+    <value>Administrative rights</value>
   </data>
   <data name="SI_Build_Time" xml:space="preserve">
-    <value>Build Time</value>
+    <value>Build time</value>
   </data>
   <data name="SI_Build_Type" xml:space="preserve">
-    <value>Build Type</value>
+    <value>Build type</value>
   </data>
   <data name="SI_Common_Language_Runtime_Version" xml:space="preserve">
-    <value>Common Language Runtime Version (.NET Version)</value>
+    <value>Common language runtime version (.NET version)</value>
   </data>
   <data name="SI_Runtime_Path" xml:space="preserve">
-    <value>Runtime Path</value>
+    <value>Runtime path</value>
   </data>
   <data name="SI_CrypTool_Version" xml:space="preserve">
-    <value>CrypTool Version</value>
+    <value>CrypTool version</value>
   </data>
   <data name="SI_Current_Culture" xml:space="preserve">
-    <value>Current Culture</value>
+    <value>Current culture</value>
   </data>
   <data name="SI_Host_Name" xml:space="preserve">
     <value>Host Name</value>
   </data>
   <data name="SI_Installation_Type" xml:space="preserve">
-    <value>Installation Type</value>
+    <value>Installation type</value>
   </data>
   <data name="SI_Machine_Name" xml:space="preserve">
     <value>Machine Name</value>
   </data>
   <data name="SI_Operating_System" xml:space="preserve">
-    <value>Operating System</value>
+    <value>Operating system</value>
   </data>
   <data name="SI_Processors" xml:space="preserve">
     <value>Processors</value>
@@ -935,7 +935,7 @@
     <value>Subject</value>
   </data>
   <data name="SI_ValidCertificate" xml:space="preserve">
-    <value>Valid Certificate</value>
+    <value>Valid certificate</value>
   </data>
   <data name="ToolTip_Copy" xml:space="preserve">
     <value>Copy Tooltip</value>
@@ -944,10 +944,10 @@
     <value>https://www.cryptool.org/cryptool2</value>
   </data>
   <data name="SI_System_Type" xml:space="preserve">
-    <value>System Type</value>
+    <value>System type</value>
   </data>
   <data name="SI_System_Type_32" xml:space="preserve">
-    <value>32-bit Operating System</value>
+    <value>32-bit operating system</value>
   </data>
   <data name="SI_System_Type_64" xml:space="preserve">
     <value>64-bit Operating System</value>
@@ -965,13 +965,13 @@
     <value>Processor name</value>
   </data>
   <data name="SI_CommandLine" xml:space="preserve">
-    <value>Command Line</value>
+    <value>Command line</value>
   </data>
   <data name="Java_could_not" xml:space="preserve">
     <value>Could not start java.exe. Probably no Java installed.</value>
   </data>
   <data name="Java_Version" xml:space="preserve">
-    <value>Java Version</value>
+    <value>Java version</value>
   </data>
   <data name="CrypToolStore" xml:space="preserve">
     <value>CrypToolStore</value>
