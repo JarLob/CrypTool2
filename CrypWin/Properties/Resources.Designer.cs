@@ -1473,7 +1473,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Process Type ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Process type ähnelt.
         /// </summary>
         internal static string ProcessType {
             get {
