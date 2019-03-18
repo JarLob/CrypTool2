@@ -976,4 +976,7 @@
   <data name="CrypToolStore" xml:space="preserve">
     <value>CrypToolStore</value>
   </data>
+  <data name="ProcessType" xml:space="preserve">
+    <value>Process Type</value>
+  </data>
 </root>

@@ -1473,6 +1473,15 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Process Type ähnelt.
+        /// </summary>
+        internal static string ProcessType {
+            get {
+                return ResourceManager.GetString("ProcessType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Protocols ähnelt.
         /// </summary>
         internal static string Protocols {
