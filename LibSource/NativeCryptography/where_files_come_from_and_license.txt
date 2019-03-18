@@ -32,3 +32,5 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 Other source code files use the license shown in the source code file.
+
+the asm files were compiled using: YASM - https://yasm.tortall.net/Download.html

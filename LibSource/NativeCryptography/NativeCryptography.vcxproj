@@ -190,7 +190,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>object_files\do_rdtsc.obj;object_files\iaesx86.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>object_files\iaesx64.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <LinkTimeCodeGeneration>
       </LinkTimeCodeGeneration>
@@ -199,6 +199,7 @@
       <TreatLinkerWarningAsErrors>
       </TreatLinkerWarningAsErrors>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y /F "$(TargetDir)$(TargetFileName)" "..\..\Lib"</Command>
