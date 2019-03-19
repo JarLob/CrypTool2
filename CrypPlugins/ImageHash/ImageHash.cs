@@ -241,7 +241,7 @@ namespace Cryptool.Plugins.ImageHash
                     // Step 2: Resize to sizexsize (standard: 16x16)
                     int size = settings.Size;   // standard: 16
                     int halfSize = size / 2;    // standard: 8
-                    step2Img = step1Img.Resize(size, size, Emgu.CV.CvEnum.INTER.CV_INTER_NN);
+                    step2Img = step1Img.Resize(size, size, Emgu.CV.CvEnum.Inter.Nearest);
                     ProgressChanged(progress++, STEPS);
                     if ((settings.PresentationStep > 3 && settings.ShowEachStep) || (settings.PresentationStep == 3))
                     {
@@ -284,16 +284,16 @@ namespace Cryptool.Plugins.ImageHash
                     switch (flip)
                     {
                         case 1:
-                            step4Img = step4Img.Flip(Emgu.CV.CvEnum.FLIP.HORIZONTAL);
+                            step4Img = step4Img.Flip(Emgu.CV.CvEnum.FlipType.Horizontal);
                             subImage = swap(subImage, 1);
                             break;
                         case 2:
-                            step4Img = step4Img.Flip(Emgu.CV.CvEnum.FLIP.VERTICAL);
+                            step4Img = step4Img.Flip(Emgu.CV.CvEnum.FlipType.Vertical);
                             subImage = swap(subImage, 2);
                             break;
                         case 3:
-                            step4Img = step4Img.Flip(Emgu.CV.CvEnum.FLIP.HORIZONTAL);
-                            step4Img = step4Img.Flip(Emgu.CV.CvEnum.FLIP.VERTICAL);
+                            step4Img = step4Img.Flip(Emgu.CV.CvEnum.FlipType.Horizontal);
+                            step4Img = step4Img.Flip(Emgu.CV.CvEnum.FlipType.Vertical);
                             subImage = swap(subImage, 3);
                             break;
                     }

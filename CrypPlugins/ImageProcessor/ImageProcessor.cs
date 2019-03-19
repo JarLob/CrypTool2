@@ -147,11 +147,11 @@ namespace Cryptool.Plugins.ImageProcessor
                                 switch (settings.FlipType)
                                 {
                                     case 0:         // Horizontal
-                                        img._Flip(Emgu.CV.CvEnum.FLIP.HORIZONTAL);
+                                        img._Flip(Emgu.CV.CvEnum.FlipType.Horizontal);
                                         CreateOutputStream(img.ToBitmap());
                                         break;
                                     case 1:         // Vertical
-                                        img._Flip(Emgu.CV.CvEnum.FLIP.VERTICAL);
+                                        img._Flip(Emgu.CV.CvEnum.FlipType.Vertical);
                                         CreateOutputStream(img.ToBitmap());
                                         break;
                                 }
@@ -179,7 +179,7 @@ namespace Cryptool.Plugins.ImageProcessor
                                     settings.SizeX = 4096;
                                 if (settings.SizeY > 4096)
                                     settings.SizeY = 4096;
-                                using (Image<Bgr, byte> newImg = img.Resize(settings.SizeX, settings.SizeY, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR))
+                                using (Image<Bgr, byte> newImg = img.Resize(settings.SizeX, settings.SizeY, Emgu.CV.CvEnum.Inter.Linear))
                                 {
                                     CreateOutputStream(newImg.ToBitmap());
                                 }

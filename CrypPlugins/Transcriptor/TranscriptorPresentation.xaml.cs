@@ -633,7 +633,7 @@ namespace Transcriptor
                 }
 
                 //Both images must have the same size so they both get set to 50x50 pixel
-                rectangleImage = rectangleImage.Resize(50, 50, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
+                rectangleImage = rectangleImage.Resize(50, 50, Emgu.CV.CvEnum.Inter.Linear);
 
                 for (int i = 0; i < symbolItems.Count; i++)
                 {
@@ -644,7 +644,7 @@ namespace Transcriptor
                         itemImage = itemImage.Not();
                     }
 
-                    itemImage = itemImage.Resize(50, 50, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
+                    itemImage = itemImage.Resize(50, 50, Emgu.CV.CvEnum.Inter.Linear);
 
                     //Calculates the absolute differance of both images so both images will overlap
                     Image<Gray, Byte> absImage = rectangleImage.AbsDiff(itemImage);
@@ -716,7 +716,7 @@ namespace Transcriptor
             Image<Gray, Byte> sourceImage = new Image<Gray, byte>(ToBitmap(picture.Source as BitmapSource));
 
             //The Images have to be resized so they have the same Width and height like the picture.Source otherwise the coordinates are wrong
-            sourceImage = sourceImage.Resize((int)picture.Width, (int)picture.Height, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
+            sourceImage = sourceImage.Resize((int)picture.Width, (int)picture.Height, Emgu.CV.CvEnum.Inter.Linear);
             System.Drawing.Bitmap symbolBitmap = new System.Drawing.Bitmap(sourceImage.Bitmap);
             symbolBitmap = symbolBitmap.Clone(cropRect, System.Drawing.Imaging.PixelFormat.DontCare);
 
@@ -725,7 +725,7 @@ namespace Transcriptor
             Image<Gray, float> resultImage;
     
             //The template method
-            resultImage = sourceImage.MatchTemplate(templateImage, Emgu.CV.CvEnum.TM_TYPE.CV_TM_CCOEFF_NORMED);
+            resultImage = sourceImage.MatchTemplate(templateImage, Emgu.CV.CvEnum.TemplateMatchingType.CcoeffNormed);
 
             float[, ,] matches = resultImage.Data;
             bool skip = false;
