@@ -99,7 +99,6 @@ namespace FileInput
 
         public void PostExecution()
         {
-            Console.WriteLine("wird das hier ausgeführt????????????????");
             fileInputPresentation.makeUnaccesAble(true);
         }
 
