@@ -177,4 +177,22 @@
   <data name="TakePictureChoiceList3" xml:space="preserve">
     <value>False</value>
   </data>
+  <data name="BrightnessCaption" xml:space="preserve">
+    <value>Brightness</value>
+  </data>
+  <data name="BrightnessTooltip" xml:space="preserve">
+    <value>Changes the brightness of the camera image.</value>
+  </data>
+  <data name="ContrastCaption" xml:space="preserve">
+    <value>Contrast</value>
+  </data>
+  <data name="ContrastTooltip" xml:space="preserve">
+    <value>Changes the contrast of the camera image.</value>
+  </data>
+  <data name="SharpnessCaption" xml:space="preserve">
+    <value>Sharpness</value>
+  </data>
+  <data name="SharpnessTooltip" xml:space="preserve">
+    <value>Changes the sharpness of the camera image.</value>
+  </data>
 </root>
