@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2019 CrypTool 2 Team <ct2contact@cryptool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@ using System.Windows.Threading;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using Webcam;
-using Cryptool.Plugins.Webcam.Libaries;
 
 namespace Cryptool.Plugins.Webcam
 {
@@ -38,14 +37,15 @@ namespace Cryptool.Plugins.Webcam
         #region Private Variables
 
         private static readonly WebcamSettings settings = new WebcamSettings();
-        private readonly WebcamPresentation presentation;
+        private readonly WebcamPresentation presentation = new WebcamPresentation(settings);
         private DateTime lastExecuted = DateTime.Now;
         private System.Timers.Timer grabOutputPicture = null;
         private bool takePicture;
+        private bool running = false;
 
         public Webcam()
         {
-            presentation = new WebcamPresentation(NewCamEstablished);
+            
         }
 
         #endregion
@@ -79,7 +79,47 @@ namespace Cryptool.Plugins.Webcam
             set
             {
                 takePicture = value;
-                OnPropertyChanged("TakePicture");
+                TakePictureNow();
+            }
+        }
+
+        /// <summary>
+        /// Takes a single picture and outputs it to the "single output"
+        /// triggered by the TakePicture (boolean) input
+        /// </summary>
+        private void TakePictureNow()
+        {
+            if (running)
+            {
+                bool takeit = false;
+                switch (settings.TakePictureChoice)
+                {
+                    case 0://if takePicture == true OR takePicture == false
+                    default:
+                        takeit = true;
+                        break;
+                    case 1://if takePicture == true
+                        takeit = takePicture;
+                        break;
+                    case 2://if takePicture == false
+                        takeit = !takePicture;
+                        break;                   
+                }
+
+                if (takeit)
+                {
+                    byte[] data = null;
+                    presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        data = presentation.CaptureImage();
+                    }, null);
+
+                    if (data != null)
+                    {
+                        SingleOutPut = data;
+                        OnPropertyChanged("SingleOutPut");
+                    }
+                }
             }
         }
 
@@ -116,44 +156,49 @@ namespace Cryptool.Plugins.Webcam
         public void Execute()
         {
             ProgressChanged(0, 1);
-            if (CapDevice.DeviceMonikers.Length > 0)
+            if (!running)
             {
-                presentation.Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)(state =>
-                {
-                    try
-                    {
-                        if (!presentation.IsCamRunning()) // if cam is  not running, start it
-                        {
-                            presentation.StartCam( CapDevice.DeviceMonikers[settings.DeviceChoice].MonikerString);
-                        }
-
-
-                        if ((settings.TakePictureChoice == 1 && TakePicture) //set singleoutput if takepicture is false
-                            | (settings.TakePictureChoice == 2 && !TakePicture) //set singleoutput if takepicture is false
-                            | (settings.TakePictureChoice == 0))
-                        {
-                            if (PictureOutput != null)
-                            {
-                                BitmapSource bitmap = presentation.webcamPlayer.CurrentBitmap;
-                                if (bitmap != null)
-                                {
-                                    SingleOutPut = ImageTojepgByte(bitmap);
-                                    OnPropertyChanged("SingleOutPut");
-                                }
-
-                            }
-                        }
-
-
-                    }
-
-                    catch (Exception ex)
-                    {
-                        GuiLogMessage(ex.Message, NotificationLevel.Error);
-                    }
-                }), null);
+                running = true;
+                Thread thread = new Thread(CaptureThread);
+                thread.IsBackground = true;
+                thread.Start();
             }
             ProgressChanged(1, 1);
+        }
+
+        /// <summary>
+        /// Thread for capturing images
+        /// </summary>
+        private void CaptureThread()
+        {
+            // 1) start camera
+            presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                presentation.Start(settings.DeviceChoice);
+            }, null);
+            
+            // 2) loop capturing images
+            while (running)
+            {
+                byte[] data = null;
+                presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    data = presentation.CaptureImage();
+                }, null);
+
+                if (data != null)
+                {
+                    PictureOutput = data;
+                    OnPropertyChanged("PictureOutput");
+                }
+                Thread.Sleep(settings.SendPicture);
+            }
+
+            // 3) stop camera
+            presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                presentation.Stop();
+            }, null);       
         }
 
         /// <summary>
@@ -169,21 +214,7 @@ namespace Cryptool.Plugins.Webcam
         /// </summary>
         public void Stop()
         {
-            if (CapDevice.DeviceMonikers.Length > 0)
-            {
-                presentation.Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)(state =>
-                {
-                    try
-                    {
-                        presentation.StopCam();
-                    }
-                    catch (Exception e)
-                    {
-                        GuiLogMessage(e.Message, NotificationLevel.Error);
-                    }
-                }), null);
-                grabOutputPicture.Stop();
-            }
+            running = false;
         }
         /// <summary>
         /// Called once when plugin is loaded into editor workspace.
@@ -201,68 +232,7 @@ namespace Cryptool.Plugins.Webcam
 
         #endregion
 
-        public static byte[] ImageTojepgByte(BitmapSource bitmap)
-        {
-            using (var ms = new MemoryStream())
-            {
-                var enc = new JpegBitmapEncoder();
-                enc.Frames.Add(BitmapFrame.Create(bitmap));
-                enc.QualityLevel = settings.PictureQuality;
-                enc.Save(ms);
-
-                var image = ms.ToArray();
-                ms.Dispose();
-
-                return image;
-            }
-        }
-
         #region Event Handling
-
-
-        void NewCamEstablished(object sender, EventArgs e)
-        {
-            try
-            {
-                grabOutputPicture = new System.Timers.Timer { Interval = settings.SendPicture };
-                grabOutputPicture.Elapsed += new ElapsedEventHandler(GrabOutputPictureTick);
-                grabOutputPicture.Start();
-            }
-            catch (Exception ex)
-            {
-                GuiLogMessage(ex.Message, NotificationLevel.Error);
-            }
-        }
-
-        /// <summary>
-        /// tickmethod for the GrabOutputPicture timer.
-        /// updates the pictureoutput with the current image of the webcam
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GrabOutputPictureTick(object sender, EventArgs e)
-        {
-            presentation.Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)(state =>
-            {
-                try
-                {
-                    // Store current image in the webcam
-                    BitmapSource bitmap = presentation.webcamPlayer.CurrentBitmap;
-
-                    if (bitmap != null)
-                    {
-                        PictureOutput = ImageTojepgByte(bitmap);
-                        OnPropertyChanged("PictureOutput");
-                        lastExecuted = DateTime.Now;
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                    GuiLogMessage(ex.Message, NotificationLevel.Error);
-                }
-            }), null);
-        }
 
         public event StatusChangedEventHandler OnPluginStatusChanged;
 

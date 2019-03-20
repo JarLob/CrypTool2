@@ -142,7 +142,7 @@
     <value>Sets the packet size and picture quality of the camera.</value>
   </data>
   <data name="SendPictureCaption" xml:space="preserve">
-    <value>Send picture</value>
+    <value>Period</value>
   </data>
   <data name="SendPictureTooltip" xml:space="preserve">
     <value>Sets the time in milliseconds in which the image file is sent to the output.</value>

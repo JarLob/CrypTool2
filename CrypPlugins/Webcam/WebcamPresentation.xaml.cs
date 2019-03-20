@@ -1,4 +1,19 @@
-﻿using System;
+﻿/*
+   Copyright 2019 CrypTool 2 Team <ct2contact@cryptool.org>
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,116 +27,107 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Cryptool.Plugins.Webcam.Libaries;
-
+using Emgu.CV;
+using System.IO;
+using System.Threading;
+using Emgu.CV.CvEnum;
+using System.Drawing.Imaging;
+using System.ComponentModel;
+using System.Drawing;
+using Cryptool.Plugins.Webcam;
+using Encoder = System.Drawing.Imaging.Encoder;
 
 namespace Webcam
 {
+  
     /// <summary>
     /// Interaktionslogik für WebCamPresentation.xaml
     /// </summary>
     public partial class WebcamPresentation : UserControl
     {
-         private readonly EventHandler newCamEstablished;
+        private Capture _capture = null;
+        private ImageCodecInfo _jpgEncoder;
+        private Encoder _encoder;        
+        private WebcamSettings _settings;
 
-        public WebcamPresentation(EventHandler newCamEstablished)
+        public WebcamPresentation(WebcamSettings settings)
         {
             InitializeComponent();
-            this.newCamEstablished = newCamEstablished;
+            _settings = settings;            
         }
 
         /// <summary>
-        /// starts the cam, representated by the given device string and registers the capture handle methode
+        /// Starts the camera with the given id 
         /// </summary>
         /// <param name="device"></param>
-        public void StartCam(string device)
+        public void Start(int id = 0)
         {
-            if (SelectedWebcam != null && device.Equals(SelectedWebcam.MonikerString))
+            _capture = new Capture(id);
+            _jpgEncoder = GetEncoder(ImageFormat.Jpeg);
+            _encoder = Encoder.Quality;
+        }
+
+        /// <summary>
+        /// Updates the ui camera image and returns the image as
+        /// jpeg in a byte array
+        /// </summary>
+        /// <returns></returns>
+        public byte[] CaptureImage()
+        {
+            try
             {
-                SelectedWebcam.Start();
-            }
-            else
-            {
-                SelectedWebcam = new CapDevice("")
+                using (MemoryStream stream = new MemoryStream())
                 {
-                    MonikerString = device
-                };
+                    _capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Brightness, _settings.Brightness);
+                    _capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Contrast, _settings.Contrast);
+                    _capture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Sharpness, _settings.Sharpness);
+                    var bitmap = _capture.QueryFrame().Bitmap;
+                    EncoderParameters encoderParameters = new EncoderParameters(1);
+                    EncoderParameter encoderParameter = new EncoderParameter(_encoder, _settings.PictureQuality);
+                    encoderParameters.Param[0] = encoderParameter;  
+                    bitmap.Save(stream, _jpgEncoder, encoderParameters);                    
+                    stream.Position = 0;
+                    BitmapImage bitmapImage = new BitmapImage();
+                    bitmapImage.BeginInit();
+                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmapImage.StreamSource = stream;
+                    bitmapImage.EndInit();
+                    bitmapImage.Freeze();
+                    Picture.Source = bitmapImage;
+                    return stream.ToArray();
+                }
             }
-            //register output change eventhandler
-            SelectedWebcam.NewBitmapReady += newCamEstablished;
-        }
-
-        /// <summary>
-        /// stops the current cam and deregister the capture handle methode
-        /// </summary>
-        public void StopCam()
-        {
-            if (SelectedWebcam != null)
+            catch (Exception ex)
             {
-                SelectedWebcam.Stop();
-                SelectedWebcam.NewBitmapReady -= newCamEstablished;
+                //wtf?
             }
+            return null;
         }
 
-        public bool IsCamRunning()
+        private ImageCodecInfo GetEncoder(ImageFormat format)
         {
-            return SelectedWebcam != null && SelectedWebcam.IsRunning;
-        }
-
-        #region Properties
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
+        }  
 
         /// <summary>
-        /// Wrapper for the SelectedWebcam dependency property
+        /// Stops and disposes the camera
         /// </summary>
-        public CapDevice SelectedWebcam
+        public void Stop()
         {
-            get { return (CapDevice)GetValue(SelectedWebcamProperty); }
-            set { SetValue(SelectedWebcamProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for SelectedWebcam.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SelectedWebcamProperty =
-            DependencyProperty.Register("SelectedWebcam", typeof(CapDevice), typeof(WebcamPresentation), new UIPropertyMetadata(null));
-
-        /// <summary>
-        /// Wrapper for the SelectedWebcamMonikerString dependency property
-        /// </summary>
-        public string SelectedWebcamMonikerString
-        {
-            get { return (string)GetValue(SelectedWebcamMonikerStringProperty); }
-            set { SetValue(SelectedWebcamMonikerStringProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for SelectedWebcamMonikerString.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SelectedWebcamMonikerStringProperty = DependencyProperty.Register("SelectedWebcamMonikerString", typeof(string),
-            typeof(WebcamPresentation), new UIPropertyMetadata("", new PropertyChangedCallback(SelectedWebcamMonikerString_Changed)));
-
-        /// <summary>
-        /// Wrapper for the SelectedImages dependency property
-        /// </summary>
-        public ObservableCollection<BitmapSource> SelectedImages
-        {
-            get { return (ObservableCollection<BitmapSource>)GetValue(SelectedImagesProperty); }
-            set { SetValue(SelectedImagesProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for SelectedImages.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SelectedImagesProperty = DependencyProperty.Register("SelectedImages", typeof(ObservableCollection<BitmapSource>),
-            typeof(WebcamPresentation), new UIPropertyMetadata(new ObservableCollection<BitmapSource>()));
-
-        #endregion
-
-        #region Methods
-
-
-        /// <summary>
-        /// Invoked when the SelectedWebcamMonikerString dependency property has changed
-        /// </summary>
-        /// <param name="sender">Sender</param>
-        /// <param name="e">EventArgs</param>
-        private static void SelectedWebcamMonikerString_Changed(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-        { }
-
-        #endregion
+            if (_capture != null)
+            {
+                _capture.Dispose();
+            }
+            _capture = null;
+        }     
+        
     }
 }

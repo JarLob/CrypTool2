@@ -142,7 +142,7 @@
     <value>Verändert die Paketgröße und Bildqualität der Kamera</value>
   </data>
   <data name="SendPictureCaption" xml:space="preserve">
-    <value>Abtastrate</value>
+    <value>Periode</value>
   </data>
   <data name="SendPictureTooltip" xml:space="preserve">
     <value>Bestimmt die Zeitspanne in Millisekunden, in der das Kamerabild zum Bildausgang geschickt wird.</value>

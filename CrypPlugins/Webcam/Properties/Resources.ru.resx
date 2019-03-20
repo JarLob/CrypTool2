@@ -142,7 +142,7 @@
     <value>Устанавливает размер пакета и качество изображения камеры.</value>
   </data>
   <data name="SendPictureCaption" xml:space="preserve">
-    <value>Отправить картинку</value>
+    <value>период</value>
   </data>
   <data name="SendPictureTooltip" xml:space="preserve">
     <value>Устанавливает время в миллисекундах, в которое файл изображения отправляется на выход.</value>

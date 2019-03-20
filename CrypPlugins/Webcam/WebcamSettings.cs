@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2019 CrypTool 2 Team <ct2contact@cryptool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -22,31 +22,40 @@ using System.Windows.Documents;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using Webcam;
-using Cryptool.Plugins.Webcam.Libaries;
+using System.Management;
 
 namespace Cryptool.Plugins.Webcam
 {
-    // HOWTO: rename class (click name, press F2)
     public class WebcamSettings : ISettings
     {
         #region Private Variables
 
         private int quality = 50;
+        private int _brightness = 100;
+        private int _contrast = 25;
+        private int _sharpness = 100;
+
         private ObservableCollection<string> device = new ObservableCollection<string>();
         private int capDevice;
         private int sendPicture = 1000;
         private int takePictureChoice;
-
+        
         #endregion
 
         public WebcamSettings()
         {
             Device.Clear();
-            for (int i = 0; i < CapDevice.DeviceMonikers.Length-1; i++)
+            
+            var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity WHERE (PNPClass = 'Image' OR PNPClass = 'Camera')");
+            foreach (var info in searcher.Get())
             {
-                Device.Add(FilterInfo.GetName(CapDevice.DeviceMonikers[i].MonikerString));
+                string name = Convert.ToString(info["Caption"]);
+                Device.Add(name);
             }
-            capDevice = CapDevice.DeviceMonikers.Length-1;
+
+
+            //devices hinzufügen
+            //standard camera auswählen
         }
         
         public ObservableCollection<string> Device
@@ -62,14 +71,8 @@ namespace Cryptool.Plugins.Webcam
             }
         }
 
-
         #region TaskPane Settings
-
-        /// <summary>
-        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
-        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
-        /// </summary>
-
+      
         [TaskPane("DeviceChoiceCaption", "DeviceChoiceTooltip", null, 0, false, ControlType.DynamicComboBox, new string[] { "Device" })]
         public int DeviceChoice
         {
@@ -104,7 +107,7 @@ namespace Cryptool.Plugins.Webcam
             }
         }
 
-        [TaskPane("PictureQualityCaption", "PictureQualityTooltip", "DeviceSettingsGroup", 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 100)]
+        [TaskPane("PictureQualityCaption", "PictureQualityTooltip", "DeviceSettingsGroup", 1, true, ControlType.Slider, 1, 100)]
         public int PictureQuality
         {
             get
@@ -121,7 +124,58 @@ namespace Cryptool.Plugins.Webcam
             }
         }
 
-        [TaskPane("SendPictureCaption", "SendPictureTooltip", "DeviceSettingsGroup", 2, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 40, 10000)]
+        [TaskPane("BrightnessCaption", "BrightnessTooltip", "DeviceSettingsGroup", 2, true, ControlType.Slider, 1, 100)]
+        public int Brightness
+        {
+            get
+            {
+                return _brightness;
+            }
+            set
+            {
+                if (_brightness != value)
+                {
+                    _brightness = value;
+                    OnPropertyChanged("Brightness");
+                }
+            }
+        }
+
+        [TaskPane("ContrastCaption", "ContrastTooltip", "DeviceSettingsGroup", 3, true, ControlType.Slider, 1, 100)]
+        public int Contrast
+        {
+            get
+            {
+                return _contrast;
+            }
+            set
+            {
+                if (_contrast != value)
+                {
+                    _contrast = value;
+                    OnPropertyChanged("Contrast");
+                }
+            }
+        }
+
+        [TaskPane("SharpnessCaption", "SharpnessTooltip", "DeviceSettingsGroup", 4, true, ControlType.Slider, 1, 100)]
+        public int Sharpness
+        {
+            get
+            {
+                return _sharpness;
+            }
+            set
+            {
+                if (_sharpness != value)
+                {
+                    _sharpness = value;
+                    OnPropertyChanged("Sharpness");
+                }
+            }
+        }
+
+        [TaskPane("SendPictureCaption", "SendPictureTooltip", "DeviceSettingsGroup", 5, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 40, 10000)]
         public int SendPicture
         {
             get
