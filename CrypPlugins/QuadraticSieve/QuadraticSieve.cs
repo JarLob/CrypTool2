@@ -278,7 +278,8 @@ namespace Cryptool.Plugins.QuadraticSieve
             finally
             {
                 alreadyInUse = false;
-            }
+                Thread.Sleep(2000); //give msieve two seconds to close its file
+            }            
         }
 
         private bool checkInUse()
