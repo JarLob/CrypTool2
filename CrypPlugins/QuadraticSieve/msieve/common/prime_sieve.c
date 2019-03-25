@@ -9,7 +9,7 @@ useful. Again optionally, if you add to the functionality present here
 please consider making those additions public too, so that others may 
 benefit from your work.
 
-$Id: prime_sieve.c 23 2009-07-20 02:59:07Z jasonp_sf $
+$Id: prime_sieve.c 228 2010-02-28 23:37:55Z jasonp_sf $
 --------------------------------------------------------------------*/
 
 #include <common.h>
@@ -141,6 +141,8 @@ void init_prime_sieve(prime_sieve_t *s,
 void free_prime_sieve(prime_sieve_t *s) { 
 	free(s->aux);
 	free(s->sieve);
+	s->aux = NULL;
+	s->sieve = NULL;
 }
 
 /*------------------------------------------------------------------*/

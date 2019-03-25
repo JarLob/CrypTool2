@@ -9,20 +9,39 @@ useful. Again optionally, if you add to the functionality present here
 please consider making those additions public too, so that others may 
 benefit from your work.	
 
-$Id: common.h 23 2009-07-20 02:59:07Z jasonp_sf $
+$Id: common.h 937 2013-08-08 00:19:28Z jasonp_sf $
 --------------------------------------------------------------------*/
 
 #ifndef _COMMON_H_
 #define _COMMON_H_
 
 #include <msieve.h>
+#include <gmp_xface.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#ifdef HAVE_MPI
+	#define MAX_MPI_GRID_DIM 35
+
+	#define MPI_TRY(x) \
+	{								\
+		int status;						\
+		if ((status = (x)) != MPI_SUCCESS) {			\
+			printf("MPI error at %s:%d\n", __FILE__, __LINE__);\
+			MPI_Abort(MPI_COMM_WORLD, status);		\
+		}							\
+	}
+
+	#ifndef MPI_ERR_ASSERT  /* MPI library may not have this */
+	#define MPI_ERR_ASSERT 22
+	#endif
+#endif
+
 /*---------------- SAVEFILE RELATED DECLARATIONS ---------------------*/
 
+#define BIGNUM_BUF_SIZE 500
 #define LINE_BUF_SIZE 300
 #define SAVEFILE_READ 0x01
 #define SAVEFILE_WRITE 0x02
@@ -135,6 +154,14 @@ void hashtable_close(hashtable_t *h);
 void hashtable_free(hashtable_t *h);
 size_t hashtable_sizeof(hashtable_t *h);
 
+static INLINE void hashtable_reset(hashtable_t *h) {
+	h->match_array_size = 1;
+	h->num_used = 0;
+
+	memset(h->hashtable, 0, 
+		sizeof(uint32) << h->log2_hashtable_size);
+}
+
 static INLINE uint32 hashtable_get_num(hashtable_t *h) {
 	return h->match_array_size - 1;
 }
@@ -231,7 +258,7 @@ uint32 factor_mpqs(msieve_obj *obj, mp_t *n, factor_list_t *factor_list);
 
 uint32 factor_gnfs(msieve_obj *obj, mp_t *n, factor_list_t *factor_list);
 
-#define MIN_NFS_BITS 277
+#define MIN_NFS_BITS 264
 
 /*--------------LINEAR ALGEBRA RELATED DECLARATIONS ---------------------*/
 
@@ -249,6 +276,8 @@ typedef struct {
 
 /* A column of the matrix */
 
+#define MAX_COL_IDEALS 1000
+
 typedef struct {
 	uint32 *data;		/* The list of occupied rows in this column */
 	uint32 weight;		/* Number of nonzero entries in this column */
@@ -264,21 +293,20 @@ uint32 merge_relations(uint32 *merge_array,
 		  uint32 *src2, uint32 n2);
 
 uint64 * block_lanczos(msieve_obj *obj,
-			uint32 nrows, 
+			uint32 nrows, uint32 max_nrows, uint32 start_row,
 			uint32 num_dense_rows,
-			uint32 ncols, 
-			la_col_t *cols,
-			uint32 *deps_found);
+			uint32 ncols, uint32 max_ncols, uint32 start_col,
+			la_col_t *cols, uint32 *deps_found);
 
-void count_matrix_nonzero(msieve_obj *obj,
+uint64 count_matrix_nonzero(msieve_obj *obj,
 			uint32 nrows, uint32 num_dense_rows,
 			uint32 ncols, la_col_t *cols);
 
-void reduce_matrix(msieve_obj *obj, uint32 *nrows, 
+uint64 reduce_matrix(msieve_obj *obj, uint32 *nrows, 
 		uint32 num_dense_rows, uint32 *ncols, 
 		la_col_t *cols, uint32 num_excess);
 
-#define MIN_REORDER_SIZE 2000000
+#define MIN_REORDER_SIZE 200000
 
 void reorder_matrix(msieve_obj *obj, uint32 **rowperm, uint32 **colperm);
 
@@ -288,11 +316,15 @@ void dump_cycles(msieve_obj *obj, la_col_t *cols, uint32 ncols);
 
 void dump_matrix(msieve_obj *obj, 
 		uint32 nrows, uint32 num_dense_rows,
-		uint32 ncols, la_col_t *cols);
+		uint32 ncols, la_col_t *cols,
+		uint64 num_nonzero);
 
 void read_matrix(msieve_obj *obj, 
-		uint32 *nrows_out, uint32 *num_dense_rows_out,
-		uint32 *ncols_out, la_col_t **cols_out);
+		uint32 *nrows, uint32 *max_nrows, uint32 *start_row,
+		uint32 *num_dense_rows_out,
+		uint32 *ncols, uint32 *max_ncols, uint32 *start_col,
+		la_col_t **cols_out,
+		uint32 *rowperm, uint32 *colperm);
 
 void dump_dependencies(msieve_obj *obj, 
 			uint64 *deps, uint32 ncols);
@@ -300,7 +332,8 @@ void dump_dependencies(msieve_obj *obj,
 void read_cycles(msieve_obj *obj, 
 		uint32 *num_cycles_out, 
 		la_col_t **cycle_list_out, 
-		uint32 dependency);
+		uint32 dependency,
+		uint32 *colperm);
 
 /*-------------- MISCELLANEOUS STUFF ----------------------------------*/
 
@@ -325,11 +358,45 @@ void add_next_factor(msieve_obj *obj, mp_t *n,
 
 #define MAX_VARS 5
 
-typedef double (*objective_func)(double *v, void *extra);
+typedef double (*objective_func)(double v[MAX_VARS], void *extra);
 
 double minimize(double p[MAX_VARS], uint32 ndim, 
 			double ftol, uint32 max_iter,
 			objective_func callback, void *extra);
+
+double minimize_global(double p[MAX_VARS], uint32 ndim,
+                        double limits[MAX_VARS][2],
+			double tol, uint32 iter_limit,
+			objective_func callback, 
+			void *extra);
+
+typedef double (*objective_func_grad)(double v[MAX_VARS], 
+					double grad[MAX_VARS],
+					void *extra);
+
+double minimize_grad(double p[MAX_VARS], uint32 ndim, 
+			double ftol, uint32 max_iter,
+			objective_func callback, 
+			objective_func_grad callback_grad,
+			void *extra);
+
+typedef double (*objective_func_hess)(double v[MAX_VARS], 
+					double grad[MAX_VARS],
+					double hess[MAX_VARS][MAX_VARS],
+					void *extra);
+
+double minimize_hess(double p[MAX_VARS], uint32 ndim, 
+			double ftol, uint32 max_iter,
+			objective_func callback, 
+			objective_func_hess callback_hess,
+			void *extra);
+
+/* solve a linear system of size n; matrix and b are overwritten */
+
+void solve_dmatrix(double matrix[MAX_VARS][MAX_VARS], 
+			double x[MAX_VARS],
+			double b[MAX_VARS],
+			uint32 n);
 
 /* Dickman's rho function */
 

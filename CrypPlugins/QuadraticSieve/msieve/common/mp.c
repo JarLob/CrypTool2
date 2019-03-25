@@ -9,10 +9,13 @@ useful. Again optionally, if you add to the functionality present here
 please consider making those additions public too, so that others may 
 benefit from your work.	
 
-$Id: mp.c 23 2009-07-20 02:59:07Z jasonp_sf $
+$Id: mp.c 976 2015-03-02 09:19:51Z brgladman $
 --------------------------------------------------------------------*/
 
-#include <mp_int.h>
+#include <mp.h>
+#include <common.h>
+#include <gmp_xface.h>
+#include <mpz_aprcl32.h>
 
 /* silly hack: in order to expand macros and then
    turn them into strings, you need two levels of
@@ -20,6 +23,18 @@ $Id: mp.c 23 2009-07-20 02:59:07Z jasonp_sf $
 
 #define _(x) #x
 #define STRING(x) _(x)
+
+/*---------------------------------------------------------------*/
+static uint32 num_nonzero_words(uint32 *x, uint32 max_words) {
+
+	/* return the index of the first nonzero word in
+	   x, searching backwards from max_words */
+
+	uint32 i;
+	for (i = max_words; i && !x[i-1]; i--)
+		;
+	return i;
+}
 
 /*---------------------------------------------------------------*/
 uint32 mp_bits(mp_t *a) {
@@ -429,21 +444,23 @@ static uint32 mp_submul_1(uint32 *a, uint32 b,
 
 #if defined(GCC_ASM32A)
 	ASM_G(
-	    "negl %5			\n\t"
+	    "leal (%2,%0,4), %2         \n\t"
+	    "leal (%3,%0,4), %3         \n\t"
+	    "negl %0			\n\t"
 	    "jz 1f			\n\t"
 	    "0:				\n\t"
-	    "movl (%2,%5,4), %%eax	\n\t"
+	    "movl (%2,%0,4), %%eax	\n\t"
 	    "mull %4			\n\t"
 	    "addl %1, %%eax		\n\t"
 	    "adcl $0, %%edx		\n\t"
-	    "subl %%eax, (%3,%5,4)	\n\t"
+	    "subl %%eax, (%3,%0,4)	\n\t"
 	    "movl %%edx, %1		\n\t"
 	    "adcl $0, %1		\n\t"
 	    "addl $1, %0		\n\t"
 	    "jnz 0b			\n\t"
 	    "1:				\n\t"
-	    : "+r"(words), "+r"(carry)
-	    : "r"(a + words), "r"(x + words), "g"(b)
+	    : "+r"(words), "+r"(carry), "+r"(a), "+r"(x)
+	    : "g"(b)
 	    : "%eax", "%edx", "cc", "memory");
 
 #elif defined(MSC_ASM32A)
@@ -500,14 +517,14 @@ void mp_mul_1(mp_t *a, uint32 b, mp_t *x) {
 
 #if defined(GCC_ASM32A)
 	ASM_G(
-	    "negl %5			\n\t"
+	    "negl %0			\n\t"
 	    "jz 1f			\n\t"
 	    "0:				\n\t"
-	    "movl (%2,%5,4), %%eax	\n\t"
+	    "movl (%2,%0,4), %%eax	\n\t"
 	    "mull %4			\n\t"
 	    "addl %1, %%eax		\n\t"
 	    "adcl $0, %%edx		\n\t"
-	    "movl %%eax, (%3,%5,4)	\n\t"
+	    "movl %%eax, (%3,%0,4)	\n\t"
 	    "movl %%edx, %1		\n\t"
 	    "addl $1, %5		\n\t"
 	    "jnz 0b			\n\t"
@@ -654,7 +671,7 @@ uint32 mp_rjustify(mp_t *a, mp_t *res) {
 }
 
 /*---------------------------------------------------------------*/
-void mp_divrem_core(big_mp_t *num, mp_t *denom, 
+static void mp_divrem_core(big_mp_t *num, mp_t *denom, 
 			mp_t *quot, mp_t *rem) {
 
 	int32 i, j, k;
@@ -663,23 +680,8 @@ void mp_divrem_core(big_mp_t *num, mp_t *denom,
 	uint32 nacc[2*MAX_MP_WORDS+1];
 	uint32 dacc[MAX_MP_WORDS];
 
-	mp_clear(quot);
-	mp_clear(rem);
-
 	i = num->nwords;
 	j = denom->nwords;
-	if (mp_cmp((mp_t *)num, denom) < 0) {
-		mp_copy((mp_t *)num, rem);  /* copy low half of num only! */
-		return;
-	}
-	if (j <= 1) { 		
-		/* quotient and remainder had better fit in an mp_t */
-		rem->val[0] = mp_divrem_1((mp_t *)num, denom->val[0], quot);
-		if (rem->val[0] > 0)
-			rem->nwords = 1;
-		return;
-	}
-
 	high_denom = denom->val[j-1];
 
 #if defined(GCC_ASM32X) || defined(GCC_ASM64X) 
@@ -745,7 +747,7 @@ void mp_divrem_core(big_mp_t *num, mp_t *denom,
 #else
 			uint64 acc = (uint64)high_num << 32 | (uint64)low_num;
 			q = (uint32)(acc / high_denom);
-			r = (uint32)(acc % high_denom);
+			r = (uint32)(acc - (uint64)q * high_denom);
 #endif
 			while ((uint64)low_denom * (uint64)q >
 				((uint64)r << 32) + check) {
@@ -797,19 +799,45 @@ void mp_divrem(mp_t *num, mp_t *denom, mp_t *quot, mp_t *rem) {
 		quot = &tmp_quot;
 	if (rem == NULL)
 		rem = &tmp_rem;
-	
+
+	if (mp_cmp(num, denom) < 0) {
+		/* no division necessary */
+		mp_copy(num, rem); 
+		mp_clear(quot);
+		return;
+	}
+
+	mp_clear(rem);	
+	if (denom->nwords <= 1) { 		
+		/* 1-word division is special-cased */
+		rem->val[0] = mp_divrem_1(num, denom->val[0], quot);
+		if (rem->val[0] > 0)
+			rem->nwords = 1;
+		return;
+	}
+
+	/* perform the full long division routine */
+
+	mp_clear(quot);
 	mp_divrem_core((big_mp_t *)num, denom, quot, rem);
 
 #if 0
 	/* an extremely paranoid check for an extremely
 	   complex routine */
 
-	mp_t test;
-	mp_mul(quot, denom, &test);
-	mp_add(&test, rem, &test);
-	if (mp_cmp(&test, num)) {
-		printf("division failed\n");
-		exit(-1);
+	if (num->nwords <= MAX_MP_WORDS) {
+		mp_t test;
+		mp_mul(quot, denom, &test);
+		mp_add(&test, rem, &test);
+		if (mp_cmp(&test, num)) {
+			char buf[1000];
+			printf("division failed\n");
+			printf("%s\n", mp_sprintf(num, 16, buf));
+			printf("%s\n", mp_sprintf(denom, 16, buf));
+			printf("%s\n", mp_sprintf(quot, 16, buf));
+			printf("%s\n", mp_sprintf(rem, 16, buf));
+			exit(-1);
+		}
 	}
 #endif
 }
@@ -819,9 +847,6 @@ uint32 mp_divrem_1(mp_t *num, uint32 denom, mp_t *quot) {
 
 	int32 i;
 	uint32 rem = 0;
-
-	if (quot == NULL)
-		return mp_mod_1(num, denom);
 
 	for (i = (int32)num->nwords; i < MAX_MP_WORDS; i++)
 		quot->val[i] = 0;
@@ -843,8 +868,9 @@ uint32 mp_divrem_1(mp_t *num, uint32 denom, mp_t *quot) {
 		quot->val[i] = quot1;
 #else
 		uint64 acc = (uint64)rem << 32 | (uint64)num->val[i];
-		quot->val[i] = (uint32)(acc / denom);
-		rem = (uint32)(acc % denom);
+		uint32 q = (uint32)(acc / denom);
+		quot->val[i] = q;
+		rem = (uint32)(acc - (uint64)q * denom);
 #endif
 		i--;
 	}
@@ -864,25 +890,179 @@ void mp_modmul(mp_t *a, mp_t *b, mp_t *n, mp_t *res) {
 	mp_t *small = a;
 	mp_t *large = b;
 	big_mp_t prod;
-	mp_t tmp_quot;
 
 	if (small->nwords > large->nwords) {
 		small = b;
 		large = a;
 	}
-	if (small->nwords == 0) {
+	if (mp_is_zero(small)) {
 		mp_clear(res);
 		return;
 	}
 
-	memset(prod.val, 0, sizeof(prod.val));
+	memset(&prod, 0, sizeof(big_mp_t));
 	for (i = 0; i < small->nwords; i++) 
 		mp_addmul_1(large, small->val[i], prod.val + i);
 	
 	prod.nwords = num_nonzero_words(prod.val, a->nwords + b->nwords);
 
-	mp_divrem_core(&prod, n, &tmp_quot, res);
+	mp_mod((mp_t *)&prod, n, res);
 }
+
+/*---------------------------------------------------------------*/
+#if !defined(GCC_ASM64A) && !(defined(_MSC_VER) && defined(_WIN64))
+
+static uint64 mp_mod_2(uint32 num[4], uint64 p) {
+
+	int32 i, k;
+	uint32 shift, comp_shift;
+	uint32 high_denom, low_denom;
+	uint32 nacc[5];
+	uint32 dacc[2];
+
+	for (i = 4; i; i--) {
+		if (num[i-1] > 0)
+			break;
+	}
+
+	high_denom = (uint32)(p >> 32);
+
+#if defined(GCC_ASM32X)
+	ASM_G("bsrl %1, %0": "=r"(shift) : "rm"(high_denom) : "cc");
+	shift = 31 - shift;
+#else
+	comp_shift = 0x80000000;
+	shift = 0;
+	if ((high_denom >> 16) == 0) {
+		comp_shift = 0x8000;
+		shift = 16;
+	}
+
+	while ( !(high_denom & comp_shift) ) {
+		shift++;
+		comp_shift >>= 1;
+	}
+#endif
+	comp_shift = 32 - shift;
+	p <<= shift;
+	high_denom = dacc[1] = (uint32)(p >> 32);
+	low_denom = dacc[0] = (uint32)p;
+
+	if (shift) {
+		for (k = i; k > 1; k--) {
+			nacc[k-1] = num[k-1] << shift |
+					num[k-2] >> comp_shift;
+		}
+		nacc[0] = num[0] << shift;
+		nacc[i] = num[i-1] >> comp_shift;
+	}
+	else {
+		memcpy(nacc, num, i * sizeof(uint32));
+		nacc[i] = 0;
+	}
+
+	while (i + 1 > 2) {
+		uint32 q, r;
+		uint32 high_num = nacc[i];
+		uint32 low_num = nacc[i-1];
+		uint32 check = nacc[i-2];
+
+		if (high_num == high_denom) {
+
+			/* the quotient will be 2^32, and must
+			   always get corrected */
+
+			q = 0xffffffff;
+		}
+		else {
+
+#if defined(GCC_ASM32X)
+			q = low_num;
+			r = high_num;
+			ASM_G("divl %2"
+				: "+a"(q),"+d"(r)
+				: "rm"(high_denom) : "cc");
+#else
+			uint64 acc = (uint64)high_num << 32 | (uint64)low_num;
+			q = (uint32)(acc / high_denom);
+			r = (uint32)(acc % high_denom);
+#endif
+			while ((uint64)low_denom * (uint64)q >
+				(((uint64)r << 32) | check)) {
+				q--;
+				r += high_denom;
+				if (r < high_denom)
+					break;
+			}
+		}
+
+		if (mp_submul_1(dacc, q, 2, nacc + i - 2) 
+							!= high_num) {
+			uint32 carry = 0;
+			for (q--, k = 0; k < 2; k++) {
+				uint32 sum = nacc[i-2+k] + carry;
+				carry = (sum < nacc[i-2+k]);
+				nacc[i-2+k] = sum + dacc[k];
+				carry += (nacc[i-2+k] < sum);
+			}
+		}
+
+		nacc[i--] = 0;
+	}
+
+	if (shift) {
+		uint32 res0 = nacc[0] >> shift | nacc[1] << comp_shift;
+		uint32 res1 = nacc[1] >> shift;
+		return (uint64)res1 << 32 | res0;
+	}
+	else {
+		return (uint64)nacc[1] << 32 | nacc[0];
+	}
+}
+
+uint64 mp_modmul_2(uint64 a, uint64 b, uint64 p) {
+
+	uint64 prod;
+	uint32 num[4];
+	uint32 a0, a1;
+	uint32 b0, b1;
+
+	a1 = (uint32)(a >> 32);
+	a0 = (uint32)a;
+	b1 = (uint32)(b >> 32);
+	b0 = (uint32)b;
+	if ((a1 | b1) == 0) {
+		if ((uint32)(p >> 32) == 0) {
+			return mp_modmul_1(a0, b0, (uint32)p);
+		}
+		else {
+			prod = (uint64)a0 * (uint64)b0;
+			return prod % p;
+		}
+	}
+
+	prod = (uint64)a0 * (uint64)b0;
+	num[0] = (uint32)prod;
+	prod = (prod >> 32) + 
+		(uint64)a0 * (uint64)b1;
+	num[1] = (uint32)prod;
+	num[2] = (uint32)(prod >> 32);
+
+	prod = (uint64)a1 * (uint64)b0 +
+		(uint64)num[1];
+	num[1] = (uint32)prod;
+	prod = (prod >> 32) + 
+		(uint64)a1 * (uint64)b1 +
+		(uint64)num[2];
+	num[2] = (uint32)prod;
+	num[3] = (uint32)(prod >> 32);
+
+	if ((uint32)(p >> 32) == 0)
+		return mp_mod_1_core(num, 4, (uint32)p);
+	else
+		return mp_mod_2(num, p);
+}
+#endif /* !defined(GCC_ASM64A) && !(defined(_MSC_VER) && defined(_WIN64)) */
 
 /*---------------------------------------------------------------*/
 uint32 mp_iroot(mp_t *a, uint32 root, mp_t *res) {
@@ -1433,7 +1613,6 @@ void mp_modsqrt2(mp_t *a, mp_t *p, mp_t *res,
 
 	mp_t p0, p1, r0, r1, r2;
 
-	mp_mod(a, p, &r0);
 	mp_modsqrt(a, p, &r1, seed1, seed2);
 
 	mp_mul(&r1, &r1, &r2);
@@ -1465,19 +1644,28 @@ int32 mp_is_prime(mp_t *p, uint32 *seed1, uint32 *seed2) {
 				  151,157,163,167,173,179,181,191,193,
 				  197,199,211,223,227,229,233,239,241,251};
 
-	uint32 i, j, bits, num_squares;
+	uint32 i, j, bits, num_squares, ret;
 	mp_t base, tmp, oddpart, p_minus_1;
+	mpz_t zp;
 
 	for (i = 0; i < sizeof(factors) / sizeof(uint32); i++) {
 		if (p->nwords == 1 && p->val[0] == factors[i])
-			return 1;
+			return MSIEVE_PRIME;
 
 		if (!mp_mod_1(p, factors[i]))
-			return 0;
+			return MSIEVE_COMPOSITE;
 	}
 
 	if (p->nwords == 1 && p->val[0] < 65536)
-		return 1;
+		return MSIEVE_PRIME;
+
+	mpz_init(zp);
+	mp2gmp(p, zp);
+	ret = mpz_aprcl(zp);
+	mpz_clear(zp);
+	if (ret == APRTCLE_PRIME) return MSIEVE_PRIME;
+	if (ret == APRTCLE_PRP) return MSIEVE_PROBABLE_PRIME;
+	if (ret == APRTCLE_COMPOSITE) return MSIEVE_COMPOSITE;
 
 	mp_sub_1(p, 1, &p_minus_1);
 	mp_copy(&p_minus_1, &oddpart);
@@ -1509,10 +1697,93 @@ int32 mp_is_prime(mp_t *p, uint32 *seed1, uint32 *seed2) {
 	}
 
 	if (i == NUM_WITNESSES)
-		return 1;
-	return 0;
+		return MSIEVE_PROBABLE_PRIME;
+	return MSIEVE_COMPOSITE;
 }
 		
+/*---------------------------------------------------------------*/
+	/* thanks to SPWorley */
+
+static const uint8 sprp_lookup[1024]= {
+5,6,11,15,76,15,11,26,10,35,29,13,
+22,6,14,3,21,24,30,13,6,11,12,6,11,11,5,11,19,3,13,
+14,3,6,17,26,6,13,13,13,2,6,5,2,11,15,7,3,10,37,43,
+18,33,5,37,13,5,3,37,14,26,5,6,15,19,45,11,24,2,6,
+23,2,11,10,2,15,5,5,15,15,15,55,5,92,10,5,18,10,2,
+66,22,21,2,42,13,5,17,3,2,6,2,3,2,13,3,14,14,42,6,7,
+39,6,15,3,24,5,3,11,14,22,11,5,26,22,14,2,28,6,19,7,
+7,10,2,45,40,11,31,2,11,17,33,12,23,2,14,10,13,15,
+13,6,3,3,3,38,7,23,18,7,6,10,10,5,11,5,6,2,2,11,6,
+12,21,5,43,6,11,15,21,55,38,13,2,2,17,10,13,13,13,7,
+10,5,13,3,29,14,11,23,18,5,2,7,2,14,10,2,2,20,10,7,
+18,7,6,5,3,10,15,57,18,10,26,12,13,6,17,6,3,3,10,13,
+15,44,35,30,26,13,2,13,2,31,37,5,10,31,2,15,5,7,17,
+33,17,2,21,23,7,5,17,6,40,17,11,56,30,30,10,3,15,11,
+2,15,3,5,2,2,17,22,2,10,2,7,12,13,5,22,5,20,17,7,6,
+18,18,6,19,6,5,21,24,2,10,2,2,11,19,42,2,5,17,7,2,42,
+7,41,5,5,23,15,11,2,34,10,24,11,12,14,11,2,15,30,28,
+19,6,10,12,5,6,45,7,13,11,12,15,13,11,13,2,23,2,33,
+15,15,11,10,24,26,13,31,13,7,11,23,5,12,17,14,7,29,
+29,15,22,19,14,11,15,19,2,15,2,28,13,20,14,15,60,5,
+2,12,69,24,20,7,18,2,13,5,6,10,14,6,24,3,11,23,5,13,
+88,13,14,19,3,5,3,21,2,11,6,31,42,18,73,2,7,3,2,3,23,
+11,6,6,5,6,14,11,2,11,7,10,7,38,39,5,15,2,19,5,7,22,
+13,7,11,24,10,20,14,3,2,10,15,3,13,15,29,11,10,3,6,5,
+30,13,26,6,6,17,29,10,19,15,19,21,46,6,17,3,14,3,2,6,
+17,26,34,2,11,5,29,19,3,2,19,7,11,14,29,15,7,33,14,21,
+12,7,17,15,5,5,7,14,35,21,15,11,15,3,18,3,11,17,7,21,
+20,3,15,11,10,3,24,47,10,5,10,5,3,42,6,2,10,21,3,2,2,
+5,14,7,3,2,14,15,11,5,12,13,15,15,5,11,10,6,5,7,6,19,
+5,2,6,15,5,6,3,2,24,10,10,11,14,11,7,13,3,7,3,18,20,
+30,33,17,30,17,3,35,5,5,17,46,6,26,6,20,40,5,10,12,7,
+17,5,12,2,6,5,10,5,7,7,7,3,17,11,10,34,10,15,2,6,3,11,
+23,13,6,2,18,14,10,7,6,10,7,10,77,6,17,10,5,5,18,17,5,
+15,2,11,3,10,13,28,21,20,23,6,7,14,11,3,6,18,5,5,10,6,
+23,3,3,2,6,2,15,6,10,5,15,21,7,6,3,7,12,5,3,13,17,20,
+21,15,7,2,14,40,20,5,11,7,7,10,10,31,11,13,21,43,3,14,
+22,10,22,23,2,10,10,3,7,3,20,7,5,15,7,10,2,30,52,10,
+56,14,14,2,2,3,7,5,5,10,3,10,7,15,13,3,89,21,11,5,14,
+13,13,11,40,23,21,6,3,20,14,24,6,2,28,6,5,5,6,5,20,7,
+13,29,26,31,5,11,3,24,5,7,5,29,38,3,19,13,6,2,22,10,7,
+22,5,29,7,11,6,3,2,37,7,7,6,19,12,2,91,7,2,6,56,52,7,
+11,10,31,2,6,11,78,34,15,2,53,14,22,31,22,41,2,23,6,
+39,6,31,15,15,10,7,30,2,19,6,43,11,38,6,6,3,26,7,10,
+11,5,2,11,5,22,22,3,15,2,5,6,24,10,17,7,10,11,2,23,13,
+5,11,11,6,21,18,3,21,10,21,2,11,5,7,44,43,31,10,13,3,
+2,10,3,7,2,47,13,12,2,13,5,11,2,5,7,11,19,5,10,17,22,
+26,2,2,7,2,2,6,6,3,6,22,15,13,57,13,12,2,20,3,5,13,3,
+13,15,6,15,2,21,11,10,11,15,2,22,23,10,6,44,7,2,10,5,
+31,6,2,5,22,15,5,17,11,2,6,6,13,23,6,5,11,7,28,29,22,
+2,7,11,6,35,24,2,3,2,17,13,3,6,2,14,5,11,11,7,23,13,11,
+2,13,13,10,12,23,10,18,5,60,10,5,26,5,29,3,20,7,21,47};
+
+int32 mp_is_prime_1(uint32 p) {
+
+	uint32 base = sprp_lookup[(0x3AC69A35*p)>>22];	
+	uint32 d = p - 1;	
+	uint32 ad;
+	uint32 r;
+	uint32 s = 0;
+
+	while (!(d & 1)) {
+		s++;
+		d >>= 1;
+	}
+
+	ad = mp_expo_1(base, d, p);
+	
+	if (ad == 1) 
+		return 1;
+	if (s > 0 && ad == p - 1) 
+		return 1;
+	for (r = 1; r < s; r++) {
+		ad = mp_modmul_1(ad, ad, p);
+		if (ad == p - 1) 
+			return 1;
+	}		
+	return 0;
+}
+
 /*---------------------------------------------------------------*/
 void mp_random_prime(uint32 bits, mp_t *res,
 			uint32 *seed1, uint32 *seed2) {

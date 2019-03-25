@@ -9,7 +9,7 @@ useful. Again optionally, if you add to the functionality present here
 please consider making those additions public too, so that others may 
 benefit from your work.	
 
-$Id: util.h 23 2009-07-20 02:59:07Z jasonp_sf $
+$Id: util.h 1005 2016-11-11 15:43:21Z jasonp_sf $
 --------------------------------------------------------------------*/
 
 #ifndef _UTIL_H_
@@ -17,24 +17,34 @@ $Id: util.h 23 2009-07-20 02:59:07Z jasonp_sf $
 
 /* system-specific stuff ---------------------------------------*/
 
-#if defined(WIN32)
-	#define WIN32_LEAN_AND_MEAN
-#endif
-
 #if defined(WIN32) || defined(_WIN64)
+	#define WIN32_LEAN_AND_MEAN
 
 	#include <windows.h>
 	#include <process.h>
-
-#else /* !WIN32 */
-
+#else
 	#include <fcntl.h>
 	#include <unistd.h>
 	#include <errno.h>
 	#include <pthread.h>
 	#include <sys/resource.h>
+	#include <float.h>
+	#include <dlfcn.h>
+#endif
 
-#endif /* WIN32 */
+#ifdef NO_ZLIB
+	#define gzFile   FILE
+	#define gzopen   fopen
+	#define gzclose  fclose
+	#define gzeof    feof
+	#define gzrewind rewind
+	#define gzprintf fprintf
+	#define gzputs(f,b)   fprintf(f, "%s", b)
+	#define gzgets(f,b,l) fgets(b,l,f)
+	#define gzflush(f,b)  fflush(f)
+#else
+	#include <zlib.h>
+#endif
 
 /* system-independent header files ------------------------------------*/
 
@@ -46,13 +56,19 @@ $Id: util.h 23 2009-07-20 02:59:07Z jasonp_sf $
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#ifndef _MSC_VER
+#if !defined(_MSC_VER) || _MSC_VER >= 1800
 	#include <inttypes.h>
 #endif
 #ifdef _MSC_VER
 	#define _USE_MATH_DEFINES
 #endif
 #include <math.h>
+
+#if defined(_MSC_VER) && _MSC_VER >= 1900
+/* for _getcwd() and _access_s() used in stage1_sieve_gpu.c */
+    #include <direct.h>
+    #include <io.h>
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -92,14 +108,40 @@ extern "C" {
 	#endif
 #endif
 
+#if defined(WIN32) || defined(_WIN64)
+	typedef HMODULE libhandle_t;
+#else
+	typedef void * libhandle_t;
+#endif
+
 /* useful functions ---------------------------------------------------*/
 
 #define MIN(a,b) ((a) < (b)? (a) : (b))
 #define MAX(a,b) ((a) > (b)? (a) : (b))
 
 #if defined(_MSC_VER)
+    
+	#include <float.h>
 	#define INLINE __inline
 	#define getpid _getpid
+	#define ftello _ftelli64
+	#define fseeko _fseeki64
+
+#if _MSC_VER < 1900
+	int64 strtoll(const char *nptr, char **endptr, int base);
+	uint64 strtoull(const char *nptr, char **endptr, int base);
+#endif
+
+    __inline double rint(double x)
+    {
+        static double c2_52 = 4503599627370496.0e0;  /* 2 ^ 52 */ 
+        double t;
+
+        if(x != x || _copysign(x, 1.0) >= c2_52)
+            return (x);
+        t = _copysign(c2_52, x);
+        return (x + t) - t;
+    }
 
 #elif !defined(RS6K)
 	#define INLINE inline
@@ -154,6 +196,10 @@ double get_cpu_time(void);
 void set_idle_priority(void);
 uint64 get_file_size(char *name);
 uint64 get_ram_size(void);
+
+libhandle_t load_dynamic_lib(const char *libname);
+void unload_dynamic_lib(libhandle_t h);
+void * get_lib_symbol(libhandle_t h, const char *symbol_name);
 
 #ifndef M_LN2
 #define M_LN2 0.69314718055994530942
@@ -240,6 +286,13 @@ enum cpu_type get_cpu_type(void);
 	#if !defined(WIN32) && !defined(__i386__)
 		#define HAS_MANY_REGISTERS
 	#endif
+#endif
+
+#if !defined(HAS_SSE) && defined(__x86_64__)
+	#define HAS_SSE
+#endif
+#if !defined(HAS_SSE2) && defined(__x86_64__)
+	#define HAS_SSE2
 #endif
 
 /* this byzantine complexity sets up the correct assembly

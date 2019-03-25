@@ -9,7 +9,7 @@ useful. Again optionally, if you add to the functionality present here
 please consider making those additions public too, so that others may 
 benefit from your work.	
 
-$Id: hashtable.c 23 2009-07-20 02:59:07Z jasonp_sf $
+$Id: hashtable.c 713 2012-03-10 12:56:24Z jasonp_sf $
 --------------------------------------------------------------------*/
 
 #include <common.h>
@@ -85,9 +85,9 @@ void *hashtable_find(hashtable_t *h, void *blob,
 		h->match_array_alloc *= 2;
 		match_array = h->match_array = (uint32 *)xrealloc(
 						h->match_array,
+						sizeof(uint32) *
 						h->match_array_alloc *
-						(blob_words + 1) *
-						sizeof(uint32));
+						(blob_words + 1));
 	}
 
 	/* pre-emptively grow the hashtable size if it's
@@ -135,7 +135,7 @@ void *hashtable_find(hashtable_t *h, void *blob,
 
 	offset = hashtable[hashval];
 	while (offset != 0) {
-		entry = match_array + offset * (blob_words + 1);
+		entry = match_array + (size_t)offset * (blob_words + 1);
 		for (i = 0; i < hash_words; i++) {
 			if (entry[i] != key[i])
 				break;
@@ -156,7 +156,9 @@ void *hashtable_find(hashtable_t *h, void *blob,
 
 		/* not found; add it */
 
-		entry = match_array + h->match_array_size * (blob_words + 1);
+		entry = match_array + 
+			(size_t)h->match_array_size * (blob_words + 1);
+
 		for (i = 0; i < hash_words; i++) {
 			entry[i] = key[i];
 		}

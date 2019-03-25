@@ -9,7 +9,7 @@ useful. Again optionally, if you add to the functionality present here
 please consider making those additions public too, so that others may 
 benefit from your work.	
 
-$Id: driver.c 23 2009-07-20 02:59:07Z jasonp_sf $
+$Id: driver.c 984 2015-03-28 16:26:48Z jasonp_sf $
 --------------------------------------------------------------------*/
 
 #include <common.h>
@@ -20,34 +20,31 @@ msieve_obj * msieve_obj_new(char *input_integer, uint32 flags,
 			    char *savefile_name, char *logfile_name,
 			    char *nfs_fbfile_name,
 			    uint32 seed1, uint32 seed2, uint32 max_relations,
-			    uint64 nfs_lower, uint64 nfs_upper,
 			    enum cpu_type cpu,
 			    uint32 cache_size1, uint32 cache_size2,
-			    uint32 num_threads, uint32 mem_mb) {
+			    uint32 num_threads, uint32 which_gpu, 
+			    const char *nfs_args) {
 
 	msieve_obj *obj = (msieve_obj *)xcalloc((size_t)1, sizeof(msieve_obj));
 
-	if (obj == NULL)
-		return obj;
-	
 	obj->input = input_integer;
 	obj->flags = flags;
 	obj->seed1 = seed1;
 	obj->seed2 = seed2;
 	obj->max_relations = max_relations;
-	obj->nfs_lower = nfs_lower;
-	obj->nfs_upper = nfs_upper;
 	obj->cpu = cpu;
 	obj->cache_size1 = cache_size1;
 	obj->cache_size2 = cache_size2;
 	obj->num_threads = num_threads;
-	obj->mem_mb = mem_mb;
+	obj->which_gpu = which_gpu;
 	obj->logfile_name = MSIEVE_DEFAULT_LOGFILE;
+	obj->nfs_args = nfs_args;
 	if (logfile_name)
 		obj->logfile_name = logfile_name;
 	obj->nfs_fbfile_name = MSIEVE_DEFAULT_NFS_FBFILE;
 	if (nfs_fbfile_name)
 		obj->nfs_fbfile_name = nfs_fbfile_name;
+	obj->mp_sprintf_buf = (char *)xmalloc(32 * MAX_MP_WORDS + 1);
 	savefile_init(&obj->savefile, savefile_name);
 	
 	return obj;
@@ -67,6 +64,7 @@ msieve_obj * msieve_obj_free(msieve_obj *obj) {
 	}
 
 	savefile_free(&obj->savefile);
+	free(obj->mp_sprintf_buf);
 	free(obj);
 	return NULL;
 }
@@ -75,22 +73,29 @@ msieve_obj * msieve_obj_free(msieve_obj *obj) {
 uint32 msieve_run_core(msieve_obj *obj, mp_t *n, 
 				factor_list_t *factor_list) {
 
-	uint32 i;
+	uint32 i, p;
 	uint32 bits;
+	double logn = mp_log(n);
+	double logbound = log(PRECOMPUTED_PRIME_BOUND);
 
 	/* detect if n is a perfect power. Try extracting any root
-	   whose value would exceed the trial factoring bound */
+	   whose value would exceed the trial factoring bound, and
+	   only consider prime powers. Most n are not powers, so it's
+	   more important to get through all the possibilities
+	   quickly, and quit before computing a root that is known
+	   to be too small */
 
-	i = 2;
-	while (1) {
+	for (i = p = 0; i < PRECOMPUTED_NUM_PRIMES; i++) {
 		mp_t n2;
-		if (mp_iroot(n, i, &n2) == 0) {
+
+		p += prime_delta[i];
+		if (logn < p * logbound)
+			break;
+
+		if (mp_iroot(n, p, &n2) == 0) {
 			factor_list_add(obj, factor_list, &n2);
 			return 1;
 		}
-		if (n2.nwords == 1 && n2.val[0] < PRECOMPUTED_PRIME_BOUND)
-			break;
-		i++;
 	}
 
 	/* If n is small enough, use custom routines */
@@ -156,18 +161,28 @@ void msieve_run(msieve_obj *obj) {
 	}
 	n_string = mp_sprintf(&n, 10, obj->mp_sprintf_buf);
 
+#ifdef HAVE_MPI
+	MPI_TRY(MPI_Comm_size(MPI_COMM_WORLD, (int *)&obj->mpi_size));
+	MPI_TRY(MPI_Comm_rank(MPI_COMM_WORLD, (int *)&obj->mpi_rank));
+#endif
+
 	/* print startup banner */
 
 	logprintf(obj, "\n");
 	logprintf(obj, "\n");
-	logprintf(obj, "Msieve v. %d.%02d\n", MSIEVE_MAJOR_VERSION, 
-					MSIEVE_MINOR_VERSION);
+	logprintf(obj, "Msieve v. %d.%02d (SVN %s)\n", 
+				MSIEVE_MAJOR_VERSION, 
+				MSIEVE_MINOR_VERSION,
+				MSIEVE_SVN_VERSION);
 	start_time = time(NULL);
 	if (obj->flags & MSIEVE_FLAG_LOG_TO_STDOUT) {
 		printf("%s", ctime(&start_time));
 	}
 
 	logprintf(obj, "random seeds: %08x %08x\n", obj->seed1, obj->seed2);
+#ifdef HAVE_MPI
+	logprintf(obj, "MPI process %u of %u\n", obj->mpi_rank, obj->mpi_size);
+#endif
 	logprintf(obj, "factoring %s (%d digits)\n", 
 				n_string, strlen(n_string));
 
@@ -178,6 +193,16 @@ void msieve_run(msieve_obj *obj) {
 		obj->flags |= MSIEVE_FLAG_FACTORIZATION_DONE;
 		put_trivial_factorlist(&factor_list, obj);
 		return;
+	}
+
+	factor_list_init(&factor_list);
+
+	/* check for going straight to NFS (I hope you know
+	   what you're doing) */
+
+	if (obj->flags & MSIEVE_FLAG_NFS_ONLY) {
+		factor_gnfs(obj, &n, &factor_list);
+		goto clean_up;
 	}
 
 	/* perform trial division */
@@ -304,7 +329,14 @@ void logprintf(msieve_obj *obj, char *fmt, ...) {
 	if (obj->flags & MSIEVE_FLAG_USE_LOGFILE) {
 		time_t t = time(NULL);
 		char buf[64];
+#ifdef HAVE_MPI
+		char namebuf[256];
+		sprintf(namebuf, "%s.mpi%02u", 
+				obj->logfile_name, obj->mpi_rank);
+		FILE *logfile = fopen(namebuf, "a");
+#else
 		FILE *logfile = fopen(obj->logfile_name, "a");
+#endif
 
 		if (logfile == NULL) {
 			fprintf(stderr, "cannot open logfile\n");
@@ -521,11 +553,9 @@ static void factor_list_add_core(msieve_obj *obj,
 			list->final_factors[i]->type = MSIEVE_PRIME;
 		}
 		else {
-			list->final_factors[i]->type = (mp_is_prime(
+			list->final_factors[i]->type = mp_is_prime(
 						new_factor, 
-						&obj->seed1, &obj->seed2)) ?
-						MSIEVE_PROBABLE_PRIME : 
-						MSIEVE_COMPOSITE;
+						&obj->seed1, &obj->seed2);
 		}
 		mp_copy(new_factor, &(list->final_factors[i]->factor));
 	}

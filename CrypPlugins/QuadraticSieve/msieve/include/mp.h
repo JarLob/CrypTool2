@@ -9,7 +9,7 @@ useful. Again optionally, if you add to the functionality present here
 please consider making those additions public too, so that others may 
 benefit from your work.	
 
-$Id: mp.h 23 2009-07-20 02:59:07Z jasonp_sf $
+$Id: mp.h 967 2014-06-26 02:48:22Z jasonp_sf $
 --------------------------------------------------------------------*/
 
 #ifndef _MP_H_
@@ -22,7 +22,7 @@ extern "C" {
 #endif
 
 /* Basic multiple-precision arithmetic implementation. Precision
-   is hardwired not to exceed ~275 digits. Numbers are stored in 
+   is hardwired not to exceed ~300 digits. Numbers are stored in 
    two's-complement binary form, in little-endian word order.
    All inputs and results are assumed positive, and the high-order 
    words that are not in use must be zero for all input operands.
@@ -32,7 +32,7 @@ extern "C" {
    no support in C for 128-bit data types, so that 64x64 multiplies
    and 128/64 divides would need assembly language support */
 
-#define MAX_MP_WORDS 29
+#define MAX_MP_WORDS 32
 
 #define MP_RADIX 4294967296.0
 
@@ -41,6 +41,17 @@ typedef struct {
 	uint32 val[MAX_MP_WORDS];
 } mp_t;
 
+/* a double-size mp_t, used for double-size multiplication
+   and long division
+
+   Note that the following will only work if the layout
+   of the first MAX_MP_WORDS+1 words of big_mp_t matches
+   that of an mp_t */
+
+typedef struct {
+	uint32 nwords;
+	uint32 val[2 * MAX_MP_WORDS];
+} big_mp_t;
 
 /* signed multiple-precision integers */
 
@@ -193,6 +204,33 @@ static INLINE uint32 mp_modmul_1(uint32 a, uint32 b, uint32 n) {
 	return mp_mod64(acc, n);
 }
 
+#if defined(GCC_ASM64A)		/*-----------------------------------*/
+
+static INLINE uint64 mp_modmul_2(uint64 a, uint64 b, uint64 n) {
+	uint64 res = a;
+	ASM_G("mulq %1        \n\t"
+	      "divq %2        \n\t"
+	      "movq %%rdx, %0 \n\t"
+		: "+a"(res)
+		: "g"(b), "g"(n)
+		: "%rdx", "cc");
+	return res;
+}
+
+#elif defined(_MSC_VER) && defined(_WIN64) /*-------------------------*/
+
+uint64 mul_mod_64(uint64, uint64, uint64);
+
+static INLINE uint64 mp_modmul_2(uint64 a, uint64 b, uint64 n) {
+	return mul_mod_64(a, b, n);
+}
+
+#else  /*-------------------------------------------------------------*/
+
+uint64 mp_modmul_2(uint64 a, uint64 b, uint64 n);
+
+#endif
+
 	/* General-purpose division routines. mp_divrem
 	   divides num by denom, putting the quotient in
 	   quot (if not NULL) and the remainder in rem
@@ -204,8 +242,8 @@ void mp_divrem(mp_t *num, mp_t *denom, mp_t *quot, mp_t *rem);
 
 	/* Division routine where the denominator is a
 	   single word. The quotient is written to quot
-	   (if not NULL) and the remainder is returned.
-	   quot may overwrite the input */
+	   and the remainder is returned.  quot may 
+	   overwrite the input */
 
 uint32 mp_divrem_1(mp_t *num, uint32 denom, mp_t *quot);
 
@@ -469,6 +507,7 @@ void mp_rand(uint32 bits, mp_t *res, uint32 *seed1, uint32 *seed2);
 
 #define NUM_WITNESSES 20
 int32 mp_is_prime(mp_t *p, uint32 *seed1, uint32 *seed2);
+int32 mp_is_prime_1(uint32 p);
 void mp_random_prime(uint32 bits, mp_t *res, uint32 *seed1, uint32 *seed2);
 uint32 mp_next_prime(mp_t *p, mp_t *res, uint32 *seed1, uint32 *seed2);
 

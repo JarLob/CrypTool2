@@ -9,7 +9,7 @@ useful. Again optionally, if you add to the functionality present here
 please consider making those additions public too, so that others may 
 benefit from your work.	
 
-$Id: msieve.h 23 2009-07-20 02:59:07Z jasonp_sf $
+$Id: msieve.h 986 2015-07-11 16:10:34Z jasonp_sf $
 --------------------------------------------------------------------*/
 
 #ifndef _MSIEVE_H_
@@ -22,12 +22,19 @@ extern "C" {
 	/* Lightweight factoring API */
 
 #include <util.h>
-#include <mp.h>
+
+#ifdef HAVE_MPI
+#include <mpi.h>
+#endif
 
 /* version info */
 
 #define MSIEVE_MAJOR_VERSION 1
-#define MSIEVE_MINOR_VERSION 42
+#define MSIEVE_MINOR_VERSION 53
+
+#ifndef MSIEVE_SVN_VERSION
+#define MSIEVE_SVN_VERSION "unknown"
+#endif
 
 /* The final output from the factorization is a linked
    list of msieve_factor structures, one for each factor
@@ -66,30 +73,37 @@ enum msieve_flags {
 					    sieving where exact progress info
 					    is not needed, sieving clients can
 					    save a lot of memory with this */
-	MSIEVE_FLAG_NFS_POLY = 0x40,     /* if input is large enough, perform
-	                                    polynomial selection for NFS */
-	MSIEVE_FLAG_NFS_SIEVE = 0x80,    /* if input is large enough, perform
+	MSIEVE_FLAG_NFS_POLY1 = 0x40,     /* if input is large enough, perform
+	                                    stage 1 polynomial selection for NFS */
+	MSIEVE_FLAG_NFS_POLYSIZE = 0x80,  /* if input is large enough, perform
+	                                    NFS polynomial size optimization */
+	MSIEVE_FLAG_NFS_POLYROOT = 0x100, /* if input is large enough, perform
+	                                    NFS polynomial root optimization */
+	MSIEVE_FLAG_NFS_SIEVE = 0x200,   /* if input is large enough, perform
 	                                    sieving for NFS */
-	MSIEVE_FLAG_NFS_FILTER = 0x100,  /* if input is large enough, perform
+	MSIEVE_FLAG_NFS_FILTER = 0x400,  /* if input is large enough, perform
 	                                    filtering phase for NFS */
-	MSIEVE_FLAG_NFS_LA = 0x200,      /* if input is large enough, perform
+	MSIEVE_FLAG_NFS_LA = 0x800,      /* if input is large enough, perform
 	                                    linear algebra phase for NFS */
-	MSIEVE_FLAG_NFS_SQRT = 0x400,    /* if input is large enough, perform
+	MSIEVE_FLAG_NFS_SQRT = 0x1000,    /* if input is large enough, perform
 	                                    square root phase for NFS */
-	MSIEVE_FLAG_NFS_LA_RESTART = 0x800,/* restart the NFS linear algbra */
-	MSIEVE_FLAG_DEEP_ECM = 0x1000    /* perform nontrivial-size ECM */
+	MSIEVE_FLAG_NFS_LA_RESTART = 0x2000,/* restart the NFS linear algbra */
+	MSIEVE_FLAG_DEEP_ECM = 0x4000,   /* perform nontrivial-size ECM */
+	MSIEVE_FLAG_NFS_ONLY = 0x8000    /* go straight to NFS */
 };
 	
 /* structure encapsulating the savefile used in a factorization */
 
 typedef struct {
 
-#if defined(WIN32) || defined(_WIN64)
+#if defined(NO_ZLIB) && (defined(WIN32) || defined(_WIN64))
 	HANDLE file_handle;
 	uint32 read_size;
 	uint32 eof;
 #else
-	FILE *fp;
+	gzFile *fp;
+	char isCompressed;
+	char is_a_FILE;
 #endif
 	char *name;
 	char *buf;
@@ -117,20 +131,35 @@ typedef struct {
 	                              stage will try to find. The default (0)
 				      is to keep sieving until all necessary 
 				      relations are found. */
-	uint64 nfs_lower;         /* lower bound for NFS-related thing to do */
-	uint64 nfs_upper;         /* upper bound for NFS-related thing to do */
+	uint32 which_gpu;         /* ordinal ID of GPU to use */
+
 
 	uint32 cache_size1;       /* bytes in level 1 cache */
 	uint32 cache_size2;       /* bytes in level 2 cache */
 	enum cpu_type cpu;
+
 	uint32 num_threads;
 
-	uint32 mem_mb;            /* megabytes usable for NFS filtering */
+#ifdef HAVE_MPI
+	uint32 mpi_size;          /* number of MPI processes, each with
+                                     num_threads threads */
+	uint32 mpi_rank;          /* from 0 to mpi_size - 1 */
 
-	char mp_sprintf_buf[32 * MAX_MP_WORDS+1]; /* scratch space for 
-						printing big integers */
+	uint32 mpi_nrows;         /* a 2-D MPI lanczos grid */
+	uint32 mpi_ncols;
+	MPI_Comm mpi_la_grid;
+	MPI_Comm mpi_la_row_grid; /* communicator for the current MPI row */
+	MPI_Comm mpi_la_col_grid; /* communicator for the current MPI col */
+	uint32 mpi_la_row_rank;
+	uint32 mpi_la_col_rank;
+#endif
 
-	//added:
+	char *mp_sprintf_buf;    /* scratch space for printing big integers */
+
+
+	const char *nfs_args;   /* arguments for NFS */
+
+//added:
 	uint32 fb_size;
 } msieve_obj;
 
@@ -142,13 +171,12 @@ msieve_obj * msieve_obj_new(char *input_integer,
 			    uint32 seed1,
 			    uint32 seed2,
 			    uint32 max_relations,
-			    uint64 nfs_lower,
-			    uint64 nfs_upper,
 			    enum cpu_type cpu,
 			    uint32 cache_size1,
 			    uint32 cache_size2,
 			    uint32 num_threads,
-			    uint32 mem_mb);
+			    uint32 which_gpu,
+			    const char *nfs_args);
 
 msieve_obj * msieve_obj_free(msieve_obj *obj);
 

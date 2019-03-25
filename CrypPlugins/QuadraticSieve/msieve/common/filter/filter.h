@@ -9,7 +9,7 @@ useful. Again optionally, if you add to the functionality present here
 please consider making those additions public too, so that others may 
 benefit from your work.	
 
-$Id: filter.h 23 2009-07-20 02:59:07Z jasonp_sf $
+$Id: filter.h 556 2011-03-16 13:16:18Z jasonp_sf $
 --------------------------------------------------------------------*/
 
 /* implementation of relation filtering, using an intermediate
@@ -98,6 +98,7 @@ typedef struct {
 	uint32 num_ideals;            /* number of unique ideals that must
 					 be merged */
 	uint32 num_extra_relations;   /* number of excess relsets required */
+	double target_density;        /* target number of nonzeros per cycle */
 	double avg_cycle_weight;      /* the avg number of nonzeros per cycle */
 	uint32 max_relations;         /* largest relations in a relation set */
 	relation_set_t *relset_array; /* current list of relation sets */

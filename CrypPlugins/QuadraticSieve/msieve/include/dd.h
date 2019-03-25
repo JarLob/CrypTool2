@@ -9,7 +9,7 @@ useful. Again optionally, if you add to the functionality present here
 please consider making those additions public too, so that others may 
 benefit from your work.	
 
-$Id: dd.h 23 2009-07-20 02:59:07Z jasonp_sf $
+$Id: dd.h 849 2013-03-09 08:02:27Z brgladman $
 --------------------------------------------------------------------*/
 
 #ifndef _DD_H_
@@ -21,6 +21,7 @@ $Id: dd.h 23 2009-07-20 02:59:07Z jasonp_sf $
 
 #include <util.h>
 #include <mp.h>
+#include <gmp_xface.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -29,7 +30,7 @@ extern "C" {
    /* These routines *require* IEEE 53-bit double precision,
       even on x86 processors that support higher precision */
 
-#if defined(WIN32) || defined(_WIN64) 
+#if defined(WIN32) && !defined(_WIN64) 
 	#include <float.h>
 	typedef uint32 dd_precision_t;
 #elif (defined(__GNUC__) || defined(__ICL)) && \
@@ -41,7 +42,7 @@ extern "C" {
 #endif
 
 static INLINE dd_precision_t dd_set_precision_ieee(void) {
-#if defined(WIN32) || defined(_WIN64)
+#if defined(WIN32) && !defined(_WIN64)
 	dd_precision_t old_prec = _control87(0, 0);
 	_control87(_PC_53, _MCW_PC);
 	return old_prec;
@@ -58,26 +59,8 @@ static INLINE dd_precision_t dd_set_precision_ieee(void) {
 #endif
 }
 
-static INLINE dd_precision_t dd_set_precision_intel(void) {
-#if defined(WIN32) || defined(_WIN64)
-	dd_precision_t old_prec = _control87(0, 0);
-	_control87(_PC_64, _MCW_PC);
-	return old_prec;
-
-#elif defined(GCC_ASM32X) || defined(GCC_ASM64X)
-	dd_precision_t old_prec, new_prec;
-	ASM_G volatile ("fnstcw %0":"=m"(old_prec));
-	new_prec = old_prec | 0x0300;
-	ASM_G volatile ("fldcw %0": :"m"(new_prec));
-	return old_prec;
-	
-#else
-	return 0;
-#endif
-}
-
 static INLINE void dd_clear_precision(dd_precision_t old_prec) {
-#if defined(WIN32) || defined(_WIN64)
+#if defined(WIN32) && !defined(_WIN64)
 	_control87(old_prec, 0xffffffff);
 #elif defined(GCC_ASM32X) || defined(GCC_ASM64X)
 	ASM_G volatile ("fldcw %0": :"m"(old_prec));
@@ -85,7 +68,7 @@ static INLINE void dd_clear_precision(dd_precision_t old_prec) {
 }
 
 static INLINE uint32 dd_precision_is_ieee(void) {
-#if defined(WIN32) || defined(_WIN64)
+#if defined(WIN32) && !defined(_WIN64)
 	dd_precision_t prec = _control87(0, 0);
 	return  ((prec & _MCW_PC) == _PC_53) ? 1 : 0;
 
@@ -95,20 +78,6 @@ static INLINE uint32 dd_precision_is_ieee(void) {
 	return ((prec & ~0x0300) == 0x0200) ? 1 : 0;
 #else
 	return 1;
-#endif
-}
-
-static INLINE uint32 dd_precision_is_intel(void) {
-#if defined(WIN32) || defined(_WIN64)
-	dd_precision_t prec = _control87(0, 0);
-	return  ((prec & _MCW_PC) == _PC_64) ? 1 : 0;
-
-#elif defined(GCC_ASM32X) || defined(GCC_ASM64X)
-	dd_precision_t prec;
-	ASM_G volatile ("fnstcw %0":"=m"(prec));
-	return ((prec & ~0x0300) == 0x0300) ? 1 : 0;
-#else
-	return 0;
 #endif
 }
 
@@ -342,38 +311,9 @@ static INLINE dd_t dd_div_dd(dd_t a, dd_t b) {
 
 /* miscellaneous functions */
 
-static INLINE dd_t dd_floor(dd_t a) {
-
-	double hi = floor(a.hi);
-	double lo = 0.0;
-	
-	if (hi == a.hi) {
-		/* High word is integer already.  
-		   Round the low word. */
-
-		lo = floor(a.lo);
-		QUICK_TWO_SUM(hi, lo, hi, lo);
-	}
-	return dd_set_dd(hi, lo);
-}
-
 static INLINE dd_t dd_neg(dd_t a) {
 
 	return dd_set_dd(-a.hi, -a.lo);
-}
-
-static INLINE dd_t dd_sqrt(dd_t a) {
-
-	double x, ax;
-	dd_t res;
-
-	if (a.hi == 0.0)
-		return dd_set_d(0.0);
-	
-	x = 1.0 / sqrt(a.hi);
-	ax = a.hi * x;
-	res = dd_sub_dd(a, dd_mul_d(dd_set_d(ax), ax));
-	return dd_add_d(dd_set_d(ax), res.hi * (0.5 * x));
 }
 
 static INLINE int32 dd_cmp_d(dd_t a, double b) {
@@ -436,6 +376,19 @@ static INLINE dd_t dd_signed_mp2dd(signed_mp_t *x) {
 		return dd_neg(dd_mp2dd(&x->num));
 	else
 		return dd_mp2dd(&x->num);
+}
+
+static INLINE dd_t dd_gmp2dd(mpz_t x) {
+
+	signed_mp_t mpx;
+
+	gmp2mp(x, &mpx.num);
+
+	mpx.sign = POSITIVE;
+	if (mpz_sgn(x) < 0)
+		mpx.sign = NEGATIVE;
+
+	return dd_signed_mp2dd(&mpx);
 }
 
 static INLINE void dd_dd2mp(dd_t d, mp_t *x) {
