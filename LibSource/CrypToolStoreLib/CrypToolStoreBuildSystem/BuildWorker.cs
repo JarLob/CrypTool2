@@ -28,6 +28,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using CrypToolStoreLib;
 
 namespace CrypToolStoreBuildSystem
 {
@@ -39,6 +40,7 @@ namespace CrypToolStoreBuildSystem
         private const string BUILD_FOLDER = "Build";
         private const string SOURCE_FILE_NAME = "Source";
         private const string TIMESTAMP_SERVER = "http://timestamp.verisign.com/scripts/timstamp.dll";
+        private const string BUILD_TARGET = "x64";
 
         private BuildLogger Logger = new BuildLogger();
         private Configuration Config = Configuration.GetConfiguration();
@@ -688,7 +690,7 @@ namespace CrypToolStoreBuildSystem
             string buildfoldername = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion;
 
             ProcessStartInfo info = new ProcessStartInfo("msbuild.exe");
-            info.Arguments = buildfoldername + String.Format("\\build_plugin.xml /p:Platform=x86 /p:Configuration=Release /p:CertificatePfxFile=\"{0}\" /p:CertificatePassword=\"{1}\"", SigningCertificatePfxFile, SigningCertificatePassword);
+            info.Arguments = buildfoldername + String.Format("\\build_plugin.xml /p:Platform={0} /p:Configuration=Release /p:CertificatePfxFile=\"{1}\" /p:CertificatePassword=\"{2}\"", BUILD_TARGET, SigningCertificatePfxFile, SigningCertificatePassword);
             info.CreateNoWindow = false;
             info.UseShellExecute = false;
             info.RedirectStandardOutput = true;
