@@ -86,7 +86,7 @@ namespace Cryptool.CrypToolStore
             try
             {
                 CrypToolStoreClient client = new CrypToolStoreClient();
-                client.ServerCertificate = new X509Certificate2(Properties.Resources.anonymous);
+                client.ServerCertificate = new X509Certificate2(Properties.Resources.CTStoreTLS);
                 client.ServerAddress = Constants.ServerAddress;
                 client.ServerPort = Constants.ServerPort;
                 client.Connect();

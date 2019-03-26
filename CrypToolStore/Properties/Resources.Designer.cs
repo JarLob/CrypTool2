@@ -71,16 +71,6 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
-        /// </summary>
-        internal static byte[] anonymous {
-            get {
-                object obj = ResourceManager.GetObject("anonymous", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Authors: ähnelt.
         /// </summary>
         internal static string Authors {
@@ -328,6 +318,16 @@ namespace Cryptool.CrypToolStore.Properties {
             get {
                 return ResourceManager.GetString("CrypToolStorePresentation_UpdateStorePluginList_Exception_occured_during_retrieva" +
                         "l_of_current_list_of_plugins_from_CrypToolStore___0_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] CTStoreTLS {
+            get {
+                object obj = ResourceManager.GetObject("CTStoreTLS", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

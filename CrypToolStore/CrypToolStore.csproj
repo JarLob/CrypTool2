@@ -137,6 +137,7 @@
     <EmbeddedResource Include="Properties\Resources.ru.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.ru.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.de.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -159,9 +160,6 @@
     <Resource Include="header_logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="anonymous.crt" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="default.png" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +168,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="updateavailable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="CTStoreTLS.crt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

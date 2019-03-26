@@ -129,10 +129,6 @@
   <data name="Welcome_To_CrypToolStore" xml:space="preserve">
     <value>Welcome to the CrypTool Store!</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="anonymous" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\anonymous.crt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="Search" xml:space="preserve">
     <value>Search:</value>
   </data>
@@ -145,6 +141,7 @@
   <data name="AuthorsInstitutes" xml:space="preserve">
     <value>Author's Institute(s):</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="download" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\download.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -246,5 +243,8 @@
   </data>
   <data name="FileSize" xml:space="preserve">
     <value>File size:</value>
+  </data>
+  <data name="CTStoreTLS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ctstoretls.crt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
