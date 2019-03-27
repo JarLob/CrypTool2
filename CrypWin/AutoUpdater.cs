@@ -445,7 +445,7 @@ namespace Cryptool.CrypWin
                 Stream s = client.OpenRead(XmlPath);
                 XElement xml = XElement.Load(s);
 
-                onlineUpdateVersions = xml.Element("x86");
+                onlineUpdateVersions = xml.Element("x64");
 
                 // Retrieve the current version from the server (for nightly, beta and stable)
                 Version.TryParse(onlineUpdateVersions.Element(GetBuildTypeXmlString()).Attribute("version").Value, out onlineUpdateVersion);
