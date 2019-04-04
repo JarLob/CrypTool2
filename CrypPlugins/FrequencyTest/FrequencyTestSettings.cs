@@ -40,7 +40,8 @@ namespace Cryptool.FrequencyTest
         private int boundaryFragments = 0;
         private bool autozoom = true;
         private int chartHeight = 160;
-        private int scale = 10000; // = 1 , factor of 10000
+        private int scale = 10000; // = 1 , factor of 10000        
+        private bool sortFrequencies = false;
 
         #endregion
 
@@ -92,7 +93,7 @@ namespace Cryptool.FrequencyTest
                     OnPropertyChanged("CaseSensitivity");
                 }
             }
-        }
+        }      
 
         [PropertySaveOrder(2)]
         [TaskPane("GrammLengthCaption", "GrammLengthTooltip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 100)]
@@ -105,6 +106,21 @@ namespace Cryptool.FrequencyTest
                 {
                     grammLength = value;
                     OnPropertyChanged("GrammLength");
+                }
+            }
+        }
+
+        [PropertySaveOrder(8)]
+        [TaskPane("SortFrequenciesCaption", "SortFrequenciesTooltip", null, 8, false, ControlType.CheckBox)]
+        public bool SortFrequencies
+        {
+            get { return this.sortFrequencies; }
+            set
+            {
+                if (value != sortFrequencies)
+                {
+                    sortFrequencies = value;
+                    OnPropertyChanged("SortFrequencies");
                 }
             }
         }
@@ -206,7 +222,7 @@ namespace Cryptool.FrequencyTest
                     OnPropertyChanged("Scale");   
                 }
             }
-        }
+        }       
 
         #endregion
         

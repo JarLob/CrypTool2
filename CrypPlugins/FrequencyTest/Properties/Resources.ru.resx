@@ -213,4 +213,10 @@
   <data name="No_data_available_yet" xml:space="preserve">
     <value>Пока данных нет!</value>
   </data>
+  <data name="SortFrequenciesCaption" xml:space="preserve">
+    <value>Частоты сортировки</value>
+  </data>
+  <data name="SortFrequenciesTooltip" xml:space="preserve">
+    <value>Если включено, столбцы графика сортируются по частотам.</value>
+  </data>
 </root>

@@ -149,6 +149,24 @@ namespace Cryptool.FrequencyTest
                 // OUTPUT
                 StringBuilder sb = new StringBuilder();
                 arrayOutput = new int[grams.Count];
+
+                //here, we sort by frequency occurrence if the user wants so
+                if (settings.SortFrequencies)
+                {
+                    List<KeyValuePair<string, double[]>> list = grams.ToList();
+                    list.Sort(delegate(KeyValuePair<string, double[]> a, KeyValuePair<string, double[]> b)
+                    {
+                        return a.Value[ABSOLUTE] > b.Value[ABSOLUTE] ? -1 : 1;
+                    });
+
+                    grams.Clear();
+
+                    foreach (var i in list)
+                    {
+                        grams.Add(i.Key, i.Value);
+                    }
+                }                
+
                 for (int i = 0; i < grams.Count; i++)
                 {
                     KeyValuePair<string, double[]> item = grams.ElementAt(i);
@@ -256,9 +274,9 @@ namespace Cryptool.FrequencyTest
                         presentation.SetHeadline(settings.GrammLength + "-gram frequency (in %)");
                         break;
                 }
-                
 
-                presentation.ShowData(data);
+
+                presentation.ShowData(data, settings.SortFrequencies);
             }
         }
 

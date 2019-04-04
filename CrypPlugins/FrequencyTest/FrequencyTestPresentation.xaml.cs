@@ -31,15 +31,22 @@ namespace Cryptool.FrequencyTest
         }
 
 
-        public void ShowData(DataSource data)
+        public void ShowData(DataSource data, bool sort)
         {
+            List<CollectionElement> list = data.ValueCollection.ToList();
+            //here, we sort by frequency occurrence if the user wants so
+            if (sort)
+            {
+                list.Sort(delegate(CollectionElement a, CollectionElement b) { return (a.Amount > b.Amount ? -1 : 1); });
+            }
+
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 DataSource source = (DataSource)this.Resources["source"];
                 source.ValueCollection.Clear();
-                for (int i = 0; i < data.ValueCollection.Count; i++)
+                for (int i = 0; i < list.Count; i++)
                 {
-                    source.ValueCollection.Add(data.ValueCollection[i]);
+                    source.ValueCollection.Add(list[i]);
                 }                
             }, null);
         }
