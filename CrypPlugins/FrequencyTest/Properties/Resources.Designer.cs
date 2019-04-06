@@ -313,7 +313,7 @@ namespace Cryptool.FrequencyTest.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sort Frequencies ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sort frequencies ähnelt.
         /// </summary>
         internal static string SortFrequenciesCaption {
             get {
@@ -322,7 +322,7 @@ namespace Cryptool.FrequencyTest.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die If enabled the bars of the graph are sortead based on the frequencies. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die If enabled the bars of the graph are sorted based on the frequencies. ähnelt.
         /// </summary>
         internal static string SortFrequenciesTooltip {
             get {

@@ -214,9 +214,9 @@
     <value>No data available yet!</value>
   </data>
   <data name="SortFrequenciesCaption" xml:space="preserve">
-    <value>Sort Frequencies</value>
+    <value>Sort frequencies</value>
   </data>
   <data name="SortFrequenciesTooltip" xml:space="preserve">
-    <value>If enabled the bars of the graph are sortead based on the frequencies.</value>
+    <value>If enabled the bars of the graph are sorted based on the frequencies.</value>
   </data>
 </root>
