@@ -23,7 +23,7 @@ using Cryptool.PluginBase.Utils;
 namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 {
     [Author("Nils Kopal", "nils.kopal@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
-    [PluginInfo("Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties.Resources","PluginCaption", "PluginTooltip", "HomophonicSubstitutionAnalyzer/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties.Resources","PluginCaption", "PluginTooltip", "HomophonicSubstitutionAnalyzer/userdoc.xml", "HomophonicSubstitutionAnalyzer/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class HomophonicSubstitutionAnalyzer : ICrypComponent
     {
