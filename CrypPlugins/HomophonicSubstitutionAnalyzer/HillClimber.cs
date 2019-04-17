@@ -473,7 +473,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public string CiphertextAlphabet { get; set; }
         public int TextColumns { get; set; }
         public int Cycles { get; set; }
-        public int Iterations { get; set; }
+        public int Restarts { get; set; }
         public int MinWordLength { get; set; }
         public int MaxWordLength { get; set; }
         public int WordCountToFind { get; set; }

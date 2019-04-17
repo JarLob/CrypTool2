@@ -45,7 +45,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private int _maxWordLength = 10;
         private AnalysisMode _analysisMode;
         private int _cycles = 50000;
-        private int _iterations = 1000;
+        private int _restarts = 1000;
 
         #endregion
 
@@ -107,11 +107,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             set { _cycles = value; }
         }
 
-        [TaskPane("IterationsCaption", "IterationsTooltip", "AlgorithmSettingsGroup", 8, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, int.MaxValue)]
-        public int Iterations
+        [TaskPane("RestartsCaption", "RestartsTooltip", "AlgorithmSettingsGroup", 8, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, int.MaxValue)]
+        public int Restarts
         {
-            get { return _iterations; }
-            set { _iterations = value; }
+            get { return _restarts; }
+            set { _restarts = value; }
         }
 
         #endregion

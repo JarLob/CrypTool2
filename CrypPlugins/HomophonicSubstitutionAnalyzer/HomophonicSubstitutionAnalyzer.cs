@@ -23,7 +23,7 @@ using Cryptool.PluginBase.Utils;
 namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 {
     [Author("Nils Kopal", "nils.kopal@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
-    [PluginInfo("PluginCaption", "PluginTooltip", "HomophonicSubstitutionAnalyzer/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties.Resources","PluginCaption", "PluginTooltip", "HomophonicSubstitutionAnalyzer/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class HomophonicSubstitutionAnalyzer : ICrypComponent
     {
@@ -112,7 +112,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             _presentation.AnalyzerConfiguration.MaxWordLength = _settings.MaxWordLength;
             _presentation.AnalyzerConfiguration.Cycles = _settings.Cycles;
             _presentation.AnalyzerConfiguration.AnalysisMode = _settings.AnalysisMode;
-            _presentation.AnalyzerConfiguration.Iterations = _settings.Iterations;
+            _presentation.AnalyzerConfiguration.Restarts = _settings.Restarts;
             _presentation.AddDictionary(Dictionary);                        
 
             _presentation.EnableUI();

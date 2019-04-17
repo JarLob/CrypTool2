@@ -117,6 +117,39 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AlgorithmSettingsGroup" xml:space="preserve">
+    <value>Cryptanalysis algorithm settings</value>
+  </data>
+  <data name="AnalaysisModeTooltip" xml:space="preserve">
+    <value>Automatic or semi-automatic mode</value>
+  </data>
+  <data name="AnalysisModeCaption" xml:space="preserve">
+    <value>Analysis mode</value>
+  </data>
+  <data name="Analyzer" xml:space="preserve">
+    <value>Analyzer</value>
+  </data>
+  <data name="BestList" xml:space="preserve">
+    <value>Bestlist</value>
+  </data>
+  <data name="Ciphertext" xml:space="preserve">
+    <value>Ciphertext:</value>
+  </data>
+  <data name="CiphertextCaption" xml:space="preserve">
+    <value>Ciphertext</value>
+  </data>
+  <data name="CiphertextFormatCaption" xml:space="preserve">
+    <value>Ciphertext format</value>
+  </data>
+  <data name="CiphertextFormatTooltip" xml:space="preserve">
+    <value>This defines the format of the ciphertext (single letters, number groups, or comma-separated)</value>
+  </data>
+  <data name="CiphertextTooltip" xml:space="preserve">
+    <value>Ciphertext to analyze</value>
+  </data>
+  <data name="CommaSeparated" xml:space="preserve">
+    <value>Comma-separated</value>
+  </data>
   <data name="Copy_all" xml:space="preserve">
     <value>Copy all lines</value>
   </data>
@@ -131,5 +164,110 @@
   </data>
   <data name="Copy_value" xml:space="preserve">
     <value>Copy value</value>
+  </data>
+  <data name="CostValue_0" xml:space="preserve">
+    <value>Cost Value: {0}</value>
+  </data>
+  <data name="CyclesCaption" xml:space="preserve">
+    <value>Cycles</value>
+  </data>
+  <data name="CyclesTooltip" xml:space="preserve">
+    <value>Maximum number of analysis cycles which should be performed.</value>
+  </data>
+  <data name="DictionaryCaption" xml:space="preserve">
+    <value>Dictionary</value>
+  </data>
+  <data name="DictionaryTooltip" xml:space="preserve">
+    <value>The attached dictionary will be used during the cryptanalysis to find and lock already revelaed plaintext words.</value>
+  </data>
+  <data name="FindLockWords" xml:space="preserve">
+    <value>Find/Lock words</value>
+  </data>
+  <data name="FullAutomatic" xml:space="preserve">
+    <value>Automatic</value>
+  </data>
+  <data name="KeyHeader" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="KeyLetterDistribution" xml:space="preserve">
+    <value>Key letter distribution</value>
+  </data>
+  <data name="LanguageCaption" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LanguageSettingsGroup" xml:space="preserve">
+    <value>Language Settings</value>
+  </data>
+  <data name="LanguageTooltip" xml:space="preserve">
+    <value>This language will be used by the cost function.</value>
+  </data>
+  <data name="MaxWordLengthCaption" xml:space="preserve">
+    <value>Maximum word length</value>
+  </data>
+  <data name="MaxWordLengthTooltip" xml:space="preserve">
+    <value>The maximum length of each word to auto lock.</value>
+  </data>
+  <data name="MinWordLengthCaption" xml:space="preserve">
+    <value>Minimum word length</value>
+  </data>
+  <data name="MinWordLengthTooltip" xml:space="preserve">
+    <value>The minimum length of each word to auto lock.</value>
+  </data>
+  <data name="NumberGroups" xml:space="preserve">
+    <value>Number groups</value>
+  </data>
+  <data name="Plaintext" xml:space="preserve">
+    <value>Plaintext:</value>
+  </data>
+  <data name="PlaintextCaption" xml:space="preserve">
+    <value>Plaintext</value>
+  </data>
+  <data name="PlaintextTooltip" xml:space="preserve">
+    <value>New plaintext candidates, which resulted in a higher score, will be outputted here.</value>
+  </data>
+  <data name="PluginCaption" xml:space="preserve">
+    <value>Homophonic Substitution Analyzer</value>
+  </data>
+  <data name="PluginTooltip" xml:space="preserve">
+    <value>Analyzer to cryptanalyze homophonic substitution ciphers.</value>
+  </data>
+  <data name="ResetLockedLetters" xml:space="preserve">
+    <value>Reset locked letters</value>
+  </data>
+  <data name="RestartsCaption" xml:space="preserve">
+    <value>Restarts</value>
+  </data>
+  <data name="RestartsTooltip" xml:space="preserve">
+    <value>How many times should the analysis algorithm be restarted?</value>
+  </data>
+  <data name="SemiAutomatic" xml:space="preserve">
+    <value>Semi automatic</value>
+  </data>
+  <data name="SingleLetters" xml:space="preserve">
+    <value>Single letters</value>
+  </data>
+  <data name="TextFormatGroup" xml:space="preserve">
+    <value>Text format</value>
+  </data>
+  <data name="TextHeader" xml:space="preserve">
+    <value>Plaintext</value>
+  </data>
+  <data name="UseSpacesCaption" xml:space="preserve">
+    <value>Use spaces</value>
+  </data>
+  <data name="UseSpacesTooltip" xml:space="preserve">
+    <value>If activated, the analyzer assumes spaces in the plaintext.</value>
+  </data>
+  <data name="ValueHeader" xml:space="preserve">
+    <value>Costvalue</value>
+  </data>
+  <data name="WordCountToFindCaption" xml:space="preserve">
+    <value>Word count to find</value>
+  </data>
+  <data name="WordCountToFindTooltip" xml:space="preserve">
+    <value>Defines the number of words needed to find by the auto locker.</value>
+  </data>
+  <data name="WordLockerGroup" xml:space="preserve">
+    <value>Word locker</value>
   </data>
 </root>

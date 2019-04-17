@@ -15,27 +15,17 @@
 */
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using Cryptool.PluginBase.Utils;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 {
@@ -69,7 +59,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public event EventHandler<NewBestValueEventArgs> NewBestValue;
 
         private ObservableCollection<ResultEntry> BestList = new ObservableCollection<ResultEntry>();
-        private int _iteration = 0;
+        private int _restart = 0;
 
         public HomophoneSubstitutionAnalyzerPresentation()
         {
@@ -358,8 +348,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 if (AnalyzerConfiguration.AnalysisMode == AnalysisMode.FullAutomatic)
                 {
-                    //in fullautomatic analysis mode the progress is calculated using the iterations
-                    eventArgs.Percentage = (double) _iteration / (double) AnalyzerConfiguration.Iterations;
+                    //in fullautomatic analysis mode the progress is calculated using the restarts
+                    eventArgs.Percentage = (double) _restart / (double) AnalyzerConfiguration.Restarts;
                 }
                 Progress.Invoke(sender, eventArgs);
             }
@@ -391,7 +381,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 }
                 CipherAlphabetTextBox.Text = eventArgs.CiphertextAlphabet;
                 PlainAlphabetTextBox.Text = eventArgs.PlaintextAlphabet;
-                CostTextBox.Text = String.Format("Cost Value: {0}", Math.Round(eventArgs.CostValue, 2));
+                CostTextBox.Text = String.Format(Properties.Resources.CostValue_0, Math.Round(eventArgs.CostValue, 2));
                 AutoLockWords(AnalyzerConfiguration.WordCountToFind);
                 MarkLockedHomophones();
                 newTopEntry = AddNewBestListEntry(eventArgs.PlaintextAlphabet, eventArgs.CostValue, eventArgs.Plaintext);
@@ -684,7 +674,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 ThreadStart threadStart = () =>
                 {
-                    for (_iteration = 0; _iteration < AnalyzerConfiguration.Iterations; _iteration++)
+                    for (_restart = 0; _restart < AnalyzerConfiguration.Restarts; _restart++)
                     {
                         _hillClimber.Execute();
                         if (_running == false)
