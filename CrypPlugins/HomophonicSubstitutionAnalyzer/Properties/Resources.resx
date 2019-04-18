@@ -166,19 +166,19 @@
     <value>Copy value</value>
   </data>
   <data name="CostValue_0" xml:space="preserve">
-    <value>Cost Value: {0}</value>
+    <value>Cost value: {0}</value>
   </data>
   <data name="CyclesCaption" xml:space="preserve">
     <value>Cycles</value>
   </data>
   <data name="CyclesTooltip" xml:space="preserve">
-    <value>Maximum number of analysis cycles which should be performed.</value>
+    <value>Maximum number of analysis cycles to be performed</value>
   </data>
   <data name="DictionaryCaption" xml:space="preserve">
     <value>Dictionary</value>
   </data>
   <data name="DictionaryTooltip" xml:space="preserve">
-    <value>The attached dictionary will be used during the cryptanalysis to find and lock already revelaed plaintext words.</value>
+    <value>The attached dictionary is used during cryptanalysis to find and lock already revealed plaintext words.</value>
   </data>
   <data name="FindLockWords" xml:space="preserve">
     <value>Find/Lock words</value>
@@ -196,22 +196,22 @@
     <value>Language</value>
   </data>
   <data name="LanguageSettingsGroup" xml:space="preserve">
-    <value>Language Settings</value>
+    <value>Language settings</value>
   </data>
   <data name="LanguageTooltip" xml:space="preserve">
-    <value>This language will be used by the cost function.</value>
+    <value>This language will be used by the cost function</value>
   </data>
   <data name="MaxWordLengthCaption" xml:space="preserve">
     <value>Maximum word length</value>
   </data>
   <data name="MaxWordLengthTooltip" xml:space="preserve">
-    <value>The maximum length of each word to auto lock.</value>
+    <value>The maximum length of each word to auto lock</value>
   </data>
   <data name="MinWordLengthCaption" xml:space="preserve">
     <value>Minimum word length</value>
   </data>
   <data name="MinWordLengthTooltip" xml:space="preserve">
-    <value>The minimum length of each word to auto lock.</value>
+    <value>The minimum length of each word to auto lock</value>
   </data>
   <data name="NumberGroups" xml:space="preserve">
     <value>Number groups</value>
@@ -223,13 +223,13 @@
     <value>Plaintext</value>
   </data>
   <data name="PlaintextTooltip" xml:space="preserve">
-    <value>New plaintext candidates, which resulted in a higher score, will be outputted here.</value>
+    <value>New plaintext candidates with higher scores are shown here</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Homophonic Substitution Analyzer</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Analyzer to cryptanalyze homophonic substitution ciphers.</value>
+    <value>Analyzer to cryptanalyze homophonic substitution ciphers</value>
   </data>
   <data name="ResetLockedLetters" xml:space="preserve">
     <value>Reset locked letters</value>
@@ -256,7 +256,7 @@
     <value>Use spaces</value>
   </data>
   <data name="UseSpacesTooltip" xml:space="preserve">
-    <value>If activated, the analyzer assumes spaces in the plaintext.</value>
+    <value>If activated, the analyzer assumes spaces in the plaintext</value>
   </data>
   <data name="ValueHeader" xml:space="preserve">
     <value>Costvalue</value>
@@ -265,7 +265,7 @@
     <value>Word count to find</value>
   </data>
   <data name="WordCountToFindTooltip" xml:space="preserve">
-    <value>Defines the number of words needed to find by the auto locker.</value>
+    <value>Defines the minimum number of words to find in the revealed plaintext, that the auto locker locks the according symbols</value>
   </data>
   <data name="WordLockerGroup" xml:space="preserve">
     <value>Word locker</value>

@@ -205,7 +205,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cost Value: {0} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cost value: {0} ähnelt.
         /// </summary>
         internal static string CostValue_0 {
             get {
@@ -223,7 +223,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Maximum number of analysis cycles which should be performed. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Maximum number of analysis cycles to be performed ähnelt.
         /// </summary>
         internal static string CyclesTooltip {
             get {
@@ -241,7 +241,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The attached dictionary will be used during the cryptanalysis to find and lock already revelaed plaintext words. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The attached dictionary is used during cryptanalysis to find and lock already revealed plaintext words. ähnelt.
         /// </summary>
         internal static string DictionaryTooltip {
             get {
@@ -295,7 +295,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Language Settings ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Language settings ähnelt.
         /// </summary>
         internal static string LanguageSettingsGroup {
             get {
@@ -304,7 +304,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This language will be used by the cost function. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This language will be used by the cost function ähnelt.
         /// </summary>
         internal static string LanguageTooltip {
             get {
@@ -322,7 +322,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The maximum length of each word to auto lock. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The maximum length of each word to auto lock ähnelt.
         /// </summary>
         internal static string MaxWordLengthTooltip {
             get {
@@ -340,7 +340,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The minimum length of each word to auto lock. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The minimum length of each word to auto lock ähnelt.
         /// </summary>
         internal static string MinWordLengthTooltip {
             get {
@@ -376,7 +376,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die New plaintext candidates, which resulted in a higher score, will be outputted here. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die New plaintext candidates with higher scores are shown here ähnelt.
         /// </summary>
         internal static string PlaintextTooltip {
             get {
@@ -394,7 +394,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analyzer to cryptanalyze homophonic substitution ciphers. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analyzer to cryptanalyze homophonic substitution ciphers ähnelt.
         /// </summary>
         internal static string PluginTooltip {
             get {
@@ -475,7 +475,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die If activated, the analyzer assumes spaces in the plaintext. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die If activated, the analyzer assumes spaces in the plaintext ähnelt.
         /// </summary>
         internal static string UseSpacesTooltip {
             get {
@@ -502,7 +502,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the number of words needed to find by the auto locker. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the minimum number of words to find in the revealed plaintext, that the auto locker locks the according symbols ähnelt.
         /// </summary>
         internal static string WordCountToFindTooltip {
             get {

@@ -67,7 +67,6 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             DisableUIAndStop();            
         }
  
-
         /// <summary>
         /// Initializes the ui with a new ciphertext
         /// </summary>
@@ -366,27 +365,39 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             bool newTopEntry = false;
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                int column = 0;
-                int row = 0;
-                foreach (var letter in eventArgs.Plaintext)
+                try
                 {
-                    _plaintextLabels[column, row].Content = letter;
-                    _plaintextLabels[column, row].Symbol = "" + letter;
-                    column++;
-                    if (column == AnalyzerConfiguration.TextColumns)
+                    int column = 0;
+                    int row = 0;
+                    foreach (var letter in eventArgs.Plaintext)
                     {
-                        column = 0;
-                        row++;
+                        _plaintextLabels[column, row].Content = letter;
+                        _plaintextLabels[column, row].Symbol = "" + letter;
+                        column++;
+                        if (column == AnalyzerConfiguration.TextColumns)
+                        {
+                            column = 0;
+                            row++;
+                        }
                     }
+                    CipherAlphabetTextBox.Text = eventArgs.CiphertextAlphabet;
+                    PlainAlphabetTextBox.Text = eventArgs.PlaintextAlphabet;
+                    CostTextBox.Text = String.Format(Properties.Resources.CostValue_0, Math.Round(eventArgs.CostValue, 2));
+                    AutoLockWords(AnalyzerConfiguration.WordCountToFind);
+                    MarkLockedHomophones();
+                    newTopEntry = AddNewBestListEntry(eventArgs.PlaintextAlphabet, eventArgs.CostValue, eventArgs.Plaintext);
                 }
-                CipherAlphabetTextBox.Text = eventArgs.CiphertextAlphabet;
-                PlainAlphabetTextBox.Text = eventArgs.PlaintextAlphabet;
-                CostTextBox.Text = String.Format(Properties.Resources.CostValue_0, Math.Round(eventArgs.CostValue, 2));
-                AutoLockWords(AnalyzerConfiguration.WordCountToFind);
-                MarkLockedHomophones();
-                newTopEntry = AddNewBestListEntry(eventArgs.PlaintextAlphabet, eventArgs.CostValue, eventArgs.Plaintext);
-                waitHandle.Set();
+                catch (Exception)
+                {
+                    //if auto-lock fails, we just continue
+                }
+                finally
+                {
+                    waitHandle.Set();
+                }
             }, null);
+
+            //wait here for auto-locker to finish
             waitHandle.WaitOne();
 
             if (NewBestValue != null)
