@@ -45,6 +45,23 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         }
 
         /// <summary>
+        /// Convert homophones to list of strings
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static List<string> ConvertHomophoneTextNumbersToListOfStrings(string text)
+        {
+            List<string> list = new List<string>();
+            var position = 0;
+            for (var i = 0; i < text.Length; i += 2)
+            {
+                list.Add("" + int.Parse(text.Substring(i, 2)));
+                position++;
+            }
+            return list;
+        }
+
+        /// <summary>
         /// Maps an arry of numbers into text space usnig the given alphabet
         /// </summary>
         /// <param name="numbers"></param>
@@ -165,6 +182,21 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         }
 
         /// <summary>
+        /// Converts the text to a list of string
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static List<string> ConvertHomophonesToListOfString(string text)
+        {
+            List<string> list = new List<string>();
+            for (int i = 0; i < text.Length; i++)
+            {
+                list.Add("" + text[i]);
+            }
+            return list;
+        }
+
+        /// <summary>
         /// Maps a string containing "blocks" of homophones into numberspace separated by separator
         /// </summary>
         /// <param name="ciphertext"></param>
@@ -189,6 +221,24 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 numbers.Add(homophones[trimmedblock]);
             }
             return numbers.ToArray();
+        }
+
+        /// <summary>
+        /// Maps a string containing "blocks" of homophones into numberspace separated by separator
+        /// </summary>
+        /// <param name="ciphertext"></param>
+        /// <returns></returns>
+        public static List<string> ConvertHomophoneCommaSeparatedToListOfStrings(string text, char separator = ' ')
+        {
+            string[] blocks = text.Split(separator);
+            List<string> list = new List<string>();
+
+            foreach (var block in blocks)
+            {
+                string trimmedblock = block.Trim();               
+                list.Add(trimmedblock);
+            }
+            return list;
         }
     }    
 }

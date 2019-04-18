@@ -16,11 +16,8 @@
 using Cryptool.PluginBase.Utils;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 {
@@ -29,7 +26,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private bool _stop = false;
      
         private HomophoneMapping[] globalbestkey;
-        private int[] globalbestplaintext;
+        private Text globalbestplaintext;
         private double globalbestkeycost;
 
         public event EventHandler<ProgressChangedEventArgs> Progress;
@@ -127,7 +124,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                         DecryptHomophonicSubstitutionInPlace(plaintext, runkey, i, j);
 
                         // compute cost value to rate the key (fitness)
-                        var costvalue = Pentagrams.CalculateCost(plaintext) * AnalyzerConfiguration.CostFunctionMultiplicator;
+                        var costvalue = Pentagrams.CalculateCost(plaintext.ToIntegerArray()) * AnalyzerConfiguration.CostFunctionMultiplicator;
                         
                         // use Cowans churn to accept or refuse the new key
                         if (simulatedAnnealing.AcceptWithConstantTemperature(costvalue, bestkeycost))
@@ -160,7 +157,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 
                     if (NewBestValue != null)
                     {
-                        string strplaintext = Tools.MapNumbersIntoTextSpace(globalbestplaintext, AnalyzerConfiguration.PlaintextAlphabet);
+                        string strplaintext = Tools.MapNumbersIntoTextSpace(globalbestplaintext.ToIntegerArray(), AnalyzerConfiguration.PlaintextAlphabet);
                         string strplaintextalphabet = CreateKeyString(globalbestkey, AnalyzerConfiguration.PlaintextAlphabet);
                         string strciphertextalphabet = AnalyzerConfiguration.CiphertextAlphabet.Substring(0, globalbestkey.Length);
                         double costvalue = globalbestkeycost;
@@ -216,15 +213,14 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <param name="key"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int[] DecryptHomophonicSubstitution(int[] ciphertext, HomophoneMapping[] key)
-        {
-            var ciphertextlength = ciphertext.Length;
-            var plaintext = new int[ciphertextlength];
+        public static Text DecryptHomophonicSubstitution(Text ciphertext, HomophoneMapping[] key)
+        {            
+            var plaintext = new Text();
             foreach (HomophoneMapping mapping in key)
             {
                 foreach (int position in mapping.Positions)
                 {
-                    plaintext[position] = mapping.PlainLetter;
+                    plaintext[position] = new int[] { mapping.PlainLetter };
                 }
             }
             return plaintext;
@@ -238,15 +234,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <param name="i"></param>
         /// <param name="j"></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void DecryptHomophonicSubstitutionInPlace(int[] plaintext, HomophoneMapping[] key, int i, int j)
+        public static void DecryptHomophonicSubstitutionInPlace(Text plaintext, HomophoneMapping[] key, int i, int j)
         {
             foreach (var position in key[i].Positions)
             {
-                plaintext[position] = key[i].PlainLetter;
+                plaintext[position] = new int[] { key[i].PlainLetter };
             }
             foreach (var position in key[j].Positions)
             {
-                plaintext[position] = key[j].PlainLetter;
+                plaintext[position] = new int[] { key[j].PlainLetter };
             }
         }
 
@@ -354,15 +350,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <param name="ciphertext"></param>
         /// <param name="cipherLetter"></param>
         /// <param name="plainLetter"></param>
-        public HomophoneMapping(int[] ciphertext, int cipherLetter, int plainLetter)
+        public HomophoneMapping(Text ciphertext, int cipherLetter, int plainLetter)
         {
             CipherLetter = cipherLetter;
             PlainLetter = plainLetter;
             var positions = new List<int>();
-            var length = ciphertext.Length;
+            var length = ciphertext.GetSymbolsCount();
             for (int i = 0; i < length; i++)
             {
-                if (ciphertext[i] == cipherLetter)
+                if (ciphertext[i][0] == cipherLetter)
                 {
                     positions.Add(i);
                 }
@@ -479,7 +475,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public int WordCountToFind { get; set; }
         public List<LetterLimits> KeyLetterLimits { get; set; }
         public int[] LockedHomophoneMappings { get; set; }
-        public int[] Ciphertext { get; private set; }
+        public Text Ciphertext { get; private set; }
         public double CostFunctionMultiplicator { get; set; }
 
         /// <summary>
@@ -487,7 +483,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         /// <param name="keylength"></param>
         /// <param name="ciphertext"></param>
-        public AnalyzerConfiguration(int keylength, int[] ciphertext)
+        public AnalyzerConfiguration(int keylength, Text ciphertext)
         {
             Keylength = keylength;
             Ciphertext = ciphertext;
@@ -500,9 +496,9 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 LockedHomophoneMappings[i] = -1;
             }
 
-            for (var i = 0; i < Ciphertext.Length; i++)
+            for (var i = 0; i < Ciphertext.GetSymbolsCount(); i++)
             {
-                Ciphertext[i] = Ciphertext[i] % keylength;
+                Ciphertext[i] = new int[] { Ciphertext[i][0] % keylength };
             }
         }        
     }    

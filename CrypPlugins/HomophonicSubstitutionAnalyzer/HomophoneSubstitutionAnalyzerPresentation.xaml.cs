@@ -61,6 +61,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private ObservableCollection<ResultEntry> BestList = new ObservableCollection<ResultEntry>();
         private int _restart = 0;
 
+        private List<string> _originalCiphertextSymbols = new List<string>();
+
         public HomophoneSubstitutionAnalyzerPresentation()
         {
             InitializeComponent();
@@ -76,8 +78,10 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             _ciphertext = ciphertext;
             _ciphertextFormat = ciphertextFormat;
             int[] numbers = ConvertCiphertextToNumbers(ciphertext);
+            _originalCiphertextSymbols = ConvertToList(ciphertext);
+
             _keylength = (int)(Tools.Distinct(numbers).Length * 1.3);
-            AnalyzerConfiguration = new AnalyzerConfiguration(_keylength, Tools.ChangeToConsecutiveNumbers(numbers));
+            AnalyzerConfiguration = new AnalyzerConfiguration(_keylength, new Text(Tools.ChangeToConsecutiveNumbers(numbers)));
 
             AnalyzerConfiguration.PlaintextAlphabet = PlainAlphabetText;
             AnalyzerConfiguration.CiphertextAlphabet = CipherAlphabetText;
@@ -114,14 +118,30 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 case CiphertextFormat.NumberGroups:
                     return Tools.MapHomophoneTextNumbersIntoNumberSpace(ciphertext);
-                    break;
                 case CiphertextFormat.CommaSeparated:
                     return Tools.MapHomophoneCommaSeparatedIntoNumberSpace(ciphertext);
-                    break;
                 case CiphertextFormat.SingleLetters:
                 default:
                     return Tools.MapHomophonesIntoNumberSpace(ciphertext);
-                    break;
+            }
+        }
+
+        /// <summary>
+        /// Converts string text to list of strings
+        /// </summary>
+        /// <param name="ciphertext"></param>
+        /// <returns></returns>
+        private List<string> ConvertToList(string ciphertext)
+        {
+            switch (_ciphertextFormat)
+            {
+                case CiphertextFormat.NumberGroups:
+                    return Tools.ConvertHomophoneTextNumbersToListOfStrings(ciphertext);
+                case CiphertextFormat.CommaSeparated:
+                    return Tools.ConvertHomophoneCommaSeparatedToListOfStrings(ciphertext);
+                case CiphertextFormat.SingleLetters:
+                default:
+                    return Tools.ConvertHomophonesToListOfString(ciphertext);
             }
         }
 
@@ -147,13 +167,13 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         /// <param name="ciphertext"></param>
         /// <param name="columns"></param>
-        private void GenerateCiphertextGrid(int[] ciphertext, int columns)
+        private void GenerateCiphertextGrid(Text ciphertext, int columns)
         {
             CiphertextGrid.Children.Clear();
             
-            int rows = (int)Math.Ceiling((double)ciphertext.Length / columns);
+            int rows = (int)Math.Ceiling((double)ciphertext.GetSymbolsCount() / columns);
             _ciphertextLabels = new SymbolLabel[columns, rows];
-            string text = Tools.MapNumbersIntoTextSpace(ciphertext, CipherAlphabetText);
+            string text = Tools.MapNumbersIntoTextSpace(ciphertext.ToIntegerArray(), CipherAlphabetText);
 
             for (int column = 0; column < columns; column++)
             {
@@ -172,7 +192,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 for (int x = 0; x < columns; x++)
                 {
-                    if (offset == ciphertext.Length)
+                    if (offset == ciphertext.GetSymbolsCount())
                     {
                         break;
                     }
@@ -183,11 +203,14 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     label.SymbolOffset = offset;
                     label.Symbol = text.Substring(offset, 1);
                     _ciphertextLabels[x, y] = label;
-                    label.Width = 30;
+                    label.Width = 30  + (_originalCiphertextSymbols[offset].Length  - 1) * 5;
                     label.Height = 30;
                     label.FontSize = 20;
                     label.FontFamily = new FontFamily("Courier New");
-                    label.Content = text.Substring(offset, 1);
+                    //label.Content = text.Substring(offset, 1);
+                    label.Content = _originalCiphertextSymbols[offset];
+                    label.HorizontalAlignment = HorizontalAlignment.Center;
+                    label.HorizontalContentAlignment = HorizontalAlignment.Center;
                     offset++;
                     Grid.SetRow(label, y);
                     Grid.SetColumn(label, x);
@@ -201,13 +224,13 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         /// <param name="plaintext"></param>
         /// <param name="columns"></param>
-        private void GeneratePlaintextGrid(int[] plaintext, int columns)
+        private void GeneratePlaintextGrid(Text plaintext, int columns)
         {
             PlaintextGrid.Children.Clear();
 
-            int rows = (int)Math.Ceiling((double)plaintext.Length / columns);
+            int rows = (int)Math.Ceiling((double)plaintext.GetSymbolsCount() / columns);
             _plaintextLabels = new SymbolLabel[columns, rows];
-            string text = Tools.MapNumbersIntoTextSpace(plaintext, CipherAlphabetText);
+            string text = Tools.MapNumbersIntoTextSpace(plaintext.ToIntegerArray(), CipherAlphabetText);
 
             for (int column = 0; column < columns; column++)
             {
@@ -226,7 +249,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 for (int x = 0; x < columns; x++)
                 {
-                    if (offset == plaintext.Length)
+                    if (offset == plaintext.GetSymbolsCount())
                     {
                         break;
                     }
@@ -238,11 +261,13 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     label.Y = y;
                     label.SymbolOffset = offset;
                     label.Symbol = text.Substring(offset, 1);
-                    label.Width = 30;
+                    label.Width = 30 + (_originalCiphertextSymbols[offset].Length - 1) * 5;
                     label.Height = 30;
                     label.FontSize = 20;
                     label.FontFamily = new FontFamily("Courier New");
                     label.Content = text.Substring(offset, 1);
+                    label.HorizontalAlignment = HorizontalAlignment.Center;
+                    label.HorizontalContentAlignment = HorizontalAlignment.Center;
                     offset++;
                     Grid.SetRow(label, y);
                     Grid.SetColumn(label, x);
@@ -546,12 +571,14 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 var numkey = new HomophoneMapping[PlainAlphabetTextBox.Text.Length];
                 var cipheralphabet = Tools.MapIntoNumberSpace(CipherAlphabetTextBox.Text, CipherAlphabetText);
                 var plainalphabet = Tools.MapIntoNumberSpace(PlainAlphabetTextBox.Text, PlainAlphabetText);
+
+                Text ciphertxt = new Text(ciphertext);
                 for (var i = 0; i < _keylength; i++)
                 {
-                    numkey[i] = new HomophoneMapping(ciphertext, cipheralphabet[i], plainalphabet[i]);
+                    numkey[i] = new HomophoneMapping(ciphertxt, cipheralphabet[i], plainalphabet[i]);
                 }
 
-                var plaintext = Tools.MapNumbersIntoTextSpace(HillClimber.DecryptHomophonicSubstitution(ciphertext, numkey), PlainAlphabetText);
+                var plaintext = Tools.MapNumbersIntoTextSpace(HillClimber.DecryptHomophonicSubstitution(new Text(ciphertext), numkey).ToIntegerArray(), PlainAlphabetText);
                 int column = 0;
                 int row = 0;
                 foreach (var letter in plaintext)
