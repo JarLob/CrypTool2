@@ -176,7 +176,14 @@ namespace CrypCloud.Manager.ViewModels
         {
             get
             {
-                if (CrypCloudCore.Instance.GetUsername().ToLower().Equals("anonymous"))
+                try
+                {
+                    if (CrypCloudCore.Instance.GetUsername().ToLower().Equals("anonymous"))
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception)
                 {
                     return false;
                 }
