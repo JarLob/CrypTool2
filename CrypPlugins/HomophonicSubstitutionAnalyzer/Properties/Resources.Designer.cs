@@ -205,6 +205,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cost factor multiplicator ähnelt.
+        /// </summary>
+        internal static string CostFactorMultiplicatorCaption {
+            get {
+                return ResourceManager.GetString("CostFactorMultiplicatorCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Cost value: {0} ähnelt.
         /// </summary>
         internal static string CostValue_0 {
@@ -255,6 +264,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         internal static string FindLockWords {
             get {
                 return ResourceManager.GetString("FindLockWords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Fixed temperature ähnelt.
+        /// </summary>
+        internal static string FixedTemperatureCaption {
+            get {
+                return ResourceManager.GetString("FixedTemperatureCaption", resourceCulture);
             }
         }
         

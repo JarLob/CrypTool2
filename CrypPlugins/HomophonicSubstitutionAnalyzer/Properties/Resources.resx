@@ -165,6 +165,9 @@
   <data name="Copy_value" xml:space="preserve">
     <value>Copy value</value>
   </data>
+  <data name="CostFactorMultiplicatorCaption" xml:space="preserve">
+    <value>Cost factor multiplicator</value>
+  </data>
   <data name="CostValue_0" xml:space="preserve">
     <value>Cost value: {0}</value>
   </data>
@@ -182,6 +185,9 @@
   </data>
   <data name="FindLockWords" xml:space="preserve">
     <value>Find/Lock words</value>
+  </data>
+  <data name="FixedTemperatureCaption" xml:space="preserve">
+    <value>Fixed temperature</value>
   </data>
   <data name="FullAutomatic" xml:space="preserve">
     <value>Automatic</value>
