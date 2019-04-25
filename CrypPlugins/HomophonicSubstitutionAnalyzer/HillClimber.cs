@@ -47,10 +47,10 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// Attacks the homophone substitution using hillclimbing
         /// </summary>        
         public void Execute()
-        {
+        {          
             //0) initialize everything            
             Random random = new Random(Guid.NewGuid().GetHashCode());
-            SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing();
+            SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(AnalyzerConfiguration.FixedTemperature);
             KeyLetterDistributor keyLetterDistributor = new KeyLetterDistributor();            
             HomophoneMapping[] bestkey = new HomophoneMapping[AnalyzerConfiguration.Keylength];
             double bestkeycost = double.MinValue;
@@ -477,6 +477,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public int[] LockedHomophoneMappings { get; set; }
         public Text Ciphertext { get; private set; }
         public double CostFunctionMultiplicator { get; set; }
+        public double FixedTemperature { get; set; }
+        public char Separator { get; set; }
 
         /// <summary>
         /// Creates a new AnalyzerConfiugraion using the given keylength and ciphertext
@@ -489,7 +491,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             Ciphertext = ciphertext;
             LockedHomophoneMappings = new int[keylength];
             KeyLetterLimits = new List<LetterLimits>();
-            CostFunctionMultiplicator = 500000;
+            Separator = ' ';
 
             for (var i = 0; i < keylength; i++)
             {

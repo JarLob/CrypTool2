@@ -29,30 +29,12 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
     public class SimulatedAnnealing
     {
         private Random _random = new Random();
+        private double _fixedTemperature = 0;
 
-        // Fixed temperature optimized for hexagram scoring
-        public const double FIXED_TEMPERATURE = 15000;
-        // Size of degradation threshold lookup table.
-        private const int LOOKUP_TABLE_SIZE = 100;
-        // The churn algorithm lookup table of degradation thresholds.
-        private readonly double[] _degradationLookupTable;
-
-        public SimulatedAnnealing()
+        public SimulatedAnnealing(double fixedTemperature)
         {
-            _degradationLookupTable = new double[LOOKUP_TABLE_SIZE];
-            ComputeDegradationLookupTable();
-        }
-
-        /// <summary>
-        /// Compute the churn algorithm lookup table of degradation thresholds
-        /// </summary>
-        private void ComputeDegradationLookupTable() 
-        {
-            for (int index = 0; index < LOOKUP_TABLE_SIZE; index++)
-            {
-                _degradationLookupTable[index] = FIXED_TEMPERATURE * Math.Log(LOOKUP_TABLE_SIZE / (index + 1));
-            }
-        }
+            _fixedTemperature = fixedTemperature;
+        }       
 
         /// <summary>
         /// Simulated Annealing Acceptance Function – Constant _temperature
@@ -69,30 +51,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             }
             // Degradation between current key and new key.
             double degradation = currentKeyScore - newKeyScore;
-            double acceptanceProbability = Math.Pow(Math.E, -degradation / FIXED_TEMPERATURE);
+            double acceptanceProbability = Math.Pow(Math.E, -degradation / _fixedTemperature);
             return acceptanceProbability > 0.0085 && _random.NextDouble() < acceptanceProbability;
-        }
-
-        
-        /// <summary>
-        /// Simulated Annealing acceptance function - Churn implementation
-        /// </summary>
-        /// <param name="newKeyScore"></param>
-        /// <param name="currentKeyScore"></param>
-        /// <returns></returns>
-        public bool AcceptWithChurn(double newKeyScore, double currentKeyScore)
-        {
-            // Always AcceptWithChurn better keys
-            if (newKeyScore > currentKeyScore)
-            {
-                return true;
-            }
-            // Fetch a Random degradation threshold from the lookup table
-            int randomIndex = _random.Next(LOOKUP_TABLE_SIZE);
-            double degradationRandomThreshold = _degradationLookupTable[randomIndex];
-            // Degradation between current key and new key
-            double degradation = currentKeyScore - newKeyScore;
-            return degradation < degradationRandomThreshold;
-        }
+        }           
     }
 }

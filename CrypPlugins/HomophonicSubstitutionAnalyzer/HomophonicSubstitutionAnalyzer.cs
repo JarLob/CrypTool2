@@ -104,8 +104,26 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public void Execute()
         {            
             ProgressChanged(0, 1);
+
+            //set separator for ciphertext letter separation
+            char separator;
+            switch (_settings.Separator)
+            {
+                case Separator.Comma:
+                    separator = ',';
+                    break;
+                case Separator.FullStop:
+                    separator = '.';
+                    break;
+                case Separator.Semicolon:
+                    separator = ';';
+                    break;
+                default:
+                    separator = ' ';
+                    break;
+            }
             _presentation.LoadLangStatistics(_settings.Language, _settings.UseSpaces);
-            _presentation.AddCiphertext(Ciphertext, _settings.CiphertextFormat);
+            _presentation.AddCiphertext(Ciphertext, _settings.CiphertextFormat, separator, _settings.CostFactorMultiplicator, _settings.FixedTemperature);
             GenerateLetterLimits();
             _presentation.AnalyzerConfiguration.WordCountToFind = _settings.WordCountToFind;
             _presentation.AnalyzerConfiguration.MinWordLength = _settings.MinWordLength;

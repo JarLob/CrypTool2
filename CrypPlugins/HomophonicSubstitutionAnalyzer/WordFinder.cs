@@ -125,7 +125,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     if (IsInDictionary(word))
                     {
                         string strWord = Tools.MapNumbersIntoTextSpace(word, _alphabet);
-                        Console.WriteLine(String.Format("Word found: {0}", strWord));
+                        //Console.WriteLine(String.Format("Word found: {0}", strWord));
                         _wordPositions.Add(i, length);
                         i += word.Length;
                         

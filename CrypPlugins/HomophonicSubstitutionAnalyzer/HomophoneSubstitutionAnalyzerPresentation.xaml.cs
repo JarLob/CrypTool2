@@ -73,16 +73,14 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// Initializes the ui with a new ciphertext
         /// </summary>
         /// <param name="ciphertext"></param>
-        public void AddCiphertext(string ciphertext, CiphertextFormat ciphertextFormat)
+        public void AddCiphertext(string ciphertext, CiphertextFormat ciphertextFormat, char separator, int costFactorMultiplicator, int fixedTemperature)
         {
             _ciphertext = ciphertext;
             _ciphertextFormat = ciphertextFormat;
-            int[] numbers = ConvertCiphertextToNumbers(ciphertext);
-            _originalCiphertextSymbols = ConvertToList(ciphertext);
-
+            int[] numbers = ConvertCiphertextToNumbers(ciphertext, separator);
+            _originalCiphertextSymbols = ConvertToList(ciphertext, separator);
             _keylength = (int)(Tools.Distinct(numbers).Length * 1.3);
             AnalyzerConfiguration = new AnalyzerConfiguration(_keylength, new Text(Tools.ChangeToConsecutiveNumbers(numbers)));
-
             AnalyzerConfiguration.PlaintextAlphabet = PlainAlphabetText;
             AnalyzerConfiguration.CiphertextAlphabet = CipherAlphabetText;
             AnalyzerConfiguration.TextColumns = 60;
@@ -91,6 +89,9 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             AnalyzerConfiguration.MinWordLength = 8;
             AnalyzerConfiguration.MaxWordLength = 10;
             AnalyzerConfiguration.WordCountToFind = 3;
+            AnalyzerConfiguration.Separator = separator;
+            AnalyzerConfiguration.CostFunctionMultiplicator = costFactorMultiplicator;
+            AnalyzerConfiguration.FixedTemperature = fixedTemperature;
             _hillClimber = new HillClimber(AnalyzerConfiguration);
             _hillClimber.Pentagrams = _pentagrams;
             _hillClimber.NewBestValue += HillClimberNewBestValue;
@@ -112,14 +113,14 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         /// <param name="ciphertext"></param>
         /// <returns></returns>
-        private int[] ConvertCiphertextToNumbers(string ciphertext)
+        private int[] ConvertCiphertextToNumbers(string ciphertext, char separator)
         {
             switch (_ciphertextFormat)
             {
                 case CiphertextFormat.NumberGroups:
                     return Tools.MapHomophoneTextNumbersIntoNumberSpace(ciphertext);
                 case CiphertextFormat.CommaSeparated:
-                    return Tools.MapHomophoneCommaSeparatedIntoNumberSpace(ciphertext);
+                    return Tools.MapHomophoneCommaSeparatedIntoNumberSpace(ciphertext, separator);
                 case CiphertextFormat.SingleLetters:
                 default:
                     return Tools.MapHomophonesIntoNumberSpace(ciphertext);
@@ -131,14 +132,14 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         /// <param name="ciphertext"></param>
         /// <returns></returns>
-        private List<string> ConvertToList(string ciphertext)
+        private List<string> ConvertToList(string ciphertext, char separator)
         {
             switch (_ciphertextFormat)
             {
                 case CiphertextFormat.NumberGroups:
                     return Tools.ConvertHomophoneTextNumbersToListOfStrings(ciphertext);
                 case CiphertextFormat.CommaSeparated:
-                    return Tools.ConvertHomophoneCommaSeparatedToListOfStrings(ciphertext);
+                    return Tools.ConvertHomophoneCommaSeparatedToListOfStrings(ciphertext, separator);
                 case CiphertextFormat.SingleLetters:
                 default:
                     return Tools.ConvertHomophonesToListOfString(ciphertext);
@@ -561,7 +562,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 PlainAlphabetTextBox.Text = PlainAlphabetTextBox.Text.Insert(index, Tools.MapNumbersIntoTextSpace(new int[] { _hillClimber.AnalyzerConfiguration.LockedHomophoneMappings[index] }, PlainAlphabetText));
 
                 //decrypt text using the key
-                var ciphertext = Tools.ChangeToConsecutiveNumbers(ConvertCiphertextToNumbers(_ciphertext));
+                var ciphertext = Tools.ChangeToConsecutiveNumbers(ConvertCiphertextToNumbers(_ciphertext, AnalyzerConfiguration.Separator));
 
                 var len = Tools.Distinct(ciphertext).Length;
                 for (var i = 0; i < ciphertext.Length; i++)

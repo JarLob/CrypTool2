@@ -20,6 +20,11 @@ using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 {
+    /// <summary>
+    /// SingleLetter <=> symbol is a single UTF-8 letter
+    /// NumberGroups <=> symbol is a group of numbers, e.g. 01 121 1112, defined by length of groups
+    /// CommaSepartated <=> symbol is everything between two "commas", e.g. BLA,FU,BAR
+    /// </summary>
     public enum CiphertextFormat
     {
         SingleLetters,
@@ -27,12 +32,29 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         CommaSeparated
     }
 
+    /// <summary>
+    /// Separator for "CommaSeparated" CiphertextFormat
+    /// </summary>
+    public enum Separator
+    {
+        Comma,
+        FullStop,
+        Semicolon,
+        Space
+    }
+
+    /// <summary>
+    /// Mode of cryptanalysis
+    /// </summary>
     public enum AnalysisMode
     {
         SemiAutomatic,
         FullAutomatic
     }
 
+    /// <summary>
+    /// Settings class for Homophonic Substitution Analyzer
+    /// </summary>
     public class HomophonicSubstitutionAnalyzerSettings : ISettings
     {
         #region Private Variables
@@ -40,12 +62,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private int _language;
         private bool _useSpaces;
         private CiphertextFormat _ciphertextFormat = CiphertextFormat.SingleLetters;
+        private Separator _separator = Separator.Space;
         private int _wordCountToFind = 5;
         private int _minWordLength = 8;
         private int _maxWordLength = 10;
         private AnalysisMode _analysisMode;
         private int _cycles = 50000;
         private int _restarts = 1000;
+        private int _costFunctionMultiplicator = 500000;
+        private int _fixedTemperature = 15000;
 
         #endregion
 
@@ -72,46 +97,67 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             set { _ciphertextFormat = value; }
         }
 
-        [TaskPane("WordCountToFindCaption", "WordCountToFindTooltip", "WordLockerGroup", 3, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 100)]
+        [TaskPane("SeparatorCaption", "SeparatorTooltip", "TextFormatGroup", 3, false, ControlType.ComboBox, new[] { "Comma", "FullStop", "Semicolon", "Space" })]
+        public Separator Separator
+        {
+            get { return _separator; }
+            set { _separator = value; }
+        }
+
+        [TaskPane("WordCountToFindCaption", "WordCountToFindTooltip", "WordLockerGroup", 4, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 100)]
         public int WordCountToFind
         {
             get { return _wordCountToFind; }
             set { _wordCountToFind = value; }
         }
 
-        [TaskPane("MinWordLengthCaption", "MinWordLengthTooltip", "WordLockerGroup", 4, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 100)]
+        [TaskPane("MinWordLengthCaption", "MinWordLengthTooltip", "WordLockerGroup", 5, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 100)]
         public int MinWordLength
         {
             get { return _minWordLength; }
             set { _minWordLength = value; }
         }
 
-        [TaskPane("MaxWordLengthCaption", "MaxWordLengthTooltip", "WordLockerGroup", 5, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 100)]
+        [TaskPane("MaxWordLengthCaption", "MaxWordLengthTooltip", "WordLockerGroup", 6, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 100)]
         public int MaxWordLength
         {
             get { return _maxWordLength; }
             set { _maxWordLength = value; }
         }
 
-        [TaskPane("AnalysisModeCaption", "AnalaysisModeTooltip", "AlgorithmSettingsGroup", 6, false, ControlType.ComboBox, new string[]{"SemiAutomatic", "FullAutomatic"})]
+        [TaskPane("AnalysisModeCaption", "AnalaysisModeTooltip", "AlgorithmSettingsGroup", 7, false, ControlType.ComboBox, new string[]{"SemiAutomatic", "FullAutomatic"})]
         public AnalysisMode AnalysisMode
         {
             get { return _analysisMode; }
             set { _analysisMode = value; }
         }
 
-        [TaskPane("CyclesCaption", "CyclesTooltip", "AlgorithmSettingsGroup", 7, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, int.MaxValue)]
+        [TaskPane("CyclesCaption", "CyclesTooltip", "AlgorithmSettingsGroup", 8, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, int.MaxValue)]
         public int Cycles
         {
             get { return _cycles; }
             set { _cycles = value; }
         }
 
-        [TaskPane("RestartsCaption", "RestartsTooltip", "AlgorithmSettingsGroup", 8, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, int.MaxValue)]
+        [TaskPane("RestartsCaption", "RestartsTooltip", "AlgorithmSettingsGroup", 9, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, int.MaxValue)]
         public int Restarts
         {
             get { return _restarts; }
             set { _restarts = value; }
+        }
+
+        [TaskPane("CostFactorMultiplicatorCaption", "CostFactorMultiplicatorTooltip", "AlgorithmSettingsGroup", 10, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, int.MaxValue)]
+        public int CostFactorMultiplicator
+        {
+            get { return _costFunctionMultiplicator; }
+            set { _costFunctionMultiplicator = value; }
+        }
+
+        [TaskPane("FixedTemperatureCaption", "FixedTemperatureTooltip", "AlgorithmSettingsGroup", 11, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, int.MaxValue)]
+        public int FixedTemperature
+        {
+            get { return _fixedTemperature; }
+            set { _fixedTemperature = value; }
         }
 
         #endregion
