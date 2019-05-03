@@ -135,6 +135,9 @@
   <data name="Ciphertext" xml:space="preserve">
     <value>Ciphertext:</value>
   </data>
+  <data name="CiphertextAlphabet" xml:space="preserve">
+    <value>Ciphertext alphabet:</value>
+  </data>
   <data name="CiphertextCaption" xml:space="preserve">
     <value>Ciphertext</value>
   </data>
@@ -225,6 +228,9 @@
   <data name="Plaintext" xml:space="preserve">
     <value>Plaintext:</value>
   </data>
+  <data name="PlaintextAlphabet" xml:space="preserve">
+    <value>Plaintext alphabet:</value>
+  </data>
   <data name="PlaintextCaption" xml:space="preserve">
     <value>Plaintext</value>
   </data>
@@ -256,7 +262,10 @@
     <value>Text format</value>
   </data>
   <data name="TextHeader" xml:space="preserve">
-    <value>Plaintext</value>
+    <value>Revealed Plaintext</value>
+  </data>
+  <data name="TopTenLabel" xml:space="preserve">
+    <value>Top List</value>
   </data>
   <data name="UseSpacesCaption" xml:space="preserve">
     <value>Use spaces</value>

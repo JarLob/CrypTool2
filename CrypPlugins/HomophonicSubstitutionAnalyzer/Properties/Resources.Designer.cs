@@ -115,6 +115,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext alphabet: ähnelt.
+        /// </summary>
+        internal static string CiphertextAlphabet {
+            get {
+                return ResourceManager.GetString("CiphertextAlphabet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext ähnelt.
         /// </summary>
         internal static string CiphertextCaption {
@@ -385,6 +394,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext alphabet: ähnelt.
+        /// </summary>
+        internal static string PlaintextAlphabet {
+            get {
+                return ResourceManager.GetString("PlaintextAlphabet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext ähnelt.
         /// </summary>
         internal static string PlaintextCaption {
@@ -475,11 +493,20 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Revealed Plaintext ähnelt.
         /// </summary>
         internal static string TextHeader {
             get {
                 return ResourceManager.GetString("TextHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Top List ähnelt.
+        /// </summary>
+        internal static string TopTenLabel {
+            get {
+                return ResourceManager.GetString("TopTenLabel", resourceCulture);
             }
         }
         

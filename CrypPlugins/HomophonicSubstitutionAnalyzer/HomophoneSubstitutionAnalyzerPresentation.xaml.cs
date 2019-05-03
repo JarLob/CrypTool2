@@ -669,11 +669,13 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     {
                         _running = false;
                         _hillClimber.Stop();
-                        AnalyzeButton.Content = "Analyze";
+                        AnalyzeButton.Content = "Analyze";                        
                     }
                     else
                     {                        
                         AnalyzeButton.Content = "Stop";
+                        ProgressBar.Value = 0;
+                        ProgressText.Content = string.Empty;
                         StartAnalysis();
                     }
                 }

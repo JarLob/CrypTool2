@@ -34,9 +34,23 @@
                     <RowDefinition Height="25" />
                     <RowDefinition Height="150*" />
                 </Grid.RowDefinitions>
-                <TextBox Name="InfoTextBox" Grid.Row="0" FontSize="20" FontFamily="Courier New" IsEnabled="False" Grid.ColumnSpan="4" Margin="0,0,0.334,0"/>
-                <TextBox Name="CipherAlphabetTextBox" Grid.Row="1" FontSize="17" VerticalContentAlignment="Center" FontFamily="Courier New" IsEnabled="False" Grid.ColumnSpan="4" Margin="0,0,0.334,0" />
-                <TextBox Name="PlainAlphabetTextBox" Grid.Row="2" FontSize="17" VerticalContentAlignment="Center" FontFamily="Courier New" IsEnabled="False" Grid.ColumnSpan="4" Margin="0,0,0.334,0" />
+                <TextBox Name="InfoTextBox" Grid.Row="0" FontSize="20" FontFamily="Courier New" IsEnabled="False" Grid.ColumnSpan="4" Margin="0,0,0,0"/>
+                <Grid Grid.Row="1"  Margin="0,0,0,0" Grid.ColumnSpan="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Width="200" Content="{Loc CiphertextAlphabet}" Grid.Column="0" VerticalContentAlignment="Center"/>
+                    <TextBox Name="CipherAlphabetTextBox" Grid.Column="1" FontSize="17" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" FontFamily="Courier New" IsEnabled="False" Margin="0,0,0,0" />
+                </Grid>
+                <Grid Grid.Row="2"  Margin="0,0,0,0" Grid.ColumnSpan="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Width="200" Content="{Loc PlaintextAlphabet}" Grid.Column="0" VerticalContentAlignment="Center"/>
+                    <TextBox Name="PlainAlphabetTextBox" Grid.Column="1" FontSize="17" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" FontFamily="Courier New" IsEnabled="False" Margin="0,0,0,0" />
+                </Grid>
                 <Grid Grid.Row="3" Grid.ColumnSpan="4" Margin="0,0,0.334,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200"/>
@@ -68,7 +82,7 @@
         <TabItem Header="{Loc BestList}">
             <Grid Height="Auto">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="26" />
+                    <ColumnDefinition Width="30" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
