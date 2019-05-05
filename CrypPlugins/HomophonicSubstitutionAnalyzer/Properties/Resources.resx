@@ -265,7 +265,7 @@
     <value>Revealed Plaintext</value>
   </data>
   <data name="TopTenLabel" xml:space="preserve">
-    <value>Top List</value>
+    <value>Bestlist</value>
   </data>
   <data name="UseSpacesCaption" xml:space="preserve">
     <value>Use spaces</value>

@@ -502,7 +502,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Top List ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bestlist ähnelt.
         /// </summary>
         internal static string TopTenLabel {
             get {
