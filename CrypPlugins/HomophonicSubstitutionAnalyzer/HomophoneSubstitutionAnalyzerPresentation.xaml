@@ -34,7 +34,7 @@
                     <RowDefinition Height="25" />
                     <RowDefinition Height="150*" />
                 </Grid.RowDefinitions>
-                <TextBox Name="InfoTextBox" Grid.Row="0" FontSize="20" FontFamily="Courier New" IsEnabled="False" Grid.ColumnSpan="4" Margin="0,0,0,0"/>
+                <Label Name="InfoTextLabel" Grid.ColumnSpan="4" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalContentAlignment="Center"/>
                 <Grid Grid.Row="1"  Margin="0,0,0,0" Grid.ColumnSpan="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200"/>

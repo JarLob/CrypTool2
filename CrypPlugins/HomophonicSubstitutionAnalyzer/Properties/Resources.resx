@@ -186,6 +186,9 @@
   <data name="DictionaryTooltip" xml:space="preserve">
     <value>The attached dictionary is used during cryptanalysis to find and lock already revealed plaintext words.</value>
   </data>
+  <data name="DifferentHomophones" xml:space="preserve">
+    <value>The ciphertext length is {0} and it contains {1} different homophones</value>
+  </data>
   <data name="FindLockWords" xml:space="preserve">
     <value>Find/Lock words</value>
   </data>
@@ -262,7 +265,7 @@
     <value>Text format</value>
   </data>
   <data name="TextHeader" xml:space="preserve">
-    <value>Revealed Plaintext</value>
+    <value>Revealed plaintext</value>
   </data>
   <data name="TopTenLabel" xml:space="preserve">
     <value>Bestlist</value>

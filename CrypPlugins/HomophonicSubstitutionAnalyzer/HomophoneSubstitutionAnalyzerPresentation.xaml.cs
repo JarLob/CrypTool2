@@ -79,7 +79,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             _ciphertextFormat = ciphertextFormat;
             int[] numbers = ConvertCiphertextToNumbers(ciphertext, separator);
             _originalCiphertextSymbols = ConvertToList(ciphertext, separator);
-            _keylength = (int)(Tools.Distinct(numbers).Length * 1.3);
+            int homophoneNumber = Tools.Distinct(numbers).Length;
+            _keylength = (int)(homophoneNumber * 1.3);
             AnalyzerConfiguration = new AnalyzerConfiguration(_keylength, new Text(Tools.ChangeToConsecutiveNumbers(numbers)));
             AnalyzerConfiguration.PlaintextAlphabet = PlainAlphabetText;
             AnalyzerConfiguration.CiphertextAlphabet = CipherAlphabetText;
@@ -105,6 +106,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 ProgressText.Content = String.Empty;
                 BestList.Clear();
                 BestListView.DataContext = BestList;
+                InfoTextLabel.Content = String.Format(Properties.Resources.DifferentHomophones, numbers.Length, homophoneNumber);
             }, null);          
         }
 
