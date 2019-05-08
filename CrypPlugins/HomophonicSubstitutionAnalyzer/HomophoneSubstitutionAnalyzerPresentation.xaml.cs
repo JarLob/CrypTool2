@@ -82,7 +82,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             int homophoneNumber = Tools.Distinct(numbers).Length;
             _keylength = (int)(homophoneNumber * 1.3);
             AnalyzerConfiguration = new AnalyzerConfiguration(_keylength, new Text(Tools.ChangeToConsecutiveNumbers(numbers)));
-            AnalyzerConfiguration.PlaintextAlphabet = PlainAlphabetText;
+            AnalyzerConfiguration.PlaintextMapping = PlainAlphabetText;
             AnalyzerConfiguration.CiphertextAlphabet = CipherAlphabetText;
             AnalyzerConfiguration.TextColumns = 60;
             AnalyzerConfiguration.Cycles = 50000;
@@ -291,10 +291,43 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 _minTextBoxes = new TextBox[AnalyzerConfiguration.KeyLetterLimits.Count];
                 _maxTextBoxes = new TextBox[AnalyzerConfiguration.KeyLetterLimits.Count];
 
+                Grid grid = new Grid();
+                grid.Width = 500;
+                grid.ColumnDefinitions.Add(new ColumnDefinition());
+                grid.ColumnDefinitions.Add(new ColumnDefinition());
+                grid.ColumnDefinitions.Add(new ColumnDefinition());
+
+                Label letterLabel = new Label();
+                letterLabel.Content = Properties.Resources.LetterLabel;
+                Grid.SetRow(letterLabel, 0);
+                Grid.SetColumn(letterLabel, 0);
+                letterLabel.VerticalContentAlignment = VerticalAlignment.Center;
+                letterLabel.HorizontalContentAlignment = HorizontalAlignment.Center;
+
+                Label minLabel = new Label();
+                minLabel.Content = Properties.Resources.MinLabel;
+                Grid.SetRow(minLabel, 0);
+                Grid.SetColumn(minLabel, 1);
+                minLabel.VerticalContentAlignment = VerticalAlignment.Center;
+                minLabel.HorizontalContentAlignment = HorizontalAlignment.Center;
+
+                Label maxLabel = new Label();
+                maxLabel.Content = Properties.Resources.MaxLabel; Grid.SetRow(letterLabel, 0);
+                Grid.SetRow(maxLabel, 0);
+                Grid.SetColumn(maxLabel, 2);
+                maxLabel.VerticalContentAlignment = VerticalAlignment.Center;
+                maxLabel.HorizontalContentAlignment = HorizontalAlignment.Center;
+
+                grid.Children.Add(letterLabel);
+                grid.Children.Add(minLabel);
+                grid.Children.Add(maxLabel);
+
+                KeyLetterListView.Items.Add(grid);
+
                 int index = 0;
                 foreach (LetterLimits limits in AnalyzerConfiguration.KeyLetterLimits)
                 {
-                    Grid grid = new Grid();
+                    grid = new Grid();
                     grid.Width = 500;
                     grid.ColumnDefinitions.Add(new ColumnDefinition());
                     grid.ColumnDefinitions.Add(new ColumnDefinition());
@@ -303,7 +336,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     Label label = new Label();
                     label.FontSize = 16;
                     label.Width = 50;
-                    label.Content = String.Format("\"{0}\"", Tools.MapNumbersIntoTextSpace(new int[] {limits.Letter}, AnalyzerConfiguration.PlaintextAlphabet));
+                    label.Content = String.Format("\"{0}\"", Tools.MapNumbersIntoTextSpace(new int[] {limits.Letter}, AnalyzerConfiguration.PlaintextMapping));
                     Grid.SetRow(label, 0);
                     Grid.SetColumn(label, 0);
 
@@ -409,11 +442,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                         }
                     }
                     CipherAlphabetTextBox.Text = eventArgs.CiphertextAlphabet;
-                    PlainAlphabetTextBox.Text = eventArgs.PlaintextAlphabet;
+                    PlainAlphabetTextBox.Text = eventArgs.PlaintextMapping;
                     CostTextBox.Text = String.Format(Properties.Resources.CostValue_0, Math.Round(eventArgs.CostValue, 2));
                     AutoLockWords(AnalyzerConfiguration.WordCountToFind);
                     MarkLockedHomophones();
-                    newTopEntry = AddNewBestListEntry(eventArgs.PlaintextAlphabet, eventArgs.CostValue, eventArgs.Plaintext);
+                    newTopEntry = AddNewBestListEntry(eventArgs.PlaintextMapping, eventArgs.CostValue, eventArgs.Plaintext);
                 }
                 catch (Exception)
                 {

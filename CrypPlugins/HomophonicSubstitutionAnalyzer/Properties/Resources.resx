@@ -231,8 +231,8 @@
   <data name="Plaintext" xml:space="preserve">
     <value>Plaintext:</value>
   </data>
-  <data name="PlaintextAlphabet" xml:space="preserve">
-    <value>Plaintext alphabet:</value>
+  <data name="PlaintextMapping" xml:space="preserve">
+    <value>Plaintext mapping:</value>
   </data>
   <data name="PlaintextCaption" xml:space="preserve">
     <value>Plaintext</value>
@@ -287,5 +287,14 @@
   </data>
   <data name="WordLockerGroup" xml:space="preserve">
     <value>Word locker</value>
+  </data>
+  <data name="LetterLabel" xml:space="preserve">
+    <value>Letter</value>
+  </data>
+  <data name="MaxLabel" xml:space="preserve">
+    <value>Maximum number</value>
+  </data>
+  <data name="MinLabel" xml:space="preserve">
+    <value>Minimum number</value>
   </data>
 </root>

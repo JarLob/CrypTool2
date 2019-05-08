@@ -349,6 +349,24 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Letter ähnelt.
+        /// </summary>
+        internal static string LetterLabel {
+            get {
+                return ResourceManager.GetString("LetterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Maximum number ähnelt.
+        /// </summary>
+        internal static string MaxLabel {
+            get {
+                return ResourceManager.GetString("MaxLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Maximum word length ähnelt.
         /// </summary>
         internal static string MaxWordLengthCaption {
@@ -363,6 +381,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         internal static string MaxWordLengthTooltip {
             get {
                 return ResourceManager.GetString("MaxWordLengthTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Minimum number ähnelt.
+        /// </summary>
+        internal static string MinLabel {
+            get {
+                return ResourceManager.GetString("MinLabel", resourceCulture);
             }
         }
         
@@ -403,20 +430,20 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext alphabet: ähnelt.
-        /// </summary>
-        internal static string PlaintextAlphabet {
-            get {
-                return ResourceManager.GetString("PlaintextAlphabet", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext ähnelt.
         /// </summary>
         internal static string PlaintextCaption {
             get {
                 return ResourceManager.GetString("PlaintextCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext mapping: ähnelt.
+        /// </summary>
+        internal static string PlaintextMapping {
+            get {
+                return ResourceManager.GetString("PlaintextMapping", resourceCulture);
             }
         }
         

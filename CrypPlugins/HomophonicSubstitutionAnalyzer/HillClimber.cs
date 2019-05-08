@@ -157,8 +157,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 
                     if (NewBestValue != null)
                     {
-                        string strplaintext = Tools.MapNumbersIntoTextSpace(globalbestplaintext.ToIntegerArray(), AnalyzerConfiguration.PlaintextAlphabet);
-                        string strplaintextalphabet = CreateKeyString(globalbestkey, AnalyzerConfiguration.PlaintextAlphabet);
+                        string strplaintext = Tools.MapNumbersIntoTextSpace(globalbestplaintext.ToIntegerArray(), AnalyzerConfiguration.PlaintextMapping);
+                        string strPlaintextMapping = CreateKeyString(globalbestkey, AnalyzerConfiguration.PlaintextMapping);
                         string strciphertextalphabet = AnalyzerConfiguration.CiphertextAlphabet.Substring(0, globalbestkey.Length);
                         double costvalue = globalbestkeycost;
 
@@ -166,7 +166,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                             new NewBestValueEventArgs()
                             {
                                 Plaintext = strplaintext,
-                                PlaintextAlphabet = strplaintextalphabet,
+                                PlaintextMapping = strPlaintextMapping,
                                 CiphertextAlphabet = strciphertextalphabet,
                                 CostValue = costvalue
                             });
@@ -178,9 +178,9 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     noglobalbestcounter++;
                     if (noglobalbestcounter == 100)
                     {
-                        runkey[runkey.Length - 1].PlainLetter = random.Next(0, AnalyzerConfiguration.PlaintextAlphabet.Length - 1);
-                        runkey[runkey.Length - 2].PlainLetter = random.Next(0, AnalyzerConfiguration.PlaintextAlphabet.Length - 1);
-                        runkey[runkey.Length - 3].PlainLetter = random.Next(0, AnalyzerConfiguration.PlaintextAlphabet.Length - 1);
+                        runkey[runkey.Length - 1].PlainLetter = random.Next(0, AnalyzerConfiguration.PlaintextMapping.Length - 1);
+                        runkey[runkey.Length - 2].PlainLetter = random.Next(0, AnalyzerConfiguration.PlaintextMapping.Length - 1);
+                        runkey[runkey.Length - 3].PlainLetter = random.Next(0, AnalyzerConfiguration.PlaintextMapping.Length - 1);
                         noglobalbestcounter = 0;
                     }
                 }
@@ -321,7 +321,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
     {
         public bool NewTopEntry { get; set; }
         public string Plaintext{ get;set;}        
-        public string PlaintextAlphabet{ get;set;}
+        public string PlaintextMapping{ get;set;}
         public string CiphertextAlphabet{ get;set;}
         public double CostValue{ get;set;}
     }
@@ -465,7 +465,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
     {
         public AnalysisMode AnalysisMode { get; set; }
         public int Keylength { get; private set; }
-        public string PlaintextAlphabet { get; set; }
+        public string PlaintextMapping { get; set; }
         public string CiphertextAlphabet { get; set; }
         public int TextColumns { get; set; }
         public int Cycles { get; set; }
