@@ -50,7 +50,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
@@ -72,21 +71,10 @@
     <Compile Include="FF2.cs" />
     <Compile Include="FF2Parameters.cs" />
     <Compile Include="Offset.cs" />
-    <Compile Include="UnitTests\DFFTest.cs" />
-    <Compile Include="UnitTests\FF2Test.cs" />
     <Compile Include="FF3.cs" />
     <Compile Include="FF3Parameters.cs" />
     <Compile Include="FFX.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTests\CipherTest.cs" />
-    <Compile Include="UnitTests\CommonTest.cs" />
-    <Compile Include="UnitTests\FF1PaddingTest.cs" />
-    <Compile Include="UnitTests\FF1Test.cs" />
-    <Compile Include="UnitTests\FF3Test.cs" />
-    <Compile Include="UnitTests\FFXConformanceTest.cs" />
-    <Compile Include="UnitTests\FFXTest.cs" />
-    <Compile Include="UnitTests\NISTConformanceTest.cs" />
-    <Compile Include="UnitTests\RuntimeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
