@@ -18,6 +18,11 @@ along with SharpPcap.  If not, see <http://www.gnu.org/licenses/>.
  * Copyright 2010-2011 Chris Morgan <chmorgan@gmail.com>
  */
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
 namespace SharpPcap.AirPcap
 {
     /// <summary>

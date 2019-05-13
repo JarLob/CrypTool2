@@ -18,6 +18,7 @@ along with SharpPcap.  If not, see <http://www.gnu.org/licenses/>.
  * Copyright 2005 Tamir Gal <tamir@tamirgal.com>
  * Copyright 2009-2010 Chris Morgan <chmorgan@gmail.com>
  */
+using System;
 
 namespace SharpPcap
 {
