@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of PacketDotNet
 
 PacketDotNet is free software: you can redistribute it and/or modify
@@ -15,7 +15,9 @@ You should have received a copy of the GNU Lesser General Public License
 along with PacketDotNet.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace PacketDotNet
+using PacketDotNet.Utils;
+
+﻿namespace PacketDotNet
 {
     /// <summary>
     /// Represents an application layer packet as described at http://en.wikipedia.org/wiki/Application_Layer

@@ -18,6 +18,7 @@ along with PacketDotNet.  If not, see <http://www.gnu.org/licenses/>.
  *  Copyright 2010 Chris Morgan <chmorgan@gmail.com>
  *  Copyright 2010 Evan Plaice <evanplaice@gmail.com>
  */
+using System;
 
 namespace PacketDotNet
 {
