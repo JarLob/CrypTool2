@@ -268,7 +268,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The ciphertext length is {0} and it contains {1} different homophones ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The ciphertext length is {0} and it contains {1} different homophones. ähnelt.
         /// </summary>
         internal static string DifferentHomophones {
             get {

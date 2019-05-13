@@ -187,7 +187,7 @@
     <value>The attached dictionary is used during cryptanalysis to find and lock already revealed plaintext words.</value>
   </data>
   <data name="DifferentHomophones" xml:space="preserve">
-    <value>The ciphertext length is {0} and it contains {1} different homophones</value>
+    <value>The ciphertext length is {0} and it contains {1} different homophones.</value>
   </data>
   <data name="FindLockWords" xml:space="preserve">
     <value>Find/Lock words</value>
