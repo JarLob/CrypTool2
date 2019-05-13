@@ -35,36 +35,62 @@ namespace CrypCloud.Manager
         private readonly int startvalue;
         public CrypCloudSettingsTab(Style settingsStyle)
         {
-            InitializeComponent();         
-            startvalue = Settings.Default.amountOfWorker;
-            CrypCloudCore.Instance.AmountOfWorker = startvalue;
-            CrypCloudCore.Instance.LogLevel = Settings.Default.LogLevel;
-            if (CrypCloudCore.Instance.LogLevel != null)
+            InitializeComponent();
+            try
             {
-                for (int i = 0; i < LogLevelComboBox.Items.Count;i++)
+                startvalue = Settings.Default.amountOfWorker;
+                CrypCloudCore.Instance.AmountOfWorker = startvalue;
+            }
+            catch (Exception)
+            {
+                startvalue = 1;
+                CrypCloudCore.Instance.AmountOfWorker = 1;
+            }
+
+            try
+            {
+                CrypCloudCore.Instance.LogLevel = Settings.Default.LogLevel;
+                if (CrypCloudCore.Instance.LogLevel != null)
                 {
-                    if (((ComboBoxItem)LogLevelComboBox.Items[i]).Content.ToString().Equals(CrypCloudCore.Instance.LogLevel))
+                    for (int i = 0; i < LogLevelComboBox.Items.Count; i++)
                     {
-                        LogLevelComboBox.SelectedIndex = i;
+                        if (((ComboBoxItem)LogLevelComboBox.Items[i]).Content.ToString().Equals(CrypCloudCore.Instance.LogLevel))
+                        {
+                            LogLevelComboBox.SelectedIndex = i;
+                        }
                     }
                 }
             }
-            Resources.Add("settingsStyle", settingsStyle);               
-            NUDTextBox.Text = startvalue.ToString();
-            EnableOpenCL.IsChecked = Settings.Default.enableOpenCL;
-            CrypCloudCore.Instance.EnableOpenCL = Settings.Default.enableOpenCL;
-            WritePerformanceLog.IsChecked = Settings.Default.writePerformanceLog;
-            CrypCloudCore.Instance.WritePerformanceLog = Settings.Default.writePerformanceLog;
-            OpenCLDevice.ItemsSource = DevicesAvailable;
-            RefreshDevicesList();
-            OpenCLDevice.SelectedIndex = Settings.Default.OpenCLDevice;
-            if (EnableOpenCL.IsChecked.Value == true)
+            catch (Exception)
             {
-                OpenCLDevice.IsEnabled = true;
+                CrypCloudCore.Instance.LogLevel = Settings.Default.LogLevel;
             }
-            else
+
+            Resources.Add("settingsStyle", settingsStyle);
+            try
             {
+                NUDTextBox.Text = startvalue.ToString();
+                EnableOpenCL.IsChecked = Settings.Default.enableOpenCL;
+                CrypCloudCore.Instance.EnableOpenCL = Settings.Default.enableOpenCL;
+                WritePerformanceLog.IsChecked = Settings.Default.writePerformanceLog;
+                CrypCloudCore.Instance.WritePerformanceLog = Settings.Default.writePerformanceLog;
+                OpenCLDevice.ItemsSource = DevicesAvailable;
+                RefreshDevicesList();
+                OpenCLDevice.SelectedIndex = Settings.Default.OpenCLDevice;
+                if (EnableOpenCL.IsChecked.Value == true)
+                {
+                    OpenCLDevice.IsEnabled = true;
+                }
+                else
+                {
+                    OpenCLDevice.IsEnabled = false;
+                }
+            }
+            catch (Exception)
+            {
+                WritePerformanceLog.IsChecked = false;
                 OpenCLDevice.IsEnabled = false;
+                CrypCloudCore.Instance.WritePerformanceLog = false;
             }
         }
 
