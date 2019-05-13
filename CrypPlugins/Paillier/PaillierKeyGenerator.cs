@@ -15,15 +15,10 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.PluginBase;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Numerics;
-using System.Security.Cryptography;
 
 namespace Cryptool.Plugins.Paillier
 {

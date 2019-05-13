@@ -1,7 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Numerics;
-using System.Threading;
 
 namespace Tests.TemplateAndPluginTests
 {

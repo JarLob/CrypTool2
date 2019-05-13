@@ -15,7 +15,6 @@
 */
 
 using System;
-using System.Reflection;
 
 namespace Cryptool.PluginBase
 {

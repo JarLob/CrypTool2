@@ -8,9 +8,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.IO;
 using System.Collections;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Threading;
 using QuickZip.MiniCss;
 //using QuickZip.MiniHtml.Controls;
 

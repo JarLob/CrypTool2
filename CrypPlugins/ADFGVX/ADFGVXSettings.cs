@@ -20,9 +20,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Cryptool.PluginBase;
-using Cryptool.PluginBase.Validation;
-using System.IO;
-using System.Collections;
 using System.ComponentModel;
 
 namespace Cryptool.ADFGVX

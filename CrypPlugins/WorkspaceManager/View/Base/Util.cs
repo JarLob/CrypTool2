@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Data;
 using WorkspaceManager.View.Visuals;
 using System.Windows;
 using System.Windows.Media;
 using System.Runtime.InteropServices;
-using WorkspaceManager.View.VisualComponents;
 using System.Windows.Controls.Primitives;
-using Cryptool.PluginBase.Control;
-using Cryptool.PluginBase;
-using System.Reflection;
-using System.Numerics;
-using WorkspaceManager.Model;
 using WorkspaceManager.View.VisualComponents.CryptoLineView;
 
 namespace WorkspaceManager.View.Base

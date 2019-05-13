@@ -14,12 +14,8 @@
    limitations under the License.
 */
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Primes.Library.FactorTree;
-using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace Primes.WpfControls.ShapeManagement.Ellipse
 {

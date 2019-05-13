@@ -21,7 +21,6 @@ using Cryptool.PluginBase.Miscellaneous;
 //using PaddingOracleAttack.Properties;
 using System;
 using System.ComponentModel;
-using System.Reflection;
 using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Threading;

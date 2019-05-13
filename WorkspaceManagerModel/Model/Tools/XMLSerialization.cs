@@ -23,11 +23,8 @@ using System.IO;
 using System.Xml;
 using System.Collections;
 using System.IO.Compression;
-using Cryptool.PluginBase;
-using WorkspaceManager;
 using System.Windows;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using WorkspaceManagerModel.Properties;
 

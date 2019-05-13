@@ -14,14 +14,10 @@
    limitations under the License.
 */
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Documents;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using Webcam;
 using System.Management;
 
 namespace Cryptool.Plugins.Webcam

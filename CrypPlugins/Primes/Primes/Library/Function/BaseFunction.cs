@@ -14,9 +14,7 @@
    limitations under the License.
 */
 
-using System;
 using System.Collections;
-using System.Text;
 
 namespace Primes.Library.Function
 {

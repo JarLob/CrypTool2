@@ -16,9 +16,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
 using Primes.Bignum;
 
 namespace Primes.WpfControls.Factorization.QS

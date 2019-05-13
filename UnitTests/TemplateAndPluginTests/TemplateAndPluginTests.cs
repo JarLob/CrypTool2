@@ -1,11 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.IO;
 using System.Threading;
-using System.Windows;
-using Cryptool.PluginBase;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WorkspaceManager.Model;
 using System.Windows.Forms;

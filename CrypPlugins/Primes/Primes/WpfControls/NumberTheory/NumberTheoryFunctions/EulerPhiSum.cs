@@ -14,15 +14,7 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Controls;
-using System.Windows;
 using System.Numerics;
-using Primes.Library;
-using Primes.Bignum;
-using Primes.WpfControls.Components;
 using Cryptool.PluginBase.Miscellaneous;
 
 namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions

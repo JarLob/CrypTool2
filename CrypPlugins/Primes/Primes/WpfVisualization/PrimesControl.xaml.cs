@@ -35,7 +35,6 @@ using Primes.WpfControls.PrimesDistribution.Spirals;
 using Primes.WpfControls.Primetest;
 using Primes.WpfControls.Start;
 using System.Threading;
-using System.Diagnostics;
 
 namespace Primes.WpfVisualization
 {

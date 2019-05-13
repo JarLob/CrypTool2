@@ -21,13 +21,8 @@
 // from http://www.hotpixel.net/software.html
 // and changed to fit more the published algorithm
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Security.Cryptography;
-using System.Text;
-
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;

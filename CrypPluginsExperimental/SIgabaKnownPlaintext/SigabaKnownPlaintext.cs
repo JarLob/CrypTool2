@@ -25,13 +25,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
-using System.Web.UI.WebControls;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Control;
 using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.Control;
 
 
 namespace SigabaKnownPlaintext

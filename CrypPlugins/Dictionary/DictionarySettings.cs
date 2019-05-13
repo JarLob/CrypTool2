@@ -14,16 +14,9 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Controls;
 using Cryptool.PluginBase;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
-using System.IO;
-using Cryptool.PluginBase.Miscellaneous;
 
 namespace Dictionary
 {

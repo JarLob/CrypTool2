@@ -1,9 +1,4 @@
-﻿using System;
-using System.Windows.Media;
-using System.Collections.ObjectModel;
-using KeySearcher;
-
-namespace KeySearcherPresentation.Controls
+﻿namespace KeySearcherPresentation.Controls
 {
     [Cryptool.PluginBase.Attributes.Localization("KeySearcher.Properties.Resources")]
     public partial class OpenCLPresentation

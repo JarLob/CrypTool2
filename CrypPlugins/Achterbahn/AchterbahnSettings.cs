@@ -14,16 +14,8 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Collections;
 using System.ComponentModel;
 using Cryptool.PluginBase;
-using Cryptool.PluginBase.Validation;
 using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.Achterbahn

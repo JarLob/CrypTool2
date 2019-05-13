@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.ComponentModel;
-using System.Collections;
-using System.Collections.Generic;
 using System.Windows.Threading;
 using System.Threading;
-using System.Text.RegularExpressions;
 using Cryptool.PluginBase;
-using Cryptool.PluginBase.Control;
 using Cryptool.PluginBase.Miscellaneous;
-using System.IO;
 
 namespace IDPAnalyser
 {

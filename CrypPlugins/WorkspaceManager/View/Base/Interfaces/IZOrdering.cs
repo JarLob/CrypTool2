@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace WorkspaceManager.View.Base.Interfaces
+﻿namespace WorkspaceManager.View.Base.Interfaces
 {
     public interface IZOrdering
     {

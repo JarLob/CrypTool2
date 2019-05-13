@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
@@ -11,8 +10,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Wizard;
 using WorkspaceManager.Model;
 using ValidationType = System.Xml.ValidationType;
-using System.Reflection;
-using Cryptool.Core;
 
 namespace Tests
 {

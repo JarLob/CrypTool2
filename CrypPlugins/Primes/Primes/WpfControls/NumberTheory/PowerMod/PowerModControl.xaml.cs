@@ -16,15 +16,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Primes.Library;
 using Primes.WpfControls.Validation.Validator;
@@ -33,7 +29,6 @@ using Primes.Bignum;
 using System.Threading;
 using Primes.WpfControls.Components;
 using Primes.WpfControls.Components.Arrows;
-using Primes.WpfControls.Primetest;
 using System.Diagnostics;
 
 namespace Primes.WpfControls.NumberTheory.PowerMod

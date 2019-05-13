@@ -15,16 +15,7 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Contexts;
-using System.Security.Cryptography;
 using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.TEA

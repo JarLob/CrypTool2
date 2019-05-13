@@ -1,4 +1,4 @@
-/*
+﻿/*
 This file is part of PacketDotNet
 
 PacketDotNet is free software: you can redistribute it and/or modify
@@ -18,9 +18,7 @@ along with PacketDotNet.  If not, see <http://www.gnu.org/licenses/>.
  * Copyright 2009 Chris Morgan <chmorgan@gmail.com>
  */
 
-using PacketDotNet.Utils;
-
-﻿namespace PacketDotNet
+namespace PacketDotNet
 {
     /// <summary>
     /// Session layer packet

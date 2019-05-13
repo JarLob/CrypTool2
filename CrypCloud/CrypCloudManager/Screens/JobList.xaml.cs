@@ -1,7 +1,5 @@
 ﻿ 
 using System.Windows.Controls;
-using System.Windows.Input;
-using CrypCloud.Manager.ViewModels;
 
 namespace CrypCloud.Manager.Screens
 {

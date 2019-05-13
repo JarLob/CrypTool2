@@ -10,7 +10,6 @@ using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Attributes;
 using System.Diagnostics;
 using OnlineDocumentationGenerator.Generators.HtmlGenerator;
-using System.Windows.Documents;
 
 namespace Cryptool.CrypWin
 {

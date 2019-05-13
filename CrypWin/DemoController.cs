@@ -16,14 +16,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Windows;
 using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
 using System.IO;
-using System.Windows.Data;
 
 namespace Cryptool.CrypWin
 {

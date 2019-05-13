@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace PKCS1.Library
+﻿namespace PKCS1.Library
 {
     public enum HashFunctionType { SHA1 = 0, SHA256 = 1, SHA384 = 2, SHA512 = 3, MD2 = 4, MD5 = 5 };
 

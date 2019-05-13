@@ -20,7 +20,6 @@ License along with this library
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Shapes;
 
 namespace WorkspaceManager.Base.Sort
 {

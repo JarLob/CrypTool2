@@ -5,9 +5,6 @@ using System.Text;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Threading;
-using System.Runtime.InteropServices;
-
-using Cryptool;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;

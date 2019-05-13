@@ -15,12 +15,9 @@
 */
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase;
 using System.ComponentModel;
 using System.Numerics;
@@ -28,7 +25,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Threading;
-using System.Threading.Tasks;
 using Cryptool.PluginBase.Attributes;
 using System.Text.RegularExpressions;
 

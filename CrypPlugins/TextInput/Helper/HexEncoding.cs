@@ -15,7 +15,6 @@
 */
 
 using System;
-using System.Text;
 
 namespace Cryptool.TextInput.Helper
 {

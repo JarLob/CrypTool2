@@ -16,7 +16,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Primes.Bignum;
 
 namespace SevenZ.Calculator

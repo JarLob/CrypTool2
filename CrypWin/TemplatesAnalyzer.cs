@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Xml;
-using Cryptool.PluginBase;
 using Cryptool.PluginBase.Editor;
-using Cryptool.PluginBase.Miscellaneous;
 using WorkspaceManager.Model;
 
 namespace Cryptool.CrypWin

@@ -18,7 +18,6 @@ using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.PluginBase.IO;
-using System.Text;
 using Cryptool.PluginBase.Attributes;
 using System.Windows.Threading;
 using System.Threading;

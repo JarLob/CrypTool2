@@ -1,12 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Threading;
-using Cryptool.PluginBase.Control;
 using KeySearcher.CrypCloud;
 using KeySearcher.KeyPattern;
-using VoluntLib2;
 using VoluntLib2.ComputationLayer;
 
 namespace KeySearcher

@@ -19,7 +19,6 @@ using System.Numerics;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System;
-using System.Threading;
 using System.Security.Cryptography;
 
 

@@ -19,21 +19,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
 using Primes.WpfControls.Validation;
 using Primes.Library.FactorTree;
 using Primes.WpfControls.Validation.Validator;
 using Primes.Bignum;
 using Primes.WpfControls.Components;
 using Primes.Library;
-using System.Threading;
 
 namespace Primes.WpfControls.Factorization
 {

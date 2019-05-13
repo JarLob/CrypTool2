@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Collections;
-using System.IO;
 using System.Text;
 namespace Cryptool.Plugins.GrainV0.Chipher
 {

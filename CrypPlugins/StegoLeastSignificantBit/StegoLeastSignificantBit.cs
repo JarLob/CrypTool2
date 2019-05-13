@@ -20,9 +20,6 @@
 
 using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -32,7 +29,6 @@ using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using System.ComponentModel;
-using System.Globalization;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;

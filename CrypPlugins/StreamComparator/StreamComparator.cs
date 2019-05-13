@@ -3,14 +3,9 @@ using System.IO;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using System;
-using System.Windows.Media.Imaging;
 using System.Text;
-using System.Web;
 using System.Xml;
-using System.Windows.Markup;
 using Cryptool.PluginBase.IO;
-using System.Collections.Generic;
-using System.Runtime.Remoting.Contexts;
 using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.StreamComparator

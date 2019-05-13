@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using Cryptool.PluginBase;

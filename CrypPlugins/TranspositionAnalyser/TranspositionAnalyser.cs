@@ -7,7 +7,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Threading;
 using System.Threading;
-using System.Text.RegularExpressions;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Control;
 using Cryptool.PluginBase.Miscellaneous;

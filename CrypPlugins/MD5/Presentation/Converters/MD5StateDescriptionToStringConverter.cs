@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Data;
 using Cryptool.MD5.Algorithm;
 using Cryptool.PluginBase;

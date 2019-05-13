@@ -26,14 +26,6 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using Emgu.CV;
 using Emgu.CV.Structure;
-
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows;
-
-using System.Collections;
-using System.Runtime.CompilerServices;
-
 using ImageHash.Properties;
 
 namespace Cryptool.Plugins.ImageHash

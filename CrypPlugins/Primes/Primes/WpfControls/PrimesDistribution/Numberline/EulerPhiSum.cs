@@ -23,7 +23,6 @@ using System.Windows.Controls;
 using Primes.Library;
 using System.Windows;
 using System.Linq;
-using System.Numerics;
 
 namespace Primes.WpfControls.PrimesDistribution.Numberline
 {

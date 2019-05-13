@@ -22,9 +22,8 @@ namespace net.util
 	using GenericGF = com.google.zxing.common.reedsolomon.GenericGF;
 	using ReedSolomonDecoder = com.google.zxing.common.reedsolomon.ReedSolomonDecoder;
 	using ReedSolomonEncoder = com.google.zxing.common.reedsolomon.ReedSolomonEncoder;
-	using ReedSolomonException = com.google.zxing.common.reedsolomon.ReedSolomonException;
 
-	/// <summary>
+    /// <summary>
 	/// Some helper to work with an array of bits.
 	/// 
 	/// @author Christoph Gaffga

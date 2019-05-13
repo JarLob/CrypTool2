@@ -14,10 +14,7 @@
    limitations under the License.
 */
 
-using System;
 using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
 using Cryptool.PluginBase;
 
 namespace Cryptool.MiniTreyfer

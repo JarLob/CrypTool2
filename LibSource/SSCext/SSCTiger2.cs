@@ -10,14 +10,8 @@
 // $Date::                                                                                    $://
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-using System;
-using System.Text;
-
-using System.Security.Cryptography;
-using System.Runtime.InteropServices;
-
 #if DEBUG
-using System.Diagnostics;
+
 #endif
 
 // http://en.wikipedia.org/wiki/Tiger_(cryptography)

@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections;
 using System.IO;
 using CrypTool.Util.Logging;
 using CrypTool.CertificateLibrary.Util;
 using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.Crypto;
-using Org.BouncyCastle.Asn1.X509;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.X509;
 

@@ -3,9 +3,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Diagnostics;
-using System.Diagnostics.Contracts;
-using System.Windows.Input;
 using System.Collections.Generic;
 using System.Threading;
 

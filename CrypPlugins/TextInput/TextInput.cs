@@ -14,26 +14,15 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using Cryptool.PluginBase;
 using System.Windows.Controls;
 using System.Windows;
-using System.Windows.Data;
-using System.IO;
 using Cryptool.PluginBase.Attributes;
-using Cryptool.TextInput.Helper;
 using System.Windows.Threading;
 using System.Threading;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
-using System.Runtime.CompilerServices;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Runtime.Remoting.Contexts;
-using System.Drawing;
 using System.Windows.Input;
 
 namespace Cryptool.TextInput

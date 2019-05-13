@@ -19,8 +19,6 @@ using Cryptool.PluginBase;
 using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Security.Cryptography;
-using System.Text.RegularExpressions;
 
 namespace Cryptool.Plugins.Salsa20
 {

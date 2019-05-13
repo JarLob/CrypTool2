@@ -15,7 +15,7 @@
 */
 
 using System;
-using System.Numerics;
+
 namespace Cryptool.PluginBase.IO
 {
     /// <summary>

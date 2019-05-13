@@ -14,11 +14,7 @@
    limitations under the License.
 */
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using NAudio.Wave;

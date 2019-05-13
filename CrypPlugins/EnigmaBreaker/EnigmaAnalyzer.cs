@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 
 // additional needed libs
-using System.Diagnostics;
 
 //Cryptool 2.0 specific includes
 using Cryptool.PluginBase;

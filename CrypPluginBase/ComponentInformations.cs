@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using Cryptool.PluginBase.Control;
 using System.Linq;
-using Cryptool.PluginBase;
 
 namespace Cryptool.PluginBase
 {

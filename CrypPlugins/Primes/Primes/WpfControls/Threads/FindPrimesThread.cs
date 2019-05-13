@@ -14,11 +14,7 @@
    limitations under the License.
 */
 
-using System;
 using System.Collections.Generic;
-using System.Text;
-using Primes.WpfControls.Components;
-
 using System.Threading;
 using Primes.Bignum;
 

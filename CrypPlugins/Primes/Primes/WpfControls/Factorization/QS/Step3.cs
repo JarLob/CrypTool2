@@ -16,12 +16,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using Primes.Library;
 using System.Windows;
-using System.Threading;
 using Primes.Bignum;
 
 namespace Primes.WpfControls.Factorization.QS

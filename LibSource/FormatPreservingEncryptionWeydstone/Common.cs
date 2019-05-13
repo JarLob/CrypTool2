@@ -19,13 +19,9 @@
 * Converted and modified by Alexander Hirsch <hirsch@cryptool.org>
 */
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Numerics;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
 
 namespace FormatPreservingEncryptionWeydstone
 {

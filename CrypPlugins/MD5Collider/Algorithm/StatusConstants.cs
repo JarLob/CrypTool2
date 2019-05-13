@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Cryptool.Plugins.MD5Collider.Algorithm
+﻿namespace Cryptool.Plugins.MD5Collider.Algorithm
 {
     public abstract class StatusConstants
     {

@@ -15,17 +15,13 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Cryptool.PluginBase;
 using System.ComponentModel;
 using System.IO;
 using Cryptool.PluginBase.IO;
 using System.Windows.Controls;
-using System.Runtime.Remoting.Contexts;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Runtime.CompilerServices;
 
 namespace Cryptool.Plugins.Convertor
 {

@@ -23,8 +23,6 @@ using System.Windows.Controls;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using Emgu.CV;

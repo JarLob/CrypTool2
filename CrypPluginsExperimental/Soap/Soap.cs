@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Xml;
 using System.Xml.Schema;
-using System.Web;
 using System.Web.Services.Description;
-using System.Web.Services.Protocols;
 using System.Data;
 using System.IO;
 using System.ComponentModel;
@@ -19,7 +14,6 @@ using System.Windows.Controls;
 using System.Collections;
 using System.Windows.Threading;
 using System.Threading;
-using Cryptool.PluginBase.Control;
 
 
 namespace Soap

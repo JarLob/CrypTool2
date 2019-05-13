@@ -18,10 +18,7 @@
 using System;
 using System.Windows;
 using System.ComponentModel;
-using System.IO;
-using System.Diagnostics;
 using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.Plugins.NFSFactorizer
 {

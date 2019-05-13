@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.IO;
 using Cryptool.PluginBase;
-using Cryptool.Plugins.A5;
-using Cryptool.PluginBase.IO;
 using System.ComponentModel;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
-using System.Diagnostics;
-using System.Collections;
-using System.Text.RegularExpressions;
 
 namespace Cryptool.Plugins.A5
 {

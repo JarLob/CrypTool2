@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Cryptool.Plugins.StegoPermutation
+﻿namespace Cryptool.Plugins.StegoPermutation
 {
     class LRArray
     {

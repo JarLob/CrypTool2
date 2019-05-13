@@ -20,8 +20,6 @@ using Cryptool.PluginBase;
 using System.ComponentModel;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
-using System.Resources;
-using System.Globalization;
 
 
 namespace Cryptool.Plugins.T310

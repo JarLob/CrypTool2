@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Media;
 using System.Xml.Linq;
 using Cryptool.Core;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Editor;
-using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
 using OnlineDocumentationGenerator.DocInformations;
-using OnlineDocumentationGenerator.DocInformations.Utils;
 using OnlineDocumentationGenerator.Generators;
-using OnlineDocumentationGenerator.Generators.HtmlGenerator;
 using Cryptool.PluginBase.Attributes;
 
 namespace OnlineDocumentationGenerator

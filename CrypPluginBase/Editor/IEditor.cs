@@ -16,9 +16,6 @@
 
 using System;
 using Cryptool.Core;
-using System.Collections.Generic;
-using System.Security.RightsManagement;
-using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.PluginBase.Editor
 {

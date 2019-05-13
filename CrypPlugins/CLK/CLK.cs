@@ -15,26 +15,18 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Cryptool.PluginBase;
 using System.Windows.Controls;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
-using System.Runtime.Remoting.Contexts;
 using Cryptool.PluginBase.Miscellaneous;
 //timer
 using System.Timers;
 // for mouse click
 using System.Windows.Input;
 // for QuickwatchPresentaton
-using System.Windows.Threading;
-
-
 using System.Windows;
 // for setting image uri programmatically
-using System.Windows.Media.Imaging;
+
 //using System.Windows.Data;
 //using System.IO;
 //using System.Runtime.CompilerServices;

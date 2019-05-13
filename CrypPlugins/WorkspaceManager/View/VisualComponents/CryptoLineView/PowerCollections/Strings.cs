@@ -6,8 +6,6 @@
 // contained in the file "License.txt" accompanying this file.
 //******************************
 
-using System;
-
 namespace Wintellect.PowerCollections
 {
 	/// <summary>

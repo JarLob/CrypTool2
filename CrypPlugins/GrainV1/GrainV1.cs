@@ -14,13 +14,10 @@
    limitations under the License.
 */
 
-using System;
-using System.Text;
 using Cryptool.PluginBase;
 using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Text.RegularExpressions;
 
 namespace Cryptool.Plugins.GrainV1
 {

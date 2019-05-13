@@ -14,11 +14,9 @@
    limitations under the License.
 */
 using System;
-using System.Numerics;
 using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Windows;
 
 namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 {

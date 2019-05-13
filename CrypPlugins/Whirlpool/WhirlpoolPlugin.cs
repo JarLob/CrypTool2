@@ -23,14 +23,8 @@
 // http://www.larc.usp.br/~pbarreto/WhirlpoolPage.html
 
 
- 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Security.Cryptography;
-using System.Text;
-
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;

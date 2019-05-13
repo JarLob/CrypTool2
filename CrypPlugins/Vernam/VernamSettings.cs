@@ -1,6 +1,4 @@
-﻿
-using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;

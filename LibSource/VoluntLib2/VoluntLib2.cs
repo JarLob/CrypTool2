@@ -14,17 +14,10 @@
    limitations under the License.
 */
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using VoluntLib2;
 using VoluntLib2.Tools;
 using VoluntLib2.ConnectionLayer;
 using VoluntLib2.ComputationLayer;

@@ -18,8 +18,6 @@ using System;
 using System.ComponentModel;
 using System.Numerics;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Media;
 using CrypCloud.Core;
 using CrypCloud.Manager.Services;
 using CrypCloud.Manager.ViewModels;

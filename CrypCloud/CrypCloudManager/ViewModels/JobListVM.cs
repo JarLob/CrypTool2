@@ -1,22 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Linq;
-using System.Numerics;
-using System.Text;
 using System.Windows;
-using System.Windows.Forms;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
 using CrypCloud.Core;
 using CrypCloud.Manager.Properties;
 using CrypCloud.Manager.ViewModels.Helper;
-using KeySearcher.CrypCloud.statistics;
 using MessageBox = System.Windows.MessageBox;
-using UserControl = System.Windows.Controls.UserControl;
-using VoluntLib2;
 using VoluntLib2.ManagementLayer;
 using VoluntLib2.ConnectionLayer;
 

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using CrypCloud.Manager.ViewModels;
 
 namespace CrypCloud.Manager.Services

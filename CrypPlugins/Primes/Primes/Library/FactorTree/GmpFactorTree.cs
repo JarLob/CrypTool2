@@ -16,9 +16,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-
-using Primes.Library.FactorTree.Exceptions;
 using System.Threading;
 using Primes.Bignum;
 

@@ -17,11 +17,7 @@ using System;
 using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Windows.Controls;
-using System.Data;
 using System.Collections.Generic;
-using System.Collections;
-using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Linq;
 

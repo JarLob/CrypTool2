@@ -1,5 +1,3 @@
-using System;
-
 namespace HexBox
 {
     internal abstract class DataBlock

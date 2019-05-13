@@ -22,9 +22,7 @@ namespace net.watermark
 
 	using Bits = Bits;
 
-	using ReedSolomonException = ReedSolomonException;
-
-	/// <summary>
+    /// <summary>
 	/// Implementation of a watermarking also. See https://code.google.com/p/dct-watermark/
 	/// 
 	/// @author Christoph Gaffga

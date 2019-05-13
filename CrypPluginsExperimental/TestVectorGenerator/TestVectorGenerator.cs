@@ -21,13 +21,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System;
-using Fare;
 using System.Security.Cryptography;
 using System.Text;
 using System.Linq;
-using System.Numerics;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Properties;
 using Resources = TestVectorGenerator.Properties.Resources;
 
 namespace Cryptool.Plugins.TestVectorGenerator

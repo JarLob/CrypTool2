@@ -15,11 +15,7 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Primes.Bignum;
-using Primes.WpfControls.Components;
-using Primes.Library;
 using Primes.WpfControls.Validation;
 
 namespace Primes.WpfControls.Factorization

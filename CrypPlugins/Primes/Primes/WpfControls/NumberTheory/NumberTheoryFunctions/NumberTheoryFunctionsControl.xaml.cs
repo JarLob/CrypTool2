@@ -17,21 +17,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Data;
 using Primes.Library;
-using System.Diagnostics;
 using System.Collections;
 using System.Collections.ObjectModel;
 using Primes.WpfControls.Components;
@@ -39,7 +32,6 @@ using System.IO;
 using Primes.Bignum;
 using Primes.WpfControls.Validation.Validator;
 using Primes.WpfControls.Validation;
-using Primes.Resources.lang.WpfControls.Distribution;
 
 namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
 {

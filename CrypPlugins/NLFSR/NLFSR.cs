@@ -15,28 +15,16 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Cryptool.PluginBase;
-using System.IO;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
 using System.Windows.Controls;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Security.Cryptography;
 // for [MethodImpl(MethodImplOptions.Synchronized)]
 using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Contexts;
 // for QuickwatchPresentation
-using System.Windows.Threading;
-using System.Threading;
-using System.Windows.Automation.Peers;
 // for RegEx
 using System.Text.RegularExpressions;
 // MathParser
-using Cryptool.MathParser;
 
 namespace Cryptool.NLFSR
 {

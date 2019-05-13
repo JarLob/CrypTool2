@@ -14,10 +14,6 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Primes.Library.Function
 {
     public enum FunctionState { Stopped, Running }

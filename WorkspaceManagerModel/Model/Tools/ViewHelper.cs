@@ -15,12 +15,10 @@
 */
 
 using System;
-using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using Cryptool.PluginBase.IO;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Numerics;
 
 namespace WorkspaceManagerModel.Model.Tools

@@ -14,7 +14,6 @@
    limitations under the License.
 */
 
-using System.Windows.Input;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace Cryptool.Plugins.UserCode

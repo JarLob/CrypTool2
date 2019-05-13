@@ -15,8 +15,6 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Media.Animation;
 using System.Windows;
 

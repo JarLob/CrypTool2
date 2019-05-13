@@ -15,13 +15,11 @@
 */
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 //Cryptool 2.0 specific includes
 using Cryptool.PluginBase;
-using Cryptool.PluginBase.Miscellaneous;
 using System.Diagnostics;
 
 

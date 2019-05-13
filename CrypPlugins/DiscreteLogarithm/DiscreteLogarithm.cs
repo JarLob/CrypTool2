@@ -16,17 +16,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System.ComponentModel;
-using System.Security.Cryptography;
-using System.Threading;
-using System.Collections;
-using System.Collections.Generic;
 using System.Numerics;
-using Cryptool.PluginBase.IO;
 using DiscreteLogarithm;
 
 namespace Cryptool.Plugins.DiscreteLogarithm

@@ -14,17 +14,9 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Diagnostics;
 using System.Runtime.Remoting.Contexts;
 
 namespace Gate

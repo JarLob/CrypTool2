@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System.ComponentModel;
-using Cryptool.KasiskiTest;
 using System.Windows.Controls;
 
 namespace Cryptool.KasiskiTest

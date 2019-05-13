@@ -14,7 +14,6 @@
    limitations under the License.
 */
 
-using System.Text;
 using Cryptool.PluginBase;
 
 using System.ComponentModel;

@@ -14,25 +14,14 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
 using System.Security.Cryptography;
 using Cryptool.PluginBase;
 using System.Windows.Controls;
 using System.ComponentModel;
-using System.Windows.Documents;
-using System.Windows.Markup;
-using System.Windows;
 using Cryptool.PluginBase.IO;
-using System.Runtime.CompilerServices;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Runtime.Remoting.Contexts;
 using Cryptool.MD5.Presentation;
 using Cryptool.MD5.Algorithm;
-using System.Windows.Threading;
 
 namespace Cryptool.MD5
 {

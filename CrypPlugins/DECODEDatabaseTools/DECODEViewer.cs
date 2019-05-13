@@ -18,15 +18,11 @@ using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Net;
-using System.Runtime.Serialization.Json;
 using Cryptool.Plugins.DECODEDatabaseTools.DataObjects;
-using System.IO;
-using System.Collections.Generic;
 using System.Windows.Threading;
 using System.Threading;
 using System;
 using Cryptool.PluginBase.IO;
-using System.Windows.Media.Imaging;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {

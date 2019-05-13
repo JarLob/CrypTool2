@@ -2,7 +2,6 @@
 using System.Windows.Media;
 using System.Threading;
 using System.Windows.Threading;
-using Cryptool.PluginBase.Attributes;
 
 
 namespace Cryptool.PluginBase.Utils.Graphics.Diagrams.Histogram

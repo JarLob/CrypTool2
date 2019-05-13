@@ -1,7 +1,3 @@
-using System;
-using System.Text;
-using System.Drawing;
-using System.Windows.Forms;
 using System.Collections.Generic;
 
 namespace QuickZip.MiniHtml2

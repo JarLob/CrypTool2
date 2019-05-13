@@ -16,16 +16,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Cryptool.PluginBase;
 using System.Windows.Controls;
 using System.ComponentModel;
-using System.IO;
 using Contains.Aho_Corasick;
 using System.Collections;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Threading;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using System.Text.RegularExpressions;

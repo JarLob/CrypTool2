@@ -14,16 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
-using System.Windows.Controls;
-using System.Diagnostics;
 using System.Resources;
-using System.Reflection;
 using System.Numerics;
-using Primes.WpfControls.Components;
 using Primes.Bignum;
 using Primes.Library;
 

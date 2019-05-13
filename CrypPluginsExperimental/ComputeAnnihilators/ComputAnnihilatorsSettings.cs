@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Windows.Controls;
-using System.Collections.Generic;
 using System.Collections;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.ComputeAnnihilators
 {

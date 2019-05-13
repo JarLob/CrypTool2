@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Resources;
+﻿using System.Resources;
 
 namespace Primes.OnlineHelp
 {

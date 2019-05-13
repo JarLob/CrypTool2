@@ -16,15 +16,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Primes.Bignum;
 using Primes.WpfControls.Components;
 using System.Windows.Controls;
-using System.Diagnostics;
 using Primes.Library;
 using System.Windows;
 using System.Linq;
-using System.Numerics;
 
 namespace Primes.WpfControls.PrimesDistribution.Numberline
 {

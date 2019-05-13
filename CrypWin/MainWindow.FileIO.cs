@@ -27,7 +27,6 @@ using Cryptool.PluginBase.Editor;
 using Microsoft.Win32;
 using System.Windows.Documents;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace Cryptool.CrypWin
 {

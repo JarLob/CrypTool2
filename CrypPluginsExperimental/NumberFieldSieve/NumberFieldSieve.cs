@@ -17,9 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading;
@@ -28,7 +26,6 @@ using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.Properties;
 using Ionic.Zip;
 using IronPython.Runtime;
 using IronPython.Runtime.Exceptions;

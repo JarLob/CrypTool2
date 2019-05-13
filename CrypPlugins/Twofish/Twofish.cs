@@ -13,8 +13,6 @@
 // more about at http://www.schneier.com/twofish.html
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;

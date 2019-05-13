@@ -9,7 +9,6 @@ using System.Xml.Linq;
 using System.Linq;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Editor;
 using Cryptool.PluginBase.Miscellaneous;
 using Ionic.Zip;
 using OnlineDocumentationGenerator.DocInformations;

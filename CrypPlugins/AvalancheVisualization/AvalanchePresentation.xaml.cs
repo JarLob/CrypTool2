@@ -10,10 +10,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using System.Windows.Documents;
 using System.Linq;
-using System.Windows.Input;
-using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
-using Cryptool.PluginBase.Miscellaneous;
 
 
 namespace AvalancheVisualization

@@ -17,7 +17,7 @@ using System;
 using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Numerics;
+
 namespace Cryptool.Plugins.ZeroKnowledgeChecker
 {
 

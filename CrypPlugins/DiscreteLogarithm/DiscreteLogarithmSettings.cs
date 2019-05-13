@@ -14,13 +14,8 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 using Cryptool.PluginBase;
-using System.Collections.ObjectModel;
 
 namespace Cryptool.Plugins.DiscreteLogarithm
 {

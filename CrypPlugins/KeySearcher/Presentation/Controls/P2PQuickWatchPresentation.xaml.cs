@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
 using KeySearcher;
-using KeySearcher.KeyPattern;
 using System.Globalization;
 using System.Threading.Tasks;
-using CrypCloud.Core;
 using KeySearcher.CrypCloud;
 using System.Text;
 

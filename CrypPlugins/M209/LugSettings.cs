@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Cryptool.Plugins.M209
+﻿namespace Cryptool.Plugins.M209
 {
     class LugSettings
     {

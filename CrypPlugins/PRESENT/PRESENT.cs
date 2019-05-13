@@ -19,17 +19,11 @@
 // PRESENT information: http://www.crypto.rub.de/imperia/md/content/texte/publications/conferences/present_ches2007.pdf
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.IO;
 using System.Security.Cryptography;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Contexts;
-using System.Windows;
-using System.Windows.Threading;
-using System.Threading;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;

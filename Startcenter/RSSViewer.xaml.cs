@@ -11,7 +11,6 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using System.Xml;
 using System.Xml.Linq;
-using System.Net;
 
 namespace Startcenter
 {

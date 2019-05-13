@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -10,7 +8,6 @@ using CrypCloud.Core.CloudComponent;
 using CrypCloud.Core.Properties;
 using CrypCloud.Core.utils;
 using Cryptool.PluginBase;
-using NLog;
 using VoluntLib2;
 using WorkspaceManager.Model;
 using VoluntLib2.ManagementLayer;

@@ -1,14 +1,5 @@
 using System;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
-using System.Drawing.Imaging;
-using System.Diagnostics;
-using System.Windows.Forms;
-using System.IO;
-using System.Collections;
 using System.Runtime.InteropServices;
-using System.Threading;
 
 namespace QuickZip.MiniHtml2
 {

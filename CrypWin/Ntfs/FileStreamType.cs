@@ -1,5 +1,3 @@
-using System;
-
 namespace Trinet.Core.IO.Ntfs
 {
 	/// <summary>

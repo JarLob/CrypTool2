@@ -17,17 +17,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase;
 using System.Windows.Controls;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Collections;
 using System.IO;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Diagnostics;
-using System.Collections.ObjectModel;
 
 namespace Dictionary
 {

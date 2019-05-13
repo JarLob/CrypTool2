@@ -16,7 +16,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
 using System.Text;
 using Cryptool.PluginBase;
@@ -26,7 +25,6 @@ using Cryptool.PluginBase.Control;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Reflection;
 
 namespace Cryptool.Plugins.CostFunction
 {

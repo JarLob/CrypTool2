@@ -28,7 +28,6 @@ using System.Windows.Threading;
 using System.Text;
 using AvalancheVisualization;
 using System.Linq;
-using System.Windows;
 using Cryptool.PluginBase.Attributes;
 using AvalancheVisualization.Properties;
 

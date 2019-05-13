@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Cryptool.PluginBase.IO;
-using Cryptool.Plugins.Cryptography.Encryption;
 
 namespace Tests.TemplateAndPluginTests
 {

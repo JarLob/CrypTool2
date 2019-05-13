@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
 using System.Windows.Controls;
 using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Globalization;
 
 

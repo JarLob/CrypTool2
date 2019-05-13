@@ -14,9 +14,7 @@
    limitations under the License.
 */
 
-using System;
 using System.Text.RegularExpressions;
-using System.Collections.Generic;
 
 namespace SevenZ.Calculator
 {

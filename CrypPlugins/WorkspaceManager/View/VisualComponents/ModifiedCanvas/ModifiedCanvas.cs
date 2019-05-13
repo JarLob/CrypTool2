@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Controls;
 using System.Windows;
-using System.Windows.Media;
 using WorkspaceManager.View.Visuals;
-using WorkspaceManager.View.VisualComponents.CryptoLineView;
 using WorkspaceManager.View.Base.Interfaces;
 
 namespace WorkspaceManager.View.VisualComponents

@@ -18,7 +18,6 @@ using System.ComponentModel;
 using System.Text;
 using System.Text.RegularExpressions;
 using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
 using StringOperations.Properties;
 using System.Collections.Generic;
 

@@ -14,8 +14,6 @@
    limitations under the License.
 */
 
-using System;
-
 namespace Contains.Aho_Corasick
 {
   public interface IStringSearchAlgorithm

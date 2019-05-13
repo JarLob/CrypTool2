@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Cryptool.PluginBase;
-using System.IO;
 using System.ComponentModel;
 
 namespace Cryptool.Playfair

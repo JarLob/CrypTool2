@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Org.BouncyCastle.Math;
 using Cryptool.PluginBase;

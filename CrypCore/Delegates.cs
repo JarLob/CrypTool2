@@ -14,8 +14,6 @@
    limitations under the License.
 */
 
-using System;
-
 namespace Cryptool.Core
 {
     public delegate void CrypCoreExceptionEventHandler(object sender, PluginManagerEventArgs args);

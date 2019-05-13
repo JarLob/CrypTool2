@@ -20,12 +20,10 @@ along with PacketDotNet.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Text.RegularExpressions;
-using MiscUtil.Conversion;
 using PacketDotNet.Utils;
 using PacketDotNet.LLDP;
 

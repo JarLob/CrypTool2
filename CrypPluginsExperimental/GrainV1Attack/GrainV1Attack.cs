@@ -4,8 +4,6 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Collections;
-using System.IO;
 
 namespace Cryptool.Plugins.GrainV1.Attack
 {

@@ -15,14 +15,9 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Cryptool.PluginBase;
 using System.Windows.Controls;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
-using System.Runtime.Remoting.Contexts;
 using Cryptool.PluginBase.Miscellaneous;
 
 // for [MethodImpl(MethodImplOptions.Synchronized)]

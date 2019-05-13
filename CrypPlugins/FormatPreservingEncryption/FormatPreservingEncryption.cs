@@ -14,7 +14,6 @@
    limitations under the License.
 */
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
@@ -23,7 +22,6 @@ using System.Xml;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using FormatPreservingEncryptionWeydstone;
-using System.Globalization;
 
 namespace Cryptool.Plugins.FormatPreservingEncryption
 {

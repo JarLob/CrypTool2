@@ -17,7 +17,6 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Cryptool.Plugins.SpanishStripCipherAnalysis

@@ -14,11 +14,7 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Controls;
-using Primes.WpfControls.Validation.Exceptions;
 using Primes.WpfControls.Validation.ControlValidator.Exceptions;
 using Primes.Library;
 

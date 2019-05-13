@@ -19,7 +19,6 @@ using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.PluginBase.IO;
-using BLAKE.Properties;
 
 namespace Cryptool.Plugins.BLAKE
 {

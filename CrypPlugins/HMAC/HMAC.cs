@@ -15,15 +15,9 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Runtime.Remoting.Contexts;
 using Cryptool.PluginBase;
-using Cryptool;
-using System.IO;
 using System.Windows.Controls;
 using System.ComponentModel;
 

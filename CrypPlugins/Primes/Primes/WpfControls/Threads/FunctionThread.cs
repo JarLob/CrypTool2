@@ -15,8 +15,6 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Primes.Library.Function;
 using System.Windows.Threading;
 using System.Windows.Media;

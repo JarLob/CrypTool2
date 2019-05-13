@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.IO;
 using Org.BouncyCastle.Utilities.Encoders;
 using Org.BouncyCastle.Math;
-using System.Security.Cryptography;
 using Cryptool.PluginBase;
 
 namespace PKCS1.Library

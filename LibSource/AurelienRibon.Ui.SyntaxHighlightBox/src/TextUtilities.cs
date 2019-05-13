@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 
 namespace AurelienRibon.Ui.SyntaxHighlightBox {
 	public class TextUtilities {

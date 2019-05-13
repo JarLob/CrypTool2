@@ -16,21 +16,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using System.Windows.Documents;
-using System.Windows.Markup;
 using Cryptool.PluginBase.Editor;
 using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.PluginBase.Properties;
 using System.Resources;
-using System.Threading;
 using System.Globalization;
-using System.Collections;
-using Cryptool.PluginBase.Control;
 using Cryptool.PluginBase.Attributes;
 
 namespace Cryptool.PluginBase

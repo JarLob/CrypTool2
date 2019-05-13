@@ -5,12 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
-using System.Windows.Threading;
-using System.Threading;
-using System.Windows;
-using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase;
-using Keccak.Properties;
 using System.IO;
 
 namespace Cryptool.Plugins.Keccak

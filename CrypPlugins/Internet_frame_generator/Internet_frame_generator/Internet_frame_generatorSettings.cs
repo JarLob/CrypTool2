@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Cryptool.PluginBase;
 using System.ComponentModel;
-using System.Text.RegularExpressions;
 
 namespace Cryptool.Internet_frame_generator
 {

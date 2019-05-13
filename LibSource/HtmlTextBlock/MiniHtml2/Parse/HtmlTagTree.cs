@@ -8,7 +8,6 @@
  */
 
 using System;
-using System.Collections.Generic;
 
 namespace QuickZip.MiniHtml2
 {

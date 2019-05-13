@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Net.Sockets;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using CrypTool.Util.Logging;
 using System.Net;
 using CrypTool.CertificateLibrary.Util;
-using System.IO;
 
 namespace CrypTool.CertificateLibrary.Network
 {

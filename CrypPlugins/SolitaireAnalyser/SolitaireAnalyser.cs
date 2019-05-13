@@ -15,14 +15,11 @@
 */
 using System;
 using System.Diagnostics;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Cryptool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.Control;
-using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
 using System.Windows.Threading;

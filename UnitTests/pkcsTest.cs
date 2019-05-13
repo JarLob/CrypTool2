@@ -10,11 +10,7 @@
 // $Date::                                                                                    $://
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-using System;
-using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using System.Security.Cryptography;
 using PKCS5;
 
 namespace Tests

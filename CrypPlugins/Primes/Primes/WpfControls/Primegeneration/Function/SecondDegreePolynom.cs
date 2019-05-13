@@ -17,10 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Reflection;
-using System.Resources;
 using Primes.WpfControls.Components;
 using Primes.Bignum;
 

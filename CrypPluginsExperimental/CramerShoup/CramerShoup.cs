@@ -17,7 +17,6 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using CramerShoup.Properties;
 using Cryptool.Plugins.CramerShoup.lib;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Crypto;

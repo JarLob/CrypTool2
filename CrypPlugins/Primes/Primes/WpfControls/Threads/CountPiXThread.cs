@@ -15,9 +15,6 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Primes.WpfControls.PrimesDistribution.Graph;
 using System.Windows.Threading;
 using Primes.Bignum;

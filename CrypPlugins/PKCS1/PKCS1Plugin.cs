@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Cryptool.PluginBase;
+﻿using Cryptool.PluginBase;
 using PKCS1.WpfVisualization;
 using PKCS1.Library;
 using Cryptool.PluginBase.Miscellaneous;

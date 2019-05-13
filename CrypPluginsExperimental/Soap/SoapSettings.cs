@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Cryptool.PluginBase;
+﻿using Cryptool.PluginBase;
 using System.ComponentModel;
-using System.Security.Cryptography;
-using System.Security.Cryptography.Xml;
 using System.Collections;
-using System.Xml;
-using System.IO;
 
 namespace Soap
 {

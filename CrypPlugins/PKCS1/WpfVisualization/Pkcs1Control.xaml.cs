@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Threading;
-using Cryptool.PluginBase;
 using Cryptool.PluginBase.Attributes;
 using PKCS1.WpfControls;
 using PKCS1.WpfControls.Start;
@@ -21,8 +10,6 @@ using PKCS1.WpfControls.SigGenFake;
 using PKCS1.WpfControls.SigVal;
 using PKCS1.WpfControls.RsaKeyGen;
 using PKCS1.Library;
-using PKCS1.WpfVisualization.Navigation;
-using PKCS1.WpfVisualization;
 using PKCS1.Resources.lang.Gui;
 
 

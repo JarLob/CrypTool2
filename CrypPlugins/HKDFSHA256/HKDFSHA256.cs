@@ -18,7 +18,6 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows;

@@ -18,15 +18,12 @@ using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System;
-using System.Collections.Generic;
 using AESVisualization;
 using System.Threading;
 using Cryptool.PluginBase.IO;
 using System.Windows;
 using System.Windows.Threading;
-using System.Windows.Media;
 using System.Collections;
-using System.Diagnostics;
 
 
 namespace Cryptool.Plugins.AESVisualization

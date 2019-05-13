@@ -18,11 +18,9 @@ using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Text;
-using System.Collections;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Linq;
 
 namespace Cryptool.Plugins.SpanishStripCipher
 {

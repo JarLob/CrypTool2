@@ -17,7 +17,6 @@
 using System;
 using System.ComponentModel;
 using System.Numerics;
-using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 

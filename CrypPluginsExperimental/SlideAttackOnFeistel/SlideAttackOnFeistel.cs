@@ -14,13 +14,11 @@
    limitations under the License.
 */
 
-using System.Text;
 using Cryptool.PluginBase;
 
 using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase.Miscellaneous;
-using System;
 using System.Collections.Generic;
 
 namespace Cryptool.SlideAttackOnFeistel

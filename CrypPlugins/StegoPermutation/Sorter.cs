@@ -1,4 +1,4 @@
-/*
+﻿/*
    Copyright 2011 CrypTool 2 Team
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,11 +14,10 @@
    limitations under the License.
 */
 
-﻿using System;
+ using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Text;
-using System.Numerics;
+ using System.Numerics;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Threading;

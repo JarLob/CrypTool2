@@ -14,13 +14,8 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Primes.Bignum;
-using Primes.WpfControls.Components;
 using Primes.WpfControls.Validation;
-using Primes.Library;
 
 namespace Primes.WpfControls.Primetest
 {

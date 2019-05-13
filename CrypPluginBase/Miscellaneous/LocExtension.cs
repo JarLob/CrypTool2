@@ -15,10 +15,7 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Resources;
-using System.Text;
 using System.Windows.Markup;
 using System.Xaml;
 using Cryptool.PluginBase.Attributes;

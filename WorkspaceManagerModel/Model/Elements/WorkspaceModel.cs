@@ -25,7 +25,6 @@ using WorkspaceManager.Execution;
 using WorkspaceManager.Model.Tools;
 using Cryptool.PluginBase.Editor;
 using WorkspaceManagerModel.Model.Operations;
-using Cryptool.PluginBase;
 using System.IO;
 using System.Text;
 using System.Security.Cryptography;

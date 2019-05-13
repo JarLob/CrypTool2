@@ -17,7 +17,6 @@
 using System;
 using Cryptool.PluginBase.Editor;
 using Cryptool.PluginBase.Control;
-using Cryptool.PluginBase.Miscellaneous;
 using System.Numerics;
 using System.Windows.Controls;
 

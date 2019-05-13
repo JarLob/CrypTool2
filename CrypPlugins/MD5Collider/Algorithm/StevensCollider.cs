@@ -32,13 +32,7 @@ notice and the version number should be present.
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Security.Cryptography;
-using System.Threading;
-
-
 
 
 namespace Cryptool.Plugins.MD5Collider.Algorithm

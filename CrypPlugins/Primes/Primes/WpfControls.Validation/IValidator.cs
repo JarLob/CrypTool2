@@ -14,10 +14,6 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Primes.WpfControls.Validation
 {
     public enum ValidationResult { OK, INFO, WARNING, ERROR }

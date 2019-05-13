@@ -17,15 +17,12 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-
-using System.Runtime.InteropServices;
 using System.IO;
 using System.Reflection;
 using System;
 using Cryptool.PluginBase.IO;
 using System.Text;
 using System.Diagnostics;
-using System.Collections.Generic;
 
 namespace Cryptool.Plugins.SATSolver
 {

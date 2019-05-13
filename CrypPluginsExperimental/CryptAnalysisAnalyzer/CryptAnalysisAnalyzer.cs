@@ -16,12 +16,8 @@
 
 using System;
 using System.Linq;
-using System.Numerics;
 using System.ComponentModel;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.Windows.Threading;
 using System.Windows.Controls;
 using CryptAnalysisAnalyzer.Properties;
 using Cryptool.PluginBase;

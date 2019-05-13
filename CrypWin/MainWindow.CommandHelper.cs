@@ -15,20 +15,14 @@
 */
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Input;
-using System.IO;
-using System.Diagnostics;
 using Cryptool.CrypWin.Properties;
 using Cryptool.PluginBase;
 using System.Windows;
-using Cryptool.CrypWin.Resources;
 using System.Windows.Threading;
 using System.Threading;
 using Cryptool.PluginBase.Editor;
-using System.Windows.Controls;
 using StartCenter;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using Cryptool.CrypWin.Helper;

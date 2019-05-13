@@ -16,7 +16,6 @@
 
 
 using System;
-using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,18 +23,10 @@ using System.Text;
 // additional needed libs
 using System.Windows.Controls;
 using System.ComponentModel;
-using System.Threading;
-using System.Collections;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Resources;
 
 //Cryptool 2.0 specific includes
-using Cryptool;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.PluginBase.IO;
 
 
 namespace Cryptool.Enigma

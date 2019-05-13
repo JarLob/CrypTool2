@@ -20,12 +20,9 @@ using Cryptool.PluginBase.Miscellaneous;
 using System;
 using System.Net;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.Serialization.Json;
 using System.IO;
 using System.Text;
-using System.Windows.Threading;
-using System.Threading;
 using Cryptool.Plugins.WebHits.Properties;
 
 

@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Drawing;
 
 namespace Cryptool.PluginBase.Properties
 {

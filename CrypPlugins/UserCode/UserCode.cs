@@ -17,7 +17,6 @@
 using System;
 using System.CodeDom.Compiler;
 using System.Numerics;
-using System.Reflection;
 using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.PluginBase;
 using System.ComponentModel;
@@ -27,8 +26,6 @@ using System.Threading;
 using System.IO;
 using Microsoft.CSharp;
 using System.Runtime.Remoting;
-using System.Security.Permissions;
-using System.Security;
 using AurelienRibon.Ui.SyntaxHighlightBox;
 
 namespace Cryptool.Plugins.UserCode

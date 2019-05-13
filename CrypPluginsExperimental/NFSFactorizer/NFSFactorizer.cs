@@ -15,22 +15,17 @@
 */
 using System;
 using System.IO;
-using System.IO.Compression;
-using Ionic.Zip;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Controls;
-using Cryptool.PluginBase.Properties;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Numerics;
 using System.Reflection;
-using System.Management;
 using System.Windows;
 
 

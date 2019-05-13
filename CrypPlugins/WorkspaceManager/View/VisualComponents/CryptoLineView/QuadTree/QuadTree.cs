@@ -3,10 +3,9 @@
 
    Licensed under the Code Project Open License (CPOL) 1.02
 */
-using System;
+
 using System.Drawing;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace QuadTreeLib
 {

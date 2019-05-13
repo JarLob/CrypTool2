@@ -16,10 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using VoluntLib2.ComputationLayer;
 using VoluntLib2.ManagementLayer.Messages;

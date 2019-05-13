@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Globalization;
 using System.Collections;
-using CrypTool.Util.Logging;
 
 namespace CrypTool.CertificateLibrary.Util
 {

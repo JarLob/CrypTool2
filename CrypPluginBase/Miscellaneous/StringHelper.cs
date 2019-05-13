@@ -1,10 +1,4 @@
-﻿using System;
-using System.Numerics;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Cryptool.PluginBase.Miscellaneous
+﻿namespace Cryptool.PluginBase.Miscellaneous
 {
     public static class SubstringExtensions
     {

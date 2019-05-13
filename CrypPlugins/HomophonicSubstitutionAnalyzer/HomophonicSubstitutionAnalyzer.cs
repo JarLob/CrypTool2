@@ -18,7 +18,6 @@ using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Threading;
-using Cryptool.PluginBase.Utils;
 
 namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 {

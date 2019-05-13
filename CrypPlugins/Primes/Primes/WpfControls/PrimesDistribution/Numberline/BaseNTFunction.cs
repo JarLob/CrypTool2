@@ -14,15 +14,12 @@
    limitations under the License.
 */
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using Primes.Bignum;
 using System.Windows.Controls;
 using Primes.WpfControls.Components;
 using Primes.Library;
-using System.Diagnostics;
 
 namespace Primes.WpfControls.PrimesDistribution.Numberline
 {

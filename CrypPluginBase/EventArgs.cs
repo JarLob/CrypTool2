@@ -15,7 +15,6 @@
 */
 
 using System;
-using Cryptool.PluginBase.Editor;
 using System.Collections.Generic;
 using System.Windows;
 

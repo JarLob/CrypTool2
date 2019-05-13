@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
-using Cryptool.PluginBase.IO;
 
 namespace Cryptool.PluginBase.Utils
 {

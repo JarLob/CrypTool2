@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.IO;
 using CrypTool.Util.Logging;
 using CrypTool.CertificateLibrary.Util;
 using System.Collections;
-using Org.BouncyCastle.Asn1;
 
 namespace CrypTool.CertificateLibrary.Certificates
 {

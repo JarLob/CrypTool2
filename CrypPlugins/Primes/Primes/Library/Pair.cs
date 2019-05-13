@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Primes.Library
+﻿namespace Primes.Library
 {
     public class Pair<T, U>
     {

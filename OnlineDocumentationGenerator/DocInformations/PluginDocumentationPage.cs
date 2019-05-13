@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -11,7 +9,6 @@ using Cryptool.PluginBase;
 using OnlineDocumentationGenerator.DocInformations.Localization;
 using OnlineDocumentationGenerator.DocInformations.Utils;
 using OnlineDocumentationGenerator.Generators.HtmlGenerator;
-using OnlineDocumentationGenerator.Reference;
 
 namespace OnlineDocumentationGenerator.DocInformations
 {

@@ -15,13 +15,8 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
 using System.Windows;
 using System.ComponentModel;
-using System.Security.Cryptography;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 

@@ -25,10 +25,8 @@ using System.IO;
 using System.Threading;
 using System.Windows.Threading;
 using System.Data;
-using System.Windows.Data;
 using System.Windows;
 using System.Linq;
-using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Cryptool.M_138

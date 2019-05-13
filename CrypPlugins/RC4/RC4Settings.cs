@@ -14,15 +14,8 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
 using Cryptool.PluginBase;
-using System.Security.Cryptography;
 using System.ComponentModel;
-using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.Plugins.Cryptography.Encryption
 {

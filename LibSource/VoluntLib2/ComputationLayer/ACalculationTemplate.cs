@@ -16,7 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using VoluntLib2.Tools;
 
 namespace VoluntLib2.ComputationLayer

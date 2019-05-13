@@ -15,7 +15,6 @@
 */
 using System;
 using System.Collections.ObjectModel;
-using System.Configuration;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;

@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Cryptool.PluginBase;
 using System.ComponentModel;
-using System.Threading;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Markup;
-using System.IO;
-using WorkspaceManager.Properties;
 
 namespace WorkspaceManager
 {

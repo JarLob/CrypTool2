@@ -13,10 +13,6 @@
 // more about at http://www.schneier.com/twofish.html
 // used sources from http://www.codeproject.com/KB/recipes/twofish_csharp.aspx
 
-using System;
-using System.Diagnostics;
-using System.Security.Cryptography;
-
 namespace System.Security.Cryptography
 {
 

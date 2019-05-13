@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
-using System.Web;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using System.Text.RegularExpressions;
 using Cryptool.PluginBase;
 using OnlineDocumentationGenerator.DocInformations;
 using OnlineDocumentationGenerator.DocInformations.Utils;
-using OnlineDocumentationGenerator.Generators.HtmlGenerator;
 using OnlineDocumentationGenerator.Properties;
-using WorkspaceManager.Model;
 
 namespace OnlineDocumentationGenerator.Generators.LaTeXGenerator
 {

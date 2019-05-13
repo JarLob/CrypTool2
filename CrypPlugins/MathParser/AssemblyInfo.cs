@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 //
 // Allgemeine Informationen �ber eine Assembly werden �ber folgende Attribute 

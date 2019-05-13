@@ -10,19 +10,10 @@
 // $Date::                                                                                    $://
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
-
 using System.Security.Cryptography;
 
 using System.ComponentModel;
-using System.Runtime.InteropServices;
-
-using System.Windows.Controls;
 
 namespace PKCS5
 {

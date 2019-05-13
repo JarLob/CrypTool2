@@ -15,19 +15,10 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
 using System.Threading;
-using System.Diagnostics;
 using System.Windows.Forms;
 using System.Windows.Threading;
-using System.IO;
 using Cryptool.Core;
-using Cryptool.CrypWin.Properties;
-using System.Reflection;
-using System.Security.Principal;
 using Cryptool.PluginBase.Miscellaneous;
 using Application = System.Windows.Application;
 

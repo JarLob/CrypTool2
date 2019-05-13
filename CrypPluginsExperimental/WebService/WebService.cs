@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Windows;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Cryptool.PluginBase;
-using Cryptool.PluginBase.IO;
 using System.ComponentModel;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Xml;
 using System.Web.Services.Description;
-using System.Web.Services.Configuration;
 using System.CodeDom.Compiler;
 
 
@@ -25,17 +21,7 @@ using System.Collections;
 using System.Windows.Documents;
 using System.Windows.Threading;
 using System.Threading;
-using System.Windows.Media;
-
-using System.Security.Cryptography.X509Certificates;
-
 using System.Windows.Controls;
-using Cryptool.PluginBase.Control;
-using System.Web.Services.Protocols;
-
-
-
-using System.Web.Services;
 
 
 namespace WebService

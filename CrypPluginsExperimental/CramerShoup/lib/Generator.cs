@@ -1,12 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Utilities;
 using Org.BouncyCastle.Crypto.Digests;
-using Org.BouncyCastle.Math.EC;
 using Org.BouncyCastle.Crypto.EC;
 
 namespace Cryptool.Plugins.CramerShoup.lib

@@ -18,7 +18,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using Sigaba.Properties;
 
 namespace Sigaba
 {

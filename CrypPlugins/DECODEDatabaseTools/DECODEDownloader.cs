@@ -21,11 +21,9 @@ using System.Net;
 using System.Runtime.Serialization.Json;
 using Cryptool.Plugins.DECODEDatabaseTools.DataObjects;
 using System.IO;
-using System.Collections.Generic;
 using System.Windows.Threading;
 using System.Threading;
 using System;
-using System.Text;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {

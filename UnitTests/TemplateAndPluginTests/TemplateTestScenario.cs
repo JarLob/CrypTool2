@@ -1,13 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using System.Windows.Controls;
-using Cryptool.Core;
-using Cryptool.PluginBase;
-using Cryptool.PluginBase.Editor;
 using WorkspaceManager.Execution;
 using WorkspaceManager.Model;
 

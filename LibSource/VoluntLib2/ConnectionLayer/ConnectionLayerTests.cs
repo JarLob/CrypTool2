@@ -14,14 +14,7 @@
    limitations under the License.
 */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using VoluntLib2.ConnectionLayer.Messages;
 
 namespace VoluntLib2.ConnectionLayer

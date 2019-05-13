@@ -15,9 +15,6 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Primes.Library.Function;
 
 namespace Primes.Library.Function
 {

@@ -15,30 +15,18 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Primes.Library.Function;
 using Primes.Library;
 
 using Primes.WpfControls.Validation.Validator;
 using Primes.WpfControls.Validation;
-using System.Threading;
-using Primes.WpfControls.Validation.ControlValidator;
-using Primes.WpfControls.Validation.Exceptions;
-using Primes.WpfControls.Validation.ControlValidator.Exceptions;
 using Primes.Bignum;
 using Primes.WpfControls.Components;
 using Primes.WpfControls.Threads;
-using System.Diagnostics;
 
 namespace Primes.WpfControls.PrimesDistribution.Graph
 {

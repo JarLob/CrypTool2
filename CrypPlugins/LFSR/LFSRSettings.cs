@@ -14,19 +14,9 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.IO;
-using System.Security.Cryptography;
 using Cryptool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
-using System.Runtime.CompilerServices;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Runtime.Remoting.Contexts;
 
 // for Visibility
 using System.Windows;

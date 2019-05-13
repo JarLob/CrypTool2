@@ -18,10 +18,6 @@ using Cryptool.PluginBase.Attributes;
 using Cryptool.PluginBase.Editor;
 using Cryptool.PluginBase.Miscellaneous;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace Cryptool.CrypToolStore

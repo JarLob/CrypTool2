@@ -14,10 +14,6 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
 using Primes.Bignum;
 
 namespace Primes.WpfControls.Validation

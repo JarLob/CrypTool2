@@ -41,8 +41,6 @@ using WorkspaceManager.View.Visuals;
 using WorkspaceManager.View.Base;
 using WorkspaceManagerModel.Model.Operations;
 using WorkspaceManager.View.VisualComponents.CryptoLineView;
-using WorkspaceManagerModel.Model.Tools;
-using System.Collections;
 using System.Globalization;
 
 //Disable warnings for unused or unassigned fields and events:

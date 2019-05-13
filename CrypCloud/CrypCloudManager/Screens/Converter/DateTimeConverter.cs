@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Threading;
 using System.Windows.Data;
 
 namespace CrypCloud.Manager.Screens.Converter

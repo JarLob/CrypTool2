@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections.ObjectModel;
-using Cryptool.KasiskiTest;
+﻿using System.Collections.ObjectModel;
 
 
 namespace Cryptool.KasiskiTest

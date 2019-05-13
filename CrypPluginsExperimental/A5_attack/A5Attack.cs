@@ -18,9 +18,7 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Text;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace Cryptool.Plugins.A5_attack
 {

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using System.Timers;
-using System.Windows.Shapes;
 using CrypCloud.Core;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Control;
@@ -13,8 +12,6 @@ using KeySearcher.CrypCloud;
 using KeySearcher.CrypCloud.statistics;
 using KeySearcherPresentation.Controls;
 using Timer = System.Timers.Timer;
-using VoluntLib2;
-using VoluntLib2.ComputationLayer;
 using VoluntLib2.Tools;
 
 namespace KeySearcher

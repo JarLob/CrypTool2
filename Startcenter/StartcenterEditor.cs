@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Windows.Controls;
 using Cryptool.Core;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Attributes;
 using Cryptool.PluginBase.Editor;
-using Cryptool.PluginBase.Miscellaneous;
 
 namespace StartCenter
 {

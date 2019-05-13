@@ -18,10 +18,7 @@
 // Author: Timm Korte, cryptool@easycrypt.de
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.IO;
 using Cryptool.PluginBase;
 using System.Windows.Forms;
 using System.Threading;

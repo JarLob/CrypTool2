@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
 using Cryptool.MD5.Algorithm;
 using Cryptool.PluginBase.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
