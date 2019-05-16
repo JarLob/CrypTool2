@@ -97,7 +97,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -109,19 +108,8 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Numerics" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UIAutomationProvider">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
     <Reference Include="WindowsBase">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -214,11 +202,6 @@
     <ProjectReference Include="..\..\LibSource\VoluntLib2\VoluntLib2.csproj">
       <Project>{1b68fdaa-c5a7-4f8a-bd5b-5876e8ac1879}</Project>
       <Name>VoluntLib2</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CostFunction\CostFunction.csproj">
-      <Project>{3C72FF93-48C2-4929-B3B2-83F165AAE636}</Project>
-      <Name>CostFunction</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\LibSource\OpenCLNet\OpenCLNet.csproj">
       <Project>{0946E1A6-5488-4711-AD10-D54D6A5D2F32}</Project>

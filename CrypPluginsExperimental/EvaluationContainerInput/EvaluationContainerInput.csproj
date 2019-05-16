@@ -100,14 +100,6 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -122,10 +114,6 @@
       <Project>{25DB2B47-A457-4EC2-960B-395CE07AE093}</Project>
       <Name>CrypPluginBase</Name>
       <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\LibSource\Fare\Fare.csproj">
-      <Project>{24033e0e-0304-4f06-94cd-6f6416eca509}</Project>
-      <Name>Fare</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
