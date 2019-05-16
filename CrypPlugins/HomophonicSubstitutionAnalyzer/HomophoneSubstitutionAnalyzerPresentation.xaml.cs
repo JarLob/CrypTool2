@@ -445,8 +445,10 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     CipherAlphabetTextBox.Text = eventArgs.CiphertextAlphabet;
                     PlainAlphabetTextBox.Text = eventArgs.PlaintextMapping;
                     CostTextBox.Text = String.Format(Properties.Resources.CostValue_0, Math.Round(eventArgs.CostValue, 2));
-                    AutoLockWords(AnalyzerConfiguration.WordCountToFind);
+                    var wordPositions = AutoLockWords(AnalyzerConfiguration.WordCountToFind);
                     MarkLockedHomophones();
+                    MarkFoundWords(wordPositions);
+
                     newTopEntry = AddNewBestListEntry(eventArgs.PlaintextMapping, eventArgs.CostValue, eventArgs.Plaintext);
                 }
                 catch (Exception)
@@ -466,6 +468,34 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {               
                 eventArgs.NewTopEntry = newTopEntry;
                 NewBestValue.Invoke(sender, eventArgs);
+            }
+        }
+
+        /// <summary>
+        /// Marks the found words in blue color
+        /// </summary>
+        /// <param name="wordPositions"></param>
+        private void MarkFoundWords(Dictionary<int, int> wordPositions)
+        {
+            //Color the found words in blue
+            foreach (var value in wordPositions)
+            {
+                for (int i = 0; i < value.Value; i++)
+                {
+                    int position = value.Key + i;
+                    foreach (var label in _ciphertextLabels)
+                    {
+                        if (label == null)
+                        {
+                            continue;
+                        }
+                        if (label.SymbolOffset == position)
+                        {
+                            label.Background = Brushes.LightSkyBlue;
+                            _plaintextLabels[label.X, label.Y].Background = Brushes.LightSkyBlue;
+                        }
+                    }
+                }
             }
         }
 
@@ -642,6 +672,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// Locks a mapping of a single mapping of a homophone
         /// </summary>
         /// <param name="symbol"></param>
+        /// <param name="auto"></param>
         private void LockHomophone(string symbol, bool auto = false)
         {
             var key = CipherAlphabetTextBox.Text;
@@ -838,18 +869,19 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 return;
             }
-            AutoLockWords(1);
+            var foundWords = AutoLockWords(1);
+            MarkFoundWords(foundWords);
         }
 
         /// <summary>
         /// Automatically locks words
         /// Only works, if a WordFinder has previously been created
         /// </summary>
-        private void AutoLockWords(int minCount)
+        private Dictionary<int, int> AutoLockWords(int minCount)
         {
             if (_wordFinder == null)
             {
-                return;
+                return null;
             }
 
             StringBuilder textBuilder = new StringBuilder();
@@ -876,7 +908,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             Dictionary<int, int> wordPositions = _wordFinder.FindWords(plaintext);
             if (wordPositions.Count < minCount)
             {
-                return;
+                return null;
             }
             foreach (var value in wordPositions)
             {
@@ -897,6 +929,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     }
                 }
             }
+            return wordPositions;
         }
 
         /// <summary>
