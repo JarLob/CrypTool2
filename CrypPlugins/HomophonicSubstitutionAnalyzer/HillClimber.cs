@@ -327,6 +327,14 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
     }
 
     /// <summary>
+    /// EventArgs for a change of the user. This means, the user
+    /// changed the plaintext mapping of a homophone
+    /// </summary>
+    public class UserChangedTextEventArgs : NewBestValueEventArgs
+    {
+    }
+
+    /// <summary>
     /// A mapping of a plainletter to a ciphertext letter
     /// </summary>
     public class HomophoneMapping : ICloneable

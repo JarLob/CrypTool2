@@ -40,11 +40,12 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public HomophonicSubstitutionAnalyzer()
         {
             _presentation.NewBestValue += PresentationOnNewBestValue;
+            _presentation.UserChangedText += PresentationOnUserChangedText;
             _presentation.Progress += PresentationOnProgress;
         }
 
         #region Data Properties
-       
+
         /// </summary>
         [PropertyInfo(Direction.InputData, "CiphertextCaption", "CiphertextTooltip", true)]
         public string Ciphertext
@@ -213,7 +214,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// Analyzer found a new best value
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="newBestValueEventArgs"></param>
         private void PresentationOnNewBestValue(object sender, NewBestValueEventArgs newBestValueEventArgs)
         {
             if(!_running)
@@ -227,7 +228,16 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             }
         }
 
-
+        /// <summary>
+        /// User changed a homophone plaintext mapping
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="userChangedTextEventArgs"></param>
+        private void PresentationOnUserChangedText(object sender, UserChangedTextEventArgs userChangedTextEventArgs)
+        {
+            Plaintext = userChangedTextEventArgs.Plaintext;
+            OnPropertyChanged("Plaintext");
+        }
 
         /// <summary>
         /// Called once after workflow execution has stopped.

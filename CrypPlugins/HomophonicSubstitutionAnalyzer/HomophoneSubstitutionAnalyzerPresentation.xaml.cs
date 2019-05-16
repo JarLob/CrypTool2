@@ -57,6 +57,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 
         public event EventHandler<ProgressChangedEventArgs> Progress;
         public event EventHandler<NewBestValueEventArgs> NewBestValue;
+        public event EventHandler<UserChangedTextEventArgs> UserChangedText;
 
         private ObservableCollection<ResultEntry> BestList = new ObservableCollection<ResultEntry>();
         private int _restart = 0;
@@ -520,7 +521,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// Left mouse button down
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="mouseButtonEventArgs"></param>
         private void LabelOnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             if (_running)
@@ -544,7 +545,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// Right mouse button down
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="mouseButtonEventArgs"></param>
         private void LabelOnMouseRightButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             if (_running)
@@ -629,6 +630,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     }
                 }
                 MarkLockedHomophones();
+                if (UserChangedText != null)
+                {
+                    UserChangedTextEventArgs args = new UserChangedTextEventArgs() { Plaintext = plaintext };
+                    UserChangedText.Invoke(this, args);
+                }
             }
         }
 
