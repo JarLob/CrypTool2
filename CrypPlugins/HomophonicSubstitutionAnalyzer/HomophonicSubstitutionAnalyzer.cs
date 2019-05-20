@@ -14,6 +14,7 @@
    limitations under the License.
 */
 using System.ComponentModel;
+using System.Text;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
@@ -46,7 +47,6 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 
         #region Data Properties
 
-        /// </summary>
         [PropertyInfo(Direction.InputData, "CiphertextCaption", "CiphertextTooltip", true)]
         public string Ciphertext
         {
@@ -54,7 +54,6 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             set;
         }
 
-        /// </summary>
         [PropertyInfo(Direction.InputData, "DictionaryCaption", "DictionaryTooltip", false)]
         public string[] Dictionary
         {
@@ -69,6 +68,19 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             set;
         }
 
+        [PropertyInfo(Direction.OutputData, "KeyCaption", "KeyTooltip")]
+        public string Key
+        {
+            get;
+            set;
+        }
+
+        [PropertyInfo(Direction.OutputData, "FoundWordsCaption", "FoundWordsTooltip")]
+        public string FoundWords
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region IPlugin Members
@@ -200,7 +212,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// Progress of analyzer changed
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="progressChangedEventArgs"></param>
         private void PresentationOnProgress(object sender, ProgressChangedEventArgs progressChangedEventArgs)
         {
             if(!_running)
@@ -225,6 +237,22 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 Plaintext = newBestValueEventArgs.Plaintext;
                 OnPropertyChanged("Plaintext");
+                if (newBestValueEventArgs.FoundWords != null && newBestValueEventArgs.FoundWords.Count > 0)
+                {
+                    StringBuilder wordBuilder = new StringBuilder();
+                    foreach (var word in newBestValueEventArgs.FoundWords)
+                    {
+                        wordBuilder.AppendLine(word);
+                    }
+
+                    FoundWords = wordBuilder.ToString();
+                    OnPropertyChanged("FoundWords");
+                }
+                if (!string.IsNullOrWhiteSpace(newBestValueEventArgs.SubstitutionKey))
+                {
+                    Key = newBestValueEventArgs.SubstitutionKey;
+                    OnPropertyChanged("Key");
+                }
             }
         }
 
@@ -237,6 +265,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         {
             Plaintext = userChangedTextEventArgs.Plaintext;
             OnPropertyChanged("Plaintext");
+            Key = userChangedTextEventArgs.SubstitutionKey;
+            OnPropertyChanged("Key");
         }
 
         /// <summary>

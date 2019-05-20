@@ -229,7 +229,7 @@
     <value>Number groups</value>
   </data>
   <data name="Plaintext" xml:space="preserve">
-    <value>Revealed Plaintext:</value>
+    <value>Revealed plaintext:</value>
   </data>
   <data name="PlaintextMapping" xml:space="preserve">
     <value>Plaintext mapping:</value>

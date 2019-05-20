@@ -324,6 +324,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public string PlaintextMapping{ get;set;}
         public string CiphertextAlphabet{ get;set;}
         public double CostValue{ get;set;}
+        public List<string> FoundWords { get; set; }
+        public String SubstitutionKey { get; set; }
     }
 
     /// <summary>

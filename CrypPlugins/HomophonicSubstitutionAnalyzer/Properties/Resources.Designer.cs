@@ -421,7 +421,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Revealed Plaintext: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Revealed plaintext: ähnelt.
         /// </summary>
         internal static string Plaintext {
             get {

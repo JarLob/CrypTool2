@@ -69,11 +69,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             InitializeComponent();
             DisableUIAndStop();            
         }
- 
+
         /// <summary>
         /// Initializes the ui with a new ciphertext
         /// </summary>
         /// <param name="ciphertext"></param>
+        /// <param name="ciphertextFormat"></param>
+        /// <param name="separator"></param>
+        /// <param name="costFactorMultiplicator"></param>
+        /// <param name="fixedTemperature"></param>
         public void AddCiphertext(string ciphertext, CiphertextFormat ciphertextFormat, char separator, int costFactorMultiplicator, int fixedTemperature)
         {
             _ciphertext = ciphertext;
@@ -283,7 +287,6 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <summary>
         /// Generates the tab for the selection of the key letter distribution
         /// </summary>
-        /// <param name="PlainAlphabetText"></param>
         public void GenerateKeyLetterLimitsListView()
         {
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
@@ -425,6 +428,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         {
             AutoResetEvent waitHandle = new AutoResetEvent(false);
             bool newTopEntry = false;
+            Dictionary<int, int> wordPositions = null;
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 try
@@ -445,11 +449,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     CipherAlphabetTextBox.Text = eventArgs.CiphertextAlphabet;
                     PlainAlphabetTextBox.Text = eventArgs.PlaintextMapping;
                     CostTextBox.Text = String.Format(Properties.Resources.CostValue_0, Math.Round(eventArgs.CostValue, 2));
-                    var wordPositions = AutoLockWords(AnalyzerConfiguration.WordCountToFind);
                     MarkLockedHomophones();
+                    wordPositions = AutoLockWords(AnalyzerConfiguration.WordCountToFind);
                     MarkFoundWords(wordPositions);
-
                     newTopEntry = AddNewBestListEntry(eventArgs.PlaintextMapping, eventArgs.CostValue, eventArgs.Plaintext);
+                    if (newTopEntry)
+                    {
+                        var substitutionKey = GenerateSubstitutionKey();
+                        eventArgs.SubstitutionKey = substitutionKey;
+                    }
                 }
                 catch (Exception)
                 {
@@ -465,10 +473,88 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             waitHandle.WaitOne();
 
             if (NewBestValue != null)
-            {               
+            {
+                if (newTopEntry && wordPositions != null && wordPositions.Count > 0)
+                {
+                    eventArgs.FoundWords = new List<string>();
+                    //if we have a new top entry, we also output the found words
+                    foreach (KeyValuePair<int,int> positionLength in wordPositions)
+                    {
+                        var word = eventArgs.Plaintext.Substring(positionLength.Key, positionLength.Value);
+                        eventArgs.FoundWords.Add(word);
+                    }
+                }
+
                 eventArgs.NewTopEntry = newTopEntry;
                 NewBestValue.Invoke(sender, eventArgs);
             }
+        }
+
+        /// <summary>
+        /// Generates the current substitution key which can be used by
+        /// the Substitution component with the nomenclature templates
+        /// </summary>
+        /// <returns></returns>
+        private string GenerateSubstitutionKey()
+        {
+            var keyDictionary = new Dictionary<string, List<string>>();
+            foreach (var ciphertextLabel in _ciphertextLabels)
+            {
+                if(ciphertextLabel == null)
+                {
+                    continue;
+                }
+                var x = ciphertextLabel.X;
+                var y = ciphertextLabel.Y;
+                var plaintextLabel = _plaintextLabels[x, y];
+
+                if (plaintextLabel != null)
+                {
+                    var plainletter = plaintextLabel.Symbol;
+                    var cipherletter = _originalCiphertextSymbols[ciphertextLabel.SymbolOffset];
+
+                    if (!keyDictionary.ContainsKey(plainletter))
+                    {
+                        keyDictionary.Add(plainletter, new List<string>());
+                    }
+                    if (!keyDictionary[plainletter].Contains(cipherletter))
+                    {
+                        keyDictionary[plainletter].Add(cipherletter);
+                    }
+                }
+            }
+            var builder = new StringBuilder();
+            foreach (var keyValuePair in keyDictionary)
+            {
+                builder.Append(String.Format("[{0}];", keyValuePair.Key));
+                var list = keyValuePair.Value;
+                for (var i = 0; i < list.Count; i++)
+                {
+                    var symbol = list[i];
+                    if (i == 0)
+                    {
+                        builder.Append("[");
+                        builder.Append(symbol);
+                    }
+                    else if (i < list.Count - 1)
+                    {
+                        builder.Append("|");
+                        builder.Append(symbol);
+                    }
+                    else
+                    {
+                        builder.Append("|");
+                        builder.Append(symbol);
+                        builder.AppendLine("]");
+                    }
+                }
+                if(list.Count == 1)
+                {
+                    //if we have only one element, we have to close the tag
+                    builder.AppendLine("]");
+                }
+            }
+            return builder.ToString();
         }
 
         /// <summary>
@@ -663,6 +749,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 if (UserChangedText != null)
                 {
                     UserChangedTextEventArgs args = new UserChangedTextEventArgs() { Plaintext = plaintext };
+                    args.SubstitutionKey = GenerateSubstitutionKey();
                     UserChangedText.Invoke(this, args);
                 }
             }
@@ -1071,7 +1158,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// Handler for the copy-context menu
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="routedEventArgs"></param>
         private void ContextMenuHandler(object sender, RoutedEventArgs routedEventArgs)
         {
             try
@@ -1151,12 +1238,9 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
     /// </summary>
     public class ResultEntry 
     {
-        private int _ranking = 0;
-
         public int Ranking { get; set; }
         public double Value { get; set; }
         public string Key { get; set; }
         public string Text { get; set; }
-        public event PropertyChangedEventHandler PropertyChanged;
     }    
 }
