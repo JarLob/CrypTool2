@@ -295,11 +295,38 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Found words ähnelt.
+        /// </summary>
+        internal static string FoundWordsCaption {
+            get {
+                return ResourceManager.GetString("FoundWordsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Found words based on the connected dictionary are shown here ähnelt.
+        /// </summary>
+        internal static string FoundWordsTooltip {
+            get {
+                return ResourceManager.GetString("FoundWordsTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Automatic ähnelt.
         /// </summary>
         internal static string FullAutomatic {
             get {
                 return ResourceManager.GetString("FullAutomatic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Revealed key ähnelt.
+        /// </summary>
+        internal static string KeyCaption {
+            get {
+                return ResourceManager.GetString("KeyCaption", resourceCulture);
             }
         }
         
@@ -318,6 +345,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         internal static string KeyLetterDistribution {
             get {
                 return ResourceManager.GetString("KeyLetterDistribution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New key candidates with higher scores are shown here ähnelt.
+        /// </summary>
+        internal static string KeyTooltip {
+            get {
+                return ResourceManager.GetString("KeyTooltip", resourceCulture);
             }
         }
         

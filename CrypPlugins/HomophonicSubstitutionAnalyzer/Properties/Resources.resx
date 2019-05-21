@@ -297,4 +297,16 @@
   <data name="MinLabel" xml:space="preserve">
     <value>Minimum number</value>
   </data>
+  <data name="FoundWordsCaption" xml:space="preserve">
+    <value>Found words</value>
+  </data>
+  <data name="FoundWordsTooltip" xml:space="preserve">
+    <value>Found words based on the connected dictionary are shown here</value>
+  </data>
+  <data name="KeyCaption" xml:space="preserve">
+    <value>Revealed key</value>
+  </data>
+  <data name="KeyTooltip" xml:space="preserve">
+    <value>New key candidates with higher scores are shown here</value>
+  </data>
 </root>
