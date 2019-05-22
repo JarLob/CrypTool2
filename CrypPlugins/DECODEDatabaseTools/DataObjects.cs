@@ -1,4 +1,5 @@
-﻿using Cryptool.PluginBase.Miscellaneous;
+﻿using System;
+using Cryptool.PluginBase.Miscellaneous;
 /*
    Copyright 2018 Nils Kopal <Nils.Kopal<at>CrypTool.org
 
@@ -14,12 +15,12 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Net;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
@@ -121,16 +122,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
     }
 
     [DataContract]
-    public class Image : INotifyPropertyChanged
+    public class Image
     {
-        private JsonDownloaderAndConverter fullImageDownloader;
-        private JsonDownloaderAndConverter thumbnailDownloader;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public event DownloadDataCompletedEventHandler DownloadDataCompleted;
-        public event DownloadProgressChangedEventHandler DownloadProgressChanged;
-
-
         [DataMember]
         public int image_id { get; set; }
         [DataMember]
@@ -139,113 +132,58 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
         public string thumbnail_url { get; set; }
 
         private byte[] thumbnail_data;
+        private byte[] full_data;
 
-
-        public BitmapFrame GetFullImage
+        public byte[] GetFullImage
         {
             get
             {
-                return null;
+                if (full_data == null)
+                {
+                    full_data = JsonDownloaderAndConverter.GetData(full_url);
+                }
+                return full_data;
             }
         }
 
-        public BitmapFrame GetThumbnail
+        /// <summary>
+        /// Downloads a thumbnail
+        /// </summary>
+        public void DownloadThumbnail()
+        {
+            if (thumbnail_data == null)
+            {
+                thumbnail_data = JsonDownloaderAndConverter.GetData(thumbnail_url);
+            }
+        }
+
+        /// <summary>
+        /// Returns the thumbnail as BitmapImage
+        /// </summary>
+        public ImageSource GetThumbnail
         {
             get
             {
-                if (thumbnailDownloader == null)
-                {
-                    thumbnailDownloader = new JsonDownloaderAndConverter();
-                    thumbnailDownloader.DownloadDataCompleted += thumbnailDownloader_DownloadDataCompleted;
-                    thumbnailDownloader.GetData(thumbnail_url);
-                    return null;
-                }
                 if (thumbnail_data == null)
                 {
                     return null;
                 }
-                var decoder = BitmapDecoder.Create(new MemoryStream(thumbnail_data),
-                              BitmapCreateOptions.PreservePixelFormat,
-                              BitmapCacheOption.None);
-                if (decoder.Frames.Count > 0)
+                try
                 {
-                    return decoder.Frames[0];
+                    var decoder = BitmapDecoder.Create(new MemoryStream(thumbnail_data),
+                        BitmapCreateOptions.PreservePixelFormat,
+                        BitmapCacheOption.None);
+
+                    if (decoder.Frames.Count > 0)
+                    {
+                        return decoder.Frames[0];
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    return null;
+                    //do nothing
                 }
-            }
-        }
-
-        /// <summary>
-        /// Invoked when thumbnail download finished
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        void thumbnailDownloader_DownloadDataCompleted(object sender, DownloadDataCompletedEventArgs args)
-        {
-            if (args.Error == null)
-            {
-                thumbnail_data = args.Result;
-            }
-            OnPropertyChanged("GetThumbnail");
-        }
-
-      
-        private void OnPropertyChanged(string propertyName)
-        {
-            EventsHelper.PropertyChanged(PropertyChanged, this, propertyName);
-        }
-
-        /// <summary>
-        /// download the full image
-        /// </summary>
-        internal void DownloadImage()
-        {
-            if (fullImageDownloader == null)
-            {
-                fullImageDownloader = new JsonDownloaderAndConverter();
-                fullImageDownloader.DownloadDataCompleted += fullImageDownloader_DownloadDataCompleted;
-                fullImageDownloader.DownloadProgressChanged += fullImageDownloader_DownloadProgressChanged;
-                fullImageDownloader.GetData(full_url);
-            }          
-        }
-
-        /// <summary>
-        /// Called, when the download progress changed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        void fullImageDownloader_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs args)
-        {
-            if (DownloadProgressChanged != null)
-            {
-                DownloadProgressChanged.Invoke(this, args);
-            }
-        }
-
-        /// <summary>
-        /// called when download is finished
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        void fullImageDownloader_DownloadDataCompleted(object sender, DownloadDataCompletedEventArgs args)
-        {
-            try
-            {
-                if (DownloadDataCompleted != null)
-                {
-                    DownloadDataCompleted.Invoke(this, args);
-                }
-                fullImageDownloader.DownloadDataCompleted -= fullImageDownloader_DownloadDataCompleted;
-                fullImageDownloader.DownloadProgressChanged -= fullImageDownloader_DownloadProgressChanged;
-                fullImageDownloader.Dispose();
-                fullImageDownloader = null;
-            }
-            catch (Exception ex)
-            {
-                //wtf?
+                return null;
             }
         }
     }
@@ -253,11 +191,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
     [DataContract]
     public class Document
     {
-        private JsonDownloaderAndConverter jsonDownloaderAndConverter;
-
-        public event DownloadDataCompletedEventHandler DownloadDataCompleted;
-        public event DownloadProgressChangedEventHandler DownloadProgressChanged;
-
+       
         [DataMember]
         public int document_id { get; set; }
         [DataMember]
@@ -271,59 +205,19 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
         [DataMember]
         public string download_url { get; set; }
 
-
+        private byte[] document_data;
         /// <summary>
         /// Tries to download the document; if it fails, it returns null
         /// </summary>
-        public void DownloadDocument()
+        public byte[] DownloadDocument()
         {                   
-            if (jsonDownloaderAndConverter == null)
+            if (document_data == null)
             {
-                jsonDownloaderAndConverter = new JsonDownloaderAndConverter();
-                jsonDownloaderAndConverter.DownloadDataCompleted += jsonDownloaderAndConverter_DownloadDataCompleted;
-                jsonDownloaderAndConverter.DownloadProgressChanged += jsonDownloaderAndConverter_DownloadProgressChanged;
-                jsonDownloaderAndConverter.GetData(download_url);
-            }          
-        }
-
-        /// <summary>
-        /// Called when download progress changed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        void jsonDownloaderAndConverter_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs args)
-        {
-            if (DownloadProgressChanged != null)
-            {
-                DownloadProgressChanged.Invoke(this, args);
+                document_data = JsonDownloaderAndConverter.GetData(download_url);
             }
-        }
-
-        /// <summary>
-        /// Called, when download is finished
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void jsonDownloaderAndConverter_DownloadDataCompleted(object sender, System.Net.DownloadDataCompletedEventArgs args)
-        {
-            try
-            {
-                if (DownloadDataCompleted != null)
-                {
-                    DownloadDataCompleted.Invoke(this, args);
-                }
-                jsonDownloaderAndConverter.DownloadDataCompleted -= jsonDownloaderAndConverter_DownloadDataCompleted;
-                jsonDownloaderAndConverter.DownloadProgressChanged -= jsonDownloaderAndConverter_DownloadProgressChanged;
-                jsonDownloaderAndConverter.Dispose();
-                jsonDownloaderAndConverter = null;
-            }
-            catch (Exception ex)
-            {
-                //wtf?
-            }
+            return document_data;
         }
     }
-
 
     [DataContract]
     public class Documents

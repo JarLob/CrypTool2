@@ -24,6 +24,7 @@ using System.IO;
 using System.Windows.Threading;
 using System.Threading;
 using System;
+using System.Text;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
@@ -35,8 +36,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         #region Private Variables
         private DECODEDownloaderSettings settings;
         private DECODEDownloaderPresentation presentation;
-        private JsonDownloaderAndConverter jsonDownloaderAndConverter;
         private bool running = false;
+
+
         #endregion
 
         /// <summary>
@@ -46,10 +48,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             settings = new DECODEDownloaderSettings();
             presentation = new DECODEDownloaderPresentation(this);
-            jsonDownloaderAndConverter = new JsonDownloaderAndConverter();
-            jsonDownloaderAndConverter.DownloadDataCompleted += jsonDownloaderAndConverter_DownloadDataCompleted;
-            jsonDownloaderAndConverter.DownloadStringCompleted += jsonDownloaderAndConverter_DownloadStringCompleted;
-            jsonDownloaderAndConverter.DownloadProgressChanged += jsonDownloaderAndConverter_DownloadProgressChanged;
         }
 
         #region Data Properties
@@ -107,7 +105,40 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             ProgressChanged(0, 1);
             try
             {
-               jsonDownloaderAndConverter.GetRecordsList(JsonDownloaderAndConverter.DOWNLOAD_URL);
+               var recordsString = JsonDownloaderAndConverter.GetRecords();
+               Records records;
+               DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Records));
+               using (MemoryStream stream = new MemoryStream(UTF8Encoding.UTF8.GetBytes(recordsString)))
+               {
+                   stream.Position = 0;
+                   try
+                   {
+                       records = (Records)serializer.ReadObject(stream);
+                   }
+                   catch (Exception ex)
+                   {
+                       throw new Exception(String.Format("Could not deserialize json data received from DECODE database: {0}", ex.Message), ex);
+                   }
+               }
+               presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+               {
+                   try
+                   {
+                       presentation.RecordsList.Clear();
+                       if (records != null)
+                       {
+                           foreach (RecordsRecord record in records.records)
+                           {
+                               presentation.RecordsList.Add(record);
+                           }
+                       }
+                   }
+                   catch (Exception ex)
+                   {
+                       GuiLogMessage(String.Format("Exception while adding received data to ListView: {0}", ex.Message), NotificationLevel.Error);
+                       return;
+                   }
+               }, null);
             }
             catch (Exception ex)
             {
@@ -116,117 +147,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             }                   
             running = true;
         }
-       
-        /// <summary>
-        /// Download progess changed; we update the plugin progress accordingly
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        
-        private void jsonDownloaderAndConverter_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs args)
-        {
-            ProgressChanged(args.BytesReceived, args.TotalBytesToReceive);
-        }        
-
-        /// <summary>
-        /// Download record list finished
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void jsonDownloaderAndConverter_DownloadDataCompleted(object sender, DownloadDataCompletedEventArgs args)
-        {
-            if (args.UserState.Equals(JsonDownloaderAndConverter.GETRECORDLIST))
-            {
-                HandleDownloadRecordsFinished(args);
-                ProgressChanged(1, 1);
-            }            
-        }
-
-        /// <summary>
-        /// Download record finished
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void jsonDownloaderAndConverter_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs args)
-        {
-            if (args.UserState.Equals(JsonDownloaderAndConverter.GETRECORDSTRING))
-            {
-                HandleDownloadRecordFinished(args);
-                ProgressChanged(1, 1);
-            }
-            
-        }      
-
-        /// <summary>
-        /// We received a records list; now we show it to the user
-        /// </summary>
-        /// <param name="args"></param>
-        private void HandleDownloadRecordsFinished(DownloadDataCompletedEventArgs args)
-        {
-            if (args.Error != null)
-            {
-                GuiLogMessage(String.Format("Error during downloading of records list: {0}", args.Error.Message), NotificationLevel.Error);
-                return;
-            }
-            try
-            {
-                Records records;
-                //end of dirty hack
-                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Records));
-                using (MemoryStream stream = new MemoryStream(args.Result))
-                {
-                    stream.Position = 0;
-                    try
-                    {
-                        records = (Records)serializer.ReadObject(stream);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception(String.Format("Could not deserialize json data received from DECODE database: {0}", ex.Message), ex);
-                    }
-                }
-                presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    try
-                    {
-                        presentation.RecordsList.Clear();
-                        if (records != null)
-                        {
-                            foreach (RecordsRecord record in records.records)
-                            {
-                                presentation.RecordsList.Add(record);
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        GuiLogMessage(String.Format("Exception while adding received data to ListView: {0}", ex.Message), NotificationLevel.Error);
-                        return;
-                    }
-                }, null);
-            }
-            catch (Exception ex)
-            {
-                GuiLogMessage(String.Format("Exception while adding received data to ListView: {0}", ex.Message), NotificationLevel.Error);
-            }     
-        }
-
-        /// <summary>
-        /// We downloaded a record json string; now we output it
-        /// </summary>
-        /// <param name="args"></param>
-        private void HandleDownloadRecordFinished(DownloadStringCompletedEventArgs args)
-        {
-            if (args.Error == null)
-            {
-                DECODERecord = args.Result;
-                OnPropertyChanged("DECODERecord");
-            }
-            else
-            {
-                GuiLogMessage(String.Format("Exception while downloading of record: {0}", args.Error.Message), NotificationLevel.Error);
-            }
-        }
 
         public void Download(RecordsRecord record)
         {
@@ -234,8 +154,17 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             {
                 return;
             }
+            try
+            {
+                DECODERecord = JsonDownloaderAndConverter.GetRecord(record.record_id);
+                OnPropertyChanged("DECODERecord");
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Could not download record from DECODE database: {0}", ex.Message), NotificationLevel.Error);
+            }
             ProgressChanged(0, 1);
-            jsonDownloaderAndConverter.GetRecordString(record);
+            
         }
 
         /// <summary>
@@ -266,7 +195,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// </summary>
         public void Dispose()
         {
-            jsonDownloaderAndConverter.Dispose();
+            
         }
 
         #endregion
@@ -280,6 +209,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         public event PluginProgressChangedEventHandler OnPluginProgressChanged;
 
         public event PropertyChangedEventHandler PropertyChanged;
+        
 
         private void GuiLogMessage(string message, NotificationLevel logLevel)
         {

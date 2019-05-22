@@ -1,6 +1,5 @@
-﻿using Cryptool.PluginBase.Miscellaneous;
-/*
-   Copyright 2018 Nils Kopal <Nils.Kopal<at>CrypTool.org
+﻿/*
+   Copyright 2019 Nils Kopal <Nils.Kopal<at>CrypTool.org
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -18,154 +17,147 @@ using Cryptool.Plugins.DECODEDatabaseTools.DataObjects;
 using System;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Runtime.Serialization.Json;
 using System.Text;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
-    public class JsonDownloaderAndConverter : IDisposable
+    public class JsonDownloaderAndConverter
     {
-        public const string DOWNLOAD_URL = "https://stp.lingfil.uu.se/decode/database/records";
+        private const string LoginUrl = "https://cl.lingfil.uu.se/decode/database/api/login";
+        private const string DownloadRecordsUrl = "https://cl.lingfil.uu.se/decode/database/api/records";
+        private const string DownloadRecordUrl = "https://cl.lingfil.uu.se/decode/database/api/records/{0}";
 
-        public const string GETRECORDLIST = "GetRecordsList";
-        public const string GETRECORDSTRING = "GetRecordString";
-        public const string GETDATA = "GetData";
-        public const string USER_AGENT = "CrypTool 2";
-
-        public event DownloadDataCompletedEventHandler DownloadDataCompleted;
-        public event DownloadStringCompletedEventHandler DownloadStringCompleted;
-        public event DownloadProgressChangedEventHandler DownloadProgressChanged;
-
-        private MyWebClient WebClient = new MyWebClient();
-        private bool isDownloading = false;
+        private const string UserAgent = "CrypTool 2/DECODE JsonDownloaderAndConverter";
+        private static CookieContainer _cookieContainer = new CookieContainer();
 
         /// <summary>
-        /// Inherited WebClient to change timeout
+        /// Login into DECODE database using username and password,
+        /// also creates a new static CookieContainer, which it uses for storing and using the cookie
         /// </summary>
-        private class MyWebClient : WebClient
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public static bool Login(string username, string password)
         {
-            private const int TIMEOUT = 5000;
-
-            protected override WebRequest GetWebRequest(Uri uri)
+            try
             {
-                WebRequest w = base.GetWebRequest(uri);
-                w.Timeout = TIMEOUT;
-                return w;
+                _cookieContainer = new CookieContainer();
+                var handler = new HttpClientHandler { CookieContainer = _cookieContainer };
+                using (var client = new HttpClient(handler))
+                {
+                    var usernamePasswordJson = new StringContent(String.Format("{{\"username\": \"{0}\", \"password\": \"{1}\"}}", username, password));
+                    client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var response = client.PostAsync(LoginUrl, usernamePasswordJson).Result;
+                    switch (response.StatusCode)
+                    {
+                        case HttpStatusCode.OK:
+                            return true;
+                        case HttpStatusCode.Forbidden:
+                            return false;
+                        default:
+                            throw new Exception(String.Format("Error: Status code was {0}", response.StatusCode));
+                    }
+                }
             }
-        }
-
-        /// <summary>
-        /// Creates a new JsonDownloaderAndConverter
-        /// </summary>
-        public JsonDownloaderAndConverter()
-        {
-            WebClient.DownloadDataCompleted += WebClient_DownloadDataCompleted;
-            WebClient.DownloadStringCompleted += WebClient_DownloadStringCompleted;
-            WebClient.DownloadProgressChanged += WebClient_DownloadProgressChanged;
-        }
-
-        /// <summary>
-        /// Called when the download progress of the webclient changed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void WebClient_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            if (DownloadProgressChanged != null)
+            catch (Exception ex)
             {
-                DownloadProgressChanged.Invoke(this, e);
-            }
-        }
-
-        /// <summary>
-        /// Called when the download of the webclient is completed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void WebClient_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
-        {
-            lock (this)
-            {              
-                isDownloading = false;
-            }
-            if (DownloadStringCompleted != null)
-            {
-                DownloadStringCompleted.Invoke(this, e);
-            }
-        }
-
-        /// <summary>
-        /// Called when the download of the webclient is completed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void WebClient_DownloadDataCompleted(object sender, DownloadDataCompletedEventArgs e)
-        {
-            lock (this)
-            {
-                isDownloading = false;
-            }
-            if (DownloadDataCompleted != null)
-            {
-                DownloadDataCompleted.Invoke(this, e);
+                throw new Exception(String.Format("Error while loggin into DECODE database: {0}", ex.Message), ex);
             }
         }
 
         /// <summary>
         /// Get the list of records of the DECODE database using the json protocol
         /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        public void GetRecordsList(string url)
+        public static string GetRecords()
         {
-            lock (this)
-            {
-                if (isDownloading)
-                {
-                    return;
-                }
-                isDownloading = true;
-            }
             try
             {
-                WebClient.Headers.Add("Accept", "application/json");
-                WebClient.Headers.Add("Accept", "text/plain");
-                WebClient.Headers.Add("user-agent", USER_AGENT + ";" + AssemblyHelper.InstallationType.ToString() + ";" + AssemblyHelper.Version);
-                WebClient.DownloadDataAsync(new Uri(url), GETRECORDLIST);
+                if (IsLoggedIn() == false)
+                {
+                    throw new Exception("Not logged in!");
+                }
+
+                var handler = new HttpClientHandler { CookieContainer = _cookieContainer };
+                using (var client = new HttpClient(handler))
+                {
+                    client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    var response = client.GetAsync(DownloadRecordsUrl).Result;
+
+                    switch (response.StatusCode)
+                    {
+                        case HttpStatusCode.OK:
+                            return response.Content.ReadAsStringAsync().Result;
+                        default:
+                            throw new Exception(String.Format("Error: Status code was {0}", response.StatusCode));
+                    }
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception(String.Format("Error while downloading records data from DECODE database: {0}", ex.Message), ex);
-            }                
-            
+                throw new Exception(String.Format("Error while downloading records from DECODE database: {0}", ex.Message), ex);
+            }
         }
 
         /// <summary>
-        /// Get a single record as string from the DECODE database using the json protocol
+        /// Get a single record as string from the DECODE database using the json protocol and http
         /// </summary>
-        /// <param name="record"></param>
-        /// <returns></returns>
-        public void GetRecordString(RecordsRecord record)
+        public static string GetRecord(int id)
         {
-            lock (this)
-            {
-                if (isDownloading)
-                {
-                    return;
-                }
-                isDownloading = true;
-            }
             try
             {
-                WebClient.Headers.Add("Accept", "application/json");
-                WebClient.Headers.Add("Accept", "text/plain");
-                WebClient.Headers.Add("user-agent", USER_AGENT + ";" + AssemblyHelper.InstallationType.ToString() + ";" + AssemblyHelper.Version);
-                string url = DOWNLOAD_URL + "/" + record.record_id;
-                WebClient.DownloadStringAsync(new Uri(url), "GetRecordString");
+                if (IsLoggedIn() == false)
+                {
+                    throw new Exception("Not logged in!");
+                }
+
+                var handler = new HttpClientHandler { CookieContainer = _cookieContainer };
+                using (var client = new HttpClient(handler))
+                {
+                    client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    var response = client.GetAsync(String.Format(DownloadRecordUrl, id)).Result;
+
+                    switch (response.StatusCode)
+                    {
+                        case HttpStatusCode.OK:
+                            return response.Content.ReadAsStringAsync().Result;
+                        default:
+                            throw new Exception(String.Format("Error: Status code was {0}", response.StatusCode));
+                    }
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception(String.Format("Error while downloading record data from DECODE database: {0}", ex.Message), ex);
+                throw new Exception(String.Format("Error while downloading record from DECODE database: {0}", ex.Message), ex);
+            }
+        }
+
+        /// <summary>
+        /// Get a records object from a string containing Record json data
+        /// </summary>
+        /// <param name="data"></param>
+        public static Records ConvertStringToRecords(string data)
+        {
+            try
+            {
+                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Records));
+                using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(data)))
+                {
+                    stream.Position = 0;
+                    Records records = (Records)serializer.ReadObject(stream);
+                    return records;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("Could not deserialize json data: {0}", ex.Message), ex);
             }
         }
 
@@ -173,8 +165,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// Get a record object from a string containing Record json data
         /// </summary>
         /// <param name="data"></param>
-        /// <returns></returns>
-        public Record GetRecordFromString(string data)
+        public static Record ConvertStringToRecord(string data)
         {
             try
             {
@@ -195,21 +186,30 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// <summary>
         /// Downloads data from the specified URL and returns it as byte array
         /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        public void GetData(string url)
+        public static byte[] GetData(string url)
         {
-            lock (this)
-            {
-                if (isDownloading)
-                {
-                    return;
-                }
-                isDownloading = true;
-            }
             try
             {
-                WebClient.DownloadDataAsync(new Uri(url), GETDATA);
+                if (IsLoggedIn() == false)
+                {
+                    throw new Exception("Not logged in!");
+                }
+                var handler = new HttpClientHandler { CookieContainer = _cookieContainer };
+                using (var client = new HttpClient(handler))
+                {
+                    client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    var response = client.GetAsync(url).Result;
+
+                    switch (response.StatusCode)
+                    {
+                        case HttpStatusCode.OK:
+                            return response.Content.ReadAsByteArrayAsync().Result;
+                        default:
+                            throw new Exception(String.Format("Error: Status code was {0}", response.StatusCode));
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -218,11 +218,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         }
 
         /// <summary>
-        /// Disposes the internal webclient
+        /// Checks, if there is a valid cookie
         /// </summary>
-        public void Dispose()
+        /// <returns></returns>
+        public static bool IsLoggedIn()
         {
-            WebClient.Dispose();
+            return _cookieContainer.Count == 1;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -178,6 +178,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DECODE_message {
+            get {
+                object obj = ResourceManager.GetObject("DECODE_message", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die DECODE Downloader ähnelt.
         /// </summary>
         internal static string DecodeDownloaderPluginCaption {
@@ -210,6 +220,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         internal static string DecodeRecordTooltip {
             get {
                 return ResourceManager.GetString("DecodeRecordTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die DECODE ähnelt.
+        /// </summary>
+        internal static string DECODESettingsTab {
+            get {
+                return ResourceManager.GetString("DECODESettingsTab", resourceCulture);
             }
         }
         
@@ -273,6 +292,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         internal static string Id {
             get {
                 return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The creator of this record has chosen to not make this image available for download. ähnelt.
+        /// </summary>
+        internal static string image_not_available_for_download {
+            get {
+                return ResourceManager.GetString("image_not_available_for_download", resourceCulture);
             }
         }
         
@@ -403,6 +431,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Password: ähnelt.
+        /// </summary>
+        internal static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext language: ähnelt.
         /// </summary>
         internal static string PlaintextLanguage {
@@ -466,6 +503,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Test login data ähnelt.
+        /// </summary>
+        internal static string TestLoginData {
+            get {
+                return ResourceManager.GetString("TestLoginData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Title ähnelt.
         /// </summary>
         internal static string TitleHeader {
@@ -507,6 +553,24 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         internal static string UploadDateHeader {
             get {
                 return ResourceManager.GetString("UploadDateHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Use login data: ähnelt.
+        /// </summary>
+        internal static string UseLoginData {
+            get {
+                return ResourceManager.GetString("UseLoginData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Username: ähnelt.
+        /// </summary>
+        internal static string Username {
+            get {
+                return ResourceManager.GetString("Username", resourceCulture);
             }
         }
     }

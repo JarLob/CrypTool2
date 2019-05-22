@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2018 Nils Kopal <Nils.Kopal<at>CrypTool.org
+   Copyright 2019 Nils Kopal <Nils.Kopal<at>CrypTool.org
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 {
     public class DECODEDownloaderSettings : ISettings
     {
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string propertyName)
@@ -33,6 +32,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         public void Initialize()
         {
 
-        }
+        }        
     }
 }
