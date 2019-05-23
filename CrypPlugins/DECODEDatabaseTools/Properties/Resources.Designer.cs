@@ -160,7 +160,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Login credentials are correct! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Login credentials are correct. ähnelt.
         /// </summary>
         internal static string CredentialsOK {
             get {
@@ -359,7 +359,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Could not log into DECODE database. Please check your login credentials. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not log into the DECODE database. Please check your login credentials. ähnelt.
         /// </summary>
         internal static string LoginFailed {
             get {
@@ -503,7 +503,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die If you want to access the DECODE database in CrypTool 2, you have to go https://cl.lingfil.uu.se/decode/database and create a user account. Then, enter your credentials below: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die If you want to access the DECODE database in CrypTool 2, you have to go to https://cl.lingfil.uu.se/decode/database and create a user account. Then, enter your credentials here: ähnelt.
         /// </summary>
         internal static string SettingsInfoText {
             get {

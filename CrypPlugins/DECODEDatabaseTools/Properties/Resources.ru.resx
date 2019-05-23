@@ -292,7 +292,7 @@
     <value>Не удалось войти в базу данных DECODE. Пожалуйста, проверьте ваши учетные данные.</value>
   </data>
   <data name="CredentialsOK" xml:space="preserve">
-    <value>Данные для входа верны!</value>
+    <value>Данные для входа верны.</value>
   </data>
   <data name="CredentialsWrong" xml:space="preserve">
     <value>Учетные данные неверны!</value>
