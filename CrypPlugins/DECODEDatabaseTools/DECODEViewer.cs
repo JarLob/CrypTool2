@@ -17,7 +17,6 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Net;
 using Cryptool.Plugins.DECODEDatabaseTools.DataObjects;
 using System.IO;
 using System.Windows.Threading;
@@ -29,7 +28,6 @@ using System.Drawing.Imaging;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
@@ -132,6 +130,26 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// </summary>
         public void Execute()
         {
+            if (!JsonDownloaderAndConverter.IsLoggedIn())
+            {
+                var username = DECODESettingsTab.GetUsername();
+                var password = DECODESettingsTab.GetPassword();
+
+                if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+                {
+                    username = "anonymous";
+                    password = "anonymous";
+                }
+
+                var loginSuccess = JsonDownloaderAndConverter.Login(username, password);
+                if (!loginSuccess)
+                {
+                    GuiLogMessage(Properties.Resources.LoginFailed, NotificationLevel.Error);
+                    _running = false;
+                    return;
+                }
+            }
+
             _running = true;
             ProgressChanged(0, 1);
             Record record;

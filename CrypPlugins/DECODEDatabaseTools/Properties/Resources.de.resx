@@ -160,7 +160,7 @@
     <value>DECODE-Downloader</value>
   </data>
   <data name="DecodeDownloaderPluginTooltip" xml:space="preserve">
-    <value>Component to download data from the DECODE database</value>
+    <value>Komponente zum Herunterladen von Daten aus der DECODE-Datenbank</value>
   </data>
   <data name="DecodeRecordCaption" xml:space="preserve">
     <value>Datensatz</value>
@@ -193,7 +193,7 @@
     <value>Bilder:</value>
   </data>
   <data name="image_not_available_for_download" xml:space="preserve">
-    <value>Der Ersteller dieses Datensatzes hat sich entschieden, dieses Bild nicht zum Download zur Verfügung zu stellen.</value>
+    <value>Der Ersteller dieses Datensatzes entschied, dieses Bild nicht zum Download zur Verfügung zu stellen.</value>
   </data>
   <data name="InkType" xml:space="preserve">
     <value>Art der Tinte:</value>
@@ -280,9 +280,21 @@
     <value>Benutzername:</value>
   </data>
   <data name="TestLoginData" xml:space="preserve">
-    <value>Login-Daten testen:</value>
+    <value>Login-Daten testen</value>
   </data>
   <data name="UseLoginData" xml:space="preserve">
     <value>Anmeldedaten verwenden:</value>
+  </data>
+  <data name="SettingsInfoText" xml:space="preserve">
+    <value>Wenn Sie in CrypTool 2 auf die DECODE-Datenbank zugreifen möchten, müssen Sie unter https://cl.lingfil.uu.se/decode/database ein Benutzerkonto erstellen. Geben Sie anschließend Ihre Anmeldedaten hier ein:</value>
+  </data>
+  <data name="LoginFailed" xml:space="preserve">
+    <value>Anmeldung bei DECODE-Datenbank nicht möglich. Bitte überprüfen Sie Ihre Zugangsdaten.</value>
+  </data>
+  <data name="CredentialsOK" xml:space="preserve">
+    <value>Anmeldedaten sind korrekt!</value>
+  </data>
+  <data name="CredentialsWrong" xml:space="preserve">
+    <value>Anmeldedaten sind falsch!</value>
   </data>
 </root>

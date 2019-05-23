@@ -225,5 +225,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             return _cookieContainer.Count == 1;
         }
+
+        /// <summary>
+        /// Removes the cookie to log out
+        /// </summary>
+        public static void LogOut()
+        {
+            _cookieContainer = new CookieContainer();
+        }
     }
 }

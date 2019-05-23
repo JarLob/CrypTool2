@@ -1,7 +1,5 @@
-﻿using System;
-using Cryptool.PluginBase.Miscellaneous;
-/*
-   Copyright 2018 Nils Kopal <Nils.Kopal<at>CrypTool.org
+﻿/*
+   Copyright 2019 Nils Kopal <Nils.Kopal<at>CrypTool.org
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,11 +13,10 @@ using Cryptool.PluginBase.Miscellaneous;
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -206,6 +203,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
         public string download_url { get; set; }
 
         private byte[] document_data;
+
         /// <summary>
         /// Tries to download the document; if it fails, it returns null
         /// </summary>

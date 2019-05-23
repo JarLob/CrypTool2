@@ -6,26 +6,29 @@
              mc:Ignorable="d" xmlns:Properties="clr-namespace:Cryptool.PluginBase.Properties;assembly=CrypPluginBase" 
              d:DesignHeight="300" d:DesignWidth="500">
     <Grid>
-        <StackPanel Name="stackPanel1" VerticalAlignment="Top" Margin="20">
+        <StackPanel VerticalAlignment="Top" Margin="20">
+            <Image Source="logo.png" Width="250" HorizontalAlignment="Left"/>
             <Grid Width="500" HorizontalAlignment="Left">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200" />
                     <ColumnDefinition Width="200" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
                     <RowDefinition Height="40" />
                     <RowDefinition Height="40" />
                     <RowDefinition Height="40" />
                 </Grid.RowDefinitions>
-                <Label Grid.Column="0" Grid.Row="0" Content="{Loc Username}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" Height="30"  />
-                <TextBox Name="UsernameTextbox"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch"  TextChanged="UsernameTextbox_OnTextChanged" Margin="10,10,10,10"/>
+                <TextBlock TextWrapping="WrapWithOverflow" Grid.Row="0" Grid.ColumnSpan="2"  HorizontalAlignment="Left" Text="{Loc SettingsInfoText}"/>
 
-                <Label Grid.Column="0" Grid.Row="1" Content="{Loc Password}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" Height="30"  />
-                <PasswordBox Name="PasswordTextbox"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" PasswordChanged="PasswordTextbox_OnPasswordChanged" Margin="10,10,10,10"/>
+                <Label Grid.Column="0" Grid.Row="1" Content="{Loc Username}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" Height="30"  />
+                <TextBox Name="UsernameTextbox"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch"  TextChanged="UsernameTextbox_OnTextChanged" Margin="10,10,10,10"/>
 
-                <Label Grid.Column="0" Grid.Row="2" Content="{Loc TestLoginData}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" Height="30"  />
-                <Button Name="TestLoginDataButton" Grid.Column="1" Grid.Row="2" Content="{Loc TestLoginData}" Click="TestLoginDataButton_OnClick" />
-                
+                <Label Grid.Column="0" Grid.Row="2" Content="{Loc Password}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" Height="30"  />
+                <PasswordBox Name="PasswordTextbox"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" PasswordChanged="PasswordTextbox_OnPasswordChanged" Margin="10,10,10,10"/>
+
+                <Label Grid.Column="0" Grid.Row="3" Content="{Loc TestLoginData}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" Height="30"  />
+                <Button Name="TestLoginDataButton" Grid.Column="1" Grid.Row="3" Content="{Loc TestLoginData}" Click="TestLoginDataButton_OnClick" />
             </Grid>
         </StackPanel>
     </Grid>

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2018 Nils Kopal <Nils.Kopal<at>CrypTool.org
+   Copyright 2019 Nils Kopal <Nils.Kopal<at>CrypTool.org
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Net;
 using System.Runtime.Serialization.Json;
 using Cryptool.Plugins.DECODEDatabaseTools.DataObjects;
 using System.IO;
@@ -103,6 +102,26 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         public void Execute()
         {
             ProgressChanged(0, 1);
+
+            if (!JsonDownloaderAndConverter.IsLoggedIn())
+            {
+                var username = DECODESettingsTab.GetUsername();
+                var password = DECODESettingsTab.GetPassword();
+
+                if(string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+                {
+                    username = "anonymous";
+                    password = "anonymous";
+                }
+
+                var loginSuccess = JsonDownloaderAndConverter.Login(username, password);
+                if (!loginSuccess)
+                {
+                    GuiLogMessage(Properties.Resources.LoginFailed,NotificationLevel.Error);
+                    return;
+                }
+            }
+
             try
             {
                var recordsString = JsonDownloaderAndConverter.GetRecords();

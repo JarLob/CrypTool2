@@ -160,6 +160,24 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Login credentials are correct! ähnelt.
+        /// </summary>
+        internal static string CredentialsOK {
+            get {
+                return ResourceManager.GetString("CredentialsOK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Login credentials are wrong! ähnelt.
+        /// </summary>
+        internal static string CredentialsWrong {
+            get {
+                return ResourceManager.GetString("CredentialsWrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Dating: ähnelt.
         /// </summary>
         internal static string Dating {
@@ -296,7 +314,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The creator of this record has chosen to not make this image available for download. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The creator of this record decided not to make this image available for download. ähnelt.
         /// </summary>
         internal static string image_not_available_for_download {
             get {
@@ -337,6 +355,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         internal static string InlinePlaintext {
             get {
                 return ResourceManager.GetString("InlinePlaintext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not log into DECODE database. Please check your login credentials. ähnelt.
+        /// </summary>
+        internal static string LoginFailed {
+            get {
+                return ResourceManager.GetString("LoginFailed", resourceCulture);
             }
         }
         
@@ -472,6 +499,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         internal static string Sender {
             get {
                 return ResourceManager.GetString("Sender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die If you want to access the DECODE database in CrypTool 2, you have to go https://cl.lingfil.uu.se/decode/database and create a user account. Then, enter your credentials below: ähnelt.
+        /// </summary>
+        internal static string SettingsInfoText {
+            get {
+                return ResourceManager.GetString("SettingsInfoText", resourceCulture);
             }
         }
         

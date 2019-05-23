@@ -280,9 +280,21 @@
     <value>Имя пользователя:</value>
   </data>
   <data name="TestLoginData" xml:space="preserve">
-    <value>Проверьте данные для входа:</value>
+    <value>Проверьте данные для входа</value>
   </data>
   <data name="UseLoginData" xml:space="preserve">
     <value>Используйте данные для входа:</value>
+  </data>
+  <data name="String" xml:space="preserve">
+    <value>Если вы хотите получить доступ к базе данных DECODE в CrypTool 2, вам нужно зайти на https://cl.lingfil.uu.se/decode/database и создать учетную запись пользователя. Затем введите свои учетные данные ниже:</value>
+  </data>
+  <data name="LoginFailed" xml:space="preserve">
+    <value>Не удалось войти в базу данных DECODE. Пожалуйста, проверьте ваши учетные данные.</value>
+  </data>
+  <data name="CredentialsOK" xml:space="preserve">
+    <value>Данные для входа верны!</value>
+  </data>
+  <data name="CredentialsWrong" xml:space="preserve">
+    <value>Учетные данные неверны!</value>
   </data>
 </root>

@@ -200,7 +200,7 @@
     <value>Images:</value>
   </data>
   <data name="image_not_available_for_download" xml:space="preserve">
-    <value>The creator of this record has chosen to not make this image available for download.</value>
+    <value>The creator of this record decided not to make this image available for download.</value>
   </data>
   <data name="InkType" xml:space="preserve">
     <value>Ink Type:</value>
@@ -288,5 +288,17 @@
   </data>
   <data name="UseLoginData" xml:space="preserve">
     <value>Use login data:</value>
+  </data>
+  <data name="SettingsInfoText" xml:space="preserve">
+    <value>If you want to access the DECODE database in CrypTool 2, you have to go https://cl.lingfil.uu.se/decode/database and create a user account. Then, enter your credentials below:</value>
+  </data>
+  <data name="LoginFailed" xml:space="preserve">
+    <value>Could not log into DECODE database. Please check your login credentials.</value>
+  </data>
+  <data name="CredentialsOK" xml:space="preserve">
+    <value>Login credentials are correct!</value>
+  </data>
+  <data name="CredentialsWrong" xml:space="preserve">
+    <value>Login credentials are wrong!</value>
   </data>
 </root>

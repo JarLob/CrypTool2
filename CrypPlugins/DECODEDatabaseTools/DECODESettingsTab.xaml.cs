@@ -60,6 +60,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             Properties.Settings.Default.Username = UsernameTextbox.Text;
             Properties.Settings.Default.Save();
+            JsonDownloaderAndConverter.LogOut();
         }
 
         /// <summary>
@@ -74,6 +75,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             Properties.Settings.Default.PasswordIV = Convert.ToBase64String(iv);
             Properties.Settings.Default.Password = Convert.ToBase64String(ProtectedData.Protect(UTF8Encoding.UTF8.GetBytes(PasswordTextbox.Password), iv, DataProtectionScope.CurrentUser));            
             Properties.Settings.Default.Save();
+            JsonDownloaderAndConverter.LogOut();
         }
 
         /// <summary>
@@ -97,15 +99,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         }
 
         /// <summary>
-        /// Returns, if the DECODE downloader and viewer should use the login
-        /// </summary>
-        /// <returns></returns>
-        internal static bool GetUseLoginData()
-        {
-            return Properties.Settings.Default.UseLoginData;
-        }
-
-        /// <summary>
         /// Method to test login data
         /// </summary>
         /// <param name="sender"></param>
@@ -117,11 +110,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 var loginOk = JsonDownloaderAndConverter.Login(GetUsername(), GetPassword());
                 if (loginOk)
                 {
-                    MessageBox.Show("Login credentials are correct!");
+                    MessageBox.Show(Properties.Resources.CredentialsOK, null, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Login credentials are wrong!");
+                    MessageBox.Show(Properties.Resources.CredentialsWrong,null,MessageBoxButton.OK,MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
