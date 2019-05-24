@@ -37,10 +37,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     public class DECODEViewer : ICrypComponent
     {
         #region Private Variables
-        private DECODEViewerSettings _settings;
-        private DECODEViewerPresentation _presentation;
-        private bool _running = false;
-
+        private readonly DECODEViewerSettings _settings;
+        private readonly DECODEViewerPresentation _presentation;
+        private bool _running;
+        private Thread _workerThread;
         #endregion
 
         /// <summary>
@@ -145,11 +145,38 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 if (!loginSuccess)
                 {
                     GuiLogMessage(Properties.Resources.LoginFailed, NotificationLevel.Error);
-                    _running = false;
                     return;
                 }
             }
 
+            _running = false;
+            if (_workerThread == null)
+            {
+                //create a new thread if we have none
+                _workerThread = new Thread(new ThreadStart(ExecuteThread));
+                _workerThread.IsBackground = true;
+                _workerThread.Start();
+            }
+            else
+            {
+                //wait for current thread to stop
+                while (_workerThread.IsAlive)
+                {
+                    Thread.Sleep(10);
+                }
+                //start a new one
+                _workerThread = new Thread(new ThreadStart(ExecuteThread));
+                _workerThread.IsBackground = true;
+                _workerThread.Start();
+            }
+        }
+
+        /// <summary>
+        /// Thread for executing viewer
+        /// We use this to allow restart during execution
+        /// </summary>
+        private void ExecuteThread()
+        {
             _running = true;
             ProgressChanged(0, 1);
             Record record;
@@ -159,7 +186,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             }
             catch (Exception ex)
             {
-                GuiLogMessage(String.Format("Could not download or convert data from DECODE database: {0}", ex.Message), NotificationLevel.Error);
+                GuiLogMessage(String.Format("Could not convert data from DECODE database: {0}", ex.Message), NotificationLevel.Error);
                 return;
             }
             try
@@ -171,10 +198,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     _presentation.ImageList.Items.Clear();
                 }, null);
                 ProgressChanged(0, 0);
-                for (int i = 0; i < record.images.Count; i++)
+                for (var i = 0; i < record.images.Count; i++)
                 {
                     record.images[i].DownloadThumbnail();
-                    _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
+                    _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         try
                         {
@@ -197,7 +224,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     _presentation.DocumentList.Items.Clear();
-                    foreach (DataObjects.Document document in record.documents.AllDocuments)
+                    foreach (var document in record.documents.AllDocuments)
                     {
                         _presentation.DocumentList.Items.Add(document);
                         if (_running == false)
@@ -221,7 +248,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 GuiLogMessage(String.Format("Error while adding data:{0}", ex.Message), NotificationLevel.Error);
                 return;
             }
-            
             ProgressChanged(1, 1);
         }
 
