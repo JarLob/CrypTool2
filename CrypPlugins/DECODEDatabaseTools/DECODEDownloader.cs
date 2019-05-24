@@ -173,6 +173,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             {
                 return;
             }
+            ProgressChanged(0, 1);
             try
             {
                 DECODERecord = JsonDownloaderAndConverter.GetRecord(record.record_id);
@@ -182,7 +183,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             {
                 GuiLogMessage(String.Format("Could not download record from DECODE database: {0}", ex.Message), NotificationLevel.Error);
             }
-            ProgressChanged(0, 1);
+            ProgressChanged(1, 1);
             
         }
 

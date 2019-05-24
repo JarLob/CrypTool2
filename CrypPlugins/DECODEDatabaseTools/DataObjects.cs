@@ -131,16 +131,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
         private byte[] thumbnail_data;
         private byte[] full_data;
 
-        public byte[] GetFullImage
+        public byte[] GetFullImage(DownloadProgress downloadProgress)
         {
-            get
+            if (full_data == null)
             {
-                if (full_data == null)
-                {
-                    full_data = JsonDownloaderAndConverter.GetData(full_url);
-                }
-                return full_data;
+                full_data = JsonDownloaderAndConverter.GetData(full_url, downloadProgress);
             }
+            return full_data;
         }
 
         /// <summary>
@@ -207,11 +204,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
         /// <summary>
         /// Tries to download the document; if it fails, it returns null
         /// </summary>
-        public byte[] DownloadDocument()
+        public byte[] DownloadDocument(DownloadProgress downloadProgress)
         {                   
             if (document_data == null)
             {
-                document_data = JsonDownloaderAndConverter.GetData(download_url);
+                document_data = JsonDownloaderAndConverter.GetData(download_url, downloadProgress);
             }
             return document_data;
         }

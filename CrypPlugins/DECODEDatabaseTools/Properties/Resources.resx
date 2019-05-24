@@ -301,4 +301,10 @@
   <data name="CredentialsWrong" xml:space="preserve">
     <value>Login credentials are wrong!</value>
   </data>
+  <data name="CredentialsOKTitle" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="CredentialsWrongTitle" xml:space="preserve">
+    <value>Failed</value>
+  </data>
 </root>

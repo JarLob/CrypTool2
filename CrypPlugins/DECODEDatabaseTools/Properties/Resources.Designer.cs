@@ -169,11 +169,29 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Success ähnelt.
+        /// </summary>
+        internal static string CredentialsOKTitle {
+            get {
+                return ResourceManager.GetString("CredentialsOKTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Login credentials are wrong! ähnelt.
         /// </summary>
         internal static string CredentialsWrong {
             get {
                 return ResourceManager.GetString("CredentialsWrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Failed ähnelt.
+        /// </summary>
+        internal static string CredentialsWrongTitle {
+            get {
+                return ResourceManager.GetString("CredentialsWrongTitle", resourceCulture);
             }
         }
         

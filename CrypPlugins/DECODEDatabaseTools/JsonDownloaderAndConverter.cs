@@ -21,6 +21,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
@@ -140,28 +141,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         }
 
         /// <summary>
-        /// Get a records object from a string containing Record json data
-        /// </summary>
-        /// <param name="data"></param>
-        public static Records ConvertStringToRecords(string data)
-        {
-            try
-            {
-                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Records));
-                using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(data)))
-                {
-                    stream.Position = 0;
-                    Records records = (Records)serializer.ReadObject(stream);
-                    return records;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(String.Format("Could not deserialize json data: {0}", ex.Message), ex);
-            }
-        }
-
-        /// <summary>
         /// Get a record object from a string containing Record json data
         /// </summary>
         /// <param name="data"></param>
@@ -186,7 +165,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// <summary>
         /// Downloads data from the specified URL and returns it as byte array
         /// </summary>
-        public static byte[] GetData(string url)
+        public static byte[] GetData(string url, DownloadProgress downloadProgress = null)
         {
             try
             {
@@ -199,23 +178,61 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 {
                     client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                    var response = client.GetAsync(url).Result;
-
-                    switch (response.StatusCode)
-                    {
-                        case HttpStatusCode.OK:
-                            return response.Content.ReadAsByteArrayAsync().Result;
-                        default:
-                            throw new Exception(String.Format("Error: Status code was {0}", response.StatusCode));
-                    }
+                    var fileBytes = DownloadFile(client, url, downloadProgress).Result;
+                    return fileBytes;
                 }
             }
             catch (Exception ex)
             {
                 throw new Exception(String.Format("Error while downloading data from {0}: {1}", url, ex.Message), ex);
             }
+        } 
+
+        /// <summary>
+        /// Downloads the file and also triggers progress
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        private static async Task<byte[]> DownloadFile(HttpClient client, string url, DownloadProgress downloadProgress = null)
+        {
+            using (var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
+            {
+                response.EnsureSuccessStatusCode();
+                var totalBytes = response.Content.Headers.ContentLength;
+                var totalBytesRead = 0;
+                var lastTotalBytesRead = 0;
+                var fileBytes = new byte[(int)totalBytes];
+                using (var contentStream = await response.Content.ReadAsStreamAsync())
+                {
+                    var isMoreToRead = true;
+                    do
+                    {
+                        var bytesRead = await contentStream.ReadAsync(fileBytes, totalBytesRead, fileBytes.Length - totalBytesRead);
+                        if (bytesRead == 0)
+                        {
+                            isMoreToRead = false;
+
+                            continue;
+                        }
+                        totalBytesRead += bytesRead;
+                        if (downloadProgress != null && totalBytesRead > lastTotalBytesRead + 1024)
+                        {
+                            lastTotalBytesRead = totalBytesRead;
+                            downloadProgress.FireEvent(new DownloadProgressEventArgs((long)totalBytes, totalBytesRead));
+                        }
+                    }while (isMoreToRead);
+
+                    if (downloadProgress != null)
+                    {
+                        downloadProgress.FireEvent(new DownloadProgressEventArgs((long)totalBytes, (long)totalBytes));
+                    }
+
+                }
+                return fileBytes;
+            }
         }
+
 
         /// <summary>
         /// Checks, if there is a valid cookie
@@ -232,6 +249,35 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         public static void LogOut()
         {
             _cookieContainer = new CookieContainer();
+        }
+    }
+
+    /// <summary>
+    /// "Callback" for download progress
+    /// </summary>
+    public class DownloadProgress
+    {
+        public event EventHandler<DownloadProgressEventArgs> NewDownloadProgress;
+        public void FireEvent(DownloadProgressEventArgs args)
+        {
+            if(NewDownloadProgress != null)
+            {
+                NewDownloadProgress.Invoke(this, args);
+            }
+        }
+    }
+
+    /// <summary>
+    /// EventArgs for download progress callback
+    /// </summary>
+    public class DownloadProgressEventArgs : EventArgs
+    {
+        public long TotalBytes { get; set; }
+        public long BytesDownloaded { get; set; }
+        public DownloadProgressEventArgs(long totalBytes, long bytesDownloaded)
+        {
+            TotalBytes = totalBytes;
+            BytesDownloaded = bytesDownloaded;
         }
     }
 }

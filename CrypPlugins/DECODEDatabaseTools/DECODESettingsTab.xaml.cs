@@ -110,11 +110,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 var loginOk = JsonDownloaderAndConverter.Login(GetUsername(), GetPassword());
                 if (loginOk)
                 {
-                    MessageBox.Show(Properties.Resources.CredentialsOK, null, MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show(Properties.Resources.CredentialsOK, Properties.Resources.CredentialsOKTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    MessageBox.Show(Properties.Resources.CredentialsWrong,null,MessageBoxButton.OK,MessageBoxImage.Error);
+                    MessageBox.Show(Properties.Resources.CredentialsWrong, Properties.Resources.CredentialsWrongTitle, MessageBoxButton.OK,MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)

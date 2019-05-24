@@ -297,4 +297,10 @@
   <data name="CredentialsWrong" xml:space="preserve">
     <value>Anmeldedaten sind falsch!</value>
   </data>
+  <data name="CredentialsOKTitle" xml:space="preserve">
+    <value>Erfolg</value>
+  </data>
+  <data name="CredentialsWrongTitle" xml:space="preserve">
+    <value>Fehlgeschlagen</value>
+  </data>
 </root>

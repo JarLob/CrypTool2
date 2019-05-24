@@ -41,6 +41,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         private readonly DECODEViewerPresentation _presentation;
         private bool _running;
         private Thread _workerThread;
+        private readonly DownloadProgress _downloadProgress = new DownloadProgress();
+
         #endregion
 
         /// <summary>
@@ -50,11 +52,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             _settings = new DECODEViewerSettings();
             _presentation = new DECODEViewerPresentation(this);
+            _downloadProgress.NewDownloadProgress += _downloadProgress_NewDownloadProgress;
         }
 
         #region Data Properties
 
-        
+
         /// <summary>
         /// Input of a json record of the DECODE database
         /// </summary>
@@ -195,6 +198,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 //add all images to the ListView of images
                 _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
+                    _presentation.IsEnabled = false;
                     _presentation.ImageList.Items.Clear();
                 }, null);
                 ProgressChanged(0, 0);
@@ -241,6 +245,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     _presentation.HasDeciphermentCheckbox.IsChecked = record.documents.deciphered_text.Count > 0;
                     //translation
                     _presentation.HasTranslationCheckbox.IsChecked = record.documents.translation.Count > 0;
+
+                    _presentation.IsEnabled = true;
                 }, null);
             }
             catch (Exception ex)
@@ -325,7 +331,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 byte[] imageBytes = null;
                 try
                 {
-                    imageBytes = image.GetFullImage;
+                    imageBytes = image.GetFullImage(_downloadProgress);
                 }
                 catch (Exception ex)
                 {
@@ -347,6 +353,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             try
             {
+                _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    _presentation.IsEnabled = false;
+                }, null);
                 string text = Encoding.UTF8.GetString(imageBytes);
                 //this is a hacky check... if the database returns text instead of an image
                 //the user is not allowed to download the image
@@ -380,6 +390,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             {
                 GuiLogMessage(String.Format("Exception occured during creation of image: {0}", ex.Message), NotificationLevel.Error);
             }
+            finally
+            {
+                _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    _presentation.IsEnabled = true;
+                }, null);
+            }
         }
 
         /// <summary>
@@ -395,17 +412,44 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             Task.Run(() => DoDownloadDocument(document));
         }
 
+        /// <summary>
+        /// Do download of a document
+        /// </summary>
+        /// <param name="document"></param>
         private void DoDownloadDocument(Document document)
         {
             try
             {
-                OutputDocument = document.DownloadDocument();
+                _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    _presentation.IsEnabled = false;
+                }, null);
+
+                OutputDocument = document.DownloadDocument(_downloadProgress);
                 OnPropertyChanged("OutputDocument");
             }
             catch (Exception ex)
             {
                 GuiLogMessage(String.Format("Exception during downloading of document: {0}", ex.Message), NotificationLevel.Error);
             }
+            finally
+            {
+                _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    _presentation.IsEnabled = true;
+                }, null);
+            }
         }
+
+        /// <summary>
+        /// Fired, when download progress changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="downloadProgressEventArgs"></param>
+        private void _downloadProgress_NewDownloadProgress(object sender, DownloadProgressEventArgs downloadProgressEventArgs)
+        {
+            ProgressChanged(downloadProgressEventArgs.BytesDownloaded, downloadProgressEventArgs.TotalBytes);
+        }
+
     }
 }
