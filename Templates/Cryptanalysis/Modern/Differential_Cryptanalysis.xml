@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+  <title lang="en">Differential Cryptanalysis</title>
+  <title lang="de">Differenzielle Kryptoanalyse</title>
+  
+  <summary lang="en"></summary>
+  <summary lang="de">Differentielle Kryptoanalyse Tutorial für verschiedene Chiffren</summary>
+  
+  <description lang="en"></description>
+  <description lang="de">In diesem Template wird die Differenzielle Kryptoanalyse als Tutorial vorgeführt. Es sind verschiedene Chiffren verfügbar. Das Tutorial beginnt bei einer kleinen Toy-Chiffre und präsentiert dabei die Kernidee des Verfahrens. Darauf aufbauend wird der Angriff weiter verfeinert und ausgebaut, sodass im weiteren Verlauf immer größere Chiffren analysiert werden können.</description>
+  
+  <keywords lang="en"></keywords>
+  <keywords lang="de">Differenzielle Kryptoanalyse, Differentielle Kryptoanayse, Kryptoanalyse, symmetrische Blockchiffren, symmentrische Blockalgorithmen, DKA</keywords>
+  
+  <icon file="Differential_Cryptanalysis.png" />
+  <relevantPlugins>
+    <plugin name="ToyCiphers" />
+  </relevantPlugins>
+  <replacements lang="de">
+    
+  </replacements>
+  <replacements lang="en">
+    
+  </replacements>
+</sample>
