@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="ToyCiphers.UI.Cipher3Pres"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ToyCiphers.UI"
+             xmlns:controls="clr-namespace:ToyCiphers.UI.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="1400" d:DesignWidth="400">
+    <Viewbox StretchDirection="Both" Stretch="Uniform">
+        <Grid Name="OuterGrid" Height="1400" Width="400" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Name="CipherGrid" Visibility="Visible">
+                <Label Name="InputBlock" FontFamily="Courier New" FontSize="20" FontWeight="Bold" Content="{Loc Cipher3LblInputBlock}" HorizontalAlignment="Center"/>
+                <!-- Round 1 -->
+                <controls:_16BitKeyRound Grid.Row="0" Grid.Column="0" Margin="50,0,0,0"></controls:_16BitKeyRound>
+                <Label FontFamily="Courier New" FontSize="20" Content="K0" HorizontalAlignment="Right" Margin="0,85,10,0"></Label>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="50,170,0,0"></controls:_4BitSBox>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="130,170,0,0"></controls:_4BitSBox>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="210,170,0,0"></controls:_4BitSBox>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="290,170,0,0"></controls:_4BitSBox>
+                <controls:_16BitPermutation Grid.Row="0" Grid.Column="0" Margin="50,195,0,0"></controls:_16BitPermutation>
+                <!-- /Round 1 -->
+                <!-- Round 2 -->
+                <controls:_16BitKeyRound Grid.Row="0" Grid.Column="0" Margin="50,240,0,0"></controls:_16BitKeyRound>
+                <Label FontFamily="Courier New" FontSize="20" Content="K1" HorizontalAlignment="Right" Margin="0,325,10,0"></Label>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="50,410,0,0"></controls:_4BitSBox>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="130,410,0,0"></controls:_4BitSBox>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="210,410,0,0"></controls:_4BitSBox>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="290,410,0,0"></controls:_4BitSBox>
+                <controls:_16BitPermutation Grid.Row="0" Grid.Column="0" Margin="50,435,0,0"></controls:_16BitPermutation>
+                <!-- /Round 2 -->
+                <!-- Round 3 -->
+                <controls:_16BitKeyRound Grid.Row="0" Grid.Column="0" Margin="50,490,0,0"></controls:_16BitKeyRound>
+                <Label FontFamily="Courier New" FontSize="20" Content="K2" HorizontalAlignment="Right" Margin="0,575,10,0"></Label>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="50,660,0,0"></controls:_4BitSBox>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="130,660,0,0"></controls:_4BitSBox>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="210,660,0,0"></controls:_4BitSBox>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="290,660,0,0"></controls:_4BitSBox>
+                <controls:_16BitPermutation Grid.Row="0" Grid.Column="0" Margin="50,685,0,0"></controls:_16BitPermutation>
+                <!-- /Round 3 -->
+                <!-- Round 4 -->
+                <controls:_16BitKeyRound Grid.Row="0" Grid.Column="0" Margin="50,740,0,0"></controls:_16BitKeyRound>
+                <Label FontFamily="Courier New" FontSize="20" Content="K3" HorizontalAlignment="Right" Margin="0,825,10,0"></Label>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="50,910,0,0"></controls:_4BitSBox>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="130,910,0,0"></controls:_4BitSBox>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="210,910,0,0"></controls:_4BitSBox>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="290,910,0,0"></controls:_4BitSBox>
+                <controls:_16BitPermutation Grid.Row="0" Grid.Column="0" Margin="50,935,0,0"></controls:_16BitPermutation>
+                <!-- /Round 4 -->
+                <!-- Round 5 -->
+                <controls:_16BitKeyRound Grid.Row="0" Grid.Column="0" Margin="50,990,0,0"></controls:_16BitKeyRound>
+                <Label FontFamily="Courier New" FontSize="20" Content="K4" HorizontalAlignment="Right" Margin="0,1075,10,0"></Label>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="50,1160,0,0"></controls:_4BitSBox>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="130,1160,0,0"></controls:_4BitSBox>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="210,1160,0,0"></controls:_4BitSBox>
+                <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="290,1160,0,0"></controls:_4BitSBox>
+                <controls:_16BitKeyRound Grid.Row="0" Grid.Column="0" Margin="50,1175,0,0"></controls:_16BitKeyRound>
+                <Label FontFamily="Courier New" FontSize="20" Content="K5" HorizontalAlignment="Right" Margin="0,1260,10,0"></Label>
+                <!-- /Round 5 -->
+            </Grid>
+            <Grid Name="LabelGrid" Visibility="Hidden">
+                <Label FontFamily="Courier New" FontSize="30" FontWeight="Bold" Content="{Loc Cipher3LblHeading}" HorizontalAlignment="Center"/>
+                <TextBlock FontFamily="Courier New" FontSize="15" Margin="0,60,0,0" Text="{Loc Cipher3LblText}" TextWrapping="Wrap"></TextBlock>
+            </Grid>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,0" Orientation="Vertical">
+                <Label Name="OutputBlock" FontFamily="Courier New" FontSize="20" FontWeight="Bold" Content="{Loc Cipher3LblOutputBlock}" HorizontalAlignment="Center"/>
+                <Button Content="{Loc BtnSwitchView}" HorizontalAlignment="Center" Height="30" Width="120" Click="ToggleViewClicked"></Button>
+            </StackPanel>
+        </Grid>
+    </Viewbox>
+</UserControl>

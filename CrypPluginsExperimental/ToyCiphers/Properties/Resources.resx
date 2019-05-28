@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BtnSwitchView" xml:space="preserve">
+    <value>Switch view</value>
+  </data>
+  <data name="ChoiceOfAlgorithm" xml:space="preserve">
+    <value>Choice of the algorithm</value>
+  </data>
+  <data name="ChoiceOfAlgorithmToolTop" xml:space="preserve">
+    <value>At this point one of the algorithms contained in the list can be selected. This algorithm can be examined by differential cryptanalysis.</value>
+  </data>
+  <data name="Cipher1" xml:space="preserve">
+    <value>16 bit blocksize, 2 subkeys, the key consists of 32 bit</value>
+  </data>
+  <data name="Cipher1LblHeading" xml:space="preserve">
+    <value>Cipher 1</value>
+  </data>
+  <data name="Cipher1LblInputBlock" xml:space="preserve">
+    <value>Inputblock</value>
+  </data>
+  <data name="Cipher1LblOutputBlock" xml:space="preserve">
+    <value>Outpublock</value>
+  </data>
+  <data name="Cipher1LblText" xml:space="preserve">
+    <value>This block cipher works on 16 bit blocks. One encryption round is executed using a total of two round keys. The following steps are performed in the encryption round: Key addition, substitution and key addition. The round keys have a size of 16 bits, the SBoxes each process 4 bits. The key is thus 32 bits in size.</value>
+  </data>
+  <data name="Cipher2" xml:space="preserve">
+    <value>16 bit blocksize, 4 subkeys, the key consists of 64 bit</value>
+  </data>
+  <data name="Cipher2LblHeading" xml:space="preserve">
+    <value>Cipher 2</value>
+  </data>
+  <data name="Cipher2LblInputBlock" xml:space="preserve">
+    <value>Inputblock</value>
+  </data>
+  <data name="Cipher2LblOutputBlock" xml:space="preserve">
+    <value>Outpublock</value>
+  </data>
+  <data name="Cipher2LblText" xml:space="preserve">
+    <value>This block cipher works on 16 bit blocks. Three encryption rounds are performed, whereby a total of four round keys are used. Two round keys are used in the last encryption round. Each round consists of three sub-steps: key addition, substitution and permutation - in the last round the permutation is omitted. The round keys have a size of 16 bits, the SBoxes each process 4 bits. The key is thus 64 bits in size.</value>
+  </data>
+  <data name="Cipher3" xml:space="preserve">
+    <value>16 bit blocksize, 6 subkeys, the key consists of 96 bit</value>
+  </data>
+  <data name="Cipher3LblHeading" xml:space="preserve">
+    <value>Cipher 3</value>
+  </data>
+  <data name="Cipher3LblInputBlock" xml:space="preserve">
+    <value>Inputblock</value>
+  </data>
+  <data name="Cipher3LblOutputBlock" xml:space="preserve">
+    <value>Outputblock</value>
+  </data>
+  <data name="Cipher3LblText" xml:space="preserve">
+    <value>This block cipher works on 16 bit blocks. 5 encryption rounds are performed, whereby a total of six round keys are used. In the last encryption round two round keys are used. Each round consists of three sub-steps: key addition, substitution and permutation - in the last round the permutation unfolds and the last round key is added. The round keys are 16 bits in size, the SBoxes each process 4 bits. The key is therefore 96 bits in size.
+
+</value>
+  </data>
+  <data name="Cipher4" xml:space="preserve">
+    <value>4 bit blocksize, 4 subkeys, the key consists of 16 bit</value>
+  </data>
+  <data name="Cipher4LblHeading" xml:space="preserve">
+    <value>Cipher 4</value>
+  </data>
+  <data name="Cipher4LblInputBlock" xml:space="preserve">
+    <value>Inputblock</value>
+  </data>
+  <data name="Cipher4LblOutputBlock" xml:space="preserve">
+    <value>Outputblock</value>
+  </data>
+  <data name="Cipher4LblText" xml:space="preserve">
+    <value>This block cipher works on 4 bit blocks. Three encryption rounds are performed, whereby a total of four round keys are used. Two round keys are used in the last encryption round. Each round consists of two sub-steps: key addition and substitution. In the last round, the last round key is then added. The round keys have a size of 4 bits and the SBoxes each work on 4 bits.  The key is thus 16 bits in size.</value>
+  </data>
+  <data name="Cipher5" xml:space="preserve">
+    <value>Feal-4</value>
+  </data>
+  <data name="KeyInput" xml:space="preserve">
+    <value>Input for the key</value>
+  </data>
+  <data name="KeyInputTooltip" xml:space="preserve">
+    <value>This input contains the key with which the message is encrypted</value>
+  </data>
+  <data name="PluginCaption" xml:space="preserve">
+    <value>DCA ToyCiphers</value>
+  </data>
+  <data name="PluginTooltip" xml:space="preserve">
+    <value>The ToyCiphers component contains various algorithms for encrypting information. The algorithms are very simple and short to demonstrate certain things.</value>
+  </data>
+  <data name="SingleMessageInput" xml:space="preserve">
+    <value>Input for a message to be encrypted</value>
+  </data>
+  <data name="SingleMessageInputTooltip" xml:space="preserve">
+    <value>The message present at this input will be encrypted and will be outputted</value>
+  </data>
+  <data name="SingleMessageOutput" xml:space="preserve">
+    <value>Output for a single encrypted message</value>
+  </data>
+  <data name="SingleMessageOutputTooltip" xml:space="preserve">
+    <value>An encrypted message is output at this output</value>
+  </data>
+</root>
