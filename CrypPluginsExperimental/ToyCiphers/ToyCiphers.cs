@@ -15,6 +15,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System.ComponentModel;
@@ -23,6 +24,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Threading;
+using Cryptool.PluginBase.IO;
+using ToyCiphers.Ciphers;
+using ToyCiphers.Ciphers.Cipher1;
+using ToyCiphers.Ciphers.Cipher2;
+using ToyCiphers.Ciphers.Cipher3;
+using ToyCiphers.Ciphers.Cipher4;
+using ToyCiphers.Properties;
 using ToyCiphers.UI;
 
 
@@ -36,40 +44,51 @@ namespace Cryptool.Plugins.ToyCiphers
         #region Private Variables
 
         private readonly ToyCiphersSettings settings = new ToyCiphersSettings();
-        private byte[] _singleMessageInput;
-        private byte _singleMessageOutput;
+        private readonly ToyCiphersPres _activePresentation = new ToyCiphersPres();
+        private ICryptoolStream _messageInput;
+        private ICryptoolStream _messageOutput;
+        private IEncryption _currentCipher = null;
         private byte[] _key;
-        private ToyCiphersPres _activePresentation = new ToyCiphersPres();
+        private bool _stop = false;
+        private bool _subkeysSatisfied = false;
 
         #endregion
+
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        public ToyCiphers()
+        {
+            settings.PropertyChanged += new PropertyChangedEventHandler(SettingChangedListener);
+        }
 
         #region Data Properties
 
         /// <summary>
-        /// Input for a single message
+        /// Input for messages
         /// </summary>
-        [PropertyInfo(Direction.InputData, "SingleMessageInput", "SingleMessageInputTooltip")]
-        public byte[] SingleMessageInput
+        [PropertyInfo(Direction.InputData, "MessageInput", "MessageInputTooltip")]
+        public ICryptoolStream MessageInput
         {
-            get { return _singleMessageInput; }
+            get { return _messageInput; }
             set
             {
-                _singleMessageInput = value;
-                OnPropertyChanged("SingleMessageInput");
+                _messageInput = value;
+                OnPropertyChanged("MessageInput");
             }
         }
 
         /// <summary>
-        /// Output for a single message
+        /// Output for encrypted messages
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "SingleMessageOutput", "SingleMessageOutputTooltip")]
-        public byte SingleMessageOutput
+        [PropertyInfo(Direction.OutputData, "MessageOutput", "MessageOutputTooltip")]
+        public ICryptoolStream MessageOutput
         {
-            get { return _singleMessageOutput; }
+            get { return _messageOutput; }
             set
             {
-                _singleMessageOutput = value;
-                OnPropertyChanged("SingleMessageOutput");
+                _messageOutput = value;
+                OnPropertyChanged("MessageOutput");
             }
         }
 
@@ -112,6 +131,7 @@ namespace Cryptool.Plugins.ToyCiphers
         /// </summary>
         public void PreExecution()
         {
+            
         }
 
         /// <summary>
@@ -122,8 +142,77 @@ namespace Cryptool.Plugins.ToyCiphers
             // HOWTO: Use this to show the progress of a plugin algorithm execution in the editor.
             ProgressChanged(0, 1);
 
+            // Check specific algorithm and invoke the selection into the UI class
+            if (settings.CurrentAlgorithm == Algorithms.Cipher1)
+            {
+                //create encryption object for the cipher
+                _currentCipher = new Cipher1();
+                _currentCipher.SetKeys(readSubkeys(Cipher1Configuration.KEYNUM));
+            }
+            else if (settings.CurrentAlgorithm == Algorithms.Cipher2)
+            {
+                //create encryption object for the cipher
+                _currentCipher = new Cipher2();
+                _currentCipher.SetKeys(readSubkeys(Cipher2Configuration.KEYNUM));
+            }
+            else if (settings.CurrentAlgorithm == Algorithms.Cipher3)
+            {
+                //create encryption object for the cipher
+                _currentCipher = new Cipher3();
+                _currentCipher.SetKeys(readSubkeys(Cipher3Configuration.KEYNUM));
+            }
+            else if (settings.CurrentAlgorithm == Algorithms.Cipher4)
+            {
+                //create encryption object for the cipher
+                _currentCipher = new Cipher4();
+                _currentCipher.SetKeys(readSubkeys(Cipher4Configuration.KEYNUM));
+            }
+
+            if (!_subkeysSatisfied)
+            {
+                GuiLogMessage(Resources.KeyError, NotificationLevel.Error);
+                ProgressChanged(1, 1);
+                return;
+            }
+
+            List<int> messages = new List<int>();
+            var cryptedMessageList = new List<int>();
+
+            using (CStreamReader reader = _messageInput.CreateReader())
+            {
+                byte[] inputBlock = new byte[4];
+                int message;
+                int readcount = 0;
+                while ((readcount += reader.Read(inputBlock, readcount, 4 - readcount)) < 4 &&
+                       reader.Position < reader.Length && !_stop)
+                {
+
+                }
+                message = BitConverter.ToInt32(inputBlock, 0);
+                messages.Add(message);
+            }
+
+            foreach (var message in messages)
+            {
+                cryptedMessageList.Add(message);
+            }
+
+
 
             
+
+            using (CStreamWriter writer = new CStreamWriter())
+            {
+                foreach (var cryptedMessage in cryptedMessageList)
+                {
+                    byte[] outputblock = BitConverter.GetBytes(cryptedMessage);
+                    writer.Write(outputblock, 0, outputblock.Length);
+                }
+
+                writer.Flush();
+                MessageOutput = writer;
+            }
+
             // HOWTO: Make sure the progress bar is at maximum when your Execute() finished successfully.
             ProgressChanged(1, 1);
         }
@@ -189,10 +278,34 @@ namespace Cryptool.Plugins.ToyCiphers
 
         #region methods
 
-        public ToyCiphers()
+        /// <summary>
+        /// applies the keys specified by the user to the cipher
+        /// </summary>
+        /// <param name="keycount"></param>
+        /// <returns></returns>
+        private int[] readSubkeys(int keycount)
         {
-            settings.PropertyChanged += new PropertyChangedEventHandler(SettingChangedListener);
-        }
+            int[] keys = new int[keycount];
+
+            if (KeyInput.Length < (keycount * 2))
+            {
+                _subkeysSatisfied = false;
+            }
+
+            for (int i = 0; i < (KeyInput.Length / 2); i++)
+            {
+                byte[] key = new byte[4];
+                for (int j = 0; j < 2; j++)
+                {
+                    key[j] = KeyInput[(i * 2) + j];
+                }
+                keys[i] = BitConverter.ToInt32(key, 0);
+            }
+
+            _subkeysSatisfied = true;
+            return keys;
+        } 
+
 
         /// <summary>
         /// Handles changes within the settings class
@@ -239,7 +352,6 @@ namespace Cryptool.Plugins.ToyCiphers
                     }, null);
                 }
             }
-
         }
 
         #endregion

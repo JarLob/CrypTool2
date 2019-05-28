@@ -78,6 +78,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ciphers\Cipher1\Cipher1.cs" />
+    <Compile Include="Ciphers\Cipher1\Cipher1Configuration.cs" />
+    <Compile Include="Ciphers\Cipher2\Cipher2.cs" />
+    <Compile Include="Ciphers\Cipher2\Cipher2Configuration.cs" />
+    <Compile Include="Ciphers\Cipher3\Cipher3.cs" />
+    <Compile Include="Ciphers\Cipher3\Cipher3Configuration.cs" />
+    <Compile Include="Ciphers\Cipher4\Cipher4.cs" />
+    <Compile Include="Ciphers\Cipher4\Cipher4Configuration.cs" />
+    <Compile Include="Ciphers\IEncryption.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -110,6 +119,7 @@
     <Compile Include="UI\Controls\4BitSBox.xaml.cs">
       <DependentUpon>4BitSBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\TableMapping.cs" />
     <Compile Include="UI\ToyCiphersPres.xaml.cs">
       <DependentUpon>ToyCiphersPres.xaml</DependentUpon>
     </Compile>
@@ -188,6 +198,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

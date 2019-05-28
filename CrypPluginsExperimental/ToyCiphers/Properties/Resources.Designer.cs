@@ -279,6 +279,60 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The permutation swaps the fixed position i of an input bit to a position j in the output. The following table describes the permutation, with the first line representing the decimal position of a bit in the input and the second line representing the position of the corresponding bit in the output. ähnelt.
+        /// </summary>
+        internal static string DescPermutation {
+            get {
+                return ResourceManager.GetString("DescPermutation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The SBox substitutes fixed input bits for other output bits. The following table describes the SBox, where the first line represents the decimal representation of the input bits and the second line represents the decimal representation of the output bits. ähnelt.
+        /// </summary>
+        internal static string DescSBox {
+            get {
+                return ResourceManager.GetString("DescSBox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Table of the Permutation: ähnelt.
+        /// </summary>
+        internal static string HeaderPermutation {
+            get {
+                return ResourceManager.GetString("HeaderPermutation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Table of the SBox: ähnelt.
+        /// </summary>
+        internal static string HeaderSBox {
+            get {
+                return ResourceManager.GetString("HeaderSBox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input ähnelt.
+        /// </summary>
+        internal static string Input {
+            get {
+                return ResourceManager.GetString("Input", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The specified key is not big enough. Please check the requirements of this cipher. ähnelt.
+        /// </summary>
+        internal static string KeyError {
+            get {
+                return ResourceManager.GetString("KeyError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Input for the key ähnelt.
         /// </summary>
         internal static string KeyInput {
@@ -293,6 +347,51 @@ namespace ToyCiphers.Properties {
         internal static string KeyInputTooltip {
             get {
                 return ResourceManager.GetString("KeyInputTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input for a messages to be encrypted ähnelt.
+        /// </summary>
+        internal static string MessageInput {
+            get {
+                return ResourceManager.GetString("MessageInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The messages present at this input will be encrypted and will be outputted ähnelt.
+        /// </summary>
+        internal static string MessageInputTooltip {
+            get {
+                return ResourceManager.GetString("MessageInputTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output for encrypted messages ähnelt.
+        /// </summary>
+        internal static string MessageOutput {
+            get {
+                return ResourceManager.GetString("MessageOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The encrypted messages will be outputted  ähnelt.
+        /// </summary>
+        internal static string MessageOutputTooltip {
+            get {
+                return ResourceManager.GetString("MessageOutputTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output ähnelt.
+        /// </summary>
+        internal static string Output {
+            get {
+                return ResourceManager.GetString("Output", resourceCulture);
             }
         }
         
@@ -315,38 +414,20 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input for a message to be encrypted ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Position of input ähnelt.
         /// </summary>
-        internal static string SingleMessageInput {
+        internal static string TablePermutationInput {
             get {
-                return ResourceManager.GetString("SingleMessageInput", resourceCulture);
+                return ResourceManager.GetString("TablePermutationInput", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The message present at this input will be encrypted and will be outputted ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Position of output ähnelt.
         /// </summary>
-        internal static string SingleMessageInputTooltip {
+        internal static string TablePermutationOutput {
             get {
-                return ResourceManager.GetString("SingleMessageInputTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output for a single encrypted message ähnelt.
-        /// </summary>
-        internal static string SingleMessageOutput {
-            get {
-                return ResourceManager.GetString("SingleMessageOutput", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die An encrypted message is output at this output ähnelt.
-        /// </summary>
-        internal static string SingleMessageOutputTooltip {
-            get {
-                return ResourceManager.GetString("SingleMessageOutputTooltip", resourceCulture);
+                return ResourceManager.GetString("TablePermutationOutput", resourceCulture);
             }
         }
     }

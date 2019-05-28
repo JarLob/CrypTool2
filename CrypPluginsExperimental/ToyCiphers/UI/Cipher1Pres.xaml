@@ -7,15 +7,16 @@
              xmlns:controls="clr-namespace:ToyCiphers.UI.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="415" d:DesignWidth="400">
-    <Viewbox StretchDirection="Both" Stretch="Uniform">
-        <Grid Name="OuterGrid" Height="415" Width="400" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid Name="CipherGrid" Visibility="Visible">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Viewbox Grid.Row="0" StretchDirection="Both" Stretch="Uniform" Name="CipherGrid" Visibility="Hidden">
+            <Grid Height="390" Width="400">
                 <Label Name="InputBlock" FontFamily="Courier New" FontSize="20" FontWeight="Bold" Content="{Loc Cipher1LblInputBlock}" HorizontalAlignment="Center"/>
                 <controls:_16BitKeyRound Grid.Row="0" Grid.Column="0" Margin="50,0,0,0"></controls:_16BitKeyRound>
                 <Label FontFamily="Courier New" FontSize="20" Content="K0" HorizontalAlignment="Right" Margin="0,85,10,0"></Label>
@@ -25,15 +26,55 @@
                 <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="290,170,0,0"></controls:_4BitSBox>
                 <controls:_16BitKeyRound Grid.Row="0" Grid.Column="0" Margin="50,185,0,0"></controls:_16BitKeyRound>
                 <Label FontFamily="Courier New" FontSize="20" Content="K1" HorizontalAlignment="Right" Margin="0,270,10,0"></Label>
+                <Label Name="OutputBlock" FontFamily="Courier New" FontSize="20" FontWeight="Bold" Margin="0,350,0,0" Content="{Loc Cipher1LblOutputBlock}" HorizontalAlignment="Center"/>
             </Grid>
-            <Grid Name="LabelGrid" Visibility="Hidden">
-                <Label FontFamily="Courier New" FontSize="30" FontWeight="Bold" Content="{Loc Cipher1LblHeading}" HorizontalAlignment="Center"/>
-                <TextBlock FontFamily="Courier New" FontSize="15" Margin="0,60,0,0" Text="{Loc Cipher1LblText}" TextWrapping="Wrap"></TextBlock>
+        </Viewbox>
+        <ScrollViewer Name="LabelGrid" Grid.Row="0" VerticalScrollBarVisibility="Auto" Visibility="Visible">
+            <Grid Visibility="Visible">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" FontFamily="Courier New" FontSize="30" FontWeight="Bold" Content="{Loc Cipher1LblHeading}" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="1" FontFamily="Courier New" FontSize="15" Margin="10,0,10,0" Text="{Loc Cipher1LblText}" TextWrapping="Wrap"></TextBlock>
+
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" FontFamily="Courier New" FontSize="15" Margin="10,10,10,0" Text="{Loc DescSBox}" TextWrapping="Wrap"></TextBlock>
+                    <TextBlock Grid.Row="1" FontFamily="Courier New" FontSize="15" FontWeight="Bold" Margin="10,10,10,0" Text="{Loc HeaderSBox}" TextWrapping="Wrap"></TextBlock>
+                    <DataGrid Grid.Row="2" HorizontalAlignment="Center" CanUserAddRows="false" AutoGenerateColumns="False" Margin="0,10,0,0" ItemsSource="{Binding SBoxData, Mode=OneWay}">
+                        <DataGrid.Columns >
+                            <DataGridTextColumn Binding="{Binding Path=Direction, Mode=OneWay}" MinWidth="25" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Path=ZeroOutput, Mode=OneWay}" MinWidth="25" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Path=OneOutput, Mode=OneWay}" MinWidth="25" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Path=TwoOutput, Mode=OneWay}" MinWidth="25" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Path=ThreeOutput, Mode=OneWay}" MinWidth="25" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Path=FourOutput, Mode=OneWay}" MinWidth="25" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Path=FiveOutput, Mode=OneWay}" MinWidth="25" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Path=SixOutput, Mode=OneWay}" MinWidth="25" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Path=SevenOutput, Mode=OneWay}" MinWidth="25" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Path=EightOutput, Mode=OneWay}" MinWidth="25" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Path=NineOutput, Mode=OneWay}" MinWidth="25" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Path=TenOutput, Mode=OneWay}" MinWidth="25" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Path=ElevenOutput, Mode=OneWay}" MinWidth="25" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Path=TwelveOutput, Mode=OneWay}" MinWidth="25" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Path=ThirteenOutput, Mode=OneWay}" MinWidth="25" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Path=FourteenOutput, Mode=OneWay}" MinWidth="25" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Path=FifteenOutput, Mode=OneWay}" MinWidth="25" IsReadOnly="True"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+
             </Grid>
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,0" Orientation="Vertical">
-                <Label Name="OutputBlock" FontFamily="Courier New" FontSize="20" FontWeight="Bold" Content="{Loc Cipher1LblOutputBlock}" HorizontalAlignment="Center"/>
-                <Button Content="{Loc BtnSwitchView}" HorizontalAlignment="Center" Height="30" Width="120" Click="ToggleViewClicked"></Button>
-            </StackPanel>
-        </Grid>
-    </Viewbox>
+        </ScrollViewer>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Vertical">
+            <Button Content="{Loc BtnSwitchView}" HorizontalAlignment="Center" Height="30" Width="120" Click="ToggleViewClicked"></Button>
+        </StackPanel>
+    </Grid>
 </UserControl>

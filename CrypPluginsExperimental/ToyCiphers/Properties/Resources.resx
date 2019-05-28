@@ -191,11 +191,44 @@
   <data name="Cipher5" xml:space="preserve">
     <value>Feal-4</value>
   </data>
+  <data name="DescPermutation" xml:space="preserve">
+    <value>The permutation swaps the fixed position i of an input bit to a position j in the output. The following table describes the permutation, with the first line representing the decimal position of a bit in the input and the second line representing the position of the corresponding bit in the output.</value>
+  </data>
+  <data name="DescSBox" xml:space="preserve">
+    <value>The SBox substitutes fixed input bits for other output bits. The following table describes the SBox, where the first line represents the decimal representation of the input bits and the second line represents the decimal representation of the output bits.</value>
+  </data>
+  <data name="HeaderPermutation" xml:space="preserve">
+    <value>Table of the Permutation:</value>
+  </data>
+  <data name="HeaderSBox" xml:space="preserve">
+    <value>Table of the SBox:</value>
+  </data>
+  <data name="Input" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <data name="KeyError" xml:space="preserve">
+    <value>The specified key is not big enough. Please check the requirements of this cipher.</value>
+  </data>
   <data name="KeyInput" xml:space="preserve">
     <value>Input for the key</value>
   </data>
   <data name="KeyInputTooltip" xml:space="preserve">
     <value>This input contains the key with which the message is encrypted</value>
+  </data>
+  <data name="MessageInput" xml:space="preserve">
+    <value>Input for a messages to be encrypted</value>
+  </data>
+  <data name="MessageInputTooltip" xml:space="preserve">
+    <value>The messages present at this input will be encrypted and will be outputted</value>
+  </data>
+  <data name="MessageOutput" xml:space="preserve">
+    <value>Output for encrypted messages</value>
+  </data>
+  <data name="MessageOutputTooltip" xml:space="preserve">
+    <value>The encrypted messages will be outputted </value>
+  </data>
+  <data name="Output" xml:space="preserve">
+    <value>Output</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>DCA ToyCiphers</value>
@@ -203,16 +236,10 @@
   <data name="PluginTooltip" xml:space="preserve">
     <value>The ToyCiphers component contains various algorithms for encrypting information. The algorithms are very simple and short to demonstrate certain things.</value>
   </data>
-  <data name="SingleMessageInput" xml:space="preserve">
-    <value>Input for a message to be encrypted</value>
+  <data name="TablePermutationInput" xml:space="preserve">
+    <value>Position of input</value>
   </data>
-  <data name="SingleMessageInputTooltip" xml:space="preserve">
-    <value>The message present at this input will be encrypted and will be outputted</value>
-  </data>
-  <data name="SingleMessageOutput" xml:space="preserve">
-    <value>Output for a single encrypted message</value>
-  </data>
-  <data name="SingleMessageOutputTooltip" xml:space="preserve">
-    <value>An encrypted message is output at this output</value>
+  <data name="TablePermutationOutput" xml:space="preserve">
+    <value>Position of output</value>
   </data>
 </root>
