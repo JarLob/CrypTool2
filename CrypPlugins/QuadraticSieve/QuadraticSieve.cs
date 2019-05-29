@@ -183,13 +183,14 @@ namespace Cryptool.Plugins.QuadraticSieve
 
                 if (InputNumber < 2)
                 {
-                    GuiLogMessage("Please enter a number >= 2.", NotificationLevel.Error);
+                    GuiLogMessage(Resources.Input_too_small_, NotificationLevel.Error);
                     return;
                 }
 
-                if (InputNumber.ToString().Length >= 275)
+                var numberLength = InputNumber.ToString().Length;
+                if (numberLength >= 275)
                 {
-                    GuiLogMessage(Resources.Input_too_big_, NotificationLevel.Error);
+                    GuiLogMessage(String.Format(Resources.Input_too_big_, numberLength - 1), NotificationLevel.Error);
                     return;
                 }
 

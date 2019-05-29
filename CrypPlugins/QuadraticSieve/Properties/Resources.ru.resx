@@ -304,12 +304,15 @@
     <value>Просеивание закончено.</value>
   </data>
   <data name="Input_too_big_" xml:space="preserve">
-    <value>Вход слишком большой.</value>
+    <value>Вход слишком большой (верхний предел: 10^274; заданный вход: 10^{0})</value>
   </data>
   <data name="Digit" xml:space="preserve">
     <value>цифра</value>
   </data>
   <data name="Bit" xml:space="preserve">
     <value>немного</value>
+  </data>
+  <data name="Input_too_small_" xml:space="preserve">
+    <value>Пожалуйста, введите число&gt; = 2</value>
   </data>
 </root>

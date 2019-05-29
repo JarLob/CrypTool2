@@ -304,12 +304,15 @@
     <value>Sieben beendet.</value>
   </data>
   <data name="Input_too_big_" xml:space="preserve">
-    <value>Eingabe zu groß.</value>
+    <value>Eingabe zu groß (Obere Schranke: 10^274; erhaltene Eingabe: 10^{0})</value>
   </data>
   <data name="Digit" xml:space="preserve">
     <value>Dezimalstelle</value>
   </data>
   <data name="Bit" xml:space="preserve">
     <value>Bit</value>
+  </data>
+  <data name="Input_too_small_" xml:space="preserve">
+    <value>Bitte geben Sie eine Zahl &gt;= 2 ein</value>
   </data>
 </root>
