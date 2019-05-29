@@ -19,7 +19,7 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Quadratisches_Sieb" /></desc
     <plugin name="QuadraticSieve" />
   </relevantPlugins>
   <replacements lang="de">
-    <replacement key="$Number Input$" value="Zahleneingabe" />
+    <replacement key="$Number Input$" value="Eingabe: Zu faktorisierende Zahl" />
     <replacement key="$QuadraticSieve$" value="Quadratisches Sieb" />
     <replacement key="$Output$" value="Ausgabe: Alle Faktoren, einer pro Zeile" />
     <replacement key="$memo$" value="Geben Sie oben die Zahl ein, die nach Start des Arbeitsbereiches faktorisiert werden soll. Das Ergebnis wird am Ausgang der Komponente &quot;Quadratisches Sieb&quot; ausgegeben und in der Textausgabe-Komponente angezeigt.\line\line Zahlen können auch als mathematischer Ausdruck eingegeben werden, z.B. 2^20+13.\line Wenn der Wert des mathematischen Ausdruckes ein Bruch ist, wird nur der ganzzahlige Anteil verwendet, z.B. (2^3-1)/2 = 7 / 2 = 3." />
@@ -31,9 +31,9 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Quadratisches_Sieb" /></desc
     <replacement key="$memo$" value="Введите число, указанное выше, после того, как вы запустили рабочую область. Результат выводится на выходе компонента «Квадратный экран» и отображается в компоненте вывода текста. \Line \line Номера также могут быть введены в виде математического выражения, например, 2 ^ 20 + 13. \Line Если значение математического выражения представляет собой долю , используется только целочисленная часть, например (2 ^ 3-1) / 2 = 7/2 = 3." />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Number Input$" value="Number Input" />
+    <replacement key="$Number Input$" value="Input: Number to be factorized" />
     <replacement key="$QuadraticSieve$" value="Quadratic Sieve" />
     <replacement key="$Output$" value="Output: All factors, one per line" />
-    <replacement key="$memo$" value="Above, you can enter any number, which will be factorized upon executing this workspace. The result will be shown in the output of the quadratic sieve component.\line\line Numbers can also be entered as a mathematical expression, e.g. 2^20+13.\line If the result of the mathematical expression is a fraction, only the integer part is used, e.g. (2^3-1)/2 = 7 / 2 = 3." />
+    <replacement key="$memo$" value="Above in the input component, you can enter any number. This number will be factorized by the quadratic sieve component when executing this workspace (Play button). The result will be shown in the output component on the right.\line\line Numbers can also be entered as a mathematical expression, e.g. 2^20+13.\line If the result of the mathematical expression is a fraction, only the integer part is used, e.g. (2^3-1)/2 = 7 / 2 = 3.\line \line The given number is (2^304-1)/2 which is 303 digits long and has 5 factors. After quickly splitting off the two small factors which are found first, most of the time (about 15 minutes) is used to factorize the 291 bit composite (38353...78743)." />
   </replacements>
 </sample>
