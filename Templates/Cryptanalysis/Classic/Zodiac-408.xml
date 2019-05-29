@@ -20,6 +20,8 @@
     <replacement key="$ciphertext$" value="Z-408 Message" />
 	<replacement key="$analyzer$" value="Homophonic Substitution Analyzer" />
 	<replacement key="$plaintext$" value="Revealed plaintext" />
+	<replacement key="$revealedkey$" value="Revealed key" />
+	<replacement key="$foundwords$" value="Found words" />
 	<replacement key="$dictionary$" value="Dictionary" />
     <replacement key="$memo$" value="{\b Cryptanalysis of the Zodiac-408 cipher}\line\line
 &quot;Zodiac Killer&quot; is the pseudonym of a serial killer who operated in Northern California. The killer's identity remains unknown. Zodiac murdered victims in Benicia, Vallejo, Lake Berryessa, and San Francisco between December 1968 and October 1969. Four men and three women between the ages of 16 and 29 were targeted. The killer originated the name &quot;Zodiac&quot; in a series of taunting messages sent to the local Bay Area press. These messages included four cryptograms (or ciphertexts). Of the four cryptograms sent, only one (Zodiac-408) has been definitively solved. Source: https://en.wikipedia.org/wiki/Zodiac_Killer\line\line
@@ -31,6 +33,8 @@ In the semi-automatic mode, the 3 buttons &quot;Analyze/Stop&quot;, &quot;Reset 
     <replacement key="$ciphertext$" value="Z-408 сообщение" />
 	<replacement key="$analyzer$" value="Анализатор гомофонического замещения" />
 	<replacement key="$plaintext$" value="Простой текст" />
+	<replacement key="$revealedkey$" value="Выявленный ключ" />
+	<replacement key="$foundwords$" value="Найденные слова" />
 	<replacement key="$dictionary$" value="толковый словарь" />
     <replacement key="$memo$" value="{\b Криптоанализ шифра Зодиак-408} \line \line
 Убийца Зодиака - это псевдоним неопознанного серийного убийцы, который работал в Северной Калифорнии, по крайней мере, с конца 1960-х до начала 1970-х годов. Личность убийцы остается неизвестной. Зодиак убил жертв в Бенисии, Вальехо, озере Беррисса и Сан-Франциско в период с декабря 1968 года по октябрь 1969 года. Четверо мужчин и три женщины в возрасте от 16 до 29 лет стали жертвами. Убийца создал имя «Зодиак» в серии насмешливых писем, отправленных в местную бухту. Эти буквы включали четыре криптограммы (или шифры). Из четырех отправленных криптограмм только одна была окончательно решена. Источник: https://en.wikipedia.org/wiki/Zodiac_Killer \line\line
@@ -40,7 +44,9 @@ In the semi-automatic mode, the 3 buttons &quot;Analyze/Stop&quot;, &quot;Reset 
   <replacements lang="de">
     <replacement key="$ciphertext$" value="Z-408-Nachricht" />
 	<replacement key="$analyzer$" value="Homophone Substitutionsanalyse" />
-	<replacement key="$plaintext$" value="Klartext" />
+	<replacement key="$plaintext$" value="Gefundener Klartext" />
+	<replacement key="$revealedkey$" value="Gefundener Schlüssel" />
+	<replacement key="$foundwords$" value="Gefundene Wörter" />
 	<replacement key="$dictionary$" value="Wörterbuch" />
     <replacement key="$memo$" value="{\b Kryptoanalyse der Zodiac-408-Chiffre} \line\line
 Der Zodiac Killer ist das Pseudonym eines nicht identifizierten Serienmörders, der mindestens in den späten 1960ern bis Anfang der 1970er Jahre in Nordkalifornien agierte. Die Identität des Mörders bleibt unbekannt. Der Mörder tötete zwischen Dezember 1968 und Oktober 1969 in Benicia, Vallejo, Lake Berryessa und San Francisco mehrere Opfer. Vier Männer und drei Frauen im Alter von 16 bis 29 Jahren wurden von ihm ins Visier genommen. Der Mörder hat den Namen &quot;Zodiac&quot; in einer Reihe spöttischer Briefe, die an die örtliche Bay Area-Presse geschickt wurden, genutzt. Diese Briefe enthielten vier Kryptogramme. Von den vier gesendeten Kryptogrammen wurde nur eines beweisbar gelöst. Quelle: https://en.wikipedia.org/wiki/Zodiac_Killer \line\line
