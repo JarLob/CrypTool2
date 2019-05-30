@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{00315F90-F982-442B-AA19-A2B91F1CDBEE}</ProjectGuid>
+    <ProjectGuid>{E9942F8D-1C08-4BC9-9B1F-824963F25E35}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ToyCiphers</RootNamespace>
-    <AssemblyName>ToyCiphers</AssemblyName>
+    <RootNamespace>DCAPathFinder</RootNamespace>
+    <AssemblyName>DCAPathFinder</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -34,22 +34,12 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <OutputPath>bin\x64\Release\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\CrypBuild\Debug\CrypPlugins\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <OutputPath>..\..\CrypBuild\Debug\CrypPlugins\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore">
@@ -62,8 +52,6 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -79,51 +67,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms.cs" />
-    <Compile Include="Ciphers\Cipher1\Cipher1.cs" />
-    <Compile Include="Ciphers\Cipher1\Cipher1Configuration.cs" />
-    <Compile Include="Ciphers\Cipher2\Cipher2.cs" />
-    <Compile Include="Ciphers\Cipher2\Cipher2Configuration.cs" />
-    <Compile Include="Ciphers\Cipher3\Cipher3.cs" />
-    <Compile Include="Ciphers\Cipher3\Cipher3Configuration.cs" />
-    <Compile Include="Ciphers\Cipher4\Cipher4.cs" />
-    <Compile Include="Ciphers\Cipher4\Cipher4Configuration.cs" />
-    <Compile Include="Ciphers\IEncryption.cs" />
+    <Compile Include="DCAPathFinder.cs" />
+    <Compile Include="DCAPathFinderSettings.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ToyCiphers.cs" />
-    <Compile Include="ToyCiphersSettings.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\Cipher1Pres.xaml.cs">
-      <DependentUpon>Cipher1Pres.xaml</DependentUpon>
+    <Compile Include="UI\DCAPathFinderPres.xaml.cs">
+      <DependentUpon>DCAPathFinderPres.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Cipher2Pres.xaml.cs">
-      <DependentUpon>Cipher2Pres.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Cipher3Pres.xaml.cs">
-      <DependentUpon>Cipher3Pres.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Cipher4Pres.xaml.cs">
-      <DependentUpon>Cipher4Pres.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\16BitKeyRound.xaml.cs">
-      <DependentUpon>16BitKeyRound.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\16BitPermutation.xaml.cs">
-      <DependentUpon>16BitPermutation.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\4BitKeyRound.xaml.cs">
-      <DependentUpon>4BitKeyRound.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\4BitSBox.xaml.cs">
-      <DependentUpon>4BitSBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\TableMapping.cs" />
-    <Compile Include="UI\ToyCiphersPres.xaml.cs">
-      <DependentUpon>ToyCiphersPres.xaml</DependentUpon>
-    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CrypPluginBase\CrypPluginBase.csproj">
+      <Project>{25DB2B47-A457-4EC2-960B-395CE07AE093}</Project>
+      <Name>CrypPluginBase</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -146,9 +107,6 @@
     <Resource Include="userdoc.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\IC_ToyCiphers.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.de.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -156,50 +114,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CrypPluginBase\CrypPluginBase.csproj">
-      <Project>{25db2b47-a457-4ec2-960b-395ce07ae093}</Project>
-      <Name>CrypPluginBase</Name>
-    </ProjectReference>
+    <Resource Include="Images\IC_DCAPathFinder.png" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="UI\Cipher1Pres.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Cipher2Pres.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Cipher3Pres.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Cipher4Pres.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Controls\16BitKeyRound.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Controls\16BitPermutation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Controls\4BitKeyRound.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Controls\4BitSBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\ToyCiphersPres.xaml">
+    <Page Include="UI\DCAPathFinderPres.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

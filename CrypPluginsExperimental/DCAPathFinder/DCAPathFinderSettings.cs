@@ -18,28 +18,16 @@ using System;
 using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using ToyCiphers;
+using DCAPathFinder;
 
-namespace Cryptool.Plugins.ToyCiphers
+namespace Cryptool.Plugins.DCAPathFinder
 {
-    public class ToyCiphersSettings : ISettings
+    public class DCAPathFinderSettings : ISettings
     {
         #region Private Variables
 
         private string _choiceOfAlgorithm;
         private Algorithms _currentAlgorithm;
-
-        #endregion
-
-        #region methods
-
-        /// <summary>
-        /// default constructor
-        /// </summary>
-        public ToyCiphersSettings()
-        {
-            ChoiceOfAlgorithm = "0";
-        }
 
         #endregion
 
@@ -62,7 +50,7 @@ namespace Cryptool.Plugins.ToyCiphers
         /// <summary>
         /// Selection of the toy cipher algorithm
         /// </summary>
-        [TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", null, 1, false, ControlType.ComboBox, new string[]{ "Cipher1", "Cipher2", "Cipher3", "Cipher4" })]
+        [TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", null, 1, false, ControlType.ComboBox, new string[] { "Cipher1", "Cipher2", "Cipher3", "Cipher4" })]
         public string ChoiceOfAlgorithm
         {
             get
@@ -84,7 +72,7 @@ namespace Cryptool.Plugins.ToyCiphers
                         case "1":
                         {
                             CurrentAlgorithm = Algorithms.Cipher2;
-                            }
+                        }
                             break;
                         case "2":
                         {
@@ -117,7 +105,7 @@ namespace Cryptool.Plugins.ToyCiphers
 
         public void Initialize()
         {
-           
+
         }
     }
 }
