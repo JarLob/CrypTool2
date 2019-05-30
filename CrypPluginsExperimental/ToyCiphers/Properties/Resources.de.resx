@@ -190,10 +190,10 @@
     <value>Feal-4</value>
   </data>
   <data name="DescPermutation" xml:space="preserve">
-    <value>Die Permutation vertauscht die feste Position i eines Eingabebit auf eine Position j in der Ausgabe. Die folgende Tabelle beschreibt die Permutation, wobei die erste Zeile die dezimale Position eines Bits in der Eingabe darstellt und die zweite Zeile die Position des entsprechenden Bits in der Ausgabe.</value>
+    <value>Die Permutation vertauscht die feste Position i eines Eingabebits auf eine Position j in der Ausgabe. Die folgende Tabelle beschreibt die Permutation, wobei die erste Zeile die Position eines Bits in der Eingabe darstellt und die zweite Zeile die Position des entsprechenden Bits in der Ausgabe.</value>
   </data>
   <data name="DescSBox" xml:space="preserve">
-    <value>Die SBox substituiert feste Eingabebits auf andere Ausgabebits. Die folgende Tabelle beschreibt die SBox, wobei die erste Zeile die dezimale Repräsentation der Eingabebits darstellt und die zweite Zeile die dezimale Repräsentation der Ausgabebits. </value>
+    <value>Die SBox substituiert feste Eingabebits auf andere Ausgabebits. Die folgende Tabelle beschreibt die SBox, wobei die erste Zeile den Wert der Eingabebits und die zweite Zeile die Ausgabebits darstellt. </value>
   </data>
   <data name="HeaderPermutation" xml:space="preserve">
     <value>Tabelle der Permutation:</value>
@@ -213,6 +213,9 @@
   <data name="KeyInputTooltip" xml:space="preserve">
     <value>An diesem Eingang liegt der Schlüssel an, mit dem die Nachricht verschlüsselt wird</value>
   </data>
+  <data name="MessageError" xml:space="preserve">
+    <value>Die eingegebenen Nachrichten sind zu klein oder groß. Bitte überprüfen Sie die Anforderungen dieser Chiffre.</value>
+  </data>
   <data name="MessageInput" xml:space="preserve">
     <value>Eingang für zu verschlüsselnde Nachrichten</value>
   </data>
@@ -223,10 +226,10 @@
     <value>Ausgabe</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>DCA ToyCiphers</value>
+    <value>DCA ToyCipher</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Die ToyCiphers-Komponente enthält verschiedene Algorithmen zur Verschlüsselung von Informationen. Die Algorithmen sind sehr einfach und kurz, um an ihnen bestimmte Dinge demonstrieren zu können.</value>
+    <value>Die ToyCipher-Komponente enthält verschiedene Algorithmen zur Verschlüsselung von Texten. Die Algorithmen sind sehr einfach und kurz, um an ihnen beispielsweise kryptographische Prinzipien oder kryptoanalytische Verfahren demonstrieren zu können.</value>
   </data>
   <data name="SingleMessageOutput" xml:space="preserve">
     <value>Ausgang für eine verschlüsselte Nachricht</value>

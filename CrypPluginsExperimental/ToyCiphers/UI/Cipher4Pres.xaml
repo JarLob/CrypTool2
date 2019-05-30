@@ -15,30 +15,34 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
         </Grid.RowDefinitions>
-        <Viewbox Grid.Row="0" StretchDirection="Both" Stretch="Uniform" Name="CipherGrid" Visibility="Hidden">
+        <Viewbox Grid.Row="0" StretchDirection="Both" Stretch="Uniform" Name="CipherGrid" Visibility="Visible">
             <Grid Height="790" Width="400" HorizontalAlignment="Center">
                 <Label Name="InputBlock" FontFamily="Courier New" FontSize="20" FontWeight="Bold" Content="{Loc Cipher4LblInputBlock}" HorizontalAlignment="Center"/>
                 <!-- Round 1 -->
                 <controls:_4BitKeyRound Grid.Row="0" Grid.Column="0" Margin="170,0,0,0"></controls:_4BitKeyRound>
-                <Label FontFamily="Courier New" FontSize="20" Content="K0" Margin="240,85,10,0"></Label>
+                <Label FontFamily="Courier New" FontSize="20" Content="K0" Margin="240,75,10,0"></Label>
+                <Label FontFamily="Courier New" FontSize="15" Content="{Binding CurrentK0, Mode=OneWay}" HorizontalAlignment="Right" Margin="0,95,115,0"></Label>
                 <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="170,170,0,0"></controls:_4BitSBox>
                 <!-- /Round 1 -->
                 <!-- Round 2 -->
                 <controls:_4BitKeyRound Grid.Row="0" Grid.Column="0" Margin="170,185,0,0"></controls:_4BitKeyRound>
-                <Label FontFamily="Courier New" FontSize="20" Content="K1" Margin="240,270,10,0"></Label>
+                <Label FontFamily="Courier New" FontSize="20" Content="K1" Margin="240,260,10,0"></Label>
+                <Label FontFamily="Courier New" FontSize="15" Content="{Binding CurrentK1, Mode=OneWay}" HorizontalAlignment="Right" Margin="0,280,115,0"></Label>
                 <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="170,355,0,0"></controls:_4BitSBox>
                 <!-- /Round 2 -->
                 <!-- Round 3 -->
                 <controls:_4BitKeyRound Grid.Row="0" Grid.Column="0" Margin="170,370,0,0"></controls:_4BitKeyRound>
-                <Label FontFamily="Courier New" FontSize="20" Content="K2" Margin="240,450,10,0"></Label>
+                <Label FontFamily="Courier New" FontSize="20" Content="K2" Margin="240,440,10,0"></Label>
+                <Label FontFamily="Courier New" FontSize="15" Content="{Binding CurrentK2, Mode=OneWay}" HorizontalAlignment="Right" Margin="0,460,115,0"></Label>
                 <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="170,540,0,0"></controls:_4BitSBox>
                 <controls:_4BitKeyRound Grid.Row="0" Grid.Column="0" Margin="170,555,0,0"></controls:_4BitKeyRound>
-                <Label FontFamily="Courier New" FontSize="20" Content="K3" Margin="240,640,10,0"></Label>
+                <Label FontFamily="Courier New" FontSize="20" Content="K3" Margin="240,630,10,0"></Label>
+                <Label FontFamily="Courier New" FontSize="15" Content="{Binding CurrentK3, Mode=OneWay}" HorizontalAlignment="Right" Margin="0,650,115,0"></Label>
                 <!-- /Round 3 -->
                 <Label Name="OutputBlock" FontFamily="Courier New" FontSize="20" FontWeight="Bold" Margin="0,720,0,0" Content="{Loc Cipher4LblOutputBlock}" HorizontalAlignment="Center"/>
             </Grid>
         </Viewbox>
-        <ScrollViewer Name="LabelGrid" Grid.Row="0" VerticalScrollBarVisibility="Auto" Visibility="Visible">
+        <ScrollViewer Name="LabelGrid" Grid.Row="0" VerticalScrollBarVisibility="Auto" Visibility="Hidden">
             <Grid Visibility="Visible">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>

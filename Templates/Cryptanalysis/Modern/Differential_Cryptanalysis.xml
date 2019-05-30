@@ -16,10 +16,19 @@
   <relevantPlugins>
     <plugin name="ToyCiphers" />
   </relevantPlugins>
+  
   <replacements lang="de">
-    
+    <replacement key="$UserMessageInput$" value="Eingabe des Klartext" />
+	<replacement key="$UserKeyInput$" value="Eingabe des Schlüssel" />
+	<replacement key="$ToyCipherComponent$" value="DCA ToyCipher" />
+	<replacement key="$ToyCipherComponentOutput$" value="Ausgabe des Schlüsseltext" />
+	<replacement key="$DCADesc$" value="In dieser Vorlage wird ein Tutorial für differenzielle Kryptoanalyse von symmetrischen Blockchiffren dargestellt." />
   </replacements>
   <replacements lang="en">
-    
+	<replacement key="$UserMessageInput$" value="Input of the plaintext" />
+	<replacement key="$UserKeyInput$" value="Input of the key" />
+	<replacement key="$ToyCipherComponent$" value="DCA ToyCipher" />
+	<replacement key="$ToyCipherComponentOutput$" value="Output of the ciphertext" />
+	<replacement key="$DCADesc$" value="In this template a tutorial for differential cryptanalysis of symmetric block ciphers is presented." />
   </replacements>
 </sample>

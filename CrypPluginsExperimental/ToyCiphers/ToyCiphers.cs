@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2019 Christian Bender christian1.bender@student.uni-siegen.de
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -139,7 +139,6 @@ namespace Cryptool.Plugins.ToyCiphers
         /// </summary>
         public void Execute()
         {
-            // HOWTO: Use this to show the progress of a plugin algorithm execution in the editor.
             ProgressChanged(0, 1);
 
             // Check specific algorithm and invoke the selection into the UI class
@@ -147,25 +146,57 @@ namespace Cryptool.Plugins.ToyCiphers
             {
                 //create encryption object for the cipher
                 _currentCipher = new Cipher1();
-                _currentCipher.SetKeys(readSubkeys(Cipher1Configuration.KEYNUM));
+                int[] subKeys = readSubkeys(Cipher1Configuration.KEYNUM);
+                if (subKeys != null)
+                {
+                    _currentCipher.SetKeys(subKeys);
+                    _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                    {
+                        ((Cipher1Pres)_activePresentation.MainGrid.Children[0]).Keys = subKeys;
+                    }, null);
+                }
             }
             else if (settings.CurrentAlgorithm == Algorithms.Cipher2)
             {
                 //create encryption object for the cipher
                 _currentCipher = new Cipher2();
-                _currentCipher.SetKeys(readSubkeys(Cipher2Configuration.KEYNUM));
+                int[] subKeys = readSubkeys(Cipher2Configuration.KEYNUM);
+                if (subKeys != null)
+                {
+                    _currentCipher.SetKeys(subKeys);
+                    _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                    {
+                        ((Cipher2Pres)_activePresentation.MainGrid.Children[0]).Keys = subKeys;
+                    }, null);
+                }
             }
             else if (settings.CurrentAlgorithm == Algorithms.Cipher3)
             {
                 //create encryption object for the cipher
                 _currentCipher = new Cipher3();
-                _currentCipher.SetKeys(readSubkeys(Cipher3Configuration.KEYNUM));
+                int[] subKeys = readSubkeys(Cipher3Configuration.KEYNUM);
+                if (subKeys != null)
+                {
+                    _currentCipher.SetKeys(subKeys);
+                    _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                    {
+                        ((Cipher3Pres)_activePresentation.MainGrid.Children[0]).Keys = subKeys;
+                    }, null);
+                }
             }
             else if (settings.CurrentAlgorithm == Algorithms.Cipher4)
             {
                 //create encryption object for the cipher
                 _currentCipher = new Cipher4();
-                _currentCipher.SetKeys(readSubkeys(Cipher4Configuration.KEYNUM));
+                int[] subKeys = readSubkeys(Cipher4Configuration.KEYNUM);
+                if (subKeys != null)
+                {
+                    _currentCipher.SetKeys(subKeys);
+                    _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                    {
+                        ((Cipher4Pres)_activePresentation.MainGrid.Children[0]).Keys = subKeys;
+                    }, null);
+                }
             }
 
             if (!_subkeysSatisfied)
@@ -175,12 +206,20 @@ namespace Cryptool.Plugins.ToyCiphers
                 return;
             }
 
-            List<int> messages = new List<int>();
-            var cryptedMessageList = new List<int>();
+            List<int> messageList = new List<int>();
+            List<UInt16> encryptedMessageList = new List<UInt16>();
 
+            //Read all messages
             using (CStreamReader reader = _messageInput.CreateReader())
             {
-                byte[] inputBlock = new byte[4];
+                if ((reader.Length % 2) != 0)
+                {
+                    GuiLogMessage(Resources.MessageError, NotificationLevel.Error);
+                    ProgressChanged(1, 1);
+                    return;
+                }
+
+                byte[] inputBlock = new byte[2];
                 int message;
                 int readcount = 0;
                 while ((readcount += reader.Read(inputBlock, readcount, 4 - readcount)) < 4 &&
@@ -188,32 +227,30 @@ namespace Cryptool.Plugins.ToyCiphers
                 {
 
                 }
-                message = BitConverter.ToInt32(inputBlock, 0);
-                messages.Add(message);
+                message = BitConverter.ToUInt16(inputBlock, 0);
+                messageList.Add(message);
             }
 
-            foreach (var message in messages)
+            //encrypt all messages
+            foreach (var message in messageList)
             {
-                cryptedMessageList.Add(message);
+                int encryptedMessage = _currentCipher.EncryptBlock(message);
+                encryptedMessageList.Add(Convert.ToUInt16(encryptedMessage));
             }
-
-
-
             
-
+            //write all messages to the output
             using (CStreamWriter writer = new CStreamWriter())
             {
-                foreach (var cryptedMessage in cryptedMessageList)
+                foreach (var enctyptedMessage in encryptedMessageList)
                 {
-                    byte[] outputblock = BitConverter.GetBytes(cryptedMessage);
-                    writer.Write(outputblock, 0, outputblock.Length);
+                    byte[] outputBlock = BitConverter.GetBytes(enctyptedMessage);
+                    writer.Write(outputBlock, 0, outputBlock.Length);
                 }
 
                 writer.Flush();
                 MessageOutput = writer;
             }
 
-            // HOWTO: Make sure the progress bar is at maximum when your Execute() finished successfully.
             ProgressChanged(1, 1);
         }
 
@@ -287,19 +324,41 @@ namespace Cryptool.Plugins.ToyCiphers
         {
             int[] keys = new int[keycount];
 
-            if (KeyInput.Length < (keycount * 2))
+            if (settings.CurrentAlgorithm == Algorithms.Cipher1 || settings.CurrentAlgorithm == Algorithms.Cipher2 ||
+                settings.CurrentAlgorithm == Algorithms.Cipher2)
             {
-                _subkeysSatisfied = false;
-            }
-
-            for (int i = 0; i < (KeyInput.Length / 2); i++)
-            {
-                byte[] key = new byte[4];
-                for (int j = 0; j < 2; j++)
+                if (KeyInput.Length != (keycount * 2))
                 {
-                    key[j] = KeyInput[(i * 2) + j];
+                    _subkeysSatisfied = false;
+                    return null;
                 }
-                keys[i] = BitConverter.ToInt32(key, 0);
+
+                for (int i = 0; i < (KeyInput.Length / 2); i++)
+                {
+                    byte[] key = new byte[2];
+                    for (int j = 0; j < 2; j++)
+                    {
+                        key[1 - j] = KeyInput[(i * 2) + j];
+                    }
+                    keys[i] = BitConverter.ToUInt16(key, 0);
+                }
+
+            }
+            else
+            {
+                if (KeyInput.Length != keycount)
+                {
+                    _subkeysSatisfied = false;
+                    return null;
+                }
+
+                for (int i = 0; i < (KeyInput.Length); i++)
+                {
+                    byte[] key = new byte[2];
+                    key[0] = KeyInput[i];
+  
+                    keys[i] = BitConverter.ToUInt16(key, 0);
+                }
             }
 
             _subkeysSatisfied = true;

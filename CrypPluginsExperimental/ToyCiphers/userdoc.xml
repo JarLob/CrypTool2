@@ -5,24 +5,65 @@
   <language culture="en"/>
   <language culture="de-DE"/>
 
-  <introduction lang="en">    
+  <introduction lang="en">  
+  The ToyCipher component provides several very small and simple algorithms for encrypting data. ToyCiphers are very suitable to demonstrate cryptographic principles and methods in a simple way due to their slim structure. Furthermore, they can be used for various attacks and analysis methods such as differential cryptanalysis. In the following sections the available ToyCiphers are described:  
+  <section headline="ToyCipher 1">
+  ToyChiffre 1 is a symmetric block cipher which works on 16 bit blocks. An encryption round is executed with two round keys of 16 bits each. The encryption round consists of key addition and substitution by four parallel SBoxes. The SBoxes each work on 4-bit blocks. In the presentation of the component ToyCipher 1 is shown graphically. It contains the functionality of the SBox. This cipher is based on the cipher "CIPHERONE" in [2].
+  <section headline="ToyCipher 2">
+  ToyCipher 2 is a symmetric block cipher which works on 16 bit blocks. Three encryption rounds are executed, whereby the round keys are each 16 bits in size. The encryption rounds consist of key addition, permutation and substitution by four parallel SBoxes. In the last encryption round the permutation is omitted and two round keys are used. The SBoxes each work on 4-bit blocks. In the presentation of the component ToyCipher 2 is shown graphically. It contains the functionality of the SBox and permutation. This cipher is described in [1].
+  </section>
+  <section headline="ToyCipher 3">
+  ToyCipher 3 is a symmetric block cipher which works on 16 bit blocks. Five encryption rounds are executed, whereby the round keys are each 16 bits in size. The encryption rounds consist of key addition, permutation and subsitution by four parallel SBoxes. In the last encryption round the permutation is omitted and two round keys are used. The SBoxes each work on 4-bit blocks. In the presentation of the component the ToyCipher 3 is shown graphically. It contains the functionality of the SBox and permutation. This cipher is described in [2] with the name "CIPHERFOUR".
+  </section>
+  <section headline="ToyCipher 4">
+  ToyCipher 4 is a symmetric block cipher which works on 4 bit blocks. 3 encryption rounds are executed, whereby the round keys are each 4 bits large. The encryption rounds consist of key addition and substitution. In the presentation of the component ToyCipher 4 is shown graphically. It contains the functionality of the SBox. This cipher is described in [2] with the name "CIPHERTHREE".
+  </section>
   </introduction>
 
   <introduction lang="de-DE">    
+  Die ToyChiffre-Komponente stellt verschiedene sehr kleine und einfache Algorithmen zur Verschlüsselung von Daten bereit. ToyChiffren sind aufgrund ihres schlanken Aufbau sehr geeignet kryptographische Prinzipien und Verfahren auf einfache Art demonstrieren zu können. Darüber hinaus können an ihnen gut verschiedene Angriffe und Analyseverfahren wie beispielsweise differenzielle Kryptoanalyse durchgeführt werden. In den folgenden Abschnitten werden die verfügbaren ToyChiffren beschrieben:
+  <section headline="ToyChiffre 1">
+  ToyChiffre 1 ist eine symmetrische Blockchiffre, welche auf 16 Bit großen Blöcken arbeitet. Es wird eine Verschlüsselungsrunde ausgeführt mit zwei je 16 Bit großen Rundenschlüsseln. Die Verschlüsselungsrunde besteht aus Schlüssel-Addition und Substitution durch vier parallele SBoxen. Die SBoxen arbeiten jeweils auf 4 Bit großen Blöcken. In der Präsentation der Komponente ist ToyChiffre 1 graphisch dargestellt. Darin enthalten ist die Funktionsweise der SBox. Diese Chiffre orientiert sich an der Chiffre "CIPHERONE" in [2].
+  </section>
+  <section headline="ToyChiffre 2">
+  ToyChiffre 2 ist eine symmetrische Blockchiffre, welche auf 16 Bit großen Blöcken arbeitet. Es werden drei Verschlüsselungsrunden ausgeführt, wobei die Rundenschlüssel je 16 Bit groß sind. Die Verschlüsselungsrunden bestehen aus Schlüssel-Addition, Permutation und Substitution durch vier parallele SBoxen. In der letzten Verschlüsselungsrunde entfällt die Permutation und es werden zwei Rundenschlüssel verwendet. Die SBoxen arbeiten jeweils auf 4 Bit großen Blöcken. In der Präsentation der Komponente ist ToyChiffre 2 graphisch dargestellt. Darin enthalten ist die Funktionsweise der SBox und Permutation. Diese Chiffre ist in [1] beschrieben.
+  </section>
+  <section headline="ToyChiffre 3">
+  ToyChiffre 3 ist eine symmetrische Blockchiffre, welche auf 16 Bit großen Blöcken arbeitet. Es werden fünf Verschlüsselungsrunden ausgeführt, wobei die Rundenschlüssel je 16 Bit groß sind. Die Verschlüsselungsrunden bestehen aus Schlüssel-Addition, Permutation und Subsitution durch vier parallele SBoxen. In der letzten Verschlüsselungsrunde entfällt die Permutation und es werden zwei Rundenschlüssel verwendet. Die SBoxen arbeiten jeweils auf 4 Bit großen Blöcken. In der Präsentation der Komponente ist die ToyChiffre 3 graphisch dargestellt. Darin enthalten ist die Funktionsweise der SBox und Permutation. Diese Chiffre ist in [2] mit dem Namen "CIPHERFOUR" beschrieben.
+  </section>
+  <section headline="ToyChiffre 4">
+  ToyChiffre 4 ist eine symmetrische Blockchiffre, welche auf 4 Bit großen Blöcken arbeitet. Es werden 3 Verschlüsselungsrunden ausgeführt, wobei die Rundenschlüssel je 4 Bit groß sind. Die Verschlüsselungsrunden bestehen aus Schlüssel-Addition und Substitution. In der Präsentation der Komponente ist ToyChiffre 4 graphisch dargestellt. Darin enthalten ist die Funktionsweise der SBox. Diese Chiffre ist in [2] mit dem Namen "CIPHERTHREE" beschrieben.
+  </section>
   </introduction>
 
   <usage lang="en">
+  First, an algorithm is selected in the configuration of the ToyCipher component. Depending on the selection, keys of different lengths must be specified. In addition, input messages can be specified, which will be encrypted by the component. The key length can be found in this documentation or in the presentation of the component itself.
   </usage>
 
   <usage lang="de-DE">
+  Zunächst wird in der Konfiguration der ToyChiffre-Komponente ein Algorithmus ausgewählt. In Abhängigkeit der Auswahl müssen verschieden lange Schlüssel angegeben werden. Des weiteren können Eingabenachrichten angegeben werden, welche durch die Komponente dann verschlüsselt ausgegeben werden. Die Schlüssellänge kann in dieser Dokumentation oder in der Präsentation der Komponente selbst entnommen werden.
   </usage>
   
   <presentation lang="en">
+  The ToyCipher component contains a graphical presentation. In this presentation a short description in textual and graphical form is given for each ToyCipher. The views can be switched via a button
   </presentation>
   
   <presentation lang="de-DE">
+  Die ToyChiffre-Komponente enthält eine graphische Präsentation. In dieser wird zu jeder ToyChiffre eine kurze Beschreibung in textueller und graphischer Form gegeben. Die Ansichten können über einen Button umgeschaltet werden.
   </presentation>
   
   <references>
+  <linkReference>
+      <link url="https://pdfs.semanticscholar.org/dee2/23a06f16f6d6939b363d56b6af5a2c9edbee.pdf" lang="en" />
+      <caption lang="en">DIFFERENTIAL CRYPTANALYSIS FOR A 3-ROUND SPN</caption>
+      <link url="https://pdfs.semanticscholar.org/dee2/23a06f16f6d6939b363d56b6af5a2c9edbee.pdf" lang="de-DE" />
+      <caption lang="de-DE">DIFFERENTIAL CRYPTANALYSIS FOR A 3-ROUND SPN</caption>
+    </linkReference>
+	<linkReference>
+      <link url="https://www.springer.com/de/book/9783642173417" lang="en" />
+      <caption lang="en">The Block Cipher Companion</caption>
+      <link url="https://www.springer.com/de/book/9783642173417" lang="de-DE" />
+      <caption lang="de-DE">The Block Cipher Companion</caption>
+    </linkReference>
   </references>
 </documentation>

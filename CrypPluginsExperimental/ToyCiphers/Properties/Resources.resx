@@ -195,10 +195,10 @@
     <value>The permutation swaps the fixed position i of an input bit to a position j in the output. The following table describes the permutation, with the first line representing the decimal position of a bit in the input and the second line representing the position of the corresponding bit in the output.</value>
   </data>
   <data name="DescSBox" xml:space="preserve">
-    <value>The SBox substitutes fixed input bits for other output bits. The following table describes the SBox, where the first line represents the decimal representation of the input bits and the second line represents the decimal representation of the output bits.</value>
+    <value>The SBox substitutes fixed input bits for other output bits. The following table describes the SBox, where the first line represents the value of the input bits and the second line represents the output bits.</value>
   </data>
   <data name="HeaderPermutation" xml:space="preserve">
-    <value>Table of the Permutation:</value>
+    <value>Table of the permutation:</value>
   </data>
   <data name="HeaderSBox" xml:space="preserve">
     <value>Table of the SBox:</value>
@@ -215,8 +215,11 @@
   <data name="KeyInputTooltip" xml:space="preserve">
     <value>This input contains the key with which the message is encrypted</value>
   </data>
+  <data name="MessageError" xml:space="preserve">
+    <value>The messages entered are too small or too large. Please check the requirements of this cipher.</value>
+  </data>
   <data name="MessageInput" xml:space="preserve">
-    <value>Input for a messages to be encrypted</value>
+    <value>Input for messages to be encrypted</value>
   </data>
   <data name="MessageInputTooltip" xml:space="preserve">
     <value>The messages present at this input will be encrypted and will be outputted</value>
@@ -231,10 +234,10 @@
     <value>Output</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>DCA ToyCiphers</value>
+    <value>DCA ToyCipher</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>The ToyCiphers component contains various algorithms for encrypting information. The algorithms are very simple and short to demonstrate certain things.</value>
+    <value>The ToyCipher component contains various algorithms for text encryption. The algorithms are very simple and short to demonstrate cryptographic principles or cryptoanalytical methods.</value>
   </data>
   <data name="TablePermutationInput" xml:space="preserve">
     <value>Position of input</value>

@@ -288,7 +288,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The SBox substitutes fixed input bits for other output bits. The following table describes the SBox, where the first line represents the decimal representation of the input bits and the second line represents the decimal representation of the output bits. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The SBox substitutes fixed input bits for other output bits. The following table describes the SBox, where the first line represents the value of the input bits and the second line represents the output bits. ähnelt.
         /// </summary>
         internal static string DescSBox {
             get {
@@ -297,7 +297,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Table of the Permutation: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Table of the permutation: ähnelt.
         /// </summary>
         internal static string HeaderPermutation {
             get {
@@ -351,7 +351,16 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input for a messages to be encrypted ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The messages entered are too small or too large. Please check the requirements of this cipher. ähnelt.
+        /// </summary>
+        internal static string MessageError {
+            get {
+                return ResourceManager.GetString("MessageError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input for messages to be encrypted ähnelt.
         /// </summary>
         internal static string MessageInput {
             get {
@@ -396,7 +405,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die DCA ToyCiphers ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die DCA ToyCipher ähnelt.
         /// </summary>
         internal static string PluginCaption {
             get {
@@ -405,7 +414,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The ToyCiphers component contains various algorithms for encrypting information. The algorithms are very simple and short to demonstrate certain things. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The ToyCipher component contains various algorithms for text encryption. The algorithms are very simple and short to demonstrate cryptographic principles or cryptoanalytical methods. ähnelt.
         /// </summary>
         internal static string PluginTooltip {
             get {

@@ -1,20 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿/*
+   Copyright 2019 Christian Bender christian1.bender@student.uni-siegen.de
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ToyCiphers.UI
 {
@@ -25,6 +30,11 @@ namespace ToyCiphers.UI
     public partial class Cipher4Pres : UserControl, INotifyPropertyChanged
     {
         private ObservableCollection<TableMapping> sboxData;
+        private int[] _keys;
+        private string _currentK0;
+        private string _currentK1;
+        private string _currentK2;
+        private string _currentK3;
 
         /// <summary>
         /// Constructor
@@ -73,6 +83,8 @@ namespace ToyCiphers.UI
                 FifteenOutput = 8
             });
 
+
+
             DataContext = this;
             InitializeComponent();
         }
@@ -86,7 +98,85 @@ namespace ToyCiphers.UI
             set
             {
                 sboxData = value;
-                OnPropertyChanged("SBoxData");
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Property for the keys
+        /// </summary>
+        public int[] Keys
+        {
+            get { return _keys; }
+            set
+            {
+                _keys = value;
+                UInt16 keyTemp = Convert.ToUInt16(_keys[0]);
+
+                CurrentK0 = Convert.ToString(keyTemp, 2).PadLeft(4, '0');
+
+                keyTemp = Convert.ToUInt16(_keys[1]);
+                CurrentK1 = Convert.ToString(keyTemp, 2).PadLeft(4, '0');
+
+                keyTemp = Convert.ToUInt16(_keys[2]);
+                CurrentK2 = Convert.ToString(keyTemp, 2).PadLeft(4, '0');
+
+                keyTemp = Convert.ToUInt16(_keys[3]);
+                CurrentK3 = Convert.ToString(keyTemp, 2).PadLeft(4, '0');
+
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Property for binding K0
+        /// </summary>
+        public string CurrentK0
+        {
+            get { return _currentK0; }
+            set
+            {
+                _currentK0 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Property for binding K1
+        /// </summary>
+        public string CurrentK1
+        {
+            get { return _currentK1; }
+            set
+            {
+                _currentK1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Property for binding K2
+        /// </summary>
+        public string CurrentK2
+        {
+            get { return _currentK2; }
+            set
+            {
+                _currentK2 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Property for binding K3
+        /// </summary>
+        public string CurrentK3
+        {
+            get { return _currentK3; }
+            set
+            {
+                _currentK3 = value;
+                OnPropertyChanged();
             }
         }
 
