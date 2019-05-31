@@ -127,7 +127,7 @@
     <value>At this point one of the algorithms contained in the list can be selected. This algorithm can be examined by differential cryptanalysis.</value>
   </data>
   <data name="Cipher1" xml:space="preserve">
-    <value>16 bit blocksize, 2 subkeys, the key consists of 32 bit</value>
+    <value>Cipher 1: 16 bit blocksize, 2 subkeys, the key consists of 32 bit</value>
   </data>
   <data name="Cipher1LblHeading" xml:space="preserve">
     <value>Cipher 1</value>
@@ -142,7 +142,7 @@
     <value>This block cipher works on 16 bit blocks. One encryption round is executed using a total of two round keys. The following steps are performed in the encryption round: Key addition, substitution and key addition. The round keys have a size of 16 bits, the SBoxes each process 4 bits. The key is thus 32 bits in size.</value>
   </data>
   <data name="Cipher2" xml:space="preserve">
-    <value>16 bit blocksize, 4 subkeys, the key consists of 64 bit</value>
+    <value>Cipher 2: 16 bit blocksize, 4 subkeys, the key consists of 64 bit</value>
   </data>
   <data name="Cipher2LblHeading" xml:space="preserve">
     <value>Cipher 2</value>
@@ -157,7 +157,7 @@
     <value>This block cipher works on 16 bit blocks. Three encryption rounds are performed, whereby a total of four round keys are used. Two round keys are used in the last encryption round. Each round consists of three sub-steps: key addition, substitution and permutation - in the last round the permutation is omitted. The round keys have a size of 16 bits, the SBoxes each process 4 bits. The key is thus 64 bits in size.</value>
   </data>
   <data name="Cipher3" xml:space="preserve">
-    <value>16 bit blocksize, 6 subkeys, the key consists of 96 bit</value>
+    <value>Cipher 3: 16 bit blocksize, 6 subkeys, the key consists of 96 bit</value>
   </data>
   <data name="Cipher3LblHeading" xml:space="preserve">
     <value>Cipher 3</value>
@@ -174,7 +174,7 @@
 </value>
   </data>
   <data name="Cipher4" xml:space="preserve">
-    <value>4 bit blocksize, 4 subkeys, the key consists of 16 bit</value>
+    <value>Cipher 4: 4 bit blocksize, 4 subkeys, the key consists of 16 bit</value>
   </data>
   <data name="Cipher4LblHeading" xml:space="preserve">
     <value>Cipher 4</value>

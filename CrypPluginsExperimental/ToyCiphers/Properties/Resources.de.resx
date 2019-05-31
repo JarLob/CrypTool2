@@ -127,7 +127,7 @@
     <value>An dieser Stelle kann einer der in der Liste enthaltenen Algorithmen ausgewählt werden. Dieser kann mittels differenzieller Kryptoanalyse untersucht werden.</value>
   </data>
   <data name="Cipher1" xml:space="preserve">
-    <value>16 Bit Blockgröße, 2 Rundenschlüssel, der Schlüssel ist 32 Bit groß</value>
+    <value>Ciffre 1: 16 Bit Blockgröße, 2 Rundenschlüssel, der Schlüssel ist 32 Bit groß</value>
   </data>
   <data name="Cipher1LblHeading" xml:space="preserve">
     <value>Chiffre 1</value>
@@ -142,7 +142,7 @@
     <value>Diese Blockchiffre arbeitet auf 16 Bit großen Blöcken. Es wird eine Verschlüsselungsrunde ausgeführt, wobei insgesamt zwei Rundenschlüssel verwendet werden. In der Verschlüsselungsrunde werden folgende Schritte durchgeführt: Schlüsseladdidtion, Substitution und Schlüsseladdition. Die Rundenschlüssel sind 16 Bit groß, die SBoxen verarbeiten jeweils 4 Bit. Der Schlüssel ist damit 32 Bit groß.</value>
   </data>
   <data name="Cipher2" xml:space="preserve">
-    <value>16 Bit Blockgröße, 4 Rundenschlüssel, der Schlüssel ist 64 Bit groß</value>
+    <value>Chiffre 2: 16 Bit Blockgröße, 4 Rundenschlüssel, der Schlüssel ist 64 Bit groß</value>
   </data>
   <data name="Cipher2LblHeading" xml:space="preserve">
     <value>Chiffre 2</value>
@@ -157,7 +157,7 @@
     <value>Diese Blockchiffre arbeitet auf 16 Bit großen Blöcken. Es werden drei Verschlüsselungsrunden durchgeführt, wobei insgesamt vier Rundenschlüssel verwendet werden. In der letzten Verschlüsselungsrunde werden zwei Rundenschlüssel angewandt. Jede Runde besteht aus drei Teilschritten: Schlüsseladdition, Substitution und Permutation - in der letzten Runde entfällt die Permutation und es wird der letzte Rundenschlüssel addiert. Die Rundenschlüssel sind 16 Bit groß, die SBoxen verarbeiten jeweils 4 Bit. Der Schlüssel ist damit 64 Bit groß.</value>
   </data>
   <data name="Cipher3" xml:space="preserve">
-    <value>16 Bit Blockgröße, 6 Rundenschlüssel, der Schlüssel ist 96 Bit groß</value>
+    <value>Chiffre 3: 16 Bit Blockgröße, 6 Rundenschlüssel, der Schlüssel ist 96 Bit groß</value>
   </data>
   <data name="Cipher3LblHeading" xml:space="preserve">
     <value>Chiffre 3</value>
@@ -172,7 +172,7 @@
     <value>Diese Blockchiffre arbeitet auf 16 Bit großen Blöcken. Es werden 5 Verschlüsselungsrunden durchgeführt, wobei insgesamt sechs Rundenschlüssel verwendet werden. In der letzten Verschlüsselungsrunde werden zwei Rundenschlüssel angewandt. Jede Runde besteht aus drei Teilschritten: Schlüsseladdition, Substitution und Permutation - in der letzten Runde entfält die Permutation und es wird der letzte Rundenschlüssel addiert. Die Rundenschlüssel sind 16 Bit groß, die SBoxen verarbeiten jeweils 4 Bit. Der Schlüssel ist damit 96 Bit groß.</value>
   </data>
   <data name="Cipher4" xml:space="preserve">
-    <value>4 Bit Blockgröße , 4 Rundenschlüssel, der Schlüssel ist 16 Bit groß</value>
+    <value>Chiffre 4: 4 Bit Blockgröße , 4 Rundenschlüssel, der Schlüssel ist 16 Bit groß</value>
   </data>
   <data name="Cipher4LblHeading" xml:space="preserve">
     <value>Chiffre 4</value>
@@ -236,6 +236,12 @@
   </data>
   <data name="SingleMessageOutputTooltip" xml:space="preserve">
     <value>An diesem Ausgang wird eine verschlüsselte Nachricht ausgegeben</value>
+  </data>
+  <data name="StartMaskContent1" xml:space="preserve">
+    <value>Durch Starten des Workspaces beginnt die differenzielle Kryptoanalyse. Zunächst wird in dieser Komponente die Chiffre analysiert. In der "Pfad</value>
+  </data>
+  <data name="StartMaskHeader" xml:space="preserve">
+    <value>Bereit zur Ausführung</value>
   </data>
   <data name="TablePermutationInput" xml:space="preserve">
     <value>Position in Eingabe</value>

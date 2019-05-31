@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BtnSkipChapter" xml:space="preserve">
+    <value>Kapitel überspringen</value>
+  </data>
   <data name="ChoiceOfAlgorithm" xml:space="preserve">
     <value>Wahl des Algorithmus</value>
   </data>
@@ -124,16 +127,40 @@
     <value>An dieser Stelle kann einer der in der Liste enthaltenen Algorithmen ausgewählt werden. Dieser kann mittels differenzieller Kryptoanalyse untersucht werden.</value>
   </data>
   <data name="Cipher1" xml:space="preserve">
-    <value>16 Bit Blockgröße, 2 Rundenschlüssel, der Schlüssel ist 32 Bit groß</value>
+    <value>Chiffre 1: 16 Bit Blockgröße, 2 Rundenschlüssel, der Schlüssel ist 32 Bit groß</value>
   </data>
   <data name="Cipher2" xml:space="preserve">
-    <value>16 Bit Blockgröße, 4 Rundenschlüssel, der Schlüssel ist 64 Bit groß</value>
+    <value>Chiffre 2: 16 Bit Blockgröße, 4 Rundenschlüssel, der Schlüssel ist 64 Bit groß</value>
   </data>
   <data name="Cipher3" xml:space="preserve">
-    <value>16 Bit Blockgröße, 6 Rundenschlüssel, der Schlüssel ist 96 Bit groß</value>
+    <value>Chiffre 3: 16 Bit Blockgröße, 6 Rundenschlüssel, der Schlüssel ist 96 Bit groß</value>
   </data>
   <data name="Cipher4" xml:space="preserve">
-    <value>4 Bit Blockgröße , 4 Rundenschlüssel, der Schlüssel ist 16 Bit groß</value>
+    <value>Chiffre 4: 4 Bit Blockgröße , 4 Rundenschlüssel, der Schlüssel ist 16 Bit groß</value>
+  </data>
+  <data name="DescriptionContent1" xml:space="preserve">
+    <value>In den Einstellungen dieser Komponente können Sie zwischen den Tutorials wechseln. Es folgt eine kurze Beschreibung der Chiffren der einzelnen Teile des Tutorials:</value>
+  </data>
+  <data name="DescriptionContent2" xml:space="preserve">
+    <value>Tutorial 1 verwendet Chiffre 1 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet zwei Rundenschlüssel. Es wird eine Verschlüsselungsrunde ausgeführt. In diesem Tutorial werden zwei unbekannte je 16 Bit große Rundenschlüssel wiederhergestellt.</value>
+  </data>
+  <data name="DescriptionContent3" xml:space="preserve">
+    <value>Tutorial 2 verwendet Chiffre 2 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet vier Rundenschlüssel. Es werden drei Verschlüsselungsrunden ausgeführt. In diesem Tutorial werden vier unbekannte je 16 Bit große Rundenschlüssel wiederhergestellt.</value>
+  </data>
+  <data name="DescriptionContent4" xml:space="preserve">
+    <value>Tutorial 3 verwendet Chiffre 3 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet sechs Rundenschlüssel. Es werden fünf Verschlüsselungsrunden ausgeführt. In diesem Tutorial werden sechs unbekannte je 16 Bit große Rundenschlüssel wiederhergestellt.</value>
+  </data>
+  <data name="DescriptionHeader" xml:space="preserve">
+    <value>Beschreibung der Tutorials</value>
+  </data>
+  <data name="DescriptionSubHeader1" xml:space="preserve">
+    <value>Tutorial 1</value>
+  </data>
+  <data name="DescriptionSubHeader2" xml:space="preserve">
+    <value>Tutorial 2</value>
+  </data>
+  <data name="DescriptionSubHeader3" xml:space="preserve">
+    <value>Tutorial 3</value>
   </data>
   <data name="ExpectedDifferential" xml:space="preserve">
     <value>Erwartete Differenz</value>
@@ -146,6 +173,27 @@
   </data>
   <data name="MessageCountToolTip" xml:space="preserve">
     <value>Die Nachrichtenanzahl spezifiziert die Anzahl an Nachrichten, die das Orakel generieren soll</value>
+  </data>
+  <data name="OverviewContent1" xml:space="preserve">
+    <value>Herzlich Willkommen zum Tutorial zur differenziellen Kryptoanalyse. Dieses Verfahren zur Analyse rundenbasierter symmetrischer Blockchiffren hat das Ziel, einzelne Bits bis hin zu vollständigen Rundenschlüsseln wiederherzustellen. Veröffentlicht wurde dieses Verfahren 1991 von den zwei israelischen Forschern Eli Biham und Adi Shamir. </value>
+  </data>
+  <data name="OverviewContent2" xml:space="preserve">
+    <value>In diesem Tutorial wird dieses Verfahren in drei Teilen präsentiert. Teil eins vermittelt die Grundlegende Idee der differenziellen Kryptoanalyse durch die Analyse einer Chiffre mit einer Verschlüsselungsrunde. Teil zwei beschreibt erweitert diese Idee auf drei Verschlüsselungsrunden. In Teil drei wird das vermittelte Wissen vertieft durch Erhöhung der Komplexität der Chiffre auf 5 Verschlüsselungsrunden.</value>
+  </data>
+  <data name="OverviewContent3" xml:space="preserve">
+    <value>In der Konfiguration dieser Komponente können die verschiedenen Teile des Tutorials ausgewählt werden.</value>
+  </data>
+  <data name="OverviewContent4" xml:space="preserve">
+    <value>Viel Spaß beim ausprobieren und brechen der Chiffren!</value>
+  </data>
+  <data name="OverviewHeader" xml:space="preserve">
+    <value>Differenzielle Kryptoanalyse Tutorial</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Pfad der Charakteristik</value>
+  </data>
+  <data name="PathToolTip" xml:space="preserve">
+    <value>Diese Werte beschreiben den Fluss der Differenzwerte durch eine Chiffre.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>DCA PfadFinder</value>

@@ -78,6 +78,15 @@
     <Compile Include="UI\DCAPathFinderPres.xaml.cs">
       <DependentUpon>DCAPathFinderPres.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Overview.xaml.cs">
+      <DependentUpon>Overview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\StartMask.xaml.cs">
+      <DependentUpon>StartMask.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\TutorialDescriptions.xaml.cs">
+      <DependentUpon>TutorialDescriptions.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CrypPluginBase\CrypPluginBase.csproj">
@@ -121,6 +130,25 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\Overview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\StartMask.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\TutorialDescriptions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UI\Controls\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\next-button.png" />
+    <Resource Include="Images\prev-button.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

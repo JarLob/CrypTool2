@@ -88,7 +88,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 16 bit blocksize, 2 subkeys, the key consists of 32 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 1: 16 bit blocksize, 2 subkeys, the key consists of 32 bit ähnelt.
         /// </summary>
         internal static string Cipher1 {
             get {
@@ -133,7 +133,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 16 bit blocksize, 4 subkeys, the key consists of 64 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 2: 16 bit blocksize, 4 subkeys, the key consists of 64 bit ähnelt.
         /// </summary>
         internal static string Cipher2 {
             get {
@@ -178,7 +178,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 16 bit blocksize, 6 subkeys, the key consists of 96 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 3: 16 bit blocksize, 6 subkeys, the key consists of 96 bit ähnelt.
         /// </summary>
         internal static string Cipher3 {
             get {
@@ -225,7 +225,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 4 bit blocksize, 4 subkeys, the key consists of 16 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 4: 4 bit blocksize, 4 subkeys, the key consists of 16 bit ähnelt.
         /// </summary>
         internal static string Cipher4 {
             get {

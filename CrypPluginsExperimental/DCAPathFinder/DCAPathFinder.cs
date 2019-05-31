@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using System;
 using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
@@ -33,10 +34,25 @@ namespace Cryptool.Plugins.DCAPathFinder
         private readonly DCAPathFinderPres pres = new DCAPathFinderPres();
         private int _expectedDifferential;
         private int _messageCount;
+        private int[] _path;
 
         #endregion
 
         #region Data Properties
+
+        /// <summary>
+        /// This output describes the characteristic path
+        /// </summary>
+        [PropertyInfo(Direction.OutputData, "Path", "PathToolTip")]
+        public int[] Path
+        {
+            get { return _path; }
+            set
+            {
+                _path = value;
+                OnPropertyChanged("Path");
+            }
+        }
 
         /// <summary>
         /// This output describes the expected value

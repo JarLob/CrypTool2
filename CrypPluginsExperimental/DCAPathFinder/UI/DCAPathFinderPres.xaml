@@ -7,6 +7,26 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Label HorizontalAlignment="Center" Content="DCA PathFinder" ></Label>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+        </Grid.RowDefinitions>
+        <!-- Viewbox for Content -->
+        <Viewbox Grid.Row="0" Name="ContentViewBox" VerticalAlignment="Top" Stretch="Uniform">
+
+        </Viewbox>
+        <!-- Footer of the slides -->
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button Name="BtnPrevious" HorizontalAlignment="Center" Margin="5,0,5,0" Click="BtnPreviousClicked">
+                <Image Source="/DCAPathFinder;component/images/prev-button.png"/>
+            </Button>
+            <Button Name="BtnNext" HorizontalAlignment="Center" Margin="5,0,5,0" Click="BtnNextClicked">
+                <Image Source="/DCAPathFinder;component/images/next-button.png"/>
+            </Button>
+            <Button Name="BtnSkip" Content="{Loc BtnSkipChapter}" HorizontalAlignment="Center" Margin="5,0,5,0"></Button>
+        </StackPanel>
     </Grid>
 </UserControl>

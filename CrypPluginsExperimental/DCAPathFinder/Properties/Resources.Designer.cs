@@ -61,6 +61,15 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Skip chapter ähnelt.
+        /// </summary>
+        internal static string BtnSkipChapter {
+            get {
+                return ResourceManager.GetString("BtnSkipChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Choice of the algorithm ähnelt.
         /// </summary>
         internal static string ChoiceOfAlgorithm {
@@ -79,7 +88,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 16 bit blocksize, 2 subkeys, the key consists of 32 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 1: 16 bit blocksize, 2 subkeys, the key consists of 32 bit ähnelt.
         /// </summary>
         internal static string Cipher1 {
             get {
@@ -88,7 +97,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 16 bit blocksize, 4 subkeys, the key consists of 64 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 2: 16 bit blocksize, 4 subkeys, the key consists of 64 bit ähnelt.
         /// </summary>
         internal static string Cipher2 {
             get {
@@ -97,7 +106,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 16 bit blocksize, 6 subkeys, the key consists of 96 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 3: 16 bit blocksize, 6 subkeys, the key consists of 96 bit ähnelt.
         /// </summary>
         internal static string Cipher3 {
             get {
@@ -106,11 +115,83 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 4 bit blocksize, 4 subkeys, the key consists of 16 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 4: 4 bit blocksize, 4 subkeys, the key consists of 16 bit ähnelt.
         /// </summary>
         internal static string Cipher4 {
             get {
                 return ResourceManager.GetString("Cipher4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die In the settings of this component, you can switch between the tutorials. The following is a short description of the ciphers of the individual parts of the tutorial: ähnelt.
+        /// </summary>
+        internal static string DescriptionContent1 {
+            get {
+                return ResourceManager.GetString("DescriptionContent1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 1 uses cipher 1 of the ToyChiffren component. This cipher works on 16 bit blocks and uses two round keys. One encryption round is executed. In this tutorial two unknown 16 bit round keys are restored. ähnelt.
+        /// </summary>
+        internal static string DescriptionContent2 {
+            get {
+                return ResourceManager.GetString("DescriptionContent2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 2 uses cipher 2 of the ToyChiffren component. This cipher works on 16 bit blocks and uses four round keys. Three encryption rounds are executed. In this tutorial four unknown 16 bit roundkeys are restored. ähnelt.
+        /// </summary>
+        internal static string DescriptionContent3 {
+            get {
+                return ResourceManager.GetString("DescriptionContent3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 3 uses cipher 3 of the ToyChiffren component. This cipher works on 16 bit blocks and uses six round keys. Five encryption rounds are executed. In this tutorial six unknown 16 bit round keys are restored. ähnelt.
+        /// </summary>
+        internal static string DescriptionContent4 {
+            get {
+                return ResourceManager.GetString("DescriptionContent4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Description of the Tutorials ähnelt.
+        /// </summary>
+        internal static string DescriptionHeader {
+            get {
+                return ResourceManager.GetString("DescriptionHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 1 ähnelt.
+        /// </summary>
+        internal static string DescriptionSubHeader1 {
+            get {
+                return ResourceManager.GetString("DescriptionSubHeader1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 2 ähnelt.
+        /// </summary>
+        internal static string DescriptionSubHeader2 {
+            get {
+                return ResourceManager.GetString("DescriptionSubHeader2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 3 ähnelt.
+        /// </summary>
+        internal static string DescriptionSubHeader3 {
+            get {
+                return ResourceManager.GetString("DescriptionSubHeader3", resourceCulture);
             }
         }
         
@@ -151,6 +232,69 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Welcome to the differential cryptanalysis tutorial. This method for the analysis of turn-based symmetric block ciphers aims at recovering single bits up to complete lap keys. This procedure was published in 1991 by the two Israeli researchers, Eli Biham and Adi Shamir. ähnelt.
+        /// </summary>
+        internal static string OverviewContent1 {
+            get {
+                return ResourceManager.GetString("OverviewContent1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die In this tutorial this procedure is presented in three parts. Part one teaches the basic idea of differential cryptanalysis by analyzing a cipher with an encryption round. Part two expands this idea to three encryption rounds. In part three the knowledge is deepened by increasing the complexity of the cipher to 5 encryption rounds. ähnelt.
+        /// </summary>
+        internal static string OverviewContent2 {
+            get {
+                return ResourceManager.GetString("OverviewContent2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die In the configuration of this component the different parts of the tutorial can be selected. ähnelt.
+        /// </summary>
+        internal static string OverviewContent3 {
+            get {
+                return ResourceManager.GetString("OverviewContent3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Have fun trying out and breaking the ciphers! ähnelt.
+        /// </summary>
+        internal static string OverviewContent4 {
+            get {
+                return ResourceManager.GetString("OverviewContent4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differential Cryptanalysis Tutorial ähnelt.
+        /// </summary>
+        internal static string OverviewHeader {
+            get {
+                return ResourceManager.GetString("OverviewHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Path of the characteristic ähnelt.
+        /// </summary>
+        internal static string Path {
+            get {
+                return ResourceManager.GetString("Path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die These values describe the flow of the difference values through a cipher.  ähnelt.
+        /// </summary>
+        internal static string PathToolTip {
+            get {
+                return ResourceManager.GetString("PathToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die DCA PathFinder ähnelt.
         /// </summary>
         internal static string PluginCaption {
@@ -165,15 +309,6 @@ namespace DCAPathFinder.Properties {
         internal static string PluginTooltip {
             get {
                 return ResourceManager.GetString("PluginTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
-        /// </summary>
-        internal static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
     }

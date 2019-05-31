@@ -200,6 +200,8 @@ namespace Cryptool.Plugins.ToyCiphers
                 }
             }
 
+            ProgressChanged(0.05, 1);
+
             if (!_subkeysSatisfied)
             {
                 GuiLogMessage(Resources.KeyError, NotificationLevel.Error);
@@ -232,19 +234,26 @@ namespace Cryptool.Plugins.ToyCiphers
                 messageList.Add(message);
             }
 
+            ProgressChanged(0.1, 1);
+
+            double step = 0.8 / messageList.Count;
+            double current = 0.1;
+
             //encrypt all messages
             foreach (var message in messageList)
             {
                 int encryptedMessage = _currentCipher.EncryptBlock(message);
                 encryptedMessageList.Add(Convert.ToUInt16(encryptedMessage));
+                current += step;
+                ProgressChanged(current, 1);
             }
             
             //write all messages to the output
             using (CStreamWriter writer = new CStreamWriter())
             {
-                foreach (var enctyptedMessage in encryptedMessageList)
+                foreach (var encryptedMessage in encryptedMessageList)
                 {
-                    byte[] outputBlock = BitConverter.GetBytes(enctyptedMessage);
+                    byte[] outputBlock = BitConverter.GetBytes(encryptedMessage);
                     writer.Write(outputBlock, 0, outputBlock.Length);
                 }
 
