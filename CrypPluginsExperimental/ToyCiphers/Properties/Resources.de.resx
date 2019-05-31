@@ -124,7 +124,7 @@
     <value>Wahl des Algorithmus</value>
   </data>
   <data name="ChoiceOfAlgorithmToolTop" xml:space="preserve">
-    <value>An dieser Stelle kann einer der in der Liste enthaltenen Algorithmen ausgewählt werden. Dieser kann mittels differenzieller Kryptoanalyse untersucht werden.</value>
+    <value>Hier können Sie einen der in der Liste enthaltenen Algorithmen auswählen. Dieser kann dann mittels differenzieller Kryptoanalyse untersucht werden.</value>
   </data>
   <data name="Cipher1" xml:space="preserve">
     <value>Ciffre 1: 16 Bit Blockgröße, 2 Rundenschlüssel, der Schlüssel ist 32 Bit groß</value>

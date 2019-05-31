@@ -142,13 +142,13 @@
     <value>In den Einstellungen dieser Komponente können Sie zwischen den Tutorials wechseln. Es folgt eine kurze Beschreibung der Chiffren der einzelnen Teile des Tutorials:</value>
   </data>
   <data name="DescriptionContent2" xml:space="preserve">
-    <value>Tutorial 1 verwendet Chiffre 1 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet zwei Rundenschlüssel. Es wird eine Verschlüsselungsrunde ausgeführt. In diesem Tutorial werden zwei unbekannte je 16 Bit große Rundenschlüssel wiederhergestellt.</value>
+    <value>Tutorial 1 verwendet Chiffre 1 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet zwei Rundenschlüssel. Es wird eine Verschlüsselungsrunde ausgeführt. In diesem Tutorial werden zwei unbekannte, je 16 Bit große Rundenschlüssel wiederhergestellt.</value>
   </data>
   <data name="DescriptionContent3" xml:space="preserve">
-    <value>Tutorial 2 verwendet Chiffre 2 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet vier Rundenschlüssel. Es werden drei Verschlüsselungsrunden ausgeführt. In diesem Tutorial werden vier unbekannte je 16 Bit große Rundenschlüssel wiederhergestellt.</value>
+    <value>Tutorial 2 verwendet Chiffre 2 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet vier Rundenschlüssel. Es werden drei Verschlüsselungsrunden ausgeführt. In diesem Tutorial werden vier unbekannte, je 16 Bit große Rundenschlüssel wiederhergestellt.</value>
   </data>
   <data name="DescriptionContent4" xml:space="preserve">
-    <value>Tutorial 3 verwendet Chiffre 3 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet sechs Rundenschlüssel. Es werden fünf Verschlüsselungsrunden ausgeführt. In diesem Tutorial werden sechs unbekannte je 16 Bit große Rundenschlüssel wiederhergestellt.</value>
+    <value>Tutorial 3 verwendet Chiffre 3 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet sechs Rundenschlüssel. Es werden fünf Verschlüsselungsrunden ausgeführt. In diesem Tutorial werden sechs unbekannte, je 16 Bit große Rundenschlüssel wiederhergestellt.</value>
   </data>
   <data name="DescriptionHeader" xml:space="preserve">
     <value>Beschreibung der Tutorials</value>
@@ -172,22 +172,22 @@
     <value>Nachrichtenanzahl</value>
   </data>
   <data name="MessageCountToolTip" xml:space="preserve">
-    <value>Die Nachrichtenanzahl spezifiziert die Anzahl an Nachrichten, die das Orakel generieren soll</value>
+    <value>Anzahl an Nachrichten, die das Orakel generieren soll</value>
   </data>
   <data name="OverviewContent1" xml:space="preserve">
-    <value>Herzlich Willkommen zum Tutorial zur differenziellen Kryptoanalyse. Dieses Verfahren zur Analyse rundenbasierter symmetrischer Blockchiffren hat das Ziel, einzelne Bits bis hin zu vollständigen Rundenschlüsseln wiederherzustellen. Veröffentlicht wurde dieses Verfahren 1991 von den zwei israelischen Forschern Eli Biham und Adi Shamir. </value>
+    <value>Herzlich willkommen zum Tutorial zur differenziellen Kryptoanalyse. Dieses Verfahren zur Analyse rundenbasierter symmetrischer Blockchiffren hat das Ziel, einzelne Bits bis hin zu vollständigen Rundenschlüsseln wiederherzustellen. Veröffentlicht wurde dieses Verfahren 1991 von den zwei israelischen Forschern Eli Biham und Adi Shamir. </value>
   </data>
   <data name="OverviewContent2" xml:space="preserve">
-    <value>In diesem Tutorial wird dieses Verfahren in drei Teilen präsentiert. Teil eins vermittelt die Grundlegende Idee der differenziellen Kryptoanalyse durch die Analyse einer Chiffre mit einer Verschlüsselungsrunde. Teil zwei beschreibt erweitert diese Idee auf drei Verschlüsselungsrunden. In Teil drei wird das vermittelte Wissen vertieft durch Erhöhung der Komplexität der Chiffre auf 5 Verschlüsselungsrunden.</value>
+    <value>Dieses Tutorial handelt das DCA-Verfahren in drei Teilen. Teil 1 vermittelt die grundlegende Idee der differenziellen Kryptoanalyse (DCA) anhand einer Chiffre mit einer Verschlüsselungsrunde. Teil 2 vertieft diese Idee anhand einer Chiffre mit drei Verschlüsselungsrunden. In Teil drei wird das vermittelte Wissen vertieft durch Erhöhung der Komplexität der Chiffre auf 5 Verschlüsselungsrunden.</value>
   </data>
   <data name="OverviewContent3" xml:space="preserve">
     <value>In der Konfiguration dieser Komponente können die verschiedenen Teile des Tutorials ausgewählt werden.</value>
   </data>
   <data name="OverviewContent4" xml:space="preserve">
-    <value>Viel Spaß beim ausprobieren und brechen der Chiffren!</value>
+    <value>Viel Spaß beim Ausprobieren und Brechen der Chiffren!</value>
   </data>
   <data name="OverviewHeader" xml:space="preserve">
-    <value>Differenzielle Kryptoanalyse Tutorial</value>
+    <value>Tutorial zur differenziellen Kryptoanalyse</value>
   </data>
   <data name="Path" xml:space="preserve">
     <value>Pfad der Charakteristik</value>

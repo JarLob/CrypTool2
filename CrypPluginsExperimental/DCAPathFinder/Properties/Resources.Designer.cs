@@ -160,7 +160,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Description of the Tutorials ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Description of the tutorials ähnelt.
         /// </summary>
         internal static string DescriptionHeader {
             get {
@@ -223,7 +223,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The number of messages specifies the number of messages the oracle should generate. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of messages the oracle should generate ähnelt.
         /// </summary>
         internal static string MessageCountToolTip {
             get {
@@ -232,7 +232,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Welcome to the differential cryptanalysis tutorial. This method for the analysis of turn-based symmetric block ciphers aims at recovering single bits up to complete lap keys. This procedure was published in 1991 by the two Israeli researchers, Eli Biham and Adi Shamir. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Welcome to the differential cryptanalysis tutorial. This method for the analysis of round-based symmetric block ciphers aims at recovering single bits up to complete round keys. This method was published in 1991 by the two Israeli researchers, Eli Biham and Adi Shamir. ähnelt.
         /// </summary>
         internal static string OverviewContent1 {
             get {
@@ -241,7 +241,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In this tutorial this procedure is presented in three parts. Part one teaches the basic idea of differential cryptanalysis by analyzing a cipher with an encryption round. Part two expands this idea to three encryption rounds. In part three the knowledge is deepened by increasing the complexity of the cipher to 5 encryption rounds. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This tutorial deals with the DCA procedure in three parts. Part 1 teaches the basic idea of differential cryptanalysis (DCA) using a cipher with an encryption round. Part 2 deepens this idea using a cipher with three encryption rounds. Part three deepens the knowledge by increasing the complexity of the cipher to 5 encryption rounds. In part three the knowledge is deepened by increasing the complexity of the cipher to 5 encryption rounds. ähnelt.
         /// </summary>
         internal static string OverviewContent2 {
             get {
