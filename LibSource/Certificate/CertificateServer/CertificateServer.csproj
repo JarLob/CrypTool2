@@ -286,6 +286,7 @@
     <ProjectReference Include="..\CertificateLibrary\CertificateLibrary.csproj">
       <Project>{ABA78840-2321-4DD3-91C6-84CC722D794B}</Project>
       <Name>CertificateLibrary</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
