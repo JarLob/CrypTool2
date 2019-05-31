@@ -414,7 +414,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The ToyCipher component contains various algorithms for text encryption. The algorithms are very simple and short to demonstrate cryptographic principles or cryptoanalytical methods. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The ToyCipher component contains various symmetric algorithms for encryption. The algorithms are very simple and short to demonstrate cryptographic principles or cryptoanalytical methods. ähnelt.
         /// </summary>
         internal static string PluginTooltip {
             get {

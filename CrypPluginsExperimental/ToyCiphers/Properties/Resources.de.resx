@@ -214,7 +214,7 @@
     <value>An diesem Eingang liegt der Schlüssel an, mit dem die Nachricht verschlüsselt wird</value>
   </data>
   <data name="MessageError" xml:space="preserve">
-    <value>Die eingegebenen Nachrichten sind zu klein oder groß. Bitte überprüfen Sie die Anforderungen dieser Chiffre.</value>
+    <value>Die eingegebenen Nachrichten sind zu klein oder zu groß. Bitte überprüfen Sie die Anforderungen dieser Chiffre.</value>
   </data>
   <data name="MessageInput" xml:space="preserve">
     <value>Eingang für zu verschlüsselnde Nachrichten</value>
@@ -229,7 +229,7 @@
     <value>DCA ToyCipher</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Die ToyCipher-Komponente enthält verschiedene Algorithmen zur Verschlüsselung von Texten. Die Algorithmen sind sehr einfach und kurz, um an ihnen beispielsweise kryptographische Prinzipien oder kryptoanalytische Verfahren demonstrieren zu können.</value>
+    <value>Die ToyCipher-Komponente enthält verschiedene symmetrische Algorithmen zur Verschlüsselung. Die Algorithmen sind sehr einfach und kurz, um an ihnen kryptographische Prinzipien oder kryptoanalytische Verfahren demonstrieren zu können.</value>
   </data>
   <data name="SingleMessageOutput" xml:space="preserve">
     <value>Ausgang für eine verschlüsselte Nachricht</value>
