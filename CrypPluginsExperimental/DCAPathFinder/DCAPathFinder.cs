@@ -16,9 +16,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
+using DCAPathFinder;
 using DCAPathFinder.UI;
 
 namespace Cryptool.Plugins.DCAPathFinder
@@ -31,12 +34,17 @@ namespace Cryptool.Plugins.DCAPathFinder
         #region Private Variables
 
         private readonly DCAPathFinderSettings settings = new DCAPathFinderSettings();
-        private readonly DCAPathFinderPres pres = new DCAPathFinderPres();
+        private readonly DCAPathFinderPres _activePresentation = new DCAPathFinderPres();
         private int _expectedDifferential;
         private int _messageCount;
         private int[] _path;
 
         #endregion
+
+        public DCAPathFinder()
+        {
+            settings.PropertyChanged += new PropertyChangedEventHandler(SettingChangedListener);
+        }
 
         #region Data Properties
 
@@ -99,7 +107,7 @@ namespace Cryptool.Plugins.DCAPathFinder
         /// </summary>
         public UserControl Presentation
         {
-            get { return pres; }
+            get { return _activePresentation; }
         }
 
         /// <summary>
@@ -107,6 +115,11 @@ namespace Cryptool.Plugins.DCAPathFinder
         /// </summary>
         public void PreExecution()
         {
+            //dispatch action: inform ui that workspace is running
+            _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+            {
+                _activePresentation.WorkspaceRunning = true;
+            }, null);
         }
 
         /// <summary>
@@ -128,6 +141,11 @@ namespace Cryptool.Plugins.DCAPathFinder
         /// </summary>
         public void PostExecution()
         {
+            //dispatch action: inform ui that workspace is stopped
+            _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+            {
+                _activePresentation.WorkspaceRunning = false;
+            }, null);
         }
 
         /// <summary>
@@ -150,6 +168,56 @@ namespace Cryptool.Plugins.DCAPathFinder
         /// </summary>
         public void Dispose()
         {
+        }
+
+        #endregion
+
+        #region methods
+
+        /// <summary>
+        /// Handles changes within the settings class
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SettingChangedListener(object sender, PropertyChangedEventArgs e)
+        {
+            //Listen for changes of the current chosen algorithm
+            if (e.PropertyName == "CurrentAlgorithm")
+            {
+                //Check specific algorithm and invoke the selection into the UI class
+                if (settings.CurrentAlgorithm == Algorithms.Cipher1)
+                {
+                    //dispatch action: set active tutorial number
+                    _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                    {
+                        _activePresentation.TutorialNumber = 1;
+                    }, null);
+                }
+                else if (settings.CurrentAlgorithm == Algorithms.Cipher2)
+                {
+                    //dispatch action: set active tutorial number
+                    _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                    {
+                        _activePresentation.TutorialNumber = 2;
+                    }, null);
+                }
+                else if (settings.CurrentAlgorithm == Algorithms.Cipher3)
+                {
+                    //dispatch action: set active tutorial number
+                    _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                    {
+                        _activePresentation.TutorialNumber = 3;
+                    }, null);
+                }
+                else if (settings.CurrentAlgorithm == Algorithms.Cipher4)
+                {
+                    //dispatch action: set active tutorial number
+                    _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                    {
+                        _activePresentation.TutorialNumber = 4;
+                    }, null);
+                }
+            }
         }
 
         #endregion

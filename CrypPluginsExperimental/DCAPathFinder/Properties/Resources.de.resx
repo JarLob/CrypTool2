@@ -162,11 +162,86 @@
   <data name="DescriptionSubHeader3" xml:space="preserve">
     <value>Tutorial 3</value>
   </data>
+  <data name="DifferentialCryptanalysisHeader" xml:space="preserve">
+    <value>2. Differenzielle Kryptoanalyse von Chiffre 1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide1Content1" xml:space="preserve">
+    <value>An dieser Stelle wenden wir die Idee der differenziellen Kryptoanalyse auf Chiffre 1 an. Der Aufbau einer Chiffre ist in aller Regel öffentlich, sodass alle Bestandteile und deren Funktionsweise bekannt sind. Die Sicherheit einer Chiffre sollte niemals auf Geheimhaltung der Konstruktion basieren, sondern auf der Geheimhaltung des Schlüssels. Diese Aussage wird durch das Kerckhoffs’ Prinzip beschrieben.</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide1Content2" xml:space="preserve">
+    <value>Chiffre 1 besteht aus Schlüsseladdition und Substitution. Der Aufbau kann in der ToyChiffre-Komponente als betrachtet werden. Wir versuchen nun die zwei unbekannten Rundenschlüssel k0 und k1 wiederherzustellen. Wir betrachten zunächst die einzelnen Schritte der Verschlüsselung. Zunächst wird eine Schlüsseladdition durchgeführt mit k0. Wir erhalten:</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide1Content3" xml:space="preserve">
+    <value>Anschließend erfolgt eine Substitution durch die SBoxen:</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide1Header" xml:space="preserve">
+    <value>Differenzielle Kryptoanalyse von Chiffre 1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide2Content1" xml:space="preserve">
+    <value>Als letztes erfolgt wieder eine Schlüsseladdition mit k1:</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide2Header" xml:space="preserve">
+    <value>Differenzielle Kryptoanalyse von Chiffre 1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide3Content1" xml:space="preserve">
+    <value>Die folgende Abbildung fasst den Verschlüsselungsprozess, wie zuvor skizziert, zusammen:</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide3Header" xml:space="preserve">
+    <value>Differenzielle Kryptoanalyse von Chiffre 1</value>
+  </data>
   <data name="ExpectedDifferential" xml:space="preserve">
     <value>Erwartete Differenz</value>
   </data>
   <data name="ExpectedDifferentialToolTip" xml:space="preserve">
     <value>Diese Differenz beschreibt den Erwartungswert, der an der zuvor spezifizierten Stelle (Runde, SBox) mit hoher Wahrscheinlichkeit auftreten soll</value>
+  </data>
+  <data name="IntroductionHeader" xml:space="preserve">
+    <value>1. Einführung</value>
+  </data>
+  <data name="IntroductionSlide1Content1" xml:space="preserve">
+    <value>In diesem Abschnitt betrachten wir die Basisidee der differenziellen Kryptoanalyse. Viele symmetrische rundenbasierte Blockchiffren bestehen aus drei grundlegenden Operationen: Schlüsseladdition, Substitution und Permutation. In diesem Abschnitt beschränken wir uns zunächst auf Schlüsseladdition und Substitution.</value>
+  </data>
+  <data name="IntroductionSlide1Content2" xml:space="preserve">
+    <value>Bei der Schlüsseladdition verwenden sehr viele Chiffren die XOR-Operation (Exklusiv-Oder). Die XOR-Operation ist ein zweistelliger-Operator, der durch folgende Wertetabelle beschrieben werden kann:</value>
+  </data>
+  <data name="IntroductionSlide1DataColHeader1" xml:space="preserve">
+    <value>Eingabebit A</value>
+  </data>
+  <data name="IntroductionSlide1DataColHeader2" xml:space="preserve">
+    <value>Eingabebit B</value>
+  </data>
+  <data name="IntroductionSlide1DataColHeader3" xml:space="preserve">
+    <value>Ergebnisbit</value>
+  </data>
+  <data name="IntroductionSlide1Header" xml:space="preserve">
+    <value>Einführung</value>
+  </data>
+  <data name="IntroductionSlide2Content1" xml:space="preserve">
+    <value>Wird die XOR-Operation mit einer Nachricht m und Schlüssel k durchgeführt, erhält man den Schlüsseltext:</value>
+  </data>
+  <data name="IntroductionSlide2Content2" xml:space="preserve">
+    <value>Die Kernidee der differenziellen Kryptoanalyse ist es nun, dass der Schlüssel zweimal verwendet wird. Wir betrachten an dieser Stelle die Auswirkung:</value>
+  </data>
+  <data name="IntroductionSlide2Content3" xml:space="preserve">
+    <value>Wir erhalten wieder die ursprüngliche Nachricht m. Die XOR-Operation wird häufig auch als Differenz-Operator bezeichnet. Dies werden wir in diesem Tutorial auch machen.</value>
+  </data>
+  <data name="IntroductionSlide2Content4" xml:space="preserve">
+    <value>In der Realität sind Chiffren umfangreicher, komplizierter und bestehen nicht ausschließlich aus Schlüsseladdition. Die differenzielle Kryptoanalyse ist ein so genannter "Chosen Plaintext-Angriff", das bedeutet der Kryptoanalyst kann Nachrichten auswählen und diese verschlüsseln lassen.</value>
+  </data>
+  <data name="IntroductionSlide2Header" xml:space="preserve">
+    <value>Einführung</value>
+  </data>
+  <data name="IntroductionSlide3Content1" xml:space="preserve">
+    <value>Die Idee des zweimaligen Anwenden des Schlüssels können wir nun verwenden. Wir betrachten zwei Nachrichten. Dann kann folgendes berechnet werden:</value>
+  </data>
+  <data name="IntroductionSlide3Content2" xml:space="preserve">
+    <value>Nun gilt:</value>
+  </data>
+  <data name="IntroductionSlide3Content3" xml:space="preserve">
+    <value>In Worten, wir erhalten die Differenz der Klartexte durch Berechnung der Differenz der Schlüsseltexte.</value>
+  </data>
+  <data name="IntroductionSlide3Header" xml:space="preserve">
+    <value>Einführung</value>
   </data>
   <data name="MessageCount" xml:space="preserve">
     <value>Nachrichtenanzahl</value>
@@ -186,6 +261,9 @@
   <data name="OverviewContent4" xml:space="preserve">
     <value>Viel Spaß beim Ausprobieren und Brechen der Chiffren!</value>
   </data>
+  <data name="OverviewContent5" xml:space="preserve">
+    <value>(Diese Einführung kann durch Starten des Workspaces übersprungen werden)</value>
+  </data>
   <data name="OverviewHeader" xml:space="preserve">
     <value>Tutorial zur differenziellen Kryptoanalyse</value>
   </data>
@@ -200,5 +278,17 @@
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Die DCA PfadFinder-Komponente sucht in Abhängigkeit von durch den User spezifizierten Parametern nach Differenzialen in einer symmetrischen Blockchiffre.</value>
+  </data>
+  <data name="StartMaskContent1" xml:space="preserve">
+    <value>Durch Starten des Workspaces beginnt das Tutorial.</value>
+  </data>
+  <data name="StartMaskContent2" xml:space="preserve">
+    <value>Sie haben Tutorial {0} zur Zeit ausgwählt.</value>
+  </data>
+  <data name="StartMaskHeader" xml:space="preserve">
+    <value>Bereit zur Ausführung</value>
+  </data>
+  <data name="TitleHeader" xml:space="preserve">
+    <value>Tutorial Differenzielle Kryptoanalyse symmetrischer Blockchiffren</value>
   </data>
 </root>

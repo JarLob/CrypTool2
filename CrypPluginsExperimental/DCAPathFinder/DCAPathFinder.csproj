@@ -75,6 +75,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\Controls\16BitKeyRound.xaml.cs">
+      <DependentUpon>16BitKeyRound.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\16BitPermutation.xaml.cs">
+      <DependentUpon>16BitPermutation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\4BitKeyRound.xaml.cs">
+      <DependentUpon>4BitKeyRound.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\4BitSBox.xaml.cs">
+      <DependentUpon>4BitSBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\DCAPathFinderPres.xaml.cs">
       <DependentUpon>DCAPathFinderPres.xaml</DependentUpon>
     </Compile>
@@ -84,6 +96,34 @@
     <Compile Include="UI\StartMask.xaml.cs">
       <DependentUpon>StartMask.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Tutorial1\DifferentialCryptanalysisHeader.xaml.cs">
+      <DependentUpon>DifferentialCryptanalysisHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial1\DifferentialCryptanalysisSlide1.xaml.cs">
+      <DependentUpon>DifferentialCryptanalysisSlide1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial1\DifferentialCryptanalysisSlide2.xaml.cs">
+      <DependentUpon>DifferentialCryptanalysisSlide2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial1\DifferentialCryptanalysisSlide3.xaml.cs">
+      <DependentUpon>DifferentialCryptanalysisSlide3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial1\IntroductionHeader.xaml.cs">
+      <DependentUpon>IntroductionHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial1\IntroductionSlide1.xaml.cs">
+      <DependentUpon>IntroductionSlide1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial1\IntroductionSlide2.xaml.cs">
+      <DependentUpon>IntroductionSlide2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial1\IntroductionSlide3.xaml.cs">
+      <DependentUpon>IntroductionSlide3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial1\Title.xaml.cs">
+      <DependentUpon>Title.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial1\XorTableMapping.cs" />
     <Compile Include="UI\TutorialDescriptions.xaml.cs">
       <DependentUpon>TutorialDescriptions.xaml</DependentUpon>
     </Compile>
@@ -126,6 +166,22 @@
     <Resource Include="Images\IC_DCAPathFinder.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UI\Controls\16BitKeyRound.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Controls\16BitPermutation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Controls\4BitKeyRound.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Controls\4BitSBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UI\DCAPathFinderPres.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -138,17 +194,70 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\Tutorial1\DifferentialCryptanalysisHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial1\DifferentialCryptanalysisSlide1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial1\DifferentialCryptanalysisSlide2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial1\DifferentialCryptanalysisSlide3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial1\IntroductionHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial1\IntroductionSlide1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial1\IntroductionSlide2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial1\IntroductionSlide3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial1\Title.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\TutorialDescriptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UI\Controls\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\next-button.png" />
     <Resource Include="Images\prev-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\mXORk.png" />
+    <Resource Include="Images\mXORkXORk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\m1XORkm2XORk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\c1XORc2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\mXORk0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\StepSBOX.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\vXORk1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

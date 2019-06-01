@@ -162,11 +162,89 @@
   <data name="DescriptionSubHeader3" xml:space="preserve">
     <value>Tutorial 3</value>
   </data>
+  <data name="DifferentialCryptanalysisHeader" xml:space="preserve">
+    <value>Differential cryptanalysis of cipher 1</value>
+  </data>
+  <data name="DifferentialCryptanalysisHeader1" xml:space="preserve">
+    <value>2. differential cryptanalysis of cipher 1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide1Content1" xml:space="preserve">
+    <value>At this point we apply the idea of differential cryptanalysis to cipher 1. The structure of a cipher is usually public, so that all components and their functionality are known. The security of a cipher should never be based on the secrecy of the construction, but on the secrecy of the key. This statement is described by the Kerckhoffs' principle.</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide1Content2" xml:space="preserve">
+    <value>Chiffre 1 consists of key addition and substitution. The structure can be considered in the ToyChiffre component. We now try to restore the two unknown round keys k0 and k1. First we look at the individual steps of the encryption. First a key addition is performed with k0. We get:</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide1Content3" xml:space="preserve">
+    <value>Subsequently, a substitution by the SBoxes takes place:</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide1Header" xml:space="preserve">
+    <value>Differential cryptanalysis of cipher 1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide2Content1" xml:space="preserve">
+    <value>Finally, a key addition with k1 takes place again:</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide2Header" xml:space="preserve">
+    <value>Differential cryptanalysis of cipher 1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide3Content1" xml:space="preserve">
+    <value>The following figure summarizes the encryption process as outlined above:</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide3Header" xml:space="preserve">
+    <value>Differential cryptanalysis of cipher 1</value>
+  </data>
   <data name="ExpectedDifferential" xml:space="preserve">
     <value>Expected difference</value>
   </data>
   <data name="ExpectedDifferentialToolTip" xml:space="preserve">
     <value>This difference describes the expected value that should occur with a high probability at the previously specified position ( round, SBox).</value>
+  </data>
+  <data name="IntroductionHeader" xml:space="preserve">
+    <value>1. IntroductionHeader</value>
+  </data>
+  <data name="IntroductionSlide1Content1" xml:space="preserve">
+    <value>In this section we consider the basic idea of differential cryptanalysis. Many symmetric round-based block ciphers consist of three basic operations: Key addition, substitution and permutation. In this section, we limit ourselves to key addition and substitution.</value>
+  </data>
+  <data name="IntroductionSlide1Content2" xml:space="preserve">
+    <value>Many ciphers use the XOR operation (exclusive-OR) for key addition. The XOR operation is a two-digit operator that can be described by the following value table:</value>
+  </data>
+  <data name="IntroductionSlide1DataColHeader1" xml:space="preserve">
+    <value>Inputbit A</value>
+  </data>
+  <data name="IntroductionSlide1DataColHeader2" xml:space="preserve">
+    <value>Inputbit B</value>
+  </data>
+  <data name="IntroductionSlide1DataColHeader3" xml:space="preserve">
+    <value>Resultbit</value>
+  </data>
+  <data name="IntroductionSlide1Header" xml:space="preserve">
+    <value>Introduction</value>
+  </data>
+  <data name="IntroductionSlide2Content1" xml:space="preserve">
+    <value>If the XOR operation is performed with a message m and key k, the ciphertext is generated:</value>
+  </data>
+  <data name="IntroductionSlide2Content2" xml:space="preserve">
+    <value>The core idea of differential cryptanalysis is now to use the key twice. Let's look at the impact at this point:</value>
+  </data>
+  <data name="IntroductionSlide2Content3" xml:space="preserve">
+    <value>We get back the original message m. The XOR operation is often referred to as the difference operator. This is what we will do in this tutorial.</value>
+  </data>
+  <data name="IntroductionSlide2Content4" xml:space="preserve">
+    <value>In reality, ciphers are more extensive, more complicated and do not consist exclusively of key addition. Differential cryptanalysis is a so-called "chosen plaintext attack", which means that the cryptanalyst can select messages and encrypt them.</value>
+  </data>
+  <data name="IntroductionSlide2Header" xml:space="preserve">
+    <value>Introduction</value>
+  </data>
+  <data name="IntroductionSlide3Content1" xml:space="preserve">
+    <value>We can now use the idea of using the key twice. We are looking at two messages. Then the following can be calculated:</value>
+  </data>
+  <data name="IntroductionSlide3Content2" xml:space="preserve">
+    <value>It is valid:</value>
+  </data>
+  <data name="IntroductionSlide3Content3" xml:space="preserve">
+    <value>In words, we get the difference of the plain texts by calculating the difference of the key texts.</value>
+  </data>
+  <data name="IntroductionSlide3Header" xml:space="preserve">
+    <value>Introduction</value>
   </data>
   <data name="MessageCount" xml:space="preserve">
     <value>Count of messages</value>
@@ -186,6 +264,9 @@
   <data name="OverviewContent4" xml:space="preserve">
     <value>Have fun trying out and breaking the ciphers!</value>
   </data>
+  <data name="OverviewContent5" xml:space="preserve">
+    <value>(This introduction can be skipped by starting the workspace)</value>
+  </data>
   <data name="OverviewHeader" xml:space="preserve">
     <value>Differential Cryptanalysis Tutorial</value>
   </data>
@@ -200,5 +281,17 @@
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>The DCA PathFinder component searches for differentials in a symmetric block cipher depending on parameters specified by the user.</value>
+  </data>
+  <data name="StartMaskContent1" xml:space="preserve">
+    <value>The tutorial starts when you start the workspace.</value>
+  </data>
+  <data name="StartMaskContent2" xml:space="preserve">
+    <value>You have currently selected Tutorial {0}.</value>
+  </data>
+  <data name="StartMaskHeader" xml:space="preserve">
+    <value>Ready for execution</value>
+  </data>
+  <data name="TitleHeader" xml:space="preserve">
+    <value>Tutorial differential cryptanalysis of symmetric block ciphers</value>
   </data>
 </root>

@@ -19,14 +19,24 @@
 
         </Viewbox>
         <!-- Footer of the slides -->
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal">
-            <Button Name="BtnPrevious" HorizontalAlignment="Center" Margin="5,0,5,0" Click="BtnPreviousClicked">
-                <Image Source="/DCAPathFinder;component/images/prev-button.png"/>
-            </Button>
-            <Button Name="BtnNext" HorizontalAlignment="Center" Margin="5,0,5,0" Click="BtnNextClicked">
-                <Image Source="/DCAPathFinder;component/images/next-button.png"/>
-            </Button>
-            <Button Name="BtnSkip" Content="{Loc BtnSkipChapter}" HorizontalAlignment="Center" Margin="5,0,5,0"></Button>
-        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button Name="BtnPrevious" HorizontalAlignment="Center" Margin="5,0,5,0" Click="BtnPreviousClicked" IsEnabled="{Binding IsPreviousPossible, Mode=OneWay}">
+                    <Image Source="/DCAPathFinder;component/images/prev-button.png"/>
+                </Button>
+                <Button Name="BtnNext" HorizontalAlignment="Center" Margin="5,0,5,0" Click="BtnNextClicked" IsEnabled="{Binding IsNextPossible, Mode=OneWay}">
+                    <Image Source="/DCAPathFinder;component/images/next-button.png"/>
+                </Button>
+                <Button Name="BtnSkip" Content="{Loc BtnSkipChapter}" HorizontalAlignment="Center" Margin="5,0,5,0" IsEnabled="False"></Button>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Width="30" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Label FontFamily="Courier New" FontSize="8" Content="{Binding SlideCounter, Mode=OneWay}" Margin="0,0,0,-5"></Label>
+            </StackPanel>
+        </Grid>
+        
     </Grid>
 </UserControl>
