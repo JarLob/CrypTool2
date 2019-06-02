@@ -26,24 +26,43 @@ namespace DCAPathFinder.UI.Controls
     /// </summary>
     public partial class _16BitKeyRound : UserControl, INotifyPropertyChanged
     {
-        private Color _inputColor;
+        private string _inputColor;
+        private string _outputColor;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public _16BitKeyRound()
         {
-            //_inputColor = System.Windows.Media.Color.
+            InputColor = "Black";
+            OutputColor = "Black";
+
             DataContext = this;
             InitializeComponent();
         }
 
         /// <summary>
-        /// Property for Color
+        /// Property for input color
         /// </summary>
-        public Color InputColor
+        public string InputColor
         {
             get { return _inputColor; }
             set
             {
                 _inputColor = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Property for output color
+        /// </summary>
+        public string OutputColor
+        {
+            get { return _outputColor; }
+            set
+            {
+                _outputColor = value;
                 OnPropertyChanged();
             }
         }

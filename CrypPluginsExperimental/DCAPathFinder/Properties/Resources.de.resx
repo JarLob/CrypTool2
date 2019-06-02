@@ -178,7 +178,7 @@
     <value>Differenzielle Kryptoanalyse von Chiffre 1</value>
   </data>
   <data name="DifferentialCryptanalysisSlide2Content1" xml:space="preserve">
-    <value>als Letztes erfolgt wieder eine Schlüsseladdition mit k1:</value>
+    <value>Als Letztes erfolgt wieder eine Schlüsseladdition mit k1:</value>
   </data>
   <data name="DifferentialCryptanalysisSlide2Header" xml:space="preserve">
     <value>Differenzielle Kryptoanalyse von Chiffre 1</value>
@@ -187,6 +187,30 @@
     <value>Die folgende Abbildung fasst den Verschlüsselungsprozess, wie zuvor skizziert, zusammen:</value>
   </data>
   <data name="DifferentialCryptanalysisSlide3Header" xml:space="preserve">
+    <value>Differenzielle Kryptoanalyse von Chiffre 1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide4Content1" xml:space="preserve">
+    <value>Die folgende Abbildung fasst den Verschlüsselungsprozess, wie zuvor skizziert, zusammen:</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide4Header" xml:space="preserve">
+    <value>Differenzielle Kryptoanalyse von Chiffre 1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content1" xml:space="preserve">
+    <value>Der Kryptoanalyst kennt die Parameter m und c, allerdings sind die internen Zwischenwerte u und v unbekannt, da k0 und k1 unbekannt sind. Allerdings kennt der Kryptoanalyst die Differenz der internen Werte. Wir betrachten im Folgenden zwei Nachrichten m1 und m2 und führen den Verschlüsselungsprozess partiell durch:</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content2" xml:space="preserve">
+    <value>Wir können</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content3" xml:space="preserve">
+    <value>berechnen durch Differenzbildung von m1 und m2. Als nächstes kann k1 geraten werden und die Werte von v1 und v2 berechnet werden, denn die Funktionsweise der SBox ist öffentlich und damit auch invertierbar. Dadurch kann der Kryptoanalyst</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content4" xml:space="preserve">
+    <value>berechnen. Allerdings können diese Werte nicht direkt mit den internen Werten u1 und u2 verglichen werden, da diese unbekannt sind.</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content5" xml:space="preserve">
+    <value>Allerdings weiß der Kryptoanalyst, dass bei korrektem Rundenschlüssel k1 folgendes gilt:</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Header" xml:space="preserve">
     <value>Differenzielle Kryptoanalyse von Chiffre 1</value>
   </data>
   <data name="ExpectedDifferential" xml:space="preserve">

@@ -196,20 +196,11 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Differential cryptanalysis of cipher 1 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 2. Differential cryptanalysis of cipher 1 ähnelt.
         /// </summary>
         internal static string DifferentialCryptanalysisHeader {
             get {
                 return ResourceManager.GetString("DifferentialCryptanalysisHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 2. differential cryptanalysis of cipher 1 ähnelt.
-        /// </summary>
-        internal static string DifferentialCryptanalysisHeader1 {
-            get {
-                return ResourceManager.GetString("DifferentialCryptanalysisHeader1", resourceCulture);
             }
         }
         
@@ -282,6 +273,78 @@ namespace DCAPathFinder.Properties {
         internal static string DifferentialCryptanalysisSlide3Header {
             get {
                 return ResourceManager.GetString("DifferentialCryptanalysisSlide3Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The following figure summarizes the encryption process as outlined above: ähnelt.
+        /// </summary>
+        internal static string DifferentialCryptanalysisSlide4Content1 {
+            get {
+                return ResourceManager.GetString("DifferentialCryptanalysisSlide4Content1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differential cryptanalysis of cipher 1 ähnelt.
+        /// </summary>
+        internal static string DifferentialCryptanalysisSlide4Header {
+            get {
+                return ResourceManager.GetString("DifferentialCryptanalysisSlide4Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The cryptanalyst knows the parameters m and c, but the internal intermediate values u and v are unknown, since k0 and k1 are unknown. However, the cryptanalyst knows the difference of the internal values. In the following, we will look at two messages m1 and m2 and perform the encryption process partially: ähnelt.
+        /// </summary>
+        internal static string DifferentialCryptanalysisSlide9Content1 {
+            get {
+                return ResourceManager.GetString("DifferentialCryptanalysisSlide9Content1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die We can ähnelt.
+        /// </summary>
+        internal static string DifferentialCryptanalysisSlide9Content2 {
+            get {
+                return ResourceManager.GetString("DifferentialCryptanalysisSlide9Content2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die calculated by difference formation of m1 and m2. Next you can guess k1 and calculate the values of v1 and v2, because the functionality of the SBox is public and therefore invertible. This allows the cryptoanalyst to ähnelt.
+        /// </summary>
+        internal static string DifferentialCryptanalysisSlide9Content3 {
+            get {
+                return ResourceManager.GetString("DifferentialCryptanalysisSlide9Content3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die calculate. However, these values cannot be directly compared with the internal values u1 and u2, since these are unknown. ähnelt.
+        /// </summary>
+        internal static string DifferentialCryptanalysisSlide9Content4 {
+            get {
+                return ResourceManager.GetString("DifferentialCryptanalysisSlide9Content4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die However, the cryptoanalyst knows that the following applies if the round key k1 is correct: ähnelt.
+        /// </summary>
+        internal static string DifferentialCryptanalysisSlide9Content5 {
+            get {
+                return ResourceManager.GetString("DifferentialCryptanalysisSlide9Content5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differential cryptanalysis of cipher 1 ähnelt.
+        /// </summary>
+        internal static string DifferentialCryptanalysisSlide9Header {
+            get {
+                return ResourceManager.GetString("DifferentialCryptanalysisSlide9Header", resourceCulture);
             }
         }
         

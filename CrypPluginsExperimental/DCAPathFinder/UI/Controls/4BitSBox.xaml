@@ -16,9 +16,9 @@
         -->
         <!-- /InputBits -->
         <!-- Box -->
-        <Rectangle Width="60" Height="45" Margin="0,0,0,0" Stroke="Black" StrokeThickness="2.0"/>
+        <Rectangle Width="60" Height="45" Margin="0,0,0,0" Stroke="{Binding OutputColor, Mode=OneWay}" StrokeThickness="2.0"/>
         <!-- /Box -->
-        <Label Width="60" FontFamily="Courier New" FontSize="18" Height="45" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="SBox" Margin="0,0,0,0"/>
+        <Label Width="60" FontFamily="Courier New" FontSize="18" Height="45" Foreground="{Binding OutputColor, Mode=OneWay}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="SBox" Margin="0,0,0,0"/>
         <!-- OutputBits -->
         <!-- 
         <Line X1="7.5" Y1="45" X2="7.5" Y2="90" Stroke="Black" StrokeThickness="2.0" />

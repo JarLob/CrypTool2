@@ -108,6 +108,24 @@
     <Compile Include="UI\Tutorial1\DifferentialCryptanalysisSlide3.xaml.cs">
       <DependentUpon>DifferentialCryptanalysisSlide3.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Tutorial1\DifferentialCryptanalysisSlide4.xaml.cs">
+      <DependentUpon>DifferentialCryptanalysisSlide4.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial1\DifferentialCryptanalysisSlide5.xaml.cs">
+      <DependentUpon>DifferentialCryptanalysisSlide5.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial1\DifferentialCryptanalysisSlide6.xaml.cs">
+      <DependentUpon>DifferentialCryptanalysisSlide6.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial1\DifferentialCryptanalysisSlide7.xaml.cs">
+      <DependentUpon>DifferentialCryptanalysisSlide7.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial1\DifferentialCryptanalysisSlide8.xaml.cs">
+      <DependentUpon>DifferentialCryptanalysisSlide8.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial1\DifferentialCryptanalysisSlide9.xaml.cs">
+      <DependentUpon>DifferentialCryptanalysisSlide9.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Tutorial1\IntroductionHeader.xaml.cs">
       <DependentUpon>IntroductionHeader.xaml</DependentUpon>
     </Compile>
@@ -210,6 +228,30 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\Tutorial1\DifferentialCryptanalysisSlide4.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial1\DifferentialCryptanalysisSlide5.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial1\DifferentialCryptanalysisSlide6.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial1\DifferentialCryptanalysisSlide7.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial1\DifferentialCryptanalysisSlide8.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial1\DifferentialCryptanalysisSlide9.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Tutorial1\IntroductionHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -235,7 +277,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\c.png" />
+    <Resource Include="Images\m.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\next-button.png" />
     <Resource Include="Images\prev-button.png" />
@@ -258,6 +303,27 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\vXORk1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\c_red.png" />
+    <Resource Include="Images\mXORk0_red.png" />
+    <Resource Include="Images\m_red.png" />
+    <Resource Include="Images\vXORk1_red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\StepSBOX_red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DiffInternValues.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\u1XORu2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SBoxInverted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\u1XORu2Eq.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

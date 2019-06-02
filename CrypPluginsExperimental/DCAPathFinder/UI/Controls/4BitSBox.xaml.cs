@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 
 namespace DCAPathFinder.UI.Controls
@@ -21,11 +23,43 @@ namespace DCAPathFinder.UI.Controls
     /// <summary>
     /// Interaktionslogik für _4BitSBox.xaml
     /// </summary>
-    public partial class _4BitSBox : UserControl
+    public partial class _4BitSBox : UserControl, INotifyPropertyChanged
     {
+        private string _outputColor;
+
         public _4BitSBox()
         {
+            OutputColor = "Black";
+
+            DataContext = this;
             InitializeComponent();
         }
+
+        /// <summary>
+        /// Property for output color
+        /// </summary>
+        public string OutputColor
+        {
+            get { return _outputColor; }
+            set
+            {
+                _outputColor = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// OnPropertyChanged-method for INotifyPropertyChanged
+        /// </summary>
+        /// <param name="propertyName"></param>
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// Event
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

@@ -163,10 +163,7 @@
     <value>Tutorial 3</value>
   </data>
   <data name="DifferentialCryptanalysisHeader" xml:space="preserve">
-    <value>Differential cryptanalysis of cipher 1</value>
-  </data>
-  <data name="DifferentialCryptanalysisHeader1" xml:space="preserve">
-    <value>2. differential cryptanalysis of cipher 1</value>
+    <value>2. Differential cryptanalysis of cipher 1</value>
   </data>
   <data name="DifferentialCryptanalysisSlide1Content1" xml:space="preserve">
     <value>At this point we apply the idea of differential cryptanalysis to cipher 1. The structure of a cipher is usually public, so that all components and their functionality are known. The security of a cipher should never be based on the secrecy of the construction, but on the secrecy of the key. This requirement is also called Kerckhoff's principle.</value>
@@ -190,6 +187,30 @@
     <value>The following figure summarizes the encryption process as outlined above:</value>
   </data>
   <data name="DifferentialCryptanalysisSlide3Header" xml:space="preserve">
+    <value>Differential cryptanalysis of cipher 1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide4Content1" xml:space="preserve">
+    <value>The following figure summarizes the encryption process as outlined above:</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide4Header" xml:space="preserve">
+    <value>Differential cryptanalysis of cipher 1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content1" xml:space="preserve">
+    <value>The cryptanalyst knows the parameters m and c, but the internal intermediate values u and v are unknown, since k0 and k1 are unknown. However, the cryptanalyst knows the difference of the internal values. In the following, we will look at two messages m1 and m2 and perform the encryption process partially:</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content2" xml:space="preserve">
+    <value>We can</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content3" xml:space="preserve">
+    <value>calculated by difference formation of m1 and m2. Next you can guess k1 and calculate the values of v1 and v2, because the functionality of the SBox is public and therefore invertible. This allows the cryptoanalyst to</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content4" xml:space="preserve">
+    <value>calculate. However, these values cannot be directly compared with the internal values u1 and u2, since these are unknown.</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content5" xml:space="preserve">
+    <value>However, the cryptoanalyst knows that the following applies if the round key k1 is correct:</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Header" xml:space="preserve">
     <value>Differential cryptanalysis of cipher 1</value>
   </data>
   <data name="ExpectedDifferential" xml:space="preserve">

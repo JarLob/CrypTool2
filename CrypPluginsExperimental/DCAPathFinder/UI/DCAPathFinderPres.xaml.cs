@@ -40,7 +40,7 @@ namespace DCAPathFinder.UI
         /// <summary>
         /// Handles the different views
         /// </summary>
-        private void SetupView()
+        public void SetupView()
         {
             //introduction slides
             if (!WorkspaceRunning)
@@ -188,7 +188,67 @@ namespace DCAPathFinder.UI
                                 //setup pres content
                                 ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide3();
                             }
-                                break;                        
+                                break;
+                            case 9:
+                            {
+                                //setup possible button actions
+                                IsPreviousPossible = true;
+                                IsNextPossible = true;
+
+                                //setup pres content
+                                ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide4();
+                            }
+                                break;
+                            case 10:
+                            {
+                                //setup possible button actions
+                                IsPreviousPossible = true;
+                                IsNextPossible = true;
+
+                                //setup pres content
+                                ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide5();
+                            }
+                                break;
+                            case 11:
+                            {
+                                //setup possible button actions
+                                IsPreviousPossible = true;
+                                IsNextPossible = true;
+
+                                //setup pres content
+                                ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide6();
+                            }
+                                break;
+                            case 12:
+                            {
+                                //setup possible button actions
+                                IsPreviousPossible = true;
+                                IsNextPossible = true;
+
+                                //setup pres content
+                                ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide7();
+                            }
+                                break;
+                            case 13:
+                            {
+                                //setup possible button actions
+                                IsPreviousPossible = true;
+                                IsNextPossible = true;
+
+                                //setup pres content
+                                ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide8();
+                            }
+                                break;
+                            case 14:
+                            {
+                                //setup possible button actions
+                                IsPreviousPossible = true;
+                                IsNextPossible = true;
+
+                                //setup pres content
+                                ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide9();
+                            }
+                                break;
                         }
                     }
                         break;

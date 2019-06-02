@@ -130,7 +130,14 @@ namespace Cryptool.Plugins.DCAPathFinder
             // HOWTO: Use this to show the progress of a plugin algorithm execution in the editor.
             ProgressChanged(0, 1);
 
-           
+            //dispatch action {DEBUG}: show slide 8 to save time
+            _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+            {
+                _activePresentation.StepCounter = 8;
+                _activePresentation.SetupView();
+            }, null);
+
+            
 
             // HOWTO: Make sure the progress bar is at maximum when your Execute() finished successfully.
             ProgressChanged(1, 1);
