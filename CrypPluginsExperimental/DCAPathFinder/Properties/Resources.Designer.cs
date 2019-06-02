@@ -214,7 +214,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die At this point we apply the idea of differential cryptanalysis to cipher 1. The structure of a cipher is usually public, so that all components and their functionality are known. The security of a cipher should never be based on the secrecy of the construction, but on the secrecy of the key. This statement is described by the Kerckhoffs&apos; principle. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die At this point we apply the idea of differential cryptanalysis to cipher 1. The structure of a cipher is usually public, so that all components and their functionality are known. The security of a cipher should never be based on the secrecy of the construction, but on the secrecy of the key. This requirement is also called Kerckhoff&apos;s principle. ähnelt.
         /// </summary>
         internal static string DifferentialCryptanalysisSlide1Content1 {
             get {
@@ -223,7 +223,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Chiffre 1 consists of key addition and substitution. The structure can be considered in the ToyChiffre component. We now try to restore the two unknown round keys k0 and k1. First we look at the individual steps of the encryption. First a key addition is performed with k0. We get: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Chiffre 1 consists of key addition and substitution. Chiffre 1 consists of key addition and substitution. The structure can be viewed in the ToyCipher component. We now try to restore the two unknown round keys k0 and k1. To do this, we first look at the individual steps of the encryption. First a key addition to the input block is performed with k0. We get: ähnelt.
         /// </summary>
         internal static string DifferentialCryptanalysisSlide1Content2 {
             get {
@@ -394,7 +394,8 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In reality, ciphers are more extensive, more complicated and do not consist exclusively of key addition. Differential cryptanalysis is a so-called &quot;chosen plaintext attack&quot;, which means that the cryptanalyst can select messages and encrypt them. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In reality, ciphers are more extensive, more complicated and do not consist exclusively of key additions. The
+        ///differential cryptanalysis is a so called &quot;chosen plaintext attack&quot;, which means the cryptanalyst can select plaintext messages and encrypt them to have matching plaintext/ciphertext pairs. ähnelt.
         /// </summary>
         internal static string IntroductionSlide2Content4 {
             get {
@@ -412,7 +413,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die We can now use the idea of using the key twice. We are looking at two messages. Then the following can be calculated: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die We take advantage of the idea of using the key twice by looking at pairs of messages. Then the following can be calculated: ähnelt.
         /// </summary>
         internal static string IntroductionSlide3Content1 {
             get {

@@ -169,10 +169,10 @@
     <value>2. differential cryptanalysis of cipher 1</value>
   </data>
   <data name="DifferentialCryptanalysisSlide1Content1" xml:space="preserve">
-    <value>At this point we apply the idea of differential cryptanalysis to cipher 1. The structure of a cipher is usually public, so that all components and their functionality are known. The security of a cipher should never be based on the secrecy of the construction, but on the secrecy of the key. This statement is described by the Kerckhoffs' principle.</value>
+    <value>At this point we apply the idea of differential cryptanalysis to cipher 1. The structure of a cipher is usually public, so that all components and their functionality are known. The security of a cipher should never be based on the secrecy of the construction, but on the secrecy of the key. This requirement is also called Kerckhoff's principle.</value>
   </data>
   <data name="DifferentialCryptanalysisSlide1Content2" xml:space="preserve">
-    <value>Chiffre 1 consists of key addition and substitution. The structure can be considered in the ToyChiffre component. We now try to restore the two unknown round keys k0 and k1. First we look at the individual steps of the encryption. First a key addition is performed with k0. We get:</value>
+    <value>Chiffre 1 consists of key addition and substitution. Chiffre 1 consists of key addition and substitution. The structure can be viewed in the ToyCipher component. We now try to restore the two unknown round keys k0 and k1. To do this, we first look at the individual steps of the encryption. First a key addition to the input block is performed with k0. We get:</value>
   </data>
   <data name="DifferentialCryptanalysisSlide1Content3" xml:space="preserve">
     <value>Subsequently, a substitution by the SBoxes takes place:</value>
@@ -229,13 +229,14 @@
     <value>We get back the original message m. The XOR operation is often referred to as the difference operator. This is what we will do in this tutorial.</value>
   </data>
   <data name="IntroductionSlide2Content4" xml:space="preserve">
-    <value>In reality, ciphers are more extensive, more complicated and do not consist exclusively of key addition. Differential cryptanalysis is a so-called "chosen plaintext attack", which means that the cryptanalyst can select messages and encrypt them.</value>
+    <value>In reality, ciphers are more extensive, more complicated and do not consist exclusively of key additions. The
+differential cryptanalysis is a so called "chosen plaintext attack", which means the cryptanalyst can select plaintext messages and encrypt them to have matching plaintext/ciphertext pairs.</value>
   </data>
   <data name="IntroductionSlide2Header" xml:space="preserve">
     <value>Introduction</value>
   </data>
   <data name="IntroductionSlide3Content1" xml:space="preserve">
-    <value>We can now use the idea of using the key twice. We are looking at two messages. Then the following can be calculated:</value>
+    <value>We take advantage of the idea of using the key twice by looking at pairs of messages. Then the following can be calculated:</value>
   </data>
   <data name="IntroductionSlide3Content2" xml:space="preserve">
     <value>It is valid:</value>

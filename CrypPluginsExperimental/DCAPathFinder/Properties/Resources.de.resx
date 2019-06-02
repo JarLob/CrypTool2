@@ -166,10 +166,10 @@
     <value>2. Differenzielle Kryptoanalyse von Chiffre 1</value>
   </data>
   <data name="DifferentialCryptanalysisSlide1Content1" xml:space="preserve">
-    <value>An dieser Stelle wenden wir die Idee der differenziellen Kryptoanalyse auf Chiffre 1 an. Der Aufbau einer Chiffre ist in aller Regel öffentlich, sodass alle Bestandteile und deren Funktionsweise bekannt sind. Die Sicherheit einer Chiffre sollte niemals auf Geheimhaltung der Konstruktion basieren, sondern auf der Geheimhaltung des Schlüssels. Diese Aussage wird durch das Kerckhoffs’ Prinzip beschrieben.</value>
+    <value>An dieser Stelle wenden wir die Idee der differenziellen Kryptoanalyse auf Chiffre 1 an. Der Aufbau einer Chiffre ist in aller Regel öffentlich, sodass alle Bestandteile und deren Funktionsweise bekannt sind. Die Sicherheit einer Chiffre sollte niemals auf Geheimhaltung der Konstruktion basieren, sondern auf der Geheimhaltung des Schlüssels. Diese Forderung wird auch Kerckhoffs’ Prinzip genannt.</value>
   </data>
   <data name="DifferentialCryptanalysisSlide1Content2" xml:space="preserve">
-    <value>Chiffre 1 besteht aus Schlüsseladdition und Substitution. Der Aufbau kann in der ToyChiffre-Komponente als betrachtet werden. Wir versuchen nun die zwei unbekannten Rundenschlüssel k0 und k1 wiederherzustellen. Wir betrachten zunächst die einzelnen Schritte der Verschlüsselung. Zunächst wird eine Schlüsseladdition durchgeführt mit k0. Wir erhalten:</value>
+    <value>Chiffre 1 besteht aus Schlüsseladdition und Substitution. Der Aufbau kann in der ToyChiffre-Komponente betrachtet werden. Wir versuchen nun die zwei unbekannten Rundenschlüssel k0 und k1 wiederherzustellen. Dazu betrachten wir zunächst die einzelnen Schritte der Verschlüsselung. Zunächst wird eine Schlüsseladdition zum Eingabeblock durchgeführt mit k0. Wir erhalten:</value>
   </data>
   <data name="DifferentialCryptanalysisSlide1Content3" xml:space="preserve">
     <value>Anschließend erfolgt eine Substitution durch die SBoxen:</value>
@@ -178,7 +178,7 @@
     <value>Differenzielle Kryptoanalyse von Chiffre 1</value>
   </data>
   <data name="DifferentialCryptanalysisSlide2Content1" xml:space="preserve">
-    <value>Als letztes erfolgt wieder eine Schlüsseladdition mit k1:</value>
+    <value>als Letztes erfolgt wieder eine Schlüsseladdition mit k1:</value>
   </data>
   <data name="DifferentialCryptanalysisSlide2Header" xml:space="preserve">
     <value>Differenzielle Kryptoanalyse von Chiffre 1</value>
@@ -199,7 +199,7 @@
     <value>1. Einführung</value>
   </data>
   <data name="IntroductionSlide1Content1" xml:space="preserve">
-    <value>In diesem Abschnitt betrachten wir die Basisidee der differenziellen Kryptoanalyse. Viele symmetrische rundenbasierte Blockchiffren bestehen aus drei grundlegenden Operationen: Schlüsseladdition, Substitution und Permutation. In diesem Abschnitt beschränken wir uns zunächst auf Schlüsseladdition und Substitution.</value>
+    <value>In diesem Abschnitt betrachten wir die Grundidee der differenziellen Kryptoanalyse. Viele symmetrische rundenbasierte Blockchiffren bestehen aus drei grundlegenden Operationen: Schlüsseladdition, Substitution und Permutation. In diesem Abschnitt beschränken wir uns zunächst auf Schlüsseladdition und Substitution.</value>
   </data>
   <data name="IntroductionSlide1Content2" xml:space="preserve">
     <value>Bei der Schlüsseladdition verwenden sehr viele Chiffren die XOR-Operation (Exklusiv-Oder). Die XOR-Operation ist ein zweistelliger-Operator, der durch folgende Wertetabelle beschrieben werden kann:</value>
@@ -220,19 +220,20 @@
     <value>Wird die XOR-Operation mit einer Nachricht m und Schlüssel k durchgeführt, erhält man den Schlüsseltext:</value>
   </data>
   <data name="IntroductionSlide2Content2" xml:space="preserve">
-    <value>Die Kernidee der differenziellen Kryptoanalyse ist es nun, dass der Schlüssel zweimal verwendet wird. Wir betrachten an dieser Stelle die Auswirkung:</value>
+    <value>Die Grundidee der differenziellen Kryptoanalyse ist es nun, dass der Schlüssel zweimal verwendet wird. Wir betrachten an dieser Stelle die Auswirkung:</value>
   </data>
   <data name="IntroductionSlide2Content3" xml:space="preserve">
-    <value>Wir erhalten wieder die ursprüngliche Nachricht m. Die XOR-Operation wird häufig auch als Differenz-Operator bezeichnet. Dies werden wir in diesem Tutorial auch machen.</value>
+    <value>Wir erhalten wieder die ursprüngliche Nachricht m. Der XOR-Operator wird häufig auch als Differenz-Operator bezeichnet. Diese Benennung nutzen wir in diesem Tutorial auch.</value>
   </data>
   <data name="IntroductionSlide2Content4" xml:space="preserve">
-    <value>In der Realität sind Chiffren umfangreicher, komplizierter und bestehen nicht ausschließlich aus Schlüsseladdition. Die differenzielle Kryptoanalyse ist ein so genannter "Chosen Plaintext-Angriff", das bedeutet der Kryptoanalyst kann Nachrichten auswählen und diese verschlüsseln lassen.</value>
+    <value>In der Realität sind Chiffren umfangreicher, komplizierter und bestehen nicht ausschließlich aus Schlüsseladditionen. Die
+differenzielle Kryptoanalyse ist ein so genannter "Chosen Plaintext-Angriff", das bedeutet der Kryptoanalyst kann Klartext-Nachrichten auswählen und diese verschlüsseln lassen, so dass er passende Klartext-/Geheimtext-Paare hat.</value>
   </data>
   <data name="IntroductionSlide2Header" xml:space="preserve">
     <value>Einführung</value>
   </data>
   <data name="IntroductionSlide3Content1" xml:space="preserve">
-    <value>Die Idee des zweimaligen Anwenden des Schlüssels können wir nun verwenden. Wir betrachten zwei Nachrichten. Dann kann folgendes berechnet werden:</value>
+    <value>Die Idee des zweimaligen Anwenden des Schlüssels nutzen wir, indem wir Paare von Nachrichten betrachen. Dann kann folgendes berechnet werden:</value>
   </data>
   <data name="IntroductionSlide3Content2" xml:space="preserve">
     <value>Nun gilt:</value>
@@ -283,7 +284,7 @@
     <value>Durch Starten des Workspaces beginnt das Tutorial.</value>
   </data>
   <data name="StartMaskContent2" xml:space="preserve">
-    <value>Sie haben Tutorial {0} zur Zeit ausgwählt.</value>
+    <value>Momentan haben Sie Tutorial {0} ausgwählt.</value>
   </data>
   <data name="StartMaskHeader" xml:space="preserve">
     <value>Bereit zur Ausführung</value>
