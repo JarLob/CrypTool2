@@ -172,7 +172,7 @@
     <value>At this point we apply the idea of differential cryptanalysis to cipher 1. The structure of a cipher is usually public, so that all components and their functionality are known. The security of a cipher should never be based on the secrecy of the construction, but on the secrecy of the key. This requirement is also called Kerckhoff's principle.</value>
   </data>
   <data name="DifferentialCryptanalysisSlide1Content2" xml:space="preserve">
-    <value>Chiffre 1 consists of key addition and substitution. Chiffre 1 consists of key addition and substitution. The structure can be viewed in the ToyCipher component. We now try to restore the two unknown round keys k0 and k1. To do this, we first look at the individual steps of the encryption. First a key addition to the input block is performed with k0. We get:</value>
+    <value>Cipher 1 consists of key addition and substitution. The structure can be viewed in the ToyCipher component. We now try to restore the two unknown round keys k0 and k1. To do this, we first look at the individual steps of the encryption. First a key addition to the input block is performed with k0. We get:</value>
   </data>
   <data name="DifferentialCryptanalysisSlide1Content3" xml:space="preserve">
     <value>Subsequently, a substitution by the SBoxes takes place:</value>

@@ -223,7 +223,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Chiffre 1 consists of key addition and substitution. Chiffre 1 consists of key addition and substitution. The structure can be viewed in the ToyCipher component. We now try to restore the two unknown round keys k0 and k1. To do this, we first look at the individual steps of the encryption. First a key addition to the input block is performed with k0. We get: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 1 consists of key addition and substitution. The structure can be viewed in the ToyCipher component. We now try to restore the two unknown round keys k0 and k1. To do this, we first look at the individual steps of the encryption. First a key addition to the input block is performed with k0. We get: ähnelt.
         /// </summary>
         internal static string DifferentialCryptanalysisSlide1Content2 {
             get {

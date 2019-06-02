@@ -233,7 +233,7 @@ differenzielle Kryptoanalyse ist ein so genannter "Chosen Plaintext-Angriff", da
     <value>Einführung</value>
   </data>
   <data name="IntroductionSlide3Content1" xml:space="preserve">
-    <value>Die Idee des zweimaligen Anwenden des Schlüssels nutzen wir, indem wir Paare von Nachrichten betrachen. Dann kann folgendes berechnet werden:</value>
+    <value>Die Idee des zweimaligen Anwendens des Schlüssels nutzen wir, indem wir Paare von Nachrichten betrachen. Dann kann folgendes berechnet werden:</value>
   </data>
   <data name="IntroductionSlide3Content2" xml:space="preserve">
     <value>Nun gilt:</value>
@@ -284,7 +284,7 @@ differenzielle Kryptoanalyse ist ein so genannter "Chosen Plaintext-Angriff", da
     <value>Durch Starten des Workspaces beginnt das Tutorial.</value>
   </data>
   <data name="StartMaskContent2" xml:space="preserve">
-    <value>Momentan haben Sie Tutorial {0} ausgwählt.</value>
+    <value>Momentan haben Sie Tutorial {0} ausgewählt.</value>
   </data>
   <data name="StartMaskHeader" xml:space="preserve">
     <value>Bereit zur Ausführung</value>
