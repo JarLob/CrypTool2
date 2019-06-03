@@ -165,11 +165,56 @@
   <data name="DifferentialCryptanalysisHeader" xml:space="preserve">
     <value>2. Differential cryptanalysis of cipher 1</value>
   </data>
+  <data name="DifferentialCryptanalysisSlide10Content1" xml:space="preserve">
+    <value>The value of</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide10Content2Run1" xml:space="preserve">
+    <value>is already known. The cryptoanalyst now tries all values t of k</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide10Content2Run2" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide10Content2Run3" xml:space="preserve">
+    <value>and every time</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide10Content3Run1" xml:space="preserve">
+    <value>is valid, t is noted as a candidate for k</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide10Content3Run2" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide10Content3Run3" xml:space="preserve">
+    <value>. If more than one candidate remains at the end, the attack will be reshuffled with new pairs of plaintext and keytext.</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide10Content4" xml:space="preserve">
+    <value>By clicking the "next-button" again, differential cryptanalysis can be performed on cipher 1 in the "Key Recovery" component.</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide10Header" xml:space="preserve">
+    <value>Differential cryptanalysis of cipher 1</value>
+  </data>
   <data name="DifferentialCryptanalysisSlide1Content1" xml:space="preserve">
     <value>At this point we apply the idea of differential cryptanalysis to cipher 1. The structure of a cipher is usually public, so that all components and their functionality are known. The security of a cipher should never be based on the secrecy of the construction, but on the secrecy of the key. This requirement is also called Kerckhoffs' principle.</value>
   </data>
-  <data name="DifferentialCryptanalysisSlide1Content2" xml:space="preserve">
-    <value>Cipher 1 consists of key addition and substitution. The structure can be viewed in the ToyCipher component. We now try to restore the two unknown round keys k0 and k1. To do this, we first look at the individual steps of the encryption. First a key addition to the input block is performed with k0. We get:</value>
+  <data name="DifferentialCryptanalysisSlide1Content2Run1" xml:space="preserve">
+    <value>Cipher 1 consists of key addition and substitution. The structure can be viewed in the ToyCipher component. We now try to restore the two unknown round keys k</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide1Content2Run2" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide1Content2Run3" xml:space="preserve">
+    <value>and k</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide1Content2Run4" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide1Content2Run5" xml:space="preserve">
+    <value>. To do this, we first look at the individual steps of the encryption. First a key addition to the input block is performed with k</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide1Content2Run6" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide1Content2Run7" xml:space="preserve">
+    <value>. We get:</value>
   </data>
   <data name="DifferentialCryptanalysisSlide1Content3" xml:space="preserve">
     <value>Subsequently, a substitution by the SBoxes takes place:</value>
@@ -177,8 +222,14 @@
   <data name="DifferentialCryptanalysisSlide1Header" xml:space="preserve">
     <value>Differential cryptanalysis of cipher 1</value>
   </data>
-  <data name="DifferentialCryptanalysisSlide2Content1" xml:space="preserve">
-    <value>Finally, a key addition with k1 takes place again:</value>
+  <data name="DifferentialCryptanalysisSlide2Content1Run1" xml:space="preserve">
+    <value>Finally, a key addition with k</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide2Content1Run2" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide2Content1Run3" xml:space="preserve">
+    <value> takes place again:</value>
   </data>
   <data name="DifferentialCryptanalysisSlide2Header" xml:space="preserve">
     <value>Differential cryptanalysis of cipher 1</value>
@@ -195,20 +246,122 @@
   <data name="DifferentialCryptanalysisSlide4Header" xml:space="preserve">
     <value>Differential cryptanalysis of cipher 1</value>
   </data>
-  <data name="DifferentialCryptanalysisSlide9Content1" xml:space="preserve">
-    <value>The cryptanalyst knows the parameters m and c, but the internal intermediate values u and v are unknown, since k0 and k1 are unknown. However, these values cannot be compared directly with the internal values u1 and u2, as these are unknown. In the following, we will look at two messages m1 and m2 and perform the encryption process partially:</value>
+  <data name="DifferentialCryptanalysisSlide9Content1Run1" xml:space="preserve">
+    <value>The cryptoanalyst knows the parameters m and c, but the internal intermediate values u and v are unknown, as k</value>
   </data>
-  <data name="DifferentialCryptanalysisSlide9Content2" xml:space="preserve">
-    <value>We can</value>
+  <data name="DifferentialCryptanalysisSlide9Content1Run2" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="DifferentialCryptanalysisSlide9Content3" xml:space="preserve">
-    <value>calculated by difference formation of m1 and m2. Next you can guess k1 and calculate the values of v1 and v2, because the functionality of the SBox is public and therefore invertible. This allows the cryptoanalyst to</value>
+  <data name="DifferentialCryptanalysisSlide9Content1Run3" xml:space="preserve">
+    <value>and k</value>
   </data>
-  <data name="DifferentialCryptanalysisSlide9Content4" xml:space="preserve">
-    <value>calculate. However, these values cannot be directly compared with the internal values u1 and u2, since these are unknown.</value>
+  <data name="DifferentialCryptanalysisSlide9Content1Run4" xml:space="preserve">
+    <value>1</value>
   </data>
-  <data name="DifferentialCryptanalysisSlide9Content5" xml:space="preserve">
-    <value>However, the cryptoanalyst knows that the following applies if the round key k1 is correct:</value>
+  <data name="DifferentialCryptanalysisSlide9Content1Run5" xml:space="preserve">
+    <value>are unknown. However, the cryptanalyst knows the difference between the internal values. In the following we will look at two messages m</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content1Run6" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content1Run7" xml:space="preserve">
+    <value>and m</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content1Run8" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content1Run9" xml:space="preserve">
+    <value>and perform the encryption process partially:</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content2Run1" xml:space="preserve">
+    <value>This knowledge can be used to get k</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content2Run10" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content2Run11" xml:space="preserve">
+    <value>). We can calculate</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content2Run2" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content2Run3" xml:space="preserve">
+    <value>. We consider two plaintext keytext pairs (m</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content2Run4" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content2Run5" xml:space="preserve">
+    <value>, c</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content2Run6" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content2Run7" xml:space="preserve">
+    <value>) and (m</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content2Run8" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content2Run9" xml:space="preserve">
+    <value>, c</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content3Run1" xml:space="preserve">
+    <value>by difference calculation of m</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content3Run10" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content3Run11" xml:space="preserve">
+    <value>because the functionality of the SBox is public and therefore invertible. This allows the cryptoanalyst to calculate</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content3Run2" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content3Run3" xml:space="preserve">
+    <value>and m</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content3Run4" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content3Run5" xml:space="preserve">
+    <value>. Next step is k</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content3Run6" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content3Run7" xml:space="preserve">
+    <value>and the values of v</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content3Run8" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content3Run9" xml:space="preserve">
+    <value>and v</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content4Run1" xml:space="preserve">
+    <value>However, these values cannot be directly compared with the internal values u</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content4Run2" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content4Run3" xml:space="preserve">
+    <value>and u</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content4Run4" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content4Run5" xml:space="preserve">
+    <value>as these are unknown.</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content5Run1" xml:space="preserve">
+    <value>However, the cryptoanalyst knows that if the round key k</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content5Run2" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="DifferentialCryptanalysisSlide9Content5Run3" xml:space="preserve">
+    <value>is valid, the following applies:</value>
   </data>
   <data name="DifferentialCryptanalysisSlide9Header" xml:space="preserve">
     <value>Differential cryptanalysis of cipher 1</value>

@@ -133,7 +133,7 @@ namespace Cryptool.Plugins.DCAPathFinder
             //dispatch action {DEBUG}: show slide 8 to save time
             _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
             {
-                _activePresentation.StepCounter = 8;
+                _activePresentation.StepCounter = 6;
                 _activePresentation.SetupView();
             }, null);
 

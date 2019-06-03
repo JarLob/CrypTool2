@@ -249,6 +249,16 @@ namespace DCAPathFinder.UI
                                 ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide9();
                             }
                                 break;
+                            case 15:
+                            {
+                                //setup possible button actions
+                                IsPreviousPossible = true;
+                                IsNextPossible = true;
+
+                                //setup pres content
+                                ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide10();
+                            }
+                                break;
                         }
                     }
                         break;

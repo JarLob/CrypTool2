@@ -102,6 +102,9 @@
     <Compile Include="UI\Tutorial1\DifferentialCryptanalysisSlide1.xaml.cs">
       <DependentUpon>DifferentialCryptanalysisSlide1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Tutorial1\DifferentialCryptanalysisSlide10.xaml.cs">
+      <DependentUpon>DifferentialCryptanalysisSlide10.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Tutorial1\DifferentialCryptanalysisSlide2.xaml.cs">
       <DependentUpon>DifferentialCryptanalysisSlide2.xaml</DependentUpon>
     </Compile>
@@ -220,6 +223,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\Tutorial1\DifferentialCryptanalysisSlide10.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Tutorial1\DifferentialCryptanalysisSlide2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -324,6 +331,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\u1XORu2Eq.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\k1restore.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

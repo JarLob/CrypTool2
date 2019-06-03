@@ -21,7 +21,10 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Content="{Loc DifferentialCryptanalysisSlide1Header}"></Label>
         <TextBlock Grid.Row="1" FontFamily="Courier New" FontSize="12" Text="{Loc DifferentialCryptanalysisSlide1Content1}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
-        <TextBlock Grid.Row="2" FontFamily="Courier New" FontSize="12" Text="{Loc DifferentialCryptanalysisSlide1Content2}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
+        <TextBlock Grid.Row="2" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0" TextWrapping="Wrap">
+            <Run Text="{Loc DifferentialCryptanalysisSlide1Content2Run1}"></Run><Run BaselineAlignment="Subscript" Text="{Loc DifferentialCryptanalysisSlide1Content2Run2}" FontSize="10"></Run>
+            <Run Text="{Loc DifferentialCryptanalysisSlide1Content2Run3}"></Run><Run BaselineAlignment="Subscript" Text="{Loc DifferentialCryptanalysisSlide1Content2Run4}" FontSize="10"></Run><Run Text="{Loc DifferentialCryptanalysisSlide1Content2Run5}"></Run><Run BaselineAlignment="Subscript" Text="{Loc DifferentialCryptanalysisSlide1Content2Run6}" FontSize="10"></Run><Run Text="{Loc DifferentialCryptanalysisSlide1Content2Run7}"></Run>
+        </TextBlock>
         <Image Grid.Row="3" Source="/DCAPathFinder;component/images/mXORk0.png"></Image>
         <TextBlock Grid.Row="4" FontFamily="Courier New" FontSize="12" Text="{Loc DifferentialCryptanalysisSlide1Content3}" Margin="10,5,10,0" TextWrapping="Wrap"></TextBlock>
         <Image Grid.Row="5" Source="/DCAPathFinder;component/images/StepSBOX.png"></Image>
