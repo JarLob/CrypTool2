@@ -202,7 +202,7 @@
     <value>Wir können</value>
   </data>
   <data name="DifferentialCryptanalysisSlide9Content3" xml:space="preserve">
-    <value>berechnen durch Differenzbildung von m1 und m2. Als nächstes kann k1 geraten werden und die Werte von v1 und v2 berechnet werden, denn die Funktionsweise der SBox ist öffentlich und damit auch invertierbar. Dadurch kann der Kryptoanalyst</value>
+    <value>berechnen durch Differenzbildung von m1 und m2. Als Nächstes kann k1 geraten und die Werte von v1 und v2 berechnet werden, denn die Funktionsweise der SBox ist öffentlich und damit auch invertierbar. Dadurch kann der Kryptoanalyst</value>
   </data>
   <data name="DifferentialCryptanalysisSlide9Content4" xml:space="preserve">
     <value>berechnen. Allerdings können diese Werte nicht direkt mit den internen Werten u1 und u2 verglichen werden, da diese unbekannt sind.</value>

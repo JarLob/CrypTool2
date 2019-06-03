@@ -166,7 +166,7 @@
     <value>2. Differential cryptanalysis of cipher 1</value>
   </data>
   <data name="DifferentialCryptanalysisSlide1Content1" xml:space="preserve">
-    <value>At this point we apply the idea of differential cryptanalysis to cipher 1. The structure of a cipher is usually public, so that all components and their functionality are known. The security of a cipher should never be based on the secrecy of the construction, but on the secrecy of the key. This requirement is also called Kerckhoff's principle.</value>
+    <value>At this point we apply the idea of differential cryptanalysis to cipher 1. The structure of a cipher is usually public, so that all components and their functionality are known. The security of a cipher should never be based on the secrecy of the construction, but on the secrecy of the key. This requirement is also called Kerckhoffs' principle.</value>
   </data>
   <data name="DifferentialCryptanalysisSlide1Content2" xml:space="preserve">
     <value>Cipher 1 consists of key addition and substitution. The structure can be viewed in the ToyCipher component. We now try to restore the two unknown round keys k0 and k1. To do this, we first look at the individual steps of the encryption. First a key addition to the input block is performed with k0. We get:</value>
@@ -196,7 +196,7 @@
     <value>Differential cryptanalysis of cipher 1</value>
   </data>
   <data name="DifferentialCryptanalysisSlide9Content1" xml:space="preserve">
-    <value>The cryptanalyst knows the parameters m and c, but the internal intermediate values u and v are unknown, since k0 and k1 are unknown. However, the cryptanalyst knows the difference of the internal values. In the following, we will look at two messages m1 and m2 and perform the encryption process partially:</value>
+    <value>The cryptanalyst knows the parameters m and c, but the internal intermediate values u and v are unknown, since k0 and k1 are unknown. However, these values cannot be compared directly with the internal values u1 and u2, as these are unknown. In the following, we will look at two messages m1 and m2 and perform the encryption process partially:</value>
   </data>
   <data name="DifferentialCryptanalysisSlide9Content2" xml:space="preserve">
     <value>We can</value>

@@ -205,7 +205,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die At this point we apply the idea of differential cryptanalysis to cipher 1. The structure of a cipher is usually public, so that all components and their functionality are known. The security of a cipher should never be based on the secrecy of the construction, but on the secrecy of the key. This requirement is also called Kerckhoff&apos;s principle. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die At this point we apply the idea of differential cryptanalysis to cipher 1. The structure of a cipher is usually public, so that all components and their functionality are known. The security of a cipher should never be based on the secrecy of the construction, but on the secrecy of the key. This requirement is also called Kerckhoffs&apos; principle. ähnelt.
         /// </summary>
         internal static string DifferentialCryptanalysisSlide1Content1 {
             get {
@@ -295,7 +295,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The cryptanalyst knows the parameters m and c, but the internal intermediate values u and v are unknown, since k0 and k1 are unknown. However, the cryptanalyst knows the difference of the internal values. In the following, we will look at two messages m1 and m2 and perform the encryption process partially: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The cryptanalyst knows the parameters m and c, but the internal intermediate values u and v are unknown, since k0 and k1 are unknown. However, these values cannot be compared directly with the internal values u1 and u2, as these are unknown. In the following, we will look at two messages m1 and m2 and perform the encryption process partially: ähnelt.
         /// </summary>
         internal static string DifferentialCryptanalysisSlide9Content1 {
             get {
