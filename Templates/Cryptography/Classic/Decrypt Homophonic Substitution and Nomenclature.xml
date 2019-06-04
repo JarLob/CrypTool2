@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Homophone Substitution Cipher and Nomenclature -- Encryption</title>
-  <summary lang="en">Encrypt texts using the <i>substitution</i> component for homophone encryption and nomenclatures</summary>
-  <description lang="en">This template shows how to use the <i>Subsitution</i> component in order to perform a homophone encryption and to use a nomenclature as key.</description>
+  <title lang="en">Homophonic Substitution Cipher and Nomenclature -- Decryption</title>
+  <summary lang="en">Decrypt texts using the <i>substitution</i> component for homophonic ciphers and nomenclatures</summary>
+  <description lang="en">This template shows how to use the <i>subsitution</i> component in order to perform a homophonic decryption and to use a nomenclature as key.</description>
   <keywords>substitution, monoalphabetic, homophone, nomenclature</keywords>
 
-  <title lang="de">Homophone Substitutions-Chiffre und Nomenklatur -- Verschlüsselung</title>
-  <summary lang="de">Benutzung des <i>Substitutions-Plugins</i> für homophone Verschlüsselungen und Nomenklaturen</summary>
-  <description lang="de">Diese Vorlage zeigt, wie man die <i>Substitutions-Komponente</i> nutzen kann, um homophone Verschlüsselungen durchzuführen und auch Nomenklaturen als Schlüssel zu benutzen.</description>
+  <title lang="de">Homophone Substitutions-Chiffre und Nomenklatur -- Entschlüsselung</title>
+  <summary lang="de">Benutzung des <i>Substitutionsplugins</i> für homophone Entschlüsselungen und Nomenklaturen</summary>
+  <description lang="de">Diese Vorlage zeigt die Benutzung der <i>Substitutions-Komponente</i> um homophone Verschlüsselungen zu entschlüsseln und Nomenklaturen zu nutzen.</description>
   <keywords lang="de">Substitution, monoalphabetisch, homophon, Nomenklatur</keywords>
 
   <icon file="substitution.png" />
@@ -21,7 +21,7 @@
 	<replacement key="$NOMENCLATURE$" value="Nomenklatur"/>	
 	<replacement key="$PLAIN_COLUMN$" value="Klartextspalte"/>	
 	<replacement key="$CIPHER_COLUMN$" value="Geheimtextspalte"/>	
-	<replacement key="$MEMO$" value="{\fs25 Diese Vorlage zeigt, wie man die Schlüssel von homophonen Chiffren oder sogar von Nomenklaturen erstellen kann, und wie man mit diesem Schlüssel und der Substitutions-Komponente einen Text verschlüsseln kann.\line\line
+	<replacement key="$MEMO$" value="{\fs25 Diese Vorlage zeigt, wie man die Schlüssel von homophonen Chiffren oder sogar von Nomenklaturen erstellen kann, und wie man mit diesem Schlüssel und der Substitutions-Komponente einen Text entschlüsseln kann.\line\line
 In der Texteingabe-Komponente {\b Nomenklatur} können die Homophone bzw. die Nomenklatur definiert werden.\line\line
 {\b [A];[01|02]} definiert, dass der Buchstabe {\b A} durch eines der Homophone {\b 01} oder {\b 02} substituiert wird.\line
 {\b [BISHOP];[85]} definiert, dass das Wort {\b BISHOP} mit dem Homophon {\b 85} substituiert wird.\line\line
@@ -39,7 +39,7 @@ Quelle des Klartexts: https://en.wikipedia.org/wiki/Pope
 	<replacement key="$NOMENCLATURE$" value="Nomenclature"/>	
 	<replacement key="$PLAIN_COLUMN$" value="Plaintext column"/>	
 	<replacement key="$CIPHER_COLUMN$" value="Ciphertext column"/>	
-	<replacement key="$MEMO$" value="{\fs25 This template shows how to create a homophonic cipher or even a nomenclature using the substitution component and then encrypt a text using the created cipher.\line\line
+	<replacement key="$MEMO$" value="{\fs25 This template shows how to create a homophonic cipher or even a nomenclature using the substitution component and then decrypt a text using the created cipher.\line\line
 In the TextInput component {\b Nomenclature} the homophones or the nomenclature can be defined.\line\line
 {\b [A];[01|02]} defines that the letter {\b A} is substituted by one of the homophones {\b 01} or {\b 02}.\line
 {\b [BISHOP];[85]} defines that the word {\b BISHOP} is substituted with the homophone {\b 85}.\line\line
