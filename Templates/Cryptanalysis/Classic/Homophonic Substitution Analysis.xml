@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+  <title lang="en">Homophonic Substitution Analysis</title>
+  <title lang="ru">Гомофонический анализ замещения</title>
+  <title lang="de">Homophone Substutionsanalyse</title>  
+  <summary lang="en">Cryptanalysis of homophonic ciphers using the <i>Homophonic Substitution Analyzer</i></summary>
+  <summary lang="ru">Криптоанализ гомофонических шифров с использованием <i> Homophonic Substitution Analyzer </i></summary>
+  <summary lang="de">Kryptoanalyse homophoner Chiffren mit der <i> Homophonen Substitutionsanalyse </i></summary>
+  <description lang="en">This sample demonstrates how to use the <i>Homophonic Substitution Analyzer</i> to break homophonic substitution ciphers.</description>
+  <description lang="ru">Этот пример демонстрирует, как использовать анализ гомофонического замещения для взлома шифров гомофонического замещения.</description>
+  <description lang="de">In diesem Beispiel wird veranschaulicht, wie die <i>Homophonen Substitutionsanalyse</i> verwendet wird, um homophone Substitutionschiffren zu brechen.</description>  
+  <keywords>homophone, homophonic, substitution, mono alphabetic</keywords>
+  <keywords lang="ru">гомофонический, гомофонический, замещение, моноалфавитный</keywords>
+  <keywords lang="de">Homophon, Substitution, mono alphabetisch</keywords>
+  <icon file="Homophonic Substitution Analysis.png" />  
+  <relevantPlugins>
+    <plugin name="HomophonicSubstitutionAnalyzer" />
+  </relevantPlugins>
+<replacements lang="en">
+    <replacement key="$ciphertext$" value="Ciphertext" />
+	<replacement key="$analyzer$" value="Homophonic Substitution Analyzer" />
+	<replacement key="$plaintext$" value="Revealed plaintext" />
+	<replacement key="$revealedkey$" value="Revealed key" />
+	<replacement key="$foundwords$" value="Found words" />
+	<replacement key="$dictionary$" value="Dictionary" />
+	<replacement key="$block$" value="Block" />
+    <replacement key="$memo$" value="{\b Cryptanalysis of the homophonic substitution cipher}\line\line
+A homophonic substitution cipher tries to eliminate the possibility to analyze the ciphertext using simple language statistics. 
+To do so, it flattens the frequencies of single letters, thus, in the perfect case, the ciphertext letters are uniformly distributed. 
+For example, instead of encrypting the letter 'E' only with one ciphertext letter, it can now be encrypted using one of several different &quot;homophones&quot;, e.g. 01, 02, 03, 04, 05. 
+Then the ciphertext consists of different pairs of digits -- this method was often used in history, i.e. in letters kept in the Vatican's secret archive or in messages of the Spanish Civil War encrypted with the Spanish Strip Cipher. 
+The keyspace size of a homophonic cipher can be calculated by 26^n where n is the number of homophones. 
+For example, a homophonic encrypted text having only 52 homophones has a keyspace size of 26^52 which is about 2^244, where each homophone may be mapped to one of the 26 letters of the Latin alphabet.\line\line
+After starting the template's workspace the first time (by clicking the Play button), the analyzer needs some time to load huge pentagram language statistics and to fill the ciphertext and the plaintext areas with letters.\line\line
+In the semi-automatic mode, the 3 buttons &quot;Analyze/Stop&quot;, &quot;Reset locked letters&quot;, and &quot;Find/Lock words&quot; within the analyzer component are enabled. 
+To start the analysis process click on the &quot;Analyze&quot; button. After some time, the auto-locker will automatically lock already revealed words. You can stop (&quot;Stop&quot;) and restart (&quot;Analyze&quot;) the analysis process at any time. 
+When the analysis is stopped, you can also lock and unlock single letters of the revealed plaintext by yourself with a left mouse button click. After locking a letter with the left mouse button, you can change letters using the right mouse button: 
+Each click on the right mouse button shows the next valid letter; clicking the right mouse button plus Shift selects the previous letter in the plaintext alphabet."/>
+  </replacements>
+<replacements lang="ru">
+    <replacement key="$ciphertext$" value="шифротекста" />
+	<replacement key="$analyzer$" value="Анализатор гомофонического замещения" />
+	<replacement key="$plaintext$" value="Простой текст" />
+	<replacement key="$revealedkey$" value="Выявленный ключ" />
+	<replacement key="$foundwords$" value="Найденные слова" />
+	<replacement key="$dictionary$" value="толковый словарь" />
+    <replacement key="$block$" value="блок" />
+	<replacement key="$memo$" value="{\b Криптоанализ шифра гомофонного замещения} \line\line
+Шифр с гомофоническим замещением пытается исключить возможность анализа зашифрованного текста с использованием статистики простого языка.
+Для этого он выравнивает частоты отдельных букв, поэтому в идеальном случае буквы зашифрованного текста распределяются равномерно.
+Например, вместо того, чтобы шифровать букву «E» только одной буквой зашифрованного текста, теперь она может быть зашифрована с использованием одного из нескольких разных «гомофонов», например, 01, 02, 03, 04, 05.
+Затем зашифрованный текст состоит из разных пар цифр - этот метод часто использовался в истории, т. Е. В письмах, хранящихся в секретном архиве Ватикана, или в сообщениях о гражданской войне в Испании, зашифрованных с помощью шифра испанской полосы.
+Размер пространства ключей гомофонического шифра можно вычислить как 26^n, где n - количество гомофонов.
+Например, зашифрованный гомофонический текст, имеющий только 52 гомофона, имеет размер пространства клавиш 26^52, что составляет около 2^244, где каждый гомофон может быть сопоставлен с одной из 26 букв латинского алфавита. \line\line
+После первого запуска рабочей области шаблона (нажав кнопку «Воспроизвести») анализатору требуется некоторое время для загрузки огромной статистики языка пентаграммы и для заполнения областей зашифрованного текста и открытого текста буквами. \line\line
+В полуавтоматическом режиме 3 кнопки «Анализировать / Остановить», «Сбросить заблокированные буквы» и «Найти / заблокировать слова» внутри анализатора компонент включен.
+Чтобы начать процесс анализа, нажмите кнопку «Анализировать»; кнопка. Через некоторое время автоблокировка автоматически заблокирует уже выявленные слова. Вы можете в любой момент остановить (&quot;Остановить&quot;) и перезапустить (&quot;Анализировать&quot;) процесс анализа.
+Когда анализ остановлен, вы также можете заблокировать и разблокировать отдельные буквы открытого текста самостоятельно, щелкнув левой кнопкой мыши. После блокировки буквы левой кнопкой мыши, вы можете изменить буквы правой кнопкой мыши:
+Каждый щелчок правой кнопкой мыши показывает следующую правильную букву; щелкнув правой кнопкой мыши, плюс Shift выделяет предыдущую букву в текстовом алфавите." />	
+  </replacements>
+  <replacements lang="de">
+    <replacement key="$ciphertext$" value="Geheimtext" />
+	<replacement key="$analyzer$" value="Homophone Substitutionsanalyse" />
+	<replacement key="$plaintext$" value="Gefundener Klartext" />
+	<replacement key="$revealedkey$" value="Gefundener Schlüssel" />
+	<replacement key="$foundwords$" value="Gefundene Wörter" />
+	<replacement key="$dictionary$" value="Wörterbuch" />
+	<replacement key="$block$" value="Block" />
+    <replacement key="$memo$" value="{\b Kryptoanalyse der homophonen Substitutionschiffre} \line\line
+Eine homophone Substitutions-Chiffre versucht, die Möglichkeit zu beseitigen, den Geheimtext mit einfachen Sprachstatistiken zu analysieren.
+Zu diesem Zweck werden die Häufigkeiten einzelner Buchstaben abgeflacht, sodass die Chiffretext-Buchstaben im Idealfall gleichmäßig verteilt sind.
+Anstatt beispielsweise den Buchstaben &quot;E &quot; nur mit einem Chiffretext-Buchstaben zu verschlüsseln, kann er jetzt unter Verwendung eines von mehreren verschiedenen  &quot;Homophonen &quot; verschlüsselt werden, z. 01, 02, 03, 04, 05.
+Dann besteht der Chiffretext aus verschiedenen Ziffernpaaren - diese Methode wurde oft in der Geschichte verwendet, d. H. In Briefen, die im Geheimarchiv des Vatikans aufbewahrt wurden, oder in Nachrichten des spanischen Bürgerkriegs, die mit der spanischen Strip-Chiffre verschlüsselt wurden.
+Die Schlüsselraumgröße einer homophonen Chiffre kann mit 26 ^ n berechnet werden, wobei n die Anzahl der Homophone ist.
+Beispielsweise hat ein homophon verschlüsselter Text mit nur 52 Homophonen eine Schlüsselraumgröße von 26^52, was ungefähr 2^244 ist, wobei jedes Homophon einem der 26 Buchstaben des lateinischen Alphabets zugeordnet werden kann. \line\line
+Um die Chiffre im sogenannten halbautomatischen Analysemodus zu analysieren, müssen Sie den Arbeitsbereich über den Start-Button starten. 
+Nach dem Starten des Arbeitsbereichs benötigt die Analyse einige Zeit, um die Sprachstatistiken (Pentagramme) zu laden. Wenn der Chiffretext und der Klartext mit Buchstaben gefüllt sind, 
+können Sie den Analyseprozess starten, indem Sie auf &quot;Analysieren&quot; klicken. Nach einiger Zeit sperrt der Auto-Locker automatisch offenbarte Wörter. Sie können den Analyseprozess anhalten 
+und neustarten. Wenn die Analyse gestoppt ist, können Sie Buchstaben auch mit der linken Maustaste sperren und entsperren. Sie können Buchstaben auch mit der rechten Maustaste und mit der 
+Umschalttaste und der rechten Maustaste manuell ändern." />
+	"/>
+  </replacements>
+</sample>
