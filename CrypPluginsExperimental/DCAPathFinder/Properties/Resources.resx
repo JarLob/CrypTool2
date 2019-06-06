@@ -127,16 +127,16 @@
     <value>At this point one of the algorithms contained in the list can be selected. This algorithm can be examined by differential cryptanalysis.</value>
   </data>
   <data name="Cipher1" xml:space="preserve">
-    <value>Cipher 1: 16 bit blocksize, 2 subkeys, the key consists of 32 bit</value>
+    <value>Tutorial 1: Cipher 1, 16 bit blocksize, 2 subkeys, the key consists of 32 bit</value>
   </data>
   <data name="Cipher2" xml:space="preserve">
-    <value>Cipher 2: 16 bit blocksize, 4 subkeys, the key consists of 64 bit</value>
+    <value>Tutorial 2: Cipher 2, 16 bit blocksize, 4 subkeys, the key consists of 64 bit</value>
   </data>
   <data name="Cipher3" xml:space="preserve">
-    <value>Cipher 3: 16 bit blocksize, 6 subkeys, the key consists of 96 bit</value>
+    <value>Tutorial 3: Cipher 3, 16 bit blocksize, 6 subkeys, the key consists of 96 bit</value>
   </data>
   <data name="Cipher4" xml:space="preserve">
-    <value>Cipher 4: 4 bit blocksize, 4 subkeys, the key consists of 16 bit</value>
+    <value>Tutorial 4: Cipher 4, 4 bit blocksize, 4 subkeys, the key consists of 16 bit</value>
   </data>
   <data name="DescriptionContent1" xml:space="preserve">
     <value>The following is a short description of the ciphers of the individual parts of the tutorial:</value>
@@ -184,10 +184,10 @@
     <value>1</value>
   </data>
   <data name="DifferentialCryptanalysisSlide10Content3Run3" xml:space="preserve">
-    <value>. If more than one candidate remains at the end, the attack will be reshuffled with new pairs of plaintext and keytext.</value>
+    <value>. If more than one candidate remains at the end, the attack will be reshuffled with new pairs of plaintext and ciphertext.</value>
   </data>
   <data name="DifferentialCryptanalysisSlide10Content4" xml:space="preserve">
-    <value>By clicking the "next-button" again, differential cryptanalysis can be performed on cipher 1 in the "Key Recovery" component.</value>
+    <value>By clicking the "next" button again, differential cryptanalysis can be performed on cipher 1 in the "Key Recovery" component.</value>
   </data>
   <data name="DifferentialCryptanalysisSlide10Header" xml:space="preserve">
     <value>Differential cryptanalysis of cipher 1</value>
@@ -208,7 +208,7 @@
     <value>1</value>
   </data>
   <data name="DifferentialCryptanalysisSlide1Content2Run5" xml:space="preserve">
-    <value>. To do this, we first look at the individual steps of the encryption. First a key addition to the input block is performed with k</value>
+    <value>. To do this, we first look at the individual steps of the encryption. First, a key addition to the input block is performed with k</value>
   </data>
   <data name="DifferentialCryptanalysisSlide1Content2Run6" xml:space="preserve">
     <value>0</value>
@@ -259,7 +259,7 @@
     <value>1</value>
   </data>
   <data name="DifferentialCryptanalysisSlide9Content1Run5" xml:space="preserve">
-    <value>are unknown. However, the cryptanalyst knows the difference between the internal values. In the following we will look at two messages m</value>
+    <value>are unknown. However, the cryptanalyst knows the difference between the internal values. In the following, we look at two messages m</value>
   </data>
   <data name="DifferentialCryptanalysisSlide9Content1Run6" xml:space="preserve">
     <value>1</value>
@@ -286,7 +286,7 @@
     <value>1</value>
   </data>
   <data name="DifferentialCryptanalysisSlide9Content2Run3" xml:space="preserve">
-    <value>. We consider two plaintext keytext pairs (m</value>
+    <value>. We consider two plaintext-ciphertext pairs (m</value>
   </data>
   <data name="DifferentialCryptanalysisSlide9Content2Run4" xml:space="preserve">
     <value>1</value>

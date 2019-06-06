@@ -38,7 +38,7 @@ namespace Cryptool.Plugins.DCAPathFinder
         private readonly DCAPathFinderPres _activePresentation = new DCAPathFinderPres();
         private int _expectedDifferential;
         private int _messageCount;
-        private int[] _path;
+        private string _path;
 
         #endregion
 
@@ -53,7 +53,7 @@ namespace Cryptool.Plugins.DCAPathFinder
         /// This output describes the characteristic path
         /// </summary>
         [PropertyInfo(Direction.OutputData, "Path", "PathToolTip")]
-        public int[] Path
+        public string Path
         {
             get { return _path; }
             set

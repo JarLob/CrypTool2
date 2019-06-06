@@ -88,7 +88,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 1: 16 bit blocksize, 2 subkeys, the key consists of 32 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 1: Cipher 1, 16 bit blocksize, 2 subkeys, the key consists of 32 bit ähnelt.
         /// </summary>
         internal static string Cipher1 {
             get {
@@ -97,7 +97,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 2: 16 bit blocksize, 4 subkeys, the key consists of 64 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 2: Cipher 2, 16 bit blocksize, 4 subkeys, the key consists of 64 bit ähnelt.
         /// </summary>
         internal static string Cipher2 {
             get {
@@ -106,7 +106,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 3: 16 bit blocksize, 6 subkeys, the key consists of 96 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 3: Cipher 3, 16 bit blocksize, 6 subkeys, the key consists of 96 bit ähnelt.
         /// </summary>
         internal static string Cipher3 {
             get {
@@ -115,7 +115,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 4: 4 bit blocksize, 4 subkeys, the key consists of 16 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 4: Cipher 4, 4 bit blocksize, 4 subkeys, the key consists of 16 bit ähnelt.
         /// </summary>
         internal static string Cipher4 {
             get {
@@ -259,7 +259,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die . If more than one candidate remains at the end, the attack will be reshuffled with new pairs of plaintext and keytext. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die . If more than one candidate remains at the end, the attack will be reshuffled with new pairs of plaintext and ciphertext. ähnelt.
         /// </summary>
         internal static string DifferentialCryptanalysisSlide10Content3Run3 {
             get {
@@ -268,7 +268,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die By clicking the &quot;next-button&quot; again, differential cryptanalysis can be performed on cipher 1 in the &quot;Key Recovery&quot; component. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die By clicking the &quot;next&quot; button again, differential cryptanalysis can be performed on cipher 1 in the &quot;Key Recovery&quot; component. ähnelt.
         /// </summary>
         internal static string DifferentialCryptanalysisSlide10Content4 {
             get {
@@ -331,7 +331,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die . To do this, we first look at the individual steps of the encryption. First a key addition to the input block is performed with k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die . To do this, we first look at the individual steps of the encryption. First, a key addition to the input block is performed with k ähnelt.
         /// </summary>
         internal static string DifferentialCryptanalysisSlide1Content2Run5 {
             get {
@@ -484,7 +484,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die are unknown. However, the cryptanalyst knows the difference between the internal values. In the following we will look at two messages m ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die are unknown. However, the cryptanalyst knows the difference between the internal values. In the following, we look at two messages m ähnelt.
         /// </summary>
         internal static string DifferentialCryptanalysisSlide9Content1Run5 {
             get {
@@ -565,7 +565,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die . We consider two plaintext keytext pairs (m ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die . We consider two plaintext-ciphertext pairs (m ähnelt.
         /// </summary>
         internal static string DifferentialCryptanalysisSlide9Content2Run3 {
             get {
