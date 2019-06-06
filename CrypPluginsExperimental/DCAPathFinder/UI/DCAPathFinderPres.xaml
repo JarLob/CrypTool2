@@ -11,31 +11,35 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="430*"></RowDefinition>
-            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="425*"></RowDefinition>
+            <RowDefinition Height="25*"></RowDefinition>
         </Grid.RowDefinitions>
         <!-- Viewbox for Content -->
-        <Viewbox Grid.Row="0" Name="ContentViewBox" VerticalAlignment="Top" Stretch="Uniform">
+        <Viewbox Grid.Row="0" Name="ContentViewBox" Stretch="Uniform">
 
         </Viewbox>
         <!-- Footer of the slides -->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="8*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel  Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button Name="BtnPrevious" HorizontalAlignment="Center" Margin="5,0,5,0" Click="BtnPreviousClicked" IsEnabled="{Binding IsPreviousPossible, Mode=OneWay}">
                     <Image Source="/DCAPathFinder;component/images/prev-button.png"/>
                 </Button>
                 <Button Name="BtnNext" HorizontalAlignment="Center" Margin="5,0,5,0" Click="BtnNextClicked" IsEnabled="{Binding IsNextPossible, Mode=OneWay}">
                     <Image Source="/DCAPathFinder;component/images/next-button.png"/>
                 </Button>
-                <Button Name="BtnSkip" Content="{Loc BtnSkipChapter}" HorizontalAlignment="Center" Margin="5,0,5,0" IsEnabled="False"></Button>
+                <Button FontSize="8" Name="BtnSkip" Content="{Loc BtnSkipChapter}" HorizontalAlignment="Center" Margin="5,0,5,0" IsEnabled="False"></Button>
             </StackPanel>
-            <StackPanel Grid.Column="1" Width="30" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                <Label FontFamily="Courier New" FontSize="12" Content="{Binding SlideCounter, Mode=OneWay}" Visibility="{Binding SlideCounterVisibility, Mode=OneWay}" Margin="0,0,0,-5"></Label>
+            <StackPanel VerticalAlignment="Bottom" Grid.Column="1" HorizontalAlignment="Right">
+                <Label FontFamily="Courier New" FontSize="10" Content="{Binding SlideCounter, Mode=OneWay}" Visibility="{Binding SlideCounterVisibility, Mode=OneWay}" Margin="0,0,0,-5"></Label>
             </StackPanel>
+
         </Grid>
         
     </Grid>

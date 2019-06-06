@@ -127,16 +127,16 @@
     <value>At this point one of the algorithms contained in the list can be selected. This algorithm can be examined by differential cryptanalysis.</value>
   </data>
   <data name="Cipher1" xml:space="preserve">
-    <value>Tutorial 1: Cipher 1, 16 bit blocksize, 2 subkeys, the key consists of 32 bit</value>
+    <value>Tutorial 1: Cipher 1 (16 bit blocksize, 2 subkeys, keylength is 32 bit)</value>
   </data>
   <data name="Cipher2" xml:space="preserve">
-    <value>Tutorial 2: Cipher 2, 16 bit blocksize, 4 subkeys, the key consists of 64 bit</value>
+    <value>Tutorial 2: Cipher 2 (16 bit blocksize, 4 subkeys, keylength is 64 bit)</value>
   </data>
   <data name="Cipher3" xml:space="preserve">
-    <value>Tutorial 3: Cipher 3, 16 bit blocksize, 6 subkeys, the key consists of 96 bit</value>
+    <value>Tutorial 3: Cipher 3 (16 bit blocksize, 6 subkeys, keylength is 96 bit)</value>
   </data>
   <data name="Cipher4" xml:space="preserve">
-    <value>Tutorial 4: Cipher 4, 4 bit blocksize, 4 subkeys, the key consists of 16 bit</value>
+    <value>Tutorial 4: Cipher 4 (4 bit blocksize, 4 subkeys, keylength is16 bit)</value>
   </data>
   <data name="DescriptionContent1" xml:space="preserve">
     <value>The following is a short description of the ciphers of the individual parts of the tutorial:</value>

@@ -127,28 +127,28 @@
     <value>An dieser Stelle kann einer der in der Liste enthaltenen Algorithmen ausgewählt werden. Dieser kann mittels differenzieller Kryptoanalyse untersucht werden.</value>
   </data>
   <data name="Cipher1" xml:space="preserve">
-    <value>Tutorial 1: Chiffre 1, 16 Bit Blockgröße, 2 Rundenschlüssel, der Schlüssel ist 32 Bit groß</value>
+    <value>Tutorial 1: Chiffre 1 (16 Bit Blockgröße, 2 Rundenschlüssel, 32 Bit Schlüssellänge)</value>
   </data>
   <data name="Cipher2" xml:space="preserve">
-    <value>Tutorial 2: Chiffre 2, 16 Bit Blockgröße, 4 Rundenschlüssel, der Schlüssel ist 64 Bit groß</value>
+    <value>Tutorial 2: Chiffre 2 (16 Bit Blockgröße, 4 Rundenschlüssel, 64 Bit Schlüssellänge)</value>
   </data>
   <data name="Cipher3" xml:space="preserve">
-    <value>Tutorial 3: Chiffre 3, 16 Bit Blockgröße, 6 Rundenschlüssel, der Schlüssel ist 96 Bit groß</value>
+    <value>Tutorial 3: Chiffre 3, (16 Bit Blockgröße, 6 Rundenschlüssel, 96 Bit Schlüssellänge)</value>
   </data>
   <data name="Cipher4" xml:space="preserve">
-    <value>Tutorial 4: Chiffre4,  4 Bit Blockgröße , 4 Rundenschlüssel, der Schlüssel ist 16 Bit groß</value>
+    <value>Tutorial 4: Chiffre4 (4 Bit Blockgröße , 4 Rundenschlüssel, 16 Bit Schlüssellänge)</value>
   </data>
   <data name="DescriptionContent1" xml:space="preserve">
-    <value>Es folgt eine kurze Beschreibung der Chiffren der einzelnen Teile des Tutorials:</value>
+    <value>Übersicht über die Tutorials:</value>
   </data>
   <data name="DescriptionContent2" xml:space="preserve">
-    <value>Tutorial 1 verwendet Chiffre 1 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet zwei Rundenschlüssel. Es wird eine Verschlüsselungsrunde ausgeführt. In diesem Tutorial werden zwei unbekannte, je 16 Bit große Rundenschlüssel wiederhergestellt.</value>
+    <value>Tutorial 1 verwendet Chiffre 1 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet zwei Rundenschlüssel. Es wird eine Verschlüsselungsrunde ausgeführt. In diesem Tutorial werden zwei unbekannte, je 16 Bit lange Rundenschlüssel wiederhergestellt.</value>
   </data>
   <data name="DescriptionContent3" xml:space="preserve">
-    <value>Tutorial 2 verwendet Chiffre 2 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet vier Rundenschlüssel. Es werden drei Verschlüsselungsrunden ausgeführt. In diesem Tutorial werden vier unbekannte, je 16 Bit große Rundenschlüssel wiederhergestellt.</value>
+    <value>Tutorial 2 verwendet Chiffre 2 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet vier Rundenschlüssel. Es werden drei Verschlüsselungsrunden ausgeführt. In diesem Tutorial werden vier unbekannte, je 16 Bit lange Rundenschlüssel wiederhergestellt.</value>
   </data>
   <data name="DescriptionContent4" xml:space="preserve">
-    <value>Tutorial 3 verwendet Chiffre 3 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet sechs Rundenschlüssel. Es werden fünf Verschlüsselungsrunden ausgeführt. In diesem Tutorial werden sechs unbekannte, je 16 Bit große Rundenschlüssel wiederhergestellt.</value>
+    <value>Tutorial 3 verwendet Chiffre 3 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet sechs Rundenschlüssel. Es werden fünf Verschlüsselungsrunden ausgeführt. In diesem Tutorial werden sechs unbekannte, je 16 Bit lange Rundenschlüssel wiederhergestellt.</value>
   </data>
   <data name="DescriptionHeader" xml:space="preserve">
     <value>Beschreibung der Tutorials</value>

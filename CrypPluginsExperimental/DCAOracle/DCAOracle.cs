@@ -14,10 +14,13 @@
    limitations under the License.
 */
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
+using DCAOracle;
 
 namespace Cryptool.Plugins.DCAOracle
 {
@@ -29,6 +32,7 @@ namespace Cryptool.Plugins.DCAOracle
         #region Private Variables
 
         private readonly DCAOracleSettings _settings = new DCAOracleSettings();
+        private readonly Random _random = new Random();
         private int _messsageDifference;
         private int _messagePairsCount;
         private byte[] _messagePairsOutput;
@@ -40,7 +44,7 @@ namespace Cryptool.Plugins.DCAOracle
         /// <summary>
         /// Property for the count of message pairs
         /// </summary>
-        [PropertyInfo(Direction.InputData, "MessagePairsCountInput", "MessagePairsCountInputToolTip", true)]
+        [PropertyInfo(Direction.InputData, "MessagePairsCountInput", "MessagePairsCountInputToolTip")]
         public int MessagePairsCount
         {
             get { return _messagePairsCount; }
@@ -111,12 +115,63 @@ namespace Cryptool.Plugins.DCAOracle
         /// </summary>
         public void Execute()
         {
-            // HOWTO: Use this to show the progress of a plugin algorithm execution in the editor.
-            ProgressChanged(0, 1);
+            if (MessagePairsCount == 0)
+            {
+                GuiLogMessage(, NotificationLevel.Warning)
+                return;
+            }
 
+            double curProgress = 0;
+            double stepCount = 1.0 / (MessagePairsCount * 2);
+            ProgressChanged(curProgress, 1);
 
+            List<Pair> pairList = new List<Pair>();
 
-            // HOWTO: Make sure the progress bar is at maximum when your Execute() finished successfully.
+            //generate pairs
+            int i;
+            for (i = 0; i < MessagePairsCount; i++)
+            {
+                int x = _random.Next(0, ((int) Math.Pow(2, _settings.WordSize) - 1));
+                int y = x ^ MessageDifference;
+
+                Pair inputPair = new Pair()
+                {
+                    LeftMember = x,
+                    RightMember = y
+                };
+           
+                pairList.Add(inputPair);
+
+                curProgress += stepCount;
+                ProgressChanged(curProgress, 1);
+            }
+
+            //each pair consists of 2 int32 and each int32 consists of 4 byte
+            _messagePairsOutput = new byte[MessagePairsCount * 2 * 4];
+
+            //convert pairs
+            i = 0;
+            foreach (Pair curPair in pairList)
+            {
+                byte[] leftMember = BitConverter.GetBytes(curPair.LeftMember);
+                _messagePairsOutput[i] = leftMember[0];
+                _messagePairsOutput[i + 1] = leftMember[1];
+                _messagePairsOutput[i + 2] = leftMember[2];
+                _messagePairsOutput[i + 3] = leftMember[3];
+
+                byte[] rightMember = BitConverter.GetBytes(curPair.RightMember);
+                _messagePairsOutput[i + 4] = rightMember[0];
+                _messagePairsOutput[i + 5] = rightMember[1];
+                _messagePairsOutput[i + 6] = rightMember[2];
+                _messagePairsOutput[i + 7] = rightMember[3];
+
+                i += 8;
+                curProgress += stepCount;
+                ProgressChanged(curProgress, 1);
+            }
+
+            //finished: inform output
+            OnPropertyChanged("MessagePairsOutput");
             ProgressChanged(1, 1);
         }
 

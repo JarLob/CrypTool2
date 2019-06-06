@@ -141,6 +141,9 @@
   <data name="PluginTooltip" xml:space="preserve">
     <value>This component generates randomly selected message pairs, where the messages of a pair have a definable difference</value>
   </data>
+  <data name="WarningMessageCountMustBeSpecified" xml:space="preserve">
+    <value>The number of message pairs must be greater than 0!</value>
+  </data>
   <data name="WorSizeParameter" xml:space="preserve">
     <value>word length</value>
   </data>

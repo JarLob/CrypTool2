@@ -62,7 +62,8 @@ namespace Cryptool.Plugins.ToyCiphers
         /// <summary>
         /// Selection of the toy cipher algorithm
         /// </summary>
-        [TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", null, 1, false, ControlType.ComboBox, new string[]{ "Cipher1", "Cipher2", "Cipher3", "Cipher4" })]
+        //[TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", null, 1, false, ControlType.ComboBox, new string[]{ "Cipher1", "Cipher2", "Cipher3", "Cipher4", "Cipher5" })]
+        [TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", null, 1, false, ControlType.ComboBox, new string[] { "Cipher1", "Cipher2", "Cipher3"})]
         public string ChoiceOfAlgorithm
         {
             get

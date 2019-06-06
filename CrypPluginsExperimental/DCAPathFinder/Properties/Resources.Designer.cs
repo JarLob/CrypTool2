@@ -88,7 +88,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 1: Cipher 1, 16 bit blocksize, 2 subkeys, the key consists of 32 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 1: Cipher 1 (16 bit blocksize, 2 subkeys, keylength is 32 bit) ähnelt.
         /// </summary>
         internal static string Cipher1 {
             get {
@@ -97,7 +97,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 2: Cipher 2, 16 bit blocksize, 4 subkeys, the key consists of 64 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 2: Cipher 2 (16 bit blocksize, 4 subkeys, keylength is 64 bit) ähnelt.
         /// </summary>
         internal static string Cipher2 {
             get {
@@ -106,7 +106,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 3: Cipher 3, 16 bit blocksize, 6 subkeys, the key consists of 96 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 3: Cipher 3 (16 bit blocksize, 6 subkeys, keylength is 96 bit) ähnelt.
         /// </summary>
         internal static string Cipher3 {
             get {
@@ -115,7 +115,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 4: Cipher 4, 4 bit blocksize, 4 subkeys, the key consists of 16 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 4: Cipher 4 (4 bit blocksize, 4 subkeys, keylength is16 bit) ähnelt.
         /// </summary>
         internal static string Cipher4 {
             get {

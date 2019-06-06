@@ -88,7 +88,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 1: 16 bit blocksize, 2 subkeys, the key consists of 32 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 1: 16 bit blocksize, 2 subkeys, 32 bit keylength ähnelt.
         /// </summary>
         internal static string Cipher1 {
             get {
@@ -124,7 +124,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This block cipher works on 16 bit blocks. One encryption round is executed using a total of two round keys. The following steps are performed in the encryption round: Key addition, substitution and key addition. The round keys have a size of 16 bits, the SBoxes each process 4 bits. The key is thus 32 bits in size. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This block cipher works on 16 bit blocks. One encryption round is executed using a total of two round keys. The following steps are performed in the encryption round: Key addition, substitution and key addition. The round keys have a size of 16 bits, the SBoxes each process 4 bits. The keylength is 32 bit. ähnelt.
         /// </summary>
         internal static string Cipher1LblText {
             get {
@@ -133,7 +133,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 2: 16 bit blocksize, 4 subkeys, the key consists of 64 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 2: 16 bit blocksize, 4 subkeys, 64 bit keylength ähnelt.
         /// </summary>
         internal static string Cipher2 {
             get {
@@ -169,7 +169,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This block cipher works on 16 bit blocks. Three encryption rounds are performed, whereby a total of four round keys are used. Two round keys are used in the last encryption round. Each round consists of three sub-steps: key addition, substitution and permutation - in the last round the permutation is omitted. The round keys have a size of 16 bits, the SBoxes each process 4 bits. The key is thus 64 bits in size. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This block cipher works on 16 bit blocks. Three encryption rounds are performed, whereby a total of four round keys are used. Two round keys are used in the last encryption round. Each round consists of three sub-steps: key addition, substitution and permutation - in the last round the permutation is omitted. The round keys have a size of 16 bits, the SBoxes each process 4 bits. The keylength is 64 bit. ähnelt.
         /// </summary>
         internal static string Cipher2LblText {
             get {
@@ -178,7 +178,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 3: 16 bit blocksize, 6 subkeys, the key consists of 96 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 3: 16 bit blocksize, 6 subkeys, 96 bit keylength ähnelt.
         /// </summary>
         internal static string Cipher3 {
             get {
@@ -214,7 +214,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This block cipher works on 16 bit blocks. 5 encryption rounds are performed, whereby a total of six round keys are used. In the last encryption round two round keys are used. Each round consists of three sub-steps: key addition, substitution and permutation - in the last round the permutation unfolds and the last round key is added. The round keys are 16 bits in size, the SBoxes each process 4 bits. The key is therefore 96 bits in size.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This block cipher works on 16 bit blocks. 5 encryption rounds are performed, whereby a total of six round keys are used. In the last encryption round two round keys are used. Each round consists of three sub-steps: key addition, substitution and permutation - in the last round the permutation unfolds and the last round key is added. The round keys are 16 bits in size, the SBoxes each process 4 bits. The keylength is 96 bit.
         ///
         /// ähnelt.
         /// </summary>
@@ -225,7 +225,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 4: 4 bit blocksize, 4 subkeys, the key consists of 16 bit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 4: 4 bit blocksize, 4 subkeys, 16 bit keylength ähnelt.
         /// </summary>
         internal static string Cipher4 {
             get {
@@ -261,7 +261,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This block cipher works on 4 bit blocks. Three encryption rounds are performed, whereby a total of four round keys are used. Two round keys are used in the last encryption round. Each round consists of two sub-steps: key addition and substitution. In the last round, the last round key is then added. The round keys have a size of 4 bits and the SBoxes each work on 4 bits.  The key is thus 16 bits in size. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This block cipher works on 4 bit blocks. Three encryption rounds are performed, whereby a total of four round keys are used. Two round keys are used in the last encryption round. Each round consists of two sub-steps: key addition and substitution. In the last round, the last round key is then added. The round keys have a size of 4 bits and the SBoxes each work on 4 bits.  The keylength is 16 bit. ähnelt.
         /// </summary>
         internal static string Cipher4LblText {
             get {
@@ -324,7 +324,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The specified key is not big enough. Please check the requirements of this cipher. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The specified key is not long enough. Please check the requirements of this cipher. ähnelt.
         /// </summary>
         internal static string KeyError {
             get {
