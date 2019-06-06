@@ -139,7 +139,7 @@
     <value>Chiffre 4: 4 Bit Blockgröße , 4 Rundenschlüssel, der Schlüssel ist 16 Bit groß</value>
   </data>
   <data name="DescriptionContent1" xml:space="preserve">
-    <value>In den Einstellungen dieser Komponente können Sie zwischen den Tutorials wechseln. Es folgt eine kurze Beschreibung der Chiffren der einzelnen Teile des Tutorials:</value>
+    <value>Es folgt eine kurze Beschreibung der Chiffren der einzelnen Teile des Tutorials:</value>
   </data>
   <data name="DescriptionContent2" xml:space="preserve">
     <value>Tutorial 1 verwendet Chiffre 1 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet zwei Rundenschlüssel. Es wird eine Verschlüsselungsrunde ausgeführt. In diesem Tutorial werden zwei unbekannte, je 16 Bit große Rundenschlüssel wiederhergestellt.</value>
@@ -366,6 +366,9 @@
   <data name="DifferentialCryptanalysisSlide9Header" xml:space="preserve">
     <value>Differenzielle Kryptoanalyse von Chiffre 1</value>
   </data>
+  <data name="DisplayOptions" xml:space="preserve">
+    <value>Darstellungsoptionen</value>
+  </data>
   <data name="ExpectedDifferential" xml:space="preserve">
     <value>Erwartete Differenz</value>
   </data>
@@ -431,7 +434,7 @@ differenzielle Kryptoanalyse ist ein so genannter "Chosen Plaintext-Angriff", da
     <value>Herzlich willkommen zum Tutorial zur differenziellen Kryptoanalyse. Dieses Verfahren zur Analyse rundenbasierter symmetrischer Blockchiffren hat das Ziel, einzelne Bits bis hin zu vollständigen Rundenschlüsseln wiederherzustellen. Veröffentlicht wurde dieses Verfahren 1991 von den zwei israelischen Forschern Eli Biham und Adi Shamir. </value>
   </data>
   <data name="OverviewContent2" xml:space="preserve">
-    <value>Dieses Tutorial handelt das DCA-Verfahren in drei Teilen. Teil 1 vermittelt die grundlegende Idee der differenziellen Kryptoanalyse (DCA) anhand einer Chiffre mit einer Verschlüsselungsrunde. Teil 2 vertieft diese Idee anhand einer Chiffre mit drei Verschlüsselungsrunden. In Teil drei wird das vermittelte Wissen vertieft durch Erhöhung der Komplexität der Chiffre auf 5 Verschlüsselungsrunden.</value>
+    <value>Dieses Tutorial behandelt das Verfahren der differenziellen Kryptoanalyse (DCA) in drei Teilen.  Teil 1 vermittelt die grundlegende Idee der DCA anhand einer Chiffre mit einer Verschlüsselungsrunde. Teil 2 vertieft diese Idee anhand einer Chiffre mit drei Verschlüsselungsrunden. In Teil drei wird das vermittelte Wissen vertieft durch Erhöhung der Komplexität der Chiffre auf 5 Verschlüsselungsrunden.</value>
   </data>
   <data name="OverviewContent3" xml:space="preserve">
     <value>In der Konfiguration dieser Komponente können die verschiedenen Teile des Tutorials ausgewählt werden.</value>
@@ -456,6 +459,12 @@ differenzielle Kryptoanalyse ist ein so genannter "Chosen Plaintext-Angriff", da
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Die DCA PfadFinder-Komponente sucht in Abhängigkeit von durch den User spezifizierten Parametern nach Differenzialen in einer symmetrischen Blockchiffre.</value>
+  </data>
+  <data name="PresentationMode" xml:space="preserve">
+    <value>Tutorialmodus</value>
+  </data>
+  <data name="PresentationModeToolTip" xml:space="preserve">
+    <value>Bei aktiviertem Tutorialmodus erfolgt je Tutorual eine Präsentation mit Informationen zur differenziellen Kryptoanalyse </value>
   </data>
   <data name="StartMaskContent1" xml:space="preserve">
     <value>Durch Starten des Workspaces beginnt das Tutorial.</value>

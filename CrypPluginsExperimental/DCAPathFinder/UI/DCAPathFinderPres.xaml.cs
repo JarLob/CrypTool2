@@ -13,8 +13,10 @@ namespace DCAPathFinder.UI
     public partial class DCAPathFinderPres : UserControl, INotifyPropertyChanged
     {
         private int _stepCounter;
+        private bool _presentationMode;
         private int _tutorialNumber;
         private int _currentTutorialLastSlideNumber;
+        private Visibility _slideCounterVisibility;
         private string _selectedTutorial;
         private bool _isNextPossible;
         private bool _isPreviousPossible;
@@ -26,7 +28,7 @@ namespace DCAPathFinder.UI
         public DCAPathFinderPres()
         {
             _stepCounter = 0;
-            _currentTutorialLastSlideNumber = 3;
+            _slideCounterVisibility = Visibility.Hidden;
             _workspaceRunning = false;
             _isNextPossible = true;
             _isPreviousPossible = false;
@@ -35,6 +37,11 @@ namespace DCAPathFinder.UI
             InitializeComponent();
 
             SetupView();
+
+            //setup pres content
+            ContentViewBox.Child = new Overview();
+            IsPreviousPossible = false;
+            IsNextPossible = false;
         }
 
         /// <summary>
@@ -43,225 +50,234 @@ namespace DCAPathFinder.UI
         public void SetupView()
         {
             //introduction slides
-            if (!WorkspaceRunning)
+            if (PresentationMode)
             {
-                _currentTutorialLastSlideNumber = 3;
-                switch (StepCounter)
+                if (StepCounter == 0)
                 {
-                    case 0:
+                    _currentTutorialLastSlideNumber = 10;
+                    OnPropertyChanged("SlideCounter");
+
+                    if (WorkspaceRunning)
                     {
                         //setup possible button actions
                         IsPreviousPossible = false;
                         IsNextPossible = true;
-
-                        //setup pres content
-                        ContentViewBox.Child = new Overview();
                     }
-                        break;
-                    case 1:
+
+                    //setup pres content
+                    ContentViewBox.Child = new Overview();
+                }
+                else if (StepCounter == 1)
+                {
+                    //setup possible button actions
+                    IsPreviousPossible = true;
+                    IsNextPossible = true;
+
+                    //setup pres content
+                    ContentViewBox.Child = new TutorialDescriptions();
+                }
+                //StepCounter > 1
+                else
+                {
+                    //check the selected tutorial number
+                    switch (TutorialNumber)
                     {
-                        //setup possible button actions
-                        IsPreviousPossible = true;
-                        IsNextPossible = true;
+                        //this is tutorial number 1
+                        case 1:
+                            {
+                                //check the current step
+                                switch (StepCounter)
+                                {
+                                    case 2:
+                                        {
+                                            //setup possible button actions
+                                            IsPreviousPossible = true;
+                                            IsNextPossible = true;
 
-                        //setup pres content
-                        ContentViewBox.Child = new TutorialDescriptions();
-                    }
-                        break;
-                    case 2:
-                    {
-                        //setup possible button actions
-                        IsPreviousPossible = true;
-                        IsNextPossible = false;
+                                            //setup pres content
+                                            ContentViewBox.Child = new Tutorial1.Title();
+                                        }
+                                        break;
+                                    case 3:
+                                        {
+                                            //setup possible button actions
+                                            IsPreviousPossible = true;
+                                            IsNextPossible = true;
 
-                        //setup pres content
-                        var startMask = new StartMask();
-                        Binding myBinding = new Binding();
-                        myBinding.Source = this;
-                        myBinding.Path = new PropertyPath("SelectedTutorial");
-                        myBinding.Mode = BindingMode.OneWay;
-                        BindingOperations.SetBinding(startMask.TutorialTextBlock, TextBlock.TextProperty, myBinding);
-                        ContentViewBox.Child = startMask;
+                                            //setup pres content
+                                            ContentViewBox.Child = new Tutorial1.IntroductionHeader();
+                                        }
+                                        break;
+                                    case 4:
+                                        {
+                                            //setup possible button actions
+                                            IsPreviousPossible = true;
+                                            IsNextPossible = true;
+
+                                            //setup pres content
+                                            ContentViewBox.Child = new Tutorial1.IntroductionSlide1();
+                                        }
+                                        break;
+                                    case 5:
+                                        {
+                                            //setup possible button actions
+                                            IsPreviousPossible = true;
+                                            IsNextPossible = true;
+
+                                            //setup pres content
+                                            ContentViewBox.Child = new Tutorial1.IntroductionSlide2();
+                                        }
+                                        break;
+                                    case 6:
+                                        {
+                                            //setup possible button actions
+                                            IsPreviousPossible = true;
+                                            IsNextPossible = true;
+
+                                            //setup pres content
+                                            ContentViewBox.Child = new Tutorial1.IntroductionSlide3();
+                                        }
+                                        break;
+                                    case 7:
+                                        {
+                                            //setup possible button actions
+                                            IsPreviousPossible = true;
+                                            IsNextPossible = true;
+
+                                            //setup pres content
+                                            ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisHeader();
+                                        }
+                                        break;
+                                    case 8:
+                                        {
+                                            //setup possible button actions
+                                            IsPreviousPossible = true;
+                                            IsNextPossible = true;
+
+                                            //setup pres content
+                                            ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide1();
+                                        }
+                                        break;
+                                    case 9:
+                                        {
+                                            //setup possible button actions
+                                            IsPreviousPossible = true;
+                                            IsNextPossible = true;
+
+                                            //setup pres content
+                                            ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide2();
+                                        }
+                                        break;
+                                    case 10:
+                                        {
+                                            //setup possible button actions
+                                            IsPreviousPossible = true;
+                                            IsNextPossible = true;
+
+                                            //setup pres content
+                                            ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide3();
+                                        }
+                                        break;
+                                    case 11:
+                                        {
+                                            //setup possible button actions
+                                            IsPreviousPossible = true;
+                                            IsNextPossible = true;
+
+                                            //setup pres content
+                                            ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide4();
+                                        }
+                                        break;
+                                    case 12:
+                                        {
+                                            //setup possible button actions
+                                            IsPreviousPossible = true;
+                                            IsNextPossible = true;
+
+                                            //setup pres content
+                                            ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide5();
+                                        }
+                                        break;
+                                    case 13:
+                                        {
+                                            //setup possible button actions
+                                            IsPreviousPossible = true;
+                                            IsNextPossible = true;
+
+                                            //setup pres content
+                                            ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide6();
+                                        }
+                                        break;
+                                    case 14:
+                                        {
+                                            //setup possible button actions
+                                            IsPreviousPossible = true;
+                                            IsNextPossible = true;
+
+                                            //setup pres content
+                                            ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide7();
+                                        }
+                                        break;
+                                    case 15:
+                                        {
+                                            //setup possible button actions
+                                            IsPreviousPossible = true;
+                                            IsNextPossible = true;
+
+                                            //setup pres content
+                                            ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide8();
+                                        }
+                                        break;
+                                    case 16:
+                                        {
+                                            //setup possible button actions
+                                            IsPreviousPossible = true;
+                                            IsNextPossible = true;
+
+                                            //setup pres content
+                                            ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide9();
+                                        }
+                                        break;
+                                    case 17:
+                                        {
+                                            //setup possible button actions
+                                            IsPreviousPossible = true;
+                                            IsNextPossible = true;
+
+                                            //setup pres content
+                                            ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide10();
+                                        }
+                                        break;
+                                }
+                            }
+                            break;
                     }
-                        break;
                 }
             }
-            //tutorial slides
+            //no intro
             else
             {
-                //check the selected tutorial number
+                //check active tutorial number
                 switch (TutorialNumber)
                 {
-                    //this is tutorial number 1
                     case 1:
                     {
-                        _currentTutorialLastSlideNumber = 10;
-                        //check the current step
+                        //presentation for tutorial 1
                         switch (StepCounter)
                         {
                             case 0:
                             {
-                                //setup possible button actions
-                                IsPreviousPossible = false;
-                                IsNextPossible = true;
+                                _currentTutorialLastSlideNumber = 10;
+                                OnPropertyChanged("SlideCounter");
 
                                 //setup pres content
-                                ContentViewBox.Child = new Tutorial1.Title();
-                            }
-                                break;
-                            case 1:
-                            {
-                                //setup possible button actions
-                                IsPreviousPossible = true;
-                                IsNextPossible = true;
-
-                                //setup pres content
-                                ContentViewBox.Child = new Tutorial1.IntroductionHeader();
-                            }
-                                break;
-                            case 2:
-                            {
-                                //setup possible button actions
-                                IsPreviousPossible = true;
-                                IsNextPossible = true;
-
-                                //setup pres content
-                                ContentViewBox.Child = new Tutorial1.IntroductionSlide1();
-                            }
-                                break;
-                            case 3:
-                            {
-                                //setup possible button actions
-                                IsPreviousPossible = true;
-                                IsNextPossible = true;
-
-                                //setup pres content
-                                ContentViewBox.Child = new Tutorial1.IntroductionSlide2();
-                            }
-                                break;
-                            case 4:
-                            {
-                                //setup possible button actions
-                                IsPreviousPossible = true;
-                                IsNextPossible = true;
-
-                                //setup pres content
-                                ContentViewBox.Child = new Tutorial1.IntroductionSlide3();
-                            }
-                                break;
-                            case 5:
-                            {
-                                //setup possible button actions
-                                IsPreviousPossible = true;
-                                IsNextPossible = true;
-
-                                //setup pres content
-                                ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisHeader();
-                            }
-                                break;
-                            case 6:
-                            {
-                                //setup possible button actions
-                                IsPreviousPossible = true;
-                                IsNextPossible = true;
-
-                                //setup pres content
-                                ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide1();
-                            }
-                                break;
-                            case 7:
-                            {
-                                //setup possible button actions
-                                IsPreviousPossible = true;
-                                IsNextPossible = true;
-
-                                //setup pres content
-                                ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide2();
-                            }
-                                break;
-                            case 8:
-                            {
-                                //setup possible button actions
-                                IsPreviousPossible = true;
-                                IsNextPossible = true;
-
-                                //setup pres content
-                                ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide3();
-                            }
-                                break;
-                            case 9:
-                            {
-                                //setup possible button actions
-                                IsPreviousPossible = true;
-                                IsNextPossible = true;
-
-                                //setup pres content
-                                ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide4();
-                            }
-                                break;
-                            case 10:
-                            {
-                                //setup possible button actions
-                                IsPreviousPossible = true;
-                                IsNextPossible = true;
-
-                                //setup pres content
-                                ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide5();
-                            }
-                                break;
-                            case 11:
-                            {
-                                //setup possible button actions
-                                IsPreviousPossible = true;
-                                IsNextPossible = true;
-
-                                //setup pres content
-                                ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide6();
-                            }
-                                break;
-                            case 12:
-                            {
-                                //setup possible button actions
-                                IsPreviousPossible = true;
-                                IsNextPossible = true;
-
-                                //setup pres content
-                                ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide7();
-                            }
-                                break;
-                            case 13:
-                            {
-                                //setup possible button actions
-                                IsPreviousPossible = true;
-                                IsNextPossible = true;
-
-                                //setup pres content
-                                ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide8();
-                            }
-                                break;
-                            case 14:
-                            {
-                                //setup possible button actions
-                                IsPreviousPossible = true;
-                                IsNextPossible = true;
-
-                                //setup pres content
-                                ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide9();
-                            }
-                                break;
-                            case 15:
-                            {
-                                //setup possible button actions
-                                IsPreviousPossible = true;
-                                IsNextPossible = true;
-
-                                //setup pres content
-                                ContentViewBox.Child = new Tutorial1.DifferentialCryptanalysisSlide10();
+                                ContentViewBox.Child = new Overview();
                             }
                                 break;
                         }
                     }
                         break;
+
                 }
             }
         }
@@ -307,6 +323,19 @@ namespace DCAPathFinder.UI
         #region Properties
 
         /// <summary>
+        /// Property for slide counter visibility
+        /// </summary>
+        public Visibility SlideCounterVisibility
+        {
+            get { return _slideCounterVisibility; }
+            set
+            {
+                _slideCounterVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
         /// Property for indicating that the workspace is running
         /// </summary>
         public bool WorkspaceRunning
@@ -315,10 +344,34 @@ namespace DCAPathFinder.UI
             set
             {
                 _workspaceRunning = value;
+                if (_workspaceRunning)
+                {
+                    IsNextPossible = true;
+                    IsPreviousPossible = false;
+                }
+                else
+                {
+                    IsNextPossible = false;
+                    IsPreviousPossible = false;
+                }
+
                 OnPropertyChanged();
 
                 StepCounter = 0;
                 SetupView();
+            }
+        }
+
+        /// <summary>
+        /// Property for presentation mode
+        /// </summary>
+        public bool PresentationMode
+        {
+            get { return _presentationMode; }
+            set
+            {
+                _presentationMode = value;
+                OnPropertyChanged();
             }
         }
 

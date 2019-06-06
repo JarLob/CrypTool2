@@ -139,7 +139,7 @@
     <value>Cipher 4: 4 bit blocksize, 4 subkeys, the key consists of 16 bit</value>
   </data>
   <data name="DescriptionContent1" xml:space="preserve">
-    <value>In the settings of this component, you can switch between the tutorials. The following is a short description of the ciphers of the individual parts of the tutorial:</value>
+    <value>The following is a short description of the ciphers of the individual parts of the tutorial:</value>
   </data>
   <data name="DescriptionContent2" xml:space="preserve">
     <value>Tutorial 1 uses cipher 1 of the ToyChiffren component. This cipher works on 16 bit blocks and uses two round keys. One encryption round is executed. In this tutorial two unknown 16 bit round keys are restored.</value>
@@ -366,6 +366,9 @@
   <data name="DifferentialCryptanalysisSlide9Header" xml:space="preserve">
     <value>Differential cryptanalysis of cipher 1</value>
   </data>
+  <data name="DisplayOptions" xml:space="preserve">
+    <value>Display options</value>
+  </data>
   <data name="ExpectedDifferential" xml:space="preserve">
     <value>Expected difference</value>
   </data>
@@ -431,7 +434,7 @@ differential cryptanalysis is a so called "chosen plaintext attack", which means
     <value>Welcome to the differential cryptanalysis tutorial. This method for the analysis of round-based symmetric block ciphers aims at recovering single bits up to complete round keys. This method was published in 1991 by the two Israeli researchers, Eli Biham and Adi Shamir.</value>
   </data>
   <data name="OverviewContent2" xml:space="preserve">
-    <value>This tutorial deals with the DCA procedure in three parts. Part 1 teaches the basic idea of differential cryptanalysis (DCA) using a cipher with an encryption round. Part 2 deepens this idea using a cipher with three encryption rounds. Part three deepens the knowledge by increasing the complexity of the cipher to 5 encryption rounds. In part three the knowledge is deepened by increasing the complexity of the cipher to 5 encryption rounds.</value>
+    <value>This tutorial describes the differential cryptanalysis (DCA) procedure in three parts. Part 1 explains the basic idea of DCA using a cipher with one encryption round. Part 2 deepens this idea using a cipher with three encryption rounds. Part three deepens the knowledge by increasing the complexity of the cipher to 5 encryption rounds. In part three the knowledge is deepened by increasing the complexity of the cipher to 5 encryption rounds.</value>
   </data>
   <data name="OverviewContent3" xml:space="preserve">
     <value>In the configuration of this component the different parts of the tutorial can be selected.</value>
@@ -456,6 +459,12 @@ differential cryptanalysis is a so called "chosen plaintext attack", which means
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>The DCA PathFinder component searches for differentials in a symmetric block cipher depending on parameters specified by the user.</value>
+  </data>
+  <data name="PresentationMode" xml:space="preserve">
+    <value>Tutorial mode</value>
+  </data>
+  <data name="PresentationModeToolTip" xml:space="preserve">
+    <value>If tutorial mode is activated, a presentation with information on differential cryptanalysis is made for each tutorial</value>
   </data>
   <data name="StartMaskContent1" xml:space="preserve">
     <value>The tutorial starts when you start the workspace.</value>

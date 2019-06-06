@@ -17,6 +17,7 @@
 using System;
 using System.ComponentModel;
 using System.Threading;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using Cryptool.PluginBase;
@@ -119,6 +120,8 @@ namespace Cryptool.Plugins.DCAPathFinder
             _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
             {
                 _activePresentation.WorkspaceRunning = true;
+                _activePresentation.PresentationMode = settings.PresentationMode;
+                _activePresentation.SlideCounterVisibility = Visibility.Visible;
             }, null);
         }
 
@@ -133,9 +136,10 @@ namespace Cryptool.Plugins.DCAPathFinder
             //dispatch action {DEBUG}: show slide 8 to save time
             _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
             {
-                _activePresentation.StepCounter = 6;
+                _activePresentation.StepCounter = 0;
                 _activePresentation.SetupView();
             }, null);
+
 
             
 
@@ -151,6 +155,7 @@ namespace Cryptool.Plugins.DCAPathFinder
             //dispatch action: inform ui that workspace is stopped
             _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
             {
+                _activePresentation.SlideCounterVisibility = Visibility.Hidden;
                 _activePresentation.WorkspaceRunning = false;
             }, null);
         }

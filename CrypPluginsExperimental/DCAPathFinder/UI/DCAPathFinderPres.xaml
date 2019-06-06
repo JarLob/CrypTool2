@@ -11,8 +11,8 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="430*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
         </Grid.RowDefinitions>
         <!-- Viewbox for Content -->
         <Viewbox Grid.Row="0" Name="ContentViewBox" VerticalAlignment="Top" Stretch="Uniform">
@@ -34,7 +34,7 @@
                 <Button Name="BtnSkip" Content="{Loc BtnSkipChapter}" HorizontalAlignment="Center" Margin="5,0,5,0" IsEnabled="False"></Button>
             </StackPanel>
             <StackPanel Grid.Column="1" Width="30" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                <Label FontFamily="Courier New" FontSize="8" Content="{Binding SlideCounter, Mode=OneWay}" Margin="0,0,0,-5"></Label>
+                <Label FontFamily="Courier New" FontSize="12" Content="{Binding SlideCounter, Mode=OneWay}" Visibility="{Binding SlideCounterVisibility, Mode=OneWay}" Margin="0,0,0,-5"></Label>
             </StackPanel>
         </Grid>
         

@@ -28,6 +28,7 @@ namespace Cryptool.Plugins.DCAPathFinder
 
         private string _choiceOfAlgorithm;
         private Algorithms _currentAlgorithm;
+        private bool _presentationMode;
 
         #endregion
 
@@ -47,10 +48,21 @@ namespace Cryptool.Plugins.DCAPathFinder
 
         #region TaskPane Settings
 
+        [TaskPane("PresentationMode", "PresentationModeToolTip", "DisplayOptions", 1, false, ControlType.CheckBox)]
+        public bool PresentationMode
+        {
+            get { return _presentationMode; }
+            set
+            {
+                _presentationMode = value;
+                OnPropertyChanged("PresentationMode");
+            }
+        }
+
         /// <summary>
         /// Selection of the toy cipher algorithm
         /// </summary>
-        [TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", null, 1, false, ControlType.ComboBox, new string[] { "Cipher1", "Cipher2", "Cipher3", "Cipher4" })]
+        [TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", null, 2, false, ControlType.ComboBox, new string[] { "Cipher1", "Cipher2", "Cipher3", "Cipher4" })]
         public string ChoiceOfAlgorithm
         {
             get

@@ -124,7 +124,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In the settings of this component, you can switch between the tutorials. The following is a short description of the ciphers of the individual parts of the tutorial: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The following is a short description of the ciphers of the individual parts of the tutorial: ähnelt.
         /// </summary>
         internal static string DescriptionContent1 {
             get {
@@ -808,6 +808,15 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Display options ähnelt.
+        /// </summary>
+        internal static string DisplayOptions {
+            get {
+                return ResourceManager.GetString("DisplayOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Expected difference ähnelt.
         /// </summary>
         internal static string ExpectedDifferential {
@@ -998,7 +1007,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This tutorial deals with the DCA procedure in three parts. Part 1 teaches the basic idea of differential cryptanalysis (DCA) using a cipher with an encryption round. Part 2 deepens this idea using a cipher with three encryption rounds. Part three deepens the knowledge by increasing the complexity of the cipher to 5 encryption rounds. In part three the knowledge is deepened by increasing the complexity of the cipher to 5 encryption rounds. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This tutorial describes the differential cryptanalysis (DCA) procedure in three parts. Part 1 explains the basic idea of DCA using a cipher with one encryption round. Part 2 deepens this idea using a cipher with three encryption rounds. Part three deepens the knowledge by increasing the complexity of the cipher to 5 encryption rounds. In part three the knowledge is deepened by increasing the complexity of the cipher to 5 encryption rounds. ähnelt.
         /// </summary>
         internal static string OverviewContent2 {
             get {
@@ -1075,6 +1084,24 @@ namespace DCAPathFinder.Properties {
         internal static string PluginTooltip {
             get {
                 return ResourceManager.GetString("PluginTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial mode ähnelt.
+        /// </summary>
+        internal static string PresentationMode {
+            get {
+                return ResourceManager.GetString("PresentationMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die If tutorial mode is activated, a presentation with information on differential cryptanalysis is made for each tutorial ähnelt.
+        /// </summary>
+        internal static string PresentationModeToolTip {
+            get {
+                return ResourceManager.GetString("PresentationModeToolTip", resourceCulture);
             }
         }
         
