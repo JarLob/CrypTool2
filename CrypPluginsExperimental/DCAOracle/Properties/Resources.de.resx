@@ -145,9 +145,9 @@
     <value>Die Anzahl der Nachrichtenpaare muss größer als 0 sein!</value>
   </data>
   <data name="WorSizeParameter" xml:space="preserve">
-    <value>Wortbreite</value>
+    <value>Blockgröße</value>
   </data>
   <data name="WorSizeParameterToolTip" xml:space="preserve">
-    <value>Dieser Parameter spezifiziert die Wortbreite der zu generierenden Nachrichten</value>
+    <value>Dieser Parameter gibt die Blockgröße der verwendeten Chiffre an. Jede Nachricht enthält genau einen Block.</value>
   </data>
 </root>

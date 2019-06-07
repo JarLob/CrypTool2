@@ -121,10 +121,10 @@
     <value>Kapitel überspringen</value>
   </data>
   <data name="ChoiceOfAlgorithm" xml:space="preserve">
-    <value>Wahl des Algorithmus</value>
+    <value>Wahl der Chiffre</value>
   </data>
   <data name="ChoiceOfAlgorithmToolTop" xml:space="preserve">
-    <value>An dieser Stelle kann einer der in der Liste enthaltenen Algorithmen ausgewählt werden. Dieser kann mittels differenzieller Kryptoanalyse untersucht werden.</value>
+    <value>An dieser Stelle kann eine der in der Liste enthaltenen Chiffren ausgewählt werden. Diese kann mittels differenzieller Kryptoanalyse untersucht werden.</value>
   </data>
   <data name="Cipher1" xml:space="preserve">
     <value>Tutorial 1: Chiffre 1 (16 Bit Blockgröße, 2 Rundenschlüssel, 32 Bit Schlüssellänge)</value>

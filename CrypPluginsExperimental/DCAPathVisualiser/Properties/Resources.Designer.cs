@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DCAOracle.Properties {
+namespace DCAPathVisualiser.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace DCAOracle.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DCAOracle.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DCAPathVisualiser.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,61 +61,70 @@ namespace DCAOracle.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Difference of messages ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Choice of the algorithm ähnelt.
         /// </summary>
-        internal static string MessageDifferenceInput {
+        internal static string ChoiceOfAlgorithm {
             get {
-                return ResourceManager.GetString("MessageDifferenceInput", resourceCulture);
+                return ResourceManager.GetString("ChoiceOfAlgorithm", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Specifies the difference between the messages of a pair ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die At this point, you can select one of the ciphers contained in the list. This one is used to display the differential. ähnelt.
         /// </summary>
-        internal static string MessageDifferenceInputToolTip {
+        internal static string ChoiceOfAlgorithmToolTop {
             get {
-                return ResourceManager.GetString("MessageDifferenceInputToolTip", resourceCulture);
+                return ResourceManager.GetString("ChoiceOfAlgorithmToolTop", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Count of message pairs ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 1 (16 bit blocksize, 2 subkeys, 32 bit keylength) ähnelt.
         /// </summary>
-        internal static string MessagePairsCountInput {
+        internal static string Cipher1 {
             get {
-                return ResourceManager.GetString("MessagePairsCountInput", resourceCulture);
+                return ResourceManager.GetString("Cipher1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Specifies the number of message pairs to be generated ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 2 (16 bit blocksize, 4 subkeys, 64 bit keylength) ähnelt.
         /// </summary>
-        internal static string MessagePairsCountInputToolTip {
+        internal static string Cipher2 {
             get {
-                return ResourceManager.GetString("MessagePairsCountInputToolTip", resourceCulture);
+                return ResourceManager.GetString("Cipher2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Message pairs ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 3 (16 bit blocksize, 6 subkeys, 96 bit keylength) ähnelt.
         /// </summary>
-        internal static string MessagePairsOutput {
+        internal static string Cipher3 {
             get {
-                return ResourceManager.GetString("MessagePairsOutput", resourceCulture);
+                return ResourceManager.GetString("Cipher3", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output of message pairs with specified difference ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input of the differential ähnelt.
         /// </summary>
-        internal static string MessagePairsOutputToolTip {
+        internal static string DifferentialInput {
             get {
-                return ResourceManager.GetString("MessagePairsOutputToolTip", resourceCulture);
+                return ResourceManager.GetString("DifferentialInput", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die DCA Oracle ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The differential is used to show  ähnelt.
+        /// </summary>
+        internal static string DifferentialInputToolTip {
+            get {
+                return ResourceManager.GetString("DifferentialInputToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die DCA PathVisualiser ähnelt.
         /// </summary>
         internal static string PluginCaption {
             get {
@@ -124,38 +133,11 @@ namespace DCAOracle.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This component generates randomly selected message pairs, where the messages of a pair have a definable difference ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The DCA PathVisualiser component visualizes the characteristics found by the DCA PathFinder component ähnelt.
         /// </summary>
         internal static string PluginTooltip {
             get {
                 return ResourceManager.GetString("PluginTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The number of message pairs must be greater than 0! ähnelt.
-        /// </summary>
-        internal static string WarningMessageCountMustBeSpecified {
-            get {
-                return ResourceManager.GetString("WarningMessageCountMustBeSpecified", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Blocksize ähnelt.
-        /// </summary>
-        internal static string WorSizeParameter {
-            get {
-                return ResourceManager.GetString("WorSizeParameter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This parameter specifies the blocksize of the used cipher. Each message will contain exactly one block. ähnelt.
-        /// </summary>
-        internal static string WorSizeParameterToolTip {
-            get {
-                return ResourceManager.GetString("WorSizeParameterToolTip", resourceCulture);
             }
         }
     }

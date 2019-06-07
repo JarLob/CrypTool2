@@ -20,7 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DCAPathFinder
+namespace DCAPathVisualiser
 {
     /// <summary>
     /// Cipher1 = 16 bit blocksize, 2 subkeys, 32 bit key

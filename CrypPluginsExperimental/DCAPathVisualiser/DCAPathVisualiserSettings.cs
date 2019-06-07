@@ -18,17 +18,16 @@ using System;
 using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using DCAPathFinder;
+using DCAPathVisualiser;
 
-namespace Cryptool.Plugins.DCAPathFinder
+namespace Cryptool.Plugins.DCAPathVisualiser
 {
-    public class DCAPathFinderSettings : ISettings
+    public class DCAPathVisualiserSettings : ISettings
     {
         #region Private Variables
 
         private string _choiceOfAlgorithm;
         private Algorithms _currentAlgorithm;
-        private bool _presentationMode;
 
         #endregion
 
@@ -48,21 +47,10 @@ namespace Cryptool.Plugins.DCAPathFinder
 
         #region TaskPane Settings
 
-        [TaskPane("PresentationMode", "PresentationModeToolTip", "DisplayOptions", 1, false, ControlType.CheckBox)]
-        public bool PresentationMode
-        {
-            get { return _presentationMode; }
-            set
-            {
-                _presentationMode = value;
-                OnPropertyChanged("PresentationMode");
-            }
-        }
-
         /// <summary>
         /// Selection of the toy cipher algorithm
         /// </summary>
-        [TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", null, 2, false, ControlType.ComboBox, new string[] { "Cipher1", "Cipher2", "Cipher3"})]
+        [TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", null, 2, false, ControlType.ComboBox, new string[] { "Cipher1", "Cipher2", "Cipher3" })]
         public string ChoiceOfAlgorithm
         {
             get

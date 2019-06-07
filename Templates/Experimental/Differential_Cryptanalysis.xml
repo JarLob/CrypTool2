@@ -24,7 +24,9 @@
 	<replacement key="$ToyCipherComponentOutput$" value="Ausgabe des Schlüsseltexts" />
 	<replacement key="$DCADesc$" value="This template contains a tutorial for differential cryptanalysis of symmetric block ciphers." />
 	<replacement key="$DCAPathFinderComponent$" value="DCA PfadFinder" />
-		<replacement key="$DCAOracleComponent$" value="DCA Orakel" />
+	<replacement key="$DCAOracleComponent$" value="DCA Orakel" />
+	<replacement key="$DCAKeyRecoveryComponent$" value="DCA Schlüsselwiederherstelung" />
+	<replacement key="$DCAPathVisualiserComponent$" value="DCA PfadVisualisierer" />
   </replacements>
   <replacements lang="en">
 	<replacement key="$UserMessageInput$" value="Input of the plaintext" />
@@ -34,5 +36,7 @@
 	<replacement key="$DCADesc$" value="This template contains a tutorial for differential cryptanalysis of symmetric block ciphers." />
 	<replacement key="$DCAPathFinderComponent$" value="DCA PathFinder" />
 	<replacement key="$DCAOracleComponent$" value="DCA Oracle" />
+	<replacement key="$DCAKeyRecoveryComponent$" value="DCA KeyRecovery" />
+	<replacement key="$DCAPathVisualiserComponent$" value="DCA PathVisualiser" />
   </replacements>
 </sample>

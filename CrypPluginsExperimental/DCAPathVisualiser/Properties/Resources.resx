@@ -117,37 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MessageDifferenceInput" xml:space="preserve">
-    <value>Difference of messages</value>
+  <data name="ChoiceOfAlgorithm" xml:space="preserve">
+    <value>Choice of the algorithm</value>
   </data>
-  <data name="MessageDifferenceInputToolTip" xml:space="preserve">
-    <value>Specifies the difference between the messages of a pair</value>
+  <data name="ChoiceOfAlgorithmToolTop" xml:space="preserve">
+    <value>At this point, you can select one of the ciphers contained in the list. This one is used to display the differential.</value>
   </data>
-  <data name="MessagePairsCountInput" xml:space="preserve">
-    <value>Count of message pairs</value>
+  <data name="Cipher1" xml:space="preserve">
+    <value>Cipher 1 (16 bit blocksize, 2 subkeys, 32 bit keylength)</value>
   </data>
-  <data name="MessagePairsCountInputToolTip" xml:space="preserve">
-    <value>Specifies the number of message pairs to be generated</value>
+  <data name="Cipher2" xml:space="preserve">
+    <value>Cipher 2 (16 bit blocksize, 4 subkeys, 64 bit keylength)</value>
   </data>
-  <data name="MessagePairsOutput" xml:space="preserve">
-    <value>Message pairs</value>
+  <data name="Cipher3" xml:space="preserve">
+    <value>Cipher 3 (16 bit blocksize, 6 subkeys, 96 bit keylength)</value>
   </data>
-  <data name="MessagePairsOutputToolTip" xml:space="preserve">
-    <value>Output of message pairs with specified difference</value>
+  <data name="DifferentialInput" xml:space="preserve">
+    <value>Input of the differential</value>
+  </data>
+  <data name="DifferentialInputToolTip" xml:space="preserve">
+    <value>The differential is used to show </value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>DCA Oracle</value>
+    <value>DCA PathVisualiser</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>This component generates randomly selected message pairs, where the messages of a pair have a definable difference</value>
-  </data>
-  <data name="WarningMessageCountMustBeSpecified" xml:space="preserve">
-    <value>The number of message pairs must be greater than 0!</value>
-  </data>
-  <data name="WorSizeParameter" xml:space="preserve">
-    <value>Blocksize</value>
-  </data>
-  <data name="WorSizeParameterToolTip" xml:space="preserve">
-    <value>This parameter specifies the blocksize of the used cipher. Each message will contain exactly one block.</value>
+    <value>The DCA PathVisualiser component visualizes the characteristics found by the DCA PathFinder component</value>
   </data>
 </root>

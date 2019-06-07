@@ -14,75 +14,102 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
-using DCAOracle;
-using DCAOracle.Properties;
+using DCAKeyRecovery.UI;
 
-
-namespace Cryptool.Plugins.DCAOracle
+namespace Cryptool.Plugins.DCAKeyRecovery
 {
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
-    [PluginInfo("DCAOracle.Properties.Resources", "PluginCaption", "PluginTooltip", "DCAPathFinder/userdoc.xml", new[] { "DCAOracle/Images/IC_Oracle.png" })]
+    [PluginInfo("DCAKeyRecovery.Properties.Resources", "PluginCaption", "PluginTooltip", "DCAPathFinder/userdoc.xml", new[] { "DCAKeyRecovery/Images/IC_KeyRecovery.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
-    public class DCAOracle : ICrypComponent
+    public class DCAKeyRecovery : ICrypComponent
     {
         #region Private Variables
 
-        private readonly DCAOracleSettings _settings = new DCAOracleSettings();
-        private readonly Random _random = new Random();
-        private int _messsageDifference;
-        private int _messagePairsCount;
-        private ICryptoolStream _messagePairsOutput;
+        private readonly DCAKeyRecoverySettings _settings = new DCAKeyRecoverySettings();
+        private readonly KeyRecoveryPres _pres = new KeyRecoveryPres();
+        private string _differential;
+        private ICryptoolStream _unencryptedMessagePairs;
+        private ICryptoolStream _encryptedMessagePairs;
+        private int _neededMessageCount;
+
+        private byte[] _roundKeys;
 
         #endregion
 
         #region Data Properties
 
         /// <summary>
-        /// Property for the count of message pairs
+        /// Input for the differential
         /// </summary>
-        [PropertyInfo(Direction.InputData, "MessagePairsCountInput", "MessagePairsCountInputToolTip")]
-        public int MessagePairsCount
+        [PropertyInfo(Direction.InputData, "DifferentialInput", "DifferentialInputToolTip")]
+        public string Differential
         {
-            get { return _messagePairsCount; }
+            get { return _differential; }
             set
             {
-                _messagePairsCount = value;
-                OnPropertyChanged("MessagePairsCount");
+                _differential = value;
+                OnPropertyChanged("Differential");
             }
         }
 
         /// <summary>
-        /// Property for the difference of the messages of a pair
+        /// input of the plaintext message pairs
         /// </summary>
-        [PropertyInfo(Direction.InputData, "MessageDifferenceInput", "MessageDifferenceInputToolTip", false)]
-        public int MessageDifference
+        [PropertyInfo(Direction.InputData, "UnencryptedMessagePairsInput", "UnencryptedMessagePairsInputToolTip")]
+        public ICryptoolStream UnencryptedMessagePairs
         {
-            get { return _messsageDifference; }
+            get { return _unencryptedMessagePairs; }
             set
             {
-                _messsageDifference = value;
-                OnPropertyChanged("MessageDifference");
+                _unencryptedMessagePairs = value;
+                OnPropertyChanged("UnencryptedMessagePairs");
             }
         }
 
         /// <summary>
-        /// Property for the generated message pairs
+        /// Input if the encrypted message pairs
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "MessagePairsOutput", "MessagePairsOutputToolTip")]
-        public ICryptoolStream MessagePairsOutput
+        [PropertyInfo(Direction.InputData, "EncryptedMessagePairsInput", "EncryptedMessagePairsInputToolTip")]
+        public ICryptoolStream EncryptedMessagePairs
         {
-            get { return _messagePairsOutput; }
+            get { return _encryptedMessagePairs; }
             set
             {
-                _messagePairsOutput = value;
-                OnPropertyChanged("MessagePairsOutput");
+                _encryptedMessagePairs = value;
+                OnPropertyChanged("EncryptedMessagePairs");
+            }
+        }
+
+        /// <summary>
+        /// Output for the round keys
+        /// </summary>
+        [PropertyInfo(Direction.OutputData, "RoundKeysOutput", "RoundKeysOutputToolTip")]
+        public byte[] RoundKeys
+        {
+            get { return _roundKeys; }
+            set
+            {
+                _roundKeys = value;
+                OnPropertyChanged("RoundKeys");
+            }
+        }
+
+        /// <summary>
+        /// Output for the needed message count
+        /// </summary>
+        [PropertyInfo(Direction.OutputData, "NeededMessageCountOutput", "NeededMessageCountOutputToolTip")]
+        public int NeededMessageCount
+        {
+            get { return _neededMessageCount; }
+            set
+            {
+                _neededMessageCount = value;
+                OnPropertyChanged("NeededMessageCount");
             }
         }
 
@@ -103,7 +130,7 @@ namespace Cryptool.Plugins.DCAOracle
         /// </summary>
         public UserControl Presentation
         {
-            get { return null; }
+            get { return _pres; }
         }
 
         /// <summary>
@@ -118,70 +145,10 @@ namespace Cryptool.Plugins.DCAOracle
         /// </summary>
         public void Execute()
         {
-            if (MessagePairsCount == 0)
-            {
-                GuiLogMessage(Resources.WarningMessageCountMustBeSpecified, NotificationLevel.Warning);
-                return;
-            }
+            ProgressChanged(0, 1);
 
-            double curProgress = 0;
-            double stepCount = 1.0 / (MessagePairsCount * 2);
-            ProgressChanged(curProgress, 1);
+            
 
-            List<Pair> pairList = new List<Pair>();
-
-            //generate pairs
-            int i;
-            for (i = 0; i < MessagePairsCount; i++)
-            {
-                int xtemp = _random.Next(0, ((int)Math.Pow(2, _settings.WordSize) - 1));
-                int ytemp = xtemp ^ MessageDifference;
-
-                UInt16 x = (UInt16)xtemp;
-                UInt16 y = (UInt16)ytemp;
-
-                Pair inputPair = new Pair()
-                {
-                    LeftMember = x,
-                    RightMember = y
-                };
-           
-                pairList.Add(inputPair);
-
-                curProgress += stepCount;
-                ProgressChanged(curProgress, 1);
-            }
-
-            //each pair consists of 2 uint16 and each uint16 consists of 2 byte
-            byte[] outputTemp = new byte[MessagePairsCount * 2 * 2];
-
-            //convert pairs
-            i = 0;
-            foreach (Pair curPair in pairList)
-            {
-                byte[] leftMember = BitConverter.GetBytes(curPair.LeftMember);
-                outputTemp[i] = leftMember[0];
-                outputTemp[i + 1] = leftMember[1];
-
-                byte[] rightMember = BitConverter.GetBytes(curPair.RightMember);
-                outputTemp[i + 2] = rightMember[0];
-                outputTemp[i + 3] = rightMember[1];
-
-                i += 4;
-                curProgress += stepCount;
-                ProgressChanged(curProgress, 1);
-            }
-
-            //write all messages to the output
-            using (CStreamWriter writer = new CStreamWriter())
-            {
-                writer.Write(outputTemp, 0, outputTemp.Length);
-                writer.Flush();
-                MessagePairsOutput = writer;
-            }
-
-            //finished: inform output
-            OnPropertyChanged("MessagePairsOutput");
             ProgressChanged(1, 1);
         }
 

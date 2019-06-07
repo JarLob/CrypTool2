@@ -70,7 +70,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Choice of the algorithm ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Choice of the cipher ähnelt.
         /// </summary>
         internal static string ChoiceOfAlgorithm {
             get {
@@ -79,7 +79,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die At this point one of the algorithms contained in the list can be selected. This algorithm can be examined by differential cryptanalysis. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die At this point one of the ciphers contained in the list can be selected. This cipher can be examined by differential cryptanalysis. ähnelt.
         /// </summary>
         internal static string ChoiceOfAlgorithmToolTop {
             get {

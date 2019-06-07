@@ -121,10 +121,10 @@
     <value>Skip chapter</value>
   </data>
   <data name="ChoiceOfAlgorithm" xml:space="preserve">
-    <value>Choice of the algorithm</value>
+    <value>Choice of the cipher</value>
   </data>
   <data name="ChoiceOfAlgorithmToolTop" xml:space="preserve">
-    <value>At this point one of the algorithms contained in the list can be selected. This algorithm can be examined by differential cryptanalysis.</value>
+    <value>At this point one of the ciphers contained in the list can be selected. This cipher can be examined by differential cryptanalysis.</value>
   </data>
   <data name="Cipher1" xml:space="preserve">
     <value>Tutorial 1: Cipher 1 (16 bit blocksize, 2 subkeys, keylength is 32 bit)</value>

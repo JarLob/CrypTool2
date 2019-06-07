@@ -117,37 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MessageDifferenceInput" xml:space="preserve">
-    <value>Difference of messages</value>
+  <data name="ChoiceOfAlgorithm" xml:space="preserve">
+    <value>Wahl der Chiffre</value>
   </data>
-  <data name="MessageDifferenceInputToolTip" xml:space="preserve">
-    <value>Specifies the difference between the messages of a pair</value>
+  <data name="ChoiceOfAlgorithmToolTop" xml:space="preserve">
+    <value>An dieser Stelle kann eine der in der Liste enthaltenen Chiffren ausgewählt werden. Diese kann mittels differenzieller Kryptoanalyse untersucht werden.</value>
   </data>
-  <data name="MessagePairsCountInput" xml:space="preserve">
-    <value>Count of message pairs</value>
+  <data name="Cipher1" xml:space="preserve">
+    <value>Chiffre 1 (16 Bit Blockgröße, 2 Rundenschlüssel, 32 Bit Schlüssellänge)</value>
   </data>
-  <data name="MessagePairsCountInputToolTip" xml:space="preserve">
-    <value>Specifies the number of message pairs to be generated</value>
+  <data name="Cipher2" xml:space="preserve">
+    <value>Chiffre 2 (16 Bit Blockgröße, 4 Rundenschlüssel, 64 Bit Schlüssellänge)</value>
   </data>
-  <data name="MessagePairsOutput" xml:space="preserve">
-    <value>Message pairs</value>
+  <data name="Cipher3" xml:space="preserve">
+    <value>Chiffre 3 (16 Bit Blockgröße, 6 Rundenschlüssel, 96 Bit Schlüssellänge)</value>
   </data>
-  <data name="MessagePairsOutputToolTip" xml:space="preserve">
-    <value>Output of message pairs with specified difference</value>
+  <data name="DifferentialInput" xml:space="preserve">
+    <value>Eingabe des Differenzial</value>
+  </data>
+  <data name="DifferentialInputToolTip" xml:space="preserve">
+    <value>Das Differenzial wird zur Wiederherstellung der Schlüsselbits verwendet</value>
+  </data>
+  <data name="EncryptedMessagePairsInput" xml:space="preserve">
+    <value>Eingabe der verschlüsselten Nachrichtenpaare</value>
+  </data>
+  <data name="EncryptedMessagePairsInputToolTip" xml:space="preserve">
+    <value>Die Nachrichtenpaare sind die korrespondierenden Paare zu den unverschlüsselten Nachrichtenpaare, die zur Wiederherstellung der Schlüsselbits notwendig sind</value>
+  </data>
+  <data name="NeededMessageCountOutput" xml:space="preserve">
+    <value>Notwendige Nachrichtenpaare</value>
+  </data>
+  <data name="NeededMessageCountOutputToolTip" xml:space="preserve">
+    <value>Spezifiziert die Anzahl an notwendigen Nachrichtenpaaren zur Wiederherstellung von Schlüsselbits</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>DCA Oracle</value>
+    <value>DCA KeyRecovery</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>This component generates randomly selected message pairs, where the messages of a pair have a definable difference</value>
+    <value>Die DCA KeyRecovery-Komponente führt die Wiederherstellung von Schlüsselbits von Rundenschlüsseln durch</value>
   </data>
-  <data name="WarningMessageCountMustBeSpecified" xml:space="preserve">
-    <value>The number of message pairs must be greater than 0!</value>
+  <data name="RoundKeysOutput" xml:space="preserve">
+    <value>Ausgabe der Rundenschlüssel</value>
   </data>
-  <data name="WorSizeParameter" xml:space="preserve">
-    <value>Blocksize</value>
+  <data name="RoundKeysOutputToolTip" xml:space="preserve">
+    <value>Die Rundenschlüssel werden nach der Durchführung der differenziellen Kryptoanalyse ausgegeben</value>
   </data>
-  <data name="WorSizeParameterToolTip" xml:space="preserve">
-    <value>This parameter specifies the blocksize of the used cipher. Each message will contain exactly one block.</value>
+  <data name="UnencryptedMessagePairsInput" xml:space="preserve">
+    <value>Eingabe der Nachrichtenpaare</value>
+  </data>
+  <data name="UnencryptedMessagePairsInputToolTip" xml:space="preserve">
+    <value>Die Nachrichtenpaare werden zur Wiederherstellung der Schlüsselbits verwendet</value>
   </data>
 </root>
