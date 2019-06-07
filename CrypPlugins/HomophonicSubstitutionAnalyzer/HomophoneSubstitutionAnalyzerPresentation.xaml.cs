@@ -415,6 +415,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     //in fullautomatic analysis mode the progress is calculated using the restarts
                     eventArgs.Percentage = (double) _restart / (double) AnalyzerConfiguration.Restarts;
                 }
+
                 Progress.Invoke(sender, eventArgs);
             }
         }
