@@ -1,2 +1,145 @@
-Task 1: Decrypt the following text using the Caesar cipher built in CT2:
-------------------------------------------------------------------------------------------------------------------------
+Task 1: 
+Va fvkgl OP, Pnrfne fbhtug ryrpgvba nf pbafhy sbe svsglavar OP, nybat jvgu gjb bgure pnaqvqngrf. Gur ryrpgvba jnf fbeqvq – rira Pngb, jvgu uvf erchgngvba sbe vapbeehcgvovyvgl, vf fnvq gb unir erfbegrq gb oevorel va snibhe bs bar bs Pnrfne'f bccbaragf. Pnrfne jba, nybat jvgu pbafreingvir Znephf Ovohyhf 
+
+Task 2:
+Gaius Julius Caesar was born into a patrician family, the gens Julia, which claimed descent from Iulus, son of the legendary Trojan prince Aeneas, supposedly the son of the goddess Venus.
+
+Task 3:
+Gur nffnffvangvba bs Whyvhf Pnrfne jnf gur erfhyg bs n pbafcvenpl ol znal Ebzna frangbef yrq ol Tnvhf Pnffvhf Ybatvahf, Qrpvzhf Whavhf Oehghf Nyovahf, naq Znephf Whavhf Oehghf. Gurl fgnoorq Pnrfne (gjraglguerr gvzrf) gb qrngu va n ybpngvba nqwnprag gb gur Gurnger bs Cbzcrl ba gur Vqrf bs Znepu svsgrra Znepu sbheglsbhe OP. 
+
+Task 4:
+rN YJBLGMUJaLTB, a YSLTWJ (MJ YBLTWJ) SI aN aPUMJSGTO VMJ LWJVMJOSNU WNYJBLGSMN MJ XWYJBLGSMN—a IWJSWI MV DWPP-XWVSNWX IGWLI GTaG YaN ZW VMPPMDWX aI a LJMYWXFJW. zN aPGWJNaGSEW, PWII YMOOMN GWJO SI WNYSLTWJOWNG. kM WNYSLTWJ MJ WNYMXW SI GM YMNEWJG SNVMJOaGSMN SNGM YSLTWJ MJ YMXW. rN YMOOMN LaJPaNYW, "YSLTWJ" SI IBNMNBOMFI DSGT "YMXW", aI GTWB aJW ZMGT a IWG MV IGWLI GTaG WNYJBLG a OWIIaUW; TMDWEWJ, GTW YMNYWLGI aJW XSIGSNYG SN YJBLGMUJaLTB, WILWYSaPPB YPaIISYaP YJBLGMUJaLTB. 
+
+Key: password = Hidden, offset = 10
+
+Task 5:
+Codes generally substitute different length strings of characters in the output, while ciphers generally substitute the same number of characters as are input. 
+
+Key: password = secret, offset = 8
+
+Task 6:
+JRU GOLF "XWNRUL" WP BOLQUL JWQUK QUZPJ "CULO" ZPF RZF JRU KZQU OLWAWP: QWFFSU BLUPXR ZK XWBLU ZPF QUFWUHZS SZJWP ZK XWBLZ, BLOQ JRU ZLZYX KWBL = CULO (KUU CULO - UJDQOSOAD). "XWNRUL" GZK SZJUL IKUF BOL ZPD FUXWQZS FWAWJ, UHUP ZPD PIQYUL. JRULU ZLU QZPD JRUOLWUK ZYOIJ ROG JRU GOLF "XWNRUL" QZD RZHU XOQU JO QUZP "UPXOFWPA". 
+
+Task 7:
+OPK QRXYSY WL IAGICKBOSA OESRV GW GLV ZDOKRRVV GDXNIE ARW HQYEGXIMWCZIQ XF FGIOWR HV ZDOKRRVV MI BNI AMEIOMKRGL TIIBAVL EEH RIY MA JRGO NOVFX UINKXMOIU FT OOSIEE FVBZMFXR FZTREFS ZR CQY FBSB PV KOJEE UIG AOKASII BQUZNR SEOBOWGE SIGTGWB
+Key: VIGENERE
+
+Task 8:
+VIGENERE CREATED A DIFFERENT, STRONGER AUTOKEY CIPHER IN FIFTEEN EIGHTY SIX
+Key: BELLASO
+
+Task 9:
+TSF ECUMTBX JMGHPS FP EMQV QHXKIDUE REJGZIP EIOFOH WHCTBTLR JIIUC JXDGV LHW RN PBVCR XQTNHPGHLCIKBK EQEOII. AWCIIMQ WATK E DIIFH REXJIQLX KO POGIRXV I BLWJARF.
+
+Task 10:
+05 35 99 21 06 47 23 25 88 05 51 52 22 33 43 51 99 52 37 88 01 36 17 48 21 06 49 22 99 51 03 21 88 27 02 19 20 01 18 41 24 52 26 99 38 19 88 20 47 22 45 42 21 35 17 25 99 05 36 06 23 26 50 02 49 88 05 51 52 06 18 15 50 99 37 35 88 49 41 11 50 51 01 52 42 51 02 38 36 99 17 01 44 04 22 48 49 88 31 05 50 99 52 37 88 28 02 49 07 41 01 50 21 99 43 24 06 02 35 51 22 29 52 88 23 21 51 52 22 47 99 19 48 21 46 42 22 36 18 01 21 49 88 12 25 99 03 38 34 37 44 04 38 35 26 77
+Key: 
+[ ];[99|88]
+[.];[77]
+[I];[01|02]
+[H];[03|04]
+[A];[05|06]
+[G];[07|08]
+[J];[09|10]
+[B];[11|12]
+[Z];[13|14]
+[K];[15|16]
+[C];[17|18]
+[F];[19|20]
+[E];[21|22]
+[L];[23|24]
+[Y];[25|26]
+[D];[27|28]
+[X];[29|30]
+[W];[31|32]
+[M];[33|34]
+[N];[35|36]
+[O];[37|38]
+[V];[39|40]
+[U];[41|42]
+[P];[43|44]
+[Q];[45|46]
+[R];[47|48]
+[S];[49|50]
+[T];[51|52]
+
+Task 11:
+THE BEALE CIPHERS ARE ANOTHER EXAMPLE OF A HOMOPHONIC CIPHER. THIS IS A STORY OF BURIED TREASURE THAT WAS DESCRIBED BY USE OF A CIPHERED TEXT THAT WAS KEYED TO THE DECLARATION OF INDEPENDENCE.
+
+Key: 
+[ ];[99|88]
+[.];[77]
+[E];[01|02]
+[D];[03|04]
+[F];[05|06]
+[C];[07|08]
+[G];[09|10]
+[B];[11|12]
+[H];[13|14]
+[I];[15|16]
+[A];[17|18]
+[X];[19|20]
+[Y];[21|22]
+[J];[23|24]
+[Z];[25|26]
+[K];[27|28]
+[V];[29|30]
+[W];[31|32]
+[L];[33|34]
+[T];[35|36]
+[U];[37|38]
+[N];[39|40]
+[M];[41|42]
+[R];[43|44]
+[S];[45|46]
+[Q];[47|48]
+[P];[49|50]
+[O];[51|52]
+
+Task 12:
+39 03 51 11 49 52 29 30 04 15 29 51 99 45 43 09 10 52 88 33 35 13 30 51 99 52 09 16 36 88 07 37 35 19 38 99 51 15 88 40 03 36 27 52 37 38 04 99 50 51 29 30 03 16 29 52 88 46 44 10 09 51 99 34 35 14 30 52 88 20 51 15 99 52 37 88 04 29 51 10 03 52 38 99 16 47 01 36 09 51 13 88 33 35 10 21 12 52 30 02 99 51 37 45 88 34 09 52 22 19 14 04 39 01 29 99 20 02 36 88 10 03 28 43 46 99 04 38 88 37 51 33 09 44 15 99 52 30 88 29 01 43 99 30 03 11 44 88 35 41 99 29 02 43 88 16 48 04 44 38 30 03 42 04 47 99 13 43 27 36 10 17 29 03 35 37 88 51 38 45 99 14 44 41 36 13 12 52 30 04 35 37 77 88 99 40 03 51 11 49 52 29 30 04 15 29 51 88 46 43 09 10 52 99 34 36 14 30 51 88 16 33 44 38 29 99 30 01 43 88 12 52 05 35 13 03 29 21 99 36 42 88 02 04 15 99 09 03 41 44 88 35 37 99 16 48 04 43 38 30 03 42 04 47 88 44 37 45 43 51 28 36 14 15 77 99 01 44 88 50 43 38 44 41 03 29 43 46 99 42 13 35 11 88 52 37 99 04 38 41 36 14 12 51 10 88 44 45 18 48 52 30 03 35 37 99 36 42 88 29 17 30 35 13 16 99 51 38 46 88 27 04 15 03 29 16 99 41 14 36 11 88 13 43 37 35 19 38 44 45 99 15 47 02 36 09 52 14 16 77 88 01 04 15 99 12 35 16 30 88 42 51 11 36 18 15 99 20 35 13 08 88 03 16 99 43 37 29 04 30 10 44 46 88 12 52 39 03 51 43 99 38 52 29 17 14 51 09 04 15 77
+
+Task 13:
+§ a ä / @ o + $ ) u Ä e q s m @ p - ö f + w g e = Ä n b § f ) - ( h c d g e a 1 + o # h m r @ f Ä = - q g + $ b ä / @ - ö e + x h f ) Ä n a § e = - ä p + $ f - + e g v @ b - w m ö r q Ä f + % 0 - @ e ^ a ä o ' + § t r # h n - ( ' $ m b Ä p + a s q x ö ) ° @ - = g ) ^ o h f + t e = Ä n - r # @ + i p Ä s ) g f 1 c - b @ w ä o + / § m n h a b : - ö q + r Ä a b p - g Ö + $ - 0 h t e ° + ^ ä m a - f § d @ = + $ b ö ( Ä - Ö § a b ä e ° + q ' n g s ^ # - $ + m § & % ö r - ' h a @ + ä f q g - $ + Ö § e r $ o 1 - x h n b ) + j g i t a § q Ä = - & 0 + j @ / s b ö $ m - § f r # n h i g c h m j ' ä ( + / n Ä $ q t m @ p
+
+Task 14:
+19 20 03 21 31 11 53 41 14 24 02 13 25 51 15 39 06 05 30 59 56 03 54 31 35 29 34 14 10 48 57 09 27 06 39 53 16 04 56 05 20 25 35 01 18 36 57 07 55 59 03 26 05 41 14 24 31 33 02 04 35 54 29 39 45 20 47 21 58 59 42 27 47 38 12 55 15 02 16 47 53 48 14 56 28 49 34 57 36 03 19 13 39 16 05 26 35 41 25 27 54 28 59 55 22 31 20 14 45 39 57 52 02 21 36 05 41 27 15 51 32 07 53 48 15 30 13 21 55 59 14 56 01 18 39 59 58 03 54 14 47 02 47 24 31 16 12 27 36 48 35 20 29 34 55 42 24 02 26 28 53 21 57 33 56 47 27 39 03 36 10 55 16 47 02 41 25 31 26 06 19 16 01 27 47 38 15 21 53 59 14 56 16 48 39 45 04 03 15 42 51 29 25 36 31 28 58 13 59 19 30 32 34 55 47 14 21 53 10 01 02 16 38 49 27 48 42 05 15 36 56 26 35 54 39 45 59 24 57 20 44 05 41 29 34 03 47 21 31 14 39 53 16 48 12 56 47 03 15 31 07 51 16 53 49 24 35 36 56 57 54 47 03 55 21 05 59 10 14 34 31 38 12 53 16 56 28 03 32 35 18 24 31 47 53 26 02 20 28 16 56 27 26 33 10 49 55 36 48 57 41 25 34 02 01 06 47 58 42 39 24 03 15 31 21 53 59 14 56 16 48 05 39 12 27 15 07 36 03 55 47 59 34 02 14 01 27 16 38 24 55 28 48 02 54 32 39 35 19 20 31 26 59 34 53 27 14 39 56 42 47 59 03 28 55 15 48 02 15 48 57 41 27 14 05 45 54 58 30 31 21 35 08 55 04 53 39 24
+
+Task 15:
+see document
+
+Task 16:
+iw no lh lj is lj nr no no iw nm iu ic ld ib nk lk nv ip is iq lz ih if is iw ig iw lr lr ib ll ih nx ns nu ih ia lh ng lh if in ib lq ld nu ih ia ls iv nz lm lj lh lk lk nr ia lf ij lh no nw lf io nn is iw nm ig ns nv it ln lq ie ld lr ig ip nv nx lz ih if ld ll io ia iw if ng lg is ll ib nz ls nw lz lm lf nv ie ng lt is lz lm nz ll io no ib it lz no lk ng ib np nr no lk nh nl in ld ng ns iw nm iu lf lh ne ld if nn ld ig ns is in ib lz ls ig lg ni nr no iz lh ia lf ld nc nk nv ie is lm iq is lh ls nr if is lu is ia ip nv ng ig is ie ng ns lz nm lf ld ng ls lh ia nt il ib ih ni ni nl iq lj lr ib le le lv iw ng lg io lf lh ni no ng lg ld la is nh ls ic io ni ng ln it lh ng nr io ig lg lz ld ij lg is ia lh lc iw nv iw lv lh no no ip ld ie nv ip ln ie nm iw ia ic nz ie lz nw iw lb is lr nm nw io no iz ig lg is nr iv lz ii is iy iw no iz is ir lv nr no lk ny is lb ib in ld in lx if iz nz ne ld lr iw nd iw lk no ia ln ig nt nr ii nv il ln lt in il ia lz in is la ld nx nz lt if is nb ln nf ij iw iz lk ig ni lx ls ln lr iz nl iw lc ib ij lm ln ni lr ig nl ic in il iq nl iz iz nv nx ig nr nm lf ib nu lr iz nz lu is nh it nl ie nn il lz nu ls ld ni no iw it ld nv ip nv nl ni iw ld ls nv nn nv ls lg iv lo iw ng nr
+
+Task 17:
+yitkt1qkt1q1fxdwtk1gz1rozztktfy1ynhtl1gz1lxwlyoyxyogf1eohitkl1oz1yit1eohitk1ghtkqytl1gf1lofust1styytkl1oy1ol1ytkdtr1q1lodhst1lxwlyoyxyogf1eohitk1q1eohitk1yiqy1ghtkqytl1gf1sqkutk1ukgxhl1gz1styytkl1ol1ytkdtr1hgsnukqhioe
+
+Task 18:
+JxQ8ubMS7bqaJSrelaIRJbE56bWctQ8bqaJHluayDav8EcJbVkbJxuaxUK7QbqXtbJxlaCTHsxaiTHlbpcmbYxlbxSJYlHb3Q8QbiS4ZDjb6lpaSJayJaTbmU8dUKIQbMpIb7yYJZDjbrRYMQRDbJxlCavq7Jbq7eulFc
+
+Task 19:
+526555515015509520522555185512508055507509522055555195205155512523555513522526185555507519055555522145205509015513524055555155521555507085522555075526185045055145555205519522555509512508055195555520185155504518513075555512145555095507555235522509055555504085518205522555525506507555205519055185522555235055509522555507085185055522555520015509523055513522185508555526205555095507555025215195518125502555511015095145205518513075555507519055508522555509055045505555195506523045522145515255555205085055095185555522502055508555035519526513524522523555507155555065015125515555215165512145555526125518035055
+
+(Hint: maybe use 3 digits)
+
+Task 20:
+ap ao bb au ai aj at cc xg xs af dd ax hx xr hj xv bb as ab ac xy hy au cc hr am hu xd dd xg ai xi af xv bb ac xo xz xh hj hi cc xl xm dd au xs hu bb xg hh av an aq af hj cc au hx xv hd dd xf ao as he hb am hu ae bb xg ai af cc xk hq xi ad xs xn xv xm hj at xx hh ap xo hb dd ab hd xw bb as hu xz ht cc hq xh dd ag xl am xo he hm hi bb au hx af cc ar hk xv hu ao dd ap xu bb ai af ab xi xg at cc xh xs xv dd hc xz ae hu bb hi xl an af cc hj hq hh au at dd ab hb am bb he xm cc xz dd xh av xn hc xv as bb xw hq az cc xg hx hu dd al hd ab aw af bb ap hv cc ai xv xz xi hj hi dd xs hu bb at au xl xo af cc xg hx he xh xv dd hj hq hh au hi bb ab ao ht cc xg ap xl xp dd hj ai hu an bb xj xf aj au af cc xz ax hq xb dd hs ab hb am bb xg xs xv cc ag xr as at hj dd xd hy au xm hu xh hi bb at xz aj ae cc xg hx af dd ha xr hd ah bb hq ao xw cc hj ai xv dd hm xs hy au hu bb xi ab xy hr aj xg cc ac xo af ax dd hj hx hh xv hu bb xy hb xz xh au hi cc he xm dd xg ai af bb hj as hk xn hf xv au cc hq hd ht dd ad ab am xo hu ae bb ap av xg cc xu xr xi at hj dd xd hy au ao af xh hi 
+
+Task 21:
+DBCEFXFXVTRCVRMMNQHPRLFANBNEGTFWNQHPRXYITCYIQXYIZIXXUWDEBVKXVGWMZTJBGLVMINUVZEKMJVCEFKRXCMXIQEEHOZGRFQZXOMJYAHVVBZAYAHKSVVARXRFAITUGNXZSIFJSRWCEIORILOESRIHSHXKLDAZLRCJLJCRHVXJFPZOIQSLXOPKVRWFQZENIEIOACWQRBAJXCMKBNGKPJKGXVSESITEAJXYMNEGWUMJPVAZQRWJEBMDXUMIXTMOKUXUIBZKIFJZJOGYIIIEQDVAXRWJMSXUMAXWMQMYIPSEHNVUVGLJIQMTXLWVZZVJITVVINMOKUXDMICZIFJFVOGLSHVJIXWTHFAVWOQJFLVFAN
+
+(Hint: only WW knows)
+
+Task 22:
+SEANWIEUIIUZHDTGCNPLBHXGKOZBJQBFEQTXZBWJJOYTKFHRTPZWKPVURYSQVOUPZXGGOEPHCKUASFKIPWPLVOJIZHMNNVAEUDXYFDURJBOVPASXMLVFYYRDELVPLMFYSINXYFQEONPKMOBPCFYXJFHOHTASETOVBOCAJDSVQUMZTZVTPHYDAUFQTIUTTJJDOGOAIAFLWHTXTIQLTRSEALVLFLXFO
+
+(Hint: maybe period 15)
+
+Task 23:
+47 17 03 21 13 23 24 29 35 15 51 25 23 22 43 26 16 24 11 18 48 44 21 17 23 33 43 47 14 13 37 44 27 52 36 25 18 43 15 12 30 14 35 16 13 38 44 41 17 43 44 43 29 44 51 18 26 36 25 39 15 24 42 14 07 52 17 43 48 18 04 22 13 23 24 30 35 29 30 11 16 14 17 51 13 36 26 40 47 18 03 21 14 23 39 17 52 22 37 35 48 51 25 45 47 18 04 21 13 52 26 51 29 03 14 36 48 47 24 25 48 44 22 13 15 52 47 48 23 17 46 35 26 40 14 24 38 51 31 36 25 26 35 25 43 47 18 04 21 13 23 24 30 36 16 08 23 17 29 45 07 35 46 44 14 37 43 28 24 15 13 08 36 45 44 16 22 18 43 52 46 44 30 43 51 17 26 35 25 39 15 23 41 14 07 52 18 44 36 26 13 38 43 42 35 44 29 45 24 41 48 17 03 21 14 23 30 24 40 04 47 18 03 22 13 23 24 29 36 27 21 30 43 28 44 25 14 16 27 23 17 43 13 37 51 26 42 24 12 18 38 11 25 46 17 44 14 52 29 39 23 18 35 13 37 28 15 
+
+Task 24:
+3714110012652015280300660407501926589962390004250012650834526737203225005511426207118805124112633167120500042555997439585599622500711358005804332178997168006662050038765826376212371399071265384434518871328829333237115637005668276658335619546300051930223128543720070004250688272021207103347888073166274426190704712032659920388848043988122729216852580600117538112672627358217899015100250450629916126966032678880544691965169948686922069976543400202099196500542122880233546556501240003157003814120060113427546588282021193703335100266215280399140440000425001263125638343266125650042520085421883331716869886611075054262040270037145438887256335466016311390038131288374858253778402075996311383858337200685700381458990363675054011237
+
+Task 25:
+bxdbbefeppcfwwhcdhddbydhbefxcxbyeedyfddcddgfbxdbbdaecgcgfawwcafffxqqacfxgybgexyyeaadbfttdeggadgffdrrqqbcafcaahdhgccffxaefdacdbdxfegfffaecydbcbhxggadhbbdehfagxexadhcaeahdhbyecwwcacgdxfawwbfbbgychyyqqddbbppaegceahcaecfaxbbyyhcaecbbbhfbyahdcbggyyyghfafxdefgbegyzzcfcafgccbcdeaxdefccydxdcbgdeaeghbdwwgyadqqffgxahahedgddxcahcdhfabcbeadagfgzzppeacaagfxddyyacccfxcappaycbeerrcfahbbgxcgdhberrafrrebrrcbzzdaggrrgfdhdcbafxaedecchxgggxafwwgycfadcgagggdcafttgycfgxaxfgedcbdhcahccxfagchcdydheeffttcgdxdybyppahgdedagwwafbettcaqqdecafgfafgdcddgffxcccahedyadgaddgccyghadyyppffghaegyadaxfxcbdyedeahbbewwabhxcfaechbbhbdebydhfawwcxcaeeeagybcfhrrdedydxzzbdcadycfaedxbyebrrhbdbehcfdcfhhbgycadxdhwwcgfarrgcggdbcghbfattchdbdybcccgdttddgchdrrddfedxdhbefxdhbyggwwdafegydhgxaydhbebcbbccwwaxhbdbgyaddxwwdcbahbddbybbdd
