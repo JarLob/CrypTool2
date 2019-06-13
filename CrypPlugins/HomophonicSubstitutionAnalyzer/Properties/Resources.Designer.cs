@@ -160,11 +160,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Comma-separated ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Comma ähnelt.
         /// </summary>
-        internal static string CommaSeparated {
+        internal static string Comma {
             get {
-                return ResourceManager.GetString("CommaSeparated", resourceCulture);
+                return ResourceManager.GetString("Comma", resourceCulture);
             }
         }
         
@@ -318,6 +318,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         internal static string FullAutomatic {
             get {
                 return ResourceManager.GetString("FullAutomatic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Full stop ähnelt.
+        /// </summary>
+        internal static string FullStop {
+            get {
+                return ResourceManager.GetString("FullStop", resourceCulture);
             }
         }
         
@@ -547,11 +556,56 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Semicolon ähnelt.
+        /// </summary>
+        internal static string Semicolon {
+            get {
+                return ResourceManager.GetString("Semicolon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Separator ähnelt.
+        /// </summary>
+        internal static string SeparatorCaption {
+            get {
+                return ResourceManager.GetString("SeparatorCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Separator that is used for separating the ciphertext into single letters or letter groups. ähnelt.
+        /// </summary>
+        internal static string SeparatorTooltip {
+            get {
+                return ResourceManager.GetString("SeparatorTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Single letters ähnelt.
         /// </summary>
         internal static string SingleLetters {
             get {
                 return ResourceManager.GetString("SingleLetters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Space symbol ähnelt.
+        /// </summary>
+        internal static string Space {
+            get {
+                return ResourceManager.GetString("Space", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Symbol-separated ähnelt.
+        /// </summary>
+        internal static string SymbolSeparated {
+            get {
+                return ResourceManager.GetString("SymbolSeparated", resourceCulture);
             }
         }
         

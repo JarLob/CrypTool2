@@ -150,8 +150,8 @@
   <data name="CiphertextTooltip" xml:space="preserve">
     <value>Ciphertext to analyze</value>
   </data>
-  <data name="CommaSeparated" xml:space="preserve">
-    <value>Comma-separated</value>
+  <data name="SymbolSeparated" xml:space="preserve">
+    <value>Symbol-separated</value>
   </data>
   <data name="Copy_all" xml:space="preserve">
     <value>Copy all lines</value>
@@ -308,5 +308,23 @@
   </data>
   <data name="KeyTooltip" xml:space="preserve">
     <value>New key candidates with higher scores are shown here</value>
+  </data>
+  <data name="Comma" xml:space="preserve">
+    <value>Comma</value>
+  </data>
+  <data name="FullStop" xml:space="preserve">
+    <value>Full stop</value>
+  </data>
+  <data name="Semicolon" xml:space="preserve">
+    <value>Semicolon</value>
+  </data>
+  <data name="SeparatorCaption" xml:space="preserve">
+    <value>Separator</value>
+  </data>
+  <data name="SeparatorTooltip" xml:space="preserve">
+    <value>Separator that is used for separating the ciphertext into single letters or letter groups.</value>
+  </data>
+  <data name="Space" xml:space="preserve">
+    <value>Space symbol</value>
   </data>
 </root>

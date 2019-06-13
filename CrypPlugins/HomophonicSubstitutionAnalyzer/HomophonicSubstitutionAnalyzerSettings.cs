@@ -90,7 +90,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             set { _useSpaces = value; }
         }
 
-        [TaskPane("CiphertextFormatCaption", "CiphertextFormatTooltip", "TextFormatGroup", 2, false, ControlType.ComboBox, new[] { "SingleLetters", "NumberGroups", "CommaSeparated" })]
+        [TaskPane("CiphertextFormatCaption", "CiphertextFormatTooltip", "TextFormatGroup", 2, false, ControlType.ComboBox, new[] { "SingleLetters", "NumberGroups", "SymbolSeparated" })]
         public CiphertextFormat CiphertextFormat
         {
             get { return _ciphertextFormat; }
@@ -165,11 +165,6 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         #region Events
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            EventsHelper.PropertyChanged(PropertyChanged, this, propertyName);
-        }
 
         #endregion
 
