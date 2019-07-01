@@ -322,9 +322,15 @@
     <value>Separator</value>
   </data>
   <data name="SeparatorTooltip" xml:space="preserve">
-    <value>Separator that is used for separating the ciphertext into single letters or letter groups.</value>
+    <value>Separator used for separating the ciphertext into single letters or letter groups.</value>
   </data>
   <data name="Space" xml:space="preserve">
     <value>Space symbol</value>
+  </data>
+  <data name="Analyze" xml:space="preserve">
+    <value>Analyze</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
   </data>
 </root>

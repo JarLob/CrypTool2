@@ -1,29 +1,42 @@
-[b]CrypTool 2 Release 2018.3[b]
+[b]CrypTool 2 Release 2019.1[b]
 
-Dear CrypTool 2 users,
+Dear CrypTool 2 users.
 
-In December 2018, we publish our last release of CrypTool 2 this year, the CrypTool 2 2018.3 release. We added new components to CrypTool 2 as well as we made existing components more robust. Also, we polished many templates and parts of the online help. CrypTool 2 is created by professional volunteers and by students from universities in different countries. We hope that you have as much fun and value using CrypTool 2 2018.3 as we had making it.
+CrypTool 2 (CT2) is free, open-source e-learning software about cryptography and cryptanalysis used in schools, universities, companies, and administrations all over the world.
 
-Sincerly yours,
-The CrypTool 2 Developer Team, December 2018
+In June 2019, we published the first release of CrypTool 2 this year, named "2019.1". Compared to release "2018.3", three main parts were added:
 
-Changelog:
+The first main part of this update is the change from the x86 architecture (32bit) to the x64 architecture (64bit). 
+This allows CT2 to allocate more memory, thus, makes the integration of more sophisticated cryptanalysis components possible.
 
-- General:
-We translated CrypTool 2 to Russian. This was done using the Cloud Translation API. We appreciate feedback from our users from Russia.
-For future releases we plan to implement additional languages. Right now, CrypTool 2 is translated to English, German, and Russian.
+The second main part is the introduction of the CrypToolStore. 
+The store allows external developers to easily develop and integrate their components into CT2.
+Such components, which are not (yet) part of the official CT2 installation, can be downloaded and installed by the user through the store. 
+The store also allows us to publish components in shorter time frames than ever before or to test intermediate results from students more easily.
+Besides downloading components, the store also allows to download "external files", e.g. huge language statistics.
+
+The third part published within this release is the CrypCloud. 
+The cloud allows the distributed cryptanalysis of modern symmetric ciphers like DES or AES. 
+Multiple computers can be connected through the cloud to attack these ciphers using the built-in KeySearcher (brute-force or exhaustive search).
+This demonstrates how distributed cryptanalysis can easily be parallelized on multiple computers of ad-hoc volunteering networks.
+
+Also, we integrated the new "Homophonic Substitution Analyzer" component. 
+Right now, the analyzer allows to efficiently break homophonic encrypted English texts. 
+In future releases, we'll integrate more target languages.
+
+Sincerely yours,
+The CrypTool 2 Developer Team, June 2019
+
+
+Changelog summary:
 
 New and updated components:
-- DECODE Database tools: We are proud to anounce that we implemented components in CrypTool 2 (namely the DECODE Downloader and the DECODE Viewer) which enable the user to retrieve data from the DECODE database. The university of Uppsala created over the past few years the DECODE database with more than 800 historical documents containing known and unknown ciphertexts from different countries. In detail, the DECODE database contains a collection of digitized images of historical documents with ciphertexts and encryption keys along with metadata information about their provenance, location, transcriptions of the texts, and possible cryptanalysis results or commentary. The database enables search and the user can upload and download the public content. The transcriptions can be used for training automatic cryptology tools. Due to license restrictions, some images cannot be downloaded but are shown as miniature. CrypTool 2 (CT2) makes the download and cryptanalysis of these documents much more convenient. With the DEOCDE downloader and viewer components in CrypTool 2, you are able to directly query the DECODE database.
-The Process Executor component has been newly added. It implements the CrypTool 2 inter-process control protocol (CT2IPC). Using CT2IPC, developers may implement Java applications that are able to communicate with CrypTool 2. Based on that, we plan to publish the cryptanalysis suite from George Lasry in 2019.
-- The T-310 cipher machine component has been completely reworked.
-- A Playfair analyzer component was created newly. It enables CrypTool 2 users to break Playfair ciphers.
-- Three different standardized key derivation functions (KDF) have been newly added in CrypTool 2. All KDF components (HKDF SHA-256, KKDF SHA-256, and KKDF SHAKE256) contain helpful visualizations making it easier to understand each function in detail.
-- In the Random Number Generator component, new random number generators have been added and the existing ones have been updated.
-- The new Shared Prime attack template shows how to break RSA keys sharing a same prime factor.
-- The shortcut Ctrl+i has been added to the Workspace Manager to toggle the settings bar.
-- A CWM file now can be dragged from the Windows file
+- DECODE database tools: We added authentication to the DECODE database tools, allowing, to download restricted documents (login credentials needed).
+- CrypToolStore: We added the CrypToolStore: a "store" allowing to download components and files from external developers.
+- CrypCloud: We added the CrypCloud: a peer-to-peer-based distributed computing platform for distributed cryptanalysis.
+- Homophonic Substitution Analyzer: an analyzer that allows the automatic and semi-automatic cryptanalysis of homophonic ciphers
+-- Zodiac-408: as an example for homophonic substitution analysis, we added the (in-)famous Zodiac-408 letter, which is homophonically encrypted and can be solved automatically by CT2 now.
 
 And:
-Many bugs fixed...
-Many typos fixed...
+Many small bugs fixed ...
+Many typos corrected ...

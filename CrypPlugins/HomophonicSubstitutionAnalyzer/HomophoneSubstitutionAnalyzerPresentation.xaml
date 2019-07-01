@@ -55,16 +55,16 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="140"/>
-                        <ColumnDefinition Width="140"/>
-                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="210"/>
+                        <ColumnDefinition Width="210"/>
+                        <ColumnDefinition Width="210"/>
                     </Grid.ColumnDefinitions>
                     <ProgressBar Name="ProgressBar" Grid.Column="0"/>
                     <Label Name="ProgressText" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Width="200" Height="25"/>
                     <TextBox Name="CostTextBox" Grid.Column="1" IsEnabled="False"/>
-                    <Button Name="AnalyzeButton" Grid.Column="2" Content="{Loc Analyze}" Click="Analyze_Click" Width="120"/>
-                    <Button Name="ResetLockedLettersButton" Grid.Column="3" Content="{Loc ResetLockedLetters}" Click="ResetLockedLettersButton_Click" Width="120" />
-                    <Button Name="FindLockWordsButton" Grid.Column="4" Content="{Loc FindLockWords}" Click="FindLockWordsButton_OnClick" Width="120"/>
+                    <Button Name="AnalyzeButton" Grid.Column="2" Content="{Loc Analyze}" Click="Analyze_Click" Width="200"/>
+                    <Button Name="ResetLockedLettersButton" Grid.Column="3" Content="{Loc ResetLockedLetters}" Click="ResetLockedLettersButton_Click" Width="200" />
+                    <Button Name="FindLockWordsButton" Grid.Column="4" Content="{Loc FindLockWords}" Click="FindLockWordsButton_OnClick" Width="200"/>
                 </Grid>
                 <Label Grid.Row="4" Grid.ColumnSpan="4" Content="{Loc Ciphertext}" Margin="0,0,0.334,0"/>
                 <ScrollViewer Grid.Row="5" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Width="Auto" Height="Auto" Grid.ColumnSpan="4" Margin="0,0,0.334,0">

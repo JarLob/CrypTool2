@@ -327,4 +327,10 @@
   <data name="Space" xml:space="preserve">
     <value>пространства</value>
   </data>
+  <data name="Analyze" xml:space="preserve">
+    <value>Начать анализ</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>ватит анализировать</value>
+  </data>
 </root>

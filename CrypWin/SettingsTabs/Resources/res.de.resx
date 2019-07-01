@@ -199,7 +199,7 @@
     <value>Einstellungen zu Einzel-Komponenten</value>
   </data>
   <data name="BackgroundingContent" xml:space="preserve">
-    <value>Im Hintergrund verstecken, wenn beim Schließen Projekte ausgeführt werden</value>
+    <value>CrypTool 2 im Hintergrund verstecken, wenn beim Schließen Projekte ausgeführt werden</value>
   </data>
   <data name="BackgroundingLabelContent" xml:space="preserve">
     <value>Hintergrund-Ausführung:</value>
@@ -268,7 +268,7 @@
     <value>Auswahl invertieren</value>
   </data>
   <data name="RecentFileListLength" xml:space="preserve">
-    <value>Länge der Liste zuletzt geöffneten Projekte</value>
+    <value>Anzahl der Einträge in der Liste zuletzt geöffneter cwm-Dateien</value>
   </data>
   <data name="seconds_" xml:space="preserve">
     <value>Sekunden lang!</value>

@@ -271,7 +271,7 @@
     <value>Bestenliste</value>
   </data>
   <data name="UseSpacesCaption" xml:space="preserve">
-    <value>Verwenden Sie Leerzeichen</value>
+    <value>Verwende Leerzeichen</value>
   </data>
   <data name="UseSpacesTooltip" xml:space="preserve">
     <value>Wenn aktiviert, nimmt der Analysator Leerzeichen im Klartext an</value>
@@ -322,9 +322,15 @@
     <value>Trennzeichen</value>
   </data>
   <data name="SeparatorTooltip" xml:space="preserve">
-    <value>Das Trennzeichen, dass genutzt wird, um den Geheimtext in einzelne Buchstaben oder Buchstabengruppen zu zerlegen.</value>
+    <value>Das Trennzeichen, das genutzt wird, um den Geheimtext in einzelne Buchstaben oder Buchstabengruppen zu zerlegen.</value>
   </data>
   <data name="Space" xml:space="preserve">
     <value>Leerzeichen</value>
+  </data>
+  <data name="Analyze" xml:space="preserve">
+    <value>Analysieren</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
   </data>
 </root>

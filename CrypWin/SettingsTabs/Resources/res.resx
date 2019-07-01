@@ -199,7 +199,7 @@
     <value>Settings to single components</value>
   </data>
   <data name="BackgroundingContent" xml:space="preserve">
-    <value>Hide in background when closing while projects are running</value>
+    <value>Hide in background when CrypTool 2 is closing and projects are still running</value>
   </data>
   <data name="BackgroundingLabelContent" xml:space="preserve">
     <value>Backgrounding options:</value>
@@ -286,7 +286,7 @@
     <value>Invert selection</value>
   </data>
   <data name="RecentFileListLength" xml:space="preserve">
-    <value>Length of the list of recent files</value>
+    <value>Length of the list of recently opened cwm files</value>
   </data>
   <data name="seconds_" xml:space="preserve">
     <value>seconds!</value>

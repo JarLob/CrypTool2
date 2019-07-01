@@ -19,7 +19,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class res {
@@ -106,7 +106,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hide in background when closing while projects are running ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hide in background when CrypTool 2 is closing and projects are still running ähnelt.
         /// </summary>
         public static string BackgroundingContent {
             get {
@@ -376,7 +376,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Length of the list of recent files ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Length of the list of recently opened cwm files ähnelt.
         /// </summary>
         public static string RecentFileListLength {
             get {

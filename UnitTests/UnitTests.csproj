@@ -82,7 +82,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|x64'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Test\</OutputPath>
+    <OutputPath>..\CrypBuild\Test\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -94,8 +94,14 @@
       <HintPath>..\..\..\trunk\Lib\ExtendedNTL.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ISAPCommitmentScheme">
+      <HintPath>..\Lib\ISAPCommitmentScheme.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>True</Private>
+    </Reference>
+    <Reference Include="NativeCryptography">
+      <HintPath>..\Lib\NativeCryptography.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -132,6 +138,9 @@
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
       <Private>True</Private>
     </Reference>
+    <Reference Include="zxing">
+      <HintPath>..\Lib\zxing.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AchterbahnTest.cs" />
@@ -153,7 +162,6 @@
     <Compile Include="CRCTest.cs" />
     <Compile Include="KeccakTest.cs" />
     <Compile Include="CamelliaTest.cs" />
-    <Compile Include="LatticeCryptoTest.cs" />
     <Compile Include="MorseCodeTest.cs" />
     <Compile Include="CostFunctionTest.cs" />
     <Compile Include="CrypPluginBase\CStream.cs" />
@@ -232,11 +240,6 @@
     <ProjectReference Include="..\CrypPlugins\KKDFSHAKE256\KKDFSHAKE256.csproj">
       <Project>{5c8fa726-5867-42ab-ab6d-801340967dcb}</Project>
       <Name>KKDFSHAKE256</Name>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\CrypPlugins\LatticeCrypto\LatticeCrypto.csproj">
-      <Project>{3F92F927-E6FA-4048-AB98-04D98B82B69E}</Project>
-      <Name>LatticeCrypto</Name>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\CrypPlugins\MD5\MD5.csproj">

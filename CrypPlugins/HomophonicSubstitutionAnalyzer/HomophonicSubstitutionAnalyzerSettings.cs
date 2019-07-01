@@ -76,7 +76,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 
         #region TaskPane Settings
 
-        [TaskPane("LanguageCaption", "LanguageTooltip", "LanguageSettingsGroup", 0, false, ControlType.LanguageSelector)]
+        //[TaskPane("LanguageCaption", "LanguageTooltip", "LanguageSettingsGroup", 0, false, ControlType.LanguageSelector)]
         public int Language
         {
             get { return _language; }

@@ -53,7 +53,7 @@
 
                 <StackPanel Orientation="Horizontal" Style="{StaticResource ResourceKey=settingsStyle}">
                     <Label Content="{Loc RecentFileListLength}" />
-                    <TextBox Name="RecentFileListLengthBox" Width="40" TextChanged="RecentFileListLengthBox_TextChanged" />
+                    <TextBox Name="RecentFileListLengthBox" Width="40" VerticalContentAlignment="Center" TextChanged="RecentFileListLengthBox_TextChanged" />
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

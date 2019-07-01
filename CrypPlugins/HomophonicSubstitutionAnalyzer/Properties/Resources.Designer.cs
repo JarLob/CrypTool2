@@ -88,6 +88,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analyze ähnelt.
+        /// </summary>
+        internal static string Analyze {
+            get {
+                return ResourceManager.GetString("Analyze", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Analyzer ähnelt.
         /// </summary>
         internal static string Analyzer {
@@ -574,7 +583,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Separator that is used for separating the ciphertext into single letters or letter groups. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Separator used for separating the ciphertext into single letters or letter groups. ähnelt.
         /// </summary>
         internal static string SeparatorTooltip {
             get {
@@ -597,6 +606,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         internal static string Space {
             get {
                 return ResourceManager.GetString("Space", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Stop ähnelt.
+        /// </summary>
+        internal static string Stop {
+            get {
+                return ResourceManager.GetString("Stop", resourceCulture);
             }
         }
         

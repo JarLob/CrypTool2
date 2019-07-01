@@ -564,6 +564,10 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <param name="wordPositions"></param>
         private void MarkFoundWords(Dictionary<int, int> wordPositions)
         {
+            if(wordPositions == null)
+            {
+                return;
+            }
             //Color the found words in blue
             foreach (var value in wordPositions)
             {
@@ -829,11 +833,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     {
                         _running = false;
                         _hillClimber.Stop();
-                        AnalyzeButton.Content = "Analyze";                        
+                        AnalyzeButton.Content = Properties.Resources.Analyze;                        
                     }
                     else
                     {                        
-                        AnalyzeButton.Content = "Stop";
+                        AnalyzeButton.Content = Properties.Resources.Stop;
                         ProgressBar.Value = 0;
                         ProgressText.Content = string.Empty;
                         StartAnalysis();
