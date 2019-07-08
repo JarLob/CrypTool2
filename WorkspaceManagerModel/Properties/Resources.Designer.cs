@@ -19,7 +19,7 @@ namespace WorkspaceManagerModel.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -61,7 +61,7 @@ namespace WorkspaceManagerModel.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die An error occured while executing PostExecution of {0}: {1} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die An error occured while executing PostExecution of &apos;{0}&apos;: {1} ähnelt.
         /// </summary>
         internal static string An_Error_occured_while_post_0_1 {
             get {
@@ -70,7 +70,7 @@ namespace WorkspaceManagerModel.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die An error occured while executing PreExecution of {0}: {1} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die An error occured while executing PreExecution of &apos;{0}&apos;: {1} ähnelt.
         /// </summary>
         internal static string An_Error_occured_while_pre_0_1 {
             get {
@@ -314,7 +314,7 @@ namespace WorkspaceManagerModel.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die An error occured while executing &apos;{0}&apos; : {1}  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die An error occured while executing &apos;{0}&apos;: {1}  ähnelt.
         /// </summary>
         internal static string PluginModel_Execute_An_error_occured_while_executing____0______1__ {
             get {
@@ -323,7 +323,7 @@ namespace WorkspaceManagerModel.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die An error occured while executing &apos;{0}&apos; : {1} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die An error occured while executing &apos;{0}&apos;: {1} ähnelt.
         /// </summary>
         internal static string PluginModel_Execute_An_error_occured_while_executing___0______1_ {
             get {

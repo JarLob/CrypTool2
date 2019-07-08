@@ -163,10 +163,10 @@
     <value>An error occured while setting value of connector '{0}' of '{1}': {2}</value>
   </data>
   <data name="PluginModel_Execute_An_error_occured_while_executing____0______1__" xml:space="preserve">
-    <value>An error occured while executing '{0}' : {1} </value>
+    <value>An error occured while executing '{0}': {1} </value>
   </data>
   <data name="PluginModel_Execute_An_error_occured_while_executing___0______1_" xml:space="preserve">
-    <value>An error occured while executing '{0}' : {1}</value>
+    <value>An error occured while executing '{0}': {1}</value>
   </data>
   <data name="CopyOperation_Execute_Could_not_restore_the_setting___0___of_plugin___1__" xml:space="preserve">
     <value>Could not restore the setting '{0}' of plugin '{1}'</value>
@@ -229,9 +229,9 @@
     <value>An Error occured while stopping '{0}': {1}</value>
   </data>
   <data name="An_Error_occured_while_post_0_1" xml:space="preserve">
-    <value>An error occured while executing PostExecution of {0}: {1}</value>
+    <value>An error occured while executing PostExecution of '{0}': {1}</value>
   </data>
   <data name="An_Error_occured_while_pre_0_1" xml:space="preserve">
-    <value>An error occured while executing PreExecution of {0}: {1}</value>
+    <value>An error occured while executing PreExecution of '{0}': {1}</value>
   </data>
 </root>

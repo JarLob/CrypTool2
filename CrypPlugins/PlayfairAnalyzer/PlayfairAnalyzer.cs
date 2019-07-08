@@ -174,9 +174,7 @@ namespace Cryptool.PlayfairAnalyzer
                         hexfilename = CrypToolStore.ResourceHelper.GetResourceFile(1, 1, this, "To work with the Playfair Analyzer, a special language statistics file (English log hexagrams) has to be downloaded. If you do not download this file, the Playfair Analyzer won't work. Please press the download button to start the download.");
                         if (string.IsNullOrEmpty(hexfilename))
                         {
-                            GuiLogMessage("The Playfair Analyzer cannot work without English hexagram statistics. " +
-                                          "Please download the statics first. " +
-                                          "The download dialog will automatically popup the next time you start the Playfair Analyzer.", NotificationLevel.Warning);
+                            GuiLogMessage("The Playfair Analyzer cannot work without English hexagram statistics. Please download the statistics first. The download dialog will automatically popup the next time you start the Playfair Analyzer.", NotificationLevel.Warning);
                             return;
                         }
                         break;
@@ -392,11 +390,20 @@ namespace Cryptool.PlayfairAnalyzer
                         string consoleOut = _Process.StandardOutput.ReadToEnd();
                         string consoleError = _Process.StandardError.ReadToEnd();
 
-                        if (!String.IsNullOrWhiteSpace(consoleOut))
+                        bool outputConsoleErrorOutput = true;
+                        //check for java update error
+                        //a small "hack" to check which checks the text output of java
+                        if (!String.IsNullOrWhiteSpace(consoleError) && consoleError.ToLower().Contains("has been compiled by a more recent version of the java runtime"))
+                        {
+                            GuiLogMessage(String.Format("Your installed java version is not suitable for running the Playfair Analyzer. Please install the newest Java version obtained from the official Java website."), NotificationLevel.Error);
+                            outputConsoleErrorOutput = false;
+                        }
+
+                        if (outputConsoleErrorOutput && !String.IsNullOrWhiteSpace(consoleOut))
                         {
                             GuiLogMessage(String.Format("Console output:\r\n {0}", consoleOut), NotificationLevel.Error);
                         }
-                        if (!String.IsNullOrWhiteSpace(consoleError))
+                        if (outputConsoleErrorOutput && !String.IsNullOrWhiteSpace(consoleError))
                         {
                             GuiLogMessage(String.Format("Console error output:\r\n {0}", consoleError), NotificationLevel.Error);
                         }

@@ -254,7 +254,7 @@ namespace Cryptool.CrypWin
             }
             catch (Exception)
             {
-                GuiLogMessage("AutoUpdate: Error occured while trying to get update information.", NotificationLevel.Warning);
+                GuiLogMessage("AutoUpdate: Error occurred while trying to get update information.", NotificationLevel.Warning);
             }
         }
 
@@ -327,10 +327,11 @@ namespace Cryptool.CrypWin
             new Thread(delegate()
                            {
                                if (waitSecs > 0)
-                                   Thread.Sleep(waitSecs*1000);
-
+                               {
+                                   Thread.Sleep(waitSecs * 1000);
+                               }
                                CheckForUpdates(reference);
-                           } ).Start();
+                           }).Start();
         }
 
         private void CheckForUpdates(char reference)
@@ -464,7 +465,7 @@ namespace Cryptool.CrypWin
                 }
 
                 serverNotAvailableMessage = ex.Message;
-                GuiLogMessage("AutoUpdate: Cannot check for updates:" + ex.Message, NotificationLevel.Warning);
+                GuiLogMessage("AutoUpdate: Cannot check for updates: " + ex.Message, NotificationLevel.Warning);
             }
             finally
             {
