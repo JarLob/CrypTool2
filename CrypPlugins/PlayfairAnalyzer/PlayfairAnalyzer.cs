@@ -62,6 +62,8 @@ namespace Cryptool.PlayfairAnalyzer
         private DateTime _startTime;
         private bool _alreadyExecuted = false;
 
+    
+
         [PropertyInfo(Direction.InputData, "CiphertextCaption", "CiphertextTooltip", true)]
        
         public string Ciphertext
@@ -169,7 +171,7 @@ namespace Cryptool.PlayfairAnalyzer
                 {
                     case Language.English:
                         // Current English file is Resource-1-1
-                        hexfilename = CrypToolStore.ResourceHelper.GetResourceFile(1, 1, this, "To work with the Playfair Analyzer, a special language statistics file has to be downloaded. If you do not download this file, the Playfair Analyzer won't work. Please press the download button to start the download.");
+                        hexfilename = CrypToolStore.ResourceHelper.GetResourceFile(1, 1, this, "To work with the Playfair Analyzer, a special language statistics file (English log hexagrams) has to be downloaded. If you do not download this file, the Playfair Analyzer won't work. Please press the download button to start the download.");
                         if (string.IsNullOrEmpty(hexfilename))
                         {
                             GuiLogMessage("The Playfair Analyzer cannot work without English hexagram statistics. " +
@@ -230,10 +232,14 @@ namespace Cryptool.PlayfairAnalyzer
                 //Step 1: Create process                
                 string jarfilename = DirectoryHelper.BaseDirectory + @"\Jars\playfair.jar";                                
                 _Process = new Process();
+                _Process.StartInfo.RedirectStandardError = true;
+                _Process.StartInfo.RedirectStandardOutput = true;
                 _Process.StartInfo.WorkingDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CrypTool2");
                 _Process.StartInfo.FileName = "java.exe";
                 _Process.StartInfo.Arguments = String.Format("-jar \"{0}\" -h \"{1}\"", jarfilename, hexfilename);
                 _Process.StartInfo.CreateNoWindow = true;
+                _Process.StartInfo.UseShellExecute = false;
+
                 if (_settings.ShowWindow)
                 {
                     _Process.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
@@ -379,6 +385,22 @@ namespace Cryptool.PlayfairAnalyzer
                 if (_Process.HasExited)
                 {
                     GuiLogMessage(String.Format("Process exited with exit code: {0}", _Process.ExitCode), _Process.ExitCode != 0 ? NotificationLevel.Error : NotificationLevel.Info);
+
+                    if (_Process.ExitCode != 0)
+                    {
+                        //get output and error from the console and output it in the log
+                        string consoleOut = _Process.StandardOutput.ReadToEnd();
+                        string consoleError = _Process.StandardError.ReadToEnd();
+
+                        if (!String.IsNullOrWhiteSpace(consoleOut))
+                        {
+                            GuiLogMessage(String.Format("Console output:\r\n {0}", consoleOut), NotificationLevel.Error);
+                        }
+                        if (!String.IsNullOrWhiteSpace(consoleError))
+                        {
+                            GuiLogMessage(String.Format("Console error output:\r\n {0}", consoleError), NotificationLevel.Error);
+                        }
+                    }
                 }
 
                 //set end time in presentation
