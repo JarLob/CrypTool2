@@ -136,7 +136,7 @@ namespace Cryptool.CrypToolStore
                             //wtf?
                         }
                     }));
-                    MessageBox.Show("Successfully download resource file", "Resource file downloaded");
+                    MessageBox.Show("Successfully downloaded resource file", "Resource file downloaded");
                     Path = filename;
                     Dispatcher.BeginInvoke(new ThreadStart(() =>
                     {
