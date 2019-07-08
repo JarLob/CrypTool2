@@ -37,8 +37,9 @@ namespace Cryptool.CrypToolStore
         /// </summary>
         /// <param name="resourceId"></param>
         /// <param name="resourceVersion"></param>
+        /// <param name="description"></param>
         /// <returns>the path if it exists; otherwise returns null</returns>
-        public static string GetResourceFile(int resourceId, int resourceVersion, IPlugin plugin)
+        public static string GetResourceFile(int resourceId, int resourceVersion, IPlugin plugin, string description)
         {
             lock (LockObject)
             {
@@ -59,7 +60,7 @@ namespace Cryptool.CrypToolStore
                         return file;
                     }
                     //the resource file does not exists; thus, we download the resource from CrypToolStoreServer
-                    return DownloadResource(resourceId, resourceVersion, plugin);
+                    return DownloadResource(resourceId, resourceVersion, plugin, description);
                 }
                 catch (Exception)
                 {
@@ -97,8 +98,9 @@ namespace Cryptool.CrypToolStore
         /// <param name="resourceId"></param>
         /// <param name="resourceVersion"></param>
         /// <param name="plugin"></param>
+        /// <param name="description"></param>
         /// <returns></returns>
-        private static string DownloadResource(int resourceId, int resourceVersion, IPlugin plugin)
+        private static string DownloadResource(int resourceId, int resourceVersion, IPlugin plugin, string description)
         {
             //check CrypToolStore if resource exists
             string path = null;
@@ -107,7 +109,7 @@ namespace Cryptool.CrypToolStore
                 try
                 {
                     DownloadResourceDataFileWindow downloadResourceDataFileWindow =
-                        new DownloadResourceDataFileWindow(resourceId, resourceVersion, plugin);
+                        new DownloadResourceDataFileWindow(resourceId, resourceVersion, plugin, description);
                     //position download window in the middle of CrypTool 2:
                     downloadResourceDataFileWindow.Left = Application.Current.MainWindow.Width / 2 - downloadResourceDataFileWindow.Width / 2;
                     downloadResourceDataFileWindow.Top = Application.Current.MainWindow.Height / 2 - downloadResourceDataFileWindow.Height / 2;

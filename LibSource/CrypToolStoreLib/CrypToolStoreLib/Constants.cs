@@ -27,7 +27,7 @@ namespace CrypToolStoreLib
         public const string CLIENT_DEFAULT_ADDRESS = "localhost";
         public const int CLIENT_READ_TIMEOUT = 5000;
         public const int CLIENT_WRITE_TIMEOUT = 5000;
-        public const int CLIENT_FILE_BUFFER_SIZE = 1048576; // 1MB
+        public const int CLIENT_FILE_BUFFER_SIZE = 81920; // 80kb
 
         //Constants of Database class
         public const int DATABASE_PBKDF2_ITERATION_COUNT = 10000;
@@ -37,7 +37,7 @@ namespace CrypToolStoreLib
         public const string MESSAGEHEADER_MAGIC = "CrypToolStore";       // 13 byte (string); each message begins with that                
 
         //Constants for Server class
-        public const int SERVER_MESSAGE_MAX_PAYLOAD_SIZE = 10485760; //10mb
+        public const int SERVER_MESSAGE_MAX_PAYLOAD_SIZE = 1048576; //1mb
         public const int SERVER_DEFAULT_PORT = 15151;     
    
         //Constants for ClientHandler class
@@ -47,7 +47,7 @@ namespace CrypToolStoreLib
         public const string CLIENTHANDLER_PLUGIN_SOURCE_FOLDER = "Sources";
         public const string CLIENTHANDLER_PLUGIN_ASSEMBLIES_FOLDER = "Assemblies";
         public const string CLIENTHANDLER_RESOURCES_FOLDER = "Resources";
-        public const int CLIENTHANDLER_FILE_BUFFER_SIZE = 1048576; // 1MB
+        public const int CLIENTHANDLER_FILE_BUFFER_SIZE = 81920; // 80kb
         public const string CLIENTHANDLER_RESOURCEDATA_FOLDER = "ResourceData";
     }
 }

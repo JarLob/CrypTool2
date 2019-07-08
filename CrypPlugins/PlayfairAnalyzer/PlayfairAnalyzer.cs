@@ -26,6 +26,7 @@ using Cryptool.Plugins.Ipc.Messages;
 using Google.Protobuf;
 using System.Windows.Threading;
 using Cryptool.PluginBase.IO;
+using System.IO;
 
 namespace Cryptool.PlayfairAnalyzer
 {
@@ -37,6 +38,8 @@ namespace Cryptool.PlayfairAnalyzer
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class PlayfairAnalyzer : ICrypComponent
     {    
+        public const long fileSizeResource11bin = 617831552; //this is the file size of "Resource-1-1.bin", which is downloaded from CrypToolStore
+
         public event StatusChangedEventHandler OnPluginStatusChanged;
         public event PluginProgressChangedEventHandler OnPluginProgressChanged;
         public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
@@ -155,17 +158,18 @@ namespace Cryptool.PlayfairAnalyzer
                 GuiLogMessage(Properties.Resources.AlreadyExecuted, NotificationLevel.Error);
                 return;
             }
-            _alreadyExecuted = true;       
+
+            _alreadyExecuted = true;
+            string hexfilename = null;
 
             try
             {
-                // Step -1: Download and reference language statistics file
-                string hexfilename = null;
-                switch(_settings.Language)
+                // Step -2: Download and reference language statistics file
+                switch (_settings.Language)
                 {
                     case Language.English:
                         // Current English file is Resource-1-1
-                        hexfilename = CrypToolStore.ResourceHelper.GetResourceFile(1, 1, this);
+                        hexfilename = CrypToolStore.ResourceHelper.GetResourceFile(1, 1, this, "To work with the Playfair Analyzer, a special language statistics file has to be downloaded. If you do not download this file, the Playfair Analyzer won't work. Please press the download button to start the download.");
                         if (string.IsNullOrEmpty(hexfilename))
                         {
                             GuiLogMessage("The Playfair Analyzer cannot work without English hexagram statistics. " +
@@ -178,6 +182,32 @@ namespace Cryptool.PlayfairAnalyzer
                         throw new NotImplementedException(String.Format("Language {0} has not been implemented", _settings.Language.ToString()));
                         break;
                 }
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("An error occurred during execution of CrypToolStore resource download: {0}", ex.Message), NotificationLevel.Error);
+                return;
+            }
+
+            try
+            {
+                //Step -1: Check for correct file size; if wrong => delete file
+                long length = new FileInfo(hexfilename).Length;
+                if (length != fileSizeResource11bin)
+                {
+                    GuiLogMessage(String.Format("The filesize of the statistics file is wrong ({0} byte). Expected {1} byte. Delete file now. Please restart the workspace to download the file again", length, fileSizeResource11bin), NotificationLevel.Error);
+                    File.Delete(hexfilename);
+                    return;
+                }
+            }
+            catch(Exception ex)
+            {
+                GuiLogMessage(String.Format("An error occurred during file size check of resource file: {0}", ex.Message), NotificationLevel.Error);
+                return;
+            }
+
+            try
+            {                
                 //Step 0: Set running true :-)
                 _Running = true;
 

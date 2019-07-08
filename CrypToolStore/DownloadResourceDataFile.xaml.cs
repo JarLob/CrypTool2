@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2018 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
+   Copyright 2019 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -32,19 +32,20 @@ namespace Cryptool.CrypToolStore
         private IPlugin Plugin { get; set; }
 
         public string Path { get; set; }
-
+        
         private bool Stop = false;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public DownloadResourceDataFileWindow(int resourceId, int resourceVersion, IPlugin plugin)
+        public DownloadResourceDataFileWindow(int resourceId, int resourceVersion, IPlugin plugin, string description)
         {
             InitializeComponent();
             ResizeMode = ResizeMode.NoResize;
             ResourceId = resourceId;
             ResourceVersion = resourceVersion;
             Plugin = plugin;
+            DescriptionText.Text = description;
             Closing += DownloadResourceDataFileWindow_Closing;
             Title = String.Format("A {0} component requested to download a resource file", plugin.GetType().Name);
             Path = null;
@@ -75,6 +76,16 @@ namespace Cryptool.CrypToolStore
             uploadSourceZipFileThread.Start();
 
             DownloadButton.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// Closes the window and aborts the download
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AbortButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
 
         /// <summary>
