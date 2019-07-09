@@ -1,5 +1,4 @@
-﻿using Cryptool.PluginBase.Miscellaneous;
-/*
+﻿/*
    Copyright 2018 Nils Kopal <Nils.Kopal<at>CrypTool.org
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.Plugins.DECODEDatabaseTools.DataObjects;
 using System;
 using System.ComponentModel;

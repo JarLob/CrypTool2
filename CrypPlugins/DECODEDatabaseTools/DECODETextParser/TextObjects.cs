@@ -28,7 +28,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             Pages = new List<Page>();
         }
-        public List<Page> Pages { get; set; }
+
+        public List<Page> Pages
+        {
+            get;
+            set;
+        }
 
         public override string ToString()
         {
@@ -51,7 +56,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             Lines = new List<Line>();
         }
-        public List<Line> Lines { get; set; }
+
+        public List<Line> Lines
+        {
+            get;
+            set;
+        }
 
         public override string ToString()
         {
@@ -84,8 +94,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             Tokens = new List<Token>();
             LineType = LineType.Text;
         }
-        public List<Token> Tokens { get; set; }
-        public LineType LineType { get; set; }
+
+        public List<Token> Tokens
+        {
+            get;
+            set;
+        }
+
+        public LineType LineType
+        {
+            get;
+            set;
+        }
 
         public override string ToString()
         {
@@ -107,12 +127,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     /// </summary>
     public enum TokenType
     {
-        Code = 0,
-        CodeUnknown = 1,
-        Vocabulary = 2,
-        VocabularyUnkown = 3,
-        Null = 4,
-        Other = 5,
+        Unknown = 0,
+        Ciphertext = 1,
+        Plaintext = 2,
+        Cleartext = 3
     }
 
     /// <summary>
@@ -120,10 +138,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     /// </summary>
     public class Token
     {
+        public Token()
+        {
+            TokenType = TokenType.Unknown;
+        }
+
         public string Text
         {
             get; set;
         }
+
         public TokenType TokenType
         {
             get; set;
