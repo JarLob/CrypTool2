@@ -57,7 +57,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
         #region Data Properties
 
-
         /// <summary>
         /// Input of a json record of the DECODE database
         /// </summary>
