@@ -204,7 +204,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 ProgressChanged(0, 0);
                 for (var i = 0; i < record.images.Count; i++)
                 {
-                    record.images[i].DownloadThumbnail();
+                    if (!record.images[i].DownloadThumbnail())
+                    {
+                        break;
+                    }
                     _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         try

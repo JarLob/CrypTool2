@@ -143,12 +143,19 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
         /// <summary>
         /// Downloads a thumbnail
         /// </summary>
-        public void DownloadThumbnail()
+        public bool DownloadThumbnail()
         {
             if (thumbnail_data == null)
             {
-                thumbnail_data = JsonDownloaderAndConverter.GetData(thumbnail_url);
+                try
+                {
+                    thumbnail_data = JsonDownloaderAndConverter.GetData(thumbnail_url);
+                }catch(Exception)
+                {
+                    return false;
+                }
             }
+            return true;
         }
 
         /// <summary>
