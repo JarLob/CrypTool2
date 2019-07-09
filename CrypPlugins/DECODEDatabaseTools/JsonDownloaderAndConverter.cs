@@ -45,6 +45,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             try
             {
+                //per default we set username and password to anonymous
+                if(string.IsNullOrEmpty(username) || string.IsNullOrWhiteSpace(username) || username.ToLower().Equals("anonymous"))
+                {
+                    username = "anonymous";
+                    password = "amomymous";
+                }
+
                 _cookieContainer = new CookieContainer();
                 var handler = new HttpClientHandler { CookieContainer = _cookieContainer };
                 using (var client = new HttpClient(handler))
