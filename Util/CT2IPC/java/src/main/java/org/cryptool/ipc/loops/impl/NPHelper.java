@@ -29,13 +29,18 @@ import org.cryptool.ipc.loops.impl.AbstractLoop.LoopState;
 public final class NPHelper {
 
 	/**
-	 * Requires Java 9 or later.
+	 *
 	 *
 	 * @return The native process id of the process.
 	 *
 	 */
-	public static long getPID() {
-		return ProcessHandle.current().pid();
+	public static long getPID() throws Exception {
+		final String name = java.lang.management.ManagementFactory.getRuntimeMXBean().getName();
+		try {
+			return Long.parseLong(name.split("@")[0]);
+		} catch (Exception e) {
+			throw new Exception("Failed to determine the process id of this process.", e);
+		}
 	}
 
 	public static String pipeUrl(final String pipename) {
