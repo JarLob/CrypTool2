@@ -395,7 +395,7 @@ namespace Cryptool.PlayfairAnalyzer
                         //a small "hack" to check which checks the text output of java
                         if (!String.IsNullOrWhiteSpace(consoleError) && consoleError.ToLower().Contains("has been compiled by a more recent version of the java runtime"))
                         {
-                            GuiLogMessage(String.Format("Your installed Java version is not suitable for running the Playfair Analyzer.Please install the newest Java version which can be obtained from the official Java website."), NotificationLevel.Error);                            outputConsoleErrorOutput = false;
+                            GuiLogMessage(String.Format("Your installed Java version is not suitable for running the Playfair Analyzer. Please install the newest Java version which can be obtained from the official Java website."), NotificationLevel.Error);                            outputConsoleErrorOutput = false;
                         }
                         if (outputConsoleErrorOutput && !String.IsNullOrWhiteSpace(consoleOut))
                         {
