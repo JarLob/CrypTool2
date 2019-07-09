@@ -117,8 +117,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 var loginSuccess = JsonDownloaderAndConverter.Login(username, password);
                 if (!loginSuccess)
                 {
-                    GuiLogMessage(Properties.Resources.LoginFailed,NotificationLevel.Error);
-                    return;
+                    GuiLogMessage(Properties.Resources.LoginFailed,NotificationLevel.Warning);
                 }
             }
 

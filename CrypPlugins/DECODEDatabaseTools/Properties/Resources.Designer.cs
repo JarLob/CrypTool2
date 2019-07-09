@@ -377,7 +377,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Could not log into the DECODE database. Please check your login credentials. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not log into the DECODE database. Please check your login credentials. You are only able to view publicly available records. ähnelt.
         /// </summary>
         internal static string LoginFailed {
             get {

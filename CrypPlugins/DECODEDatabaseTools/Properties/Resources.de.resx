@@ -289,7 +289,7 @@
     <value>Wenn Sie in CrypTool 2 auf die DECODE-Datenbank zugreifen möchten, müssen Sie unter https://cl.lingfil.uu.se/decode/database ein Benutzerkonto erstellen. Geben Sie anschließend Ihre Anmeldedaten hier ein:</value>
   </data>
   <data name="LoginFailed" xml:space="preserve">
-    <value>Anmeldung bei der DECODE-Datenbank nicht möglich. Bitte überprüfen Sie Ihre Zugangsdaten.</value>
+    <value>Anmeldung bei der DECODE-Datenbank nicht möglich. Bitte überprüfen Sie Ihre Zugangsdaten. Sie können aktuell nur öffentliche Datensätze einsehen.</value>
   </data>
   <data name="CredentialsOK" xml:space="preserve">
     <value>Anmeldedaten sind korrekt.</value>
