@@ -195,7 +195,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             {
                 _presentation.Record = record;
                 //add all images to the ListView of images
-                _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                _presentation.Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
                 {
                     _presentation.IsEnabled = false;
                     _presentation.ImageList.Items.Clear();
@@ -207,7 +207,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     {
                         break;
                     }
-                    _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    _presentation.Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
                     {
                         try
                         {
@@ -227,7 +227,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 ProgressChanged(1, 1);
 
                 //add all documents to the ListView of documents
-                _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                _presentation.Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
                 {
                     _presentation.DocumentList.Items.Clear();
                     foreach (var document in record.documents.AllDocuments)

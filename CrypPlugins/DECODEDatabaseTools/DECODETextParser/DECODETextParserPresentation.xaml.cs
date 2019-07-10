@@ -34,14 +34,17 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// <param name="document"></param>
         public void ShowDocument(TextDocument document)
         {
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
             {
                 PageList.Items.Clear();
-                foreach (var page in document.Pages)
+            }, null);
+            foreach (var page in document.Pages)
+            {
+                Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
                 {
                     PageList.Items.Add(page);
-                }
-            }, null);
+                }, null);
+            }
         }
 
         /// <summary>
