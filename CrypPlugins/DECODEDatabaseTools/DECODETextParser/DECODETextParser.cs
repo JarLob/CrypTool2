@@ -29,6 +29,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
         private string _DECODETextDocument;
         private string _parsedText;
+        private DECODETextParserPresentation _presentation = new DECODETextParserPresentation();
+        private DECODETextParserSettings _settings = new DECODETextParserSettings();
 
         #endregion
 
@@ -70,7 +72,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             get
             {
-                return null;
+                return _settings;
             }
         }
 
@@ -78,7 +80,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             get
             {
-                return null;
+                return _presentation;
             }
         }
 
@@ -106,7 +108,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             parser.DECODETextDocument = DECODETextDocument;
             var document = parser.GetDocument();
             _parsedText = document.ToString();
-
+            _presentation.ShowDocument(document);
             OnPropertyChanged("ParsedText");
         }
 

@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="Cryptool.Plugins.DECODEDatabaseTools.DECODETextParserPresentation"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Cryptool.Plugins.DECODEDatabaseTools"
+             mc:Ignorable="d" 
+             MinWidth="1000" 
+             MinHeight="500">
+    <Grid>
+        <ScrollViewer Grid.Row="6" Grid.Column="1" CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <ListView Name="PageList" FontSize="12" Height="Auto" Foreground="LightGray" Background="LightGray" PreviewMouseWheel="PageList_PreviewMouseWheel">
+                <ListView.Resources>
+                    <Style TargetType="GridViewColumnHeader">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                    </Style>
+                </ListView.Resources>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <!--<EventSetter Event="MouseDoubleClick" Handler="ImageListHandleDoubleClick" />-->
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="Auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Path=Visualize}"                                           
+                                             Width="{Binding ActualWidth,
+                                             RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

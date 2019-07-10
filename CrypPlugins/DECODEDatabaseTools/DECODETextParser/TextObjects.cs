@@ -73,6 +73,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             }
             return stringBuilder.ToString();
         }
+
+        public string Visualize
+        {
+            get
+            {
+                return ToString();
+            }
+            set
+            {
+                //do nothing
+            }
+        }
     }
 
     /// <summary>

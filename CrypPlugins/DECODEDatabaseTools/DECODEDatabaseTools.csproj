@@ -85,6 +85,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DECODETextParser\DECODETextParserPresentation.xaml.cs">
+      <DependentUpon>DECODETextParserPresentation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DECODETextParser\DECODETextParserSettings.cs" />
     <Compile Include="DECODETextParser\Parsers.cs" />
     <Compile Include="DECODETextParser\TextObjects.cs" />
@@ -172,6 +175,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="DECODESettingsTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DECODETextParser\DECODETextParserPresentation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

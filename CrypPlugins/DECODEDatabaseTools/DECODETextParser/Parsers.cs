@@ -77,10 +77,17 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 //comments in the DECODE transcription format start with #
                 if (trimmedLine.StartsWith("#"))
                 {
-                    string comment = trimmedLine.Substring(1, trimmedLine.Length - 1).ToUpper();
+                    //remove all # from beginning of string
+                    int offset = 0;
+                    while (trimmedLine[offset] == '#')
+                    {
+                        offset++;
+                    }
+
+                    string comment = trimmedLine.Substring(offset, trimmedLine.Length - offset).ToUpper().TrimStart();
 
                     line.LineType = LineType.Comment;
-                    if(comment.StartsWith("IMAGE NAME") || comment.StartsWith("PAGE"))
+                    if(comment.StartsWith("PAGE"))
                     {
                         //at each IMAGE NAME comment, a new page (image) starts
                         currentPage = new Page();
