@@ -22,7 +22,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Background="White" Width="{Binding ElementName=PageList, Path=ActualWidth}" Height="200" HorizontalAlignment="Stretch" Content="{Binding Path=Visualize}"/>
+                        <Label Grid.Column="0" Background="White" Width="{Binding ElementName=PageList, Path=ActualWidth}" Height="Auto" HorizontalAlignment="Stretch" Content="{Binding Path=Visualize}"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
