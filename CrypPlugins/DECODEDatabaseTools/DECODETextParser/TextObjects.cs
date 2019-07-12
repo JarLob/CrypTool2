@@ -13,8 +13,10 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using Cryptool.PluginBase.Miscellaneous;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
@@ -22,8 +24,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     /// <summary>
     /// A document contains one or more pages
     /// </summary>
-    public class TextDocument
+    public class TextDocument 
     {
+      
         public TextDocument()
         {
             Pages = new List<Page>();
@@ -33,7 +36,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             get;
             set;
-        }
+        }       
 
         public override string ToString()
         {
@@ -45,6 +48,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             }
             return stringBuilder.ToString();
         }
+      
     }
 
     /// <summary>
@@ -52,6 +56,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     /// </summary>
     public class Page
     {
+    
         public Page()
         {
             Lines = new List<Line>();
@@ -61,7 +66,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             get;
             set;
-        }
+        }    
 
         public override string ToString()
         {
@@ -79,10 +84,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             get
             {
                 return ToString();
-            }
-            set
-            {
-                //do nothing
             }
         }
     }

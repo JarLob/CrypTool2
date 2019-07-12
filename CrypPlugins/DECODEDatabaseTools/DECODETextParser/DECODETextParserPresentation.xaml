@@ -5,35 +5,27 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Cryptool.Plugins.DECODEDatabaseTools"
              mc:Ignorable="d" 
-             MinWidth="1000" 
-             MinHeight="500">
-    <Grid>
-        <ScrollViewer Grid.Row="6" Grid.Column="1" CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
-            <ListView Name="PageList" FontSize="12" Height="Auto" Foreground="LightGray" Background="LightGray" PreviewMouseWheel="PageList_PreviewMouseWheel">
-                <ListView.Resources>
-                    <Style TargetType="GridViewColumnHeader">
-                        <Setter Property="Visibility" Value="Collapsed" />
-                    </Style>
-                </ListView.Resources>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListViewItem}">
-                        <!--<EventSetter Event="MouseDoubleClick" Handler="ImageListHandleDoubleClick" />-->
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Width="Auto">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBox Text="{Binding Path=Visualize}"                                           
-                                             Width="{Binding ActualWidth,
-                                             RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </ScrollViewer>
-    </Grid>
+             MinWidth="1000"
+             MinHeight="500"
+             Width="Auto"
+             Height="Auto"
+             HorizontalAlignment="Stretch">
+    <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <ListBox Margin="0,0,0,0" Name="PageList" HorizontalAlignment="Stretch" 
+                 Foreground="LightGray" Background="LightGray" BorderBrush="LightGray" 
+                 PreviewMouseWheel="PageList_PreviewMouseWheel" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                 ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Background="White" Width="{Binding ElementName=PageList, Path=ActualWidth}" Height="200" HorizontalAlignment="Stretch" Content="{Binding Path=Visualize}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </ScrollViewer>
 </UserControl>
