@@ -106,6 +106,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 Token token = new Token();
                 token.Text = trimmedLine;
                 line.Tokens.Add(token);
+                line.Tokens.Add(token); // only for testing
                 currentPage.Lines.Add(line);
             }
             return document;

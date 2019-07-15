@@ -11,7 +11,7 @@
              Height="Auto"
              HorizontalAlignment="Stretch">
     <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanContentScroll="False" 
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto" 
                   ScrollViewer.VerticalScrollBarVisibility="Auto">
         <ListBox Margin="0,0,0,0" Name="PageList" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                  Foreground="LightGray" Background="LightGray" BorderBrush="LightGray" 
@@ -42,14 +42,43 @@
                             </ListBox.ItemContainerStyle>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                <Grid HorizontalAlignment="Stretch">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="30" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0" Content="{Binding Path=LineNumber}" HorizontalContentAlignment="Right"/>
-                                    <Label Grid.Column="1" Content="{Binding Path=Visualize}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                                </Grid>
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" Content="{Binding Path=LineNumber}"
+                                               Margin="0,0,0,0" 
+                                               VerticalAlignment="Top" 
+                                               HorizontalContentAlignment="Right"
+                                               Background="LightBlue"/>
+                                        <ListBox Grid.Column="1" ItemsSource="{Binding Path=Tokens}" 
+                                                 Margin="0,0,0,0" 
+                                                 BorderThickness="0"
+                                                 VerticalAlignment="Top"
+                                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"  
+                                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="0">
+                                            <ListBox.ItemContainerStyle>
+                                                <Style TargetType="ListBoxItem">
+                                                    <Setter Property="IsHitTestVisible" Value="False" />
+                                                </Style>
+                                            </ListBox.ItemContainerStyle>
+                                            <ListBox.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal"/>
+                                                </ItemsPanelTemplate>
+                                            </ListBox.ItemsPanel>
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Label Content="{Binding Path=Text}" 
+                                                           Margin="0,0,0,0" 
+                                                           Background="LightBlue" 
+                                                           BorderThickness="0" 
+                                                           VerticalAlignment="Top" Padding="0"/>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </Grid>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
