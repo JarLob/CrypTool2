@@ -55,8 +55,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     /// A page contains several lines of text
     /// </summary>
     public class Page
-    {
-    
+    {    
+        public int PageNumber { get; set; }
+
         public Page()
         {
             Lines = new List<Line>();
@@ -102,6 +103,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     /// </summary>
     public class Line
     {
+        public int LineNumber { get; set; }
+
         public Line()
         {
             Tokens = new List<Token>();
@@ -132,6 +135,14 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 }
             }
             return stringBuilder.ToString();
+        }
+
+        public string Visualize
+        {
+            get
+            {
+                return ToString();
+            }
         }
     }
 

@@ -60,10 +60,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 return null;
             }
 
-            TextDocument document = new TextDocument();
+            int pagenumber = 1;
+            int linenumber = 1;
 
+            TextDocument document = new TextDocument();
             Page currentPage = new Page();
-            document.Pages.Add(currentPage);
+            document.Pages.Add(currentPage);            
 
             foreach(string textLine in DECODETextDocument.Split(new[] { '\r', '\n' }))
             {
@@ -73,7 +75,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 {
                     continue;
                 }
-                Line line = new Line();                
+                Line line = new Line();
+                line.LineNumber = linenumber;
+                linenumber++;
+
                 //comments in the DECODE transcription format start with #
                 if (trimmedLine.StartsWith("#"))
                 {
@@ -90,6 +95,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     if(comment.StartsWith("PAGE"))
                     {
                         //at each IMAGE NAME comment, a new page (image) starts
+                        currentPage.PageNumber = pagenumber;
+                        line.LineNumber = 1;
+                        pagenumber++;
+                        linenumber = 2;                                                
                         currentPage = new Page();
                         document.Pages.Add(currentPage);
                     }

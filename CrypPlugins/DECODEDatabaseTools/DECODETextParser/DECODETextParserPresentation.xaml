@@ -10,19 +10,49 @@
              Width="Auto"
              Height="Auto"
              HorizontalAlignment="Stretch">
-    <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
-        <ListBox Margin="0,0,0,0" Name="PageList" HorizontalAlignment="Stretch" 
+    <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanContentScroll="False" 
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                  ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <ListBox Margin="0,0,0,0" Name="PageList" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                  Foreground="LightGray" Background="LightGray" BorderBrush="LightGray" 
                  PreviewMouseWheel="PageList_PreviewMouseWheel" 
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                  ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="IsHitTestVisible" Value="False" />
+                </Style>
+            </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Background="White" Width="{Binding ElementName=PageList, Path=ActualWidth}" Height="Auto" HorizontalAlignment="Stretch" Content="{Binding Path=Visualize}"/>
+                        <ListBox Grid.Column="0" ItemsSource="{Binding Path=Lines}"  
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"  
+                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+                                 HorizontalContentAlignment="Stretch" 
+                                 HorizontalAlignment="Stretch"
+                                 Margin="0,0,0,0">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="IsHitTestVisible" Value="False" />
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Content="{Binding Path=LineNumber}" HorizontalContentAlignment="Right"/>
+                                    <Label Grid.Column="1" Content="{Binding Path=Visualize}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                                </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
