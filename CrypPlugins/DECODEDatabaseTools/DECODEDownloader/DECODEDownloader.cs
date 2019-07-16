@@ -105,22 +105,36 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
             if (!JsonDownloaderAndConverter.IsLoggedIn())
             {
-                var username = DECODESettingsTab.GetUsername();
-                var password = DECODESettingsTab.GetPassword();
+                string username = null;
+                string password = null;
+                try
+                {
+                    username = DECODESettingsTab.GetUsername();
+                    password = DECODESettingsTab.GetPassword();
+                }
+                catch (Exception ex)
+                {
+                    //do nothing
+                }
 
-                if(string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+                if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
                 {
                     username = "anonymous";
                     password = "anonymous";
                 }
-
-                var loginSuccess = JsonDownloaderAndConverter.Login(username, password);
-                if (!loginSuccess)
+                try
                 {
-                    GuiLogMessage(Properties.Resources.LoginFailed,NotificationLevel.Warning);
+                    var loginSuccess = JsonDownloaderAndConverter.Login(username, password);
+                    if (!loginSuccess)
+                    {
+                        GuiLogMessage(Properties.Resources.LoginFailed, NotificationLevel.Warning);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(ex.Message, NotificationLevel.Warning);
                 }
             }
-
             try
             {
                var recordsString = JsonDownloaderAndConverter.GetRecords();

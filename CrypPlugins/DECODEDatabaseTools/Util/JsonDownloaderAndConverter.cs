@@ -247,7 +247,14 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// <returns></returns>
         public static bool IsLoggedIn()
         {
-            return _cookieContainer.Count == 1;
+            try
+            {
+                return _cookieContainer.Count == 1;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         /// <summary>
