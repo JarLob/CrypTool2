@@ -17,7 +17,8 @@
                  Foreground="LightGray" Background="LightGray" BorderBrush="LightGray" 
                  PreviewMouseWheel="PageList_PreviewMouseWheel" 
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                 ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                 Padding="0">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="IsHitTestVisible" Value="False" />
@@ -25,41 +26,54 @@
             </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid HorizontalAlignment="Stretch">
+                    <Grid HorizontalAlignment="Stretch" Margin="0,0,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <ListBox Grid.Column="0" ItemsSource="{Binding Path=Lines}"  
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Page:" HorizontalAlignment="Left" />
+                        <Label Grid.Row="0" Grid.Column="0" Content="{Binding Path=PageNumber}" HorizontalAlignment="Left" Margin="35,0,0,0" />
+                        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Path=Lines}"  
                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  
                                  ScrollViewer.VerticalScrollBarVisibility="Disabled" 
                                  HorizontalContentAlignment="Stretch" 
                                  HorizontalAlignment="Stretch"
-                                 Margin="0,0,0,0">
+                                 Margin="0,0,0,0"
+                                 Padding="0">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
                                     <Setter Property="IsHitTestVisible" Value="False" />
+                                    <Setter Property="Margin" Value="0"/>
+                                    <Setter Property="Padding" Value="0"/>
                                 </Style>
                             </ListBox.ItemContainerStyle>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid HorizontalAlignment="Stretch">
+                                    <Grid HorizontalAlignment="Stretch" Margin="0,0,0,0">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="30" />
+                                            <ColumnDefinition Width="20" />
+                                            <ColumnDefinition Width="10" />
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <Label Grid.Column="0" Content="{Binding Path=LineNumber}"
                                                Margin="0,0,0,0" 
-                                               VerticalAlignment="Top" 
+                                               VerticalAlignment="Center" 
                                                HorizontalContentAlignment="Right"
-                                               Background="LightBlue"/>
-                                        <ListBox Grid.Column="1" ItemsSource="{Binding Path=Tokens}" 
+                                               Padding="0" />
+                                        <ListBox Grid.Column="2" ItemsSource="{Binding Path=Tokens}" 
                                                  Margin="0,0,0,0" 
                                                  BorderThickness="0"
                                                  VerticalAlignment="Top"
                                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  
-                                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="0">
+                                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+                                                 Padding="0">
                                             <ListBox.ItemContainerStyle>
                                                 <Style TargetType="ListBoxItem">
+                                                    <Setter Property="Margin" Value="0"/>
+                                                    <Setter Property="Padding" Value="0"/>
                                                     <Setter Property="IsHitTestVisible" Value="False" />
                                                 </Style>
                                             </ListBox.ItemContainerStyle>
@@ -72,9 +86,9 @@
                                                 <DataTemplate>
                                                     <Label Content="{Binding Path=Text}" 
                                                            Margin="0,0,0,0" 
-                                                           Background="LightBlue" 
                                                            BorderThickness="0" 
-                                                           VerticalAlignment="Top" Padding="0"/>
+                                                           VerticalAlignment="Center" 
+                                                           Padding="0"/>
                                                 </DataTemplate>
                                             </ListBox.ItemTemplate>
                                         </ListBox>
