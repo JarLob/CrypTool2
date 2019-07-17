@@ -102,11 +102,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         public void Execute()
         {
             ProgressChanged(0, 1);
+            string username = null;
+            string password = null;
 
             if (!JsonDownloaderAndConverter.IsLoggedIn())
             {
-                string username = null;
-                string password = null;
+               
                 try
                 {
                     username = DECODESettingsTab.GetUsername();
@@ -176,7 +177,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             {
                 GuiLogMessage(String.Format("Could not download or convert data from DECODE database: {0}", ex.Message), NotificationLevel.Error);
                 return;
-            }                   
+            }
+
+            presentation.SetLoginNameLabel(String.Format("You are logged in as {0}", username));
+
             running = true;
         }
 

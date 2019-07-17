@@ -26,17 +26,84 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     /// </summary>
     public class TextDocument 
     {
-      
+        public List<Page> Pages
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Own index of document owner, i.e. file location, e.g. Segr.di Stato Francia 3/1/
+        /// </summary>
+        public string CatalogName
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The name of the image(s) representing the cipher, e.g. 117r.jpg-117v.jpg
+        /// </summary>
+        public string ImageName
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Full name or initials of the transcriber, e.g. TimB
+        /// </summary>
+        public string TranscriberName
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The date the transcription was created, e.g. February 3, 2016
+        /// </summary>
+        public string DateOfTranscription
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The time it took to transcribe all images of a cipher in hours and minutes without counting breaks and quality checks,
+        /// e.g. 30+30+60 minutes = 120 minutes
+        /// </summary>
+        public string TranscriptionTime
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Method, which was used, to create the transcription
+        /// </summary>
+        public string TranscriptionMethod
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Description of e.g. difficulties, problems
+        /// </summary>
+        public string Comments
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Constructor to create a TextDocument
+        /// </summary>
         public TextDocument()
         {
             Pages = new List<Page>();
         }
 
-        public List<Page> Pages
-        {
-            get;
-            set;
-        }       
 
         public override string ToString()
         {

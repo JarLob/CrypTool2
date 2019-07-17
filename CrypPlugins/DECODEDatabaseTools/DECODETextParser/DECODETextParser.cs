@@ -105,11 +105,26 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         public void Execute()
         {
             SimpleSingleTokenParser parser = new SimpleSingleTokenParser();
+            parser.OnGuiLogNotificationOccured += Parser_OnGuiLogNotificationOccured;
             parser.DECODETextDocument = DECODETextDocument;
             var document = parser.GetDocument();
+            if(document == null)
+            {
+                return;
+            }
             _parsedText = document.ToString();
             _presentation.ShowDocument(document);
             OnPropertyChanged("ParsedText");
+        }
+
+        /// <summary>
+        /// Forwards the gui message of the parsers to CrypTool 2
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void Parser_OnGuiLogNotificationOccured(IPlugin sender, GuiLogEventArgs args)
+        {
+            GuiLogMessage(args.Message, args.NotificationLevel);
         }
 
         public void Initialize()
@@ -137,6 +152,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         private void OnPropertyChanged(string name)
         {
             EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
+        }
+
+        private void GuiLogMessage(string message, NotificationLevel logLevel)
+        {
+            EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
         }
     }
 }

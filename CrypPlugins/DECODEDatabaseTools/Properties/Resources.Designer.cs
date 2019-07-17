@@ -377,7 +377,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Could not log into the DECODE database. Please check your login credentials. You are only able to view publicly available records. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die You are logged in as {0}. ähnelt.
+        /// </summary>
+        internal static string LoggedInAs {
+            get {
+                return ResourceManager.GetString("LoggedInAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not login to the DECODE database. Please check your login credentials if you have some. You are currently only able to view publicly available records. ähnelt.
         /// </summary>
         internal static string LoginFailed {
             get {

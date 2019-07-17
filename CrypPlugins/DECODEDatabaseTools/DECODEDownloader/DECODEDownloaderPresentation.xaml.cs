@@ -16,8 +16,10 @@
 using Cryptool.Plugins.DECODEDatabaseTools.DataObjects;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Threading;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
@@ -89,5 +91,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             CollectionViewSource.GetDefaultView(ListView.ItemsSource).Refresh();
         }
 
+        /// <summary>
+        /// Sets the content of the LoginLabel
+        /// </summary>
+        /// <param name="text"></param>
+        public void SetLoginNameLabel(string text)
+        {
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                LoginNameLabel.Content = text;
+            }, null);
+        }
     }
 }

@@ -38,6 +38,14 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
             {
                 PageList.Items.Clear();
+                //set all header fields
+                CatalogNameLabel.Content = document.CatalogName;
+                ImageNameLabel.Content = document.ImageName;
+                TranscriberNameLabel.Content = document.TranscriberName;
+                DateOfTranscriptionLabel.Content = document.DateOfTranscription;
+                TranscriptionTimeLabel.Content = document.TranscriptionTime;
+                TranscriptionMethodLabel.Content = document.TranscriptionMethod;
+                CommentsLabel.Content = document.Comments;
             }, null);
             foreach (var page in document.Pages)
             {

@@ -293,7 +293,7 @@
     <value>If you want to access the DECODE database in CrypTool 2, you have to go to https://cl.lingfil.uu.se/decode/database and create a user account. Then, enter your credentials here:</value>
   </data>
   <data name="LoginFailed" xml:space="preserve">
-    <value>Could not log into the DECODE database. Please check your login credentials. You are only able to view publicly available records.</value>
+    <value>Could not login to the DECODE database. Please check your login credentials if you have some. You are currently only able to view publicly available records.</value>
   </data>
   <data name="CredentialsOK" xml:space="preserve">
     <value>Login credentials are correct.</value>
@@ -306,5 +306,8 @@
   </data>
   <data name="CredentialsWrongTitle" xml:space="preserve">
     <value>Failed</value>
+  </data>
+  <data name="LoggedInAs" xml:space="preserve">
+    <value>You are logged in as {0}.</value>
   </data>
 </root>

@@ -8,11 +8,13 @@
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Content="{Loc Filter}" Background="White" />
-        <TextBox Grid.Row="0" Margin="50,2,2,2" Name="Filter" TextChanged="Filter_TextChanged" />
-        <ListView Grid.Row="1" Name="ListView" Background="White" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="12" Grid.Column="1" Height="Auto" Foreground="Black">
+        <Label Grid.Row="0" Name="LoginNameLabel" Background="White" HorizontalAlignment="Stretch" />
+        <Label Grid.Row="1" Content="{Loc Filter}"  Background="LightGray"/>
+        <TextBox Grid.Row="1" Margin="50,2,2,2" Name="Filter" TextChanged="Filter_TextChanged" />
+        <ListView Grid.Row="2" Name="ListView" Background="White" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="12" Grid.Column="1" Height="Auto" Foreground="Black">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <EventSetter Event="MouseDoubleClick" Handler="HandleDoubleClick" />

@@ -289,7 +289,7 @@
     <value>Если вы хотите получить доступ к базе данных DECODE в CrypTool 2, вам нужно зайти на https://cl.lingfil.uu.se/decode/database и создать учетную запись пользователя. Затем введите свои учетные данные ниже:</value>
   </data>
   <data name="LoginFailed" xml:space="preserve">
-    <value>Не удалось войти в базу данных DECODE. Пожалуйста, проверьте ваши учетные данные. В настоящее время вы можете просматривать только публичные записи.</value>
+    <value>Не удалось войти в базу данных DECODE. Пожалуйста, проверьте ваши учетные данные, если у вас есть. В настоящее время вы можете просматривать только общедоступные записи.</value>
   </data>
   <data name="CredentialsOK" xml:space="preserve">
     <value>Данные для входа верны.</value>
@@ -302,5 +302,8 @@
   </data>
   <data name="CredentialsWrongTitle" xml:space="preserve">
     <value>не удалось</value>
+  </data>
+  <data name="LoggedInAs" xml:space="preserve">
+    <value>Вы вошли как {0}.</value>
   </data>
 </root>
