@@ -18,9 +18,28 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Windows.Media;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
+
+    /// <summary>
+    /// Type of tokens
+    /// </summary>
+    public enum TokenType
+    {
+        Unknown = 0,
+        Ciphertext = 1,
+        Plaintext = 2,
+        Cleartext = 3
+    }
+
+    public enum LineType
+    {
+        Comment = 0,
+        Text = 1
+    }
+
     /// <summary>
     /// A document contains one or more pages
     /// </summary>
@@ -122,12 +141,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     /// A page contains several lines of text
     /// </summary>
     public class Page
-    {    
+    {
+        private TextDocument _textDocument;
+
         public int PageNumber { get; set; }
 
-        public Page()
+        public Page(TextDocument textDocument)
         {
             Lines = new List<Line>();
+            _textDocument = textDocument;
         }
 
         public List<Line> Lines
@@ -154,15 +176,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 return ToString();
             }
         }
-    }
 
-    /// <summary>
-    /// Type of the line
-    /// </summary>
-    public enum LineType
-    {
-        Comment = 0,
-        Text = 1
+        public TextDocument GetParentTextDocument()
+        {
+            return _textDocument;
+        }
     }
 
     /// <summary>
@@ -170,12 +188,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     /// </summary>
     public class Line
     {
+        private Page _page;
+
         public int LineNumber { get; set; }
 
-        public Line()
+        public Line(Page page)
         {
             Tokens = new List<Token>();
             LineType = LineType.Text;
+            _page = page;
         }
 
         public List<Token> Tokens
@@ -211,17 +232,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 return ToString();
             }
         }
-    }
 
-    /// <summary>
-    /// Type of tokens
-    /// </summary>
-    public enum TokenType
-    {
-        Unknown = 0,
-        Ciphertext = 1,
-        Plaintext = 2,
-        Cleartext = 3
+        public Page GetParentPage()
+        {
+            return _page;
+        }
     }
 
     /// <summary>
@@ -229,10 +244,14 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     /// </summary>
     public class Token
     {
-        public Token()
+        private Line _line = null;
+
+        public Token(Line line)
         {
             TokenType = TokenType.Unknown;
+            _line = line;
         }
+
 
         public string Text
         {
@@ -242,6 +261,31 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         public TokenType TokenType
         {
             get; set;
+        }
+
+        /// <summary>
+        /// Returns the ui color of this token
+        /// </summary>
+        /// <returns></returns>
+        public SolidColorBrush TextColor
+        {
+            get
+            {
+                switch (_line.LineType)
+                {
+                    case LineType.Text:
+                        return Brushes.Black;
+                    case LineType.Comment:
+                        return Brushes.Blue;
+                    default:
+                        return Brushes.Black;
+                }
+            }
+        }
+
+        public Line GetParentLine()
+        {
+            return _line;
         }
     }
 

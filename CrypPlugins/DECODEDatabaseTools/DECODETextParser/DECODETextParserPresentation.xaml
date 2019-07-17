@@ -148,7 +148,8 @@
                                                            Margin="0,0,0,0" 
                                                            BorderThickness="0" 
                                                            VerticalAlignment="Center" 
-                                                           Padding="0"/>
+                                                           Padding="0"
+                                                           Foreground="{Binding Path=TextColor}"/>
                                                     </DataTemplate>
                                                 </ListBox.ItemTemplate>
                                             </ListBox>

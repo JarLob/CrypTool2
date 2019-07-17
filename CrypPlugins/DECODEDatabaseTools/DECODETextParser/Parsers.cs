@@ -79,7 +79,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             int linenumber = 1;
 
             TextDocument document = new TextDocument();
-            Page currentPage = new Page();
+            Page currentPage = new Page(document);
             currentPage.PageNumber = pagenumber;
             document.Pages.Add(currentPage);            
 
@@ -91,13 +91,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 {
                     continue;
                 }
-                Line line = new Line();
-                line.LineNumber = linenumber;
+                Line currentLine = new Line(currentPage);
+                currentLine.LineNumber = linenumber;
                 linenumber++;
 
                 //comments in the DECODE transcription format start with #
                 if (trimmedLine.StartsWith("#"))
                 {
+                    currentLine.LineType = LineType.Comment;
+
                     //remove all # from beginning of string
                     int offset = 0;
                     while (trimmedLine[offset] == '#')
@@ -105,16 +107,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                         offset++;
                     }
 
-                    string comment = trimmedLine.Substring(offset, trimmedLine.Length - offset).ToUpper().TrimStart();
+                    string comment = trimmedLine.Substring(offset, trimmedLine.Length - offset).ToUpper().TrimStart();                
 
-                    line.LineType = LineType.Comment;
                     if(comment.StartsWith("PAGE"))
                     {
                         //at each IMAGE NAME comment, a new page (image) starts
-                        line.LineNumber = 1;
+                        currentLine.LineNumber = 1;
                         pagenumber++;
                         linenumber = 2;                                                
-                        currentPage = new Page();
+                        currentPage = new Page(document);
                         currentPage.PageNumber = pagenumber;
                         document.Pages.Add(currentPage);
                     }
@@ -233,10 +234,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                         }
                     }
                 }
-                Token token = new Token();
+                Token token = new Token(currentLine);
                 token.Text = trimmedLine;
-                line.Tokens.Add(token);
-                currentPage.Lines.Add(line);
+                currentLine.Tokens.Add(token);
+                currentPage.Lines.Add(currentLine);
             }
 
             //check, if header fields are set; if not, set these to "undefined"
