@@ -67,6 +67,7 @@ public class Stats {
 
     public static long evalPlaintextHexagram(int[] plaintext, int plaintextLength) {
 
+        CtAPI.shutdownIfNeeded();
         Stats.evaluations++;
 
         int index = (((((((plaintext[0] * 26) + plaintext[1]) * 26) + plaintext[2]) * 26) + plaintext[3]) * 26 + plaintext[4]);

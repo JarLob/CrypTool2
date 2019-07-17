@@ -181,6 +181,7 @@ public class CtBestList {
             s.append(bestResults.get(i).toString(i + 1));
         }
         CtAPI.displayBestList(s.toString());
+        //System.out.println(s.toString());
     }
 
     // Private.

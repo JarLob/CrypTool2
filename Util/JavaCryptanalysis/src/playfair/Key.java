@@ -17,7 +17,7 @@ public class Key {
     int decryptionRemoveNullsLength;
     int[] fullDecryption;
     long score;
-    String keyword;
+    private String keyword;
 
 
     Key() {
@@ -61,6 +61,7 @@ public class Key {
         decrypt();
 
         long ngrams = Stats.evalPlaintextHexagram(decryptionRemoveNulls, decryptionRemoveNullsLength);
+        //long ngrams = NGrams.eval7(decryptionRemoveNulls, decryptionRemoveNullsLength);
         if (crib == null) {
             score = ngrams;
         } else {
@@ -245,7 +246,7 @@ public class Key {
         }
     }
 
-    int[] buffer = new int[Playfair.SQUARE];
+    private int[] buffer = new int[Playfair.SQUARE];
     void alignAlphabet() {
         int bestR = -1;
         int bestC = -1;
@@ -265,6 +266,7 @@ public class Key {
                         }
                         last = previous;
                         count++;
+                        //System.out.printf("%2d %2d = %3d\n", r, c, count);
                         if (count > bestCount) {
                             bestCount = count;
                             bestC = c;
@@ -274,6 +276,8 @@ public class Key {
                 }
             }
         }
+        //System.out.printf("%2d %2d = %3d\n", bestR, bestC, bestCount);
+
         System.arraycopy(key, 0, buffer, 0, Playfair.SQUARE);
         for (int r = 0; r < Playfair.DIM; r++) {
             for (int c = 0; c < Playfair.DIM; c++) {
@@ -307,5 +311,16 @@ public class Key {
         computeInverse();
         keyword = Utils.getString(phrase);
         return length == 25;
+    }
+
+
+    public static void main(String[] args) {
+        //VWXQZLMOPYBRUTSANDCEFGHIK
+        Key key = new Key();
+        key.key = Utils.getText("VWXYZLMOPQBRUTSANDCEFGHIK");
+        //key.keyFromSentence(Utils.getText("BRUTUSANDCAESAR"));
+        System.out.printf("%s\n", key);
+        key.alignAlphabet();
+        System.out.printf("%s\n", key);
     }
 }

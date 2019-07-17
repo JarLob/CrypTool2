@@ -1917,6 +1917,77 @@ UKW DONAJUXTQELKSCBZIVMHFRYGWP
 
     }
 
+    public void initPathLookupHandM4Range(int from, int len) {
+
+        if (from == 0) {
+            initPathLookupAll(len);
+            return;
+        }
+        int lookup_length = 32 * (len + from);
+        if ((lookup == null) || (lookup.length != lookup_length)) {
+            lookup = new byte[lookup_length];
+        }
+
+        int i;
+        byte k;
+        byte c;
+
+        /* calculate effective offset from ring and message settings */
+        int offsetR = (26 + rMesg - rRing) % 26;
+        int offsetM = (26 + mMesg - mRing) % 26;
+        int offsetL = (26 + lMesg - lRing) % 26;
+        int offsetG = (26 + gMesg - gRing) % 26;
+
+        /* calculate turnover points from ring settings */
+        /* calculate turnover points from ring settings */
+        boolean rTurnovers[] = getTurnoverPoints(rSlot, rRing);
+        boolean mTurnovers[] = getTurnoverPoints(mSlot, mRing);
+
+        byte[] walRslot = wal[rSlot];
+        byte[] walMslot = wal[mSlot];
+        byte[] walLslot = wal[lSlot];
+        byte[] walGslot = wal[gSlot];
+        byte[] ukwUkwnum = ukw[ukwNum];
+        byte[] rev_walGslot = rev_wal[gSlot];
+        byte[] rev_walLslot = rev_wal[lSlot];
+        byte[] rev_walMslot = rev_wal[mSlot];
+        byte[] rev_walRslot = rev_wal[rSlot];
+
+
+        for (i = 0; i < (from + len); i++) {
+
+            if (mTurnovers[offsetM]) {
+                offsetR = (offsetR + 1) % 26;
+                offsetM = (offsetM + 1) % 26;
+                offsetL = (offsetL + 1) % 26;
+            } else if (rTurnovers[offsetR]) {
+                offsetR = (offsetR + 1) % 26;
+                offsetM = (offsetM + 1) % 26;
+            } else {
+                offsetR = (offsetR + 1) % 26;
+            }
+
+            if (i >= from) {
+                int base = (i << 5);
+                for (k = 0; k < 26; k++) {
+                    c = k;
+                    c = etw[c];
+                    c = walRslot[c + offsetR + 26];
+                    c = walMslot[c - offsetR + offsetM + 26];
+                    c = walLslot[c - offsetM + offsetL + 26];
+                    c = walGslot[c - offsetL + offsetG + 26];
+                    c = ukwUkwnum[c - offsetG + 26];
+                    c = rev_walGslot[c + offsetG];
+                    c = rev_walLslot[c - offsetG + offsetL + 26];
+                    c = rev_walMslot[c - offsetL + offsetM + 26];
+                    c = rev_walRslot[c - offsetM + offsetR + 26];
+                    c = rev_etw[c - offsetR + 26];
+                    lookup[base + k] = c;
+                }
+            }
+        }
+    }
+
     public void initPathLookupAll(int len) {
 
 

@@ -216,7 +216,7 @@ public class CtAPI {
 
     // Private.
 
-    private static void shutdownIfNeeded() {
+    public static void shutdownIfNeeded() {
         if (Ct2Connector.getShutdownRequested()) {
             println("Received request to shutdown ....");
             java.awt.Toolkit.getDefaultToolkit().beep();
@@ -230,7 +230,7 @@ public class CtAPI {
     }
 
     private static String plaintextCapped(String plaintext) {
-        if (plaintext.length() <= 100) {
+        if (plaintext.length() <= 1000) {
             return plaintext;
         }
         return plaintext.substring(0, Math.min(100, plaintext.length())) + "...";

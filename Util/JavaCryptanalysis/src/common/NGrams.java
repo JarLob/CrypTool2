@@ -13,10 +13,10 @@ public class NGrams {
     private static final Map<Long, Long> map7 = new HashMap<>();
     private static final Map<Long, Long> map8 = new HashMap<>();
     private static final long MASK7 = (long) Math.pow(26, 6);
-    ;
+
     private static final boolean[] FILTER = new boolean[(int) Math.pow(26, 6)];
     private static final long MASK8 = (long) Math.pow(26, 7);
-    ;
+
 
 
     public static long eval7(int[] text, int len) {

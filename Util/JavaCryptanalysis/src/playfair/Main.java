@@ -116,12 +116,12 @@ public class Main {
             CtAPI.goodbyeFatalError("Could not read hexa file .... " + RESOURCE_PATH + "/" + HEXA_FILE);
         }
 
-        //if (!NGrams.load(RESOURCE_PATH + "/" + Utils.NGRAMS7_FILE, 7)) {
-        //    CtAPI.goodbyeFatalError("Could not read 7-grams file .... " + RESOURCE_PATH + "/" + Utils.NGRAMS7_FILE);
-        //}
-        //if (!NGrams.load(RESOURCE_PATH + "/" + Utils.NGRAMS8_FILE, 8)) {
-        //    CtAPI.goodbyeFatalError("Could not read 8-grams file .... " + RESOURCE_PATH + "/" + Utils.NGRAMS8_FILE);
-        //}
+//        if (!NGrams.load(RESOURCE_PATH + "/" + Utils.NGRAMS7_FILE, 7)) {
+//            CtAPI.goodbyeFatalError("Could not read 7-grams file .... " + RESOURCE_PATH + "/" + Utils.NGRAMS7_FILE);
+//        }
+//        if (!NGrams.load(RESOURCE_PATH + "/" + Utils.NGRAMS8_FILE, 8)) {
+//            CtAPI.goodbyeFatalError("Could not read 8-grams file .... " + RESOURCE_PATH + "/" + Utils.NGRAMS8_FILE);
+//        }
 
 
         Key simulationKey = null;
@@ -136,10 +136,11 @@ public class Main {
 
 
 
-            int[] sentence = Utils.readRandomSentenceFromFile(RESOURCE_PATH + "/" + "shakespeare.txt", "", 14, true);
-            simulationKey.keyFromSentence(sentence);
+            //int[] sentence = Utils.readRandomSentenceFromFile(RESOURCE_PATH + "/" + "shakespeare.txt", "", 8 + Utils.randomNextInt(20), true);
+            //simulationKey.keyFromSentence(sentence);
             System.out.println(simulationKey);
-            plainText = Utils.readRandomSentenceFromFile(RESOURCE_PATH + "/" + "shakespeare.txt", CRIB, SIMULATION_TEXT_LENGTH, true);
+            //plainText = Utils.readRandomSentenceFromFile(RESOURCE_PATH + "/" + "shakespeare.txt", CRIB, SIMULATION_TEXT_LENGTH, true);
+
 
 
             cipherText = new int[SIMULATION_TEXT_LENGTH];
@@ -173,7 +174,7 @@ public class Main {
             }
             CtAPI.printf("Ciphertext: %s Length: %d\n", Utils.getString(cipherText), cipherText.length);
         }
-
+        
         SolvePlayfair.solveMultithreaded(cipherText, CRIB, THREADS, CYCLES, simulationKey);
 
     }

@@ -400,8 +400,10 @@ public class Main {
 
                 finalKey.setMesg(indicPlainS);
             }
-            finalKey.printKeyString("Decryption Key:\t");
+
+
             finalKey.encipherDecipherAll(ciphertext, plaintext, clen);
+            finalKey.printKeyString("Decryption Key:\t");
 
             byte[] steppings = new byte[Key.MAXLEN];
             finalKey.showSteppings(steppings, clen);

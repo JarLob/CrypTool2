@@ -72,6 +72,8 @@ public class BombeSearch {
 
     private static int scoreForMenus(double tri, double ic) {
 
+
+
         int res;
         if (tri > 10000.0)
             res = (int) tri;
@@ -83,6 +85,7 @@ public class BombeSearch {
             return 0;
         else
             return res;
+
     }
 
     private static void searchCribMenus(BombeMenu[] bombeMenus, int nMenus, Key from, Key to,
@@ -166,7 +169,7 @@ public class BombeSearch {
                                                                 counter++;
 
                                                                 if (ckey.model == Key.Model.M4)
-                                                                    ckey.initPathLookupAll(bombeMenus[m].cribStartPos + bombeMenus[m].cribLen);
+                                                                    ckey.initPathLookupHandM4Range(bombeMenus[m].cribStartPos, bombeMenus[m].cribLen);
                                                                 else
                                                                     ckey.initPathLookupHandM3Range(bombeMenus[m].cribStartPos, bombeMenus[m].cribLen);
 
@@ -174,6 +177,7 @@ public class BombeSearch {
                                                                     assumedSteckers[i] = -1;
                                                                     strength[i] = 0;
                                                                 }
+
 
                                                                 if (bombeMenus[m].testIfBombsStops(0, ckey.lookup, assumedSteckers, strength, false)) {
                                                                     foundForThisKey = true;
@@ -187,6 +191,7 @@ public class BombeSearch {
                                                                     tri = ckey.triScoreWithoutLookupBuild(ciphertext, len);
                                                                     ic = ckey.icScoreWithoutLookupBuild(ciphertext, len);
                                                                     ckey.score = scoreForMenus(tri, ic);
+
 
                                                                     if (ckey.score > 0) {
                                                                         nStops++;

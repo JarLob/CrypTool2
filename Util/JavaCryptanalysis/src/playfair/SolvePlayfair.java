@@ -42,16 +42,32 @@ public class SolvePlayfair {
                 if (SimulatedAnnealing.acceptHexaScore(newScore, currentScore, multiplier)) {
                     currentKey.copy(newKey);
                     currentScore = newScore;
+
                     if (currentScore > bestScore) {
+//                        currentKey.decrypt();
+//                        long n8 = NGrams.eval8(currentKey.decryptionRemoveNulls, currentKey.decryptionRemoveNullsLength);
+//
+//                        if (CtBestList.shouldPushResult(n8)) {
+//                            CtBestList.pushResult(n8,
+//                                    currentKey.toString(),
+//                                    currentKey.toString(),
+//                                    Utils.getString(currentKey.fullDecryption),
+//                                    Stats.evaluationsSummary() +
+//                                            String.format("[%d/%d}[Task: %2d][Mult.: %,d]",
+//                                                    currentKey.decryptionRemoveNullsLength, cipherText.length, taskNumber, multiplier));
+//
+//                        }
+//
                         bestScore = currentScore;
                         bestKey.copy(currentKey);
                         bestKey.decrypt();
-                        bestKey.alignAlphabet();
                     }
 
                 }
             }
+
             if (CtBestList.shouldPushResult(bestScore)) {
+                bestKey.alignAlphabet();
                 CtBestList.pushResult(bestScore,
                         bestKey.toString(),
                         bestKey.toString(),

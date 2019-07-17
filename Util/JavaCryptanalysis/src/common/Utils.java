@@ -98,7 +98,7 @@ public class Utils {
         return cipherStr;
     }
 
-    public static int readTextSegmentFromFile(String filename, int startPost, int[] text) {
+    public static int readTextSegmentFromFile(String filename, int startPosition, int[] text) {
 
         int length = 0;
 
@@ -111,7 +111,7 @@ public class Utils {
             String line = "";
 
             while (((line = bufferedReader.readLine()) != null) && (length < text.length)) {
-                if (position > startPost) {
+                if (position > startPosition) {
                     for (int i = 0; i < line.length(); i++) {
                         char c = line.charAt(i);
                         int rep = from.indexOf(c);
@@ -132,7 +132,7 @@ public class Utils {
         } catch (IOException ex) {
             CtAPI.goodbyeFatalError("Unable to read text file %s - %s", filename, ex.toString());
         }
-        printf("Read segment from file: %s, Position: %d , Length: %d\n", filename, startPost, length);
+        printf("Read segment from file: %s, Position: %d , Length: %d\n", filename, startPosition, length);
         printf("%s\n\n", getString(text));
 
         return length;

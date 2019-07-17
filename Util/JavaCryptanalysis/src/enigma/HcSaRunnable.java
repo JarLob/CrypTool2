@@ -315,7 +315,7 @@ class HcSaRunnable implements Runnable {
         for (int i = 0; i < rounds * 2; i++) {
             SAStep(Key.EVAL.BI);
         }
-        SAStep(Key.EVAL.TRI);
+        //SAStep(Key.EVAL.TRI);
 
         long currentScore = key.score = key.eval(Key.EVAL.TRI, ciphertext, len);
         checkOffsets(currentScore);
