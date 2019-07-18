@@ -62,8 +62,6 @@ namespace Cryptool.PlayfairAnalyzer
         private DateTime _startTime;
         private bool _alreadyExecuted = false;
 
-    
-
         [PropertyInfo(Direction.InputData, "CiphertextCaption", "CiphertextTooltip", true)]
        
         public string Ciphertext
@@ -230,14 +228,10 @@ namespace Cryptool.PlayfairAnalyzer
                 //Step 1: Create process                
                 string jarfilename = DirectoryHelper.BaseDirectory + @"\Jars\playfair.jar";                                
                 _Process = new Process();
-                _Process.StartInfo.RedirectStandardError = true;
-                _Process.StartInfo.RedirectStandardOutput = true;
                 _Process.StartInfo.WorkingDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CrypTool2");
                 _Process.StartInfo.FileName = "java.exe";
                 _Process.StartInfo.Arguments = String.Format("-jar \"{0}\" -h \"{1}\"", jarfilename, hexfilename);
                 _Process.StartInfo.CreateNoWindow = true;
-                _Process.StartInfo.UseShellExecute = false;
-
                 if (_settings.ShowWindow)
                 {
                     _Process.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
@@ -383,29 +377,6 @@ namespace Cryptool.PlayfairAnalyzer
                 if (_Process.HasExited)
                 {
                     GuiLogMessage(String.Format("Process exited with exit code: {0}", _Process.ExitCode), _Process.ExitCode != 0 ? NotificationLevel.Error : NotificationLevel.Info);
-
-                    if (_Process.ExitCode != 0)
-                    {
-                        //get output and error from the console and output it in the log
-                        string consoleOut = _Process.StandardOutput.ReadToEnd();
-                        string consoleError = _Process.StandardError.ReadToEnd();
-
-                        bool outputConsoleErrorOutput = true;
-                        //check for java update error
-                        //a small "hack" to check which checks the text output of java
-                        if (!String.IsNullOrWhiteSpace(consoleError) && consoleError.ToLower().Contains("has been compiled by a more recent version of the java runtime"))
-                        {
-                            GuiLogMessage(String.Format("Your installed Java version is not suitable for running the Playfair Analyzer. Please install the newest Java version which can be obtained from the official Java website."), NotificationLevel.Error);                            outputConsoleErrorOutput = false;
-                        }
-                        if (outputConsoleErrorOutput && !String.IsNullOrWhiteSpace(consoleOut))
-                        {
-                            GuiLogMessage(String.Format("Console output:\r\n {0}", consoleOut), NotificationLevel.Error);
-                        }
-                        if (outputConsoleErrorOutput && !String.IsNullOrWhiteSpace(consoleError))
-                        {
-                            GuiLogMessage(String.Format("Console error output:\r\n {0}", consoleError), NotificationLevel.Error);
-                        }
-                    }
                 }
 
                 //set end time in presentation

@@ -122,8 +122,7 @@ namespace WorkspaceManager.Execution
                 foreach (var pluginModel in workspaceModel.AllPluginModels)
                 {                           
                     var thread = new Thread(new ParameterizedThreadStart(pluginModel.Execute))
-                                     {Name = "WorkspaceManager_Thread-" + i};
-                    //thread.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
+                                     {Name = "WorkspaceManagerThread-" + pluginModel.Name};
                     threads.Add(thread);
                     thread.IsBackground = true;
                     i++;
