@@ -15,6 +15,7 @@
 */
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
+using System;
 using System.ComponentModel;
 using System.Windows.Controls;
 
@@ -31,6 +32,20 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         private string _parsedText;
         private DECODETextParserPresentation _presentation = new DECODETextParserPresentation();
         private DECODETextParserSettings _settings = new DECODETextParserSettings();
+
+        #endregion
+
+        #region Constructor
+
+        public DECODETextParser()
+        {
+            _presentation.OnGuiLogNotificationOccured += ForwardGuiLogNotification;
+        }
+
+        private void _presentation_OnGuiLogNotificationOccured(IPlugin sender, GuiLogEventArgs args)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
 
@@ -104,14 +119,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
         public void Execute()
         {
-            SimpleSingleTokenParser parser = new SimpleSingleTokenParser();
-            parser.OnGuiLogNotificationOccured += Parser_OnGuiLogNotificationOccured;
+            NoVocabularyParser parser = new NoVocabularyParser(2);
+            parser.OnGuiLogNotificationOccured += ForwardGuiLogNotification;
             parser.DECODETextDocument = DECODETextDocument;
+            DateTime startTime = DateTime.Now;
             var document = parser.GetDocument();
             if(document == null)
             {
                 return;
             }
+            GuiLogMessage(String.Format("Parsed document in {0}ms", (DateTime.Now - startTime).TotalMilliseconds), NotificationLevel.Info);
             _parsedText = document.ToString();
             _presentation.ShowDocument(document);
             OnPropertyChanged("ParsedText");
@@ -122,7 +139,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void Parser_OnGuiLogNotificationOccured(IPlugin sender, GuiLogEventArgs args)
+        private void ForwardGuiLogNotification(IPlugin sender, GuiLogEventArgs args)
         {
             GuiLogMessage(args.Message, args.NotificationLevel);
         }

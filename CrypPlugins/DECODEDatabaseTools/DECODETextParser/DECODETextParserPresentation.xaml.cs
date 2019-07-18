@@ -1,4 +1,6 @@
-﻿using Cryptool.Plugins.DECODEDatabaseTools.DataObjects;
+﻿using Cryptool.PluginBase;
+using Cryptool.PluginBase.Miscellaneous;
+using Cryptool.Plugins.DECODEDatabaseTools.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -35,6 +37,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// <param name="document"></param>
         public void ShowDocument(TextDocument document)
         {
+            DateTime startTime = DateTime.Now;
+
             Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
             {
                 PageList.Items.Clear();
@@ -54,6 +58,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     PageList.Items.Add(page);
                 }, null);
             }
+            GuiLogMessage(String.Format("Created document user interface in {0}ms", (DateTime.Now - startTime).TotalMilliseconds), NotificationLevel.Info);
         }
 
         /// <summary>
@@ -73,6 +78,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 var parent = ((Control)sender).Parent as UIElement;
                 parent.RaiseEvent(eventArg);
             }
+        }
+
+        public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+
+        protected void GuiLogMessage(string message, NotificationLevel logLevel)
+        {
+            EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, null, new GuiLogEventArgs(message, null, logLevel));
         }
     }
 }

@@ -29,9 +29,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     public enum TokenType
     {
         Unknown = 0,
-        Ciphertext = 1,
-        Plaintext = 2,
-        Cleartext = 3
+        Null = 1,
+        RegularCode = 2,
+        VocabularyElement = 3,
+        Tag = 4
     }
 
     public enum LineType
@@ -274,9 +275,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 switch (_line.LineType)
                 {
                     case LineType.Text:
-                        return Brushes.Black;
+                        switch (TokenType)
+                        {
+                            case TokenType.Tag:
+                                return Brushes.DarkGreen;
+                            default:
+                                return Brushes.Black;
+                        }
                     case LineType.Comment:
-                        return Brushes.Blue;
+                        return Brushes.DarkGreen;
                     default:
                         return Brushes.Black;
                 }
