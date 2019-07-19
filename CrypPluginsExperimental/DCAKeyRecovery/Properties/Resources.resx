@@ -117,6 +117,63 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AnyRoundAttackDataColHeader1" xml:space="preserve">
+    <value>Key candidate</value>
+  </data>
+  <data name="AnyRoundAttackDataColHeader2" xml:space="preserve">
+    <value>Hitcount</value>
+  </data>
+  <data name="AnyRoundAttackDataColHeader3" xml:space="preserve">
+    <value>Probability</value>
+  </data>
+  <data name="AnyRoundAttackEnd" xml:space="preserve">
+    <value>End:</value>
+  </data>
+  <data name="AnyRoundAttackRound" xml:space="preserve">
+    <value>Attacked encryption round:</value>
+  </data>
+  <data name="AnyRoundAttackRoundResults" xml:space="preserve">
+    <value>Result</value>
+  </data>
+  <data name="AnyRoundAttackStart" xml:space="preserve">
+    <value>Start:</value>
+  </data>
+  <data name="AnyRoundAttackStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="AnyRoundExpectedHitCount" xml:space="preserve">
+    <value>Expected hitcount:</value>
+  </data>
+  <data name="AnyRoundExpectedProbability" xml:space="preserve">
+    <value>Expected probability:</value>
+  </data>
+  <data name="AnyRoundMessagePairCount" xml:space="preserve">
+    <value>Count of Messagepairs:</value>
+  </data>
+  <data name="AnyRoundRecoveredRoundKey" xml:space="preserve">
+    <value>Recovered roundkey:</value>
+  </data>
+  <data name="AttackLastRoundHeader" xml:space="preserve">
+    <value>{0} key restore</value>
+  </data>
+  <data name="AutomaticMode" xml:space="preserve">
+    <value>Automatic mode</value>
+  </data>
+  <data name="AutomaticModeToolTip" xml:space="preserve">
+    <value>No user input required in automatic mode</value>
+  </data>
+  <data name="BtnNextKey" xml:space="preserve">
+    <value>Skip key</value>
+  </data>
+  <data name="BtnNextMessage" xml:space="preserve">
+    <value>Skip message pair</value>
+  </data>
+  <data name="BtnSkip" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="BtnStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
   <data name="ChoiceOfAlgorithm" xml:space="preserve">
     <value>Choice of the cipher</value>
   </data>
@@ -126,29 +183,125 @@
   <data name="Cipher1" xml:space="preserve">
     <value>Cipher 1 (16 bit blocksize, 2 subkeys, keylength is 32 bit)</value>
   </data>
+  <data name="Cipher1CipherViewCol" xml:space="preserve">
+    <value>Key candidate</value>
+  </data>
+  <data name="Cipher1SummaryResultViewTotalSummary1" xml:space="preserve">
+    <value>Total</value>
+  </data>
   <data name="Cipher2" xml:space="preserve">
     <value>Cipher 2 (16 bit blocksize, 4 subkeys, keylength is 64 bit)</value>
+  </data>
+  <data name="Cipher2SummaryResultViewRound1" xml:space="preserve">
+    <value>Round 1</value>
+  </data>
+  <data name="Cipher2SummaryResultViewRound2" xml:space="preserve">
+    <value>Round 2</value>
+  </data>
+  <data name="Cipher2SummaryResultViewRound3" xml:space="preserve">
+    <value>Round 3</value>
+  </data>
+  <data name="Cipher2SummaryResultViewTotalSummary" xml:space="preserve">
+    <value>Total</value>
   </data>
   <data name="Cipher3" xml:space="preserve">
     <value>Cipher 3 (16 bit blocksize, 6 subkeys, keylength is 96 bit)</value>
   </data>
+  <data name="Cipher3SummaryResultViewRound1" xml:space="preserve">
+    <value>Round 1</value>
+  </data>
+  <data name="Cipher3SummaryResultViewRound2" xml:space="preserve">
+    <value>Round 2</value>
+  </data>
+  <data name="Cipher3SummaryResultViewRound3" xml:space="preserve">
+    <value>Round 3</value>
+  </data>
+  <data name="Cipher3SummaryResultViewRound4" xml:space="preserve">
+    <value>Round 4</value>
+  </data>
+  <data name="Cipher3SummaryResultViewRound5" xml:space="preserve">
+    <value>Round 5</value>
+  </data>
+  <data name="Cipher3SummaryResultViewTotalSummary" xml:space="preserve">
+    <value>Total</value>
+  </data>
   <data name="DifferentialInput" xml:space="preserve">
-    <value>Input of the differential</value>
+    <value>Differential</value>
   </data>
   <data name="DifferentialInputToolTip" xml:space="preserve">
-    <value>The differential is used to restore the key bits</value>
+    <value>Input for the differential</value>
   </data>
   <data name="EncryptedMessagePairsInput" xml:space="preserve">
-    <value>Input of encrypted message pairs</value>
+    <value>Ciphertext-pairs</value>
   </data>
   <data name="EncryptedMessagePairsInputToolTip" xml:space="preserve">
-    <value>The message pairs are the cooresponding pairs to the unencrypted message pairs necessary for restoring the key bits</value>
+    <value>Input for the ciphertext-pairs</value>
+  </data>
+  <data name="FinishedOutput" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="FinishedOutputToolTip" xml:space="preserve">
+    <value>The output indicates to the PathFinder component that the calculation has been completed</value>
+  </data>
+  <data name="Lang" xml:space="preserve">
+    <value>ENG</value>
+  </data>
+  <data name="LastRoundAttackCurrentCiphertext" xml:space="preserve">
+    <value>Current ciphertext:</value>
+  </data>
+  <data name="LastRoundAttackCurrentKeyCandidate" xml:space="preserve">
+    <value>Current key candidate:</value>
+  </data>
+  <data name="LastRoundAttackCurrentKeyOfAll" xml:space="preserve">
+    <value>Number of keys to test:</value>
+  </data>
+  <data name="LastRoundAttackCurrentPlaintext" xml:space="preserve">
+    <value>Current plaintext:</value>
+  </data>
+  <data name="LastRoundAttackDataColHeader1" xml:space="preserve">
+    <value>Iteration</value>
+  </data>
+  <data name="LastRoundAttackDataColHeader2" xml:space="preserve">
+    <value>Remaining key candidates</value>
+  </data>
+  <data name="LastRoundAttackEnd" xml:space="preserve">
+    <value>End:</value>
+  </data>
+  <data name="LastRoundAttackExpectedDifference" xml:space="preserve">
+    <value>Expected difference:</value>
+  </data>
+  <data name="LastRoundAttackNumberOfExaminedPairs" xml:space="preserve">
+    <value>Examined plaintext/keytext pairs:</value>
+  </data>
+  <data name="LastRoundAttackRemainingKeyCandidates" xml:space="preserve">
+    <value>Remaining key candidates:</value>
+  </data>
+  <data name="LastRoundAttackRound" xml:space="preserve">
+    <value>Attacked round:</value>
+  </data>
+  <data name="LastRoundAttackRoundResults" xml:space="preserve">
+    <value>Iterations</value>
+  </data>
+  <data name="LastRoundAttackStart" xml:space="preserve">
+    <value>Start:</value>
+  </data>
+  <data name="LastRoundAttackStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="MessageDifferenceOutput" xml:space="preserve">
+    <value>Expected difference</value>
+  </data>
+  <data name="MessageDifferenceOutputToolTip" xml:space="preserve">
+    <value>Output for the expected difference</value>
+  </data>
+  <data name="MessageNoResult" xml:space="preserve">
+    <value>The last subkeys could not be restored. This can happen if one of the previous subkeys was incorrectly calculated. Possibly the parameters in the PathFinder component should be selected again.</value>
   </data>
   <data name="NeededMessageCountOutput" xml:space="preserve">
-    <value>Necessary message pairs</value>
+    <value>Message pair count</value>
   </data>
   <data name="NeededMessageCountOutputToolTip" xml:space="preserve">
-    <value>Specifies the number of message pairs required to recover key bits</value>
+    <value>Input for the message pair count</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>DCA KeyRecovery</value>
@@ -157,15 +310,60 @@
     <value>The DCA KeyRecovery component performs recovery of key bits from round keys</value>
   </data>
   <data name="RoundKeysOutput" xml:space="preserve">
-    <value>Output of the round keys</value>
+    <value>Roundkeys</value>
   </data>
   <data name="RoundKeysOutputToolTip" xml:space="preserve">
-    <value>The round keys are output after the differential cryptanalysis has been performed</value>
+    <value>Output for the roundkeys</value>
+  </data>
+  <data name="SummaryResultViewCountOfDecryptions" xml:space="preserve">
+    <value>Decryption count:</value>
+  </data>
+  <data name="SummaryResultViewCountOfMessages" xml:space="preserve">
+    <value>Message count:</value>
+  </data>
+  <data name="SummaryResultViewCurrentRound" xml:space="preserve">
+    <value>Attacked encryption round:</value>
+  </data>
+  <data name="SummaryResultViewEndTime" xml:space="preserve">
+    <value>End:</value>
+  </data>
+  <data name="SummaryResultViewRecoveredK0" xml:space="preserve">
+    <value>Recovered subkey K0:</value>
+  </data>
+  <data name="SummaryResultViewRecoveredK1" xml:space="preserve">
+    <value>Recovered subkey K1:</value>
+  </data>
+  <data name="SummaryResultViewRecoveredK2" xml:space="preserve">
+    <value>Recovered subkey K2:</value>
+  </data>
+  <data name="SummaryResultViewRecoveredK3" xml:space="preserve">
+    <value>Recovered subkey K3:</value>
+  </data>
+  <data name="SummaryResultViewRecoveredK4" xml:space="preserve">
+    <value>Recovered subkey K4:</value>
+  </data>
+  <data name="SummaryResultViewRecoveredK5" xml:space="preserve">
+    <value>Recovered subkey K5:</value>
+  </data>
+  <data name="SummaryResultViewStartTime" xml:space="preserve">
+    <value>Start:</value>
+  </data>
+  <data name="SummaryResultViewTestedKeys" xml:space="preserve">
+    <value>Tried keys:</value>
+  </data>
+  <data name="TabItemHeaderCipher" xml:space="preserve">
+    <value>Detailed view</value>
+  </data>
+  <data name="TabItemHeaderRoundSummary" xml:space="preserve">
+    <value>Round status</value>
+  </data>
+  <data name="TabItemHeaderSummary" xml:space="preserve">
+    <value>Full status</value>
   </data>
   <data name="UnencryptedMessagePairsInput" xml:space="preserve">
-    <value>Input of message pairs</value>
+    <value>Plaintext-pairs</value>
   </data>
   <data name="UnencryptedMessagePairsInputToolTip" xml:space="preserve">
-    <value>The message pairs are used to restore the round key bits</value>
+    <value>Input for the plaintext-pairs</value>
   </data>
 </root>

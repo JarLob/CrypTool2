@@ -20,13 +20,13 @@
             <RowDefinition Height="80"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Content="{Loc IntroductionSlide2Header}"></Label>
-        <TextBlock Grid.Row="1" FontFamily="Courier New" FontSize="12" Text="{Loc IntroductionSlide2Content1}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
+        <Label Grid.Row="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Content="{Loc Tutorial1IntroductionSlide2Header}"></Label>
+        <TextBlock Grid.Row="1" FontFamily="Courier New" FontSize="12" Text="{Loc Tutorial1IntroductionSlide2Content1}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
         <Image Grid.Row="2" Source="/DCAPathFinder;component/images/mXORk.png"></Image>
-        <TextBlock Grid.Row="3" FontFamily="Courier New" FontSize="12" Text="{Loc IntroductionSlide2Content2}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
+        <TextBlock Grid.Row="3" FontFamily="Courier New" FontSize="12" Text="{Loc Tutorial1IntroductionSlide2Content2}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
         <Image Grid.Row="4" Source="/DCAPathFinder;component/images/mXORkXORk.png"></Image>
-        <TextBlock Grid.Row="5" FontFamily="Courier New" FontSize="12" Text="{Loc IntroductionSlide2Content3}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
-        <TextBlock Grid.Row="6" FontFamily="Courier New" FontSize="12" Text="{Loc IntroductionSlide2Content4}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
+        <TextBlock Grid.Row="5" FontFamily="Courier New" FontSize="12" Text="{Loc Tutorial1IntroductionSlide2Content3}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
+        <TextBlock Grid.Row="6" FontFamily="Courier New" FontSize="12" Text="{Loc Tutorial1IntroductionSlide2Content4}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
 
     </Grid>
 </UserControl>

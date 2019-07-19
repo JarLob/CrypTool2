@@ -248,27 +248,6 @@ namespace ToyCiphers.UI
         }
 
         /// <summary>
-        /// Toggles the view
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ToggleViewClicked(object sender, RoutedEventArgs e)
-        {
-            if (CipherGrid.Visibility == Visibility.Hidden)
-            {
-                CipherGrid.Visibility = Visibility.Visible;
-                OutputBlock.Visibility = Visibility.Visible;
-                LabelGrid.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                CipherGrid.Visibility = Visibility.Hidden;
-                OutputBlock.Visibility = Visibility.Hidden;
-                LabelGrid.Visibility = Visibility.Visible;
-            }
-        }
-
-        /// <summary>
         /// Event
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
@@ -279,7 +258,10 @@ namespace ToyCiphers.UI
         /// <param name="propertyName"></param>
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (PropertyChanged != null)
+            {
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

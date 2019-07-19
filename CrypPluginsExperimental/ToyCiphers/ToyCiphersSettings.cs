@@ -27,7 +27,9 @@ namespace Cryptool.Plugins.ToyCiphers
         #region Private Variables
 
         private string _choiceOfAlgorithm;
+        private string _choiceOfMode;
         private Algorithms _currentAlgorithm;
+        private Mode _currentMode;
 
         #endregion
 
@@ -45,6 +47,22 @@ namespace Cryptool.Plugins.ToyCiphers
 
         #region Properties
 
+        /// <summary>
+        /// Property for the mode
+        /// </summary>
+        public Mode CurrentMode
+        {
+            get { return _currentMode; }
+            set
+            {
+                _currentMode = value;
+                OnPropertyChanged("CurrentMode");
+            }
+        }
+
+        /// <summary>
+        /// Property for the cipher
+        /// </summary>
         public Algorithms CurrentAlgorithm
         {
             get { return _currentAlgorithm; }
@@ -60,10 +78,40 @@ namespace Cryptool.Plugins.ToyCiphers
         #region TaskPane Settings
 
         /// <summary>
+        /// Selection of the operating mode
+        /// </summary>
+        [TaskPane("ChoiceOfMode", "ChoiceOfModeToolTop", "OperatingOptions", 1, false, ControlType.ComboBox, new string[] { "Mode1", "Mode2"})]
+        public string ChoiceOfMode
+        {
+            get { return _choiceOfMode; }
+            set
+            {
+                if (_choiceOfMode != value)
+                {
+                    _choiceOfMode = value;
+                    switch (_choiceOfMode)
+                    {
+                        case "0":
+                        {
+                            CurrentMode = Mode.Encrypt;
+                        }
+                            break;
+                        case "1":
+                        {
+                            CurrentMode = Mode.Decrypt;
+                        }
+                            break;
+                    }
+                    OnPropertyChanged("ChoiceOfMode");
+                } 
+            }
+        }
+
+        /// <summary>
         /// Selection of the toy cipher algorithm
         /// </summary>
         //[TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", null, 1, false, ControlType.ComboBox, new string[]{ "Cipher1", "Cipher2", "Cipher3", "Cipher4", "Cipher5" })]
-        [TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", null, 1, false, ControlType.ComboBox, new string[] { "Cipher1", "Cipher2", "Cipher3"})]
+        [TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", "OperatingOptions", 2, false, ControlType.ComboBox, new string[] { "Cipher1", "Cipher2", "Cipher3"})]
         public string ChoiceOfAlgorithm
         {
             get

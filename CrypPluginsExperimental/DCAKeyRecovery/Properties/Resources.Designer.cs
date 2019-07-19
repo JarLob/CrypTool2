@@ -61,6 +61,177 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key candidate ähnelt.
+        /// </summary>
+        internal static string AnyRoundAttackDataColHeader1 {
+            get {
+                return ResourceManager.GetString("AnyRoundAttackDataColHeader1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hitcount ähnelt.
+        /// </summary>
+        internal static string AnyRoundAttackDataColHeader2 {
+            get {
+                return ResourceManager.GetString("AnyRoundAttackDataColHeader2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Probability ähnelt.
+        /// </summary>
+        internal static string AnyRoundAttackDataColHeader3 {
+            get {
+                return ResourceManager.GetString("AnyRoundAttackDataColHeader3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die End: ähnelt.
+        /// </summary>
+        internal static string AnyRoundAttackEnd {
+            get {
+                return ResourceManager.GetString("AnyRoundAttackEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Attacked encryption round: ähnelt.
+        /// </summary>
+        internal static string AnyRoundAttackRound {
+            get {
+                return ResourceManager.GetString("AnyRoundAttackRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Result ähnelt.
+        /// </summary>
+        internal static string AnyRoundAttackRoundResults {
+            get {
+                return ResourceManager.GetString("AnyRoundAttackRoundResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start: ähnelt.
+        /// </summary>
+        internal static string AnyRoundAttackStart {
+            get {
+                return ResourceManager.GetString("AnyRoundAttackStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Status ähnelt.
+        /// </summary>
+        internal static string AnyRoundAttackStatus {
+            get {
+                return ResourceManager.GetString("AnyRoundAttackStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Expected hitcount: ähnelt.
+        /// </summary>
+        internal static string AnyRoundExpectedHitCount {
+            get {
+                return ResourceManager.GetString("AnyRoundExpectedHitCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Expected probability: ähnelt.
+        /// </summary>
+        internal static string AnyRoundExpectedProbability {
+            get {
+                return ResourceManager.GetString("AnyRoundExpectedProbability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Count of Messagepairs: ähnelt.
+        /// </summary>
+        internal static string AnyRoundMessagePairCount {
+            get {
+                return ResourceManager.GetString("AnyRoundMessagePairCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Recovered roundkey: ähnelt.
+        /// </summary>
+        internal static string AnyRoundRecoveredRoundKey {
+            get {
+                return ResourceManager.GetString("AnyRoundRecoveredRoundKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0} key restore ähnelt.
+        /// </summary>
+        internal static string AttackLastRoundHeader {
+            get {
+                return ResourceManager.GetString("AttackLastRoundHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Automatic mode ähnelt.
+        /// </summary>
+        internal static string AutomaticMode {
+            get {
+                return ResourceManager.GetString("AutomaticMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No user input required in automatic mode ähnelt.
+        /// </summary>
+        internal static string AutomaticModeToolTip {
+            get {
+                return ResourceManager.GetString("AutomaticModeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Skip key ähnelt.
+        /// </summary>
+        internal static string BtnNextKey {
+            get {
+                return ResourceManager.GetString("BtnNextKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Skip message pair ähnelt.
+        /// </summary>
+        internal static string BtnNextMessage {
+            get {
+                return ResourceManager.GetString("BtnNextMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Skip ähnelt.
+        /// </summary>
+        internal static string BtnSkip {
+            get {
+                return ResourceManager.GetString("BtnSkip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start ähnelt.
+        /// </summary>
+        internal static string BtnStart {
+            get {
+                return ResourceManager.GetString("BtnStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Choice of the cipher ähnelt.
         /// </summary>
         internal static string ChoiceOfAlgorithm {
@@ -88,11 +259,65 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key candidate ähnelt.
+        /// </summary>
+        internal static string Cipher1CipherViewCol {
+            get {
+                return ResourceManager.GetString("Cipher1CipherViewCol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Total ähnelt.
+        /// </summary>
+        internal static string Cipher1SummaryResultViewTotalSummary1 {
+            get {
+                return ResourceManager.GetString("Cipher1SummaryResultViewTotalSummary1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 2 (16 bit blocksize, 4 subkeys, keylength is 64 bit) ähnelt.
         /// </summary>
         internal static string Cipher2 {
             get {
                 return ResourceManager.GetString("Cipher2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 1 ähnelt.
+        /// </summary>
+        internal static string Cipher2SummaryResultViewRound1 {
+            get {
+                return ResourceManager.GetString("Cipher2SummaryResultViewRound1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 2 ähnelt.
+        /// </summary>
+        internal static string Cipher2SummaryResultViewRound2 {
+            get {
+                return ResourceManager.GetString("Cipher2SummaryResultViewRound2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 3 ähnelt.
+        /// </summary>
+        internal static string Cipher2SummaryResultViewRound3 {
+            get {
+                return ResourceManager.GetString("Cipher2SummaryResultViewRound3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Total ähnelt.
+        /// </summary>
+        internal static string Cipher2SummaryResultViewTotalSummary {
+            get {
+                return ResourceManager.GetString("Cipher2SummaryResultViewTotalSummary", resourceCulture);
             }
         }
         
@@ -106,7 +331,61 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input of the differential ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 1 ähnelt.
+        /// </summary>
+        internal static string Cipher3SummaryResultViewRound1 {
+            get {
+                return ResourceManager.GetString("Cipher3SummaryResultViewRound1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 2 ähnelt.
+        /// </summary>
+        internal static string Cipher3SummaryResultViewRound2 {
+            get {
+                return ResourceManager.GetString("Cipher3SummaryResultViewRound2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 3 ähnelt.
+        /// </summary>
+        internal static string Cipher3SummaryResultViewRound3 {
+            get {
+                return ResourceManager.GetString("Cipher3SummaryResultViewRound3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 4 ähnelt.
+        /// </summary>
+        internal static string Cipher3SummaryResultViewRound4 {
+            get {
+                return ResourceManager.GetString("Cipher3SummaryResultViewRound4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 5 ähnelt.
+        /// </summary>
+        internal static string Cipher3SummaryResultViewRound5 {
+            get {
+                return ResourceManager.GetString("Cipher3SummaryResultViewRound5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Total ähnelt.
+        /// </summary>
+        internal static string Cipher3SummaryResultViewTotalSummary {
+            get {
+                return ResourceManager.GetString("Cipher3SummaryResultViewTotalSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differential ähnelt.
         /// </summary>
         internal static string DifferentialInput {
             get {
@@ -115,7 +394,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The differential is used to restore the key bits ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input for the differential ähnelt.
         /// </summary>
         internal static string DifferentialInputToolTip {
             get {
@@ -124,7 +403,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input of encrypted message pairs ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext-pairs ähnelt.
         /// </summary>
         internal static string EncryptedMessagePairsInput {
             get {
@@ -133,7 +412,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The message pairs are the cooresponding pairs to the unencrypted message pairs necessary for restoring the key bits ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input for the ciphertext-pairs ähnelt.
         /// </summary>
         internal static string EncryptedMessagePairsInputToolTip {
             get {
@@ -142,7 +421,187 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Necessary message pairs ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Finished ähnelt.
+        /// </summary>
+        internal static string FinishedOutput {
+            get {
+                return ResourceManager.GetString("FinishedOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The output indicates to the PathFinder component that the calculation has been completed ähnelt.
+        /// </summary>
+        internal static string FinishedOutputToolTip {
+            get {
+                return ResourceManager.GetString("FinishedOutputToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ENG ähnelt.
+        /// </summary>
+        internal static string Lang {
+            get {
+                return ResourceManager.GetString("Lang", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Current ciphertext: ähnelt.
+        /// </summary>
+        internal static string LastRoundAttackCurrentCiphertext {
+            get {
+                return ResourceManager.GetString("LastRoundAttackCurrentCiphertext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Current key candidate: ähnelt.
+        /// </summary>
+        internal static string LastRoundAttackCurrentKeyCandidate {
+            get {
+                return ResourceManager.GetString("LastRoundAttackCurrentKeyCandidate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of keys to test: ähnelt.
+        /// </summary>
+        internal static string LastRoundAttackCurrentKeyOfAll {
+            get {
+                return ResourceManager.GetString("LastRoundAttackCurrentKeyOfAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Current plaintext: ähnelt.
+        /// </summary>
+        internal static string LastRoundAttackCurrentPlaintext {
+            get {
+                return ResourceManager.GetString("LastRoundAttackCurrentPlaintext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Iteration ähnelt.
+        /// </summary>
+        internal static string LastRoundAttackDataColHeader1 {
+            get {
+                return ResourceManager.GetString("LastRoundAttackDataColHeader1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Remaining key candidates ähnelt.
+        /// </summary>
+        internal static string LastRoundAttackDataColHeader2 {
+            get {
+                return ResourceManager.GetString("LastRoundAttackDataColHeader2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die End: ähnelt.
+        /// </summary>
+        internal static string LastRoundAttackEnd {
+            get {
+                return ResourceManager.GetString("LastRoundAttackEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Expected difference: ähnelt.
+        /// </summary>
+        internal static string LastRoundAttackExpectedDifference {
+            get {
+                return ResourceManager.GetString("LastRoundAttackExpectedDifference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Examined plaintext/keytext pairs: ähnelt.
+        /// </summary>
+        internal static string LastRoundAttackNumberOfExaminedPairs {
+            get {
+                return ResourceManager.GetString("LastRoundAttackNumberOfExaminedPairs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Remaining key candidates: ähnelt.
+        /// </summary>
+        internal static string LastRoundAttackRemainingKeyCandidates {
+            get {
+                return ResourceManager.GetString("LastRoundAttackRemainingKeyCandidates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Attacked round: ähnelt.
+        /// </summary>
+        internal static string LastRoundAttackRound {
+            get {
+                return ResourceManager.GetString("LastRoundAttackRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Iterations ähnelt.
+        /// </summary>
+        internal static string LastRoundAttackRoundResults {
+            get {
+                return ResourceManager.GetString("LastRoundAttackRoundResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start: ähnelt.
+        /// </summary>
+        internal static string LastRoundAttackStart {
+            get {
+                return ResourceManager.GetString("LastRoundAttackStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Status ähnelt.
+        /// </summary>
+        internal static string LastRoundAttackStatus {
+            get {
+                return ResourceManager.GetString("LastRoundAttackStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Expected difference ähnelt.
+        /// </summary>
+        internal static string MessageDifferenceOutput {
+            get {
+                return ResourceManager.GetString("MessageDifferenceOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output for the expected difference ähnelt.
+        /// </summary>
+        internal static string MessageDifferenceOutputToolTip {
+            get {
+                return ResourceManager.GetString("MessageDifferenceOutputToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The last subkeys could not be restored. This can happen if one of the previous subkeys was incorrectly calculated. Possibly the parameters in the PathFinder component should be selected again. ähnelt.
+        /// </summary>
+        internal static string MessageNoResult {
+            get {
+                return ResourceManager.GetString("MessageNoResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Message pair count ähnelt.
         /// </summary>
         internal static string NeededMessageCountOutput {
             get {
@@ -151,7 +610,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Specifies the number of message pairs required to recover key bits ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input for the message pair count ähnelt.
         /// </summary>
         internal static string NeededMessageCountOutputToolTip {
             get {
@@ -178,7 +637,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output of the round keys ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Roundkeys ähnelt.
         /// </summary>
         internal static string RoundKeysOutput {
             get {
@@ -187,7 +646,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The round keys are output after the differential cryptanalysis has been performed ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output for the roundkeys ähnelt.
         /// </summary>
         internal static string RoundKeysOutputToolTip {
             get {
@@ -196,7 +655,142 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input of message pairs ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Decryption count: ähnelt.
+        /// </summary>
+        internal static string SummaryResultViewCountOfDecryptions {
+            get {
+                return ResourceManager.GetString("SummaryResultViewCountOfDecryptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Message count: ähnelt.
+        /// </summary>
+        internal static string SummaryResultViewCountOfMessages {
+            get {
+                return ResourceManager.GetString("SummaryResultViewCountOfMessages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Attacked encryption round: ähnelt.
+        /// </summary>
+        internal static string SummaryResultViewCurrentRound {
+            get {
+                return ResourceManager.GetString("SummaryResultViewCurrentRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die End: ähnelt.
+        /// </summary>
+        internal static string SummaryResultViewEndTime {
+            get {
+                return ResourceManager.GetString("SummaryResultViewEndTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Recovered subkey K0: ähnelt.
+        /// </summary>
+        internal static string SummaryResultViewRecoveredK0 {
+            get {
+                return ResourceManager.GetString("SummaryResultViewRecoveredK0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Recovered subkey K1: ähnelt.
+        /// </summary>
+        internal static string SummaryResultViewRecoveredK1 {
+            get {
+                return ResourceManager.GetString("SummaryResultViewRecoveredK1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Recovered subkey K2: ähnelt.
+        /// </summary>
+        internal static string SummaryResultViewRecoveredK2 {
+            get {
+                return ResourceManager.GetString("SummaryResultViewRecoveredK2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Recovered subkey K3: ähnelt.
+        /// </summary>
+        internal static string SummaryResultViewRecoveredK3 {
+            get {
+                return ResourceManager.GetString("SummaryResultViewRecoveredK3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Recovered subkey K4: ähnelt.
+        /// </summary>
+        internal static string SummaryResultViewRecoveredK4 {
+            get {
+                return ResourceManager.GetString("SummaryResultViewRecoveredK4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Recovered subkey K5: ähnelt.
+        /// </summary>
+        internal static string SummaryResultViewRecoveredK5 {
+            get {
+                return ResourceManager.GetString("SummaryResultViewRecoveredK5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start: ähnelt.
+        /// </summary>
+        internal static string SummaryResultViewStartTime {
+            get {
+                return ResourceManager.GetString("SummaryResultViewStartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tried keys: ähnelt.
+        /// </summary>
+        internal static string SummaryResultViewTestedKeys {
+            get {
+                return ResourceManager.GetString("SummaryResultViewTestedKeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Detailed view ähnelt.
+        /// </summary>
+        internal static string TabItemHeaderCipher {
+            get {
+                return ResourceManager.GetString("TabItemHeaderCipher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round status ähnelt.
+        /// </summary>
+        internal static string TabItemHeaderRoundSummary {
+            get {
+                return ResourceManager.GetString("TabItemHeaderRoundSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Full status ähnelt.
+        /// </summary>
+        internal static string TabItemHeaderSummary {
+            get {
+                return ResourceManager.GetString("TabItemHeaderSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext-pairs ähnelt.
         /// </summary>
         internal static string UnencryptedMessagePairsInput {
             get {
@@ -205,7 +799,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The message pairs are used to restore the round key bits ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input for the plaintext-pairs ähnelt.
         /// </summary>
         internal static string UnencryptedMessagePairsInputToolTip {
             get {

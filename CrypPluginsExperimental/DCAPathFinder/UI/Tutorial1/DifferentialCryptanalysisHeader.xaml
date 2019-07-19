@@ -7,6 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="600">
     <Grid Height="350" Width="600">
-        <TextBlock FontFamily="Courier New" FontSize="30" FontWeight="Bold" Text="{Loc DifferentialCryptanalysisHeader}"  Margin="10,0,10,0" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"></TextBlock>
+        <TextBlock FontFamily="Courier New" FontSize="30" FontWeight="Bold" Text="{Loc Tutorial1DifferentialCryptanalysisHeader}"  Margin="10,0,10,0" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"></TextBlock>
     </Grid>
 </UserControl>

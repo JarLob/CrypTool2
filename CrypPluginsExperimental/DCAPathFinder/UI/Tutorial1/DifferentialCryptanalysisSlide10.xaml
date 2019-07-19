@@ -20,18 +20,21 @@
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Content="{Loc DifferentialCryptanalysisSlide10Header}"></Label>
-        <TextBlock Grid.Row="1" FontFamily="Courier New" FontSize="12" Text="{Loc DifferentialCryptanalysisSlide10Content1}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
+        <Label Grid.Row="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Content="{Loc Tutorial1DifferentialCryptanalysisSlide10Header}"></Label>
+        <TextBlock Grid.Row="1" FontFamily="Courier New" FontSize="12" Text="{Loc Tutorial1DifferentialCryptanalysisSlide10Content1}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
         <Image Grid.Row="2" Source="/DCAPathFinder;component/images/u1XORu2.png"></Image>
         <TextBlock Grid.Row="3" FontFamily="Courier New" FontSize="12" Margin="10,2,10,0" TextWrapping="Wrap">
-            <Run Text="{Loc DifferentialCryptanalysisSlide10Content2Run1}"></Run><Run BaselineAlignment="Subscript" Text="{Loc DifferentialCryptanalysisSlide10Content2Run2}" FontSize="10"></Run>
-            <Run Text="{Loc DifferentialCryptanalysisSlide10Content2Run3}"></Run>
+            <Run Text="{Loc Tutorial1DifferentialCryptanalysisSlide10Content2Run1}"></Run><Run BaselineAlignment="Subscript" Text="{Loc Tutorial1DifferentialCryptanalysisSlide10Content2Run2}" FontSize="10"></Run>
+            <Run Text="{Loc Tutorial1DifferentialCryptanalysisSlide10Content2Run3}"></Run>
         </TextBlock>
         <Image Grid.Row="4" Source="/DCAPathFinder;component/images/k1restore.png"></Image>
 
         <TextBlock Grid.Row="5" FontFamily="Courier New" FontSize="12" Margin="10,2,10,0" TextWrapping="Wrap">
-            <Run Text="{Loc DifferentialCryptanalysisSlide10Content3Run1}"></Run><Run BaselineAlignment="Subscript" Text="{Loc DifferentialCryptanalysisSlide10Content3Run2}" FontSize="10"></Run><Run Text="{Loc DifferentialCryptanalysisSlide10Content3Run3}"></Run>
+            <Run Text="{Loc Tutorial1DifferentialCryptanalysisSlide10Content3Run1}"></Run><Run BaselineAlignment="Subscript" Text="{Loc Tutorial1DifferentialCryptanalysisSlide10Content3Run2}" FontSize="10"></Run><Run Text="{Loc Tutorial1DifferentialCryptanalysisSlide10Content3Run3}"></Run>
         </TextBlock>
-        <TextBlock Grid.Row="6" FontFamily="Courier New" FontSize="12" Text="{Loc DifferentialCryptanalysisSlide10Content4}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
+
+        <!-- 
+        <TextBlock Grid.Row="6" FontFamily="Courier New" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc Tutorial1DifferentialCryptanalysisSlide10Content4}" TextWrapping="Wrap" Margin="10,0,10,0"></TextBlock>
+        -->
     </Grid>
 </UserControl>

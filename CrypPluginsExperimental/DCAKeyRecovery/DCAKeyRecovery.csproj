@@ -34,7 +34,7 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
+    <OutputPath>..\..\CrypBuild\Release\CrypPlugins\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -52,6 +52,11 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -74,11 +79,76 @@
     <Reference Include="WindowsBase">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WpfMath">
+      <HintPath>..\..\Lib\WpfMath.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms.cs" />
     <Compile Include="DCAKeyRecovery.cs" />
     <Compile Include="DCAKeyRecoverySettings.cs" />
+    <Compile Include="Logic\AbortingPolicy.cs" />
+    <Compile Include="Logic\Characteristic.cs" />
+    <Compile Include="Logic\Cipher1\Cipher1Configuration.cs" />
+    <Compile Include="Logic\Cipher1\Cipher1DifferentialKeyRecoveryAttack.cs" />
+    <Compile Include="Logic\Cipher1\Cipher1KeyRecovery.cs" />
+    <Compile Include="Logic\Cipher2\Cipher2Characteristic.cs" />
+    <Compile Include="Logic\Cipher2\Cipher2Configuration.cs" />
+    <Compile Include="Logic\Cipher2\Cipher2DifferentialKeyRecoveryAttack.cs" />
+    <Compile Include="Logic\Cipher2\Cipher2KeyRecovery.cs" />
+    <Compile Include="Logic\Cipher3\Cipher3Characteristic.cs" />
+    <Compile Include="Logic\Cipher3\Cipher3Configuration.cs" />
+    <Compile Include="Logic\Cipher3\Cipher3DifferentialKeyRecoveryAttack.cs" />
+    <Compile Include="Logic\Cipher3\Cipher3KeyRecovery.cs" />
+    <Compile Include="Logic\ProgressEventArgs.cs" />
+    <Compile Include="Logic\ResultViewAnyRoundKeyResultEventArgs.cs" />
+    <Compile Include="Logic\CipherViewLastRoundEventArgs.cs" />
+    <Compile Include="Logic\DifferentialAttackLastRoundResult.cs" />
+    <Compile Include="Logic\DifferentialAttackRoundConfiguration.cs" />
+    <Compile Include="Logic\DifferentialAttackRoundResult.cs" />
+    <Compile Include="Logic\DifferentialKeyRecoveryAttack.cs" />
+    <Compile Include="Logic\IKeyRecovery.cs" />
+    <Compile Include="Logic\KeyProbability.cs" />
+    <Compile Include="Logic\ResultViewAnyRoundEventArgs.cs" />
+    <Compile Include="Logic\RoundResult.cs" />
+    <Compile Include="Logic\ResultViewLastRoundRoundResultEventArgs.cs" />
+    <Compile Include="Logic\ResultViewLastRoundEventArgs.cs" />
+    <Compile Include="Logic\Pair.cs" />
+    <Compile Include="Logic\SearchPolicy.cs" />
+    <Compile Include="Logic\SummaryLastRound.cs" />
+    <Compile Include="Logic\SummaryViewRefreshArgs.cs" />
+    <Compile Include="Logic\SummaryAnyRound.cs" />
+    <Compile Include="UI\Cipher1\Cipher1CipherView.xaml.cs">
+      <DependentUpon>Cipher1CipherView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Cipher1\Cipher1SummaryResultView.xaml.cs">
+      <DependentUpon>Cipher1SummaryResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Cipher2\Cipher2AnyRoundResultView.xaml.cs">
+      <DependentUpon>Cipher2AnyRoundResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Cipher2\Cipher2LastRoundResultView.xaml.cs">
+      <DependentUpon>Cipher2LastRoundResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Cipher2\Cipher2SummaryResultView.xaml.cs">
+      <DependentUpon>Cipher2SummaryResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Cipher3\Cipher3AnyRoundResultView.xaml.cs">
+      <DependentUpon>Cipher3AnyRoundResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Cipher3\Cipher3LastRoundResultView.xaml.cs">
+      <DependentUpon>Cipher3LastRoundResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Cipher3\Cipher3SummaryResultView.xaml.cs">
+      <DependentUpon>Cipher3SummaryResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\16BitKeyRound.xaml.cs" />
+    <Compile Include="UI\Controls\16BitPermutationTBC.xaml.cs" />
+    <Compile Include="UI\Controls\16BitPermutation3RSPN.xaml.cs">
+      <DependentUpon>16BitPermutation3RSPN.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\4BitSBox.xaml.cs" />
     <Compile Include="UI\KeyRecoveryPres.xaml.cs">
       <DependentUpon>KeyRecoveryPres.xaml</DependentUpon>
     </Compile>
@@ -88,6 +158,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\Cipher1\Cipher1ResultView.xaml.cs">
+      <DependentUpon>Cipher1ResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Models\KeyResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CrypPluginBase\CrypPluginBase.csproj">
@@ -127,10 +201,67 @@
     <Resource Include="Images\IC_KeyRecovery.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UI\Cipher1\Cipher1CipherView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Cipher1\Cipher1SummaryResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Cipher2\Cipher2AnyRoundResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Cipher2\Cipher2LastRoundResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Cipher2\Cipher2SummaryResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Cipher3\Cipher3AnyRoundResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Cipher3\Cipher3LastRoundResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Cipher3\Cipher3SummaryResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\16BitKeyRound.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Controls\16BitPermutationTBC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Controls\16BitPermutation3RSPN.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Controls\4BitSBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UI\KeyRecoveryPres.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\Cipher1\Cipher1ResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\next-button.png" />
+    <Resource Include="Images\prev-button.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

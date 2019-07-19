@@ -19,8 +19,11 @@ namespace ToyCiphers.Ciphers
     public interface IEncryption
     {
         int EncryptBlock(int data);
+        int DecryptBlock(int data);
         int SBox(int data);
         int PBox(int data);
+        int ReverseSBox(int data);
+        int ReversePBox(int data);
         int KeyMix(int data, int key);
         void SetKeys(int[] keys);
     }

@@ -36,11 +36,22 @@ namespace Cryptool.Plugins.DCAOracle
 
         private readonly DCAOracleSettings _settings = new DCAOracleSettings();
         private readonly Random _random = new Random();
-        private int _messsageDifference;
+        private int _messageDifference;
+        private bool _newMessageDiff;
         private int _messagePairsCount;
+        private bool _newMessagePairsCount;
         private ICryptoolStream _messagePairsOutput;
 
         #endregion
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public DCAOracle()
+        {
+            _newMessageDiff = false;
+            _newMessagePairsCount = false;
+        }
 
         #region Data Properties
 
@@ -54,6 +65,7 @@ namespace Cryptool.Plugins.DCAOracle
             set
             {
                 _messagePairsCount = value;
+                _newMessagePairsCount = true;
                 OnPropertyChanged("MessagePairsCount");
             }
         }
@@ -61,13 +73,14 @@ namespace Cryptool.Plugins.DCAOracle
         /// <summary>
         /// Property for the difference of the messages of a pair
         /// </summary>
-        [PropertyInfo(Direction.InputData, "MessageDifferenceInput", "MessageDifferenceInputToolTip", false)]
+        [PropertyInfo(Direction.InputData, "MessageDifferenceInput", "MessageDifferenceInputToolTip")]
         public int MessageDifference
         {
-            get { return _messsageDifference; }
+            get { return _messageDifference; }
             set
             {
-                _messsageDifference = value;
+                _messageDifference = value;
+                _newMessageDiff = true;
                 OnPropertyChanged("MessageDifference");
             }
         }
@@ -118,6 +131,16 @@ namespace Cryptool.Plugins.DCAOracle
         /// </summary>
         public void Execute()
         {
+            //check if both inputs are new
+            if (!_newMessageDiff || !_newMessagePairsCount)
+            {
+                return;
+            }
+                
+            //reset the inputs
+            _newMessageDiff = false;
+            _newMessagePairsCount = false;
+
             if (MessagePairsCount == 0)
             {
                 GuiLogMessage(Resources.WarningMessageCountMustBeSpecified, NotificationLevel.Warning);
@@ -130,7 +153,6 @@ namespace Cryptool.Plugins.DCAOracle
 
             List<Pair> pairList = new List<Pair>();
 
-            //generate pairs
             int i;
             for (i = 0; i < MessagePairsCount; i++)
             {
@@ -151,6 +173,8 @@ namespace Cryptool.Plugins.DCAOracle
                 curProgress += stepCount;
                 ProgressChanged(curProgress, 1);
             }
+
+            _newMessageDiff = false;
 
             //each pair consists of 2 uint16 and each uint16 consists of 2 byte
             byte[] outputTemp = new byte[MessagePairsCount * 2 * 2];
@@ -181,7 +205,7 @@ namespace Cryptool.Plugins.DCAOracle
             }
 
             //finished: inform output
-            OnPropertyChanged("MessagePairsOutput");
+            //OnPropertyChanged("MessagePairsOutput");
             ProgressChanged(1, 1);
         }
 
@@ -190,6 +214,8 @@ namespace Cryptool.Plugins.DCAOracle
         /// </summary>
         public void PostExecution()
         {
+            _newMessageDiff = false;
+            _newMessagePairsCount = false;
         }
 
         /// <summary>

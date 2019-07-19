@@ -117,6 +117,63 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AnyRoundAttackDataColHeader1" xml:space="preserve">
+    <value>Schlüsselkandidat</value>
+  </data>
+  <data name="AnyRoundAttackDataColHeader2" xml:space="preserve">
+    <value>Anzahl Treffer</value>
+  </data>
+  <data name="AnyRoundAttackDataColHeader3" xml:space="preserve">
+    <value>Wahrscheinlichkeit</value>
+  </data>
+  <data name="AnyRoundAttackEnd" xml:space="preserve">
+    <value>Ende:</value>
+  </data>
+  <data name="AnyRoundAttackRound" xml:space="preserve">
+    <value>Angegriffene Verschlüsselungsrunde:</value>
+  </data>
+  <data name="AnyRoundAttackRoundResults" xml:space="preserve">
+    <value>Ergebnis</value>
+  </data>
+  <data name="AnyRoundAttackStart" xml:space="preserve">
+    <value>Start:</value>
+  </data>
+  <data name="AnyRoundAttackStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="AnyRoundExpectedHitCount" xml:space="preserve">
+    <value>Erwartete Trefferzahl:</value>
+  </data>
+  <data name="AnyRoundExpectedProbability" xml:space="preserve">
+    <value>Erwartete Wahrscheinlichkeit:</value>
+  </data>
+  <data name="AnyRoundMessagePairCount" xml:space="preserve">
+    <value>Anzahl Nachrichtenpaare:</value>
+  </data>
+  <data name="AnyRoundRecoveredRoundKey" xml:space="preserve">
+    <value>Wiederhergesteller Rundenschlüssel:</value>
+  </data>
+  <data name="AttackLastRoundHeader" xml:space="preserve">
+    <value>{0} Schlüsselwiederherstellung</value>
+  </data>
+  <data name="AutomaticMode" xml:space="preserve">
+    <value>Automatischer Modus</value>
+  </data>
+  <data name="AutomaticModeToolTip" xml:space="preserve">
+    <value>Im automatischen Modus ist keine Eingabe durch den Anwender notwendig</value>
+  </data>
+  <data name="BtnNextKey" xml:space="preserve">
+    <value>Schlüssel überspringen</value>
+  </data>
+  <data name="BtnNextMessage" xml:space="preserve">
+    <value>Nachrichten-Paar überspringen</value>
+  </data>
+  <data name="BtnSkip" xml:space="preserve">
+    <value>Überspringen</value>
+  </data>
+  <data name="BtnStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
   <data name="ChoiceOfAlgorithm" xml:space="preserve">
     <value>Wahl der Chiffre</value>
   </data>
@@ -126,29 +183,131 @@
   <data name="Cipher1" xml:space="preserve">
     <value>Chiffre 1 (16 Bit Blockgröße, 2 Rundenschlüssel, 32 Bit Schlüssellänge)</value>
   </data>
+  <data name="Cipher1CipherViewCol" xml:space="preserve">
+    <value>Schlüsselkandidat</value>
+  </data>
+  <data name="Cipher1SummaryResultViewTotalSummary1" xml:space="preserve">
+    <value>Gesamt</value>
+  </data>
   <data name="Cipher2" xml:space="preserve">
     <value>Chiffre 2 (16 Bit Blockgröße, 4 Rundenschlüssel, 64 Bit Schlüssellänge)</value>
+  </data>
+  <data name="Cipher2SummaryResultViewRound1" xml:space="preserve">
+    <value>Runde 1</value>
+  </data>
+  <data name="Cipher2SummaryResultViewRound2" xml:space="preserve">
+    <value>Runde 2</value>
+  </data>
+  <data name="Cipher2SummaryResultViewRound3" xml:space="preserve">
+    <value>Runde 3</value>
+  </data>
+  <data name="Cipher2SummaryResultViewTotalSummary" xml:space="preserve">
+    <value>Gesamt</value>
   </data>
   <data name="Cipher3" xml:space="preserve">
     <value>Chiffre 3 (16 Bit Blockgröße, 6 Rundenschlüssel, 96 Bit Schlüssellänge)</value>
   </data>
+  <data name="Cipher3SummaryResultViewRound1" xml:space="preserve">
+    <value>Runde 1</value>
+  </data>
+  <data name="Cipher3SummaryResultViewRound2" xml:space="preserve">
+    <value>Runde 2</value>
+  </data>
+  <data name="Cipher3SummaryResultViewRound3" xml:space="preserve">
+    <value>Runde 3</value>
+  </data>
+  <data name="Cipher3SummaryResultViewRound4" xml:space="preserve">
+    <value>Runde 4</value>
+  </data>
+  <data name="Cipher3SummaryResultViewRound5" xml:space="preserve">
+    <value>Runde 5</value>
+  </data>
+  <data name="Cipher3SummaryResultViewTotalSummary" xml:space="preserve">
+    <value>Gesamt</value>
+  </data>
   <data name="DifferentialInput" xml:space="preserve">
-    <value>Eingabe des Differenzial</value>
+    <value>Differenzial</value>
   </data>
   <data name="DifferentialInputToolTip" xml:space="preserve">
-    <value>Das Differenzial wird zur Wiederherstellung der Schlüsselbits verwendet</value>
+    <value>Eingang für das Differenzial</value>
   </data>
   <data name="EncryptedMessagePairsInput" xml:space="preserve">
-    <value>Eingabe der verschlüsselten Nachrichtenpaare</value>
+    <value>Geheimtext-Nachrichtenpaare</value>
   </data>
   <data name="EncryptedMessagePairsInputToolTip" xml:space="preserve">
-    <value>Die Nachrichtenpaare sind die korrespondierenden Paare zu den unverschlüsselten Nachrichtenpaare, die zur Wiederherstellung der Schlüsselbits notwendig sind</value>
+    <value>Eingang für die Geheimtext-Nachrichtenpaare</value>
+  </data>
+  <data name="ExpectedDifferential" xml:space="preserve">
+    <value>Expected difference</value>
+  </data>
+  <data name="ExpectedDifferentialToolTip" xml:space="preserve">
+    <value>Output for the expected difference</value>
+  </data>
+  <data name="FinishedOutput" xml:space="preserve">
+    <value>Fertig</value>
+  </data>
+  <data name="FinishedOutputToolTip" xml:space="preserve">
+    <value>Der Ausgang zeigt der PfadFinder-Komponente an, dass die Berechnung abgeschlossen ist</value>
+  </data>
+  <data name="Lang" xml:space="preserve">
+    <value>GER</value>
+  </data>
+  <data name="LastRoundAttackCurrentCiphertext" xml:space="preserve">
+    <value>Aktueller Schlüsseltext:</value>
+  </data>
+  <data name="LastRoundAttackCurrentKeyCandidate" xml:space="preserve">
+    <value>Aktueller Schlüsselkandidat:</value>
+  </data>
+  <data name="LastRoundAttackCurrentKeyOfAll" xml:space="preserve">
+    <value>Anzahl zu testende Schlüssel:</value>
+  </data>
+  <data name="LastRoundAttackCurrentPlaintext" xml:space="preserve">
+    <value>Aktueller Klartext:</value>
+  </data>
+  <data name="LastRoundAttackDataColHeader1" xml:space="preserve">
+    <value>Iteration</value>
+  </data>
+  <data name="LastRoundAttackDataColHeader2" xml:space="preserve">
+    <value>Verbleibende Schlüsselkandidaten</value>
+  </data>
+  <data name="LastRoundAttackEnd" xml:space="preserve">
+    <value>Ende:</value>
+  </data>
+  <data name="LastRoundAttackExpectedDifference" xml:space="preserve">
+    <value>Erwartete Differenz:</value>
+  </data>
+  <data name="LastRoundAttackNumberOfExaminedPairs" xml:space="preserve">
+    <value>Untersuchte Klartext-/Schlüsseltext-Paare:</value>
+  </data>
+  <data name="LastRoundAttackRemainingKeyCandidates" xml:space="preserve">
+    <value>Verbleibende Schlüsselkandidaten:</value>
+  </data>
+  <data name="LastRoundAttackRound" xml:space="preserve">
+    <value>Angegriffene Verschlüsselungsrunde:</value>
+  </data>
+  <data name="LastRoundAttackRoundResults" xml:space="preserve">
+    <value>Iterationen</value>
+  </data>
+  <data name="LastRoundAttackStart" xml:space="preserve">
+    <value>Start:</value>
+  </data>
+  <data name="LastRoundAttackStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="MessageDifferenceOutput" xml:space="preserve">
+    <value>Erwartete Differenz</value>
+  </data>
+  <data name="MessageDifferenceOutputToolTip" xml:space="preserve">
+    <value>Ausgang für die erwartete Differenz</value>
+  </data>
+  <data name="MessageNoResult" xml:space="preserve">
+    <value>Die letzten Rundenschlüssel konnten nicht wiederhergestellt werden. Das kann passieren, wenn einer der vorigen Rundenschlüssel falsch berechnet wurde. Möglicherweise sollten die Parameter in der PfadFinder-Komponente neu gewählt werden.</value>
   </data>
   <data name="NeededMessageCountOutput" xml:space="preserve">
-    <value>Notwendige Nachrichtenpaare</value>
+    <value>Anzahl Nachrichtenpaare</value>
   </data>
   <data name="NeededMessageCountOutputToolTip" xml:space="preserve">
-    <value>Spezifiziert die Anzahl an notwendigen Nachrichtenpaaren zur Wiederherstellung von Schlüsselbits</value>
+    <value>Ausgang für die Anzahl an angeforderten Nachrichtenpaare</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>DCA KeyRecovery</value>
@@ -157,15 +316,60 @@
     <value>Die DCA KeyRecovery-Komponente führt die Wiederherstellung von Schlüsselbits von Rundenschlüsseln durch</value>
   </data>
   <data name="RoundKeysOutput" xml:space="preserve">
-    <value>Ausgabe der Rundenschlüssel</value>
+    <value>Rundenschlüssel</value>
   </data>
   <data name="RoundKeysOutputToolTip" xml:space="preserve">
-    <value>Die Rundenschlüssel werden nach der Durchführung der differenziellen Kryptoanalyse ausgegeben</value>
+    <value>Ausgabe der Rundenschlüssel</value>
+  </data>
+  <data name="SummaryResultViewCountOfDecryptions" xml:space="preserve">
+    <value>Anzahl Entschlüsselungen:</value>
+  </data>
+  <data name="SummaryResultViewCountOfMessages" xml:space="preserve">
+    <value>Anzahl Nachrichten:</value>
+  </data>
+  <data name="SummaryResultViewCurrentRound" xml:space="preserve">
+    <value>Angegriffene Verschlüsselungsrunde:</value>
+  </data>
+  <data name="SummaryResultViewEndTime" xml:space="preserve">
+    <value>Ende:</value>
+  </data>
+  <data name="SummaryResultViewRecoveredK0" xml:space="preserve">
+    <value>Wiederhergestellter Rundenschlüssel K0:</value>
+  </data>
+  <data name="SummaryResultViewRecoveredK1" xml:space="preserve">
+    <value>Wiederhergestellter Rundenschlüssel K1:</value>
+  </data>
+  <data name="SummaryResultViewRecoveredK2" xml:space="preserve">
+    <value>Wiederhergestellter Rundenschlüssel K2:</value>
+  </data>
+  <data name="SummaryResultViewRecoveredK3" xml:space="preserve">
+    <value>Wiederhergestellter Rundenschlüssel K3:</value>
+  </data>
+  <data name="SummaryResultViewRecoveredK4" xml:space="preserve">
+    <value>Wiederhergestellter Rundenschlüssel K4:</value>
+  </data>
+  <data name="SummaryResultViewRecoveredK5" xml:space="preserve">
+    <value>Wiederhergestellter Rundenschlüssel K5:</value>
+  </data>
+  <data name="SummaryResultViewStartTime" xml:space="preserve">
+    <value>Start:</value>
+  </data>
+  <data name="SummaryResultViewTestedKeys" xml:space="preserve">
+    <value>Getestete Schlüssel:</value>
+  </data>
+  <data name="TabItemHeaderCipher" xml:space="preserve">
+    <value>Detaillierte Ansicht</value>
+  </data>
+  <data name="TabItemHeaderRoundSummary" xml:space="preserve">
+    <value>Rundenstatus</value>
+  </data>
+  <data name="TabItemHeaderSummary" xml:space="preserve">
+    <value>Gesamtstatus</value>
   </data>
   <data name="UnencryptedMessagePairsInput" xml:space="preserve">
-    <value>Eingabe der Nachrichtenpaare</value>
+    <value>Klartext-Nachrichtenpaare</value>
   </data>
   <data name="UnencryptedMessagePairsInputToolTip" xml:space="preserve">
-    <value>Die Nachrichtenpaare werden zur Wiederherstellung der Schlüsselbits verwendet</value>
+    <value>Eingang für die Klartext-Nachrichtenpaare</value>
   </data>
 </root>

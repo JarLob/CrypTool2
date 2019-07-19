@@ -96,7 +96,7 @@ namespace Cryptool.Plugins.ToyCiphers
         /// <summary>
         /// Input for the key
         /// </summary>
-        [PropertyInfo(Direction.InputData, "KeyInput", "KeyInputTooltip", true)]
+        [PropertyInfo(Direction.InputData, "KeyInput", "KeyInputTooltip")]
         public byte[] KeyInput
         {
             get { return _key; }
@@ -141,6 +141,13 @@ namespace Cryptool.Plugins.ToyCiphers
         public void Execute()
         {
             ProgressChanged(0, 1);
+
+            if (MessageInput == null)
+                return;
+
+            if (KeyInput == null)
+                return;
+
 
             // Check specific algorithm and invoke the selection into the UI class
             if (settings.CurrentAlgorithm == Algorithms.Cipher1)
@@ -222,16 +229,25 @@ namespace Cryptool.Plugins.ToyCiphers
                     return;
                 }
 
-                byte[] inputBlock = new byte[2];
+                byte[] inputBlocks = new byte[reader.Length];
                 int message;
                 int readcount = 0;
-                while ((readcount += reader.Read(inputBlock, readcount, 4 - readcount)) < 4 &&
+                while ((readcount += reader.Read(inputBlocks, readcount, 2)) < reader.Length &&
                        reader.Position < reader.Length && !_stop)
                 {
 
                 }
-                message = BitConverter.ToUInt16(inputBlock, 0);
-                messageList.Add(message);
+
+                for (int i = 0; i < inputBlocks.Length; i += 2)
+                {
+                    byte[] inputBlock = new byte[2];
+                    inputBlock[0] = inputBlocks[i];
+                    inputBlock[1] = inputBlocks[i + 1];
+
+                    message = BitConverter.ToUInt16(inputBlock, 0);
+                    messageList.Add(message);
+                }
+
             }
 
             ProgressChanged(0.1, 1);
@@ -239,15 +255,28 @@ namespace Cryptool.Plugins.ToyCiphers
             double step = 0.8 / messageList.Count;
             double current = 0.1;
 
-            //encrypt all messages
-            foreach (var message in messageList)
+            if (settings.CurrentMode == Mode.Encrypt)
             {
-                int encryptedMessage = _currentCipher.EncryptBlock(message);
-                encryptedMessageList.Add(Convert.ToUInt16(encryptedMessage));
-                current += step;
-                ProgressChanged(current, 1);
+                //encrypt all messages
+                foreach (var message in messageList)
+                {
+                    int encryptedMessage = _currentCipher.EncryptBlock(message);
+                    encryptedMessageList.Add(Convert.ToUInt16(encryptedMessage));
+                    current += step;
+                    ProgressChanged(current, 1);
+                }
+            }else if (settings.CurrentMode == Mode.Decrypt)
+            {
+                //decrypt all messages
+                foreach (var message in messageList)
+                {
+                    int encryptedMessage = _currentCipher.DecryptBlock(message);
+                    encryptedMessageList.Add(Convert.ToUInt16(encryptedMessage));
+                    current += step;
+                    ProgressChanged(current, 1);
+                }
             }
-            
+
             //write all messages to the output
             using (CStreamWriter writer = new CStreamWriter())
             {
@@ -335,7 +364,7 @@ namespace Cryptool.Plugins.ToyCiphers
             int[] keys = new int[keycount];
 
             if (settings.CurrentAlgorithm == Algorithms.Cipher1 || settings.CurrentAlgorithm == Algorithms.Cipher2 ||
-                settings.CurrentAlgorithm == Algorithms.Cipher2)
+                settings.CurrentAlgorithm == Algorithms.Cipher3)
             {
                 if (KeyInput.Length != (keycount * 2))
                 {

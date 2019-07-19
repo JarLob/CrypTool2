@@ -34,7 +34,7 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
+    <OutputPath>..\..\CrypBuild\Release\CrypPlugins\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -88,6 +88,7 @@
     <Compile Include="Ciphers\Cipher4\Cipher4.cs" />
     <Compile Include="Ciphers\Cipher4\Cipher4Configuration.cs" />
     <Compile Include="Ciphers\IEncryption.cs" />
+    <Compile Include="Mode.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -111,8 +112,11 @@
     <Compile Include="UI\Controls\16BitKeyRound.xaml.cs">
       <DependentUpon>16BitKeyRound.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Controls\16BitPermutation.xaml.cs">
-      <DependentUpon>16BitPermutation.xaml</DependentUpon>
+    <Compile Include="UI\Controls\16BitPermutation3RSPN.xaml.cs">
+      <DependentUpon>16BitPermutation3RSPN.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\16BitPermutationTBC.xaml.cs">
+      <DependentUpon>16BitPermutationTBC.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Controls\4BitKeyRound.xaml.cs">
       <DependentUpon>4BitKeyRound.xaml</DependentUpon>
@@ -182,7 +186,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Controls\16BitPermutation.xaml">
+    <Page Include="UI\Controls\16BitPermutation3RSPN.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\16BitPermutationTBC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

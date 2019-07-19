@@ -126,6 +126,12 @@
   <data name="ChoiceOfAlgorithmToolTop" xml:space="preserve">
     <value>At this point one of the algorithms contained in the list can be selected. This algorithm can be examined by differential cryptanalysis.</value>
   </data>
+  <data name="ChoiceOfMode" xml:space="preserve">
+    <value>Encrypt/Decrypt</value>
+  </data>
+  <data name="ChoiceOfModeToolTop" xml:space="preserve">
+    <value>Data is encrypted or decrypted depending on the selected operating option</value>
+  </data>
   <data name="Cipher1" xml:space="preserve">
     <value>Cipher 1: 16 bit blocksize, 2 subkeys, 32 bit keylength</value>
   </data>
@@ -191,6 +197,12 @@
   <data name="Cipher5" xml:space="preserve">
     <value>Feal-4</value>
   </data>
+  <data name="CipherDetails" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="CipherView" xml:space="preserve">
+    <value>Cipher</value>
+  </data>
   <data name="DescPermutation" xml:space="preserve">
     <value>The permutation swaps the fixed position i of an input bit to a position j in the output. The following table describes the permutation, with the first line representing the decimal position of a bit in the input and the second line representing the position of the corresponding bit in the output.</value>
   </data>
@@ -210,25 +222,34 @@
     <value>The specified key is not long enough. Please check the requirements of this cipher.</value>
   </data>
   <data name="KeyInput" xml:space="preserve">
-    <value>Input for the key</value>
+    <value>Key</value>
   </data>
   <data name="KeyInputTooltip" xml:space="preserve">
-    <value>This input contains the key with which the message is encrypted</value>
+    <value>Input for the key</value>
   </data>
   <data name="MessageError" xml:space="preserve">
     <value>The messages entered are too small or too large. Please check the requirements of this cipher.</value>
   </data>
   <data name="MessageInput" xml:space="preserve">
-    <value>Input for messages to be encrypted</value>
+    <value>Plaintext / Ciphertext</value>
   </data>
   <data name="MessageInputTooltip" xml:space="preserve">
-    <value>The messages present at this input will be encrypted and will be outputted</value>
+    <value>Input for the plaintext / ciphertext (depending on selected operating mode)</value>
   </data>
   <data name="MessageOutput" xml:space="preserve">
-    <value>Output for encrypted messages</value>
+    <value>Plaintext / Ciphertext</value>
   </data>
   <data name="MessageOutputTooltip" xml:space="preserve">
-    <value>The encrypted messages will be outputted </value>
+    <value>Output for the plaintext / ciphertext (depending on selected operating mode)</value>
+  </data>
+  <data name="Mode1" xml:space="preserve">
+    <value>Encrypt</value>
+  </data>
+  <data name="Mode2" xml:space="preserve">
+    <value>Decrypt</value>
+  </data>
+  <data name="OperatingOptions" xml:space="preserve">
+    <value>Operating options</value>
   </data>
   <data name="Output" xml:space="preserve">
     <value>Output</value>

@@ -14,11 +14,19 @@
    limitations under the License.
 */
 
+using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
+using DCAPathVisualiser;
+using DCAPathVisualiser.Logic;
+using DCAPathVisualiser.Logic.Cipher2;
+using DCAPathVisualiser.Properties;
 using DCAPathVisualiser.UI;
+using Newtonsoft.Json;
 
 namespace Cryptool.Plugins.DCAPathVisualiser
 {
@@ -34,6 +42,11 @@ namespace Cryptool.Plugins.DCAPathVisualiser
         private string _differential;
 
         #endregion
+
+        public DCAPathVisualiser()
+        {
+            _settings.PropertyChanged += new PropertyChangedEventHandler(SettingChangedListener);
+        }
 
         #region Data Properties
 
@@ -76,6 +89,11 @@ namespace Cryptool.Plugins.DCAPathVisualiser
         /// </summary>
         public void PreExecution()
         {
+            //dispatch action: inform ui that workspace is running
+            _pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+            {
+                _pres.WorkspaceRunning = true;
+            }, null);
         }
 
         /// <summary>
@@ -85,6 +103,25 @@ namespace Cryptool.Plugins.DCAPathVisualiser
         {
             ProgressChanged(0, 1);
 
+            DifferentialAttackRoundConfiguration conf = ReadConfiguration(Differential);
+
+            //check component setting
+            if (conf.SelectedAlgorithm != _settings.CurrentAlgorithm)
+            {
+                GuiLogMessage(Resources.WarningWrongAlgorithm, NotificationLevel.Warning);
+                ProgressChanged(1, 1);
+                return;
+            }
+
+            if (conf != null)
+            {
+                _pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                {
+                    _pres.CurrentConfigurationToDisplay = conf;
+                    _pres.RenderView();
+                }, null);
+            }
+
             ProgressChanged(1, 1);
         }
 
@@ -93,6 +130,11 @@ namespace Cryptool.Plugins.DCAPathVisualiser
         /// </summary>
         public void PostExecution()
         {
+            //dispatch action: inform ui that workspace is not running
+            _pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+            {
+                _pres.WorkspaceRunning = false;
+            }, null);
         }
 
         /// <summary>
@@ -119,7 +161,71 @@ namespace Cryptool.Plugins.DCAPathVisualiser
 
         #endregion
 
-        #region Event Handling
+        #region methods
+
+        /// <summary>
+        /// Reads json string and returns it as object
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
+        private DifferentialAttackRoundConfiguration ReadConfiguration(string json)
+        {
+            DifferentialAttackRoundConfiguration config = null;
+
+            json = json.Replace("DCAPathFinder", "DCAPathVisualiser");
+
+            try
+            {
+                config = JsonConvert.DeserializeObject<DifferentialAttackRoundConfiguration>(json, new Newtonsoft.Json.JsonSerializerSettings
+                {
+                    TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Auto,
+                    NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
+                });
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+
+
+            return config;
+        }
+
+        /// <summary>
+        /// Handles changes within the settings class
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SettingChangedListener(object sender, PropertyChangedEventArgs e)
+        {
+            //Listen for changes of the current chosen algorithm
+            if (e.PropertyName == "CurrentAlgorithm")
+            {
+                //Check specific algorithm and invoke the selection into the UI class
+                if (_settings.CurrentAlgorithm == Algorithms.Cipher1)
+                {
+                    //dispatch action: clear the active grid and add the specific algorithm visualization
+                    _pres.Dispatcher.Invoke(DispatcherPriority.Send,
+                        (SendOrPostCallback) delegate { _pres.CurrentAlgorithm = Algorithms.Cipher1; }, null);
+                }
+                else if (_settings.CurrentAlgorithm == Algorithms.Cipher2)
+                {
+                    _pres.Dispatcher.Invoke(DispatcherPriority.Send,
+                        (SendOrPostCallback) delegate { _pres.CurrentAlgorithm = Algorithms.Cipher2; }, null);
+                }
+                else if (_settings.CurrentAlgorithm == Algorithms.Cipher3)
+                {
+                    _pres.Dispatcher.Invoke(DispatcherPriority.Send,
+                        (SendOrPostCallback) delegate { _pres.CurrentAlgorithm = Algorithms.Cipher3; }, null);
+                }
+            }
+        }
+
+        #endregion
+
+            #region Event Handling
 
         public event StatusChangedEventHandler OnPluginStatusChanged;
 

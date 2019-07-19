@@ -15,6 +15,9 @@
 */
 
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace ToyCiphers.UI.Controls
 {
@@ -26,6 +29,25 @@ namespace ToyCiphers.UI.Controls
         public _4BitSBox()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Handles the mouse click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HandleSBoxClick(object sender, MouseButtonEventArgs e)
+        {
+            Rectangle elem = (Rectangle) sender;
+            if (elem.Stroke == Brushes.Black)
+            {
+                elem.Stroke = Brushes.Red;
+            }
+            else
+            {
+                elem.Stroke = Brushes.Black;
+            }
+            
         }
     }
 }

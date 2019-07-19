@@ -86,8 +86,8 @@
 
             </Grid>
         </ScrollViewer>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Vertical">
-            <Button Content="{Loc BtnSwitchView}" Height="30" Width="120" Click="ToggleViewClicked"></Button>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Vertical">
+            <Button Content="{Loc BtnSwitchView}" HorizontalAlignment="Center"  Width="120" Click="ToggleViewClicked"></Button>
         </StackPanel>
     </Grid>    
 </UserControl>

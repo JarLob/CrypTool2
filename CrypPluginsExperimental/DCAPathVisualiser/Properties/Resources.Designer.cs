@@ -61,6 +61,15 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Active SBoxes: ähnelt.
+        /// </summary>
+        internal static string ActiveSBoxes {
+            get {
+                return ResourceManager.GetString("ActiveSBoxes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Choice of the algorithm ähnelt.
         /// </summary>
         internal static string ChoiceOfAlgorithm {
@@ -106,7 +115,25 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input of the differential ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die #Characteristics: ähnelt.
+        /// </summary>
+        internal static string CountOfDifferentials {
+            get {
+                return ResourceManager.GetString("CountOfDifferentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differential: ähnelt.
+        /// </summary>
+        internal static string Differential {
+            get {
+                return ResourceManager.GetString("Differential", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differential ähnelt.
         /// </summary>
         internal static string DifferentialInput {
             get {
@@ -115,11 +142,110 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The differential is used to show  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input of the differential to show  ähnelt.
         /// </summary>
         internal static string DifferentialInputToolTip {
             get {
                 return ResourceManager.GetString("DifferentialInputToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Expected difference: ähnelt.
+        /// </summary>
+        internal static string ExpectedDifferential {
+            get {
+                return ResourceManager.GetString("ExpectedDifferential", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input difference: ähnelt.
+        /// </summary>
+        internal static string InputDifferential {
+            get {
+                return ResourceManager.GetString("InputDifferential", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input diff. ähnelt.
+        /// </summary>
+        internal static string InputDiffHeader1 {
+            get {
+                return ResourceManager.GetString("InputDiffHeader1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input diff. R1 ähnelt.
+        /// </summary>
+        internal static string InputDiffR1Header1 {
+            get {
+                return ResourceManager.GetString("InputDiffR1Header1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input diff. R2 ähnelt.
+        /// </summary>
+        internal static string InputDiffR2Header1 {
+            get {
+                return ResourceManager.GetString("InputDiffR2Header1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Expected Diff. ähnelt.
+        /// </summary>
+        internal static string InputDiffR3Header1Run1 {
+            get {
+                return ResourceManager.GetString("InputDiffR3Header1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3 ähnelt.
+        /// </summary>
+        internal static string InputDiffR3Header1Run2 {
+            get {
+                return ResourceManager.GetString("InputDiffR3Header1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output diff. R1 ähnelt.
+        /// </summary>
+        internal static string OutputDiffR1Header1 {
+            get {
+                return ResourceManager.GetString("OutputDiffR1Header1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output diff. R2 ähnelt.
+        /// </summary>
+        internal static string OutputDiffR2Header1 {
+            get {
+                return ResourceManager.GetString("OutputDiffR2Header1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differenz v ähnelt.
+        /// </summary>
+        internal static string OutputDiffR3Header1Run1 {
+            get {
+                return ResourceManager.GetString("OutputDiffR3Header1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3 ähnelt.
+        /// </summary>
+        internal static string OutputDiffR3Header1Run2 {
+            get {
+                return ResourceManager.GetString("OutputDiffR3Header1Run2", resourceCulture);
             }
         }
         
@@ -138,6 +264,87 @@ namespace DCAPathVisualiser.Properties {
         internal static string PluginTooltip {
             get {
                 return ResourceManager.GetString("PluginTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Probability: ähnelt.
+        /// </summary>
+        internal static string Probability {
+            get {
+                return ResourceManager.GetString("Probability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Attacked encryption round: ähnelt.
+        /// </summary>
+        internal static string Round {
+            get {
+                return ResourceManager.GetString("Round", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Characteristics ähnelt.
+        /// </summary>
+        internal static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Characteristic visualisation ähnelt.
+        /// </summary>
+        internal static string TabItemHeaderCipher {
+            get {
+                return ResourceManager.GetString("TabItemHeaderCipher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Characteristics table ähnelt.
+        /// </summary>
+        internal static string TabItemHeaderTable {
+            get {
+                return ResourceManager.GetString("TabItemHeaderTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Depending on the message pair ähnelt.
+        /// </summary>
+        internal static string TableHeaderLastRoundExpectedDiff {
+            get {
+                return ResourceManager.GetString("TableHeaderLastRoundExpectedDiff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Depending on the message pair ähnelt.
+        /// </summary>
+        internal static string TableHeaderLastRoundInputDiff {
+            get {
+                return ResourceManager.GetString("TableHeaderLastRoundInputDiff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Depending on the difference that occurs ähnelt.
+        /// </summary>
+        internal static string TableHeaderLastRoundProbability {
+            get {
+                return ResourceManager.GetString("TableHeaderLastRoundProbability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The wrong cipher is selected in the DCA PathVisualiser component. Please check the configuration of the component. ähnelt.
+        /// </summary>
+        internal static string WarningWrongAlgorithm {
+            get {
+                return ResourceManager.GetString("WarningWrongAlgorithm", resourceCulture);
             }
         }
     }

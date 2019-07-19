@@ -88,6 +88,24 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Encrypt/Decrypt ähnelt.
+        /// </summary>
+        internal static string ChoiceOfMode {
+            get {
+                return ResourceManager.GetString("ChoiceOfMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Data is encrypted or decrypted depending on the selected operating option ähnelt.
+        /// </summary>
+        internal static string ChoiceOfModeToolTop {
+            get {
+                return ResourceManager.GetString("ChoiceOfModeToolTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 1: 16 bit blocksize, 2 subkeys, 32 bit keylength ähnelt.
         /// </summary>
         internal static string Cipher1 {
@@ -279,6 +297,24 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Details ähnelt.
+        /// </summary>
+        internal static string CipherDetails {
+            get {
+                return ResourceManager.GetString("CipherDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher ähnelt.
+        /// </summary>
+        internal static string CipherView {
+            get {
+                return ResourceManager.GetString("CipherView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die The permutation swaps the fixed position i of an input bit to a position j in the output. The following table describes the permutation, with the first line representing the decimal position of a bit in the input and the second line representing the position of the corresponding bit in the output. ähnelt.
         /// </summary>
         internal static string DescPermutation {
@@ -333,7 +369,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input for the key ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key ähnelt.
         /// </summary>
         internal static string KeyInput {
             get {
@@ -342,7 +378,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This input contains the key with which the message is encrypted ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input for the key ähnelt.
         /// </summary>
         internal static string KeyInputTooltip {
             get {
@@ -360,7 +396,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input for messages to be encrypted ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext / Ciphertext ähnelt.
         /// </summary>
         internal static string MessageInput {
             get {
@@ -369,7 +405,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The messages present at this input will be encrypted and will be outputted ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input for the plaintext / ciphertext (depending on selected operating mode) ähnelt.
         /// </summary>
         internal static string MessageInputTooltip {
             get {
@@ -378,7 +414,7 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output for encrypted messages ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext / Ciphertext ähnelt.
         /// </summary>
         internal static string MessageOutput {
             get {
@@ -387,11 +423,38 @@ namespace ToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The encrypted messages will be outputted  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output for the plaintext / ciphertext (depending on selected operating mode) ähnelt.
         /// </summary>
         internal static string MessageOutputTooltip {
             get {
                 return ResourceManager.GetString("MessageOutputTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Encrypt ähnelt.
+        /// </summary>
+        internal static string Mode1 {
+            get {
+                return ResourceManager.GetString("Mode1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Decrypt ähnelt.
+        /// </summary>
+        internal static string Mode2 {
+            get {
+                return ResourceManager.GetString("Mode2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Operating options ähnelt.
+        /// </summary>
+        internal static string OperatingOptions {
+            get {
+                return ResourceManager.GetString("OperatingOptions", resourceCulture);
             }
         }
         

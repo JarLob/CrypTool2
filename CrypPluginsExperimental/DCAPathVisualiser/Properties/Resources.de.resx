@@ -132,16 +132,115 @@
   <data name="Cipher3" xml:space="preserve">
     <value>Chiffre 3 (16 Bit Blockgröße, 6 Rundenschlüssel, 96 Bit Schlüssellänge)</value>
   </data>
+  <data name="CountOfDifferentials" xml:space="preserve">
+    <value>#Charakteristiken:</value>
+  </data>
+  <data name="Differential" xml:space="preserve">
+    <value>Differenzial:</value>
+  </data>
   <data name="DifferentialInput" xml:space="preserve">
-    <value>Eingabe des Differenzial</value>
+    <value>Differenzial</value>
   </data>
   <data name="DifferentialInputToolTip" xml:space="preserve">
-    <value>Das zu visualisierende Differenzial </value>
+    <value>Eingang des zu visualisierenden Differenzials</value>
+  </data>
+  <data name="ExpectedDifferential" xml:space="preserve">
+    <value>Erwartete Differenz:</value>
+  </data>
+  <data name="InputDiffR3Header1Run1" xml:space="preserve">
+    <value>u</value>
+  </data>
+  <data name="InputDifferential" xml:space="preserve">
+    <value>Eingabedifferenz:</value>
+  </data>
+  <data name="InputDiffHeader1" xml:space="preserve">
+    <value>Eingabedifferenz</value>
+  </data>
+  <data name="InputDiffR1Header1Run1" xml:space="preserve">
+    <value>u</value>
+  </data>
+  <data name="InputDiffR2Header1Run1" xml:space="preserve">
+    <value>u</value>
+  </data>
+  <data name="OutputDiffR1Header1Run1" xml:space="preserve">
+    <value>v</value>
+  </data>
+  <data name="OutputDiffR2Header1Run1" xml:space="preserve">
+    <value>v</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>DCA PfadVisualisierer</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Die DCA PfadVisualisierer-Komponente visualisiert die durch die PfadFinder-Komponente gefundenen Charakteristiken</value>
+  </data>
+  <data name="Probability" xml:space="preserve">
+    <value>Wahrscheinlichkeit:</value>
+  </data>
+  <data name="Round" xml:space="preserve">
+    <value>Angegriffene Verschlüsselungsrunde: </value>
+  </data>
+  <data name="TabItemHeaderCipher" xml:space="preserve">
+    <value>Charakteristik-Visualisierung</value>
+  </data>
+  <data name="TabItemHeaderTable" xml:space="preserve">
+    <value>Charakteristik-Tabelle</value>
+  </data>
+  <data name="ActiveSBoxes" xml:space="preserve">
+    <value>Aktive SBoxen:</value>
+  </data>
+  <data name="WarningWrongAlgorithm" xml:space="preserve">
+    <value>In der DCA PfadVisualisierer-Komponente ist die falsche Chiffre ausgewählt. Bitte prüfen Sie die Konfiguration der Komponente. </value>
+  </data>
+  <data name="TableHeaderLastRoundExpectedDiff" xml:space="preserve">
+    <value>Abhängig vom Nachrichtenpaar</value>
+  </data>
+  <data name="TableHeaderLastRoundInputDiff" xml:space="preserve">
+    <value>Abhängig vom Nachrichtenpaar</value>
+  </data>
+  <data name="TableHeaderLastRoundProbability" xml:space="preserve">
+    <value>Abhängig von der auftretenden Differenz</value>
+  </data>
+  <data name="InputDiffR3Header1Run2" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="InputDiffR1Header1Run2" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="InputDiffR2Header1Run2" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="OutputDiffR1Header1Run2" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="OutputDiffR2Header1Run2" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="Characteristics" xml:space="preserve">
+    <value>Charakteristiken</value>
+  </data>
+  <data name="InputDiffR4Header1Run1" xml:space="preserve">
+    <value>u</value>
+  </data>
+  <data name="InputDiffR4Header1Run2" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="InputDiffR5Header1Run1" xml:space="preserve">
+    <value>u</value>
+  </data>
+  <data name="InputDiffR5Header1Run2" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="OutputDiffR3Header1Run1" xml:space="preserve">
+    <value>v</value>
+  </data>
+  <data name="OutputDiffR3Header1Run2" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="OutputDiffR4Header1Run1" xml:space="preserve">
+    <value>v</value>
+  </data>
+  <data name="OutputDiffR4Header1Run2" xml:space="preserve">
+    <value>4</value>
   </data>
 </root>

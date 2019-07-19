@@ -132,16 +132,85 @@
   <data name="Cipher3" xml:space="preserve">
     <value>Cipher 3 (16 bit blocksize, 6 subkeys, 96 bit keylength)</value>
   </data>
+  <data name="CountOfDifferentials" xml:space="preserve">
+    <value>#Characteristics:</value>
+  </data>
+  <data name="Differential" xml:space="preserve">
+    <value>Differential:</value>
+  </data>
   <data name="DifferentialInput" xml:space="preserve">
-    <value>Input of the differential</value>
+    <value>Differential</value>
   </data>
   <data name="DifferentialInputToolTip" xml:space="preserve">
-    <value>The differential is used to show </value>
+    <value>Input of the differential to show </value>
+  </data>
+  <data name="ExpectedDifferential" xml:space="preserve">
+    <value>Expected difference:</value>
+  </data>
+  <data name="InputDiffR3Header1Run1" xml:space="preserve">
+    <value>Expected Diff.</value>
+  </data>
+  <data name="InputDifferential" xml:space="preserve">
+    <value>Input difference:</value>
+  </data>
+  <data name="InputDiffHeader1" xml:space="preserve">
+    <value>Input diff.</value>
+  </data>
+  <data name="InputDiffR1Header1" xml:space="preserve">
+    <value>Input diff. R1</value>
+  </data>
+  <data name="InputDiffR2Header1" xml:space="preserve">
+    <value>Input diff. R2</value>
+  </data>
+  <data name="OutputDiffR1Header1" xml:space="preserve">
+    <value>Output diff. R1</value>
+  </data>
+  <data name="OutputDiffR2Header1" xml:space="preserve">
+    <value>Output diff. R2</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>DCA PathVisualiser</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>The DCA PathVisualiser component visualizes the characteristics found by the DCA PathFinder component</value>
+  </data>
+  <data name="Probability" xml:space="preserve">
+    <value>Probability:</value>
+  </data>
+  <data name="Round" xml:space="preserve">
+    <value>Attacked encryption round:</value>
+  </data>
+  <data name="TabItemHeaderCipher" xml:space="preserve">
+    <value>Characteristic visualisation</value>
+  </data>
+  <data name="TabItemHeaderTable" xml:space="preserve">
+    <value>Characteristics table</value>
+  </data>
+  <data name="ActiveSBoxes" xml:space="preserve">
+    <value>Active SBoxes:</value>
+  </data>
+  <data name="WarningWrongAlgorithm" xml:space="preserve">
+    <value>The wrong cipher is selected in the DCA PathVisualiser component. Please check the configuration of the component.</value>
+  </data>
+  <data name="TableHeaderLastRoundExpectedDiff" xml:space="preserve">
+    <value>Depending on the message pair</value>
+  </data>
+  <data name="TableHeaderLastRoundInputDiff" xml:space="preserve">
+    <value>Depending on the message pair</value>
+  </data>
+  <data name="TableHeaderLastRoundProbability" xml:space="preserve">
+    <value>Depending on the difference that occurs</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>Characteristics</value>
+  </data>
+  <data name="InputDiffR3Header1Run2" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="OutputDiffR3Header1Run1" xml:space="preserve">
+    <value>Differenz v</value>
+  </data>
+  <data name="OutputDiffR3Header1Run2" xml:space="preserve">
+    <value>3</value>
   </data>
 </root>

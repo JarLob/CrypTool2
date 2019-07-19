@@ -14,9 +14,13 @@
    limitations under the License.
 */
 
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace DCAPathFinder.UI.Controls
 {
@@ -26,13 +30,81 @@ namespace DCAPathFinder.UI.Controls
     public partial class _4BitSBox : UserControl, INotifyPropertyChanged
     {
         private string _outputColor;
+        private Brush _labelTextColor;
+        private bool _isClickable;
+        private bool _alreadyAttacked;
+        private bool _isSelected = false;
+        public event EventHandler<EventArgs> SelectionChanged;
 
         public _4BitSBox()
         {
-            OutputColor = "Black";
+            _isSelected = false;
+            _outputColor = "Black";
+            _labelTextColor = Brushes.Black;
+            _isClickable = true;
+            _alreadyAttacked = false;
 
             DataContext = this;
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Property for label text color
+        /// </summary>
+        public Brush LabelTextColor
+        {
+            get { return _labelTextColor; }
+            set
+            {
+                _labelTextColor = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Property to indicate that SBox was already attacked
+        /// </summary>
+        public bool AlreadyAttacked
+        {
+            get { return _alreadyAttacked; }
+            set
+            {
+                _alreadyAttacked = value;
+                if (!_alreadyAttacked)
+                {
+                    OutputColor = "Black";
+                    LabelTextColor = Brushes.Black;
+                }
+                else
+                {
+                    //OutputColor = "Gray";
+                    //LabelTextColor = Brushes.Gray;
+
+                    OutputColor = "LimeGreen";
+                    LabelTextColor = Brushes.LimeGreen;
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Property to configure if SBox is clickable
+        /// </summary>
+        public bool IsClickable
+        {
+            get { return _isClickable; }
+            set
+            {
+                _isClickable = value;
+
+                if (_isClickable)
+                {
+                    OutputColor = "Gray";
+                    LabelTextColor = Brushes.Gray;
+                }
+
+                OnPropertyChanged();
+            }
         }
 
         /// <summary>
@@ -49,12 +121,69 @@ namespace DCAPathFinder.UI.Controls
         }
 
         /// <summary>
+        /// Property of _isSelected
+        /// </summary>
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                SelectionChanged.Invoke(this, null);
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Handles the mouse click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HandleSBoxClick(object sender, MouseButtonEventArgs e)
+        {
+            if (!IsClickable)
+            {
+                return;
+            }
+
+            Rectangle elem = (Rectangle)sender;
+            /*
+            if (elem.Stroke == Brushes.Black)
+            {
+                IsSelected = true;
+                elem.Stroke = Brushes.Red;
+                LabelTextColor = Brushes.Red;
+            }
+            else
+            {
+                IsSelected = false;
+                elem.Stroke = Brushes.Black;
+                LabelTextColor = Brushes.Black;
+            }
+            */
+
+            if (elem.Stroke == Brushes.Gray)
+            {
+                IsSelected = true;
+                elem.Stroke = Brushes.Red;
+                LabelTextColor = Brushes.Red;
+            }
+            else
+            {
+                IsSelected = false;
+                elem.Stroke = Brushes.Gray;
+                LabelTextColor = Brushes.Gray;
+            }
+        }
+
+
+        /// <summary>
         /// OnPropertyChanged-method for INotifyPropertyChanged
         /// </summary>
         /// <param name="propertyName"></param>
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>

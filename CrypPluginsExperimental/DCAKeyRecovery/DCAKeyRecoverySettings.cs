@@ -28,6 +28,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
 
         private string _choiceOfAlgorithm;
         private Algorithms _currentAlgorithm;
+        private bool _automaticMode;
 
         #endregion
 
@@ -46,6 +47,20 @@ namespace Cryptool.Plugins.DCAKeyRecovery
         #endregion
 
         #region TaskPane Settings
+
+        /// <summary>
+        /// checkbox to activate the automatic mode (no user interaction needed)
+        /// </summary>
+        [TaskPane("AutomaticMode", "AutomaticModeToolTip", null, 1, false, ControlType.CheckBox)]
+        public bool AutomaticMode
+        {
+            get { return _automaticMode; }
+            set
+            {
+                _automaticMode = value;
+                OnPropertyChanged("AutomaticMode");
+            }
+        }
 
         /// <summary>
         /// Selection of the toy cipher algorithm

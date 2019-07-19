@@ -23,6 +23,31 @@ namespace ToyCiphers.Ciphers.Cipher4
     {
         private int[] _keys = new int[Cipher4Configuration.KEYNUM];
 
+        /// <summary>
+        /// Decrypts a single 4 bit block
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public int DecryptBlock(int data)
+        {
+            int result = KeyMix(data, _keys[3]);
+            result = ReverseSBox(result);
+            result = KeyMix(result, _keys[2]);
+
+            result = ReverseSBox(result);
+            result = KeyMix(result, _keys[1]);
+
+            result = ReverseSBox(result);
+            result = KeyMix(result, _keys[0]);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Encrypts a single 4 bit block
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public int EncryptBlock(int data)
         {
             //round1
@@ -53,13 +78,72 @@ namespace ToyCiphers.Ciphers.Cipher4
         }
 
         /// <summary>
-        /// not needed in Cipher4
+        /// Cipher4 has no permutation
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
         public int PBox(int data)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Cipher4 has no permutation
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public int ReversePBox(int data)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Reverses the SBox
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public int ReverseSBox(int data)
+        {
+            BitArray bitsOfBlock = new BitArray(BitConverter.GetBytes(data));
+
+            BitArray zeroToThree = new BitArray(4);
+            BitArray fourToSeven = new BitArray(4);
+
+            for (int i = 0; i < 4; i++)
+            {
+                zeroToThree[i] = bitsOfBlock[i];
+                fourToSeven[i] = bitsOfBlock[i + 4];
+            }
+
+            byte[] zeroToThreeBytes = new byte[4];
+            zeroToThree.CopyTo(zeroToThreeBytes, 0);
+
+            byte[] fourToSevenBytes = new byte[4];
+            fourToSeven.CopyTo(fourToSevenBytes, 0);
+
+            int zeroToThreeInt = BitConverter.ToInt32(zeroToThreeBytes, 0);
+            int fourToSevenInt = BitConverter.ToInt32(fourToSevenBytes, 0);
+
+            //use sbox
+            zeroToThreeInt = Cipher4Configuration.SBOXREVERSE[zeroToThreeInt];
+            fourToSevenInt = Cipher4Configuration.SBOXREVERSE[fourToSevenInt];
+
+            bitsOfBlock = new BitArray(16);
+
+            zeroToThree = new BitArray(BitConverter.GetBytes(zeroToThreeInt));
+            fourToSeven = new BitArray(BitConverter.GetBytes(fourToSevenInt));
+
+            for (int i = 0; i < 4; i++)
+            {
+                bitsOfBlock[i] = zeroToThree[i];
+                //bitsOfBlock[4 + i] = fourToSeven[i];
+            }
+
+            byte[] bytes = new byte[4];
+            bitsOfBlock.CopyTo(bytes, 0);
+            int combined = BitConverter.ToInt32(bytes, 0);
+
+            return combined;
         }
 
         /// <summary>

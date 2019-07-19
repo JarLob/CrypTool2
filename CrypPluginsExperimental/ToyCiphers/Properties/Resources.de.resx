@@ -126,8 +126,14 @@
   <data name="ChoiceOfAlgorithmToolTop" xml:space="preserve">
     <value>Hier können Sie einen der in der Liste enthaltenen Algorithmen auswählen. Dieser kann dann mittels differenzieller Kryptoanalyse untersucht werden.</value>
   </data>
+  <data name="ChoiceOfMode" xml:space="preserve">
+    <value>Ver-/Entschlüsseln</value>
+  </data>
+  <data name="ChoiceOfModeToolTop" xml:space="preserve">
+    <value>Je nach gewählter Betriebsoption werden Daten verschlüsselt oder entschlüsselt</value>
+  </data>
   <data name="Cipher1" xml:space="preserve">
-    <value>Ciffre 1: 16 Bit Blockgröße, 2 Rundenschlüssel, 32 Bit Schlüssellänge</value>
+    <value>Chiffre 1: 16 Bit Blockgröße, 2 Rundenschlüssel, 32 Bit Schlüssellänge</value>
   </data>
   <data name="Cipher1LblHeading" xml:space="preserve">
     <value>Chiffre 1</value>
@@ -189,6 +195,12 @@
   <data name="Cipher5" xml:space="preserve">
     <value>Feal-4</value>
   </data>
+  <data name="CipherDetails" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="CipherView" xml:space="preserve">
+    <value>Chiffre</value>
+  </data>
   <data name="DescPermutation" xml:space="preserve">
     <value>Die Permutation vertauscht die feste Position i eines Eingabebits auf eine Position j in der Ausgabe. Die folgende Tabelle beschreibt die Permutation, wobei die erste Zeile die Position eines Bits in der Eingabe darstellt und die zweite Zeile die Position des entsprechenden Bits in der Ausgabe.</value>
   </data>
@@ -208,19 +220,34 @@
     <value>Der angegebene Schlüssel ist nicht lang genug. Bitte überprüfen Sie die Anforderungen dieser Chiffre.</value>
   </data>
   <data name="KeyInput" xml:space="preserve">
-    <value>Eingang für den Schlüssel</value>
+    <value>Schlüssel</value>
   </data>
   <data name="KeyInputTooltip" xml:space="preserve">
-    <value>An diesem Eingang liegt der Schlüssel an, mit dem die Nachricht verschlüsselt wird</value>
+    <value>Eingang für den Schlüssel</value>
   </data>
   <data name="MessageError" xml:space="preserve">
     <value>Die eingegebenen Nachrichten sind zu klein oder zu groß. Bitte überprüfen Sie die Anforderungen dieser Chiffre.</value>
   </data>
   <data name="MessageInput" xml:space="preserve">
-    <value>Eingang für zu verschlüsselnde Nachrichten</value>
+    <value>Klartext / Geheimtext</value>
   </data>
   <data name="MessageInputTooltip" xml:space="preserve">
-    <value>Die an diesem Eingang anliegenden Nachrichten werden verschlüsselt und am Ausgang ausgegeben</value>
+    <value>Eingang für den Klartext / Geheimtext (je nach gewähltem Betriebsmodus)</value>
+  </data>
+  <data name="MessageOutput" xml:space="preserve">
+    <value>Klartext / Geheimtext</value>
+  </data>
+  <data name="MessageOutputTooltip" xml:space="preserve">
+    <value>Ausgang für den Klartext / Geheimtext (je nach gewähltem Betriebsmodus)</value>
+  </data>
+  <data name="Mode1" xml:space="preserve">
+    <value>Verschlüsseln</value>
+  </data>
+  <data name="Mode2" xml:space="preserve">
+    <value>Entschlüsseln</value>
+  </data>
+  <data name="OperatingOptions" xml:space="preserve">
+    <value>Betriebsoptionen</value>
   </data>
   <data name="Output" xml:space="preserve">
     <value>Ausgabe</value>
@@ -230,18 +257,6 @@
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Die ToyCipher-Komponente enthält verschiedene symmetrische Algorithmen zur Verschlüsselung. Die Algorithmen sind sehr einfach und kurz, um an ihnen kryptographische Prinzipien oder kryptoanalytische Verfahren demonstrieren zu können.</value>
-  </data>
-  <data name="SingleMessageOutput" xml:space="preserve">
-    <value>Ausgang für eine verschlüsselte Nachricht</value>
-  </data>
-  <data name="SingleMessageOutputTooltip" xml:space="preserve">
-    <value>An diesem Ausgang wird eine verschlüsselte Nachricht ausgegeben</value>
-  </data>
-  <data name="StartMaskContent1" xml:space="preserve">
-    <value>Durch Starten des Workspaces beginnt die differenzielle Kryptoanalyse. Zunächst wird in dieser Komponente die Chiffre analysiert. In der "Pfad</value>
-  </data>
-  <data name="StartMaskHeader" xml:space="preserve">
-    <value>Bereit zur Ausführung</value>
   </data>
   <data name="TablePermutationInput" xml:space="preserve">
     <value>Position in Eingabe</value>

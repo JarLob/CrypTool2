@@ -14,18 +14,26 @@
    limitations under the License.
 */
 
-using System.Windows.Controls;
+using System;
 
-namespace ToyCiphers.UI.Controls
+namespace DCAKeyRecovery.Logic
 {
-    /// <summary>
-    /// Interaktionslogik für _16BitPermutation.xaml
-    /// </summary>
-    public partial class _16BitPermutation : UserControl
+    public abstract class Characteristic : ICloneable
     {
-        public _16BitPermutation()
-        {
-            InitializeComponent();
-        }
+        public UInt16[] InputDifferentials;
+        public UInt16[] OutputDifferentials;
+        public double Probability = -1;
+
+        /// <summary>
+        /// to be implemented in subclasses
+        /// </summary>
+        /// <returns></returns>
+        public abstract object Clone();
+
+        /// <summary>
+        /// to be implemented in subclasses
+        /// </summary>
+        /// <returns></returns>
+        public abstract string ToString();
     }
 }
