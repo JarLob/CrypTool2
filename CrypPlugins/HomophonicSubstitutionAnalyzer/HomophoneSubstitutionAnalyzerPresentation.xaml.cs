@@ -46,10 +46,10 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private TextBox[] _minTextBoxes = new TextBox[0];
         private TextBox[] _maxTextBoxes = new TextBox[0];
         public AnalyzerConfiguration AnalyzerConfiguration { get; private set; }
-        private PentaGrams _pentagrams;        
+        private Grams _grams;        
 
         //cache for loaded pentagrams
-        private static Dictionary<string, PentaGrams> PentagramsCache = new Dictionary<string, PentaGrams>();
+        private static Dictionary<string, Grams> NGramCache = new Dictionary<string, Grams>();
 
         private string _ciphertext = null;
         private CiphertextFormat _ciphertextFormat;
@@ -99,7 +99,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             AnalyzerConfiguration.CostFunctionMultiplicator = costFactorMultiplicator;
             AnalyzerConfiguration.FixedTemperature = fixedTemperature;
             _hillClimber = new HillClimber(AnalyzerConfiguration);
-            _hillClimber.Pentagrams = _pentagrams;
+            _hillClimber.Grams = _grams;
             _hillClimber.NewBestValue += HillClimberNewBestValue;
             _hillClimber.Progress += HillClimberProgress;
 
@@ -1143,19 +1143,52 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         /// <param name="language"></param>
         /// <param name="useSpaces"></param>
-        public void LoadLangStatistics(int language, bool useSpaces)
+        public void LoadLangStatistics(int language, bool useSpaces, int ngramsize = 5)
         {
             lock (this)
             {
                 //we use a cache for each language, thus, we do not need to load and load it again
-                string key = String.Format("{0}-{1}", language, useSpaces);
-                if (!PentagramsCache.ContainsKey(key))
+                string key = String.Format("{0}-{1}-{2}", language, useSpaces, ngramsize);
+                if (!NGramCache.ContainsKey(key))
                 {
-                    PentaGrams pentaGrams = new PentaGrams(LanguageStatistics.LanguageCode(language), useSpaces);
-                    PentagramsCache.Add(key, pentaGrams);
+                    //this is a "fallback" mechanism; it tries to load ngramsize,...,5,4,3-grams, then it fails
+                    bool loaded = false;
+                    while(loaded == false)
+                    {
+                        try
+                        {
+                            switch (ngramsize)
+                            {
+                                default:
+                                case 5:
+                                    PentaGrams pentaGrams = new PentaGrams(LanguageStatistics.LanguageCode(language), useSpaces);
+                                    NGramCache.Add(key, pentaGrams);
+                                    loaded = true;
+                                    break;
+                                case 4:
+                                    QuadGrams quadGrams = new QuadGrams(LanguageStatistics.LanguageCode(language), useSpaces);
+                                    NGramCache.Add(key, quadGrams);
+                                    loaded = true;
+                                    break;
+                                case 3:
+                                    TriGrams triGrams = new TriGrams(LanguageStatistics.LanguageCode(language), useSpaces);
+                                    NGramCache.Add(key, triGrams);
+                                    loaded = true;
+                                    break;                                                                    
+                            }                           
+                        }
+                        catch (Exception)
+                        {
+                            ngramsize--;
+                            if(ngramsize == 2)
+                            {
+                                throw new ArgumentException(String.Format("Could not load any ngrams for language='{0}' useSpaces={1}", LanguageStatistics.LanguageCode(language),useSpaces));
+                            }
+                        }
+                    }
                 }
-                _pentagrams = PentagramsCache[key];
-                PlainAlphabetText = _pentagrams.Alphabet;
+                _grams = NGramCache[key];
+                PlainAlphabetText = _grams.Alphabet;
             }
         }
 

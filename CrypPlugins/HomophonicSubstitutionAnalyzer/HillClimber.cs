@@ -31,7 +31,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 
         public event EventHandler<ProgressChangedEventArgs> Progress;
         public event EventHandler<NewBestValueEventArgs> NewBestValue;
-        public PentaGrams Pentagrams { get; set; }
+        public Grams Grams { get; set; }
         public AnalyzerConfiguration AnalyzerConfiguration { get; private set; }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                         DecryptHomophonicSubstitutionInPlace(plaintext, runkey, i, j);
 
                         // compute cost value to rate the key (fitness)
-                        var costvalue = Pentagrams.CalculateCost(plaintext.ToIntegerArray()) * AnalyzerConfiguration.CostFunctionMultiplicator;
+                        var costvalue = Grams.CalculateCost(plaintext.ToIntegerArray()) * AnalyzerConfiguration.CostFunctionMultiplicator;
                         
                         // use Cowans churn to accept or refuse the new key
                         if (simulatedAnnealing.AcceptWithConstantTemperature(costvalue, bestkeycost))

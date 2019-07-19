@@ -19,6 +19,8 @@ using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Threading;
+using Cryptool.PluginBase.Utils;
+using System;
 
 namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 {
@@ -168,42 +170,40 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         private void GenerateLetterLimits()
         {
+            int languageId = _settings.Language;
+            string languageCode = LanguageStatistics.SupportedLanguagesCodes[languageId];
             _presentation.AnalyzerConfiguration.KeyLetterLimits.Clear();
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 0, MinValue = 3, MaxValue = 5 });   //A
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 1, MinValue = 1, MaxValue = 2 });   //B
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 2, MinValue = 1, MaxValue = 2 });   //C
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 3, MinValue = 1, MaxValue = 2 });   //D
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 4, MinValue = 4, MaxValue = 6 });   //E
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 5, MinValue = 1, MaxValue = 2 });   //F
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 6, MinValue = 1, MaxValue = 2 });   //G
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 7, MinValue = 1, MaxValue = 2 });   //H
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 8, MinValue = 3, MaxValue = 5 });   //I
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 9, MinValue = 1, MaxValue = 2 });   //J
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 10, MinValue = 1, MaxValue = 2 });   //K
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 11, MinValue = 1, MaxValue = 2 });   //L
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 12, MinValue = 1, MaxValue = 2 });   //M
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 13, MinValue = 2, MaxValue = 3 });   //N
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 14, MinValue = 3, MaxValue = 5 });   //O
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 15, MinValue = 1, MaxValue = 2 });   //P
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 16, MinValue = 1, MaxValue = 2 });   //Q
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 17, MinValue = 1, MaxValue = 2 });   //R
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 18, MinValue = 1, MaxValue = 2 });   //S
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 19, MinValue = 3, MaxValue = 5 });   //T
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 20, MinValue = 3, MaxValue = 5 });   //U
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 21, MinValue = 1, MaxValue = 2 });   //V
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 22, MinValue = 1, MaxValue = 2 });   //W
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 23, MinValue = 1, MaxValue = 2 });   //X
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 24, MinValue = 1, MaxValue = 2 });   //Y
-            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 25, MinValue = 1, MaxValue = 2 });   //Z
+            string alphabet = LanguageStatistics.Alphabets[languageCode];
 
-            //_presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 26, MinValue = 1, MaxValue = 1 });   //Ä
-            //_presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 27, MinValue = 1, MaxValue = 1 });   //Ö
-            //_presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 28, MinValue = 1, MaxValue = 1 });   //Ü
-            //_presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 29, MinValue = 1, MaxValue = 1 });   //ß            
-
+            double[] unigrams;
+            if (LanguageStatistics.Unigrams.ContainsKey(languageCode))
+            {
+                unigrams = LanguageStatistics.Unigrams[languageCode];
+            }
+            else
+            {
+                //if we have no unigram stats, we just equally distribute the letters 
+                unigrams = new double[alphabet.Length];
+                for(int i=0;i< alphabet.Length; i++)
+                {
+                    unigrams[i] = 1.0 / alphabet.Length;
+                }
+            }
+            
+            for(int i = 0; i < alphabet.Length; i++)
+            {
+                int minvalue = 1;
+                int maxvalue = 2;
+                if (i < unigrams.Length)
+                {
+                    minvalue = (int)Math.Ceiling(unigrams[i] * alphabet.Length);
+                    maxvalue = minvalue * 2;
+                }
+                _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = i, MinValue = minvalue, MaxValue = maxvalue });
+            }            
             if (_settings.UseSpaces)
             {
-                _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = 26, MinValue = 2, MaxValue = 3 });   //SPACE       
+                _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = alphabet.Length, MinValue = 2, MaxValue = 3 });   //SPACE/NULLS
             }
             _presentation.GenerateKeyLetterLimitsListView();
         }
