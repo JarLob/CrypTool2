@@ -1,3 +1,12 @@
+ATTENTION: 
+The build description below is now deprecated.
+Please get the source codes of the two dependent libraries from the following links and build everything with VS2019.
+https://github.com/BrianGladman/mpfr
+https://github.com/BrianGladman/mpir
+A more detailed instruction or build script will follow soon.
+
+
+
 This C++/CLI project is a wrapper around the Bit Commitment Scheme code by Martin Schmidt.
 The original source can be found at his website:
 http://www.ifam.uni-hannover.de/~mschmidt/
