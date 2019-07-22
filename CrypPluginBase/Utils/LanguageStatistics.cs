@@ -16,7 +16,7 @@ namespace Cryptool.PluginBase.Utils
         {
             Englisch,
             German,
-            Spansih,
+            Spanish,
             French,
             Italian,
             Hungarian,
