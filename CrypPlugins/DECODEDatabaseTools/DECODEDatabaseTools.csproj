@@ -85,17 +85,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DECODETextParser\DECODETextParserPresentation.xaml.cs">
-      <DependentUpon>DECODETextParserPresentation.xaml</DependentUpon>
+    <Compile Include="DECODEDecipherer\DECODEDeciphererPresentation.xaml.cs">
+      <DependentUpon>DECODEDeciphererPresentation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DECODETextParser\DECODETextParserSettings.cs" />
-    <Compile Include="DECODETextParser\Parsers.cs" />
-    <Compile Include="DECODETextParser\TextObjects.cs" />
+    <Compile Include="DECODEDecipherer\DECODEDeciphererSettings.cs" />
+    <Compile Include="DECODEDecipherer\Parsers.cs" />
+    <Compile Include="DECODEDecipherer\TextObjects.cs" />
     <Compile Include="Util\DataObjects.cs" />
     <Compile Include="DECODESettingsTab.xaml.cs">
       <DependentUpon>DECODESettingsTab.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DECODETextParser\DECODETextParser.cs" />
+    <Compile Include="DECODEDecipherer\DECODEDecipherer.cs" />
     <Compile Include="DECODEViewer\DECODEViewerSettings.cs" />
     <Compile Include="DECODEViewer\DECODEViewerPresentation.xaml.cs">
       <DependentUpon>DECODEViewerPresentation.xaml</DependentUpon>
@@ -178,7 +178,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DECODETextParser\DECODETextParserPresentation.xaml">
+    <Page Include="DECODEDecipherer\DECODEDeciphererPresentation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

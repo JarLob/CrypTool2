@@ -22,29 +22,24 @@ using System.Windows.Controls;
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
     [Author("Nils Kopal", "nils.kopal@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
-    [PluginInfo("Cryptool.Plugins.DECODEDatabaseTools.Properties.Resources", "DecodeTextParserCaption", "DecodeTextParserTooltip", "DECODEDatabaseTools/userdoc.xml", "DECODEDatabaseTools/icon.png")]
+    [PluginInfo("Cryptool.Plugins.DECODEDatabaseTools.Properties.Resources", "DECODEDeciphererCaption", "DECODEDeciphererTooltip", "DECODEDatabaseTools/userdoc.xml", "DECODEDatabaseTools/icon.png")]
     [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
-    public class DECODETextParser : ICrypComponent
+    public class DECODEDecipherer: ICrypComponent
     {
         #region Private Variables
 
         private string _DECODETextDocument;
         private string _parsedText;
-        private DECODETextParserPresentation _presentation = new DECODETextParserPresentation();
-        private DECODETextParserSettings _settings = new DECODETextParserSettings();
+        private DECODEDeciphererPresentation _presentation = new DECODEDeciphererPresentation();
+        private DECODEDeciphererSettings _settings = new DECODEDeciphererSettings();
 
         #endregion
 
         #region Constructor
 
-        public DECODETextParser()
+        public DECODEDecipherer()
         {
             _presentation.OnGuiLogNotificationOccured += ForwardGuiLogNotification;
-        }
-
-        private void _presentation_OnGuiLogNotificationOccured(IPlugin sender, GuiLogEventArgs args)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion
