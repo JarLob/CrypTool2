@@ -29,7 +29,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         #region Private Variables
 
         private string _DECODETextDocument;
-        private string _parsedText;
+        private string _DECODEKeyDocument;
+        private string _outputText;
         private DECODEDeciphererPresentation _presentation = new DECODEDeciphererPresentation();
         private DECODEDeciphererSettings _settings = new DECODEDeciphererSettings();
 
@@ -47,7 +48,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         #region Data Properties
 
         /// <summary>
-        /// Input of a json record of the DECODE database
+        /// Input of a DECODETextDocument (cipher file)
         /// </summary>
         [PropertyInfo(Direction.InputData, "DECODETextDocumentCaption", "DECODETextDocumentTooltip")]
         public string DECODETextDocument
@@ -63,18 +64,34 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         }
 
         /// <summary>
-        /// Input of a json record of the DECODE database
+        /// Input of DECODEKeyDocument (key file)
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "ParsedTextCaption", "ParsedTextTooltip")]
-        public string ParsedText
+        [PropertyInfo(Direction.InputData, "DECODEKeyDocumentCaption", "DECODEKeyTooltip")]
+        public string DECODEKeyDocument
         {
             get
             {
-                return _parsedText;
+                return _DECODEKeyDocument;
             }
             set
             {
-                _parsedText = value;
+                _DECODEKeyDocument = value;
+            }
+        }
+
+        /// <summary>
+        /// Output of text (parsed or parsed + decoded)
+        /// </summary>
+        [PropertyInfo(Direction.OutputData, "OutputTextCaption", "OutputTextTooltip")]
+        public string OutputText
+        {
+            get
+            {
+                return _outputText;
+            }
+            set
+            {
+                _outputText = value;
             }
         }
 
@@ -114,7 +131,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
         public void Execute()
         {
-            NoVocabularyParser parser = new NoVocabularyParser(2);
+            Decoder decoder = null;
+            if (DECODEKeyDocument != null)
+            {
+                decoder = new Decoder(DECODEKeyDocument);
+                decoder.OnGuiLogNotificationOccured += ForwardGuiLogNotification;
+            }
+            Parser_3DigitsEndingWithNullDigit parser = new Parser_3DigitsEndingWithNullDigit("1","8");
             parser.OnGuiLogNotificationOccured += ForwardGuiLogNotification;
             parser.DECODETextDocument = DECODETextDocument;
             DateTime startTime = DateTime.Now;
@@ -124,8 +147,21 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 return;
             }
             GuiLogMessage(String.Format("Parsed document in {0}ms", (DateTime.Now - startTime).TotalMilliseconds), NotificationLevel.Info);
-            _parsedText = document.ToString();
+            
+            if (decoder != null)
+            {
+                startTime = DateTime.Now;                
+                foreach(var page in document.Pages)
+                {
+                    foreach(var line in page.Lines)
+                    {
+                        decoder.Decode(line);
+                    }
+                }
+                GuiLogMessage(String.Format("Decoded document in {0}ms", (DateTime.Now - startTime).TotalMilliseconds), NotificationLevel.Info);
+            }
             _presentation.ShowDocument(document);
+            _outputText = document.ToString();
             OnPropertyChanged("ParsedText");
         }
 
@@ -151,7 +187,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
         public void PreExecution()
         {
-            
+            DECODETextDocument = null;
+            DECODEKeyDocument = null;            
         }
 
         public void Stop()

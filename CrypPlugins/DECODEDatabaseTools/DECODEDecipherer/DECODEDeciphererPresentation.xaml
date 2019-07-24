@@ -121,7 +121,7 @@
                                                Margin="0,0,0,0" 
                                                VerticalAlignment="Center" 
                                                HorizontalContentAlignment="Right"
-                                               Padding="0" />
+                                               Padding="0" FontSize="14"/>
                                             <!-- Single line tokens: -->
                                             <ListBox Grid.Column="2" ItemsSource="{Binding Path=Tokens}" 
                                                  Margin="0,0,0,0" 
@@ -144,12 +144,24 @@
                                                 </ListBox.ItemsPanel>
                                                 <ListBox.ItemTemplate>
                                                     <DataTemplate>
-                                                        <Label Content="{Binding Path=Text}" 
-                                                           Margin="0,0,0,0" 
-                                                           BorderThickness="0" 
-                                                           VerticalAlignment="Center" 
-                                                           Padding="0"
-                                                           Foreground="{Binding Path=TextColor}"/>
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*"/>
+                                                                <RowDefinition Height="*"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Label Content="{Binding Path=Text}" Grid.Row="0" 
+                                                               Margin="0,0,0,0" 
+                                                               BorderThickness="0" 
+                                                               VerticalAlignment="Center" 
+                                                               Padding="0"
+                                                               Foreground="{Binding Path=TextColor}" FontSize="14"/>
+                                                            <Label Content="{Binding Path=DecodedText}"  Grid.Row="1"  
+                                                               Margin="0,0,0,0" 
+                                                               BorderThickness="0" 
+                                                               VerticalAlignment="Center" 
+                                                               Padding="0"
+                                                               Foreground="{Binding Path=TextColor}" FontSize="14"/>
+                                                        </Grid>
                                                     </DataTemplate>
                                                 </ListBox.ItemTemplate>
                                             </ListBox>

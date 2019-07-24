@@ -378,6 +378,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                             }
                             Token nullToken = new Token(line);
                             nullToken.TokenType = TokenType.Null;
+                            nullToken.Text = symbol;
                             line.Tokens.Add(nullToken);
                             continue;
                         }
@@ -392,6 +393,148 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                             regularCodeToken.Text = tokenStringBuilder.ToString();
                             line.Tokens.Add(regularCodeToken);
                             tokenStringBuilder.Clear();
+                        }
+                    }
+                    lastLine = line;
+                }
+
+                if (tagTokenBuilder.Length > 0)
+                {
+                    Token tagToken = new Token(lastLine);
+                    tagToken.TokenType = TokenType.Tag;
+                    tagToken.Text = tagTokenBuilder.ToString();
+                    lastLine.Tokens.Add(tagToken);
+                    tagTokenBuilder.Clear();
+                    is_a_tag = false;
+                }
+                if (tokenStringBuilder.Length > 0)
+                {
+                    Token regularCodeToken = new Token(lastLine);
+                    regularCodeToken.TokenType = TokenType.RegularCode;
+                    regularCodeToken.Text = tokenStringBuilder.ToString();
+                    lastLine.Tokens.Add(regularCodeToken);
+                    tokenStringBuilder.Clear();
+                }
+            }
+
+            return document;
+        }
+    }
+
+    public class Parser_3DigitsEndingWithNullDigit : SimpleSingleTokenParser
+    {
+        private string[] _nulls = new string[] { };
+
+        public Parser_3DigitsEndingWithNullDigit(params string[] nulls)
+        {
+            if (nulls != null)
+            {
+                _nulls = nulls;
+            }
+        }
+
+        /// <summary>
+        /// Returns the parsed new document
+        /// </summary>
+        /// <returns></returns>
+        public override TextDocument GetDocument()
+        {
+            TextDocument document = base.GetDocument();
+            if (document == null)
+            {
+                return null;
+            }
+
+            foreach (Page page in document.Pages)
+            {
+                //create new tokens based on the "old" tokens
+                StringBuilder tokenStringBuilder = new StringBuilder();
+                StringBuilder tagTokenBuilder = new StringBuilder();
+                Line lastLine = null;
+
+                bool is_a_tag = false;
+                foreach (Line line in page.Lines)
+                {
+                    if (line.LineType == LineType.Comment)
+                    {
+                        continue;
+                    }
+
+                    //We are using the SimpleSingleTokenParser as baseline
+                    //Thus, we have a single token for each line
+                    string text = line.Tokens[0].Text;
+                    line.Tokens.Remove(line.Tokens[0]);
+
+                    for (int position = 0; position < text.Length; position++)
+                    {
+                        string symbol = text.Substring(position, 1);
+                        if (string.IsNullOrWhiteSpace(symbol) && !is_a_tag)
+                        {
+                            continue;
+                        }
+
+                        if (symbol.Equals("<"))
+                        {
+                            tagTokenBuilder.Append(symbol);
+                            is_a_tag = true;
+                            continue;
+                        }
+                        if (is_a_tag == true && symbol.Equals(">"))
+                        {
+                            tagTokenBuilder.Append(symbol);
+                            Token tagToken = new Token(line);
+                            tagToken.TokenType = TokenType.Tag;
+                            tagToken.Text = tagTokenBuilder.ToString();
+                            line.Tokens.Add(tagToken);
+                            tagTokenBuilder.Clear();
+                            is_a_tag = false;
+                            continue;
+                        }
+                        if (is_a_tag)
+                        {
+                            tagTokenBuilder.Append(symbol);
+                            continue;
+                        }
+                        if (_nulls.Contains(symbol))
+                        {
+                            //we found a null, thus, add a new token of previously collected characters
+                            if (tokenStringBuilder.Length == 3)
+                            {
+                                //we know, that this is a vocabulary element (length = 3 digits)
+                                Token regularCodeToken = new Token(line);
+                                regularCodeToken.TokenType = TokenType.VocabularyElement;
+                                regularCodeToken.Text = tokenStringBuilder.ToString();
+                                line.Tokens.Add(regularCodeToken);
+                                tokenStringBuilder.Clear();
+                            }
+                            else if(tokenStringBuilder.Length > 0)
+                            {
+                                Token regularCodeToken = new Token(line);
+                                regularCodeToken.TokenType = TokenType.RegularCode;
+                                regularCodeToken.Text = tokenStringBuilder.ToString();
+                                line.Tokens.Add(regularCodeToken);
+                                tokenStringBuilder.Clear();
+                            }
+
+                            Token nullToken = new Token(line);
+                            nullToken.TokenType = TokenType.Null;
+                            nullToken.Text = symbol;
+                            line.Tokens.Add(nullToken);
+                            continue;
+                        }
+                        //here, we know, we have no null symbol and no whitespace
+                        //thus, the symbol (maybe) belongs to a regular code or a vocabulary element
+                        tokenStringBuilder.Append(symbol);
+
+                        if(tokenStringBuilder.Length > 3)
+                        {
+                            //if we are longer than 3 digits, we know we can not be in a vocabulary, 
+                            //thus, we add a regular code
+                            Token regularCodeToken = new Token(line);
+                            regularCodeToken.TokenType = TokenType.RegularCode;
+                            regularCodeToken.Text = tokenStringBuilder.ToString().Substring(0, 2);
+                            line.Tokens.Add(regularCodeToken);
+                            tokenStringBuilder.Remove(0, 2);
                         }
                     }
                     lastLine = line;

@@ -249,12 +249,17 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             TokenType = TokenType.Unknown;
             _line = line;
+            DecodedText = null;
         }
-
 
         public string Text
         {
             get; set;
+        }
+
+        public string DecodedText
+        {
+            get;set;
         }
 
         public TokenType TokenType
@@ -277,6 +282,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                         {
                             case TokenType.Tag:
                                 return Brushes.DarkGreen;
+                            case TokenType.Null:
+                                return Brushes.Gray;
+                            case TokenType.VocabularyElement:
+                                return Brushes.DarkBlue;
                             default:
                                 return Brushes.Black;
                         }
