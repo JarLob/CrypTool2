@@ -5,6 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO.Compression;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Properties;
+using System.Linq;
 
 namespace Cryptool.PluginBase.Utils
 {
@@ -418,31 +419,9 @@ namespace Cryptool.PluginBase.Utils
 
         private void LoadGZ(string filename)
         {
-            uint[] data;
-            uint max;
-            ulong sum;
-
-            BinaryFormatter bf = new BinaryFormatter();
-
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
-            using (var gz = new GZipStream(fs, CompressionMode.Decompress))
-            {
-                Alphabet = (string)bf.Deserialize(gz);
-                max = (uint)bf.Deserialize(gz);
-                sum = (ulong)bf.Deserialize(gz);
-                if (max == 0 && sum == 0)
-                {
-                    Frequencies = (float[]) bf.Deserialize(gz);
-                }
-                else
-                {
-                    data = (uint[])bf.Deserialize(gz);
-                    Frequencies = new float[Alphabet.Length];
-                    for (int a = 0; a < Alphabet.Length; a++)
-                        Frequencies[a] = (float)Math.Log((data[a] + 0.001) / max);
-                }
-            }
-
+            var file = new LanguageStatisticsFile(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename));
+            Frequencies = (float[])file.LoadFrequencies(1);
+            Alphabet = file.Alphabet;
         }
 
         public override double CalculateCost(int[] plaintext)
@@ -471,32 +450,9 @@ namespace Cryptool.PluginBase.Utils
 
         private void LoadGZ(string filename)
         {
-            uint[,] data;
-            uint max;
-            ulong sum;
-
-            BinaryFormatter bf = new BinaryFormatter();
-
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
-            using (var gz = new GZipStream(fs, CompressionMode.Decompress))
-            {
-                Alphabet = (string)bf.Deserialize(gz);
-                max = (uint)bf.Deserialize(gz);
-                sum = (ulong)bf.Deserialize(gz);
-                if (max == 0 && sum == 0)
-                {
-                    Frequencies = (float[,])bf.Deserialize(gz);
-                }
-                else
-                {
-                    data = (uint[,])bf.Deserialize(gz);
-                    Frequencies = new float[Alphabet.Length, Alphabet.Length];
-
-                    for (int a = 0; a < Alphabet.Length; a++)
-                    for (int b = 0; b < Alphabet.Length; b++)
-                        Frequencies[a, b] = (float)Math.Log((data[a, b] + 0.001) / max);
-                }                                                
-            }            
+            var file = new LanguageStatisticsFile(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename));
+            Frequencies = (float[,])file.LoadFrequencies(2);
+            Alphabet = file.Alphabet;
         }
 
         public override double CalculateCost(int[] plaintext)
@@ -525,34 +481,9 @@ namespace Cryptool.PluginBase.Utils
 
         private void LoadGZ(string filename)
         {
-            uint[,,] data;
-            uint max;
-            ulong sum;
-
-            BinaryFormatter bf = new BinaryFormatter();
-
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
-            using (var gz = new GZipStream(fs, CompressionMode.Decompress))
-            {
-                Alphabet = (string)bf.Deserialize(gz);
-                max = (uint)bf.Deserialize(gz);
-                sum = (ulong)bf.Deserialize(gz);
-                if (max == 0 && sum == 0)
-                {
-                    Frequencies = (float[,,]) bf.Deserialize(gz);
-                }
-                else
-                {
-                    data = (uint[, ,])bf.Deserialize(gz);
-                    Frequencies = new float[Alphabet.Length, Alphabet.Length, Alphabet.Length];
-
-                    for (int a = 0; a < Alphabet.Length; a++)
-                    for (int b = 0; b < Alphabet.Length; b++)
-                    for (int c = 0; c < Alphabet.Length; c++)
-                        Frequencies[a, b, c] = (float)Math.Log((data[a, b, c] + 0.001) / max);
-                }
-                
-            }         
+            var file = new LanguageStatisticsFile(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename));
+            Frequencies = (float[,,])file.LoadFrequencies(3);
+            Alphabet = file.Alphabet;
         }
 
         public override double CalculateCost(int[] plaintext)
@@ -581,34 +512,9 @@ namespace Cryptool.PluginBase.Utils
 
         private void LoadGZ(string filename)
         {
-            uint[,,,] data;
-            uint max;
-            ulong sum;
-
-            BinaryFormatter bf = new BinaryFormatter();
-
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
-            using (var gz = new GZipStream(fs, CompressionMode.Decompress))
-            {
-                Alphabet = (string)bf.Deserialize(gz);
-                max = (uint)bf.Deserialize(gz);
-                sum = (ulong)bf.Deserialize(gz);                
-                if (max == 0 && sum == 0)
-                {
-                    Frequencies = (float[,,,])bf.Deserialize(gz);
-                }
-                else
-                {
-                    data = (uint[, , ,])bf.Deserialize(gz);
-                    Frequencies = new float[Alphabet.Length, Alphabet.Length, Alphabet.Length, Alphabet.Length];
-
-                    for (int a = 0; a < Alphabet.Length; a++)
-                    for (int b = 0; b < Alphabet.Length; b++)
-                    for (int c = 0; c < Alphabet.Length; c++)
-                    for (int d = 0; d < Alphabet.Length; d++)
-                        Frequencies[a, b, c, d] = (float)Math.Log((data[a, b, c, d] + 0.001) / max);
-                }
-            }        
+            var file = new LanguageStatisticsFile(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename));
+            Frequencies = (float[,,,])file.LoadFrequencies(4);
+            Alphabet = file.Alphabet;
         }
 
         public override double CalculateCost(int[] plaintext)
@@ -637,36 +543,9 @@ namespace Cryptool.PluginBase.Utils
 
         private void LoadGZ(string filename)
         {
-            uint[,,,,] data;
-            uint max;
-            ulong sum;
-
-            BinaryFormatter bf = new BinaryFormatter();
-
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
-            using (var gz = new GZipStream(fs, CompressionMode.Decompress))
-            {
-                Alphabet = (string)bf.Deserialize(gz);
-                max = (uint)bf.Deserialize(gz);
-                sum = (ulong)bf.Deserialize(gz);
-                
-                if (max == 0 && sum == 0)
-                {
-                    Frequencies = (float[,,,,]) bf.Deserialize(gz);
-                }
-                else
-                {
-                    data = (uint[, , , ,])bf.Deserialize(gz);
-                    Frequencies = new float[Alphabet.Length, Alphabet.Length, Alphabet.Length, Alphabet.Length, Alphabet.Length];
-
-                    for (int a = 0; a < Alphabet.Length; a++)
-                    for (int b = 0; b < Alphabet.Length; b++)
-                    for (int c = 0; c < Alphabet.Length; c++)
-                    for (int d = 0; d < Alphabet.Length; d++)
-                    for (int e = 0; e < Alphabet.Length; e++)
-                        Frequencies[a, b, c, d, e] = (float)Math.Log((data[a, b, c, d, e] + 0.001) / max);
-                }
-            }           
+            var file = new LanguageStatisticsFile(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename));
+            Frequencies = (float[,,,,]) file.LoadFrequencies(5);
+            Alphabet = file.Alphabet;
         }
 
         public override double CalculateCost(int[] plaintext)
@@ -680,6 +559,62 @@ namespace Cryptool.PluginBase.Utils
                 value += Frequencies[plaintext[i], plaintext[i + 1], plaintext[i + 2], plaintext[i + 3], plaintext[i + 4]];
 
             return value / end;
+        }
+    }
+
+    public class LanguageStatisticsFile
+    {
+        private readonly string filePath;
+
+        /// <summary>
+        /// Magic number (ASCII string 'CTLS') for this file format.
+        /// </summary>
+        public const uint FileFormatMagicNumber = 'C' + ('T' << 8) + ('L' << 16) + ('S' << 24);
+
+        public string Alphabet { get; private set; }
+
+        public LanguageStatisticsFile(string filePath)
+        {
+            this.filePath = filePath;
+        }
+
+        public Array LoadFrequencies(int arrayDimensions)
+        {
+            using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            using (var gz = new GZipStream(fs, CompressionMode.Decompress))
+            using (var br = new BinaryReader(gz))
+            {
+                var magicNumber = br.ReadUInt32();
+                if (magicNumber != FileFormatMagicNumber)
+                {
+                    throw new Exception("File does not start with the expected magic number for language statistics.");
+                }
+
+                var gramLength = br.ReadInt32();
+                if (gramLength != arrayDimensions)
+                {
+                    throw new Exception("Gram length of statistics file differs from required dimensions of frequency array.");
+                }
+
+                Alphabet = br.ReadString();
+                var alphabetLength = Alphabet.Length;
+
+                var frequencyEntries = 1;
+                //frequencyEntries = exp(alphabetLength, gramLength) 
+                for (int i = 0; i < gramLength; i++)
+                {
+                    frequencyEntries *= alphabetLength;
+                }
+
+                //Instantiate array with "arrayDimensions" dimensions of length "alphabetLength":
+                var arrayLengths = Enumerable.Repeat(alphabetLength, arrayDimensions).ToArray();
+                var frequencyArray = Array.CreateInstance(typeof(float), arrayLengths);
+
+                //Read whole block of frequency floats and do a block copy for efficiency reasons:
+                var frequencyData = br.ReadBytes(sizeof(float) * frequencyEntries);
+                Buffer.BlockCopy(frequencyData, 0, frequencyArray, 0, frequencyData.Length);
+                return frequencyArray;
+            }
         }
     }
 }
