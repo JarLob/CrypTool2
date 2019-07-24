@@ -144,11 +144,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 case ParserType.NoVocabularyParser:
                     parser = new NoVocabularyParser(2);
                     break;
-                case ParserType.Vocabulary3DigitsEndingWithNull1DigitParser:
-                    parser = new Vocabulary3DigitsEndingWithNull1DigitParser(_settings.GetNulls());
+                case ParserType.Vocabulary3DigitsEndingWithNull1DigitsParser:
+                    parser = new Vocabulary3DigitsEndingWithNull1DigitsParser(_settings.GetNulls());
                     break;
                 case ParserType.Vocabulary3DigitsEndingWithNull2DigitsParser:
-                    parser = new Vocabulary3DigitsEndingWithNull1DigitParser(_settings.GetNulls());
+                    parser = new Vocabulary3DigitsEndingWithNull2DigitsParser(_settings.GetNulls());
                     break;
                 case ParserType.SimpleSingleTokenParser:
                 default:

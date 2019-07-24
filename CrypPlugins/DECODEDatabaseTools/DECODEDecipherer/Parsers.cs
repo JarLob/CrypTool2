@@ -429,11 +429,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     /// Parses the text into regular codes of two
     /// Also supports vocabulary elements of three digits followed by a null digit
     /// </summary>
-    public class Vocabulary3DigitsEndingWithNull1DigitParser : SimpleSingleTokenParser
+    public class Vocabulary3DigitsEndingWithNull1DigitsParser : SimpleSingleTokenParser
     {
         private string[] _nulls = new string[] { };
 
-        public Vocabulary3DigitsEndingWithNull1DigitParser(params string[] nulls)
+        public Vocabulary3DigitsEndingWithNull1DigitsParser(params string[] nulls)
         {
             if (nulls != null)
             {

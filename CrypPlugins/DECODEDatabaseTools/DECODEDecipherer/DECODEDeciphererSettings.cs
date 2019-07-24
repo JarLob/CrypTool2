@@ -23,7 +23,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     {
         SimpleSingleTokenParser = 0,
         NoVocabularyParser = 1,
-        Vocabulary3DigitsEndingWithNull1DigitParser = 2,
+        Vocabulary3DigitsEndingWithNull1DigitsParser = 2,
         Vocabulary3DigitsEndingWithNull2DigitsParser = 3
     }
 
@@ -37,7 +37,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             "SimpleSingleTokenParser",
             "NoVocabularyParser",
-            "Vocabulary3DigitsEndingWithNull1DigitParser",
+            "Vocabulary3DigitsEndingWithNull1DigitsParser",
             "Vocabulary3DigitsEndingWithNull2DigitsParser"
         })]
         public ParserType ParserType
