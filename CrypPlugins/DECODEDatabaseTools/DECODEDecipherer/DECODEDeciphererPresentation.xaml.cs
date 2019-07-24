@@ -54,13 +54,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 TranscriptionMethodLabel.Content = document.TranscriptionMethod;
                 CommentsLabel.Content = document.Comments;
             }, null);
+
             foreach (var page in document.Pages)
             {
                 Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
-                {
-                    PageList.Items.Add(page);
+                {                    
+                    PageList.Items.Add(page);                    
                 }, null);
             }
+
             GuiLogMessage(String.Format("Created document user interface in {0}ms", (DateTime.Now - startTime).TotalMilliseconds), NotificationLevel.Info);
         }
 

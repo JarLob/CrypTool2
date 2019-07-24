@@ -14,17 +14,80 @@
    limitations under the License.
 */
 using Cryptool.PluginBase;
+using Cryptool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
+    public enum ParserType
+    {
+        SimpleSingleTokenParser = 0,
+        NoVocabularyParser = 1,
+        Vocabulary3DigitsEndingWithNull1DigitParser = 2,
+        Vocabulary3DigitsEndingWithNull2DigitsParser = 3
+    }
+
     class DECODEDeciphererSettings : ISettings
     {
+        private ParserType _parserType;
+        private string _nulls;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        [TaskPane("ParserTypeCaption", "ParserTypeTooltip", null, 1, false, ControlType.ComboBox, new string[] 
+        {
+            "SimpleSingleTokenParser",
+            "NoVocabularyParser",
+            "Vocabulary3DigitsEndingWithNull1DigitParser",
+            "Vocabulary3DigitsEndingWithNull2DigitsParser"
+        })]
+        public ParserType ParserType
+        {
+            get { return _parserType; }
+            set
+            {
+                if ((value) != _parserType)
+                {
+                    _parserType = value;
+                    OnPropertyChanged("ParserType");
+                }
+            }
+        }
+
+        [TaskPane("NullsCaption", "NullsTooltip", null, 2, false, ControlType.TextBox)]
+        public string Nulls
+        {
+            get { return _nulls; }
+            set
+            {
+                if ((value) != _nulls)
+                {
+                    _nulls = value;
+                    OnPropertyChanged("Nulls");
+                }
+            }
+        }
 
         public void Initialize()
         {
             
+        }
+
+        public string[] GetNulls()
+        {
+            if (string.IsNullOrEmpty(_nulls)){
+                return new string[0];
+            }
+            string[] nulls = _nulls.Split(',');
+            for(int i = 0; i < nulls.Length; i++)
+            {
+                nulls[i] = nulls[i].Trim();
+            }
+            return nulls;
+        }
+
+        protected void OnPropertyChanged(string name)
+        {
+            EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
         }
     }
 }

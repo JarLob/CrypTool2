@@ -17,6 +17,7 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System;
 using System.ComponentModel;
+using System.Text;
 using System.Windows.Controls;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
@@ -137,7 +138,24 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 decoder = new Decoder(DECODEKeyDocument);
                 decoder.OnGuiLogNotificationOccured += ForwardGuiLogNotification;
             }
-            Parser_3DigitsEndingWithNullDigit parser = new Parser_3DigitsEndingWithNullDigit("1","8");
+            Parser parser = null;
+            switch (_settings.ParserType)
+            {                
+                case ParserType.NoVocabularyParser:
+                    parser = new NoVocabularyParser(2);
+                    break;
+                case ParserType.Vocabulary3DigitsEndingWithNull1DigitParser:
+                    parser = new Vocabulary3DigitsEndingWithNull1DigitParser(_settings.GetNulls());
+                    break;
+                case ParserType.Vocabulary3DigitsEndingWithNull2DigitsParser:
+                    parser = new Vocabulary3DigitsEndingWithNull1DigitParser(_settings.GetNulls());
+                    break;
+                case ParserType.SimpleSingleTokenParser:
+                default:
+                    parser = new SimpleSingleTokenParser();
+                    break;
+            }            
+                        
             parser.OnGuiLogNotificationOccured += ForwardGuiLogNotification;
             parser.DECODETextDocument = DECODETextDocument;
             DateTime startTime = DateTime.Now;
@@ -161,8 +179,43 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 GuiLogMessage(String.Format("Decoded document in {0}ms", (DateTime.Now - startTime).TotalMilliseconds), NotificationLevel.Info);
             }
             _presentation.ShowDocument(document);
-            _outputText = document.ToString();
-            OnPropertyChanged("ParsedText");
+
+            if (decoder != null)
+            {
+                StringBuilder outputBuilder = new StringBuilder();
+
+                foreach (var page in document.Pages)
+                {
+                    foreach (var line in page.Lines)
+                    {
+                        if (line.LineType == LineType.Comment)
+                        {
+                            outputBuilder.AppendLine(line.ToString());
+                        }
+                        else
+                        {
+                            foreach(var token in line.Tokens)
+                            {
+                                if (token.TokenType == TokenType.Tag)
+                                {
+                                    outputBuilder.Append(token.Text);
+                                }
+                                else
+                                {
+                                    outputBuilder.Append(token.DecodedText);
+                                }
+                            }
+                            outputBuilder.AppendLine();
+                        }                        
+                    }
+                }
+                _outputText = outputBuilder.ToString();
+            }
+            else
+            {
+                _outputText = document.ToString();
+            }
+            OnPropertyChanged("OutputText");
         }
 
         /// <summary>
