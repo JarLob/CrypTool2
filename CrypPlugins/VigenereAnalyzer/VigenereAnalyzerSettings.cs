@@ -28,21 +28,6 @@ namespace Cryptool.VigenereAnalyzer
         Autokey = 1
     };
 
-    public enum Language
-    {
-        Englisch = 0,
-        German = 1,
-        Spanish = 2
-    };
-
-    public enum CostFunction
-    {
-        Trigrams = 0,
-        Quadgrams = 1,
-        Both = 2,
-        IoC = 3
-    }
-
     public enum UnknownSymbolHandlingMode
     {
         Ignore = 0,
@@ -61,11 +46,10 @@ namespace Cryptool.VigenereAnalyzer
         private Mode _mode = Mode.Vigenere;
         private int _fromKeylength;
         private int _toKeyLength = 20;
-        private Language _language = Language.Englisch;
         private bool _fastConverge;
         private int _restarts = 50;
         private KeyStyle _keyStyle;
-        private CostFunction _costFunction = CostFunction.Quadgrams;
+        private int _language;
 
         // EVALUATION!
         private bool _stopIfPercentReached = false;
@@ -146,8 +130,8 @@ namespace Cryptool.VigenereAnalyzer
             }
         }
 
-        [TaskPane("LanguageCaption", "LanguageTooltip", null, 5, false, ControlType.ComboBox, new string[]{"English","German", "Spanish"})]
-        public Language Language
+        [TaskPane("LanguageCaption", "LanguageTooltip", null, 5, false, ControlType.LanguageSelector)]
+        public int Language
         {
             get
             {
@@ -163,22 +147,6 @@ namespace Cryptool.VigenereAnalyzer
             }
         }
 
-        [TaskPane("CostFunction", "CostFunctionTooltip", null, 6, false, ControlType.ComboBox, new string[] { "Trigrams", "Quadgrams", "Both", "IoC" })]
-        public CostFunction CostFunction
-        {
-            get
-            {
-                return _costFunction;
-            }
-            set
-            {
-                if (value != _costFunction)
-                {
-                    _costFunction = value;
-                    OnPropertyChanged("CostFunction");
-                }
-            }
-        }
 
         [TaskPane("KeyStyleCaption", "KeyStyleTooltip", null, 7, false, ControlType.ComboBox, new string[] { "Random", "NaturalLanguage" })]
         public KeyStyle KeyStyle

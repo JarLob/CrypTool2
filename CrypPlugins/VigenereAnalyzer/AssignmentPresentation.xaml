@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:Cryptool.VigenereAnalyzer.Properties"
     d:DesignHeight="263">
-    
+
     <UserControl.Resources>
         <RotateTransform x:Key="HeaderRotate" Angle="270" />
         <Style x:Key="ValueRow1">

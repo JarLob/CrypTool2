@@ -28,6 +28,7 @@ using System.Windows.Threading;
 using System.Threading;
 using System.Collections.Generic;
 using Cryptool.PluginBase.Attributes;
+using Cryptool.PluginBase.Utils;
 
 namespace Cryptool.VigenereAnalyzer
 {
@@ -45,8 +46,6 @@ namespace Cryptool.VigenereAnalyzer
         private string _plaintext;
         private string _key;
         private readonly VigenereAnalyzerSettings _settings = new VigenereAnalyzerSettings();
-        private double[,,] _trigrams;
-        private double[,,,] _quadgrams;
         private bool _stopped;
         private DateTime _startTime;
         private DateTime _endTime;
@@ -162,27 +161,7 @@ namespace Cryptool.VigenereAnalyzer
         }
         
         public void PreExecution()
-        {
-            if (_settings.Language == Language.German)
-            {
-                Load3Grams("de-3gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-                Load4Grams("de-4gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖß");
-            }
-            else if (_settings.Language == Language.Englisch)
-            {
-                Load3Grams("en-3gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-                Load4Grams("en-4gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-            }
-            else if (_settings.Language == Language.Spanish)
-            {
-                Load3Grams("es-3gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZÑ");
-                Load4Grams("es-4gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZÑ");
-            }
-            else
-            {
-                Load3Grams("en-3gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-                Load4Grams("en-4gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-            }
+        {           
             VigenereAlphabet = Alphabet;
         }
 
@@ -419,6 +398,15 @@ namespace Cryptool.VigenereAnalyzer
 
             var runkey = new int[keylength];
 
+            Grams grams = null;
+            try
+            {
+                grams = new PentaGrams(LanguageStatistics.LanguageCode(_settings.Language), false);
+            }catch(Exception ex)
+            {
+                grams = new QuadGrams(LanguageStatistics.LanguageCode(_settings.Language), false);
+            }
+
             while (restarts > 0)
             {
                 // generate random key
@@ -451,23 +439,8 @@ namespace Cryptool.VigenereAnalyzer
 
                             keys++;
                             var costvalue = 0.0;
-                            switch (_settings.CostFunction)
-                            {
-                                case CostFunction.Trigrams:
-                                    costvalue = CalculateTrigramCost(_trigrams, plaintext) + (_settings.KeyStyle == KeyStyle.NaturalLanguage ? CalculateTrigramCost(_trigrams, runkey) : 0);
-                                    break;
-                                case CostFunction.Quadgrams:
-                                    costvalue = CalculateQuadgramCost(_quadgrams, plaintext) + (_settings.KeyStyle == KeyStyle.NaturalLanguage ? CalculateQuadgramCost(_quadgrams, runkey) : 0);
-                                    break;
-                                case CostFunction.Both:
-                                    var tri = CalculateTrigramCost(_trigrams, plaintext) + (_settings.KeyStyle == KeyStyle.NaturalLanguage ? CalculateTrigramCost(_trigrams, runkey) : 0);
-                                    var quad = CalculateQuadgramCost(_quadgrams, plaintext) + (_settings.KeyStyle == KeyStyle.NaturalLanguage ? CalculateQuadgramCost(_quadgrams, runkey) : 0);
-                                    costvalue += (0.5 * tri + 0.5 * quad);
-                                    break;
-                                case CostFunction.IoC:
-                                    costvalue = CalculateIoC(plaintext);
-                                    break;
-                            }                            
+
+                            costvalue = grams.CalculateCost(plaintext);
                             
                             if (costvalue > bestkeycost)
                             {
@@ -760,63 +733,7 @@ namespace Cryptool.VigenereAnalyzer
             return plaintext;
         }
 
-        /// <summary>
-        /// Calculate cost value based on index of coincidence
-        /// </summary>
-        /// <param name="plaintext"></param>
-        /// <returns></returns>
-        public static double CalculateIoC(int[] plaintext)
-        {
-            Dictionary<int, UInt64> countChars = new Dictionary<int, UInt64>();
-
-            foreach (int c in plaintext)
-                if (countChars.ContainsKey(c)) countChars[c]++; else countChars.Add(c, 1);
-            
-            UInt64 value = 0;
-
-            foreach (UInt64 cnt in countChars.Values)
-                value += cnt * (cnt - 1);
-
-            UInt64 N = (UInt64)plaintext.Length;
-            return (double)value/(N*(N-1));
-        }
-
-        /// <summary>
-        /// Calculate cost value based on 3-grams
-        /// </summary>
-        /// <param name="ngrams3"></param>
-        /// <param name="plaintext"></param>
-        /// <returns></returns>
-        public static double CalculateTrigramCost(double[,,] ngrams3, int[] plaintext)
-        {
-            double value = 0;
-            var end = plaintext.Length - 2;
-
-            for (var i = 0; i < end; i++)
-            {
-                value += ngrams3[plaintext[i], plaintext[i + 1], plaintext[i + 2]];
-            }
-            return value;
-        }
-
-        /// <summary>
-        /// Calculate cost value based on 4-grams
-        /// </summary>
-        /// <param name="ngrams4"></param>
-        /// <param name="plaintext"></param>
-        /// <returns></returns>
-        public static double CalculateQuadgramCost(double[, , ,] ngrams4, int[] plaintext)
-        {
-            double value = 0;
-            var end = plaintext.Length - 3;
-
-            for (var i = 0; i < end; i++)
-            {
-                value += ngrams4[plaintext[i], plaintext[i + 1], plaintext[i + 2], plaintext[i + 3]];
-            }
-            return value;
-        }
-
+    
         /// <summary>
         /// Maps a given array of numbers into the "textspace" defined by the alphabet
         /// </summary>
@@ -868,64 +785,7 @@ namespace Cryptool.VigenereAnalyzer
                 }
             }
             return builder.ToString();
-        }
-
-        /// <summary>
-        /// Load 3Gram file
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="alphabet"></param>
-        private void Load3Grams(string filename, string alphabet)
-        {
-            _trigrams = new double[alphabet.Length, alphabet.Length, alphabet.Length];
-            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
-            {
-                using (var reader = new BinaryReader(fileStream))
-                {
-                    for (int i = 0; i < alphabet.Length; i++)
-                    {
-                        for (int j = 0; j < alphabet.Length; j++)
-                        {
-                            for (int k = 0; k < alphabet.Length; k++)
-                            {                                
-                                    var bytes = reader.ReadBytes(8);
-                                    _trigrams[i, j, k] = BitConverter.ToDouble(bytes, 0);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Load 4Gram file
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="alphabet"></param>
-        private void Load4Grams(string filename, string alphabet)
-        {
-            _quadgrams = new double[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
-            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
-            {
-                using (var reader = new BinaryReader(fileStream))
-                {
-                    for (int i = 0; i < alphabet.Length; i++)
-                    {
-                        for (int j = 0; j < alphabet.Length; j++)
-                        {
-                            for (int k = 0; k < alphabet.Length; k++)
-                            {
-                                for (int l = 0; l < alphabet.Length; l++)
-                                {
-                                    var bytes = reader.ReadBytes(8);
-                                    _quadgrams[i, j, k, l] = BitConverter.ToDouble(bytes, 0);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        }     
 
         private void OnPropertyChanged(string name)
         {
