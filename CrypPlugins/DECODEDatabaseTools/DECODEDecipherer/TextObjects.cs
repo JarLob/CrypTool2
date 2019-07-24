@@ -281,16 +281,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                         switch (TokenType)
                         {
                             case TokenType.Tag:
-                                return Brushes.DarkGreen;
+                                return Brushes.Black;
                             case TokenType.Null:
                                 return Brushes.Gray;
                             case TokenType.VocabularyElement:
+                                return Brushes.DarkGreen;
+                            case TokenType.RegularCode:
                                 return Brushes.DarkBlue;
                             default:
                                 return Brushes.Black;
                         }
                     case LineType.Comment:
-                        return Brushes.DarkGreen;
+                        return Brushes.Black;
                     default:
                         return Brushes.Black;
                 }

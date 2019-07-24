@@ -93,7 +93,8 @@
                                    FontSize="14" VerticalContentAlignment="Center" 
                                    HorizontalContentAlignment="Left" 
                                    HorizontalAlignment="Stretch" Margin="45,1,1,1" 
-                                   Padding="0" BorderThickness="0" Background="White" />
+                                   Padding="0" BorderThickness="0" Background="White"
+                                   FontFamily="Courier New"/>
                             <!-- Lines: -->
                             <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Path=Lines}"  
                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  
@@ -121,11 +122,12 @@
                                                Margin="0,0,0,0" 
                                                VerticalAlignment="Center" 
                                                HorizontalContentAlignment="Right"
-                                               Padding="0" FontSize="14"/>
+                                               Padding="0" FontSize="14" FontFamily="Courier New"/>
                                             <!-- Single line tokens: -->
                                             <ListBox Grid.Column="2" ItemsSource="{Binding Path=Tokens}" 
                                                  Margin="0,0,0,0" 
-                                                 BorderThickness="0"
+                                                 BorderThickness="0,0,0,1"
+                                                 BorderBrush="Black"
                                                  VerticalAlignment="Top"
                                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  
                                                  ScrollViewer.VerticalScrollBarVisibility="Disabled" 
@@ -133,7 +135,7 @@
                                                 <ListBox.ItemContainerStyle>
                                                     <Style TargetType="ListBoxItem">
                                                         <Setter Property="Margin" Value="0"/>
-                                                        <Setter Property="Padding" Value="0"/>
+                                                        <Setter Property="Padding" Value="3,0,0,0"/>
                                                         <Setter Property="IsHitTestVisible" Value="False" />
                                                     </Style>
                                                 </ListBox.ItemContainerStyle>
@@ -154,13 +156,13 @@
                                                                BorderThickness="0" 
                                                                VerticalAlignment="Center" 
                                                                Padding="0"
-                                                               Foreground="{Binding Path=TextColor}" FontSize="14"/>
+                                                               Foreground="{Binding Path=TextColor}" FontSize="14" FontFamily="Courier New"/>
                                                             <Label Content="{Binding Path=DecodedText}"  Grid.Row="1"  
                                                                Margin="0,0,0,0" 
                                                                BorderThickness="0" 
                                                                VerticalAlignment="Center" 
                                                                Padding="0"
-                                                               Foreground="{Binding Path=TextColor}" FontSize="14"/>
+                                                               Foreground="Black" FontSize="14" FontFamily="Courier New"/>
                                                         </Grid>
                                                     </DataTemplate>
                                                 </ListBox.ItemTemplate>
