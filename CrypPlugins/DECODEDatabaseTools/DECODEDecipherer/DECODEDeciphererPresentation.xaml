@@ -34,97 +34,126 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Content="Catalog Name:" FontSize="14" Background="White"/>
-            <Label Grid.Row="0" Grid.Column="1" Name="CatalogNameLabel" FontSize="14" Background="White" />
+            <Label Grid.Row="0" Grid.Column="1" Name="CatalogNameLabel" FontSize="14" Background="White" Content="{Binding CurrentTextDocument.CatalogName}" />
             <Label Grid.Row="0" Grid.Column="2" Background="White"/>
             <Label Grid.Row="0" Grid.Column="3" Content="Image Name:" FontSize="14" Background="White"/>
-            <Label Grid.Row="0" Grid.Column="4" Name="ImageNameLabel" FontSize="14" Background="White"/>
+            <Label Grid.Row="0" Grid.Column="4" Name="ImageNameLabel" FontSize="14" Background="White" Content="{Binding CurrentTextDocument.ImageName}"/>
             <Label Grid.Row="0" Grid.Column="5" Background="White"/>
 
-            <Label Grid.Row="1" Grid.Column="0" Content="Transcriber Name:" FontSize="14" Background="LightGray"/>
-            <Label Grid.Row="1" Grid.Column="1" Name="TranscriberNameLabel" FontSize="14" Background="LightGray"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="Transcriber Name:" FontSize="14" Background="LightGray" />
+            <Label Grid.Row="1" Grid.Column="1" Name="TranscriberNameLabel" FontSize="14" Background="LightGray" Content="{Binding CurrentTextDocument.TranscriberName}"/>
             <Label Grid.Row="1" Grid.Column="2" Background="LightGray"/>
             <Label Grid.Row="1" Grid.Column="3" Content="Date of Transcription:" FontSize="14" Background="LightGray"/>
-            <Label Grid.Row="1" Grid.Column="4" Name="DateOfTranscriptionLabel" FontSize="14" Background="LightGray"/>
+            <Label Grid.Row="1" Grid.Column="4" Name="DateOfTranscriptionLabel" FontSize="14" Background="LightGray" Content="{Binding CurrentTextDocument.DateOfTranscription}"/>
             <Label Grid.Row="1" Grid.Column="5" Background="LightGray"/>
 
             <Label Grid.Row="2" Grid.Column="0" Content="Transcription Time:" FontSize="14" Background="White"/>
-            <Label Grid.Row="2" Grid.Column="1" Name="TranscriptionTimeLabel" FontSize="14" Background="White" />
+            <Label Grid.Row="2" Grid.Column="1" Name="TranscriptionTimeLabel" FontSize="14" Background="White" Content="{Binding CurrentTextDocument.TranscriptionTime}" />
             <Label Grid.Row="2" Grid.Column="2" Background="White"/>
             <Label Grid.Row="2" Grid.Column="3" Content="Transcription Method:" FontSize="14" Background="White"/>
-            <Label Grid.Row="2" Grid.Column="4" Name="TranscriptionMethodLabel" FontSize="14"  Background="White"/>
+            <Label Grid.Row="2" Grid.Column="4" Name="TranscriptionMethodLabel" FontSize="14"  Background="White" Content="{Binding CurrentTextDocument.TranscriptionMethod}"/>
             <Label Grid.Row="2" Grid.Column="5" Background="White"/>
             <Label Grid.Row="3" Grid.Column="0" Content="Comments:" FontSize="14"  Background="LightGray"/>
-            <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" Name="CommentsLabel" Height="75" FontSize="14" Background="LightGray" />
+            <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" Name="CommentsLabel" Height="75" FontSize="14" Background="LightGray" Content="{Binding CurrentTextDocument.Comments}" />
         </Grid>
         <!-- Splitter in the middle -->
         <GridSplitter Grid.Row="1" Height="20" HorizontalAlignment="Stretch"/>
         <!-- Pages: -->
-        <ScrollViewer Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanContentScroll="False" 
-                  ScrollViewer.HorizontalScrollBarVisibility="Auto" 
-                  ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.RowSpan="2">
-            <ListBox Margin="0,0,0,0" Name="PageList" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                 Foreground="LightGray" Background="LightGray" BorderBrush="LightGray" 
-                 PreviewMouseWheel="PageList_PreviewMouseWheel" 
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                 Padding="0">
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="IsHitTestVisible" Value="False" />
-                    </Style>
-                </ListBox.ItemContainerStyle>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid HorizontalAlignment="Stretch" Margin="0,0,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Label Grid.Row="0" Grid.Column="0" Content=" Page:" 
+        <TreeView Margin="0,0,0,0" Padding="0" ItemsSource="{Binding CurrentTextDocument.Pages}" 
+                  Grid.Row="2" Grid.RowSpan="2" 
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                  Foreground="LightGray" Background="LightGray" BorderBrush="LightGray" 
+                  VirtualizingStackPanel.IsVirtualizing="True"
+                  VirtualizingPanel.VirtualizationMode="Recycling"
+                  ScrollViewer.CanContentScroll="True">
+            <TreeView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </TreeView.ItemsPanel>
+            <TreeView.Resources>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <!--This is the style for one page element-->
+                    <Setter Property="IsHitTestVisible" Value="False" />
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TreeViewItem}">
+                                <StackPanel Orientation="Vertical" Margin="{TemplateBinding Margin}" IsHitTestVisible="{TemplateBinding IsHitTestVisible}">
+                                    <ContentPresenter x:Name="PART_Header" 
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                                      ContentSource="Header"/>
+                                    <ItemsPresenter x:Name="ItemsHost" />
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TreeView.Resources>
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Lines}">
+                    <Grid HorizontalAlignment="Stretch" Margin="0,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content=" Page:" 
                                    FontSize="14"
                                    HorizontalContentAlignment="Left" 
                                    VerticalContentAlignment="Center"
                                    HorizontalAlignment="Stretch" 
                                    Padding="0" BorderThickness="0" Background="White" Margin="1,1,1,1"/>
-                            <Label Grid.Row="0" Grid.Column="0" Content="{Binding Path=PageNumber}" 
+                        <Label Grid.Row="0" Grid.Column="0" Content="{Binding Path=PageNumber}" 
                                    FontSize="14" VerticalContentAlignment="Center" 
                                    HorizontalContentAlignment="Left" 
                                    HorizontalAlignment="Stretch" Margin="45,1,1,1" 
                                    Padding="0" BorderThickness="0" Background="White"
                                    FontFamily="Courier New"/>
-                            <!-- Lines: -->
-                            <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Path=Lines}"  
-                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"  
-                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" 
-                                 HorizontalContentAlignment="Stretch" 
-                                 HorizontalAlignment="Stretch"
-                                 Margin="0,0,0,0"
-                                 Padding="0">
-                                <ListBox.ItemContainerStyle>
-                                    <Style TargetType="ListBoxItem">
-                                        <Setter Property="IsHitTestVisible" Value="False" />
-                                        <Setter Property="Margin" Value="0"/>
-                                        <Setter Property="Padding" Value="0"/>
-                                    </Style>
-                                </ListBox.ItemContainerStyle>
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid HorizontalAlignment="Stretch" Margin="0,0,0,0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="20" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Label Grid.Column="0" Content="{Binding Path=LineNumber}"
+                    </Grid>
+                    <HierarchicalDataTemplate.ItemContainerStyle>
+                        <Style TargetType="TreeViewItem">
+                            <!--This is the style for one line element-->
+                            <Setter Property="IsHitTestVisible" Value="False" />
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Padding" Value="4"/>
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type TreeViewItem}">
+                                        <Border Background="{TemplateBinding Background}" 
+                                                Margin="{TemplateBinding Margin}"
+                                                Padding="{TemplateBinding Padding}"
+                                                IsHitTestVisible="{TemplateBinding IsHitTestVisible}">
+                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                              ContentSource="Header"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </HierarchicalDataTemplate.ItemContainerStyle>
+                    <HierarchicalDataTemplate.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch" Margin="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Content="{Binding Path=LineNumber}"
                                                Margin="0,0,0,0" 
                                                VerticalAlignment="Center" 
                                                HorizontalContentAlignment="Right"
                                                Padding="0" FontSize="14" FontFamily="Courier New"/>
-                                            <!-- Single line tokens: -->
-                                            <ListBox Grid.Column="2" ItemsSource="{Binding Path=Tokens}" 
+                                <!-- Single line tokens: -->
+                                <ItemsControl Grid.Column="2" ItemsSource="{Binding Path=Tokens}" 
                                                  Margin="0,0,0,0" 
                                                  BorderThickness="0,0,0,1"
                                                  BorderBrush="Black"
@@ -132,49 +161,40 @@
                                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  
                                                  ScrollViewer.VerticalScrollBarVisibility="Disabled" 
                                                  Padding="0">
-                                                <ListBox.ItemContainerStyle>
-                                                    <Style TargetType="ListBoxItem">
-                                                        <Setter Property="Margin" Value="0"/>
-                                                        <Setter Property="Padding" Value="3,0,0,0"/>
-                                                        <Setter Property="IsHitTestVisible" Value="False" />
-                                                    </Style>
-                                                </ListBox.ItemContainerStyle>
-                                                <ListBox.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal"/>
-                                                    </ItemsPanelTemplate>
-                                                </ListBox.ItemsPanel>
-                                                <ListBox.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <Grid>
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition Height="*"/>
-                                                                <RowDefinition Height="*"/>
-                                                            </Grid.RowDefinitions>
-                                                            <Label Content="{Binding Path=Text}" Grid.Row="0" 
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="3,0,0,0" IsHitTestVisible="False">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <Label Content="{Binding Path=Text}" Grid.Row="0" 
                                                                Margin="0,0,0,0" 
                                                                BorderThickness="0" 
                                                                VerticalAlignment="Center" 
                                                                Padding="0"
                                                                Foreground="{Binding Path=TextColor}" FontSize="14" FontFamily="Courier New"/>
-                                                            <Label Content="{Binding Path=DecodedText}"  Grid.Row="1"  
+                                                <Label Content="{Binding Path=DecodedText}"  Grid.Row="1"  
                                                                Margin="0,0,0,0" 
                                                                BorderThickness="0" 
                                                                VerticalAlignment="Center" 
                                                                Padding="0"
                                                                Foreground="Black" FontSize="14" FontFamily="Courier New"/>
-                                                        </Grid>
-                                                    </DataTemplate>
-                                                </ListBox.ItemTemplate>
-                                            </ListBox>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </ScrollViewer>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                        </DataTemplate>
+                    </HierarchicalDataTemplate.ItemTemplate>
+                </HierarchicalDataTemplate>
+
+            </TreeView.ItemTemplate>
+        </TreeView>
     </Grid>
 </UserControl>

@@ -29,8 +29,17 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     /// </summary>
     public partial class DECODEDeciphererPresentation : UserControl
     {
+        public TextDocument CurrentTextDocument
+        {
+            get { return (TextDocument)this.GetValue(CurrentTextDocumentProperty); }
+            set { SetValue(CurrentTextDocumentProperty, value); }
+        }
+        public static readonly DependencyProperty CurrentTextDocumentProperty = DependencyProperty.Register(
+          nameof(CurrentTextDocument), typeof(TextDocument), typeof(DECODEDeciphererPresentation), new PropertyMetadata(null));
+
         public DECODEDeciphererPresentation()
         {
+            DataContext = this;
             InitializeComponent();
         }
 
@@ -40,30 +49,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// <param name="document"></param>
         public void ShowDocument(TextDocument document)
         {
-            DateTime startTime = DateTime.Now;
-
-            Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                PageList.Items.Clear();
-                //set all header fields
-                CatalogNameLabel.Content = document.CatalogName;
-                ImageNameLabel.Content = document.ImageName;
-                TranscriberNameLabel.Content = document.TranscriberName;
-                DateOfTranscriptionLabel.Content = document.DateOfTranscription;
-                TranscriptionTimeLabel.Content = document.TranscriptionTime;
-                TranscriptionMethodLabel.Content = document.TranscriptionMethod;
-                CommentsLabel.Content = document.Comments;
+                CurrentTextDocument = document;
             }, null);
-
-            foreach (var page in document.Pages)
-            {
-                Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
-                {                    
-                    PageList.Items.Add(page);                    
-                }, null);
-            }
-
-            GuiLogMessage(String.Format("Created document user interface in {0}ms", (DateTime.Now - startTime).TotalMilliseconds), NotificationLevel.Info);
         }
 
         /// <summary>
