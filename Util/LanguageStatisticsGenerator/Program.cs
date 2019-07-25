@@ -259,103 +259,40 @@ namespace LanguageStatisticsGenerator
             }
         }
 
+
+        /// <summary>
+        /// Magic number (ASCII string 'CTLS') for statistics file format.
+        /// </summary>
+        public const uint FileFormatMagicNumber = 'C' + ('T' << 8) + ('L' << 16) + ('S' << 24);
+
+        private void WriteStatisticsFile(int gramLength, IEnumerable<float> frequencies, string outputFile)
+        {
+            using (FileStream fs = new FileStream(outputFile, FileMode.Create, FileAccess.Write))
+            using (var gz = new GZipStream(fs, CompressionMode.Compress))
+            using (var bw = new BinaryWriter(gz))
+            {
+                bw.Write(FileFormatMagicNumber);
+                bw.Write(gramLength);
+                bw.Write(alphabet);
+                foreach (var frequencyValue in frequencies)
+                {
+                    bw.Write(frequencyValue);
+                }
+            }
+        }
+
+        private static IEnumerable<float> CalculateLogs(Array freq, uint max)
+        {
+            return freq.Cast<uint>().Select(value => (float)Math.Log((value + 0.001) / max));
+        }
+
         public void WriteGZ(string filename)
         {
-            BinaryFormatter bf = new BinaryFormatter();
-
-            GetMaxAndSum(5);
-            using (var fs = new FileStream(String.Format(filename + ".gz", 5), FileMode.Create))
+            var freqs = new Array[] { freq1, freq2, freq3, freq4, freq5 };
+            for (int gramLength = 5; gramLength >= 1; gramLength--)
             {
-                using (var gz = new GZipStream(fs, CompressionMode.Compress))
-                {
-                    var f5 = new float[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
-                    for (int a = 0; a < alphabet.Length; a++)
-                    for (int b = 0; b < alphabet.Length; b++)
-                    for (int c = 0; c < alphabet.Length; c++)
-                    for (int d = 0; d < alphabet.Length; d++)
-                    for (int e = 0; e < alphabet.Length; e++)
-                        f5[a, b, c, d, e] = (float)Math.Log((freq5[a, b, c, d, e] + 0.001) / max);
-                    max = 0;
-                    sum = 0;
-                    bf.Serialize(gz, alphabet);                    
-                    bf.Serialize(gz, max);
-                    bf.Serialize(gz, sum);
-                    bf.Serialize(gz, f5);
-                }
-            }
-
-            GetMaxAndSum(4);
-            using (var fs = new FileStream(String.Format(filename + ".gz", 4), FileMode.Create))
-            {
-                using (var gz = new GZipStream(fs, CompressionMode.Compress))
-                {
-                    var f4 = new float[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
-                    for (int a = 0; a < alphabet.Length; a++)
-                    for (int b = 0; b < alphabet.Length; b++)
-                    for (int c = 0; c < alphabet.Length; c++)
-                    for (int d = 0; d < alphabet.Length; d++)
-                        f4[a, b, c, d] = (float)Math.Log((freq4[a, b, c, d] + 0.001) / max);
-                    max = 0;
-                    sum = 0;
-                    bf.Serialize(gz, alphabet);
-                    bf.Serialize(gz, max);
-                    bf.Serialize(gz, sum);
-                    bf.Serialize(gz, f4);
-                }
-            }
-
-            GetMaxAndSum(3);
-            using (var fs = new FileStream(String.Format(filename + ".gz", 3), FileMode.Create))
-            {
-                using (var gz = new GZipStream(fs, CompressionMode.Compress))
-                {
-                    var f3 = new float[alphabet.Length, alphabet.Length, alphabet.Length];
-                    for (int a = 0; a < alphabet.Length; a++)
-                    for (int b = 0; b < alphabet.Length; b++)
-                    for (int c = 0; c < alphabet.Length; c++)
-                        f3[a, b, c] = (float)Math.Log((freq3[a, b, c] + 0.001) / max);
-                    max = 0;
-                    sum = 0;
-                    bf.Serialize(gz, alphabet);
-                    bf.Serialize(gz, max);
-                    bf.Serialize(gz, sum);
-                    bf.Serialize(gz, f3);
-                }
-            }
-
-            GetMaxAndSum(2);
-            using (var fs = new FileStream(String.Format(filename + ".gz", 2), FileMode.Create))
-            {
-                using (var gz = new GZipStream(fs, CompressionMode.Compress))
-                {
-                    var f2 = new float[alphabet.Length, alphabet.Length];
-                    for (int a = 0; a < alphabet.Length; a++)
-                    for (int b = 0; b < alphabet.Length; b++)
-                        f2[a, b] = (float)Math.Log((freq2[a, b] + 0.001) / max);
-                    max = 0;
-                    sum = 0;
-                    bf.Serialize(gz, alphabet);
-                    bf.Serialize(gz, max);
-                    bf.Serialize(gz, sum);
-                    bf.Serialize(gz, f2);
-                }
-            }
-
-            GetMaxAndSum(1);
-            using (var fs = new FileStream(String.Format(filename + ".gz", 1), FileMode.Create))
-            {
-                using (var gz = new GZipStream(fs, CompressionMode.Compress))
-                {
-                    var f1 = new float[alphabet.Length];
-                    for (int a = 0; a < alphabet.Length; a++)
-                        f1[a] = (float)Math.Log((freq1[a] + 0.001) / max);
-                    max = 0;
-                    sum = 0;
-                    bf.Serialize(gz, alphabet);
-                    bf.Serialize(gz, max);
-                    bf.Serialize(gz, sum);
-                    bf.Serialize(gz, f1);
-                }
+                GetMaxAndSum(gramLength);
+                WriteStatisticsFile(gramLength, CalculateLogs(freqs[gramLength-1], max), string.Format(filename + ".gz", gramLength));
             }
         }
     }
