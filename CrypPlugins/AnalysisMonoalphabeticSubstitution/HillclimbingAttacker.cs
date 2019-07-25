@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Utils;
 
@@ -14,7 +15,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         private bool stopFlag;
         private PluginProgress pluginProgress;
         private UpdateKeyDisplay updateKeyDisplay;
-        public CalculateCostDelegate calculateCost;
+        
 
         //Input
         private string ciphertextString = null;
@@ -84,12 +85,6 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             set { this.pluginProgress = value; }
         }
 
-        public CalculateCostDelegate CalculateCost
-        {
-            get { return this.calculateCost; }
-            set { this.calculateCost = value; }
-        }
-
         #endregion Output Properties
 
 
@@ -156,7 +151,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                                 plaintext[inplaceSpots[sub2, m]] = sub1;
 
                             //Calculate the costfunction
-                            double costvalue = calculateCost(plaintext);
+                            double costvalue = grams.CalculateCost(plaintext);
 
                             if (bestkeycost < costvalue) //When found a better key adopt it.
                             {
@@ -194,9 +189,12 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                 {
                     globalbestkeycost = bestkeycost;
                     //Add to bestlist-output:
-                    string sss = cipherText.ToString(plaintextAlphabet, true);
-                    string keystring = CreateKeyOutput(bestkey);
-                    KeyCandidate newKeyCan = new KeyCandidate(bestkey, bestkeycost, ConvertNumbersToLetters(UseKeyOnCipher(ciphertext, bestkey), plaintextalphabet), keystring);
+                    string keystring = MapNumbersIntoTextSpace(bestkey, plaintextalphabet);
+                    if (keystring.Contains("ABIRD"))
+                    {
+                        Console.WriteLine(keystring);
+                    }
+                    KeyCandidate newKeyCan = new KeyCandidate(bestkey, bestkeycost, MapNumbersIntoTextSpace(UseKeyOnCipher(ciphertext, bestkey), plaintextalphabet), keystring);
                     newKeyCan.HillAttack = true;
                     updateKeyDisplay(newKeyCan);
                 }
@@ -204,27 +202,6 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         }
 
         #region Methods & Functions
-
-        private String CreateKeyOutput(int[] key)
-        {
-            char[] k = new char[plaintextalphabet.Length];
-            for (int i = 0; i < k.Length; i++) k[i] = ' ';
-
-            for (int i = 0; i < ciphertextalphabet.Length; i++)
-                k[key[i]] = ciphertextalphabet[i];
-
-            return new string(k);
-        }
-
-        public static string RemoveInvalidChars(string text, string alphabet)
-        {
-            return new string((text.Where(c => alphabet.Contains(c))).ToArray());
-        }
-
-        public static int[] MapTextIntoNumberSpace(string text, string alphabet)
-        {
-            return text.Select(c => alphabet.IndexOf(c)).ToArray();
-        }
 
         private int[] BuildRandomKey(Random randomdev)
         {
@@ -260,55 +237,20 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             return plaintext;
         }
 
-        private int[] InplaceSubstitution(int[] plaintext, int symbol1, int symbol2)
-        {
-            //Swap in Text
-            for (int i = 0; i < inplaceAmountOfSymbols[symbol1]; i++)
-            {
-                plaintext[inplaceSpots[symbol1, i]] = symbol2;
-            }
-
-            for (int i = 0; i < inplaceAmountOfSymbols[symbol2]; i++)
-            {
-                plaintext[inplaceSpots[symbol2, i]] = symbol1;
-            }
-
-            //In PlacesArray
-            int[] temparray = new int[inplaceAmountOfSymbols[symbol1]];
-
-            for (int t = 0; t < inplaceAmountOfSymbols[symbol1]; t++)
-            {
-                temparray[t] = inplaceSpots[symbol1, t];
-            }
-            //Spots of sub1 = Spots of sub2
-            for (int t = 0; t < inplaceAmountOfSymbols[symbol2]; t++)
-            {
-                inplaceSpots[symbol1, t] = inplaceSpots[symbol2, t];
-            }
-
-            //Spots of sub2 = Spots of sub1
-            for (int t = 0; t < temparray.Length; t++)
-            {
-                inplaceSpots[symbol2, t] = temparray[t];
-            }
-
-            //In AmountArray
-            int temp = inplaceAmountOfSymbols[symbol1];
-            inplaceAmountOfSymbols[symbol1] = inplaceAmountOfSymbols[symbol2];
-            inplaceAmountOfSymbols[symbol2] = temp;
-
-            return plaintext;
-        }
-
         /// <summary>
         /// Maps a given array of numbers into the "textspace" defined by the alphabet
         /// </summary>
         /// <param name="numbers"></param>
         /// <param name="alphabet"></param>
         /// <returns></returns>
-        public static string ConvertNumbersToLetters(int[] numbers, string alphabet)
+        public static string MapNumbersIntoTextSpace(int[] numbers, string alphabet)
         {
-            return String.Join("", numbers.Select(i => alphabet[i]));
+            var builder = new StringBuilder();
+            foreach (var i in numbers)
+            {
+                builder.Append(alphabet[i]);
+            }
+            return builder.ToString();
         }
 
         private void AnalyzeSymbolPlaces(int[] text, int length)

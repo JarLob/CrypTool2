@@ -78,11 +78,6 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             }
         }
 
-        public void HandleSingleClick(Object sender, EventArgs eventArgs)
-        {
-            //this.updateOutputFromUserChoice(0);
-        }
-
         // Strings with nul characters are not displayed correctly in the clipboard
         string removeNuls(string s)
         {

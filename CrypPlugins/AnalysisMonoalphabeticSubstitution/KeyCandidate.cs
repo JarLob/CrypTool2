@@ -71,26 +71,6 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             }
 
             return false;
-
-           /* if (keyCandidate == null)
-            {
-                return false;
-            }
-
-            if (this.key.Length != keyCandidate.key.Length)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < this.key.Length; i++)
-            {
-                if (this.key[i] != keyCandidate.key[i])
-                {
-                    return false;
-                }
-            }
-
-            return true;*/
         }
     }
 

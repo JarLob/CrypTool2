@@ -33,9 +33,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
 {
     public delegate void PluginProgress(double current, double maximum);
     public delegate void UpdateOutput(String key_string, String plaintext_string);
-    delegate double CalculateFitness(Text plaintext);
     delegate void UpdateKeyDisplay(KeyCandidate keyCan);
-    delegate double CalculateCostDelegate(int[] plaintext);
 
     [Author("Andreas Grüner", "Andreas.Gruener@web.de", "Humboldt University Berlin", "http://www.hu-berlin.de")]
     [PluginInfo("Cryptool.AnalysisMonoalphabeticSubstitution.Properties.Resources", "PluginCaption", "PluginTooltip", "AnalysisMonoalphabeticSubstitution/Documentation/doc.xml", "AnalysisMonoalphabeticSubstitution/icon.png")]
@@ -79,8 +77,6 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         private DictionaryAttacker dicAttacker;
         private GeneticAttacker genAttacker;
         private HillclimbingAttacker hillAttacker;
-
-        CalculateCostDelegate CalculateCost;
 
         #endregion
 
@@ -170,12 +166,16 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             // Set alphabets
             string lang = LanguageStatistics.LanguageCode(settings.Language);
             grams = new QuadGrams(lang, settings.UseSpaces);
-            CalculateCost = grams.CalculateCost;
 
             plaintextalphabet = grams.Alphabet;
             ciphertextalphabet = String.IsNullOrEmpty(CiphertextAlphabet)
                 ? new string(Ciphertext.ToLower().Distinct().OrderBy(c => c).ToArray()).Replace("\r", "").Replace("\n", "")
                 : new string(CiphertextAlphabet.ToLower().Distinct().OrderBy(c => c).ToArray()).Replace("\r", "").Replace("\n", "");             
+
+            if(ciphertextalphabet[0] == ' ')
+            {
+                ciphertextalphabet = ciphertextalphabet.Trim() + " ";
+            }
 
             ptAlphabet = new Alphabet(plaintextalphabet);
             ctAlphabet = new Alphabet(ciphertextalphabet);
@@ -238,13 +238,6 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                 GuiLogMessage(Resources.no_ciphertext, NotificationLevel.Error);
                 inputOK = false;
             }
-            
-            // Language frequencies
-            //if (this.langFreq == null)
-            //{
-            //    GuiLogMessage(Resources.no_lang_freq, NotificationLevel.Error);
-            //    //inputOK = false;
-            //}
 
             // Check length of ciphertext and plaintext alphabet
             if (this.ctAlphabet.Length > this.ptAlphabet.Length)
@@ -334,7 +327,6 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             this.hillAttacker.Restarts = settings.Restarts;
             this.hillAttacker.PlaintextAlphabet = plaintextalphabet;
             this.hillAttacker.CiphertextAlphabet = ciphertextalphabet;
-            this.hillAttacker.CalculateCost = CalculateCost;
             this.hillAttacker.grams = grams;
             this.hillAttacker.PluginProgressCallback = this.ProgressChanged;
             this.hillAttacker.UpdateKeyDisplay = this.UpdateKeyDisplay;
@@ -484,9 +476,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                                     {
                                         entry.Attack = Resources.HillAttackDisplay;
                                     }
-
                                     double f = keyCandidate.Fitness;
-                                    //double f = Math.Log10(Math.Abs(keyCandidate.Fitness));
                                     entry.Value = string.Format("{0:0.00000} ", f);
                                     ((AssignmentPresentation) Presentation).entries.Add(entry);
                                 }
@@ -580,24 +570,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
 
         #endregion
 
-        #region Helper Functions
-        
-        //private string detAlphabet(int n)
-        //{
-        //    var langs = "en de es fr it hu ru cs".Split(new char[] { ' ' });
-        //    string lang = langs[n % langs.Length];
-        //    quadgrams = new QuadGrams(lang, settings.UseSpaces);
-        //    return quadgrams.Alphabet.ToLower();
-
-        //    //string alphabet;
-        //    //var quadgrams = LanguageStatistics.Load4Grams(lang, out alphabet, settings.UseSpaces);
-        //    //this.langFreq = new Frequencies(new Alphabet(alphabet, 1, 0));
-        //    //this.langFreq.prob4gram = quadgrams;
-        //    //this.langFreq.ngram = 4;
-        //    //this.langFreq.CalculateFitnessOfKey = this.langFreq.CalculateFitness4gram2;
-
-        //    //return alphabet.ToLower();
-        //}
+        #region Helper Functions       
 
         private void UpdateOutput(string key_string, String plaintext_string)
         {
@@ -608,30 +581,6 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             OnPropertyChanged("KeyOutput");
         }
 
-        private String CreateKeyOutput(int[] key, Alphabet plaintextalphabet, Alphabet ciphertextalphabet)
-        {
-            char[] k = new char[plaintextalphabet.Length];
-
-            for (int i = 0; i < k.Length; i++) k[i] = ' ';
-
-            for (int i = 0; i < ciphertextalphabet.Length; i++)
-                k[key[i]] = ciphertextalphabet.GetLetterFromPosition(i)[0];
-
-            return new string(k);
-        }
-
-        private String CreateAlphabetOutput2(int[] key, Alphabet ciphertext_alphabet)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < key.Length; i++)
-            {
-                sb.Append(ciphertext_alphabet.GetLetterFromPosition(key[i]));
-            }
-
-            return sb.ToString();
-        }
-        
         #endregion
     }
 
