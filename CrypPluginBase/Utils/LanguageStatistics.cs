@@ -405,6 +405,7 @@ namespace Cryptool.PluginBase.Utils
     {
         public string Alphabet { get; protected set; }
         public abstract double CalculateCost(int[] plaintext);
+        public abstract int GramSize();
     }
 
     public class UniGrams : Grams
@@ -435,6 +436,11 @@ namespace Cryptool.PluginBase.Utils
                 value += Frequencies[plaintext[i]];
 
             return value / end;
+        }
+
+        public override int GramSize()
+        {
+            return 1;
         }
     }
 
@@ -467,6 +473,11 @@ namespace Cryptool.PluginBase.Utils
 
             return value / end;
         }
+
+        public override int GramSize()
+        {
+            return 2;
+        }
     }
 
     public class TriGrams : Grams
@@ -497,6 +508,11 @@ namespace Cryptool.PluginBase.Utils
                 value += Frequencies[plaintext[i], plaintext[i + 1], plaintext[i + 2]];
 
             return value / end;
+        }
+
+        public override int GramSize()
+        {
+            return 3;
         }
     }
 
@@ -529,6 +545,11 @@ namespace Cryptool.PluginBase.Utils
 
             return value / end;
         }
+
+        public override int GramSize()
+        {
+            return 4;
+        }
     }
 
     public class PentaGrams : Grams
@@ -559,6 +580,11 @@ namespace Cryptool.PluginBase.Utils
                 value += Frequencies[plaintext[i], plaintext[i + 1], plaintext[i + 2], plaintext[i + 3], plaintext[i + 4]];
 
             return value / end;
+        }
+
+        public override int GramSize()
+        {
+            return 5;
         }
     }
 
