@@ -158,12 +158,14 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
 
         public List<Byte[]> ToSingleWords(Alphabet alpha)
         {
+            int space = alpha.GetPositionOfLetter(" ");
+
             List<Byte[]> result = new List<Byte[]>();
 
             List<Byte> word = new List<Byte>();
             for (int i = 0; i < this.text.Count; i++)
             {
-                if (this.text[i] >= 0)
+                if (this.text[i] != space)
                 {
                     word.Add((byte)this.text[i]);
                 }
@@ -276,6 +278,11 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         private void AddOrgCapital(bool val)
         {
             this.orgCapital.Add(val);
+        }
+
+        public int[] ToIntArray()
+        {
+            return this.text.ToArray();
         }
 
         #endregion

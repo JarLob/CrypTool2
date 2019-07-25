@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cryptool.PluginBase.Utils;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -20,7 +21,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
 
         // Input Variables
         private Dictionary lDic;
-        private Frequencies freq;
+        private Grams grams;
         private Text ctext;
         private Alphabet calpha;
         private Alphabet palpha;
@@ -70,10 +71,10 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             set { this.lDic = value; }
         }
 
-        public Frequencies frequencies
+        public Grams Grams
         {
-            get { return this.freq; }
-            set { this.freq = value; }
+            get { return this.grams; }
+            set { this.grams = value; }
         }
 
         public Text ciphertext
@@ -137,7 +138,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         public void PrepareAttack()
         {
             // Test input
-            if (this.calpha == null || this.ctext == null || this.freq == null || this.lDic == null)
+            if (this.calpha == null || this.ctext == null || this.grams == null || this.lDic == null)
             {
                 return;
             }
@@ -533,16 +534,16 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         {
             double fitness = 0.0;
 
-            if (this.freq.NGram == 3)
+            if (this.grams.GramSize() == 3)
             {
                 if (candidate.Length == 1)
                 {
                     int count = 0;
-                    for (int i = 0; i < this.freq.size; i++)
+                    for (int i = 0; i < this.grams.GramSize(); i++)
                     {
-                        for (int j = 0; j < this.freq.size; j++)
+                        for (int j = 0; j < this.grams.GramSize(); j++)
                         {
-                            fitness += this.freq.Prob3Gram[candidate[0],i,j];
+                            fitness += this.grams.CalculateCost(new int[] { candidate[0], i, j });
                             count++;
                         }
                     }
@@ -551,9 +552,9 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                 else if (candidate.Length == 2)
                 {
                     int count = 0;
-                    for (int i = 0; i < this.freq.size; i++)
+                    for (int i = 0; i < this.grams.GramSize(); i++)
                     {
-                        fitness += this.freq.Prob3Gram[candidate[0],candidate[1],i];
+                        fitness += this.grams.CalculateCost(new int[] { candidate[0], candidate[1], i });
                         count++;
                     }
                     fitness = fitness / count;
@@ -566,7 +567,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
 
                     for (int i = 3; i < candidate.Length; i++)
                     {
-                        fitness += this.freq.Prob3Gram[l1,l2,l3];
+                        fitness += this.grams.CalculateCost(new int[] { l1, l2, l3 });
 
                         l1 = l2;
                         l2 = l3;
@@ -574,18 +575,18 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                     }
                 }
             }
-            else if (this.freq.NGram == 4)
+            else if (this.grams.GramSize() == 4)
             {
                 if (candidate.Length == 1)
                 {
                     int count = 0;
-                    for (int i = 0; i < this.freq.size; i++)
+                    for (int i = 0; i < this.grams.GramSize(); i++)
                     {
-                        for (int j = 0; j < this.freq.size; j++)
+                        for (int j = 0; j < this.grams.GramSize(); j++)
                         {
-                            for (int t = 0; t < this.freq.size; t++)
+                            for (int t = 0; t < this.grams.GramSize(); t++)
                             {
-                                fitness += this.freq.Prob4Gram[candidate[0],i,j,t];
+                                fitness += this.grams.CalculateCost(new int[] { candidate[0], i, j, t });
                                 count++;
                             }
                         }
@@ -595,11 +596,11 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                 else if (candidate.Length == 2)
                 {
                     int count = 0;
-                    for (int i = 0; i < this.freq.size; i++)
+                    for (int i = 0; i < this.grams.GramSize(); i++)
                     {
-                        for (int j = 0; j < this.freq.size; j++)
+                        for (int j = 0; j < this.grams.GramSize(); j++)
                         {
-                            fitness += this.freq.Prob4Gram[candidate[0],candidate[1],i,j];
+                            fitness += this.grams.CalculateCost(new int[] { candidate[0], candidate[1], i, j });
                             count++;
                         }
                     }
@@ -608,9 +609,9 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                 else if (candidate.Length == 3)
                 {
                     int count = 0;
-                    for (int i = 0; i < this.freq.size; i++)
+                    for (int i = 0; i < this.grams.GramSize(); i++)
                     {
-                        fitness += this.freq.Prob4Gram[candidate[0],candidate[1],candidate[2],i];
+                        fitness += this.grams.CalculateCost(new int[] { candidate[0], candidate[1], candidate[2], i });
                         count++;
                     }
                     fitness = fitness / count;
@@ -624,7 +625,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
 
                     for (int i = 4; i < candidate.Length; i++)
                     {
-                        fitness += this.freq.Prob4Gram[l1,l2,l3,l4];
+                        fitness += this.grams.CalculateCost(new int[] { l1, l2, l3, l4 });
 
                         l1 = l2;
                         l2 = l3;
@@ -679,7 +680,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             int[] key = this.MakeKeyComplete(map.DeriveKey());
             Text plaintext = this.DecryptCiphertext(key, this.ctext, this.calpha);
             string plain = plaintext.ToString(this.palpha);
-            double fit = this.freq.CalculateFitnessOfKey(plaintext);
+            double fit = this.grams.CalculateCost(plaintext.ToIntArray());
             String key_string = CreateAlphabetOutput(key,this.palpha);
             KeyCandidate keyCan = new KeyCandidate(key, fit, plain, key_string);
             keyCan.DicAttack = true;

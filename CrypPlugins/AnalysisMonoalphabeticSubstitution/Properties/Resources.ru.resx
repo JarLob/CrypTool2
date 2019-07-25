@@ -361,12 +361,9 @@
     <value>Алгоритм</value>
   </data>
   <data name="ChooseAlgorithmList1" xml:space="preserve">
-    <value>Процессор Hillclimbing</value>
+    <value>Hillclimbing</value>
   </data>
   <data name="ChooseAlgorithmList2" xml:space="preserve">
-    <value>Графический процессор Hillclimbing</value>
-  </data>
-  <data name="ChooseAlgorithmList3" xml:space="preserve">
     <value>Словарь и генетика</value>
   </data>
   <data name="ChooseAlgorithmTooltip" xml:space="preserve">
@@ -395,42 +392,6 @@
   </data>
   <data name="UseSpacesTooltip" xml:space="preserve">
     <value>Использовать статистику языка, которая включает символ пробела</value>
-  </data>
-  <data name="ChooseAlphabetList1" xml:space="preserve">
-    <value>английский</value>
-  </data>
-  <data name="ChooseAlphabetList10" xml:space="preserve">
-    <value>португальский</value>
-  </data>
-  <data name="ChooseAlphabetList11" xml:space="preserve">
-    <value>Чешский</value>
-  </data>
-  <data name="ChooseAlphabetList12" xml:space="preserve">
-    <value>греческий</value>
-  </data>
-  <data name="ChooseAlphabetList2" xml:space="preserve">
-    <value>Немецкий</value>
-  </data>
-  <data name="ChooseAlphabetList3" xml:space="preserve">
-    <value>испанский</value>
-  </data>
-  <data name="ChooseAlphabetList4" xml:space="preserve">
-    <value>латинский</value>
-  </data>
-  <data name="ChooseAlphabetList5" xml:space="preserve">
-    <value>Французский</value>
-  </data>
-  <data name="ChooseAlphabetList6" xml:space="preserve">
-    <value>Венгерский</value>
-  </data>
-  <data name="ChooseAlphabetList7" xml:space="preserve">
-    <value>шведский</value>
-  </data>
-  <data name="ChooseAlphabetList8" xml:space="preserve">
-    <value>итальянский</value>
-  </data>
-  <data name="ChooseAlphabetList9" xml:space="preserve">
-    <value>Голландский</value>
   </data>
   <data name="KeyOutputCaption" xml:space="preserve">
     <value>ключ</value>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cryptool.PluginBase.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         private Alphabet plaintext_alphabet = null;
         private Alphabet ciphertext_alphabet = null;
         private Text ciphertext = null;
-        private Frequencies language_frequencies = null;
+        private Grams grams;
         private Boolean standardAlphabet = false;
         
         // Output Property Variables
@@ -81,10 +82,10 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             set { this.ciphertext = value; }
         }
 
-        public Frequencies Language_Frequencies
+        public Grams Grams
         {
-            get { return this.language_frequencies; }
-            set { this.language_frequencies = value; }
+            get { return this.grams; }
+            set { this.grams = value; }
         }
 
         public Boolean StandardAlphabet
@@ -150,7 +151,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                 Population population = new Population();
                 SetUpEnvironment(population, GeneticAttacker.population_size);
 
-                CreateInitialGeneration(population, this.ciphertext, this.ciphertext_alphabet, this.plaintext_alphabet, null);
+                CreateInitialGeneration(population, this.ciphertext, this.ciphertext_alphabet, this.plaintext_alphabet);
 
                 double change = population.dev;
                 int curGen = 1;
@@ -204,7 +205,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                     pop.prob[k++] = i;
         }
 
-        private void CreateInitialGeneration(Population pop, Text ciphertext, Alphabet cipher_alpha, Alphabet plain_alpha, Frequencies freq)
+        private void CreateInitialGeneration(Population pop, Text ciphertext, Alphabet cipher_alpha, Alphabet plain_alpha)
         {
             // Create initial population keys
             int[] newkey;
@@ -224,7 +225,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             // Calculate fitness of population keys
             for (int i = 0; i < pop.keys.Length; i++)
             {
-                pop.fitness[i] = this.language_frequencies.CalculateFitnessOfKey(DecryptCiphertext(pop.keys[i], ciphertext, cipher_alpha));
+                pop.fitness[i] = this.grams.CalculateCost(DecryptCiphertext(pop.keys[i], ciphertext, cipher_alpha).ToIntArray());
             }
 
             // Sort keys according to their fitness
@@ -297,7 +298,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             // Calculate fitness of population
             for (int i = 0; i < next.keys.Length; i++)
             {
-                next.fitness[i] = this.language_frequencies.CalculateFitnessOfKey(DecryptCiphertext(next.keys[i],ciphertext, cipher_alpha));
+                next.fitness[i] = this.grams.CalculateCost(DecryptCiphertext(next.keys[i],ciphertext, cipher_alpha).ToIntArray());
             }
 
             // Sort keys according to their fitness
@@ -498,7 +499,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                     res[i] = res[index];
                     res[index] = helper;
                     plaintext = DecryptCiphertext(res, ciphertext, ciphertext_alphabet);
-                    new_fitness = this.language_frequencies.CalculateFitnessOfKey(plaintext);
+                    new_fitness = this.grams.CalculateCost(plaintext.ToIntArray());
                     if (fitness > new_fitness)
                     {
                         helper = res[i];

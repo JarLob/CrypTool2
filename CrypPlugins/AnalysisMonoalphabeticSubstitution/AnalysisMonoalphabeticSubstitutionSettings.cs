@@ -38,22 +38,20 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         #region Initialization / Constructor
 
         public void Initialize()
-        {
-            UpdateTaskPaneVisibility();
+        {            
         }
 
         #endregion
 
         #region TaskPane Settings
 
-        [TaskPane("ChooseAlgorithmCaption", "ChooseAlgorithmTooltip", "SelectAlgorithmGroup", 1, false, ControlType.ComboBox, new string[] { "ChooseAlgorithmList1", "ChooseAlgorithmList2", "ChooseAlgorithmList3" })]
+        [TaskPane("ChooseAlgorithmCaption", "ChooseAlgorithmTooltip", "SelectAlgorithmGroup", 1, false, ControlType.ComboBox, new string[] { "ChooseAlgorithmList1", "ChooseAlgorithmList2"})]
         public int ChooseAlgorithm
         {
             get { return chooseAlgorithm; }
             set
             {
                 chooseAlgorithm = value;
-                UpdateTaskPaneVisibility();
                 OnPropertyChanged("ChooseAlgorithm");
             }
         }
@@ -80,15 +78,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         {
             get { return language; }
             set { language = value; }
-        }
-        
-        [TaskPane("ChooseAlphabetCaption", "ChooseAlphabetTooltip", "AlphabetGroup", 1, false, ControlType.ComboBox,
-              new string[] { "ChooseAlphabetList1", "ChooseAlphabetList2", "ChooseAlphabetList3", "ChooseAlphabetList4", "ChooseAlphabetList5", "ChooseAlphabetList6", "ChooseAlphabetList7", "ChooseAlphabetList8", "ChooseAlphabetList9", "ChooseAlphabetList10", "ChooseAlphabetList11"/*, "ChooseAlphabetList12"*/ })] //Add new value for another language, do it in the resource files to have multi-language support
-        public int Language2
-        {
-            get { return language2; }
-            set { language2 = value; }
-        }
+        }       
 
         [TaskPane("UseSpacesCaption", "UseSpacesTooltip", "AlphabetGroup", 2, false, ControlType.CheckBox)]
         public bool UseSpaces
@@ -105,26 +95,6 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             {
                 treatmentInvalidChars = value;
                 OnPropertyChanged("TreatmentInvalidChars");
-            }
-        }
-
-        #endregion
-
-        #region ISettings Members
-
-        /// <summary>
-        /// HOWTO: This flags indicates whether some setting has been changed since the last save.
-        /// If a property was changed, this becomes true, hence CrypTool will ask automatically if you want to save your changes.
-        /// </summary>
-        public bool HasChanges
-        {
-            get
-            {
-                return hasChanges;
-            }
-            set
-            {
-                hasChanges = value;
             }
         }
 
@@ -158,29 +128,6 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             if (TaskPaneAttributeChanged != null)
             {
                 TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Collapsed)));
-            }
-        }
-
-        internal void UpdateTaskPaneVisibility()
-        {
-            if (TaskPaneAttributeChanged == null)
-                return;
-
-            switch (chooseAlgorithm)
-            {
-                case 0:
-                case 1:
-                    showSettingsElement("Restarts");
-                    showSettingsElement("UseSpaces");
-                    showSettingsElement("Language");
-                    hideSettingsElement("Language2");
-                    break;
-                case 2:
-                    hideSettingsElement("Restarts");
-                    hideSettingsElement("UseSpaces");
-                    showSettingsElement("Language2");
-                    hideSettingsElement("Language");
-                    break;
             }
         }
 

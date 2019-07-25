@@ -19,7 +19,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -133,7 +133,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hillclimbing CPU ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hillclimbing ähnelt.
         /// </summary>
         public static string ChooseAlgorithmList1 {
             get {
@@ -142,20 +142,11 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hillclimbing GPU ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Dictionary &amp; Genetic ähnelt.
         /// </summary>
         public static string ChooseAlgorithmList2 {
             get {
                 return ResourceManager.GetString("ChooseAlgorithmList2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Dictionary &amp; Genetic ähnelt.
-        /// </summary>
-        public static string ChooseAlgorithmList3 {
-            get {
-                return ResourceManager.GetString("ChooseAlgorithmList3", resourceCulture);
             }
         }
         
@@ -174,114 +165,6 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution.Properties {
         public static string ChooseAlphabetCaption {
             get {
                 return ResourceManager.GetString("ChooseAlphabetCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die English ähnelt.
-        /// </summary>
-        public static string ChooseAlphabetList1 {
-            get {
-                return ResourceManager.GetString("ChooseAlphabetList1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Portuguese ähnelt.
-        /// </summary>
-        public static string ChooseAlphabetList10 {
-            get {
-                return ResourceManager.GetString("ChooseAlphabetList10", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Czech ähnelt.
-        /// </summary>
-        public static string ChooseAlphabetList11 {
-            get {
-                return ResourceManager.GetString("ChooseAlphabetList11", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Greek ähnelt.
-        /// </summary>
-        public static string ChooseAlphabetList12 {
-            get {
-                return ResourceManager.GetString("ChooseAlphabetList12", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die German ähnelt.
-        /// </summary>
-        public static string ChooseAlphabetList2 {
-            get {
-                return ResourceManager.GetString("ChooseAlphabetList2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Spanish ähnelt.
-        /// </summary>
-        public static string ChooseAlphabetList3 {
-            get {
-                return ResourceManager.GetString("ChooseAlphabetList3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Latin ähnelt.
-        /// </summary>
-        public static string ChooseAlphabetList4 {
-            get {
-                return ResourceManager.GetString("ChooseAlphabetList4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die French ähnelt.
-        /// </summary>
-        public static string ChooseAlphabetList5 {
-            get {
-                return ResourceManager.GetString("ChooseAlphabetList5", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hungarian ähnelt.
-        /// </summary>
-        public static string ChooseAlphabetList6 {
-            get {
-                return ResourceManager.GetString("ChooseAlphabetList6", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Swedish ähnelt.
-        /// </summary>
-        public static string ChooseAlphabetList7 {
-            get {
-                return ResourceManager.GetString("ChooseAlphabetList7", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Italian ähnelt.
-        /// </summary>
-        public static string ChooseAlphabetList8 {
-            get {
-                return ResourceManager.GetString("ChooseAlphabetList8", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Dutch ähnelt.
-        /// </summary>
-        public static string ChooseAlphabetList9 {
-            get {
-                return ResourceManager.GetString("ChooseAlphabetList9", resourceCulture);
             }
         }
         

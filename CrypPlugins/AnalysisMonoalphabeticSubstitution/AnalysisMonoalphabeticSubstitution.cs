@@ -27,7 +27,7 @@ using System.Windows.Threading;
 using System.Threading;
 using Cryptool.AnalysisMonoalphabeticSubstitution.Properties;
 using Cryptool.PluginBase.Utils;
-using ManagedCuda;
+
 
 namespace Cryptool.AnalysisMonoalphabeticSubstitution
 {
@@ -37,7 +37,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
     delegate void UpdateKeyDisplay(KeyCandidate keyCan);
     delegate double CalculateCostDelegate(int[] plaintext);
 
-    [Author("Andreas Grüner, Cordian Henkel", "Andreas.Gruener@web.de, Cordian.Henkel@yahoo.de", "Humboldt University Berlin, Universität Kassel", "http://www.hu-berlin.de, https://www.ais.uni-kassel.de")]
+    [Author("Andreas Grüner", "Andreas.Gruener@web.de", "Humboldt University Berlin", "http://www.hu-berlin.de")]
     [PluginInfo("Cryptool.AnalysisMonoalphabeticSubstitution.Properties.Resources", "PluginCaption", "PluginTooltip", "AnalysisMonoalphabeticSubstitution/Documentation/doc.xml", "AnalysisMonoalphabeticSubstitution/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
 
@@ -53,14 +53,13 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         // Working data
         private Alphabet ptAlphabet = null;
         private Alphabet ctAlphabet = null;
-        private Frequencies langFreq = null;
         private Dictionary langDic = null;
         private Text cText = null;
         private List<KeyCandidate> keyCandidates;
         private string ciphertextalphabet;
         private string plaintextalphabet;
         private string keyoutput;
-        private QuadGrams quadgrams;
+        private Grams grams;
 
         // Input property variables
         private String ciphertext;
@@ -165,66 +164,35 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                 }
             }, null);
 
-            // Prepare the cryptanalysis of the ciphertext
-            
-            ciphertext = ciphertext.ToLower();   // Todo: add case handling
+            // Prepare the cryptanalysis of the ciphertext            
+            ciphertext = ciphertext.ToLower();
 
-            if (settings.ChooseAlgorithm < 2)
-            {
-                // Set alphabets
-                string lang = LanguageStatistics.LanguageCode(settings.Language);
-                quadgrams = new QuadGrams(lang, settings.UseSpaces);
-                //pentagrams = new PentaGrams(lang, settings.UseSpaces);
-                CalculateCost = quadgrams.CalculateCost;
+            // Set alphabets
+            string lang = LanguageStatistics.LanguageCode(settings.Language);
+            grams = new QuadGrams(lang, settings.UseSpaces);
+            CalculateCost = grams.CalculateCost;
 
-                plaintextalphabet = quadgrams.Alphabet;
-                ciphertextalphabet = String.IsNullOrEmpty(CiphertextAlphabet)
-                    ? new string(Ciphertext.ToLower().Distinct().OrderBy(c => c).ToArray()).Replace("\r", "").Replace("\n", "")
-                    : new string(CiphertextAlphabet.ToLower().Distinct().OrderBy(c => c).ToArray()).Replace("\r", "").Replace("\n", "");
-                //            ciphertextalphabet = String.IsNullOrEmpty(CiphertextAlphabet) ? plaintextalphabet : new string(Ciphertext.ToLower().Distinct().OrderBy(c => c).ToArray()).Replace("\r", "").Replace("\n", "");
+            plaintextalphabet = grams.Alphabet;
+            ciphertextalphabet = String.IsNullOrEmpty(CiphertextAlphabet)
+                ? new string(Ciphertext.ToLower().Distinct().OrderBy(c => c).ToArray()).Replace("\r", "").Replace("\n", "")
+                : new string(CiphertextAlphabet.ToLower().Distinct().OrderBy(c => c).ToArray()).Replace("\r", "").Replace("\n", "");             
 
-                this.ptAlphabet = new Alphabet(plaintextalphabet);
-                this.ctAlphabet = new Alphabet(ciphertextalphabet);
-            }
-            else
-            {
+            ptAlphabet = new Alphabet(plaintextalphabet);
+            ctAlphabet = new Alphabet(ciphertextalphabet);
+
+            if (settings.ChooseAlgorithm == 1)
+            {        
+                ciphertext = ciphertext.ToLower();
+                plaintextalphabet = plaintextalphabet.ToLower();
+                ciphertextalphabet = plaintextalphabet;
+                
+                ptAlphabet = new Alphabet(plaintextalphabet);
+                ctAlphabet = new Alphabet(ciphertextalphabet);
+
                 // Dictionary
-
                 try
                 {
-                    this.langDic = null;
-
-                    switch (settings.Language2)
-                    {
-                        case 1: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß"; break;  // German
-                        case 2: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÑ"; break;  // spanish
-                        case 3: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break; // Latin 
-                        case 4: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break; // French 
-                        case 5: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break; // Hungarian 
-                        case 6: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ"; break; // Swedish 
-                        case 7: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break; // Italian 
-                        case 8: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break; // Dutch 
-                        case 9: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break; // Portuguese 
-                        case 10: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break; // Czech 
-                        case 11: plaintextalphabet = "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ"; break; // Greek
-                        default: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break;  // English
-                    }
-
-                    switch (settings.Language2)
-                    {
-                        case 1: this.langDic = new Dictionary("de-small.dic", plaintextalphabet.Length); break;
-                        case 2: this.langDic = new Dictionary("es-small.dic", plaintextalphabet.Length); break;
-                        case 3: this.langDic = new Dictionary("la-small.dic", plaintextalphabet.Length); break;
-                        case 4: this.langDic = new Dictionary("fr-small.dic", plaintextalphabet.Length); break;
-                        case 5: this.langDic = new Dictionary("hu-small.dic", plaintextalphabet.Length); break;
-                        case 6: this.langDic = new Dictionary("sv-small.dic", plaintextalphabet.Length); break;
-                        case 7: this.langDic = new Dictionary("it-small.dic", plaintextalphabet.Length); break;
-                        case 8: this.langDic = new Dictionary("nl-small.dic", plaintextalphabet.Length); break;
-                        case 9: this.langDic = new Dictionary("pt-small.dic", plaintextalphabet.Length); break;
-                        case 10: this.langDic = new Dictionary("cs-small.dic", plaintextalphabet.Length); break;
-                        case 11: this.langDic = new Dictionary("el-small.dic", plaintextalphabet.Length); break;
-                        default: this.langDic = new Dictionary("en-small.dic", plaintextalphabet.Length); break;
-                    }
+                    langDic = new Dictionary(LanguageStatistics.LanguageCode(settings.Language) + "-small.dic", plaintextalphabet.Length);
                 }
                 catch (Exception ex)
                 {
@@ -235,25 +203,6 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                 {
                     GuiLogMessage(Resources.no_dictionary, NotificationLevel.Warning);
                 }
-
-                String helper = IdentifyNGramFile(settings.Language2);
-                if (helper == null)
-                {
-                    GuiLogMessage(Resources.no_ngram_file, NotificationLevel.Error);
-                    return;
-                }
-
-                //ciphertextalphabet = String.IsNullOrEmpty(CiphertextAlphabet)
-                //    ? Regex.Replace(new string(Ciphertext.ToLower().Distinct().OrderBy(c => c).ToArray()), @"\s", "")
-                //    : Regex.Replace(new string(CiphertextAlphabet.ToLower().Distinct().OrderBy(c => c).ToArray()), @"\s", "");
-                ciphertext = ciphertext.ToLower();
-                plaintextalphabet = plaintextalphabet.ToLower();
-                ciphertextalphabet = plaintextalphabet;
-                
-                this.ptAlphabet = new Alphabet(plaintextalphabet);
-                this.ctAlphabet = new Alphabet(ciphertextalphabet);
-                this.langFreq = new Frequencies(this.ptAlphabet);
-                this.langFreq.ReadProbabilitiesFromNGramFile(helper);
             }
 
             // Plaintext Alphabet
@@ -325,25 +274,13 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
 
             /* Algorithm:
              * 0 = Hillclimbing CPU
-             * 1 = Hillclimbing GPU
-             * 2 = Genetic & Dictionary */
+             * 1 = Genetic & Dictionary */
             if (settings.ChooseAlgorithm == 0)
             {
                 AnalyzeHillclimbing(false);
                 totalKeys = hillAttacker.TotalKeys;
             }
             else if (settings.ChooseAlgorithm == 1)
-            {
-                if (!isCudaAvailable())
-                {
-                    GuiLogMessage(Resources.no_cuda, NotificationLevel.Error);
-                    return;
-                }
-
-                AnalyzeHillclimbing(true);
-                totalKeys = hillAttacker.TotalKeys;
-            }
-            else if (settings.ChooseAlgorithm == 2)
             {
                 if (this.langDic != null)
                     AnalyzeDictionary();
@@ -390,54 +327,20 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         {
         }
 
-        private bool isCudaAvailable()
-        {
-            //Check if Cuda is Available (Device & Driver).
-            bool cudaAvailable = true;
-
-            try
-            {
-                CudaContext chtxt = new CudaContext();
-
-                if (CudaContext.GetDeviceCount() != 0 && CudaContext.GetDriverVersion() != null)
-                {
-                    Console.WriteLine("" + CudaContext.GetDriverVersion());
-                    cudaAvailable = true;
-                }
-                else
-                {
-                    cudaAvailable = false;
-                }
-                chtxt.Dispose();
-            }
-            catch (Exception ex)
-            {
-                //CUDA does not work; Exception is also thrown when there is no CUDA installed
-                cudaAvailable = false;
-            }
-
-            return cudaAvailable;
-        }
-
         public void AnalyzeHillclimbing(bool GPU = false)
         {
             // Initialize analyzer
-            //this.hillAttacker.Ciphertext = this.cText.ToString(this.ctAlphabet);
             this.hillAttacker.Ciphertext = ciphertext;
             this.hillAttacker.Restarts = settings.Restarts;
             this.hillAttacker.PlaintextAlphabet = plaintextalphabet;
             this.hillAttacker.CiphertextAlphabet = ciphertextalphabet;
             this.hillAttacker.CalculateCost = CalculateCost;
-            this.hillAttacker.quadgrams = quadgrams;
-
+            this.hillAttacker.grams = grams;
             this.hillAttacker.PluginProgressCallback = this.ProgressChanged;
             this.hillAttacker.UpdateKeyDisplay = this.UpdateKeyDisplay;
 
             // Start attack
-            if(GPU)
-                this.hillAttacker.ExecuteOnGPU();
-            else
-                this.hillAttacker.ExecuteOnCPU();
+            hillAttacker.ExecuteOnCPU();
         }
 
         private void AnalyzeDictionary()
@@ -448,10 +351,9 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             //this.dicAttacker = new DictionaryAttacker();
             this.dicAttacker.ciphertext = this.cText;
             this.dicAttacker.languageDictionary = this.langDic;
-            this.dicAttacker.frequencies = this.langFreq;
             this.dicAttacker.ciphertext_alphabet = this.ctAlphabet;
             this.dicAttacker.plaintext_alphabet = this.ptAlphabet;
-
+            this.dicAttacker.Grams = this.grams;
             this.dicAttacker.PluginProgressCallback = this.ProgressChanged;
             this.dicAttacker.UpdateKeyDisplay = this.UpdateKeyDisplay;
             
@@ -483,46 +385,13 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             this.genAttacker.Ciphertext = this.cText;
             this.genAttacker.Ciphertext_Alphabet = this.ctAlphabet;
             this.genAttacker.Plaintext_Alphabet = this.ptAlphabet;
-            this.genAttacker.Language_Frequencies = this.langFreq;
-
+            this.genAttacker.Grams = this.grams;
             this.genAttacker.PluginProgressCallback = this.ProgressChanged;
             this.genAttacker.UpdateKeyDisplay = this.UpdateKeyDisplay;
             
             // Start attack
             
             this.genAttacker.Analyze();
-        }
-
-        private string IdentifyNGramFile(int alpha_nr)
-        {
-            string name = "";
-            string lang = "";
-
-            switch(alpha_nr)
-            {
-                case 1: lang = "de"; break;
-                case 2: lang = "es"; break;
-                case 3: lang = "la"; break;
-                case 4: lang = "fr"; break;
-                case 5: lang = "hu"; break;
-                case 6: lang = "sv"; break;
-                case 7: lang = "it"; break;
-                case 8: lang = "nl"; break;
-                case 9: lang = "pt"; break;
-                case 10: lang = "cs"; break;
-                case 11: lang = "el"; break;
-                default: lang = "en"; break;
-            }
-
-            // It is always looked for a 4-gram file at first. If the 4-gram file is not found the 3-gram file is choosen
-            for (int i = 4; i > 2; i--)
-            {
-                name = lang + "-" + i.ToString() + "gram-nocs.bin";
-                if (File.Exists(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, name)))
-                    return name;
-            }
-
-            return null;
         }
 
         private void UpdateKeyDisplay(KeyCandidate keyCan)
