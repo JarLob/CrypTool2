@@ -150,6 +150,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 case ParserType.Vocabulary3DigitsEndingWithNull2DigitsParser:
                     parser = new Vocabulary3DigitsEndingWithNull2DigitsParser(_settings.GetNulls());
                     break;
+                case ParserType.Vocabulary4DigitsWithPrefixParser:
+                    parser = new Vocabulary4DigitsWithPrefixParser(_settings.Prefix, _settings.GetNulls());
+                    break;
                 case ParserType.SimpleSingleTokenParser:
                 default:
                     parser = new SimpleSingleTokenParser();

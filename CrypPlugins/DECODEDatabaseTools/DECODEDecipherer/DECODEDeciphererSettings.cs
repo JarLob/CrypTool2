@@ -24,13 +24,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         SimpleSingleTokenParser = 0,
         NoVocabularyParser = 1,
         Vocabulary3DigitsEndingWithNull1DigitsParser = 2,
-        Vocabulary3DigitsEndingWithNull2DigitsParser = 3
+        Vocabulary3DigitsEndingWithNull2DigitsParser = 3,
+        Vocabulary4DigitsWithPrefixParser = 4
     }
 
     class DECODEDeciphererSettings : ISettings
     {
         private ParserType _parserType;
         private string _nulls;
+        private string _prefix;
         public event PropertyChangedEventHandler PropertyChanged;
 
         [TaskPane("ParserTypeCaption", "ParserTypeTooltip", null, 1, false, ControlType.ComboBox, new string[] 
@@ -38,7 +40,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             "SimpleSingleTokenParser",
             "NoVocabularyParser",
             "Vocabulary3DigitsEndingWithNull1DigitsParser",
-            "Vocabulary3DigitsEndingWithNull2DigitsParser"
+            "Vocabulary3DigitsEndingWithNull2DigitsParser",
+            "Vocabulary4DigitsWithPrefixParser"
         })]
         public ParserType ParserType
         {
@@ -63,6 +66,20 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 {
                     _nulls = value;
                     OnPropertyChanged("Nulls");
+                }
+            }
+        }
+
+        [TaskPane("PrefixCaption", "PrefixTooltip", null, 3, false, ControlType.TextBox)]
+        public string Prefix
+        {
+            get { return _prefix; }
+            set
+            {
+                if ((value) != _prefix)
+                {
+                    _prefix = value;
+                    OnPropertyChanged("Prefix");
                 }
             }
         }
