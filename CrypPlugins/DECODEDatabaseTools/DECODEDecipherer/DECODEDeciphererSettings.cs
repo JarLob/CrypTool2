@@ -25,7 +25,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         NoVocabularyParser = 1,
         Vocabulary3DigitsEndingWithNull1DigitsParser = 2,
         Vocabulary3DigitsEndingWithNull2DigitsParser = 3,
-        Vocabulary4DigitsWithPrefixParser = 4
+        Vocabulary4DigitsWithPrefixParser = 4,
+        Francia4Parser = 5
     }
 
     class DECODEDeciphererSettings : ISettings
@@ -41,7 +42,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             "NoVocabularyParser",
             "Vocabulary3DigitsEndingWithNull1DigitsParser",
             "Vocabulary3DigitsEndingWithNull2DigitsParser",
-            "Vocabulary4DigitsWithPrefixParser"
+            "Vocabulary4DigitsWithPrefixParser",
+            "Francia4Parser"
         })]
         public ParserType ParserType
         {

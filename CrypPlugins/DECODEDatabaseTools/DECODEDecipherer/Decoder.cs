@@ -17,9 +17,6 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
@@ -27,6 +24,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     {
         private string _DECODEKeyDocument;
         private Dictionary<string, string> _keyMapping = new Dictionary<string, string>();
+        private List<string> _nulls = new List<string>();
 
         public Decoder(string DECODEKeyDocument)
         {
@@ -66,8 +64,27 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     GuiLogMessage(String.Format("Found a remapping in the key. Ignoring it: {0}", trimmedLine), NotificationLevel.Warning);
                     continue;
                 }
+
+                if (right.Trim().ToLower().Equals("<null>"))
+                {
+                    if (!_nulls.Contains(left))
+                    {
+                        _nulls.Add(left);
+                    }
+                    else
+                    {
+                        GuiLogMessage(String.Format("Found a remapping in the key. Ignoring it: {0}", trimmedLine), NotificationLevel.Warning);
+                    }
+                    continue;
+                }
+                                
                 _keyMapping.Add(left, right);
             }
+        }
+
+        public string[] GetNulls()
+        {
+            return _nulls.ToArray();
         }
 
         /// <summary>

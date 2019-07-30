@@ -33,6 +33,19 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             }
             return false;
         }
+
+        public static string[] Concat(this string[] arrayA, string[] arrayB)
+        {
+            if (arrayB == null || arrayB.Length == 0)
+            {
+                return arrayA;
+            }
+            string[] arrayC = new string[arrayA.Length + arrayB.Length];
+
+            Array.Copy(arrayA, arrayC, arrayA.Length);
+            Array.Copy(arrayB, 0, arrayC, arrayA.Length, arrayB.Length);
+            return arrayC;
+        }
     }
 
     /// <summary>
@@ -250,6 +263,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                         }
                     }
                 }
+
                 Token token = new Token(currentLine);
                 token.Text = trimmedLine;
                 currentLine.Tokens.Add(token);
@@ -878,6 +892,258 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                                 continue;
                             }
                         }
+                    }
+                    lastLine = line;
+                }
+
+                if (tagTokenBuilder.Length > 0)
+                {
+                    Token tagToken = new Token(lastLine);
+                    tagToken.TokenType = TokenType.Tag;
+                    tagToken.Text = tagTokenBuilder.ToString();
+                    lastLine.Tokens.Add(tagToken);
+                    tagTokenBuilder.Clear();
+                    is_a_tag = false;
+                }
+
+                while (tokenStringBuilder.Length > 0)
+                {
+                    string symbol0 = "" + tokenStringBuilder[0];
+                    if (_nulls.Contains(symbol0))
+                    {
+                        //null length 1
+                        Token nullToken = new Token(lastLine);
+                        nullToken.TokenType = TokenType.Null;
+                        nullToken.Text = "" + tokenStringBuilder[0];
+                        lastLine.Tokens.Add(nullToken);
+                        tokenStringBuilder.Remove(0, 1);
+                    }
+                    else if (tokenStringBuilder.Length == 1)
+                    {
+                        //code length 1
+                        Token regularCodeToken = new Token(lastLine);
+                        regularCodeToken.TokenType = TokenType.RegularCode;
+                        regularCodeToken.Text = tokenStringBuilder.ToString().Substring(0, 1);
+                        lastLine.Tokens.Add(regularCodeToken);
+                        tokenStringBuilder.Remove(0, 1);
+                    }
+                    else
+                    {
+                        string symbol1 = "" + tokenStringBuilder[1];
+                        if (_nulls.Contains(symbol1))
+                        {
+                            //code length 1
+                            Token regularCodeToken = new Token(lastLine);
+                            regularCodeToken.TokenType = TokenType.RegularCode;
+                            regularCodeToken.Text = tokenStringBuilder.ToString().Substring(0, 1);
+                            lastLine.Tokens.Add(regularCodeToken);
+                            tokenStringBuilder.Remove(0, 1);
+                            //null length 1
+                            Token nullToken = new Token(lastLine);
+                            nullToken.TokenType = TokenType.Null;
+                            nullToken.Text = "" + tokenStringBuilder[0];
+                            lastLine.Tokens.Add(nullToken);
+                            tokenStringBuilder.Remove(0, 1);
+                        }
+                        else
+                        {
+                            //code length 2
+                            Token regularCodeToken = new Token(lastLine);
+                            regularCodeToken.TokenType = TokenType.RegularCode;
+                            regularCodeToken.Text = tokenStringBuilder.ToString().Substring(0, 2);
+                            lastLine.Tokens.Add(regularCodeToken);
+                            tokenStringBuilder.Remove(0, 2);
+                        }
+                    }
+                }
+            }
+            return document;
+        }
+    }
+
+    /// <summary>
+    /// Parser for Francia 4-1
+    /// </summary>
+    public class Francia4Parser : SimpleSingleTokenParser
+    {
+        private string[] _nulls = new string[] { };
+
+        public Francia4Parser( params string[] nulls)
+        {
+            if (nulls != null)
+            {
+                _nulls = nulls;
+            }
+        }
+
+        /// <summary>
+        /// Returns the parsed new document
+        /// </summary>
+        /// <returns></returns>
+        public override TextDocument GetDocument()
+        {
+            TextDocument document = base.GetDocument();
+            if (document == null)
+            {
+                return null;
+            }
+
+            foreach (Page page in document.Pages)
+            {
+                //create new tokens based on the "old" tokens
+                StringBuilder tokenStringBuilder = new StringBuilder();
+                StringBuilder tagTokenBuilder = new StringBuilder();
+                Line lastLine = null;
+
+                bool is_a_tag = false;
+                bool is_vocabulary = false;
+
+                foreach (Line line in page.Lines)
+                {
+                    if (line.LineType == LineType.Comment)
+                    {
+                        continue;
+                    }
+
+                    //We are using the SimpleSingleTokenParser as baseline
+                    //Thus, we have a single token for each line
+                    string text = line.Tokens[0].Text;
+                    line.Tokens.Remove(line.Tokens[0]);
+
+                    for (int position = 0; position < text.Length; position++)
+                    {
+                        string symbol = text.Substring(position, 1);
+                        if (string.IsNullOrWhiteSpace(symbol) && !is_a_tag)
+                        {
+                            continue;
+                        }
+
+                        if (symbol.Equals("<"))
+                        {
+                            tagTokenBuilder.Append(symbol);
+                            is_a_tag = true;
+                            continue;
+                        }
+                        if (is_a_tag == true && symbol.Equals(">"))
+                        {
+                            tagTokenBuilder.Append(symbol);
+                            Token tagToken = new Token(line);
+                            tagToken.TokenType = TokenType.Tag;
+                            tagToken.Text = tagTokenBuilder.ToString();
+                            line.Tokens.Add(tagToken);
+                            tagTokenBuilder.Clear();
+                            is_a_tag = false;
+                            continue;
+                        }
+                        if (is_a_tag)
+                        {
+                            tagTokenBuilder.Append(symbol);
+                            continue;
+                        }
+
+                        tokenStringBuilder.Append(symbol);
+
+                        if ("abcdefghij".Contains(symbol))
+                        {
+                            is_vocabulary = true;
+                            continue;
+                        }
+
+                        if(tokenStringBuilder.Length == 5)
+                        {
+                            //vocabulary
+                            if ("abcdefghij".Contains("" + tokenStringBuilder[3]))
+                            {
+                                Token vocabularyToken = new Token(line);
+                                vocabularyToken.TokenType = TokenType.VocabularyElement;
+                                vocabularyToken.Text = tokenStringBuilder.ToString().Substring(0, tokenStringBuilder.Length - 2);
+                                line.Tokens.Add(vocabularyToken);
+                                tokenStringBuilder.Remove(0, 3);
+                                continue;
+                            }
+                            else
+                            {
+                                Token vocabularyToken = new Token(line);
+                                vocabularyToken.TokenType = TokenType.VocabularyElement;
+                                vocabularyToken.Text = tokenStringBuilder.ToString().Substring(0, tokenStringBuilder.Length - 1);
+                                line.Tokens.Add(vocabularyToken);
+                                tokenStringBuilder.Remove(0, 4);
+                            }
+                            //remaining token
+                            if (_nulls.Contains(symbol))
+                            {
+                                Token nullToken = new Token(line);
+                                nullToken.TokenType = TokenType.Null;
+                                nullToken.Text = "" + symbol;
+                                line.Tokens.Add(nullToken);
+                                tokenStringBuilder.Clear();
+                            }
+                            else if("abcdefghij".Contains(symbol))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                Token regularToken = new Token(line);
+                                regularToken.TokenType = TokenType.RegularCode;
+                                regularToken.Text = "" + symbol;
+                                line.Tokens.Add(regularToken);
+                                tokenStringBuilder.Clear();                                
+                            }
+                            is_vocabulary = false;
+                            continue;
+                        }
+
+                        if (_nulls.Contains(symbol))
+                        {                            
+                            if (tokenStringBuilder.Length == 4 || tokenStringBuilder.Length == 5 && is_vocabulary)
+                            {
+                                //vocabulary
+                                Token vocabularyToken = new Token(line);
+                                vocabularyToken.TokenType = TokenType.VocabularyElement;
+                                vocabularyToken.Text = tokenStringBuilder.ToString().Substring(0, tokenStringBuilder.Length-1);
+                                line.Tokens.Add(vocabularyToken);                                
+
+                                //null length 1
+                                Token nullToken = new Token(line);
+                                nullToken.TokenType = TokenType.Null;
+                                nullToken.Text = "" + symbol;
+                                line.Tokens.Add(nullToken);
+
+                                tokenStringBuilder.Clear();                                
+                            }
+                            else
+                            {
+                                for(int i=0;i< tokenStringBuilder.Length - 2; i++)
+                                {
+                                    //code length 1
+                                    Token regularCodeToken = new Token(line);
+                                    regularCodeToken.TokenType = TokenType.RegularCode;
+                                    regularCodeToken.Text = tokenStringBuilder.ToString().Substring(0, 1);
+                                    line.Tokens.Add(regularCodeToken);
+                                    tokenStringBuilder.Remove(0, 1);
+                                }
+                                Token nullToken = new Token(line);
+                                nullToken.TokenType = TokenType.Null;
+                                nullToken.Text = "" + symbol;
+                                line.Tokens.Add(nullToken);
+
+                                tokenStringBuilder.Clear();
+                            }
+                            is_vocabulary = false;
+                            continue;
+                        }
+
+                        if (!is_vocabulary)
+                        {
+                            //code length 1
+                            Token regularCodeToken = new Token(line);
+                            regularCodeToken.TokenType = TokenType.RegularCode;
+                            regularCodeToken.Text = tokenStringBuilder.ToString().Substring(0, 1);
+                            line.Tokens.Add(regularCodeToken);
+                            tokenStringBuilder.Remove(0, 1);
+                        }
+                        
                     }
                     lastLine = line;
                 }

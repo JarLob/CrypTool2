@@ -138,6 +138,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 decoder = new Decoder(DECODEKeyDocument);
                 decoder.OnGuiLogNotificationOccured += ForwardGuiLogNotification;
             }
+
+            Preprocessor preprocessor = new Preprocessor();
+
+            string[] nulls = _settings.GetNulls();
+            if(decoder != null)
+            {
+                nulls = nulls.Concat(decoder.GetNulls());
+            }
+
             Parser parser = null;
             switch (_settings.ParserType)
             {                
@@ -145,20 +154,27 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     parser = new NoVocabularyParser(2);
                     break;
                 case ParserType.Vocabulary3DigitsEndingWithNull1DigitsParser:
-                    parser = new Vocabulary3DigitsEndingWithNull1DigitsParser(_settings.GetNulls());
+                    parser = new Vocabulary3DigitsEndingWithNull1DigitsParser(nulls);
                     break;
                 case ParserType.Vocabulary3DigitsEndingWithNull2DigitsParser:
-                    parser = new Vocabulary3DigitsEndingWithNull2DigitsParser(_settings.GetNulls());
+                    parser = new Vocabulary3DigitsEndingWithNull2DigitsParser(nulls);
                     break;
                 case ParserType.Vocabulary4DigitsWithPrefixParser:
-                    parser = new Vocabulary4DigitsWithPrefixParser(_settings.Prefix, _settings.GetNulls());
+                    parser = new Vocabulary4DigitsWithPrefixParser(_settings.Prefix, nulls);
+                    break;
+                case ParserType.Francia4Parser:
+                    parser = new Francia4Parser(nulls);
                     break;
                 case ParserType.SimpleSingleTokenParser:
                 default:
                     parser = new SimpleSingleTokenParser();
                     break;
             }            
-                        
+            //Step 1: Preprocessor replaces some tags used in the document            
+            preprocessor.DECODETextDocument = DECODETextDocument;
+            DECODETextDocument = preprocessor.GetProcessedString();
+
+            //Step 2: Apply parser
             parser.OnGuiLogNotificationOccured += ForwardGuiLogNotification;
             parser.DECODETextDocument = DECODETextDocument;
             DateTime startTime = DateTime.Now;
@@ -169,6 +185,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             }
             GuiLogMessage(String.Format("Parsed document in {0}ms", (DateTime.Now - startTime).TotalMilliseconds), NotificationLevel.Info);
             
+            //Step 3: Decode parsed document
             if (decoder != null)
             {
                 startTime = DateTime.Now;                
@@ -181,6 +198,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 }
                 GuiLogMessage(String.Format("Decoded document in {0}ms", (DateTime.Now - startTime).TotalMilliseconds), NotificationLevel.Info);
             }
+
+            //Step 4: Show final result
             _presentation.ShowDocument(document);
 
             if (decoder != null)
