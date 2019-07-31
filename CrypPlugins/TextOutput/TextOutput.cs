@@ -77,7 +77,14 @@ namespace TextOutput
                     input = value;
 
                     string fillValue = ObjectToString(value);
-                    fillValue = fillValue.Replace("\n", "");
+                    if (settings.LineBreaks == TextOutputSettings.LineBreaksEnum.Windows)
+                    {
+                        fillValue = fillValue.Replace("\n", "");
+                    }
+                    else
+                    {
+                        fillValue = fillValue.Replace("\n", "\r");
+                    }
                     if (input != null) ShowInPresentation(fillValue);
                     CurrentValue = getNewValue(fillValue);
 

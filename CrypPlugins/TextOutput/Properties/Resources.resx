@@ -243,4 +243,10 @@
   <data name="ManualFontSettingsTooltip" xml:space="preserve">
     <value>Set the font manually.</value>
   </data>
+  <data name="LineBreaksCaption" xml:space="preserve">
+    <value>Line breaks handling</value>
+  </data>
+  <data name="LineBreaksTooltip" xml:space="preserve">
+    <value>Sets if Windows (LF +CR) or Unix (LF) line breaks are used.</value>
+  </data>
 </root>

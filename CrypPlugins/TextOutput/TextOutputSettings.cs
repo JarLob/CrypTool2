@@ -25,6 +25,12 @@ namespace TextOutput
 {
     public class TextOutputSettings : ISettings
     {
+        public enum LineBreaksEnum
+        {            
+            Windows,
+            UNIX
+        }
+
         public ObservableCollection<string> Fonts
         {
             get { return fonts; }
@@ -131,8 +137,23 @@ namespace TextOutput
             }
         }
 
+        private LineBreaksEnum linebreaks = LineBreaksEnum.Windows;
+        [TaskPane("LineBreaksCaption", "LineBreaksTooltip", null, 3, false, ControlType.ComboBox, new string[] { "Windows", "Unix" })]
+        public LineBreaksEnum LineBreaks
+        {
+            get { return this.linebreaks; }
+            set
+            {
+                if (value != this.linebreaks)
+                {
+                    this.linebreaks = value;
+                    //OnPropertyChanged("AppendBreaks");
+                }
+            }
+        }
+
         private bool showChars = true;
-        [TaskPane("ShowCharsCaption", "ShowCharsTooltip", "ShowCharsGroup", 3, true, ControlType.CheckBox, "", null)]
+        [TaskPane("ShowCharsCaption", "ShowCharsTooltip", "ShowCharsGroup", 4, true, ControlType.CheckBox, "", null)]
         public bool ShowChars
         {
             get { return showChars; }
@@ -147,7 +168,7 @@ namespace TextOutput
         }
 
         private bool showLines = true;
-        [TaskPane("ShowLinesCaption", "ShowLinesTooltip", "ShowCharsGroup", 4, true, ControlType.CheckBox, "", null)]
+        [TaskPane("ShowLinesCaption", "ShowLinesTooltip", "ShowCharsGroup", 5, true, ControlType.CheckBox, "", null)]
         public bool ShowLines
         {
             get { return showLines; }
@@ -162,7 +183,7 @@ namespace TextOutput
         }
 
         private bool showDigits = false;
-        [TaskPane("ShowDigitsCaption", "ShowDigitsTooltip", "ShowCharsGroup", 5, true, ControlType.CheckBox, "", null)]
+        [TaskPane("ShowDigitsCaption", "ShowDigitsTooltip", "ShowCharsGroup", 6, true, ControlType.CheckBox, "", null)]
         public bool ShowDigits
         {
             get { return showDigits; }
@@ -177,7 +198,7 @@ namespace TextOutput
         }
 
         private int showChanges = 0;
-        [TaskPane("ShowChangesCaption", "ShowChangesTooltip", "ChangesGroup", 6, true, ControlType.ComboBox, new string[] { "DontShow", "ShowOnlyDifferences", "ShowInsertsAndDeletions", "ShowChangedSymbols" })]
+        [TaskPane("ShowChangesCaption", "ShowChangesTooltip", "ChangesGroup", 7, true, ControlType.ComboBox, new string[] { "DontShow", "ShowOnlyDifferences", "ShowInsertsAndDeletions", "ShowChangedSymbols" })]
         public int ShowChanges
         {
             get { return showChanges; }
@@ -191,7 +212,7 @@ namespace TextOutput
             }
         }
 
-        [TaskPane("ManualFontSettingsCaption", "ManualFontSettingsTooltip", "FontGroup", 7, true, ControlType.CheckBox, "")]
+        [TaskPane("ManualFontSettingsCaption", "ManualFontSettingsTooltip", "FontGroup", 8, true, ControlType.CheckBox, "")]
         public bool ManualFontSettings
         {
             get { return manualFontSettings; }
@@ -217,7 +238,7 @@ namespace TextOutput
             }
         }
 
-        [TaskPane("FontCaption", "FontTooltip", "FontGroup", 8, true, ControlType.DynamicComboBox, new string[] { "Fonts" })]
+        [TaskPane("FontCaption", "FontTooltip", "FontGroup", 9, true, ControlType.DynamicComboBox, new string[] { "Fonts" })]
         public int Font
         {
             get { return font; }
@@ -234,7 +255,7 @@ namespace TextOutput
             }
         }
 
-        [TaskPane("FontSizeCaption", "FontSizeTooltip", "FontGroup", 9, true, ControlType.NumericUpDown, ValidationType.RangeInteger, 8, 72)]
+        [TaskPane("FontSizeCaption", "FontSizeTooltip", "FontGroup", 10, true, ControlType.NumericUpDown, ValidationType.RangeInteger, 8, 72)]
         public double FontSize
         {
             get { return fontsize; }

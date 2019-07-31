@@ -240,4 +240,10 @@
   <data name="ManualFontSettingsTooltip" xml:space="preserve">
     <value>Stellt die Schrift manuell ein.</value>
   </data>
+  <data name="LineBreaksCaption" xml:space="preserve">
+    <value>Behandlung von Zeilenumbrüchen</value>
+  </data>
+  <data name="LineBreaksTooltip" xml:space="preserve">
+    <value>Legt fest, ob Zeilenumbrüche von Windows (LF + CR) oder von Unix (LF) verwendet werden.</value>
+  </data>
 </root>

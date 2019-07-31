@@ -243,4 +243,10 @@
   <data name="ManualFontSettingsTooltip" xml:space="preserve">
     <value>Установите шрифт вручную.</value>
   </data>
+  <data name="LineBreaksCaption" xml:space="preserve">
+    <value>Обработка разрывов строк</value>
+  </data>
+  <data name="LineBreaksTooltip" xml:space="preserve">
+    <value>Определяет, используются ли разрывы строк в Windows (LF + CR) или Unix (LF).</value>
+  </data>
 </root>
