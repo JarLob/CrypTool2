@@ -165,6 +165,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 case ParserType.Francia4Parser:
                     parser = new Francia4Parser(nulls);
                     break;
+                case ParserType.Francia6Parser:
+                    parser = new Francia6Parser(nulls);
+                    break;
                 case ParserType.SimpleSingleTokenParser:
                 default:
                     parser = new SimpleSingleTokenParser();
