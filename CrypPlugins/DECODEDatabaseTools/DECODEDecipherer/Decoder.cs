@@ -23,8 +23,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     public class Decoder
     {
         private string _DECODEKeyDocument;
-        private Dictionary<string, string> _keyMapping = new Dictionary<string, string>();
-        private List<string> _nulls = new List<string>();
+        private Dictionary<Token, Token> _keyMapping = new Dictionary<Token, Token>();
+        private List<Token> _nulls = new List<Token>();
 
         public Decoder(string DECODEKeyDocument)
         {
@@ -48,24 +48,20 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     GuiLogMessage(String.Format("Found a line in the key that does not contain a valid key mapping: {0}", trimmedLine), NotificationLevel.Warning);
                     continue;
                 }
-                string left = parts[0].Trim();
-                string right = string.Empty;
-                for(int i = 1; i < parts.Length; i++)
-                {                    
-                    right += parts[i].Trim();
+                Token left = new Token(null, parts[0].Trim());
+
+                string rightString = "";
+                for (int i = 1; i < parts.Length; i++)
+                {
+                    rightString += parts[i];
                     if (i < parts.Length - 1)
                     {
-                        right += " - ";
+                        rightString += " - ";
                     }
                 }
+                rightString = rightString.Trim();
 
-                if (_keyMapping.ContainsKey(left))
-                {
-                    GuiLogMessage(String.Format("Found a remapping in the key. Ignoring it: {0}", trimmedLine), NotificationLevel.Warning);
-                    continue;
-                }
-
-                if (right.Trim().ToLower().Equals("<null>"))
+                if (rightString.ToLower().Equals("<null>"))
                 {
                     if (!_nulls.Contains(left))
                     {
@@ -77,14 +73,22 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     }
                     continue;
                 }
+
+                Token right = new Token(null, rightString);               
+                if (_keyMapping.ContainsKey(left))
+                {
+                    GuiLogMessage(String.Format("Found a remapping in the key. Ignoring it: {0}", trimmedLine), NotificationLevel.Warning);
+                    continue;
+                }
+
                                 
                 _keyMapping.Add(left, right);
             }
         }
 
-        public string[] GetNulls()
+        public List<Token> GetNulls()
         {
-            return _nulls.ToArray();
+            return _nulls;
         }
 
         /// <summary>
@@ -102,26 +106,32 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             {                
                 if(token.TokenType == TokenType.Null)
                 {
-                    token.DecodedText = " ";
+                    Symbol nullSymbol = new Symbol(token);
+                    nullSymbol.Text = " ";
+                    token.DecodedSymbols.Add(nullSymbol);
                     continue;
                 }
-                if (_keyMapping.ContainsKey(token.Text))
+                if (_keyMapping.ContainsKey(token))
                 {
-                    token.DecodedText = _keyMapping[token.Text];
+                    token.DecodedSymbols = _keyMapping[token].Symbols;
                 }
                 else
                 {
                     if (token.TokenType == TokenType.RegularCode)
                     {
-                        token.DecodedText = "??";
+                        Symbol unknownSymbol = new Symbol(token);
+                        unknownSymbol.Text = "??";
+                        token.DecodedSymbols.Add(unknownSymbol);
                     }
                     else if(token.TokenType == TokenType.VocabularyElement)
                     {
-                        token.DecodedText = "???";
+                        Symbol unknownSymbol = new Symbol(token);
+                        unknownSymbol.Text = "???";
+                        token.DecodedSymbols.Add(unknownSymbol);
                     }
                     else
                     {
-                        token.DecodedText = null;
+                        token.DecodedSymbols = null;
                     }
                 }
             }

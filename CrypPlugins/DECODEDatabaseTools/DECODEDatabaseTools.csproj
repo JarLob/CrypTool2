@@ -90,9 +90,11 @@
     </Compile>
     <Compile Include="DECODEDecipherer\DECODEDeciphererSettings.cs" />
     <Compile Include="DECODEDecipherer\Decoder.cs" />
+    <Compile Include="DECODEDecipherer\Extensions.cs" />
     <Compile Include="DECODEDecipherer\Parsers.cs" />
     <Compile Include="DECODEDecipherer\Preprocessor.cs" />
     <Compile Include="DECODEDecipherer\TextObjects.cs" />
+    <Compile Include="DECODEDecipherer\TokenBuilder.cs" />
     <Compile Include="Util\DataObjects.cs" />
     <Compile Include="DECODESettingsTab.xaml.cs">
       <DependentUpon>DECODESettingsTab.xaml</DependentUpon>

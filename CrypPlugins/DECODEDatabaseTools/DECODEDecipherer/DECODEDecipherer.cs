@@ -16,6 +16,7 @@
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Controls;
@@ -141,22 +142,25 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
             Preprocessor preprocessor = new Preprocessor();
 
-            string[] nulls = _settings.GetNulls();
+            List<Token> nulls = _settings.GetNulls();
             if(decoder != null)
             {
-                nulls = nulls.Concat(decoder.GetNulls());
+                foreach (var nullToken in decoder.GetNulls())
+                {
+                    nulls.Add(nullToken);
+                }
             }
 
             Parser parser = null;
             switch (_settings.ParserType)
             {                
                 case ParserType.NoVocabularyParser:
-                    parser = new NoVocabularyParser(2);
+                    parser = new NoVocabularyParser(2, nulls);
                     break;
                 case ParserType.Vocabulary3DigitsEndingWithNull1DigitsParser:
                     parser = new Vocabulary3DigitsEndingWithNull1DigitsParser(nulls);
                     break;
-                case ParserType.Vocabulary3DigitsEndingWithNull2DigitsParser:
+                /*case ParserType.Vocabulary3DigitsEndingWithNull2DigitsParser:
                     parser = new Vocabulary3DigitsEndingWithNull2DigitsParser(nulls);
                     break;
                 case ParserType.Vocabulary4DigitsWithPrefixParser:
@@ -167,7 +171,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     break;
                 case ParserType.Francia6Parser:
                     parser = new Francia6Parser(nulls);
-                    break;
+                    break;*/
                 case ParserType.SimpleSingleTokenParser:
                 default:
                     parser = new SimpleSingleTokenParser();
@@ -223,11 +227,17 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                             {
                                 if (token.TokenType == TokenType.Tag)
                                 {
-                                    outputBuilder.Append(token.Text);
+                                    foreach (var symbol in token.Symbols)
+                                    {
+                                        outputBuilder.Append(symbol.Text);
+                                    }
                                 }
                                 else
                                 {
-                                    outputBuilder.Append(token.DecodedText);
+                                    foreach (var symbol in token.DecodedSymbols)
+                                    {
+                                        outputBuilder.Append(symbol.Text);
+                                    }
                                 }
                             }
                             outputBuilder.AppendLine();

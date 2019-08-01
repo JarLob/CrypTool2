@@ -170,21 +170,61 @@
                                         <DataTemplate>
                                             <Grid Margin="3,0,0,0" IsHitTestVisible="False">
                                                 <Grid.RowDefinitions>
-                                                    <RowDefinition Height="*"/>
-                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="18"/>
+                                                    <RowDefinition Height="18"/>
                                                 </Grid.RowDefinitions>
-                                                <Label Content="{Binding Path=Text}" Grid.Row="0" 
+                                                <!-- text symbols-->
+                                                <ItemsControl ItemsSource="{Binding Path=Symbols}"
+                                                 Margin="0,0,0,0" 
+                                                 BorderThickness="0,0,0,0"
+                                                 BorderBrush="Black"
+                                                 VerticalAlignment="Top"
+                                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"  
+                                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+                                                 Padding="0"
+                                                 Grid.Row="0">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Orientation="Horizontal"/>
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Label Content="{Binding Path=Text}"
                                                                Margin="0,0,0,0" 
                                                                BorderThickness="0" 
                                                                VerticalAlignment="Center" 
                                                                Padding="0"
                                                                Foreground="{Binding Path=TextColor}" FontSize="14" FontFamily="Courier New"/>
-                                                <Label Content="{Binding Path=DecodedText}"  Grid.Row="1"  
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                                <!-- decoded symbols-->
+                                                <ItemsControl ItemsSource="{Binding Path=DecodedSymbols}"
+                                                 Margin="0,0,0,0" 
+                                                 BorderThickness="0,0,0,0"
+                                                 BorderBrush="Black"
+                                                 VerticalAlignment="Top"
+                                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"  
+                                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+                                                 Padding="0"
+                                                 Grid.Row="1">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Orientation="Horizontal"/>
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Label Content="{Binding Path=Text}"
                                                                Margin="0,0,0,0" 
                                                                BorderThickness="0" 
                                                                VerticalAlignment="Center" 
                                                                Padding="0"
                                                                Foreground="Black" FontSize="14" FontFamily="Courier New"/>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
                                             </Grid>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>

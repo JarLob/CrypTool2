@@ -42,7 +42,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     /// <summary>
     /// A document contains one or more pages
     /// </summary>
-    public class TextDocument 
+    public class TextDocument
     {
         public List<Page> Pages
         {
@@ -126,14 +126,14 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder();
-            foreach(var page in Pages)
+            foreach (var page in Pages)
             {
                 stringBuilder.Append(page.ToString());
                 stringBuilder.Append(Environment.NewLine);
             }
             return stringBuilder.ToString();
         }
-      
+
     }
 
     /// <summary>
@@ -155,7 +155,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             get;
             set;
-        }    
+        }
 
         public override string ToString()
         {
@@ -215,11 +215,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             StringBuilder stringBuilder = new StringBuilder();
             foreach (var token in Tokens)
             {
-                stringBuilder.Append(token.Text);
-                if (token != Tokens[Tokens.Count - 1])
-                {
-                    stringBuilder.Append(" ");
-                }
+                stringBuilder.Append(token.ToString());               
             }
             return stringBuilder.ToString();
         }
@@ -244,22 +240,102 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     public class Token
     {
         private Line _line = null;
+        private List<Symbol> _symbols = new List<Symbol>();
+        private List<Symbol> _decodedSymbols = new List<Symbol>();
 
         public Token(Line line)
         {
             TokenType = TokenType.Unknown;
             _line = line;
-            DecodedText = null;
+            DecodedSymbols = new List<Symbol>();
+            Symbols = new List<Symbol>();
         }
 
-        public string Text
+        public Token(Line line, string str) : this(line)
         {
-            get; set;
+            StringBuilder builder = new StringBuilder();
+            foreach(var c in str)
+            {
+                builder.Append("" + c);
+                if(builder.Length == 3)
+                {
+                    if(builder[1] == '^')
+                    {
+                        Symbol symbolWithTop = new Symbol(this);
+                        symbolWithTop.Top = "" + builder[2];
+                        symbolWithTop.Text = "" + builder[0];
+                        Symbols.Add(symbolWithTop);
+                        builder.Clear();
+                        continue;
+                    }
+                    if (builder[1] == '_')
+                    {
+                        Symbol symbolWithBottom = new Symbol(this);
+                        symbolWithBottom.Bottom = "" + builder[2];
+                        symbolWithBottom.Text = "" + builder[0];
+                        Symbols.Add(symbolWithBottom);
+                        builder.Clear();
+                        continue;
+                    }
+                    Symbol symbol = new Symbol(this);
+                    symbol.Text = "" + builder[0];
+                    Symbols.Add(symbol);
+                    builder.Remove(0, 1);
+                    continue;
+                }
+            }                      
+            while(builder.Length > 0)
+            {
+                Symbol symbol = new Symbol(this);
+                symbol.Text = "" + builder[0];
+                Symbols.Add(symbol);
+                builder.Remove(0, 1);
+                continue;
+            }
         }
 
-        public string DecodedText
+        /// <summary>
+        /// Sets the symbols to the given list
+        /// also sets parent token at each element to this token
+        /// </summary>
+        public List<Symbol> Symbols
         {
-            get;set;
+            get
+            {
+                return _symbols;
+            }
+            set
+            {
+                _symbols = value;
+                foreach(var symbol in _symbols)
+                {
+                    symbol.ParentToken = this;                    
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets the decoded symbols to the given list
+        /// also sets parent token at each element to this token
+        /// </summary>
+        public List<Symbol> DecodedSymbols
+        {
+            get
+            {
+                return _decodedSymbols;
+            }
+            set
+            {
+                if(value == null)
+                {
+                    return;
+                }
+                _decodedSymbols = value;
+                foreach (var symbol in _decodedSymbols)
+                {
+                    symbol.ParentToken = this;
+                }
+            }
         }
 
         public TokenType TokenType
@@ -303,6 +379,188 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             return _line;
         }
+
+
+        public override bool Equals(object obj)
+        {
+            var symbol = obj as Symbol;
+            if(symbol != null)
+            {
+                if(Symbols.Count != 1)
+                {
+                    return false;
+                }
+                return symbol.Equals(Symbols[0]);
+            }
+
+            var token = obj as Token;
+            if (token == null)
+            {
+                return false;
+            }
+            else
+            {
+                return token.GetHashCode() == GetHashCode();
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            var hash = 13;
+            var counter = 1;
+            foreach (var symbol in Symbols)
+            {
+                hash = ((counter + hash) * 7) + (symbol != null ? symbol.GetHashCode() : 0);
+                counter++;
+            }          
+            return hash;
+        }
+
+        public static Token operator+ (Token token, Symbol symbol)
+        {
+            token.Symbols.Add(symbol);
+            symbol.ParentToken = token;
+            return token;
+        }
+
+        public Symbol this[int index]
+        {
+            get
+            {
+                return Symbols[index];
+            }
+            set
+            {                
+                Symbols[index] = value;
+                value.ParentToken = this;
+            }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (var symbol in Symbols)
+            {
+                stringBuilder.Append(symbol.ToString());              
+            }
+            return stringBuilder.ToString();
+        }
     }
 
+    /// <summary>
+    /// A symbol is a single symbol of text
+    /// examples: A,B,C,...,a,b,c,...,0,1,2,...,0^1,0^2,... etc
+    /// </summary>
+    public class Symbol : ICloneable
+    {
+        private Token _token;
+
+        public Symbol(Token token)
+        {            
+            _token = token;
+            Top = string.Empty;
+            Text = string.Empty;
+            Bottom = string.Empty;
+        }
+
+        public string Top
+        {
+            get;
+            set;
+        }
+
+        public string Text
+        {
+            get;
+            set;
+        }
+
+        public string Bottom
+        {
+            get;
+            set;
+        }
+
+        public override bool Equals(object obj)
+        {
+            var str = obj as string;
+            if(str != null)
+            {
+                return str.Equals(Text);
+            }
+
+            var symbol = obj as Symbol;
+            if(symbol == null)
+            {
+                return false;
+            }
+            else
+            {
+                return symbol.GetHashCode() == GetHashCode();
+            }            
+        }
+
+        public override int GetHashCode()
+        {
+            var hash = 13;
+            hash = (hash * 3) + (Top != null ? Top.GetHashCode() : 0);
+            hash = (hash * 5) + (Text != null ? Text.GetHashCode() : 0);
+            hash = (hash * 7) + (Bottom != null ? Bottom.GetHashCode() : 0);
+            return hash;
+        }
+
+        public Token ParentToken
+        {
+            get
+            {
+                return _token;
+            }
+            set
+            {
+                _token = value;
+            }
+        }
+
+
+        public object Clone()
+        {
+            Symbol symbol = new Symbol(_token);
+            symbol.Top = Top;            
+            symbol.Text = Text;
+            symbol.Bottom = Bottom;
+            return symbol;
+        }
+
+        /// <summary>
+        /// Returns the TextColor of this symbol by calling
+        /// the property of the parent Token
+        /// </summary>
+        public SolidColorBrush TextColor
+        {
+            get
+            {
+                if (_token != null)
+                {
+                    return _token.TextColor;
+                }
+                return null;
+            }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(Text);
+
+            if (!string.IsNullOrEmpty(Top))
+            {
+                stringBuilder.Append("^" + Top);
+            }
+            if (!string.IsNullOrEmpty(Bottom))
+            {
+                stringBuilder.Append("_" + Bottom);
+            }
+            return stringBuilder.ToString();
+        }
+    } 
 }

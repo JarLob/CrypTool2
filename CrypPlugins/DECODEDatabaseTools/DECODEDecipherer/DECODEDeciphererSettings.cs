@@ -15,6 +15,7 @@
 */
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
@@ -93,17 +94,19 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             
         }
 
-        public string[] GetNulls()
+        public List<Token> GetNulls()
         {
-            if (string.IsNullOrEmpty(_nulls)){
-                return new string[0];
-            }
+            List<Token> list = new List<Token>();           
             string[] nulls = _nulls.Split(',');
             for(int i = 0; i < nulls.Length; i++)
             {
-                nulls[i] = nulls[i].Trim();
+                Token token = new Token(null);
+                Symbol symbol = new Symbol(token);
+                token.Symbols.Add(symbol);
+                symbol.Text = nulls[i].Trim();
+                list.Add(token);
             }
-            return nulls;
+            return list;
         }
 
         protected void OnPropertyChanged(string name)
