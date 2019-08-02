@@ -407,13 +407,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         public override int GetHashCode()
         {
             var hash = 13;
-            var counter = 1;
+            StringBuilder builder = new StringBuilder();
+            var counter = 0;
             foreach (var symbol in Symbols)
             {
-                hash = ((counter + hash) * 7) + (symbol != null ? symbol.GetHashCode() : 0);
                 counter++;
+                hash = ((counter + hash) * 7) + (symbol != null ? symbol.GetHashCode() : 0);
+                builder.Append(hash);
             }          
-            return hash;
+            return builder.ToString().GetHashCode();
         }
 
         public static Token operator+ (Token token, Symbol symbol)

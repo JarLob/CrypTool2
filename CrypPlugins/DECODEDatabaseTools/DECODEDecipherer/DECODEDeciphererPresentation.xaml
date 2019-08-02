@@ -163,7 +163,7 @@
                                                  Padding="0">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal"/>
+                                            <StackPanel Orientation="Horizontal" VirtualizingPanel.IsVirtualizing="False" VirtualizingPanel.VirtualizationMode="Recycling"/>
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
@@ -171,7 +171,7 @@
                                             <Grid Margin="3,0,0,0" IsHitTestVisible="False">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="18"/>
-                                                    <RowDefinition Height="18"/>
+                                                    <RowDefinition Height="18*"/>
                                                 </Grid.RowDefinitions>
                                                 <!-- text symbols-->
                                                 <ItemsControl ItemsSource="{Binding Path=Symbols}"
@@ -180,12 +180,14 @@
                                                  BorderBrush="Black"
                                                  VerticalAlignment="Top"
                                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  
-                                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+                                                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                                 VirtualizingPanel.IsVirtualizing="True"
+                                                 VirtualizingPanel.VirtualizationMode="Recycling"
                                                  Padding="0"
                                                  Grid.Row="0">
                                                     <ItemsControl.ItemsPanel>
                                                         <ItemsPanelTemplate>
-                                                            <StackPanel Orientation="Horizontal"/>
+                                                            <StackPanel Orientation="Horizontal" VirtualizingPanel.IsVirtualizing="False" VirtualizingPanel.VirtualizationMode="Recycling"/>
                                                         </ItemsPanelTemplate>
                                                     </ItemsControl.ItemsPanel>
                                                     <ItemsControl.ItemTemplate>
@@ -206,12 +208,14 @@
                                                  BorderBrush="Black"
                                                  VerticalAlignment="Top"
                                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  
-                                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+                                                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                                 VirtualizingPanel.IsVirtualizing="True"
+                                                 VirtualizingPanel.VirtualizationMode="Recycling"
                                                  Padding="0"
                                                  Grid.Row="1">
                                                     <ItemsControl.ItemsPanel>
                                                         <ItemsPanelTemplate>
-                                                            <StackPanel Orientation="Horizontal"/>
+                                                            <StackPanel Orientation="Horizontal" VirtualizingPanel.IsVirtualizing="False" VirtualizingPanel.VirtualizationMode="Recycling"/>
                                                         </ItemsPanelTemplate>
                                                     </ItemsControl.ItemsPanel>
                                                     <ItemsControl.ItemTemplate>

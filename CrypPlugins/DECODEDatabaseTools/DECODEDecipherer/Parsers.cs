@@ -578,9 +578,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     /// </summary>
     public class Vocabulary3DigitsEndingWithNull2DigitsParser : SimpleSingleTokenParser
     {
-        private string[] _nulls = new string[] { };
+        private List<Token> _nulls = new List<Token>();
 
-        public Vocabulary3DigitsEndingWithNull2DigitsParser(params string[] nulls)
+        public Vocabulary3DigitsEndingWithNull2DigitsParser(List<Token> nulls = null)
         {
             if (nulls != null)
             {
@@ -655,7 +655,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
                         if (tokenBuilder.Length == 5)
                         {
-                            if (_nulls.Contains("" + tokenBuilder[tokenBuilder.Length - 1]))
+                            if (_nulls.Contains(tokenBuilder.GetToken(3,2,null)))
                             {
                                 //we have 2 null symbols => thus, we have a vocabulary element and 2 nulls
                                 Token vocabularyToken = tokenBuilder.GetToken(0, 3, line);
@@ -681,7 +681,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                         }
                         if (tokenBuilder.Length == 4)
                         {
-                            if (_nulls.Contains("" + tokenBuilder[tokenBuilder.Length - 1]))
+                            if (_nulls.Contains(tokenBuilder.GetToken(2, 2, null)))
                             {
                                 Token regularCodeToken = tokenBuilder.GetToken(0, 2, line);
                                 regularCodeToken.TokenType = TokenType.RegularCode;
@@ -698,7 +698,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                         }
                         if (tokenBuilder.Length == 2)
                         {
-                            if (_nulls.Contains("" + tokenBuilder[tokenBuilder.Length - 1]))
+                            if (_nulls.Contains(tokenBuilder.GetToken(0, 2, null)))
                             {
                                 Token nullToken = new Token(line);
                                 nullToken.TokenType = TokenType.Null;
