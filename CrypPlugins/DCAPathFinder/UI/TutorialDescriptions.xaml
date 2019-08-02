@@ -23,21 +23,69 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <!-- Heading of the slide -->
-        <Label Grid.Row="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Content="{Loc DescriptionHeader}"></Label>
+        <RichTextBox Grid.Row="0" IsReadOnly="True" BorderThickness="0" Background="Transparent" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center">
+            <FlowDocument TextAlignment="Center">
+                <Paragraph>
+                    <Run Text="{Loc DescriptionHeader}" />
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
         <!-- Short description of the slide -->
-        <TextBlock Grid.Row="1" FontFamily="Courier New" FontSize="12" Text="{Loc DescriptionContent1}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
+        <RichTextBox Grid.Row="1" IsReadOnly="True" BorderThickness="0" Background="Transparent" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="{Loc DescriptionContent1}" />
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
         <!-- Subheading for tutorial 1 -->
-        <Label Grid.Row="2" FontFamily="Courier New" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" Margin="5,0,5,0" Content="{Loc DescriptionSubHeader1}"></Label>
-        <TextBlock Grid.Row="3" FontFamily="Courier New" FontSize="12" Text="{Loc DescriptionContent2}" TextWrapping="Wrap" Margin="10,0,10,0"></TextBlock>
+        <RichTextBox Grid.Row="2" IsReadOnly="True" BorderThickness="0" Background="Transparent" FontFamily="Courier New" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" Margin="10,0,10,0">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="{Loc DescriptionSubHeader1}" />
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <RichTextBox Padding="0,-5,0,0" Grid.Row="3" IsReadOnly="True" BorderThickness="0" Background="Transparent" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="{Loc DescriptionContent2}" />
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
         <!-- Subheading for tutorial 2 -->
-        <Label Grid.Row="4" FontFamily="Courier New" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" Margin="5,0,5,0" Content="{Loc DescriptionSubHeader2}"></Label>
-        <TextBlock Grid.Row="5" FontFamily="Courier New" FontSize="12" Text="{Loc DescriptionContent3}" TextWrapping="Wrap" Margin="10,0,10,0"></TextBlock>
+        <RichTextBox Grid.Row="4" IsReadOnly="True" BorderThickness="0" Background="Transparent" FontFamily="Courier New" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" Margin="10,0,10,0">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="{Loc DescriptionSubHeader2}" />
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <RichTextBox Padding="0,-5,0,0" Grid.Row="5" IsReadOnly="True" BorderThickness="0" Background="Transparent" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="{Loc DescriptionContent3}" />
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
         <!-- Subheading for tutorial 3 -->
-        <Label Grid.Row="6" FontFamily="Courier New" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" Margin="5,0,5,0" Content="{Loc DescriptionSubHeader3}"></Label>
-        <TextBlock Grid.Row="7" FontFamily="Courier New" FontSize="12" Text="{Loc DescriptionContent4}" TextWrapping="Wrap" Margin="10,0,10,0"></TextBlock>
+        <RichTextBox Grid.Row="6" IsReadOnly="True" BorderThickness="0" Background="Transparent" FontFamily="Courier New" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" Margin="10,0,10,0">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="{Loc DescriptionSubHeader3}" />
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <RichTextBox Padding="0,-5,0,0" Grid.Row="7" IsReadOnly="True" BorderThickness="0" Background="Transparent" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="{Loc DescriptionContent4}" />
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
     </Grid>
 </UserControl>

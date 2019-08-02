@@ -17,9 +17,31 @@
             <RowDefinition Height="120"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Content="{Loc Tutorial1IntroductionSlide1Header}"></Label>
-        <TextBlock Grid.Row="1" FontFamily="Courier New" FontSize="12" Text="{Loc Tutorial1IntroductionSlide1Content1}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
-        <TextBlock Grid.Row="2" FontFamily="Courier New" FontSize="12" Text="{Loc Tutorial1IntroductionSlide1Content2}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
+
+        <RichTextBox Grid.Row="0" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" >
+            <FlowDocument >
+                <Paragraph TextAlignment="Center">
+                    <Run Text="{Loc Tutorial1IntroductionSlide1Header}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+
+        <RichTextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial1IntroductionSlide1Content1}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+
+        <RichTextBox Grid.Row="2" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial1IntroductionSlide1Content2}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+
         <DataGrid Grid.Row="3" HorizontalAlignment="Center" CanUserAddRows="false" AutoGenerateColumns="False" Margin="0,10,0,0" ItemsSource="{Binding XorData, Mode=OneWay}">
             <DataGrid.Columns >
                 <DataGridTextColumn Binding="{Binding Path=Col1, Mode=OneWay}" Header="{Loc Tutorial1IntroductionSlide1DataColHeader1}" MinWidth="25" IsReadOnly="True">

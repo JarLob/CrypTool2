@@ -139,9 +139,6 @@
     <Compile Include="UI\Overview.xaml.cs">
       <DependentUpon>Overview.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\StartMask.xaml.cs">
-      <DependentUpon>StartMask.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\Tutorial1\DifferentialCryptanalysisHeader.xaml.cs">
       <DependentUpon>DifferentialCryptanalysisHeader.xaml</DependentUpon>
     </Compile>
@@ -340,7 +337,9 @@
     <Resource Include="userdoc.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.de.resx" />
+    <EmbeddedResource Include="Properties\Resources.de.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -387,10 +386,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Overview.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\StartMask.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -666,7 +661,9 @@
   <ItemGroup>
     <Resource Include="Images\k1restore.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\k0calc.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\SBox_Characteristic.png" />
   </ItemGroup>
@@ -683,6 +680,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Differential.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\k0calc2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

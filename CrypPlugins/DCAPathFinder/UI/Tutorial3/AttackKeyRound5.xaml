@@ -16,9 +16,13 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="0" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,0">
-            <Run Text="{Loc Tutorial3AttackRound5HeaderRun1}"></Run><Run Text="{Loc Tutorial3AttackRound5HeaderRun2}" BaselineAlignment="Subscript" FontSize="15"></Run><Run Text="{Loc Tutorial3AttackRound5HeaderRun3}"></Run>
-        </TextBlock>
+        <RichTextBox IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" Grid.Row="0" Grid.Column="0" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,0">
+            <FlowDocument>
+                <Paragraph TextAlignment="Center">
+                    <Run Text="{Loc Tutorial3AttackRound5HeaderRun1}"></Run><Run Text="{Loc Tutorial3AttackRound5HeaderRun2}" BaselineAlignment="Subscript" FontSize="15"></Run><Run Text="{Loc Tutorial3AttackRound5HeaderRun3}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
             <Grid Height="1400" Width="900">

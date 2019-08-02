@@ -21,19 +21,39 @@
 
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Content="{Loc Tutorial2CharacteristicSlide1Header}"></Label>
+        <RichTextBox Grid.Row="0" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center">
+            <FlowDocument >
+                <Paragraph TextAlignment="Center">
+                    <Run Text="{Loc Tutorial2CharacteristicSlide1Header}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
-        <TextBlock Grid.Row="1" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0" TextWrapping="Wrap">
-            <Run Text="{Loc Tutorial2CharacteristicSlide1Content1Run1}"></Run><controls:FormulaControl Formula="\alpha" Scale="18"/><Run Text="{Loc Tutorial2CharacteristicSlide1Content1Run2}"></Run><controls:FormulaControl Formula="\beta" Scale="15"/><Run Text="{Loc Tutorial2CharacteristicSlide1Content1Run3}"></Run>
-        </TextBlock>
+        <RichTextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial2CharacteristicSlide1Content1Run1}"></Run><controls:FormulaControl Formula="\alpha" Scale="18"/><Run Text="{Loc Tutorial2CharacteristicSlide1Content1Run2}"></Run><controls:FormulaControl Formula="\beta" Scale="15"/><Run Text="{Loc Tutorial2CharacteristicSlide1Content1Run3}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
         <Image Grid.Row="2" HorizontalAlignment="Center" Height="30" Width="60" Source="/DCAPathFinder;component/images/SBox_Char.png"></Image>
 
-        <TextBlock Grid.Row="3" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0" TextWrapping="Wrap">
-            <Run Text="{Loc Tutorial2CharacteristicSlide1Content2Run1}" /><controls:FormulaControl Formula="(\alpha, \beta)" Scale="14"/><Run Text="{Loc Tutorial2CharacteristicSlide1Content2Run2}" />
-        </TextBlock>
-        
-        <TextBlock Grid.Row="4" FontFamily="Courier New" FontSize="12" Text="{Loc Tutorial2CharacteristicSlide1Content2}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
+        <RichTextBox Grid.Row="3" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial2CharacteristicSlide1Content2Run1}" /><controls:FormulaControl Formula="(\alpha, \beta)" Scale="14"/><Run Text="{Loc Tutorial2CharacteristicSlide1Content2Run2}" />
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+
+        <RichTextBox Grid.Row="4" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial2CharacteristicSlide1Content2}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
     </Grid>
 </UserControl>

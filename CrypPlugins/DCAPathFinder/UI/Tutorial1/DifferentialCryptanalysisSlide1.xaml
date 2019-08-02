@@ -19,14 +19,36 @@
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Content="{Loc Tutorial1DifferentialCryptanalysisSlide1Header}"></Label>
-        <TextBlock Grid.Row="1" FontFamily="Courier New" FontSize="12" Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Content1}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
-        <TextBlock Grid.Row="2" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0" TextWrapping="Wrap">
-            <Run Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Content2Run1}"></Run><Run BaselineAlignment="Subscript" Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Content2Run2}" FontSize="10"></Run>
-            <Run Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Content2Run3}"></Run><Run BaselineAlignment="Subscript" Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Content2Run4}" FontSize="10"></Run><Run Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Content2Run5}"></Run><Run BaselineAlignment="Subscript" Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Content2Run6}" FontSize="10"></Run><Run Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Content2Run7}"></Run>
-        </TextBlock>
+        <RichTextBox Grid.Row="0" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center">
+            <FlowDocument >
+                <Paragraph TextAlignment="Center">
+                    <Run Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Header}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <RichTextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Content1}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <RichTextBox Grid.Row="2" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Content2Run1}"></Run><Run BaselineAlignment="Subscript" Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Content2Run2}" FontSize="10"></Run>
+                    <Run Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Content2Run3}"></Run><Run BaselineAlignment="Subscript" Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Content2Run4}" FontSize="10"></Run><Run Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Content2Run5}"></Run><Run BaselineAlignment="Subscript" Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Content2Run6}" FontSize="10"></Run><Run Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Content2Run7}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
         <Image Grid.Row="3" Source="/DCAPathFinder;component/images/mXORk0.png"></Image>
-        <TextBlock Grid.Row="4" FontFamily="Courier New" FontSize="12" Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Content3}" Margin="10,5,10,0" TextWrapping="Wrap"></TextBlock>
+        <RichTextBox Grid.Row="4" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,5,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial1DifferentialCryptanalysisSlide1Content3}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
         <Image Grid.Row="5" Source="/DCAPathFinder;component/images/StepSBOX.png"></Image>
     </Grid>
 </UserControl>

@@ -19,11 +19,47 @@
             <RowDefinition Height="15"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Content="{Loc OverviewHeader}"></Label>
-        <TextBlock Grid.Row="1" FontFamily="Courier New" FontSize="12" Text="{Loc OverviewContent1}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
-        <TextBlock Grid.Row="2" FontFamily="Courier New" FontSize="12" Text="{Loc OverviewContent2}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
-        <TextBlock Grid.Row="3" FontFamily="Courier New" FontSize="12" Text="{Loc OverviewContent3}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
-        <TextBlock Grid.Row="4" FontFamily="Courier New" FontSize="12" Text="{Binding SelectedTutorial, Mode=OneWay}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
-        <TextBlock Grid.Row="5" FontFamily="Courier New" FontSize="12" Text="{Loc OverviewContent4}" HorizontalAlignment="Center" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
+        <RichTextBox Grid.Row="0" IsReadOnly="True" BorderThickness="0" Background="Transparent" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center">
+            <FlowDocument TextAlignment="Center">
+                <Paragraph>
+                    <Run Text="{Loc OverviewHeader}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <RichTextBox Grid.Row="1" IsReadOnly="True" BorderThickness="0" Background="Transparent" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="{Loc OverviewContent1}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <RichTextBox Grid.Row="2" IsReadOnly="True" BorderThickness="0" Background="Transparent" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="{Loc OverviewContent2}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <RichTextBox Grid.Row="3" IsReadOnly="True" BorderThickness="0" Background="Transparent" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="{Loc OverviewContent3}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <RichTextBox Grid.Row="4" IsReadOnly="True" BorderThickness="0" Background="Transparent" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="{Binding SelectedTutorial, Mode=OneWay}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <RichTextBox Grid.Row="5" IsReadOnly="True" BorderThickness="0" Background="Transparent" FontFamily="Courier New" FontSize="12" HorizontalAlignment="Center" Margin="10,0,10,0">
+            <FlowDocument>
+                <Paragraph TextAlignment="Center">
+                    <Run Text="{Loc OverviewContent4}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
     </Grid>
 </UserControl>

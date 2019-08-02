@@ -17,7 +17,13 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Content="{Loc Tutorial2AnalysisSlide2Header}"></Label>
+        <RichTextBox Grid.Row="0" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center">
+            <FlowDocument >
+                <Paragraph TextAlignment="Center">
+                    <Run Text="{Loc Tutorial2AnalysisSlide2Header}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
         <ScrollViewer x:Name="scrollbar" Grid.Row="1" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
 

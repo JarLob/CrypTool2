@@ -16,15 +16,28 @@
             <RowDefinition Height="100*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="10,0,10,0" TextWrapping="Wrap">
-            <Run Text="{Loc Tutorial2AttackFirstRoundHeaderRun1}"/><Run Text="{Loc Tutorial2AttackFirstRoundHeaderRun2}" BaselineAlignment="Subscript" FontSize="15" /><Run Text="{Loc Tutorial2AttackFirstRoundHeaderRun3}"/><Run Text="{Loc Tutorial2AttackFirstRoundHeaderRun4}" BaselineAlignment="Subscript" FontSize="15" />
-        </TextBlock>
+        <RichTextBox Grid.Row="0" Grid.Column="0" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph TextAlignment="Center">
+                    <Run Text="{Loc Tutorial2AttackFirstRoundHeaderRun1}"/><Run Text="{Loc Tutorial2AttackFirstRoundHeaderRun2}" BaselineAlignment="Subscript" FontSize="15" /><Run Text="{Loc Tutorial2AttackFirstRoundHeaderRun3}"/><Run Text="{Loc Tutorial2AttackFirstRoundHeaderRun4}" BaselineAlignment="Subscript" FontSize="15" />
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0" TextWrapping="Wrap">
-            <Run Text="{Loc Tutorial2AttackFirstRoundContent1Run1}" /><Run Text="{Loc Tutorial2AttackFirstRoundContent1Run2}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AttackFirstRoundContent1Run3}" /><Run Text="{Loc Tutorial2AttackFirstRoundContent1Run4}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AttackFirstRoundContent1Run5}" />
-        </TextBlock>
-        <TextBlock Grid.Row="2" Grid.Column="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0" TextWrapping="Wrap">
-            <Run Text="{Loc Tutorial2AttackFirstRoundContent2Run1}" /><Run Text="{Loc Tutorial2AttackFirstRoundContent2Run2}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AttackFirstRoundContent2Run3}" /><Run Text="{Loc Tutorial2AttackFirstRoundContent2Run4}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AttackFirstRoundContent2Run5}" />
-        </TextBlock>
+        <RichTextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial2AttackFirstRoundContent1Run1}" /><Run Text="{Loc Tutorial2AttackFirstRoundContent1Run2}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AttackFirstRoundContent1Run3}" /><Run Text="{Loc Tutorial2AttackFirstRoundContent1Run4}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AttackFirstRoundContent1Run5}" />
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+
+        <RichTextBox Grid.Row="2" Grid.Column="0" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial2AttackFirstRoundContent2Run1}" /><Run Text="{Loc Tutorial2AttackFirstRoundContent2Run2}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AttackFirstRoundContent2Run3}" /><Run Text="{Loc Tutorial2AttackFirstRoundContent2Run4}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AttackFirstRoundContent2Run5}" />
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
     </Grid>
 </UserControl>

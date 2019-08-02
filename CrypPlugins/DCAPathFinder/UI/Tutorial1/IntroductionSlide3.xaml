@@ -19,16 +19,39 @@
             <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Content="{Loc Tutorial1IntroductionSlide3Header}"></Label>
 
-        <TextBlock Grid.Row="1" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0" TextWrapping="Wrap">
-            <Run Text="{Loc Tutorial1IntroductionSlide3Content1Run1}" /><Run BaselineAlignment="Subscript" Text="{Loc Tutorial1IntroductionSlide3Content1Run2}" FontSize="10" /><Run Text="{Loc Tutorial1IntroductionSlide3Content1Run3}" /><Run BaselineAlignment="Subscript" Text="{Loc Tutorial1IntroductionSlide3Content1Run4}" FontSize="10" /><Run Text="{Loc Tutorial1IntroductionSlide3Content1Run5}" />
-        </TextBlock>
+        <RichTextBox Grid.Row="0" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center">
+            <FlowDocument >
+                <Paragraph TextAlignment="Center">
+                    <Run Text="{Loc Tutorial1IntroductionSlide3Header}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+
+        <RichTextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial1IntroductionSlide3Content1Run1}" /><Run BaselineAlignment="Subscript" Text="{Loc Tutorial1IntroductionSlide3Content1Run2}" FontSize="10" /><Run Text="{Loc Tutorial1IntroductionSlide3Content1Run3}" /><Run BaselineAlignment="Subscript" Text="{Loc Tutorial1IntroductionSlide3Content1Run4}" FontSize="10" /><Run Text="{Loc Tutorial1IntroductionSlide3Content1Run5}" />
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
         <Image Grid.Row="2" Source="/DCAPathFinder;component/images/m1XORkm2XORk.png"></Image>
-        <TextBlock Grid.Row="3" FontFamily="Courier New" FontSize="12" Text="{Loc Tutorial1IntroductionSlide3Content2}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
+        <RichTextBox Grid.Row="3" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial1IntroductionSlide3Content2}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
         <Image Grid.Row="4" Source="/DCAPathFinder;component/images/c1XORc2.png"></Image>
-        <TextBlock Grid.Row="5" FontFamily="Courier New" FontSize="12" Text="{Loc Tutorial1IntroductionSlide3Content3}" Margin="10,10,10,0" TextWrapping="Wrap"></TextBlock>
+        <RichTextBox Grid.Row="5" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,10,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial1IntroductionSlide3Content3}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
         
 
 

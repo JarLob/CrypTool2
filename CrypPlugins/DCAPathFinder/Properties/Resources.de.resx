@@ -1170,4 +1170,22 @@
   <data name="Tutorial3AttackFirstRoundHeaderRun4" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="Tutorial1DifferentialCryptanalysisSlide10Content4Run1" xml:space="preserve">
+    <value>Nach erfolgreicher Wiederherstellung von k</value>
+  </data>
+  <data name="Tutorial1DifferentialCryptanalysisSlide10Content4Run2" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Tutorial1DifferentialCryptanalysisSlide10Content4Run3" xml:space="preserve">
+    <value> kann k</value>
+  </data>
+  <data name="Tutorial1DifferentialCryptanalysisSlide10Content4Run4" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Tutorial1DifferentialCryptanalysisSlide10Content4Run5" xml:space="preserve">
+    <value> sofort berechnet werden. Dieser kann durch Berechnung der Gleichung</value>
+  </data>
+  <data name="Tutorial1DifferentialCryptanalysisSlide10Content5Run1" xml:space="preserve">
+    <value>bestimmt werden.</value>
+  </data>
 </root>

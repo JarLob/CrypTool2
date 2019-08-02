@@ -17,14 +17,29 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Content="{Loc Tutorial3AttackFinishedHeader}"></Label>
+        <RichTextBox Grid.Row="0" Grid.Column="0" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" >
+            <FlowDocument >
+                <Paragraph TextAlignment="Center">
+                    <Run Text="{Loc Tutorial3AttackFinishedHeader}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" FontFamily="Courier New" VerticalAlignment="Bottom" FontSize="12" Text="{Loc Tutorial3AttackFinishedContent1}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
+        <RichTextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" VerticalAlignment="Bottom" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial3AttackFinishedContent1}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
-        <TextBlock Grid.Row="2" Grid.Column="0" FontFamily="Courier New" VerticalAlignment="Bottom" FontSize="12" Margin="10,0,10,0" TextWrapping="Wrap">
-            <Run Text="{Loc Tutorial3AttackFinishedContent2Run1}"></Run><Run Text="{Loc Tutorial3AttackFinishedContent2Run2}" BaselineAlignment="Subscript" FontSize="8"></Run><Run Text="{Loc Tutorial3AttackFinishedContent2Run3}"></Run><Run Text="{Loc Tutorial3AttackFinishedContent2Run4}" BaselineAlignment="Subscript" FontSize="8"></Run><Run Text="{Loc Tutorial3AttackFinishedContent2Run5}"></Run>
-        </TextBlock>
-
+        <RichTextBox Grid.Row="2" Grid.Column="0" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" VerticalAlignment="Bottom" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial3AttackFinishedContent2Run1}"></Run><Run Text="{Loc Tutorial3AttackFinishedContent2Run2}" BaselineAlignment="Subscript" FontSize="8"></Run><Run Text="{Loc Tutorial3AttackFinishedContent2Run3}"></Run><Run Text="{Loc Tutorial3AttackFinishedContent2Run4}" BaselineAlignment="Subscript" FontSize="8"></Run><Run Text="{Loc Tutorial3AttackFinishedContent2Run5}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
     </Grid>
 </UserControl>

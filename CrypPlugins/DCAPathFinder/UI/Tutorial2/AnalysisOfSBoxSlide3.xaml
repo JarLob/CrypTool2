@@ -14,18 +14,48 @@
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="70"></RowDefinition>
-            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
 
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Content="{Loc Tutorial2AnalysisOfSBoxSlide3Header}"></Label>
+        <RichTextBox Grid.Row="0" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center">
+            <FlowDocument >
+                <Paragraph TextAlignment="Center">
+                    <Run Text="{Loc Tutorial2AnalysisOfSBoxSlide3Header}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
-        <TextBlock Grid.Row="1" FontFamily="Courier New" FontSize="12" Text="{Loc Tutorial2AnalysisOfSBoxSlide3Content1}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
+        <RichTextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial2AnalysisOfSBoxSlide3Content1}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
-        <TextBlock Grid.Row="2" FontFamily="Courier New" FontSize="12" Text="{Loc Tutorial2AnalysisOfSBoxSlide3Content2}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
-        <TextBlock Grid.Row="3" FontFamily="Courier New" FontSize="12" Text="{Loc Tutorial2AnalysisOfSBoxSlide3Content3}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
-        <TextBlock Grid.Row="4" FontFamily="Courier New" FontSize="12" Text="{Loc Tutorial2AnalysisOfSBoxSlide3Content4}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
+        <RichTextBox Grid.Row="2" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial2AnalysisOfSBoxSlide3Content2}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <RichTextBox Grid.Row="3" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial2AnalysisOfSBoxSlide3Content3}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <RichTextBox Grid.Row="4" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial2AnalysisOfSBoxSlide3Content4}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
     </Grid>
 </UserControl>

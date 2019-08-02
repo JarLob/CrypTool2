@@ -18,16 +18,37 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Content="{Loc Tutorial2AnalysisSlide3Header}"></Label>
+        <RichTextBox Grid.Row="0" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center">
+            <FlowDocument >
+                <Paragraph TextAlignment="Center">
+                    <Run Text="{Loc Tutorial2AnalysisSlide3Header}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
-        <TextBlock Grid.Row="1" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0" TextWrapping="Wrap">
-            <Run Text="{Loc Tutorial2AnalysisSlide3Content1Run1}"/><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run2}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run3}"/><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run4}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run5}"/><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run6}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run7}"/><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run8}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run9}"/><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run10}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run11}"/><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run12}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run13}"/>
-        </TextBlock>
+        <RichTextBox Grid.Row="1" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial2AnalysisSlide3Content1Run1}"/><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run2}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run3}"/><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run4}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run5}"/><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run6}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run7}"/><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run8}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run9}"/><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run10}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run11}"/><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run12}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AnalysisSlide3Content1Run13}"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
-        <TextBlock Grid.Row="2" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0" TextWrapping="Wrap">
-            <Run Text="{Loc Tutorial2AnalysisSlide3Content2Run1}"/><Run Text="{Loc Tutorial2AnalysisSlide3Content2Run2}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AnalysisSlide3Content2Run3}"/><Run Text="{Loc Tutorial2AnalysisSlide3Content2Run4}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AnalysisSlide3Content2Run5}"/>
-        </TextBlock>
-        
-        <TextBlock Grid.Row="3" Text="{Loc Tutorial2AnalysisSlide3Content3}" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
+        <RichTextBox Grid.Row="2" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial2AnalysisSlide3Content2Run1}"/><Run Text="{Loc Tutorial2AnalysisSlide3Content2Run2}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AnalysisSlide3Content2Run3}"/><Run Text="{Loc Tutorial2AnalysisSlide3Content2Run4}" BaselineAlignment="Subscript" FontSize="10" /><Run Text="{Loc Tutorial2AnalysisSlide3Content2Run5}"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+
+        <RichTextBox Grid.Row="3" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial2AnalysisSlide3Content3}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+
     </Grid>
 </UserControl>

@@ -15,10 +15,14 @@
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        
-        <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="0" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,0">
-            <Run Text="{Loc Tutorial2AttackRound3HeaderRun1}"></Run><Run Text="{Loc Tutorial2AttackRound3HeaderRun2}" BaselineAlignment="Subscript" FontSize="15"></Run><Run Text="{Loc Tutorial2AttackRound3HeaderRun3}"></Run>
-        </TextBlock>
+
+        <RichTextBox FontFamily="Courier New" IsReadOnly="True" Background="Transparent" BorderThickness="0" Grid.Row="0" Grid.Column="0" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,0">
+            <FlowDocument >
+                <Paragraph TextAlignment="Center">
+                    <Run Text="{Loc Tutorial2AttackRound3HeaderRun1}"></Run><Run Text="{Loc Tutorial2AttackRound3HeaderRun2}" BaselineAlignment="Subscript" FontSize="15"></Run><Run Text="{Loc Tutorial2AttackRound3HeaderRun3}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
             <Grid Height="900" Width="900">
@@ -97,15 +101,19 @@
 
                 <!-- /Round 3 -->
 
-                <TextBlock Grid.Row="0" Grid.Column="2" FontFamily="Courier New" FontSize="20" VerticalAlignment="Top" Margin="0,20,0,0" TextWrapping="Wrap">
-                    <Run Text="{Loc Tutorial2AttackKeyRound3Content1Run1}"></Run><Run Text="{Loc Tutorial2AttackKeyRound3Content1Run2}" BaselineAlignment="Subscript" FontSize="15"></Run><Run Text="{Loc Tutorial2AttackKeyRound3Content1Run3}"></Run>
-                    <LineBreak/>
-                    <LineBreak/>
-                    <Run Text="{Loc Tutorial2AttackKeyRound3Content1Run4}"></Run>
-                    <LineBreak/>
-                    <LineBreak/>
-                    <Run Text="{Loc Tutorial2AttackKeyRound3Content1Run5}"></Run>
-                </TextBlock>
+                <RichTextBox Grid.Row="0" Grid.Column="2" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="20" VerticalAlignment="Top" Margin="0,20,0,0">
+                    <FlowDocument >
+                        <Paragraph>
+                            <Run Text="{Loc Tutorial2AttackKeyRound3Content1Run1}"></Run><Run Text="{Loc Tutorial2AttackKeyRound3Content1Run2}" BaselineAlignment="Subscript" FontSize="15"></Run><Run Text="{Loc Tutorial2AttackKeyRound3Content1Run3}"></Run>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run Text="{Loc Tutorial2AttackKeyRound3Content1Run4}"></Run>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run Text="{Loc Tutorial2AttackKeyRound3Content1Run5}"></Run>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
 
             </Grid>
         </ScrollViewer>

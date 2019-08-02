@@ -15,8 +15,26 @@
             <RowDefinition Height="80"></RowDefinition>
             <RowDefinition Height="100*"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Column="0" Grid.Row="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" Text="{Loc Tutorial3WaitingSlideHeader}" Margin="10,0,10,0" TextAlignment="Center" TextWrapping="Wrap"></TextBlock>
-        <TextBlock Grid.Column="0" Grid.Row="1" FontFamily="Courier New" FontSize="12" Text="{Loc Tutorial3WaitingSlideContent1}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
-        <TextBlock Grid.Column="0" Grid.Row="2" FontFamily="Courier New" FontSize="12" Text="{Loc Tutorial3WaitingSlideContent2}" Margin="10,0,10,0" TextWrapping="Wrap"></TextBlock>
+        <RichTextBox Grid.Column="0" Grid.Row="0" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph TextAlignment="Center">
+                    <Run Text="{Loc Tutorial3WaitingSlideHeader}" ></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <RichTextBox Grid.Column="0" Grid.Row="1" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial3WaitingSlideContent1}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <RichTextBox Grid.Column="0" Grid.Row="2" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0">
+            <FlowDocument >
+                <Paragraph>
+                    <Run Text="{Loc Tutorial3WaitingSlideContent2}"></Run>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
     </Grid>
 </UserControl>
