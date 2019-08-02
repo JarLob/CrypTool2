@@ -245,12 +245,39 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 }
 
                 Token token = new Token(currentLine);
+                token.TokenType = TokenType.Unknown;
+                bool top = false;
+                bool bottom = false;                
+                Symbol symbol = null;
+
                 foreach (var c in trimmedLine)
                 {
-                    //todo: add top and bottom text
-                    Symbol symbol = new Symbol(token);
-                    symbol.Text = c + "";
-                    token.Symbols.Add(symbol);
+                    switch (c)
+                    {
+                        case '^':
+                            top = true;
+                            continue;
+                        case '_':
+                            bottom = true;
+                            continue;
+                        default:
+                            if (top && symbol != null)
+                            {
+                                top = false;
+                                symbol.Top = c + "";
+                                continue;
+                            }
+                            if (bottom && symbol != null)
+                            {
+                                bottom = false;
+                                symbol.Bottom = c + "";
+                                continue;
+                            }
+                            symbol = new Symbol(token);
+                            symbol.Text = c + "";
+                            token.Symbols.Add(symbol);
+                            break;
+                    }
                 }
                 currentLine.Tokens.Add(token);
                 currentPage.Lines.Add(currentLine);
@@ -335,7 +362,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     }
 
                     //We are using the SimpleSingleTokenParser as baseline
-                    //Thus, we have a single token with a single symbol for each line
+                    //Thus, we have a single token with symbols for each line
                     List<Symbol> text = line.Tokens[0].Symbols;
                     line.Tokens.Remove(line.Tokens[0]);
 

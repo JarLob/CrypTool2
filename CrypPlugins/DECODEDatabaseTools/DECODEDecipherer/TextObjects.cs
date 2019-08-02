@@ -564,5 +564,28 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             }
             return stringBuilder.ToString();
         }
+
+        /// <summary>
+        /// Returns 0 when there is no top or bottom text
+        /// Returns 1 when there is a top text
+        /// Returns 2 when there is a bottom text
+        /// Returns 3 when there are top AND bottom texts
+        /// </summary>
+        public int SymbolDisplayType
+        {
+            get
+            {
+                int value = 0;
+                if (!string.IsNullOrEmpty(Top) && !string.IsNullOrWhiteSpace(Top))
+                {
+                    value += 1;
+                }
+                if (!string.IsNullOrEmpty(Bottom) && !string.IsNullOrWhiteSpace(Bottom))
+                {
+                    value += 2;
+                }
+                return value;
+            }
+        }
     } 
 }

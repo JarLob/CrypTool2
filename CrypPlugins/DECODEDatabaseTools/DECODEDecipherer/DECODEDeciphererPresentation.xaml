@@ -192,12 +192,91 @@
                                                     </ItemsControl.ItemsPanel>
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate>
-                                                            <Label Content="{Binding Path=Text}"
-                                                               Margin="0,0,0,0" 
-                                                               BorderThickness="0" 
-                                                               VerticalAlignment="Center" 
-                                                               Padding="0"
-                                                               Foreground="{Binding Path=TextColor}" FontSize="14" FontFamily="Courier New"/>
+                                                        <ContentPresenter Content="{Binding}">
+                                                            <ContentPresenter.Resources>
+                                                                <DataTemplate x:Key="WithTopAndBottom">
+                                                                    <Grid>
+                                                                        <Label Content="{Binding Path=Text}"
+                                                                               Margin="0,0,0,0" 
+                                                                               BorderThickness="0" 
+                                                                               VerticalAlignment="Top" 
+                                                                               Padding="0"
+                                                                               Foreground="{Binding Path=TextColor}" FontSize="14" FontFamily="Courier New"/>
+                                                                        <Label Content="{Binding Path=Top}"
+                                                                               Margin="0,-24,0,0" 
+                                                                               BorderThickness="0" 
+                                                                               VerticalAlignment="Center" 
+                                                                               Padding="0"
+                                                                               Foreground="{Binding Path=TextColor}" Background="Transparent" FontWeight="Bold" FontSize="14" FontFamily="Courier New"/>
+                                                                        <Label Content="{Binding Path=Bottom}"
+                                                                               Margin="0,4,0,0" 
+                                                                               BorderThickness="0" 
+                                                                               VerticalAlignment="Bottom" 
+                                                                               Padding="0"
+                                                                               Foreground="{Binding Path=TextColor}"  Background="Transparent" FontWeight="Bold" FontSize="14" FontFamily="Courier New"/>
+                                                                    </Grid>
+                                                                </DataTemplate>
+                                                                <DataTemplate x:Key="WithTop">
+                                                                    <Grid>
+                                                                        <Label Content="{Binding Path=Text}"
+                                                                               Margin="0,0,0,0" 
+                                                                               BorderThickness="0" 
+                                                                               VerticalAlignment="Top" 
+                                                                               Padding="0"
+                                                                               Foreground="{Binding Path=TextColor}" FontSize="14" FontFamily="Courier New"/>
+                                                                        <Label Content="{Binding Path=Top}"
+                                                                               Margin="0,-24,0,0" 
+                                                                               BorderThickness="0" 
+                                                                               VerticalAlignment="Center" 
+                                                                               Padding="0"
+                                                                               Foreground="{Binding Path=TextColor}" Background="Transparent" FontWeight="Bold" FontSize="14" FontFamily="Courier New"/>
+                                                                    </Grid>
+                                                                </DataTemplate>
+                                                                <DataTemplate x:Key="WithBottom">
+                                                                    <Grid>
+                                                                        <Label Content="{Binding Path=Text}"
+                                                                               Margin="0,0,0,0" 
+                                                                               BorderThickness="0" 
+                                                                               VerticalAlignment="Top" 
+                                                                               Padding="0"
+                                                                               Foreground="{Binding Path=TextColor}" FontSize="14" FontFamily="Courier New"/>
+                                                                        <Label Content="{Binding Path=Bottom}"
+                                                                               Margin="0,4,0,0" 
+                                                                               BorderThickness="0" 
+                                                                               VerticalAlignment="Bottom" 
+                                                                               Padding="0"
+                                                                               Foreground="{Binding Path=TextColor}" Background="Transparent" FontWeight="Bold" FontSize="14" FontFamily="Courier New"/>
+                                                                    </Grid>
+                                                                </DataTemplate>
+                                                                <DataTemplate x:Key="None">
+                                                                    <Label Content="{Binding Path=Text}"
+                                                                               Margin="0,0,0,0" 
+                                                                               BorderThickness="0" 
+                                                                               VerticalAlignment="Top" 
+                                                                               Padding="0"
+                                                                               Foreground="{Binding Path=TextColor}" FontSize="14" FontFamily="Courier New"/>
+                                                                </DataTemplate>
+                                                            </ContentPresenter.Resources>
+
+                                                            <ContentPresenter.Style>
+                                                                <Style TargetType="{x:Type ContentPresenter}">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding SymbolDisplayType}" Value="0">
+                                                                            <Setter Property="ContentTemplate" Value="{StaticResource None}" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding SymbolDisplayType}" Value="1">
+                                                                            <Setter Property="ContentTemplate" Value="{StaticResource WithTop}" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding SymbolDisplayType}" Value="2">
+                                                                            <Setter Property="ContentTemplate" Value="{StaticResource WithBottom}" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding SymbolDisplayType}" Value="3">
+                                                                            <Setter Property="ContentTemplate" Value="{StaticResource WithTopAndBottom}" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ContentPresenter.Style>
+                                                        </ContentPresenter>
                                                         </DataTemplate>
                                                     </ItemsControl.ItemTemplate>
                                                 </ItemsControl>
