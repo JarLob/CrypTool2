@@ -109,6 +109,21 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             return list;
         }
 
+        public List<Token> GetPrefix()
+        {
+            List<Token> list = new List<Token>();
+            string[] prefix = _prefix.Split(',');
+            for (int i = 0; i < prefix.Length; i++)
+            {
+                Token token = new Token(null);
+                Symbol symbol = new Symbol(token);
+                token.Symbols.Add(symbol);
+                symbol.Text = prefix[i].Trim();
+                list.Add(token);
+            }
+            return list;
+        }
+
         protected void OnPropertyChanged(string name)
         {
             EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));

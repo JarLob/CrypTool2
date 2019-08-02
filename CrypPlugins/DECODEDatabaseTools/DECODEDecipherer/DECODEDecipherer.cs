@@ -163,10 +163,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 case ParserType.Vocabulary3DigitsEndingWithNull2DigitsParser:
                     parser = new Vocabulary3DigitsEndingWithNull2DigitsParser(nulls);
                     break;
-                /*case ParserType.Vocabulary4DigitsWithPrefixParser:
-                    parser = new Vocabulary4DigitsWithPrefixParser(_settings.Prefix, nulls);
+                case ParserType.Vocabulary4DigitsWithPrefixParser:
+                    parser = new Vocabulary4DigitsWithPrefixParser(_settings.GetPrefix(), nulls);
                     break;
-                case ParserType.Francia4Parser:
+                /*case ParserType.Francia4Parser:
                     parser = new Francia4Parser(nulls);
                     break;
                 case ParserType.Francia6Parser:
