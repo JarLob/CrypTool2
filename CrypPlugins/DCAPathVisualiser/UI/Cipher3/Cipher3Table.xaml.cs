@@ -147,12 +147,18 @@ namespace DCAPathVisualiser.UI.Cipher3
         private void CharacteristicSelectionChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             DataGrid dataGrid = sender as DataGrid;
-            Cipher3CharacteristicUI item = dataGrid.SelectedItem as Cipher3CharacteristicUI;
-
-            SelectionChanged.Invoke(this, new Cipher3CharacteristicSelectionEventArgs()
+            if (dataGrid != null)
             {
-                SelectedCharacteristic = item
-            });
+                Cipher3CharacteristicUI item = dataGrid.SelectedItem as Cipher3CharacteristicUI;
+
+                if (SelectionChanged != null)
+                {
+                    SelectionChanged.Invoke(this, new Cipher3CharacteristicSelectionEventArgs()
+                    {
+                        SelectedCharacteristic = item
+                    });
+                }
+            }
         }
 
         /// <summary>

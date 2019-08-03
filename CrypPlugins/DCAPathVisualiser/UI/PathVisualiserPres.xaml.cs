@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -146,7 +147,18 @@ namespace DCAPathVisualiser.UI
                                     ((Cipher2Table) _tableControl).Characteristics.Add(charTable);
                                 }
                             }
-                                break;
+                                break;    
+                        }
+
+                        //select first element
+                        var firstElem = ((Cipher2Table)_tableControl).Characteristics.FirstOrDefault();
+                        if (firstElem != null)
+                        {
+                            ((Cipher2Table)_tableControl).DataGridCharacteristics.SelectedItem = firstElem;
+                            Cipher2CharacteristicToShowChanged(this, new Cipher2CharacteristicSelectionEventArgs()
+                            {
+                                SelectedCharacteristic = firstElem
+                            });
                         }
                     }
                     else
@@ -437,6 +449,17 @@ namespace DCAPathVisualiser.UI
                                 }
 
                                 break;
+                        }
+
+                        //select first element
+                        var firstElem = ((Cipher3Table)_tableControl).Characteristics.FirstOrDefault();
+                        if (firstElem != null)
+                        {
+                            ((Cipher3Table)_tableControl).DataGridCharacteristics.SelectedItem = firstElem;
+                            Cipher3CharacteristicToShowChanged(this, new Cipher3CharacteristicSelectionEventArgs()
+                            {
+                                SelectedCharacteristic = firstElem
+                            });
                         }
                     }
                     else
