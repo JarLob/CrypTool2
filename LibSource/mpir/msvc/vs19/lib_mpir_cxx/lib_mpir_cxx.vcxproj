@@ -85,6 +85,7 @@ postbuild "$(TargetPath)" 19
     <ClCompile>
       <AdditionalIncludeDirectories>..\..\..\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;WIN32;_LIB;HAVE_CONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <PostBuildEvent>
       <Command>cd ..\..\
@@ -96,6 +97,7 @@ postbuild "$(TargetPath)" 19
     <ClCompile>
       <AdditionalIncludeDirectories>..\..\..\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;WIN32;_LIB;HAVE_CONFIG_H;_WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <PostBuildEvent>
       <Command>cd ..\..\

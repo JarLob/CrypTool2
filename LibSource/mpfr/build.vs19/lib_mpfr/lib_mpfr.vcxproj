@@ -86,7 +86,7 @@
       <AdditionalIncludeDirectories>..\;..\..\src\;..\..\..\mpir\lib\$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WIN32;HAVE_CONFIG_H;_DEBUG;_LIB;_GMP_IEEE_FLOATS;_CRT_SECURE_NO_WARNINGS;MPFR_HAVE_GMP_IMPL</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <ProgramDataBaseFileName>$(TargetDir)$(TargetName).pdb</ProgramDataBaseFileName>
@@ -176,7 +176,7 @@
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\;..\..\src\;..\..\..\mpir\lib\$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WIN32;HAVE_CONFIG_H;NDEBUG;_LIB;_GMP_IEEE_FLOATS;_CRT_SECURE_NO_WARNINGS;MPFR_HAVE_GMP_IMPL</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <ProgramDataBaseFileName>$(TargetDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <IntrinsicFunctions>true</IntrinsicFunctions>
