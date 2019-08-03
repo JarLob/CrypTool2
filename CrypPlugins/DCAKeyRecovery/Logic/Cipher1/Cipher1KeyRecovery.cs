@@ -39,6 +39,7 @@ namespace DCAKeyRecovery.Logic.Cipher1
         private List<Pair> _cipherTextPairList;
         private int usedPairCount = 0;
         public bool stop;
+        public bool refreshUi;
 
         /// <summary>
         /// Constructor
@@ -165,7 +166,7 @@ namespace DCAKeyRecovery.Logic.Cipher1
 
                     int decryptedBlocksDiff = decryptedLeftMember ^ decryptedRightMember;
 
-                    if (refreshCounter % 100 == 0 || (refreshCounter) == keysToTest)
+                    if (refreshUi && (refreshCounter % 100 == 0 || (refreshCounter) == keysToTest))
                     {
                         //refresh UI
                         lastRoundEventArgsIterationResultViewLastRound = new ResultViewLastRoundEventArgs()
@@ -191,8 +192,8 @@ namespace DCAKeyRecovery.Logic.Cipher1
                     {
                         possibleKeyList.Remove(item);
                     }
-
-                    if (possibleKeyList.Count % 800 == 0)
+                    
+                    if (refreshUi && possibleKeyList.Count % 800 == 0)
                     {
                         progress += 0.01;
 

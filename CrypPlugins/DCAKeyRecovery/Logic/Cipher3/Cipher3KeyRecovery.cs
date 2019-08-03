@@ -42,7 +42,8 @@ namespace DCAKeyRecovery.Logic.Cipher3
         private int usedPairCount = 0;
         public bool stop;
         public CancellationTokenSource Cts = new CancellationTokenSource();
-        private int _procMultiplier = 2;
+        public int threadCount;
+        public bool refreshUi;
 
         /// <summary>
         /// Constructor
@@ -189,7 +190,7 @@ namespace DCAKeyRecovery.Logic.Cipher3
 
                     int decryptedBlocksDiff = decryptedLeftMember ^ decryptedRightMember;
 
-                    if (refreshCounter % 30 == 0)
+                    if (refreshUi && (refreshCounter % 100 == 0 || (refreshCounter) == keysToTest))
                     {
                         //refresh UI
                         lastRoundEventArgsIterationResultViewLastRound = new ResultViewLastRoundEventArgs()
@@ -221,7 +222,7 @@ namespace DCAKeyRecovery.Logic.Cipher3
                         possibleKeyList.Remove(item);
                     }
 
-                    if (possibleKeyList.Count % 800 == 0)
+                    if (refreshUi && possibleKeyList.Count % 800 == 0)
                     {
                         progress += 0.01;
 
@@ -550,7 +551,27 @@ namespace DCAKeyRecovery.Logic.Cipher3
             Cts = new CancellationTokenSource();
             po.CancellationToken = Cts.Token;
             po.CancellationToken.ThrowIfCancellationRequested();
-            po.MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling((Environment.ProcessorCount * 1.0) * _procMultiplier));
+            po.MaxDegreeOfParallelism = threadCount;
+
+            anyRoundEventArgs = new ResultViewAnyRoundEventArgs()
+            {
+                startTime = startTime,
+                endTime = DateTime.MinValue,
+                round = configuration.Round,
+                currentExpectedProbability = configuration.Probability,
+                currentKeyCandidate = Convert.ToString((ushort)0, 2).PadLeft(16, '0'),
+                currentKeysToTestThisRound = loopBorder,
+                currentRecoveredRoundKey = Convert.ToString((ushort)partialKey, 2).PadLeft(16, '0'),
+                expectedDifference =
+                    Convert.ToString((ushort)configuration.ExpectedDifference, 2).PadLeft(16, '0'),
+                expectedHitCount = (int)(configuration.Probability * configuration.FilteredPairList.Count),
+                messagePairCountToExamine = configuration.FilteredPairList.Count
+            };
+
+            if (AnyRoundResultViewRefreshOccured != null)
+            {
+                AnyRoundResultViewRefreshOccured.Invoke(this, anyRoundEventArgs);
+            }
 
             //for (int i = 0; i < loopBorder; i++)
             Parallel.For(0, loopBorder, po, i =>
@@ -564,31 +585,34 @@ namespace DCAKeyRecovery.Logic.Cipher3
 
                 KeyProbability curTry = new KeyProbability() {Counter = 0, Key = guessedKey};
 
-                anyRoundEventArgs = new ResultViewAnyRoundEventArgs()
+                if (refreshUi)
                 {
-                    startTime = startTime,
-                    endTime = DateTime.MinValue,
-                    round = configuration.Round,
-                    currentExpectedProbability = configuration.Probability,
-                    currentKeyCandidate = Convert.ToString((ushort) curTry.Key, 2).PadLeft(16, '0'),
-                    currentKeysToTestThisRound = loopBorder,
-                    currentRecoveredRoundKey = Convert.ToString((ushort) partialKey, 2).PadLeft(16, '0'),
-                    expectedDifference =
-                        Convert.ToString((ushort) configuration.ExpectedDifference, 2).PadLeft(16, '0'),
-                    expectedHitCount = (int) (configuration.Probability * configuration.FilteredPairList.Count),
-                    messagePairCountToExamine = configuration.FilteredPairList.Count
-                };
+                    anyRoundEventArgs = new ResultViewAnyRoundEventArgs()
+                    {
+                        startTime = startTime,
+                        endTime = DateTime.MinValue,
+                        round = configuration.Round,
+                        currentExpectedProbability = configuration.Probability,
+                        currentKeyCandidate = Convert.ToString((ushort)curTry.Key, 2).PadLeft(16, '0'),
+                        currentKeysToTestThisRound = loopBorder,
+                        currentRecoveredRoundKey = Convert.ToString((ushort)partialKey, 2).PadLeft(16, '0'),
+                        expectedDifference =
+                            Convert.ToString((ushort)configuration.ExpectedDifference, 2).PadLeft(16, '0'),
+                        expectedHitCount = (int)(configuration.Probability * configuration.FilteredPairList.Count),
+                        messagePairCountToExamine = configuration.FilteredPairList.Count
+                    };
 
-                //synchronize access to resultList
-                _semaphoreSlim.Wait();
-                try
-                {
-                    if (AnyRoundResultViewRefreshOccured != null)
-                        AnyRoundResultViewRefreshOccured.Invoke(this, anyRoundEventArgs);
-                }
-                finally
-                {
-                    _semaphoreSlim.Release();
+                    //synchronize access to resultList
+                    _semaphoreSlim.Wait();
+                    try
+                    {
+                        if (AnyRoundResultViewRefreshOccured != null)
+                            AnyRoundResultViewRefreshOccured.Invoke(this, anyRoundEventArgs);
+                    }
+                    finally
+                    {
+                        _semaphoreSlim.Release();
+                    }
                 }
 
                 foreach (var curPair in configuration.EncrypedPairList)
@@ -632,11 +656,34 @@ namespace DCAKeyRecovery.Logic.Cipher3
                 try
                 {
                     roundResult.KeyCandidateProbabilities.Add(curTry);
-                    e = new ProgressEventArgs()
+
+                    if (refreshUi)
                     {
-                        Increment = increment
-                    };
-                    if (ProgressChangedOccured != null) ProgressChangedOccured.Invoke(this, e);
+                        e = new ProgressEventArgs()
+                        {
+                            Increment = increment
+                        };
+
+                        if (ProgressChangedOccured != null)
+                        {
+                            ProgressChangedOccured.Invoke(this, e);
+                        }
+                    }
+                    else
+                    {
+                        if (i == (loopBorder / 2) || i == (loopBorder - 1))
+                        {
+                            e = new ProgressEventArgs()
+                            {
+                                Increment = 0.5
+                            };
+
+                            if (ProgressChangedOccured != null)
+                            {
+                                ProgressChangedOccured.Invoke(this, e);
+                            }
+                        }
+                    }
                 }
                 finally
                 {

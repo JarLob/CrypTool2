@@ -119,6 +119,7 @@
     <Compile Include="Logic\SummaryLastRound.cs" />
     <Compile Include="Logic\SummaryViewRefreshArgs.cs" />
     <Compile Include="Logic\SummaryAnyRound.cs" />
+    <Compile Include="SettingsErrorMessagsEventArgs.cs" />
     <Compile Include="UI\Cipher1\Cipher1CipherView.xaml.cs">
       <DependentUpon>Cipher1CipherView.xaml</DependentUpon>
     </Compile>

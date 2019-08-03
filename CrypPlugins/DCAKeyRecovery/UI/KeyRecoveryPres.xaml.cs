@@ -55,7 +55,7 @@ namespace DCAKeyRecovery.UI
         {
             _dispatcher = new System.Windows.Threading.DispatcherTimer();
             _dispatcher.Tick += new EventHandler(highlightComponent);
-            _dispatcher.Interval = new TimeSpan(0, 0, 1);
+            _dispatcher.Interval = new TimeSpan(0, 0, 0, 0, 500);
 
 
             StartClickEvent = new AutoResetEvent(false);

@@ -84,6 +84,8 @@ namespace Cryptool.Plugins.DCAKeyRecovery
         public DCAKeyRecovery()
         {
             _settings.PropertyChanged += new PropertyChangedEventHandler(SettingChangedListener);
+            _settings.SettingsErrorOccured += HandleSettingsError;
+
             _nextStep = new AutoResetEvent(false);
         }
 
@@ -357,19 +359,6 @@ namespace Cryptool.Plugins.DCAKeyRecovery
             }
             else
             {
-                /*
-                switch (_currentAlgorithm)
-                {
-                    case Algorithms.Cipher2:
-                        Cipher2DifferentialKeyRecoveryAttack c2Attack = attack as Cipher2DifferentialKeyRecoveryAttack;
-                        if ((!c2Attack.recoveredSubkey2 || !c2Attack.recoveredSubkey3) && !_hasNewDifferential)
-                        {
-                            return;
-                        }
-                        break;
-                }
-                */
-
                 _hasNewDifferential = false;
                 _hasNewPlaintextPairs = false;
                 _hasNewCipherTextPairs = false;
@@ -795,6 +784,13 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                         return;
                     }
 
+                    //set refresh setting for UI
+                    Cipher1KeyRecovery c1KeyRecovery = keyRecovery as Cipher1KeyRecovery;
+                    if (c1KeyRecovery != null)
+                    {
+                        c1KeyRecovery.refreshUi = _settings.UIUpdateWhileExecution;
+                    }
+
                     DifferentialAttackLastRoundResult lastRoundResult = keyRecovery.AttackFirstRound(attack);
                     if (lastRoundResult != null)
                     {
@@ -855,13 +851,21 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                     }
                     else
                     {
-                        GuiLogMessage(Resources.MessageNoResult, NotificationLevel.Info);
+                        GuiLogMessage(Resources.MessageNoResult, NotificationLevel.Warning);
                     }
                 }
                     break;
                 case Algorithms.Cipher2:
                 {
                     Cipher2DifferentialKeyRecoveryAttack c2Attack = attack as Cipher2DifferentialKeyRecoveryAttack;
+
+                    //set refresh setting for UI
+                    Cipher2KeyRecovery c2KeyRecovery = keyRecovery as Cipher2KeyRecovery;
+                    if (c2KeyRecovery != null)
+                    {
+                        c2KeyRecovery.refreshUi = _settings.UIUpdateWhileExecution;
+                        c2KeyRecovery.threadCount = _settings.ThreadCount;
+                    }
 
                     SummaryAnyRound anyRoundSummary;
                     SummaryViewRefreshArgs summaryViewRefreshArgs;
@@ -1247,13 +1251,21 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                     }
                     else
                     {
-                        GuiLogMessage(Resources.MessageNoResult, NotificationLevel.Info);
+                        GuiLogMessage(Resources.MessageNoResult, NotificationLevel.Warning);
                     }
                 }
                     break;
                 case Algorithms.Cipher3:
                 {
                     Cipher3DifferentialKeyRecoveryAttack c3Attack = attack as Cipher3DifferentialKeyRecoveryAttack;
+
+                    //set refresh setting for UI
+                    Cipher3KeyRecovery c3KeyRecovery = keyRecovery as Cipher3KeyRecovery;
+                    if (c3KeyRecovery != null)
+                    {
+                        c3KeyRecovery.refreshUi = _settings.UIUpdateWhileExecution;
+                        c3KeyRecovery.threadCount = _settings.ThreadCount;
+                    }
 
                     SummaryAnyRound anyRoundSummary;
                     SummaryViewRefreshArgs summaryViewRefreshArgs;
@@ -1902,7 +1914,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                     }
                     else
                     {
-                        GuiLogMessage(Resources.MessageNoResult, NotificationLevel.Info);
+                        GuiLogMessage(Resources.MessageNoResult, NotificationLevel.Warning);
                     }
                 }
                     break;
@@ -2036,6 +2048,16 @@ namespace Cryptool.Plugins.DCAKeyRecovery
             }
 
             return config;
+        }
+
+        /// <summary>
+        /// Handles an occured error during changing a setting
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HandleSettingsError(object sender, SettingsErrorMessagsEventArgs e)
+        {
+            GuiLogMessage(e.message, NotificationLevel.Warning);
         }
 
         #endregion

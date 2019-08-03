@@ -619,6 +619,15 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Speed settings ähnelt.
+        /// </summary>
+        internal static string PerformanceSettingsGroup {
+            get {
+                return ResourceManager.GetString("PerformanceSettingsGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die DCA KeyRecovery ähnelt.
         /// </summary>
         internal static string PluginCaption {
@@ -786,6 +795,60 @@ namespace DCAKeyRecovery.Properties {
         internal static string TabItemHeaderSummary {
             get {
                 return ResourceManager.GetString("TabItemHeaderSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Usable threads ähnelt.
+        /// </summary>
+        internal static string ThreadCount {
+            get {
+                return ResourceManager.GetString("ThreadCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Specifies the number of threads to use for the calculation. ähnelt.
+        /// </summary>
+        internal static string ThreadCountToolTip {
+            get {
+                return ResourceManager.GetString("ThreadCountToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The maximum number of threads for your system is {0} threads. This number is limited by your processor. ähnelt.
+        /// </summary>
+        internal static string ThreadSettingError {
+            get {
+                return ResourceManager.GetString("ThreadSettingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial options ähnelt.
+        /// </summary>
+        internal static string TutorialSettingsGroup {
+            get {
+                return ResourceManager.GetString("TutorialSettingsGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Update of the user interface during calculations ähnelt.
+        /// </summary>
+        internal static string UIUpdateWhileExecution {
+            get {
+                return ResourceManager.GetString("UIUpdateWhileExecution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Determines whether the user interface is updated during calculations or only after the calculation has been completed. This setting affects the execution speed of the component. ähnelt.
+        /// </summary>
+        internal static string UIUpdateWhileExecutionToolTip {
+            get {
+                return ResourceManager.GetString("UIUpdateWhileExecutionToolTip", resourceCulture);
             }
         }
         
