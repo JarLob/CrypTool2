@@ -83,6 +83,7 @@
     <Compile Include="Logic\AbortingPolicy.cs" />
     <Compile Include="Logic\Characteristic.cs" />
     <Compile Include="Logic\ProgressEventArgs.cs" />
+    <Compile Include="SettingsErrorMessagsEventArgs.cs" />
     <Compile Include="UI\Models\CharacteristicUI.cs" />
     <Compile Include="Logic\Cipher1\Cipher1DifferentialKeyRecoveryAttack.cs" />
     <Compile Include="Logic\Cipher1\Cipher1PathFinder.cs" />

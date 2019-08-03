@@ -72,6 +72,7 @@ namespace Cryptool.Plugins.DCAPathFinder
         {
             _stop = false;
             settings.PropertyChanged += new PropertyChangedEventHandler(SettingChangedListener);
+            settings.SettingsErrorOccured += HandleSettingsError;
         }
 
         #region Data Properties
@@ -193,16 +194,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                     pathFinder = new Cipher2PathFinder();
                     _differentialKeyRecoveryAttack = new Cipher2DifferentialKeyRecoveryAttack();
                     pathFinder.AttackSearchResultOccured += handleSearchresult;
-                        pathFinder.ProgressChangedOccured += RefreshProgress;
-                    }
+                    pathFinder.ProgressChangedOccured += RefreshProgress;
+                }
                     break;
                 case Algorithms.Cipher3:
                 {
                     pathFinder = new Cipher3PathFinder();
                     _differentialKeyRecoveryAttack = new Cipher3DifferentialKeyRecoveryAttack();
                     pathFinder.AttackSearchResultOccured += handleSearchresult;
-                        pathFinder.ProgressChangedOccured += RefreshProgress;
-                    }
+                    pathFinder.ProgressChangedOccured += RefreshProgress;
+                }
                     break;
             }
 
@@ -226,10 +227,11 @@ namespace Cryptool.Plugins.DCAPathFinder
         private void RefreshProgress(object sender, ProgressEventArgs e)
         {
             _currentProgress += e.Increment;
-            if(_currentProgress > 1.0)
+            if (_currentProgress > 1.0)
             {
                 _currentProgress = 1.0;
             }
+
             ProgressChanged(_currentProgress, _maxProgress);
         }
 
@@ -287,9 +289,9 @@ namespace Cryptool.Plugins.DCAPathFinder
                         ExpectedDifferential = (new Random()).Next(0, ((int) Math.Pow(2, 16) - 1));
                         Path = SerializeConfiguration(conf);
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                        }
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                    }
                     else
                     {
                         //wait until pres has finished
@@ -312,9 +314,9 @@ namespace Cryptool.Plugins.DCAPathFinder
                         ExpectedDifferential = (new Random()).Next(0, ((int) Math.Pow(2, 16) - 1));
                         Path = SerializeConfiguration(conf);
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                        }
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                    }
                 }
                     break;
                 case Algorithms.Cipher2:
@@ -328,25 +330,24 @@ namespace Cryptool.Plugins.DCAPathFinder
                     {
                         Cipher2PathFinder c2PathFinder = pathFinder as Cipher2PathFinder;
                         c2PathFinder._maxProgress = 0.5;
+                        c2PathFinder.threadCount = settings.ThreadCount;
                         bool firstIteration = true;
 
                         //break round 3
                         while (!c2Attack.recoveredSubkey3)
                         {
-                                if (!firstIteration)
-                                {
-                                    c2PathFinder._maxProgress = 1.0;
-                                    _currentProgress = 0;
-                                }
+                            if (!firstIteration)
+                            {
+                                c2PathFinder._maxProgress = 1.0;
+                                _currentProgress = 0;
+                            }
 
                             _activePresentation.workDataEvent.WaitOne();
 
-                                _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
-                                {
-                                    _activePresentation.UIProgressRefresh = false;
-                                }, null);
+                            _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send,
+                                (SendOrPostCallback) delegate { _activePresentation.UIProgressRefresh = false; }, null);
 
-                                if (_stop)
+                            if (_stop)
                             {
                                 return;
                             }
@@ -475,11 +476,12 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     _semaphoreSlim.Release();
                                 }
                             }
-                                firstIteration = false;
 
-                                _currentProgress = 1.0;
-                                ProgressChanged(_currentProgress, _maxProgress);
-                            }
+                            firstIteration = false;
+
+                            _currentProgress = 1.0;
+                            ProgressChanged(_currentProgress, _maxProgress);
+                        }
 
                         //reset SBoxes which are already attacked
                         _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send,
@@ -490,9 +492,9 @@ namespace Cryptool.Plugins.DCAPathFinder
                         while (!c2Attack.recoveredSubkey2)
                         {
                             _activePresentation.workDataEvent.WaitOne();
-                                _currentProgress = 0;
+                            _currentProgress = 0;
 
-                                if (_stop)
+                            if (_stop)
                             {
                                 return;
                             }
@@ -606,7 +608,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                                         c2PathFinder.Cts.Dispose();
                                         c2PathFinder.Cts = new CancellationTokenSource();
                                     }
-                                    }
+                                }
                                 finally
                                 {
                                     _semaphoreSlim.Release();
@@ -614,20 +616,20 @@ namespace Cryptool.Plugins.DCAPathFinder
                             }
 
 
-                                _currentProgress = 1.0;
-                                ProgressChanged(_currentProgress, _maxProgress);
-                            }
+                            _currentProgress = 1.0;
+                            ProgressChanged(_currentProgress, _maxProgress);
+                        }
 
                         if (_stop)
                         {
                             return;
                         }
 
-                            _nextRound.WaitOne();
+                        _nextRound.WaitOne();
 
-                            _currentProgress = 0;
+                        _currentProgress = 0;
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -647,18 +649,19 @@ namespace Cryptool.Plugins.DCAPathFinder
                         ExpectedDifferential = (new Random()).Next(0, ((int) Math.Pow(2, 16) - 1));
                         Path = SerializeConfiguration(conf);
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                        }
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                    }
                     else
                     {
-                            Cipher2PathFinder c2PathFinder = pathFinder as Cipher2PathFinder;
-                            c2PathFinder._maxProgress = 1.0;
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        Cipher2PathFinder c2PathFinder = pathFinder as Cipher2PathFinder;
+                        c2PathFinder._maxProgress = 1.0;
+                        c2PathFinder.threadCount = settings.ThreadCount;
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -710,21 +713,21 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c2PathFinder.Cts.Dispose();
                                     c2PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            //round 3 run 2
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        //round 3 run 2
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -774,21 +777,21 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c2PathFinder.Cts.Dispose();
                                     c2PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            //round 3 run 3
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        //round 3 run 3
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -838,21 +841,21 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c2PathFinder.Cts.Dispose();
                                     c2PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            //round 3 run 4
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        //round 3 run 4
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -902,21 +905,21 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c2PathFinder.Cts.Dispose();
                                     c2PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            //round 2 run 1
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        //round 2 run 1
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -966,21 +969,21 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c2PathFinder.Cts.Dispose();
                                     c2PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            //round 2 run 2
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        //round 2 run 2
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -1030,21 +1033,21 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c2PathFinder.Cts.Dispose();
                                     c2PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            //round 2 run 3
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        //round 2 run 3
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -1094,21 +1097,21 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c2PathFinder.Cts.Dispose();
                                     c2PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            //round 2 run 4
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        //round 2 run 4
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -1158,21 +1161,21 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c2PathFinder.Cts.Dispose();
                                     c2PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            //attack last round
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        //attack last round
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -1196,7 +1199,6 @@ namespace Cryptool.Plugins.DCAPathFinder
                         MessageCount = 1;
                         ExpectedDifferential = (new Random()).Next(0, ((int) Math.Pow(2, 16) - 1));
                         Path = SerializeConfiguration(conf);
-
                     }
                 }
                     break;
@@ -1211,10 +1213,17 @@ namespace Cryptool.Plugins.DCAPathFinder
 
                     if (!settings.AutomaticMode)
                     {
+                        c3PathFinder._maxProgress = 1.0;
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        c3PathFinder.threadCount = settings.ThreadCount;
+
                         //break round 5
                         while (!c3Attack.recoveredSubkey5)
                         {
                             _activePresentation.workDataEvent.WaitOne();
+                            _currentProgress = 0.0;
+                            ProgressChanged(_currentProgress, _maxProgress);
 
                             if (_stop)
                             {
@@ -1331,7 +1340,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                                         c3PathFinder.Cts.Dispose();
                                         c3PathFinder.Cts = new CancellationTokenSource();
                                     }
-                                    }
+                                }
                                 finally
                                 {
                                     _semaphoreSlim.Release();
@@ -1353,6 +1362,8 @@ namespace Cryptool.Plugins.DCAPathFinder
                         while (!c3Attack.recoveredSubkey4)
                         {
                             _activePresentation.workDataEvent.WaitOne();
+                            _currentProgress = 0.0;
+                            ProgressChanged(_currentProgress, _maxProgress);
 
                             if (_stop)
                             {
@@ -1469,7 +1480,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                                         c3PathFinder.Cts.Dispose();
                                         c3PathFinder.Cts = new CancellationTokenSource();
                                     }
-                                    }
+                                }
                                 finally
                                 {
                                     _semaphoreSlim.Release();
@@ -1491,6 +1502,8 @@ namespace Cryptool.Plugins.DCAPathFinder
                         while (!c3Attack.recoveredSubkey3)
                         {
                             _activePresentation.workDataEvent.WaitOne();
+                            _currentProgress = 0.0;
+                            ProgressChanged(_currentProgress, _maxProgress);
 
                             if (_stop)
                             {
@@ -1607,7 +1620,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                                         c3PathFinder.Cts.Dispose();
                                         c3PathFinder.Cts = new CancellationTokenSource();
                                     }
-                                    }
+                                }
                                 finally
                                 {
                                     _semaphoreSlim.Release();
@@ -1628,6 +1641,8 @@ namespace Cryptool.Plugins.DCAPathFinder
                         while (!c3Attack.recoveredSubkey2)
                         {
                             _activePresentation.workDataEvent.WaitOne();
+                            _currentProgress = 0.0;
+                            ProgressChanged(_currentProgress, _maxProgress);
 
                             if (_stop)
                             {
@@ -1744,7 +1759,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                                         c3PathFinder.Cts.Dispose();
                                         c3PathFinder.Cts = new CancellationTokenSource();
                                     }
-                                    }
+                                }
                                 finally
                                 {
                                     _semaphoreSlim.Release();
@@ -1762,7 +1777,10 @@ namespace Cryptool.Plugins.DCAPathFinder
                             return;
                         }
 
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
                         _nextRound.WaitOne();
+
 
                         if (_stop)
                         {
@@ -1786,12 +1804,13 @@ namespace Cryptool.Plugins.DCAPathFinder
                     }
                     else
                     {
-                            c3PathFinder._maxProgress = 1.0;
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        c3PathFinder._maxProgress = 1.0;
+                        c3PathFinder.threadCount = settings.ThreadCount;
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -1843,20 +1862,20 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c3PathFinder.Cts.Dispose();
                                     c3PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -1908,20 +1927,20 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c3PathFinder.Cts.Dispose();
                                     c3PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -1973,20 +1992,20 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c3PathFinder.Cts.Dispose();
                                     c3PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -2038,20 +2057,20 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c3PathFinder.Cts.Dispose();
                                     c3PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -2103,20 +2122,20 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c3PathFinder.Cts.Dispose();
                                     c3PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -2168,20 +2187,20 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c3PathFinder.Cts.Dispose();
                                     c3PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -2233,20 +2252,20 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c3PathFinder.Cts.Dispose();
                                     c3PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -2298,20 +2317,20 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c3PathFinder.Cts.Dispose();
                                     c3PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -2363,20 +2382,20 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c3PathFinder.Cts.Dispose();
                                     c3PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -2428,20 +2447,20 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c3PathFinder.Cts.Dispose();
                                     c3PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -2493,20 +2512,20 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c3PathFinder.Cts.Dispose();
                                     c3PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -2558,20 +2577,20 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c3PathFinder.Cts.Dispose();
                                     c3PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -2623,20 +2642,20 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c3PathFinder.Cts.Dispose();
                                     c3PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -2688,20 +2707,20 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c3PathFinder.Cts.Dispose();
                                     c3PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -2753,20 +2772,20 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c3PathFinder.Cts.Dispose();
                                     c3PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -2818,20 +2837,20 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     c3PathFinder.Cts.Dispose();
                                     c3PathFinder.Cts = new CancellationTokenSource();
                                 }
-                                }
+                            }
                             finally
                             {
                                 _semaphoreSlim.Release();
                             }
                         }
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                            _nextRound.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                        _nextRound.WaitOne();
+                        _currentProgress = 0.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
 
-                            if (_stop)
+                        if (_stop)
                         {
                             return;
                         }
@@ -2856,9 +2875,9 @@ namespace Cryptool.Plugins.DCAPathFinder
                         ExpectedDifferential = (new Random()).Next(0, ((int) Math.Pow(2, 16) - 1));
                         Path = SerializeConfiguration(conf);
 
-                            _currentProgress = 1.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
-                        }
+                        _currentProgress = 1.0;
+                        ProgressChanged(_currentProgress, _maxProgress);
+                    }
                 }
                     break;
             }
@@ -3316,7 +3335,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             {
                                 c2PathFinder.Cts.Cancel();
                                 c2PathFinder.Cts.Dispose();
-                                }
+                            }
                         }
                         catch (Exception e)
                         {
@@ -3384,6 +3403,16 @@ namespace Cryptool.Plugins.DCAPathFinder
         #endregion
 
         #region methods
+
+        /// <summary>
+        /// Handles an occured error during changing a setting
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HandleSettingsError(object sender, SettingsErrorMessagsEventArgs e)
+        {
+            GuiLogMessage(e.message, NotificationLevel.Warning);
+        }
 
         /// <summary>
         /// Method to generate the attack configuration for following components

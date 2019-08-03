@@ -96,7 +96,16 @@ namespace DCAKeyRecovery.UI.Cipher2
             {
                 _currentExpectedProbability = value;
                 OnPropertyChanged();
+                OnPropertyChanged("CurrentExpectedProbabilityStr");
             }
+        }
+
+        /// <summary>
+        /// Property for formatted _currentExpectedProbability
+        /// </summary>
+        public string CurrentExpectedProbabilityStr
+        {
+            get { return String.Format("{0:0.0000}", CurrentExpectedProbability); }
         }
 
         /// <summary>

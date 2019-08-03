@@ -421,6 +421,15 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Speed settings ähnelt.
+        /// </summary>
+        internal static string PerformanceSettingsGroup {
+            get {
+                return ResourceManager.GetString("PerformanceSettingsGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die DCA PathFinder ähnelt.
         /// </summary>
         internal static string PluginCaption {
@@ -597,6 +606,33 @@ namespace DCAPathFinder.Properties {
         internal static string StartTime {
             get {
                 return ResourceManager.GetString("StartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Usable threads ähnelt.
+        /// </summary>
+        internal static string ThreadCount {
+            get {
+                return ResourceManager.GetString("ThreadCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Specifies the number of threads to use for the calculation. ähnelt.
+        /// </summary>
+        internal static string ThreadCountToolTip {
+            get {
+                return ResourceManager.GetString("ThreadCountToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The maximum number of threads for your system is {0} threads. This number is limited by your processor. ähnelt.
+        /// </summary>
+        internal static string ThreadSettingError {
+            get {
+                return ResourceManager.GetString("ThreadSettingError", resourceCulture);
             }
         }
         

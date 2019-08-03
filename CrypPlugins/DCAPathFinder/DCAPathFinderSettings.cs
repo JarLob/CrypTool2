@@ -21,6 +21,7 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using DCAPathFinder;
 using DCAPathFinder.Logic;
+using DCAPathFinder.Properties;
 
 namespace Cryptool.Plugins.DCAPathFinder
 {
@@ -37,6 +38,8 @@ namespace Cryptool.Plugins.DCAPathFinder
         private AbortingPolicy _currentAbortingPolicy;
         private bool _presentationMode;
         private bool _automaticMode;
+        private int _maxThreads = Environment.ProcessorCount;
+        private int _threadCount;
 
         #endregion
 
@@ -96,6 +99,40 @@ namespace Cryptool.Plugins.DCAPathFinder
             {
                 _chosenMessagePairsCount = value;
                 OnPropertyChanged("ChosenMessagePairsCount");
+            }
+        }
+
+        /// <summary>
+        /// setting to specify the number of threads to use in key recovery
+        /// </summary>
+        [TaskPane("ThreadCount", "ThreadCountToolTip", "PerformanceSettingsGroup", 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 64)]
+        public int ThreadCount
+        {
+            get
+            {
+                return _threadCount;
+            }
+            set
+            {
+                if (value <= _maxThreads)
+                {
+                    _threadCount = value;
+                    OnPropertyChanged("ThreadCount");
+                }
+                else
+                {
+                    SettingsErrorMessagsEventArgs e = new SettingsErrorMessagsEventArgs()
+                    {
+                        message = Resources.ThreadSettingError.Replace("{0}", _maxThreads.ToString())
+                    };
+
+                    if (SettingsErrorOccured != null)
+                    {
+                        SettingsErrorOccured.Invoke(this, e);
+                    }
+
+                    ThreadCount = _maxThreads;
+                }
             }
         }
 
@@ -239,24 +276,28 @@ namespace Cryptool.Plugins.DCAPathFinder
                             hideSettingsElement("ChosenMessagePairsCount");
                             hideSettingsElement("ChoiceOfSearchPolicy");
                             hideSettingsElement("ChoiceOfAbortingPolicy");
+                            hideSettingsElement("ThreadCount");
                             break;
                         case "1":
                             CurrentAlgorithm = Algorithms.Cipher2;
                             showSettingsElement("ChosenMessagePairsCount");
                             showSettingsElement("ChoiceOfSearchPolicy");
                             showSettingsElement("ChoiceOfAbortingPolicy");
+                            showSettingsElement("ThreadCount");
                             break;
                         case "2":
                             CurrentAlgorithm = Algorithms.Cipher3;
                             showSettingsElement("ChosenMessagePairsCount");
                             showSettingsElement("ChoiceOfSearchPolicy");
                             showSettingsElement("ChoiceOfAbortingPolicy");
+                            showSettingsElement("ThreadCount");
                             break;
                         case "3":
                             CurrentAlgorithm = Algorithms.Cipher4;
                             showSettingsElement("ChosenMessagePairsCount");
                             showSettingsElement("ChoiceOfSearchPolicy");
                             showSettingsElement("ChoiceOfAbortingPolicy");
+                            showSettingsElement("ThreadCount");
                             break;
                     }
                     OnPropertyChanged("ChoiceOfAlgorithm");
@@ -271,6 +312,8 @@ namespace Cryptool.Plugins.DCAPathFinder
         public event PropertyChangedEventHandler PropertyChanged;
 
         public event TaskPaneAttributeChangedHandler TaskPaneAttributeChanged;
+
+        public event EventHandler<SettingsErrorMessagsEventArgs> SettingsErrorOccured;
 
         private void OnPropertyChanged(string propertyName)
         {
@@ -338,11 +381,13 @@ namespace Cryptool.Plugins.DCAPathFinder
                     hideSettingsElement("ChosenMessagePairsCount");
                     hideSettingsElement("ChoiceOfSearchPolicy");
                     hideSettingsElement("ChoiceOfAbortingPolicy");
+                    hideSettingsElement("ThreadCount");
                     break;
                 default:
                     showSettingsElement("ChosenMessagePairsCount");
                     showSettingsElement("ChoiceOfSearchPolicy");
-                    if(_choiceOfSearchPolicy == "2")
+                    showSettingsElement("ThreadCount");
+                    if (_choiceOfSearchPolicy == "2")
                     {
                         hideSettingsElement("ChoiceOfAbortingPolicy");
                         

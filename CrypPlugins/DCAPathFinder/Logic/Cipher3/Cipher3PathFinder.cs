@@ -17,7 +17,7 @@ namespace DCAPathFinder.Logic.Cipher3
         private Characteristic _currentGlobalMax;
         public bool Stop = false;
         public CancellationTokenSource Cts = new CancellationTokenSource();
-        private int _procMultiplier = 2;
+        public int threadCount;
         public double _maxProgress;
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace DCAPathFinder.Logic.Cipher3
             Cts = new CancellationTokenSource();
             po.CancellationToken = Cts.Token;
             po.CancellationToken.ThrowIfCancellationRequested();
-            po.MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling((Environment.ProcessorCount * 1.0) * _procMultiplier));
+            po.MaxDegreeOfParallelism = threadCount;
             //for(int i = 1; i < loopBorder;i++)
             Parallel.For(1, loopBorder, po, i =>
             {
@@ -562,7 +562,7 @@ namespace DCAPathFinder.Logic.Cipher3
             Cts = new CancellationTokenSource();
             po.CancellationToken = Cts.Token;
             po.CancellationToken.ThrowIfCancellationRequested();
-            po.MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling((Environment.ProcessorCount * 1.0) * _procMultiplier));
+            po.MaxDegreeOfParallelism = threadCount;
 
             //for (int i = 1; i < loopBorder;i++)
             Parallel.For(1, loopBorder, po, i =>
@@ -1091,7 +1091,7 @@ namespace DCAPathFinder.Logic.Cipher3
                     Cts = new CancellationTokenSource();
                     po.CancellationToken = Cts.Token;
                     po.CancellationToken.ThrowIfCancellationRequested();
-                    po.MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling((Environment.ProcessorCount * 1.0) * _procMultiplier));
+                    po.MaxDegreeOfParallelism = threadCount;
 
                     //calculate the results to find the best differential
                     //for (int i = 1; i < allCharacteristics.Length; i++)
@@ -1215,7 +1215,7 @@ namespace DCAPathFinder.Logic.Cipher3
                     Cts = new CancellationTokenSource();
                     po.CancellationToken = Cts.Token;
                     po.CancellationToken.ThrowIfCancellationRequested();
-                    po.MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling((Environment.ProcessorCount * 1.0) * _procMultiplier));
+                    po.MaxDegreeOfParallelism = threadCount;
 
                     //check for other useable characteristics
                     //foreach (Characteristic characteristic in characteristics)

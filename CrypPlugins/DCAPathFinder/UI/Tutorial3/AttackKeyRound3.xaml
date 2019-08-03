@@ -153,6 +153,18 @@
                 </TextBlock>
 
                 <!-- /Round 5 -->
+
+                <RichTextBox Grid.Row="0" Grid.Column="2" IsReadOnly="True" Background="Transparent" BorderThickness="0" FontFamily="Courier New" FontSize="20" VerticalAlignment="Top" Margin="0,20,0,0">
+                    <FlowDocument >
+                        <Paragraph>
+                            <Run Text="{Loc Tutorial3AttackKeyRound3Content1Run1}"></Run><Run Text="{Loc Tutorial3AttackKeyRound3Content1Run2}" BaselineAlignment="Subscript" FontSize="15"></Run><Run Text="{Loc Tutorial3AttackKeyRound3Content1Run3}"></Run>
+                            <LineBreak/>
+                            <LineBreak/>
+                            <Run Text="{Loc Tutorial3AttackKeyRound3Content1Run4}"></Run><Run Text="{Loc Tutorial3AttackKeyRound3Content1Run5}" BaselineAlignment="Subscript" FontSize="15"></Run><Run Text="{Loc Tutorial3AttackKeyRound3Content1Run6}"></Run>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
             </Grid>
         </ScrollViewer>
     </Grid>

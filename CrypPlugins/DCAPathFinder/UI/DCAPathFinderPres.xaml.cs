@@ -58,7 +58,7 @@ namespace DCAPathFinder.UI
         {
             _dispatcher = new System.Windows.Threading.DispatcherTimer();
             _dispatcher.Tick += new EventHandler(highlightComponent);
-            _dispatcher.Interval = new TimeSpan(0, 0, 0, 500);
+            _dispatcher.Interval = new TimeSpan(0, 0, 0, 0, 500);
 
             buttonNextClickedEvent = new AutoResetEvent(false);
             buttonPrevClickedEvent = new AutoResetEvent(false);

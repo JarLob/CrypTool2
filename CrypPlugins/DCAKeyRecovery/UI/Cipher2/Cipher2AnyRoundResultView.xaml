@@ -58,7 +58,7 @@
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left">
                     <Label Content="{Loc AnyRoundExpectedProbability}" FontFamily="Courier New" FontSize="12"  />
-                    <Label Content="{Binding CurrentExpectedProbability, Mode=OneWay}" FontFamily="Courier New" FontSize="12"/>
+                    <Label Content="{Binding CurrentExpectedProbabilityStr, Mode=OneWay}" FontFamily="Courier New" FontSize="12"/>
                 </StackPanel>
                 <!-- /third row -->
                 <!-- fourth row -->

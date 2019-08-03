@@ -904,4 +904,16 @@ differential cryptanalysis is a so called "chosen plaintext attack", which means
   <data name="Tutorial2IntroductionSlide1Content4" xml:space="preserve">
     <value>Aufgrund der mehrfachen Verschlüsselungsrunden kann diese Chiffre nicht wie Chiffre 1 angegriffen werden. Für Chiffre 2 wird ein Ansatz benötigt, der die Änderungen von differenzen über mehrere Verschlüsselungsrunden mit einer gewissen Wahrscheinlichkeit vorraussagt.</value>
   </data>
+  <data name="PerformanceSettingsGroup" xml:space="preserve">
+    <value>Speed settings</value>
+  </data>
+  <data name="ThreadCount" xml:space="preserve">
+    <value>Usable threads</value>
+  </data>
+  <data name="ThreadCountToolTip" xml:space="preserve">
+    <value>Specifies the number of threads to use for the calculation.</value>
+  </data>
+  <data name="ThreadSettingError" xml:space="preserve">
+    <value>The maximum number of threads for your system is {0} threads. This number is limited by your processor.</value>
+  </data>
 </root>
