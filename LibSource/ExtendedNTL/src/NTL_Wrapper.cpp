@@ -20,7 +20,7 @@ namespace NTL
 		}
 
 		//Obsolet
-		array<BigInteger,2>^ LLLReduce (array<BigInteger,2>^ matrix, long dim, double delta)
+		cli::array<BigInteger,2>^ LLLReduce (cli::array<BigInteger,2>^ matrix, long dim, double delta)
 		{
 			mat_ZZ B, U;	
 			vector<mat_ZZ> S;
@@ -45,7 +45,7 @@ namespace NTL
 				}
 			}
 
-			array<BigInteger,2>^ transMatrix  = gcnew array<BigInteger,2>(dim, dim);
+			auto transMatrix  = gcnew cli::array<BigInteger,2>(dim, dim);
 			for (int i = 1; i <= dim; i++)
 			{
 				for (int j = 1; j <= dim; j++) 
@@ -56,7 +56,7 @@ namespace NTL
 			return transMatrix;
 		}
 
-		void LLLReduce (array<BigInteger,2>^ matrix,  array<BigInteger,2>^ transMatrix, List<array<BigInteger,2>^>^ steps, long n, long m, double delta)
+		void LLLReduce (cli::array<BigInteger,2>^ matrix,  cli::array<BigInteger,2>^ transMatrix, List<cli::array<BigInteger,2>^>^ steps, long n, long m, double delta)
 		{
 			mat_ZZ B, U;
 			vector<mat_ZZ> S;
@@ -92,7 +92,7 @@ namespace NTL
 			for (int k = 0; k < S.size(); k++)
 			{
 				mat_ZZ step = S[k];
-				array<BigInteger,2>^ stepMatrix = gcnew array<BigInteger,2>(n, m);
+				auto stepMatrix = gcnew cli::array<BigInteger,2>(n, m);
 				
 				for (int i = 1; i <= n; i++)
 				{
@@ -144,7 +144,7 @@ namespace NTL
 				return 0;
 		}
 
-		BigInteger Determinant (array<BigInteger,2>^ matrix, int dim)
+		BigInteger Determinant (cli::array<BigInteger,2>^ matrix, int dim)
 		{
 			mat_ZZ B;
 
