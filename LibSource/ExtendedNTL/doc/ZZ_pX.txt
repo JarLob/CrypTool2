@@ -26,18 +26,40 @@ public:
    ZZ_pX(); // initialize to 0
 
    ZZ_pX(const ZZ_pX& a); // copy constructor
+   explicit ZZ_pX(const ZZ_p& a); // promotion 
+   explicit ZZ_pX(long a); // promotion 
 
    ZZ_pX& operator=(const ZZ_pX& a); // assignment
    ZZ_pX& operator=(const ZZ_p& a); // assignment
    ZZ_pX& operator=(const long a); // assignment
 
-   ZZ_pX(long i, const ZZ_p& c);  // initialize to X^i*c
-   ZZ_pX(long i, long c);
-
    ~ZZ_pX(); // destructor
 
+   ZZ_pX(ZZ_pX&& a); 
+   // move constructor (C++11 only)
+   // declared noexcept unless NTL_EXCEPTIONS flag is set
 
-   typedef ZZ_p coeff_type;
+#ifndef NTL_DISABLE_MOVE_ASSIGN
+   ZZ_pX& operator=(ZZ_pX&& a); 
+   // move assignment (C++11 only)
+   // declared noexcept unless NTL_EXCEPTIONS flag is set
+#endif
+
+   ZZ_pX(INIT_MONO_TYPE, long i, const ZZ_p& c);  
+   ZZ_pX(INIT_MONO_TYPE, long i, long c);
+   // initialize to c*X^i, invoke as ZZ_pX(INIT_MONO, i, c)
+
+   ZZ_pX(INIT_MONO_TYPE, long i, long c);
+   // initialize to X^i, invoke as ZZ_pX(INIT_MONO, i)
+
+
+   // typedefs to aid in generic programming
+   typedef zz_p coeff_type;
+   typedef zz_pE residue_type;
+   typedef zz_pXModulus modulus_type;
+   typedef zz_pXMultiplier multiplier_type;
+   typedef fftRep fft_type;
+
 
    // ...
 
@@ -445,6 +467,7 @@ ZZ_pX SqrMod(const ZZ_pX& a, const ZZ_pX& f);
 void MulByXMod(ZZ_pX& x, const ZZ_pX& a, const ZZ_pX& f);
 ZZ_pX MulByXMod(const ZZ_pX& a, const ZZ_pX& f);
 // x = (a * X) mod f
+// NOTE: thread boosting enabled only if x does not alias a
 
 void InvMod(ZZ_pX& x, const ZZ_pX& a, const ZZ_pX& f);
 ZZ_pX InvMod(const ZZ_pX& a, const ZZ_pX& f);
@@ -701,7 +724,7 @@ void CompMod(ZZ_pX& x, const ZZ_pX& g, const ZZ_pXArgument& H,
 ZZ_pX CompMod(const ZZ_pX& g, const ZZ_pXArgument& H, 
                     const ZZ_pXModulus& F);
 
-extern long ZZ_pXArgBound;
+extern thread_local long ZZ_pXArgBound;
 
 // Initially 0.  If this is set to a value greater than zero, then
 // composition routines will allocate a table of no than about
@@ -755,6 +778,51 @@ vec_ZZ_p UpdateMap(const vec_ZZ_p& a,
 // This is "transposed" MulMod by B.
 // Input may have "high order" zeroes stripped.
 // Output will always have high order zeroes stripped.
+
+
+
+
+
+/**************************************************************************\
+
+        Faster Composition and Projection with Pre-Conditioning
+
+A new, experimental version of composition with preconditioning.
+This interface was introduced in NTL v10.3.0, and it should be 
+considered a preliminary interface and subject to change.
+
+The class ZZ_pXNewArgument is similar to ZZ_pXArgument, but with
+a different internal layout.  Copy constructor and assignment work.
+
+Note that all NTL modular composition and power projection routines, 
+as well as other routines that use modular composition power projection 
+internally, now use this new class.
+
+Note also that these routines do not pay any attention to the
+ZZ_pXArgBound variable.
+
+\**************************************************************************/
+
+class ZZ_pXNewArgument { 
+ // ...
+};
+
+void build(ZZ_pXNewArgument& H, const ZZ_pX& h, const ZZ_pXModulus& F, long m);
+// same functionality as the corresponding ZZ_pXArgument-based routine
+
+void CompMod(ZZ_pX& x, const ZZ_pX& g, const ZZ_pXNewArgument& H,
+             const ZZ_pXModulus& F);
+// same functionality as the corresponding ZZ_pXArgument-based routine
+
+void ProjectPowers(vec_ZZ_p& x, const vec_ZZ_p& a, long k,
+                   const ZZ_pXNewArgument& H, const ZZ_pXModulus& F);
+// same functionality as the corresponding ZZ_pXArgument-based routine
+
+
+
+
+
+
 
 
 /**************************************************************************\
@@ -875,3 +943,10 @@ static const ZZ_pX& ZZ_pX::zero();
 void swap(ZZ_pX& x, ZZ_pX& y); 
 // swap x and y (via "pointer swapping")
 
+void ZZ_pX::swap(ZZ_pX& x);
+// swap member function
+
+
+ZZ_pX::ZZ_pX(long i, const ZZ_p& c);  
+ZZ_pX::ZZ_pX(long i, long c);
+// initialize to c*X^i, provided for backward compatibility

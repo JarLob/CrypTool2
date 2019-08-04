@@ -1,6 +1,5 @@
 #include <NTL/mat_poly_ZZ_p.h>
 
-#include <NTL/new.h>
 
 NTL_START_IMPL
 
@@ -9,7 +8,7 @@ void HessCharPoly(ZZ_pX& g, const ZZ_pX& a, const ZZ_pX& f)
 {
    long n = deg(f);
    if (n <= 0 || deg(a) >= n)
-      Error("HessCharPoly: bad args");
+      LogicError("HessCharPoly: bad args");
 
    mat_ZZ_p M;
    M.SetDims(n, n);
@@ -37,7 +36,7 @@ void CharPolyMod(ZZ_pX& g, const ZZ_pX& a, const ZZ_pX& ff)
    long n = deg(f);
 
    if (n <= 0 || deg(a) >= n) 
-      Error("CharPoly: bad args");
+      LogicError("CharPoly: bad args");
 
    if (IsZero(a)) {
       clear(g);

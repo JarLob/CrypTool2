@@ -5,24 +5,6 @@
 NTL_CLIENT
 
 
-void random(mat_zz_p& X, long n, long m)
-{
-   X.SetDims(n, m);
-   long i, j;
-
-   for (i = 0; i < n; i++)
-      for (j = 0; j < m; j++)
-         random(X[i][j]);
-}
-
-void random(vec_zz_p& X, long n)
-{
-   X.SetLength(n);
-   long i;
-
-   for (i = 0; i < n; i++)
-      random(X[i]);
-}
 
 void cvt(mat_GF2& x, const mat_zz_p& a)
 {
@@ -62,7 +44,7 @@ int main()
    v[1] = 1;
    v[0] = v[1];
 
-   if (v[0] != v[1]) Error("BitMatTest not OK!!");
+   if (v[0] != v[1]) TerminalError("BitMatTest not OK!!");
 
    for (i=0; i < 8; i++) {
       mat_zz_p a, x;
@@ -77,22 +59,18 @@ int main()
       random(a, n, m);
 
       t = GetTime();
-      kernel(x, a);
+      image(x, a);
       t = GetTime() - t;  cerr << t << "\n";
 
       cvt(A, a);
 
       t = GetTime();
-      kernel(X, A);
+      image(X, A);
       t = GetTime() - t;  cerr << t << "\n";
-
-      cerr << x.NumRows() << "\n";
 
       cvt(X1, x);
 
-      if (X1 != X) Error("BitMatTest NOT OK!!");
-
-      if (!IsZero(X*A)) Error("BitMatTest NOT OK!!");
+      if (X1 != X) TerminalError("BitMatTest NOT OK!!");
 
       cerr << "\n";
    }

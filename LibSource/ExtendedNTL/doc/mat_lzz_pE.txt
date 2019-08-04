@@ -54,10 +54,13 @@ void transpose(mat_zz_pE& X, const mat_zz_pE& A);
 mat_zz_pE transpose(const mat_zz_pE& A);
 // X = transpose of A
 
-void solve(zz_pE& d, vec_zz_pE& X,
-           const mat_zz_pE& A, const vec_zz_pE& b);
+void solve(zz_pE& d, vec_zz_pE& x, const mat_zz_pE& A, const vec_zz_pE& b);
 // A is an n x n matrix, b is a length n vector.  Computes d =
 // determinant(A).  If d != 0, solves x*A = b.
+
+void solve(zz_pE& d, const mat_zz_pE& A, vec_zz_pE& x, const vec_zz_pE& b);
+// A is an n x n matrix, b is a length n vector.  Computes d = determinant(A).
+// If d != 0, solves A*x = b (so x and b are treated as a column vectors).
 
 void inv(zz_pE& d, mat_zz_pE& X, const mat_zz_pE& A);
 // A is an n x n matrix.  Computes d = determinant(A).  If d != 0,
@@ -91,6 +94,10 @@ mat_zz_pE diag(long n, const zz_pE& d);
 
 long IsDiag(const mat_zz_pE& A, long n, const zz_pE& d);
 // test if X is an  n x n diagonal matrix with d on diagonal
+
+
+void random(mat_zz_pE& x, long n, long m);  // x = random n x m matrix
+mat_zz_pE random_mat_zz_pE(long n, long m);
 
 
 

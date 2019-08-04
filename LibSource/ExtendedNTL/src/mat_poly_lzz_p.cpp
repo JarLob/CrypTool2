@@ -1,6 +1,5 @@
 #include <NTL/mat_poly_lzz_p.h>
 
-#include <NTL/new.h>
 
 NTL_START_IMPL
 
@@ -9,7 +8,7 @@ void CharPoly(zz_pX& f, const mat_zz_p& M)
 {
    long n = M.NumRows();
    if (M.NumCols() != n)
-      Error("CharPoly: nonsquare matrix");
+      LogicError("CharPoly: nonsquare matrix");
 
    if (n == 0) {
       set(f);

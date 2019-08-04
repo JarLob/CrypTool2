@@ -1,7 +1,6 @@
 
 #include <NTL/mat_RR.h>
 
-#include <NTL/new.h>
 
 NTL_START_IMPL
 
@@ -12,7 +11,7 @@ void add(mat_RR& X, const mat_RR& A, const mat_RR& B)
    long m = A.NumCols();  
   
    if (B.NumRows() != n || B.NumCols() != m)   
-      Error("matrix add: dimension mismatch");  
+      LogicError("matrix add: dimension mismatch");  
   
    X.SetDims(n, m);  
   
@@ -28,7 +27,7 @@ void sub(mat_RR& X, const mat_RR& A, const mat_RR& B)
    long m = A.NumCols();  
   
    if (B.NumRows() != n || B.NumCols() != m)  
-      Error("matrix sub: dimension mismatch");  
+      LogicError("matrix sub: dimension mismatch");  
   
    X.SetDims(n, m);  
   
@@ -45,7 +44,7 @@ void mul_aux(mat_RR& X, const mat_RR& A, const mat_RR& B)
    long m = B.NumCols();  
   
    if (l != B.NumRows())  
-      Error("matrix mul: dimension mismatch");  
+      LogicError("matrix mul: dimension mismatch");  
   
    X.SetDims(n, m);  
   
@@ -84,7 +83,7 @@ void mul_aux(vec_RR& x, const mat_RR& A, const vec_RR& b)
    long l = A.NumCols();  
   
    if (l != b.length())  
-      Error("matrix mul: dimension mismatch");  
+      LogicError("matrix mul: dimension mismatch");  
   
    x.SetLength(n);  
   
@@ -104,7 +103,7 @@ void mul_aux(vec_RR& x, const mat_RR& A, const vec_RR& b)
   
 void mul(vec_RR& x, const mat_RR& A, const vec_RR& b)  
 {  
-   if (&b == &x || A.position1(x) != -1) {
+   if (&b == &x || A.alias(x)) {
       vec_RR tmp;
       mul_aux(tmp, A, b);
       x = tmp;
@@ -120,7 +119,7 @@ void mul_aux(vec_RR& x, const vec_RR& a, const mat_RR& B)
    long l = B.NumCols();  
   
    if (n != a.length())  
-      Error("matrix mul: dimension mismatch");  
+      LogicError("matrix mul: dimension mismatch");  
   
    x.SetLength(l);  
   
@@ -175,7 +174,7 @@ void determinant(RR& d, const mat_RR& M_in)
    n = M_in.NumRows();
 
    if (M_in.NumCols() != n)
-      Error("determinant: nonsquare matrix");
+      LogicError("determinant: nonsquare matrix");
 
    if (n == 0) {
       set(d);
@@ -306,10 +305,10 @@ void solve(RR& d, vec_RR& X,
 {
    long n = A.NumRows();
    if (A.NumCols() != n)
-      Error("solve: nonsquare matrix");
+      LogicError("solve: nonsquare matrix");
 
    if (b.length() != n)
-      Error("solve: dimension mismatch");
+      LogicError("solve: dimension mismatch");
 
    if (n == 0) {
       set(d);
@@ -402,7 +401,7 @@ void inv(RR& d, mat_RR& X, const mat_RR& A)
 {
    long n = A.NumRows();
    if (A.NumCols() != n)
-      Error("inv: nonsquare matrix");
+      LogicError("inv: nonsquare matrix");
 
    if (n == 0) {
       set(d);
@@ -515,7 +514,7 @@ void mul(mat_RR& X, const mat_RR& A, const RR& b_in)
 
 void mul(mat_RR& X, const mat_RR& A, double b_in)
 {
-   static RR b;
+   RR b;
    b = b_in;
    long n = A.NumRows();
    long m = A.NumCols();
@@ -645,12 +644,12 @@ void inv(mat_RR& X, const mat_RR& A)
 {
    RR d;
    inv(d, X, A);
-   if (d == 0) Error("inv: non-invertible matrix");
+   if (d == 0) ArithmeticError("inv: non-invertible matrix");
 }
 
 void power(mat_RR& X, const mat_RR& A, const ZZ& e)
 {
-   if (A.NumRows() != A.NumCols()) Error("power: non-square matrix");
+   if (A.NumRows() != A.NumCols()) LogicError("power: non-square matrix");
 
    if (e == 0) {
       ident(X, A.NumRows());

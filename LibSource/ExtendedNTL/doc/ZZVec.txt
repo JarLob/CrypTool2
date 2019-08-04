@@ -8,7 +8,7 @@ SUMMARY:
 The class ZZVec implements vectors of fixed-length ZZ's.  You can
 allocate a vector of ZZ's of a specified length, where the maximum
 size of each ZZ is also specified.  The size is measured in terms
-of the number of zzigits.
+of the number of limbs.
 
 These parameters can be specified either with a constructor 
 or with SetSize.  It is an error to try to re-size a vector of non-zero length,
@@ -34,6 +34,10 @@ public:
 
    ~ZZVec();
 
+   ZZVec(ZZVec&& other) noexcept;
+   ZZVec& operator=(ZZVec&& other) noexcept;
+   // move semantics (C++11 only)
+
    ZZVec(long n, long d);
    // sets length to n and max size of each element to d
 
@@ -57,6 +61,12 @@ public:
    ZZ& operator[](long i);
    const ZZ& operator[](long i) const;
    // indexing operator; starts at 0; no range checking
+
+   swap(ZZVec& x);
+   // swap with x by swapping pointers
+
+   void move(ZZVec& other);
+   // quick move other to *this
 };
 
 

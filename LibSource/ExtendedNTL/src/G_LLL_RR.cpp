@@ -2,7 +2,6 @@
 #include <NTL/LLL.h>
 #include <NTL/fileio.h>
 
-#include <NTL/new.h>
 
 NTL_START_IMPL
 
@@ -12,7 +11,8 @@ NTL_START_IMPL
 static void RowTransform(vec_ZZ& A, vec_ZZ& B, const ZZ& MU1)
 // x = x - y*MU
 {
-   static ZZ T, MU;
+   NTL_ZZRegister(T);
+   NTL_ZZRegister(MU);
    long k;
 
    long n = A.length();
@@ -64,7 +64,8 @@ static void RowTransform(vec_ZZ& A, vec_ZZ& B, const ZZ& MU1)
 static void RowTransform2(vec_ZZ& A, vec_ZZ& B, const ZZ& MU1)
 // x = x + y*MU
 {
-   static ZZ T, MU;
+   NTL_ZZRegister(T);
+   NTL_ZZRegister(MU);
    long k;
 
    long n = A.length();
@@ -115,7 +116,6 @@ static void RowTransform2(vec_ZZ& A, vec_ZZ& B, const ZZ& MU1)
 class GivensCache_RR {
 public:
    GivensCache_RR(long m, long n);
-   ~GivensCache_RR();
 
    void flush();
    void selective_flush(long l);
@@ -128,8 +128,9 @@ public:
 
    mat_RR buf;
 
-   long *bl;
-   long *bv;
+   UniqueArray<long> bl;
+   UniqueArray<long> bv;
+
    long bp;
 };
 
@@ -142,27 +143,17 @@ GivensCache_RR::GivensCache_RR(long m, long n)
    else if (sz > 20)
       sz = 20;
 
-   typedef double *doubleptr;
-
-   long i;
 
    buf.SetDims(sz, n);
 
-   bl = NTL_NEW_OP long[sz];
-   if (!bl) Error("out of memory");
-   for (i = 0; i < sz; i++) bl[0] = 0;
+   bl.SetLength(sz);
+   bv.SetLength(sz);
 
-   bv = NTL_NEW_OP long[sz];
-   if (!bv) Error("out of memory");
-   for (i = 0; i < sz; i++) bv[0] = 0;
+   long i;
+   for (i = 0; i < sz; i++) bl[i] = 0;
+   for (i = 0; i < sz; i++) bv[i] = 0;
 
    bp = 0;
-}
-
-GivensCache_RR::~GivensCache_RR()
-{
-   delete [] bl;
-   delete [] bv;
 }
 
 void GivensCache_RR::flush()
@@ -384,16 +375,19 @@ void GivensComputeGS(mat_RR& B1, mat_RR& mu, mat_RR& aux, long k, long n,
       aux(k,j) = s;
    }
 
-   if (k > n+1) Error("G_LLL_RR: internal error");
+   if (k > n+1) LogicError("G_LLL_RR: internal error");
    if (k > n) p(k) = 0;
 
 }
 
-static RR red_fudge;
-static long log_red = 0;
+NTL_TLS_GLOBAL_DECL(RR, red_fudge)
+
+static NTL_CHEAP_THREAD_LOCAL long log_red = 0;
 
 static void init_red_fudge()
 {
+   NTL_TLS_GLOBAL_ACCESS(red_fudge);
+
    log_red = long(0.50*RR::precision());
 
    power2(red_fudge, -log_red);
@@ -401,6 +395,8 @@ static void init_red_fudge()
 
 static void inc_red_fudge()
 {
+   NTL_TLS_GLOBAL_ACCESS(red_fudge);
+
 
    mul(red_fudge, red_fudge, 2);
    log_red--;
@@ -408,17 +404,16 @@ static void inc_red_fudge()
    cerr << "G_LLL_RR: warning--relaxing reduction (" << log_red << ")\n";
 
    if (log_red < 4)
-      Error("G_LLL_RR: can not continue...sorry");
+      ResourceError("G_LLL_RR: can not continue...sorry");
 }
 
 
 
 
-static long verbose = 0;
-
-static unsigned long NumSwaps = 0;
-static double StartTime = 0;
-static double LastTime = 0;
+static NTL_CHEAP_THREAD_LOCAL long verbose = 0;
+static NTL_CHEAP_THREAD_LOCAL unsigned long NumSwaps = 0;
+static NTL_CHEAP_THREAD_LOCAL double StartTime = 0;
+static NTL_CHEAP_THREAD_LOCAL double LastTime = 0;
 
 
 
@@ -472,6 +467,8 @@ long ll_G_LLL_RR(mat_ZZ& B, mat_ZZ* U, const RR& delta, long deep,
            mat_RR& aux, long m, long init_k, long &quit,
            GivensCache_RR& cache)
 {
+   NTL_TLS_GLOBAL_ACCESS(red_fudge);
+
    long n = B.NumCols();
 
    long i, j, k, Fc1;
@@ -620,7 +617,7 @@ long ll_G_LLL_RR(mat_ZZ& B, mat_ZZ* U, const RR& delta, long deep,
       if (deep > 0) {
          // deep insertions
    
-         Error("sorry...deep insertions not implemented");
+         LogicError("sorry...deep insertions not implemented");
 
       } // end deep insertions
 
@@ -729,8 +726,8 @@ long G_LLL_RR(mat_ZZ& B, double delta, long deep,
       LastTime = StartTime;
    }
 
-   if (delta < 0.50 || delta >= 1) Error("G_LLL_RR: bad delta");
-   if (deep < 0) Error("G_LLL_RR: bad deep");
+   if (delta < 0.50 || delta >= 1) LogicError("G_LLL_RR: bad delta");
+   if (deep < 0) LogicError("G_LLL_RR: bad deep");
    RR Delta;
    conv(Delta, delta);
    return G_LLL_RR(B, 0, Delta, deep, check);
@@ -746,8 +743,8 @@ long G_LLL_RR(mat_ZZ& B, mat_ZZ& U, double delta, long deep,
       LastTime = StartTime;
    }
 
-   if (delta < 0.50 || delta >= 1) Error("G_LLL_RR: bad delta");
-   if (deep < 0) Error("G_LLL_RR: bad deep");
+   if (delta < 0.50 || delta >= 1) LogicError("G_LLL_RR: bad delta");
+   if (deep < 0) LogicError("G_LLL_RR: bad deep");
    RR Delta;
    conv(Delta, delta);
    return G_LLL_RR(B, &U, Delta, deep, check);
@@ -755,11 +752,13 @@ long G_LLL_RR(mat_ZZ& B, mat_ZZ& U, double delta, long deep,
 
 
 
-static vec_RR G_BKZConstant;
+NTL_TLS_GLOBAL_DECL(vec_RR, G_BKZConstant)
 
 static
 void ComputeG_BKZConstant(long beta, long p)
 {
+   NTL_TLS_GLOBAL_ACCESS(G_BKZConstant);
+
    RR c_PI;
    ComputePi(c_PI);
 
@@ -809,11 +808,14 @@ void ComputeG_BKZConstant(long beta, long p)
 
 }
 
-static vec_RR G_BKZThresh;
+NTL_TLS_GLOBAL_DECL(vec_RR, G_BKZThresh)
 
 static 
 void ComputeG_BKZThresh(RR *c, long beta)
 {
+   NTL_TLS_GLOBAL_ACCESS(G_BKZConstant);
+   NTL_TLS_GLOBAL_ACCESS(G_BKZThresh);
+
    G_BKZThresh.SetLength(beta-1);
 
    long i;
@@ -895,6 +897,10 @@ static
 long G_BKZ_RR(mat_ZZ& BB, mat_ZZ* UU, const RR& delta, 
          long beta, long prune, LLLCheckFct check)
 {
+   NTL_TLS_GLOBAL_ACCESS(red_fudge);
+   NTL_TLS_GLOBAL_ACCESS(G_BKZThresh);
+
+
    long m = BB.NumRows();
    long n = BB.NumCols();
    long m_orig = m;
@@ -1174,7 +1180,7 @@ long G_BKZ_RR(mat_ZZ& BB, mat_ZZ* UU, const RR& delta,
                }
             }
    
-            if (s == 0) Error("G_BKZ_RR: internal error");
+            if (s == 0) LogicError("G_BKZ_RR: internal error");
    
             if (s > 0) {
                // special case
@@ -1191,7 +1197,7 @@ long G_BKZ_RR(mat_ZZ& BB, mat_ZZ* UU, const RR& delta,
    
                new_m = ll_G_LLL_RR(B, U, delta, 0, check,
                                 B1, mu, aux, h, jj, quit, cache);
-               if (new_m != h) Error("G_BKZ_RR: internal error");
+               if (new_m != h) LogicError("G_BKZ_RR: internal error");
                if (quit) break;
             }
             else {
@@ -1223,7 +1229,7 @@ long G_BKZ_RR(mat_ZZ& BB, mat_ZZ* UU, const RR& delta,
                for (i = 1; i <= n; i++)
                   conv(B1(jj, i), B(jj, i));
       
-               if (IsZero(B(jj))) Error("G_BKZ_RR: internal error"); 
+               if (IsZero(B(jj))) LogicError("G_BKZ_RR: internal error"); 
       
                // remove linear dependencies
    
@@ -1232,7 +1238,7 @@ long G_BKZ_RR(mat_ZZ& BB, mat_ZZ* UU, const RR& delta,
                                   kk+1, jj, quit, cache);
 
               
-               if (new_m != kk) Error("G_BKZ_RR: internal error"); 
+               if (new_m != kk) LogicError("G_BKZ_RR: internal error"); 
 
                // remove zero vector
       
@@ -1260,7 +1266,7 @@ long G_BKZ_RR(mat_ZZ& BB, mat_ZZ* UU, const RR& delta,
                   new_m = ll_G_LLL_RR(B, U, delta, 0, check,
                                    B1, mu, aux, h, h, quit, cache);
    
-                  if (new_m != h) Error("G_BKZ_RR: internal error");
+                  if (new_m != h) LogicError("G_BKZ_RR: internal error");
                   if (quit) break;
                }
             }
@@ -1276,7 +1282,7 @@ long G_BKZ_RR(mat_ZZ& BB, mat_ZZ* UU, const RR& delta,
             if (!clean) {
                new_m = ll_G_LLL_RR(B, U, delta, 0, check, B1, mu, aux,
                                    h, h, quit, cache);
-               if (new_m != h) Error("G_BKZ_RR: internal error");
+               if (new_m != h) LogicError("G_BKZ_RR: internal error");
                if (quit) break;
             }
    
@@ -1328,8 +1334,8 @@ long G_BKZ_RR(mat_ZZ& BB, mat_ZZ& UU, double delta,
       LastTime = StartTime;
    }
 
-   if (delta < 0.50 || delta >= 1) Error("G_BKZ_RR: bad delta");
-   if (beta < 2) Error("G_BKZ_RR: bad block size");
+   if (delta < 0.50 || delta >= 1) LogicError("G_BKZ_RR: bad delta");
+   if (beta < 2) LogicError("G_BKZ_RR: bad block size");
 
    RR Delta;
    conv(Delta, delta);
@@ -1347,8 +1353,8 @@ long G_BKZ_RR(mat_ZZ& BB, double delta,
       LastTime = StartTime;
    }
 
-   if (delta < 0.50 || delta >= 1) Error("G_BKZ_RR: bad delta");
-   if (beta < 2) Error("G_BKZ_RR: bad block size");
+   if (delta < 0.50 || delta >= 1) LogicError("G_BKZ_RR: bad delta");
+   if (beta < 2) LogicError("G_BKZ_RR: bad block size");
 
    RR Delta;
    conv(Delta, delta);

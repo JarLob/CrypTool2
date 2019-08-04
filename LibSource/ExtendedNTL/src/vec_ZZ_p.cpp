@@ -4,19 +4,14 @@
 
 NTL_START_IMPL
 
-
-void BlockConstruct(ZZ_p* x, long n)
+static 
+void BasicBlockConstruct(ZZ_p* x, long n, long d)
 {
-   if (n <= 0) return; 
-
-   if (!ZZ_pInfo)
-      Error("ZZ_p constructor called while modulus undefined");
-
-   long d = ZZ_p::ModulusSize();
-
    long m, j;
 
    long i = 0;
+
+   NTL_SCOPE(guard) { BlockDestroy(x, i); };
 
    while (i < n) {
       m = ZZ_BlockConstructAlloc(x[i]._ZZ_p__rep, d, n-i);
@@ -24,7 +19,57 @@ void BlockConstruct(ZZ_p* x, long n)
          ZZ_BlockConstructSet(x[i]._ZZ_p__rep, x[i+j]._ZZ_p__rep, j);
       i += m;
    }
+
+   guard.relax();
 }
+
+void BlockConstruct(ZZ_p* x, long n)
+{
+   if (n <= 0) return; 
+
+   if (!ZZ_pInfo)
+      LogicError("ZZ_p constructor called while modulus undefined");
+
+   long d = ZZ_p::ModulusSize();
+
+   BasicBlockConstruct(x, n, d);
+}
+
+void BlockConstructFromVec(ZZ_p* x, long n, const ZZ_p* y)
+{
+   if (n <= 0) return;
+
+   long d = y->_ZZ_p__rep.MaxAlloc() - 1;
+   BasicBlockConstruct(x, n, d);
+
+   NTL_SCOPE(guard) { BlockDestroy(x, n); };
+
+   long i;
+   for (i = 0; i < n; i++) x[i] = y[i];
+
+   guard.relax();
+}
+
+void BlockConstructFromObj(ZZ_p* x, long n, const ZZ_p& y)
+{
+   if (n <= 0) return;
+
+
+   if (!ZZ_pInfo)
+      LogicError("ZZ_p constructor called while modulus undefined");
+
+   long d = ZZ_p::ModulusSize();
+
+   BasicBlockConstruct(x, n, d);
+
+   NTL_SCOPE(guard) { BlockDestroy(x, n); };
+
+   long i;
+   for (i = 0; i < n; i++) x[i] = y;
+
+   guard.relax();
+}
+
 
 void BlockDestroy(ZZ_p* x, long n)
 {
@@ -40,36 +85,13 @@ void BlockDestroy(ZZ_p* x, long n)
 }
 
 
-void conv(vec_ZZ_p& x, const vec_ZZ& a)
-{
-   long i, n;
-
-   n = a.length();
-   x.SetLength(n);
-
-   ZZ_p* xp = x.elts();
-   const ZZ* ap = a.elts();
-
-   for (i = 0; i < n; i++)
-      conv(xp[i], ap[i]);
-}
-
-void conv(vec_ZZ& x, const vec_ZZ_p& a)
-{
-   long n = a.length();
-   x.SetLength(n);
-   long i;
-   for (i = 0; i < n; i++)
-      x[i] = rep(a[i]);
-}
-
-
 
 void InnerProduct(ZZ_p& x, const vec_ZZ_p& a, const vec_ZZ_p& b)
 {
    long n = min(a.length(), b.length());
    long i;
-   static ZZ accum, t;
+   NTL_ZZRegister(accum);
+   NTL_ZZRegister(t);
 
    clear(accum);
    for (i = 0; i < n; i++) {
@@ -83,12 +105,14 @@ void InnerProduct(ZZ_p& x, const vec_ZZ_p& a, const vec_ZZ_p& b)
 void InnerProduct(ZZ_p& x, const vec_ZZ_p& a, const vec_ZZ_p& b,
                   long offset)
 {
-   if (offset < 0) Error("InnerProduct: negative offset");
-   if (NTL_OVERFLOW(offset, 1, 0)) Error("InnerProduct: offset too big");
+   if (offset < 0) LogicError("InnerProduct: negative offset");
+   if (NTL_OVERFLOW(offset, 1, 0)) 
+      ResourceError("InnerProduct: offset too big");
 
    long n = min(a.length(), b.length()+offset);
    long i;
-   static ZZ accum, t;
+   NTL_ZZRegister(accum);
+   NTL_ZZRegister(t);
 
    clear(accum);
    for (i = offset; i < n; i++) {
@@ -125,7 +149,7 @@ void mul(vec_ZZ_p& x, const vec_ZZ_p& a, long b_in)
 void add(vec_ZZ_p& x, const vec_ZZ_p& a, const vec_ZZ_p& b)
 {
    long n = a.length();
-   if (b.length() != n) Error("vector add: dimension mismatch");
+   if (b.length() != n) LogicError("vector add: dimension mismatch");
 
    x.SetLength(n);
    long i;
@@ -136,7 +160,7 @@ void add(vec_ZZ_p& x, const vec_ZZ_p& a, const vec_ZZ_p& b)
 void sub(vec_ZZ_p& x, const vec_ZZ_p& a, const vec_ZZ_p& b)
 {
    long n = a.length();
-   if (b.length() != n) Error("vector sub: dimension mismatch");
+   if (b.length() != n) LogicError("vector sub: dimension mismatch");
    x.SetLength(n);
    long i;
    for (i = 0; i < n; i++)
@@ -205,8 +229,8 @@ ZZ_p operator*(const vec_ZZ_p& a, const vec_ZZ_p& b)
 
 void VectorCopy(vec_ZZ_p& x, const vec_ZZ_p& a, long n)
 {
-   if (n < 0) Error("VectorCopy: negative length");
-   if (NTL_OVERFLOW(n, 1, 0)) Error("overflow in VectorCopy");
+   if (n < 0) LogicError("VectorCopy: negative length");
+   if (NTL_OVERFLOW(n, 1, 0)) ResourceError("overflow in VectorCopy");
 
    long m = min(n, a.length());
 
@@ -221,5 +245,10 @@ void VectorCopy(vec_ZZ_p& x, const vec_ZZ_p& a, long n)
       clear(x[i]);
 }
 
+void random(vec_ZZ_p& x, long n)
+{
+   x.SetLength(n);
+   for (long i = 0; i < n; i++) random(x[i]);
+}
 
 NTL_END_IMPL

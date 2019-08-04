@@ -4,7 +4,6 @@
 #include <NTL/vec_xdouble.h>
 #include <NTL/vec_double.h>
 
-#include <NTL/new.h>
 
 NTL_START_IMPL
 
@@ -25,7 +24,8 @@ static xdouble InnerProduct(xdouble *a, xdouble *b, long n)
 static void RowTransform(vec_ZZ& A, vec_ZZ& B, const ZZ& MU1)
 // x = x - y*MU
 {
-   static ZZ T, MU;
+   NTL_ZZRegister(T);
+   NTL_ZZRegister(MU);
    long k;
 
    long n = A.length();
@@ -88,7 +88,8 @@ static void RowTransform(vec_ZZ& A, vec_ZZ& B, const ZZ& MU1)
 static void RowTransform2(vec_ZZ& A, vec_ZZ& B, const ZZ& MU1)
 // x = x + y*MU
 {
-   static ZZ T, MU;
+   NTL_ZZRegister(T);
+   NTL_ZZRegister(MU);
    long k;
 
    long n = A.length();
@@ -188,11 +189,15 @@ void ComputeGS(mat_ZZ& B, xdouble **B1, xdouble **mu, xdouble *b,
    c[k] = b[k] - s;
 }
 
-static xdouble red_fudge = to_xdouble(0);
-static long log_red = 0;
+NTL_TLS_GLOBAL_DECL_INIT(xdouble, red_fudge, (to_xdouble(0)))
+
+
+static NTL_CHEAP_THREAD_LOCAL long log_red = 0;
 
 static void init_red_fudge()
 {
+   NTL_TLS_GLOBAL_ACCESS(red_fudge);
+
    long i;
 
    log_red = long(0.50*NTL_DOUBLE_PRECISION);
@@ -204,6 +209,8 @@ static void init_red_fudge()
 
 static void inc_red_fudge()
 {
+   NTL_TLS_GLOBAL_ACCESS(red_fudge);
+
 
    red_fudge = red_fudge * 2;
    log_red--;
@@ -211,16 +218,15 @@ static void inc_red_fudge()
    cerr << "LLL_XD: warning--relaxing reduction (" << log_red << ")\n";
 
    if (log_red < 4)
-      Error("LLL_XD: can not continue...sorry");
+      ResourceError("LLL_XD: can not continue...sorry");
 }
 
 
 
-static long verbose = 0;
-
-static unsigned long NumSwaps = 0;
-static double StartTime = 0;
-static double LastTime = 0;
+static NTL_CHEAP_THREAD_LOCAL long verbose = 0;
+static NTL_CHEAP_THREAD_LOCAL unsigned long NumSwaps = 0;
+static NTL_CHEAP_THREAD_LOCAL double StartTime = 0;
+static NTL_CHEAP_THREAD_LOCAL double LastTime = 0;
 
 
 
@@ -273,6 +279,8 @@ long ll_LLL_XD(mat_ZZ& B, mat_ZZ* U, xdouble delta, long deep,
            xdouble *b, xdouble *c,
            long m, long init_k, long &quit)
 {
+   NTL_TLS_GLOBAL_ACCESS(red_fudge);
+
    long n = B.NumCols();
 
    long i, j, k, Fc1;
@@ -284,7 +292,7 @@ long ll_LLL_XD(mat_ZZ& B, mat_ZZ* U, xdouble delta, long deep,
    xdouble *tp;
 
 
-   static xdouble bound = to_xdouble(0);
+   NTL_TLS_LOCAL_INIT(xdouble, bound, (to_xdouble(0)));
 
 
    if (bound == 0) {
@@ -314,9 +322,9 @@ long ll_LLL_XD(mat_ZZ& B, mat_ZZ* U, xdouble delta, long deep,
    for (i = k; i <= m+1; i++)
       st[i] = 1;
 
-   xdouble *buf;
-   buf = NTL_NEW_OP xdouble [m+1];
-   if (!buf) Error("out of memory in lll_LLL_XD");
+   UniqueArray<xdouble> buf_store;
+   buf_store.SetLength(m+1);
+   xdouble *buf = buf_store.get();
 
    long rst;
    long counter;
@@ -511,8 +519,6 @@ long ll_LLL_XD(mat_ZZ& B, mat_ZZ* U, xdouble delta, long deep,
    }
 
 
-   delete [] buf;
-
    return m;
 }
 
@@ -539,38 +545,22 @@ long LLL_XD(mat_ZZ& B, mat_ZZ* U, xdouble delta, long deep,
 
    if (U) ident(*U, m);
 
-   xdouble **B1;  // approximates B
-
-   typedef xdouble *xdoubleptr;
-
-   B1 = NTL_NEW_OP xdoubleptr[m+1];
-   if (!B1) Error("LLL_XD: out of memory");
-
-   for (i = 1; i <= m; i++) {
-      B1[i] = NTL_NEW_OP xdouble[n+1];
-      if (!B1[i]) Error("LLL_XD: out of memory");
-   }
-
-   xdouble **mu;
-   mu = NTL_NEW_OP xdoubleptr[m+1];
-   if (!mu) Error("LLL_XD: out of memory");
-
-   for (i = 1; i <= m; i++) {
-      mu[i] = NTL_NEW_OP xdouble[m+1];
-      if (!mu[i]) Error("LLL_XD: out of memory");
-   }
-
-   xdouble *c; // squared lengths of Gramm-Schmidt basis vectors
-
-   c = NTL_NEW_OP xdouble[m+1];
-   if (!c) Error("LLL_XD: out of memory");
-
-   xdouble *b; // squared lengths of basis vectors
-
-   b = NTL_NEW_OP xdouble[m+1];
-   if (!b) Error("LLL_XD: out of memory");
+   Unique2DArray<xdouble> B1_store;
+   B1_store.SetDimsFrom1(m+1, n+1);
+   xdouble **B1 = B1_store.get();  // approximates B
 
 
+   Unique2DArray<xdouble> mu_store;
+   mu_store.SetDimsFrom1(m+1, m+1);
+   xdouble **mu = mu_store.get();
+
+   UniqueArray<xdouble> c_store;
+   c_store.SetLength(m+1);
+   xdouble *c = c_store.get(); // squared lengths of Gramm-Schmidt basis vectors
+
+   UniqueArray<xdouble> b_store;
+   b_store.SetLength(m+1);
+   xdouble *b = b_store.get(); // squared lengths of basis vectors
 
    for (i = 1; i <=m; i++)
       for (j = 1; j <= n; j++) 
@@ -596,25 +586,6 @@ long LLL_XD(mat_ZZ& B, mat_ZZ* U, xdouble delta, long deep,
       }
    }
 
-
-   // clean-up
-
-   for (i = 1; i <= m+dep; i++) {
-      delete [] B1[i];
-   }
-
-   delete [] B1;
-
-   for (i = 1; i <= m+dep; i++) {
-      delete [] mu[i];
-   }
-
-   delete [] mu;
-
-   delete [] c;
-
-   delete [] b;
-
    return m;
 }
 
@@ -630,8 +601,8 @@ long LLL_XD(mat_ZZ& B, double delta, long deep,
       LastTime = StartTime;
    }
 
-   if (delta < 0.50 || delta >= 1) Error("LLL_XD: bad delta");
-   if (deep < 0) Error("LLL_XD: bad deep");
+   if (delta < 0.50 || delta >= 1) LogicError("LLL_XD: bad delta");
+   if (deep < 0) LogicError("LLL_XD: bad deep");
    return LLL_XD(B, 0, to_xdouble(delta), deep, check);
 }
 
@@ -646,18 +617,20 @@ long LLL_XD(mat_ZZ& B, mat_ZZ& U, double delta, long deep,
    }
 
 
-   if (delta < 0.50 || delta >= 1) Error("LLL_XD: bad delta");
-   if (deep < 0) Error("LLL_XD: bad deep");
+   if (delta < 0.50 || delta >= 1) LogicError("LLL_XD: bad delta");
+   if (deep < 0) LogicError("LLL_XD: bad deep");
    return LLL_XD(B, &U, to_xdouble(delta), deep, check);
 }
 
 
 
-static vec_xdouble BKZConstant;
+NTL_TLS_GLOBAL_DECL(vec_xdouble, BKZConstant)
 
 static
 void ComputeBKZConstant(long beta, long p)
 {
+   NTL_TLS_GLOBAL_ACCESS(BKZConstant);
+
    const double c_PI = 3.14159265358979323846264338328;
    const double LogPI = 1.14472988584940017414342735135;
 
@@ -708,11 +681,14 @@ void ComputeBKZConstant(long beta, long p)
    }
 }
 
-static vec_xdouble BKZThresh;
+NTL_TLS_GLOBAL_DECL(vec_xdouble, BKZThresh)
 
 static
 void ComputeBKZThresh(xdouble *c, long beta)
 {
+   NTL_TLS_GLOBAL_ACCESS(BKZConstant);
+   NTL_TLS_GLOBAL_ACCESS(BKZThresh);
+
    BKZThresh.SetLength(beta-1);
 
    long i;
@@ -786,6 +762,10 @@ static
 long BKZ_XD(mat_ZZ& BB, mat_ZZ* UU, xdouble delta, 
          long beta, long prune, LLLCheckFct check)
 {
+   NTL_TLS_GLOBAL_ACCESS(red_fudge);
+   NTL_TLS_GLOBAL_ACCESS(BKZThresh);
+
+
    long m = BB.NumRows();
    long n = BB.NumCols();
    long m_orig = m;
@@ -804,68 +784,56 @@ long BKZ_XD(mat_ZZ& BB, mat_ZZ* UU, xdouble delta,
 
    B.SetDims(m+1, n);
 
+   Unique2DArray<xdouble> B1_store;
+   B1_store.SetDimsFrom1(m+2, n+1);
+   xdouble **B1 = B1_store.get();  // approximates B
 
-   xdouble **B1;  // approximates B
 
-   typedef xdouble *xdoubleptr;
+   Unique2DArray<xdouble> mu_store;
+   mu_store.SetDimsFrom1(m+2, m+1);
+   xdouble **mu = mu_store.get();
 
-   B1 = NTL_NEW_OP xdoubleptr[m+2];
-   if (!B1) Error("BKZ_XD: out of memory");
+   UniqueArray<xdouble> c_store;
+   c_store.SetLength(m+2);
+   xdouble *c = c_store.get(); // squared lengths of Gramm-Schmidt basis vectors
 
-   for (i = 1; i <= m+1; i++) {
-      B1[i] = NTL_NEW_OP xdouble[n+1];
-      if (!B1[i]) Error("BKZ_XD: out of memory");
-   }
-
-   xdouble **mu;
-   mu = NTL_NEW_OP xdoubleptr[m+2];
-   if (!mu) Error("BKZ_XD: out of memory");
-
-   for (i = 1; i <= m+1; i++) {
-      mu[i] = NTL_NEW_OP xdouble[m+1];
-      if (!mu[i]) Error("BKZ_XD: out of memory");
-   }
-
-   xdouble *c; // squared lengths of Gramm-Schmidt basis vectors
-
-   c = NTL_NEW_OP xdouble[m+2];
-   if (!c) Error("BKZ_XD: out of memory");
-
-   xdouble *b; // squared lengths of basis vectors
-
-   b = NTL_NEW_OP xdouble[m+2];
-   if (!b) Error("BKZ_XD: out of memory");
+   UniqueArray<xdouble> b_store;
+   b_store.SetLength(m+2);
+   xdouble *b = b_store.get(); // squared lengths of basis vectors
 
    xdouble cbar;
 
-   xdouble *ctilda;
-   ctilda = NTL_NEW_OP xdouble[m+2];
-   if (!ctilda) Error("BKZ_XD: out of memory");
 
-   xdouble *vvec;
-   vvec = NTL_NEW_OP xdouble[m+2];
-   if (!vvec) Error("BKZ_XD: out of memory");
-
-   xdouble *yvec;
-   yvec = NTL_NEW_OP xdouble[m+2];
-   if (!yvec) Error("BKZ_XD: out of memory");
-
-   xdouble *uvec;
-   uvec = NTL_NEW_OP xdouble[m+2];
-   if (!uvec) Error("BKZ_XD: out of memory");
-
-   xdouble *utildavec;
-   utildavec = NTL_NEW_OP xdouble[m+2];
-   if (!utildavec) Error("BKZ_XD: out of memory");
+   UniqueArray<xdouble> ctilda_store;
+   ctilda_store.SetLength(m+2);
+   xdouble *ctilda = ctilda_store.get();
 
 
-   long *Deltavec;
-   Deltavec = NTL_NEW_OP long[m+2];
-   if (!Deltavec) Error("BKZ_XD: out of memory");
+   UniqueArray<xdouble> vvec_store;
+   vvec_store.SetLength(m+2);
+   xdouble *vvec = vvec_store.get();
 
-   long *deltavec;
-   deltavec = NTL_NEW_OP long[m+2];
-   if (!deltavec) Error("BKZ_XD: out of memory");
+   UniqueArray<xdouble> yvec_store;
+   yvec_store.SetLength(m+2);
+   xdouble *yvec = yvec_store.get();
+
+   UniqueArray<xdouble> uvec_store;
+   uvec_store.SetLength(m+2);
+   xdouble *uvec = uvec_store.get();
+
+   UniqueArray<xdouble> utildavec_store;
+   utildavec_store.SetLength(m+2);
+   xdouble *utildavec = utildavec_store.get();
+
+   UniqueArray<long> Deltavec_store;
+   Deltavec_store.SetLength(m+2);
+   long *Deltavec = Deltavec_store.get();
+
+   UniqueArray<long> deltavec_store;
+   deltavec_store.SetLength(m+2);
+   long *deltavec = deltavec_store.get();;
+
+
 
    mat_ZZ Ulocal;
    mat_ZZ *U;
@@ -1073,7 +1041,7 @@ long BKZ_XD(mat_ZZ& BB, mat_ZZ* UU, xdouble delta,
                }
             }
    
-            if (s == 0) Error("BKZ_XD: internal error");
+            if (s == 0) LogicError("BKZ_XD: internal error");
    
             if (s > 0) {
                // special case
@@ -1091,7 +1059,7 @@ long BKZ_XD(mat_ZZ& BB, mat_ZZ* UU, xdouble delta,
                // cerr << "special case\n";
                new_m = ll_LLL_XD(B, U, delta, 0, check, 
                                 B1, mu, b, c, h, jj, quit);
-               if (new_m != h) Error("BKZ_XD: internal error");
+               if (new_m != h) LogicError("BKZ_XD: internal error");
                if (quit) break;
             }
             else {
@@ -1126,14 +1094,14 @@ long BKZ_XD(mat_ZZ& BB, mat_ZZ* UU, xdouble delta,
       
                b[jj] = InnerProduct(B1[jj], B1[jj], n);
       
-               if (b[jj] == 0) Error("BKZ_XD: internal error"); 
+               if (b[jj] == 0) LogicError("BKZ_XD: internal error"); 
       
                // remove linear dependencies
    
                // cerr << "general case\n";
                new_m = ll_LLL_XD(B, U, delta, 0, 0, B1, mu, b, c, kk+1, jj, quit);
               
-               if (new_m != kk) Error("BKZ_XD: internal error"); 
+               if (new_m != kk) LogicError("BKZ_XD: internal error"); 
 
                // remove zero vector
       
@@ -1162,7 +1130,7 @@ long BKZ_XD(mat_ZZ& BB, mat_ZZ* UU, xdouble delta,
                   new_m = ll_LLL_XD(B, U, delta, 0, check, 
                                    B1, mu, b, c, h, h, quit);
    
-                  if (new_m != h) Error("BKZ_XD: internal error");
+                  if (new_m != h) LogicError("BKZ_XD: internal error");
                   if (quit) break;
                }
             }
@@ -1178,7 +1146,7 @@ long BKZ_XD(mat_ZZ& BB, mat_ZZ* UU, xdouble delta,
             if (!clean) {
                new_m = 
                   ll_LLL_XD(B, U, delta, 0, check, B1, mu, b, c, h, h, quit);
-               if (new_m != h) Error("BKZ_XD: internal error");
+               if (new_m != h) LogicError("BKZ_XD: internal error");
                if (quit) break;
             }
    
@@ -1217,29 +1185,6 @@ long BKZ_XD(mat_ZZ& BB, mat_ZZ* UU, xdouble delta,
       *UU = *U;
    }
 
-   for (i = 1; i <= m_orig+1; i++) {
-      delete [] B1[i];
-   }
-
-   delete [] B1;
-
-   for (i = 1; i <= m_orig+1; i++) {
-      delete [] mu[i];
-   }
-
-   delete [] mu;
-
-
-   delete [] c;
-   delete [] b;
-   delete [] ctilda;
-   delete [] vvec;
-   delete [] yvec;
-   delete [] uvec;
-   delete [] utildavec;
-   delete [] Deltavec;
-   delete [] deltavec;
-
    return m;
 }
 
@@ -1254,8 +1199,8 @@ long BKZ_XD(mat_ZZ& BB, mat_ZZ& UU, double delta,
    }
 
 
-   if (delta < 0.50 || delta >= 1) Error("BKZ_XD: bad delta");
-   if (beta < 2) Error("BKZ_XD: bad block size");
+   if (delta < 0.50 || delta >= 1) LogicError("BKZ_XD: bad delta");
+   if (beta < 2) LogicError("BKZ_XD: bad block size");
 
    return BKZ_XD(BB, &UU, to_xdouble(delta), beta, prune, check);
 }
@@ -1272,8 +1217,8 @@ long BKZ_XD(mat_ZZ& BB, double delta,
 
 
 
-   if (delta < 0.50 || delta >= 1) Error("BKZ_XD: bad delta");
-   if (beta < 2) Error("BKZ_XD: bad block size");
+   if (delta < 0.50 || delta >= 1) LogicError("BKZ_XD: bad delta");
+   if (beta < 2) LogicError("BKZ_XD: bad block size");
 
    return BKZ_XD(BB, 0, to_xdouble(delta), beta, prune, check);
 }

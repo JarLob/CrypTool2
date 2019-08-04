@@ -31,14 +31,15 @@ int main()
    cout.setf(ios::scientific);
 
 
-   for (n = 32; n <= (1L << 18); n = n << 1) {
+   for (n = 32; n <= (1L << 18); n = n << 3) {
       random(a, n);
       random(b, n);
       OldGCD(c, a, b);
       GCD(c1, a, b);
       OldXGCD(c, ss, tt, a, b);
       XGCD(c1, ss1, tt1, a, b);
-      if (c1 != c || ss1 != ss || tt1 != tt) {
+      if (c1 != c || ss1 != ss || tt1 != tt ||
+          ss*a + tt*b != c) {
          cerr << "**** GF2XTest FAILED!\n";
          return 1;
       }

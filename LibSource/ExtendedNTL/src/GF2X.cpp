@@ -2,8 +2,7 @@
 #include <NTL/GF2X.h>
 #include <NTL/vec_long.h>
 
-#include <NTL/new.h>
-#include <stdio.h>
+#include <cstdio>
 
 #if (defined(NTL_WIZARD_HACK) && defined(NTL_GF2X_LIB))
 #undef NTL_GF2X_LIB
@@ -13,16 +12,39 @@
 #include <gf2x.h>
 #endif
 
+
+#ifdef NTL_HAVE_PCLMUL
+
+#include <wmmintrin.h>
+
+#define NTL_INLINE inline
+
+static inline void
+pclmul_mul1 (unsigned long *c, unsigned long a, unsigned long b)
+{
+   __m128i aa = _mm_setr_epi64( _mm_cvtsi64_m64(a), _mm_cvtsi64_m64(0));
+   __m128i bb = _mm_setr_epi64( _mm_cvtsi64_m64(b), _mm_cvtsi64_m64(0));
+   _mm_storeu_si128((__m128i*)c, _mm_clmulepi64_si128(aa, bb, 0));
+}
+
+#else
+
+
+#define NTL_INLINE
+
+#endif
+
 NTL_START_IMPL
 
+NTL_CHEAP_THREAD_LOCAL
 long GF2X::HexOutput = 0;
 
 
 void GF2X::SetMaxLength(long n)
 {
-   if (n < 0) Error("GF2X::SetMaxLength: negative length");
+   if (n < 0) LogicError("GF2X::SetMaxLength: negative length");
    if (NTL_OVERFLOW(n, 1, 0))
-      Error("GF2X::SetMaxLength: excessive length");
+      ResourceError("GF2X::SetMaxLength: excessive length");
    long w = (n + NTL_BITS_PER_LONG - 1)/NTL_BITS_PER_LONG;
    xrep.SetMaxLength(w);
 }
@@ -36,7 +58,7 @@ GF2X::GF2X(INIT_SIZE_TYPE, long n)
 
 const GF2X& GF2X::zero()
 {
-   static GF2X z;
+   static const GF2X z; // GLOBAL (assumes C++11 thread-safe init)
    return z;
 }
 
@@ -59,9 +81,13 @@ void GF2X::normalize()
 void GF2X::SetLength(long n)
 {
    if (n < 0) {
-      Error("SetLength: negative index");
-      return;
+      LogicError("SetLength: negative index");
+      return; // NOTE: this helps the compiler optimize
    }
+
+
+   if (NTL_OVERFLOW(n, 1, 0))
+      ResourceError("GF2X::SetLength: excessive length");
 
    long w = (n + NTL_BITS_PER_LONG - 1)/NTL_BITS_PER_LONG;
    long old_w = xrep.length();
@@ -90,24 +116,6 @@ void GF2X::SetLength(long n)
 }
 
 
-ref_GF2 GF2X::operator[](long i)
-{
-   if (i < 0) Error("GF2X: subscript out of range");
-   long wi = i/NTL_BITS_PER_LONG;
-   if (wi >= xrep.length())  Error("GF2X: subscript out of range");
-   long bi = i - wi*NTL_BITS_PER_LONG;
-   return ref_GF2(INIT_LOOP_HOLE, &xrep[wi], bi);
-}
-
-
-const GF2 GF2X::operator[](long i) const
-{
-   if (i < 0) Error("GF2X: subscript out of range");
-   long wi = i/NTL_BITS_PER_LONG;
-   if (wi >= xrep.length())  Error("GF2X: subscript out of range");
-   long bi = i - wi*NTL_BITS_PER_LONG;
-   return to_GF2((xrep[wi] & (1UL << bi)) != 0);
-}
 
 
 
@@ -172,8 +180,8 @@ void SetX(GF2X& x)
 void SetCoeff(GF2X& x, long i)
 {
    if (i < 0) {
-      Error("SetCoeff: negative index");
-      return;
+      LogicError("SetCoeff: negative index");
+      return; // NOTE: helpse the compiler optimize
    }
 
    long n, j;
@@ -197,8 +205,8 @@ void SetCoeff(GF2X& x, long i)
 void SetCoeff(GF2X& x, long i, long val)
 {
    if (i < 0) {
-      Error("SetCoeff: negative index");
-      return;
+      LogicError("SetCoeff: negative index");
+      return; // NOTE: helps the compiler optimize
    }
 
    val = val & 1;
@@ -230,25 +238,17 @@ void SetCoeff(GF2X& x, long i, GF2 a)
 }
 
 
-void swap(GF2X& a, GF2X& b)
-{
-   swap(a.xrep, b.xrep);
-}
-
-
 
 long deg(const GF2X& aa)
 {
    long n = aa.xrep.length();
-
-   if (n == 0)
-      return -1;
-
+   if (n == 0) return -1;
    _ntl_ulong a = aa.xrep[n-1];
+   if (a == 0) LogicError("GF2X: unnormalized polynomial detected in deg");
+   return NTL_BITS_PER_LONG*(n-1) + _ntl_count_bits(a) - 1;
+
+#if 0
    long i = 0;
-
-   if (a == 0) Error("GF2X: unnormalized polynomial detected in deg");
-
    while (a>=256)
       i += 8, a >>= 8;
    if (a >=16)
@@ -259,8 +259,8 @@ long deg(const GF2X& aa)
       i += 2;
    else if (a >= 1)
       i++;
+#endif
 
-   return NTL_BITS_PER_LONG*(n-1) + i - 1;
 }
    
 
@@ -322,10 +322,10 @@ istream & HexInput(istream& s, GF2X& a)
 
 istream & operator>>(istream& s, GF2X& a)   
 {   
-   static ZZ ival;
+   NTL_ZZRegister(ival);
 
    long c;   
-   if (!s) Error("bad GF2X input"); 
+   if (!s) NTL_INPUT_ERROR(s, "bad GF2X input"); 
    
    c = s.peek();  
    while (IsWhiteSpace(c)) {  
@@ -341,12 +341,12 @@ istream & operator>>(istream& s, GF2X& a)
          return HexInput(s, a);
       }
       else {
-         Error("bad GF2X input");
+         NTL_INPUT_ERROR(s, "bad GF2X input");
       }
    }
 
    if (c != '[') {  
-      Error("bad GF2X input");  
+      NTL_INPUT_ERROR(s, "bad GF2X input");  
    }  
 
    GF2X ibuf;  
@@ -363,7 +363,7 @@ istream & operator>>(istream& s, GF2X& a)
    }  
 
    while (c != ']' && c != EOF) {   
-      if (!(s >> ival)) Error("bad GF2X input");
+      if (!(s >> ival)) NTL_INPUT_ERROR(s, "bad GF2X input");
       SetCoeff(ibuf, n, to_GF2(ival));
       n++;
 
@@ -375,7 +375,7 @@ istream & operator>>(istream& s, GF2X& a)
       }  
    }   
 
-   if (c == EOF) Error("bad GF2X input");  
+   if (c == EOF) NTL_INPUT_ERROR(s, "bad GF2X input");  
    s.get(); 
    
    a = ibuf; 
@@ -446,19 +446,16 @@ ostream& operator<<(ostream& s, const GF2X& a)
 
 void random(GF2X& x, long n)
 {
-   if (n < 0) Error("GF2X random: negative length");
+   if (n < 0) LogicError("GF2X random: negative length");
 
    if (NTL_OVERFLOW(n, 1, 0))
-      Error("GF2X random: excessive length");
+      ResourceError("GF2X random: excessive length");
 
    long wl = (n+NTL_BITS_PER_LONG-1)/NTL_BITS_PER_LONG;
 
    x.xrep.SetLength(wl);
 
-   long i;
-   for (i = 0; i < wl-1; i++) {
-      x.xrep[i] = RandomWord();
-   }
+   VectorRandomWord(wl-1, x.xrep.elts());
 
    if (n > 0) {
       long pos = n % NTL_BITS_PER_LONG;
@@ -559,12 +556,15 @@ void add(GF2X& x, const GF2X& a, const GF2X& b)
 
 
 
-static 
+static NTL_INLINE
 void mul1(_ntl_ulong *c, _ntl_ulong a, _ntl_ulong b)
 {
 
+#ifdef NTL_HAVE_PCLMUL
+pclmul_mul1(c, a, b);
+#else
 NTL_EFF_BB_MUL_CODE0
-
+#endif
 
 }
 
@@ -579,8 +579,11 @@ static inline
 void mul1_inline(_ntl_ulong *c, _ntl_ulong a, _ntl_ulong b)
 {
 
-
+#ifdef NTL_HAVE_PCLMUL
+pclmul_mul1(c, a, b);
+#else
 NTL_EFF_BB_MUL_CODE0
+#endif
 
 
 }
@@ -593,18 +596,54 @@ static
 void Mul1(_ntl_ulong *cp, const _ntl_ulong *bp, long sb, _ntl_ulong a)
 {
  
+#ifdef NTL_HAVE_PCLMUL
+
+   long i;
+   unsigned long carry, prod[2];
+
+   carry = 0;
+   for (i = 0; i < sb; i++) {
+      pclmul_mul1(prod, bp[i], a);
+      cp[i] = carry ^ prod[0];
+      carry = prod[1];
+   }
+
+   cp[sb] = carry;
+
+#else
 
 NTL_EFF_BB_MUL_CODE1
 
+#endif
 
+
+// warning #13200: No EMMS instruction before return
 }
 
 static 
 void AddMul1(_ntl_ulong *cp, const _ntl_ulong* bp, long sb, _ntl_ulong a)
 {
 
+#ifdef NTL_HAVE_PCLMUL
+
+   long i;
+   unsigned long carry, prod[2];
+
+   carry = 0;
+   for (i = 0; i < sb; i++) {
+      pclmul_mul1(prod, bp[i], a);
+      cp[i] ^= carry ^ prod[0];
+      carry = prod[1];
+   }
+
+   cp[sb] ^= carry;
+
+#else
 
 NTL_EFF_BB_MUL_CODE2
+
+#endif
+
 
 
 }
@@ -614,10 +653,28 @@ static
 void Mul1_short(_ntl_ulong *cp, const _ntl_ulong *bp, long sb, _ntl_ulong a)
 {
  
+#ifdef NTL_HAVE_PCLMUL
+
+   long i;
+   unsigned long carry, prod[2];
+
+   carry = 0;
+   for (i = 0; i < sb; i++) {
+      pclmul_mul1(prod, bp[i], a);
+      cp[i] = carry ^ prod[0];
+      carry = prod[1];
+   }
+
+   cp[sb] = carry;
+
+#else
 
 NTL_EFF_SHORT_BB_MUL_CODE1
 
+#endif
 
+
+// warning #13200: No EMMS instruction before return
 }
 
 
@@ -628,8 +685,11 @@ static
 void mul_half(_ntl_ulong *c, _ntl_ulong a, _ntl_ulong b)
 {
 
-
+#ifdef NTL_HAVE_PCLMUL
+pclmul_mul1(c, a, b);
+#else
 NTL_EFF_HALF_BB_MUL_CODE0
+#endif
 
 
 }
@@ -637,9 +697,12 @@ NTL_EFF_HALF_BB_MUL_CODE0
 
 // mul2...mul8 hard-code 2x2...8x8 word multiplies.
 // I adapted these routines from LiDIA (except mul3, see below).
-// Inlining these seems to hurt, not help.
+// NOTE: Generally, inlining these functions seems to hurt performance,
+// at least when using software mul1; for hardware mul1, I've
+// switched to making mul2, 3, 4 inline, although this should
+// really be profiled.
 
-static
+static NTL_INLINE
 void mul2(_ntl_ulong *c, const _ntl_ulong *a, const _ntl_ulong *b)
 {
    _ntl_ulong hs0, hs1;
@@ -667,7 +730,7 @@ void mul2(_ntl_ulong *c, const _ntl_ulong *a, const _ntl_ulong *b)
  * an its application to ECC" (ACISP 2003).
  */
 
-static
+static NTL_INLINE
 void mul3 (_ntl_ulong *c, const _ntl_ulong *a, const _ntl_ulong *b)
 {
    _ntl_ulong d0[2], d1[2], d2[2], d01[2], d02[2], d12[2];
@@ -689,7 +752,7 @@ void mul3 (_ntl_ulong *c, const _ntl_ulong *a, const _ntl_ulong *b)
 
 }
 
-static
+static NTL_INLINE
 void mul4(_ntl_ulong *c, const _ntl_ulong *a, const _ntl_ulong *b)
 {
    _ntl_ulong hs0[2], hs1[2];
@@ -746,6 +809,7 @@ void mul5 (_ntl_ulong *c, const _ntl_ulong *a, const _ntl_ulong *b)
    c[6] ^= hl2[3];
    c[7] ^= hl2[4];
    c[8] ^= hl2[5];
+// warning #13200: No EMMS instruction before return
 }
 
 static
@@ -816,6 +880,7 @@ void mul7(_ntl_ulong *c, const _ntl_ulong *a, const _ntl_ulong *b)
    c[9]  ^= hl2[5];
    c[10] ^= hl2[6];
    c[11] ^= hl2[7];
+// warning #13200: No EMMS instruction before return
 }
 
 static
@@ -854,6 +919,7 @@ void mul8(_ntl_ulong *c, const _ntl_ulong *a, const _ntl_ulong *b)
    c[9]  ^= hl2[5];
    c[10] ^= hl2[6];
    c[11] ^= hl2[7];
+// warning #13200: No EMMS instruction before return
 }
 
 static
@@ -872,7 +938,7 @@ void KarMul(_ntl_ulong *c, const _ntl_ulong *a, const _ntl_ulong *b,
          case 8: mul8(c, a, b); break;
       }
 
-      return;
+      return; // warning #13200: No EMMS instruction before return
    }
 
    long ll, lh, i, ll2, lh2;
@@ -953,89 +1019,11 @@ void mul(GF2X& c, const GF2X& a, const GF2X& b)
       return;
    }
 
-   if (sa == 1 && sb == 1) {
-      // special case...
-      _ntl_ulong v[2];
-      if (!(a0 >> NTL_BITS_PER_LONG/2))
-         mul_half(v, b0, a0);
-      else if (!(b0 >> NTL_BITS_PER_LONG/2))
-         mul_half(v, a0, b0);
-      else
-         mul1(v, a0, b0);
-
-      if (v[1]) {
-         c.xrep.SetLength(2);
-         _ntl_ulong *cp = &c.xrep[0];
-         cp[0] = v[0];
-         cp[1] = v[1];
-      }
-      else {
-         c.xrep.SetLength(1);
-         _ntl_ulong *cp = &c.xrep[0];
-         cp[0] = v[0];
-      }
-      return;
-   }
-
-   if (sa == 2 && sb == 2) {
-      // special case...
-      _ntl_ulong v[4];
-      mul2(v, &a.xrep[0], &b.xrep[0]);
-      if (v[3]) {
-         c.xrep.SetLength(4);
-         _ntl_ulong *cp = &c.xrep[0];
-         cp[0] = v[0];
-         cp[1] = v[1];
-         cp[2] = v[2];
-         cp[3] = v[3];
-      }
-      else {
-         c.xrep.SetLength(3);
-         _ntl_ulong *cp = &c.xrep[0];
-         cp[0] = v[0];
-         cp[1] = v[1];
-         cp[2] = v[2];
-      }
-      return;
-   }
-
-   // another special case:  one of the two inputs
-   // has length 1 (or less).
-
-   if (sa == 1) {
-      c.xrep.SetLength(sb + 1);
-      _ntl_ulong *cp = c.xrep.elts();
-      const _ntl_ulong *bp = b.xrep.elts();
-
-      if (a0 >> (NTL_BITS_PER_LONG-NTL_BB_MUL1_BITS+1))
-         Mul1(cp, bp, sb, a0);
-      else
-         Mul1_short(cp, bp, sb, a0);
-
-
-      c.normalize();
-      return;
-   }
-
-   if (sb == 1) {
-      c.xrep.SetLength(sa + 1);
-      _ntl_ulong *cp = c.xrep.elts();
-      const _ntl_ulong *ap = a.xrep.elts();
-
-
-      if (b0 >> (NTL_BITS_PER_LONG-NTL_BB_MUL1_BITS+1))
-         Mul1(cp, ap, sa, b0);
-      else
-         Mul1_short(cp, ap, sa, b0);
-
-      c.normalize();
-      return;
-   }
-
    // finally: the general case
 
 
-   WordVector mem;
+   NTL_TLS_LOCAL(WordVector, mem);
+   WordVectorWatcher watch_mem(mem);
 
    const _ntl_ulong *ap = a.xrep.elts(), *bp = b.xrep.elts();
    _ntl_ulong *cp;
@@ -1054,14 +1042,15 @@ void mul(GF2X& c, const GF2X& a, const GF2X& b)
       cp = c.xrep.elts();
    }
 
+   // This is thread safe in v1.2 of gf2x
    gf2x_mul(cp, ap, sa, bp, sb);
+
 
    if (in_mem) {
       c.xrep = mem;
    }
 
    c.normalize();
-   mem.release();
 }
 #else
 void OldMul(GF2X& c, const GF2X& a, const GF2X& b)
@@ -1274,6 +1263,7 @@ void mul(GF2X& c, const GF2X& a, const GF2X& b)
                cp[10] = v[10];
             }
          }
+         // warning #13200: No EMMS instruction before return
          return; 
 
          case 7: {
@@ -1401,13 +1391,16 @@ void mul(GF2X& c, const GF2X& a, const GF2X& b)
    // finally: the general case
 
    
-   static WordVector mem;
-   static WordVector stk;
-   static WordVector vec;
+   NTL_TLS_LOCAL(WordVector, mem);
+   NTL_TLS_LOCAL(WordVector, stk);
+   NTL_TLS_LOCAL(WordVector, vec);
+
+   WordVectorWatcher watch_mem(mem);
+   WordVectorWatcher watch_stk(stk);
+   WordVectorWatcher watch_vec(vec);
 
    const _ntl_ulong *ap, *bp;
    _ntl_ulong *cp;
-
 
    long sc = sa + sb;
    long in_mem = 0;
@@ -1448,8 +1441,9 @@ void mul(GF2X& c, const GF2X& a, const GF2X& b)
 
 
    vec.SetLength(2*sa);
-
    _ntl_ulong *v = vec.elts();
+
+
 
    long i, j;
 
@@ -1482,10 +1476,6 @@ void mul(GF2X& c, const GF2X& a, const GF2X& b)
       c.xrep = mem;
 
    c.normalize();
-
-   mem.release();
-   stk.release();
-   vec.release();
 }
 
 
@@ -1509,7 +1499,7 @@ void mul(GF2X& c, const GF2X& a, GF2 b)
 
 void trunc(GF2X& x, const GF2X& a, long m)
 {
-   if (m < 0) Error("trunc: bad args");
+   if (m < 0) LogicError("trunc: bad args");
 
    long n = a.xrep.length();
    if (n == 0 || m == 0) {
@@ -1582,7 +1572,7 @@ void MulByX(GF2X& x, const GF2X& a)
 
 
 
-static _ntl_ulong sqrtab[256] = {
+static const _ntl_ulong sqrtab[256] = {
 
 0UL, 1UL, 4UL, 5UL, 16UL, 17UL, 20UL, 21UL, 64UL, 
 65UL, 68UL, 69UL, 80UL, 81UL, 84UL, 85UL, 256UL, 
@@ -1620,15 +1610,22 @@ static _ntl_ulong sqrtab[256] = {
 
 
 
-static inline 
+
+static inline
 void sqr1(_ntl_ulong *c, _ntl_ulong a)
 {
+#ifdef NTL_HAVE_PCLMUL
+   // this appears to be marginally faster than the
+   // table-driven code
+   pclmul_mul1(c, a, a);
+#else
    _ntl_ulong hi, lo;
 
    NTL_BB_SQR_CODE
 
    c[0] = lo;
    c[1] = hi;
+#endif
 }
 
 
@@ -1677,7 +1674,7 @@ void LeftShift(GF2X& c, const GF2X& a, long n)
    }
 
    if (NTL_OVERFLOW(n, 1, 0))
-      Error("overflow in LeftShift");
+      ResourceError("overflow in LeftShift");
 
    if (n == 0) {
       c = a;
@@ -1720,7 +1717,7 @@ void LeftShift(GF2X& c, const GF2X& a, long n)
 void ShiftAdd(GF2X& c, const GF2X& a, long n)
 // c = c + a*X^n
 {
-   if (n < 0) Error("ShiftAdd: negative argument");
+   if (n < 0) LogicError("ShiftAdd: negative argument");
 
    if (n == 0) {
       add(c, c, a);
@@ -1728,7 +1725,7 @@ void ShiftAdd(GF2X& c, const GF2X& a, long n)
    }
 
    if (NTL_OVERFLOW(n, 1, 0))
-      Error("overflow in ShiftAdd");
+      ResourceError("overflow in ShiftAdd");
 
    long sa = a.xrep.length();
    if (sa <= 0) {
@@ -1779,7 +1776,7 @@ void RightShift(GF2X& c, const GF2X& a, long n)
    }
 
    if (n < 0) {
-      if (n < -NTL_MAX_LONG) Error("overflow in RightShift");
+      if (n < -NTL_MAX_LONG) ResourceError("overflow in RightShift");
       LeftShift(c, a, -n);
       return;
    }
@@ -1820,7 +1817,7 @@ void RightShift(GF2X& c, const GF2X& a, long n)
 
 
 
-static _ntl_ulong revtab[256] = {
+static const _ntl_ulong revtab[256] = {
 
 0UL, 128UL, 64UL, 192UL, 32UL, 160UL, 96UL, 224UL, 16UL, 144UL, 
 80UL, 208UL, 48UL, 176UL, 112UL, 240UL, 8UL, 136UL, 72UL, 200UL, 
@@ -1865,7 +1862,7 @@ void CopyReverse(GF2X& c, const GF2X& a, long hi)
    if (hi < 0) { clear(c); return; }
 
    if (NTL_OVERFLOW(hi, 1, 0))
-      Error("overflow in CopyReverse");
+      ResourceError("overflow in CopyReverse");
 
    long n = hi+1;
    long sa = a.xrep.length();
@@ -1916,7 +1913,7 @@ void CopyReverse(GF2X& c, const GF2X& a, long hi)
 void div(GF2X& q, const GF2X& a, GF2 b)
 {
    if (b == 0)
-      Error("div: division by zero");
+      ArithmeticError("div: division by zero");
 
    q = a;
 }
@@ -1924,7 +1921,7 @@ void div(GF2X& q, const GF2X& a, GF2 b)
 void div(GF2X& q, const GF2X& a, long b)
 {
    if ((b & 1) == 0)
-      Error("div: division by zero");
+      ArithmeticError("div: division by zero");
 
    q = a;
 }

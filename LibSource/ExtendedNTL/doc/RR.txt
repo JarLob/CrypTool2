@@ -19,6 +19,9 @@ using RR::SetPrecision(), and can be read using RR::precision().
 The minimum precision that can be set is 53 bits.
 The maximum precision is limited only by the word size of the machine.
 
+A convenience class RRPush is provided to automatically save and
+restore the current precision.
+
 All arithmetic operations are implemented so that the effect is as if the
 result was computed exactly, and then rounded to p bits.  If a number
 lies exactly half-way between two p-bit numbers, the "round to even"
@@ -119,6 +122,10 @@ public:
 RR(); // = 0
 
 RR(const RR& a); // copy constructor
+
+
+explicit RR(double a);  // promotion constructor
+
 RR& operator=(const RR& a); // assignment operator
 
 // NOTE: the copy constructor and assignment operator
@@ -128,6 +135,14 @@ RR& operator=(const RR& a); // assignment operator
 RR& operator=(double a); // convert and assign
 
 ~RR(); // destructor
+
+RR(RR&& a); 
+// move constructor (C++11 only)
+// declared noexcept unless NTL_EXCEPTIONS flag is set
+
+RR& operator=(RR&& a); 
+// move assignment (C++11 only)
+// declared noexcept unless NTL_EXCEPTIONS flag is set
 
 const ZZ& mantissa() const;  // read the mantissa
 long exponent() const;  // read the exponent
@@ -345,6 +360,58 @@ void RoundToZZ(ZZ& z, const RR& a);   // z = a, truncated to nearest integer
 ZZ RoundToZZ(const RR& a);            // ties are rounded to an even integer
 
 
+
+// @anchor{push}
+
+/**************************************************************************\
+
+                 Saving and restoring the current precision
+
+\**************************************************************************/
+
+
+class RRPush {
+public:
+   RRPush();  // saves the cuurent precision
+   ~RRPush(); // restores the saved precision
+
+private: 
+   RRPush(const RRPush&); // disable
+   void operator=(const RRPush&); // disable
+};
+
+
+// Example: 
+//
+// {
+//    RRPush push;  // don't forget to declare a variable!!
+//    RR::SetPrecsion(new_p);
+//    ...
+// } // old precsion restored when scope is exited
+
+
+class RROutputPush {
+public:
+   RROutputPush();   // saves the cuurent output precision
+   ~RROutputPush();  // restores the saved output precision
+
+private: 
+   RROutputPush(const RROutputPush&); // disable
+   void operator=(const RROutputPush&); // disable
+};
+
+
+// Example: 
+//
+// {
+//    RROutputPush push;  // don't forget to declare a variable!!
+//    RR::SetOutputPrecsion(new_op);
+//    ...
+// } // old output precsion restored when scope is exited
+
+
+
+
 /**************************************************************************\
 
                                  Miscelaneous
@@ -377,7 +444,9 @@ RR power2_RR(long e);
 void clear(RR& z);  // z = 0
 void set(RR& z);  // z = 1
 
-void swap(RR& a, RR& b);  // swaps a and b (by swapping pointers)
+void RR::swap(RR& a);
+void swap(RR& a, RR& b);  
+// swap (pointer swap)
 
 
 
@@ -500,8 +569,11 @@ RR ConvPrec(const quad_float& a, long p);
 void ConvPrec(RR& z, const char *s, long p); // read z from s
 RR ConvPrec(const char *s, long p);
 
-void InputPrec(RR& z, istream& s, long p); // read z from s
+istream& InputPrec(RR& z, istream& s, long p);  // read z from s
 RR InputPrec(istream& s, long p);
+// The functional variant raises an error if input
+// is missing or ill-formed, while procedural form
+// does not.
 
 void MakeRRPrec(RR& z, const ZZ& a, long e, long p); // z = a*2^e
 RR MakeRRPrec(const ZZ& a, long e, long p);

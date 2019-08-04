@@ -78,14 +78,14 @@ vec_pair_GF2EX_long NewDDF(const GF2EX& f, const GF2EX& h,
 // this routine uses external files to store some intermediate
 // results, which are removed if the routine terminates normally.
 // These files are stored in the current directory under names of the
-// form ddf-*-baby-* and ddf-*-giant-*.
+// form tmp-*.
 // The definition of "large" is controlled by the variable
 
-      extern double GF2EXFileThresh
+      extern thread_local double GF2EXFileThresh
 
 // which can be set by the user.  If the sizes of the tables
 // exceeds GF2EXFileThresh KB, external files are used.
-// Initial value is 256.
+// Initial value is NTL_FILE_THRESH (defined in tools.h).
 
 
 
@@ -130,6 +130,9 @@ vec_pair_GF2EX_long CanZass(const GF2EX& f, long verbose=0);
 // NOTE: these routines use modular composition.  The space
 // used for the required tables can be controlled by the variable
 // GF2EXArgBound (see GF2EX.txt).
+
+// NOTE: In most situations, you should use the CanZass factoring
+// routine, rather than Berlekamp: it is faster and uses less space.
 
 
 

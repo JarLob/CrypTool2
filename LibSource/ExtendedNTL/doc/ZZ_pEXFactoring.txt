@@ -57,14 +57,15 @@ vec_pair_ZZ_pEX_long NewDDF(const ZZ_pEX& f, const ZZ_pEX& h,
 // this routine uses external files to store some intermediate
 // results, which are removed if the routine terminates normally.
 // These files are stored in the current directory under names of the
-// form ddf-*-baby-* and ddf-*-giant-*.
+// form tmp-*.
 // The definition of "large" is controlled by the variable
 
-      extern double ZZ_pEXFileThresh
+      extern thread_local double ZZ_pEXFileThresh
 
 // which can be set by the user.  If the sizes of the tables
 // exceeds ZZ_pEXFileThresh KB, external files are used.
-// Initial value is 256.
+// Initial value is NTL_FILE_THRESH (defined in tools.h).
+
 
 
 

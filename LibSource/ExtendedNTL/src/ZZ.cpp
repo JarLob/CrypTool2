@@ -1,10 +1,22 @@
 
-
 #include <NTL/ZZ.h>
 #include <NTL/vec_ZZ.h>
+#include <NTL/Lazy.h>
+#include <NTL/fileio.h>
+#include <NTL/SmartPtr.h>
+
+#include <NTL/BasicThreadPool.h>
 
 
-#include <NTL/new.h>
+
+#if defined(NTL_HAVE_AVX2)
+#include <immintrin.h>
+#elif defined(NTL_HAVE_SSSE3)
+#include <emmintrin.h>
+#include <tmmintrin.h>
+#endif
+
+
 
 
 
@@ -13,26 +25,28 @@ NTL_START_IMPL
 
 
 
+
 const ZZ& ZZ::zero()
 {
-   static ZZ z;
+   
+   static const ZZ z; // GLOBAL (relies on C++11 thread-safe init)
    return z;
 }
 
 
 const ZZ& ZZ_expo(long e)
 {
-   static ZZ expo_helper;
+   NTL_TLS_LOCAL(ZZ, expo_helper);
+
    conv(expo_helper, e);
    return expo_helper;
 }
 
 
 
-
 void AddMod(ZZ& x, const ZZ& a, long b, const ZZ& n)
 {
-   static ZZ B;
+   NTL_ZZRegister(B);
    conv(B, b);
    AddMod(x, a, B, n);
 }
@@ -40,14 +54,14 @@ void AddMod(ZZ& x, const ZZ& a, long b, const ZZ& n)
 
 void SubMod(ZZ& x, const ZZ& a, long b, const ZZ& n)
 {
-   static ZZ B;
+   NTL_ZZRegister(B);
    conv(B, b);
    SubMod(x, a, B, n);
 }
 
 void SubMod(ZZ& x, long a, const ZZ& b, const ZZ& n)
 {
-   static ZZ A;
+   NTL_ZZRegister(A);
    conv(A, a);
    SubMod(x, A, b, n);
 }
@@ -56,9 +70,9 @@ void SubMod(ZZ& x, long a, const ZZ& b, const ZZ& n)
 
 // ****** input and output
 
-static long iodigits = 0;
-static long ioradix = 0;
 
+static NTL_CHEAP_THREAD_LOCAL long iodigits = 0;
+static NTL_CHEAP_THREAD_LOCAL long ioradix = 0;
 // iodigits is the greatest integer such that 10^{iodigits} < NTL_WSP_BOUND
 // ioradix = 10^{iodigits}
 
@@ -76,8 +90,9 @@ static void InitZZIO()
       ioradix = ioradix * 10;
    }
 
-   if (iodigits <= 0) Error("problem with I/O");
+   if (iodigits <= 0) TerminalError("problem with I/O");
 }
+
 
 istream& operator>>(istream& s, ZZ& x)
 {
@@ -86,9 +101,9 @@ istream& operator>>(istream& s, ZZ& x)
    long sign;
    long ndigits;
    long acc;
-   static ZZ a;
+   NTL_ZZRegister(a);
 
-   if (!s) Error("bad ZZ input");
+   if (!s) NTL_INPUT_ERROR(s, "bad ZZ input");
 
    if (!iodigits) InitZZIO();
 
@@ -107,7 +122,7 @@ istream& operator>>(istream& s, ZZ& x)
 
    cval = CharToIntVal(c);
 
-   if (cval < 0 || cval > 9) Error("bad ZZ input");
+   if (cval < 0 || cval > 9) NTL_INPUT_ERROR(s, "bad ZZ input");
 
    ndigits = 0;
    acc = 0;
@@ -142,7 +157,6 @@ istream& operator>>(istream& s, ZZ& x)
       negate(a, a);
 
    x = a;
-
    return s;
 }
 
@@ -153,48 +167,29 @@ istream& operator>>(istream& s, ZZ& x)
 
 struct _ZZ_local_stack {
    long top;
-   long alloc;
-   long *elts;
+   Vec<long> data;
 
-   _ZZ_local_stack() { top = -1; alloc = 0; elts = 0; }
-   ~_ZZ_local_stack() { }
+   _ZZ_local_stack() { top = -1; }
 
-   long pop() { return elts[top--]; }
+   long pop() { return data[top--]; }
    long empty() { return (top == -1); }
    void push(long x);
 };
 
 void _ZZ_local_stack::push(long x)
 {
-   if (alloc == 0) {
-      alloc = 100;
-      elts = (long *) NTL_MALLOC(alloc, sizeof(long), 0);
-   }
+   if (top+1 >= data.length()) 
+      data.SetLength(max(32, long(1.414*data.length())));
 
    top++;
-
-   if (top + 1 > alloc) {
-      alloc = 2*alloc;
-      elts = (long *) NTL_REALLOC(elts, alloc, sizeof(long), 0);
-   }
-
-   if (!elts) {
-      Error("out of space in ZZ output");
-   }
-
-   elts[top] = x;
+   data[top] = x;
 }
 
 
 static
 void PrintDigits(ostream& s, long d, long justify)
 {
-   static char *buf = 0;
-
-   if (!buf) {
-      buf = (char *) NTL_MALLOC(iodigits, 1, 0);
-      if (!buf) Error("out of memory");
-   }
+   NTL_TLS_LOCAL_INIT(Vec<char>, buf, (INIT_SIZE, iodigits));
 
    long i = 0;
 
@@ -223,8 +218,8 @@ void PrintDigits(ostream& s, long d, long justify)
 
 ostream& operator<<(ostream& s, const ZZ& a)
 {
-   static ZZ b;
-   static _ZZ_local_stack S;
+   ZZ b;
+   _ZZ_local_stack S;
    long r;
    long k;
 
@@ -267,12 +262,12 @@ long GCD(long a, long b)
    long u, v, t, x;
 
    if (a < 0) {
-      if (a < -NTL_MAX_LONG) Error("GCD: integer overflow");
+      if (a < -NTL_MAX_LONG) ResourceError("GCD: integer overflow");
       a = -a;
    }
 
    if (b < 0) {
-      if (b < -NTL_MAX_LONG) Error("GCD: integer overflow");
+      if (b < -NTL_MAX_LONG) ResourceError("GCD: integer overflow");
       b = -b;
    }
 
@@ -303,13 +298,13 @@ void XGCD(long& d, long& s, long& t, long a, long b)
    long aneg = 0, bneg = 0;
 
    if (a < 0) {
-      if (a < -NTL_MAX_LONG) Error("XGCD: integer overflow");
+      if (a < -NTL_MAX_LONG) ResourceError("XGCD: integer overflow");
       a = -a;
       aneg = 1;
    }
 
    if (b < 0) {
-      if (b < -NTL_MAX_LONG) Error("XGCD: integer overflow");
+      if (b < -NTL_MAX_LONG) ResourceError("XGCD: integer overflow");
       b = -b;
       bneg = 1;
    }
@@ -342,13 +337,33 @@ void XGCD(long& d, long& s, long& t, long a, long b)
    t = v1;
 }
    
+long InvModStatus(long& x, long a, long n)
+{
+   long d, s, t;
+
+   XGCD(d, s, t, a, n);
+   if (d != 1) {
+      x = d;
+      return 1;
+   }
+   else {
+      if (s < 0)
+         x = s + n;
+      else
+         x = s;
+
+      return 0;
+   }
+}
 
 long InvMod(long a, long n)
 {
    long d, s, t;
 
    XGCD(d, s, t, a, n);
-   if (d != 1) Error("InvMod: inverse undefined");
+   if (d != 1) {
+      InvModError("InvMod: inverse undefined");
+   }
    if (s < 0)
       return s + n;
    else
@@ -380,8 +395,40 @@ long PowerMod(long a, long ee, long n)
    return x;
 }
 
-long ProbPrime(long n, long NumTests)
+static
+long MillerWitness_sp(long n, long x)
 {
+   long m, y, z;
+   long j, k;
+
+   if (x == 0) return 0;
+
+   m = n - 1;
+   k = 0;
+   while((m & 1) == 0) {
+      m = m >> 1;
+      k++;
+   }
+   // n - 1 == 2^k * m, m odd
+
+   z = PowerMod(x, m, n);
+   if (z == 1) return 0;
+
+   j = 0;
+   do {
+      y = z;
+      z = MulMod(y, y, n);
+      j++;
+   } while (j != k && z != 1);
+
+   if (z != 1 || y != n-1) return 1;
+   return 0;
+}
+
+long ProbPrime(long n, long NumTrials)
+{
+   if (NumTrials < 0) NumTrials = 0;
+
    long m, x, y, z;
    long i, j, k;
 
@@ -400,8 +447,14 @@ long ProbPrime(long n, long NumTests)
    if (n == 7) return 1;
    if (n % 7 == 0) return 0;
 
+   if (n == 11) return 1;
+   if (n % 11 == 0) return 0;
+
+   if (n == 13) return 1;
+   if (n % 13 == 0) return 0;
+
    if (n >= NTL_SP_BOUND) {
-      return ProbPrime(to_ZZ(n), NumTests);
+      return ProbPrime(to_ZZ(n), NumTrials);
    }
 
    m = n - 1;
@@ -413,14 +466,20 @@ long ProbPrime(long n, long NumTests)
 
    // n - 1 == 2^k * m, m odd
 
-   for (i = 0; i < NumTests; i++) {
-      do {
-         x = RandomBnd(n);
-      } while (x == 0);
-      // x == 0 is not a useful candidtae for a witness!
+   for (i = 0; i < NumTrials+1; i++) {
+      // for consistency with the multi-precision version,
+      // we first see if 2 is a witness, so we really do 
+      // NumTrials+1 tests
 
+      if (i == 0) 
+         x = 2;
+      else {
+	 do {
+	    x = RandomBnd(n);
+	 } while (x == 0);
+         // x == 0 is not a useful candidate for a witness!
+      }
 
-      if (x == 0) continue;
       z = PowerMod(x, m, n);
       if (z == 1) continue;
    
@@ -440,7 +499,12 @@ long ProbPrime(long n, long NumTests)
 
 long MillerWitness(const ZZ& n, const ZZ& x)
 {
+   if (n.SinglePrecision()) {
+      return MillerWitness_sp(to_long(n), to_long(x));
+   }
+
    ZZ m, y, z;
+
    long j, k;
 
    if (x == 0) return 0;
@@ -471,6 +535,16 @@ long MillerWitness(const ZZ& n, const ZZ& x)
 // It is computed a bit on the "low" side, since being a bit
 // low doesn't hurt much, but being too high can hurt a lot.
 
+// See the paper "Fast generation of prime numbers and secure
+// public-key cryptographic parameters" by Ueli Maurer.
+// In that paper, it is calculated that the optimal bound in
+// roughly T_exp/T_div, where T_exp is the time for an exponentiation
+// and T_div is is the time for a single precision division.
+// Of course, estimating these times is a bit tricky, and
+// the values we use are based on experimentation, assuming
+// GMP is being used.  I've tested this on various bit lengths
+// up to 16,000, and they seem to be pretty close to optimal. 
+
 static
 long ComputePrimeBound(long bn)
 {
@@ -491,11 +565,15 @@ long ComputePrimeBound(long bn)
       prime_bnd = bn*fn;
 
    return prime_bnd;
+
+
 }
 
 
 long ProbPrime(const ZZ& n, long NumTrials)
 {
+   if (NumTrials < 0) NumTrials = 0;
+
    if (n <= 1) return 0;
 
    if (n.SinglePrecision()) {
@@ -543,10 +621,149 @@ long ProbPrime(const ZZ& n, long NumTrials)
 }
 
 
+static
+void MultiThreadedRandomPrime(ZZ& n, long l, long NumTrials)
+{
+
+   long nt = AvailableThreads();
+
+
+
+   const long LOCAL_ITER_BOUND = 8; 
+   // since resetting the PRG comes at a certain cost,
+   // we perform a few iterations with each reset to
+   // amortize the reset cost. 
+
+   unsigned long initial_counter = 0;
+   ZZ seed;
+   RandomBits(seed, 256);
+
+   for (;;) {
+
+      AtomicLowWaterMark low_water_mark(-1UL);
+      AtomicCounter counter(initial_counter);
+
+      Vec< UniquePtr<ZZ> > result(INIT_SIZE, nt);
+      Vec<long> result_ctr(INIT_SIZE, nt, -1UL);
+
+      NTL_EXEC_INDEX(nt, index)
+
+         RandomStreamPush push;
+
+	 SetSeed(seed);
+	 RandomStream& stream = GetCurrentRandomStream();
+
+	 ZZ cand;
+
+	 while (low_water_mark == -1UL) {
+
+	    unsigned long local_ctr = counter.inc();
+            if (local_ctr >> (NTL_BITS_PER_NONCE-1)) {
+               // counter overflow...rather academic
+               break;
+            }
+
+	    stream.set_nonce(local_ctr);
+	    
+	    for (long iter = 0; iter < LOCAL_ITER_BOUND && 
+				local_ctr <= low_water_mark; iter++) {
+
+	       RandomLen(cand, l);
+	       if (!IsOdd(cand)) add(cand, cand, 1);
+
+	       if (ProbPrime(cand, 0)) { 
+		  result[index].make(cand);
+		  result_ctr[index] = local_ctr;
+		  low_water_mark.UpdateMin(local_ctr);
+		  break;
+	       }
+	    }
+	 }
+
+      NTL_EXEC_INDEX_END
+
+      // find index of low_water_mark
+
+      unsigned long low_water_mark1 = low_water_mark;
+      unsigned long low_water_index = -1;
+
+      for (long index = 0; index < nt; index++) {
+	 if (result_ctr[index] == low_water_mark1) {
+	    low_water_index = index;
+	    break;
+	 }
+      }
+
+      if (low_water_index == -1) {
+         // counter overflow...rather academic
+         initial_counter = 0;
+         RandomBits(seed, 256);
+         continue;
+      }
+
+      ZZ N;
+      N = *result[low_water_index];
+
+      Vec<ZZ> W(INIT_SIZE, NumTrials);
+
+      for (long i = 0; i < NumTrials; i++) {
+         do { 
+            RandomBnd(W[i], N);
+         } while (W[i] == 0);
+      }
+
+      AtomicBool tests_pass(true);
+
+      NTL_EXEC_RANGE(NumTrials, first, last)
+
+         for (long i = first; i < last && tests_pass; i++) {
+            if (MillerWitness(N, W[i])) tests_pass = false;
+         }
+
+      NTL_EXEC_RANGE_END
+
+      if (tests_pass) {
+         n = N;
+         return;
+      }
+
+      // very unlikey to get here
+      initial_counter = low_water_mark1 + 1;
+   }
+}
+
+
 void RandomPrime(ZZ& n, long l, long NumTrials)
 {
+   if (NumTrials < 0) NumTrials = 0;
+
+   if (l >= 256) { 
+      MultiThreadedRandomPrime(n, l, NumTrials); 
+      return;
+   }
+
    if (l <= 1)
-      Error("RandomPrime: l out of range");
+      LogicError("RandomPrime: l out of range");
+
+   if (l == 2) {
+      if (RandomBnd(2))
+         n = 3;
+      else
+         n = 2;
+
+      return;
+   }
+
+   do {
+      RandomLen(n, l);
+      if (!IsOdd(n)) add(n, n, 1);
+   } while (!ProbPrime(n, NumTrials));
+}
+
+void OldRandomPrime(ZZ& n, long l, long NumTrials)
+{
+   if (l <= 1)
+      LogicError("RandomPrime: l out of range");
 
    if (l == 2) {
       if (RandomBnd(2))
@@ -593,7 +810,7 @@ long NextPrime(long m, long NumTrials)
       x++;
 
    if (x >= NTL_SP_BOUND)
-      Error("NextPrime: no more primes");
+      ResourceError("NextPrime: no more primes");
 
    return x;
 }
@@ -617,29 +834,12 @@ long NextPowerOfTwo(long m)
    }
 
    if (k >= NTL_BITS_PER_LONG-1)
-      Error("NextPowerOfTwo: overflow");
+      ResourceError("NextPowerOfTwo: overflow");
 
    return k;
 }
 
 
-
-long NumBits(long a)
-{
-   unsigned long aa;
-   if (a < 0) 
-      aa = - ((unsigned long) a);
-   else
-      aa = a;
-
-   long k = 0;
-   while (aa) {
-      k++;
-      aa = aa >> 1;
-   }
-
-   return k;
-}
 
 
 long bit(long a, long k)
@@ -660,7 +860,8 @@ long bit(long a, long k)
 
 long divide(ZZ& q, const ZZ& a, const ZZ& b)
 {
-   static ZZ qq, r;
+   NTL_ZZRegister(qq);
+   NTL_ZZRegister(r);
 
    if (IsZero(b)) {
       if (IsZero(a)) {
@@ -685,7 +886,7 @@ long divide(ZZ& q, const ZZ& a, const ZZ& b)
 
 long divide(const ZZ& a, const ZZ& b)
 {
-   static ZZ r;
+   NTL_ZZRegister(r);
 
    if (IsZero(b)) return IsZero(a);
    if (IsOne(b)) return 1;
@@ -696,7 +897,7 @@ long divide(const ZZ& a, const ZZ& b)
 
 long divide(ZZ& q, const ZZ& a, long b)
 {
-   static ZZ qq;
+   NTL_ZZRegister(qq);
 
    if (!b) {
       if (IsZero(a)) {
@@ -728,13 +929,59 @@ long divide(const ZZ& a, long b)
    long r = rem(a,  b);
    return (r == 0);
 }
-   
 
+
+void InvMod(ZZ& x, const ZZ& a, const ZZ& n)
+{
+   // NOTE: the underlying LIP routines write to the first argument,
+   // even if inverse is undefined
+
+   NTL_ZZRegister(xx);
+   if (InvModStatus(xx, a, n)) 
+      InvModError("InvMod: inverse undefined", a, n);
+   x = xx;
+}
+
+void PowerMod(ZZ& x, const ZZ& a, const ZZ& e, const ZZ& n)
+{
+   // NOTE: this ensures that all modular inverses are computed
+   // in the routine InvMod above, rather than the LIP-internal
+   // modular inverse routine
+   if (e < 0) {
+      ZZ a_inv;
+      ZZ e_neg;
+
+      InvMod(a_inv, a, n);
+      negate(e_neg, e);
+      LowLevelPowerMod(x, a_inv, e_neg, n);
+   }
+   else
+      LowLevelPowerMod(x, a, e, n); 
+}
+   
+#ifdef NTL_EXCEPTIONS
+
+void InvModError(const char *s, const ZZ& a, const ZZ& n)
+{
+   throw InvModErrorObject(s, a, n); 
+}
+
+#else
+
+void InvModError(const char *s, const ZZ& a, const ZZ& n)
+{
+   TerminalError(s);
+}
+
+
+#endif
 
 long RandomPrime_long(long l, long NumTrials)
 {
+   if (NumTrials < 0) NumTrials = 0;
+
    if (l <= 1 || l >= NTL_BITS_PER_LONG)
-      Error("RandomPrime: length out of range");
+      ResourceError("RandomPrime: length out of range");
 
    long n;
    do {
@@ -745,20 +992,18 @@ long RandomPrime_long(long l, long NumTrials)
 }
 
 
+static Lazy< Vec<char> > lowsieve_storage;
+// This is a GLOBAL VARIABLE
+
+
 PrimeSeq::PrimeSeq()
 {
    movesieve = 0;
-   movesieve_mem = 0;
    pshift = -1;
    pindex = -1;
    exhausted = 0;
 }
 
-PrimeSeq::~PrimeSeq()
-{
-   if (movesieve_mem)
-      free(movesieve_mem);
-}
 
 long PrimeSeq::next()
 {
@@ -772,7 +1017,7 @@ long PrimeSeq::next()
    }
 
    for (;;) {
-      char *p = movesieve;
+      const char *p = movesieve;
       long i = pindex;
 
       while ((++i) < NTL_PRIME_BND) {
@@ -794,8 +1039,6 @@ long PrimeSeq::next()
    }
 }
 
-static char *lowsieve = 0;
-
 void PrimeSeq::shift(long newshift)
 {
    long i;
@@ -805,32 +1048,26 @@ void PrimeSeq::shift(long newshift)
    long ibound;
    char *p;
 
-   if (!lowsieve)
+   if (!lowsieve_storage.built())
       start();
 
-   pindex = -1;
-   exhausted = 0;
+   const char *lowsieve = lowsieve_storage->elts();
+
 
    if (newshift < 0) {
       pshift = -1;
-      return;
    }
-
-   if (newshift == pshift) return;
-
-   pshift = newshift;
-
-   if (pshift == 0) {
+   else if (newshift == 0) {
+      pshift = 0;
       movesieve = lowsieve;
    } 
-   else {
-      if (!movesieve_mem) {
-         movesieve_mem = (char *) NTL_MALLOC(NTL_PRIME_BND, 1, 0);
-         if (!movesieve_mem) 
-            Error("out of memory in PrimeSeq");
+   else if (newshift != pshift) {
+      if (movesieve_mem.length() == 0) {
+         movesieve_mem.SetLength(NTL_PRIME_BND);
       }
 
-      p = movesieve = movesieve_mem;
+      pshift = newshift;
+      movesieve = p = movesieve_mem.elts();
       for (i = 0; i < NTL_PRIME_BND; i++)
          p[i] = 1;
 
@@ -849,6 +1086,9 @@ void PrimeSeq::shift(long newshift)
          jstep += 2;
       }
    }
+
+   pindex = -1;
+   exhausted = 0;
 }
 
 
@@ -861,22 +1101,32 @@ void PrimeSeq::start()
    long ibnd;
    char *p;
 
-   p = lowsieve = (char *) NTL_MALLOC(NTL_PRIME_BND, 1, 0);
-   if (!p)
-      Error("out of memory in PrimeSeq");
+   do {
+      Lazy< Vec<char> >::Builder builder(lowsieve_storage);
+      if (!builder()) break;
 
-   for (i = 0; i < NTL_PRIME_BND; i++)
-      p[i] = 1;
-      
-   jstep = 1;
-   jstart = -1;
-   ibnd = (SqrRoot(2 * NTL_PRIME_BND + 1) - 3) / 2;
-   for (i = 0; i <= ibnd; i++) {
-      jstart += 2 * ((jstep += 2) - 1);
-      if (p[i])
-         for (j = jstart; j < NTL_PRIME_BND; j += jstep)
-            p[j] = 0;
-   }
+      UniquePtr< Vec<char> > ptr;
+      ptr.make();
+      ptr->SetLength(NTL_PRIME_BND);
+
+      p = ptr->elts();
+
+      for (i = 0; i < NTL_PRIME_BND; i++)
+         p[i] = 1;
+         
+      jstep = 1;
+      jstart = -1;
+      ibnd = (SqrRoot(2 * NTL_PRIME_BND + 1) - 3) / 2;
+      for (i = 0; i <= ibnd; i++) {
+         jstart += 2 * ((jstep += 2) - 1);
+         if (p[i])
+            for (j = jstart; j < NTL_PRIME_BND; j += jstep)
+               p[j] = 0;
+      }
+
+      builder.move(ptr);
+   } while (0);
+
 }
 
 void PrimeSeq::reset(long b)
@@ -1104,7 +1354,7 @@ long CRT(ZZ& gg, ZZ& a, long G, long p)
 
    long modified = 0;
 
-   static ZZ g;
+   NTL_ZZRegister(g);
 
    if (!CRTInRange(gg, a)) {
       modified = 1;
@@ -1196,16 +1446,9 @@ long CRT(ZZ& gg, ZZ& a, const ZZ& G, const ZZ& p)
 
 
 
-void sub(ZZ& x, const ZZ& a, long b)
-{
-   static ZZ B;
-   conv(B, b);
-   sub(x, a, B);
-}
-
 void sub(ZZ& x, long a, const ZZ& b)
 {
-   static ZZ A;
+   NTL_ZZRegister(A);
    conv(A, a);
    sub(x, A, b);
 }
@@ -1213,100 +1456,30 @@ void sub(ZZ& x, long a, const ZZ& b)
 
 void power2(ZZ& x, long e)
 {
-   if (e < 0) Error("power2: negative exponent");
+   if (e < 0) ArithmeticError("power2: negative exponent");
    set(x);
    LeftShift(x, x, e);
 }
 
    
-void conv(ZZ& x, const char *s)
-{
-   long c;
-   long cval;
-   long sign;
-   long ndigits;
-   long acc;
-   long i = 0;
-
-   static ZZ a;
-
-   if (!s) Error("bad ZZ input");
-
-   if (!iodigits) InitZZIO();
-
-   a = 0;
-
-   c = s[i];
-   while (IsWhiteSpace(c)) {
-      i++;
-      c = s[i];
-   }
-
-   if (c == '-') {
-      sign = -1;
-      i++;
-      c = s[i];
-   }
-   else
-      sign = 1;
-
-   cval = CharToIntVal(c);
-   if (cval < 0 || cval > 9) Error("bad ZZ input");
-
-   ndigits = 0;
-   acc = 0;
-   while (cval >= 0 && cval <= 9) {
-      acc = acc*10 + cval;
-      ndigits++;
-
-      if (ndigits == iodigits) {
-         mul(a, a, ioradix);
-         add(a, a, acc);
-         ndigits = 0;
-         acc = 0;
-      }
-
-      i++;
-      c = s[i];
-      cval = CharToIntVal(c);
-   }
-
-   if (ndigits != 0) {
-      long mpy = 1;
-      while (ndigits > 0) {
-         mpy = mpy * 10;
-         ndigits--;
-      }
-
-      mul(a, a, mpy);
-      add(a, a, acc);
-   }
-
-   if (sign == -1)
-      negate(a, a);
-
-   x = a;
-}
-
-
 
 void bit_and(ZZ& x, const ZZ& a, long b)
 {
-   static ZZ B;
+   NTL_ZZRegister(B);
    conv(B, b);
    bit_and(x, a, B);
 }
 
 void bit_or(ZZ& x, const ZZ& a, long b)
 {
-   static ZZ B;
+   NTL_ZZRegister(B);
    conv(B, b);
    bit_or(x, a, B);
 }
 
 void bit_xor(ZZ& x, const ZZ& a, long b)
 {
-   static ZZ B;
+   NTL_ZZRegister(B);
    conv(B, b);
    bit_xor(x, a, B);
 }
@@ -1314,7 +1487,7 @@ void bit_xor(ZZ& x, const ZZ& a, long b)
 
 long power_long(long a, long e)
 {
-   if (e < 0) Error("power_long: negative exponent");
+   if (e < 0) ArithmeticError("power_long: negative exponent");
 
    if (e == 0) return 1;
 
@@ -1339,483 +1512,1115 @@ long power_long(long a, long e)
    return to_long(res);
 }
 
-//  RANDOM NUMBER GENERATION
-
-// Idea for this PRNG.  Iteratively hash seed using md5 
-// to get 256 bytes to initialize arc4.
-// Then use arc4 to get a pseudo-random byte stream.
-
-// I've taken care that the pseudo-random numbers generated by
-// the routines RandomBnd, RandomBits, and RandomLen 
-// are completely platform independent.
-
-// I make use of the md5 compression function,
-// which I've modified to work on 64-bit machines
 
 
-/*
- *  BEGIN RSA's md5 stuff
- *
- */
-
-/*
- **********************************************************************
- ** md5.c                                                            **
- ** RSA Data Security, Inc. MD5 Message Digest Algorithm             **
- ** Created: 2/17/90 RLR                                             **
- ** Revised: 1/91 SRD,AJ,BSK,JT Reference C Version                  **
- **********************************************************************
- */
-
-/*
- **********************************************************************
- ** Copyright (C) 1990, RSA Data Security, Inc. All rights reserved. **
- **                                                                  **
- ** License to copy and use this software is granted provided that   **
- ** it is identified as the "RSA Data Security, Inc. MD5 Message     **
- ** Digest Algorithm" in all material mentioning or referencing this **
- ** software or this function.                                       **
- **                                                                  **
- ** License is also granted to make and use derivative works         **
- ** provided that such works are identified as "derived from the RSA **
- ** Data Security, Inc. MD5 Message Digest Algorithm" in all         **
- ** material mentioning or referencing the derived work.             **
- **                                                                  **
- ** RSA Data Security, Inc. makes no representations concerning      **
- ** either the merchantability of this software or the suitability   **
- ** of this software for any particular purpose.  It is provided "as **
- ** is" without express or implied warranty of any kind.             **
- **                                                                  **
- ** These notices must be retained in any copies of any part of this **
- ** documentation and/or software.                                   **
- **********************************************************************
- */
+// ======================= new PRG stuff ======================
 
 
-#if (NTL_BITS_PER_LONG <= 32)
-#define TRUNC32(x) (x)
+
+
+#if (NTL_BITS_PER_INT32 == 32)
+#define INT32MASK(x) (x)
 #else
-#define TRUNC32(x) ((x) & ((1UL << 32)-1UL))
+#define INT32MASK(x) ((x) & _ntl_uint32(0xffffffff))
 #endif
 
-/* F, G and H are basic MD5 functions: selection, majority, parity */
-#define F(x, y, z) (((x) & (y)) | ((~x) & (z)))
-#define G(x, y, z) (((x) & (z)) | ((y) & (~z)))
-#define H(x, y, z) ((x) ^ (y) ^ (z))
-#define I(x, y, z) (TRUNC32((y) ^ ((x) | (~z)))) 
-
-/* ROTATE_LEFT rotates x left n bits */
-#define ROTATE_LEFT(x, n) (TRUNC32(((x) << (n)) | ((x) >> (32-(n)))))
-
-/* FF, GG, HH, and II transformations for rounds 1, 2, 3, and 4 */
-/* Rotation is separate from addition to prevent recomputation */
-#define FF(a, b, c, d, x, s, ac) \
-  {(a) = TRUNC32((a) + F((b), (c), (d)) + (x) + (ac)); \
-   (a) = ROTATE_LEFT((a), (s)); \
-   (a) = TRUNC32((a) + (b)); \
-  }
-#define GG(a, b, c, d, x, s, ac) \
-  {(a) = TRUNC32((a) + G((b), (c), (d)) + (x) + (ac)); \
-   (a) = ROTATE_LEFT((a), (s)); \
-   (a) = TRUNC32((a) + (b)); \
-  }
-#define HH(a, b, c, d, x, s, ac) \
-  {(a) = TRUNC32((a) + H((b), (c), (d)) + (x) + (ac)); \
-   (a) = ROTATE_LEFT((a), (s)); \
-   (a) = TRUNC32((a) + (b)); \
-  }
-#define II(a, b, c, d, x, s, ac) \
-  {(a) = TRUNC32((a) + I((b), (c), (d)) + (x) + (ac)); \
-   (a) = ROTATE_LEFT((a), (s)); \
-   (a) = TRUNC32((a) + (b)); \
-  }
 
 
+// SHA256 code adapted from an implementauin by Brad Conte.
+// The following is from his original source files.
+/*********************************************************************
+* Filename:   sha256.c
+* Author:     Brad Conte (brad AT bradconte.com)
+* Copyright:
+* Disclaimer: This code is presented "as is" without any guarantees.
+* Details:    Implementation of the SHA-256 hashing algorithm.
+              SHA-256 is one of the three algorithms in the SHA2
+              specification. The others, SHA-384 and SHA-512, are not
+              offered in this implementation.
+              Algorithm specification can be found here:
+               * http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
+              This implementation uses little endian byte order.
+*********************************************************************/
 
-static
-void MD5_default_IV(unsigned long *buf)
+// And the following is from the description at 
+// https://github.com/B-Con/crypto-algorithms
+
+/*********************************************************************
+
+These are basic implementations of standard cryptography algorithms, written by
+Brad Conte (brad@bradconte.com) from scratch and without any cross-licensing.
+They exist to provide publically accessible, restriction-free implementations
+of popular cryptographic algorithms, like AES and SHA-1. These are primarily
+intended for educational and pragmatic purposes (such as comparing a
+specification to actual implementation code, or for building an internal
+application that computes test vectors for a product). The algorithms have been
+tested against standard test vectors.
+
+This code is released into the public domain free of any restrictions. The
+author requests acknowledgement if the code is used, but does not require it.
+This code is provided free of any liability and without any quality claims by
+the author.
+
+Note that these are not cryptographically secure implementations. They have no
+resistence to side-channel attacks and should not be used in contexts that need
+cryptographically secure implementations.
+
+These algorithms are not optimized for speed or space. They are primarily
+designed to be easy to read, although some basic optimization techniques have
+been employed.
+
+*********************************************************************/
+
+
+
+
+
+
+#define SHA256_BLOCKSIZE (64)
+#define SHA256_HASHSIZE  (32)
+
+// DBL_INT_ADD treats two unsigned ints a and b as one 64-bit integer and adds c to it
+static inline
+void DBL_INT_ADD(_ntl_uint32& a, _ntl_uint32& b, _ntl_uint32 c)
 {
-   buf[0] = 0x67452301UL;
-   buf[1] = 0xefcdab89UL;
-   buf[2] = 0x98badcfeUL;
-   buf[3] = 0x10325476UL;
+   _ntl_uint32 aa = INT32MASK(a);
+   if (aa > INT32MASK(_ntl_uint32(0xffffffff) - c)) b++;
+   a = aa + c;
 }
 
+#define ROTLEFT(a,b) (((a) << (b)) | (INT32MASK(a) >> (32-(b))))
+#define ROTRIGHT(a,b) ((INT32MASK(a) >> (b)) | ((a) << (32-(b))))
 
+#define CH(x,y,z) (((x) & (y)) ^ (~(x) & (z)))
+#define MAJ(x,y,z) (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
+#define EP0(x) (ROTRIGHT(x,2) ^ ROTRIGHT(x,13) ^ ROTRIGHT(x,22))
+#define EP1(x) (ROTRIGHT(x,6) ^ ROTRIGHT(x,11) ^ ROTRIGHT(x,25))
+#define SIG0(x) (ROTRIGHT(x,7) ^ ROTRIGHT(x,18) ^ (INT32MASK(x) >> 3))
+#define SIG1(x) (ROTRIGHT(x,17) ^ ROTRIGHT(x,19) ^ (INT32MASK(x) >> 10))
 
-/* Basic MD5 step. Transform buf based on in.
- */
-
-static
-void MD5_compress(unsigned long *buf, unsigned long *in)
-{
-  unsigned long a = buf[0], b = buf[1], c = buf[2], d = buf[3];
-
-  /* Round 1 */
-#define S11 7
-#define S12 12
-#define S13 17
-#define S14 22
-  FF ( a, b, c, d, in[ 0], S11, 3614090360UL); /* 1 */
-  FF ( d, a, b, c, in[ 1], S12, 3905402710UL); /* 2 */
-  FF ( c, d, a, b, in[ 2], S13,  606105819UL); /* 3 */
-  FF ( b, c, d, a, in[ 3], S14, 3250441966UL); /* 4 */
-  FF ( a, b, c, d, in[ 4], S11, 4118548399UL); /* 5 */
-  FF ( d, a, b, c, in[ 5], S12, 1200080426UL); /* 6 */
-  FF ( c, d, a, b, in[ 6], S13, 2821735955UL); /* 7 */
-  FF ( b, c, d, a, in[ 7], S14, 4249261313UL); /* 8 */
-  FF ( a, b, c, d, in[ 8], S11, 1770035416UL); /* 9 */
-  FF ( d, a, b, c, in[ 9], S12, 2336552879UL); /* 10 */
-  FF ( c, d, a, b, in[10], S13, 4294925233UL); /* 11 */
-  FF ( b, c, d, a, in[11], S14, 2304563134UL); /* 12 */
-  FF ( a, b, c, d, in[12], S11, 1804603682UL); /* 13 */
-  FF ( d, a, b, c, in[13], S12, 4254626195UL); /* 14 */
-  FF ( c, d, a, b, in[14], S13, 2792965006UL); /* 15 */
-  FF ( b, c, d, a, in[15], S14, 1236535329UL); /* 16 */
-
-  /* Round 2 */
-#define S21 5
-#define S22 9
-#define S23 14
-#define S24 20
-  GG ( a, b, c, d, in[ 1], S21, 4129170786UL); /* 17 */
-  GG ( d, a, b, c, in[ 6], S22, 3225465664UL); /* 18 */
-  GG ( c, d, a, b, in[11], S23,  643717713UL); /* 19 */
-  GG ( b, c, d, a, in[ 0], S24, 3921069994UL); /* 20 */
-  GG ( a, b, c, d, in[ 5], S21, 3593408605UL); /* 21 */
-  GG ( d, a, b, c, in[10], S22,   38016083UL); /* 22 */
-  GG ( c, d, a, b, in[15], S23, 3634488961UL); /* 23 */
-  GG ( b, c, d, a, in[ 4], S24, 3889429448UL); /* 24 */
-  GG ( a, b, c, d, in[ 9], S21,  568446438UL); /* 25 */
-  GG ( d, a, b, c, in[14], S22, 3275163606UL); /* 26 */
-  GG ( c, d, a, b, in[ 3], S23, 4107603335UL); /* 27 */
-  GG ( b, c, d, a, in[ 8], S24, 1163531501UL); /* 28 */
-  GG ( a, b, c, d, in[13], S21, 2850285829UL); /* 29 */
-  GG ( d, a, b, c, in[ 2], S22, 4243563512UL); /* 30 */
-  GG ( c, d, a, b, in[ 7], S23, 1735328473UL); /* 31 */
-  GG ( b, c, d, a, in[12], S24, 2368359562UL); /* 32 */
-
-  /* Round 3 */
-#define S31 4
-#define S32 11
-#define S33 16
-#define S34 23
-  HH ( a, b, c, d, in[ 5], S31, 4294588738UL); /* 33 */
-  HH ( d, a, b, c, in[ 8], S32, 2272392833UL); /* 34 */
-  HH ( c, d, a, b, in[11], S33, 1839030562UL); /* 35 */
-  HH ( b, c, d, a, in[14], S34, 4259657740UL); /* 36 */
-  HH ( a, b, c, d, in[ 1], S31, 2763975236UL); /* 37 */
-  HH ( d, a, b, c, in[ 4], S32, 1272893353UL); /* 38 */
-  HH ( c, d, a, b, in[ 7], S33, 4139469664UL); /* 39 */
-  HH ( b, c, d, a, in[10], S34, 3200236656UL); /* 40 */
-  HH ( a, b, c, d, in[13], S31,  681279174UL); /* 41 */
-  HH ( d, a, b, c, in[ 0], S32, 3936430074UL); /* 42 */
-  HH ( c, d, a, b, in[ 3], S33, 3572445317UL); /* 43 */
-  HH ( b, c, d, a, in[ 6], S34,   76029189UL); /* 44 */
-  HH ( a, b, c, d, in[ 9], S31, 3654602809UL); /* 45 */
-  HH ( d, a, b, c, in[12], S32, 3873151461UL); /* 46 */
-  HH ( c, d, a, b, in[15], S33,  530742520UL); /* 47 */
-  HH ( b, c, d, a, in[ 2], S34, 3299628645UL); /* 48 */
-
-  /* Round 4 */
-#define S41 6
-#define S42 10
-#define S43 15
-#define S44 21
-  II ( a, b, c, d, in[ 0], S41, 4096336452UL); /* 49 */
-  II ( d, a, b, c, in[ 7], S42, 1126891415UL); /* 50 */
-  II ( c, d, a, b, in[14], S43, 2878612391UL); /* 51 */
-  II ( b, c, d, a, in[ 5], S44, 4237533241UL); /* 52 */
-  II ( a, b, c, d, in[12], S41, 1700485571UL); /* 53 */
-  II ( d, a, b, c, in[ 3], S42, 2399980690UL); /* 54 */
-  II ( c, d, a, b, in[10], S43, 4293915773UL); /* 55 */
-  II ( b, c, d, a, in[ 1], S44, 2240044497UL); /* 56 */
-  II ( a, b, c, d, in[ 8], S41, 1873313359UL); /* 57 */
-  II ( d, a, b, c, in[15], S42, 4264355552UL); /* 58 */
-  II ( c, d, a, b, in[ 6], S43, 2734768916UL); /* 59 */
-  II ( b, c, d, a, in[13], S44, 1309151649UL); /* 60 */
-  II ( a, b, c, d, in[ 4], S41, 4149444226UL); /* 61 */
-  II ( d, a, b, c, in[11], S42, 3174756917UL); /* 62 */
-  II ( c, d, a, b, in[ 2], S43,  718787259UL); /* 63 */
-  II ( b, c, d, a, in[ 9], S44, 3951481745UL); /* 64 */
-
-  buf[0] = TRUNC32(buf[0] + a);
-  buf[1] = TRUNC32(buf[1] + b);
-  buf[2] = TRUNC32(buf[2] + c);
-  buf[3] = TRUNC32(buf[3] + d);
-}
-
-
-/*
- *  END RSA's md5 stuff
- *
- */
-
-
-static
-void words_from_bytes(unsigned long *txtl, unsigned char *txtc, long n)
-{
-   long i;
-   unsigned long v;
-
-   for (i = 0; i < n; i++) {
-      v = txtc[4*i];
-      v += ((unsigned long) (txtc[4*i+1])) << 8;
-      v += ((unsigned long) (txtc[4*i+2])) << 16;
-      v += ((unsigned long) (txtc[4*i+3])) << 24;
-      txtl[i] = v;
-   }
-}
-
-static 
-void bytes_from_words(unsigned char *txtc, unsigned long *txtl, long n)
-{
-   long i;
-   unsigned long v;
-
-   for (i = 0; i < n; i++) {
-      v = txtl[i];
-      txtc[4*i] = v & 255;
-      v = v >> 8;
-      txtc[4*i+1] = v & 255;
-      v = v >> 8;
-      txtc[4*i+2] = v & 255;
-      v = v >> 8;
-      txtc[4*i+3] = v & 255;
-   }
-}
-
-
-static
-void MD5_compress1(unsigned long *buf, unsigned char *in, long n)
-{
-   unsigned long txtl[16];
-   unsigned char txtc[64]; 
-   long i, j, k;
-
-   if (n < 0) n = 0;
-
-   i = 0;
-   while (i < n) {
-      k = n-i;
-      if (k > 64) k = 64;
-      for (j = 0; j < k; j++)
-         txtc[j] = in[i+j];
-      for (; j < 64; j++)
-         txtc[j] = 0;
-      words_from_bytes(txtl, txtc, 16);
-      MD5_compress(buf, txtl);
-      i += k;
-   }
-}
-
-
-// the "cipherpunk" version of arc4 
-
-struct _ZZ_arc4_key
-{      
-    unsigned char state[256];       
-    unsigned char x;        
-    unsigned char y;
+struct SHA256_CTX {
+   unsigned char data[64];
+   _ntl_uint32 datalen;
+   _ntl_uint32 bitlen[2];
+   _ntl_uint32 state[8];
 };
+
+static const _ntl_uint32 sha256_const[64] = {
+   0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+   0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+   0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+   0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+   0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+   0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+   0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+   0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2
+};
+
+
+static
+void sha256_transform(SHA256_CTX& ctx, unsigned char *data)
+{  
+   _ntl_uint32 a,b,c,d,e,f,g,h,i,j,t1,t2,m[64];
+      
+   for (i=0,j=0; i < 16; ++i, j += 4)
+      m[i] = (data[j] << 24) | (data[j+1] << 16) | (data[j+2] << 8) | (data[j+3]);
+   for ( ; i < 64; ++i)
+      m[i] = SIG1(m[i-2]) + m[i-7] + SIG0(m[i-15]) + m[i-16];
+
+   a = ctx.state[0];
+   b = ctx.state[1];
+   c = ctx.state[2];
+   d = ctx.state[3];
+   e = ctx.state[4];
+   f = ctx.state[5];
+   g = ctx.state[6];
+   h = ctx.state[7];
+   
+   for (i = 0; i < 64; ++i) {
+      t1 = h + EP1(e) + CH(e,f,g) + sha256_const[i] + m[i];
+      t2 = EP0(a) + MAJ(a,b,c);
+      h = g;
+      g = f;
+      f = e;
+      e = d + t1;
+      d = c;
+      c = b;
+      b = a;
+      a = t1 + t2;
+   }
+   
+   ctx.state[0] += a;
+   ctx.state[1] += b;
+   ctx.state[2] += c;
+   ctx.state[3] += d;
+   ctx.state[4] += e;
+   ctx.state[5] += f;
+   ctx.state[6] += g;
+   ctx.state[7] += h;
+}  
+
+static
+void sha256_init(SHA256_CTX& ctx)
+{  
+   ctx.datalen = 0; 
+   ctx.bitlen[0] = 0; 
+   ctx.bitlen[1] = 0; 
+   ctx.state[0] = 0x6a09e667;
+   ctx.state[1] = 0xbb67ae85;
+   ctx.state[2] = 0x3c6ef372;
+   ctx.state[3] = 0xa54ff53a;
+   ctx.state[4] = 0x510e527f;
+   ctx.state[5] = 0x9b05688c;
+   ctx.state[6] = 0x1f83d9ab;
+   ctx.state[7] = 0x5be0cd19;
+}
+
+static
+void sha256_update(SHA256_CTX& ctx, const unsigned char *data, _ntl_uint32 len)
+{  
+   _ntl_uint32 i;
+   
+   for (i=0; i < len; ++i) { 
+      ctx.data[ctx.datalen] = data[i]; 
+      ctx.datalen++; 
+      if (ctx.datalen == 64) { 
+         sha256_transform(ctx,ctx.data);
+         DBL_INT_ADD(ctx.bitlen[0],ctx.bitlen[1],512); 
+         ctx.datalen = 0; 
+      }  
+   }  
+}  
+
+static
+void sha256_final(SHA256_CTX& ctx, unsigned char *hash, 
+                  long hlen=SHA256_HASHSIZE)
+{  
+   _ntl_uint32 i, j; 
+   
+   i = ctx.datalen; 
+   
+   // Pad whatever data is left in the buffer. 
+   if (ctx.datalen < 56) { 
+      ctx.data[i++] = 0x80; 
+      while (i < 56) 
+         ctx.data[i++] = 0x00; 
+   }  
+   else { 
+      ctx.data[i++] = 0x80; 
+      while (i < 64) 
+         ctx.data[i++] = 0x00; 
+      sha256_transform(ctx,ctx.data);
+      memset(ctx.data,0,56); 
+   }  
+   
+   // Append to the padding the total message's length in bits and transform. 
+   DBL_INT_ADD(ctx.bitlen[0],ctx.bitlen[1],ctx.datalen * 8);
+
+   ctx.data[63] = ctx.bitlen[0]; 
+   ctx.data[62] = ctx.bitlen[0] >> 8; 
+   ctx.data[61] = ctx.bitlen[0] >> 16; 
+   ctx.data[60] = ctx.bitlen[0] >> 24; 
+   ctx.data[59] = ctx.bitlen[1]; 
+   ctx.data[58] = ctx.bitlen[1] >> 8; 
+   ctx.data[57] = ctx.bitlen[1] >> 16;  
+   ctx.data[56] = ctx.bitlen[1] >> 24; 
+   sha256_transform(ctx,ctx.data);
+   
+   for (i = 0; i < 8; i++) {
+      _ntl_uint32 w = ctx.state[i];
+      for (j = 0; j < 4; j++) {
+         if (hlen <= 0) break;
+         hash[4*i + j] = w >> (24-j*8); 
+         hlen--;
+      }
+   }
+
+}  
+
+
+
+static
+void sha256(const unsigned char *data, long dlen, unsigned char *hash, 
+            long hlen=SHA256_HASHSIZE)
+{
+   if (dlen < 0) dlen = 0;
+   if (hlen < 0) hlen = 0;
+
+   SHA256_CTX ctx;
+   sha256_init(ctx);
+
+   const long BLKSIZE = 4096;
+
+   long i;
+   for (i = 0; i <= dlen-BLKSIZE; i += BLKSIZE) 
+      sha256_update(ctx, data + i, BLKSIZE);
+
+   if (i < dlen)
+      sha256_update(ctx, data + i, dlen - i);
+
+   sha256_final(ctx, hash, hlen);
+}
+
+
+static
+void hmac_sha256(const unsigned char *key, long klen, 
+                 const unsigned char *data, long dlen,
+                 unsigned char *hash, long hlen=SHA256_HASHSIZE)
+{
+   if (klen < 0) klen = 0;
+   if (dlen < 0) dlen = 0;
+   if (hlen < 0) hlen = 0;
+
+   unsigned char K[SHA256_BLOCKSIZE];
+   unsigned char tmp[SHA256_HASHSIZE];
+
+   long i;
+
+   if (klen <= SHA256_BLOCKSIZE) {
+      for (i = 0; i < klen; i++)
+         K[i] = key[i];
+      for (i = klen; i < SHA256_BLOCKSIZE; i++) 
+         K[i] = 0;
+   }
+   else {
+      sha256(key, klen, K, SHA256_BLOCKSIZE); 
+      for (i = SHA256_HASHSIZE; i < SHA256_BLOCKSIZE; i++)
+         K[i] = 0;
+   }
+
+   for (i = 0; i < SHA256_BLOCKSIZE; i++)
+      K[i] ^= 0x36;
+
+   SHA256_CTX ctx;
+   sha256_init(ctx);
+   sha256_update(ctx, K, SHA256_BLOCKSIZE);
+   sha256_update(ctx, data, dlen);
+   sha256_final(ctx, tmp);
+
+   for (i = 0; i < SHA256_BLOCKSIZE; i++)
+      K[i] ^= (0x36 ^ 0x5C);
+
+   sha256_init(ctx);
+   sha256_update(ctx, K, SHA256_BLOCKSIZE);
+   sha256_update(ctx, tmp, SHA256_HASHSIZE);
+   sha256_final(ctx, hash, hlen);
+}
+
+
+// This key derivation uses HMAC with a zero key to derive
+// an intermediate key K from the data, and then uses HMAC
+// as a PRF in counter mode with key K to derive the final key
+
+void DeriveKey(unsigned char *key, long klen,  
+               const unsigned char *data, long dlen)
+{
+   if (dlen < 0) LogicError("DeriveKey: bad args");
+   if (klen < 0) LogicError("DeriveKey: bad args");
+
+   long i, j;
+
+
+   unsigned char K[SHA256_HASHSIZE];
+   hmac_sha256(0, 0, data, dlen, K); 
+
+   // initialize 64-bit counter to zero
+   unsigned char counter[8];
+   for (j = 0; j < 8; j++) counter[j] = 0;
+
+   for (i = 0; i <= klen-SHA256_HASHSIZE; i += SHA256_HASHSIZE) {
+      hmac_sha256(K, SHA256_HASHSIZE, counter, 8, key+i); 
+
+      // increment counter
+      for (j = 0; j < 8; j++) {
+         counter[j]++;
+         if (counter[j] != 0) break; 
+      }
+   }
+
+   if (i < klen) 
+      hmac_sha256(K, SHA256_HASHSIZE, counter, 8, key+i, klen-i);
+}
+
+
+
+
+// ******************** ChaCha20 stuff ***********************
+
+// ============= old stuff
+
+#define LE(p) (((_ntl_uint32)((p)[0])) + ((_ntl_uint32)((p)[1]) << 8) + \
+    ((_ntl_uint32)((p)[2]) << 16) + ((_ntl_uint32)((p)[3]) << 24))
+
+#define FROMLE(p, x) (p)[0] = (x), (p)[1] = ((x) >> 8), \
+   (p)[2] = ((x) >> 16), (p)[3] = ((x) >> 24)
+
+
+#define QUARTERROUND(x, a, b, c, d) \
+    x[a] += x[b], x[d] = ROTLEFT(x[d] ^ x[a], 16), \
+    x[c] += x[d], x[b] = ROTLEFT(x[b] ^ x[c], 12), \
+    x[a] += x[b], x[d] = ROTLEFT(x[d] ^ x[a], 8), \
+    x[c] += x[d], x[b] = ROTLEFT(x[b] ^ x[c], 7)
+
+
+static
+void salsa20_core(_ntl_uint32* data)
+{
+   long i;
+
+   for (i = 0; i < 10; i++) {
+      QUARTERROUND(data, 0, 4, 8, 12);
+      QUARTERROUND(data, 1, 5, 9, 13);
+      QUARTERROUND(data, 2, 6, 10, 14);
+      QUARTERROUND(data, 3, 7, 11, 15);
+      QUARTERROUND(data, 0, 5, 10, 15);
+      QUARTERROUND(data, 1, 6, 11, 12);
+      QUARTERROUND(data, 2, 7, 8, 13);
+      QUARTERROUND(data, 3, 4, 9, 14);
+   }
+}
+
+
+// key K must be exactly 32 bytes
+static
+void salsa20_init(_ntl_uint32 *state, const unsigned char *K)  
+{
+   static const _ntl_uint32 chacha_const[4] = 
+      { 0x61707865, 0x3320646e, 0x79622d32, 0x6b206574 };
+
+   long i;
+
+   for (i = 0; i < 4; i++)
+      state[i] = chacha_const[i];
+
+   for (i = 4; i < 12; i++)
+      state[i] = LE(K + 4*(i-4));
+
+   for (i = 12; i < 16; i++)
+      state[i] = 0;
+}
+
+
+
+// state and data are of length 16
+static
+void salsa20_apply(_ntl_uint32 *state, _ntl_uint32 *data)
+{
+   long i;
+
+   for (i = 0; i < 16; i++) data[i] = state[i];
+
+   salsa20_core(data);
+
+   for (i = 0; i < 16; i++) data[i] += state[i];
+
+   for (i = 12; i < 14; i++) {
+      state[i]++;
+      state[i] = INT32MASK(state[i]);
+      if (state[i] != 0) break;
+   }
+}
+
+
+
+old_RandomStream::old_RandomStream(const unsigned char *key)
+{
+   salsa20_init(state, key);
+   pos = 64;
+}
+
+
+void old_RandomStream::do_get(unsigned char *res, long n)
+{
+   if (n < 0) LogicError("RandomStream::get: bad args");
+
+   long i, j;
+
+   if (n <= 64-pos) {
+      for (i = 0; i < n; i++) res[i] = buf[pos+i];
+      pos += n;
+      return;
+   }
+
+   // read remainder of buffer
+   for (i = 0; i < 64-pos; i++) res[i] = buf[pos+i];
+   n -= 64-pos;
+   res += 64-pos;
+   pos = 64;
+
+   _ntl_uint32 wdata[16];
+
+   // read 64-byte chunks
+   for (i = 0; i <= n-64; i += 64) {
+      salsa20_apply(state, wdata);
+      for (j = 0; j < 16; j++)
+         FROMLE(res + i + 4*j, wdata[j]);
+   }
+
+   if (i < n) { 
+      salsa20_apply(state, wdata);
+
+      for (j = 0; j < 16; j++)
+         FROMLE(buf + 4*j, wdata[j]);
+
+      pos = n-i;
+      for (j = 0; j < pos; j++)
+         res[i+j] = buf[j];
+   }
+}
+
+#if (defined(NTL_HAVE_AVX2) || defined(NTL_HAVE_SSSE3))
+
+
+/*****************************************************************
+
+This AVX2 implementation is derived from public domain code 
+originally developed by Martin Goll Shay Gueron, and obtained from 
+here:
+
+https://github.com/floodyberry/supercop/tree/master/crypto_stream/chacha20/goll_gueron
+
+On a Haswell machine, ths code is about 4.x faster than the vanilla 
+C code.
+
+The following is the README from that page
+
+==================================================================
+
+This code implements Daniel J. Bernstein's ChaCha stream cipher in C,
+targeting architectures with AVX2 and future AVX512 vector extensions.
+
+The implementation improves the slightly modified implementations of Ted Krovetz in the Chromium Project
+(http://src.chromium.org/viewvc/chrome/trunk/deps/third_party/nss/nss/lib/freebl/chacha20/chacha20_vec.c and
+http://src.chromium.org/viewvc/chrome/trunk/deps/third_party/openssl/openssl/crypto/chacha/chacha_vec.c)
+by using the Advanced Vector Extensions AVX2 and, if available in future, AVX512 to widen the vectorization
+to 256-bit, respectively 512-bit.
+
+On Intel's Haswell architecture this implementation (using AVX2) is almost ~2x faster than the fastest 
+implementation here, when encrypting (decrypting) 2 blocks and more. Also, this implementation is expected 
+to double the speed again, when encrypting (decrypting) 4 blocks and more, running on a future architecture
+with support for AVX512.
+
+Further details and our measurement results are provided in:
+Goll, M., and Gueron,S.: Vectorization of ChaCha Stream Cipher. Cryptology ePrint Archive, 
+Report 2013/759, November, 2013, http://eprint.iacr.org/2013/759.pdf
+
+Developers and authors:
+*********************************************************
+Martin Goll (1) and Shay Gueron (2, 3), 
+(1) Ruhr-University Bochum, Germany
+(2) University of Haifa, Israel
+(3) Intel Corporation, Israel Development Center, Haifa, Israel
+*********************************************************
+
+Intellectual Property Notices
+-----------------------------
+
+There are no known present or future claims by a copyright holder that the
+distribution of this software infringes the copyright. In particular, the author
+of the software is not making such claims and does not intend to make such
+claims.
+
+There are no known present or future claims by a patent holder that the use of
+this software infringes the patent. In particular, the author of the software is
+not making such claims and does not intend to make such claims.
+
+Our implementation is in public domain.
+
+*****************************************************************/
+
+
+// round selector, specified values:
+//  8:  low security - high speed
+// 12:  mid security -  mid speed
+// 20: high security -  low speed
+#ifndef CHACHA_RNDS
+#define CHACHA_RNDS 20
+#endif
+
+
+#if (defined(NTL_HAVE_AVX2))
+
+typedef __m256i ivec_t;
+
+#define DELTA	_mm256_set_epi64x(0,2,0,2)
+#define START   _mm256_set_epi64x(0,1,0,0)
+#define NONCE(nonce) _mm256_set_epi64x(nonce, 1, nonce, 0)   
+
+#define STOREU_VEC(m,r)	_mm256_storeu_si256((__m256i*)(m), r)
+#define STORE_VEC(m,r)	_mm256_store_si256((__m256i*)(m), r)
+
+#define LOAD_VEC(r,m) r = _mm256_load_si256((const __m256i *)(m))
+#define LOADU_VEC(r,m) r = _mm256_loadu_si256((const __m256i *)(m))
+
+#define LOADU_VEC_128(r, m) r = _mm256_broadcastsi128_si256(_mm_loadu_si128((const __m128i*)(m)))
+
+
+
+#define ADD_VEC_32(a,b)	_mm256_add_epi32(a, b)
+#define ADD_VEC_64(a,b)	_mm256_add_epi64(a, b)
+#define XOR_VEC(a,b)	_mm256_xor_si256(a, b)
+
+
+#define ROR_VEC_V1(x)	_mm256_shuffle_epi32(x,_MM_SHUFFLE(0,3,2,1))
+#define ROR_VEC_V2(x)	_mm256_shuffle_epi32(x,_MM_SHUFFLE(1,0,3,2))
+#define ROR_VEC_V3(x)	_mm256_shuffle_epi32(x,_MM_SHUFFLE(2,1,0,3))
+#define ROL_VEC_7(x)	XOR_VEC(_mm256_slli_epi32(x, 7), _mm256_srli_epi32(x,25))
+#define ROL_VEC_12(x)	XOR_VEC(_mm256_slli_epi32(x,12), _mm256_srli_epi32(x,20))
+
+#define ROL_VEC_8(x)	_mm256_shuffle_epi8(x,_mm256_set_epi8(14,13,12,15,10,9,8,11,6,5,4,7,2,1,0,3,14,13,12,15,10,9,8,11,6,5,4,7,2,1,0,3))
+
+
+#define ROL_VEC_16(x)	_mm256_shuffle_epi8(x,_mm256_set_epi8(13,12,15,14,9,8,11,10,5,4,7,6,1,0,3,2,13,12,15,14,9,8,11,10,5,4,7,6,1,0,3,2))
+
+
+
+#define WRITEU_VEC(op, d, v0, v1, v2, v3)						\
+    STOREU_VEC(op + (d + 0*4), _mm256_permute2x128_si256(v0, v1, 0x20));	\
+    STOREU_VEC(op + (d + 8*4), _mm256_permute2x128_si256(v2, v3, 0x20));	\
+    STOREU_VEC(op + (d +16*4), _mm256_permute2x128_si256(v0, v1, 0x31));	\
+    STOREU_VEC(op + (d +24*4), _mm256_permute2x128_si256(v2, v3, 0x31));
+
+#define WRITE_VEC(op, d, v0, v1, v2, v3)						\
+    STORE_VEC(op + (d + 0*4), _mm256_permute2x128_si256(v0, v1, 0x20));	\
+    STORE_VEC(op + (d + 8*4), _mm256_permute2x128_si256(v2, v3, 0x20));	\
+    STORE_VEC(op + (d +16*4), _mm256_permute2x128_si256(v0, v1, 0x31));	\
+    STORE_VEC(op + (d +24*4), _mm256_permute2x128_si256(v2, v3, 0x31));
+
+#define SZ_VEC (32)
+
+#define RANSTREAM_NCHUNKS (2)
+// leads to a BUFSZ of 512
+
+
+#elif defined(NTL_HAVE_SSSE3)
+
+typedef __m128i ivec_t;
+
+#define DELTA	_mm_set_epi32(0,0,0,1)
+#define START   _mm_setzero_si128()
+#define NONCE(nonce) _mm_set_epi64x(nonce,0)
+
+#define STOREU_VEC(m,r)	_mm_storeu_si128((__m128i*)(m), r)
+#define STORE_VEC(m,r)	_mm_store_si128((__m128i*)(m), r)
+
+#define LOAD_VEC(r,m) r = _mm_load_si128((const __m128i *)(m))
+#define LOADU_VEC(r,m) r = _mm_loadu_si128((const __m128i *)(m))
+
+#define LOADU_VEC_128(r, m) r = _mm_loadu_si128((const __m128i*)(m))
+
+#define ADD_VEC_32(a,b)	_mm_add_epi32(a, b)
+#define ADD_VEC_64(a,b)	_mm_add_epi64(a, b)
+#define XOR_VEC(a,b)	_mm_xor_si128(a, b)
+
+
+#define ROR_VEC_V1(x)	_mm_shuffle_epi32(x,_MM_SHUFFLE(0,3,2,1))
+#define ROR_VEC_V2(x)	_mm_shuffle_epi32(x,_MM_SHUFFLE(1,0,3,2))
+#define ROR_VEC_V3(x)	_mm_shuffle_epi32(x,_MM_SHUFFLE(2,1,0,3))
+#define ROL_VEC_7(x)	XOR_VEC(_mm_slli_epi32(x, 7), _mm_srli_epi32(x,25))
+#define ROL_VEC_12(x)	XOR_VEC(_mm_slli_epi32(x,12), _mm_srli_epi32(x,20))
+
+#define ROL_VEC_8(x)	_mm_shuffle_epi8(x,_mm_set_epi8(14,13,12,15,10,9,8,11,6,5,4,7,2,1,0,3))
+
+
+#define ROL_VEC_16(x)	_mm_shuffle_epi8(x,_mm_set_epi8(13,12,15,14,9,8,11,10,5,4,7,6,1,0,3,2))
+
+
+#define WRITEU_VEC(op, d, v0, v1, v2, v3)	\
+    STOREU_VEC(op + (d + 0*4), v0);	\
+    STOREU_VEC(op + (d + 4*4), v1);	\
+    STOREU_VEC(op + (d + 8*4), v2);	\
+    STOREU_VEC(op + (d +12*4), v3);
+
+#define WRITE_VEC(op, d, v0, v1, v2, v3)	\
+    STORE_VEC(op + (d + 0*4), v0);	\
+    STORE_VEC(op + (d + 4*4), v1);	\
+    STORE_VEC(op + (d + 8*4), v2);	\
+    STORE_VEC(op + (d +12*4), v3);
+
+#define SZ_VEC (16)
+
+#define RANSTREAM_NCHUNKS (4)
+// leads to a BUFSZ of 512
+
+#else
+
+#error "unsupported architecture"
+
+#endif
+
+
+#define DQROUND_VECTORS_VEC(a,b,c,d)				\
+    a = ADD_VEC_32(a,b); d = XOR_VEC(d,a); d = ROL_VEC_16(d);	\
+    c = ADD_VEC_32(c,d); b = XOR_VEC(b,c); b = ROL_VEC_12(b);	\
+    a = ADD_VEC_32(a,b); d = XOR_VEC(d,a); d = ROL_VEC_8(d);	\
+    c = ADD_VEC_32(c,d); b = XOR_VEC(b,c); b = ROL_VEC_7(b);	\
+    b = ROR_VEC_V1(b); c = ROR_VEC_V2(c); d = ROR_VEC_V3(d);	\
+    a = ADD_VEC_32(a,b); d = XOR_VEC(d,a); d = ROL_VEC_16(d);	\
+    c = ADD_VEC_32(c,d); b = XOR_VEC(b,c); b = ROL_VEC_12(b);	\
+    a = ADD_VEC_32(a,b); d = XOR_VEC(d,a); d = ROL_VEC_8(d);	\
+    c = ADD_VEC_32(c,d); b = XOR_VEC(b,c); b = ROL_VEC_7(b);	\
+    b = ROR_VEC_V3(b); c = ROR_VEC_V2(c); d = ROR_VEC_V1(d);
+
+
+
+#define RANSTREAM_STATESZ (4*SZ_VEC)
+
+#define RANSTREAM_CHUNKSZ (2*RANSTREAM_STATESZ)
+#define RANSTREAM_BUFSZ   (RANSTREAM_NCHUNKS*RANSTREAM_CHUNKSZ)
+
+
+struct RandomStream_impl {
+
+   AlignedArray<unsigned char> state_store;
+   AlignedArray<unsigned char> buf_store;
+   long chunk_count;
+
+   void allocate_space() 
+   {
+      state_store.SetLength(RANSTREAM_STATESZ);
+      buf_store.SetLength(RANSTREAM_BUFSZ);
+   }
+
+
+   explicit
+   RandomStream_impl(const unsigned char *key) 
+   {
+      allocate_space();
+
+      unsigned char *state = state_store.elts();
+
+      unsigned int chacha_const[] = {
+	      0x61707865,0x3320646E,0x79622D32,0x6B206574
+      };
+
+
+      ivec_t d0, d1, d2, d3;
+      LOADU_VEC_128(d0, chacha_const);
+      LOADU_VEC_128(d1, key);
+      LOADU_VEC_128(d2, key+16);
+
+      d3 = START;
+
+
+      STORE_VEC(state + 0*SZ_VEC, d0); 
+      STORE_VEC(state + 1*SZ_VEC, d1); 
+      STORE_VEC(state + 2*SZ_VEC, d2); 
+      STORE_VEC(state + 3*SZ_VEC, d3); 
+
+      chunk_count = 0;
+   }
+
+   RandomStream_impl(const RandomStream_impl& other) 
+   {
+      allocate_space();
+      *this = other;
+   }
+
+   RandomStream_impl& operator=(const RandomStream_impl& other) 
+   {
+      std::memcpy(state_store.elts(), other.state_store.elts(), RANSTREAM_STATESZ);
+      std::memcpy(buf_store.elts(), other.buf_store.elts(), RANSTREAM_BUFSZ);
+      chunk_count = other.chunk_count;
+      return *this;
+   }
+
+   const unsigned char *
+   get_buf() const
+   {
+      return buf_store.elts(); 
+   }
+
+   long
+   get_buf_len() const
+   {
+      return RANSTREAM_BUFSZ;
+   }
+
+   // bytes are generated in chunks of RANSTREAM_BUFSZ bytes, except that
+   // initially, we may generate a few chunks of RANSTREAM_CHUNKSZ
+   // bytes.  This optimizes a bit for short bursts following a reset.
+
+   long
+   get_bytes(unsigned char *NTL_RESTRICT res, 
+             long n, long pos)
+   {
+      if (n < 0) LogicError("RandomStream::get: bad args");
+      if (n == 0) return pos;
+
+      unsigned char *NTL_RESTRICT buf = buf_store.elts();
+
+      if (n <= RANSTREAM_BUFSZ-pos) {
+	 std::memcpy(&res[0], &buf[pos], n);
+	 pos += n;
+	 return pos;
+      }
+
+      unsigned char *NTL_RESTRICT state = state_store.elts();
+
+      ivec_t d0, d1, d2, d3;
+      LOAD_VEC(d0, state + 0*SZ_VEC);
+      LOAD_VEC(d1, state + 1*SZ_VEC);
+      LOAD_VEC(d2, state + 2*SZ_VEC);
+      LOAD_VEC(d3, state + 3*SZ_VEC);
+
+
+      // read remainder of buffer
+      std::memcpy(&res[0], &buf[pos], RANSTREAM_BUFSZ-pos);
+      n -= RANSTREAM_BUFSZ-pos;
+      res += RANSTREAM_BUFSZ-pos;
+      pos = RANSTREAM_BUFSZ;
+
+      long i = 0;
+      for (;  i <= n-RANSTREAM_BUFSZ; i += RANSTREAM_BUFSZ) {
+
+         chunk_count |= RANSTREAM_NCHUNKS;  // disable small buffer strategy
+
+	 for (long j = 0; j < RANSTREAM_NCHUNKS; j++) {
+	    ivec_t v0=d0, v1=d1, v2=d2, v3=d3;
+	    ivec_t v4=d0, v5=d1, v6=d2, v7=ADD_VEC_64(d3, DELTA);
+
+	    for (long k = 0; k < CHACHA_RNDS/2; k++) {
+		    DQROUND_VECTORS_VEC(v0,v1,v2,v3)
+		    DQROUND_VECTORS_VEC(v4,v5,v6,v7)
+	    }
+
+	    WRITEU_VEC(res+i+j*(8*SZ_VEC), 0, ADD_VEC_32(v0,d0), ADD_VEC_32(v1,d1), ADD_VEC_32(v2,d2), ADD_VEC_32(v3,d3))
+	    d3 = ADD_VEC_64(d3, DELTA);
+	    WRITEU_VEC(res+i+j*(8*SZ_VEC), 4*SZ_VEC, ADD_VEC_32(v4,d0), ADD_VEC_32(v5,d1), ADD_VEC_32(v6,d2), ADD_VEC_32(v7,d3))
+	    d3 = ADD_VEC_64(d3, DELTA);
+
+	 }
+
+      }
+
+      if (i < n) {
+
+         long nchunks;
+
+         if (chunk_count < RANSTREAM_NCHUNKS) {
+            nchunks = long(cast_unsigned((n-i)+RANSTREAM_CHUNKSZ-1)/RANSTREAM_CHUNKSZ);
+            chunk_count += nchunks;
+         }
+         else
+            nchunks = RANSTREAM_NCHUNKS;
+
+         long pos_offset = RANSTREAM_BUFSZ - nchunks*RANSTREAM_CHUNKSZ;
+         buf += pos_offset;
+
+	 for (long j = 0; j < nchunks; j++) {
+	    ivec_t v0=d0, v1=d1, v2=d2, v3=d3;
+	    ivec_t v4=d0, v5=d1, v6=d2, v7=ADD_VEC_64(d3, DELTA);
+
+	    for (long k = 0; k < CHACHA_RNDS/2; k++) {
+               DQROUND_VECTORS_VEC(v0,v1,v2,v3)
+               DQROUND_VECTORS_VEC(v4,v5,v6,v7)
+	    }
+
+	    WRITE_VEC(buf+j*(8*SZ_VEC), 0, ADD_VEC_32(v0,d0), ADD_VEC_32(v1,d1), ADD_VEC_32(v2,d2), ADD_VEC_32(v3,d3))
+	    d3 = ADD_VEC_64(d3, DELTA);
+	    WRITE_VEC(buf+j*(8*SZ_VEC), 4*SZ_VEC, ADD_VEC_32(v4,d0), ADD_VEC_32(v5,d1), ADD_VEC_32(v6,d2), ADD_VEC_32(v7,d3))
+	    d3 = ADD_VEC_64(d3, DELTA);
+	 }
+
+	 pos = n-i+pos_offset;
+	 std::memcpy(&res[i], &buf[0], n-i);
+      }
+
+      STORE_VEC(state + 3*SZ_VEC, d3); 
+
+      return pos;
+   }
+
+   void set_nonce(unsigned long nonce)
+   {
+      unsigned char *state = state_store.elts();
+      ivec_t d3;
+      d3 = NONCE(nonce);
+      STORE_VEC(state + 3*SZ_VEC, d3);
+      chunk_count = 0;
+   }
+
+};
+
+
+#else
+
+struct RandomStream_impl {
+   _ntl_uint32 state[16];
+   unsigned char buf[64];
+
+   explicit
+   RandomStream_impl(const unsigned char *key)
+   {
+      salsa20_init(state, key);
+   }
+
+   const unsigned char *
+   get_buf() const
+   {
+      return &buf[0];
+   }
+
+   long
+   get_buf_len() const
+   {
+      return 64;
+   }
+
+   long get_bytes(unsigned char *res, long n, long pos) 
+   {
+      if (n < 0) LogicError("RandomStream::get: bad args");
+
+      long i, j;
+
+      if (n <= 64-pos) {
+	 for (i = 0; i < n; i++) res[i] = buf[pos+i];
+	 pos += n;
+	 return pos;
+      }
+
+      // read remainder of buffer
+      for (i = 0; i < 64-pos; i++) res[i] = buf[pos+i];
+      n -= 64-pos;
+      res += 64-pos;
+      pos = 64;
+
+      _ntl_uint32 wdata[16];
+
+      // read 64-byte chunks
+      for (i = 0; i <= n-64; i += 64) {
+	 salsa20_apply(state, wdata);
+	 for (j = 0; j < 16; j++)
+	    FROMLE(res + i + 4*j, wdata[j]);
+      }
+
+      if (i < n) { 
+	 salsa20_apply(state, wdata);
+
+	 for (j = 0; j < 16; j++)
+	    FROMLE(buf + 4*j, wdata[j]);
+
+	 pos = n-i;
+	 for (j = 0; j < pos; j++)
+	    res[i+j] = buf[j];
+      }
+
+      return pos;
+   }
+
+   void set_nonce(unsigned long nonce)
+   {
+      _ntl_uint32 nonce0, nonce1;
+
+      nonce0 = nonce;
+      nonce0 = INT32MASK(nonce0);
+
+      nonce1 = 0;
+
+#if (NTL_BITS_PER_LONG > 32)
+      nonce1 = nonce >> 32;
+      nonce1 = INT32MASK(nonce1);
+#endif
+
+      state[12] = 0;
+      state[13] = 0;
+      state[14] = nonce0;
+      state[15] = nonce1;
+   }
+};
+
+
+#endif
+
+
+
+// Boilerplate PIMPL code
+
+RandomStream_impl *
+RandomStream_impl_build(const unsigned char *key)
+{
+   UniquePtr<RandomStream_impl> p;
+   p.make(key);
+   return p.release();
+}
+
+RandomStream_impl *
+RandomStream_impl_build(const RandomStream_impl& other)
+{
+   UniquePtr<RandomStream_impl> p;
+   p.make(other);
+   return p.release();
+}
+
+void
+RandomStream_impl_copy(RandomStream_impl& x, const RandomStream_impl& y)
+{
+   x = y;
+}
+
+void
+RandomStream_impl_delete(RandomStream_impl* p)
+{
+   delete p;
+}
+
+const unsigned char *
+RandomStream_impl_get_buf(const RandomStream_impl& x)
+{
+   return x.get_buf();
+}
+
+long
+RandomStream_impl_get_buf_len(const RandomStream_impl& x)
+{
+   return x.get_buf_len();
+}
+
+long
+RandomStream_impl_get_bytes(RandomStream_impl& impl, 
+   unsigned char *res, long n, long pos)
+{
+   return impl.get_bytes(res, n, pos);
+}
+
+
+void 
+RandomStream_impl_set_nonce(RandomStream_impl& impl, unsigned long nonce)
+{
+   impl.set_nonce(nonce);
+}
+
+
+
+
+
+NTL_TLS_GLOBAL_DECL(UniquePtr<RandomStream>,  CurrentRandomStream);
+
+
+void SetSeed(const RandomStream& s)
+{
+   NTL_TLS_GLOBAL_ACCESS(CurrentRandomStream);
+
+   if (!CurrentRandomStream)
+      CurrentRandomStream.make(s);
+   else
+      *CurrentRandomStream = s;
+}
+
+
+void SetSeed(const unsigned char *data, long dlen)
+{
+   if (dlen < 0) LogicError("SetSeed: bad args");
+
+   Vec<unsigned char> key;
+   key.SetLength(NTL_PRG_KEYLEN);
+   DeriveKey(key.elts(), NTL_PRG_KEYLEN, data, dlen);
+ 
+   SetSeed(RandomStream(key.elts()));
+}
+
+void SetSeed(const ZZ& seed)
+{
+   long nb = NumBytes(seed);
+
+   Vec<unsigned char> buf;
+   buf.SetLength(nb);
+
+   BytesFromZZ(buf.elts(), seed, nb);
+
+   SetSeed(buf.elts(), nb);
+}
+
+
+static
+void InitRandomStream()
+{
+   const std::string& id = UniqueID();
+   SetSeed((const unsigned char *) id.c_str(), id.length());
+}
+
+static inline
+RandomStream& LocalGetCurrentRandomStream()
+{
+   NTL_TLS_GLOBAL_ACCESS(CurrentRandomStream);
+
+   if (!CurrentRandomStream) InitRandomStream();
+   return *CurrentRandomStream;
+}
+
+RandomStream& GetCurrentRandomStream()
+{
+   return LocalGetCurrentRandomStream();
+}
+
+
+
+
+
 
 
 static inline
-void swap_byte(unsigned char *a, unsigned char *b)
+unsigned long WordFromBytes(const unsigned char *buf, long n)
 {
-    unsigned char swapByte; 
-    
-    swapByte = *a; 
-    *a = *b;      
-    *b = swapByte;
-}
+   unsigned long res = 0;
+   long i;
 
-static
-void prepare_key(unsigned char *key_data_ptr, 
-                 long key_data_len, _ZZ_arc4_key *key)
-{
-    unsigned char index1;
-    unsigned char index2;
-    unsigned char* state;
-    long counter;     
-    
-    state = &key->state[0];         
-    for(counter = 0; counter < 256; counter++)              
-       state[counter] = counter;               
-    key->x = 0;     
-    key->y = 0;     
-    index1 = 0;     
-    index2 = 0;             
-    for(counter = 0; counter < 256; counter++)      
-    {               
-         index2 = (key_data_ptr[index1] + state[counter] + index2) & 255;                
-         swap_byte(&state[counter], &state[index2]);            
+   for (i = n-1; i >= 0; i--)
+      res = (res << 8) | buf[i];
 
-         index1 = (index1 + 1) % key_data_len;  
-    }       
-}
-
-
-
-static
-void arc4(unsigned char *buffer_ptr, long buffer_len, _ZZ_arc4_key *key)
-{ 
-    unsigned char x;
-    unsigned char y;
-    unsigned char* state;
-    unsigned char xorIndex;
-    long counter;              
-    
-    x = key->x;     
-    y = key->y;     
-    
-    state = &key->state[0];         
-    for(counter = 0; counter < buffer_len; counter ++)      
-    {               
-         x = (x + 1) & 255;
-         y = (state[x] + y) & 255;
-         swap_byte(&state[x], &state[y]);                        
-              
-         xorIndex = (state[x] + state[y]) & 255;
-              
-         buffer_ptr[counter] = state[xorIndex];         
-     }               
-     key->x = x;     
-     key->y = y;
-}
-
-// global state information for PRNG
-
-static long ran_initialized = 0;
-static _ZZ_arc4_key ran_key;
-
-static unsigned long default_md5_tab[16] = {
-744663023UL, 1011602954UL, 3163087192UL, 3383838527UL, 
-3305324122UL, 3197458079UL, 2266495600UL, 2760303563UL, 
-346234297UL, 1919920720UL, 1896169861UL, 2192176675UL, 
-2027150322UL, 2090160759UL, 2134858730UL, 1131796244UL
-};
-
-
-
-static
-void build_arc4_tab(unsigned char *seed_bytes, const ZZ& s)
-{
-   long nb = NumBytes(s);
-   
-   unsigned char *txt;
-
-   typedef unsigned char u_char;
-   txt = NTL_NEW_OP u_char[nb + 68];
-   if (!txt) Error("out of memory");
-
-   BytesFromZZ(txt + 4, s, nb);
-
-   bytes_from_words(txt + nb + 4, default_md5_tab, 16);
-
-   unsigned long buf[4];
-
-   unsigned long i;
-   for (i = 0; i < 16; i++) {
-      MD5_default_IV(buf);
-      bytes_from_words(txt, &i, 1);
-
-      MD5_compress1(buf, txt, nb + 68);
-
-      bytes_from_words(seed_bytes + 16*i, buf, 4);
-   }
-
-   delete [] txt;
-}
-
-
-void SetSeed(const ZZ& s)
-{
-   unsigned char seed_bytes[256];
-
-   build_arc4_tab(seed_bytes, s);
-   prepare_key(seed_bytes, 256, &ran_key);
-
-   // we discard the first 1024 bytes of the arc4 stream, as this is
-   // recommended practice.
-
-   arc4(seed_bytes, 256, &ran_key);
-   arc4(seed_bytes, 256, &ran_key);
-   arc4(seed_bytes, 256, &ran_key);
-   arc4(seed_bytes, 256, &ran_key);
-
-   ran_initialized = 1;
-}
-
-static 
-void ran_bytes(unsigned char *bytes, long n)
-{
-   if (!ran_initialized) SetSeed(ZZ::zero());
-   arc4(bytes, n, &ran_key);
+   return res;
 }
 
 
 unsigned long RandomWord()
 {
+   RandomStream& stream = LocalGetCurrentRandomStream();
    unsigned char buf[NTL_BITS_PER_LONG/8];
-   long i;
-   unsigned long res;
 
-   ran_bytes(buf, NTL_BITS_PER_LONG/8);
+   stream.get(buf, NTL_BITS_PER_LONG/8);
+   return WordFromBytes(buf, NTL_BITS_PER_LONG/8);
+}
 
-   res = 0;
-   for (i = NTL_BITS_PER_LONG/8 - 1; i >= 0; i--) {
-      res = res << 8;
-      res = res | buf[i];
+
+void VectorRandomWord(long k, unsigned long* x)
+{
+   RandomStream& stream = LocalGetCurrentRandomStream();
+   unsigned char buf[NTL_BITS_PER_LONG/8];
+
+   for (long i = 0; i < k; i++) {
+      stream.get(buf, NTL_BITS_PER_LONG/8);
+      x[i] = WordFromBytes(buf, NTL_BITS_PER_LONG/8);
    }
-
-   return res;
 }
 
 long RandomBits_long(long l)
 {
    if (l <= 0) return 0;
    if (l >= NTL_BITS_PER_LONG) 
-      Error("RandomBits: length too big");
+      ResourceError("RandomBits: length too big");
 
+   RandomStream& stream = LocalGetCurrentRandomStream();
    unsigned char buf[NTL_BITS_PER_LONG/8];
-   unsigned long res;
-   long i;
-
    long nb = (l+7)/8;
-   ran_bytes(buf, nb);
+   stream.get(buf, nb);
 
-   res = 0;
-   for (i = nb - 1; i >= 0; i--) {
-      res = res << 8;
-      res = res | buf[i];
-   }
-
-   return long(res & ((1UL << l)-1UL)); 
+   return long(WordFromBytes(buf, nb) & ((1UL << l)-1UL)); 
 }
 
 unsigned long RandomBits_ulong(long l)
 {
    if (l <= 0) return 0;
    if (l > NTL_BITS_PER_LONG) 
-      Error("RandomBits: length too big");
+      ResourceError("RandomBits: length too big");
 
+   RandomStream& stream = LocalGetCurrentRandomStream();
    unsigned char buf[NTL_BITS_PER_LONG/8];
-   unsigned long res;
-   long i;
-
    long nb = (l+7)/8;
-   ran_bytes(buf, nb);
-
-   res = 0;
-   for (i = nb - 1; i >= 0; i--) {
-      res = res << 8;
-      res = res | buf[i];
-   }
-
+   stream.get(buf, nb);
+   unsigned long res = WordFromBytes(buf, nb);
    if (l < NTL_BITS_PER_LONG)
       res = res & ((1UL << l)-1UL);
-
    return res;
 }
 
@@ -1824,10 +2629,36 @@ long RandomLen_long(long l)
    if (l <= 0) return 0;
    if (l == 1) return 1;
    if (l >= NTL_BITS_PER_LONG) 
-      Error("RandomLen: length too big");
+      ResourceError("RandomLen: length too big");
 
-   return RandomBits_long(l-1) + (1L << (l-1)); 
+   RandomStream& stream = LocalGetCurrentRandomStream();
+   unsigned char buf[NTL_BITS_PER_LONG/8];
+   long nb = ((l-1)+7)/8;
+   stream.get(buf, nb);
+   unsigned long res = WordFromBytes(buf, nb);
+   unsigned long mask = (1UL << (l-1)) - 1UL;
+   return long((res & mask) | (mask+1UL)); 
 }
+
+
+long RandomBnd(long bnd)
+{
+   if (bnd <= 1) return 0;
+
+   RandomStream& stream = LocalGetCurrentRandomStream();
+   unsigned char buf[NTL_BITS_PER_LONG/8];
+   long l = NumBits(bnd-1);
+   long nb = (l+7)/8;
+
+   long tmp;
+   do {
+      stream.get(buf, nb);
+      tmp = long(WordFromBytes(buf, nb) & ((1UL << l)-1UL));
+   } while (tmp >= bnd);
+
+   return tmp;
+}
+
 
 
 void RandomBits(ZZ& x, long l)
@@ -1838,30 +2669,28 @@ void RandomBits(ZZ& x, long l)
    }
 
    if (NTL_OVERFLOW(l, 1, 0))
-      Error("RandomBits: length too big");
+      ResourceError("RandomBits: length too big");
+
+   RandomStream& stream = LocalGetCurrentRandomStream();
 
    long nb = (l+7)/8;
+   unsigned long mask = (1UL << (8 - nb*8 + l)) - 1UL;
 
-   static unsigned char *buf = 0;
-   static long buf_len = 0;
+   NTL_TLS_LOCAL(Vec<unsigned char>, buf_mem);
+   Vec<unsigned char>::Watcher watch_buf_mem(buf_mem);
 
-   if (nb > buf_len) {
-      if (buf) delete [] buf;
-      buf_len = ((nb + 1023)/1024)*1024; // allocate in 1024-byte lots
-      typedef unsigned char u_char;
-      buf = NTL_NEW_OP u_char[buf_len];
-      if (!buf) Error("out of memory");
-   }
+   buf_mem.SetLength(nb);
+   unsigned char *buf = buf_mem.elts();
 
-   ran_bytes(buf, nb);
+   x.SetSize((l + NTL_ZZ_NBITS - 1)/NTL_ZZ_NBITS);
+   // pre-allocate to ensure strong ES
 
-   static ZZ res;
-
-   ZZFromBytes(res, buf, nb);
-   trunc(res, res, l);
-
-   x = res;
+   stream.get(buf, nb);
+   buf[nb-1] &= mask;
+   
+   ZZFromBytes(x, buf, nb);
 }
+
 
 void RandomLen(ZZ& x, long l)
 {
@@ -1876,19 +2705,48 @@ void RandomLen(ZZ& x, long l)
    }
 
    if (NTL_OVERFLOW(l, 1, 0))
-      Error("RandomLen: length too big");
+      ResourceError("RandomLen: length too big");
 
-   // pre-allocate space to avoid two allocations
-   long nw = (l + NTL_ZZ_NBITS - 1)/NTL_ZZ_NBITS;
-   x.SetSize(nw);
+   RandomStream& stream = LocalGetCurrentRandomStream();
 
-   RandomBits(x, l-1);
-   SetBit(x, l-1);
+   long nb = (l+7)/8;
+   unsigned long mask = (1UL << (8 - nb*8 + l)) - 1UL;
+
+   NTL_TLS_LOCAL(Vec<unsigned char>, buf_mem);
+   Vec<unsigned char>::Watcher watch_buf_mem(buf_mem);
+
+   buf_mem.SetLength(nb);
+   unsigned char *buf = buf_mem.elts();
+
+   x.SetSize((l + NTL_ZZ_NBITS - 1)/NTL_ZZ_NBITS);
+   // pre-allocate to ensure strong ES
+
+   stream.get(buf, nb);
+   buf[nb-1] &= mask;
+   buf[nb-1] |= ((mask >> 1) + 1UL);
+   
+   ZZFromBytes(x, buf, nb);
 }
 
 
-const long RandomBndExcess = 8;
 
+
+
+/**********************************************************
+
+The following implementation of RandomBnd is designed
+for speed.  It certainly is not resilient against a
+timing side-channel attack (but then again, none of these
+PRG routines are designed to be).
+
+The naive strategy generates random candidates of the right 
+bit length until the candidate < bnd.
+The idea in this implementation is to generate the high
+order two bytes of the candidate first, and compare this
+to the high order two bytes of tmp.  We can discard the
+candidate if this is already too large.
+
+***********************************************************/
 
 void RandomBnd(ZZ& x, const ZZ& bnd)
 {
@@ -1897,54 +2755,60 @@ void RandomBnd(ZZ& x, const ZZ& bnd)
       return;
    }
 
-   long k = NumBits(bnd);
+   RandomStream& stream = LocalGetCurrentRandomStream();
 
-   if (weight(bnd) == 1) {
-      RandomBits(x, k-1);
-      return;
+   long l = NumBits(bnd);
+   long nb = (l+7)/8;
+
+   if (nb <= 3) {
+      long lbnd = conv<long>(bnd);
+      unsigned char lbuf[3];
+      long ltmp;
+      
+      x.SetSize((l + NTL_ZZ_NBITS - 1)/NTL_ZZ_NBITS);
+      // pre-allocate to ensure strong ES
+      do {
+         stream.get(lbuf, nb);
+         ltmp = long(WordFromBytes(lbuf, nb) & ((1UL << l)-1UL));
+      } while (ltmp >= lbnd);
+
+     conv(x, ltmp);
+     return;
    }
 
-   long l = k + RandomBndExcess;
+   // deal with possible alias
+   NTL_ZZRegister(tmp_store);
+   const ZZ& bnd_ref = ((&x == &bnd) ? (tmp_store = bnd) : bnd); 
 
-   static ZZ t, r, t1;
 
-   do {
-      RandomBits(t, l);
-      rem(r, t, bnd);
-      sub(t1, bnd, r);
-      add(t, t, t1);
-   } while (NumBits(t) > l);
+   NTL_ZZRegister(hbnd);
+   RightShift(hbnd, bnd_ref, (nb-2)*8);
+   long lhbnd = conv<long>(hbnd);
 
-   x = r;
-}
+   unsigned long mask = (1UL << (16 - nb*8 + l)) - 1UL;
 
-long RandomBnd(long bnd)
-{
-   if (bnd <= 1) return 0;
+   NTL_TLS_LOCAL(Vec<unsigned char>, buf_mem);
+   Vec<unsigned char>::Watcher watch_buf_mem(buf_mem);
+   buf_mem.SetLength(nb);
+   unsigned char *buf = buf_mem.elts();
 
-   long k = NumBits(bnd);
+   unsigned char hbuf[2];
 
-   if (((bnd - 1) & bnd) == 0) 
-      return RandomBits_long(k-1);
+   x.SetSize((l + NTL_ZZ_NBITS - 1)/NTL_ZZ_NBITS);
+   // pre-allocate to ensure strong ES
+   for (;;) {
+      stream.get(hbuf, 2);
+      long hpart = long(WordFromBytes(hbuf, 2) & mask);
 
-   long l = k + RandomBndExcess;
+      if (hpart > lhbnd) continue;
 
-   if (l > NTL_BITS_PER_LONG-2) {
-      static ZZ Bnd, res;
+      stream.get(buf, nb-2);
+      buf[nb-2] = ((unsigned long) hpart);
+      buf[nb-1] = ((unsigned long) hpart) >> 8; 
 
-      Bnd = bnd;
-      RandomBnd(res, Bnd);
-      return to_long(res);
+      ZZFromBytes(x, buf, nb);
+      if (hpart < lhbnd || x < bnd_ref) break;
    }
-
-   long t, r;
-
-   do {
-      t = RandomBits_long(l);
-      r = t % bnd;
-   } while (t + bnd - r > (1L << l)); 
-
-   return r;
 }
 
 
@@ -1955,15 +2819,15 @@ long RandomBnd(long bnd)
 static
 double Log2(double x)
 {
-   static double log2 = log(2.0);
+   static const double log2 = log(2.0); // GLOBAL (relies on C++11 thread-safe init)
    return log(x)/log2;
 }
 
 // Define p(k,t) to be the conditional probability that a random, odd, k-bit 
 // number is composite, given that it passes t iterations of the 
 // Miller-Rabin test.
-// This routine returns 0 or 1, and if it returns 1 then
-// p(k,t) <= 2^{-n}.
+// If this routine returns a non-zero value, then
+//    p(k,t) <= 2^{-n}.
 // This basically encodes the estimates of Damgard, Landrock, and Pomerance;
 // it uses floating point arithmetic, but is coded in such a way
 // that its results should be correct, assuming that the log function
@@ -1989,7 +2853,7 @@ long ErrBoundTest(long kk, long tt, long nn)
    if (n < 1) return 1;
 
    // the following test is largely academic
-   if (9*t > NTL_FDOUBLE_PRECISION) Error("ErrBoundTest: t too big");
+   if (9*t > NTL_FDOUBLE_PRECISION) LogicError("ErrBoundTest: t too big");
 
    double log2_k = Log2(k);
 
@@ -2022,9 +2886,9 @@ long ErrBoundTest(long kk, long tt, long nn)
 
 void GenPrime(ZZ& n, long k, long err)
 {
-   if (k <= 1) Error("GenPrime: bad length");
+   if (k <= 1) LogicError("GenPrime: bad length");
 
-   if (k > (1L << 20)) Error("GenPrime: length too large");
+   if (k > (1L << 20)) ResourceError("GenPrime: length too large");
 
    if (err < 1) err = 1;
    if (err > 512) err = 512;
@@ -2051,9 +2915,9 @@ void GenPrime(ZZ& n, long k, long err)
 
 long GenPrime_long(long k, long err)
 {
-   if (k <= 1) Error("GenPrime: bad length");
+   if (k <= 1) LogicError("GenPrime: bad length");
 
-   if (k >= NTL_BITS_PER_LONG) Error("GenPrime: length too large");
+   if (k >= NTL_BITS_PER_LONG) ResourceError("GenPrime: length too large");
 
    if (err < 1) err = 1;
    if (err > 512) err = 512;
@@ -2074,12 +2938,302 @@ long GenPrime_long(long k, long err)
    return RandomPrime_long(k, t);
 }
 
+void MultiThreadedGenGermainPrime(ZZ& n, long k, long err)
+{
+   long nt = AvailableThreads();
+
+
+   long prime_bnd = ComputePrimeBound(k);
+
+   if (NumBits(prime_bnd) >= k/2)
+      prime_bnd = (1L << (k/2-1));
+
+   ZZ two;
+   two = 2;
+
+   const long LOCAL_ITER_BOUND = 8;
+   // since resetting the PRG comes at a certain cost,
+   // we perform a few iterations with each reset to
+   // amortize the reset cost. 
+
+   unsigned long initial_counter = 0;
+   ZZ seed;
+   RandomBits(seed, 256);
+
+
+   ZZ overflow_counter;
+
+   for (;;) {
+
+      AtomicLowWaterMark low_water_mark(-1UL);
+      AtomicCounter counter(initial_counter);
+
+      Vec< UniquePtr<ZZ> > result(INIT_SIZE, nt);
+      Vec<long> result_ctr(INIT_SIZE, nt, -1UL);
+
+      NTL_EXEC_INDEX(nt, index)
+
+         RandomStreamPush push;
+
+	 SetSeed(seed);
+	 RandomStream& stream = GetCurrentRandomStream();
+
+	 ZZ cand, n1;
+         PrimeSeq s;
+
+	 while (low_water_mark == -1UL) {
+
+	    unsigned long local_ctr = counter.inc();
+            if (local_ctr >> (NTL_BITS_PER_NONCE-1)) {
+               // counter overflow...rather academic
+               break;
+            }
+
+	    stream.set_nonce(local_ctr);
+	    
+	    for (long iter = 0; iter < LOCAL_ITER_BOUND && 
+				local_ctr <= low_water_mark; iter++) {
+
+
+	       RandomLen(cand, k);
+	       if (!IsOdd(cand)) add(cand, cand, 1);
+
+	       s.reset(3);
+	       long p;
+
+	       long sieve_passed = 1;
+
+	       p = s.next();
+	       while (p && p < prime_bnd) {
+		  long r = rem(cand, p);
+
+		  if (r == 0) {
+		     sieve_passed = 0;
+		     break;
+		  }
+
+		  // test if 2*r + 1 = 0 (mod p)
+		  if (r == p-r-1) {
+		     sieve_passed = 0;
+		     break;
+		  }
+
+		  p = s.next();
+	       }
+
+               if (!sieve_passed) continue;
+
+
+               if (MillerWitness(cand, two)) continue;
+
+	       // n1 = 2*cand+1
+	       mul(n1, cand, 2);
+	       add(n1, n1, 1);
+
+
+               if (MillerWitness(n1, two)) continue;
+
+	       result[index].make(cand);
+	       result_ctr[index] = local_ctr;
+	       low_water_mark.UpdateMin(local_ctr);
+	       break;
+            }
+         }
+
+      NTL_EXEC_INDEX_END
+
+      // find index of low_water_mark
+
+      unsigned long low_water_mark1 = low_water_mark;
+      unsigned long low_water_index = -1;
+
+      for (long index = 0; index < nt; index++) {
+	 if (result_ctr[index] == low_water_mark1) {
+	    low_water_index = index;
+	    break;
+	 }
+      }
+
+      if (low_water_index == -1) {
+         // counter overflow...rather academic
+         overflow_counter++;
+         initial_counter = 0;
+         RandomBits(seed, 256);
+         continue;
+      }
+
+      ZZ N;
+      N = *result[low_water_index];
+
+      ZZ iter = ((overflow_counter << (NTL_BITS_PER_NONCE-1)) +
+                 conv<ZZ>(low_water_mark1) + 1)*LOCAL_ITER_BOUND;
+
+      // now do t M-R iterations...just to make sure
+ 
+      // First compute the appropriate number of M-R iterations, t
+      // The following computes t such that 
+      //       p(k,t)*8/k <= 2^{-err}/(5*iter^{1.25})
+      // which suffices to get an overall error probability of 2^{-err}.
+      // Note that this method has the advantage of not requiring 
+      // any assumptions on the density of Germain primes.
+
+      long err1 = max(1, err + 7 + (5*NumBits(iter) + 3)/4 - NumBits(k));
+      long t;
+      t = 1;
+      while (!ErrBoundTest(k, t, err1))
+         t++;
+
+      Vec<ZZ> W(INIT_SIZE, t);
+
+      for (long i = 0; i < t; i++) {
+         do { 
+            RandomBnd(W[i], N);
+         } while (W[i] == 0);
+      }
+
+      AtomicBool tests_pass(true);
+
+      NTL_EXEC_RANGE(t, first, last)
+
+         for (long i = first; i < last && tests_pass; i++) {
+            if (MillerWitness(N, W[i])) tests_pass = false;
+         }
+
+      NTL_EXEC_RANGE_END
+
+      if (tests_pass) {
+         n = N;
+         return;
+      }
+
+      // very unlikey to get here
+      initial_counter = low_water_mark1 + 1;
+   }
+}
 
 void GenGermainPrime(ZZ& n, long k, long err)
 {
-   if (k <= 1) Error("GenGermainPrime: bad length");
+   if (k <= 1) LogicError("GenGermainPrime: bad length");
 
-   if (k > (1L << 20)) Error("GenGermainPrime: length too large");
+   if (k > (1L << 20)) ResourceError("GenGermainPrime: length too large");
+
+   if (err < 1) err = 1;
+   if (err > 512) err = 512;
+
+   if (k == 2) {
+      if (RandomBnd(2))
+         n = 3;
+      else
+         n = 2;
+
+      return;
+   }
+
+   if (k >= 192) {
+      MultiThreadedGenGermainPrime(n, k, err);
+      return;
+   }
+
+
+   long prime_bnd = ComputePrimeBound(k);
+
+   if (NumBits(prime_bnd) >= k/2)
+      prime_bnd = (1L << (k/2-1));
+
+
+   ZZ two;
+   two = 2;
+
+   ZZ n1;
+
+   
+   PrimeSeq s;
+
+   ZZ iter;
+   iter = 0;
+
+
+   for (;;) {
+      iter++;
+
+      RandomLen(n, k);
+      if (!IsOdd(n)) add(n, n, 1);
+
+      s.reset(3);
+      long p;
+
+      long sieve_passed = 1;
+
+      p = s.next();
+      while (p && p < prime_bnd) {
+         long r = rem(n, p);
+
+         if (r == 0) {
+            sieve_passed = 0;
+            break;
+         }
+
+         // test if 2*r + 1 = 0 (mod p)
+         if (r == p-r-1) {
+            sieve_passed = 0;
+            break;
+         }
+
+         p = s.next();
+      }
+
+      if (!sieve_passed) continue;
+
+
+      if (MillerWitness(n, two)) continue;
+
+      // n1 = 2*n+1
+      mul(n1, n, 2);
+      add(n1, n1, 1);
+
+
+      if (MillerWitness(n1, two)) continue;
+
+      // now do t M-R iterations...just to make sure
+ 
+      // First compute the appropriate number of M-R iterations, t
+      // The following computes t such that 
+      //       p(k,t)*8/k <= 2^{-err}/(5*iter^{1.25})
+      // which suffices to get an overall error probability of 2^{-err}.
+      // Note that this method has the advantage of not requiring 
+      // any assumptions on the density of Germain primes.
+
+      long err1 = max(1, err + 7 + (5*NumBits(iter) + 3)/4 - NumBits(k));
+      long t;
+      t = 1;
+      while (!ErrBoundTest(k, t, err1))
+         t++;
+
+      ZZ W;
+      long MR_passed = 1;
+
+      long i;
+      for (i = 1; i <= t; i++) {
+         do {
+            RandomBnd(W, n);
+         } while (W == 0);
+         // W == 0 is not a useful candidate witness!
+
+         if (MillerWitness(n, W)) {
+            MR_passed = 0;
+            break;
+         }
+      }
+
+      if (MR_passed) break;
+   }
+}
+
+void OldGenGermainPrime(ZZ& n, long k, long err)
+{
+   if (k <= 1) LogicError("GenGermainPrime: bad length");
+
+   if (k > (1L << 20)) ResourceError("GenGermainPrime: length too large");
 
    if (err < 1) err = 1;
    if (err > 512) err = 512;
@@ -2191,7 +3345,7 @@ void GenGermainPrime(ZZ& n, long k, long err)
 long GenGermainPrime_long(long k, long err)
 {
    if (k >= NTL_BITS_PER_LONG-1)
-      Error("GenGermainPrime_long: length too long");
+      ResourceError("GenGermainPrime_long: length too long");
 
    ZZ n;
    GenGermainPrime(n, k, err);

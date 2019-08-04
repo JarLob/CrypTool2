@@ -56,10 +56,13 @@ void transpose(mat_GF2E& X, const mat_GF2E& A);
 mat_GF2E transpose(const mat_GF2E& A);
 // X = transpose of A
 
-void solve(GF2E& d, vec_GF2E& X,
-           const mat_GF2E& A, const vec_GF2E& b);
-// A is an n x n matrix, b is a length n vector.  Computes d =
-// determinant(A).  If d != 0, solves x*A = b.
+void solve(GF2E& d, vec_GF2E& x, const mat_GF2E& A, const vec_GF2E& b);
+// A is an n x n matrix, b is a length n vector.  Computes d = determinant(A).
+// If d != 0, solves x*A = b.
+
+void solve(GF2E& d, const mat_GF2E& A, vec_GF2E& x, const vec_GF2E& b);
+// A is an n x n matrix, b is a length n vector.  Computes d = determinant(A).
+// If d != 0, solves A*x = b (so x and b are treated as a column vectors).
 
 void inv(GF2E& d, mat_GF2E& X, const mat_GF2E& A);
 // A is an n x n matrix.  Computes d = determinant(A).  If d != 0,
@@ -95,6 +98,10 @@ mat_GF2E diag(long n, const GF2E& d);
 long IsDiag(const mat_GF2E& A, long n, const GF2E& d);
 // test if X is an  n x n diagonal matrix with d on diagonal
 
+
+
+void random(mat_GF2E& x, long n, long m);  // x = random n x m matrix
+mat_GF2E random_mat_GF2E(long n, long m);
 
 
 

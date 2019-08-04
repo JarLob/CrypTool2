@@ -278,7 +278,7 @@ long
 
      typedef long (*LLLCheckFct)(const vec_ZZ&);
 
-  See the file subset.c for an example of the use of this feature.
+  See the file subset.cpp for an example of the use of this feature.
 
 * The optional parameter "verbose" can be set to see all kinds of fun
   things printed while the routine is executing.  A status report is
@@ -286,13 +286,13 @@ long
   dumped to a file.  The behavior can be controlled with these global
   variables:
 
-     extern char *LLLDumpFile;  // file to dump basis, 0 => no dump; 
-                                // initially 0
+     extern thread_local char *LLLDumpFile;  
+     // file to dump basis, 0 => no dump; 
+     // initially 0
 
-     extern double LLLStatusInterval; // seconds between status reports 
-                                      // initially 900s = 15min
-
-
+     extern thread_local double LLLStatusInterval; 
+     // seconds between status reports 
+     // initially 900s = 15min
 
  
 ************* Calling Syntax for BKZ routines ***************
