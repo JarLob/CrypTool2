@@ -184,7 +184,7 @@
     <value>Kein Property mit Namen '{0}' des Typs '{1}' existiert in '{2}:{3}' aber das PluginModel besitzt ein entsprechendes ConnectorModel. Lösche das ConnectorModel jetzt.</value>
   </data>
   <data name="ModelPersistance_restoreSettings_A_ConnectorModel_for_the_plugins_property___0___of_type___1___does_not_exist_in_the_PluginModel_of___2___3____Create_a_ConnectorModel_now_" xml:space="preserve">
-    <value>Kein ConnectorModel für das Plugins Property '{0}' des Typs '{1}' existiert im PluginModel '{2}:{3}'. Erstelle solch ein ConnectorModel nun.</value>
+    <value>Für das Plugin Property '{0}' des Typs '{1}' existiert im PluginModel '{2}:{3}' kein ConnectorModel. Dieses wird nun erstellt.</value>
   </data>
   <data name="ModelPersistance_restoreSettings_Error_while_initializing____0__" xml:space="preserve">
     <value>Ein Fehler trat während der Initialisierung von '{0}' auf</value>
