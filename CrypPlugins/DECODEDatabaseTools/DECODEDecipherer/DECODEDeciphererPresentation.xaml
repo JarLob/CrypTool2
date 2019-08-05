@@ -63,6 +63,7 @@
                   Grid.Row="2" Grid.RowSpan="2" 
                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                   Foreground="LightGray" Background="LightGray" BorderBrush="LightGray" 
+                  ScrollViewer.IsDeferredScrollingEnabled="True"
                   VirtualizingStackPanel.IsVirtualizing="True"
                   VirtualizingPanel.VirtualizationMode="Recycling"
                   ScrollViewer.CanContentScroll="True">

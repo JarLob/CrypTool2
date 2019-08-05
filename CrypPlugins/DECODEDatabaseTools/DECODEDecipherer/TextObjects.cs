@@ -140,15 +140,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     /// A page contains several lines of text
     /// </summary>
     public class Page
-    {
-        private TextDocument _textDocument;
-
+    {      
         public int PageNumber { get; set; }
 
         public Page(TextDocument textDocument)
         {
             Lines = new List<Line>();
-            _textDocument = textDocument;
+            ParentTextDocument = textDocument;
         }
 
         public List<Line> Lines
@@ -176,9 +174,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             }
         }
 
-        public TextDocument GetParentTextDocument()
+        public TextDocument ParentTextDocument
         {
-            return _textDocument;
+            get;
+            set;
         }
     }
 
@@ -187,15 +186,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     /// </summary>
     public class Line
     {
-        private Page _page;
-
         public int LineNumber { get; set; }
 
         public Line(Page page)
         {
             Tokens = new List<Token>();
             LineType = LineType.Text;
-            _page = page;
+            ParentPage = page;
         }
 
         public List<Token> Tokens
@@ -228,9 +225,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             }
         }
 
-        public Page GetParentPage()
+        public Page ParentPage
         {
-            return _page;
+            get;
+            set;
         }
     }
 
@@ -239,14 +237,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     /// </summary>
     public class Token
     {
-        private Line _line = null;
         private List<Symbol> _symbols = new List<Symbol>();
         private List<Symbol> _decodedSymbols = new List<Symbol>();
 
         public Token(Line line)
         {
             TokenType = TokenType.Unknown;
-            _line = line;
+            ParentLine = line;
             DecodedSymbols = new List<Symbol>();
             Symbols = new List<Symbol>();
         }
@@ -351,7 +348,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             get
             {
-                switch (_line.LineType)
+                if(ParentLine == null)
+                {
+                    return null;
+                }
+                switch (ParentLine.LineType)
                 {
                     case LineType.Text:
                         switch (TokenType)
@@ -375,11 +376,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             }
         }
 
-        public Line GetParentLine()
+        public Line ParentLine
         {
-            return _line;
+            get;
+            set;
         }
-
 
         public override bool Equals(object obj)
         {
@@ -455,34 +456,72 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     /// </summary>
     public class Symbol : ICloneable
     {
-        private Token _token;
-
         public Symbol(Token token)
         {            
-            _token = token;
+            ParentToken = token;
             Top = string.Empty;
             Text = string.Empty;
             Bottom = string.Empty;
+            BottomChangesSymbol = true;
+            TopChangesSymbol = true;
         }
 
+        /// <summary>
+        /// Top text of symbol
+        /// </summary>
         public string Top
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Does the Top text change the meaning of the symbol?
+        /// </summary>
+        public bool TopChangesSymbol
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Main text of symbol
+        /// </summary>
         public string Text
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Bottom text of the symbol
+        /// </summary>
         public string Bottom
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Does the Bottom text change the meaning of the symbol?
+        /// </summary>
+        public bool BottomChangesSymbol
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// The parent token which this symbol belongs to
+        /// </summary>
+        public Token ParentToken
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Compares this symbol with another one
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             var str = obj as string;
@@ -502,34 +541,47 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             }            
         }
 
+        /// <summary>
+        /// Returns the hash code of this symbol
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             var hash = 13;
-            hash = (hash * 3) + (Top != null ? Top.GetHashCode() : 0);
+            if (TopChangesSymbol)
+            {
+                hash = (hash * 3) + (Top != null ? Top.GetHashCode() : 0);
+            }
+            else
+            {
+                hash = (hash * 3) + string.Empty.GetHashCode();
+            }
+
             hash = (hash * 5) + (Text != null ? Text.GetHashCode() : 0);
-            hash = (hash * 7) + (Bottom != null ? Bottom.GetHashCode() : 0);
+
+            if (BottomChangesSymbol)
+            {
+                hash = (hash * 7) + (Bottom != null ? Bottom.GetHashCode() : 0);
+            }
+            else
+            {
+                hash = (hash * 7) + string.Empty.GetHashCode();
+            }
             return hash;
         }
 
-        public Token ParentToken
-        {
-            get
-            {
-                return _token;
-            }
-            set
-            {
-                _token = value;
-            }
-        }
-
-
+        /// <summary>
+        /// Clones this symbol
+        /// </summary>
+        /// <returns></returns>
         public object Clone()
         {
-            Symbol symbol = new Symbol(_token);
-            symbol.Top = Top;            
+            Symbol symbol = new Symbol(ParentToken);
+            symbol.Top = Top;
+            symbol.TopChangesSymbol = TopChangesSymbol;
             symbol.Text = Text;
             symbol.Bottom = Bottom;
+            symbol.BottomChangesSymbol = BottomChangesSymbol;
             return symbol;
         }
 
@@ -541,14 +593,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             get
             {
-                if (_token != null)
+                if (ParentToken != null)
                 {
-                    return _token.TextColor;
+                    return ParentToken.TextColor;
                 }
                 return null;
             }
         }
 
+        /// <summary>
+        /// Returns the string representation of this symbol
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -566,6 +622,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         }
 
         /// <summary>
+        /// Used in the user interface
         /// Returns 0 when there is no top or bottom text
         /// Returns 1 when there is a top text
         /// Returns 2 when there is a bottom text

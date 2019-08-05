@@ -816,7 +816,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
                     for (int position = 0; position < text.Count; position++)
                     {
-                        Symbol symbol = text[position];
+                        Symbol symbol = text[position];                        
+
                         if (string.IsNullOrWhiteSpace(symbol.Text) && !is_a_tag)
                         {
                             continue;
@@ -990,16 +991,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 return null;
             }
 
+            //create new tokens based on the "old" tokens
+            TokenBuilder tokenBuilder = new TokenBuilder();
+            TokenBuilder tagTokenBuilder = new TokenBuilder();
+            Line lastLine = null;
+
+            bool is_a_tag = false;
+            bool is_vocabulary = false;
+
             foreach (Page page in document.Pages)
             {
-                //create new tokens based on the "old" tokens
-                TokenBuilder tokenBuilder = new TokenBuilder();
-                TokenBuilder tagTokenBuilder = new TokenBuilder();
-                Line lastLine = null;
-
-                bool is_a_tag = false;
-                bool is_vocabulary = false;
-
                 foreach (Line line in page.Lines)
                 {
                     if (line.LineType == LineType.Comment)
@@ -1015,6 +1016,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     for (int position = 0; position < text.Count; position++)
                     {
                         Symbol symbol = text[position];
+                        symbol.TopChangesSymbol = false;
+
                         if (string.IsNullOrWhiteSpace(symbol.Text) && !is_a_tag)
                         {
                             continue;
@@ -1045,104 +1048,58 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
                         tokenBuilder.Append(symbol);
 
-                        if (symbol.Top.Equals("."))
+                        if (!is_vocabulary)
                         {
-                            is_vocabulary = true;
-                            continue;
+                            if (_nulls.Contains(symbol))
+                            {
+                                //null symbol
+                                Token nullToken = tokenBuilder.GetToken(0, 1, line);
+                                nullToken.TokenType = TokenType.Null;
+                                line.Tokens.Add(nullToken);
+                                tokenBuilder.Clear();
+                            }
+                            else
+                            {
+                                //regular code
+                                Token regularCodeToken = tokenBuilder.GetToken(0, 1, line);
+                                regularCodeToken.TokenType = TokenType.RegularCode;
+                                line.Tokens.Add(regularCodeToken);
+                                tokenBuilder.Clear();
+                            }
                         }
 
-                        if (tokenBuilder.Length == 5)
+                        if (is_vocabulary && tokenBuilder.Length == 3)
                         {
-                            //vocabulary
-                            if (tokenBuilder[3].Top.Equals("."))
+                            //vocabulary 3
+                            if (!_nulls.Contains(tokenBuilder[2]))
                             {
                                 Token vocabularyToken = tokenBuilder.GetToken(0, 3, line);
                                 vocabularyToken.TokenType = TokenType.VocabularyElement;
                                 line.Tokens.Add(vocabularyToken);
-                                tokenBuilder.Remove(0, 3);
-                                continue;
+                                tokenBuilder.Clear();                                
                             }
-                            else
+                            //vocabulary 2 with null
+                            else if (_nulls.Contains(tokenBuilder[2]))
                             {
-                                Token vocabularyToken = tokenBuilder.GetToken(0, 1, line);
+                                Token vocabularyToken = tokenBuilder.GetToken(0, 2, line);
                                 vocabularyToken.TokenType = TokenType.VocabularyElement;
                                 line.Tokens.Add(vocabularyToken);
-                                tokenBuilder.Remove(0, 4);
-                            }
-                            //remaining token
-                            if (_nulls.Contains(symbol))
-                            {
-                                Token nullToken = new Token(line);
+                                tokenBuilder.Remove(0, 2);
+                                Token nullToken = tokenBuilder.GetToken(0, 1, line);
                                 nullToken.TokenType = TokenType.Null;
-                                symbol.ParentToken = nullToken;
-                                nullToken.Symbols.Add(symbol);
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Clear();
                             }
-                            else if (symbol.Top.Equals("."))
-                            {
-                                continue;
-                            }
                             else
                             {
-                                Token regularToken = new Token(line);
-                                regularToken.TokenType = TokenType.RegularCode;
-                                symbol.ParentToken = regularToken;
-                                regularToken.Symbols.Add(symbol);
-                                line.Tokens.Add(regularToken);
                                 tokenBuilder.Clear();
                             }
                             is_vocabulary = false;
-                            continue;
                         }
 
-                        if (_nulls.Contains(symbol))
+                        if (symbol.Top.Equals("."))
                         {
-                            if (tokenBuilder.Length == 4 || tokenBuilder.Length == 5 && is_vocabulary)
-                            {
-                                //vocabulary
-                                Token vocabularyToken = tokenBuilder.GetToken(0, tokenBuilder.Length - 1, line);
-                                vocabularyToken.TokenType = TokenType.VocabularyElement;
-                                line.Tokens.Add(vocabularyToken);
-
-                                //null length 1
-                                Token nullToken = new Token(line);
-                                nullToken.TokenType = TokenType.Null;
-                                symbol.ParentToken = nullToken;
-                                nullToken.Symbols.Add(symbol);
-                                line.Tokens.Add(nullToken);
-
-                                tokenBuilder.Clear();
-                            }
-                            else
-                            {
-                                for (int i = 0; i < tokenBuilder.Length - 2; i++)
-                                {
-                                    //code length 1
-                                    Token regularCodeToken = tokenBuilder.GetToken(0, tokenBuilder.Length - 1, line);
-                                    regularCodeToken.TokenType = TokenType.RegularCode;
-                                    line.Tokens.Add(regularCodeToken);
-                                    tokenBuilder.Remove(0, 1);
-                                }
-                                Token nullToken = new Token(line);
-                                nullToken.TokenType = TokenType.Null;
-                                symbol.ParentToken = nullToken;
-                                nullToken.Symbols.Add(symbol);
-                                line.Tokens.Add(nullToken);
-
-                                tokenBuilder.Clear();
-                            }
-                            is_vocabulary = false;
-                            continue;
-                        }
-
-                        if (!is_vocabulary)
-                        {
-                            //code length 1
-                            Token regularCodeToken = tokenBuilder.GetToken(0, 1, line);
-                            regularCodeToken.TokenType = TokenType.RegularCode;
-                            line.Tokens.Add(regularCodeToken);
-                            tokenBuilder.Remove(0, 1);
+                            is_vocabulary = true;
                         }
 
                     }
