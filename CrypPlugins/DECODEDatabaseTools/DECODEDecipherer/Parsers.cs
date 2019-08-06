@@ -1143,7 +1143,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
     /// <summary>
     /// Parser for Francia 6-1
-    /// (vocabulary elements not implemented yet!)
     /// </summary>
     public class Francia6Parser : SimpleSingleTokenParser
     {
@@ -1172,7 +1171,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             foreach (Page page in document.Pages)
             {
                 //create new tokens based on the "old" tokens
-                TokenBuilder tokenStringBuilder = new TokenBuilder();
+                TokenBuilder tokenBuilder = new TokenBuilder();
                 TokenBuilder tagTokenBuilder = new TokenBuilder();
                 Line lastLine = null;
 
@@ -1221,37 +1220,52 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                             continue;
                         }
 
-                        tokenStringBuilder.Append(symbol);                        
+                        tokenBuilder.Append(symbol);                        
 
-                        if (tokenStringBuilder.Length == 2)
+                        if (tokenBuilder.Length == 4)
                         {
-                            if (tokenStringBuilder[1].Text.Equals("2") && tokenStringBuilder[1].Top != null && tokenStringBuilder[1].Top.Equals("."))
+                            if(tokenBuilder[0].Top == string.Empty &&
+                                tokenBuilder[1].Top == string.Empty &&
+                                tokenBuilder[2].Top == string.Empty &&
+                                tokenBuilder[3].Top == string.Empty &&
+                                _nulls.Contains(tokenBuilder[2]) &&
+                                _nulls.Contains(tokenBuilder[3]))
+                            {
+                                //vocabulary element
+                                Token vocabularyToken = tokenBuilder.GetToken(0, 4, line);
+                                vocabularyToken.TokenType = TokenType.VocabularyElement;
+                                line.Tokens.Add(vocabularyToken);
+                                tokenBuilder.Remove(0, 4);
+                                continue;
+                            }                                                                                 
+
+                            if (tokenBuilder[1].Text.Equals("2") && tokenBuilder[1].Top != null && tokenBuilder[1].Top.Equals("."))
                             {
                                 //code length 2
-                                Token regularCodeToken = tokenStringBuilder.GetToken(0, 2, line);
+                                Token regularCodeToken = tokenBuilder.GetToken(0, 2, line);
                                 regularCodeToken.TokenType = TokenType.RegularCode;
                                 line.Tokens.Add(regularCodeToken);
-                                tokenStringBuilder.Remove(0, 2);
+                                tokenBuilder.Remove(0, 2);
                                 continue;
                             }
                             else
                             {                              
-                                Symbol symbol0 = tokenStringBuilder[0];
+                                Symbol symbol0 = tokenBuilder[0];
                                 if (_nulls.Contains(symbol0))
                                 {
                                     //null length 1
-                                    Token nullToken = tokenStringBuilder.GetToken(0, 1, line);
+                                    Token nullToken = tokenBuilder.GetToken(0, 1, line);
                                     nullToken.TokenType = TokenType.Null;
                                     line.Tokens.Add(nullToken);
-                                    tokenStringBuilder.Remove(0, 1);
+                                    tokenBuilder.Remove(0, 1);
                                 }
                                 else
                                 {
                                     //regular code length 1
-                                    Token regularCodeToken = tokenStringBuilder.GetToken(0, 1, line);
+                                    Token regularCodeToken = tokenBuilder.GetToken(0, 1, line);
                                     regularCodeToken.TokenType = TokenType.RegularCode;
                                     line.Tokens.Add(regularCodeToken);
-                                    tokenStringBuilder.Remove(0, 1);
+                                    tokenBuilder.Remove(0, 1);
                                 }                                
                             }
                            
@@ -1270,24 +1284,24 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     is_a_tag = false;
                 }
 
-                while (tokenStringBuilder.Length > 0)
+                while (tokenBuilder.Length > 0)
                 {
-                    Symbol symbol0 = tokenStringBuilder[0];
+                    Symbol symbol0 = tokenBuilder[0];
                     if (_nulls.Contains(symbol0))
                     {
                         //null length 1
-                        Token nullToken = tokenStringBuilder.GetToken(0, 1, lastLine);
+                        Token nullToken = tokenBuilder.GetToken(0, 1, lastLine);
                         nullToken.TokenType = TokenType.Null;
                         lastLine.Tokens.Add(nullToken);
-                        tokenStringBuilder.Remove(0, 1);
+                        tokenBuilder.Remove(0, 1);
                     }
                     else
                     {
                         //code length 1
-                        Token regularCodeToken = tokenStringBuilder.GetToken(0, 1, lastLine);
+                        Token regularCodeToken = tokenBuilder.GetToken(0, 1, lastLine);
                         regularCodeToken.TokenType = TokenType.RegularCode;
                         lastLine.Tokens.Add(regularCodeToken);
-                        tokenStringBuilder.Remove(0, 1);
+                        tokenBuilder.Remove(0, 1);
                     }
                 }
             }

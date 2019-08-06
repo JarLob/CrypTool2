@@ -134,6 +134,21 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             return stringBuilder.ToString();
         }
 
+        /// <summary>
+        /// Returns the number of tokens of this TextDocument
+        /// </summary>
+        public int TokenCount
+        {
+            get
+            {
+                int count = 0;
+                foreach (var page in Pages)
+                {                   
+                    count += page.TokenCount;
+                }
+                return count;
+            }
+        }
     }
 
     /// <summary>
@@ -178,6 +193,25 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Returns the number of tokens of this Page
+        /// </summary>
+        public int TokenCount
+        {
+            get
+            {
+                int count = 0;
+                foreach(var line in Lines)
+                {
+                    if(line.LineType != LineType.Comment)
+                    {
+                        count += line.TokenCount;
+                    }
+                }
+                return count;
+            }
         }
     }
 
@@ -229,6 +263,17 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Returns the number of tokens of this line
+        /// </summary>
+        public int TokenCount 
+        {
+            get
+            {
+                return Tokens.Count;
+            }
         }
     }
 
