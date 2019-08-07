@@ -1267,8 +1267,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                                     line.Tokens.Add(regularCodeToken);
                                     tokenBuilder.Remove(0, 1);
                                 }                                
-                            }
-                           
+                            }                           
                         }                        
                     }
                     lastLine = line;
@@ -1302,6 +1301,289 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                         regularCodeToken.TokenType = TokenType.RegularCode;
                         lastLine.Tokens.Add(regularCodeToken);
                         tokenBuilder.Remove(0, 1);
+                    }
+                }
+            }
+            return document;
+        }
+    }
+
+    /// <summary>
+    /// Parser for Francia 17-1
+    /// </summary>
+    public class Francia17Parser : SimpleSingleTokenParser
+    {
+        private List<Token> _nulls = new List<Token>();
+
+        private List<Token> _evenDigits = new List<Token>();
+        private List<Token> _oddDigits = new List<Token>();
+
+        private List<Token> _specialSet = new List<Token>();
+
+        public Francia17Parser(List<Token> nulls)
+        {
+            if (nulls != null)
+            {
+                _nulls = nulls;
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+
+                Token token = new Token(null);
+                Symbol symbol = new Symbol(token);
+                token.Symbols.Add(symbol);
+                symbol.Text = "" + i;
+                if (i % 2 == 0)
+                {
+                    _evenDigits.Add(token);
+                }
+                else
+                {
+                    _oddDigits.Add(token);
+                }
+            }
+
+            Token plusToken = new Token(null);
+            Symbol plusSymbol = new Symbol(plusToken);
+            plusSymbol.Text = "+";
+            plusToken.Symbols.Add(plusSymbol);
+            _specialSet.Add(plusToken);
+
+        }
+
+        /// <summary>
+        /// Returns the parsed new document
+        /// </summary>
+        /// <returns></returns>
+        public override TextDocument GetDocument()
+        {
+            TextDocument document = base.GetDocument();
+            if (document == null)
+            {
+                return null;
+            }
+
+            foreach (Page page in document.Pages)
+            {
+                //create new tokens based on the "old" tokens
+                TokenBuilder tokenBuilder = new TokenBuilder();
+                TokenBuilder tagTokenBuilder = new TokenBuilder();
+                Line lastLine = null;
+
+                bool is_a_tag = false;
+
+                foreach (Line line in page.Lines)
+                {
+                    if (line.LineType == LineType.Comment)
+                    {
+                        continue;
+                    }
+
+                    //We are using the SimpleSingleTokenParser as baseline
+                    //Thus, we have a single token for each line
+                    List<Symbol> text = line.Tokens[0].Symbols;
+                    line.Tokens.Remove(line.Tokens[0]);
+
+                    for (int position = 0; position < text.Count; position++)
+                    {
+                        Symbol symbol = text[position];
+                        symbol.TopChangesSymbol = false;
+
+                        if (string.IsNullOrWhiteSpace(symbol.Text) && !is_a_tag)
+                        {
+                            continue;
+                        }
+
+                        if (symbol.Equals("<"))
+                        {
+                            tagTokenBuilder.Append(symbol);
+                            is_a_tag = true;
+                            continue;
+                        }
+                        if (is_a_tag == true && symbol.Equals(">"))
+                        {
+                            tagTokenBuilder.Append(symbol);
+                            Token tagToken = new Token(line);
+                            tagToken.TokenType = TokenType.Tag;
+                            tagToken.Symbols = tagTokenBuilder.ToList();
+                            line.Tokens.Add(tagToken);
+                            tagTokenBuilder.Clear();
+                            is_a_tag = false;
+                            continue;
+                        }
+                        if (is_a_tag)
+                        {
+                            tagTokenBuilder.Append(symbol);
+                            continue;
+                        }
+
+                        tokenBuilder.Append(symbol);
+
+                        if (tokenBuilder.Length >= 2)
+                        {
+
+                            Symbol symbol0 = tokenBuilder[0];
+                            Symbol symbol1 = tokenBuilder[1];
+
+                            // 11
+                            if (_nulls.Contains(symbol0) && !symbol0.Top.Equals(".") && _nulls.Contains(symbol1))
+                            {
+                                //null length 1
+                                Token nullToken = tokenBuilder.GetToken(0, 1, line);
+                                nullToken.TokenType = TokenType.Null;
+                                line.Tokens.Add(nullToken);
+                                tokenBuilder.Remove(0, 1);
+                                continue;
+                            }
+
+                            // 13^
+                            if (_nulls.Contains(symbol0) && !symbol0.Top.Equals(".") && symbol1.Top.Equals("."))
+                            {
+                                //null length 1
+                                Token nullToken = tokenBuilder.GetToken(0, 1, line);
+                                nullToken.TokenType = TokenType.Null;
+                                line.Tokens.Add(nullToken);
+                                tokenBuilder.Remove(0, 1);
+                                continue;
+                            }
+                            // 33^
+                            if (_oddDigits.Contains(symbol0) && symbol1.Top.Equals("."))
+                            {
+                                //code length 1
+                                Token regularCodeToken = tokenBuilder.GetToken(0, 1, line);
+                                regularCodeToken.TokenType = TokenType.RegularCode;
+                                line.Tokens.Add(regularCodeToken);
+                                tokenBuilder.Remove(0, 1);
+                                continue;
+                            }
+                        }
+                        
+                        if (tokenBuilder.Length >= 4)
+                        {
+
+                            Symbol symbol0 = tokenBuilder[0];
+                            Symbol symbol1 = tokenBuilder[1];
+                            Symbol symbol2 = tokenBuilder[2];
+                            Symbol symbol3 = tokenBuilder[3];
+
+                            // 1^.7
+                            if (_nulls.Contains(symbol0) && symbol0.Top.Equals(".") && _oddDigits.Contains(symbol1))                                
+                            {
+                                //code length 2
+                                Token regularCodeToken = tokenBuilder.GetToken(0, 2, line);
+                                regularCodeToken.TokenType = TokenType.RegularCode;
+                                line.Tokens.Add(regularCodeToken);
+                                tokenBuilder.Remove(0, 2);
+                                continue;
+                            }
+                                
+                            // 1 *
+                            if (_nulls.Contains(symbol0) && !symbol0.Top.Equals("."))
+                            {
+                                //null length 1
+                                Token nullToken = tokenBuilder.GetToken(0, 1, line);
+                                nullToken.TokenType = TokenType.Null;
+                                line.Tokens.Add(nullToken);
+                                tokenBuilder.Remove(0, 1);
+                                continue;
+                            }
+
+                            // 266+
+                            if ((_evenDigits.Contains(symbol1) || _evenDigits.Contains(symbol2)) && _specialSet.Contains(symbol3)
+                                && !symbol0.Top.Equals(".")
+                                && !symbol1.Top.Equals(".")
+                                && !symbol2.Top.Equals(".")
+                                && !symbol3.Top.Equals("."))
+                            {
+                                //vocabulary length 4
+                                Token vocabularyToken = tokenBuilder.GetToken(0, 4, line);
+                                vocabularyToken.TokenType = TokenType.VocabularyElement;
+                                line.Tokens.Add(vocabularyToken);
+                                tokenBuilder.Remove(0, 4);
+                                continue;
+                            }
+
+                            // 266
+                            if ((_evenDigits.Contains(symbol1) || _evenDigits.Contains(symbol2)) && !_specialSet.Contains(symbol3)
+                                && !symbol0.Top.Equals(".")
+                                && !symbol1.Top.Equals(".")
+                                && !symbol2.Top.Equals(".")
+                                && !symbol3.Top.Equals("."))
+                            {
+                                //vocabulary length 3
+                                Token vocabularyToken = tokenBuilder.GetToken(0, 3, line);
+                                vocabularyToken.TokenType = TokenType.VocabularyElement;
+                                line.Tokens.Add(vocabularyToken);
+                                tokenBuilder.Remove(0, 3);
+                                continue;
+                            }
+
+                            // 3^.7 or 4^.1
+                            if (symbol0.Top.Contains(".") && _oddDigits.Contains(symbol1))
+                            {                            
+                                //code length 2
+                                Token regularCodeToken = tokenBuilder.GetToken(0, 2, line);
+                                regularCodeToken.TokenType = TokenType.RegularCode;
+                                line.Tokens.Add(regularCodeToken);
+                                tokenBuilder.Remove(0, 2);
+                                continue;
+                            }
+
+                            // 3
+                            if (_oddDigits.Contains(symbol0))
+                            {
+                                //code length 1
+                                Token regularCodeToken = tokenBuilder.GetToken(0, 1, line);
+                                regularCodeToken.TokenType = TokenType.RegularCode;
+                                line.Tokens.Add(regularCodeToken);
+                                tokenBuilder.Remove(0, 1);
+                                continue;
+                            }
+                        }
+                    }
+                    lastLine = line;
+                }
+
+                if (tagTokenBuilder.Length > 0)
+                {
+                    Token tagToken = new Token(lastLine);
+                    tagToken.TokenType = TokenType.Tag;
+                    tagToken.Symbols = tagTokenBuilder.ToList();
+                    lastLine.Tokens.Add(tagToken);
+                    tagTokenBuilder.Clear();
+                    is_a_tag = false;
+                }
+
+                while (tokenBuilder.Length > 0)
+                {
+                    Symbol symbol0 = tokenBuilder[0];
+                    if (_nulls.Contains(symbol0))
+                    {
+                        //null length 1
+                        Token nullToken = tokenBuilder.GetToken(0, 1, lastLine);
+                        nullToken.TokenType = TokenType.Null;
+                        lastLine.Tokens.Add(nullToken);
+                        tokenBuilder.Remove(0, 1);
+                    }
+                    else
+                    {
+                        if (tokenBuilder[0].Top.Equals("."))
+                        {
+                            //code length 2
+                            Token regularCodeToken = tokenBuilder.GetToken(0, 2, lastLine);
+                            regularCodeToken.TokenType = TokenType.RegularCode;
+                            lastLine.Tokens.Add(regularCodeToken);
+                            tokenBuilder.Remove(0, 2);
+                        }
+                        else
+                        {
+                            //code length 1
+                            Token regularCodeToken = tokenBuilder.GetToken(0, 1, lastLine);
+                            regularCodeToken.TokenType = TokenType.RegularCode;
+                            lastLine.Tokens.Add(regularCodeToken);
+                            tokenBuilder.Remove(0, 1);
+                        }
                     }
                 }
             }
