@@ -1558,7 +1558,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 while (tokenBuilder.Length > 0)
                 {
                     Symbol symbol0 = tokenBuilder[0];
-                    if (_nulls.Contains(symbol0))
+                    if (_nulls.Contains(symbol0) && !symbol0.Top.Equals("."))
                     {
                         //null length 1
                         Token nullToken = tokenBuilder.GetToken(0, 1, lastLine);
@@ -1568,7 +1568,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     }
                     else
                     {
-                        if (tokenBuilder[0].Top.Equals("."))
+                        if (tokenBuilder[0].Top.Equals(".") && tokenBuilder.Length > 1)
                         {
                             //code length 2
                             Token regularCodeToken = tokenBuilder.GetToken(0, 2, lastLine);
