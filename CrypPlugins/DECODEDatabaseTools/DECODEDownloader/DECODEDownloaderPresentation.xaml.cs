@@ -16,7 +16,9 @@
 using Cryptool.Plugins.DECODEDatabaseTools.DataObjects;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Threading;
@@ -28,6 +30,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     {
         private DECODEDownloader Plugin;        
         public ObservableCollection<RecordsRecord> RecordsList = new ObservableCollection<RecordsRecord>();        
+        private GridViewColumnHeader _lastHeaderClicked;
+        private ListSortDirection _lastDirection;
 
         public DECODEDownloaderPresentation(DECODEDownloader plugin)
         {
@@ -101,6 +105,73 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             {
                 LoginNameLabel.Content = text;
             }, null);
+        }
+        
+        /// <summary>
+        /// Sorts the list view based on the clicked column header
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)
+        {
+            var headerClicked = e.OriginalSource as GridViewColumnHeader;
+            ListSortDirection direction;
+
+            if (headerClicked != null)
+            {
+                if (headerClicked.Role != GridViewColumnHeaderRole.Padding)
+                {
+                    if (headerClicked != _lastHeaderClicked)
+                    {
+                        direction = ListSortDirection.Ascending;
+                    }
+                    else
+                    {
+                        if (_lastDirection == ListSortDirection.Ascending)
+                        {
+                            direction = ListSortDirection.Descending;
+                        }
+                        else
+                        {
+                            direction = ListSortDirection.Ascending;
+                        }
+                    }
+
+                    var columnBinding = headerClicked.Column.DisplayMemberBinding as Binding;
+                    var sortBy = (columnBinding != null ? (columnBinding.Path.Path != null ? columnBinding.Path.Path : headerClicked.Column.Header) : null)  as string;                    
+
+                    Sort(sortBy, direction);
+
+                    if (direction == ListSortDirection.Ascending)
+                    {
+                        headerClicked.Column.HeaderTemplate =
+                          Resources["HeaderTemplateArrowUp"] as DataTemplate;
+                    }
+                    else
+                    {
+                        headerClicked.Column.HeaderTemplate =
+                          Resources["HeaderTemplateArrowDown"] as DataTemplate;
+                    }
+
+                    // Remove arrow from previously sorted header
+                    if (_lastHeaderClicked != null && _lastHeaderClicked != headerClicked)
+                    {
+                        _lastHeaderClicked.Column.HeaderTemplate = null;
+                    }
+
+                    _lastHeaderClicked = headerClicked;
+                    _lastDirection = direction;
+                }
+            }
+        }
+
+        private void Sort(string sortBy, ListSortDirection direction)
+        {
+            ICollectionView dataView = CollectionViewSource.GetDefaultView(ListView.ItemsSource);
+            dataView.SortDescriptions.Clear();
+            SortDescription sd = new SortDescription(sortBy, direction);
+            dataView.SortDescriptions.Add(sd);
+            dataView.Refresh();
         }
     }
 }

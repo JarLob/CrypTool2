@@ -92,6 +92,33 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         }
 
         /// <summary>
+        /// Returns the internal key/value dictionary of this decoder
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<Token, Token> GetKeyDictionary()
+        {
+            return _keyMapping;
+        }
+
+        /// <summary>
+        /// Returns all key tokens of this decoder
+        /// </summary>
+        /// <returns></returns>
+        public List<Token> GetKeyTokens()
+        {
+            return new List<Token>(_keyMapping.Keys);
+        }
+
+        /// <summary>
+        /// Returns all value tokens of this decoder
+        /// </summary>
+        /// <returns></returns>
+        public List<Token> GetValueTokens()
+        {
+            return new List<Token>(_keyMapping.Values);
+        }
+
+        /// <summary>
         /// Decodes a line using the stored key
         /// => adds DecodedText to each token
         /// </summary>
@@ -144,5 +171,21 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, null, new GuiLogEventArgs(message, null, logLevel));
         }
 
+        /// <summary>
+        /// Returns the maximum token length of the key tokens
+        /// </summary>
+        /// <returns></returns>
+        public int GetMaximumTokenLength()
+        {
+            int maxTokenLength = 0;
+            foreach(var key in _keyMapping)
+            {
+                if(key.Key.Symbols.Count > maxTokenLength)
+                {
+                    maxTokenLength = key.Key.Symbols.Count;
+                }
+            }
+            return maxTokenLength;
+        }
     }
 }

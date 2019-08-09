@@ -176,6 +176,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 case ParserType.Francia18Parser:
                     parser = new Francia18Parser(nulls);
                     break;
+                case ParserType.VariableLengthHomophonicCipher:
+                    parser = new VariableLengthHomophonicCipher(nulls, decoder);
+                    break;                    
                 case ParserType.SimpleSingleTokenParser:
                 default:
                     parser = new SimpleSingleTokenParser();

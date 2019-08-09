@@ -252,7 +252,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
                 documents.AddRange(cryptanalysis_statistics);
                 documents.AddRange(publication);
                 documents.AddRange(transcription);
-                documents.AddRange(transcription);
                 documents.AddRange(translation);
                 documents.AddRange(miscellaneous);
                 return documents;

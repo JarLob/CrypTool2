@@ -149,7 +149,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                         }
                         else
                         {
-                            if (string.IsNullOrEmpty(document.ImageName))                               
+                            if (string.IsNullOrEmpty(document.ImageName))
                             {
                                 document.ImageName = split[1].Trim();
                             }
@@ -164,7 +164,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                                 currentPage.PageNumber = pagenumber;
                                 document.Pages.Add(currentPage);
                             }
-                        }                       
+                        }
                     }
                     else if (comment.StartsWith("TRANSCRIBER NAME"))
                     {
@@ -247,7 +247,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 Token token = new Token(currentLine);
                 token.TokenType = TokenType.Unknown;
                 bool top = false;
-                bool bottom = false;                
+                bool bottom = false;
                 Symbol symbol = null;
 
                 foreach (var c in trimmedLine)
@@ -452,7 +452,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         }
     }
 
-    
+
     /// <summary>
     /// Parses the text into regular codes of two
     /// Also supports vocabulary elements of three digits followed by a null digit
@@ -568,7 +568,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                             //if we are longer than 3 digits, we know we can not be in a vocabulary, 
                             //thus, we add a regular code
                             Token regularCodeToken = tokenBuilder.GetToken(0, 2, line);
-                            regularCodeToken.TokenType = TokenType.RegularCode;                            
+                            regularCodeToken.TokenType = TokenType.RegularCode;
                             line.Tokens.Add(regularCodeToken);
                             tokenBuilder.Remove(0, 2);
                         }
@@ -590,7 +590,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 {
                     int len = Math.Min(tokenBuilder.Length, 2);
                     Token regularCodeToken = tokenBuilder.GetToken(0, len, lastLine);
-                    regularCodeToken.TokenType = TokenType.RegularCode;                    
+                    regularCodeToken.TokenType = TokenType.RegularCode;
                     lastLine.Tokens.Add(regularCodeToken);
                     tokenBuilder.Remove(0, len);
                 }
@@ -598,7 +598,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             return document;
         }
     }
-    
+
     /// <summary>
     /// Parses the text into regular codes of two
     /// Also supports vocabulary elements of three digits followed by two nulls
@@ -682,7 +682,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
                         if (tokenBuilder.Length == 5)
                         {
-                            if (_nulls.Contains(tokenBuilder.GetToken(3,2,null)))
+                            if (_nulls.Contains(tokenBuilder.GetToken(3, 2, null)))
                             {
                                 //we have 2 null symbols => thus, we have a vocabulary element and 2 nulls
                                 Token vocabularyToken = tokenBuilder.GetToken(0, 3, line);
@@ -779,7 +779,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             if (nulls != null)
             {
                 _nulls = nulls;
-            }            
+            }
         }
 
         /// <summary>
@@ -816,7 +816,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
                     for (int position = 0; position < text.Count; position++)
                     {
-                        Symbol symbol = text[position];                        
+                        Symbol symbol = text[position];
 
                         if (string.IsNullOrWhiteSpace(symbol.Text) && !is_a_tag)
                         {
@@ -857,7 +857,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                             {
                                 //vocabulary
                                 Token vocabularyToken = tokenBuilder.GetToken(0, 4, line);
-                                vocabularyToken.TokenType = TokenType.VocabularyElement;                                
+                                vocabularyToken.TokenType = TokenType.VocabularyElement;
                                 line.Tokens.Add(vocabularyToken);
                                 tokenBuilder.Clear();
                                 continue;
@@ -939,7 +939,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                         if (_nulls.Contains(symbol1))
                         {
                             //code length 1
-                            Token regularCodeToken =tokenBuilder.GetToken(0, 1, lastLine);
+                            Token regularCodeToken = tokenBuilder.GetToken(0, 1, lastLine);
                             regularCodeToken.TokenType = TokenType.RegularCode;
                             lastLine.Tokens.Add(regularCodeToken);
                             tokenBuilder.Remove(0, 1);
@@ -1076,7 +1076,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                                 Token vocabularyToken = tokenBuilder.GetToken(0, 3, line);
                                 vocabularyToken.TokenType = TokenType.VocabularyElement;
                                 line.Tokens.Add(vocabularyToken);
-                                tokenBuilder.Clear();                                
+                                tokenBuilder.Clear();
                             }
                             //vocabulary 2 with null
                             else if (_nulls.Contains(tokenBuilder[2]))
@@ -1220,11 +1220,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                             continue;
                         }
 
-                        tokenBuilder.Append(symbol);                        
+                        tokenBuilder.Append(symbol);
 
                         if (tokenBuilder.Length == 4)
                         {
-                            if(tokenBuilder[0].Top == string.Empty &&
+                            if (tokenBuilder[0].Top == string.Empty &&
                                 tokenBuilder[1].Top == string.Empty &&
                                 tokenBuilder[2].Top == string.Empty &&
                                 tokenBuilder[3].Top == string.Empty &&
@@ -1237,7 +1237,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                                 line.Tokens.Add(vocabularyToken);
                                 tokenBuilder.Remove(0, 4);
                                 continue;
-                            }                                                                                 
+                            }
 
                             if (tokenBuilder[1].Text.Equals("2") && tokenBuilder[1].Top != null && tokenBuilder[1].Top.Equals("."))
                             {
@@ -1249,7 +1249,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                                 continue;
                             }
                             else
-                            {                              
+                            {
                                 Symbol symbol0 = tokenBuilder[0];
                                 if (_nulls.Contains(symbol0))
                                 {
@@ -1266,9 +1266,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                                     regularCodeToken.TokenType = TokenType.RegularCode;
                                     line.Tokens.Add(regularCodeToken);
                                     tokenBuilder.Remove(0, 1);
-                                }                                
-                            }                           
-                        }                        
+                                }
+                            }
+                        }
                     }
                     lastLine = line;
                 }
@@ -1458,7 +1458,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                                 continue;
                             }
                         }
-                        
+
                         if (tokenBuilder.Length >= 4)
                         {
 
@@ -1468,7 +1468,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                             Symbol symbol3 = tokenBuilder[3];
 
                             // 1^.7
-                            if (_nulls.Contains(symbol0) && symbol0.Top.Equals(".") && _oddDigits.Contains(symbol1))                                
+                            if (_nulls.Contains(symbol0) && symbol0.Top.Equals(".") && _oddDigits.Contains(symbol1))
                             {
                                 //code length 2
                                 Token regularCodeToken = tokenBuilder.GetToken(0, 2, line);
@@ -1477,7 +1477,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                                 tokenBuilder.Remove(0, 2);
                                 continue;
                             }
-                                
+
                             // 1 *
                             if (_nulls.Contains(symbol0) && !symbol0.Top.Equals("."))
                             {
@@ -1521,7 +1521,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
                             // 3^.7 or 4^.1
                             if (symbol0.Top.Contains(".") && _oddDigits.Contains(symbol1))
-                            {                            
+                            {
                                 //code length 2
                                 Token regularCodeToken = tokenBuilder.GetToken(0, 2, line);
                                 regularCodeToken.TokenType = TokenType.RegularCode;
@@ -1615,7 +1615,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 specialToken.Symbols.Add(specialSymbol);
                 _specialSet.Add(specialToken);
             }
-          
+
         }
 
         /// <summary>
@@ -1693,7 +1693,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                             Symbol symbol3 = tokenBuilder[3];
                             Symbol symbol4 = tokenBuilder[4];
                             // 846,8
-                            if (_nulls.Contains(symbol0) && _specialSet.Contains(symbol3) && _nulls.Contains(symbol4))                             
+                            if (_nulls.Contains(symbol0) && _specialSet.Contains(symbol3) && _nulls.Contains(symbol4))
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
@@ -1904,4 +1904,178 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             return document;
         }
     }
+
+    /// <summary>
+    /// Parser for Francia 18-1
+    /// </summary>
+    public class VariableLengthHomophonicCipher : SimpleSingleTokenParser
+    {
+        private List<Token> _nulls = new List<Token>();
+        private Decoder _decoder;
+
+        public VariableLengthHomophonicCipher(List<Token> nulls, Decoder decoder)
+        {
+            if (nulls != null)
+            {
+                _nulls = nulls;
+            }
+            _decoder = decoder;
+        }
+
+        /// <summary>
+        /// Returns the parsed new document
+        /// </summary>
+        /// <returns></returns>
+        public override TextDocument GetDocument()
+        {
+            TextDocument document = base.GetDocument();
+            if (document == null)
+            {
+                return null;
+            }
+            if (_decoder == null)
+            {
+                throw new Exception("No decoder (no key) given. Parser is not able to work without a key");
+            }
+
+            int maxTokenLength = _decoder.GetMaximumTokenLength();
+
+            foreach (Page page in document.Pages)
+            {
+                //create new tokens based on the "old" tokens
+                TokenBuilder tokenBuilder = new TokenBuilder();
+                TokenBuilder tagTokenBuilder = new TokenBuilder();
+                Line lastLine = null;
+
+                bool is_a_tag = false;
+                List<Token> keyTokens = _decoder.GetKeyTokens();
+
+                foreach (Line line in page.Lines)
+                {
+                    if (line.LineType == LineType.Comment)
+                    {
+                        continue;
+                    }
+
+                    //We are using the SimpleSingleTokenParser as baseline
+                    //Thus, we have a single token for each line
+                    List<Symbol> text = line.Tokens[0].Symbols;
+                    line.Tokens.Remove(line.Tokens[0]);
+
+                    for (int position = 0; position < text.Count; position++)
+                    {
+                        Symbol symbol = text[position];
+
+                        if (string.IsNullOrWhiteSpace(symbol.Text) && !is_a_tag)
+                        {
+                            continue;
+                        }
+
+                        if (symbol.Equals("<"))
+                        {
+                            tagTokenBuilder.Append(symbol);
+                            is_a_tag = true;
+                            continue;
+                        }
+                        if (is_a_tag == true && symbol.Equals(">"))
+                        {
+                            tagTokenBuilder.Append(symbol);
+                            Token tagToken = new Token(line);
+                            tagToken.TokenType = TokenType.Tag;
+                            tagToken.Symbols = tagTokenBuilder.ToList();
+                            line.Tokens.Add(tagToken);
+                            tagTokenBuilder.Clear();
+                            is_a_tag = false;
+                            continue;
+                        }
+                        if (is_a_tag)
+                        {
+                            tagTokenBuilder.Append(symbol);
+                            continue;
+                        }
+
+                        tokenBuilder.Append(symbol);
+
+                        if (tokenBuilder.Length >= maxTokenLength)
+                        {
+                            bool removedOne = false;
+                            for (int length = tokenBuilder.Length; length > 0; length--)
+                            {
+                                Token token = tokenBuilder.GetToken(0, length, line);
+                                if (_nulls.Contains(token))
+                                {
+                                    token.TokenType = TokenType.Null;
+                                    line.Tokens.Add(token);
+                                    tokenBuilder.Remove(0, length);
+                                    removedOne = true;
+                                    break;
+                                }
+                                else if (keyTokens.Contains(token))
+                                {
+                                    token.TokenType = TokenType.RegularCode;
+                                    line.Tokens.Add(token);
+                                    tokenBuilder.Remove(0, length);
+                                    removedOne = true;
+                                    break;
+                                }
+                            }
+                            if (!removedOne)
+                            {
+                                Token token = tokenBuilder.GetToken(0, 1, line);
+                                token.TokenType = TokenType.Unknown;
+                                line.Tokens.Add(token);
+                                tokenBuilder.Remove(0, 1);
+                            }
+                        }
+                    }
+
+                    lastLine = line;
+                }
+
+                if (tagTokenBuilder.Length > 0)
+                {
+                    Token tagToken = new Token(lastLine);
+                    tagToken.TokenType = TokenType.Tag;
+                    tagToken.Symbols = tagTokenBuilder.ToList();
+                    lastLine.Tokens.Add(tagToken);
+                    tagTokenBuilder.Clear();
+                    is_a_tag = false;
+                }
+
+                while (tokenBuilder.Length > 0)
+                {
+                    bool removedOne = false;
+                    for (int length = tokenBuilder.Length; length > 0; length--)
+                    {
+                        Token token = tokenBuilder.GetToken(0, length, lastLine);
+                        if (_nulls.Contains(token))
+                        {
+                            token.TokenType = TokenType.Null;
+                            lastLine.Tokens.Add(token);
+                            tokenBuilder.Remove(0, length);
+                            removedOne = true;
+                            break;
+                        }
+                        else if (keyTokens.Contains(token))
+                        {
+                            token.TokenType = TokenType.RegularCode;
+                            lastLine.Tokens.Add(token);
+                            tokenBuilder.Remove(0, length);
+                            removedOne = true;
+                            break;
+                        }
+                    }
+                    if (!removedOne)
+                    {
+                        Token token = tokenBuilder.GetToken(0, 1, lastLine);
+                        token.TokenType = TokenType.Unknown;
+                        lastLine.Tokens.Add(token);
+                        tokenBuilder.Remove(0, 1);
+                    }
+                }
+            }
+            return document;
+        }
+    }
 }
+
