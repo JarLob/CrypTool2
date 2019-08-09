@@ -31,7 +31,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         Francia6Parser = 6,
         Francia17Parser = 7,
         Francia18Parser = 8,
-        VariableLengthHomophonicCipher = 9
+        VariableLengthHomophonicCipher = 9,
+        Francia346 = 10
     }
 
     class DECODEDeciphererSettings : ISettings
@@ -52,7 +53,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             "Francia6Parser",
             "Francia17Parser",
             "Francia18Parser",
-            "VariableLengthHomophonicCipher"
+            "VariableLengthHomophonicCipher",
+            "Francia346"
         })]
         public ParserType ParserType
         {
