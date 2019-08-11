@@ -23,6 +23,7 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>ISAPCommitmentScheme</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -71,19 +72,27 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LinkKeyFile>$(ProjectDir)..\..\..\..\CrypCore\CT2_Key.snk</LinkKeyFile>
+    <LinkKeyFile>$(ProjectDir)..\..\..\CrypCore\CT2_Key.snk</LinkKeyFile>
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <LinkKeyFile>$(ProjectDir)..\..\..\..\CrypCore\CT2_Key.snk</LinkKeyFile>
+    <LinkKeyFile>$(ProjectDir)..\..\..\CrypCore\CT2_Key.snk</LinkKeyFile>
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <LinkKeyFile>$(ProjectDir)..\..\..\..\CrypCore\CT2_Key.snk</LinkKeyFile>
+    <LinkKeyFile>$(ProjectDir)..\..\..\CrypCore\CT2_Key.snk</LinkKeyFile>
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <LinkKeyFile>$(ProjectDir)..\..\..\..\CrypCore\CT2_Key.snk</LinkKeyFile>
+    <LinkKeyFile>$(ProjectDir)..\..\..\CrypCore\CT2_Key.snk</LinkKeyFile>
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -95,19 +104,16 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\mpir;$(SolutionDir)..\mpir\msvc\vs19\lib_mpir_gc\Win32\Debug;$(SolutionDir)..\mpfr\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\mpir;..\..\mpir\msvc\vs19\lib_mpir_gc\$(IntDir);..\..\mpfr\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)..\mpir\msvc\vs19\lib_mpir_cxx\Win32\Debug\mpirxx.lib;$(SolutionDir)..\mpfr\lib\Win32\Debug\mpfr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\mpir\msvc\vs19\lib_mpir_cxx\$(IntDir)mpirxx.lib;..\..\mpfr\lib\$(IntDir)mpfr.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <KeyFile>$(ProjectDir)..\..\..\..\CrypCore\CT2_Key.snk</KeyFile>
     </Link>
     <PostBuildEvent>
-      <Command>cd "$(ProjectDir)"
-cd ..\..\..\..\Lib
-
-copy "$(TargetDir)ISAPCommitmentScheme.dll" "."</Command>
+      <Command>xcopy /Y /F "$(TargetDir)$(TargetFileName)" "..\..\..\Lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -120,19 +126,16 @@ copy "$(TargetDir)ISAPCommitmentScheme.dll" "."</Command>
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\mpir;$(SolutionDir)..\mpir\msvc\vs19\lib_mpir_gc\Win32\Debug;$(SolutionDir)..\mpfr\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\mpir;..\..\mpir\msvc\vs19\lib_mpir_gc\$(IntDir);..\..\mpfr\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)..\mpir\msvc\vs19\lib_mpir_cxx\Win32\Debug\mpirxx.lib;$(SolutionDir)..\mpfr\lib\Win32\Debug\mpfr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\mpir\msvc\vs19\lib_mpir_cxx\$(IntDir)mpirxx.lib;..\..\mpfr\lib\$(IntDir)mpfr.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <KeyFile>$(ProjectDir)..\..\..\..\CrypCore\CT2_Key.snk</KeyFile>
     </Link>
     <PostBuildEvent>
-      <Command>cd "$(ProjectDir)"
-cd ..\..\..\..\Lib
-
-copy "$(TargetDir)ISAPCommitmentScheme.dll" "."</Command>
+      <Command>xcopy /Y /F "$(TargetDir)$(TargetFileName)" "..\..\..\Lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -144,18 +147,15 @@ copy "$(TargetDir)ISAPCommitmentScheme.dll" "."</Command>
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\mpir;$(SolutionDir)..\mpir\build.vc10\lib\$(Platform)\$(IntDir);$(SolutionDir)..\mpfr;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\mpir;..\..\mpir\msvc\vs19\lib_mpir_gc\$(IntDir);..\..\mpfr\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)..\mpir\build.vc10\lib\$(Platform)\$(IntDir)\mpirxx.lib;$(SolutionDir)..\mpfr\build.vc10\lib\$(Platform)\$(IntDir)\mpfr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\mpir\msvc\vs19\lib_mpir_cxx\$(IntDir)mpirxx.lib;..\..\mpfr\lib\$(IntDir)mpfr.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <KeyFile>$(ProjectDir)..\..\..\..\CrypCore\CT2_Key.snk</KeyFile>
     </Link>
     <PostBuildEvent>
-      <Command>cd "$(ProjectDir)"
-cd ..\..\..\..\Lib
-
-copy "$(TargetDir)ISAPCommitmentScheme.dll" "."</Command>
+      <Command>xcopy /Y /F "$(TargetDir)$(TargetFileName)" "..\..\..\Lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -167,18 +167,15 @@ copy "$(TargetDir)ISAPCommitmentScheme.dll" "."</Command>
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\mpir;$(SolutionDir)..\mpir\msvc\vs19\lib_mpir_gc\x64\Release;$(SolutionDir)..\mpfr\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\mpir;..\..\mpir\msvc\vs19\lib_mpir_gc\$(IntDir);..\..\mpfr\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)..\mpir\msvc\vs19\lib_mpir_cxx\x64\Release\mpirxx.lib;$(SolutionDir)..\mpfr\lib\x64\Release\mpfr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\mpir\msvc\vs19\lib_mpir_cxx\$(IntDir)mpirxx.lib;..\..\mpfr\lib\$(IntDir)mpfr.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <KeyFile>$(ProjectDir)..\..\..\..\CrypCore\CT2_Key.snk</KeyFile>
     </Link>
     <PostBuildEvent>
-      <Command>cd "$(ProjectDir)"
-cd ..\..\..\..\Lib
-
-copy "$(TargetDir)ISAPCommitmentScheme.dll" "."</Command>
+      <Command>xcopy /Y /F "$(TargetDir)$(TargetFileName)" "..\..\..\Lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
