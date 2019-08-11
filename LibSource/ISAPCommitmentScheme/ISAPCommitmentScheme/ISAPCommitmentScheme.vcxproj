@@ -104,12 +104,12 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>..\..\mpir;..\..\mpir\msvc\vs19\lib_mpir_gc\$(IntDir);..\..\mpfr\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\mpir;..\..\mpir\msvc\vs19\lib_mpir_gc\$(Platform)\$(Configuration);..\..\mpfr\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\mpir\msvc\vs19\lib_mpir_cxx\$(IntDir)mpirxx.lib;..\..\mpfr\lib\$(IntDir)mpfr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\mpir\msvc\vs19\lib_mpir_cxx\$(Platform)\$(Configuration)\mpirxx.lib;..\..\mpfr\lib\$(Platform)\$(Configuration)\mpfr.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <KeyFile>$(ProjectDir)..\..\..\..\CrypCore\CT2_Key.snk</KeyFile>
     </Link>
     <PostBuildEvent>
@@ -126,12 +126,12 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>..\..\mpir;..\..\mpir\msvc\vs19\lib_mpir_gc\$(IntDir);..\..\mpfr\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\mpir;..\..\mpir\msvc\vs19\lib_mpir_gc\$(Platform)\$(Configuration);..\..\mpfr\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\mpir\msvc\vs19\lib_mpir_cxx\$(IntDir)mpirxx.lib;..\..\mpfr\lib\$(IntDir)mpfr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\mpir\msvc\vs19\lib_mpir_cxx\$(Platform)\$(Configuration)\mpirxx.lib;..\..\mpfr\lib\$(Platform)\$(Configuration)\mpfr.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <KeyFile>$(ProjectDir)..\..\..\..\CrypCore\CT2_Key.snk</KeyFile>
     </Link>
     <PostBuildEvent>
@@ -147,11 +147,11 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>..\..\mpir;..\..\mpir\msvc\vs19\lib_mpir_gc\$(IntDir);..\..\mpfr\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\mpir;..\..\mpir\msvc\vs19\lib_mpir_gc\$(Platform)\$(Configuration);..\..\mpfr\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\mpir\msvc\vs19\lib_mpir_cxx\$(IntDir)mpirxx.lib;..\..\mpfr\lib\$(IntDir)mpfr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\mpir\msvc\vs19\lib_mpir_cxx\$(Platform)\$(Configuration)\mpirxx.lib;..\..\mpfr\lib\$(Platform)\$(Configuration)\mpfr.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <KeyFile>$(ProjectDir)..\..\..\..\CrypCore\CT2_Key.snk</KeyFile>
     </Link>
     <PostBuildEvent>
@@ -167,11 +167,11 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>..\..\mpir;..\..\mpir\msvc\vs19\lib_mpir_gc\$(IntDir);..\..\mpfr\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\mpir;..\..\mpir\msvc\vs19\lib_mpir_gc\$(Platform)\$(Configuration);..\..\mpfr\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\mpir\msvc\vs19\lib_mpir_cxx\$(IntDir)mpirxx.lib;..\..\mpfr\lib\$(IntDir)mpfr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\mpir\msvc\vs19\lib_mpir_cxx\$(Platform)\$(Configuration)\mpirxx.lib;..\..\mpfr\lib\$(Platform)\$(Configuration)\mpfr.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <KeyFile>$(ProjectDir)..\..\..\..\CrypCore\CT2_Key.snk</KeyFile>
     </Link>
     <PostBuildEvent>
