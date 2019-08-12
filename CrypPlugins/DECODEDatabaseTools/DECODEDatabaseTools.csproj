@@ -89,11 +89,11 @@
       <DependentUpon>DECODEDeciphererPresentation.xaml</DependentUpon>
     </Compile>
     <Compile Include="DECODEDecipherer\DECODEDeciphererSettings.cs" />
-    <Compile Include="DECODEDecipherer\Decoder.cs" />
-    <Compile Include="DECODEDecipherer\Extensions.cs" />
-    <Compile Include="DECODEDecipherer\Parsers.cs" />
-    <Compile Include="DECODEDecipherer\TextObjects.cs" />
-    <Compile Include="DECODEDecipherer\TokenBuilder.cs" />
+    <Compile Include="Util\Decoder.cs" />
+    <Compile Include="Util\Extensions.cs" />
+    <Compile Include="Util\Parsers.cs" />
+    <Compile Include="Util\TextObjects.cs" />
+    <Compile Include="Util\TokenBuilder.cs" />
     <Compile Include="Util\DataObjects.cs" />
     <Compile Include="DECODESettingsTab.xaml.cs">
       <DependentUpon>DECODESettingsTab.xaml</DependentUpon>

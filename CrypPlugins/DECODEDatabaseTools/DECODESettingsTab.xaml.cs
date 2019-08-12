@@ -14,6 +14,7 @@
    limitations under the License.
 */
 using Cryptool.PluginBase.Attributes;
+using Cryptool.Plugins.DECODEDatabaseTools.Util;
 using System;
 using System.Security.Cryptography;
 using System.Text;

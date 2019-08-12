@@ -19,7 +19,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 
-namespace Cryptool.Plugins.DECODEDatabaseTools
+namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 {
     /// <summary>
     /// Abstract class for a parser

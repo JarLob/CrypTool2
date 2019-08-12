@@ -13,7 +13,6 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.Plugins.DECODEDatabaseTools.DataObjects;
 using System;
 using System.IO;
 using System.Net;
@@ -23,7 +22,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cryptool.Plugins.DECODEDatabaseTools
+namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 {
     public class JsonDownloaderAndConverter
     {

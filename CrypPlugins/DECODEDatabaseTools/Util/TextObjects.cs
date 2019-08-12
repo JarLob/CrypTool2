@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Media;
 
-namespace Cryptool.Plugins.DECODEDatabaseTools
+namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 {
 
     /// <summary>

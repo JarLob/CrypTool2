@@ -23,6 +23,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Cryptool.Plugins.DECODEDatabaseTools.Util;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {

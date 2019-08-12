@@ -13,7 +13,6 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using Cryptool.Plugins.DECODEDatabaseTools.DataObjects;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -22,6 +21,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Threading;
+using Cryptool.Plugins.DECODEDatabaseTools.Util;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {

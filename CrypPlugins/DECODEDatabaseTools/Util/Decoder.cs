@@ -18,8 +18,11 @@ using Cryptool.PluginBase.Miscellaneous;
 using System;
 using System.Collections.Generic;
 
-namespace Cryptool.Plugins.DECODEDatabaseTools
+namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 {
+    /// <summary>
+    /// The decoder is for decoding the tokenized TextDocuments
+    /// </summary>
     public class Decoder
     {
         private string _DECODEKeyDocument;

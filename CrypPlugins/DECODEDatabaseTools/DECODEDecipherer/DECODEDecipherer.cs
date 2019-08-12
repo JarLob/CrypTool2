@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Controls;
+using Cryptool.Plugins.DECODEDatabaseTools.Util;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
@@ -133,10 +134,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
         public void Execute()
         {
-            Decoder decoder = null;
+            Util.Decoder decoder = null;
             if (DECODEKeyDocument != null)
             {
-                decoder = new Decoder(DECODEKeyDocument);
+                decoder = new Util.Decoder(DECODEKeyDocument);
                 decoder.OnGuiLogNotificationOccured += ForwardGuiLogNotification;
             }
 
@@ -192,7 +193,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             parser.OnGuiLogNotificationOccured += ForwardGuiLogNotification;
             parser.DECODETextDocument = DECODETextDocument;
             DateTime startTime = DateTime.Now;
-            var document = parser.GetDocument();
+            TextDocument document = parser.GetDocument();
             if(document == null)
             {
                 return;

@@ -19,7 +19,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cryptool.Plugins.DECODEDatabaseTools
+namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 {
     public class TokenBuilder
     {

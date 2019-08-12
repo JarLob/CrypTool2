@@ -17,7 +17,6 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.Plugins.DECODEDatabaseTools.DataObjects;
 using System.IO;
 using System.Windows.Threading;
 using System.Threading;
@@ -28,6 +27,7 @@ using System.Drawing.Imaging;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Threading.Tasks;
+using Cryptool.Plugins.DECODEDatabaseTools.Util;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
@@ -334,7 +334,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// Download and output an image
         /// </summary>
         /// <param name="image"></param>
-        internal void DownloadImage(DataObjects.Image image)
+        internal void DownloadImage(Util.Image image)
         {
             if (!_running)
             {

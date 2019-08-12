@@ -14,13 +14,13 @@
    limitations under the License.
 */
 using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.Plugins.DECODEDatabaseTools.DataObjects;
 using System;
 using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Cryptool.Plugins.DECODEDatabaseTools.Util;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
@@ -66,7 +66,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 var lvi = sender as ListViewItem;
                 if (lvi != null)
                 {
-                    var image = lvi.Content as DataObjects.Image;
+                    var image = lvi.Content as Util.Image;
                     if (image != null)
                     {
                         Plugin.DownloadImage(image);
@@ -91,7 +91,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 var lvi = sender as ListViewItem;
                 if (lvi != null)
                 {
-                    var document = lvi.Content as DataObjects.Document;
+                    var document = lvi.Content as Util.Document;
                     if (document != null)
                     {
                         Plugin.DownloadDocument(document);
