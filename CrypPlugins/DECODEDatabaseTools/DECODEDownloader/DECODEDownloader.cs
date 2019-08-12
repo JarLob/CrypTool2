@@ -24,6 +24,7 @@ using System.Threading;
 using System;
 using System.Text;
 using Cryptool.Plugins.DECODEDatabaseTools.Util;
+using System.Threading.Tasks;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
@@ -33,9 +34,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     public class DECODEDownloader : ICrypComponent
     {
         #region Private Variables
-        private DECODEDownloaderSettings settings;
-        private DECODEDownloaderPresentation presentation;
-        private bool running = false;
+        private DECODEDownloaderSettings _settings;
+        private DECODEDownloaderPresentation _presentation;
+        private bool _running = false;
 
 
         #endregion
@@ -45,8 +46,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// </summary>
         public DECODEDownloader()
         {
-            settings = new DECODEDownloaderSettings();
-            presentation = new DECODEDownloaderPresentation(this);
+            _settings = new DECODEDownloaderSettings();
+            _settings.PropertyChanged += Settings_PropertyChanged;
+            _presentation = new DECODEDownloaderPresentation(this);
         }
 
         #region Data Properties
@@ -67,7 +69,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// </summary>
         public ISettings Settings
         {
-            get { return settings; }
+            get { return _settings; }
         }
 
         /// <summary>
@@ -75,7 +77,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// </summary>
         public UserControl Presentation
         {
-            get { return presentation; }
+            get { return _presentation; }
+        }
+
+        public bool Running
+        {
+            get
+            {
+                return _running;
+            }
         }
 
         /// <summary>
@@ -83,11 +93,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// </summary>
         public void PreExecution()
         {
-            presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 try
                 {
-                    presentation.ListView.Items.Clear();
+                    _presentation.ListView.Items.Clear();
                 }
                 catch (Exception)
                 {
@@ -153,16 +163,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                        throw new Exception(String.Format("Could not deserialize json data received from DECODE database: {0}", ex.Message), ex);
                    }
                }
-               presentation.Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
+               _presentation.Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
                {
                    try
                    {
-                       presentation.RecordsList.Clear();
+                       _presentation.RecordsList.Clear();
                        if (records != null)
                        {
                            foreach (RecordsRecord record in records.records)
                            {
-                               presentation.RecordsList.Add(record);
+                               _presentation.RecordsList.Add(record);
                            }
                        }
                    }
@@ -179,14 +189,14 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 return;
             }
 
-            presentation.SetLoginNameLabel(String.Format("You are logged in as {0}", username));
+            _presentation.SetLoginNameLabel(String.Format("You are logged in as {0}", username));
 
-            running = true;
+            _running = true;
         }
 
         public void Download(RecordsRecord record)
         {
-            if (!running)
+            if (!_running)
             {
                 return;
             }
@@ -198,10 +208,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             }
             catch (Exception ex)
             {
-                GuiLogMessage(String.Format("Could not download record from DECODE database: {0}", ex.Message), NotificationLevel.Error);
+                GuiLogMessage(String.Format("Could not download record {0} from DECODE database: {1}", record.record_id, ex.Message), NotificationLevel.Error);
             }
             ProgressChanged(1, 1);
-            
         }
 
         /// <summary>
@@ -217,7 +226,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// </summary>
         public void Stop()
         {
-            running = false;
+            _running = false;
         }
 
         /// <summary>
@@ -233,6 +242,19 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         public void Dispose()
         {
             
+        }
+
+        /// <summary>
+        /// If the user clicks the download button, the current filtered record list is downloaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="propertyChangedEventArgs"></param>
+        private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        {
+            if (propertyChangedEventArgs.PropertyName.Equals("DownloadButton"))
+            {
+                Task.Run(() => _presentation.DownloadCurrentRecordList());                                                
+            }
         }
 
         #endregion

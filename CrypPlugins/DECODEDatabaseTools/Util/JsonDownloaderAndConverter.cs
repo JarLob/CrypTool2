@@ -146,7 +146,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
             catch (Exception ex)
             {
-                throw new Exception(String.Format("Error while downloading record from DECODE database: {0}", ex.Message), ex);
+                throw new Exception(String.Format("Error while downloading record {0} from DECODE database: {1}", id, ex.Message), ex);
             }
         }
 

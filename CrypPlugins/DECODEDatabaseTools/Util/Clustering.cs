@@ -341,6 +341,22 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 return frequencies;
             }
         }
+
+        /// <summary>
+        /// Returns the ToString of the internal text document if it is not equal to null
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            if(_textDocument != null)
+            {
+                return _textDocument.ToString();
+            }
+            else
+            {
+                return base.ToString();
+            }
+        }
     }
 
 }

@@ -32,6 +32,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         public ObservableCollection<RecordsRecord> RecordsList = new ObservableCollection<RecordsRecord>();        
         private GridViewColumnHeader _lastHeaderClicked;
         private ListSortDirection _lastDirection;
+        private bool _downloadingList = false;
 
         public DECODEDownloaderPresentation(DECODEDownloader plugin)
         {
@@ -40,7 +41,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             this.ListView.ItemsSource = RecordsList;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListView.ItemsSource);
             view.Filter = UserFilter;
-
         }
 
         /// <summary>
@@ -172,6 +172,55 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             SortDescription sd = new SortDescription(sortBy, direction);
             dataView.SortDescriptions.Add(sd);
             dataView.Refresh();
+        }
+
+        /// <summary>
+        /// Downloads the current filtered list record by record
+        /// </summary>
+        public void DownloadCurrentRecordList()
+        {
+            lock (this)
+            {
+                if (_downloadingList)
+                {
+                    return;
+                }
+                _downloadingList = true;
+            }            
+
+            string filterText = string.Empty;
+
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                IsEnabled = false;
+                filterText = Filter.Text;
+            }, null);
+            try
+            {
+                foreach (var record in RecordsList)
+                {
+                    if (string.IsNullOrEmpty(filterText) || record.name.IndexOf(filterText, StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        if (Plugin.Running == false)
+                        {
+                            return;
+                        }
+                        Plugin.Download(record);
+                    }
+                }
+
+            }
+            finally
+            {
+                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    IsEnabled = true;
+                }, null);
+                lock (this)
+                {                   
+                    _downloadingList = false;
+                }
+            }
         }
     }
 }

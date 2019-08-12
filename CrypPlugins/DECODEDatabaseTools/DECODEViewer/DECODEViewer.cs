@@ -76,7 +76,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             get;
             set;
         }
-
+        
         /// <summary>
         /// Outputs a selected document as byte array
         /// </summary>
@@ -131,7 +131,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// Called every time this plugin is run in the workflow execution.
         /// </summary>
         public void Execute()
-        {
+        {            
             if (!JsonDownloaderAndConverter.IsLoggedIn())
             {
                 string username = null;
@@ -164,12 +164,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 }
             }
             _running = false;
+            
             if (_workerThread == null)
             {
                 //create a new thread if we have none
-                _workerThread = new Thread(new ThreadStart(ExecuteThread));
+                _workerThread = new Thread(new ParameterizedThreadStart(ExecuteThread));
                 _workerThread.IsBackground = true;
-                _workerThread.Start();
+                _workerThread.Start(DECODERecord);
             }
             else
             {
@@ -179,9 +180,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     Thread.Sleep(10);
                 }
                 //start a new one
-                _workerThread = new Thread(new ThreadStart(ExecuteThread));
+                _workerThread = new Thread(new ParameterizedThreadStart(ExecuteThread));
                 _workerThread.IsBackground = true;
-                _workerThread.Start();
+                _workerThread.Start(DECODERecord);
             }
         }
 
@@ -189,14 +190,14 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// Thread for executing viewer
         /// We use this to allow restart during execution
         /// </summary>
-        private void ExecuteThread()
+        private void ExecuteThread(object decodeRecord)
         {
             _running = true;
             ProgressChanged(0, 1);
             Record record;
             try
             {
-                record = JsonDownloaderAndConverter.ConvertStringToRecord(DECODERecord);
+                record = JsonDownloaderAndConverter.ConvertStringToRecord((string)decodeRecord);
             }
             catch (Exception ex)
             {
@@ -206,37 +207,28 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             try
             {
                 _presentation.Record = record;
-                //add all images to the ListView of images
+                //remove all images from the list view
                 _presentation.Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
                 {
                     _presentation.IsEnabled = false;
                     _presentation.ImageList.Items.Clear();
-                }, null);
-                ProgressChanged(0, 0);
-                for (var i = 0; i < record.images.Count; i++)
+                }, null);                              
+
+                Document newestTranscription = null;
+                foreach (var document in record.documents.transcription)
                 {
-                    if (!record.images[i].DownloadThumbnail())
+                    if (newestTranscription == null || newestTranscription.document_id < document.document_id)
                     {
-                        break;
-                    }
-                    _presentation.Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
-                    {
-                        try
-                        {
-                            _presentation.ImageList.Items.Add(record.images[i]);
-                        }
-                        catch (Exception ex)
-                        {
-                            GuiLogMessage(String.Format("Exception while adding thumbnail to list: {0}", ex.Message), NotificationLevel.Error);
-                        }
-                    }, null);
-                    ProgressChanged(i, record.images.Count);
-                    if (_running == false)
-                    {
-                        return;
+                        newestTranscription = document;
                     }
                 }
-                ProgressChanged(1, 1);
+
+                if (newestTranscription != null)
+                {
+                    DoDownloadDocument(newestTranscription);
+                }
+
+                ProgressChanged(0, 0);
 
                 //add all documents to the ListView of documents
                 _presentation.Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
@@ -262,6 +254,33 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
                     _presentation.IsEnabled = true;
                 }, null);
+
+                //add all documents to the ListView of images
+                for (var i = 0; i < record.images.Count; i++)
+                {
+                    if (!record.images[i].DownloadThumbnail())
+                    {
+                        break;
+                    }
+                    _presentation.Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
+                    {
+                        try
+                        {
+                            _presentation.ImageList.Items.Add(record.images[i]);
+                        }
+                        catch (Exception ex)
+                        {
+                            GuiLogMessage(String.Format("Exception while adding thumbnail to list: {0}", ex.Message), NotificationLevel.Error);
+                        }
+                    }, null);
+                    ProgressChanged(i, record.images.Count);
+                    if (_running == false)
+                    {
+                        return;
+                    }
+                }
+             
+                ProgressChanged(1, 1);               
             }
             catch (Exception ex)
             {
@@ -418,11 +437,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// </summary>
         /// <param name="document"></param>
         internal void DownloadDocument(Document document)
-        {
-            if (!_running)
-            {
-                return;
-            }
+        {            
             Task.Run(() => DoDownloadDocument(document));
         }
 
@@ -430,7 +445,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// Do download of a document
         /// </summary>
         /// <param name="document"></param>
-        private void DoDownloadDocument(Document document)
+        internal void DoDownloadDocument(Document document)
         {
             try
             {
@@ -441,6 +456,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
                 OutputDocument = document.DownloadDocument(_downloadProgress);
                 OnPropertyChanged("OutputDocument");
+                
             }
             catch (Exception ex)
             {

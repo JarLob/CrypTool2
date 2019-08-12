@@ -15,6 +15,7 @@
 */
 
 using System.ComponentModel;
+using System.Windows;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 
@@ -31,6 +32,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         private Mode _mode = Mode.Manual;
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public event TaskPaneAttributeChangedHandler TaskPaneAttributeChanged;
 
         private void OnPropertyChanged(string propertyName)
         {
@@ -39,7 +41,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
         public void Initialize()
         {
-
+            switch (Mode)
+            {
+                default:
+                case Mode.Manual:
+                    HideSettingsElement("DownloadButton");
+                    break;
+                case Mode.Automatic:
+                    ShowSettingsElement("DownloadButton");
+                    break;
+            }
         }
 
         [TaskPane("DECODEDownloaderModeCaption", "DECODEDownloaderModeTooltip", null, 1, false, ControlType.ComboBox, 
@@ -60,20 +71,39 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 {
                     _mode = value;
                     OnPropertyChanged("Mode");
+                    switch (Mode)
+                    {
+                        default:
+                        case Mode.Manual:
+                            HideSettingsElement("DownloadButton");
+                            break;
+                        case Mode.Automatic:
+                            ShowSettingsElement("DownloadButton");
+                            break;
+                    }
                 }
             }
         }
 
         [TaskPane("DownloadButtonCaption", "DownloadButtonTooltip", null, 1, true, ControlType.Button)]
-        public bool DownloadButtonCaption
+        public void DownloadButton()
+        {                     
+            OnPropertyChanged("DownloadButton");
+        }
+
+        private void ShowSettingsElement(string element)
         {
-            get
+            if (TaskPaneAttributeChanged != null)
             {
-                return false;
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Visible)));
             }
-            set
-            {                
-                OnPropertyChanged("Mode");                
+        }
+
+        private void HideSettingsElement(string element)
+        {
+            if (TaskPaneAttributeChanged != null)
+            {
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Collapsed)));
             }
         }
     }
