@@ -20,8 +20,16 @@ using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
+    public enum Mode
+    {
+        Manual = 0,
+        Automatic = 1
+    }
+
     public class DECODEDownloaderSettings : ISettings
     {
+        private Mode _mode = Mode.Manual;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string propertyName)
@@ -32,6 +40,41 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         public void Initialize()
         {
 
-        }        
+        }
+
+        [TaskPane("DECODEDownloaderModeCaption", "DECODEDownloaderModeTooltip", null, 1, false, ControlType.ComboBox, 
+            new string[]
+            {
+                "Manual",
+                "Automatic",
+            })]
+        public Mode Mode
+        {
+            get
+            {
+                return _mode;
+            }
+            set
+            {
+                if ((value) != _mode)
+                {
+                    _mode = value;
+                    OnPropertyChanged("Mode");
+                }
+            }
+        }
+
+        [TaskPane("DownloadButtonCaption", "DownloadButtonTooltip", null, 1, true, ControlType.Button)]
+        public bool DownloadButtonCaption
+        {
+            get
+            {
+                return false;
+            }
+            set
+            {                
+                OnPropertyChanged("Mode");                
+            }
+        }
     }
 }

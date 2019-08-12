@@ -499,7 +499,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// A symbol is a single symbol of text
     /// examples: A,B,C,...,a,b,c,...,0,1,2,...,0^1,0^2,... etc
     /// </summary>
-    public class Symbol : ICloneable
+    public class Symbol : ICloneable, IComparable
     {
         public Symbol(Token token)
         {            
@@ -667,6 +667,36 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         }
 
         /// <summary>
+        /// Compares this Symbol to other objects (Symbols, Tokens, Strings)
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public int CompareTo(object obj)
+        {
+            var symobl = obj as Symbol;
+            if(symobl != null)
+            {
+                return symobl.Text.CompareTo(Text);
+            }
+            var token = obj as Token;
+            if (token != null)
+            {
+                if (token.Symbols.Count > 0)
+                {
+                    return token.Symbols[0].CompareTo(Text);
+                }
+                return -1;
+            }
+            var str = obj as string;
+            if (str != null)
+            {
+
+                return str.CompareTo(Text);
+            }            
+            return -1;            
+        }
+
+        /// <summary>
         /// Used in the user interface
         /// Returns 0 when there is no top or bottom text
         /// Returns 1 when there is a top text
@@ -689,5 +719,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 return value;
             }
         }
+
+
     } 
 }

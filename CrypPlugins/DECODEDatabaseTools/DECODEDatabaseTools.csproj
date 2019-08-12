@@ -85,10 +85,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DECODEClusterer\DECODEClusterer.cs" />
     <Compile Include="DECODEDecipherer\DECODEDeciphererPresentation.xaml.cs">
       <DependentUpon>DECODEDeciphererPresentation.xaml</DependentUpon>
     </Compile>
     <Compile Include="DECODEDecipherer\DECODEDeciphererSettings.cs" />
+    <Compile Include="Util\Clustering.cs" />
     <Compile Include="Util\Decoder.cs" />
     <Compile Include="Util\Extensions.cs" />
     <Compile Include="Util\Parsers.cs" />
@@ -207,9 +209,7 @@
   <ItemGroup>
     <Resource Include="logo.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DECODEClusterer\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

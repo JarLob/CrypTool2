@@ -58,6 +58,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     var usernamePasswordJson = new StringContent(String.Format("{{\"username\": \"{0}\", \"password\": \"{1}\"}}", username, password));
                     client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.Timeout = new TimeSpan(0, 0, 0, 5);
+
                     var response = client.PostAsync(LoginUrl, usernamePasswordJson).Result;
                     switch (response.StatusCode)
                     {
@@ -93,6 +95,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 {
                     client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.Timeout = new TimeSpan(0, 0, 0, 5);
 
                     var response = client.GetAsync(DownloadRecordsUrl).Result;
 
@@ -128,6 +131,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 {
                     client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.Timeout = new TimeSpan(0, 0, 0, 5);
 
                     var response = client.GetAsync(String.Format(DownloadRecordUrl, id)).Result;
 
