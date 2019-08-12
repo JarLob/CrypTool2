@@ -320,12 +320,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// Simple parser that just splits the text into regular codes of defined length
     /// Also supports "nulls"
     /// </summary>
-    public class NoVocabularyParser : SimpleSingleTokenParser
+    public class NoNomenclatureParser : SimpleSingleTokenParser
     {
         private List<Token> _nulls = new List<Token>();
         private uint _regularCodeLength = 0;
 
-        public NoVocabularyParser(uint regularCodeLength, List<Token> nulls = null)
+        public NoNomenclatureParser(uint regularCodeLength, List<Token> nulls = null)
         {
             if (nulls != null)
             {
@@ -455,13 +455,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
     /// <summary>
     /// Parses the text into regular codes of two
-    /// Also supports vocabulary elements of three digits followed by a null digit
+    /// Also supports nomenclature elements of three digits followed by a null digit
     /// </summary>
-    public class Vocabulary3DigitsEndingWithNull1DigitsParser : SimpleSingleTokenParser
+    public class Nomenclature3DigitsEndingWithNull1DigitsParser : SimpleSingleTokenParser
     {
         private List<Token> _nulls = new List<Token>();
 
-        public Vocabulary3DigitsEndingWithNull1DigitsParser(List<Token> nulls = null)
+        public Nomenclature3DigitsEndingWithNull1DigitsParser(List<Token> nulls = null)
         {
             if (nulls != null)
             {
@@ -536,11 +536,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             //we found a null, thus, add a new token of previously collected characters
                             if (tokenBuilder.Length == 3)
                             {
-                                //we know, that this is a vocabulary element (length = 3 digits)
-                                Token vocabularyToken = new Token(line);
-                                vocabularyToken.TokenType = TokenType.VocabularyElement;
-                                vocabularyToken.Symbols = tokenBuilder.ToList();
-                                line.Tokens.Add(vocabularyToken);
+                                //we know, that this is a nomenclature element (length = 3 digits)
+                                Token nomenclatureToken = new Token(line);
+                                nomenclatureToken.TokenType = TokenType.NomenclatureElement;
+                                nomenclatureToken.Symbols = tokenBuilder.ToList();
+                                line.Tokens.Add(nomenclatureToken);
                                 tokenBuilder.Clear();
                             }
                             else if (tokenBuilder.Length > 0)
@@ -560,12 +560,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             continue;
                         }
                         //here, we know, we have no null symbol and no whitespace
-                        //thus, the symbol (maybe) belongs to a regular code or a vocabulary element
+                        //thus, the symbol (maybe) belongs to a regular code or a nomenclature element
                         tokenBuilder.Append(symbol);
 
                         if (tokenBuilder.Length > 3)
                         {
-                            //if we are longer than 3 digits, we know we can not be in a vocabulary, 
+                            //if we are longer than 3 digits, we know we can not be in a nomenclature, 
                             //thus, we add a regular code
                             Token regularCodeToken = tokenBuilder.GetToken(0, 2, line);
                             regularCodeToken.TokenType = TokenType.RegularCode;
@@ -601,13 +601,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
     /// <summary>
     /// Parses the text into regular codes of two
-    /// Also supports vocabulary elements of three digits followed by two nulls
+    /// Also supports nomenclature elements of three digits followed by two nulls
     /// </summary>
-    public class Vocabulary3DigitsEndingWithNull2DigitsParser : SimpleSingleTokenParser
+    public class Nomenclature3DigitsEndingWithNull2DigitsParser : SimpleSingleTokenParser
     {
         private List<Token> _nulls = new List<Token>();
 
-        public Vocabulary3DigitsEndingWithNull2DigitsParser(List<Token> nulls = null)
+        public Nomenclature3DigitsEndingWithNull2DigitsParser(List<Token> nulls = null)
         {
             if (nulls != null)
             {
@@ -684,10 +684,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         {
                             if (_nulls.Contains(tokenBuilder.GetToken(3, 2, null)))
                             {
-                                //we have 2 null symbols => thus, we have a vocabulary element and 2 nulls
-                                Token vocabularyToken = tokenBuilder.GetToken(0, 3, line);
-                                vocabularyToken.TokenType = TokenType.VocabularyElement;
-                                line.Tokens.Add(vocabularyToken);
+                                //we have 2 null symbols => thus, we have a nomenclature element and 2 nulls
+                                Token nomenclatureToken = tokenBuilder.GetToken(0, 3, line);
+                                nomenclatureToken.TokenType = TokenType.NomenclatureElement;
+                                line.Tokens.Add(nomenclatureToken);
                                 tokenBuilder.Remove(0, 3);
 
                                 Token nullToken = new Token(line);
@@ -763,18 +763,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
     /// <summary>
     /// Parses the text into regular codes of two
-    /// Also supports vocabulary elements of four digits with a prefix
+    /// Also supports nomenclature elements of four digits with a prefix
     /// </summary>
-    public class Vocabulary4DigitsWithPrefixParser : SimpleSingleTokenParser
+    public class Nomenclature4DigitsWithPrefixParser : SimpleSingleTokenParser
     {
         private List<Token> _nulls = new List<Token>();
-        private List<Token> _vocabularyPrefix = new List<Token>();
+        private List<Token> _nomenclaturePrefix = new List<Token>();
 
-        public Vocabulary4DigitsWithPrefixParser(List<Token> vocabularyPrefix, List<Token> nulls = null)
+        public Nomenclature4DigitsWithPrefixParser(List<Token> nomenclaturePrefix, List<Token> nulls = null)
         {
-            if (vocabularyPrefix != null)
+            if (nomenclaturePrefix != null)
             {
-                _vocabularyPrefix = vocabularyPrefix;
+                _nomenclaturePrefix = nomenclaturePrefix;
             }
             if (nulls != null)
             {
@@ -853,12 +853,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             Symbol symbol0 = tokenBuilder[0];
                             Symbol symbol1 = tokenBuilder[1];
 
-                            if (_vocabularyPrefix.Contains(symbol0))
+                            if (_nomenclaturePrefix.Contains(symbol0))
                             {
-                                //vocabulary
-                                Token vocabularyToken = tokenBuilder.GetToken(0, 4, line);
-                                vocabularyToken.TokenType = TokenType.VocabularyElement;
-                                line.Tokens.Add(vocabularyToken);
+                                //nomenclature
+                                Token nomenclatureToken = tokenBuilder.GetToken(0, 4, line);
+                                nomenclatureToken.TokenType = TokenType.NomenclatureElement;
+                                line.Tokens.Add(nomenclatureToken);
                                 tokenBuilder.Clear();
                                 continue;
 
@@ -881,7 +881,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 tokenBuilder.Remove(0, 1);
                                 continue;
                             }
-                            else if (_nulls.Contains(symbol1) || _vocabularyPrefix.Contains(symbol1))
+                            else if (_nulls.Contains(symbol1) || _nomenclaturePrefix.Contains(symbol1))
                             {
                                 //code length 1
                                 Token regularCodeToken = tokenBuilder.GetToken(0, 1, line);
@@ -997,7 +997,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             Line lastLine = null;
 
             bool is_a_tag = false;
-            bool is_vocabulary = false;
+            bool is_nomenclature = false;
 
             foreach (Page page in document.Pages)
             {
@@ -1048,7 +1048,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
                         tokenBuilder.Append(symbol);
 
-                        if (!is_vocabulary)
+                        if (!is_nomenclature)
                         {
                             if (_nulls.Contains(symbol))
                             {
@@ -1068,22 +1068,22 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             }
                         }
 
-                        if (is_vocabulary && tokenBuilder.Length == 3)
+                        if (is_nomenclature && tokenBuilder.Length == 3)
                         {
-                            //vocabulary 3
+                            //nomenclature 3
                             if (!_nulls.Contains(tokenBuilder[2]))
                             {
-                                Token vocabularyToken = tokenBuilder.GetToken(0, 3, line);
-                                vocabularyToken.TokenType = TokenType.VocabularyElement;
-                                line.Tokens.Add(vocabularyToken);
+                                Token nomenclatureToken = tokenBuilder.GetToken(0, 3, line);
+                                nomenclatureToken.TokenType = TokenType.NomenclatureElement;
+                                line.Tokens.Add(nomenclatureToken);
                                 tokenBuilder.Clear();
                             }
-                            //vocabulary 2 with null
+                            //nomenclature 2 with null
                             else if (_nulls.Contains(tokenBuilder[2]))
                             {
-                                Token vocabularyToken = tokenBuilder.GetToken(0, 2, line);
-                                vocabularyToken.TokenType = TokenType.VocabularyElement;
-                                line.Tokens.Add(vocabularyToken);
+                                Token nomenclatureToken = tokenBuilder.GetToken(0, 2, line);
+                                nomenclatureToken.TokenType = TokenType.NomenclatureElement;
+                                line.Tokens.Add(nomenclatureToken);
                                 tokenBuilder.Remove(0, 2);
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
                                 nullToken.TokenType = TokenType.Null;
@@ -1094,12 +1094,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             {
                                 tokenBuilder.Clear();
                             }
-                            is_vocabulary = false;
+                            is_nomenclature = false;
                         }
 
                         if (symbol.Top.Equals("."))
                         {
-                            is_vocabulary = true;
+                            is_nomenclature = true;
                         }
 
                     }
@@ -1231,10 +1231,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 _nulls.Contains(tokenBuilder[2]) &&
                                 _nulls.Contains(tokenBuilder[3]))
                             {
-                                //vocabulary element
-                                Token vocabularyToken = tokenBuilder.GetToken(0, 4, line);
-                                vocabularyToken.TokenType = TokenType.VocabularyElement;
-                                line.Tokens.Add(vocabularyToken);
+                                //nomenclature element
+                                Token nomenclatureToken = tokenBuilder.GetToken(0, 4, line);
+                                nomenclatureToken.TokenType = TokenType.NomenclatureElement;
+                                line.Tokens.Add(nomenclatureToken);
                                 tokenBuilder.Remove(0, 4);
                                 continue;
                             }
@@ -1496,10 +1496,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 && !symbol2.Top.Equals(".")
                                 && !symbol3.Top.Equals("."))
                             {
-                                //vocabulary length 4
-                                Token vocabularyToken = tokenBuilder.GetToken(0, 4, line);
-                                vocabularyToken.TokenType = TokenType.VocabularyElement;
-                                line.Tokens.Add(vocabularyToken);
+                                //nomenclature length 4
+                                Token nomenclatureToken = tokenBuilder.GetToken(0, 4, line);
+                                nomenclatureToken.TokenType = TokenType.NomenclatureElement;
+                                line.Tokens.Add(nomenclatureToken);
                                 tokenBuilder.Remove(0, 4);
                                 continue;
                             }
@@ -1511,10 +1511,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 && !symbol2.Top.Equals(".")
                                 && !symbol3.Top.Equals("."))
                             {
-                                //vocabulary length 3
-                                Token vocabularyToken = tokenBuilder.GetToken(0, 3, line);
-                                vocabularyToken.TokenType = TokenType.VocabularyElement;
-                                line.Tokens.Add(vocabularyToken);
+                                //nomenclature length 3
+                                Token nomenclatureToken = tokenBuilder.GetToken(0, 3, line);
+                                nomenclatureToken.TokenType = TokenType.NomenclatureElement;
+                                line.Tokens.Add(nomenclatureToken);
                                 tokenBuilder.Remove(0, 3);
                                 continue;
                             }
@@ -1700,20 +1700,20 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 nullToken.TokenType = TokenType.Null;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Remove(0, 1);
-                                //vocabulary length 3
-                                Token vocabularyToken = tokenBuilder.GetToken(0, 3, line);
-                                vocabularyToken.TokenType = TokenType.VocabularyElement;
-                                line.Tokens.Add(vocabularyToken);
+                                //nomenclature length 3
+                                Token nomenclatureToken = tokenBuilder.GetToken(0, 3, line);
+                                nomenclatureToken.TokenType = TokenType.NomenclatureElement;
+                                line.Tokens.Add(nomenclatureToken);
                                 tokenBuilder.Remove(0, 3);
                                 continue;
                             }
                             // 0^.47
                             if (symbol1.Top.Equals("."))
                             {
-                                //vocabulary length 3
-                                Token vocabularyToken = tokenBuilder.GetToken(0, 3, line);
-                                vocabularyToken.TokenType = TokenType.VocabularyElement;
-                                line.Tokens.Add(vocabularyToken);
+                                //nomenclature length 3
+                                Token nomenclatureToken = tokenBuilder.GetToken(0, 3, line);
+                                nomenclatureToken.TokenType = TokenType.NomenclatureElement;
+                                line.Tokens.Add(nomenclatureToken);
                                 tokenBuilder.Remove(0, 3);
                                 continue;
                             }
@@ -1739,10 +1739,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             // 26,8
                             if (!_nulls.Contains(symbol0) && _specialSet.Contains(symbol2) && _nulls.Contains(symbol3))
                             {
-                                //vocabulary length 3
-                                Token vocabularyToken = tokenBuilder.GetToken(0, 3, line);
-                                vocabularyToken.TokenType = TokenType.VocabularyElement;
-                                line.Tokens.Add(vocabularyToken);
+                                //nomenclature length 3
+                                Token nomenclatureToken = tokenBuilder.GetToken(0, 3, line);
+                                nomenclatureToken.TokenType = TokenType.NomenclatureElement;
+                                line.Tokens.Add(nomenclatureToken);
                                 tokenBuilder.Remove(0, 3);
                                 continue;
                             }
@@ -1754,10 +1754,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 nullToken.TokenType = TokenType.Null;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Remove(0, 1);
-                                //vocabulary length 2
-                                Token vocabularyToken = tokenBuilder.GetToken(0, 2, line);
-                                vocabularyToken.TokenType = TokenType.VocabularyElement;
-                                line.Tokens.Add(vocabularyToken);
+                                //nomenclature length 2
+                                Token nomenclatureToken = tokenBuilder.GetToken(0, 2, line);
+                                nomenclatureToken.TokenType = TokenType.NomenclatureElement;
+                                line.Tokens.Add(nomenclatureToken);
                                 tokenBuilder.Remove(0, 2);
                                 continue;
                             }
@@ -1769,20 +1769,20 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 nullToken.TokenType = TokenType.Null;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Remove(0, 1);
-                                //vocabulary length 3
-                                Token vocabularyToken = tokenBuilder.GetToken(0, 3, line);
-                                vocabularyToken.TokenType = TokenType.VocabularyElement;
-                                line.Tokens.Add(vocabularyToken);
+                                //nomenclature length 3
+                                Token nomenclatureToken = tokenBuilder.GetToken(0, 3, line);
+                                nomenclatureToken.TokenType = TokenType.NomenclatureElement;
+                                line.Tokens.Add(nomenclatureToken);
                                 tokenBuilder.Remove(0, 3);
                                 continue;
                             }
                             // 0^.8
                             if (symbol2.Top.Equals(".") && _nulls.Contains(symbol1))
                             {
-                                // vocabulary length 2
-                                Token vocabularyToken = tokenBuilder.GetToken(0, 2, line);
-                                vocabularyToken.TokenType = TokenType.VocabularyElement;
-                                line.Tokens.Add(vocabularyToken);
+                                // nomenclature length 2
+                                Token nomenclatureToken = tokenBuilder.GetToken(0, 2, line);
+                                nomenclatureToken.TokenType = TokenType.NomenclatureElement;
+                                line.Tokens.Add(nomenclatureToken);
                                 tokenBuilder.Remove(0, 2);
                                 continue;
                             }
@@ -1796,20 +1796,20 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             // 26,
                             if (_specialSet.Contains(symbol2))
                             {
-                                // vocabulary length 3
-                                Token vocabularyToken = tokenBuilder.GetToken(0, 3, line);
-                                vocabularyToken.TokenType = TokenType.VocabularyElement;
-                                line.Tokens.Add(vocabularyToken);
+                                // nomenclature length 3
+                                Token nomenclatureToken = tokenBuilder.GetToken(0, 3, line);
+                                nomenclatureToken.TokenType = TokenType.NomenclatureElement;
+                                line.Tokens.Add(nomenclatureToken);
                                 tokenBuilder.Remove(0, 3);
                                 continue;
                             }
                             //588
                             if (_nulls.Contains(symbol1) && _nulls.Contains(symbol2))
                             {
-                                // vocabulary length 2
-                                Token vocabularyToken = tokenBuilder.GetToken(0, 2, line);
-                                vocabularyToken.TokenType = TokenType.VocabularyElement;
-                                line.Tokens.Add(vocabularyToken);
+                                // nomenclature length 2
+                                Token nomenclatureToken = tokenBuilder.GetToken(0, 2, line);
+                                nomenclatureToken.TokenType = TokenType.NomenclatureElement;
+                                line.Tokens.Add(nomenclatureToken);
                                 tokenBuilder.Remove(0, 2);
                                 continue;
                             }
@@ -2188,7 +2188,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             if (_nulls.Contains(symbol3))
                             {
                                 Token codeToken = tokenBuilder.GetToken(0, 3, line);
-                                codeToken.TokenType = TokenType.VocabularyElement;
+                                codeToken.TokenType = TokenType.NomenclatureElement;
                                 line.Tokens.Add(codeToken);
                                 tokenBuilder.Remove(0, 3);
 
@@ -2202,7 +2202,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             if (_nulls.Contains(tokenBuilder.GetToken(3, 2, line)))
                             {
                                 Token codeToken = tokenBuilder.GetToken(0, 3, line);
-                                codeToken.TokenType = TokenType.VocabularyElement;
+                                codeToken.TokenType = TokenType.NomenclatureElement;
                                 line.Tokens.Add(codeToken);
                                 tokenBuilder.Remove(0, 3);
 

@@ -153,17 +153,17 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             Parser parser = null;
             switch (_settings.ParserType)
             {                
-                case ParserType.NoVocabularyParser:
-                    parser = new NoVocabularyParser(2, nulls);
+                case ParserType.NoNomenclatureParser:
+                    parser = new NoNomenclatureParser(2, nulls);
                     break;
-                case ParserType.Vocabulary3DigitsEndingWithNull1DigitsParser:
-                    parser = new Vocabulary3DigitsEndingWithNull1DigitsParser(nulls);
+                case ParserType.Nomenclature3DigitsEndingWithNull1DigitsParser:
+                    parser = new Nomenclature3DigitsEndingWithNull1DigitsParser(nulls);
                     break;
-                case ParserType.Vocabulary3DigitsEndingWithNull2DigitsParser:
-                    parser = new Vocabulary3DigitsEndingWithNull2DigitsParser(nulls);
+                case ParserType.Nomenclature3DigitsEndingWithNull2DigitsParser:
+                    parser = new Nomenclature3DigitsEndingWithNull2DigitsParser(nulls);
                     break;
-                case ParserType.Vocabulary4DigitsWithPrefixParser:
-                    parser = new Vocabulary4DigitsWithPrefixParser(_settings.GetPrefix(), nulls);
+                case ParserType.Nomenclature4DigitsWithPrefixParser:
+                    parser = new Nomenclature4DigitsWithPrefixParser(_settings.GetPrefix(), nulls);
                     break;
                 case ParserType.Francia4Parser:
                     parser = new Francia4Parser(nulls);

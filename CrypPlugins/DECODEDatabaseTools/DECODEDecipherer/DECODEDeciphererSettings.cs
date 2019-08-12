@@ -24,10 +24,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     public enum ParserType
     {
         SimpleSingleTokenParser = 0,
-        NoVocabularyParser = 1,
-        Vocabulary3DigitsEndingWithNull1DigitsParser = 2,
-        Vocabulary3DigitsEndingWithNull2DigitsParser = 3,
-        Vocabulary4DigitsWithPrefixParser = 4,
+        NoNomenclatureParser = 1,
+        Nomenclature3DigitsEndingWithNull1DigitsParser = 2,
+        Nomenclature3DigitsEndingWithNull2DigitsParser = 3,
+        Nomenclature4DigitsWithPrefixParser = 4,
         Francia4Parser = 5,
         Francia6Parser = 6,
         Francia17Parser = 7,
@@ -46,10 +46,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         [TaskPane("ParserTypeCaption", "ParserTypeTooltip", null, 1, false, ControlType.ComboBox, new string[] 
         {
             "SimpleSingleTokenParser",
-            "NoVocabularyParser",
-            "Vocabulary3DigitsEndingWithNull1DigitsParser",
-            "Vocabulary3DigitsEndingWithNull2DigitsParser",
-            "Vocabulary4DigitsWithPrefixParser",
+            "NoNomenclatureParser",
+            "Nomenclature3DigitsEndingWithNull1DigitsParser",
+            "Nomenclature3DigitsEndingWithNull2DigitsParser",
+            "Nomenclature4DigitsWithPrefixParser",
             "Francia4Parser",
             "Francia6Parser",
             "Francia17Parser",

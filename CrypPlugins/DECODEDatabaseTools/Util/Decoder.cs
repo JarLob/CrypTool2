@@ -153,7 +153,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         unknownSymbol.Text = "??";
                         token.DecodedSymbols.Add(unknownSymbol);
                     }
-                    else if(token.TokenType == TokenType.VocabularyElement)
+                    else if(token.TokenType == TokenType.NomenclatureElement)
                     {
                         Symbol unknownSymbol = new Symbol(token);
                         unknownSymbol.Text = "???";

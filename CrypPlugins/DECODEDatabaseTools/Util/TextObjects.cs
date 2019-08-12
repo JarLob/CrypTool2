@@ -29,7 +29,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         Unknown = 0,
         Null = 1,
         RegularCode = 2,
-        VocabularyElement = 3,
+        NomenclatureElement = 3,
         Tag = 4
     }
 
@@ -406,7 +406,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 return Brushes.Black;
                             case TokenType.Null:
                                 return Brushes.Gray;
-                            case TokenType.VocabularyElement:
+                            case TokenType.NomenclatureElement:
                                 return Brushes.DarkGreen;
                             case TokenType.RegularCode:
                                 return Brushes.DarkBlue;
