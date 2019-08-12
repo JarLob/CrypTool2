@@ -21,6 +21,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Threading;
+using Cryptool.PluginBase;
+using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.Plugins.DECODEDatabaseTools.Util;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
@@ -33,6 +35,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         private GridViewColumnHeader _lastHeaderClicked;
         private ListSortDirection _lastDirection;
         private bool _downloadingList = false;
+        public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
 
         public DECODEDownloaderPresentation(DECODEDownloader plugin)
         {
@@ -205,6 +208,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                         {
                             return;
                         }
+
+                        GuiLogMessage(String.Format("Downloading record {0} with id {1}", record.name, record.record_id), NotificationLevel.Info);
                         Plugin.Download(record);
                     }
                 }
@@ -221,6 +226,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     _downloadingList = false;
                 }
             }
+        }
+        private void GuiLogMessage(string message, NotificationLevel logLevel)
+        {
+            EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, null, new GuiLogEventArgs(message, null, logLevel));
         }
     }
 }

@@ -49,7 +49,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             _settings = new DECODEDownloaderSettings();
             _settings.PropertyChanged += Settings_PropertyChanged;
             _presentation = new DECODEDownloaderPresentation(this);
-        }
+            _presentation.OnGuiLogNotificationOccured += presentation_OnGuiLogNotificationOccured;
+        }        
 
         #region Data Properties
 
@@ -268,7 +269,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         public event PluginProgressChangedEventHandler OnPluginProgressChanged;
 
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
+        private void presentation_OnGuiLogNotificationOccured(IPlugin sender, GuiLogEventArgs args)
+        {
+            GuiLogMessage(args.Message, args.NotificationLevel);
+        }
 
         private void GuiLogMessage(string message, NotificationLevel logLevel)
         {

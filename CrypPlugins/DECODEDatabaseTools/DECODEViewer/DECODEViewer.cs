@@ -164,7 +164,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 }
             }
             _running = false;
-            
+            ExecuteThread(DECODERecord);
             if (_workerThread == null)
             {
                 //create a new thread if we have none

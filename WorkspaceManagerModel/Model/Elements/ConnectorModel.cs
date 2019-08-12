@@ -234,11 +234,7 @@ namespace WorkspaceManager.Model
                     List<ConnectionModel> outputConnections = OutputConnections;
                     foreach (ConnectionModel connectionModel in outputConnections)
                     {   
-                        connectionModel.To.DataQueue.Enqueue(data);
-                        while (connectionModel.To.DataQueue.Count > 10)
-                        {
-                            connectionModel.To.DataQueue.Dequeue();
-                        }
+                        connectionModel.To.DataQueue.Enqueue(data);                        
                         connectionModel.To.LastData = data;      
                         connectionModel.Active = true;
                         connectionModel.GuiNeedsUpdate = true;
