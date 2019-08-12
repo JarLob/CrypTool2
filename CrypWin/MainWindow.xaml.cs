@@ -307,7 +307,7 @@ namespace Cryptool.CrypWin
             // will exit application after list has been generated
             if (IsCommandParameterGiven("-GenerateComponentConnectionStatistics"))
             {
-                GenerateComponentConnectionStatistics();
+                GenerateComponentConnectionStatistics(IsCommandParameterGiven("-storeInBaseDir"));
             }
 
             // Do not replace the place holders in templates.
@@ -749,7 +749,7 @@ namespace Cryptool.CrypWin
         /// <summary>
         /// Generates the statistics of component connections
         /// </summary>
-        private void GenerateComponentConnectionStatistics()
+        private void GenerateComponentConnectionStatistics(bool storeInBaseDir)
         {
             try
             {
@@ -758,7 +758,7 @@ namespace Cryptool.CrypWin
                 generatingComponentConnectionStatistic.Title = Properties.Resources.Generating_Statistics_Title;
                 generatingComponentConnectionStatistic.Show();
                 TemplatesAnalyzer.GenerateStatisticsFromTemplate(defaultTemplatesDirectory);
-                SaveComponentConnectionStatistics();
+                SaveComponentConnectionStatistics(storeInBaseDir);
                 generatingComponentConnectionStatistic.Close();
             }
             catch (Exception ex)
@@ -2646,9 +2646,10 @@ namespace Cryptool.CrypWin
             }
         }
 
-        private void SaveComponentConnectionStatistics()
+        private void SaveComponentConnectionStatistics(bool storeInBaseDir = false)
         {
-            ComponentConnectionStatistics.SaveCurrentStatistics(Path.Combine(DirectoryHelper.DirectoryLocal, "ccs.xml"));
+            var directory = storeInBaseDir ? DirectoryHelper.BaseDirectory : DirectoryHelper.DirectoryLocal;
+            ComponentConnectionStatistics.SaveCurrentStatistics(Path.Combine(directory, "ccs.xml"));
         }
 
         private int RunningWorkspaces()
