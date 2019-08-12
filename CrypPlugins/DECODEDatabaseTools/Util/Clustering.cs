@@ -13,8 +13,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using Cryptool.PluginBase;
+using Cryptool.PluginBase.Miscellaneous;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,11 +27,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// <summary>
     /// A ClusterSet is a self-generating set of different Clusters using a dedicated matchBorder (threshold)
     /// </summary>
-    public class ClusterSet
+    public class ClusterSet : INotifyPropertyChanged
     {
         private double _matchBorder;
         private List<Cluster> _clusters = new List<Cluster>();
         private List<TextDocument> _documents = new List<TextDocument>();
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public ClusterSet(double matchBorder = 15)
         {
@@ -41,6 +46,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// <param name="document"></param>
         public void AddDocument(TextDocument document)
         {
+
+            //Step 0: Check, if document is already in the internal document list
+            if (_documents.Contains(document))
+            {
+                return;
+            }
+
             //Step 1: create frequencies of document
             TextDocumentWithFrequencies textDocumentWithFrequencies = new TextDocumentWithFrequencies();
             textDocumentWithFrequencies.TextDocument = document; //this creates the frequencies
@@ -57,7 +69,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     bestMatchingCluster = cluster;
                 }
             }
-            if(bestMatchingCluster != null)
+            if (bestMatchingCluster != null)
             {
                 //Step 2.1: we found a best-matching cluster; thus, we add the document
                 bestMatchingCluster.AddTextDocumentWithFrequencies(textDocumentWithFrequencies);
@@ -69,7 +81,14 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 cluster.AddTextDocumentWithFrequencies(textDocumentWithFrequencies);
                 _clusters.Add(cluster);
             }
+
+            //Store document in the overall list of all documents
             _documents.Add(document);
+
+            //Notify everyone that our clusters and documents have been changed
+            OnPropertyChanged("Clusters");
+            OnPropertyChanged("Documents");
+
         }
 
         /// <summary>
@@ -94,15 +113,22 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
         }
 
+        private void OnPropertyChanged(string name)
+        {
+            EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
+        }
+
     }
 
     /// <summary>
     /// A cluster is a set of text document with similiar symbol frequencies
     /// </summary>
-    public class Cluster
+    public class Cluster : INotifyPropertyChanged
     {        
         private List<TextDocumentWithFrequencies> _documents = new List<TextDocumentWithFrequencies>();
         private Dictionary<Symbol, double> _frequencies = new Dictionary<Symbol, double>();
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// Returns the match value of the given document and this cluster
@@ -135,6 +161,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         {                        
             _documents.Add(textDocumentWithFrequencies);
             UpdateFrequencies();
+            OnPropertyChanged("Frequencies");
+            OnPropertyChanged("FrequenciesSortedBySymbol");
         }
 
         /// <summary>
@@ -194,7 +222,28 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 return _frequencies;
             }
         }
-    }
+
+        /// <summary>
+        /// Returns all symbol frequencies of this Cluster
+        /// </summary>
+        public List<KeyValuePair<Symbol, double>> FrequenciesSortedBySymbol
+        {
+            get
+            {
+                List<KeyValuePair<Symbol, double>> frequencies = _frequencies.ToList();
+                frequencies.Sort(delegate (KeyValuePair<Symbol, double> a, KeyValuePair<Symbol, double> b)
+                {
+                    return a.Key.CompareTo(b.Key);
+                });
+                return frequencies;
+            }
+        }
+
+        private void OnPropertyChanged(string name)
+        {
+            EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
+        }
+    }    
 
     /// <summary>
     /// A TextDocumentWithFrequencies is a wrapper for a TextDocument
@@ -219,20 +268,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 _textDocument = value;
                 UpdateFrequencies();
             }
-
         }
-
-        /// <summary>
-        /// Returns all frequencies of the TextDocument of this TextDocumentWithFrequencies
-        /// </summary>
-        public Dictionary<Symbol, double> Frequencies
-        {
-            get
-            {
-                return _frequencies;
-            }
-        }
-
+       
         /// <summary>
         /// Computes the symbol frequencies of all symbols in this document
         /// </summary>
@@ -277,5 +314,33 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 _frequencies.Add(key, frequency);
             }
         }
+
+        /// <summary>
+        /// Returns all frequencies of the TextDocument of this TextDocumentWithFrequencies
+        /// </summary>
+        public Dictionary<Symbol, double> Frequencies
+        {
+            get
+            {
+                return _frequencies;
+            }
+        }
+
+        /// <summary>
+        /// Returns all symbol frequencies of this Cluster
+        /// </summary>
+        public List<KeyValuePair<Symbol, double>> FrequenciesSortedBySymbol
+        {
+            get
+            {
+                List<KeyValuePair<Symbol, double>> frequencies = _frequencies.ToList();
+                frequencies.Sort(delegate (KeyValuePair<Symbol, double> a, KeyValuePair<Symbol, double> b)
+                {
+                    return a.Key.CompareTo(b.Key);
+                });
+                return frequencies;
+            }
+        }
     }
+
 }

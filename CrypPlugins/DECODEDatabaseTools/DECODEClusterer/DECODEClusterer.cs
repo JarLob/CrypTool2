@@ -43,7 +43,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
             set;
         }
 
-
         public ISettings Settings
         {
             get;
@@ -70,13 +69,21 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
         {
             if(TextDocument != null)
             {
-                SimpleSingleTokenParser parser = new SimpleSingleTokenParser();
-                parser.DECODETextDocument = TextDocument;
-                var document = parser.GetDocument();
-                _clusterset.AddDocument(document);
-                int documentCount = _clusterset.Documents.Count;
-                int clusterCount = _clusterset.Clusters.Count;
-                GuiLogMessage(String.Format("We have now {0} documents in the cluster set and {1} different clusters", documentCount, clusterCount), NotificationLevel.Info);
+                try
+                {
+                    SimpleSingleTokenParser parser = new SimpleSingleTokenParser();
+                    parser.DECODETextDocument = TextDocument;
+                    var document = parser.GetDocument();
+                    _clusterset.AddDocument(document);
+                    int documentCount = _clusterset.Documents.Count;
+                    int clusterCount = _clusterset.Clusters.Count;
+                    GuiLogMessage(String.Format("We have now {0} documents in the cluster set and {1} different clusters", documentCount, clusterCount), NotificationLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(String.Format("Exception occured while trying to add document to internal cluster set: {0}", ex.Message), NotificationLevel.Error);
+                }
+
             }
             TextDocument = null;
         }

@@ -149,6 +149,44 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 return count;
             }
         }
+
+        public override int GetHashCode()
+        {
+            var hash = 13;
+            StringBuilder builder = new StringBuilder();
+            var counter = 0;
+            foreach (var page in Pages)
+            {
+                foreach (var line in page.Lines)
+                {
+                    foreach (var token in line.Tokens)
+                    {
+                        foreach (var symbol in token.Symbols)
+                        {
+                            counter++;
+                            hash = ((counter + hash) * 7) + (symbol != null ? symbol.GetHashCode() : 0);
+                            builder.Append(hash);
+                        }
+                    }
+                }
+            }
+            return builder.ToString().GetHashCode();
+        }
+
+        /// <summary>
+        /// Compares both TextDocuments by comparing their hash code
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            var document = obj as TextDocument;
+            if(document != null)
+            {
+                return GetHashCode() == document.GetHashCode();
+            }
+            return false;
+        }
     }
 
     /// <summary>
