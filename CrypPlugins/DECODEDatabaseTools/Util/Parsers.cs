@@ -124,7 +124,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     else if (comment.StartsWith("CATALOG NAME"))
                     {
                         var split = trimmedLine.Split(':');
-                        if (split.Length != 2)
+                        if (split.Length < 2)
                         {
                             GuiLogMessage(String.Format("Wrong catalog name definition in document: {0}", trimmedLine), NotificationLevel.Warning);
                         }
@@ -136,7 +136,14 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             }
                             else
                             {
-                                document.CatalogName = split[1].Trim();
+                                for (int i = 1; i < split.Length; i++)
+                                {
+                                    document.CatalogName += split[i].Trim();
+                                    if (i < split.Length - 2)
+                                    {
+                                        document.CatalogName += " ";
+                                    }
+                                }
                             }
                         }
                     }

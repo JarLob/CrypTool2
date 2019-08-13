@@ -32,6 +32,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
     public class DECODEClusterer : ICrypComponent
     {
         private ClusterSet _clusterset;
+        private DECODEClustererPresentation _presentation;
+
+        public DECODEClusterer()
+        {
+            _presentation = new DECODEClustererPresentation();
+        }
+
 
         /// <summary>
         /// Input of a json record of the DECODE database
@@ -46,13 +53,14 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
         public ISettings Settings
         {
             get;
-            set;
         }
 
         public UserControl Presentation
         {
-            get;
-            set;
+            get
+            {
+                return _presentation;
+            }
         }
 
         public event StatusChangedEventHandler OnPluginStatusChanged;
@@ -77,7 +85,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
                     _clusterset.AddDocument(document);
                     int documentCount = _clusterset.Documents.Count;
                     int clusterCount = _clusterset.Clusters.Count;
-                    GuiLogMessage(String.Format("We have now {0} documents in the cluster set and {1} different clusters", documentCount, clusterCount), NotificationLevel.Info);
+                    GuiLogMessage(String.Format("We have now {0} documents in the cluster set and {1} different clusters", documentCount, clusterCount), NotificationLevel.Info);                    
                 }
                 catch (Exception ex)
                 {
@@ -101,6 +109,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
         public void PreExecution()
         {
             _clusterset = new ClusterSet();
+            _presentation.CurrentClusterSet = _clusterset;
         }
 
         public void Stop()

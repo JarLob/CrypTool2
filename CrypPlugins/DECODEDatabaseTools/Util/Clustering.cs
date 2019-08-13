@@ -17,10 +17,12 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 {
@@ -30,8 +32,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     public class ClusterSet : INotifyPropertyChanged
     {
         private double _matchBorder;
-        private List<Cluster> _clusters = new List<Cluster>();
-        private List<TextDocument> _documents = new List<TextDocument>();
+        private ObservableCollection<Cluster> _clusters = new ObservableCollection<Cluster>();
+        private ObservableCollection<TextDocument> _documents = new ObservableCollection<TextDocument>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -79,22 +81,23 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 //Step 2.1: we did not find a best-matching cluster; thus, we create a new one
                 Cluster cluster = new Cluster();
                 cluster.AddTextDocumentWithFrequencies(textDocumentWithFrequencies);
-                _clusters.Add(cluster);
+                Application.Current.Dispatcher.Invoke(new Action(() => _clusters.Add(cluster)));
             }
 
             //Store document in the overall list of all documents
-            _documents.Add(document);
+            Application.Current.Dispatcher.Invoke(new Action(() => _documents.Add(document)));
 
             //Notify everyone that our clusters and documents have been changed
             OnPropertyChanged("Clusters");
             OnPropertyChanged("Documents");
-
+            OnPropertyChanged("DocumentCount");
+            OnPropertyChanged("ClusterCount");
         }
 
         /// <summary>
         /// Returns all clusters of this cluster set
         /// </summary>
-        public List<Cluster> Clusters
+        public ObservableCollection<Cluster> Clusters
         {
             get
             {
@@ -105,7 +108,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// <summary>
         /// Returns all documents of this cluster set
         /// </summary>
-        public List<TextDocument> Documents
+        public ObservableCollection<TextDocument> Documents
         {
             get
             {
@@ -113,11 +116,26 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
         }
 
+        public int DocumentCount
+        {
+            get
+            {
+                return _documents.Count;
+            }
+        }
+
+        public int ClusterCount
+        {
+            get
+            {
+                return _clusters.Count;
+            }
+        }
+
         private void OnPropertyChanged(string name)
         {
             EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
         }
-
     }
 
     /// <summary>
@@ -127,8 +145,25 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     {        
         private List<TextDocumentWithFrequencies> _documents = new List<TextDocumentWithFrequencies>();
         private Dictionary<Symbol, double> _frequencies = new Dictionary<Symbol, double>();
+        private string _name;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+        }
+
+        public List<TextDocumentWithFrequencies> Documents
+        {
+            get
+            {
+                return _documents;
+            }
+        }
 
         /// <summary>
         /// Returns the match value of the given document and this cluster
@@ -160,9 +195,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         public void AddTextDocumentWithFrequencies(TextDocumentWithFrequencies textDocumentWithFrequencies)
         {                        
             _documents.Add(textDocumentWithFrequencies);
-            UpdateFrequencies();
+            UpdateFrequencies();            
+            if (_documents.Count == 1)
+            {
+                _name = textDocumentWithFrequencies.TextDocument.CatalogName;
+                OnPropertyChanged("Name");
+            }
             OnPropertyChanged("Frequencies");
             OnPropertyChanged("FrequenciesSortedBySymbol");
+            OnPropertyChanged("Documents");
         }
 
         /// <summary>

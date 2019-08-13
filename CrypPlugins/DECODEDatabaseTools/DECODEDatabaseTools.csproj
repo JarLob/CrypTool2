@@ -86,6 +86,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DECODEClusterer\DECODEClusterer.cs" />
+    <Compile Include="DECODEClusterer\DECODEClustererPresentation.xaml.cs">
+      <DependentUpon>DECODEClustererPresentation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DECODEDecipherer\DECODEDeciphererPresentation.xaml.cs">
       <DependentUpon>DECODEDeciphererPresentation.xaml</DependentUpon>
     </Compile>
@@ -179,6 +182,10 @@
     <Resource Include="icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="DECODEClusterer\DECODEClustererPresentation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DECODESettingsTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
