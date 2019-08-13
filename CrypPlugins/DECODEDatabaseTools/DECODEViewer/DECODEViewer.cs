@@ -164,7 +164,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 }
             }
             _running = false;
-            ExecuteThread(DECODERecord);
             if (_workerThread == null)
             {
                 //create a new thread if we have none
@@ -255,31 +254,33 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     _presentation.IsEnabled = true;
                 }, null);
 
-                //add all documents to the ListView of images
-                for (var i = 0; i < record.images.Count; i++)
+                if (_settings.DownloadImages)
                 {
-                    if (!record.images[i].DownloadThumbnail())
+                    //add all documents to the ListView of images
+                    for (var i = 0; i < record.images.Count; i++)
                     {
-                        break;
-                    }
-                    _presentation.Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
-                    {
-                        try
+                        if (!record.images[i].DownloadThumbnail())
                         {
-                            _presentation.ImageList.Items.Add(record.images[i]);
+                            break;
                         }
-                        catch (Exception ex)
+                        _presentation.Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
                         {
-                            GuiLogMessage(String.Format("Exception while adding thumbnail to list: {0}", ex.Message), NotificationLevel.Error);
+                            try
+                            {
+                                _presentation.ImageList.Items.Add(record.images[i]);
+                            }
+                            catch (Exception ex)
+                            {
+                                GuiLogMessage(String.Format("Exception while adding thumbnail to list: {0}", ex.Message), NotificationLevel.Error);
+                            }
+                        }, null);
+                        ProgressChanged(i, record.images.Count);
+                        if (_running == false)
+                        {
+                            return;
                         }
-                    }, null);
-                    ProgressChanged(i, record.images.Count);
-                    if (_running == false)
-                    {
-                        return;
                     }
-                }
-             
+                }             
                 ProgressChanged(1, 1);               
             }
             catch (Exception ex)
@@ -456,7 +457,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
                 OutputDocument = document.DownloadDocument(_downloadProgress);
                 OnPropertyChanged("OutputDocument");
-                
+                //GuiLogMessage(String.Format("Downloaded {0} with id {1}", document.title, document.document_id), NotificationLevel.Info);
             }
             catch (Exception ex)
             {

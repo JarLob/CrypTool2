@@ -208,8 +208,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                         {
                             return;
                         }
-
-                        GuiLogMessage(String.Format("Downloading record {0} with id {1}", record.name, record.record_id), NotificationLevel.Info);
+                        //GuiLogMessage(String.Format("Downloading record {0} with id {1}", record.name, record.record_id), NotificationLevel.Info);
                         Plugin.Download(record);
                     }
                 }

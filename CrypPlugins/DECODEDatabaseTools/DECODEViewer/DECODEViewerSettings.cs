@@ -22,6 +22,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 {
     public class DECODEViewerSettings : ISettings
     {
+        private bool _downloadImages = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -33,6 +34,19 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         public void Initialize()
         {
 
+        }
+
+        [TaskPane("DownloadImagesCaption", "DownloadImagesTooltip", null, 1, true, ControlType.CheckBox)]
+        public bool DownloadImages
+        {
+            get
+            {
+                return _downloadImages;
+            }
+            set
+            {
+                _downloadImages = value;
+            }
         }
     }
 }
