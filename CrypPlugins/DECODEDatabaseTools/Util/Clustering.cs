@@ -31,15 +31,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// </summary>
     public class ClusterSet : INotifyPropertyChanged
     {
-        private double _matchBorder;
-        private ObservableCollection<Cluster> _clusters = new ObservableCollection<Cluster>();
-        private ObservableCollection<TextDocument> _documents = new ObservableCollection<TextDocument>();
+        private double _matchThreshold;
+        private readonly ObservableCollection<Cluster> _clusters = new ObservableCollection<Cluster>();
+        private readonly ObservableCollection<TextDocument> _documents = new ObservableCollection<TextDocument>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ClusterSet(double matchBorder = 15)
+        public ClusterSet(double matchThreshold = 15)
         {
-            _matchBorder = matchBorder;
+            _matchThreshold = matchThreshold;
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             foreach (var cluster in _clusters)
             {
                 double matchValue = cluster.GetMatchValue(textDocumentWithFrequencies);
-                if (matchValue < _matchBorder && matchValue < currentBestMatchingValue)
+                if (matchValue < _matchThreshold && matchValue < currentBestMatchingValue)
                 {
                     currentBestMatchingValue = matchValue;
                     bestMatchingCluster = cluster;
@@ -116,6 +116,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
         }
 
+        /// <summary>
+        /// Returns the number of documents stored in this ClusterSet
+        /// </summary>
         public int DocumentCount
         {
             get
@@ -124,6 +127,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
         }
 
+        /// <summary>
+        /// Returns the number of clusters stored in this ClusterSet
+        /// </summary>
         public int ClusterCount
         {
             get
@@ -143,12 +149,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// </summary>
     public class Cluster : INotifyPropertyChanged
     {        
-        private List<TextDocumentWithFrequencies> _documents = new List<TextDocumentWithFrequencies>();
-        private Dictionary<Symbol, double> _frequencies = new Dictionary<Symbol, double>();
+        private readonly ObservableCollection<TextDocumentWithFrequencies> _documents = new ObservableCollection<TextDocumentWithFrequencies>();
+        private readonly Dictionary<Symbol, double> _frequencies = new Dictionary<Symbol, double>();
         private string _name;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Returns the name of this cluster
+        /// </summary>
         public string Name
         {
             get
@@ -157,7 +166,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
         }
 
-        public List<TextDocumentWithFrequencies> Documents
+        /// <summary>
+        /// Returns a list of all stored documents of this cluster
+        /// </summary>
+        public ObservableCollection<TextDocumentWithFrequencies> Documents
         {
             get
             {
@@ -193,8 +205,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// </summary>
         /// <param name="textDocumentWithFrequencies"></param>
         public void AddTextDocumentWithFrequencies(TextDocumentWithFrequencies textDocumentWithFrequencies)
-        {                        
-            _documents.Add(textDocumentWithFrequencies);
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() => _documents.Add(textDocumentWithFrequencies)));            
             UpdateFrequencies();            
             if (_documents.Count == 1)
             {
@@ -204,6 +216,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             OnPropertyChanged("Frequencies");
             OnPropertyChanged("FrequenciesSortedBySymbol");
             OnPropertyChanged("Documents");
+            OnPropertyChanged("ClusterInfo");
         }
 
         /// <summary>
@@ -267,24 +280,75 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// <summary>
         /// Returns all symbol frequencies of this Cluster
         /// </summary>
-        public List<KeyValuePair<Symbol, double>> FrequenciesSortedBySymbol
+        public List<KeyValuePair<Symbol, double>> SortedFrequencies
         {
             get
             {
                 List<KeyValuePair<Symbol, double>> frequencies = _frequencies.ToList();
                 frequencies.Sort(delegate (KeyValuePair<Symbol, double> a, KeyValuePair<Symbol, double> b)
                 {
-                    return a.Key.CompareTo(b.Key);
+                    if (a.Value == b.Value)
+                    {
+                        return 0;
+                    }
+                    return a.Value < b.Value ? 1 : -1;
                 });
                 return frequencies;
             }
+        }
+
+        /// <summary>
+        /// Returns the "info" of this cluster. Meaning, it returns a string representation
+        /// containing the frequencies of all symbols
+        /// </summary>
+        public string ClusterInfo
+        {
+            get
+            {
+                var frequencies = SortedFrequencies;
+                if (frequencies == null || frequencies.Count == 0)
+                {
+                    return base.ToString();
+                }
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < frequencies.Count; i++)
+                {
+                    KeyValuePair<Symbol, double> keyvaluepair = frequencies[i];
+                    builder.Append(keyvaluepair.Key.Text);
+                    if (!string.IsNullOrEmpty(keyvaluepair.Key.Top))
+                    {
+                        builder.Append("^" + keyvaluepair.Key.Top);
+                    }
+                    if (!string.IsNullOrEmpty(keyvaluepair.Key.Bottom))
+                    {
+                        builder.Append("_" + keyvaluepair.Key.Bottom);
+                    }
+                    builder.Append("=" + Math.Round(keyvaluepair.Value, 3));
+
+                    if (i < frequencies.Count - 2)
+                    {
+                        builder.Append(", ");
+                    }
+                }
+                return builder.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Returns the string representation of this Cluster
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return ClusterInfo;
         }
 
         private void OnPropertyChanged(string name)
         {
             EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
         }
-    }    
+
+    }
 
     /// <summary>
     /// A TextDocumentWithFrequencies is a wrapper for a TextDocument

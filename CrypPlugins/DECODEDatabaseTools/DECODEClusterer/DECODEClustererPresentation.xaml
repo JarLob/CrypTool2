@@ -51,13 +51,13 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <!--<GridViewColumn Header="{Loc NameHeader}" DisplayMemberBinding="{Binding Path=name}" Width="200">
+                    <GridViewColumn Header="Cluster info" DisplayMemberBinding="{Binding Path=ClusterInfo}" Width="500">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                    </GridViewColumn>-->
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
