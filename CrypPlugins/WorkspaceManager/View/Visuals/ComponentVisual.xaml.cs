@@ -185,7 +185,10 @@ namespace WorkspaceManager.View.Visuals
         /// </summary>
         internal void AddPresentationElement(BinComponentState state, UIElement presentation)
         {
-            presentations[state] = new PresentationElement(presentation);
+            if (presentation != null)   //do not add empty elements in the first place, in order to make availability check easier.
+            {
+                presentations[state] = new PresentationElement(presentation);
+            }
         }
 
         /// <summary>
