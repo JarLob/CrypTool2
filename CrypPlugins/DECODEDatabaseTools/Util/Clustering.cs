@@ -177,6 +177,14 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
         }
 
+        public int DocumentCount
+        {
+            get
+            {
+                return _documents.Count;
+            }
+        }
+
         /// <summary>
         /// Returns the match value of the given document and this cluster
         /// A "perfect match" is equal to 0.0
@@ -216,6 +224,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             OnPropertyChanged("Frequencies");
             OnPropertyChanged("FrequenciesSortedBySymbol");
             OnPropertyChanged("Documents");
+            OnPropertyChanged("DocumentCount");
             OnPropertyChanged("ClusterInfo");
         }
 

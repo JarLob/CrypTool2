@@ -89,6 +89,7 @@
     <Compile Include="DECODEClusterer\DECODEClustererPresentation.xaml.cs">
       <DependentUpon>DECODEClustererPresentation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DECODEClusterer\DECODEClustererSettings.cs" />
     <Compile Include="DECODEDecipherer\DECODEDeciphererPresentation.xaml.cs">
       <DependentUpon>DECODEDeciphererPresentation.xaml</DependentUpon>
     </Compile>

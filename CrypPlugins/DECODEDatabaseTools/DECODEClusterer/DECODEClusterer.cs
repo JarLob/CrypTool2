@@ -33,12 +33,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
     {
         private ClusterSet _clusterset;
         private DECODEClustererPresentation _presentation;
+        private DECODEClustererSettings _settings;
 
         public DECODEClusterer()
         {
             _presentation = new DECODEClustererPresentation();
+            _settings = new DECODEClustererSettings();
         }
-
 
         /// <summary>
         /// Input of a json record of the DECODE database
@@ -52,7 +53,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
 
         public ISettings Settings
         {
-            get;
+            get
+            {
+                return _settings;
+            }
         }
 
         public UserControl Presentation
@@ -73,10 +77,14 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
 
         }
 
+        /// <summary>
+        /// Execute (main) method of this component
+        /// </summary>
         public void Execute()
         {
             if(TextDocument != null)
             {
+                ProgressChanged(0, 1);
                 try
                 {
                     //NoNomenclatureParser with regularCodeLength = 1 just creates single symbol lines
@@ -86,7 +94,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
                     _clusterset.AddDocument(document);
                     int documentCount = _clusterset.Documents.Count;
                     int clusterCount = _clusterset.Clusters.Count;
-                    GuiLogMessage(String.Format("We have now {0} documents in the cluster set and {1} different clusters", documentCount, clusterCount), NotificationLevel.Info);                    
+                    ProgressChanged(1, 1);
                 }
                 catch (Exception ex)
                 {
@@ -107,9 +115,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
 
         }
 
+        /// <summary>
+        /// Create new ClusterSet in PreExecution
+        /// </summary>
         public void PreExecution()
         {
-            _clusterset = new ClusterSet();
+            _clusterset = new ClusterSet(_settings.MatchThreshold != 0 ? _settings.MatchThreshold : 15);
             _presentation.CurrentClusterSet = _clusterset;
         }
 
@@ -121,6 +132,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
         private void GuiLogMessage(string message, NotificationLevel logLevel)
         {
             EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
+        }
+
+        private void ProgressChanged(double value, double max)
+        {
+            EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
         }
     }
 }

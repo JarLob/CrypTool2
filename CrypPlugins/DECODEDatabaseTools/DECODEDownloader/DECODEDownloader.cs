@@ -49,6 +49,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             _settings = new DECODEDownloaderSettings();
             _settings.PropertyChanged += Settings_PropertyChanged;
             _presentation = new DECODEDownloaderPresentation(this);
+            _presentation.OnPluginProgressChanged += _presentation_OnPluginProgressChanged;
             _presentation.OnGuiLogNotificationOccured += presentation_OnGuiLogNotificationOccured;
         }        
 
@@ -200,8 +201,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             if (!_running)
             {
                 return;
-            }
-            ProgressChanged(0, 1);
+            }            
             try
             {
                 DECODERecord = JsonDownloaderAndConverter.GetRecord(record.record_id);
@@ -210,8 +210,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             catch (Exception ex)
             {
                 GuiLogMessage(String.Format("Could not download record {0} from DECODE database: {1}", record.record_id, ex.Message), NotificationLevel.Error);
-            }
-            ProgressChanged(1, 1);
+            }            
         }
 
         /// <summary>
@@ -273,6 +272,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         private void presentation_OnGuiLogNotificationOccured(IPlugin sender, GuiLogEventArgs args)
         {
             GuiLogMessage(args.Message, args.NotificationLevel);
+        }
+
+        private void _presentation_OnPluginProgressChanged(IPlugin sender, PluginProgressEventArgs args)
+        {
+            ProgressChanged(args.Value, args.Max);
         }
 
         private void GuiLogMessage(string message, NotificationLevel logLevel)

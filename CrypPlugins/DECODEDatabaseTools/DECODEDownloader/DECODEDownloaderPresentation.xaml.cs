@@ -35,7 +35,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         private GridViewColumnHeader _lastHeaderClicked;
         private ListSortDirection _lastDirection;
         private bool _downloadingList = false;
+
         public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+        public event PluginProgressChangedEventHandler OnPluginProgressChanged;
 
         public DECODEDownloaderPresentation(DECODEDownloader plugin)
         {
@@ -78,7 +80,17 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     var record = lvi.Content as RecordsRecord;
                     if (record != null)
                     {
+                        if(OnPluginProgressChanged != null)
+                        {
+                            OnPluginProgressChanged.Invoke(null, new PluginProgressEventArgs(0, 1));
+                        }
+
                         Plugin.Download(record);
+
+                        if (OnPluginProgressChanged != null)
+                        {
+                            OnPluginProgressChanged.Invoke(null, new PluginProgressEventArgs(1, 1));
+                        }
                     }
                 }
             }
@@ -200,17 +212,38 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             }, null);
             try
             {
+                double total = 0;
+                //count matching record to generate total number
                 foreach (var record in RecordsList)
                 {
+                    if (string.IsNullOrEmpty(filterText) || record.name.IndexOf(filterText, StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        total++;
+                    }
+                }
+
+                double counter = 0;
+                //output each record
+                foreach (var record in RecordsList)
+                {                    
                     if (string.IsNullOrEmpty(filterText) || record.name.IndexOf(filterText, StringComparison.OrdinalIgnoreCase) >= 0)
                     {
                         if (Plugin.Running == false)
                         {
                             return;
                         }
-                        //GuiLogMessage(String.Format("Downloading record {0} with id {1}", record.name, record.record_id), NotificationLevel.Info);
                         Plugin.Download(record);
+                        //show download progress using PluginProgressChanged
+                        counter += 1;
+                        if (OnPluginProgressChanged != null)
+                        {
+                            OnPluginProgressChanged.Invoke(null, new PluginProgressEventArgs(counter, total));
+                        }
                     }
+                }
+                if (OnPluginProgressChanged != null)
+                {
+                    OnPluginProgressChanged.Invoke(null, new PluginProgressEventArgs(1, 1));
                 }
 
             }
