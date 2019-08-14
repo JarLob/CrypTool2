@@ -185,7 +185,7 @@ namespace WorkspaceManager.View.Visuals
         /// </summary>
         internal void AddPresentationElement(BinComponentState state, UIElement presentation)
         {
-            presentations.Add(state, new PresentationElement(presentation));
+            presentations[state] = new PresentationElement(presentation);
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace WorkspaceManager.View.Visuals
         /// </summary>
         internal void AddPresentationElement(BinComponentState state, Func<UIElement> createElementAction)
         {
-            presentations.Add(state, new PresentationElement(createElementAction));
+            presentations[state] = new PresentationElement(createElementAction);
         }
 
         internal UIElement GetPresentationElement(BinComponentState state)
