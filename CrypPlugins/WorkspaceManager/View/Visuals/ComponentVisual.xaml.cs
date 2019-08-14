@@ -88,13 +88,13 @@ namespace WorkspaceManager.View.Visuals
             private set 
             { 
                 model = value;
-                Presentations.Add(BinComponentState.Presentation, model.PluginPresentation);
-                Presentations.Add(BinComponentState.Min, Model.getImage());
-                Presentations.Add(BinComponentState.Default, Model.getImage());
-                Presentations.Add(BinComponentState.Data, new DataVisual(ConnectorCollection));
-                Presentations.Add(BinComponentState.Log, new LogVisual(this));
-                SettingsVisual bsv = new SettingsVisual(Model.Plugin, this, true, false);
-                Presentations.Add(BinComponentState.Setting, bsv);
+                AddPresentationElement(BinComponentState.Presentation, model.PluginPresentation);
+                var image = Model.getImage();
+                AddPresentationElement(BinComponentState.Min, image);
+                AddPresentationElement(BinComponentState.Default, image);
+                AddPresentationElement(BinComponentState.Data, () => new DataVisual(ConnectorCollection));
+                AddPresentationElement(BinComponentState.Log, () => new LogVisual(this));
+                AddPresentationElement(BinComponentState.Setting, () => new SettingsVisual(Model.Plugin, this, true, false));
 
                 FullScreenState = HasComponentPresentation ? BinComponentState.Presentation : BinComponentState.Log;
 
@@ -147,6 +147,68 @@ namespace WorkspaceManager.View.Visuals
 
         #endregion
 
+        #region Presentation Elements
+
+        /// <summary>
+        /// Represents a presentation element on the plugin component.
+        /// </summary>
+        private class PresentationElement
+        {
+            private UIElement element;
+            private readonly Func<UIElement> createElementAction;
+
+            public UIElement Element => element ?? (element = createElementAction?.Invoke());
+
+            /// <summary>
+            /// Lazy loading constructor. Presentation element will only be created as soon as it is accessed.
+            /// </summary>
+            /// <param name="createElementAction">Creation function which returns the instance of the UI element.</param>
+            public PresentationElement(Func<UIElement> createElementAction)
+            {
+                this.createElementAction = createElementAction;
+            }
+
+            /// <summary>
+            /// Immediate constructor for an already instatiated presentation element.
+            /// </summary>
+            /// <param name="element">The instance of the UI element.</param>
+            public PresentationElement(UIElement element)
+            {
+                this.element = element;
+            }
+        }
+
+        private readonly Dictionary<BinComponentState, PresentationElement> presentations = new Dictionary<BinComponentState, PresentationElement>();
+
+        /// <summary>
+        /// Adds an already instantiated presentation element to the plugin component.
+        /// </summary>
+        internal void AddPresentationElement(BinComponentState state, UIElement presentation)
+        {
+            presentations.Add(state, new PresentationElement(presentation));
+        }
+
+        /// <summary>
+        /// Adds a presentation element to the plugin component, which will be instantiated as soon as it is needed.
+        /// </summary>
+        internal void AddPresentationElement(BinComponentState state, Func<UIElement> createElementAction)
+        {
+            presentations.Add(state, new PresentationElement(createElementAction));
+        }
+
+        internal UIElement GetPresentationElement(BinComponentState state)
+        {
+            if (presentations.TryGetValue(state, out var element))
+            {
+                return element.Element;
+            }
+            return null;
+        }
+
+        internal bool IsPresentationElementAvailable(BinComponentState state) => presentations.ContainsKey(state);
+
+        #endregion
+
         #region Properties
         public Queue<Log> ErrorsTillReset { private set; get; }
         public ThumHack HackThumb = new ThumHack();
@@ -155,42 +217,11 @@ namespace WorkspaceManager.View.Visuals
         public Vector Delta { private set; get; }
         public EditorVisual Editor { private set; get; }
 
-        public bool HasComponentPresentation
-        {
-            get
-            {
-                UIElement e = null;
-                Presentations.TryGetValue(BinComponentState.Presentation, out e);
-                return e == null ? false : true;
-            }
-        }
+        public bool HasComponentPresentation => IsPresentationElementAvailable(BinComponentState.Presentation);
 
-        public bool HasComponentSetting
-        {
-            get
-            {
-                UIElement e = null;
-                Presentations.TryGetValue(BinComponentState.Setting, out e);
-                return e == null ? false : true;
+        public bool HasComponentSetting => IsPresentationElementAvailable(BinComponentState.Setting);
 
-
-            }
-        }
-
-        private Dictionary<BinComponentState, UIElement> presentations = new Dictionary<BinComponentState, UIElement>();
-        public Dictionary<BinComponentState, UIElement> Presentations { get { return presentations; } }
-
-
-
-        public UIElement ActivePresentation
-        {
-            get
-            {
-                UIElement o = null;
-                Presentations.TryGetValue(State, out o);
-                return o;
-            }
-        }
+        public UIElement ActivePresentation => GetPresentationElement(State);
 
         private BinComponentState lastState;
         public BinComponentState LastState
@@ -220,15 +251,7 @@ namespace WorkspaceManager.View.Visuals
             }
         }
 
-        public Image Icon
-        {
-            get
-            {
-                UIElement o = null;
-                Presentations.TryGetValue(BinComponentState.Min, out o);
-                return o as Image;
-            }
-        }
+        public Image Icon => GetPresentationElement(BinComponentState.Min) as Image;
 
         private ObservableCollection<IControlMasterElement> iControlCollection = new ObservableCollection<IControlMasterElement>();
         public ObservableCollection<IControlMasterElement> IControlCollection { get { return iControlCollection; } }
@@ -556,20 +579,9 @@ typeof(SolidColorBrush), typeof(ComponentVisual), new FrameworkPropertyMetadata(
             }
         }
 
-        public static readonly DependencyProperty SideBarSettingProperty = DependencyProperty.Register("SideBarSetting",
-typeof(SettingsVisual), typeof(ComponentVisual), new FrameworkPropertyMetadata(null));
+        private SettingsVisual sideBarSetting;
+        public SettingsVisual SideBarSetting => sideBarSetting ?? (sideBarSetting = new SettingsVisual(Model.Plugin, this, true, true));
 
-        public SettingsVisual SideBarSetting
-        {
-            get
-            {
-                return (SettingsVisual)base.GetValue(SideBarSettingProperty);
-            }
-            set
-            {
-                base.SetValue(SideBarSettingProperty, value);
-            }
-        }
         #endregion
 
         #region Constructors
@@ -581,7 +593,6 @@ typeof(SettingsVisual), typeof(ComponentVisual), new FrameworkPropertyMetadata(n
             Editor = (EditorVisual)((WorkspaceManagerClass)Model.WorkspaceModel.MyEditor).Presentation;
             Editor.FullscreenVisual.Open += new EventHandler(FullscreenVisual_Close);
             ErrorsTillReset = new Queue<Log>();
-            SideBarSetting = new SettingsVisual(Model.Plugin, this, true, true);
             EditorVisual = (EditorVisual)((WorkspaceManagerClass)Model.WorkspaceModel.MyEditor).Presentation;
 
             InitializeComponent();
@@ -623,7 +634,7 @@ typeof(SettingsVisual), typeof(ComponentVisual), new FrameworkPropertyMetadata(n
         public void update()
         {
             Progress = Model.PercentageFinished;
-            Presentations[BinComponentState.Min] = Model.getImage();
+            AddPresentationElement(BinComponentState.Min, Model.getImage());
             OnPropertyChanged("ActivePresentation");
         }
         #endregion

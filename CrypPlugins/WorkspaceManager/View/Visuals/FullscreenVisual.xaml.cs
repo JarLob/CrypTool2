@@ -27,10 +27,7 @@ namespace WorkspaceManager.View.Visuals
             {
                 if (ActiveComponent == null)
                     return null;
-                UIElement o = null;
-
-                ActiveComponent.Presentations.TryGetValue(ActiveComponent.FullScreenState, out o);
-                return o;
+                return ActiveComponent.GetPresentationElement(ActiveComponent.FullScreenState);
             }
         }
 
@@ -43,9 +40,7 @@ namespace WorkspaceManager.View.Visuals
                 if (ActiveComponent == null)
                     return false;
 
-                UIElement e = null;
-                ActiveComponent.Presentations.TryGetValue(BinComponentState.Presentation, out e);
-                return e == null ? false : true;
+                return ActiveComponent.IsPresentationElementAvailable(BinComponentState.Presentation);
             }
         }
 
@@ -56,9 +51,7 @@ namespace WorkspaceManager.View.Visuals
                 if (ActiveComponent == null)
                     return false;
 
-                UIElement e = null;
-                ActiveComponent.Presentations.TryGetValue(BinComponentState.Setting, out e);
-                return e == null ? false : true;
+                return ActiveComponent.IsPresentationElementAvailable(BinComponentState.Setting);
             }
         }
 

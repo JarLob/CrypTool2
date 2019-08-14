@@ -170,7 +170,7 @@ namespace WorkspaceManager.View.Visuals
             {
                 Parent.State = BinComponentState.Log;
 
-                UIElement element = Parent.Presentations[BinComponentState.Log];
+                UIElement element = Parent.GetPresentationElement(BinComponentState.Log);
                 LogVisual logVisual = (LogVisual)element;
                 logVisual.SelectedLogs = logsTillReset.Where(a => a.Level == border.NotificationLevel);
             }
