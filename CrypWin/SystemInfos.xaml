@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="600" ToolTip="{Loc SysinfosTooltip}">
+             d:DesignHeight="400" d:DesignWidth="600" ToolTip="{Loc SysinfosTooltip}"
+             IsVisibleChanged="UserControl_IsVisibleChanged">
     <UserControl.Resources>
         <BitmapImage x:Key="Icon" UriSource="images/about.png"/>
     </UserControl.Resources>
@@ -20,6 +21,7 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Columns>
+                <DataGridTextColumn Header="#"  Binding="{Binding Id}" CanUserReorder="False" Width="Auto" />
                 <DataGridTextColumn Header="{Loc Description}"  Binding="{Binding Description}" CanUserReorder="False" Width="Auto" />
                 <DataGridTextColumn Header="{Loc Value}"  Binding="{Binding Value}" CanUserReorder="False" Width="*" />
             </DataGrid.Columns>

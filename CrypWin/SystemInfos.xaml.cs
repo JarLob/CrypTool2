@@ -24,8 +24,21 @@ namespace Cryptool.CrypWin
     [Localization("Cryptool.CrypWin.Properties.Resources")]
     public partial class SystemInfos : UserControl
     {
-        private struct Info
+        /// <summary>
+        /// Entry of the info list
+        /// </summary>
+        private class Info
         {
+            private static int idCounter = 0;
+
+            public Info()
+            {
+                //automatically generate and increment id counter
+                Id = idCounter;
+                idCounter++;
+            }
+
+            public int Id { get; set; }
             public string Description { get; set; }
             public string Value { get; set; }
         }
@@ -35,8 +48,15 @@ namespace Cryptool.CrypWin
 
         public SystemInfos()
         {
-            InitializeComponent();
-            
+            InitializeComponent();                                    
+        }
+
+        /// <summary>
+        /// Updates the info list
+        /// </summary>
+        private void UpdateInfos()
+        {
+            informations.Clear();
             var pricipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
             var hasAdministrativeRight = pricipal.IsInRole(WindowsBuiltInRole.Administrator);
             //get windows information from system registry
@@ -47,21 +67,22 @@ namespace Cryptool.CrypWin
 
                 var reg = localKey.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
                 var productName = (string)reg.GetValue("ProductName");
-                var csdVersion = (string)reg.GetValue("CSDVersion");            
+                var csdVersion = (string)reg.GetValue("CSDVersion");
                 var currentVersion = (string)reg.GetValue("CurrentVersion");
                 var currentBuildNumber = (string)reg.GetValue("CurrentBuildNumber");
                 var windowsVersionString = productName + " " + csdVersion + " (" + currentVersion + "." + currentBuildNumber + ")";
                 informations.Add(new Info() { Description = Properties.Resources.SI_Operating_System, Value = windowsVersionString });
             }
-            catch(Exception ex){
+            catch (Exception ex)
+            {
                 //show fallback if its not possible to read from registration
-                informations.Add(new Info() { Description = Properties.Resources.SI_Operating_System, Value = System.Environment.OSVersion.ToString()});
+                informations.Add(new Info() { Description = Properties.Resources.SI_Operating_System, Value = System.Environment.OSVersion.ToString() });
             }
             informations.Add(new Info() { Description = Properties.Resources.SI_System_Type, Value = System.Environment.Is64BitOperatingSystem ? Properties.Resources.SI_System_Type_64 : Properties.Resources.SI_System_Type_32 });
             //informations.Add(new Info() { Description = "Platform", Value = Environment.OSVersion.Platform.ToString() }); // always Win32NT
             //informations.Add(new Info() { Description = Properties.Resources.SI_Machine_Name, Value = System.Environment.MachineName });      //personal information
             informations.Add(new Info() { Description = Properties.Resources.SI_Processor_Name, Value = GetProcessorName() });
-            informations.Add(new Info() { Description = Properties.Resources.SI_Processors, Value = System.Environment.ProcessorCount.ToString() });            
+            informations.Add(new Info() { Description = Properties.Resources.SI_Processors, Value = System.Environment.ProcessorCount.ToString() });
             informations.Add(new Info() { Description = Properties.Resources.ProcessType, Value = (System.Environment.Is64BitProcess ? "64 Bit" : "32 Bit") });
             informations.Add(new Info() { Description = Properties.Resources.SI_Administrative_Rights, Value = hasAdministrativeRight ? Properties.Resources.SI_yes : Properties.Resources.SI_no });
             //informations.Add(new Info() { Description = Properties.Resources.SI_Unique_Identifier, Value = uniqueID });       //personal information
@@ -70,7 +91,7 @@ namespace Cryptool.CrypWin
             informations.Add(new Info() { Description = Properties.Resources.SI_CrypTool_Version, Value = AssemblyHelper.Version.ToString() });
             informations.Add(new Info() { Description = Properties.Resources.SI_Installation_Type, Value = AssemblyHelper.InstallationType.ToString() });
             informations.Add(new Info() { Description = Properties.Resources.SI_Build_Type, Value = AssemblyHelper.BuildType.ToString() });
-            informations.Add(new Info() { Description = Properties.Resources.SI_Build_Time, Value = File.GetLastWriteTime(Assembly.GetExecutingAssembly().Location).ToString(CultureInfo.CurrentUICulture.DateTimeFormat)});
+            informations.Add(new Info() { Description = Properties.Resources.SI_Build_Time, Value = File.GetLastWriteTime(Assembly.GetExecutingAssembly().Location).ToString(CultureInfo.CurrentUICulture.DateTimeFormat) });
             informations.Add(new Info() { Description = Properties.Resources.SI_Product_Name, Value = AssemblyHelper.ProductName });
             informations.Add(new Info() { Description = Properties.Resources.SI_Common_Language_Runtime_Version, Value = Environment.Version.ToString() });
             informations.Add(new Info() { Description = Properties.Resources.SI_Runtime_Path, Value = AppDomain.CurrentDomain.BaseDirectory });
@@ -97,20 +118,20 @@ namespace Cryptool.CrypWin
                 if (executingCert != null)
                 {
                     informations.Add(new Info() { Description = Properties.Resources.SI_IsSigned, Value = Properties.Resources.SI_yes });
-                    informations.Add(new Info() { Description = Properties.Resources.SI_ValidCertificate, Value = (executingCert.Verify() ? Properties.Resources.SI_yes : Properties.Resources.SI_no) });                    
+                    informations.Add(new Info() { Description = Properties.Resources.SI_ValidCertificate, Value = (executingCert.Verify() ? Properties.Resources.SI_yes : Properties.Resources.SI_no) });
                     informations.Add(new Info() { Description = Properties.Resources.SI_Subject, Value = executingCert.Subject });
                     informations.Add(new Info() { Description = Properties.Resources.SI_IssuerName, Value = executingCert.Issuer });
                     informations.Add(new Info() { Description = Properties.Resources.SI_KeyAlgorithm, Value = executingCert.GetKeyAlgorithmParametersString() });
                     informations.Add(new Info() { Description = Properties.Resources.SI_PublicKey, Value = executingCert.GetPublicKeyString() });
-                    informations.Add(new Info() { Description = Properties.Resources.SI_SerialNumber, Value = executingCert.GetSerialNumberString() });                    
+                    informations.Add(new Info() { Description = Properties.Resources.SI_SerialNumber, Value = executingCert.GetSerialNumberString() });
                     informations.Add(new Info() { Description = Properties.Resources.SI_CertHash, Value = executingCert.GetCertHashString() });
                     informations.Add(new Info() { Description = Properties.Resources.SI_EffectiveDate, Value = executingCert.GetEffectiveDateString() });
-                    informations.Add(new Info() { Description = Properties.Resources.SI_ExpirationDate, Value = executingCert.GetExpirationDateString() });                    
+                    informations.Add(new Info() { Description = Properties.Resources.SI_ExpirationDate, Value = executingCert.GetExpirationDateString() });
                 }
                 else
                 {
                     informations.Add(new Info() { Description = Properties.Resources.SI_IsSigned, Value = Properties.Resources.SI_no });
-                    informations.Add(new Info() { Description = Properties.Resources.SI_ValidCertificate, Value = Properties.Resources.SI_no });                    
+                    informations.Add(new Info() { Description = Properties.Resources.SI_ValidCertificate, Value = Properties.Resources.SI_no });
                     informations.Add(new Info() { Description = Properties.Resources.SI_Subject, Value = Properties.Resources.SI_no });
                     informations.Add(new Info() { Description = Properties.Resources.SI_IssuerName, Value = Properties.Resources.SI_no });
                     informations.Add(new Info() { Description = Properties.Resources.SI_KeyAlgorithm, Value = Properties.Resources.SI_no });
@@ -120,10 +141,42 @@ namespace Cryptool.CrypWin
                     informations.Add(new Info() { Description = Properties.Resources.SI_EffectiveDate, Value = Properties.Resources.SI_no });
                     informations.Add(new Info() { Description = Properties.Resources.SI_ExpirationDate, Value = Properties.Resources.SI_no });
                 }
+                AnalyzeLoadedAndReferencedAssemblies();
             }
             catch (Exception ex)
             {
                 //wtf?
+            }
+        }
+
+        /// <summary>
+        /// Puts all loaded or referenced assemblies in the list
+        /// </summary>
+        private void AnalyzeLoadedAndReferencedAssemblies()
+        {
+            List<string> referencedAssemblyNames = new List<string>();
+            
+            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            
+            foreach(var assembly in assemblies)
+            {
+                if (!referencedAssemblyNames.Contains(assembly.FullName))
+                {
+                    referencedAssemblyNames.Add(assembly.FullName);
+                }
+                foreach (var reference in assembly.GetReferencedAssemblies())
+                {
+                    if (!referencedAssemblyNames.Contains(reference.FullName))
+                    {
+                        referencedAssemblyNames.Add(reference.FullName);                        
+                    }
+                }
+
+            }
+            referencedAssemblyNames.Sort((x, y) => x.CompareTo(y));
+            foreach(var reference in referencedAssemblyNames)
+            {
+                informations.Add(new Info() { Description = Properties.Resources.LoadedReferencedAssembly, Value = reference });
             }
         }
 
@@ -162,16 +215,26 @@ namespace Cryptool.CrypWin
             e.CanExecute = (InfoGrid.SelectedIndex >= 0);
         }
 
+        /// <summary>
+        /// Copy a single line
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MyExecutedRoutedEventHandler(object sender, ExecutedRoutedEventArgs e)
         {
             var info = (Info) InfoGrid.SelectedItem;
-            string msg = info.Description + ": " + info.Value;
+            string msg = info.Id + ": " + info.Description + ": " + info.Value;
             Clipboard.SetDataObject(msg);
         }
 
+        /// <summary>
+        /// Copy all lines
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            string msg = String.Join(Environment.NewLine, informations.Select(i => i.Description + ": " + i.Value));
+            string msg = String.Join(Environment.NewLine, informations.Select(i => i.Id + ": " + i.Description + ": " + i.Value));
             Clipboard.SetDataObject(msg);
         }
 
@@ -207,6 +270,19 @@ namespace Cryptool.CrypWin
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// When SystemInfos are visible, we update the infos
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="dependencyPropertyChangedEventArgs"></param>
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            if((bool)(dependencyPropertyChangedEventArgs.NewValue) == true)
+            {
+                UpdateInfos();
             }
         }
     }

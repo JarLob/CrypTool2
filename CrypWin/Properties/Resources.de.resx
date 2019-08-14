@@ -958,4 +958,7 @@
   <data name="ProcessType" xml:space="preserve">
     <value>Prozesstyp</value>
   </data>
+  <data name="LoadedReferencedAssembly" xml:space="preserve">
+    <value>Geladene/referenzierte Assembly</value>
+  </data>
 </root>

@@ -973,4 +973,7 @@
   <data name="ProcessType" xml:space="preserve">
     <value>тип процесса</value>
   </data>
+  <data name="LoadedReferencedAssembly" xml:space="preserve">
+    <value>Загруженная/ссылающаяся сборка</value>
+  </data>
 </root>
