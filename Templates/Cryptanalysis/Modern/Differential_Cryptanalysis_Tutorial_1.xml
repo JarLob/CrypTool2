@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Differential Cryptanalysis Tutorial 3</title>
-  <title lang="de">Differenzielle Kryptoanalyse Tutorial 3</title>
+  <title lang="en">Differential Cryptanalysis Tutorial 1</title>
+  <title lang="de">Differenzielle Kryptoanalyse Tutorial 1</title>
   
   <summary lang="en">Differential cryptanalysis tutorial for different ciphers</summary>
   <summary lang="de">Differenzielle Kryptoanalyse Tutorial für verschiedene Chiffren</summary>
@@ -9,8 +9,8 @@
   <description lang="en">In this template, differential cryptanalysis is demonstrated as a tutorial. Different ciphers are available. The tutorial starts with a small toy cipher and presents the core idea of the method. Building on this, the attack is further refined and expanded so that larger and larger ciphers can be analyzed as the process progresses.</description>
   <description lang="de">In diesem Template wird die Differenzielle Kryptoanalyse als Tutorial vorgeführt. Es sind verschiedene Chiffren verfügbar. Das Tutorial beginnt bei einer kleinen Toy-Chiffre und präsentiert dabei die Kernidee des Verfahrens. Darauf aufbauend wird der Angriff weiter verfeinert und ausgebaut, sodass im weiteren Verlauf immer größere Chiffren analysiert werden können.</description>
   
-  <keywords lang="en">differential cryptanalysis, differential cryptanalysis tutorial 3, cryptanalysis, symmetric blockciphers, symmetric blockciphers, DCA, DCA tutorial 3</keywords>
-  <keywords lang="de">Differenzielle Kryptoanalyse, Differenzielle Kryptoanayse Tutorial 3, Kryptoanalyse, symmetrische Blockchiffren, symmentrische Blockalgorithmen, DKA, DKA Tutorial 3</keywords>
+  <keywords lang="en">differential cryptanalysis, differential cryptanalysis tutorial 1, cryptanalysis, symmetric blockciphers, symmetric blockciphers, DCA, DCA tutorial 1</keywords>
+  <keywords lang="de">Differenzielle Kryptoanalyse, Differenzielle Kryptoanayse Tutorial 1, Kryptoanalyse, symmetrische Blockchiffren, symmentrische Blockalgorithmen, DKA, DKA Tutorial 1</keywords>
   
   <icon file="Differential_Cryptanalysis.png" />
   <relevantPlugins>
