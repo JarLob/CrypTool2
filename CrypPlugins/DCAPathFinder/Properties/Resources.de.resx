@@ -226,10 +226,10 @@
     <value>Ausgang für die Nachrichtenanzahl</value>
   </data>
   <data name="OverviewContent1" xml:space="preserve">
-    <value>Herzlich willkommen zum Tutorial zur differenziellen Kryptoanalyse. Dieses Verfahren zur Analyse rundenbasierter symmetrischer Blockchiffren hat das Ziel, einzelne Bits bis hin zu vollständigen Rundenschlüsseln wiederherzustellen. Veröffentlicht wurde dieses Verfahren 1991 von den zwei israelischen Forschern Eli Biham und Adi Shamir. </value>
+    <value>Herzlich willkommen zum Tutorial zur differenziellen Kryptoanalyse (DKA). Dieses Verfahren zur Analyse rundenbasierter symmetrischer Blockchiffren hat das Ziel, einzelne Bits bis hin zu vollständigen Rundenschlüsseln wiederherzustellen. Veröffentlicht wurde dieses Verfahren 1991 von den zwei israelischen Forschern Eli Biham und Adi Shamir. </value>
   </data>
   <data name="OverviewContent2" xml:space="preserve">
-    <value>Dieses Tutorial behandelt das Verfahren der differenziellen Kryptoanalyse (DCA) in drei Teilen.  Teil 1 vermittelt die grundlegende Idee der DCA anhand einer Chiffre mit einer Verschlüsselungsrunde. Teil 2 vertieft diese Idee anhand einer Chiffre mit drei Verschlüsselungsrunden. In Teil drei wird das vermittelte Wissen vertieft durch Erhöhung der Komplexität der Chiffre auf 5 Verschlüsselungsrunden.</value>
+    <value>Dieses Tutorial behandelt das Verfahren der differenziellen Kryptoanalyse in drei Teilen. Teil 1 vermittelt die grundlegende Idee der DKA anhand einer Chiffre mit einer Verschlüsselungsrunde. Teil 2 vertieft diese Idee anhand einer Chiffre mit drei Verschlüsselungsrunden. In Teil drei wird das vermittelte Wissen vertieft durch Erhöhung der Komplexität der Chiffre auf 5 Verschlüsselungsrunden.</value>
   </data>
   <data name="OverviewContent3" xml:space="preserve">
     <value>In der Konfiguration dieser Komponente können die verschiedenen Teile des Tutorials ausgewählt werden.</value>
@@ -250,10 +250,10 @@
     <value>Beschreibt den Fluss des Differenzials durch eine Chiffre</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>DCA PfadFinder</value>
+    <value>DKA PfadFinder</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Die DCA PfadFinder-Komponente sucht in Abhängigkeit von durch den User spezifizierten Parametern nach Differenzialen in einer symmetrischen Blockchiffre.</value>
+    <value>Die DKA PfadFinder-Komponente sucht in Abhängigkeit von durch den User spezifizierten Parametern nach Differenzialen in einer symmetrischen Blockchiffre.</value>
   </data>
   <data name="PresentationMode" xml:space="preserve">
     <value>Tutorialmodus</value>
@@ -640,7 +640,7 @@
     <value>Analyse von Chiffre 2</value>
   </data>
   <data name="Tutorial2AttackFinishedContent1" xml:space="preserve">
-    <value>Tutorial 2 zur Differenziellen Kryptoanalyse in der DCA PfadFinder-Komponente ist beendet. </value>
+    <value>Tutorial 2 zur Differenziellen Kryptoanalyse in der DKA PfadFinder-Komponente ist beendet. </value>
   </data>
   <data name="Tutorial2AttackFinishedContent2Run1" xml:space="preserve">
     <value>Durch ein letztes klicken auf Start in der KeyRecovery-Komponente werden die letzten zwei Rundenschlüssel k</value>
@@ -1108,7 +1108,7 @@
     <value>Aufgrund der mehrfachen Verschlüsselungsrunden kann diese Chiffre nicht wie Chiffre 1 angegriffen werden. Für Chiffre 2 wird ein Ansatz benötigt, der die Änderungen von Differenzen über mehrere Verschlüsselungsrunden mit einer gewissen Wahrscheinlichkeit vorraussagt.</value>
   </data>
   <data name="Tutorial3AttackFinishedContent1" xml:space="preserve">
-    <value>Tutorial 3 zur Differenziellen Kryptoanalyse in der DCA PfadFinder-Komponente ist beendet. </value>
+    <value>Tutorial 3 zur Differenziellen Kryptoanalyse in der DKA PfadFinder-Komponente ist beendet. </value>
   </data>
   <data name="Tutorial3AttackFinishedContent2Run1" xml:space="preserve">
     <value>Durch ein letztes klicken auf Start in der KeyRecovery-Komponente werden die letzten zwei Rundenschlüssel k</value>
@@ -1268,5 +1268,26 @@
   </data>
   <data name="Tutorial3AttackKeyRound5Content1Run5" xml:space="preserve">
     <value>Je mehr Schlüsselbits ausgewählt werden, desto komplizierter ist die Suche nach einem Differenzial. Allerdings kann durchaus sinnvoll sein, mehrere SBoxen gleichzeitig anzugreifen. Je nach Beschaffenheit der Chiffre finden sich so bessere oder schlechtere Differenziale.</value>
+  </data>
+  <data name="UseOfflinePaths" xml:space="preserve">
+    <value>Offline Daten</value>
+  </data>
+  <data name="UseOfflinePathsToolTip" xml:space="preserve">
+    <value>Ist diese Einstellung angewählt, wird keine Suche nach Charakteristiken durchgeführt, sondern es werden Daten verwendet, die in der Komponente hinterlegt sind. Dadurch können lange Berechnungszeiten minimiert werden.</value>
+  </data>
+  <data name="R1" xml:space="preserve">
+    <value>Runde 1</value>
+  </data>
+  <data name="R2" xml:space="preserve">
+    <value>Runde 2</value>
+  </data>
+  <data name="R3" xml:space="preserve">
+    <value>Runde 3</value>
+  </data>
+  <data name="R4" xml:space="preserve">
+    <value>Runde 4</value>
+  </data>
+  <data name="R5" xml:space="preserve">
+    <value>Runde 5</value>
   </data>
 </root>

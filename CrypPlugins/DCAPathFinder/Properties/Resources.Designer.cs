@@ -106,7 +106,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Choice of the cipher ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher selection ähnelt.
         /// </summary>
         internal static string ChoiceOfAlgorithm {
             get {
@@ -349,7 +349,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Welcome to the differential cryptanalysis tutorial. This method for the analysis of round-based symmetric block ciphers aims at recovering single bits up to complete round keys. This method was published in 1991 by the two Israeli researchers, Eli Biham and Adi Shamir. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Welcome to the differential cryptanalysis (DCA) tutorial. This method for the analysis of round-based symmetric block ciphers aims at recovering single bits up to complete round keys. This method was published in 1991 by the two Israeli researchers, Eli Biham and Adi Shamir. ähnelt.
         /// </summary>
         internal static string OverviewContent1 {
             get {
@@ -358,7 +358,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This tutorial describes the differential cryptanalysis (DCA) procedure in three parts. Part 1 explains the basic idea of DCA using a cipher with one encryption round. Part 2 deepens this idea using a cipher with three encryption rounds. Part three deepens the knowledge by increasing the complexity of the cipher to 5 encryption rounds. In part three the knowledge is deepened by increasing the complexity of the cipher to 5 encryption rounds. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This tutorial describes the differential cryptanalysis procedure in three parts. Part 1 explains the basic idea of DCA using a cipher with one encryption round. Part 2 deepens this idea using a cipher with three encryption rounds. Part three deepens the knowledge by increasing the complexity of the cipher to 5 encryption rounds. In part three the knowledge is deepened by increasing the complexity of the cipher to 5 encryption rounds. ähnelt.
         /// </summary>
         internal static string OverviewContent2 {
             get {
@@ -471,6 +471,51 @@ namespace DCAPathFinder.Properties {
         internal static string ProbabilityHeader {
             get {
                 return ResourceManager.GetString("ProbabilityHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 1 ähnelt.
+        /// </summary>
+        internal static string R1 {
+            get {
+                return ResourceManager.GetString("R1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 2 ähnelt.
+        /// </summary>
+        internal static string R2 {
+            get {
+                return ResourceManager.GetString("R2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 3 ähnelt.
+        /// </summary>
+        internal static string R3 {
+            get {
+                return ResourceManager.GetString("R3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 4 ähnelt.
+        /// </summary>
+        internal static string R4 {
+            get {
+                return ResourceManager.GetString("R4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 5 ähnelt.
+        /// </summary>
+        internal static string R5 {
+            get {
+                return ResourceManager.GetString("R5", resourceCulture);
             }
         }
         
@@ -2452,6 +2497,24 @@ namespace DCAPathFinder.Properties {
         internal static string Tutorial3WaitingSlideHeader1 {
             get {
                 return ResourceManager.GetString("Tutorial3WaitingSlideHeader1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Offline data ähnelt.
+        /// </summary>
+        internal static string UseOfflinePaths {
+            get {
+                return ResourceManager.GetString("UseOfflinePaths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die If this setting is selected, the system does not search for characteristics, but uses data stored in the component. This allows long calculation times to be minimized. ähnelt.
+        /// </summary>
+        internal static string UseOfflinePathsToolTip {
+            get {
+                return ResourceManager.GetString("UseOfflinePathsToolTip", resourceCulture);
             }
         }
     }

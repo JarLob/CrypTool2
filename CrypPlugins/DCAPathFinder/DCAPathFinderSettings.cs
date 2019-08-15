@@ -40,6 +40,7 @@ namespace Cryptool.Plugins.DCAPathFinder
         private bool _automaticMode;
         private int _maxThreads = Environment.ProcessorCount;
         private int _threadCount;
+        private bool _useOfflinePaths;
 
         #endregion
 
@@ -89,16 +90,57 @@ namespace Cryptool.Plugins.DCAPathFinder
         #region TaskPane Settings
 
         /// <summary>
-        /// textbox to specify the count of chosen message pairs
+        /// Selection of the toy cipher algorithm
         /// </summary>
-        [TaskPane("ChosenMessagePairsCount", "ChosenMessagePairsCountToolTip", "DCAOptions",1, false, ControlType.TextBox)]
-        public int ChosenMessagePairsCount
+        [TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", "ChoiceOfAlgorithmGroup", 1, false, ControlType.ComboBox, new string[] { "Cipher1", "Cipher2", "Cipher3" })]
+        public string ChoiceOfAlgorithm
         {
-            get { return _chosenMessagePairsCount; }
+            get
+            {
+                return _choiceOfAlgorithm;
+            }
             set
             {
-                _chosenMessagePairsCount = value;
-                OnPropertyChanged("ChosenMessagePairsCount");
+                if (_choiceOfAlgorithm != value)
+                {
+                    _choiceOfAlgorithm = value;
+                    switch (_choiceOfAlgorithm)
+                    {
+                        case "0":
+                            CurrentAlgorithm = Algorithms.Cipher1;
+                            hideSettingsElement("ChosenMessagePairsCount");
+                            hideSettingsElement("ChoiceOfSearchPolicy");
+                            hideSettingsElement("ChoiceOfAbortingPolicy");
+                            hideSettingsElement("ThreadCount");
+                            hideSettingsElement("UseOfflinePaths");
+                            break;
+                        case "1":
+                            CurrentAlgorithm = Algorithms.Cipher2;
+                            showSettingsElement("ChosenMessagePairsCount");
+                            showSettingsElement("ChoiceOfSearchPolicy");
+                            showSettingsElement("ChoiceOfAbortingPolicy");
+                            showSettingsElement("ThreadCount");
+                            showSettingsElement("UseOfflinePaths");
+                            break;
+                        case "2":
+                            CurrentAlgorithm = Algorithms.Cipher3;
+                            showSettingsElement("ChosenMessagePairsCount");
+                            showSettingsElement("ChoiceOfSearchPolicy");
+                            showSettingsElement("ChoiceOfAbortingPolicy");
+                            showSettingsElement("ThreadCount");
+                            showSettingsElement("UseOfflinePaths");
+                            break;
+                        case "3":
+                            CurrentAlgorithm = Algorithms.Cipher4;
+                            showSettingsElement("ChosenMessagePairsCount");
+                            showSettingsElement("ChoiceOfSearchPolicy");
+                            showSettingsElement("ChoiceOfAbortingPolicy");
+                            showSettingsElement("ThreadCount");
+                            showSettingsElement("UseOfflinePaths");
+                            break;
+                    }
+                    OnPropertyChanged("ChoiceOfAlgorithm");
+                }
             }
         }
 
@@ -133,6 +175,34 @@ namespace Cryptool.Plugins.DCAPathFinder
 
                     ThreadCount = _maxThreads;
                 }
+            }
+        }
+
+        /// <summary>
+        /// textbox to specify the count of chosen message pairs
+        /// </summary>
+        [TaskPane("ChosenMessagePairsCount", "ChosenMessagePairsCountToolTip", "DCAOptions",1, false, ControlType.TextBox)]
+        public int ChosenMessagePairsCount
+        {
+            get { return _chosenMessagePairsCount; }
+            set
+            {
+                _chosenMessagePairsCount = value;
+                OnPropertyChanged("ChosenMessagePairsCount");
+            }
+        }
+
+        /// <summary>
+        /// setting to specify that paths should be loaded from a file to prevent long search times
+        /// </summary>
+        [TaskPane("UseOfflinePaths", "UseOfflinePathsToolTip", "PerformanceSettingsGroup", 2, false, ControlType.CheckBox)]
+        public bool UseOfflinePaths
+        {
+            get { return _useOfflinePaths; }
+            set
+            {
+                _useOfflinePaths = value;
+                OnPropertyChanged("UseOfflinePaths");
             }
         }
 
@@ -254,57 +324,6 @@ namespace Cryptool.Plugins.DCAPathFinder
             }
         }
 
-        /// <summary>
-        /// Selection of the toy cipher algorithm
-        /// </summary>
-        [TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", "ChoiceOfAlgorithmGroup", 1, false, ControlType.ComboBox, new string[] { "Cipher1", "Cipher2", "Cipher3"})]
-        public string ChoiceOfAlgorithm
-        {
-            get
-            {
-                return _choiceOfAlgorithm;
-            }
-            set
-            {
-                if (_choiceOfAlgorithm != value)
-                {
-                    _choiceOfAlgorithm = value;
-                    switch (_choiceOfAlgorithm)
-                    {
-                        case "0":
-                            CurrentAlgorithm = Algorithms.Cipher1;
-                            hideSettingsElement("ChosenMessagePairsCount");
-                            hideSettingsElement("ChoiceOfSearchPolicy");
-                            hideSettingsElement("ChoiceOfAbortingPolicy");
-                            hideSettingsElement("ThreadCount");
-                            break;
-                        case "1":
-                            CurrentAlgorithm = Algorithms.Cipher2;
-                            showSettingsElement("ChosenMessagePairsCount");
-                            showSettingsElement("ChoiceOfSearchPolicy");
-                            showSettingsElement("ChoiceOfAbortingPolicy");
-                            showSettingsElement("ThreadCount");
-                            break;
-                        case "2":
-                            CurrentAlgorithm = Algorithms.Cipher3;
-                            showSettingsElement("ChosenMessagePairsCount");
-                            showSettingsElement("ChoiceOfSearchPolicy");
-                            showSettingsElement("ChoiceOfAbortingPolicy");
-                            showSettingsElement("ThreadCount");
-                            break;
-                        case "3":
-                            CurrentAlgorithm = Algorithms.Cipher4;
-                            showSettingsElement("ChosenMessagePairsCount");
-                            showSettingsElement("ChoiceOfSearchPolicy");
-                            showSettingsElement("ChoiceOfAbortingPolicy");
-                            showSettingsElement("ThreadCount");
-                            break;
-                    }
-                    OnPropertyChanged("ChoiceOfAlgorithm");
-                }
-            }
-        }
-
         #endregion
 
         #region Events
@@ -382,11 +401,13 @@ namespace Cryptool.Plugins.DCAPathFinder
                     hideSettingsElement("ChoiceOfSearchPolicy");
                     hideSettingsElement("ChoiceOfAbortingPolicy");
                     hideSettingsElement("ThreadCount");
+                    hideSettingsElement("UseOfflinePaths");
                     break;
                 default:
                     showSettingsElement("ChosenMessagePairsCount");
                     showSettingsElement("ChoiceOfSearchPolicy");
                     showSettingsElement("ThreadCount");
+                    showSettingsElement("UseOfflinePaths");
                     if (_choiceOfSearchPolicy == "2")
                     {
                         hideSettingsElement("ChoiceOfAbortingPolicy");

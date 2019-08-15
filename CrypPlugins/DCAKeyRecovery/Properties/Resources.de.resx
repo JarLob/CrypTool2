@@ -313,10 +313,10 @@
     <value>Geschwindigkeitsoptionen</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>DCA KeyRecovery</value>
+    <value>DKA KeyRecovery</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Die DCA KeyRecovery-Komponente führt die Wiederherstellung von Schlüsselbits von Rundenschlüsseln durch</value>
+    <value>Die DKA KeyRecovery-Komponente führt die Wiederherstellung von Schlüsselbits von Rundenschlüsseln durch</value>
   </data>
   <data name="RoundKeysOutput" xml:space="preserve">
     <value>Rundenschlüssel</value>

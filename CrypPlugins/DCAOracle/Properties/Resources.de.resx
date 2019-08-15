@@ -136,7 +136,7 @@
     <value>Ausgabe der Nachrichtenpaare mit spezifizierter Differenz</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>DCA Orakel</value>
+    <value>DKA Orakel</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Diese Komponente generiert zufällig gewählte Nachrichtenpaare, wobei die Nachrichten eines Paares eine definierbare Differenz aufweisen</value>

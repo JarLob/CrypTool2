@@ -84,6 +84,12 @@ namespace DCAPathFinder.UI.Tutorial3
 
             SBox1Round1.AlreadyAttacked = false;
             SBox1Round1.IsClickable = false;
+
+            //Round5
+            //scrollviewerCipher.ScrollToVerticalOffset(1000);
+
+            //Round4
+            scrollviewerCipher.ScrollToVerticalOffset(620);
         }
 
         /// <summary>
@@ -93,7 +99,10 @@ namespace DCAPathFinder.UI.Tutorial3
         /// <param name="e"></param>
         private void SBoxSelectionChanged(object sender, EventArgs e)
         {
-            SelectionChanged.Invoke(sender, e);
+            if (SelectionChanged != null)
+            {
+                SelectionChanged.Invoke(sender, e);
+            }
         }
     }
 }

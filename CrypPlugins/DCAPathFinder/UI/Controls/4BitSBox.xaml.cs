@@ -129,7 +129,10 @@ namespace DCAPathFinder.UI.Controls
             set
             {
                 _isSelected = value;
-                SelectionChanged.Invoke(this, null);
+                if (SelectionChanged != null)
+                {
+                    SelectionChanged.Invoke(this, null);
+                }
                 OnPropertyChanged();
             }
         }
@@ -176,6 +179,12 @@ namespace DCAPathFinder.UI.Controls
             }
         }
 
+        public void SetOfflineSelected()
+        {
+            OutputColor = "Red";
+            LabelTextColor = Brushes.Red;
+        }
+
 
         /// <summary>
         /// OnPropertyChanged-method for INotifyPropertyChanged
@@ -183,7 +192,10 @@ namespace DCAPathFinder.UI.Controls
         /// <param name="propertyName"></param>
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (PropertyChanged != null)
+            {
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         /// <summary>

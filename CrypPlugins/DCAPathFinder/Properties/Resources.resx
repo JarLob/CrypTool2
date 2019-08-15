@@ -130,7 +130,7 @@
     <value>Skip chapter</value>
   </data>
   <data name="ChoiceOfAlgorithm" xml:space="preserve">
-    <value>Choice of the cipher</value>
+    <value>Cipher selection</value>
   </data>
   <data name="ChoiceOfAlgorithmGroup" xml:space="preserve">
     <value>Tutorial options</value>
@@ -211,10 +211,10 @@
     <value>Output for the number of messages</value>
   </data>
   <data name="OverviewContent1" xml:space="preserve">
-    <value>Welcome to the differential cryptanalysis tutorial. This method for the analysis of round-based symmetric block ciphers aims at recovering single bits up to complete round keys. This method was published in 1991 by the two Israeli researchers, Eli Biham and Adi Shamir.</value>
+    <value>Welcome to the differential cryptanalysis (DCA) tutorial. This method for the analysis of round-based symmetric block ciphers aims at recovering single bits up to complete round keys. This method was published in 1991 by the two Israeli researchers, Eli Biham and Adi Shamir.</value>
   </data>
   <data name="OverviewContent2" xml:space="preserve">
-    <value>This tutorial describes the differential cryptanalysis (DCA) procedure in three parts. Part 1 explains the basic idea of DCA using a cipher with one encryption round. Part 2 deepens this idea using a cipher with three encryption rounds. Part three deepens the knowledge by increasing the complexity of the cipher to 5 encryption rounds. In part three the knowledge is deepened by increasing the complexity of the cipher to 5 encryption rounds.</value>
+    <value>This tutorial describes the differential cryptanalysis procedure in three parts. Part 1 explains the basic idea of DCA using a cipher with one encryption round. Part 2 deepens this idea using a cipher with three encryption rounds. Part three deepens the knowledge by increasing the complexity of the cipher to 5 encryption rounds. In part three the knowledge is deepened by increasing the complexity of the cipher to 5 encryption rounds.</value>
   </data>
   <data name="OverviewContent3" xml:space="preserve">
     <value>In the configuration of this component the different parts of the tutorial can be selected.</value>
@@ -915,5 +915,26 @@ differential cryptanalysis is a so called "chosen plaintext attack", which means
   </data>
   <data name="ThreadSettingError" xml:space="preserve">
     <value>The maximum number of threads for your system is {0} threads. This number is limited by your processor.</value>
+  </data>
+  <data name="UseOfflinePaths" xml:space="preserve">
+    <value>Offline data</value>
+  </data>
+  <data name="UseOfflinePathsToolTip" xml:space="preserve">
+    <value>If this setting is selected, the system does not search for characteristics, but uses data stored in the component. This allows long calculation times to be minimized.</value>
+  </data>
+  <data name="R1" xml:space="preserve">
+    <value>Round 1</value>
+  </data>
+  <data name="R2" xml:space="preserve">
+    <value>Round 2</value>
+  </data>
+  <data name="R3" xml:space="preserve">
+    <value>Round 3</value>
+  </data>
+  <data name="R4" xml:space="preserve">
+    <value>Round 4</value>
+  </data>
+  <data name="R5" xml:space="preserve">
+    <value>Round 5</value>
   </data>
 </root>

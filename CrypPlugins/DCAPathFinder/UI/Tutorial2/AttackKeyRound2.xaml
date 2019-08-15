@@ -7,7 +7,10 @@
              xmlns:controls="clr-namespace:DCAPathFinder.UI.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Width="1000" Height="500">
+    <UserControl.Resources>
+        <RotateTransform x:Key="HeaderRotate" Angle="270" />
+    </UserControl.Resources>
+    <Grid Height="700" Width="1200">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
@@ -35,6 +38,12 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <!-- Round 1 -->
+                <Image Source="/DCAPathFinder;component/images/curlyBracet.png" Height="240" Grid.Row="0" Grid.Column="0" Margin="-290,-510,0,0"></Image>
+
+                <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="0" FontSize="25" HorizontalAlignment="Left" LayoutTransform="{StaticResource HeaderRotate}" Margin="0,0,0,665">
+                    <Run Text="{Loc R1}"></Run>
+                </TextBlock>
+
                 <controls:_16BitKeyRoundInOut x:Name="KeyRound1" Grid.Row="0" Grid.Column="0" Margin="50,0,0,0"></controls:_16BitKeyRoundInOut>
 
                 <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="1" FontSize="25" HorizontalAlignment="Left" Margin="0,82.5,0,0">
@@ -61,6 +70,12 @@
 
                 <!-- /Round 1 -->
                 <!-- Round 2 -->
+                <Image Source="/DCAPathFinder;component/images/curlyBracet.png" Height="240" Grid.Row="0" Grid.Column="0" Margin="-290,-30,0,0"></Image>
+
+                <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="0" FontSize="25" HorizontalAlignment="Left" LayoutTransform="{StaticResource HeaderRotate}" Margin="0,0,0,425">
+                    <Run Text="{Loc R2}"></Run>
+                </TextBlock>
+
                 <controls:_16BitKeyRoundOut x:Name="KeyRound2" Grid.Row="0" Grid.Column="0" Margin="50,240,0,0"></controls:_16BitKeyRoundOut>
 
                 <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="1" FontSize="20" HorizontalAlignment="Left" Margin="0,387,0,0">
@@ -82,6 +97,12 @@
                 <controls:_16BitPermutation3RSPN x:Name="PermutationRound2" Grid.Row="0" Grid.Column="0" Margin="50,435,0,0"></controls:_16BitPermutation3RSPN>
                 <!-- /Round 2 -->
                 <!-- Round 3 -->
+                <Image Source="/DCAPathFinder;component/images/curlyBracet.png" Height="235" Grid.Row="0" Grid.Column="0" Margin="-290,445,0,0"></Image>
+
+                <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="0" FontSize="25" HorizontalAlignment="Left" LayoutTransform="{StaticResource HeaderRotate}" Margin="0,0,0,185">
+                    <Run Text="{Loc R3}"></Run>
+                </TextBlock>
+
                 <controls:_16BitKeyRoundOut x:Name="KeyRound3" Grid.Row="0" Grid.Column="0" Margin="50,480,0,0"></controls:_16BitKeyRoundOut>
 
                 <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="1" FontSize="20" HorizontalAlignment="Left" Margin="0,627,0,0">

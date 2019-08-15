@@ -232,7 +232,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Choice of the cipher ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher selection ähnelt.
         /// </summary>
         internal static string ChoiceOfAlgorithm {
             get {

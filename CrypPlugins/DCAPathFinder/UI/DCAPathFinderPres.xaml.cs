@@ -50,6 +50,7 @@ namespace DCAPathFinder.UI
         private SearchPolicy _searchPolicy;
         private int _messageCount;
         public bool UIProgressRefresh = true;
+        private bool _useOfflinePaths;
 
         /// <summary>
         /// Constructor
@@ -1103,6 +1104,7 @@ namespace DCAPathFinder.UI
                                 IsNextPossible = true;
 
                                 var view = new Tutorial3.AttackKeyRound5();
+                                view.SelectionChanged += SBoxSelectionChanged;
 
                                 //Prepare view
                                 if (SBoxesAlreadyAttacked[3])
@@ -1145,11 +1147,43 @@ namespace DCAPathFinder.UI
                                     view.SBox1Round5.IsClickable = true;
                                 }
 
+                                if (UseOfflinePaths)
+                                {
+                                    if (_SBoxesCurrentAttack[3])
+                                    {
+                                        view.SBox4Round5.IsClickable = false;
+                                        view.SBox4Round5.SetOfflineSelected();
+                                    }
+
+                                    if (_SBoxesCurrentAttack[2])
+                                    {
+                                        view.SBox3Round5.IsClickable = false;
+                                        view.SBox3Round5.SetOfflineSelected();
+                                            }
+
+                                    if (_SBoxesCurrentAttack[1])
+                                    {
+                                        view.SBox2Round5.IsClickable = false;
+                                        view.SBox2Round5.SetOfflineSelected();
+                                            }
+
+                                    if (_SBoxesCurrentAttack[0])
+                                    {
+                                        view.SBox1Round5.IsClickable = false;
+                                        view.SBox1Round5.SetOfflineSelected();
+                                    }
+
+                                    view.SBox4Round5.IsClickable = false;
+                                    view.SBox3Round5.IsClickable = false;
+                                    view.SBox2Round5.IsClickable = false;
+                                    view.SBox1Round5.IsClickable = false;
+
+                                }
+
 
                                 //setup pres content
                                 SlideCounterVisibility = Visibility.Visible;
                                 ContentViewBox.Child = view;
-                                view.SelectionChanged += SBoxSelectionChanged;
                             }
                                 break;
                             case 2:
@@ -2017,6 +2051,19 @@ namespace DCAPathFinder.UI
         public string SlideCounter
         {
             get { return ((StepCounter + 1) + "/" + _currentTutorialLastSlideNumber); }
+        }
+
+        /// <summary>
+        /// Property to indicate that offline paths will be used
+        /// </summary>
+        public bool UseOfflinePaths
+        {
+            get { return _useOfflinePaths; }
+            set
+            {
+                _useOfflinePaths = value;
+                OnPropertyChanged("UseOfflinePaths");
+            }
         }
 
         #endregion

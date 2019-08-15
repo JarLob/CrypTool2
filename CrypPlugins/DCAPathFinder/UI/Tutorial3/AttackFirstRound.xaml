@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DCAPathFinder.UI.Tutorial3"
              mc:Ignorable="d" 
-             d:DesignHeight="350" d:DesignWidth="600">
+             d:DesignHeight="800" d:DesignWidth="400">
     <Grid Height="350" Width="600">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>

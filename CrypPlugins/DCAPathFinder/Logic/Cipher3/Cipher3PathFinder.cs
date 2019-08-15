@@ -1474,5 +1474,185 @@ namespace DCAPathFinder.Logic.Cipher3
             ushort outputBlock = BitConverter.ToUInt16(bytes, 0);
             return outputBlock;
         }
+
+
+
+
+
+
+
+
+
+        //Methoden zur offline Speicherung 15.08.2019
+
+        public DifferentialAttackRoundConfiguration GenerateOfflineConfiguration(int round, bool[] sBoxesToAttack, List<Differential> diffListOfSBox)
+        {
+            DifferentialAttackRoundConfiguration result = new DifferentialAttackRoundConfiguration
+            {
+                ActiveSBoxes = sBoxesToAttack,
+                Round = round,
+                AbortingPolicy = AbortingPolicy.Threshold,
+                SearchPolicy = SearchPolicy.FirstAllCharacteristicsDepthSearch,
+                SelectedAlgorithm = Algorithms.Cipher3                
+            };
+
+            int inputDifference = -1;
+            int expectedDifference = -1;
+            double probabilityAccumulated = 0.0;
+            List<Characteristic> bestCharacteristics = new List<Characteristic>();
+
+            switch (round)
+            {
+                case 5:
+                    {
+                        result.IsLast = true;
+                        result.IsBeforeLast = false;
+                        result.IsFirst = false;
+                    }
+                    break;
+                case 4:
+                    {
+                        result.IsLast = false;
+                        result.IsBeforeLast = true;
+                        result.IsFirst = false;
+                    }
+                    break;
+                case 3:
+                    {
+                        result.IsLast = false;
+                        result.IsBeforeLast = false;
+                        result.IsFirst = false;
+                    }
+                    break;
+            }
+
+
+            //search for all differentials to find the best one on the given SBoxes
+            List<Characteristic>[] allCharacteristics = FindAllDifferentialsDepthSearchOffline(result, diffListOfSBox);
+
+            ParallelOptions po = new ParallelOptions();
+            Cts = new CancellationTokenSource();
+            po.CancellationToken = Cts.Token;
+            po.CancellationToken.ThrowIfCancellationRequested();
+            po.MaxDegreeOfParallelism = threadCount;
+
+            //calculate the results to find the best differential
+            Parallel.For(1, allCharacteristics.Length, po, i =>
+            //for (int i = 1; i < AllCharacteristics.Length; i++)
+            {
+                if (allCharacteristics[i] == null)
+                {
+                    return;
+                }
+
+                foreach (var characteristicToComp in allCharacteristics[i])
+                {
+                    bool possible = true;
+
+                    for (int j = 0; j < Cipher3Configuration.SBOXNUM; j++)
+                    {
+                        if (sBoxesToAttack[j])
+                        {
+                            if (GetSubBlockFromBlock(characteristicToComp.InputDifferentials[round - 1],
+                                    (ushort)j) == 0)
+                            {
+                                possible = false;
+                            }
+                        }
+                    }
+
+                    if (!possible)
+                    {
+                        continue;
+                    }
+
+                    double roundProb = 0.0;
+                    List<Characteristic> roundCharacteristics = new List<Characteristic>();
+
+                    foreach (var characteristic in allCharacteristics[i])
+                    {
+                        if (characteristicToComp.InputDifferentials[0] == characteristic.InputDifferentials[0])
+                        {
+                            roundProb += characteristic.Probability;
+                            roundCharacteristics.Add(characteristic);
+                        }
+                    }
+
+                    _semaphoreSlim.Wait();
+                    try
+                    {
+                        if (roundProb > probabilityAccumulated)
+                        {
+                            probabilityAccumulated = roundProb;
+                            bestCharacteristics = roundCharacteristics;
+                        }
+                    }
+                    finally
+                    {
+                        _semaphoreSlim.Release();
+                    }
+                }
+            });
+
+            inputDifference = bestCharacteristics[0].InputDifferentials[0];
+            expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
+
+            result.InputDifference = inputDifference;
+            result.ExpectedDifference = expectedDifference;
+            result.Characteristics = bestCharacteristics;
+            result.Probability = probabilityAccumulated;
+
+            return result;
+        }
+
+        public List<Characteristic>[] FindAllDifferentialsDepthSearchOffline(DifferentialAttackRoundConfiguration roundConfiguration, List<Differential> differentialsList)
+        {
+            ushort round = (ushort)roundConfiguration.Round;
+
+            //calculate loop border
+            int loopBorder = CalculateLoopBorder(roundConfiguration.ActiveSBoxes);
+
+            //result list
+            List<Characteristic>[] resultList = new List<Characteristic>[loopBorder];
+
+            ParallelOptions po = new ParallelOptions();
+            Cts = new CancellationTokenSource();
+            po.CancellationToken = Cts.Token;
+            po.CancellationToken.ThrowIfCancellationRequested();
+            po.MaxDegreeOfParallelism = threadCount;
+
+            //for(int i = 1; i < loopBorder;i++)
+            Parallel.For(1, loopBorder, po, i =>
+            {
+
+                //expected difference
+                ushort expectedDifference = GenerateValue(roundConfiguration.ActiveSBoxes, (ushort)i);
+
+                bool skip = false;
+
+                for (ushort j = 0; j < Cipher3Configuration.SBOXNUM; j++)
+                {
+                    if (roundConfiguration.ActiveSBoxes[j])
+                    {
+                        if (GetSubBlockFromBlock(expectedDifference, j) == 0)
+                        {
+                            skip = true;
+                        }
+                    }
+                }
+
+                if (skip)
+                {
+                    return;
+                }
+
+                //start depth-first search
+                List<Characteristic> retVal = FindCharacteristics(expectedDifference, round, differentialsList);
+
+                resultList[i] = retVal;
+            });
+
+            return resultList;
+        }
     }
 }

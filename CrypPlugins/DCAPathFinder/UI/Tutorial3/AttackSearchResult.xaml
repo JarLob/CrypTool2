@@ -9,7 +9,7 @@
     <UserControl.Resources>
         <RotateTransform x:Key="HeaderRotate" Angle="270" />
     </UserControl.Resources>
-    <Grid Height="475" Width="900">
+    <Grid Height="525" Width="900">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>

@@ -175,7 +175,7 @@
     <value>Start</value>
   </data>
   <data name="ChoiceOfAlgorithm" xml:space="preserve">
-    <value>Choice of the cipher</value>
+    <value>Cipher selection</value>
   </data>
   <data name="ChoiceOfAlgorithmToolTop" xml:space="preserve">
     <value>At this point one of the ciphers contained in the list can be selected. This cipher can be examined by differential cryptanalysis.</value>
