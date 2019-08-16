@@ -202,6 +202,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         }
 
         /// <summary>
+        /// Returns the number of "different symbols"
+        /// e.g. for a digit-based cipher this is usally 10
+        /// </summary>
+        public int DifferentSymbols
+        {
+            get
+            {
+                return _frequencies.Count;
+            }
+        }
+
+        /// <summary>
         /// Returns the match value of the given document and this cluster
         /// A "perfect match" is equal to 0.0
         /// </summary>
@@ -246,6 +258,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             OnPropertyChanged("DocumentCount");
             OnPropertyChanged("ClusterInfo");
             OnPropertyChanged("SymbolCount");
+            OnPropertyChanged("DifferentSymbols");            
         }
 
         /// <summary>
@@ -354,7 +367,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     }
                     builder.Append("=" + Math.Round(keyvaluepair.Value, 3));
 
-                    if (i < frequencies.Count - 2)
+                    if (i < frequencies.Count - 1)
                     {
                         builder.Append(", ");
                     }

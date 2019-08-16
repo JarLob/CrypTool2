@@ -65,6 +65,13 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    <GridViewColumn Header="Different Symbols" DisplayMemberBinding="{Binding Path=DifferentSymbols}" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Cluster info" DisplayMemberBinding="{Binding Path=ClusterInfo}" Width="500">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>

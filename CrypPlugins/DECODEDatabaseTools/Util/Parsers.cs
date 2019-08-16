@@ -259,6 +259,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
                 foreach (var c in trimmedLine)
                 {
+                    if((char.IsWhiteSpace(c) || c == '\r' || c == '\n') && (top || bottom))
+                    {
+                        //we don't put whitespaces or linebreaks to top or bottom text
+                        continue;
+                    }
                     switch (c)
                     {
                         case '^':
@@ -266,7 +271,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             continue;
                         case '_':
                             bottom = true;
-                            continue;
+                            continue;                        
                         default:
                             if (top && symbol != null)
                             {
