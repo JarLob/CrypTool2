@@ -99,7 +99,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             {
                 try
                 {
-                    _presentation.ListView.Items.Clear();
+                    _presentation.RecordsList.Clear();
                 }
                 catch (Exception)
                 {

@@ -43,7 +43,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             InitializeComponent();            
             Plugin = plugin;
-            this.ListView.ItemsSource = RecordsList;
+            ListView.ItemsSource = RecordsList;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListView.ItemsSource);
             view.Filter = UserFilter;
         }

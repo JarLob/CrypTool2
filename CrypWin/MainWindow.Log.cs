@@ -85,9 +85,17 @@ namespace Cryptool.CrypWin
         /// <param name="sender"></param>
         /// <param name="arg">Information about the log message</param>
         public void OnGuiLogNotificationOccuredTS(object sender, GuiLogEventArgs arg)
-        {
+        {           
            try
             {
+                if(textBlockDebugsCount == null ||
+                    textBlockInfosCount == null ||
+                    textBlockWarningsCount == null ||
+                    textBlockErrosCount == null ||
+                    textBlockBalloonsCount == null)
+                {
+                    return;
+                }
                 statusBarTextCounter++;
                 LogMessage logMessage = new LogMessage();
 
@@ -222,7 +230,10 @@ namespace Cryptool.CrypWin
 
         private void SetMessageCount()
         {
-            dockWindowLogMessages.Header = string.Format("{0:0,0}", listViewLogList.Items.Count) + string.Format(Properties.Resources._Messages___0__filtered_, string.Format("{0:0,0}", collectionLogMessages.Count - listViewLogList.Items.Count));
+            if (listViewLogList != null || collectionLogMessages != null)
+            {
+                dockWindowLogMessages.Header = string.Format("{0:0,0}", listViewLogList.Items.Count) + string.Format(Properties.Resources._Messages___0__filtered_, string.Format("{0:0,0}", collectionLogMessages.Count - listViewLogList.Items.Count));
+            }
         }
 
         private void ScrollToLast()

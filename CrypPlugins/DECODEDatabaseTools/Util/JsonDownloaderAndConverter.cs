@@ -29,6 +29,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         private const string LoginUrl = "https://cl.lingfil.uu.se/decode/database/api/login";
         private const string DownloadRecordsUrl = "https://cl.lingfil.uu.se/decode/database/api/records";
         private const string DownloadRecordUrl = "https://cl.lingfil.uu.se/decode/database/api/records/{0}";
+        private static TimeSpan _timeout = new TimeSpan(0, 0, 0, 5);
 
         private const string UserAgent = "CrypTool 2/DECODE JsonDownloaderAndConverter";
         private static CookieContainer _cookieContainer = new CookieContainer();
@@ -95,7 +96,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 {
                     client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.Timeout = new TimeSpan(0, 0, 0, 5);
+                    client.Timeout = _timeout;
 
                     var response = client.GetAsync(DownloadRecordsUrl).Result;
 
@@ -131,7 +132,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 {
                     client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.Timeout = new TimeSpan(0, 0, 0, 5);
+                    client.Timeout = _timeout;
 
                     var response = client.GetAsync(String.Format(DownloadRecordUrl, id)).Result;
 
