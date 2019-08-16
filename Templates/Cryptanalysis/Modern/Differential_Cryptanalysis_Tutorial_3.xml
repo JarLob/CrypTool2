@@ -10,7 +10,7 @@
   <description lang="de">In diesem Template wird die differenzielle Kryptoanalyse als Tutorial erläutert. Es sind verschiedene Chiffren verfügbar. Das Tutorial beginnt bei einer kleinen Toy-Chiffre und präsentiert dabei die Kernidee des Verfahrens. Darauf aufbauend wird der Angriff weiter verfeinert und ausgebaut, sodass im weiteren Verlauf immer größere Chiffren analysiert werden können.</description>
   
   <keywords lang="en">differential cryptanalysis, differential cryptanalysis tutorial 3, cryptanalysis, symmetric blockciphers, symmetric algorithms, DCA, DCA tutorial 3</keywords>
-  <keywords lang="de">Differenzielle Kryptoanalyse, Differenzielle Kryptoanayse Tutorial 3, Kryptoanalyse, symmetrische Blockchiffren, symmentrische Algorithmen, DKA, DKA Tutorial 3</keywords>
+  <keywords lang="de">Differenzielle Kryptoanalyse, Differenzielle Kryptoanalyse Tutorial 3, Kryptoanalyse, symmetrische Blockchiffren, symmetrische Algorithmen, DKA, DKA Tutorial 3</keywords>
   
   <icon file="Differential_Cryptanalysis.png" />
   <relevantPlugins>
