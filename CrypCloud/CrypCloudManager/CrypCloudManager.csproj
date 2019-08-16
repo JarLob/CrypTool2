@@ -189,6 +189,7 @@
     <ProjectReference Include="..\..\CrypPlugins\WorkspaceManager\WorkspaceManager.csproj">
       <Project>{949B4294-2894-43B4-BD73-E0B031F5434F}</Project>
       <Name>WorkspaceManager</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\LibSource\Certificate\CertificateLibrary\CertificateLibrary.csproj">
       <Project>{aba78840-2321-4dd3-91c6-84cc722d794b}</Project>
@@ -205,6 +206,7 @@
     <ProjectReference Include="..\..\WorkspaceManagerModel\WorkspaceManagerModel.csproj">
       <Project>{C35A6E71-D6FE-478B-A12D-FAD54FC4EDC9}</Project>
       <Name>WorkspaceManagerModel</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\CrypCloudCore\CrypCloudCore.csproj">
       <Project>{5AA65CEE-66BF-4B99-B46B-339E15C1A2C4}</Project>
