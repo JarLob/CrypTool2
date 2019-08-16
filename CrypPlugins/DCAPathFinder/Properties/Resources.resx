@@ -920,7 +920,10 @@ differential cryptanalysis is a so called "chosen plaintext attack", which means
     <value>Offline data</value>
   </data>
   <data name="UseOfflinePathsToolTip" xml:space="preserve">
-    <value>If this setting is selected, the system does not search for characteristics, but uses data stored in the component. This allows long calculation times to be minimized.</value>
+    <value>If this setting is selected, the program does not search for
+characteristics, but uses pre-calculated data stored in the component
+and specific for the particular cipher. This allows long calculation
+times to be minimized.</value>
   </data>
   <data name="R1" xml:space="preserve">
     <value>Round 1</value>

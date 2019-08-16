@@ -2510,7 +2510,10 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die If this setting is selected, the system does not search for characteristics, but uses data stored in the component. This allows long calculation times to be minimized. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die If this setting is selected, the program does not search for
+        ///characteristics, but uses pre-calculated data stored in the component
+        ///and specific for the particular cipher. This allows long calculation
+        ///times to be minimized. ähnelt.
         /// </summary>
         internal static string UseOfflinePathsToolTip {
             get {

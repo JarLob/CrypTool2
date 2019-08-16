@@ -640,7 +640,7 @@
     <value>Analyse von Chiffre 2</value>
   </data>
   <data name="Tutorial2AttackFinishedContent1" xml:space="preserve">
-    <value>Tutorial 2 zur Differenziellen Kryptoanalyse in der DKA PfadFinder-Komponente ist beendet. </value>
+    <value>Tutorial 2 zur differenziellen Kryptoanalyse in der DKA PfadFinder-Komponente ist beendet. </value>
   </data>
   <data name="Tutorial2AttackFinishedContent2Run1" xml:space="preserve">
     <value>Durch ein letztes klicken auf Start in der KeyRecovery-Komponente werden die letzten zwei Rundenschlüssel k</value>
@@ -1108,7 +1108,7 @@
     <value>Aufgrund der mehrfachen Verschlüsselungsrunden kann diese Chiffre nicht wie Chiffre 1 angegriffen werden. Für Chiffre 2 wird ein Ansatz benötigt, der die Änderungen von Differenzen über mehrere Verschlüsselungsrunden mit einer gewissen Wahrscheinlichkeit vorraussagt.</value>
   </data>
   <data name="Tutorial3AttackFinishedContent1" xml:space="preserve">
-    <value>Tutorial 3 zur Differenziellen Kryptoanalyse in der DKA PfadFinder-Komponente ist beendet. </value>
+    <value>Tutorial 3 zur differenziellen Kryptoanalyse in der DKA PfadFinder-Komponente ist beendet. </value>
   </data>
   <data name="Tutorial3AttackFinishedContent2Run1" xml:space="preserve">
     <value>Durch ein letztes klicken auf Start in der KeyRecovery-Komponente werden die letzten zwei Rundenschlüssel k</value>
@@ -1273,7 +1273,10 @@
     <value>Offline Daten</value>
   </data>
   <data name="UseOfflinePathsToolTip" xml:space="preserve">
-    <value>Ist diese Einstellung angewählt, wird keine Suche nach Charakteristiken durchgeführt, sondern es werden Daten verwendet, die in der Komponente hinterlegt sind. Dadurch können lange Berechnungszeiten minimiert werden.</value>
+    <value>Ist diese Einstellung angewählt, wird keine Suche nach
+Charakteristiken durchgeführt, sondern es werden für die jeweilige
+Chiffre vorberechnete Daten verwendet, die in der Komponente hinterlegt
+sind. Dadurch können lange Berechnungszeiten minimiert werden.</value>
   </data>
   <data name="R1" xml:space="preserve">
     <value>Runde 1</value>
