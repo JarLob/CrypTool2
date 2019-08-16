@@ -305,12 +305,23 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
         /// <summary>
         /// Returns the number of tokens of this line
+        /// counts only RegularCodes, Nulls, and NomenclatureElements
         /// </summary>
         public int TokenCount 
         {
             get
             {
-                return Tokens.Count;
+                int count = 0;
+                foreach (var token in Tokens)
+                {
+                    if(token.TokenType == TokenType.RegularCode || 
+                        token.TokenType == TokenType.Null ||
+                        token.TokenType == TokenType.NomenclatureElement)
+                    {
+                        count++;
+                    }
+                }
+                return count;
             }
         }
     }

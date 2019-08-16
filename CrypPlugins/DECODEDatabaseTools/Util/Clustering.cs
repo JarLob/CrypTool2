@@ -152,6 +152,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         private readonly ObservableCollection<TextDocumentWithFrequencies> _documents = new ObservableCollection<TextDocumentWithFrequencies>();
         private readonly Dictionary<Symbol, double> _frequencies = new Dictionary<Symbol, double>();
         private string _name;
+        private int _symbolCount = 0;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -177,11 +178,26 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
         }
 
+        /// <summary>
+        /// Returns the number of documents in this cluster
+        /// </summary>
         public int DocumentCount
         {
             get
             {
                 return _documents.Count;
+            }
+        }
+
+
+        /// <summary>
+        /// Returns the sum of symbols of all documents in this cluster
+        /// </summary>
+        public int SymbolCount
+        {
+            get
+            {
+                return _symbolCount;
             }
         }
 
@@ -221,11 +237,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 _name = textDocumentWithFrequencies.TextDocument.CatalogName;
                 OnPropertyChanged("Name");
             }
+
+            _symbolCount += textDocumentWithFrequencies.TextDocument.TokenCount;
+
             OnPropertyChanged("Frequencies");
             OnPropertyChanged("FrequenciesSortedBySymbol");
             OnPropertyChanged("Documents");
             OnPropertyChanged("DocumentCount");
             OnPropertyChanged("ClusterInfo");
+            OnPropertyChanged("SymbolCount");
         }
 
         /// <summary>

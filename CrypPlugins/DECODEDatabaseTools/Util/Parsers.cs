@@ -2281,5 +2281,174 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             return document;
         }
     }
+
+    /// <summary>
+    /// Parser for Francia 346-1
+    /// </summary>
+    public class Francia283Parser : SimpleSingleTokenParser
+    {      
+        public Francia283Parser()
+        {
+            
+        }
+
+        /// <summary>
+        /// Returns the parsed new document
+        /// </summary>
+        /// <returns></returns>
+        public override TextDocument GetDocument()
+        {
+            TextDocument document = base.GetDocument();
+            if (document == null)
+            {
+                return null;
+            }
+
+            foreach (Page page in document.Pages)
+            {
+                //create new tokens based on the "old" tokens
+                TokenBuilder tokenBuilder = new TokenBuilder();
+                TokenBuilder tagTokenBuilder = new TokenBuilder();
+                Line lastLine = null;
+
+                bool is_a_tag = false;
+
+                foreach (Line line in page.Lines)
+                {
+                    if (line.LineType == LineType.Comment)
+                    {
+                        continue;
+                    }
+
+                    //We are using the SimpleSingleTokenParser as baseline
+                    //Thus, we have a single token for each line
+                    List<Symbol> text = line.Tokens[0].Symbols;
+                    line.Tokens.Remove(line.Tokens[0]);
+
+                    for (int position = 0; position < text.Count; position++)
+                    {
+                        Symbol symbol = text[position];
+
+                        if (string.IsNullOrWhiteSpace(symbol.Text) && !is_a_tag)
+                        {
+                            continue;
+                        }
+
+                        if (symbol.Equals("<"))
+                        {
+                            tagTokenBuilder.Append(symbol);
+                            is_a_tag = true;
+                            continue;
+                        }
+                        if (is_a_tag == true && symbol.Equals(">"))
+                        {
+                            tagTokenBuilder.Append(symbol);
+                            Token tagToken = new Token(line);
+                            tagToken.TokenType = TokenType.Tag;
+                            tagToken.Symbols = tagTokenBuilder.ToList();
+                            line.Tokens.Add(tagToken);
+                            tagTokenBuilder.Clear();
+                            is_a_tag = false;
+                            continue;
+                        }
+                        if (is_a_tag)
+                        {
+                            tagTokenBuilder.Append(symbol);
+                            continue;
+                        }
+
+                        tokenBuilder.Append(symbol);
+
+                        if (tokenBuilder.Length >= 5)
+                        {
+                            Symbol symbol0 = tokenBuilder[0];
+                            Symbol symbol1 = tokenBuilder[1];
+                            Symbol symbol2 = tokenBuilder[2];
+                            Symbol symbol3 = tokenBuilder[3];
+                            Symbol symbol4 = tokenBuilder[4];
+
+                            if (symbol3.Text.Equals("+"))
+                            {
+                                Token codeToken = tokenBuilder.GetToken(0, 4, line);
+                                codeToken.TokenType = TokenType.NomenclatureElement;
+                                line.Tokens.Add(codeToken);
+                                tokenBuilder.Remove(0, 4);
+                                continue;
+                            }
+                            if (symbol4.Text.Equals("+"))
+                            {
+
+                                Token unknownToken = tokenBuilder.GetToken(0, 1, line);
+                                unknownToken.TokenType = TokenType.Unknown;
+                                line.Tokens.Add(unknownToken);
+                                tokenBuilder.Remove(0, 1);
+
+                                Token codeToken = tokenBuilder.GetToken(0, 4, line);
+                                codeToken.TokenType = TokenType.NomenclatureElement;
+                                line.Tokens.Add(codeToken);
+                                tokenBuilder.Remove(0, 4);
+                                continue;
+                            }
+
+                            if ("02468".Contains(symbol1.Text))
+                            {
+                                Token regularCodeToken = tokenBuilder.GetToken(0, 2, line);
+                                regularCodeToken.TokenType = TokenType.RegularCode;
+                                line.Tokens.Add(regularCodeToken);
+                                tokenBuilder.Remove(0, 2);
+                            }
+                            else
+                            {
+                                Token unknownToken = tokenBuilder.GetToken(0, 1, line);
+                                unknownToken.TokenType = TokenType.Unknown;
+                                line.Tokens.Add(unknownToken);
+                                tokenBuilder.Remove(0, 1);
+                            }
+                        }
+                    }
+
+                    lastLine = line;
+                }
+
+                if (tagTokenBuilder.Length > 0)
+                {
+                    Token tagToken = new Token(lastLine);
+                    tagToken.TokenType = TokenType.Tag;
+                    tagToken.Symbols = tagTokenBuilder.ToList();
+                    lastLine.Tokens.Add(tagToken);
+                    tagTokenBuilder.Clear();
+                    is_a_tag = false;
+                }
+
+                while (tokenBuilder.Length > 0)
+                {
+                    if(tokenBuilder.Length >= 4 && tokenBuilder[3].Text.Equals("+"))
+                    {
+                        Token codeToken = tokenBuilder.GetToken(0, 4, lastLine);
+                        codeToken.TokenType = TokenType.NomenclatureElement;
+                        lastLine.Tokens.Add(codeToken);
+                        tokenBuilder.Remove(0, 4);
+                        continue;
+                    }
+
+                    if (tokenBuilder.Length > 1 && "02468".Contains(tokenBuilder[1].Text))
+                    {
+                        Token regularCodeToken = tokenBuilder.GetToken(0, 2, lastLine);
+                        regularCodeToken.TokenType = TokenType.RegularCode;
+                        lastLine.Tokens.Add(regularCodeToken);
+                        tokenBuilder.Remove(0, 2);
+                    }
+                    else
+                    {
+                        Token unknownToken = tokenBuilder.GetToken(0, 1, lastLine);
+                        unknownToken.TokenType = TokenType.Unknown;
+                        lastLine.Tokens.Add(unknownToken);
+                        tokenBuilder.Remove(0, 1);
+                    }
+                }
+            }
+            return document;
+        }
+    }
 }
 

@@ -58,6 +58,13 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    <GridViewColumn Header="Symbol count" DisplayMemberBinding="{Binding Path=SymbolCount}" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Cluster info" DisplayMemberBinding="{Binding Path=ClusterInfo}" Width="500">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
