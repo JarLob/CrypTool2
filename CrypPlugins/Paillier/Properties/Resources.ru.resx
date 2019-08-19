@@ -193,7 +193,7 @@
     <value>Генератор ключей Paillier</value>
   </data>
   <data name="PluginKeyDescriptionURL" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="PluginKeyTooltip" xml:space="preserve">
     <value>Создает ключ для криптосистемы Paillier</value>
@@ -239,5 +239,11 @@
   </data>
   <data name="SourceList2" xml:space="preserve">
     <value>Генерировать случайные числа</value>
+  </data>
+  <data name="Output_rCaption" xml:space="preserve">
+    <value>r</value>
+  </data>
+  <data name="Output_rTooltip" xml:space="preserve">
+    <value>Случайное значение, используемое при шифровании Пейе</value>
   </data>
 </root>

@@ -19,7 +19,7 @@ namespace Paillier.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -273,6 +273,24 @@ namespace Paillier.Properties {
         internal static string NTooltip {
             get {
                 return ResourceManager.GetString("NTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die r ähnelt.
+        /// </summary>
+        internal static string Output_rCaption {
+            get {
+                return ResourceManager.GetString("Output_rCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Random value r used for Paillier encryption ähnelt.
+        /// </summary>
+        internal static string Output_rTooltip {
+            get {
+                return ResourceManager.GetString("Output_rTooltip", resourceCulture);
             }
         }
         

@@ -240,4 +240,10 @@
   <data name="SourceList2" xml:space="preserve">
     <value>zufällig erzeugen</value>
   </data>
+  <data name="Output_rCaption" xml:space="preserve">
+    <value>r</value>
+  </data>
+  <data name="Output_rTooltip" xml:space="preserve">
+    <value>Zufallswert der während der Paillier-Verschlüsselung genutzt wird</value>
+  </data>
 </root>

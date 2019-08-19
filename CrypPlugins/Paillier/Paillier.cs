@@ -41,6 +41,7 @@ namespace Cryptool.Plugins.Paillier
         private Object inputm;              // plaintext
         private BigInteger inputoperand;    // summand or multiplicand
         private BigInteger outputc1;        // encrypted output (as BigInteger)
+        private BigInteger _r;               // random value
         private byte[] outputc2;            // encrypted output (as byte[])
 
         // Encryption/decryption can be sped up by using the chinese remainder theorem.
@@ -199,7 +200,13 @@ namespace Cryptool.Plugins.Paillier
                 }
                 r = BigInteger.ModPow(r, n, n_square);
                 //r = cipherMul(r,n);
-            } else r = 1;
+            }
+            else
+            {
+                r = 1;
+            }
+
+            this.r = r;
 
             return (((n * m + 1) % n_square) * r) % n_square;
             //return cipherAdd( (n * m + 1) % n_square, r );
@@ -407,6 +414,26 @@ namespace Cryptool.Plugins.Paillier
                 {
                     outputc2 = value;
                     OnPropertyChanged("OutputC2");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets/Sets the random value of the encryption as a BigInteger
+        /// </summary>
+        [PropertyInfo(Direction.OutputData, "Output_rCaption", "Output_rTooltip")]
+        public BigInteger r
+        {
+            get
+            {
+                return _r;
+            }
+            set
+            {
+                if (_r is BigInteger)
+                {
+                    _r = value;
+                    OnPropertyChanged("r");
                 }
             }
         }
