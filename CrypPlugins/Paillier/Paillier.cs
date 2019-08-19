@@ -26,7 +26,7 @@ namespace Cryptool.Plugins.Paillier
 {
     [Author("Armin Krauss, Martin Franz", "", "", "")]
     [PluginInfo("Paillier.Properties.Resources",
-        "PluginCaption", "PluginTooltip", "Paillier/DetailedDescription/doc.xml", 
+        "PluginCaption", "PluginTooltip", "Paillier/DetailedDescription/doc.xml",
         "Paillier/Image/PaillierEnc.png", "Paillier/Image/PaillierDec.png", "Paillier/Image/PaillierAdd.png", "Paillier/Image/PaillierMul.png")]
     [ComponentCategory(ComponentCategory.CiphersModernAsymmetric)]
     public class Paillier : ICrypComponent
@@ -41,7 +41,7 @@ namespace Cryptool.Plugins.Paillier
         private Object inputm;              // plaintext
         private BigInteger inputoperand;    // summand or multiplicand
         private BigInteger outputc1;        // encrypted output (as BigInteger)
-        private BigInteger _r;               // random value
+        private BigInteger _r;              // random value
         private byte[] outputc2;            // encrypted output (as byte[])
 
         // Encryption/decryption can be sped up by using the chinese remainder theorem.
@@ -65,12 +65,7 @@ namespace Cryptool.Plugins.Paillier
 
         public Paillier()
         {
-            //this.settings = new PaillierSettings();
-            //twoPowKeyBitLength = 1 << (keyBitLength - 1);
-            //generateKeys();
-            //this.settings.PropertyChanged += settings_OnPropertyChanged;
-            //this.PropertyChanged += settings_OnPropertyChange;
-            this.settings.OnPluginStatusChanged += settings_OnPluginStatusChanged;
+            settings.OnPluginStatusChanged += settings_OnPluginStatusChanged;
         }
 
         private void settings_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -87,87 +82,11 @@ namespace Cryptool.Plugins.Paillier
 
         #region Algorithm
 
-        private BigInteger L(BigInteger x)
-        {
-            return (x - 1) / n;
-        }
-
-        // not used, public/private keys are input variables for this plugin
-        private void generateKeys()
-        {
-            BigInteger twoPowModulusBits, n_plus1;
-
-            p = BigIntegerHelper.RandomPrimeBits(keyBitLength - (keyBitLength / 2));
-            q = BigIntegerHelper.RandomPrimeBits(keyBitLength / 2);
-            n = p * q;
-
-            // Just complete PK: n^2
-            n_plus1 = n + 1;
-            n_square = n * n;
-
-            // compute lambda
-            p_minus1 = p - 1;
-            q_minus1 = q - 1;
-            lambda = BigIntegerHelper.LCM(p_minus1, q_minus1);
-
-            // Compute n^(-1)
-            twoPowModulusBits = 1 << keyBitLength;
-            n_inv = BigIntegerHelper.ModInverse(n, twoPowModulusBits);
-
-            // Store the L(lambda)-part for decryption
-            decDiv = BigInteger.ModPow(n + 1, lambda, n_square);
-            decDiv = BigIntegerHelper.ModInverse(L(decDiv), n);
-
-            p_square = p * p;
-            q_square = q * q; 
-
-            hp = BigIntegerHelper.ModInverse((BigInteger.ModPow(n + 1, p_minus1, p_square) - 1) / p, p);
-            hq = BigIntegerHelper.ModInverse((BigInteger.ModPow(n + 1, q_minus1, q_square) - 1) / q, q);
-
-            // for CRT
-            BigInteger s, t;
-
-            BigIntegerHelper.ExtEuclid(p, q, out s, out t);
-            ep = s * p;
-            eq = t * q;
-
-            // CRT Encryption:
-            BigIntegerHelper.ExtEuclid(p_square, q_square, out s, out t);
-            ep2 = s * p_square;
-            eq2 = t * q_square;
-        }
-
-        /*
-            Decryption using chinese remainder theorem
-        */
-        //public BigInteger decrypt(BigInteger c)
-        //{
-        //    // L_p(c^p-1)
-        //    mp = (((BigInteger.ModPow(c, p_minus1, p_square) - 1) / p) * hp) % p;
-        //    // L_q(c^q-1)
-        //    mq = (((BigInteger.ModPow(c, q_minus1, q_square) - 1) / q) * hq) % q;
-        //    // ( mp*eq + mq*ep ) % n
-        //    return (mp * eq + mq * ep) % n;
-        //}
-
-        /*
-            Encryption ( (1 + m*n) * r^n mod n^2 )
-            Computing r^n using CRT.
-        */
-        //public BigInteger encrypt(BigInteger m)
-        //{
-        //    BigInteger r = RandomInt(keyBitLength) % n;
-
-        //    mp = BigInteger.ModPow(r, n, p_square);
-        //    mq = BigInteger.ModPow(r, n, q_square);
-        //    r = (mp * eq2 + mq * ep2) % n_square;
-
-        //    return (((n * m + 1) % n_square) * r) % n_square;
-        //}
-
-        /*
-            Decryption ( ((c^lambda) % n^2 - 1) div n ) * lambda^(-1) ) % n
-        */
+        /// <summary>
+        /// Decryption ( ((c^lambda) % n^2 - 1) div n ) * lambda^(-1) ) % n
+        /// </summary>
+        /// <param name=""></param>
+        /// <param name=""></param>
         private BigInteger decrypt(BigInteger c)
         {
             if (c >= n_square)
@@ -177,12 +96,12 @@ namespace Cryptool.Plugins.Paillier
             return (((BigInteger.ModPow(c, InputLambda, n_square) - 1) / n) * lambdainv) % n;
         }
 
-        /*
-           Encryption ( g^m * r^n = (1 + m*n) * r^n mod n^2 )
-           Hint: g^m = (n+1)^m = sum(k=0,m)((m over k)*n^k) = 1+m*n (mod n^2) 
-        */
-        //private BigInteger encrypt(BigInteger m, bool useRandom=true )
-        private BigInteger encrypt( BigInteger m )
+        /// <summary>
+        /// Encryption ( g^m * r^n = (1 + m*n) * r^n mod n^2 )
+        /// Hint: g^m = (n+1)^m = sum(k= 0, m)((m over k) * n^k) = 1+m* n(mod n^2)
+        /// </summary>        
+        /// <param name="m"></param>
+        private BigInteger encrypt(BigInteger m)
         {
             if (m >= n)
                 GuiLogMessage("Message is bigger than N - this will produce a wrong result!", NotificationLevel.Warning);
@@ -198,42 +117,42 @@ namespace Cryptool.Plugins.Paillier
                     if (BigInteger.GreatestCommonDivisor(r, n) == 1) break;
                     GuiLogMessage("GCD <> 1, retrying...", NotificationLevel.Warning);
                 }
+                this.r = r; // output r with property
                 r = BigInteger.ModPow(r, n, n_square);
-                //r = cipherMul(r,n);
             }
             else
             {
                 r = 1;
             }
 
-            this.r = r;
-
             return (((n * m + 1) % n_square) * r) % n_square;
-            //return cipherAdd( (n * m + 1) % n_square, r );
         }
 
-        /*
-            Using the homomorphic property of the Paillier cryptosystem:
-            This function multiplies two ciphertexts c1 = E(m1) and c2 = E(m2)
-            in order to add the encrypted plaintexts: res = E(m1 + m2)
-        */
+        /// <summary>
+        /// Using the homomorphic property of the Paillier cryptosystem:
+        /// This function multiplies two ciphertexts c1 = E(m1) and c2 = E(m2)
+        /// in order to add the encrypted plaintexts: res = E(m1 + m2)
+        /// </summary>                    
         private BigInteger cipherAdd(BigInteger c1, BigInteger c2)
         {
             return (c1 * c2) % n_square;
         }
 
-        /*
-            Computing under the hom. encryption: res = E(m1 * exp)
-            Raises ciphertext E(m1) = c to the power of exp.
-        */
+        /// <summary>
+        /// Computing under the hom. encryption: res = E(m1 * exp)
+        /// Raises ciphertext E(m1) = c to the power of exp.
+        /// </summary>
         private BigInteger cipherMul(BigInteger c, BigInteger exp)
         {
             return BigInteger.ModPow(c, exp, n_square);
         }
 
-        /*
-            This function first checks if exp is negative and then computes the result.
-        */
+        /// <summary>
+        /// This function first checks if exp is negative and then computes the result.
+        /// </summary>
+        /// <param name="c"></param>
+        /// <param name="exp"></param>
+        /// <returns></returns>
         private BigInteger cipherMulSigned(BigInteger c, BigInteger exp)
         {
             return (exp < 0)
@@ -241,37 +160,21 @@ namespace Cryptool.Plugins.Paillier
                 : cipherMul(c, exp);
         }
 
-        /*
-            Computing under the hom. encryption: res = E(m1 * (-exp))
-            Raises ciphertext E(m1) = c to the power of exp.
-        */
-        private BigInteger cipherMulNeg(BigInteger c, BigInteger negExp)
-        {
-            return cipherMulSigned(c, -negExp);
-        }
-
-        /*
-            Compute: res = E(-m)
-            Computes the multiplicative inverse of some ciphertext c = E(m).
-        */
+        /// <summary>
+        ///  Compute: res = E(-m)
+        /// Computes the multiplicative inverse of some ciphertext c = E(m).
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
         private BigInteger cipherNeg(BigInteger c)
         {
             return BigIntegerHelper.ModInverse(c, n_square);
         }
 
-        /*
-            Compute: res = E( c1 - c2 )
-            Computes the multiplicative inverse of some c2 and multiplies this with c1.
-        */
-        private BigInteger cipherSub(BigInteger c1, BigInteger c2)
-        {
-            return cipherAdd(c1, cipherNeg(c2));
-        }
-
         #endregion
 
         #region Data Properties
-   
+
         /// <summary>
         /// Gets/Sets public key n
         /// </summary>
@@ -348,15 +251,15 @@ namespace Cryptool.Plugins.Paillier
                     inputm = new byte[reader.Length];
                     reader.Seek(0, System.IO.SeekOrigin.Begin);
                     reader.ReadFully((byte[])inputm, 0, (int)reader.Length);
-                } 
+                }
                 else
-                {   
-                    if( value != null ) 
-                        GuiLogMessage("Input type " + value.GetType() + " is not allowed", NotificationLevel.Error);   
+                {
+                    if (value != null)
+                        GuiLogMessage("Input type " + value.GetType() + " is not allowed", NotificationLevel.Error);
                     //throw new Exception("Input type " + value.GetType() + " is not allowed");
                     inputm = (BigInteger)0;
                 }
- 
+
                 //OnPropertyChanged("InputM");
             }
         }
@@ -464,7 +367,7 @@ namespace Cryptool.Plugins.Paillier
         private byte[] removeZeros(byte[] input)
         {
             int i;
-            for (i = input.Length; i>0 && input[i-1] == 0; i--) ;
+            for (i = input.Length; i > 0 && input[i - 1] == 0; i--) ;
             byte[] output = new byte[i];
             Buffer.BlockCopy(input, 0, output, 0, i);
 
@@ -473,17 +376,17 @@ namespace Cryptool.Plugins.Paillier
 
         private BigInteger BigIntegerFromBuffer(byte[] buffer, int ofs, int len)
         {
-            byte[] tmp = new byte[len+1];  // extra byte makes sure that BigInteger is positive
-            Buffer.BlockCopy( (byte[])buffer, ofs, tmp, 0, len ); 
+            byte[] tmp = new byte[len + 1];  // extra byte makes sure that BigInteger is positive
+            Buffer.BlockCopy((byte[])buffer, ofs, tmp, 0, len);
             return new BigInteger(tmp);
         }
 
         private void BigIntegerIntoBuffer(BigInteger b, byte[] buffer, int ofs, int len)
         {
             byte[] bytes = b.ToByteArray();
-            Buffer.BlockCopy(bytes, 0, buffer, ofs, Math.Min(len,bytes.Length));
+            Buffer.BlockCopy(bytes, 0, buffer, ofs, Math.Min(len, bytes.Length));
         }
-        
+
         ///<summary>
         /// Takes a BigInteger as input, performs some computations on it, and returns another BigInteger.
         ///</summary>
@@ -537,7 +440,7 @@ namespace Cryptool.Plugins.Paillier
             n = InputN;
             n_square = n * n;
 
-            if (n < 2*3)
+            if (n < 2 * 3)
             {
                 GuiLogMessage("Illegal Input N - Paillier can not work", NotificationLevel.Error);
                 return;
@@ -549,7 +452,7 @@ namespace Cryptool.Plugins.Paillier
                 else if (InputM is byte[]) OutputC2 = BlockConvert((byte[])InputM, n, n_square, encrypt, true);
             }
             else if (settings.Action == 1)  // Decryption
-            {         
+            {
                 if (InputLambda < 1)
                 {
                     GuiLogMessage("Illegal private key Lambda - Paillier can not decrypt", NotificationLevel.Error);
@@ -589,7 +492,7 @@ namespace Cryptool.Plugins.Paillier
 
                 OutputC1 = cipherMul((BigInteger)InputM, InputOperand);
             }
-            
+
             // Make sure the progress bar is at maximum when your Execute() finished successfully.
             ProgressChanged(1, 1);
         }
