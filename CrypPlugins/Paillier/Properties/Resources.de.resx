@@ -244,6 +244,6 @@
     <value>r</value>
   </data>
   <data name="Output_rTooltip" xml:space="preserve">
-    <value>Zufallswert der während der Paillier-Verschlüsselung genutzt wird</value>
+    <value>Zufallswert, der während der Paillier-Verschlüsselung genutzt wird</value>
   </data>
 </root>
