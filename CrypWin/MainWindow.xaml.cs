@@ -918,8 +918,8 @@ namespace Cryptool.CrypWin
                 essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\DevComponents.WpfEditors.dll");
                 essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\DevComponents.WpfRibbon.dll");
                 essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\OnlineDocumentationGenerator.dll");
-                essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\WorkspaceManager.dll");
-                essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\WorkspaceManagerModel.dll");
+                essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\CrypPlugins\WorkspaceManagerModel.dll");
+                essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\CrypPlugins\WorkspaceManager.dll");
                 essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\CrypPlugins\Wizard.dll");
 
                 foreach(var file in essentialComponents)

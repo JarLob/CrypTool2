@@ -530,7 +530,7 @@
     <ProjectReference Include="..\CrypPlugins\WorkspaceManager\WorkspaceManager.csproj">
       <Project>{949B4294-2894-43B4-BD73-E0B031F5434F}</Project>
       <Name>WorkspaceManager</Name>
-      <Private>True</Private>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\CrypToolStore\CrypToolStore.csproj">
       <Project>{0182e69c-7f75-4b4f-953d-748d9a6d168e}</Project>
@@ -554,6 +554,7 @@
     <ProjectReference Include="..\WorkspaceManagerModel\WorkspaceManagerModel.csproj">
       <Project>{C35A6E71-D6FE-478B-A12D-FAD54FC4EDC9}</Project>
       <Name>WorkspaceManagerModel</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
