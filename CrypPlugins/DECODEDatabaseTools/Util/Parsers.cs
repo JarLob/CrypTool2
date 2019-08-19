@@ -267,10 +267,36 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     switch (c)
                     {
                         case '^':
-                            top = true;
+                            if (bottom == true)
+                            {
+                                symbol.Bottom += "_";
+                                top = false;
+                            }
+                            else if (top == true)
+                            {
+                                symbol.Top += "_";
+                                top = false;
+                            }
+                            else
+                            {
+                                top = true;
+                            }
                             continue;
                         case '_':
-                            bottom = true;
+                            if (bottom == true)
+                            {
+                                symbol.Bottom += "_";
+                                bottom = false;
+                            }
+                            else if (top == true)
+                            {
+                                symbol.Top += "_";
+                                bottom = false;
+                            }
+                            else
+                            {
+                                bottom = true;
+                            }
                             continue;                        
                         default:
                             if (top && symbol != null)
