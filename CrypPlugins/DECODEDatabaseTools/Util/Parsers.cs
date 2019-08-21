@@ -355,21 +355,21 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     }
 
     /// <summary>
-    /// Simple parser that just splits the text into regular codes of defined length
+    /// Simple parser that just splits the text into regular elements of defined length
     /// Also supports "nulls"
     /// </summary>
     public class NoNomenclatureParser : SimpleSingleTokenParser
     {
         private List<Token> _nulls = new List<Token>();
-        private uint _regularCodeLength = 0;
+        private uint _regularElementLength = 0;
 
-        public NoNomenclatureParser(uint regularCodeLength, List<Token> nulls = null)
+        public NoNomenclatureParser(uint regularElementLength, List<Token> nulls = null)
         {
             if (nulls != null)
             {
                 _nulls = nulls;
             }
-            _regularCodeLength = regularCodeLength;
+            _regularElementLength = regularElementLength;
         }
 
         /// <summary>
@@ -439,28 +439,28 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             //we found a null, thus, add a new token of previously collected characters
                             if (tokenBuilder.Length > 0)
                             {
-                                Token regularCodeToken = new Token(line);
-                                regularCodeToken.TokenType = TokenType.RegularCode;
-                                regularCodeToken.Symbols = tokenBuilder.ToList();
-                                line.Tokens.Add(regularCodeToken);
+                                Token regularElementToken = new Token(line);
+                                regularElementToken.TokenType = TokenType.RegularElement;
+                                regularElementToken.Symbols = tokenBuilder.ToList();
+                                line.Tokens.Add(regularElementToken);
                                 tokenBuilder.Clear();
                             }
                             Token nullToken = new Token(line);
-                            nullToken.TokenType = TokenType.Null;
+                            nullToken.TokenType = TokenType.NullElement;
                             nullToken.Symbols.Add(symbol);
                             line.Tokens.Add(nullToken);
                             continue;
                         }
                         //here, we know, we have no null symbol and no whitespace
-                        //thus, the symbol belongs to a regular code
+                        //thus, the symbol belongs to a regular element
                         tokenBuilder.Append(symbol);
-                        //finally, check if we reached the regular code length
-                        if (_regularCodeLength != 0 && tokenBuilder.Length == _regularCodeLength)
+                        //finally, check if we reached the regular element length
+                        if (_regularElementLength != 0 && tokenBuilder.Length == _regularElementLength)
                         {
-                            Token regularCodeToken = new Token(line);
-                            regularCodeToken.TokenType = TokenType.RegularCode;
-                            regularCodeToken.Symbols = tokenBuilder.ToList();
-                            line.Tokens.Add(regularCodeToken);
+                            Token regularElementToken = new Token(line);
+                            regularElementToken.TokenType = TokenType.RegularElement;
+                            regularElementToken.Symbols = tokenBuilder.ToList();
+                            line.Tokens.Add(regularElementToken);
                             tokenBuilder.Clear();
                         }
                     }
@@ -478,10 +478,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 }
                 if (tokenBuilder.Length > 0)
                 {
-                    Token regularCodeToken = new Token(lastLine);
-                    regularCodeToken.TokenType = TokenType.RegularCode;
-                    regularCodeToken.Symbols = tokenBuilder.ToList();
-                    lastLine.Tokens.Add(regularCodeToken);
+                    Token regularElementToken = new Token(lastLine);
+                    regularElementToken.TokenType = TokenType.RegularElement;
+                    regularElementToken.Symbols = tokenBuilder.ToList();
+                    lastLine.Tokens.Add(regularElementToken);
                     tokenBuilder.Clear();
                 }
             }
@@ -492,7 +492,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
 
     /// <summary>
-    /// Parses the text into regular codes of two
+    /// Parses the text into regular elements of two
     /// Also supports nomenclature elements of three digits followed by a null digit
     /// </summary>
     public class Nomenclature3DigitsEndingWithNull1DigitsParser : SimpleSingleTokenParser
@@ -583,31 +583,31 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             }
                             else if (tokenBuilder.Length > 0)
                             {
-                                Token regularCodeToken = new Token(line);
-                                regularCodeToken.TokenType = TokenType.RegularCode;
-                                regularCodeToken.Symbols = tokenBuilder.ToList();
-                                line.Tokens.Add(regularCodeToken);
+                                Token regularElementToken = new Token(line);
+                                regularElementToken.TokenType = TokenType.RegularElement;
+                                regularElementToken.Symbols = tokenBuilder.ToList();
+                                line.Tokens.Add(regularElementToken);
                                 tokenBuilder.Clear();
                             }
 
                             Token nullToken = new Token(line);
-                            nullToken.TokenType = TokenType.Null;
+                            nullToken.TokenType = TokenType.NullElement;
                             nullToken.Symbols.Add(symbol);
                             symbol.ParentToken = nullToken;
                             line.Tokens.Add(nullToken);
                             continue;
                         }
                         //here, we know, we have no null symbol and no whitespace
-                        //thus, the symbol (maybe) belongs to a regular code or a nomenclature element
+                        //thus, the symbol (maybe) belongs to a regular element or a nomenclature element
                         tokenBuilder.Append(symbol);
 
                         if (tokenBuilder.Length > 3)
                         {
                             //if we are longer than 3 digits, we know we can not be in a nomenclature, 
-                            //thus, we add a regular code
-                            Token regularCodeToken = tokenBuilder.GetToken(0, 2, line);
-                            regularCodeToken.TokenType = TokenType.RegularCode;
-                            line.Tokens.Add(regularCodeToken);
+                            //thus, we add a regular element
+                            Token regularElementToken = tokenBuilder.GetToken(0, 2, line);
+                            regularElementToken.TokenType = TokenType.RegularElement;
+                            line.Tokens.Add(regularElementToken);
                             tokenBuilder.Remove(0, 2);
                         }
                     }
@@ -627,9 +627,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 while (tokenBuilder.Length > 0)
                 {
                     int len = Math.Min(tokenBuilder.Length, 2);
-                    Token regularCodeToken = tokenBuilder.GetToken(0, len, lastLine);
-                    regularCodeToken.TokenType = TokenType.RegularCode;
-                    lastLine.Tokens.Add(regularCodeToken);
+                    Token regularElementToken = tokenBuilder.GetToken(0, len, lastLine);
+                    regularElementToken.TokenType = TokenType.RegularElement;
+                    lastLine.Tokens.Add(regularElementToken);
                     tokenBuilder.Remove(0, len);
                 }
             }
@@ -638,7 +638,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     }
 
     /// <summary>
-    /// Parses the text into regular codes of two
+    /// Parses the text into regular elements of two
     /// Also supports nomenclature elements of three digits followed by two nulls
     /// </summary>
     public class Nomenclature3DigitsEndingWithNull2DigitsParser : SimpleSingleTokenParser
@@ -729,7 +729,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 tokenBuilder.Remove(0, 3);
 
                                 Token nullToken = new Token(line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 nullToken.Symbols = tokenBuilder.ToList();
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Clear();
@@ -737,9 +737,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             }
                             else
                             {
-                                Token regularCodeToken = tokenBuilder.GetToken(0, 2, line);
-                                regularCodeToken.TokenType = TokenType.RegularCode;
-                                line.Tokens.Add(regularCodeToken);
+                                Token regularElementToken = tokenBuilder.GetToken(0, 2, line);
+                                regularElementToken.TokenType = TokenType.RegularElement;
+                                line.Tokens.Add(regularElementToken);
                                 tokenBuilder.Remove(0, 2);
                                 continue;
                             }
@@ -748,13 +748,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         {
                             if (_nulls.Contains(tokenBuilder.GetToken(2, 2, null)))
                             {
-                                Token regularCodeToken = tokenBuilder.GetToken(0, 2, line);
-                                regularCodeToken.TokenType = TokenType.RegularCode;
-                                line.Tokens.Add(regularCodeToken);
+                                Token regularElementToken = tokenBuilder.GetToken(0, 2, line);
+                                regularElementToken.TokenType = TokenType.RegularElement;
+                                line.Tokens.Add(regularElementToken);
                                 tokenBuilder.Remove(0, 2);
 
                                 Token nullToken = new Token(line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 nullToken.Symbols = tokenBuilder.ToList();
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Clear();
@@ -766,7 +766,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             if (_nulls.Contains(tokenBuilder.GetToken(0, 2, null)))
                             {
                                 Token nullToken = new Token(line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 nullToken.Symbols = tokenBuilder.ToList();
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Clear();
@@ -789,9 +789,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 while (tokenBuilder.Length > 0)
                 {
                     int len = Math.Min(tokenBuilder.Length, 2);
-                    Token regularCodeToken = tokenBuilder.GetToken(0, len, lastLine);
-                    regularCodeToken.TokenType = TokenType.RegularCode;
-                    lastLine.Tokens.Add(regularCodeToken);
+                    Token regularElementToken = tokenBuilder.GetToken(0, len, lastLine);
+                    regularElementToken.TokenType = TokenType.RegularElement;
+                    lastLine.Tokens.Add(regularElementToken);
                     tokenBuilder.Remove(0, len);
                 }
             }
@@ -800,7 +800,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     }
 
     /// <summary>
-    /// Parses the text into regular codes of two
+    /// Parses the text into regular elements of two
     /// Also supports nomenclature elements of four digits with a prefix
     /// </summary>
     public class Nomenclature4DigitsWithPrefixParser : SimpleSingleTokenParser
@@ -905,7 +905,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             {
                                 //null length 2
                                 Token nullToken = tokenBuilder.GetToken(0, 2, line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Remove(0, 2);
                                 continue;
@@ -914,7 +914,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Remove(0, 1);
                                 continue;
@@ -922,18 +922,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             else if (_nulls.Contains(symbol1) || _nomenclaturePrefix.Contains(symbol1))
                             {
                                 //code length 1
-                                Token regularCodeToken = tokenBuilder.GetToken(0, 1, line);
-                                regularCodeToken.TokenType = TokenType.RegularCode;
-                                line.Tokens.Add(regularCodeToken);
+                                Token regularElementToken = tokenBuilder.GetToken(0, 1, line);
+                                regularElementToken.TokenType = TokenType.RegularElement;
+                                line.Tokens.Add(regularElementToken);
                                 tokenBuilder.Remove(0, 1);
                                 continue;
                             }
                             else
                             {
                                 //code length 2
-                                Token regularCodeToken = tokenBuilder.GetToken(0, 2, line);
-                                regularCodeToken.TokenType = TokenType.RegularCode;
-                                line.Tokens.Add(regularCodeToken);
+                                Token regularElementToken = tokenBuilder.GetToken(0, 2, line);
+                                regularElementToken.TokenType = TokenType.RegularElement;
+                                line.Tokens.Add(regularElementToken);
                                 tokenBuilder.Remove(0, 2);
                                 continue;
                             }
@@ -959,16 +959,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     {
                         //null length 1
                         Token nullToken = tokenBuilder.GetToken(0, 1, lastLine);
-                        nullToken.TokenType = TokenType.Null;
+                        nullToken.TokenType = TokenType.NullElement;
                         lastLine.Tokens.Add(nullToken);
                         tokenBuilder.Remove(0, 1);
                     }
                     else if (tokenBuilder.Length == 1)
                     {
                         //code length 1
-                        Token regularCodeToken = tokenBuilder.GetToken(0, 1, lastLine);
-                        regularCodeToken.TokenType = TokenType.RegularCode;
-                        lastLine.Tokens.Add(regularCodeToken);
+                        Token regularElementToken = tokenBuilder.GetToken(0, 1, lastLine);
+                        regularElementToken.TokenType = TokenType.RegularElement;
+                        lastLine.Tokens.Add(regularElementToken);
                         tokenBuilder.Remove(0, 1);
                     }
                     else
@@ -977,22 +977,22 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         if (_nulls.Contains(symbol1))
                         {
                             //code length 1
-                            Token regularCodeToken = tokenBuilder.GetToken(0, 1, lastLine);
-                            regularCodeToken.TokenType = TokenType.RegularCode;
-                            lastLine.Tokens.Add(regularCodeToken);
+                            Token regularElementToken = tokenBuilder.GetToken(0, 1, lastLine);
+                            regularElementToken.TokenType = TokenType.RegularElement;
+                            lastLine.Tokens.Add(regularElementToken);
                             tokenBuilder.Remove(0, 1);
                             //null length 1
                             Token nullToken = tokenBuilder.GetToken(0, 1, lastLine);
-                            nullToken.TokenType = TokenType.Null;
+                            nullToken.TokenType = TokenType.NullElement;
                             lastLine.Tokens.Add(nullToken);
                             tokenBuilder.Remove(0, 1);
                         }
                         else
                         {
                             //code length 2
-                            Token regularCodeToken = tokenBuilder.GetToken(0, 2, lastLine);
-                            regularCodeToken.TokenType = TokenType.RegularCode;
-                            lastLine.Tokens.Add(regularCodeToken);
+                            Token regularElementToken = tokenBuilder.GetToken(0, 2, lastLine);
+                            regularElementToken.TokenType = TokenType.RegularElement;
+                            lastLine.Tokens.Add(regularElementToken);
                             tokenBuilder.Remove(0, 2);
                         }
                     }
@@ -1092,16 +1092,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             {
                                 //null symbol
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Clear();
                             }
                             else
                             {
-                                //regular code
-                                Token regularCodeToken = tokenBuilder.GetToken(0, 1, line);
-                                regularCodeToken.TokenType = TokenType.RegularCode;
-                                line.Tokens.Add(regularCodeToken);
+                                //regular element
+                                Token regularElementToken = tokenBuilder.GetToken(0, 1, line);
+                                regularElementToken.TokenType = TokenType.RegularElement;
+                                line.Tokens.Add(regularElementToken);
                                 tokenBuilder.Clear();
                             }
                         }
@@ -1124,7 +1124,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 line.Tokens.Add(nomenclatureToken);
                                 tokenBuilder.Remove(0, 2);
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Clear();
                             }
@@ -1161,16 +1161,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     {
                         //null length 1
                         Token nullToken = tokenBuilder.GetToken(0, tokenBuilder.Length - 1, lastLine);
-                        nullToken.TokenType = TokenType.Null;
+                        nullToken.TokenType = TokenType.NullElement;
                         lastLine.Tokens.Add(nullToken);
                         tokenBuilder.Remove(0, 1);
                     }
                     else
                     {
                         //code length 1
-                        Token regularCodeToken = tokenBuilder.GetToken(0, tokenBuilder.Length - 1, lastLine);
-                        regularCodeToken.TokenType = TokenType.RegularCode;
-                        lastLine.Tokens.Add(regularCodeToken);
+                        Token regularElementToken = tokenBuilder.GetToken(0, tokenBuilder.Length - 1, lastLine);
+                        regularElementToken.TokenType = TokenType.RegularElement;
+                        lastLine.Tokens.Add(regularElementToken);
                         tokenBuilder.Remove(0, 1);
                     }
                 }
@@ -1280,9 +1280,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             if (tokenBuilder[1].Text.Equals("2") && tokenBuilder[1].Top != null && tokenBuilder[1].Top.Equals("."))
                             {
                                 //code length 2
-                                Token regularCodeToken = tokenBuilder.GetToken(0, 2, line);
-                                regularCodeToken.TokenType = TokenType.RegularCode;
-                                line.Tokens.Add(regularCodeToken);
+                                Token regularElementToken = tokenBuilder.GetToken(0, 2, line);
+                                regularElementToken.TokenType = TokenType.RegularElement;
+                                line.Tokens.Add(regularElementToken);
                                 tokenBuilder.Remove(0, 2);
                                 continue;
                             }
@@ -1293,16 +1293,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 {
                                     //null length 1
                                     Token nullToken = tokenBuilder.GetToken(0, 1, line);
-                                    nullToken.TokenType = TokenType.Null;
+                                    nullToken.TokenType = TokenType.NullElement;
                                     line.Tokens.Add(nullToken);
                                     tokenBuilder.Remove(0, 1);
                                 }
                                 else
                                 {
-                                    //regular code length 1
-                                    Token regularCodeToken = tokenBuilder.GetToken(0, 1, line);
-                                    regularCodeToken.TokenType = TokenType.RegularCode;
-                                    line.Tokens.Add(regularCodeToken);
+                                    //regular element length 1
+                                    Token regularElementToken = tokenBuilder.GetToken(0, 1, line);
+                                    regularElementToken.TokenType = TokenType.RegularElement;
+                                    line.Tokens.Add(regularElementToken);
                                     tokenBuilder.Remove(0, 1);
                                 }
                             }
@@ -1328,16 +1328,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     {
                         //null length 1
                         Token nullToken = tokenBuilder.GetToken(0, 1, lastLine);
-                        nullToken.TokenType = TokenType.Null;
+                        nullToken.TokenType = TokenType.NullElement;
                         lastLine.Tokens.Add(nullToken);
                         tokenBuilder.Remove(0, 1);
                     }
                     else
                     {
                         //code length 1
-                        Token regularCodeToken = tokenBuilder.GetToken(0, 1, lastLine);
-                        regularCodeToken.TokenType = TokenType.RegularCode;
-                        lastLine.Tokens.Add(regularCodeToken);
+                        Token regularElementToken = tokenBuilder.GetToken(0, 1, lastLine);
+                        regularElementToken.TokenType = TokenType.RegularElement;
+                        lastLine.Tokens.Add(regularElementToken);
                         tokenBuilder.Remove(0, 1);
                     }
                 }
@@ -1469,7 +1469,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Remove(0, 1);
                                 continue;
@@ -1480,7 +1480,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Remove(0, 1);
                                 continue;
@@ -1489,9 +1489,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             if (_oddDigits.Contains(symbol0) && symbol1.Top.Equals("."))
                             {
                                 //code length 1
-                                Token regularCodeToken = tokenBuilder.GetToken(0, 1, line);
-                                regularCodeToken.TokenType = TokenType.RegularCode;
-                                line.Tokens.Add(regularCodeToken);
+                                Token regularElementToken = tokenBuilder.GetToken(0, 1, line);
+                                regularElementToken.TokenType = TokenType.RegularElement;
+                                line.Tokens.Add(regularElementToken);
                                 tokenBuilder.Remove(0, 1);
                                 continue;
                             }
@@ -1509,9 +1509,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             if (_nulls.Contains(symbol0) && symbol0.Top.Equals(".") && _oddDigits.Contains(symbol1))
                             {
                                 //code length 2
-                                Token regularCodeToken = tokenBuilder.GetToken(0, 2, line);
-                                regularCodeToken.TokenType = TokenType.RegularCode;
-                                line.Tokens.Add(regularCodeToken);
+                                Token regularElementToken = tokenBuilder.GetToken(0, 2, line);
+                                regularElementToken.TokenType = TokenType.RegularElement;
+                                line.Tokens.Add(regularElementToken);
                                 tokenBuilder.Remove(0, 2);
                                 continue;
                             }
@@ -1521,7 +1521,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Remove(0, 1);
                                 continue;
@@ -1561,9 +1561,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             if (symbol0.Top.Contains(".") && _oddDigits.Contains(symbol1))
                             {
                                 //code length 2
-                                Token regularCodeToken = tokenBuilder.GetToken(0, 2, line);
-                                regularCodeToken.TokenType = TokenType.RegularCode;
-                                line.Tokens.Add(regularCodeToken);
+                                Token regularElementToken = tokenBuilder.GetToken(0, 2, line);
+                                regularElementToken.TokenType = TokenType.RegularElement;
+                                line.Tokens.Add(regularElementToken);
                                 tokenBuilder.Remove(0, 2);
                                 continue;
                             }
@@ -1572,9 +1572,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             if (_oddDigits.Contains(symbol0))
                             {
                                 //code length 1
-                                Token regularCodeToken = tokenBuilder.GetToken(0, 1, line);
-                                regularCodeToken.TokenType = TokenType.RegularCode;
-                                line.Tokens.Add(regularCodeToken);
+                                Token regularElementToken = tokenBuilder.GetToken(0, 1, line);
+                                regularElementToken.TokenType = TokenType.RegularElement;
+                                line.Tokens.Add(regularElementToken);
                                 tokenBuilder.Remove(0, 1);
                                 continue;
                             }
@@ -1600,7 +1600,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     {
                         //null length 1
                         Token nullToken = tokenBuilder.GetToken(0, 1, lastLine);
-                        nullToken.TokenType = TokenType.Null;
+                        nullToken.TokenType = TokenType.NullElement;
                         lastLine.Tokens.Add(nullToken);
                         tokenBuilder.Remove(0, 1);
                     }
@@ -1609,17 +1609,17 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         if (tokenBuilder[0].Top.Equals(".") && tokenBuilder.Length > 1)
                         {
                             //code length 2
-                            Token regularCodeToken = tokenBuilder.GetToken(0, 2, lastLine);
-                            regularCodeToken.TokenType = TokenType.RegularCode;
-                            lastLine.Tokens.Add(regularCodeToken);
+                            Token regularElementToken = tokenBuilder.GetToken(0, 2, lastLine);
+                            regularElementToken.TokenType = TokenType.RegularElement;
+                            lastLine.Tokens.Add(regularElementToken);
                             tokenBuilder.Remove(0, 2);
                         }
                         else
                         {
                             //code length 1
-                            Token regularCodeToken = tokenBuilder.GetToken(0, 1, lastLine);
-                            regularCodeToken.TokenType = TokenType.RegularCode;
-                            lastLine.Tokens.Add(regularCodeToken);
+                            Token regularElementToken = tokenBuilder.GetToken(0, 1, lastLine);
+                            regularElementToken.TokenType = TokenType.RegularElement;
+                            lastLine.Tokens.Add(regularElementToken);
                             tokenBuilder.Remove(0, 1);
                         }
                     }
@@ -1735,7 +1735,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Remove(0, 1);
                                 //nomenclature length 3
@@ -1760,7 +1760,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Remove(0, 1);
                                 continue;
@@ -1789,7 +1789,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Remove(0, 1);
                                 //nomenclature length 2
@@ -1804,7 +1804,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Remove(0, 1);
                                 //nomenclature length 3
@@ -1867,7 +1867,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Remove(0, 1);
                             }
@@ -1875,7 +1875,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             {
                                 //code length 1
                                 Token codeToken = tokenBuilder.GetToken(0, 1, line);
-                                codeToken.TokenType = TokenType.RegularCode;
+                                codeToken.TokenType = TokenType.RegularElement;
                                 line.Tokens.Add(codeToken);
                                 tokenBuilder.Remove(0, 1);
                             }
@@ -1883,7 +1883,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             {
                                 //code length 2
                                 Token codeToken = tokenBuilder.GetToken(0, 2, line);
-                                codeToken.TokenType = TokenType.RegularCode;
+                                codeToken.TokenType = TokenType.RegularElement;
                                 line.Tokens.Add(codeToken);
                                 tokenBuilder.Remove(0, 2);
                             }
@@ -1917,7 +1917,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     {
                         //null length 1
                         Token nullToken = tokenBuilder.GetToken(0, 1, lastLine);
-                        nullToken.TokenType = TokenType.Null;
+                        nullToken.TokenType = TokenType.NullElement;
                         lastLine.Tokens.Add(nullToken);
                         tokenBuilder.Remove(0, 1);
                     }
@@ -1925,7 +1925,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     {
                         //code length 1
                         Token codeToken = tokenBuilder.GetToken(0, 1, lastLine);
-                        codeToken.TokenType = TokenType.RegularCode;
+                        codeToken.TokenType = TokenType.RegularElement;
                         lastLine.Tokens.Add(codeToken);
                         tokenBuilder.Remove(0, 1);
                     }
@@ -1933,7 +1933,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     {
                         //code length 2
                         Token codeToken = tokenBuilder.GetToken(0, 2, lastLine);
-                        codeToken.TokenType = TokenType.RegularCode;
+                        codeToken.TokenType = TokenType.RegularElement;
                         lastLine.Tokens.Add(codeToken);
                         tokenBuilder.Remove(0, 2);
                     }
@@ -2042,7 +2042,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 Token token = tokenBuilder.GetToken(0, length, line);
                                 if (_nulls.Contains(token))
                                 {
-                                    token.TokenType = TokenType.Null;
+                                    token.TokenType = TokenType.NullElement;
                                     line.Tokens.Add(token);
                                     tokenBuilder.Remove(0, length);
                                     removedOne = true;
@@ -2050,7 +2050,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 }
                                 else if (keyTokens.Contains(token))
                                 {
-                                    token.TokenType = TokenType.RegularCode;
+                                    token.TokenType = TokenType.RegularElement;
                                     line.Tokens.Add(token);
                                     tokenBuilder.Remove(0, length);
                                     removedOne = true;
@@ -2088,7 +2088,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         Token token = tokenBuilder.GetToken(0, length, lastLine);
                         if (_nulls.Contains(token))
                         {
-                            token.TokenType = TokenType.Null;
+                            token.TokenType = TokenType.NullElement;
                             lastLine.Tokens.Add(token);
                             tokenBuilder.Remove(0, length);
                             removedOne = true;
@@ -2096,7 +2096,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         }
                         else if (keyTokens.Contains(token))
                         {
-                            token.TokenType = TokenType.RegularCode;
+                            token.TokenType = TokenType.RegularElement;
                             lastLine.Tokens.Add(token);
                             tokenBuilder.Remove(0, length);
                             removedOne = true;
@@ -2208,7 +2208,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             if (_nulls.Contains(symbol0))
                             {
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Remove(0, 1);
                                 continue;
@@ -2217,7 +2217,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             if (_nulls.Contains(tokenBuilder.GetToken(0, 2, null)))
                             {
                                 Token nullToken = tokenBuilder.GetToken(0, 2, line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Remove(0, 2);
                                 continue;
@@ -2231,7 +2231,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 tokenBuilder.Remove(0, 3);
 
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Remove(0, 1);
                                 continue;
@@ -2245,15 +2245,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 tokenBuilder.Remove(0, 3);
 
                                 Token nullToken = tokenBuilder.GetToken(0, 2, line);
-                                nullToken.TokenType = TokenType.Null;
+                                nullToken.TokenType = TokenType.NullElement;
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Remove(0, 2);
                                 continue;
                             }
 
-                            Token regularCodeToken = tokenBuilder.GetToken(0, 2, line);
-                            regularCodeToken.TokenType = TokenType.RegularCode;
-                            line.Tokens.Add(regularCodeToken);
+                            Token regularElementToken = tokenBuilder.GetToken(0, 2, line);
+                            regularElementToken.TokenType = TokenType.RegularElement;
+                            line.Tokens.Add(regularElementToken);
                             tokenBuilder.Remove(0, 2);
                         }                      
                     }
@@ -2278,7 +2278,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     if (_nulls.Contains(symbol0))
                     {
                         Token nullToken = tokenBuilder.GetToken(0, 1, lastLine);
-                        nullToken.TokenType = TokenType.Null;
+                        nullToken.TokenType = TokenType.NullElement;
                         lastLine.Tokens.Add(nullToken);
                         tokenBuilder.Remove(0, 1);
                         continue;
@@ -2287,7 +2287,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     if (tokenBuilder.Length >= 2 && _nulls.Contains(tokenBuilder.GetToken(0, 2, null)))
                     {
                         Token nullToken = tokenBuilder.GetToken(0, 2, lastLine);
-                        nullToken.TokenType = TokenType.Null;
+                        nullToken.TokenType = TokenType.NullElement;
                         lastLine.Tokens.Add(nullToken);
                         tokenBuilder.Remove(0, 2);
                         continue;
@@ -2295,9 +2295,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
                     if (tokenBuilder.Length >= 2)
                     {
-                        Token regularCodeToken = tokenBuilder.GetToken(0, 2, lastLine);
-                        regularCodeToken.TokenType = TokenType.RegularCode;
-                        lastLine.Tokens.Add(regularCodeToken);
+                        Token regularElementToken = tokenBuilder.GetToken(0, 2, lastLine);
+                        regularElementToken.TokenType = TokenType.RegularElement;
+                        lastLine.Tokens.Add(regularElementToken);
                         tokenBuilder.Remove(0, 2);
                     }
                     else
@@ -2423,9 +2423,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
                             if ("02468".Contains(symbol1.Text))
                             {
-                                Token regularCodeToken = tokenBuilder.GetToken(0, 2, line);
-                                regularCodeToken.TokenType = TokenType.RegularCode;
-                                line.Tokens.Add(regularCodeToken);
+                                Token regularElementToken = tokenBuilder.GetToken(0, 2, line);
+                                regularElementToken.TokenType = TokenType.RegularElement;
+                                line.Tokens.Add(regularElementToken);
                                 tokenBuilder.Remove(0, 2);
                             }
                             else
@@ -2464,9 +2464,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
                     if (tokenBuilder.Length > 1 && "02468".Contains(tokenBuilder[1].Text))
                     {
-                        Token regularCodeToken = tokenBuilder.GetToken(0, 2, lastLine);
-                        regularCodeToken.TokenType = TokenType.RegularCode;
-                        lastLine.Tokens.Add(regularCodeToken);
+                        Token regularElementToken = tokenBuilder.GetToken(0, 2, lastLine);
+                        regularElementToken.TokenType = TokenType.RegularElement;
+                        lastLine.Tokens.Add(regularElementToken);
                         tokenBuilder.Remove(0, 2);
                     }
                     else

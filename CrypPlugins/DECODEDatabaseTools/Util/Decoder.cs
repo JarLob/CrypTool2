@@ -134,7 +134,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
             foreach(var token in line.Tokens)
             {                
-                if(token.TokenType == TokenType.Null)
+                if(token.TokenType == TokenType.NullElement)
                 {
                     Symbol nullSymbol = new Symbol(token);
                     nullSymbol.Text = " ";
@@ -147,7 +147,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 }
                 else
                 {
-                    if (token.TokenType == TokenType.RegularCode)
+                    if (token.TokenType == TokenType.RegularElement)
                     {
                         Symbol unknownSymbol = new Symbol(token);
                         unknownSymbol.Text = "??";

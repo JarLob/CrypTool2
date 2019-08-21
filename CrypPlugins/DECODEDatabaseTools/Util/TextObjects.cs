@@ -27,8 +27,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     public enum TokenType
     {
         Unknown = 0,
-        Null = 1,
-        RegularCode = 2,
+        NullElement = 1,
+        RegularElement = 2,
         NomenclatureElement = 3,
         Tag = 4
     }
@@ -314,8 +314,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 int count = 0;
                 foreach (var token in Tokens)
                 {
-                    if(token.TokenType == TokenType.RegularCode || 
-                        token.TokenType == TokenType.Null ||
+                    if(token.TokenType == TokenType.RegularElement || 
+                        token.TokenType == TokenType.NullElement ||
                         token.TokenType == TokenType.NomenclatureElement)
                     {
                         count++;
@@ -453,11 +453,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         {
                             case TokenType.Tag:
                                 return Brushes.Black;
-                            case TokenType.Null:
+                            case TokenType.NullElement:
                                 return Brushes.Gray;
                             case TokenType.NomenclatureElement:
                                 return Brushes.DarkGreen;
-                            case TokenType.RegularCode:
+                            case TokenType.RegularElement:
                                 return Brushes.DarkBlue;
                             default:
                                 return Brushes.Black;
