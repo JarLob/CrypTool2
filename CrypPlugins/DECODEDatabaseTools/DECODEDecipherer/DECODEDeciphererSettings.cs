@@ -44,6 +44,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         private string _prefix;
         private bool _useKeyAsPlaintext = false;
         private bool _useOutputSeparators = false;
+        private bool _showCommentsPlaintextCleartext = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -127,6 +128,20 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 {
                     _useOutputSeparators = value;
                     OnPropertyChanged("UseOutputSeparators");
+                }
+            }
+        }
+
+        [TaskPane("ShowCommentsPlaintextCleartextCaption", "ShowCommentsPlaintextCleartextTooltip", null, 6, false, ControlType.CheckBox)]
+        public bool ShowCommentsPlaintextCleartext
+        {
+            get { return _showCommentsPlaintextCleartext; }
+            set
+            {
+                if ((value) != _showCommentsPlaintextCleartext)
+                {
+                    _showCommentsPlaintextCleartext = value;
+                    OnPropertyChanged("ShowCommentsPlaintextCleartext");
                 }
             }
         }

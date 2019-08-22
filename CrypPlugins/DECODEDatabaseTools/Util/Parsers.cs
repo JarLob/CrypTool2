@@ -31,7 +31,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// </summary>
         public Parser()
         {
+            ShowCommentsPlaintextCleartext = false;
+        }
 
+        public bool ShowCommentsPlaintextCleartext
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -46,6 +52,88 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         public abstract TextDocument GetDocument();
 
         public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+
+        public void CleanupDocument(TextDocument document)
+        {
+            if (!ShowCommentsPlaintextCleartext)
+            {
+                //remove all tag tokens
+                foreach (var page in document.Pages)
+                {
+                    List<Line> removeLineList = new List<Line>();
+                    foreach (var line in page.Lines)
+                    {
+                        List<Token> removeTokenList = new List<Token>();
+                        foreach (var token in line.Tokens)
+                        {
+                            if (token.TokenType == TokenType.Tag)
+                            {
+                                removeTokenList.Add(token);
+                            }
+                        }
+                        foreach (var token in removeTokenList)
+                        {
+                            line.Tokens.Remove(token);
+                        }
+                        if (line.Tokens.Count == 0)
+                        {
+                            removeLineList.Add(line);
+                        }
+                    }
+                    foreach (var line in removeLineList)
+                    {
+                        page.Lines.Remove(line);
+                    }
+                    int lineCounter = 1;
+                    foreach (var line in page.Lines)
+                    {
+                        line.LineNumber = lineCounter;
+                        lineCounter++;
+                    }
+                }
+            }
+
+            //here, we remove empty pages
+            List<Page> removePageList = new List<Page>();
+            foreach (var page in document.Pages)
+            {
+                bool remove = true;
+                foreach (var line in page.Lines)
+                {
+                    if (line.Tokens.Count > 0)
+                    {
+                        foreach (var token in line.Tokens)
+                        {
+                            if (token.TokenType != TokenType.Tag)
+                            {
+                                remove = false;
+                            }
+                            if (!remove)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    if (!remove)
+                    {
+                        break;
+                    }
+                }
+                if (remove)
+                {
+                    removePageList.Add(page);
+                }
+            }
+            foreach (var page in removePageList)
+            {
+                document.Pages.Remove(page);
+            }
+            //fix page numbering
+            for (int i = 0; i < document.Pages.Count; i++)
+            {
+                document.Pages[i].PageNumber = i + 1;
+            }
+        }
 
         protected void GuiLogMessage(string message, NotificationLevel logLevel)
         {
@@ -318,6 +406,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     }
                 }
                 currentLine.Tokens.Add(token);
+                if(!ShowCommentsPlaintextCleartext && currentLine.LineType == LineType.Comment)
+                {
+                    //we don't add comments to the page, thus we remove this line
+                    linenumber--;
+                    continue;
+                }
                 currentPage.Lines.Add(currentLine);
             }
 
@@ -350,8 +444,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             {
                 document.Comments = "undefined";
             }
+
             return document;
-        }
+        }      
+
     }
 
     /// <summary>

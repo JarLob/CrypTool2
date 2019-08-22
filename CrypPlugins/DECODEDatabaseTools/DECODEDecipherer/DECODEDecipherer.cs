@@ -196,8 +196,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             //Step 1: Apply parser
             parser.OnGuiLogNotificationOccured += ForwardGuiLogNotification;
             parser.DECODETextDocument = DECODETextDocument;
+            parser.ShowCommentsPlaintextCleartext = _settings.ShowCommentsPlaintextCleartext;
             DateTime startTime = DateTime.Now;
             TextDocument document = parser.GetDocument();
+            parser.CleanupDocument(document);
             if(document == null)
             {
                 return;
