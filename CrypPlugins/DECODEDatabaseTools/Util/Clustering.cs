@@ -209,7 +209,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         {
             get
             {
-                return _frequencies.Count;
+                int count = 0;
+                foreach(var keyvaluepair in _frequencies)
+                {
+                    if (keyvaluepair.Value >= 1)
+                    {
+                        count++;
+                    }
+                }
+                return count;
             }
         }
 
@@ -356,23 +364,32 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 for (int i = 0; i < frequencies.Count; i++)
                 {
                     KeyValuePair<Symbol, double> keyvaluepair = frequencies[i];
-                    builder.Append(keyvaluepair.Key.Text);
-                    if (!string.IsNullOrEmpty(keyvaluepair.Key.Top))
+                    if (keyvaluepair.Value >= 1)
                     {
-                        builder.Append("^" + keyvaluepair.Key.Top);
-                    }
-                    if (!string.IsNullOrEmpty(keyvaluepair.Key.Bottom))
-                    {
-                        builder.Append("_" + keyvaluepair.Key.Bottom);
-                    }
-                    builder.Append("=" + Math.Round(keyvaluepair.Value, 3));
+                        builder.Append(keyvaluepair.Key.Text);
+                        if (!string.IsNullOrEmpty(keyvaluepair.Key.Top))
+                        {
+                            builder.Append("^" + keyvaluepair.Key.Top);
+                        }
+                        if (!string.IsNullOrEmpty(keyvaluepair.Key.Bottom))
+                        {
+                            builder.Append("_" + keyvaluepair.Key.Bottom);
+                        }
 
-                    if (i < frequencies.Count - 1)
-                    {
-                        builder.Append(", ");
+                        builder.Append("=" + Math.Round(keyvaluepair.Value, 0));
+
+                        if (i < frequencies.Count - 1)
+                        {
+                            builder.Append(", ");
+                        }
                     }
                 }
-                return builder.ToString();
+                string retString = builder.ToString();
+                if(retString.EndsWith(", "))
+                {
+                    retString = retString.Substring(0, retString.Length - 2);
+                }
+                return retString;
             }
         }
 
