@@ -2481,5 +2481,121 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             return document;
         }
     }
+
+    /// <summary>
+    /// This parser is used for generating plaintext for the plaintext-ciphertext mapping
+    /// </summary>
+    public class KeyAsPlaintextParser : SimpleSingleTokenParser
+    {
+        public KeyAsPlaintextParser()
+        {
+
+        }
+
+        /// <summary>
+        /// Returns the parsed new document
+        /// </summary>
+        /// <returns></returns>
+        public override TextDocument GetDocument()
+        {
+            TextDocument document = base.GetDocument();
+            if (document == null)
+            {
+                return null;
+            }
+
+            foreach (Page page in document.Pages)
+            {
+                //create new tokens based on the "old" tokens
+                TokenBuilder tokenBuilder = new TokenBuilder();
+                TokenBuilder tagTokenBuilder = new TokenBuilder();
+                Line lastLine = null;
+
+                bool is_a_tag = false;
+
+                foreach (Line line in page.Lines)
+                {
+                    if (line.LineType == LineType.Comment)
+                    {
+                        continue;
+                    }
+
+                    //We are using the SimpleSingleTokenParser as baseline
+                    //Thus, we have a single token for each line
+                    List<Symbol> text = line.Tokens[0].Symbols;
+                    line.Tokens.Remove(line.Tokens[0]);
+
+                    for (int position = 0; position < text.Count; position++)
+                    {
+                        Symbol symbol = text[position];
+
+                        if (string.IsNullOrWhiteSpace(symbol.Text) && !is_a_tag)
+                        {
+                            continue;
+                        }
+
+                        if (symbol.Equals("<"))
+                        {
+                            tagTokenBuilder.Append(symbol);
+                            is_a_tag = true;
+                            continue;
+                        }
+                        if (is_a_tag == true && symbol.Equals(">"))
+                        {
+                            tagTokenBuilder.Append(symbol);
+                            Token tagToken = new Token(line);
+                            tagToken.TokenType = TokenType.Tag;
+                            tagToken.Symbols = tagTokenBuilder.ToList();
+                            line.Tokens.Add(tagToken);
+                            tagTokenBuilder.Clear();
+                            is_a_tag = false;
+                            continue;
+                        }
+                        if (is_a_tag)
+                        {
+                            tagTokenBuilder.Append(symbol);
+                            continue;
+                        }
+
+                        tokenBuilder.Append(symbol);
+
+                        if (symbol.Text.Equals("|"))
+                        {
+                            Token token = tokenBuilder.GetToken(0, tokenBuilder.Length - 1, line);
+                            token.TokenType = TokenType.PlaintextElement;
+                            line.Tokens.Add(token);
+                            tokenBuilder.Clear();
+                        }
+                    }
+
+                    lastLine = line;
+                }
+
+                if (tagTokenBuilder.Length > 0)
+                {
+                    Token tagToken = new Token(lastLine);
+                    tagToken.TokenType = TokenType.Tag;
+                    tagToken.Symbols = tagTokenBuilder.ToList();
+                    lastLine.Tokens.Add(tagToken);
+                    tagTokenBuilder.Clear();
+                    is_a_tag = false;
+                }
+
+                if (tokenBuilder.Length > 0)
+                {
+                    Token token = tokenBuilder.GetToken(0, tokenBuilder.Length - 1, lastLine);
+                    if(token.Symbols[tokenBuilder.Length - 1].Text.Equals("|"))
+                    {
+                        token.Symbols.RemoveAt(tokenBuilder.Length - 1);
+                    }
+                    token.TokenType = TokenType.Unknown;
+                    lastLine.Tokens.Add(token);
+                    tokenBuilder.Clear();
+                }
+            }
+            return document;
+        }
+    }
+
 }
 

@@ -30,7 +30,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         NullElement = 1,
         RegularElement = 2,
         NomenclatureElement = 3,
-        Tag = 4
+        Tag = 4,
+        PlaintextElement = 5
     }
 
     public enum LineType

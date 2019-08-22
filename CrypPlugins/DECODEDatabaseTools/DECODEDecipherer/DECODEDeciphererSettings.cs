@@ -42,6 +42,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         private ParserType _parserType;
         private string _nulls;
         private string _prefix;
+        private bool _useKeyAsPlaintext = false;
+        private bool _useOutputSeparators = false;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [TaskPane("ParserTypeCaption", "ParserTypeTooltip", null, 1, false, ControlType.ComboBox, new string[] 
@@ -96,6 +99,34 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 {
                     _prefix = value;
                     OnPropertyChanged("Prefix");
+                }
+            }
+        }
+
+        [TaskPane("UseKeyAsPlaintextCaption", "UseKeyAsPlaintextTooltip", null, 4, false, ControlType.CheckBox)]
+        public bool UseKeyAsPlaintext
+        {
+            get { return _useKeyAsPlaintext; }
+            set
+            {
+                if ((value) != _useKeyAsPlaintext)
+                {
+                    _useKeyAsPlaintext = value;
+                    OnPropertyChanged("UseKeyAsPlaintext");
+                }
+            }
+        }
+
+        [TaskPane("UseOutputSeparatorsCaption", "UseOutputSeparatorsTooltip", null, 5, false, ControlType.CheckBox)]
+        public bool UseOutputSeparators
+        {
+            get { return _useOutputSeparators; }
+            set
+            {
+                if ((value) != _useOutputSeparators)
+                {
+                    _useOutputSeparators = value;
+                    OnPropertyChanged("UseOutputSeparators");
                 }
             }
         }

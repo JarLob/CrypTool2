@@ -21,6 +21,7 @@ using System.ComponentModel;
 using System.Text;
 using System.Windows.Controls;
 using Cryptool.Plugins.DECODEDatabaseTools.Util;
+using Page = Cryptool.Plugins.DECODEDatabaseTools.Util.Page;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
@@ -206,13 +207,53 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             //Step 2: Decode parsed document
             if (decoder != null)
             {
-                startTime = DateTime.Now;                
-                foreach(var page in document.Pages)
+                startTime = DateTime.Now;
+                if (_settings.UseKeyAsPlaintext)
                 {
-                    foreach(var line in page.Lines)
+                    KeyAsPlaintextParser keyAsPlaintextParser = new KeyAsPlaintextParser();
+                    keyAsPlaintextParser.DECODETextDocument = DECODEKeyDocument;
+                    var plaintextDocument = keyAsPlaintextParser.GetDocument();
+
+                    foreach (var page in document.Pages)
                     {
-                        decoder.Decode(line);
+                        Page plaintextPage = plaintextDocument.Pages[page.PageNumber - 1];
+                        foreach (var line in page.Lines)
+                        {
+                            if (line.LineType == LineType.Comment)
+                            {
+                                continue;
+                            }
+                            if(line.LineNumber - 1 >= plaintextPage.Lines.Count)
+                            {
+                                break;
+                            }
+                            Line plaintextLine = plaintextPage.Lines[line.LineNumber - 1];
+                            for (int i = 0; i < line.Tokens.Count; i++)
+                            {
+                                Token ciphertextToken = line.Tokens[i];
+                                if(ciphertextToken.TokenType == TokenType.Tag)
+                                {
+                                    continue;
+                                }
+                                if (i > plaintextLine.Tokens.Count - 1)
+                                {
+                                    break;
+                                }
+                                Token plaintextToken = plaintextLine.Tokens[i];
+                                ciphertextToken.DecodedSymbols = plaintextToken.Symbols;
+                            }
+                        }
                     }
+                }
+                else
+                {                                                                             
+                    foreach (var page in document.Pages)
+                    {
+                        foreach (var line in page.Lines)
+                        {
+                            decoder.Decode(line);
+                        }
+                    }                    
                 }
                 GuiLogMessage(String.Format("Decoded document in {0}ms", (DateTime.Now - startTime).TotalMilliseconds), NotificationLevel.Info);
             }
@@ -247,7 +288,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                                 {
                                     foreach (var symbol in token.DecodedSymbols)
                                     {
-                                        outputBuilder.Append(symbol.Text);
+                                        outputBuilder.Append(symbol.Text);                                        
+                                    }
+                                    if (_settings.UseOutputSeparators)
+                                    {
+                                        outputBuilder.Append("|");
                                     }
                                 }
                             }
