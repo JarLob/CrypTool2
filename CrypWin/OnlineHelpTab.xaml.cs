@@ -10,6 +10,7 @@ using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Attributes;
 using System.Diagnostics;
 using OnlineDocumentationGenerator.Generators.HtmlGenerator;
+using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.CrypWin
 {
@@ -102,7 +103,7 @@ namespace Cryptool.CrypWin
         private bool TryOpening(string htmlFile)
         {
             var pathToFile = GetPathToFile(htmlFile);
-            if (FileExists(pathToFile))
+            if (UpToDateFileExists(pathToFile))
             {
                 ShowPage(pathToFile);
                 return true;
@@ -140,9 +141,15 @@ namespace Cryptool.CrypWin
             return Path.Combine(helpDir, htmlFile);
         }
 
-        private bool FileExists(string pathToFile)
+        private bool UpToDateFileExists(string pathToFile)
         {
-            return File.Exists(pathToFile) && (File.GetLastWriteTime(pathToFile) > _crypwinTime);
+            var fileExists = File.Exists(pathToFile);
+            if (AssemblyHelper.BuildType == Ct2BuildType.Developer)
+            {
+                //In developing mode, check if file is older than CrypWin. If that is the case, the file is potentially not up to date anymore:
+                return fileExists && (File.GetLastWriteTime(pathToFile) > _crypwinTime);
+            }
+            return fileExists;
         }
 
         private void ShowPage(string pathToFile)
