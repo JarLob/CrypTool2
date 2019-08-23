@@ -34,7 +34,19 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             ShowCommentsPlaintextCleartext = false;
         }
 
+        /// <summary>
+        /// If this is enabled, plaintext, cleartext, and comments are shown in output
+        /// </summary>
         public bool ShowCommentsPlaintextCleartext
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// If this is enabled, unknown transcription symbols are shown
+        /// </summary>
+        public bool ShowUnknownTranscriptionSymbols
         {
             get;
             set;
@@ -53,6 +65,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
         public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
 
+        /// <summary>
+        /// Cleans the document before the parsing:
+        /// - removes empty lines (only if ShowCommentsPlaintextCleartext is disabled)
+        /// - removes empty pages
+        /// - recalculates line numbering
+        /// - removes plaintext, cleartext, and comments based on the settings (ShowCommentsPlaintextCleartext)
+        /// - removes unknownTokens if enabled
+        /// </summary>
+        /// <param name="document"></param>
         public void CleanupDocument(TextDocument document)
         {
             if (!ShowCommentsPlaintextCleartext)
@@ -70,6 +91,23 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             {
                                 removeTokenList.Add(token);
                             }
+                            else if (!ShowUnknownTranscriptionSymbols)
+                            {
+                                bool removeToken = false;
+                                foreach (var symbol in token.Symbols)
+                                {
+                                    //we remove tokens which contain at least one question mark
+                                    if (!string.IsNullOrEmpty(symbol.Text) && symbol.Text.Equals("?"))
+                                    {
+                                        removeToken = true;
+                                        break;
+                                    }
+                                }
+                                if (removeToken)
+                                {
+                                    removeTokenList.Add(token);
+                                }
+                            }
                         }
                         foreach (var token in removeTokenList)
                         {
@@ -84,6 +122,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     {
                         page.Lines.Remove(line);
                     }
+                    //fix line numbering
                     int lineCounter = 1;
                     foreach (var line in page.Lines)
                     {
@@ -357,12 +396,26 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         case '^':
                             if (bottom == true)
                             {
-                                symbol.Bottom += "_";
+                                if (string.IsNullOrEmpty(symbol.Bottom))
+                                {
+                                    symbol.Bottom = "^";
+                                }
+                                else
+                                {
+                                    symbol.Bottom += "^";
+                                }
                                 top = false;
                             }
                             else if (top == true)
                             {
-                                symbol.Top += "_";
+                                if (string.IsNullOrEmpty(symbol.Top))
+                                {
+                                    symbol.Top = "^";
+                                }
+                                else
+                                {
+                                    symbol.Top += "^";
+                                }
                                 top = false;
                             }
                             else
@@ -373,12 +426,26 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         case '_':
                             if (bottom == true)
                             {
-                                symbol.Bottom += "_";
+                                if (string.IsNullOrEmpty(symbol.Bottom))
+                                {
+                                    symbol.Bottom = "_";
+                                }
+                                else
+                                {
+                                    symbol.Bottom += "_";
+                                }
                                 bottom = false;
                             }
                             else if (top == true)
                             {
-                                symbol.Top += "_";
+                                if (string.IsNullOrEmpty(symbol.Top))
+                                {
+                                    symbol.Top = "_";
+                                }
+                                else
+                                {
+                                    symbol.Top += "_";
+                                }
                                 bottom = false;
                             }
                             else

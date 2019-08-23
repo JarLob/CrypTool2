@@ -147,16 +147,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 }
                 else
                 {
-                    if (token.TokenType == TokenType.RegularElement)
-                    {
+                    if (token.TokenType == TokenType.RegularElement || token.TokenType == TokenType.NomenclatureElement)
+                    {                      
                         Symbol unknownSymbol = new Symbol(token);
-                        unknownSymbol.Text = "??";
-                        token.DecodedSymbols.Add(unknownSymbol);
-                    }
-                    else if(token.TokenType == TokenType.NomenclatureElement)
-                    {
-                        Symbol unknownSymbol = new Symbol(token);
-                        unknownSymbol.Text = "???";
+                        unknownSymbol.Text = "?";
                         token.DecodedSymbols.Add(unknownSymbol);
                     }
                     else

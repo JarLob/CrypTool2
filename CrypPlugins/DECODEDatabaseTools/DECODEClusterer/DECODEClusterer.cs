@@ -91,6 +91,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
                     NoNomenclatureParser parser = new NoNomenclatureParser(1, null);
                     parser.DECODETextDocument = TextDocument;
                     var document = parser.GetDocument();
+                    parser.ShowCommentsPlaintextCleartext = false;
+                    parser.CleanupDocument(document);
                     _clusterset.AddDocument(document);
                     int documentCount = _clusterset.Documents.Count;
                     int clusterCount = _clusterset.Clusters.Count;

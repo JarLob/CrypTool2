@@ -197,6 +197,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             parser.OnGuiLogNotificationOccured += ForwardGuiLogNotification;
             parser.DECODETextDocument = DECODETextDocument;
             parser.ShowCommentsPlaintextCleartext = _settings.ShowCommentsPlaintextCleartext;
+            parser.ShowUnknownTranscriptionSymbols = _settings.ShowUnknownTranscriptionSymbols;
             DateTime startTime = DateTime.Now;
             TextDocument document = parser.GetDocument();
             parser.CleanupDocument(document);

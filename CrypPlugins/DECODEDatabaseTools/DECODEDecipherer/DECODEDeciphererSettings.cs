@@ -45,6 +45,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         private bool _useKeyAsPlaintext = false;
         private bool _useOutputSeparators = false;
         private bool _showCommentsPlaintextCleartext = false;
+        private bool _showUnknownTranscriptionSymbols = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -142,6 +143,20 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 {
                     _showCommentsPlaintextCleartext = value;
                     OnPropertyChanged("ShowCommentsPlaintextCleartext");
+                }
+            }
+        }
+
+        [TaskPane("ShowUnknownTranscriptionSymbolsCaption", "ShowUnknownTranscriptionSymbolsTooltip", null, 7, false, ControlType.CheckBox)]
+        public bool ShowUnknownTranscriptionSymbols
+        {
+            get { return _showUnknownTranscriptionSymbols; }
+            set
+            {
+                if ((value) != _showUnknownTranscriptionSymbols)
+                {
+                    _showUnknownTranscriptionSymbols = value;
+                    OnPropertyChanged("ShowUnknownTranscriptionSymbols");
                 }
             }
         }
