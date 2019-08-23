@@ -16,7 +16,6 @@
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System;
-using System.Text;
 using System.Collections.Generic;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools.Util
@@ -61,8 +60,30 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             set;
         }
 
-        public abstract TextDocument GetDocument();
+        /// <summary>
+        /// Returns the name of this Parser as string
+        /// </summary>
+        public string ParserName
+        {
+            get;
+            protected set;
+        }
 
+        /// <summary>
+        /// Returns the parsed TextDocument
+        /// </summary>
+        /// <returns></returns>
+        public abstract TextDocument GetTextDocument();
+
+        /// <summary>
+        /// Returns the possible parser parameters for the automatic parser test
+        /// </summary>
+        /// <returns></returns>
+        public abstract PossibleParserParameters GetPossibleParserParameters();
+        
+        /// <summary>
+        /// Event that allows the parsers to log to the CT2 gui
+        /// </summary>
         public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
 
         /// <summary>
@@ -174,9 +195,80 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
         }
 
+        /// <summary>
+        /// Helper method to invoke a gui log
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="logLevel"></param>
         protected void GuiLogMessage(string message, NotificationLevel logLevel)
         {
             EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, null, new GuiLogEventArgs(message, null, logLevel));
+        }
+    }
+
+    /// <summary>
+    /// This class contains all possible prefixes and nulls for a dedicated parser
+    /// and can be used to iterate over all combinations
+    /// </summary>
+    public class PossibleParserParameters
+    {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="maximumNumberOfNulls"></param>
+        public PossibleParserParameters(int maximumNumberOfNulls)
+        {
+            MaximumNumberOfNulls = maximumNumberOfNulls;
+        }
+
+        /// <summary>
+        /// A list of possible null tokens
+        /// </summary>
+        public readonly List<Token> PossibleNulls = new List<Token>();
+
+        /// <summary>
+        /// A list of possible nomenclature prefixes
+        /// </summary>
+        public readonly List<Token> PossiblePrefixes = new List<Token>();      
+        
+        /// <summary>
+        /// Maximum number of nulls that may occur in the ciphertext
+        /// </summary>
+        public int MaximumNumberOfNulls
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Returns the number of combinations for all possible settings
+        /// </summary>
+        /// <returns></returns>
+        public int GetNumberOfCombinations()
+        {
+            int combinations = 1;
+            for(int numberOfNulls = MaximumNumberOfNulls; numberOfNulls >= 0; numberOfNulls--)
+            {
+                combinations += Combinations(PossibleNulls.Count, numberOfNulls) * PossiblePrefixes.Count;
+            }
+            return combinations;
+        }
+
+        /// <summary>
+        /// Computes combinations
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="selection"></param>
+        /// <returns></returns>
+        private int Combinations(int number, int selection)
+        {
+            int result = 1;
+            for (int i = 0; i < selection; i++)
+            {
+                result = result * number;
+                number--;
+            }
+            return result;
         }
     }
 
@@ -190,16 +282,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// </summary>
         public SimpleSingleTokenParser()
         {
-
+            ParserName = GetType().Name;
         }
 
         /// <summary>
         /// Returns a parsed document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetDocument()
+        public override TextDocument GetTextDocument()
         {
-            if (String.IsNullOrEmpty(DECODETextDocument))
+            if (string.IsNullOrEmpty(DECODETextDocument))
             {
                 return null;
             }
@@ -253,11 +345,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         var split = trimmedLine.Split(':');
                         if (split.Length < 2)
                         {
-                            GuiLogMessage(String.Format("Wrong catalog name definition in document: {0}", trimmedLine), NotificationLevel.Warning);
+                            GuiLogMessage(string.Format("Wrong catalog name definition in document: {0}", trimmedLine), NotificationLevel.Warning);
                         }
                         else
                         {
-                            if (!String.IsNullOrEmpty(document.CatalogName))
+                            if (!string.IsNullOrEmpty(document.CatalogName))
                             {
                                 GuiLogMessage("Catalog name is defined twice in this document. Ignoring second definition", NotificationLevel.Warning);
                             }
@@ -279,7 +371,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         var split = trimmedLine.Split(':');
                         if (split.Length != 2)
                         {
-                            GuiLogMessage(String.Format("Wrong image name definition in document: {0}", trimmedLine), NotificationLevel.Warning);
+                            GuiLogMessage(string.Format("Wrong image name definition in document: {0}", trimmedLine), NotificationLevel.Warning);
                         }
                         else
                         {
@@ -305,11 +397,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         var split = trimmedLine.Split(':');
                         if (split.Length != 2)
                         {
-                            GuiLogMessage(String.Format("Wrong transcriber name definition in document: {0}", trimmedLine), NotificationLevel.Warning);
+                            GuiLogMessage(string.Format("Wrong transcriber name definition in document: {0}", trimmedLine), NotificationLevel.Warning);
                         }
                         else
                         {
-                            if (!String.IsNullOrEmpty(document.TranscriberName))
+                            if (!string.IsNullOrEmpty(document.TranscriberName))
                             {
                                 GuiLogMessage("Transcriber name is defined twice in this document. Ignoring second definition", NotificationLevel.Warning);
                             }
@@ -324,11 +416,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         var split = trimmedLine.Split(':');
                         if (split.Length != 2)
                         {
-                            GuiLogMessage(String.Format("Wrong date of transcription definition in document: {0}", trimmedLine), NotificationLevel.Warning);
+                            GuiLogMessage(string.Format("Wrong date of transcription definition in document: {0}", trimmedLine), NotificationLevel.Warning);
                         }
                         else
                         {
-                            if (!String.IsNullOrEmpty(document.DateOfTranscription))
+                            if (!string.IsNullOrEmpty(document.DateOfTranscription))
                             {
                                 GuiLogMessage("Date of transcription name is defined twice in this document. Ignoring second definition", NotificationLevel.Warning);
                             }
@@ -343,11 +435,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         var split = trimmedLine.Split(':');
                         if (split.Length != 2)
                         {
-                            GuiLogMessage(String.Format("Wrong transcription time definition in document: {0}", trimmedLine), NotificationLevel.Warning);
+                            GuiLogMessage(string.Format("Wrong transcription time definition in document: {0}", trimmedLine), NotificationLevel.Warning);
                         }
                         else
                         {
-                            if (!String.IsNullOrEmpty(document.TranscriptionTime))
+                            if (!string.IsNullOrEmpty(document.TranscriptionTime))
                             {
                                 GuiLogMessage("Transcription time is defined twice in this document. Ignoring second definition", NotificationLevel.Warning);
                             }
@@ -362,11 +454,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         var split = trimmedLine.Split(':');
                         if (split.Length != 2)
                         {
-                            GuiLogMessage(String.Format("Wrong comments definition in document: {0}", trimmedLine), NotificationLevel.Warning);
+                            GuiLogMessage(string.Format("Wrong comments definition in document: {0}", trimmedLine), NotificationLevel.Warning);
                         }
                         else
                         {
-                            if (!String.IsNullOrEmpty(document.Comments))
+                            if (!string.IsNullOrEmpty(document.Comments))
                             {
                                 GuiLogMessage("Comments is defined twice in this document. Ignoring second definition", NotificationLevel.Warning);
                             }
@@ -483,38 +575,46 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
 
             //check, if header fields are set; if not, set these to "undefined"
-            if (String.IsNullOrEmpty(document.CatalogName))
+            if (string.IsNullOrEmpty(document.CatalogName))
             {
                 document.CatalogName = "undefined";
             }
-            if (String.IsNullOrEmpty(document.ImageName))
+            if (string.IsNullOrEmpty(document.ImageName))
             {
                 document.ImageName = "undefined";
             }
-            if (String.IsNullOrEmpty(document.TranscriberName))
+            if (string.IsNullOrEmpty(document.TranscriberName))
             {
                 document.TranscriberName = "undefined";
             }
-            if (String.IsNullOrEmpty(document.DateOfTranscription))
+            if (string.IsNullOrEmpty(document.DateOfTranscription))
             {
                 document.DateOfTranscription = "undefined";
             }
-            if (String.IsNullOrEmpty(document.TranscriptionTime))
+            if (string.IsNullOrEmpty(document.TranscriptionTime))
             {
                 document.TranscriptionTime = "undefined";
             }
-            if (String.IsNullOrEmpty(document.TranscriptionMethod))
+            if (string.IsNullOrEmpty(document.TranscriptionMethod))
             {
                 document.TranscriptionMethod = "undefined";
             }
-            if (String.IsNullOrEmpty(document.Comments))
+            if (string.IsNullOrEmpty(document.Comments))
             {
                 document.Comments = "undefined";
             }
 
             return document;
-        }      
+        }
 
+        /// <summary>
+        /// Returns default empty PossibleParserParameters
+        /// </summary>
+        /// <returns></returns>
+        public override PossibleParserParameters GetPossibleParserParameters()
+        {
+            return null;
+        }
     }
 
     /// <summary>
@@ -528,6 +628,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
         public NoNomenclatureParser(uint regularElementLength, List<Token> nulls = null)
         {
+            ParserName = GetType().Name;
             if (nulls != null)
             {
                 _nulls = nulls;
@@ -539,9 +640,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetDocument()
+        public override TextDocument GetTextDocument()
         {
-            TextDocument document = base.GetDocument();
+            TextDocument document = base.GetTextDocument();
             if (document == null)
             {
                 return null;
@@ -651,8 +752,26 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
             return document;
         }
-    }
 
+        /// <summary>
+        /// Returns possible parser parameters for this Parser
+        /// </summary>
+        /// <returns></returns>
+        public override PossibleParserParameters GetPossibleParserParameters()
+        {
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(1);
+            //add all digits from 0 to 9 as possible null symbols
+            for (int i = 0; i < 10; i++)
+            {
+                Token nullToken = new Token(null);
+                Symbol nullSymbol = new Symbol(nullToken);
+                nullSymbol.Text = i.ToString();
+                nullToken.Symbols.Add(nullSymbol);
+                possibleParserParameters.PossibleNulls.Add(nullToken);
+            }
+            return possibleParserParameters;
+        }
+    }
 
     /// <summary>
     /// Parses the text into regular elements of two
@@ -664,6 +783,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
         public Nomenclature3DigitsEndingWithNull1DigitsParser(List<Token> nulls = null)
         {
+            ParserName = GetType().Name;
             if (nulls != null)
             {
                 _nulls = nulls;
@@ -674,9 +794,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetDocument()
+        public override TextDocument GetTextDocument()
         {
-            TextDocument document = base.GetDocument();
+            TextDocument document = base.GetTextDocument();
             if (document == null)
             {
                 return null;
@@ -798,6 +918,25 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
             return document;
         }
+
+        /// <summary>
+        /// Returns possible parser parameters for this Parser
+        /// </summary>
+        /// <returns></returns>
+        public override PossibleParserParameters GetPossibleParserParameters()
+        {
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
+            //add all digits from 0 to 9 as possible null symbols
+            for (int i = 0; i < 10; i++)
+            {
+                Token nullToken = new Token(null);
+                Symbol nullSymbol = new Symbol(nullToken);
+                nullSymbol.Text = i.ToString();
+                nullToken.Symbols.Add(nullSymbol);
+                possibleParserParameters.PossibleNulls.Add(nullToken);
+            }
+            return possibleParserParameters;
+        }
     }
 
     /// <summary>
@@ -810,6 +949,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
         public Nomenclature3DigitsEndingWithNull2DigitsParser(List<Token> nulls = null)
         {
+            ParserName = GetType().Name;
             if (nulls != null)
             {
                 _nulls = nulls;
@@ -820,9 +960,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetDocument()
+        public override TextDocument GetTextDocument()
         {
-            TextDocument document = base.GetDocument();
+            TextDocument document = base.GetTextDocument();
             if (document == null)
             {
                 return null;
@@ -960,6 +1100,28 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
             return document;
         }
+
+        /// <summary>
+        /// Returns possible parser parameters for this Parser
+        /// </summary>
+        /// <returns></returns>
+        public override PossibleParserParameters GetPossibleParserParameters()
+        {
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(4);
+            //add all digits from 00 to 99 as possible null symbols
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    Token nullToken = new Token(null);
+                    Symbol nullSymbol = new Symbol(nullToken);
+                    nullSymbol.Text = i.ToString() + j.ToString();
+                    nullToken.Symbols.Add(nullSymbol);
+                    possibleParserParameters.PossibleNulls.Add(nullToken);
+                }
+            }
+            return possibleParserParameters;
+        }
     }
 
     /// <summary>
@@ -973,6 +1135,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
         public Nomenclature4DigitsWithPrefixParser(List<Token> nomenclaturePrefix, List<Token> nulls = null)
         {
+            ParserName = GetType().Name;
             if (nomenclaturePrefix != null)
             {
                 _nomenclaturePrefix = nomenclaturePrefix;
@@ -987,9 +1150,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetDocument()
+        public override TextDocument GetTextDocument()
         {
-            TextDocument document = base.GetDocument();
+            TextDocument document = base.GetTextDocument();
             if (document == null)
             {
                 return null;
@@ -1163,6 +1326,32 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
             return document;
         }
+
+        /// <summary>
+        /// Returns possible parser parameters for this Parser
+        /// </summary>
+        /// <returns></returns>
+        public override PossibleParserParameters GetPossibleParserParameters()
+        {
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
+            //add all digits from 0 to 9 as possible null symbols
+            //add all digits from 0 to 9 as possible prefix symbols
+            for (int i = 0; i < 10; i++)
+            {
+                Token nullToken = new Token(null);
+                Symbol nullSymbol = new Symbol(nullToken);
+                nullSymbol.Text = i.ToString();
+                nullToken.Symbols.Add(nullSymbol);
+                possibleParserParameters.PossibleNulls.Add(nullToken);
+
+                Token prefixToken = new Token(null);
+                Symbol prefixSymbol = new Symbol(prefixToken);
+                prefixSymbol.Text = i.ToString();
+                prefixToken.Symbols.Add(prefixSymbol);
+                possibleParserParameters.PossiblePrefixes.Add(prefixToken);
+            }
+            return possibleParserParameters;
+        }
     }
 
     /// <summary>
@@ -1174,6 +1363,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
         public Francia4Parser(List<Token> nulls)
         {
+            ParserName = GetType().Name;
             if (nulls != null)
             {
                 _nulls = nulls;
@@ -1184,9 +1374,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetDocument()
+        public override TextDocument GetTextDocument()
         {
-            TextDocument document = base.GetDocument();
+            TextDocument document = base.GetTextDocument();
             if (document == null)
             {
                 return null;
@@ -1340,6 +1530,25 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
             return document;
         }
+
+        /// <summary>
+        /// Returns possible parser parameters for this Parser
+        /// </summary>
+        /// <returns></returns>
+        public override PossibleParserParameters GetPossibleParserParameters()
+        {
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
+            //add all digits from 0 to 9 as possible null symbols
+            for (int i = 0; i < 10; i++)
+            {
+                Token nullToken = new Token(null);
+                Symbol nullSymbol = new Symbol(nullToken);
+                nullSymbol.Text = i.ToString();
+                nullToken.Symbols.Add(nullSymbol);
+                possibleParserParameters.PossibleNulls.Add(nullToken);
+            }
+            return possibleParserParameters;
+        }
     }
 
     /// <summary>
@@ -1351,6 +1560,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
         public Francia6Parser(List<Token> nulls)
         {
+            ParserName = GetType().Name;
             if (nulls != null)
             {
                 _nulls = nulls;
@@ -1361,9 +1571,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetDocument()
+        public override TextDocument GetTextDocument()
         {
-            TextDocument document = base.GetDocument();
+            TextDocument document = base.GetTextDocument();
             if (document == null)
             {
                 return null;
@@ -1507,6 +1717,25 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
             return document;
         }
+
+        /// <summary>
+        /// Returns possible parser parameters for this Parser
+        /// </summary>
+        /// <returns></returns>
+        public override PossibleParserParameters GetPossibleParserParameters()
+        {
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
+            //add all digits from 0 to 9 as possible null symbols
+            for (int i = 0; i < 10; i++)
+            {
+                Token nullToken = new Token(null);
+                Symbol nullSymbol = new Symbol(nullToken);
+                nullSymbol.Text = i.ToString();
+                nullToken.Symbols.Add(nullSymbol);
+                possibleParserParameters.PossibleNulls.Add(nullToken);
+            }
+            return possibleParserParameters;
+        }
     }
 
     /// <summary>
@@ -1523,6 +1752,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
         public Francia17Parser(List<Token> nulls)
         {
+            ParserName = GetType().Name;
             if (nulls != null)
             {
                 _nulls = nulls;
@@ -1557,9 +1787,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetDocument()
+        public override TextDocument GetTextDocument()
         {
-            TextDocument document = base.GetDocument();
+            TextDocument document = base.GetTextDocument();
             if (document == null)
             {
                 return null;
@@ -1790,6 +2020,25 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
             return document;
         }
+
+        /// <summary>
+        /// Returns possible parser parameters for this Parser
+        /// </summary>
+        /// <returns></returns>
+        public override PossibleParserParameters GetPossibleParserParameters()
+        {
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
+            //add all digits from 0 to 9 as possible null symbols
+            for (int i = 0; i < 10; i++)
+            {
+                Token nullToken = new Token(null);
+                Symbol nullSymbol = new Symbol(nullToken);
+                nullSymbol.Text = i.ToString();
+                nullToken.Symbols.Add(nullSymbol);
+                possibleParserParameters.PossibleNulls.Add(nullToken);
+            }
+            return possibleParserParameters;
+        }
     }
 
     /// <summary>
@@ -1802,6 +2051,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
         public Francia18Parser(List<Token> nulls)
         {
+            ParserName = GetType().Name;
             if (nulls != null)
             {
                 _nulls = nulls;
@@ -1816,16 +2066,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 specialToken.Symbols.Add(specialSymbol);
                 _specialSet.Add(specialToken);
             }
-
         }
 
         /// <summary>
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetDocument()
+        public override TextDocument GetTextDocument()
         {
-            TextDocument document = base.GetDocument();
+            TextDocument document = base.GetTextDocument();
             if (document == null)
             {
                 return null;
@@ -2104,6 +2353,25 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
             return document;
         }
+
+        /// <summary>
+        /// Returns possible parser parameters for this Parser
+        /// </summary>
+        /// <returns></returns>
+        public override PossibleParserParameters GetPossibleParserParameters()
+        {
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
+            //add all digits from 0 to 9 as possible null symbols
+            for (int i = 0; i < 10; i++)
+            {
+                Token nullToken = new Token(null);
+                Symbol nullSymbol = new Symbol(nullToken);
+                nullSymbol.Text = i.ToString();
+                nullToken.Symbols.Add(nullSymbol);
+                possibleParserParameters.PossibleNulls.Add(nullToken);
+            }
+            return possibleParserParameters;
+        }
     }
 
     /// <summary>
@@ -2116,6 +2384,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
         public VariableLengthHomophonicCipher(List<Token> nulls, Decoder decoder)
         {
+            ParserName = GetType().Name;
             if (nulls != null)
             {
                 _nulls = nulls;
@@ -2127,9 +2396,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetDocument()
+        public override TextDocument GetTextDocument()
         {
-            TextDocument document = base.GetDocument();
+            TextDocument document = base.GetTextDocument();
             if (document == null)
             {
                 return null;
@@ -2277,6 +2546,37 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
             return document;
         }
+
+        /// <summary>
+        /// Returns possible parser parameters for this Parser
+        /// </summary>
+        /// <returns></returns>
+        public override PossibleParserParameters GetPossibleParserParameters()
+        {
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(4);
+            //add all digits from 0 to 9 as possible null symbols
+            for (int i = 0; i < 10; i++)
+            {
+                Token nullToken = new Token(null);
+                Symbol nullSymbol = new Symbol(nullToken);
+                nullSymbol.Text = i.ToString();
+                nullToken.Symbols.Add(nullSymbol);
+                possibleParserParameters.PossibleNulls.Add(nullToken);
+            }
+            //add all digits from 00 to 99 as possible null symbols
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    Token nullToken = new Token(null);
+                    Symbol nullSymbol = new Symbol(nullToken);
+                    nullSymbol.Text = i.ToString() + j.ToString();
+                    nullToken.Symbols.Add(nullSymbol);
+                    possibleParserParameters.PossibleNulls.Add(nullToken);
+                }
+            }
+            return possibleParserParameters;
+        }
     }
 
     /// <summary>
@@ -2288,6 +2588,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
         public Francia346Parser(List<Token> nulls)
         {
+            ParserName = GetType().Name;
             if (nulls != null)
             {
                 _nulls = nulls;
@@ -2298,9 +2599,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetDocument()
+        public override TextDocument GetTextDocument()
         {
-            TextDocument document = base.GetDocument();
+            TextDocument document = base.GetTextDocument();
             if (document == null)
             {
                 return null;
@@ -2474,6 +2775,37 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
             return document;
         }
+
+        /// <summary>
+        /// Returns possible parser parameters for this Parser
+        /// </summary>
+        /// <returns></returns>
+        public override PossibleParserParameters GetPossibleParserParameters()
+        {
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(4);
+            //add all digits from 0 to 9 as possible null symbols
+            for (int i = 0; i < 10; i++)
+            {
+                Token nullToken = new Token(null);
+                Symbol nullSymbol = new Symbol(nullToken);
+                nullSymbol.Text = i.ToString();
+                nullToken.Symbols.Add(nullSymbol);
+                possibleParserParameters.PossibleNulls.Add(nullToken);
+            }
+            //add all digits from 00 to 99 as possible null symbols
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    Token nullToken = new Token(null);
+                    Symbol nullSymbol = new Symbol(nullToken);
+                    nullSymbol.Text = i.ToString() + j.ToString();
+                    nullToken.Symbols.Add(nullSymbol);
+                    possibleParserParameters.PossibleNulls.Add(nullToken);
+                }
+            }
+            return possibleParserParameters;
+        }
     }
 
     /// <summary>
@@ -2483,16 +2815,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     {      
         public Francia283Parser()
         {
-            
+            ParserName = GetType().Name;
         }
 
         /// <summary>
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetDocument()
+        public override TextDocument GetTextDocument()
         {
-            TextDocument document = base.GetDocument();
+            TextDocument document = base.GetTextDocument();
             if (document == null)
             {
                 return null;
@@ -2643,6 +2975,25 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
             return document;
         }
+
+        /// <summary>
+        /// Returns possible parser parameters for this Parser
+        /// </summary>
+        /// <returns></returns>
+        public override PossibleParserParameters GetPossibleParserParameters()
+        {
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(4);
+            //add all digits from 0 to 9 as possible null symbols
+            for (int i = 0; i < 10; i++)
+            {
+                Token nullToken = new Token(null);
+                Symbol nullSymbol = new Symbol(nullToken);
+                nullSymbol.Text = i.ToString();
+                nullToken.Symbols.Add(nullSymbol);
+                possibleParserParameters.PossibleNulls.Add(nullToken);
+            }          
+            return possibleParserParameters;
+        }
     }
 
     /// <summary>
@@ -2652,16 +3003,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     {
         public KeyAsPlaintextParser()
         {
-
+            ParserName = GetType().Name;
         }
 
         /// <summary>
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetDocument()
+        public override TextDocument GetTextDocument()
         {
-            TextDocument document = base.GetDocument();
+            TextDocument document = base.GetTextDocument();
             if (document == null)
             {
                 return null;
@@ -2759,6 +3110,4 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             return document;
         }
     }
-
 }
-

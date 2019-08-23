@@ -90,7 +90,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
                     //NoNomenclatureParser with regularCodeLength = 1 just creates single symbol lines
                     NoNomenclatureParser parser = new NoNomenclatureParser(1, null);
                     parser.DECODETextDocument = TextDocument;
-                    var document = parser.GetDocument();
+                    var document = parser.GetTextDocument();
                     parser.ShowCommentsPlaintextCleartext = false;
                     parser.CleanupDocument(document);
                     _clusterset.AddDocument(document);

@@ -199,7 +199,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             parser.ShowCommentsPlaintextCleartext = _settings.ShowCommentsPlaintextCleartext;
             parser.ShowUnknownTranscriptionSymbols = _settings.ShowUnknownTranscriptionSymbols;
             DateTime startTime = DateTime.Now;
-            TextDocument document = parser.GetDocument();
+            TextDocument document = parser.GetTextDocument();
             parser.CleanupDocument(document);
             if(document == null)
             {
@@ -215,7 +215,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 {
                     KeyAsPlaintextParser keyAsPlaintextParser = new KeyAsPlaintextParser();
                     keyAsPlaintextParser.DECODETextDocument = DECODEKeyDocument;
-                    var plaintextDocument = keyAsPlaintextParser.GetDocument();
+                    var plaintextDocument = keyAsPlaintextParser.GetTextDocument();
 
                     foreach (var page in document.Pages)
                     {
