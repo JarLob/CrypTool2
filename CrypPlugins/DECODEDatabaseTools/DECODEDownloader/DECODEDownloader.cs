@@ -253,7 +253,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             if (propertyChangedEventArgs.PropertyName.Equals("DownloadButton"))
             {
-                Task.Run(() => _presentation.DownloadCurrentRecordList());                                                
+                Task.Run(() => _presentation.DownloadCurrentRecordList());
             }
         }
 

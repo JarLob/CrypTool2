@@ -28,6 +28,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
     /// </summary>
     public partial class DECODEClustererPresentation : UserControl, INotifyPropertyChanged
     {
+        private DECODEClusterer _decodeClusterer;
         private ClusterSet _currentClusterSet;
         public ClusterSet CurrentClusterSet
         {
@@ -42,10 +43,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
             }
         }
         
-        public DECODEClustererPresentation()
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="decoderClusterer"></param>
+        public DECODEClustererPresentation(DECODEClusterer decoderClusterer)
         {
             DataContext = this;
             InitializeComponent();
+            _decodeClusterer = decoderClusterer;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;   
@@ -53,6 +59,20 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
         private void OnPropertyChanged(string name)
         {
             EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ListView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var item = (sender as ListView).SelectedItem;
+            if (item != null && item is Cluster)
+            {
+                _decodeClusterer.OutputCluster((Cluster)item);
+            }
         }
     }
 }

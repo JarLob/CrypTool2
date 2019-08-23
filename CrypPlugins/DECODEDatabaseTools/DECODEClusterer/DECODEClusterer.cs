@@ -37,7 +37,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
 
         public DECODEClusterer()
         {
-            _presentation = new DECODEClustererPresentation();
+            _presentation = new DECODEClustererPresentation(this);
             _settings = new DECODEClustererSettings();
         }
 
@@ -46,6 +46,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
         /// </summary>
         [PropertyInfo(Direction.InputData, "TextDocumentCaption", "TextDocumentTooltip")]
         public string TextDocument
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Output of a complete cluster as string
+        /// </summary>
+        [PropertyInfo(Direction.OutputData, "ClusterOutputCaption", "ClusterOutputTooltip")]
+        public string ClusterOutput
         {
             get;
             set;
@@ -131,6 +141,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
 
         }
 
+        private void OnPropertyChanged(string name)
+        {
+            EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
+        }
+
         private void GuiLogMessage(string message, NotificationLevel logLevel)
         {
             EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
@@ -139,6 +154,40 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
         private void ProgressChanged(double value, double max)
         {
             EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
+        }
+
+        /// <summary>
+        /// Outputs a complete cluster
+        /// </summary>
+        /// <param name="cluster"></param>
+        public void OutputCluster(Cluster cluster)        
+        {
+            Task.Run(() =>
+            {
+                StringBuilder clusterOutputBuilder = new StringBuilder();
+                foreach(var document in cluster.Documents)
+                {
+                    foreach(var page in document.TextDocument.Pages)
+                    {
+                        foreach(var line in page.Lines)
+                        {
+                            foreach(var token in line.Tokens)
+                            {
+                                foreach(var symbol in token.Symbols)
+                                {
+                                    clusterOutputBuilder.Append(symbol);
+                                    clusterOutputBuilder.Append(" ");
+                                }
+                            }
+                            clusterOutputBuilder.AppendLine();
+                        }
+                        clusterOutputBuilder.AppendLine();
+                    }
+                    clusterOutputBuilder.AppendLine();
+                }
+                ClusterOutput = clusterOutputBuilder.ToString();
+                OnPropertyChanged("ClusterOutput");
+            });
         }
     }
 }
