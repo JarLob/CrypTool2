@@ -626,6 +626,19 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         private List<Token> _nulls = new List<Token>();
         private uint _regularElementLength = 0;
 
+        /// <summary>
+        /// Void Constructor
+        /// </summary>
+        public NoNomenclatureParser()
+        {
+            ParserName = GetType().Name;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="regularElementLength"></param>
+        /// <param name="nulls"></param>
         public NoNomenclatureParser(uint regularElementLength, List<Token> nulls = null)
         {
             ParserName = GetType().Name;
@@ -781,6 +794,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     {
         private List<Token> _nulls = new List<Token>();
 
+        /// <summary>
+        /// Void Constructor
+        /// </summary>
+        public Nomenclature3DigitsEndingWithNull1DigitsParser()
+        {
+            ParserName = GetType().Name;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="nulls"></param>
         public Nomenclature3DigitsEndingWithNull1DigitsParser(List<Token> nulls = null)
         {
             ParserName = GetType().Name;
@@ -947,6 +972,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     {
         private List<Token> _nulls = new List<Token>();
 
+        /// <summary>
+        /// Void Constructor
+        /// </summary>
+        public Nomenclature3DigitsEndingWithNull2DigitsParser()
+        {
+            ParserName = GetType().Name;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="nulls"></param>
         public Nomenclature3DigitsEndingWithNull2DigitsParser(List<Token> nulls = null)
         {
             ParserName = GetType().Name;
@@ -1133,6 +1170,19 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         private List<Token> _nulls = new List<Token>();
         private List<Token> _nomenclaturePrefix = new List<Token>();
 
+        /// <summary>
+        /// Void Constructor
+        /// </summary>
+        public Nomenclature4DigitsWithPrefixParser()
+        {
+            ParserName = GetType().Name;
+        }
+
+        /// <summary>
+        /// Void Constructor
+        /// </summary>
+        /// <param name="nomenclaturePrefix"></param>
+        /// <param name="nulls"></param>
         public Nomenclature4DigitsWithPrefixParser(List<Token> nomenclaturePrefix, List<Token> nulls = null)
         {
             ParserName = GetType().Name;
@@ -1361,6 +1411,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     {
         private List<Token> _nulls = new List<Token>();
 
+        /// <summary>
+        /// Void Constructor
+        /// </summary>
+        public Francia4Parser()
+        {
+            ParserName = GetType().Name;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="nulls"></param>
         public Francia4Parser(List<Token> nulls)
         {
             ParserName = GetType().Name;
@@ -1558,6 +1620,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     {
         private List<Token> _nulls = new List<Token>();
 
+        /// <summary>
+        /// Void Constructor
+        /// </summary>
+        public Francia6Parser()
+        {
+            ParserName = GetType().Name;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="nulls"></param>
         public Francia6Parser(List<Token> nulls)
         {
             ParserName = GetType().Name;
@@ -1750,6 +1824,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
         private List<Token> _specialSet = new List<Token>();
 
+        /// <summary>
+        /// Void Constructor
+        /// </summary>
+        public Francia17Parser()
+        {
+            ParserName = GetType().Name;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="nulls"></param>
         public Francia17Parser(List<Token> nulls)
         {
             ParserName = GetType().Name;
@@ -2049,6 +2135,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         private List<Token> _nulls = new List<Token>();
         private List<Token> _specialSet = new List<Token>();
 
+        /// <summary>
+        /// Void Constructor
+        /// </summary>
+        public Francia18Parser()
+        {
+            ParserName = GetType().Name;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="nulls"></param>
         public Francia18Parser(List<Token> nulls)
         {
             ParserName = GetType().Name;
@@ -2586,6 +2684,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     {
         private List<Token> _nulls = new List<Token>();
 
+        /// <summary>
+        /// Void Constructor
+        /// </summary>
+        public Francia346Parser()
+        {
+            ParserName = GetType().Name;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="nulls"></param>
         public Francia346Parser(List<Token> nulls)
         {
             ParserName = GetType().Name;
@@ -2812,7 +2922,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// Parser for Francia 346-1
     /// </summary>
     public class Francia283Parser : SimpleSingleTokenParser
-    {      
+    {
+        /// <summary>
+        /// Void Constructor
+        /// </summary>      
         public Francia283Parser()
         {
             ParserName = GetType().Name;
@@ -3001,6 +3114,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// </summary>
     public class KeyAsPlaintextParser : SimpleSingleTokenParser
     {
+        /// <summary>
+        /// Void Constructor
+        /// </summary>
         public KeyAsPlaintextParser()
         {
             ParserName = GetType().Name;

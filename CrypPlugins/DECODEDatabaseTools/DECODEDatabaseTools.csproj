@@ -94,6 +94,8 @@
       <DependentUpon>DECODEDeciphererPresentation.xaml</DependentUpon>
     </Compile>
     <Compile Include="DECODEDecipherer\DECODEDeciphererSettings.cs" />
+    <Compile Include="DECODEParserTester\DECODEParserTester.cs" />
+    <Compile Include="DECODEParserTester\DECODEParserTesterSettings.cs" />
     <Compile Include="Util\Clustering.cs" />
     <Compile Include="Util\Decoder.cs" />
     <Compile Include="Util\Extensions.cs" />
