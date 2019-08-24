@@ -3110,16 +3110,19 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     }
 
     /// <summary>
-    /// This parser is used for generating plaintext for the plaintext-ciphertext mapping
+    /// This parser is used for "manually parsing", i.e. the user has to seperate each token with a pipe symbol |
     /// </summary>
-    public class KeyAsPlaintextParser : SimpleSingleTokenParser
+    public class ManuallySplittedTextParser : SimpleSingleTokenParser
     {
+        private bool _plaintextParser = false;
+
         /// <summary>
         /// Void Constructor
         /// </summary>
-        public KeyAsPlaintextParser()
+        public ManuallySplittedTextParser(bool plaintextParser = false)
         {
             ParserName = GetType().Name;
+            _plaintextParser = plaintextParser;
         }
 
         /// <summary>
@@ -3192,7 +3195,14 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         if (symbol.Text.Equals("|"))
                         {
                             Token token = tokenBuilder.GetToken(0, tokenBuilder.Length - 1, line);
-                            token.TokenType = TokenType.PlaintextElement;
+                            if (_plaintextParser)
+                            {
+                                token.TokenType = TokenType.PlaintextElement;
+                            }
+                            else
+                            {
+                                token.TokenType = TokenType.RegularElement;
+                            }
                             line.Tokens.Add(token);
                             tokenBuilder.Clear();
                         }
@@ -3214,11 +3224,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 if (tokenBuilder.Length > 0)
                 {
                     Token token = tokenBuilder.GetToken(0, tokenBuilder.Length - 1, lastLine);
-                    if(token.Symbols[tokenBuilder.Length - 1].Text.Equals("|"))
+                    if(token.Symbols.Count > 0 && token.Symbols[tokenBuilder.Length - 1].Text.Equals("|"))
                     {
                         token.Symbols.RemoveAt(tokenBuilder.Length - 1);
                     }
-                    token.TokenType = TokenType.Unknown;
+                    if (_plaintextParser)
+                    {
+                        token.TokenType = TokenType.PlaintextElement;
+                    }
+                    else
+                    {
+                        token.TokenType = TokenType.RegularElement;
+                    }
                     lastLine.Tokens.Add(token);
                     tokenBuilder.Clear();
                 }

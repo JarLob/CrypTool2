@@ -187,6 +187,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 case ParserType.Francia283:
                     parser = new Francia283Parser();
                     break;
+                case ParserType.ManuallySplittedTextParser:
+                    parser = new ManuallySplittedTextParser();
+                    break;
                 case ParserType.SimpleSingleTokenParser:
                 default:
                     parser = new SimpleSingleTokenParser();
@@ -213,9 +216,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 startTime = DateTime.Now;
                 if (_settings.UseKeyAsPlaintext)
                 {
-                    KeyAsPlaintextParser keyAsPlaintextParser = new KeyAsPlaintextParser();
-                    keyAsPlaintextParser.DECODETextDocument = DECODEKeyDocument;
-                    var plaintextDocument = keyAsPlaintextParser.GetTextDocument();
+                    //we use the ManuallySplittedTextParser to get plaintext mapping for the ciphertext
+                    ManuallySplittedTextParser manuallySplittedTextParser = new ManuallySplittedTextParser(true);
+                    manuallySplittedTextParser.DECODETextDocument = DECODEKeyDocument;
+                    var plaintextDocument = manuallySplittedTextParser.GetTextDocument();
 
                     foreach (var page in document.Pages)
                     {
