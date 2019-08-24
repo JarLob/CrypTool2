@@ -7,17 +7,14 @@ using System.IO;
 using Ionic.Zip;
 using System.Security.AccessControl;
 using System.Security.Principal;
+using System.Threading.Tasks;
 
 namespace CrypUpdater
 {
-    /// <summary>
-    /// Interaktionslogik für "App.xaml"
-    /// </summary>
     public partial class App : Application
     {
         public const string ZipInstallLogHeader = "CrypTool 2 Zip Installation";
 
-        private MainWindow m = new CrypUpdater.MainWindow();
         private bool mayRestart = false;
         private static string cryptoolExePath;
         private string filePath;
@@ -392,8 +389,16 @@ namespace CrypUpdater
             }
         }
 
-
         private void UnpackZip(string ZipFilePath, string CryptoolFolderPath)
+        {
+            var loadDialog = new CrypUpdater.MainWindow();
+            var extractionTask = Task.Run(() => InternalUnpackZip(ZipFilePath, CryptoolFolderPath));
+            extractionTask.ContinueWith(_ => loadDialog.CloseOnFinish());   //Close dialog after extraction finished.
+
+            loadDialog.ShowDialog();    //This call will wait in the UI event loop until the dialog gets closed.
+        }
+
+        private void InternalUnpackZip(string ZipFilePath, string CryptoolFolderPath)
         {
             try
             {
@@ -401,8 +406,6 @@ namespace CrypUpdater
 
                 using (ZipFile zip = ZipFile.Read(ZipFilePath))
                 {
-                    m.Show();
-
                     // flomar, 10/27/2011: check whether we have a "ZipInstall.log" file in our
                     // CrypToolFolderPath-- if so, read in all listed files and delete them
                     string fileInstalledFiles = Path.Combine(CryptoolFolderPath, "ZipInstall.log");
