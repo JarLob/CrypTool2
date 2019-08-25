@@ -75,7 +75,10 @@ namespace Cryptool.CrypWin
                 case AutoUpdater.State.Downloading:
                     break;
                 case AutoUpdater.State.UpdateReady:
-                    OnRestartClicked();
+                    if (AutoUpdater.GetSingleton().IsUpdateReady)
+                    {
+                        OnRestartClicked();
+                    }
                     break;
             }
         }

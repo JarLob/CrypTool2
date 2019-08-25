@@ -463,7 +463,7 @@ namespace Cryptool.CrypWin
             {
                 File.Copy(Path.Combine(cryptoolFolderPath, "CrypUpdater.exe"), Path.Combine(DirectoryHelper.DirectoryLocalTemp, "CrypUpdater.exe"), true);
 
-                if (File.Exists(updaterPath) && File.Exists(Path.Combine(DirectoryHelper.DirectoryLocalTemp, "Ionic.Zip.Reduced.dll")))
+                if (File.Exists(filePath) && File.Exists(updaterPath) && File.Exists(Path.Combine(DirectoryHelper.DirectoryLocalTemp, "Ionic.Zip.Reduced.dll")))
                 {
                     string parameters = "\"" + filePath + "\" " + "\"" + cryptoolFolderPath + "\" " + "\"" + exePath + "\" " + "\"" + processID + "\" \"" + Boolean.TrueString + "\"";
                     Process.Start(updaterPath, parameters);
