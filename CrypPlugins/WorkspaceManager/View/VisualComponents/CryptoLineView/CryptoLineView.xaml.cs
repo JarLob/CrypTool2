@@ -693,7 +693,7 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
             {
                 hasFoundPath = SearchPathWithStops(startNode, endNode, numberOfStops, potentialStopNodes, nodeList, quadTreePlugins);
                 numberOfStops++;
-            } while (numberOfStops <= maxNumberOfStops && !hasFoundPath);
+            } while (numberOfStops <= maxNumberOfStops && !hasFoundPath && numberOfStops <= potentialStopNodes.Count);
 
             return hasFoundPath;
         }
@@ -719,6 +719,7 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
                 return TryConnectNodes(startNode, endNode, nodeList, quadTreePlugins);
             }
 
+            bool hasFoundPath = false;
             foreach (var nextStopNode in potentialStopNodes)
             {
                 if (TryConnectNodes(startNode, nextStopNode, nodeList, quadTreePlugins))
@@ -727,43 +728,28 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
                     //If connection to "nextStopNode" is possible, go down the path recursively:
                     if (SearchPathWithStops(nextStopNode, endNode, numberOfStops - 1, stopNodesLeft, nodeList, quadTreePlugins))
                     {
-                        return true;
+                        //Do not return here immediately, because we want to find the *best* path with "numberOfStops" stops.
+                        hasFoundPath = true;
                     }
                 }
             }
 
-            return false;
+            return hasFoundPath;
         }
 
         /// <summary>
         /// Returns all potential stop nodes, which are gathered by taking the edges ("routing points")
         /// of all visual components currently available.
         /// </summary>
-        /// <param name="filterPoints">Points which should not be added as stop nodes.</param>
         /// <returns>List of all potential stop nodes.</returns>
-        private IEnumerable<Node> GetPotentialStopNodes(ISet<Point> filterPoints)
+        private IEnumerable<Node> GetPotentialStopNodes()
         {
             foreach (var element in Visuals.Where(element => element is ComponentVisual).Cast<IRouting>())
             {
-                var routingPointNodes = new List<Node>();
                 for (int routPoint = 0; routPoint < 4; ++routPoint)
                 {
                     Point point = element.GetRoutingPoint(routPoint);
-                    if (!filterPoints.Contains(point))
-                    {
-                        routingPointNodes.Add(new Node() { Point = point });
-                    }
-                }
-
-                foreach (var routingPointNode in routingPointNodes)
-                {
-                    //Connect all routing points with each other from the beginning:
-                    foreach (var neighborNode in routingPointNodes.Where(node => node != routingPointNode))
-                    {
-                        routingPointNode.Vertices.Add(neighborNode);
-                    }
-
-                    yield return routingPointNode;
+                    yield return new Node() { Point = point };
                 }
             }
         }
@@ -780,7 +766,7 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
                     var startNode = new Node() { Point = LineUtil.Cheat42(StartPoint, StartPointSource, 1) };
                     var endNode = new Node() { Point = LineUtil.Cheat42(EndPoint, EndPointSource, -1) };
                     var nodeList = new List<Node>() { startNode, endNode };
-                    var potentialStopNodes = GetPotentialStopNodes(nodeList.Select(node => node.Point).ToHashSet()).ToList();
+                    var potentialStopNodes = GetPotentialStopNodes().ToList();
                     //nodeList contains all nodes (start, end and potential stop nodes):
                     nodeList.AddRange(potentialStopNodes);
                     var quadTreePlugins = helper.PluginTree;
@@ -788,9 +774,8 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
                     LinkedList<Node> path = null;
                     if (SearchPath(startNode, endNode, potentialStopNodes, nodeList, quadTreePlugins))
                     {
-                        //If a connection is found, use Dijskstra algorithm anyway to find the best one, because
-                        //there could be more than one.
-                        //It will run on "nodeList", which may contain some additional stops added by "FindConnection" now.
+                        //If a connection is found, use Dijskstra algorithm anyway to find the best one.
+                        //It will run on "nodeList", which may contain some additional stops added by "SearchPath" now.
                         var dijkstra = new Dijkstra<Node>();
                         path = dijkstra.findPath(nodeList, startNode, endNode);
                     }
