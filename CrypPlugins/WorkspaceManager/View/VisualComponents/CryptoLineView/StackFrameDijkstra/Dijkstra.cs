@@ -13,6 +13,20 @@ namespace WorkspaceManager.View.VisualComponents.StackFrameDijkstra
         public Point Point { get; set; }
         public HashSet<Node> Vertices { get; private set; }
 
+        /// <summary>
+        /// Helper set for connection finder method to memorize which
+        /// nodes are connectable to this node through newly created helper point.
+        /// This set is not relevant for the Dijkstra algorithm.
+        /// </summary>
+        public HashSet<Node> HelpingPointConnectableVertices { get; private set; }
+
+        /// <summary>
+        /// Helper set for connection finder method to memorize which
+        /// nodes are *not* connectable to this node.
+        /// This set is not relevant for the Dijkstra algorithm.
+        /// </summary>
+        public HashSet<Node> NotConnectableVertices { get; private set; }
+
         public double traverseCost(Node dest)
         {
             if (!Vertices.Contains(dest))
@@ -36,6 +50,8 @@ namespace WorkspaceManager.View.VisualComponents.StackFrameDijkstra
             this.Dist = Double.PositiveInfinity;
             this.previous = null;
             this.Vertices = new HashSet<Node>();
+            this.NotConnectableVertices = new HashSet<Node>();
+            this.HelpingPointConnectableVertices = new HashSet<Node>();
             uniqueIndex = ++uniqueCounter;
         }
 
@@ -67,12 +83,9 @@ namespace WorkspaceManager.View.VisualComponents.StackFrameDijkstra
 
     public class Dijkstra<T> where T : Node
     {
-
         public LinkedList<Node> findPath(IEnumerable<T> graph, T start, T goal)
         {
-
-            OrderedSet<T> unvisitedNodes = new OrderedSet<T>();
-
+            var unvisitedNodes = new OrderedSet<T>();
             foreach (T n in graph)
             {
                 if (n.Equals(start))
@@ -91,7 +104,6 @@ namespace WorkspaceManager.View.VisualComponents.StackFrameDijkstra
                     break;
                 }
 
-
                 if (goal.Equals(visitingNode))
                 {
                     return visitingNode.makePath();
@@ -103,8 +115,10 @@ namespace WorkspaceManager.View.VisualComponents.StackFrameDijkstra
 
                     if (altPathCost < v.Dist)
                     {
+                        unvisitedNodes.Remove(v);
                         v.Dist = altPathCost;
-                        v.previous = visitingNode;
+                        v.previous = visitingNode;                        
+                        unvisitedNodes.Add(v);  //readd the node to enforce reordering
                     }
                 }
             }

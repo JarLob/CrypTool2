@@ -15,6 +15,7 @@ using WorkspaceManagerModel.Model.Operations;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using WorkspaceManager.View.Base.Interfaces;
+using QuadTreeLib;
 
 namespace WorkspaceManager.View.VisualComponents.CryptoLineView
 {
@@ -620,6 +621,153 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
             }
         }
 
+        /// <summary>
+        /// Will try to connect "node1" with "node2".
+        /// This method updates the neighbor information of these nodes and adds new helper nodes into
+        /// "nodeList".
+        /// </summary>
+        /// <param name="node1">The first node to connect.</param>
+        /// <param name="node2">The second node to connect.</param>
+        /// <param name="nodeList">List of all nodes. This method will add new helper nodes to this list.</param>
+        /// <param name="quadTreePlugins">The quad tree of the plugin's visuals.</param>
+        /// <returns></returns>
+        private bool TryConnectNodes(Node node1, Node node2, List<Node> nodeList, QuadTree<FakeNode> quadTreePlugins)
+        {
+            if (node1 == node2)
+                return true;
+            if (node1.Vertices.Contains(node2))
+                return true;
+            if (node1.HelpingPointConnectableVertices.Contains(node2))
+                return true;
+            if (node1.NotConnectableVertices.Contains(node2))
+                return false;
+
+            bool canConnect = true;
+            // no helping point required?
+            if (node1.Point.X == node2.Point.X ||
+                node1.Point.Y == node2.Point.Y)
+            {
+                canConnect = LineUtil.PerformOrthogonalPointConnection(node1, node2, quadTreePlugins);
+            }
+            else
+            {
+                Point help = new Point(node1.Point.X, node2.Point.Y);
+
+                if (!LineUtil.PerformOrthogonalPointConnection(node1, help, node2, nodeList, quadTreePlugins))
+                {
+                    help = new Point(node2.Point.X, node1.Point.Y);
+                    if (!LineUtil.PerformOrthogonalPointConnection(node1, help, node2, nodeList, quadTreePlugins))
+                    {
+                        canConnect = false;
+                    }
+                }
+            }
+
+            if (!canConnect)
+            {
+                node1.NotConnectableVertices.Add(node2);
+                node2.NotConnectableVertices.Add(node1);
+            }
+
+            return canConnect;
+        }
+
+        /// <summary>
+        /// Will try to find a path with stops taken from the list "potentialStopNodes".
+        /// Calling this method will update neighbor information in the nodes.
+        /// Furthermore, this method will add new helper nodes into "nodeList", which will be needed when
+        /// searching for the concrete path afterwards.
+        /// </summary>
+        /// <param name="startNode">Start node of the path.</param>
+        /// <param name="endNode">End node of the path.</param>
+        /// <param name="potentialStopNodes">All nodes which can be potentially be used as stop nodes.</param>
+        /// <param name="nodeList">List of all nodes. This method will add new helper nodes to this list.</param>
+        /// <param name="quadTreePlugins">The quad tree of the plugin's visuals.</param>
+        /// <returns>Whether a path has been found.</returns>
+        private bool SearchPath(Node startNode, Node endNode, List<Node> potentialStopNodes, List<Node> nodeList, QuadTree<FakeNode> quadTreePlugins)
+        {
+            const uint maxNumberOfStops = 2;    //This is a tradeoff between performance and line complexity
+            uint numberOfStops = 0;
+            bool hasFoundPath = false;
+            do
+            {
+                hasFoundPath = SearchPathWithStops(startNode, endNode, numberOfStops, potentialStopNodes, nodeList, quadTreePlugins);
+                numberOfStops++;
+            } while (numberOfStops <= maxNumberOfStops && !hasFoundPath);
+
+            return hasFoundPath;
+        }
+
+        /// <summary>
+        /// Will try to find a path with exactly "numberOfStops" stops, taken from the list "potentialStopNodes".
+        /// </summary>
+        /// <param name="startNode">Start node of the path.</param>
+        /// <param name="endNode">End node of the path.</param>
+        /// <param name="numberOfStops">Number of stops the path should exactly have.</param>
+        /// <param name="potentialStopNodes">All nodes which can be potentially be used as stop nodes</param>
+        /// <param name="nodeList">List of all nodes. This method will add new helper nodes to this list.</param>
+        /// <param name="quadTreePlugins">The quad tree of the plugin's visuals.</param>
+        /// <returns>Whether a path has been found.</returns>
+        private bool SearchPathWithStops(Node startNode, Node endNode, uint numberOfStops, IEnumerable<Node> potentialStopNodes, List<Node> nodeList, QuadTree<FakeNode> quadTreePlugins)
+        {
+            if (startNode == endNode)
+            {
+                return true;
+            }
+            if (numberOfStops == 0)
+            {
+                return TryConnectNodes(startNode, endNode, nodeList, quadTreePlugins);
+            }
+
+            foreach (var nextStopNode in potentialStopNodes)
+            {
+                if (TryConnectNodes(startNode, nextStopNode, nodeList, quadTreePlugins))
+                {
+                    var stopNodesLeft = potentialStopNodes.Where(node => node != nextStopNode);
+                    //If connection to "nextStopNode" is possible, go down the path recursively:
+                    if (SearchPathWithStops(nextStopNode, endNode, numberOfStops - 1, stopNodesLeft, nodeList, quadTreePlugins))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns all potential stop nodes, which are gathered by taking the edges ("routing points")
+        /// of all visual components currently available.
+        /// </summary>
+        /// <param name="filterPoints">Points which should not be added as stop nodes.</param>
+        /// <returns>List of all potential stop nodes.</returns>
+        private IEnumerable<Node> GetPotentialStopNodes(ISet<Point> filterPoints)
+        {
+            foreach (var element in Visuals.Where(element => element is ComponentVisual).Cast<IRouting>())
+            {
+                var routingPointNodes = new List<Node>();
+                for (int routPoint = 0; routPoint < 4; ++routPoint)
+                {
+                    Point point = element.GetRoutingPoint(routPoint);
+                    if (!filterPoints.Contains(point))
+                    {
+                        routingPointNodes.Add(new Node() { Point = point });
+                    }
+                }
+
+                foreach (var routingPointNode in routingPointNodes)
+                {
+                    //Connect all routing points with each other from the beginning:
+                    foreach (var neighborNode in routingPointNodes.Where(node => node != routingPointNode))
+                    {
+                        routingPointNode.Vertices.Add(neighborNode);
+                    }
+
+                    yield return routingPointNode;
+                }
+            }
+        }
+
         private void makeOrthogonalPoints()
         {
             bool failed = false;
@@ -627,81 +775,23 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
             {
                 if (!isSubstituteLine && !IsDragged && !HasComputed && !loaded)
                 {
-                    List<Node> nodeList = new List<Node>();
                     FrameworkElement parent = Model.WorkspaceModel.MyEditor.Presentation;
 
-                    // add start and end. Index will be 0 and 1 
-                    Node startNode = new Node() { Point = LineUtil.Cheat42(StartPoint, StartPointSource, 1) },
-                        endNode = new Node() { Point = LineUtil.Cheat42(EndPoint, EndPointSource, -1) };
-                    nodeList.Add(startNode);
-                    nodeList.Add(endNode);
-
-                    QuadTreeLib.QuadTree<FakeNode> quadTreePlugins = helper.PluginTree;
-
-                    for (int routPoint = 0; routPoint < 4; ++routPoint)
-                    {
-                        foreach (var element in Visuals)
-                        {
-                            if (element is ComponentVisual)
-                            {
-                                IRouting p1 = element as IRouting;
-                                nodeList.Add(new Node() { Point = p1.GetRoutingPoint(routPoint) });
-                            }
-                        }
-                    } 
-
-                    // connect points
-                    int loopCount = nodeList.Count;
-                    const int performanceTradeoffAt = 2;
+                    var startNode = new Node() { Point = LineUtil.Cheat42(StartPoint, StartPointSource, 1) };
+                    var endNode = new Node() { Point = LineUtil.Cheat42(EndPoint, EndPointSource, -1) };
+                    var nodeList = new List<Node>() { startNode, endNode };
+                    var potentialStopNodes = GetPotentialStopNodes(nodeList.Select(node => node.Point).ToHashSet()).ToList();
+                    //nodeList contains all nodes (start, end and potential stop nodes):
+                    nodeList.AddRange(potentialStopNodes);
+                    var quadTreePlugins = helper.PluginTree;
 
                     LinkedList<Node> path = null;
-
-                    for (int i = 0; i < loopCount; ++i)
+                    if (SearchPath(startNode, endNode, potentialStopNodes, nodeList, quadTreePlugins))
                     {
-                        StackFrameDijkstra.Dijkstra<Node> dijkstra = new StackFrameDijkstra.Dijkstra<Node>();
-                        path = dijkstra.findPath(nodeList, startNode, endNode);
-                        if (path != null)
-                        {
-                            break;
-                        }
-
-                        var p1 = nodeList[i];
-                        // TODO: inner loop restriction! n²-n!
-                        // is k=i instead of k=0 correct?
-                        for (int k = i; k < loopCount; ++k)
-                        {
-                            var p2 = nodeList[k];
-                            if (p1 == p2)
-                                continue;
-                            if (p1.Vertices.Contains(p2))
-                                continue;
-
-                            // no helping point required?
-                            if (p1.Point.X == p2.Point.X ||
-                                p1.Point.Y == p2.Point.Y)
-                            {
-                                LineUtil.PerformOrthogonalPointConnection(p1, p2, quadTreePlugins);
-                            }
-                            else
-                            {
-                                Point help = new Point(p1.Point.X, p2.Point.Y);
-
-                                if (!LineUtil.PerformOrthogonalPointConnection(p1, help, p2, nodeList, quadTreePlugins))
-                                {
-                                    help = new Point(p2.Point.X, p1.Point.Y);
-                                    if (!LineUtil.PerformOrthogonalPointConnection(p1, help, p2, nodeList, quadTreePlugins))
-                                    {
-                                        // optional todo: double edge helping routes
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-
-                    if (path == null)
-                    {
-                        StackFrameDijkstra.Dijkstra<Node> dijkstra = new StackFrameDijkstra.Dijkstra<Node>();
+                        //If a connection is found, use Dijskstra algorithm anyway to find the best one, because
+                        //there could be more than one.
+                        //It will run on "nodeList", which may contain some additional stops added by "FindConnection" now.
+                        var dijkstra = new Dijkstra<Node>();
                         path = dijkstra.findPath(nodeList, startNode, endNode);
                     }
 
@@ -742,8 +832,9 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
                         raiseComputationDone(true);
                         return;
                     }
-                    failed = true;     
+                    failed = true;
                 }
+
                 //Failsafe
                 if (IsDragged || failed || isSubstituteLine)
                 {
@@ -767,6 +858,7 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
                 }
                 raiseComputationDone(false);
             }
+            HasComputed = true; //Set to "true" here as well, to avoid unnecessary recomputation.
             raiseComputationDone(true);
         }
 
@@ -949,12 +1041,14 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
             if (LineUtil.IsConnectionPossible(n1.Point, p2, quadTreePlugins) && LineUtil.IsConnectionPossible(n3.Point, p2, quadTreePlugins))
             {
                 Node n2 = new Node() { Point = p2 };
-                n1.Vertices.Add(n2);
 
                 n2.Vertices.Add(n1);
                 n2.Vertices.Add(n3);
-
+                n1.Vertices.Add(n2);
                 n3.Vertices.Add(n2);
+
+                n1.HelpingPointConnectableVertices.Add(n3);
+                n3.HelpingPointConnectableVertices.Add(n1);
 
                 nodeList.Add(n2);
                 return true;
@@ -963,13 +1057,15 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
             return false;
         }
 
-        public static void PerformOrthogonalPointConnection(Node p1, Node p2, QuadTreeLib.QuadTree<WorkspaceManager.View.VisualComponents.CryptoLineView.FakeNode> quadTree)
+        public static bool PerformOrthogonalPointConnection(Node p1, Node p2, QuadTreeLib.QuadTree<WorkspaceManager.View.VisualComponents.CryptoLineView.FakeNode> quadTree)
         {
             if (IsConnectionPossible(p1.Point, p2.Point, quadTree))
             {
                 p1.Vertices.Add(p2);
                 p2.Vertices.Add(p1);
+                return true;
             }
+            return false;
         }
 
         public static Point Cheat42(Point EndPoint, ConnectorVisual EndPointSource, int flipper)
