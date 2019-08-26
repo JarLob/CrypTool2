@@ -94,6 +94,9 @@
       <DependentUpon>DECODEDeciphererPresentation.xaml</DependentUpon>
     </Compile>
     <Compile Include="DECODEDecipherer\DECODEDeciphererSettings.cs" />
+    <Compile Include="DECODEParserTester\DECODEParserTestPresentation.xaml.cs">
+      <DependentUpon>DECODEParserTestPresentation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DECODEParserTester\DECODEParserTester.cs" />
     <Compile Include="DECODEParserTester\DECODEParserTesterSettings.cs" />
     <Compile Include="Util\Clustering.cs" />
@@ -188,6 +191,10 @@
     <Page Include="DECODEClusterer\DECODEClustererPresentation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DECODEParserTester\DECODEParserTestPresentation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="DECODESettingsTab.xaml">
       <SubType>Designer</SubType>

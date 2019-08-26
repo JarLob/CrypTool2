@@ -32,6 +32,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
     public class DECODEParserTester : ICrypComponent
     {
+        private DECODEParserTestPresentation _presentation = new DECODEParserTestPresentation();
+        private bool _running = false;
+
         [PropertyInfo(Direction.InputData, "ClusterCaption", "ClusterTooltip", true)]
         public string Cluster
         {
@@ -47,8 +50,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
         public UserControl Presentation
         {
-            get;
-            set;
+            get
+            {
+                return _presentation;
+            }
         }
 
         public event StatusChangedEventHandler OnPluginStatusChanged;
@@ -63,15 +68,116 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
         public void Execute()
         {
+            _running = true;
+            _presentation.ClearBestlist();
             List<Type> parserTypes = GetAllParsers();
-            foreach(var parserType in parserTypes)
+
+            //here, we count the number of usable parser:
+            int totalParsers = 0;
+            foreach (var parserType in parserTypes)
             {
+                if (GetVoidConstructorInfo(parserType) == null)
+                {
+                    continue;
+                }
+                var parser = (Parser)Activator.CreateInstance(parserType);
+
+                var possibleParserParameters = parser.GetPossibleParserParameters();
+                if (possibleParserParameters == null ||
+                    (possibleParserParameters.PossiblePrefixes.Count == 0 && possibleParserParameters.PossibleNulls.Count == 0))
+                {
+                    continue;
+                }
+                totalParsers++;
+            }
+
+            //here, we do the actual testing of each parser
+            int parserCounter = 0;
+            foreach (var parserType in parserTypes)
+            {
+                if (!_running)
+                {
+                    return;
+                }
                 if(GetVoidConstructorInfo(parserType) == null)
                 {
                     continue;
                 }
                 var parser = (Parser)Activator.CreateInstance(parserType);
-                GuiLogMessage(string.Format("Created a parser object with type name: {0}", parser.ParserName), NotificationLevel.Info);
+
+                var possibleParserParameters = parser.GetPossibleParserParameters();
+                if (possibleParserParameters == null ||
+                    (possibleParserParameters.PossiblePrefixes.Count == 0 && possibleParserParameters.PossibleNulls.Count == 0))
+                {
+                    continue;
+                }
+
+                //test all settings of the parser
+                GuiLogMessage(string.Format("Testing all {0} setting combinations of {1}", parser.GetPossibleParserParameters().GetNumberOfSettingCombinations(), parser.ParserName), NotificationLevel.Info);
+                DateTime startDateTime = DateTime.Now;
+                try
+                {                    
+                    TestParser(parser);
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(string.Format("Exception occured during parser test of {0}:", parser.ParserName, ex.Message), NotificationLevel.Error);
+                    continue;
+                }
+                GuiLogMessage(string.Format("Tested all setting combinations of {0} done in {1} ms !", parser.ParserName, (DateTime.Now - startDateTime).TotalMilliseconds), NotificationLevel.Info);
+                parserCounter++;
+                ProgressChanged(parserCounter, totalParsers);
+            }
+            ProgressChanged(1, 1);
+            _running = false;
+        }       
+
+        /// <summary>
+        /// Tests all possible settings of the given parser
+        /// </summary>
+        /// <param name="parser"></param>
+        private void TestParser(Parser parser)
+        {
+            PossibleParserParameters possibleParserParameters = parser.GetPossibleParserParameters();
+            int combinations = possibleParserParameters.GetNumberOfSettingCombinations();
+
+            List<BestListEntry> bestList = new List<BestListEntry>();
+            for (int i = 0; i < combinations; i++)
+            {
+                if (!_running)
+                {
+                    return;
+                }
+                var settings = possibleParserParameters.GetSettings(i);
+                if (settings == null)
+                {
+                    continue;
+                }
+                parser.Prefixes = settings.Item1;
+                parser.Nulls = settings.Item2;
+                parser.DECODETextDocument = Cluster;
+
+                var textDocument = parser.GetTextDocument();
+                parser.CleanupDocument(textDocument);
+
+                var entropyValue = TextDocument.CalculateEntropy(textDocument);
+
+                BestListEntry bestListEntry = new BestListEntry();
+                bestListEntry.ParserName = parser.ParserName;
+                bestListEntry.Nulls = parser.Nulls;
+                bestListEntry.Prefixes = parser.Prefixes;
+                bestListEntry.EntropyValue = entropyValue;                
+                bestList.Add(bestListEntry);
+            }
+            bestList.Sort();
+            if(bestList.Count > 1)
+            {
+                _presentation.AddNewBestlistEntry(bestList[0]);
+                _presentation.AddNewBestlistEntry(bestList[1]);
+            }
+            else if(bestList.Count == 1)
+            {
+                _presentation.AddNewBestlistEntry(bestList[0]);
             }
         }
 
@@ -92,7 +198,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
         public void Stop()
         {
-            
+            _running = false;
         }
 
         /// <summary>
@@ -133,6 +239,91 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         private void GuiLogMessage(string message, NotificationLevel logLevel)
         {
             EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
+        }
+
+        private void ProgressChanged(double value, double max)
+        {
+            EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
+        }
+    }
+
+    /// <summary>
+    /// BestListEntry for best list of parsers
+    /// </summary>
+    public class BestListEntry : IComparable
+    {
+        public BestListEntry()
+        {
+            ParserName = string.Empty;
+            EntropyValue = 0;
+        }
+
+        public string ParserName { get; set; }
+        public double EntropyValue { get; set; }
+
+        public List<Token> Nulls = new List<Token>();
+        public List<Token> Prefixes = new List<Token>();
+
+        public string EntropyAsString
+        {
+            get
+            {
+                return "" + Math.Round(EntropyValue, 2);
+            }
+        }
+
+        public string PrefixesAsString
+        {
+            get
+            {
+                if (Prefixes.Count == 0)
+                {
+                    return string.Empty;
+                }
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 0; i < Prefixes.Count; i++)
+                {
+                    stringBuilder.Append(Prefixes[i]);
+                    if (i < Prefixes.Count - 1)
+                    {
+                        stringBuilder.Append(", ");
+                    }
+                }
+                return stringBuilder.ToString();
+            }
+        }
+
+        public string NullsAsString
+        {
+            get
+            {
+                if (Nulls.Count == 0)
+                {
+                    return string.Empty;
+                }
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 0; i < Nulls.Count; i++)
+                {
+                    stringBuilder.Append(Nulls[i]);
+                    if (i < Nulls.Count - 1)
+                    {
+                        stringBuilder.Append(", ");
+                    }
+                }
+                return stringBuilder.ToString();
+            }
+        }
+    
+        public int CompareTo(object obj)
+        {
+            if(obj is BestListEntry)
+            {
+                return EntropyValue.CompareTo(((BestListEntry)obj).EntropyValue);
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

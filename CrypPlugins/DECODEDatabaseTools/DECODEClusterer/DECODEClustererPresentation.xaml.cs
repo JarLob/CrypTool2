@@ -21,7 +21,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
-namespace Cryptool.Plugins.DECODEDatabaseTools.DECODEClusterer
+namespace Cryptool.Plugins.DECODEDatabaseTools
 {
     /// <summary>
     /// Interaktionslogik für DECODEClustererPresentation.xaml

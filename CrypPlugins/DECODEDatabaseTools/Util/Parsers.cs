@@ -33,6 +33,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             ShowCommentsPlaintextCleartext = false;
         }
 
+        public List<Token> Nulls = new List<Token>();
+        public List<Token> Prefixes = new List<Token>();
+
         /// <summary>
         /// If this is enabled, plaintext, cleartext, and comments are shown in output
         /// </summary>
@@ -244,12 +247,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the number of combinations for all possible settings
         /// </summary>
         /// <returns></returns>
-        public int GetNumberOfCombinations()
+        public int GetNumberOfSettingCombinations()
         {
-            int combinations = 1;
-            for(int numberOfNulls = MaximumNumberOfNulls; numberOfNulls >= 0; numberOfNulls--)
+            int combinations = 0;
+            for(int numberOfNulls = 0; numberOfNulls < MaximumNumberOfNulls; numberOfNulls++)
             {
-                combinations += Combinations(PossibleNulls.Count, numberOfNulls) * PossiblePrefixes.Count;
+                combinations += Combinations(PossibleNulls.Count, numberOfNulls) * (PossiblePrefixes.Count > 0 ? PossiblePrefixes.Count : 1);
             }
             return combinations;
         }
@@ -266,9 +269,47 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             for (int i = 0; i < selection; i++)
             {
                 result = result * number;
-                number--;
+                //removed -- to allow all combinations
+                //number--; 
             }
             return result;
+        }
+
+        /// <summary>
+        /// Returns the setting combination with the defined number
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="maxNumber"></param>
+        /// <returns></returns>
+        public Tuple<List<Token>, List<Token>> GetSettings(int number)
+        {
+            List<Token> prefixes = new List<Token>();
+            List<Token> nulls = new List<Token>();
+            var tuple = new Tuple<List<Token>, List<Token>>(prefixes, nulls);
+
+            if (PossiblePrefixes.Count > 0)
+            {
+                int prefixIndex = number % PossiblePrefixes.Count;                
+                number = number / PossiblePrefixes.Count;
+                prefixes.Add(PossiblePrefixes[prefixIndex]);
+            }
+
+            while(number > 0)
+            {
+                int nullIndex = number % PossibleNulls.Count;
+                number = number / PossibleNulls.Count;
+                if (nulls.Contains(PossibleNulls[nullIndex]))
+                {
+                    //we return null if we generate a setting with double nulls
+                    return null;
+                }
+                else
+                {
+                    nulls.Add(PossibleNulls[nullIndex]);
+                }
+                
+            }
+            return tuple;
         }
     }
 
@@ -622,8 +663,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// Also supports "nulls"
     /// </summary>
     public class NoNomenclatureParser : SimpleSingleTokenParser
-    {
-        private List<Token> _nulls = new List<Token>();
+    {        
         private uint _regularElementLength = 0;
 
         /// <summary>
@@ -644,7 +684,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             ParserName = GetType().Name;
             if (nulls != null)
             {
-                _nulls = nulls;
+                Nulls = nulls;
             }
             _regularElementLength = regularElementLength;
         }
@@ -711,7 +751,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             tagTokenBuilder.Append(symbol);
                             continue;
                         }
-                        if (_nulls.Contains(symbol))
+                        if (Nulls.Contains(symbol))
                         {
                             //we found a null, thus, add a new token of previously collected characters
                             if (tokenBuilder.Length > 0)
@@ -791,9 +831,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// Also supports nomenclature elements of three digits followed by a null digit
     /// </summary>
     public class Nomenclature3DigitsEndingWithNull1DigitsParser : SimpleSingleTokenParser
-    {
-        private List<Token> _nulls = new List<Token>();
-
+    {       
         /// <summary>
         /// Void Constructor
         /// </summary>
@@ -811,7 +849,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             ParserName = GetType().Name;
             if (nulls != null)
             {
-                _nulls = nulls;
+                Nulls = nulls;
             }
         }
 
@@ -877,7 +915,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             tagTokenBuilder.Append(symbol);
                             continue;
                         }
-                        if (_nulls.Contains(symbol))
+                        if (Nulls.Contains(symbol))
                         {
                             //we found a null, thus, add a new token of previously collected characters
                             if (tokenBuilder.Length == 3)
@@ -969,9 +1007,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// Also supports nomenclature elements of three digits followed by two nulls
     /// </summary>
     public class Nomenclature3DigitsEndingWithNull2DigitsParser : SimpleSingleTokenParser
-    {
-        private List<Token> _nulls = new List<Token>();
-
+    {        
         /// <summary>
         /// Void Constructor
         /// </summary>
@@ -989,7 +1025,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             ParserName = GetType().Name;
             if (nulls != null)
             {
-                _nulls = nulls;
+                Nulls = nulls;
             }
         }
 
@@ -1060,7 +1096,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
                         if (tokenBuilder.Length == 5)
                         {
-                            if (_nulls.Contains(tokenBuilder.GetToken(3, 2, null)))
+                            if (Nulls.Contains(tokenBuilder.GetToken(3, 2, null)))
                             {
                                 //we have 2 null symbols => thus, we have a nomenclature element and 2 nulls
                                 Token nomenclatureToken = tokenBuilder.GetToken(0, 3, line);
@@ -1086,7 +1122,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         }
                         if (tokenBuilder.Length == 4)
                         {
-                            if (_nulls.Contains(tokenBuilder.GetToken(2, 2, null)))
+                            if (Nulls.Contains(tokenBuilder.GetToken(2, 2, null)))
                             {
                                 Token regularElementToken = tokenBuilder.GetToken(0, 2, line);
                                 regularElementToken.TokenType = TokenType.RegularElement;
@@ -1103,7 +1139,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         }
                         if (tokenBuilder.Length == 2)
                         {
-                            if (_nulls.Contains(tokenBuilder.GetToken(0, 2, null)))
+                            if (Nulls.Contains(tokenBuilder.GetToken(0, 2, null)))
                             {
                                 Token nullToken = new Token(line);
                                 nullToken.TokenType = TokenType.NullElement;
@@ -1144,7 +1180,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// <returns></returns>
         public override PossibleParserParameters GetPossibleParserParameters()
         {
-            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(4);
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
             //add all digits from 00 to 99 as possible null symbols
             for (int i = 0; i < 10; i++)
             {
@@ -1167,9 +1203,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// </summary>
     public class Nomenclature4DigitsWithPrefixParser : SimpleSingleTokenParser
     {
-        private List<Token> _nulls = new List<Token>();
-        private List<Token> _nomenclaturePrefix = new List<Token>();
-
         /// <summary>
         /// Void Constructor
         /// </summary>
@@ -1188,11 +1221,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             ParserName = GetType().Name;
             if (nomenclaturePrefix != null)
             {
-                _nomenclaturePrefix = nomenclaturePrefix;
+                Prefixes = nomenclaturePrefix;
             }
             if (nulls != null)
             {
-                _nulls = nulls;
+                Nulls = nulls;
             }
         }
 
@@ -1267,7 +1300,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             Symbol symbol0 = tokenBuilder[0];
                             Symbol symbol1 = tokenBuilder[1];
 
-                            if (_nomenclaturePrefix.Contains(symbol0))
+                            if (Prefixes.Contains(symbol0))
                             {
                                 //nomenclature
                                 Token nomenclatureToken = tokenBuilder.GetToken(0, 4, line);
@@ -1277,7 +1310,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 continue;
 
                             }
-                            else if (_nulls.Contains(symbol0) && _nulls.Contains(symbol1))
+                            else if (Nulls.Contains(symbol0) && Nulls.Contains(symbol1))
                             {
                                 //null length 2
                                 Token nullToken = tokenBuilder.GetToken(0, 2, line);
@@ -1286,7 +1319,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 tokenBuilder.Remove(0, 2);
                                 continue;
                             }
-                            else if (_nulls.Contains(symbol0))
+                            else if (Nulls.Contains(symbol0))
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
@@ -1295,7 +1328,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 tokenBuilder.Remove(0, 1);
                                 continue;
                             }
-                            else if (_nulls.Contains(symbol1) || _nomenclaturePrefix.Contains(symbol1))
+                            else if (Nulls.Contains(symbol1) || Prefixes.Contains(symbol1))
                             {
                                 //code length 1
                                 Token regularElementToken = tokenBuilder.GetToken(0, 1, line);
@@ -1331,7 +1364,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 while (tokenBuilder.Length > 0)
                 {
                     Symbol symbol0 = tokenBuilder[0];
-                    if (_nulls.Contains(symbol0))
+                    if (Nulls.Contains(symbol0))
                     {
                         //null length 1
                         Token nullToken = tokenBuilder.GetToken(0, 1, lastLine);
@@ -1350,7 +1383,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     else
                     {
                         Symbol symbol1 = tokenBuilder[1];
-                        if (_nulls.Contains(symbol1))
+                        if (Nulls.Contains(symbol1))
                         {
                             //code length 1
                             Token regularElementToken = tokenBuilder.GetToken(0, 1, lastLine);
@@ -1408,9 +1441,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// Parser for Francia 4-1
     /// </summary>
     public class Francia4Parser : SimpleSingleTokenParser
-    {
-        private List<Token> _nulls = new List<Token>();
-
+    {       
         /// <summary>
         /// Void Constructor
         /// </summary>
@@ -1428,7 +1459,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             ParserName = GetType().Name;
             if (nulls != null)
             {
-                _nulls = nulls;
+                Nulls = nulls;
             }
         }
 
@@ -1503,7 +1534,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
                         if (!is_nomenclature)
                         {
-                            if (_nulls.Contains(symbol))
+                            if (Nulls.Contains(symbol))
                             {
                                 //null symbol
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
@@ -1524,7 +1555,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         if (is_nomenclature && tokenBuilder.Length == 3)
                         {
                             //nomenclature 3
-                            if (!_nulls.Contains(tokenBuilder[2]))
+                            if (!Nulls.Contains(tokenBuilder[2]))
                             {
                                 Token nomenclatureToken = tokenBuilder.GetToken(0, 3, line);
                                 nomenclatureToken.TokenType = TokenType.NomenclatureElement;
@@ -1532,7 +1563,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 tokenBuilder.Clear();
                             }
                             //nomenclature 2 with null
-                            else if (_nulls.Contains(tokenBuilder[2]))
+                            else if (Nulls.Contains(tokenBuilder[2]))
                             {
                                 Token nomenclatureToken = tokenBuilder.GetToken(0, 2, line);
                                 nomenclatureToken.TokenType = TokenType.NomenclatureElement;
@@ -1572,7 +1603,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 while (tokenBuilder.Length > 0)
                 {
                     Symbol symbol0 = tokenBuilder[0];
-                    if (_nulls.Contains(symbol0))
+                    if (Nulls.Contains(symbol0))
                     {
                         //null length 1
                         Token nullToken = tokenBuilder.GetToken(0, tokenBuilder.Length - 1, lastLine);
@@ -1617,9 +1648,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// Parser for Francia 6-1
     /// </summary>
     public class Francia6Parser : SimpleSingleTokenParser
-    {
-        private List<Token> _nulls = new List<Token>();
-
+    {      
         /// <summary>
         /// Void Constructor
         /// </summary>
@@ -1637,7 +1666,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             ParserName = GetType().Name;
             if (nulls != null)
             {
-                _nulls = nulls;
+                Nulls = nulls;
             }
         }
 
@@ -1713,8 +1742,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 tokenBuilder[1].Top == string.Empty &&
                                 tokenBuilder[2].Top == string.Empty &&
                                 tokenBuilder[3].Top == string.Empty &&
-                                _nulls.Contains(tokenBuilder[2]) &&
-                                _nulls.Contains(tokenBuilder[3]))
+                                Nulls.Contains(tokenBuilder[2]) &&
+                                Nulls.Contains(tokenBuilder[3]))
                             {
                                 //nomenclature element
                                 Token nomenclatureToken = tokenBuilder.GetToken(0, 4, line);
@@ -1736,7 +1765,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             else
                             {
                                 Symbol symbol0 = tokenBuilder[0];
-                                if (_nulls.Contains(symbol0))
+                                if (Nulls.Contains(symbol0))
                                 {
                                     //null length 1
                                     Token nullToken = tokenBuilder.GetToken(0, 1, line);
@@ -1771,7 +1800,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 while (tokenBuilder.Length > 0)
                 {
                     Symbol symbol0 = tokenBuilder[0];
-                    if (_nulls.Contains(symbol0))
+                    if (Nulls.Contains(symbol0))
                     {
                         //null length 1
                         Token nullToken = tokenBuilder.GetToken(0, 1, lastLine);
@@ -1816,9 +1845,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// Parser for Francia 17-1
     /// </summary>
     public class Francia17Parser : SimpleSingleTokenParser
-    {
-        private List<Token> _nulls = new List<Token>();
-
+    {      
         private List<Token> _evenDigits = new List<Token>();
         private List<Token> _oddDigits = new List<Token>();
 
@@ -1841,7 +1868,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             ParserName = GetType().Name;
             if (nulls != null)
             {
-                _nulls = nulls;
+                Nulls = nulls;
             }
 
             for (int i = 0; i < 10; i++)
@@ -1944,7 +1971,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             Symbol symbol1 = tokenBuilder[1];
 
                             // 11
-                            if (_nulls.Contains(symbol0) && !symbol0.Top.Equals(".") && _nulls.Contains(symbol1))
+                            if (Nulls.Contains(symbol0) && !symbol0.Top.Equals(".") && Nulls.Contains(symbol1))
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
@@ -1955,7 +1982,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             }
 
                             // 13^
-                            if (_nulls.Contains(symbol0) && !symbol0.Top.Equals(".") && symbol1.Top.Equals("."))
+                            if (Nulls.Contains(symbol0) && !symbol0.Top.Equals(".") && symbol1.Top.Equals("."))
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
@@ -1985,7 +2012,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             Symbol symbol3 = tokenBuilder[3];
 
                             // 1^.7
-                            if (_nulls.Contains(symbol0) && symbol0.Top.Equals(".") && _oddDigits.Contains(symbol1))
+                            if (Nulls.Contains(symbol0) && symbol0.Top.Equals(".") && _oddDigits.Contains(symbol1))
                             {
                                 //code length 2
                                 Token regularElementToken = tokenBuilder.GetToken(0, 2, line);
@@ -1996,7 +2023,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             }
 
                             // 1 *
-                            if (_nulls.Contains(symbol0) && !symbol0.Top.Equals("."))
+                            if (Nulls.Contains(symbol0) && !symbol0.Top.Equals("."))
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
@@ -2075,7 +2102,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 while (tokenBuilder.Length > 0)
                 {
                     Symbol symbol0 = tokenBuilder[0];
-                    if (_nulls.Contains(symbol0) && !symbol0.Top.Equals("."))
+                    if (Nulls.Contains(symbol0) && !symbol0.Top.Equals("."))
                     {
                         //null length 1
                         Token nullToken = tokenBuilder.GetToken(0, 1, lastLine);
@@ -2131,8 +2158,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// Parser for Francia 18-1
     /// </summary>
     public class Francia18Parser : SimpleSingleTokenParser
-    {
-        private List<Token> _nulls = new List<Token>();
+    {        
         private List<Token> _specialSet = new List<Token>();
 
         /// <summary>
@@ -2152,7 +2178,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             ParserName = GetType().Name;
             if (nulls != null)
             {
-                _nulls = nulls;
+                Nulls = nulls;
             }
 
             string specialSetString = "+-,";
@@ -2241,7 +2267,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             Symbol symbol3 = tokenBuilder[3];
                             Symbol symbol4 = tokenBuilder[4];
                             // 846,8
-                            if (_nulls.Contains(symbol0) && _specialSet.Contains(symbol3) && _nulls.Contains(symbol4))
+                            if (Nulls.Contains(symbol0) && _specialSet.Contains(symbol3) && Nulls.Contains(symbol4))
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
@@ -2266,7 +2292,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 continue;
                             }
                             // 80^.4
-                            if (_nulls.Contains(symbol0) && symbol1.Top.Equals("."))
+                            if (Nulls.Contains(symbol0) && symbol1.Top.Equals("."))
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
@@ -2285,7 +2311,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             Symbol symbol2 = tokenBuilder[2];
                             Symbol symbol3 = tokenBuilder[3];
                             // 26,8
-                            if (!_nulls.Contains(symbol0) && _specialSet.Contains(symbol2) && _nulls.Contains(symbol3))
+                            if (!Nulls.Contains(symbol0) && _specialSet.Contains(symbol2) && Nulls.Contains(symbol3))
                             {
                                 //nomenclature length 3
                                 Token nomenclatureToken = tokenBuilder.GetToken(0, 3, line);
@@ -2295,7 +2321,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 continue;
                             }
                             // 8588
-                            if (_nulls.Contains(symbol0) && _nulls.Contains(symbol2) && _nulls.Contains(symbol3))
+                            if (Nulls.Contains(symbol0) && Nulls.Contains(symbol2) && Nulls.Contains(symbol3))
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
@@ -2310,7 +2336,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 continue;
                             }
                             // 86,2    862+
-                            if (_nulls.Contains(symbol0) && !_nulls.Contains(symbol1) && (_specialSet.Contains(symbol2) || _specialSet.Contains(symbol3)))
+                            if (Nulls.Contains(symbol0) && !Nulls.Contains(symbol1) && (_specialSet.Contains(symbol2) || _specialSet.Contains(symbol3)))
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
@@ -2325,7 +2351,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 continue;
                             }
                             // 0^.8
-                            if (symbol2.Top.Equals(".") && _nulls.Contains(symbol1))
+                            if (symbol2.Top.Equals(".") && Nulls.Contains(symbol1))
                             {
                                 // nomenclature length 2
                                 Token nomenclatureToken = tokenBuilder.GetToken(0, 2, line);
@@ -2352,7 +2378,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 continue;
                             }
                             //588
-                            if (_nulls.Contains(symbol1) && _nulls.Contains(symbol2))
+                            if (Nulls.Contains(symbol1) && Nulls.Contains(symbol2))
                             {
                                 // nomenclature length 2
                                 Token nomenclatureToken = tokenBuilder.GetToken(0, 2, line);
@@ -2373,7 +2399,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 line.Tokens.Add(unknownToken);
                                 tokenBuilder.Remove(0, 1);
                             }
-                            if (_nulls.Contains(tokenBuilder[0]))
+                            if (Nulls.Contains(tokenBuilder[0]))
                             {
                                 //null length 1
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
@@ -2381,7 +2407,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 line.Tokens.Add(nullToken);
                                 tokenBuilder.Remove(0, 1);
                             }
-                            else if (_nulls.Contains(tokenBuilder[1]))
+                            else if (Nulls.Contains(tokenBuilder[1]))
                             {
                                 //code length 1
                                 Token codeToken = tokenBuilder.GetToken(0, 1, line);
@@ -2423,7 +2449,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         lastLine.Tokens.Add(unknownToken);
                         tokenBuilder.Remove(0, 1);
                     }
-                    if (_nulls.Contains(tokenBuilder[0]))
+                    if (Nulls.Contains(tokenBuilder[0]))
                     {
                         //null length 1
                         Token nullToken = tokenBuilder.GetToken(0, 1, lastLine);
@@ -2431,7 +2457,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         lastLine.Tokens.Add(nullToken);
                         tokenBuilder.Remove(0, 1);
                     }
-                    else if (_nulls.Contains(tokenBuilder[1]))
+                    else if (tokenBuilder.Length == 1 || Nulls.Contains(tokenBuilder[1]))
                     {
                         //code length 1
                         Token codeToken = tokenBuilder.GetToken(0, 1, lastLine);
@@ -2474,10 +2500,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
     /// <summary>
     /// Parser for variable length homophonic ciphers
+    /// Has no void constructor, this, is not used by DECODEParserTester
     /// </summary>
     public class VariableLengthHomophonicCipher : SimpleSingleTokenParser
     {
-        private List<Token> _nulls = new List<Token>();
         private Decoder _decoder;
 
         public VariableLengthHomophonicCipher(List<Token> nulls, Decoder decoder)
@@ -2485,7 +2511,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             ParserName = GetType().Name;
             if (nulls != null)
             {
-                _nulls = nulls;
+                Nulls = nulls;
             }
             _decoder = decoder;
         }
@@ -2570,7 +2596,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             for (int length = tokenBuilder.Length; length > 0; length--)
                             {
                                 Token token = tokenBuilder.GetToken(0, length, line);
-                                if (_nulls.Contains(token))
+                                if (Nulls.Contains(token))
                                 {
                                     token.TokenType = TokenType.NullElement;
                                     line.Tokens.Add(token);
@@ -2616,7 +2642,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     for (int length = tokenBuilder.Length; length > 0; length--)
                     {
                         Token token = tokenBuilder.GetToken(0, length, lastLine);
-                        if (_nulls.Contains(token))
+                        if (Nulls.Contains(token))
                         {
                             token.TokenType = TokenType.NullElement;
                             lastLine.Tokens.Add(token);
@@ -2651,7 +2677,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// <returns></returns>
         public override PossibleParserParameters GetPossibleParserParameters()
         {
-            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(4);
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
             //add all digits from 0 to 9 as possible null symbols
             for (int i = 0; i < 10; i++)
             {
@@ -2681,9 +2707,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// Parser for Francia 346-1
     /// </summary>
     public class Francia346Parser : SimpleSingleTokenParser
-    {
-        private List<Token> _nulls = new List<Token>();
-
+    {       
         /// <summary>
         /// Void Constructor
         /// </summary>
@@ -2701,7 +2725,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             ParserName = GetType().Name;
             if (nulls != null)
             {
-                _nulls = nulls;
+                Nulls = nulls;
             }
         }
 
@@ -2779,7 +2803,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             Symbol symbol2 = tokenBuilder[2];
                             Symbol symbol3 = tokenBuilder[3];
 
-                            if (_nulls.Contains(symbol0))
+                            if (Nulls.Contains(symbol0))
                             {
                                 Token nullToken = tokenBuilder.GetToken(0, 1, line);
                                 nullToken.TokenType = TokenType.NullElement;
@@ -2788,7 +2812,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 continue;
                             }
 
-                            if (_nulls.Contains(tokenBuilder.GetToken(0, 2, null)))
+                            if (Nulls.Contains(tokenBuilder.GetToken(0, 2, null)))
                             {
                                 Token nullToken = tokenBuilder.GetToken(0, 2, line);
                                 nullToken.TokenType = TokenType.NullElement;
@@ -2797,7 +2821,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 continue;
                             }                            
 
-                            if (_nulls.Contains(symbol3))
+                            if (Nulls.Contains(symbol3))
                             {
                                 Token codeToken = tokenBuilder.GetToken(0, 3, line);
                                 codeToken.TokenType = TokenType.NomenclatureElement;
@@ -2811,7 +2835,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 continue;
                             }
 
-                            if (_nulls.Contains(tokenBuilder.GetToken(3, 2, line)))
+                            if (Nulls.Contains(tokenBuilder.GetToken(3, 2, line)))
                             {
                                 Token codeToken = tokenBuilder.GetToken(0, 3, line);
                                 codeToken.TokenType = TokenType.NomenclatureElement;
@@ -2849,7 +2873,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 {
                     Symbol symbol0 = tokenBuilder[0];
 
-                    if (_nulls.Contains(symbol0))
+                    if (Nulls.Contains(symbol0))
                     {
                         Token nullToken = tokenBuilder.GetToken(0, 1, lastLine);
                         nullToken.TokenType = TokenType.NullElement;
@@ -2858,7 +2882,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         continue;
                     }
 
-                    if (tokenBuilder.Length >= 2 && _nulls.Contains(tokenBuilder.GetToken(0, 2, null)))
+                    if (tokenBuilder.Length >= 2 && Nulls.Contains(tokenBuilder.GetToken(0, 2, null)))
                     {
                         Token nullToken = tokenBuilder.GetToken(0, 2, lastLine);
                         nullToken.TokenType = TokenType.NullElement;
@@ -2892,7 +2916,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// <returns></returns>
         public override PossibleParserParameters GetPossibleParserParameters()
         {
-            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(4);
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
             //add all digits from 0 to 9 as possible null symbols
             for (int i = 0; i < 10; i++)
             {
@@ -3095,7 +3119,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// <returns></returns>
         public override PossibleParserParameters GetPossibleParserParameters()
         {
-            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(4);
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
             //add all digits from 0 to 9 as possible null symbols
             for (int i = 0; i < 10; i++)
             {

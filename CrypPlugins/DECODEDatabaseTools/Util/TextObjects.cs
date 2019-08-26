@@ -188,6 +188,44 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
             return false;
         }
+
+        /// <summary>
+        /// Calculates the entropy over all regular elements of the given TextDocument
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        public static double CalculateEntropy(TextDocument document)
+        {
+            double entropy = 0;
+            double N = 0;
+            Dictionary<Token, double> absoluteCounts = new Dictionary<Token, double>();
+            foreach (var page in document.Pages)
+            {
+                foreach (var line in page.Lines)
+                {
+                    foreach (var token in line.Tokens)
+                    {
+                        if (token.TokenType == TokenType.RegularElement)
+                        {
+                            if (!absoluteCounts.ContainsKey(token))
+                            {
+                                absoluteCounts.Add(token, 0);
+                            }
+                            absoluteCounts[token]++;
+                            N++;
+                        }
+                    }
+                }
+            }
+
+            foreach (var absoluteValue in absoluteCounts.Values)
+            {
+                double Pi = absoluteValue / N;
+                entropy += Math.Log(Pi, 2) * Pi;
+            }
+
+            return -1 * entropy;
+        }
     }
 
     /// <summary>
