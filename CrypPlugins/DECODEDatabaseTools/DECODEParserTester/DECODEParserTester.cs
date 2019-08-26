@@ -158,7 +158,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 parser.DECODETextDocument = Cluster;
 
                 var textDocument = parser.GetTextDocument();
-                parser.CleanupDocument(textDocument);
 
                 var entropyValue = TextDocument.CalculateEntropy(textDocument);
 

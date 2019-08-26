@@ -250,7 +250,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         public int GetNumberOfSettingCombinations()
         {
             int combinations = 0;
-            for(int numberOfNulls = 0; numberOfNulls < MaximumNumberOfNulls; numberOfNulls++)
+            for(int numberOfNulls = 0; numberOfNulls <= MaximumNumberOfNulls; numberOfNulls++)
             {
                 combinations += Combinations(PossibleNulls.Count, numberOfNulls) * (PossiblePrefixes.Count > 0 ? PossiblePrefixes.Count : 1);
             }
@@ -398,7 +398,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                             {
                                 for (int i = 1; i < split.Length; i++)
                                 {
-                                    document.CatalogName += split[i].Trim();
+                                    string formattedText = split[i].Trim();
+                                    //remove starting backslash
+                                    if (formattedText.StartsWith(@"\"))
+                                    {
+                                        formattedText = formattedText.Substring(1, formattedText.Length - 1);
+                                    }
+                                    document.CatalogName += formattedText;
                                     if (i < split.Length - 2)
                                     {
                                         document.CatalogName += " ";
