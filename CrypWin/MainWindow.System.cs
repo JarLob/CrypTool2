@@ -41,8 +41,7 @@ namespace Cryptool.CrypWin
     public partial class MainWindow
     {
         private ProcessPriorityClass oldPriority = Process.GetCurrentProcess().PriorityClass;
-        private List<IEditor> runningEditorsOnSuspend = null;
-        private bool p2pConnectedOnSuspend = false;
+        private List<IEditor> runningEditorsOnSuspend = new List<IEditor>();
         private bool runOnBattery = false;
 
         #region System Events
@@ -89,7 +88,7 @@ namespace Cryptool.CrypWin
                     GuiLogMessage("Computer suspending!", NotificationLevel.Info);
 
                     //Stop all workspaces:
-                    runningEditorsOnSuspend = new List<IEditor>();
+                    runningEditorsOnSuspend.Clear();
                     foreach (var editor in editorToFileMap.Keys)
                     {
                         if (editor.CanStop)
