@@ -212,10 +212,10 @@
     <value>Replace</value>
   </data>
   <data name="OperationList9" xml:space="preserve">
-    <value>Sort (Ascending)</value>
+    <value>Sort (ascending)</value>
   </data>
   <data name="OperationList10" xml:space="preserve">
-    <value>Sort (Descending)</value>
+    <value>Sort (descending)</value>
   </data>
   <data name="OperationList11" xml:space="preserve">
     <value>Reverse</value>

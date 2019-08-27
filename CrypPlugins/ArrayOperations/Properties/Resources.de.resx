@@ -137,7 +137,7 @@
     <value>Outputwert</value>
   </data>
   <data name="OutputValueTooltip" xml:space="preserve">
-    <value>Der Outputwert enthält das Ergebnis der Array-Operation.</value>
+    <value>Der Output enthält das Ergebnis der Array-Operation.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Array Operations</value>
@@ -253,7 +253,7 @@
     <value>Der Input {0} ist nicht gesetzt.</value>
   </data>
   <data name="InputNotValidError" xml:space="preserve">
-    <value>Der Input {0} ist nicht valide: {1}</value>
+    <value>Der Input {0} ist nicht gültig: {1}</value>
   </data>
   <data name="IndexError" xml:space="preserve">
     <value>Der Wert {0} ist nicht im erlaubten Bereich: {1}..{2}</value>
