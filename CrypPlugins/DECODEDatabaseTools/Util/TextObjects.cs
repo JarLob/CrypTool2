@@ -258,14 +258,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             return stringBuilder.ToString();
         }
 
-        public string Visualize
-        {
-            get
-            {
-                return ToString();
-            }
-        }
-
         public TextDocument ParentTextDocument
         {
             get;
@@ -328,14 +320,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             return stringBuilder.ToString();
         }
 
-        public string Visualize
-        {
-            get
-            {
-                return ToString();
-            }
-        }
-
         public Page ParentPage
         {
             get;
@@ -368,7 +352,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// <summary>
     /// A Token is a single element of text
     /// </summary>
-    public class Token
+    public class Token : IComparable
     {
         private List<Symbol> _symbols = new List<Symbol>();
         private List<Symbol> _decodedSymbols = new List<Symbol>();
@@ -580,6 +564,38 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 stringBuilder.Append(symbol.ToString());              
             }
             return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Compares two Tokens by comparing their Symbols
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public int CompareTo(object obj)
+        {
+            var token = obj as Token;
+            if (token == null)
+            {
+                return -1;
+            }
+            if(Symbols.Count == 0 || token.Symbols.Count == 0 || Symbols.Count != token.Symbols.Count)
+            {
+                return -1;
+            }
+            else
+            {
+                for (int i = 0; i < Symbols.Count; i++)
+                {
+                    int compareTo = Symbols[i].CompareTo(token.Symbols[i]);
+                    if (compareTo != 0)
+                    {
+                        //we found two symbols that are not equal
+                        return compareTo;
+                    }
+                }
+                //if we are here, all symbols were equal
+                return 0;
+            }
         }
     }
 

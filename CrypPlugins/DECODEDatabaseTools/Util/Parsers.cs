@@ -82,7 +82,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the possible parser parameters for the automatic parser test
         /// </summary>
         /// <returns></returns>
-        public abstract PossibleParserParameters GetPossibleParserParameters();
+        public abstract PossibleParserParameters GetPossibleParserParameters(int maxNumberOfNulls);
         
         /// <summary>
         /// Event that allows the parsers to log to the CT2 gui
@@ -276,25 +276,32 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         }
 
         /// <summary>
-        /// Returns the setting combination with the defined number
+        /// Returns the parameter combination with the defined number
+        /// returns 0, if the number would generate a paramters object with the same null twice or more, e.g. "8, 8"
         /// </summary>
         /// <param name="number"></param>
         /// <param name="maxNumber"></param>
         /// <returns></returns>
-        public Tuple<List<Token>, List<Token>> GetSettings(int number)
+        public Parameters GetParameters(int number)
         {
             List<Token> prefixes = new List<Token>();
             List<Token> nulls = new List<Token>();
-            var tuple = new Tuple<List<Token>, List<Token>>(prefixes, nulls);
 
             if (PossiblePrefixes.Count > 0)
             {
-                int prefixIndex = number % PossiblePrefixes.Count;                
+                int prefixIndex = number % PossiblePrefixes.Count;
                 number = number / PossiblePrefixes.Count;
                 prefixes.Add(PossiblePrefixes[prefixIndex]);
             }
 
-            while(number > 0)
+            int reduction = PossibleNulls.Count;
+            while (number >= reduction)
+            {
+                number = number - reduction / PossibleNulls.Count;
+                reduction = reduction * PossibleNulls.Count;
+            }
+
+            while (number > 0)
             {
                 int nullIndex = number % PossibleNulls.Count;
                 number = number / PossibleNulls.Count;
@@ -307,9 +314,101 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 {
                     nulls.Add(PossibleNulls[nullIndex]);
                 }
-                
+
             }
-            return tuple;
+            nulls.Sort();
+            prefixes.Sort();
+
+            return new Parameters() {
+                Prefixes = prefixes,
+                Nulls = nulls
+            };
+        }
+    }
+
+    /// <summary>
+    /// Actual parameters that are used for testing
+    /// </summary>
+    public class Parameters : IComparable
+    {
+        public List<Token> Prefixes
+        {
+            get;
+            set;
+        }
+        public List<Token> Nulls
+        {
+            get;
+            set;
+        }
+
+        public int CompareTo(object obj)
+        {
+            Parameters parameters = obj as Parameters;
+            if (obj == null)
+            {
+                return -1;
+            }
+            if (Nulls.Count != parameters.Nulls.Count || Prefixes.Count != parameters.Prefixes.Count)
+            {
+                return -1;
+            }
+            else
+            {
+                for (int i = 0; i < Prefixes.Count; i++)
+                {
+                    int compareTo = Prefixes[i].CompareTo(parameters.Prefixes[i]);
+                    if (compareTo != 0)
+                    {
+                        //we found two symbols that are not equal
+                        return compareTo;
+                    }
+                }
+                for (int i = 0; i < Nulls.Count; i++)
+                {
+                    int compareTo = Nulls[i].CompareTo(parameters.Nulls[i]);
+                    if (compareTo != 0)
+                    {
+                        //we found two symbols that are not equal
+                        return compareTo;
+                    }
+                }                
+                //if we are here, all symbols were equal
+                return 0;
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            Parameters parameters = obj as Parameters;
+            if(obj == null)
+            {
+                return false;
+            }
+            return parameters.GetHashCode().Equals(GetHashCode());
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 13;
+            int counter = 1;
+            if (Prefixes != null)
+            {
+                foreach (var token in Prefixes)
+                {
+                    hashCode = hashCode * 7 + token.GetHashCode() * counter;
+                    counter++;
+                }
+            }
+            if (Nulls != null)
+            {
+                foreach (var token in Nulls)
+                {
+                    hashCode = hashCode * 19 + token.GetHashCode() * counter;
+                    counter++;
+                }
+            }
+            return hashCode;
         }
     }
 
@@ -658,7 +757,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns default empty PossibleParserParameters
         /// </summary>
         /// <returns></returns>
-        public override PossibleParserParameters GetPossibleParserParameters()
+        public override PossibleParserParameters GetPossibleParserParameters(int maxNumberOfNulls)
         {
             return null;
         }
@@ -816,9 +915,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns possible parser parameters for this Parser
         /// </summary>
         /// <returns></returns>
-        public override PossibleParserParameters GetPossibleParserParameters()
+        public override PossibleParserParameters GetPossibleParserParameters(int maxNumberOfNulls)
         {
-            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(1);
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(maxNumberOfNulls);
             //add all digits from 0 to 9 as possible null symbols
             for (int i = 0; i < 10; i++)
             {
@@ -992,9 +1091,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns possible parser parameters for this Parser
         /// </summary>
         /// <returns></returns>
-        public override PossibleParserParameters GetPossibleParserParameters()
+        public override PossibleParserParameters GetPossibleParserParameters(int maxNumberOfNulls)
         {
-            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(maxNumberOfNulls);
             //add all digits from 0 to 9 as possible null symbols
             for (int i = 0; i < 10; i++)
             {
@@ -1184,9 +1283,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns possible parser parameters for this Parser
         /// </summary>
         /// <returns></returns>
-        public override PossibleParserParameters GetPossibleParserParameters()
+        public override PossibleParserParameters GetPossibleParserParameters(int maxNumberOfNulls)
         {
-            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(maxNumberOfNulls);
             //add all digits from 00 to 99 as possible null symbols
             for (int i = 0; i < 10; i++)
             {
@@ -1420,9 +1519,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns possible parser parameters for this Parser
         /// </summary>
         /// <returns></returns>
-        public override PossibleParserParameters GetPossibleParserParameters()
+        public override PossibleParserParameters GetPossibleParserParameters(int maxNumberOfNulls)
         {
-            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(maxNumberOfNulls);
             //add all digits from 0 to 9 as possible null symbols
             //add all digits from 0 to 9 as possible prefix symbols
             for (int i = 0; i < 10; i++)
@@ -1634,9 +1733,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns possible parser parameters for this Parser
         /// </summary>
         /// <returns></returns>
-        public override PossibleParserParameters GetPossibleParserParameters()
+        public override PossibleParserParameters GetPossibleParserParameters(int maxNumberOfNulls)
         {
-            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(maxNumberOfNulls);
             //add all digits from 0 to 9 as possible null symbols
             for (int i = 0; i < 10; i++)
             {
@@ -1831,9 +1930,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns possible parser parameters for this Parser
         /// </summary>
         /// <returns></returns>
-        public override PossibleParserParameters GetPossibleParserParameters()
+        public override PossibleParserParameters GetPossibleParserParameters(int maxNumberOfNulls)
         {
-            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(maxNumberOfNulls);
             //add all digits from 0 to 9 as possible null symbols
             for (int i = 0; i < 10; i++)
             {
@@ -2144,9 +2243,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns possible parser parameters for this Parser
         /// </summary>
         /// <returns></returns>
-        public override PossibleParserParameters GetPossibleParserParameters()
+        public override PossibleParserParameters GetPossibleParserParameters(int maxNumberOfNulls)
         {
-            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(maxNumberOfNulls);
             //add all digits from 0 to 9 as possible null symbols
             for (int i = 0; i < 10; i++)
             {
@@ -2488,9 +2587,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns possible parser parameters for this Parser
         /// </summary>
         /// <returns></returns>
-        public override PossibleParserParameters GetPossibleParserParameters()
+        public override PossibleParserParameters GetPossibleParserParameters(int maxNumberOfNulls)
         {
-            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(maxNumberOfNulls);
             //add all digits from 0 to 9 as possible null symbols
             for (int i = 0; i < 10; i++)
             {
@@ -2681,9 +2780,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns possible parser parameters for this Parser
         /// </summary>
         /// <returns></returns>
-        public override PossibleParserParameters GetPossibleParserParameters()
+        public override PossibleParserParameters GetPossibleParserParameters(int maxNumberOfNulls)
         {
-            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(maxNumberOfNulls);
             //add all digits from 0 to 9 as possible null symbols
             for (int i = 0; i < 10; i++)
             {
@@ -2920,9 +3019,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns possible parser parameters for this Parser
         /// </summary>
         /// <returns></returns>
-        public override PossibleParserParameters GetPossibleParserParameters()
+        public override PossibleParserParameters GetPossibleParserParameters(int maxNumberOfNulls)
         {
-            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(maxNumberOfNulls);
             //add all digits from 0 to 9 as possible null symbols
             for (int i = 0; i < 10; i++)
             {
@@ -3123,9 +3222,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns possible parser parameters for this Parser
         /// </summary>
         /// <returns></returns>
-        public override PossibleParserParameters GetPossibleParserParameters()
+        public override PossibleParserParameters GetPossibleParserParameters(int maxNumberOfNulls)
         {
-            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(2);
+            PossibleParserParameters possibleParserParameters = new PossibleParserParameters(maxNumberOfNulls);
             //add all digits from 0 to 9 as possible null symbols
             for (int i = 0; i < 10; i++)
             {

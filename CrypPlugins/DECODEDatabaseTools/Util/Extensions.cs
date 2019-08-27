@@ -80,7 +80,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             }
             return false;
         }
-
+      
         /// <summary>
         /// Extension method for a string array to concat it to another string array
         /// </summary>

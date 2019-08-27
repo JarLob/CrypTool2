@@ -27,28 +27,28 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Entropy" DisplayMemberBinding="{Binding Path=EntropyValue}" Width="100">
+                    <GridViewColumn Header="Significant" DisplayMemberBinding="{Binding Path=Significant}" Width="100">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Nulls" DisplayMemberBinding="{Binding Path=NullsAsString}" Width="200">
+                    <GridViewColumn Header="Entropy" DisplayMemberBinding="{Binding Path=EntropyValue}" Width="150">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Prefixes" DisplayMemberBinding="{Binding Path=PrefixesAsString}" Width="200">
+                    <GridViewColumn Header="Nulls" DisplayMemberBinding="{Binding Path=NullsAsString}" Width="150">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Cluster info" DisplayMemberBinding="{Binding Path=ClusterInfo}" Width="500">
+                    <GridViewColumn Header="Prefixes" DisplayMemberBinding="{Binding Path=PrefixesAsString}" Width="150">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>

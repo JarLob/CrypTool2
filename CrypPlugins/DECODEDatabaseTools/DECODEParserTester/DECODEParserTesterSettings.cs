@@ -25,11 +25,25 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 {
     public class DECODEParserTesterSettings : ISettings
     {
+        private int _maximumNumberOfNulls = 2;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void Initialize()
         {
             
+        }
+
+        [TaskPane("MaximumNumberOfNullsCaption", "MaximumNumberOfNullsTooltip", null, 1, false, ControlType.NumericUpDown,ValidationType.RangeInteger, 1, 100)]
+        public int MaximumNumberOfNulls
+        {
+            get { return _maximumNumberOfNulls; }
+            set
+            {
+                if ((value) != _maximumNumberOfNulls)
+                {
+                    _maximumNumberOfNulls = value;
+                }
+            }
         }
     }
 }

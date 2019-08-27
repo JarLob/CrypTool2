@@ -33,7 +33,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     public class DECODEParserTester : ICrypComponent
     {
         private DECODEParserTestPresentation _presentation = new DECODEParserTestPresentation();
+        private DECODEParserTesterSettings _settings = new DECODEParserTesterSettings();
         private bool _running = false;
+        private int _maximumNumberOfNulls = 2;
 
         [PropertyInfo(Direction.InputData, "ClusterCaption", "ClusterTooltip", true)]
         public string Cluster
@@ -44,8 +46,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
         public ISettings Settings
         {
-            get;
-            set;
+            get
+            {
+                return _settings;
+            }
         }
 
         public UserControl Presentation
@@ -68,6 +72,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
         public void Execute()
         {
+            _maximumNumberOfNulls = _settings.MaximumNumberOfNulls;
             _running = true;
             _presentation.ClearBestlist();
             List<Type> parserTypes = GetAllParsers();
@@ -82,7 +87,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 }
                 var parser = (Parser)Activator.CreateInstance(parserType);
 
-                var possibleParserParameters = parser.GetPossibleParserParameters();
+                var possibleParserParameters = parser.GetPossibleParserParameters(_maximumNumberOfNulls);
                 if (possibleParserParameters == null ||
                     (possibleParserParameters.PossiblePrefixes.Count == 0 && possibleParserParameters.PossibleNulls.Count == 0))
                 {
@@ -105,7 +110,14 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 }
                 var parser = (Parser)Activator.CreateInstance(parserType);
 
-                var possibleParserParameters = parser.GetPossibleParserParameters();
+                var possibleParserParameters = parser.GetPossibleParserParameters(_maximumNumberOfNulls);
+
+                if(possibleParserParameters.PossibleNulls.Count > 10 && possibleParserParameters.MaximumNumberOfNulls > 0)
+                {
+                    //we reduce the testing right now to 1 null for parsers with more than 10 possible nulls
+                    possibleParserParameters.MaximumNumberOfNulls = 1;
+                }
+
                 if (possibleParserParameters == null ||
                     (possibleParserParameters.PossiblePrefixes.Count == 0 && possibleParserParameters.PossibleNulls.Count == 0))
                 {
@@ -113,11 +125,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 }
 
                 //test all settings of the parser
-                GuiLogMessage(string.Format("Testing all {0} setting combinations of {1}", parser.GetPossibleParserParameters().GetNumberOfSettingCombinations(), parser.ParserName), NotificationLevel.Info);
+                GuiLogMessage(string.Format("Testing all {0} setting combinations of {1}", possibleParserParameters.GetNumberOfSettingCombinations(), parser.ParserName), NotificationLevel.Info);
                 DateTime startDateTime = DateTime.Now;
                 try
                 {                    
-                    TestParser(parser);
+                    TestParser(parser, possibleParserParameters);
                 }
                 catch (Exception ex)
                 {
@@ -136,25 +148,36 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// Tests all possible settings of the given parser
         /// </summary>
         /// <param name="parser"></param>
-        private void TestParser(Parser parser)
-        {
-            PossibleParserParameters possibleParserParameters = parser.GetPossibleParserParameters();
+        private void TestParser(Parser parser, PossibleParserParameters possibleParserParameters)
+        {           
             int combinations = possibleParserParameters.GetNumberOfSettingCombinations();
 
             List<BestListEntry> bestList = new List<BestListEntry>();
+            List<Parameters> alreadyTestedParamters = new List<Parameters>();
+
             for (int i = 0; i < combinations; i++)
             {
                 if (!_running)
                 {
                     return;
                 }
-                var settings = possibleParserParameters.GetSettings(i);
-                if (settings == null)
+                var parameters = possibleParserParameters.GetParameters(i);
+                if (parameters == null)
                 {
+                    //GetParameters returns null if it would generate a setting with a null twice, e.g. "8, 8"
                     continue;
                 }
-                parser.Prefixes = settings.Item1;
-                parser.Nulls = settings.Item2;
+                if (alreadyTestedParamters.Contains(parameters))
+                {
+                    //The GetParameters method also returns "8,1" and "1,8" for nulls
+                    //thus, we do not check these again
+                    //we can compare since the GetSettings sorts the result, e.g. it returns "1,8" twice
+                    continue;
+                }
+                alreadyTestedParamters.Add(parameters);
+
+                parser.Prefixes = parameters.Prefixes;
+                parser.Nulls = parameters.Nulls;
                 parser.DECODETextDocument = Cluster;
 
                 var textDocument = parser.GetTextDocument();
@@ -171,6 +194,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             bestList.Sort();
             if(bestList.Count > 1)
             {
+                if(Math.Abs(1 - (bestList[0].EntropyValue / bestList[1].EntropyValue)) > 0.045)
+                {
+                    bestList[0].Significant = true;
+                }
                 _presentation.AddNewBestlistEntry(bestList[0]);
                 _presentation.AddNewBestlistEntry(bestList[1]);
             }
@@ -255,6 +282,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             ParserName = string.Empty;
             EntropyValue = 0;
+            Significant = false;
         }
 
         public string ParserName { get; set; }
@@ -312,7 +340,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 return stringBuilder.ToString();
             }
         }
-    
+
+        /// <summary>
+        /// Is this entry significant, i.e. is the value below it at most 5% different?
+        /// </summary>
+        public bool Significant
+        {
+            get;
+            set;
+        }
+
         public int CompareTo(object obj)
         {
             if(obj is BestListEntry)
