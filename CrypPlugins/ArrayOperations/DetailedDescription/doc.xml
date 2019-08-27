@@ -1,148 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <documentation>
-  <language culture="en" />
-  <language culture="ru" />
-  <language culture="de-DE" />
-  <introduction lang="en">
-    By using the ArrayOperation module, various transformations on arrays of arbitrary element type can be performed. 
-  </introduction>
-  <introduction lang="ru">To be written yet</introduction>
-  <introduction lang="de-DE">
-    Array-Operationen ermöglichen es, Arrays umzuformen oder über deren Inhalt einen Wert zu berechnen, unabhängig vom Typ der Array-Elemente.<br />
+    <language culture="en" />
+    <language culture="ru" />
+    <language culture="de-DE" />
+    <introduction lang="en">
+        By using the ArrayOperation module, various transformations on arrays of arbitrary element type can be performed. 
+    </introduction>
+    <introduction lang="ru">To be written yet</introduction>
+    <introduction lang="de-DE">
+        Array-Operationen ermöglichen es, Arrays umzuformen oder über deren Inhalt einen Wert zu berechnen, unabhängig vom Typ der Array-Elemente.<br />
 
-  </introduction>
-  <usage lang="en">
-    An Array operation module has various inputs to accommodate the different possible operations:
-    <ul>
-      <li>
-        <b>Array</b>-typed inputs, here called A1, A2 and A3
-      </li>
-      <li>
-        <b>Object</b>-typed inputs, here called O1, O2
-      </li>
-      <li>
-        <b>Integer (Int32)</b>-typed inputs, here called I1 and I2
-      </li>
-    </ul>
+    </introduction>
+    <usage lang="en">
+        An Array operation module has various inputs to accommodate the different possible operations:
+        <ul>
+            <li>
+                <b>Array</b>-typed inputs, here called A1, A2 and A3
+            </li>
+            <li>
+                <b>Object</b>-typed inputs, here called O1, O2
+            </li>
+            <li>
+                <b>Integer (Int32)</b>-typed inputs, here called I1 and I2
+            </li>
+        </ul>
 
-    When providing the input values, three primary inputs of type "Array" can be used and are referred to as A1, A2 and A3. To make it easier to specify simple arrays, A2 and A3 can be specified by alternatively providing a single value for the generically "Object"-typed inputs O1 and O2, respectively. For example, if A2 is not specified, but O1 is, then the second array is assumed as {O1}, the one-element array that contains the value O1. <br /> Integer values are provided through inputs I1 and I2.
-    Therefore, when "A2" is referenced in the following descriptions of the operations, unless explicitely noted, O2 can be provided instead to specify a single-argument array.
-    <br />
-    <br />
-    Output of an array operation can either be an array R or an integer r.
+        When providing the input values, three primary inputs of type "Array" can be used and are referred to as A1, A2 and A3. To make it easier to specify simple arrays, A2 and A3 can be specified by alternatively providing a single value for the generically "Object"-typed inputs O1 and O2, respectively. For example, if A2 is not specified, but O1 is, then the second array is assumed as {O1}, the one-element array that contains the value O1. <br /> Integer values are provided through inputs I1 and I2.
+        Therefore, when "A2" is referenced in the following descriptions of the operations, unless explicitely noted, O2 can be provided instead to specify a single-argument array.
+        <br />
+        <br />
+        Output of an array operation can either be an array R or an integer r.
 
-    <enum>
-      <item>
-        <b>Set-Union:</b>From inputs A1 and A2, R is produced so that all elements that appear in A1 and A2 are contained. No element is present more than once in R.
-      </item>
-      <item>
-        <b>Set-Complement (Difference):</b>From inputs A1 and A2, R is produced so that all elements that appear in A1 and not in A2 are contained in R. No element is present more than once in R.
-      </item>
-      <item>
-        <b>Set-Intersection</b> From inputs A1 and A2, R is produced so that all elements that appear in A1 and at the same time appear in A2 are contained in R. No element is present more than once in R.
-      </item>
-      <item>
-        <b>Concatenate</b>A1 and A2 are appended to each other to yield R. The length of R is then the sum of the lengths of A1 and A2.
-      </item>
-      <item>
-        <b>Equals: </b>A1 and A2 are tested for element-wise equality: If they have the same length, and do contain the same elements in the same order, then the output r is true (bool value), else, it is false.
-      </item>
-      <item>
-        <b>Unique: </b>A1 is stripped of all duplicate elements into the output array R.</item>
-      <item>
-        <b>Length</b>The output r (integer value) is the length of A1.
-      </item>
-      <item>
-        <b>Replace: </b>Every occurrence of the array A2 in the array A1 is replaced with the array A3. Single-element replacement can comfortably be specified with the one-element-array specification of the second and third arrays through inputs O1 and O2.
-      </item>
-      <item>
-        <b>Sort (Ascending): </b>The array A1 is sorted in ascending order and returned as output R.
-      </item>
-      <item>
-        <b>Sort (Descending): </b>The array A1 is sorted in descending order and returned as output R.
-      </item>
-      <item>
-          <b>Reverse</b>Reverts the order of the elements of A1 and stores it in
-          the output R.
-      </item>
-      <item>
-        <b>Subarray: </b>Stores in output R a sub-array of A1. The integer input I1 specifies the zero-based index of the first element to be selected into R. The input I2 specifies the length of the sub-array.
-      </item>
-      <item>
-        <b>IndexOf: </b> Stores in output r the zero-based index of the object from input O1 in the array A1. A1 value of -1 is stored if O1 is not present in A1
-      </item>
-      <item>
-        <b>Contains: </b>Stores in output r the boolean value of whether the object from input O1 is present in the array A1
-      </item>
-    </enum>
-  </usage>
-  <usage lang="ru">У StringOperations есть два текстовых ввода и два ввода номера. В зависимости от используемой функции эти входы имеют различное использование. Он также имеет текстовый вывод, вывод текстового массива и вывод номера. Конкатенация: требуется только текстовые входы. Объединение заданных текстов в одну новую строку. Требуется первые текстовые входы и оба ввода номера (X, Y). Возвращает подстроку из X с длиной Y в тексте outputTo-Lowercase: преобразует заданный текст первого текстового ввода в текст только с строчными буквами. To-Uppercase: преобразует заданный текст первого текстового ввода в текст только с прописными буквамиLengthOf : Возвращает длину текста первого ввода текста на номере outputCompareTo: сравнивает оба заданных текста и возвращает 0, если они равны, -1, если текст один «меньше», чем текст 2, и 1, если текст один больше &amp;#39;than text twoTrim: удаляет пробелы с начала и конца (вкладка Leerzeichen) текста ввода текста один и возвращает этот текст в текст outputIndexOf: дает первый индекс заполнения текста текстового ввода два в тексте ввод текста один в число outputEquals: возвращает 1 на выходе номера, если тексты равны, в противном случае 0Replace: заменяет все подстроки первой входной строки, которые равны второй входной строке третьей входной строкой и возвращает новую строку RegexReplace: Заменяет все подстроки первой входной строки, которые соответствуют регулярному выражению, предоставленному второй входной строкой, третьей входной строкой и возвращает новую строкуSplit: разделяет текст первого ввода на строку, указанную во втором текстовом вводе ( или в новых строках, если ввод пуст) и возвращает полученные подстроки в выходном массивеBlock: Форматирует заданную строку в блоки (используя параметр «Размер блока») после удаления всех символов пробелов. Обороты: Обрабатывает заданный текст первого ввода текста. Заменяет пароль. : Добавляет пароль спереди или хвосту строки и удаляет все возникающие символы этого пароля в остальной части stringDistinct: удаляет все двойные вхождения одних и тех же символов из строкиLevenshtein Distance: вычисляет расстояние Levenshtein двух заданных строк</usage>
-  <usage lang="de-DE">
-      Verschiedene Eingaben sind für die Array-Operationen notwendig. Nicht alle müssen immer mit Werten belegt werden.
-  <ul>
-    <li>
-      <b>Array</b>-Typ Eingaben: A1, A2 und A3
-    </li>
-    <li>
-      <b>Object</b>-Typ Eingaben: O1 und O2
-    </li>
-    <li>
-      <b>Integer (Int32)</b>-Typ Eingaben, I1 und I2
-    </li>
-  </ul>
-    
-  Wenn Array-Werte für die Eingaben A2 und A3 angegeben werden müssen, können auch alternativ Werte für jeweils O1 und O2 angegeben werden. Es wird dann ein ein-elementiges Array anstelle des fehlenden Array-Wertes verwendet. Wenn zum Beispiel beide Eingaben A2 und O1 belegt sind, hat der Array-Wert Vorrang. Wenn A2 jedoch nicht belegt ist, so wird das Array {O1} angenommen.
- 
-  <br />
-    <br />
-  Die Ausgabe der Array-Operationen erfolgt über den Array-Typ-Ausgang (hier R genannt) und einen Ausgang vom Typ Object, welcher für alle nicht-Array-Rückgabewerte verantwortlich ist.
+        <enum>
+            <item>
+                <b>Set-Union:</b>From inputs A1 and A2, R is produced so that all elements that appear in A1 and A2 are contained. No element is present more than once in R.
+            </item>
+            <item>
+                <b>Set-Complement (Difference):</b>From inputs A1 and A2, R is produced so that all elements that appear in A1 and not in A2 are contained in R. No element is present more than once in R.
+            </item>
+            <item>
+                <b>Set-Intersection</b> From inputs A1 and A2, R is produced so that all elements that appear in A1 and at the same time appear in A2 are contained in R. No element is present more than once in R.
+            </item>
+            <item>
+                <b>Concatenate</b>A1 and A2 are appended to each other to yield R. The length of R is then the sum of the lengths of A1 and A2.
+            </item>
+            <item>
+                <b>Equals: </b>A1 and A2 are tested for element-wise equality: If they have the same length, and do contain the same elements in the same order, then the output r is true (bool value), else, it is false.
+            </item>
+            <item>
+                <b>Unique: </b>A1 is stripped of all duplicate elements into the output array R.</item>
+            <item>
+                <b>Length</b>The output r (integer value) is the length of A1.
+            </item>
+            <item>
+                <b>Replace: </b>Every occurrence of the array A2 in the array A1 is replaced with the array A3. Single-element replacement can comfortably be specified with the one-element-array specification of the second and third arrays through inputs O1 and O2.
+            </item>
+            <item>
+                <b>Sort (Ascending): </b>The array A1 is sorted in ascending order and returned as output R.
+            </item>
+            <item>
+                <b>Sort (Descending): </b>The array A1 is sorted in descending order and returned as output R.
+            </item>
+            <item>
+                <b>Reverse</b>Reverts the order of the elements of A1 and stores it in
+                the output R.
+            </item>
+            <item>
+                <b>Subarray: </b>Stores in output R a sub-array of A1. The integer input I1 specifies the zero-based index of the first element to be selected into R. The input I2 specifies the length of the sub-array.
+            </item>
+            <item>
+                <b>IndexOf: </b> Stores in output r the zero-based index of the object from input O1 in the array A1. A1 value of -1 is stored if O1 is not present in A1
+            </item>
+            <item>
+                <b>Contains: </b>Stores in output r the boolean value of whether the object from input O1 is present in the array A1
+            </item>
+        </enum>
+    </usage>
+    <usage lang="ru">У StringOperations есть два текстовых ввода и два ввода номера. В зависимости от используемой функции эти входы имеют различное использование. Он также имеет текстовый вывод, вывод текстового массива и вывод номера. Конкатенация: требуется только текстовые входы. Объединение заданных текстов в одну новую строку. Требуется первые текстовые входы и оба ввода номера (X, Y). Возвращает подстроку из X с длиной Y в тексте outputTo-Lowercase: преобразует заданный текст первого текстового ввода в текст только с строчными буквами. To-Uppercase: преобразует заданный текст первого текстового ввода в текст только с прописными буквамиLengthOf : Возвращает длину текста первого ввода текста на номере outputCompareTo: сравнивает оба заданных текста и возвращает 0, если они равны, -1, если текст один «меньше», чем текст 2, и 1, если текст один больше &amp;#39;than text twoTrim: удаляет пробелы с начала и конца (вкладка Leerzeichen) текста ввода текста один и возвращает этот текст в текст outputIndexOf: дает первый индекс заполнения текста текстового ввода два в тексте ввод текста один в число outputEquals: возвращает 1 на выходе номера, если тексты равны, в противном случае 0Replace: заменяет все подстроки первой входной строки, которые равны второй входной строке третьей входной строкой и возвращает новую строку RegexReplace: Заменяет все подстроки первой входной строки, которые соответствуют регулярному выражению, предоставленному второй входной строкой, третьей входной строкой и возвращает новую строкуSplit: разделяет текст первого ввода на строку, указанную во втором текстовом вводе ( или в новых строках, если ввод пуст) и возвращает полученные подстроки в выходном массивеBlock: Форматирует заданную строку в блоки (используя параметр «Размер блока») после удаления всех символов пробелов. Обороты: Обрабатывает заданный текст первого ввода текста. Заменяет пароль. : Добавляет пароль спереди или хвосту строки и удаляет все возникающие символы этого пароля в остальной части stringDistinct: удаляет все двойные вхождения одних и тех же символов из строкиLevenshtein Distance: вычисляет расстояние Levenshtein двух заданных строк</usage>
+    <usage lang="de-DE">
+        Verschiedene Eingaben sind für die Array-Operationen notwendig. Nicht alle müssen immer mit Werten belegt werden.
+        <ul>
+            <li>
+                <b>Array</b>-Typ Eingaben: A1, A2 und A3
+            </li>
+            <li>
+                <b>Object</b>-Typ Eingaben: O1 und O2
+            </li>
+            <li>
+                <b>Integer (Int32)</b>-Typ Eingaben, I1 und I2
+            </li>
+        </ul>
 
-    <enum>
-    <item>
-      <b>Mengen-Vereinigung:</b>Bildet die Vereinigung der Mengen A1 und A2 und gibt diese in R aus. Lässt keine doppelten Elemente im Ergebnis.
-    </item>
-    <item>
-      <b>Mengen-Komplement (Differenz):</b>Bildet die Mengen-Differenz (Komplement) von A1 und A2 und gibt diese in R aus. Lässt keine doppelten Elemente im Ergebnis.
-    </item>
-    <item>
-      <b>Mengen-Schnitt: </b> Bildet die Schittmenge aus A1 und A2 und gibt diese in R aus. Lässt keine doppelten Elemente im Ergebnis.
-    </item>
-    <item>
-      <b>Konkatenation: </b>Reiht die Arrays A1 und A2 aneinander und gibt dies in R aus.
-    </item>
-    <item>
-      <b>Gleichheit: </b>Testet, ob A1 und A2 gleich sind (gleiche Elemente beinhalten) und gibt den bool-Wert in r aus.
-    </item>
-    <item>
-      <b>Keine Duplikate:</b>Löscht Duplikate aus A1 und gibt das Ergebnis in R aus.</item>
-    <item>
-      <b>Länge: </b>Gibt die Länge von A1 in r aus.
-    </item>
-    <item>
-      <b>Ersetzen: </b>Ersetzt Vorkommnisse von A2 in A1 durch A3 und gibt das Ergebnis in R aus.
-    </item>
-      <item>
-        <b> Sortieren (Aufsteigend): </b>Sortiert A1 aufsteigend und gibt das Ergebnis in R aus.
-      </item>
-      <item>
-      <b>Sortieren (Absteigend): </b> Sortiert A1 absteigend und gibt das Ergebnis in R aus.
-    </item>
-    <item>
-      <b>Umkehren: </b>Kehrt die Reihenfolge der Elemente in A1 um und gibt das Ergebnis in R aus.
-    </item>
-    <item>
-      <b>Subarray: </b>Das Subarray, welches in A1 mit dem Null-basierten Index I1 beginnt und die Länge I2 hat, wird in R abgelegt.
-    </item>
-    <item>
-      <b>IndexOf: </b>Das Array A2 wird in A1 gesucht und dessen null-basierten Index wird in r abgelegt. Wenn A2 nicht in A1 vorkommt, wird der Wert -1 in r abgelegt.
-    </item>
-    <item>
-      <b>Enthält: </b>Gibt den boolschen Wert in r aus, der aussagt, ob das Array A2 in A1 vorkommt
-    </item>
-  </enum>
-  </usage>
-  <presentation lang="en"></presentation>
-  <presentation lang="de-DE"></presentation>
-  <references>
-  </references>
+        Wenn Array-Werte für die Eingaben A2 und A3 angegeben werden müssen, können auch alternativ Werte für jeweils O1 und O2 angegeben werden. Es wird dann ein ein-elementiges Array anstelle des fehlenden Array-Wertes verwendet. Wenn zum Beispiel beide Eingaben A2 und O1 belegt sind, hat der Array-Wert Vorrang. Wenn A2 jedoch nicht belegt ist, so wird das Array {O1} angenommen.
+
+        <br />
+        <br />
+        Die Ausgabe der Array-Operationen erfolgt über den Array-Typ-Ausgang (hier R genannt) und einen Ausgang vom Typ Object, welcher für alle nicht-Array-Rückgabewerte verantwortlich ist.
+
+        <enum>
+            <item>
+                <b>Mengen-Vereinigung:</b>Bildet die Vereinigung der Mengen A1 und A2 und gibt diese in R aus. Lässt keine doppelten Elemente im Ergebnis.
+            </item>
+            <item>
+                <b>Mengen-Komplement (Differenz):</b>Bildet die Mengen-Differenz (Komplement) von A1 und A2 und gibt diese in R aus. Lässt keine doppelten Elemente im Ergebnis.
+            </item>
+            <item>
+                <b>Mengen-Schnitt: </b> Bildet die Schittmenge aus A1 und A2 und gibt diese in R aus. Lässt keine doppelten Elemente im Ergebnis.
+            </item>
+            <item>
+                <b>Konkatenation: </b>Reiht die Arrays A1 und A2 aneinander und gibt dies in R aus.
+            </item>
+            <item>
+                <b>Gleichheit: </b>Testet, ob A1 und A2 gleich sind (gleiche Elemente beinhalten) und gibt den bool-Wert in r aus.
+            </item>
+            <item>
+                <b>Keine Duplikate:</b>Löscht Duplikate aus A1 und gibt das Ergebnis in R aus.</item>
+            <item>
+                <b>Länge: </b>Gibt die Länge von A1 in r aus.
+            </item>
+            <item>
+                <b>Ersetzen: </b>Ersetzt Vorkommnisse von A2 in A1 durch A3 und gibt das Ergebnis in R aus.
+            </item>
+            <item>
+                <b> Sortieren (Aufsteigend): </b>Sortiert A1 aufsteigend und gibt das Ergebnis in R aus.
+            </item>
+            <item>
+                <b>Sortieren (Absteigend): </b> Sortiert A1 absteigend und gibt das Ergebnis in R aus.
+            </item>
+            <item>
+                <b>Umkehren: </b>Kehrt die Reihenfolge der Elemente in A1 um und gibt das Ergebnis in R aus.
+            </item>
+            <item>
+                <b>Subarray: </b>Das Subarray, welches in A1 mit dem Null-basierten Index I1 beginnt und die Länge I2 hat, wird in R abgelegt.
+            </item>
+            <item>
+                <b>IndexOf: </b>Das Array A2 wird in A1 gesucht und dessen Null-basierter Index wird in r abgelegt. Wenn A2 nicht in A1 vorkommt, wird der Wert -1 in r abgelegt.
+            </item>
+            <item>
+                <b>Enthält: </b>Gibt den boolschen Wert in r aus, der aussagt, ob das Array A2 in A1 vorkommt
+            </item>
+        </enum>
+    </usage>
+    <presentation lang="en"></presentation>
+    <presentation lang="de-DE"></presentation>
+    <references>
+    </references>
 </documentation>
