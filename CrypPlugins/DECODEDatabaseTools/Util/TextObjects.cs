@@ -43,7 +43,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// <summary>
     /// A document contains one or more pages
     /// </summary>
-    public class TextDocument
+    public class TextDocument : ICloneable
     {
         public List<Page> Pages
         {
@@ -226,12 +226,25 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
             return -1 * entropy;
         }
+
+        public object Clone()
+        {
+            TextDocument textDocument = (TextDocument)MemberwiseClone();
+            textDocument.Pages = new List<Page>();
+            foreach(var page in Pages)
+            {
+                Page clone = (Page)page.Clone();
+                clone.ParentTextDocument = textDocument;
+                textDocument.Pages.Add(clone);
+            }        
+            return textDocument;
+        }
     }
 
     /// <summary>
     /// A page contains several lines of text
     /// </summary>
-    public class Page
+    public class Page : ICloneable
     {      
         public int PageNumber { get; set; }
 
@@ -256,6 +269,19 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 stringBuilder.Append(Environment.NewLine);
             }
             return stringBuilder.ToString();
+        }
+
+        public object Clone()
+        {
+            Page page = (Page)MemberwiseClone();
+            page.Lines = new List<Line>();
+            foreach(var line in Lines)
+            {
+                Line clone = (Line)line.Clone();
+                clone.ParentPage = page;
+                page.Lines.Add(clone);
+            }          
+            return page;
         }
 
         public TextDocument ParentTextDocument
@@ -287,7 +313,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// <summary>
     /// A line is a single line of text consisting of tokens
     /// </summary>
-    public class Line
+    public class Line : ICloneable
     {
         public int LineNumber { get; set; }
 
@@ -318,6 +344,19 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 stringBuilder.Append(token.ToString());               
             }
             return stringBuilder.ToString();
+        }
+
+        public object Clone()
+        {
+            Line line = (Line)MemberwiseClone();
+            line.Tokens = new List<Token>();
+            foreach(var token in Tokens)
+            {
+                Token clone = (Token)token.Clone();
+                clone.ParentLine = line;
+                line.Tokens.Add(clone);
+            }
+            return line;
         }
 
         public Page ParentPage
@@ -352,7 +391,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
     /// <summary>
     /// A Token is a single element of text
     /// </summary>
-    public class Token : IComparable
+    public class Token : IComparable, ICloneable
     {
         private List<Symbol> _symbols = new List<Symbol>();
         private List<Symbol> _decodedSymbols = new List<Symbol>();
@@ -597,6 +636,26 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 return 0;
             }
         }
+
+        public object Clone()
+        {
+            Token token = (Token)MemberwiseClone();
+            token.Symbols = new List<Symbol>();
+            token.DecodedSymbols = new List<Symbol>();
+            foreach(var symbol in Symbols)
+            {
+                Symbol clone = (Symbol)symbol.Clone();
+                clone.ParentToken = token;
+                token.Symbols.Add(clone);
+            }
+            foreach (var symbol in DecodedSymbols)
+            {
+                Symbol clone = (Symbol)symbol.Clone();
+                clone.ParentToken = token;
+                token.DecodedSymbols.Add(clone);
+            }
+            return token;
+        }
     }
 
     /// <summary>
@@ -725,12 +784,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// <returns></returns>
         public object Clone()
         {
-            Symbol symbol = new Symbol(ParentToken);
-            symbol.Top = Top;
-            symbol.TopChangesSymbol = TopChangesSymbol;
-            symbol.Text = Text;
-            symbol.Bottom = Bottom;
-            symbol.BottomChangesSymbol = BottomChangesSymbol;
+            Symbol symbol = (Symbol)MemberwiseClone();           
             return symbol;
         }
 

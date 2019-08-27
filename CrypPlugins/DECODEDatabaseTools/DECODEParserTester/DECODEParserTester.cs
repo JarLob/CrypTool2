@@ -96,6 +96,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 totalParsers++;
             }
 
+            ///Convert cluster string into parsed single Token Parser
+            SimpleSingleTokenParser simpleSingleTokenParser = new SimpleSingleTokenParser();
+            simpleSingleTokenParser.DECODETextDocument = Cluster;
+            TextDocument textDocument = simpleSingleTokenParser.GetTextDocument();
+            simpleSingleTokenParser.CleanupDocument(textDocument);
+
             //here, we do the actual testing of each parser
             int parserCounter = 0;
             foreach (var parserType in parserTypes)
@@ -125,18 +131,20 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 }
 
                 //test all settings of the parser
-                GuiLogMessage(string.Format("Testing all {0} setting combinations of {1}", possibleParserParameters.GetNumberOfSettingCombinations(), parser.ParserName), NotificationLevel.Info);
+                GuiLogMessage(string.Format("Testing all {0} parser setting combinations of {1}", possibleParserParameters.GetNumberOfSettingCombinations(), parser.ParserName), NotificationLevel.Info);
                 DateTime startDateTime = DateTime.Now;
                 try
-                {                    
-                    TestParser(parser, possibleParserParameters);
+                {
+                    //we clone the textdocument to avoid double parsing with SingleSimpleTokenParser
+                    var clone = (TextDocument)textDocument.Clone();
+                    TestParser(clone, parser, possibleParserParameters);
                 }
                 catch (Exception ex)
                 {
                     GuiLogMessage(string.Format("Exception occured during parser test of {0}:", parser.ParserName, ex.Message), NotificationLevel.Error);
                     continue;
                 }
-                GuiLogMessage(string.Format("Tested all setting combinations of {0} done in {1} ms !", parser.ParserName, (DateTime.Now - startDateTime).TotalMilliseconds), NotificationLevel.Info);
+                GuiLogMessage(string.Format("Tested all parser setting combinations of {0} done in {1} seconds!", parser.ParserName, (DateTime.Now - startDateTime).TotalMilliseconds / 1000), NotificationLevel.Info);
                 parserCounter++;
                 ProgressChanged(parserCounter, totalParsers);
             }
@@ -148,7 +156,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// Tests all possible settings of the given parser
         /// </summary>
         /// <param name="parser"></param>
-        private void TestParser(Parser parser, PossibleParserParameters possibleParserParameters)
+        private void TestParser(TextDocument textDocument, Parser parser, PossibleParserParameters possibleParserParameters)
         {           
             int combinations = possibleParserParameters.GetNumberOfSettingCombinations();
 
@@ -178,11 +186,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
                 parser.Prefixes = parameters.Prefixes;
                 parser.Nulls = parameters.Nulls;
-                parser.DECODETextDocument = Cluster;
+                TextDocument myParsedTextDocument = parser.GetTextDocument((TextDocument)textDocument.Clone());
 
-                var textDocument = parser.GetTextDocument();
-
-                var entropyValue = TextDocument.CalculateEntropy(textDocument);
+                var entropyValue = TextDocument.CalculateEntropy(myParsedTextDocument);
 
                 BestListEntry bestListEntry = new BestListEntry();
                 bestListEntry.ParserName = parser.ParserName;

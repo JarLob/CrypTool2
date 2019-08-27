@@ -76,7 +76,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed TextDocument
         /// </summary>
         /// <returns></returns>
-        public abstract TextDocument GetTextDocument();
+        public abstract TextDocument GetTextDocument(TextDocument textDocument = null);
 
         /// <summary>
         /// Returns the possible parser parameters for the automatic parser test
@@ -429,7 +429,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns a parsed document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetTextDocument()
+        public override TextDocument GetTextDocument(TextDocument textDocument = null)
         {
             if (string.IsNullOrEmpty(DECODETextDocument))
             {
@@ -798,15 +798,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetTextDocument()
+        public override TextDocument GetTextDocument(TextDocument textDocument = null)
         {
-            TextDocument document = base.GetTextDocument();
-            if (document == null)
+            if (textDocument == null)
+            {
+                textDocument = base.GetTextDocument();
+            }
+            if (textDocument == null)
             {
                 return null;
             }
 
-            foreach (Page page in document.Pages)
+            foreach (Page page in textDocument.Pages)
             {
                 //create new tokens based on the "old" tokens
                 TokenBuilder tokenBuilder = new TokenBuilder();
@@ -908,7 +911,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 }
             }
 
-            return document;
+            return textDocument;
         }
 
         /// <summary>
@@ -962,15 +965,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetTextDocument()
+        public override TextDocument GetTextDocument(TextDocument textDocument = null)
         {
-            TextDocument document = base.GetTextDocument();
-            if (document == null)
+            if (textDocument == null)
+            {
+                textDocument = base.GetTextDocument();
+            }
+            if (textDocument == null)
             {
                 return null;
             }
 
-            foreach (Page page in document.Pages)
+            foreach (Page page in textDocument.Pages)
             {
                 //create new tokens based on the "old" tokens
                 TokenBuilder tokenBuilder = new TokenBuilder();
@@ -1084,7 +1090,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     tokenBuilder.Remove(0, len);
                 }
             }
-            return document;
+            return textDocument;
         }
 
         /// <summary>
@@ -1138,15 +1144,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetTextDocument()
+        public override TextDocument GetTextDocument(TextDocument textDocument = null)
         {
-            TextDocument document = base.GetTextDocument();
-            if (document == null)
+            if (textDocument == null)
+            {
+                textDocument = base.GetTextDocument();
+            }
+            if (textDocument == null)
             {
                 return null;
             }
 
-            foreach (Page page in document.Pages)
+            foreach (Page page in textDocument.Pages)
             {
                 //create new tokens based on the "old" tokens
                 TokenBuilder tokenBuilder = new TokenBuilder();
@@ -1276,7 +1285,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     tokenBuilder.Remove(0, len);
                 }
             }
-            return document;
+            return textDocument;
         }
 
         /// <summary>
@@ -1338,15 +1347,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetTextDocument()
+        public override TextDocument GetTextDocument(TextDocument textDocument = null)
         {
-            TextDocument document = base.GetTextDocument();
-            if (document == null)
+            if (textDocument == null)
+            {
+                textDocument = base.GetTextDocument();
+            }
+            if (textDocument == null)
             {
                 return null;
             }
 
-            foreach (Page page in document.Pages)
+            foreach (Page page in textDocument.Pages)
             {
                 //create new tokens based on the "old" tokens
                 TokenBuilder tokenBuilder = new TokenBuilder();
@@ -1512,7 +1524,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     }
                 }
             }
-            return document;
+            return textDocument;
         }
 
         /// <summary>
@@ -1572,10 +1584,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetTextDocument()
+        public override TextDocument GetTextDocument(TextDocument textDocument = null)
         {
-            TextDocument document = base.GetTextDocument();
-            if (document == null)
+            if (textDocument == null)
+            {
+                textDocument = base.GetTextDocument();
+            }
+            if (textDocument == null)
             {
                 return null;
             }
@@ -1588,7 +1603,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             bool is_a_tag = false;
             bool is_nomenclature = false;
 
-            foreach (Page page in document.Pages)
+            foreach (Page page in textDocument.Pages)
             {
                 foreach (Line line in page.Lines)
                 {
@@ -1726,7 +1741,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     }
                 }
             }
-            return document;
+            return textDocument;
         }
 
         /// <summary>
@@ -1779,15 +1794,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetTextDocument()
+        public override TextDocument GetTextDocument(TextDocument textDocument = null)
         {
-            TextDocument document = base.GetTextDocument();
-            if (document == null)
+            if (textDocument == null)
+            {
+                textDocument = base.GetTextDocument();
+            }
+            if (textDocument == null)
             {
                 return null;
             }
 
-            foreach (Page page in document.Pages)
+            foreach (Page page in textDocument.Pages)
             {
                 //create new tokens based on the "old" tokens
                 TokenBuilder tokenBuilder = new TokenBuilder();
@@ -1923,7 +1941,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     }
                 }
             }
-            return document;
+            return textDocument;
         }
 
         /// <summary>
@@ -2005,15 +2023,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetTextDocument()
+        public override TextDocument GetTextDocument(TextDocument textDocument = null)
         {
-            TextDocument document = base.GetTextDocument();
-            if (document == null)
+            if (textDocument == null)
+            {
+                textDocument = base.GetTextDocument();
+            }
+            if (textDocument == null)
             {
                 return null;
             }
 
-            foreach (Page page in document.Pages)
+            foreach (Page page in textDocument.Pages)
             {
                 //create new tokens based on the "old" tokens
                 TokenBuilder tokenBuilder = new TokenBuilder();
@@ -2236,7 +2257,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     }
                 }
             }
-            return document;
+            return textDocument;
         }
 
         /// <summary>
@@ -2301,15 +2322,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetTextDocument()
+        public override TextDocument GetTextDocument(TextDocument textDocument = null)
         {
-            TextDocument document = base.GetTextDocument();
-            if (document == null)
+            if (textDocument == null)
+            {
+                textDocument = base.GetTextDocument();
+            }
+            if (textDocument == null)
             {
                 return null;
             }
 
-            foreach (Page page in document.Pages)
+            foreach (Page page in textDocument.Pages)
             {
                 //create new tokens based on the "old" tokens
                 TokenBuilder tokenBuilder = new TokenBuilder();
@@ -2580,7 +2604,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     }
                 }
             }
-            return document;
+            return textDocument;
         }
 
         /// <summary>
@@ -2625,10 +2649,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetTextDocument()
+        public override TextDocument GetTextDocument(TextDocument textDocument = null)
         {
-            TextDocument document = base.GetTextDocument();
-            if (document == null)
+            if (textDocument == null)
+            {
+                textDocument = base.GetTextDocument();
+            }
+            if (textDocument == null)
             {
                 return null;
             }
@@ -2639,7 +2666,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
             int maxTokenLength = _decoder.GetMaximumTokenLength();
 
-            foreach (Page page in document.Pages)
+            foreach (Page page in textDocument.Pages)
             {
                 //create new tokens based on the "old" tokens
                 TokenBuilder tokenBuilder = new TokenBuilder();
@@ -2773,7 +2800,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     }
                 }
             }
-            return document;
+            return textDocument;
         }
 
         /// <summary>
@@ -2838,15 +2865,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetTextDocument()
+        public override TextDocument GetTextDocument(TextDocument textDocument = null)
         {
-            TextDocument document = base.GetTextDocument();
-            if (document == null)
+            if (textDocument == null)
+            {
+                textDocument = base.GetTextDocument();
+            }
+            if (textDocument == null)
             {
                 return null;
             }          
           
-            foreach (Page page in document.Pages)
+            foreach (Page page in textDocument.Pages)
             {
                 //create new tokens based on the "old" tokens
                 TokenBuilder tokenBuilder = new TokenBuilder();
@@ -3012,7 +3042,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     }
                 }
             }
-            return document;
+            return textDocument;
         }
 
         /// <summary>
@@ -3064,15 +3094,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetTextDocument()
+        public override TextDocument GetTextDocument(TextDocument textDocument = null)
         {
-            TextDocument document = base.GetTextDocument();
-            if (document == null)
+            if (textDocument == null)
+            {
+                textDocument = base.GetTextDocument();
+            }
+            if (textDocument == null)
             {
                 return null;
             }
 
-            foreach (Page page in document.Pages)
+            foreach (Page page in textDocument.Pages)
             {
                 //create new tokens based on the "old" tokens
                 TokenBuilder tokenBuilder = new TokenBuilder();
@@ -3215,7 +3248,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     }
                 }
             }
-            return document;
+            return textDocument;
         }
 
         /// <summary>
@@ -3258,15 +3291,18 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// Returns the parsed new document
         /// </summary>
         /// <returns></returns>
-        public override TextDocument GetTextDocument()
+        public override TextDocument GetTextDocument(TextDocument textDocument = null)
         {
-            TextDocument document = base.GetTextDocument();
-            if (document == null)
+            if (textDocument == null)
+            {
+                textDocument = base.GetTextDocument();
+            }
+            if (textDocument == null)
             {
                 return null;
             }
 
-            foreach (Page page in document.Pages)
+            foreach (Page page in textDocument.Pages)
             {
                 //create new tokens based on the "old" tokens
                 TokenBuilder tokenBuilder = new TokenBuilder();
@@ -3369,7 +3405,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     tokenBuilder.Clear();
                 }
             }
-            return document;
+            return textDocument;
         }
     }
 }
