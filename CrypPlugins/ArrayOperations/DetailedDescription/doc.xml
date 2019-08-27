@@ -45,33 +45,33 @@
         <b>Concatenate</b>A1 and A2 are appended to each other to yield R. The length of R is then the sum of the lengths of A1 and A2.
       </item>
       <item>
-        <b>Equals</b>A1 and A2 are tested for element-wise equality: If they have the same length, and do contain the same elements in the same order, then the output r is true (bool value), else, it is false.
+        <b>Equals: </b>A1 and A2 are tested for element-wise equality: If they have the same length, and do contain the same elements in the same order, then the output r is true (bool value), else, it is false.
       </item>
       <item>
-        <b> Unique</b>A1 is stripped of all duplicate elements into the output array R.</item>
+        <b>Unique: </b>A1 is stripped of all duplicate elements into the output array R.</item>
       <item>
-        <b>Length</b>The output value r is the Length of A1.
+        <b>Length: </b>The output value r is the Length of A1.
       </item>
       <item>
-        <b>Replace</b>Every occurrence of the array A2 in the array A1 is replaced with the array A3. Single-element replacement can comfortably be specified with the one-element-array specification of the second and third arrays through inputs O1 and O2.
+        <b>Replace: </b>Every occurrence of the array A2 in the array A1 is replaced with the array A3. Single-element replacement can comfortably be specified with the one-element-array specification of the second and third arrays through inputs O1 and O2.
       </item>
       <item>
-        <b> Sort (Ascending):</b>The array A1 is sorted in ascending order and returned as output R.
+        <b>Sort (Ascending): </b>The array A1 is sorted in ascending order and returned as output R.
       </item>
       <item>
-        <b>Sort (Descending)</b>The array A1 is sorted in descending order and returned as output R.
+        <b>Sort (Descending): </b>The array A1 is sorted in descending order and returned as output R.
       </item>
       <item>
-        <b>Reverse</b>Reverts the order of the elements of A1 and stored it in the output R.
+        <b>Reverse: </b>Reverts the order of the elements of A1 and stored it in the output R.
       </item>
       <item>
-        <b>Subarray</b>Stores in output R a sub-array of A1. The integer input I1 specifies the zero-based index of the first element to be selected into R. Input I2 specifies the length of the sub-array.
+        <b>Subarray: </b>Stores in output R a sub-array of A1. The integer input I1 specifies the zero-based index of the first element to be selected into R. Input I2 specifies the length of the sub-array.
       </item>
       <item>
-        <b>IndexOf</b> Stores in output r the zero-based index of the object from input O1 in the array A1. A1 value of -1 is stored if O1 is not present in A1
+        <b>IndexOf: </b> Stores in output r the zero-based index of the object from input O1 in the array A1. A1 value of -1 is stored if O1 is not present in A1
       </item>
       <item>
-        <b>Contains</b>Stores in output r the boolean value of whether the object from input O1 is present in the array A1
+        <b>Contains: </b>Stores in output r the boolean value of whether the object from input O1 is present in the array A1
       </item>
     </enum>
   </usage>
@@ -121,22 +121,22 @@
       <b>Ersetzen: </b>Ersetzt Vorkommnisse von A2 in A1 durch A3 und gibt das Ergebnis in R aus.
     </item>
       <item>
-        <b> Sortieren (Aufsteigend):</b>Sortiert A1 aufsteigend und gibt das Ergebnis in R aus.
+        <b> Sortieren (Aufsteigend): </b>Sortiert A1 aufsteigend und gibt das Ergebnis in R aus.
       </item>
       <item>
-      <b>Sortieren (Absteigend):</b> Sortiert A1 absteigend und gibt das Ergebnis in R aus.
+      <b>Sortieren (Absteigend): </b> Sortiert A1 absteigend und gibt das Ergebnis in R aus.
     </item>
     <item>
-      <b>Umkehren</b>Kehrt die Reihenfolge der Elemente in A1 um und gibt das Ergebnis in R aus.
+      <b>Umkehren: </b>Kehrt die Reihenfolge der Elemente in A1 um und gibt das Ergebnis in R aus.
     </item>
     <item>
-      <b>Subarray</b>Das Subarray welches in A1 mit dem Nullbasierten Index I1 beginnt und die Länge I2 hat, wird in R abgelegt.
+      <b>Subarray: </b>Das Subarray welches in A1 mit dem Nullbasierten Index I1 beginnt und die Länge I2 hat, wird in R abgelegt.
     </item>
     <item>
-      <b>IndexOf</b>Das Arraz A2 wird in A1 gesucht und dessen Nullbasierter Index wird in r abgelegt. Wenn A2 nicht in A1 vorkommt, wird der Wert -1 in r abgelegt.
+      <b>IndexOf: </b>Das Arraz A2 wird in A1 gesucht und dessen Nullbasierter Index wird in r abgelegt. Wenn A2 nicht in A1 vorkommt, wird der Wert -1 in r abgelegt.
     </item>
     <item>
-      <b>Enthält</b>Gibt den boolschen Wert in r aus der aussagt, ob das Array A2 in A1 vorkommt
+      <b>Enthält: </b>Gibt den boolschen Wert in r aus der aussagt, ob das Array A2 in A1 vorkommt
     </item>
   </enum>
   </usage>
