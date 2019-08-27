@@ -117,6 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+
   <data name="OperationCaption" xml:space="preserve">
     <value>Operation</value>
   </data>
@@ -153,69 +154,110 @@
   <data name="Array2Tooltip" xml:space="preserve">
     <value>Second input array</value>
   </data>
+  <data name="Array3Caption" xml:space="preserve">
+    <value>Array-Three</value>
+  </data>
+  <data name="Array3Tooltip" xml:space="preserve">
+    <value>Third input array</value>
+  </data>
   <data name="Value1Caption" xml:space="preserve">
-    <value>Index-One</value>
+    <value>Integer-One</value>
   </data>
   <data name="Value1Tooltip" xml:space="preserve">
-    <value>First index parameter</value>
+    <value>First numeric value</value>
   </data>
   <data name="Value2Caption" xml:space="preserve">
-    <value>Index-Two</value>
+    <value>Integer-Two</value>
   </data>
   <data name="Value2Tooltip" xml:space="preserve">
-    <value>Second index parameter</value>
+    <value>Second numeric value</value>
   </data>
   <data name="Object1Caption" xml:space="preserve">
-    <value>Object</value>
+    <value>Object-One</value>
   </data>
-  <data name="Value2Tooltip" xml:space="preserve">
-    <value>Arbitrary value input</value>
+  <data name="Object1Tooltip" xml:space="preserve">
+    <value>Arbitrary value number one</value>
+  </data>
+  <data name="Object2Caption" xml:space="preserve">
+    <value>Object-Two</value>
+  </data>
+  <data name="Object2Tooltip" xml:space="preserve">
+    <value>Arbitrary value number two</value>
   </data>
   <data name="ArrayOperations_Execute_Could_not_execute_operation___0______1_" xml:space="preserve">
     <value>Could not execute operation '{0}' : {1}</value>
   </data>
   <data name="OperationList1" xml:space="preserve">
-    <value>Sum</value>
+    <value>Set-Union</value>
   </data>
   <data name="OperationList2" xml:space="preserve">
-    <value>Union</value>
+    <value>Set-Complement (Difference)</value>
   </data>
   <data name="OperationList3" xml:space="preserve">
-    <value>Difference</value>
+    <value>Set-Intersection</value>
   </data>
   <data name="OperationList4" xml:space="preserve">
     <value>Concatenate</value>
   </data>
   <data name="OperationList5" xml:space="preserve">
-    <value>Unique</value>
-  </data>
-  <data name="OperationList6" xml:space="preserve">
-    <value>Length</value>
-  </data>
-  <data name="OperationList7" xml:space="preserve">
     <value>Equals</value>
   </data>
-  <data name="OperationList8" xml:space="preserve">
-    <value>IndexOf</value>
+  <data name="OperationList6" xml:space="preserve">
+    <value>Unique</value>
   </data>
-  <data name="OperationList9" xml:space="preserve">
+  <data name="OperationList7" xml:space="preserve">
+    <value>Length</value>
+  </data>
+  <data name="OperationList8" xml:space="preserve">
     <value>Replace</value>
   </data>
+  <data name="OperationList9" xml:space="preserve">
+    <value>Sort (Ascending)</value>
+  </data>
   <data name="OperationList10" xml:space="preserve">
-    <value>Sort</value>
+    <value>Sort (Descending)</value>
+  </data>
+  <data name="OperationList11" xml:space="preserve">
+    <value>Reverse</value>
+  </data>
+  <data name="OperationList12" xml:space="preserve">
+    <value>Subarray</value>
+  </data>
+  <data name="OperationList13" xml:space="preserve">
+    <value>IndexOf</value>
+  </data>
+  <data name="OperationList14" xml:space="preserve">
+    <value>Contains</value>
+  </data>
+
+  <data name="Arrayarg1" xml:space="preserve">
+    <value>array #1</value>
+  </data>
+  <data name="Arrayarg2" xml:space="preserve">
+    <value>array #2</value>
+  </data>
+  <data name="Arrayarg3" xml:space="preserve">
+    <value>array #3</value>
+  </data>
+  <data name="NumericArg1" xml:space="preserve">
+    <value>numeric value #1</value>
+  </data>
+  <data name="NumericArg2" xml:space="preserve">
+    <value>numeric value #2</value>
+  </data>
+
+  <data name="InputNotSetError" xml:space="preserve">
+    <value>The input "{0}" is not set</value>
+  </data>
+  <data name="InputNotValidError" xml:space="preserve">
+    <value>The input "{0}" is not valid: {1}</value>
+  </data>
+  <data name="IndexError" xml:space="preserve">
+    <value>the value {0} is not inside of the allowed range ({1}..{2})</value>
+  </data>
+  <data name="ArrayNotSetError" xml:space="preserve">
+    <value>No array provided for {0}</value>
   </data>
   
-
-  <data name="Ascending" xml:space="preserve">
-    <value>Ascending</value>
-  </data>
-  <data name="Descending" xml:space="preserve">
-    <value>Descending</value>
-  </data>
-  <data name="OrderCaption" xml:space="preserve">
-    <value>Order</value>
-  </data>
-  <data name="OrderTooltip" xml:space="preserve">
-    <value>Should the array be sorted ascending or descending?</value>
-  </data>
+  
 </root>

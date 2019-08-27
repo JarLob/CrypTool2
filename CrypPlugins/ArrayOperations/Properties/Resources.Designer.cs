@@ -97,6 +97,60 @@ namespace ArrayOperations.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Array-Three.
+        /// </summary>
+        internal static string Array3Caption {
+            get {
+                return ResourceManager.GetString("Array3Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Third input array.
+        /// </summary>
+        internal static string Array3Tooltip {
+            get {
+                return ResourceManager.GetString("Array3Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to array #1.
+        /// </summary>
+        internal static string Arrayarg1 {
+            get {
+                return ResourceManager.GetString("Arrayarg1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to array #2.
+        /// </summary>
+        internal static string Arrayarg2 {
+            get {
+                return ResourceManager.GetString("Arrayarg2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to array #3.
+        /// </summary>
+        internal static string Arrayarg3 {
+            get {
+                return ResourceManager.GetString("Arrayarg3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No array provided for {0}.
+        /// </summary>
+        internal static string ArrayNotSetError {
+            get {
+                return ResourceManager.GetString("ArrayNotSetError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not execute operation &apos;{0}&apos; : {1}.
         /// </summary>
         internal static string ArrayOperations_Execute_Could_not_execute_operation___0______1_ {
@@ -106,29 +160,83 @@ namespace ArrayOperations.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ascending.
+        ///   Looks up a localized string similar to the value {0} is not inside of the allowed range ({1}..{2}).
         /// </summary>
-        internal static string Ascending {
+        internal static string IndexError {
             get {
-                return ResourceManager.GetString("Ascending", resourceCulture);
+                return ResourceManager.GetString("IndexError", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Descending.
+        ///   Looks up a localized string similar to The input &quot;{0}&quot; is not set.
         /// </summary>
-        internal static string Descending {
+        internal static string InputNotSetError {
             get {
-                return ResourceManager.GetString("Descending", resourceCulture);
+                return ResourceManager.GetString("InputNotSetError", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Object.
+        ///   Looks up a localized string similar to The input &quot;{0}&quot; is not valid: {1}.
+        /// </summary>
+        internal static string InputNotValidError {
+            get {
+                return ResourceManager.GetString("InputNotValidError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to numeric value #1.
+        /// </summary>
+        internal static string NumericArg1 {
+            get {
+                return ResourceManager.GetString("NumericArg1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to numeric value #2.
+        /// </summary>
+        internal static string NumericArg2 {
+            get {
+                return ResourceManager.GetString("NumericArg2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Object-One.
         /// </summary>
         internal static string Object1Caption {
             get {
                 return ResourceManager.GetString("Object1Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arbitrary value number one.
+        /// </summary>
+        internal static string Object1Tooltip {
+            get {
+                return ResourceManager.GetString("Object1Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Object-Two.
+        /// </summary>
+        internal static string Object2Caption {
+            get {
+                return ResourceManager.GetString("Object2Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arbitrary value number two.
+        /// </summary>
+        internal static string Object2Tooltip {
+            get {
+                return ResourceManager.GetString("Object2Tooltip", resourceCulture);
             }
         }
         
@@ -142,7 +250,7 @@ namespace ArrayOperations.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sum.
+        ///   Looks up a localized string similar to Set-Union.
         /// </summary>
         internal static string OperationList1 {
             get {
@@ -151,7 +259,7 @@ namespace ArrayOperations.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sort.
+        ///   Looks up a localized string similar to Sort (Descending).
         /// </summary>
         internal static string OperationList10 {
             get {
@@ -160,7 +268,43 @@ namespace ArrayOperations.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Union.
+        ///   Looks up a localized string similar to Reverse.
+        /// </summary>
+        internal static string OperationList11 {
+            get {
+                return ResourceManager.GetString("OperationList11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subarray.
+        /// </summary>
+        internal static string OperationList12 {
+            get {
+                return ResourceManager.GetString("OperationList12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IndexOf.
+        /// </summary>
+        internal static string OperationList13 {
+            get {
+                return ResourceManager.GetString("OperationList13", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contains.
+        /// </summary>
+        internal static string OperationList14 {
+            get {
+                return ResourceManager.GetString("OperationList14", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set-Complement (Difference).
         /// </summary>
         internal static string OperationList2 {
             get {
@@ -169,7 +313,7 @@ namespace ArrayOperations.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Difference.
+        ///   Looks up a localized string similar to Set-Intersection.
         /// </summary>
         internal static string OperationList3 {
             get {
@@ -187,7 +331,7 @@ namespace ArrayOperations.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unique.
+        ///   Looks up a localized string similar to Equals.
         /// </summary>
         internal static string OperationList5 {
             get {
@@ -196,7 +340,7 @@ namespace ArrayOperations.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Length.
+        ///   Looks up a localized string similar to Unique.
         /// </summary>
         internal static string OperationList6 {
             get {
@@ -205,7 +349,7 @@ namespace ArrayOperations.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Equals.
+        ///   Looks up a localized string similar to Length.
         /// </summary>
         internal static string OperationList7 {
             get {
@@ -214,7 +358,7 @@ namespace ArrayOperations.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IndexOf.
+        ///   Looks up a localized string similar to Replace.
         /// </summary>
         internal static string OperationList8 {
             get {
@@ -223,7 +367,7 @@ namespace ArrayOperations.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Replace.
+        ///   Looks up a localized string similar to Sort (Ascending).
         /// </summary>
         internal static string OperationList9 {
             get {
@@ -237,24 +381,6 @@ namespace ArrayOperations.Properties {
         internal static string OperationTooltip {
             get {
                 return ResourceManager.GetString("OperationTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Order.
-        /// </summary>
-        internal static string OrderCaption {
-            get {
-                return ResourceManager.GetString("OrderCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Should the array be sorted ascending or descending?.
-        /// </summary>
-        internal static string OrderTooltip {
-            get {
-                return ResourceManager.GetString("OrderTooltip", resourceCulture);
             }
         }
         
@@ -313,7 +439,7 @@ namespace ArrayOperations.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Index-One.
+        ///   Looks up a localized string similar to Integer-One.
         /// </summary>
         internal static string Value1Caption {
             get {
@@ -322,7 +448,7 @@ namespace ArrayOperations.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to First index parameter.
+        ///   Looks up a localized string similar to First numeric value.
         /// </summary>
         internal static string Value1Tooltip {
             get {
@@ -331,7 +457,7 @@ namespace ArrayOperations.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Index-Two.
+        ///   Looks up a localized string similar to Integer-Two.
         /// </summary>
         internal static string Value2Caption {
             get {
@@ -340,7 +466,7 @@ namespace ArrayOperations.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Arbitrary value input.
+        ///   Looks up a localized string similar to Second numeric value.
         /// </summary>
         internal static string Value2Tooltip {
             get {

@@ -116,137 +116,149 @@
   </resheader>
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+
   </resheader>
-  <data name="Ascending" xml:space="preserve">
-    <value>Aufsteigend</value>
-  </data>
-  <data name="BlocksizeCaption" xml:space="preserve">
-    <value>Blockgröße</value>
-  </data>
-  <data name="BlocksizeTooltip" xml:space="preserve">
-    <value>Größe der Blöcke in die diese Zeichenkette aufgeteilt werden soll.</value>
-  </data>
-  <data name="Descending" xml:space="preserve">
-    <value>Absteigend</value>
-  </data>
-  <data name="OperationCaption" xml:space="preserve">
-    <value>Funktion</value>
-  </data>
-  <data name="OperationList1" xml:space="preserve">
-    <value>Konkatenieren </value>
-  </data>
-  <data name="OperationList10" xml:space="preserve">
-    <value>Ersetzen</value>
-  </data>
-  <data name="OperationList11" xml:space="preserve">
-    <value>RegexErsetzen</value>
-  </data>
-  <data name="OperationList12" xml:space="preserve">
-    <value>Trennen</value>
-  </data>
-  <data name="OperationList13" xml:space="preserve">
-    <value>Block</value>
-  </data>
-  <data name="OperationList14" xml:space="preserve">
-    <value>Umkehren</value>
-  </data>
-  <data name="OperationList15" xml:space="preserve">
-    <value>Sortierung</value>
-  </data>
-  <data name="OperationList16" xml:space="preserve">
-    <value>Eindeutig</value>
-  </data>
-  <data name="OperationList17" xml:space="preserve">
-    <value>Levenshtein-Distanz</value>
-  </data>
-  <data name="OperationList2" xml:space="preserve">
-    <value>Teilstring</value>
-  </data>
-  <data name="OperationList3" xml:space="preserve">
-    <value>Kleinbuchstaben</value>
-  </data>
-  <data name="OperationList4" xml:space="preserve">
-    <value>Großbuchstaben</value>
-  </data>
-  <data name="OperationList5" xml:space="preserve">
-    <value>Länge</value>
-  </data>
-  <data name="OperationList6" xml:space="preserve">
-    <value>Vergleichen</value>
-  </data>
-  <data name="OperationList7" xml:space="preserve">
-    <value>Trimmen</value>
-  </data>
-  <data name="OperationList8" xml:space="preserve">
-    <value>IndexVon</value>
-  </data>
-  <data name="OperationList9" xml:space="preserve">
-    <value>Gleichheit</value>
+
+  
+
+   <data name="OperationCaption" xml:space="preserve">
+    <value>Operation</value>
   </data>
   <data name="OperationTooltip" xml:space="preserve">
-    <value>Wählen Sie die Funktion, die auf die Zeichenketten angewendet werden soll.</value>
+    <value>Die Operation festlegen</value>
   </data>
-  <data name="OrderCaption" xml:space="preserve">
-    <value>Reihenfolge</value>
+  <data name="OutputArrayCaption" xml:space="preserve">
+    <value>OutputArray</value>
   </data>
-  <data name="OrderTooltip" xml:space="preserve">
-    <value>Soll der Text aufsteigend oder absteigend sortiert werden?</value>
-  </data>
-  <data name="OutputStringArrayCaption" xml:space="preserve">
-    <value>Ausgabe des Zeichenketten-Arrays</value>
-  </data>
-  <data name="OutputStringArrayTooltip" xml:space="preserve">
-    <value>Ausgabe der resultierenden Zeichenketten als Array</value>
-  </data>
-  <data name="OutputStringCaption" xml:space="preserve">
-    <value>Ausgabe der Zeichenkette</value>
-  </data>
-  <data name="OutputStringTooltip" xml:space="preserve">
-    <value>Ausgabe der resultierenden Zeichenkette</value>
+  <data name="OutputArrayTooltip" xml:space="preserve">
+    <value>Das Outputarray enthält das Ergebnis der Array-Operation.</value>
   </data>
   <data name="OutputValueCaption" xml:space="preserve">
-    <value>Ausgabewert</value>
+    <value>Outputwert</value>
   </data>
   <data name="OutputValueTooltip" xml:space="preserve">
-    <value>Der Ausgabewert der gewählten Funktion</value>
+    <value>Der Outputwert enthält das Ergebnis der Array-Operation.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Zeichenketten-Operationen</value>
+    <value>Array Operations</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Funktionen für die Modifikation von Zeichenketten</value>
+    <value>Operationen für das Arbeiten mit Arrays</value>
   </data>
   <data name="Array1Caption" xml:space="preserve">
-    <value>erste Zeichenkette</value>
+    <value>Array-Eins</value>
   </data>
   <data name="Array1Tooltip" xml:space="preserve">
-    <value>Eingabe der ersten Zeichenkette</value>
+    <value>Erster Array-Input</value>
   </data>
   <data name="Array2Caption" xml:space="preserve">
-    <value>zweite Zeichenkette</value>
+    <value>Array-Zwei</value>
   </data>
   <data name="Array2Tooltip" xml:space="preserve">
-    <value>Eingabe der zweiten Zeichenkette</value>
+    <value>Zweiter Array-Input</value>
   </data>
-  <data name="String3Caption" xml:space="preserve">
-    <value>dritte Zeichenkette</value>
+  <data name="Array3Caption" xml:space="preserve">
+    <value>Array-Drei</value>
   </data>
-  <data name="String3Tooltip" xml:space="preserve">
-    <value>Eingabe der dritten Zeichenkette</value>
-  </data>
-  <data name="ArrayOperations_Execute_Could_not_execute_operation___0______1_" xml:space="preserve">
-    <value>Konnte Operation '{0}' nicht ausführen: {1}</value>
+  <data name="Array3Tooltip" xml:space="preserve">
+    <value>Dritter Array-Input</value>
   </data>
   <data name="Value1Caption" xml:space="preserve">
-    <value>erster Funktionsparameter</value>
+    <value>Zahl 1</value>
   </data>
   <data name="Value1Tooltip" xml:space="preserve">
-    <value>Eingabe des ersten Funktionsparameters</value>
+    <value>Erster numerischer Input</value>
   </data>
   <data name="Value2Caption" xml:space="preserve">
-    <value>zweiter Funktionsparameter</value>
+    <value>Zahl 2</value>
   </data>
   <data name="Value2Tooltip" xml:space="preserve">
-    <value>Eingabe des zweiten Funktionsparameters</value>
+    <value>Zweiter numerischer Input</value>
+  </data>
+  <data name="Object1Caption" xml:space="preserve">
+    <value>Objekt-Eins</value>
+  </data>
+  <data name="Object1Tooltip" xml:space="preserve">
+    <value>Erster Wert</value>
+  </data>
+  <data name="Object2Caption" xml:space="preserve">
+    <value>Objekt-Zwei</value>
+  </data>
+  <data name="Object2Tooltip" xml:space="preserve">
+    <value>Zweiter Wert</value>
+  </data>
+  <data name="ArrayOperations_Execute_Could_not_execute_operation___0______1_" xml:space="preserve">
+    <value>Could not execute operation '{0}' : {1}</value>
+  </data>
+  <data name="OperationList1" xml:space="preserve">
+    <value>Mengen-Vereinigung</value>
+  </data>
+  <data name="OperationList2" xml:space="preserve">
+    <value>Mengen-Komplement (Differenz)</value>
+  </data>
+  <data name="OperationList3" xml:space="preserve">
+    <value>Mengen-Schnitt</value>
+  </data>
+  <data name="OperationList4" xml:space="preserve">
+    <value>Konkatenation</value>
+  </data>
+  <data name="OperationList5" xml:space="preserve">
+    <value>Gleichheit</value>
+  </data>
+  <data name="OperationList6" xml:space="preserve">
+    <value>Keine Duplikate</value>
+  </data>
+  <data name="OperationList7" xml:space="preserve">
+    <value>Länge</value>
+  </data>
+  <data name="OperationList8" xml:space="preserve">
+    <value>Ersetzen</value>
+  </data>
+  <data name="OperationList9" xml:space="preserve">
+    <value>Sortieren (Aufsteigend)</value>
+  </data>
+  <data name="OperationList10" xml:space="preserve">
+    <value>Sortieren (Absteigend)</value>
+  </data>
+  <data name="OperationList11" xml:space="preserve">
+    <value>Umkehren</value>
+  </data>
+  <data name="OperationList12" xml:space="preserve">
+    <value>Subarray</value>
+  </data>
+  <data name="OperationList13" xml:space="preserve">
+    <value>IndexOf</value>
+  </data>
+  <data name="OperationList14" xml:space="preserve">
+    <value>Enhält</value>
+  </data>
+
+  <data name="Arrayarg1" xml:space="preserve">
+    <value>Array #1</value>
+  </data>
+  <data name="Arrayarg2" xml:space="preserve">
+    <value>Array #2</value>
+  </data>
+  <data name="Arrayarg3" xml:space="preserve">
+    <value>Array #3</value>
+  </data>
+  <data name="NumericArg1" xml:space="preserve">
+    <value>Numerischer Wert #1</value>
+  </data>
+  <data name="NumericArg2" xml:space="preserve">
+    <value>Numerischer Wert #2</value>
+  </data>
+
+  <data name="InputNotSetError" xml:space="preserve">
+    <value>Der Input {0} ist nicht gesetzt.</value>
+  </data>
+  <data name="InputNotValidError" xml:space="preserve">
+    <value>Der Input {0} ist nicht valide: {1}</value>
+  </data>
+  <data name="IndexError" xml:space="preserve">
+    <value>Der Wert {0} ist nicht im erlaubten Bereich: {1}..{2}</value>
+  </data>
+  <data name="ArrayNotSetError" xml:space="preserve">
+    <value>Kein Array als Input gesetzt für {0}</value>
   </data>
 </root>
