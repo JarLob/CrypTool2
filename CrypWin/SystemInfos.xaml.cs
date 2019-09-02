@@ -93,7 +93,7 @@ namespace Cryptool.CrypWin
             informations.Add(new Info() { Description = Properties.Resources.SI_Build_Type, Value = AssemblyHelper.BuildType.ToString() });
             informations.Add(new Info() { Description = Properties.Resources.SI_Build_Time, Value = File.GetLastWriteTime(Assembly.GetExecutingAssembly().Location).ToString(CultureInfo.CurrentUICulture.DateTimeFormat) });
             informations.Add(new Info() { Description = Properties.Resources.SI_Product_Name, Value = AssemblyHelper.ProductName });
-            informations.Add(new Info() { Description = Properties.Resources.SI_Common_Language_Runtime_Version, Value = Environment.Version.ToString() });
+            informations.Add(new Info() { Description = Properties.Resources.SI_Common_Language_Runtime_Version, Value = GetDotNetVersion.Get45PlusFromRegistry() });
             informations.Add(new Info() { Description = Properties.Resources.SI_Runtime_Path, Value = AppDomain.CurrentDomain.BaseDirectory });
             informations.Add(new Info() { Description = Properties.Resources.SI_CommandLine, Value = Environment.CommandLine });
             informations.Add(new Info() { Description = Properties.Resources.Java_Version, Value = GetJavaVersion() });
@@ -283,6 +283,77 @@ namespace Cryptool.CrypWin
             if((bool)(dependencyPropertyChangedEventArgs.NewValue) == true)
             {
                 UpdateInfos();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Obtained and adapted code from https://docs.microsoft.com/en-us/dotnet/framework/migration-guide/how-to-determine-which-versions-are-installed
+    /// </summary>
+    public class GetDotNetVersion
+    {      
+        public static string Get45PlusFromRegistry()
+        {
+            const string subkey = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\";
+
+            using (var ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(subkey))
+            {
+                if (ndpKey != null && ndpKey.GetValue("Release") != null)
+                {
+                    return string.Format(CheckFor45PlusVersion((int)ndpKey.GetValue("Release")));
+                }
+                else
+                {
+                    return string.Format(".NET Framework Version 4.5 or later is not detected.");
+                }
+            }
+
+            // Checking the version using >= enables forward compatibility.
+            string CheckFor45PlusVersion(int releaseKey)
+            {
+                if (releaseKey >= 528040)
+                {
+                    return "4.8 " + Properties.Resources.SI_Or_newer;
+                }
+                if (releaseKey >= 461808)
+                { 
+                    return "4.7.2";
+                }
+                if (releaseKey >= 461308)
+                { 
+                    return "4.7.1";
+                }
+                if (releaseKey >= 460798)
+                {
+                    return "4.7";
+                }
+                if (releaseKey >= 394802)
+                {
+                    return "4.6.2";
+                }
+                if (releaseKey >= 394254)
+                { 
+                    return "4.6.1";
+                }
+                if (releaseKey >= 393295)
+                { 
+                    return "4.6";
+                }
+                if (releaseKey >= 379893)
+                {
+                    return "4.5.2";
+                }
+                if (releaseKey >= 378675)
+                { 
+                    return "4.5.1";
+                }
+                if (releaseKey >= 378389)
+                { 
+                    return "4.5";
+                }
+                // This code should never execute. A non-null release key should mean
+                // that 4.5 or later is installed.
+                return "No 4.5 or later version detected";
             }
         }
     }

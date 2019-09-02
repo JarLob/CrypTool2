@@ -961,4 +961,7 @@
   <data name="LoadedReferencedAssembly" xml:space="preserve">
     <value>Geladene/referenzierte Assembly</value>
   </data>
+  <data name="SI_Or_newer" xml:space="preserve">
+    <value>oder neuer</value>
+  </data>
 </root>

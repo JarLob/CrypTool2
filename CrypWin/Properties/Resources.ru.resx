@@ -976,4 +976,7 @@
   <data name="LoadedReferencedAssembly" xml:space="preserve">
     <value>Загруженная/ссылающаяся сборка</value>
   </data>
+  <data name="SI_Or_newer" xml:space="preserve">
+    <value>или новее</value>
+  </data>
 </root>

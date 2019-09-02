@@ -2085,6 +2085,15 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die or newer ähnelt.
+        /// </summary>
+        internal static string SI_Or_newer {
+            get {
+                return ResourceManager.GetString("SI_Or_newer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Processor name ähnelt.
         /// </summary>
         internal static string SI_Processor_Name {
