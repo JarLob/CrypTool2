@@ -216,7 +216,7 @@ namespace Cryptool.Plugins.Paillier
 
             N = p * q;
             G = N + 1;
-            Lambda = (p - 1) * (q - 1);
+            Lambda = (p - 1).LCM((q - 1));
 
             ProgressChanged(1,1);
         }
