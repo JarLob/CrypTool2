@@ -688,7 +688,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         /// </summary>
         public bool TopChangesSymbol
         {
-            get; set;
+            get;
+            set;
         }
 
         /// <summary>
@@ -698,6 +699,35 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Adds Top or Bottom diacritical marks
+        /// </summary>
+        public string VisualizeText
+        {
+            get
+            {
+                string ret = Text;
+                if (!string.IsNullOrEmpty(Top) && Top.Equals("."))
+                {
+                    //ret = "\u0307" + ret; //dot on top                
+                    ret = "\u0307" + ret; //dot on top                
+                }
+                if (!string.IsNullOrEmpty(Bottom) && Bottom.Equals("."))
+                {
+                    ret = "\u0323" + ret; //dot on bottom
+                }
+                if (!string.IsNullOrEmpty(Top) && Top.Equals("_"))
+                {
+                    ret = "\u0305" + ret; //line on top
+                }
+                if (!string.IsNullOrEmpty(Bottom) && Bottom.Equals("_"))
+                {
+                    ret = "\u0332" + ret; //line on bottom
+                }
+                return ret;
+            }
         }
 
         /// <summary>
@@ -852,32 +882,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                 return str.CompareTo(Text);
             }            
             return -1;            
-        }
-
-        /// <summary>
-        /// Used in the user interface
-        /// Returns 0 when there is no top or bottom text
-        /// Returns 1 when there is a top text
-        /// Returns 2 when there is a bottom text
-        /// Returns 3 when there are top AND bottom texts
-        /// </summary>
-        public int SymbolDisplayType
-        {
-            get
-            {
-                int value = 0;
-                if (!string.IsNullOrEmpty(Top) && !string.IsNullOrWhiteSpace(Top))
-                {
-                    value += 1;
-                }
-                if (!string.IsNullOrEmpty(Bottom) && !string.IsNullOrWhiteSpace(Bottom))
-                {
-                    value += 2;
-                }
-                return value;
-            }
-        }
-
-
+        }      
     } 
 }
