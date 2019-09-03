@@ -20,8 +20,7 @@ using System.Collections.Specialized;
 using Cryptool.PluginBase.Validation;
 using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.PluginBase.Attributes;
-
-
+using WorkspaceManager.View.Base;
 
 namespace WorkspaceManager.View.Visuals
 {
@@ -38,7 +37,7 @@ namespace WorkspaceManager.View.Visuals
         public Boolean noSettings;
         private Boolean isSideBar;
 
-        public SettingsVisual(IPlugin plugin, ComponentVisual bcv, Boolean isMaster, Boolean isSideBar)
+        public SettingsVisual(PluginSettingsContainer pluginSettingsContainer, ComponentVisual bcv, Boolean isMaster, Boolean isSideBar)
         {
             bcv.Model.ConnectorPlugstateChanged += new EventHandler<Model.ConnectorPlugstateChangedEventArgs>(Model_ConnectorPlugstateChanged);
             this.Loaded += new RoutedEventHandler(BinSettingsVisual_Loaded);
@@ -48,19 +47,13 @@ namespace WorkspaceManager.View.Visuals
             this.Resources.Add("isSideBarResource", this.isSideBar);
             
             this.bcv = bcv;
-            this.plugin = plugin;
+            this.plugin = pluginSettingsContainer.Plugin;
             entgrou = new EntryGroup();
             this.entgrou = createContentSettings(plugin);
 
             if (entgrou.entryList.Count != 0)
             {
                 ((WorkspaceManagerClass)bcv.Model.WorkspaceModel.MyEditor).executeEvent += new EventHandler(excuteEventHandler);
-
-                var taskPaneAttributeChanged = plugin.Settings.GetTaskPaneAttributeChanged();
-                if (plugin.Settings != null && taskPaneAttributeChanged != null)
-                {
-                    taskPaneAttributeChanged.AddEventHandler(plugin.Settings, new TaskPaneAttributeChangedHandler(myTaskPaneAttributeChangedHandler));
-                }
 
                 InitializeComponent();
 
@@ -113,6 +106,9 @@ namespace WorkspaceManager.View.Visuals
 
                 drawList(this.entgrou);
 
+                pluginSettingsContainer.TaskPaneAttributeChanged += HandleTaskPaneAttributeChanges;
+                //"Replay" all current task pane attributes:
+                DispatchTaskPaneAttributeChanges(pluginSettingsContainer.CurrentTaskPaneAttributes);
             }
 
             else
@@ -153,7 +149,7 @@ namespace WorkspaceManager.View.Visuals
                     if (vtbI.Uid == master.ConnectorModel.PropertyName)
                     {
 
-                        vtbI.Content = new SettingsVisual(master.PluginModel.Plugin, bcv, false, isSideBar);
+                        vtbI.Content = new SettingsVisual(new PluginSettingsContainer(master.PluginModel.Plugin), bcv, false, isSideBar);
                         vtbI.Header = master.PluginModel.GetName();
                         b = false;
                     }
@@ -163,7 +159,7 @@ namespace WorkspaceManager.View.Visuals
                 {
                     TabItem tbI = new TabItem();
                     tbI.Uid = master.ConnectorModel.PropertyName;
-                    tbI.Content = new SettingsVisual(master.PluginModel.Plugin, bcv, false, isSideBar);
+                    tbI.Content = new SettingsVisual(new PluginSettingsContainer(master.PluginModel.Plugin), bcv, false, isSideBar);
                     tbI.Header = master.PluginModel.Plugin.GetPluginInfoAttribute().Caption;
                     tbC.Items.Add(tbI);
                 }
@@ -183,40 +179,59 @@ namespace WorkspaceManager.View.Visuals
             }
         }
 
-        private void myTaskPaneAttributeChangedHandler(Object sender, TaskPaneAttributeChangedEventArgs args)
+        private void HandleTaskPaneAttributeChanges(Object sender, TaskPaneAttributeChangedEventArgs args)
         {
+            DispatchTaskPaneAttributeChanges(args.ListTaskPaneAttributeContainer);
+        }
 
-            //plugin.Settings.GetTaskPaneAttributeChanged();
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+        private void DispatchTaskPaneAttributeChanges(IEnumerable<TaskPaneAttribteContainer> attributeChanges)
+        {
+            if (Dispatcher.CheckAccess())
             {
-                foreach (List<ControlEntry> cel in entgrou.entryList)
+                HandleTaskPaneAttributeChanges(attributeChanges);
+            }
+            else
+            {
+                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    entgrou.gorupPanel[entgrou.entryList.IndexOf(cel)].Visibility = System.Windows.Visibility.Visible;
-                    Boolean allinvisble = true;
+                    HandleTaskPaneAttributeChanges(attributeChanges);
+                });
+            }
+        }
 
-                    foreach (ControlEntry ce in cel)
+        private void HandleTaskPaneAttributeChanges(IEnumerable<TaskPaneAttribteContainer> attributeChanges)
+        {
+            if (!attributeChanges.Any())
+            {
+                return;
+            }
+
+            foreach (List<ControlEntry> cel in entgrou.entryList)
+            {
+                entgrou.gorupPanel[entgrou.entryList.IndexOf(cel)].Visibility = Visibility.Visible;
+                Boolean allinvisble = true;
+
+                foreach (ControlEntry ce in cel)
+                {
+                    foreach (TaskPaneAttribteContainer tpac in attributeChanges)
                     {
-                        foreach (TaskPaneAttribteContainer tpac in args.ListTaskPaneAttributeContainer)
+                        if (ce.tpa.PropertyName == tpac.Property)
                         {
-                            if (ce.tpa.PropertyName == tpac.Property)
-                            {
-                                ce.element.Visibility = tpac.Visibility;
-                                ce.caption.Visibility = tpac.Visibility;
-                            }
-                            if (ce.element.Visibility == System.Windows.Visibility.Visible)
-                            {
-                                allinvisble = false;
-                            }
+                            ce.element.Visibility = tpac.Visibility;
+                            ce.caption.Visibility = tpac.Visibility;
                         }
+                        if (ce.element.Visibility == Visibility.Visible)
+                        {
+                            allinvisble = false;
+                        }
+                    }
 
-                    }
-                    if (allinvisble)
-                    {
-                        entgrou.gorupPanel[entgrou.entryList.IndexOf(cel)].Visibility = System.Windows.Visibility.Collapsed;
-                    }
                 }
-            }, null);
-
+                if (allinvisble)
+                {
+                    entgrou.gorupPanel[entgrou.entryList.IndexOf(cel)].Visibility = Visibility.Collapsed;
+                }
+            }
         }
 
         private void excuteEventHandler(Object sender, EventArgs args)

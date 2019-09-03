@@ -81,6 +81,8 @@ namespace WorkspaceManager.View.Visuals
 
         #region Model
 
+        private PluginSettingsContainer modelSettingsContainer;
+
         private PluginModel model;
         public PluginModel Model
         {
@@ -88,13 +90,14 @@ namespace WorkspaceManager.View.Visuals
             private set 
             { 
                 model = value;
+                modelSettingsContainer = new PluginSettingsContainer(value.Plugin);
                 AddPresentationElement(BinComponentState.Presentation, model.PluginPresentation);
                 var image = Model.getImage();
                 AddPresentationElement(BinComponentState.Min, image);
                 AddPresentationElement(BinComponentState.Default, image);
                 AddPresentationElement(BinComponentState.Data, () => new DataVisual(ConnectorCollection));
                 AddPresentationElement(BinComponentState.Log, () => new LogVisual(this));
-                AddPresentationElement(BinComponentState.Setting, () => new SettingsVisual(Model.Plugin, this, true, false));
+                AddPresentationElement(BinComponentState.Setting, () => new SettingsVisual(modelSettingsContainer, this, true, false));
 
                 FullScreenState = HasComponentPresentation ? BinComponentState.Presentation : BinComponentState.Log;
 
@@ -583,7 +586,7 @@ typeof(SolidColorBrush), typeof(ComponentVisual), new FrameworkPropertyMetadata(
         }
 
         private SettingsVisual sideBarSetting;
-        public SettingsVisual SideBarSetting => sideBarSetting ?? (sideBarSetting = new SettingsVisual(Model.Plugin, this, true, true));
+        public SettingsVisual SideBarSetting => sideBarSetting ?? (sideBarSetting = new SettingsVisual(modelSettingsContainer, this, true, true));
 
         #endregion
 

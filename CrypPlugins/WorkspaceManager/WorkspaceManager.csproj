@@ -116,6 +116,7 @@
     <Compile Include="View\Base\Interfaces\IRouting.cs" />
     <Compile Include="View\Base\Interfaces\IZOrdering.cs" />
     <Compile Include="View\Base\ObservableDictionary.cs" />
+    <Compile Include="View\Base\PluginSettingsContainer.cs" />
     <Compile Include="View\Base\RectanglePacker.cs" />
     <Compile Include="View\Base\Util.cs" />
     <Compile Include="View\VisualComponents\CryptoLineView\CryptoLineView.xaml.cs">
