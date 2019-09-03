@@ -710,8 +710,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
             {
                 string ret = Text;
                 if (!string.IsNullOrEmpty(Top) && Top.Equals("."))
-                {
-                    //ret = "\u0307" + ret; //dot on top                
+                {          
                     ret = "\u0307" + ret; //dot on top                
                 }
                 if (!string.IsNullOrEmpty(Bottom) && Bottom.Equals("."))

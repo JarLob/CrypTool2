@@ -684,7 +684,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 {
                                     symbol.Top += "_";
                                 }
-                                bottom = false;
+                                top = false;
                             }
                             else
                             {
