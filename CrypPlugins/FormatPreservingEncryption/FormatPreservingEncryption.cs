@@ -38,7 +38,7 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
         private StringBuilder logBuilder = new StringBuilder();
         private readonly char TASK_SEPERATOR = ';';
         private readonly char ALPHABET_SEPERATOR = '#';
-        
+
 
         #endregion
 
@@ -128,7 +128,7 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
             ProgressChanged(0, 1);
 
             //check Key
-            if(Key.Length != 16)
+            if (Key.Length != 16)
             {
                 GuiLogMessage("Key must be 128bit.", NotificationLevel.Error);
                 return;
@@ -138,7 +138,6 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
             //switch mode
             if (settings.Mode == (int)Modes.Normal)
             {
-                GuiLogMessage("Normal Mode", NotificationLevel.Debug);
                 if (!ValidateAlphabet(Alphabet))
                 {
                     return;
@@ -146,7 +145,6 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
 
                 char[] mapping = Alphabet.ToCharArray();
                 int radix = mapping.Length;
-                GuiLogMessage("Radix is " + radix, NotificationLevel.Debug);
 
                 if (!ValidateInput(Input))
                 {
@@ -172,7 +170,7 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
                 ProgressChanged(1, 1);
 
             }
-            else if(settings.Mode == (int)Modes.XML)
+            else if (settings.Mode == (int)Modes.XML)
             {
 
                 StringWriter sws = new StringWriter();
@@ -185,20 +183,17 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
                     OnPropertyChanged("Output");
                 }
 
-                string[] tasks = Alphabet.Split(new char[]{TASK_SEPERATOR}, StringSplitOptions.RemoveEmptyEntries);
+                string[] tasks = Alphabet.Split(new char[] { TASK_SEPERATOR }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (string task in tasks)
                 {
-                    //GuiLogMessage("task: " + task, NotificationLevel.Debug);
                     if (task.Length <= 1 || !task.Contains(ALPHABET_SEPERATOR.ToString()))
                     {
                         GuiLogMessage("Task is invalid. Too short or Alphabet missing", NotificationLevel.Error);
                         return;
                     }
-                    string[] splits = task.Split(new char[] {ALPHABET_SEPERATOR});
+                    string[] splits = task.Split(new char[] { ALPHABET_SEPERATOR });
                     string xpath = splits[0];
-                    //GuiLogMessage("xpath is: " + xpath, NotificationLevel.Debug); //TODO REMOVE
                     string taskAlphabet = splits[1];
-                    //GuiLogMessage("Alphabet is: " + taskAlphabet, NotificationLevel.Debug); //TODO REMOVE
 
                     //validate Alphabet and create mapping
                     if (!ValidateAlphabet(taskAlphabet))
@@ -208,11 +203,8 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
 
                     char[] mapping = taskAlphabet.ToCharArray();
                     int radix = mapping.Length;
-                    GuiLogMessage("Radix is " + radix, NotificationLevel.Debug);
 
-
-                    //TODO validate XML
-                    string xmlString = Input; 
+                    string xmlString = Input;
                     try
                     {
                         XmlDocument xmlDoc = new XmlDocument();
@@ -225,37 +217,24 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
                             {
                                 continue;
                             }
-
-                            //GuiLogMessage("XML Node is: " + node.InnerText, NotificationLevel.Debug);
-
                             //string -> int[]
                             int[] intInput = StringToIntArray(node.InnerText, taskAlphabet);
                             int[] intOutput;
-                            try {
+                            try
+                            {
                                 intOutput = Crypt(intInput, radix, false);
-                            } catch (Exception e) {
+                            }
+                            catch (Exception e)
+                            {
                                 GuiLogMessage(e.Message, NotificationLevel.Error);
                                 return;
                             }
                             //int[] -> string
                             string stringOutput = IntArrayToString(intOutput, mapping);
-                            //GuiLogMessage("string ciphertext is " + stringOutput, NotificationLevel.Debug);
                             node.InnerText = stringOutput;
 
-                            xmlDoc.ImportNode(node, true); 
+                            xmlDoc.ImportNode(node, true);
                         }
-                        ////TODOvvvvvvvvvvvvRemovevvvvvvvvvvvvvvvv
-                        //GuiLogMessage("new xml doc is: " + xmlDoc.ToString(), NotificationLevel.Debug);
-                        //nodes = xmlDoc.SelectNodes(xpath);
-                        //foreach (XmlNode node in nodes)
-                        //{
-                        //    if (node.InnerText.Length > 0)
-                        //    {
-                        //        GuiLogMessage("NEW Innertext is: ", NotificationLevel.Debug);
-                        //        GuiLogMessage(node.InnerText, NotificationLevel.Debug);
-                        //    }
-                        //}
-                        ////TODO^^^^^^^^^^^^Remove^^^^^^^^^^^^^^
                         StringWriter sw = new StringWriter();
                         xmlDoc.Save(sw);
                         Output = sw.ToString();
@@ -264,17 +243,17 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
                     }
                     catch (Exception e)
                     {
-                        GuiLogMessage("Couldn't process XML-Document", NotificationLevel.Error);
-                        GuiLogMessage("source: " + e.Source + "text: " + e.Message, NotificationLevel.Debug);
+                        GuiLogMessage("Could not process XML document", NotificationLevel.Error);
+                        GuiLogMessage("Source: " + e.Source + ", text: " + e.Message, NotificationLevel.Error);
                     }
                 }
 
-            OnPropertyChanged("Output");
-            ProgressChanged(1, 1);
+                OnPropertyChanged("Output");
+                ProgressChanged(1, 1);
             }
             else
             {
-                GuiLogMessage("ErrorMode", NotificationLevel.Error);
+                GuiLogMessage("Error: selected mode not implemented", NotificationLevel.Error);
             }
 
             Log = logBuilder.ToString();
@@ -341,7 +320,6 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
 
         private void UpdateProgressValue(object sender, FormatPreservingEncryptionWeydstone.ProgressChangedEventArgs e)
         {
-            GuiLogMessage("ProgressChanged : "+ e.Progress, NotificationLevel.Debug);
             ProgressChanged(e.Progress, 1);
         }
 
@@ -352,7 +330,7 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
         /// <param name="e"></param>
         private void OutputChanged(object sender, OutputChangedEventArgs e)
         {
-            logBuilder.Append(e.Text+ Environment.NewLine);
+            logBuilder.Append(e.Text + Environment.NewLine);
         }
 
         /// <summary>
@@ -369,21 +347,20 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
             {
                 case (int)Algorithms.FF1:
                     {
-                        GuiLogMessage("FF1", NotificationLevel.Debug);
                         //validate Tweak
                         int maxTweakLength = Constants.MAXLEN;
-                        if(Tweak.Length > maxTweakLength)
+                        if (Tweak.Length > maxTweakLength)
                         {
                             GuiLogMessage("Tweak is too long (" + Tweak.Length + " > " + maxTweakLength + ").", NotificationLevel.Warning);
                             byte[] newTweak = new byte[maxTweakLength];
                             Array.Copy(Tweak, 0, newTweak, 0, maxTweakLength);
                             Tweak = newTweak;
-                            GuiLogMessage("New Tweak is: "+ Common.byteArrayToHexString(Tweak), NotificationLevel.Warning);
+                            GuiLogMessage("New Tweak is: " + Common.byteArrayToHexString(Tweak), NotificationLevel.Warning);
                         }
 
                         FF1 ff1 = new FF1(radix, Constants.MAXLEN);
                         ff1.OutputChanged += OutputChanged;
-                        if(updateProgressValue) ff1.ProgressChanged += UpdateProgressValue;
+                        if (updateProgressValue) ff1.ProgressChanged += UpdateProgressValue;
                         if (settings.Action == (int)Actions.Encrypt)
                         {
                             intOutput = ff1.encrypt(Key, Tweak, intInput);
@@ -396,8 +373,6 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
                     }
                 case (int)Algorithms.FF2:
                     {
-
-                        GuiLogMessage("FF2", NotificationLevel.Debug);
                         if (TweakRadix < Constants.MINRADIX_FF2 || TweakRadix > Constants.MAXRADIX_FF2)
                         {
                             GuiLogMessage("Tweak radix must be in the range [" + Constants.MINRADIX_FF2 + ".." + Constants.MAXRADIX_FF2 + "]: " + TweakRadix, NotificationLevel.Error);
@@ -435,15 +410,14 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
                     }
                 case (int)Algorithms.FF3:
                     {
-                        GuiLogMessage("FF3", NotificationLevel.Debug);
                         int expectedTweakLength = 8;
-                        if(Tweak == null || Tweak.Length < expectedTweakLength)
+                        if (Tweak == null || Tweak.Length < expectedTweakLength)
                         {
                             GuiLogMessage("Tweak is too small (" + Tweak.Length + " < " + 8 + ").", NotificationLevel.Warning);
                             byte[] newTweak = new byte[expectedTweakLength];
-                            for (int i = 0; i<expectedTweakLength; i++)
+                            for (int i = 0; i < expectedTweakLength; i++)
                             {
-                                newTweak[i] = i < Tweak.Length ? Tweak[i] : (byte)0x00; 
+                                newTweak[i] = i < Tweak.Length ? Tweak[i] : (byte)0x00;
                             }
                             Tweak = newTweak;
                             GuiLogMessage("New Tweak is: " + Common.byteArrayToHexString(Tweak), NotificationLevel.Warning);
@@ -472,10 +446,8 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
                         }
                         return intOutput;
                     }
-                case (int)Algorithms.DFF: //case (int)Algorithms.FF2:
+                case (int)Algorithms.DFF:
                     {
-                        GuiLogMessage("DFF", NotificationLevel.Debug);
-
                         if (TweakRadix < Constants.MINRADIX_FF2 || TweakRadix > Constants.MAXRADIX_FF2)
                         {
                             GuiLogMessage("Tweak radix must be in the range [" + Constants.MINRADIX_FF2 + ".." + Constants.MAXRADIX_FF2 + "]: " + TweakRadix, NotificationLevel.Error);
@@ -497,7 +469,7 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
                             GuiLogMessage("New Tweak is: " + Common.byteArrayToHexString(Tweak), NotificationLevel.Warning);
                         }
 
-                        DFF dff =  new DFF(radix, TweakRadix, new OFF2());
+                        DFF dff = new DFF(radix, TweakRadix, new OFF2());
                         dff.OutputChanged += OutputChanged;
                         if (updateProgressValue) dff.ProgressChanged += UpdateProgressValue;
 
@@ -526,7 +498,6 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
         /// <returns></returns>
         private int[] StringToIntArray(string stringInput, string alphabet)
         {
-            GuiLogMessage("StringToIntArray: string "+stringInput+" alphabet: "+alphabet, NotificationLevel.Debug);
             int[] intPlaintext = new int[stringInput.Length];
             for (int i = 0; i < stringInput.Length; i++)
             {
@@ -534,7 +505,7 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
 
                 if (index < 0)
                 {
-                    GuiLogMessage("Character '"+ stringInput[i]+ "' does not exist in Alphabet", NotificationLevel.Error);
+                    GuiLogMessage("Character '" + stringInput[i] + "' does not exist in alphabet", NotificationLevel.Error);
                     return Array.Empty<int>();
                 }
 
@@ -558,19 +529,19 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
                 return false;
             }
             char[] mapping = Alphabet.ToCharArray();
-                //validate each char is unique
-                for (int i = 0; i<mapping.Length-1; i++)
+            //validate each char is unique
+            for (int i = 0; i < mapping.Length - 1; i++)
+            {
+                char c = mapping[i];
+                for (int j = i + 1; j < mapping.Length; j++)
                 {
-                    char c = mapping[i];
-                    for (int j = i+1; j<mapping.Length; j++)
+                    if (c == mapping[j])
                     {
-                        if (c == mapping[j])
-                        {
-                            GuiLogMessage("Alphabet must consist of distinct values. Found multiple occurrences of character '" + c + "' in Alphabet " + mapping.ToString(), NotificationLevel.Error);
-                            return false;
-                        }
+                        GuiLogMessage("Alphabet has to consist of distinct values. Found multiple occurrences of character '" + c + "' in alphabet " + mapping.ToString(), NotificationLevel.Error);
+                        return false;
                     }
                 }
+            }
             return true;
         }
 
@@ -602,17 +573,15 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
             for (int i = 0; i < intArray.Length; i++)
             {
                 int value = intArray[i];
-                if (value > mapping.Length) {
+                if (value > mapping.Length)
+                {
                     //This should not happen because of the previous validation.
-                    GuiLogMessage("Conversion Error.", NotificationLevel.Error);
                     return String.Empty;
                 }
                 result.Append(mapping[value]);
             }
             return result.ToString();
         }
-
-
         #endregion
     }
 }

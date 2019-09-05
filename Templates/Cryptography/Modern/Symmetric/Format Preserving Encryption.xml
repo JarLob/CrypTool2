@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+  <title lang="en">Format Preserving Encryption</title>
+  <summary lang="en">Usage of <i>Format Preserving Encryption</i> with a credit card number.</summary>
+  <description lang="en">This template shows how the <i>Format Preserving Encryption</i> component can be used to encrypt a credit card number.</description>  
+  <title lang="de">Formaterhaltende Verschlüsselung</title>
+  <summary lang="de">Verwendung von <i>Format Preserving Encryption</i> mit einer Kreditkartennummer.</summary>
+  <description lang="de">Diese Vorlage zeigt, wie die Komponente <i>Format Preserving Encryption</i> verwendet werden kann, um eine Kreditkartennummer zu verschlüsseln.</description>  
+  <keywords>FF1, FF2, FF3, DFF</keywords>
+  <icon file="Format Preserving Encryption.png" />
+  <relevantPlugins>
+    <plugin name="Format Preserving Encryption" />
+  </relevantPlugins>
+  <replacements lang="en">
+    <replacement key="$Alphabet$" value="Alphabet" />
+	<replacement key="$Format Preserving Encryption$" value="Format Preserving Encryption" />
+	<replacement key="$credit card number$" value="Credit Card Number" />	
+	<replacement key="$Output$" value="Output" />
+	<replacement key="$Log$" value="Log" />
+	<replacement key="$key$" value="Key" />
+	<replacement key="$tweak$" value="Tweak" />
+	<replacement key="$String Decoder$" value="String Decoder" />
+	<replacement key="$tweak radix$" value="Tweak Radix" />
+	<replacement key="$memo$" value="In this template, a 16-digit credit card number is encrypted with a randomly chosen key and tweak format-preserving. The result is again a 16-digit number. In addition, a log with intermediate values of the encryption is output. The four algorithms FF1, FF2, FF3 and DFF are available for selection, all of which can be executed with the predefined values.\line
+Decryption is also possible: The ciphertext must be copied to the text input input and the Decrypt operation must be selected in the component." />
+  </replacements>
+   <replacements lang="de">
+    <replacement key="$Alphabet$" value="Alphabet" />
+	<replacement key="$Format Preserving Encryption$" value="Format-erhaltende Verschlüsselung" />
+	<replacement key="$credit card number$" value="Kreditkartennummer" />
+	<replacement key="$Output$" value="Ausgabe" />
+	<replacement key="$Log$" value="Log" />
+	<replacement key="$key$" value="Schlüssel" />
+	<replacement key="$tweak$" value="Tweak" />
+	<replacement key="$String Decoder$" value="Zeichenketten-Decodierer" />
+	<replacement key="$tweak radix$" value="Tweak Radix" />
+	<replacement key="$memo$" value="In dieser Vorlage wird eine 16-stellige Kreditkartennummer mit einen zufällig gewählten Schlüssel und Tweak Format-erhaltend verschlüsselt. Das Ergebnis ist wiederum eine 16-stellige Nummer. Zusätzlich wird ein Log mit Zwischenwerten der Verschlüsselung ausgegeben. Zur Auswahl stehen die vier Algorithmen FF1, FF2, FF3 und DFF, die alle mit den vordefinierten Werten ausgeführt werden können.\line
+Eine Entschlüsselung ist auch möglich:  Der Geheimtext muss in die Texteingabe Eingabe kopiert werden und in der Komponente die Operation Entschlüsseln ausgewählt werden." />
+  </replacements>
+</sample>

@@ -20,8 +20,6 @@ using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.Plugins.FormatPreservingEncryption
 {
-    //TODO isnt working as expected
-    //delarce directly 
     enum Algorithms: int{ FF1, FF2, FF3, DFF};
     enum Actions { Encrypt, Decrypt};
     enum Modes { Normal, XML };
