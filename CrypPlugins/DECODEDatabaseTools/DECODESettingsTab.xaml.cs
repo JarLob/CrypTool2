@@ -20,6 +20,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
@@ -50,6 +51,19 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     //An exception occured during restore of password
                 }
             }
+            InitColorPalette();
+        }
+
+        /// <summary>
+        /// Initializes the color palette by loading it from the settings
+        /// </summary>
+        private void InitColorPalette()
+        {
+            TagElementColor.SelectedColor = DrawingToMedia(Properties.Settings.Default.TagElementColor);
+            NullElementColor.SelectedColor = DrawingToMedia(Properties.Settings.Default.NullElementColor);
+            RegularElementColor.SelectedColor = DrawingToMedia(Properties.Settings.Default.RegularElementColor);
+            NomenclatureElementColor.SelectedColor = DrawingToMedia(Properties.Settings.Default.NomenclatureElementColor);
+            CommentColor.SelectedColor = DrawingToMedia(Properties.Settings.Default.CommentColor);
         }
 
         /// <summary>
@@ -122,6 +136,76 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Called, when the user changed a color
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CrPickerSelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color> e)
+        {
+            if(sender == TagElementColor)
+            {
+                Properties.Settings.Default.TagElementColor = MediaToDrawing(e.NewValue);
+                Properties.Settings.Default.Save();
+            }
+            else if(sender == NullElementColor)
+            {
+                Properties.Settings.Default.NullElementColor = MediaToDrawing(e.NewValue);
+                Properties.Settings.Default.Save();
+            }
+            else if(sender == RegularElementColor)
+            {
+                Properties.Settings.Default.RegularElementColor = MediaToDrawing(e.NewValue);
+                Properties.Settings.Default.Save();
+            }
+            else if(sender == NomenclatureElementColor)
+            {
+                Properties.Settings.Default.NomenclatureElementColor = MediaToDrawing(e.NewValue);
+                Properties.Settings.Default.Save();
+            }
+            else if (sender == CommentColor)
+            {
+                Properties.Settings.Default.CommentColor = MediaToDrawing(e.NewValue);
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        /// <summary>
+        /// Converts Color from System.Drawing.Color to System.Windows.Media.Color
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public static Color DrawingToMedia(System.Drawing.Color color)
+        {
+            return Color.FromArgb(color.A, color.R, color.G, color.B);
+        }
+
+        /// <summary>
+        /// Converts Color from System.Windows.Media.Color to System.Drawing.Color
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public static System.Drawing.Color MediaToDrawing(Color color)
+        {
+            return System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
+        }
+
+        /// <summary>
+        /// Resets the color to default values
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ResetColorButton_Click(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.TagElementColor = System.Drawing.Color.Black;            
+            Properties.Settings.Default.NullElementColor = System.Drawing.Color.Gray;
+            Properties.Settings.Default.RegularElementColor = System.Drawing.Color.DarkBlue;
+            Properties.Settings.Default.NomenclatureElementColor = System.Drawing.Color.DarkGreen;
+            Properties.Settings.Default.CommentColor = System.Drawing.Color.Black;
+            Properties.Settings.Default.Save();
+            InitColorPalette();
         }
     }
 }

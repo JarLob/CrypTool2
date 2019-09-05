@@ -17,6 +17,7 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.Plugins.DECODEDatabaseTools.Util;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -150,24 +151,24 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             }
             ProgressChanged(1, 1);
             _running = false;
-        }       
+        }
 
         /// <summary>
         /// Tests all possible settings of the given parser
         /// </summary>
         /// <param name="parser"></param>
         private void TestParser(TextDocument textDocument, Parser parser, PossibleParserParameters possibleParserParameters)
-        {           
+        {
             int combinations = possibleParserParameters.GetNumberOfSettingCombinations();
 
             List<BestListEntry> bestList = new List<BestListEntry>();
-            List<Parameters> alreadyTestedParamters = new List<Parameters>();
+            BlockingCollection<Parameters> alreadyTestedParamters = new BlockingCollection<Parameters>();
 
             for (int i = 0; i < combinations; i++)
             {
                 if (!_running)
                 {
-                    return;
+                    continue;
                 }
                 var parameters = possibleParserParameters.GetParameters(i);
                 if (parameters == null)
@@ -194,10 +195,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 bestListEntry.ParserName = parser.ParserName;
                 bestListEntry.Nulls = parser.Nulls;
                 bestListEntry.Prefixes = parser.Prefixes;
-                bestListEntry.EntropyValue = entropyValue;                
+                bestListEntry.EntropyValue = entropyValue;
                 bestList.Add(bestListEntry);
             }
+
             bestList.Sort();
+
             if(bestList.Count > 1)
             {
                 if(Math.Abs(1 - (bestList[0].EntropyValue / bestList[1].EntropyValue)) > 0.045)

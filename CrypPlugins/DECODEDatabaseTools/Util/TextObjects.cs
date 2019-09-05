@@ -513,19 +513,19 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                     case LineType.Text:
                         switch (TokenType)
                         {
-                            case TokenType.Tag:
-                                return Brushes.Black;
+                            case TokenType.Tag:                                
+                                return new SolidColorBrush( DECODESettingsTab.DrawingToMedia(Properties.Settings.Default.TagElementColor));
                             case TokenType.NullElement:
-                                return Brushes.Gray;
+                                return new SolidColorBrush(DECODESettingsTab.DrawingToMedia(Properties.Settings.Default.NullElementColor));
                             case TokenType.NomenclatureElement:
-                                return Brushes.DarkGreen;
+                                return new SolidColorBrush(DECODESettingsTab.DrawingToMedia(Properties.Settings.Default.NomenclatureElementColor));
                             case TokenType.RegularElement:
-                                return Brushes.DarkBlue;
+                                return new SolidColorBrush(DECODESettingsTab.DrawingToMedia(Properties.Settings.Default.RegularElementColor));
                             default:
                                 return Brushes.Black;
                         }
                     case LineType.Comment:
-                        return Brushes.Black;
+                        return new SolidColorBrush(DECODESettingsTab.DrawingToMedia(Properties.Settings.Default.CommentColor));
                     default:
                         return Brushes.Black;
                 }

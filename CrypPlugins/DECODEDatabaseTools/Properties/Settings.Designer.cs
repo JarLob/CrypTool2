@@ -12,7 +12,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.2.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -56,6 +56,66 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
             }
             set {
                 this["PasswordIV"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Black")]
+        public global::System.Drawing.Color TagElementColor {
+            get {
+                return ((global::System.Drawing.Color)(this["TagElementColor"]));
+            }
+            set {
+                this["TagElementColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Gray")]
+        public global::System.Drawing.Color NullElementColor {
+            get {
+                return ((global::System.Drawing.Color)(this["NullElementColor"]));
+            }
+            set {
+                this["NullElementColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("DarkBlue")]
+        public global::System.Drawing.Color RegularElementColor {
+            get {
+                return ((global::System.Drawing.Color)(this["RegularElementColor"]));
+            }
+            set {
+                this["RegularElementColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("DarkGreen")]
+        public global::System.Drawing.Color NomenclatureElementColor {
+            get {
+                return ((global::System.Drawing.Color)(this["NomenclatureElementColor"]));
+            }
+            set {
+                this["NomenclatureElementColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Black")]
+        public global::System.Drawing.Color CommentColor {
+            get {
+                return ((global::System.Drawing.Color)(this["CommentColor"]));
+            }
+            set {
+                this["CommentColor"] = value;
             }
         }
     }

@@ -642,7 +642,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                                 {
                                     symbol.Bottom += "^";
                                 }
-                                top = false;
+                                bottom = false;
                             }
                             else if (top == true)
                             {
