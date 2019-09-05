@@ -93,7 +93,7 @@ namespace Cryptool.CrypWin
             informations.Add(new Info() { Description = Properties.Resources.SI_Build_Type, Value = AssemblyHelper.BuildType.ToString() });
             informations.Add(new Info() { Description = Properties.Resources.SI_Build_Time, Value = File.GetLastWriteTime(Assembly.GetExecutingAssembly().Location).ToString(CultureInfo.CurrentUICulture.DateTimeFormat) });
             informations.Add(new Info() { Description = Properties.Resources.SI_Product_Name, Value = AssemblyHelper.ProductName });
-            informations.Add(new Info() { Description = Properties.Resources.SI_Common_Language_Runtime_Version, Value = GetDotNetVersion.Get45PlusFromRegistry() });
+            informations.Add(new Info() { Description = Properties.Resources.SI_Common_Language_Runtime_Version, Value = GetDotNetVersion.Get45PlusFromRegistry() + " (" + Environment.Version.ToString() + ")" });
             informations.Add(new Info() { Description = Properties.Resources.SI_Runtime_Path, Value = AppDomain.CurrentDomain.BaseDirectory });
             informations.Add(new Info() { Description = Properties.Resources.SI_CommandLine, Value = Environment.CommandLine });
             informations.Add(new Info() { Description = Properties.Resources.Java_Version, Value = GetJavaVersion() });
