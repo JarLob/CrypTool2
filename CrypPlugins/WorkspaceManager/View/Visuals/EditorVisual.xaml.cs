@@ -174,6 +174,9 @@ namespace WorkspaceManager.View.Visuals
                     var list = FromToTree.Query(new System.Drawing.RectangleF(
                         (float)p.X - (float)1.5, (float)p.Y - (float)1.5, (float)3, (float)3));
 
+                    //filter out all line segments with end and start points:
+                    list = list.Where(element => element.FromTo.MetaData != FromToMeta.HasEndpoint && element.FromTo.MetaData != FromToMeta.HasStartPoint).ToList();
+
                     if (list.Count != 0)
                     {
                         if (CurrentLine == null)
@@ -352,50 +355,15 @@ namespace WorkspaceManager.View.Visuals
 
         private void renewFromToTree()
         {
+            const uint stroke = 8;
             FromToTree = new QuadTreeLib.QuadTree<FakeNode>();
-            var temp = Visuals.OfType<CryptoLineView>();
-            foreach (var element in temp)
+            foreach (var element in Visuals.OfType<CryptoLineView>())
             {
                 foreach (var fromTo in element.Line.PointList)
                 {
-                    if (fromTo.MetaData == FromToMeta.HasEndpoint || fromTo.MetaData == FromToMeta.HasStartPoint)
-                        continue;
-
-                    float x = 0, y = 0, sizeY = 0, sizeX = 0;
-                    double stroke = 8;
-                    switch (fromTo.DirSort)
-                    {
-                        case DirSort.X_ASC:
-                            x = (float)(fromTo.From.X);
-                            y = (float)(fromTo.From.Y - (stroke / 2));
-                            sizeX = (float)(fromTo.To.X);
-                            sizeY = (float)((stroke * 2));
-                            break;
-                        case DirSort.X_DESC:
-                            x = (float)(fromTo.To.X);
-                            y = (float)(fromTo.To.Y - (stroke / 2));
-                            sizeX = (float)(fromTo.From.X);
-                            sizeY = (float)((stroke * 2));
-                            break;
-                        case DirSort.Y_ASC:
-                            y = (float)(fromTo.From.Y);
-                            x = (float)(fromTo.From.X - (stroke / 2));
-                            sizeY = (float)(fromTo.To.Y);
-                            sizeX = (float)((stroke * 2));
-                            break;
-                        case DirSort.Y_DESC:
-                            y = (float)(fromTo.To.Y);
-                            x = (float)(fromTo.To.X - (stroke / 2));
-                            sizeY = (float)(fromTo.From.Y);
-                            sizeX = (float)((stroke * 2));
-                            break;
-                    }
                     FromToTree.Insert(new FakeNode()
                     {
-                        Rectangle = new System.Drawing.RectangleF(x,
-                                                                   y,
-                                                                   sizeX,
-                                                                   sizeY),
+                        Rectangle = fromTo.GetRectangle(stroke),
                         FromTo = fromTo,
                         LogicalParent = element.Line
                     });

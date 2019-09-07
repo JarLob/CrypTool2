@@ -26,6 +26,7 @@ namespace WorkspaceManager.View.VisualComponents
         private Point from, to;
 
         public DirSort DirSort { get; private set; }
+        public bool IsXDir => DirSort == DirSort.X_ASC || DirSort == DirSort.X_DESC;
         public FromToMeta MetaData
         {
             get;
@@ -106,6 +107,40 @@ namespace WorkspaceManager.View.VisualComponents
         public void Update()
         {
             checkDirSort(From, To);
+        }
+
+        public System.Drawing.RectangleF GetRectangle(double stroke = 1)
+        {
+            float x = 0, y = 0, sizeY = 0, sizeX = 0;
+            switch (DirSort)
+            {
+                case DirSort.X_ASC:
+                    x = (float)(From.X);
+                    y = (float)(From.Y - (stroke / 2));
+                    sizeX = (float)(To.X - From.X);
+                    sizeY = (float)(stroke);
+                    break;
+                case DirSort.X_DESC:
+                    x = (float)(To.X);
+                    y = (float)(To.Y - (stroke / 2));
+                    sizeX = (float)(From.X - To.X);
+                    sizeY = (float)(stroke);
+                    break;
+                case DirSort.Y_ASC:
+                    y = (float)(From.Y);
+                    x = (float)(From.X - (stroke / 2));
+                    sizeY = (float)(To.Y - From.Y);
+                    sizeX = (float)(stroke);
+                    break;
+                case DirSort.Y_DESC:
+                    y = (float)(To.Y);
+                    x = (float)(To.X - (stroke / 2));
+                    sizeY = (float)(From.Y - To.Y);
+                    sizeX = (float)(stroke);
+                    break;
+            }
+
+            return new System.Drawing.RectangleF(x, y, sizeX, sizeY);
         }
 
         public override string ToString()

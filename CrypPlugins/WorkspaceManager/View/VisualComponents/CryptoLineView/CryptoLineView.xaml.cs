@@ -1,21 +1,20 @@
+using Cryptool.PluginBase.Editor;
+using QuadTreeLib;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using Cryptool.PluginBase.Editor;
-using WorkspaceManagerModel.Model.Interfaces;
 using WorkspaceManager.Model;
-using WorkspaceManager.View.Visuals;
 using WorkspaceManager.View.VisualComponents.StackFrameDijkstra;
+using WorkspaceManager.View.Visuals;
+using WorkspaceManagerModel.Model.Interfaces;
 using WorkspaceManagerModel.Model.Operations;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using WorkspaceManager.View.Base.Interfaces;
-using QuadTreeLib;
 
 namespace WorkspaceManager.View.VisualComponents.CryptoLineView
 {
@@ -744,7 +743,7 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
         /// <returns>List of all potential stop nodes.</returns>
         private IEnumerable<Node> GetPotentialStopNodes()
         {
-            foreach (var element in Visuals.Where(element => element is ComponentVisual).Cast<IRouting>())
+            foreach (var element in Visuals.OfType<ComponentVisual>())
             {
                 for (int routPoint = 0; routPoint < 4; ++routPoint)
                 {
@@ -813,6 +812,8 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
                             prevPoint = curPoint;
                         }
                         this.PointList.Add(new FromTo(startPoint, EndPoint, FromToMeta.HasEndpoint));
+                        AdjustLineSegments(this.PointList);
+
                         HasComputed = true;
                         raiseComputationDone(true);
                         return;
@@ -845,6 +846,117 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
             }
             HasComputed = true; //Set to "true" here as well, to avoid unnecessary recomputation.
             raiseComputationDone(true);
+        }
+
+        /// <summary>
+        /// Adjust the segments of a computed line path in order to avoid collisions with other lines.
+        /// </summary>
+        private void AdjustLineSegments(IEnumerable<FromTo> segments)
+        {
+            //Create triplets of all neighbor segments by zipping the segments enumeration twice:
+            var segmentTriplets = segments.Zip(segments.Skip(1), (a, b) => (previous: a, current: b)).Zip(segments.Skip(2), (p, c) => (p.previous, p.current, next: c));
+
+            //Go through all triplets and adjust the middle element ("curSegment"):
+            foreach (var (prevSegment, curSegment, nextSegment) in segmentTriplets)
+            {
+                if (curSegment.MetaData == FromToMeta.None)    //Only adjust line segments which do not contain end or start points.
+                {
+                    // X / Y direction needs to be different between neighbor segments for the adjustment to work:
+                    if (prevSegment.IsXDir != curSegment.IsXDir && curSegment.IsXDir != nextSegment.IsXDir)
+                    {
+                        if (CheckCrossLineSegmentCollision(curSegment))
+                        {
+                            //Current segment collides, so try to adjust it:
+                            if (AdjustLineSegment(curSegment))
+                            {
+                                //Current segment was adjusted, so adjust neightbor segments accordingly:
+                                prevSegment.To = curSegment.From;
+                                nextSegment.From = curSegment.To;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Adjust a single segment of a line in order to avoid collisions with other lines.
+        /// </summary>
+        /// <returns>If the passed segment could be adjusted.</returns>
+        private bool AdjustLineSegment(FromTo segment)
+        {
+            var quadTreeLines = helper.FromToTree;
+            var quadTreePlugins = helper.PluginTree;
+            const uint maxAdjustmentTries = 6;
+
+            for (uint adjustmentTry = 0; adjustmentTry < maxAdjustmentTries; adjustmentTry++)
+            {
+                var adjustedSegment = CreateAdjustedLineSegmentAlternative(segment, adjustmentTry);
+                if (!quadTreePlugins.QueryAny(adjustedSegment.GetRectangle()))
+                {
+                    //No collision with plugins. Now check collision with other lines:
+                    if (!CheckCrossLineSegmentCollision(adjustedSegment))
+                    {
+                        //The adjustment does not collide, so use it:
+                        segment.From = adjustedSegment.From;
+                        segment.To = adjustedSegment.To;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Checks whether the passed line segment collides with any other relevant line in an "unpleasant" way.
+        /// </summary>
+        private bool CheckCrossLineSegmentCollision(FromTo segment)
+        {
+            var quadTreeLines = helper.FromToTree;
+            foreach (var crossLine in quadTreeLines.Query(segment.GetRectangle()))
+            {
+                var crossLineView = crossLine.LogicalParent;
+                //Check if found cross line is a different one, is not dragged and runs in the same direction (X or Y):
+                if (crossLineView != this && !crossLineView.IsDragged && crossLine.FromTo.IsXDir == segment.IsXDir)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        /// <summary>
+        /// Creates one out of many possible alternatives of an adjusted line segment.
+        /// This is done by moving the line segment successively to the left and right resp. to the top and bottom.
+        /// Does not check for collisions here.
+        /// </summary>
+        /// <param name="segment">The line segment to adjust.</param>
+        /// <param name="alternativeIndex">An index controlling which adjustment alternative should be used.</param>
+        /// <returns>The adjusted line.</returns>
+        private FromTo CreateAdjustedLineSegmentAlternative(FromTo segment, uint alternativeIndex)
+        {
+            const double adjustmentStepMargin = 10; //Controls which margin should be added per alternative step
+            var sign = ((alternativeIndex % 2) == 0 ? 1 : -1);  //Alternates between 1 and -1 with each alternative
+            var gap = (alternativeIndex + 2) / 2; //Numerical series: 1, 1, 2, 2, 3, 3, ...
+            var adjustment = sign * gap * adjustmentStepMargin;
+
+            switch (segment.DirSort)
+            {
+                case DirSort.X_ASC:
+                case DirSort.X_DESC:
+                    return new FromTo(
+                        Point.Add(segment.From, new Vector(0, adjustment)), 
+                        Point.Add(segment.To, new Vector(0, adjustment)));
+                case DirSort.Y_ASC:
+                case DirSort.Y_DESC:
+                    return new FromTo(
+                        Point.Add(segment.From, new Vector(adjustment, 0)),
+                        Point.Add(segment.To, new Vector(adjustment, 0)));
+            }
+            return segment;
         }
 
         private void raiseComputationDone(bool b)
