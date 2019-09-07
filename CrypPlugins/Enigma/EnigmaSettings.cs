@@ -291,7 +291,7 @@ namespace Cryptool.Enigma
 
         public void Initialize()
         {
-            hideSettingsElement("Rotor4"); hideSettingsElement("Ring4");
+            SetSettingsVisibilityForModel(Model);
         }
 
         #endregion
@@ -338,7 +338,6 @@ namespace Cryptool.Enigma
                         if (_initialRotorPos.Length > 3) _initialRotorPos = _initialRotorPos.Remove(0, 1);
                         rotor1 = 0; rotor2 = 1; rotor3 = 2; rotor4 = 0;
                         reflector = 0;
-                        hideSettingsElement("Rotor4"); hideSettingsElement("Ring4"); hideSettingsElement("Reflector");
                         break;
 
                     case 1: // Enigma D
@@ -349,7 +348,6 @@ namespace Cryptool.Enigma
                         if (_initialRotorPos.Length > 3) _initialRotorPos = _initialRotorPos.Remove(0, 1);
                         rotor1 = 0; rotor2 = 1; rotor3 = 2; rotor4 = 0;
                         reflector = 0;
-                        hideSettingsElement("Rotor4"); hideSettingsElement("Ring4"); showSettingsElement("Reflector");
                         break;
 
                     case 2: // Reichsbahn (Rocket)
@@ -381,8 +379,6 @@ namespace Cryptool.Enigma
                         rotor1 = 0; rotor2 = 1; rotor3 = 2; rotor4 = 0;
                         reflector = 0;
 
-                        showSettingsElement("Rotor4"); showSettingsElement("Ring4"); showSettingsElement("Reflector");
-                        showPlugBoard();
                         break;
 
                     case 5: // Enigma K-Model
@@ -394,7 +390,6 @@ namespace Cryptool.Enigma
                         rotor1 = 0; rotor2 = 1; rotor3 = 2; rotor4 = 0; 
                         reflector = 0; 
 
-                        hideSettingsElement("Rotor4"); hideSettingsElement("Ring4"); showSettingsElement("Reflector");
                         break;
 
                     case 6: // Enigam G / Abwehr
@@ -406,9 +401,10 @@ namespace Cryptool.Enigma
                         rotor1 = 0; rotor2 = 1; rotor3 = 2; rotor4 = 0;
                         reflector = 0;
 
-                        hideSettingsElement("Rotor4"); hideSettingsElement("Ring4"); showSettingsElement("Reflector");
                         break;
                 }
+
+                SetSettingsVisibilityForModel(value);
 
                 OnPropertyChanged("InitialRotorPos");
                 OnPropertyChanged("Rotor1");
@@ -419,6 +415,35 @@ namespace Cryptool.Enigma
             }
         }
 
+        public void SetSettingsVisibilityForModel(int model)
+        {
+            showSettingsElement("Rotor1");
+            showSettingsElement("Rotor2");
+            showSettingsElement("Rotor3");
+            showSettingsElement("Ring1");
+            showSettingsElement("Ring2");
+            showSettingsElement("Ring3");
+            showPlugBoard();
+
+            switch (model)
+            {
+                case 0: // Enigma A/B
+                    hideSettingsElement("Rotor4"); hideSettingsElement("Ring4"); hideSettingsElement("Reflector");
+                    break;
+                case 4: // Enigma M4 "Shark"
+                    showSettingsElement("Rotor4"); showSettingsElement("Ring4"); showSettingsElement("Reflector");
+                    break;
+                case 1: // Enigma D
+                case 2: // Reichsbahn (Rocket)
+                case 3: // Enigma I / M3
+                case 5: // Enigma K-Model
+                case 6: // Enigam G / Abwehr
+                    hideSettingsElement("Rotor4"); hideSettingsElement("Ring4"); showSettingsElement("Reflector");
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException($"Unknown Enigma model '{model}'.");
+            }
+        }
 
         [TaskPane( "InitialRotorPosCaption", "InitialRotorPosTooltip",
             null, 1, false, ControlType.TextBox, ValidationType.RegEx, "^[A-Za-z]{3,4}$")]
