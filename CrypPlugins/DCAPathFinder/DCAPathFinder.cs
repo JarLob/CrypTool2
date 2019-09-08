@@ -3140,23 +3140,6 @@ namespace Cryptool.Plugins.DCAPathFinder
             }
         }
 
-        private void SaveConfigurationToDisk(Cipher2OfflineData data, string fileName)
-        {
-            StringBuilder sb = new StringBuilder();
-            StringWriter sw = new StringWriter(sb);
-
-            JsonSerializer serializer = new JsonSerializer();
-            serializer.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
-            serializer.TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Auto;
-            serializer.Formatting = Newtonsoft.Json.Formatting.Indented;
-            serializer.Serialize(sw, data);
-
-            using (StreamWriter file = File.CreateText(fileName))
-            {
-                file.Write(sb.ToString());
-            }
-        }
-
         /// <summary>
         /// Called every time this plugin is run in the workflow execution.
         /// </summary>

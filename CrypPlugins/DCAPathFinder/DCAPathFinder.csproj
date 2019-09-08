@@ -82,7 +82,6 @@
     <Compile Include="DCAPathFinderSettings.cs" />
     <Compile Include="Logic\AbortingPolicy.cs" />
     <Compile Include="Logic\Characteristic.cs" />
-    <Compile Include="Logic\Cipher2\Cipher2OfflineData.cs" />
     <Compile Include="Logic\ProgressEventArgs.cs" />
     <Compile Include="SettingsErrorMessagsEventArgs.cs" />
     <Compile Include="UI\Models\CharacteristicUI.cs" />
