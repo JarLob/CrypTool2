@@ -30,6 +30,7 @@
         <CommandBinding Command="{x:Static local:EditorVisual.SmallestWidth}" Executed="LayoutCommandExecuted" CanExecute="LayoutCommandCanExecute" />
         <CommandBinding Command="{x:Static local:EditorVisual.BiggestHeight}" Executed="LayoutCommandExecuted" CanExecute="LayoutCommandCanExecute" />
         <CommandBinding Command="{x:Static local:EditorVisual.SmallestHeight}" Executed="LayoutCommandExecuted" CanExecute="LayoutCommandCanExecute" />
+        <CommandBinding Command="{x:Static local:EditorVisual.RearrangeAllLines}" Executed="RearrangeAllLinesCommandExecuted" CanExecute="RearrangeAllLinesCommandCanExecute" />
     </UserControl.CommandBindings>
 
     <UserControl.ContextMenu>
@@ -111,6 +112,14 @@
             <MenuItem Command="{x:Static local:EditorVisual.SmallestHeight}" Header="{Loc CompLayout_SmallestHeight}">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/size_minHeight.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <Separator/>
+
+            <MenuItem Command="{x:Static local:EditorVisual.RearrangeAllLines}" Header="Rearrange all lines">
+                <MenuItem.Icon>
+                    <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/presIcon.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
             </MenuItem>
 
@@ -200,10 +209,16 @@
         </Style>
 
         <ContextMenu  x:Key="ContextMenu">
-            <MenuItem Click="ContextMenuClick" Header="Delete Line" 
+            <MenuItem Click="ContextMenuClick" Header="Delete line" 
                 IsEnabled="{Binding Path=IsExecuting,Converter={StaticResource ResourceKey=NegateBindingConverter}}">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/delete.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Click="RearrangeLineContextMenuClick" Header="Rearrange line" 
+                IsEnabled="{Binding Path=IsExecuting,Converter={StaticResource ResourceKey=NegateBindingConverter}}">
+                <MenuItem.Icon>
+                    <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/presIcon.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"/>
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>

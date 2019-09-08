@@ -195,7 +195,7 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
         public void update()
         {
             Line.update();
-        } 
+        }
         #endregion
         #region EventHandler
         protected void OnPropertyChanged(string name)
@@ -214,6 +214,11 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
             {
                 this.model.WorkspaceModel.ModifyModel(new DeleteConnectionModelOperation(this.model));
             }
+        }
+
+        private void RearrangeLineContextMenuClick(object sender, RoutedEventArgs e)
+        {
+            Line.Rearrange();
         }
 
         void itemsSelected(object sender, SelectedItemsEventArgs e)
@@ -275,7 +280,7 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
             //{
                 assembleGeo();
             //}
-        } 
+        }
         #endregion
     }
 
@@ -425,6 +430,8 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
                 base.SetValue(IsEditingPointProperty, value);
             }
         }
+
+        public bool HasManualModification { get; set; }
 
         private static void OnIsDraggedValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -755,97 +762,161 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
 
         private void makeOrthogonalPoints()
         {
-            bool failed = false;
             if (!IsEditingPoint)
             {
-                if (!isSubstituteLine && !IsDragged && !HasComputed && !loaded)
+                if (HasManualModification)
                 {
-                    FrameworkElement parent = Model.WorkspaceModel.MyEditor.Presentation;
-
-                    var startNode = new Node() { Point = LineUtil.Cheat42(StartPoint, StartPointSource, 1) };
-                    var endNode = new Node() { Point = LineUtil.Cheat42(EndPoint, EndPointSource, -1) };
-                    var nodeList = new List<Node>() { startNode, endNode };
-                    var potentialStopNodes = GetPotentialStopNodes().ToList();
-                    //nodeList contains all nodes (start, end and potential stop nodes):
-                    nodeList.AddRange(potentialStopNodes);
-                    var quadTreePlugins = helper.PluginTree;
-
-                    LinkedList<Node> path = null;
-                    if (SearchPath(startNode, endNode, potentialStopNodes, nodeList, quadTreePlugins))
+                    //Keep manually modified connections "as is", but adjust start and end point if necessary:
+                    if (!AdjustManuallyModifiedLine(PointList, StartPoint, EndPoint))
                     {
-                        //If a connection is found, use Dijskstra algorithm anyway to find the best one.
-                        //It will run on "nodeList", which may contain some additional stops added by "SearchPath" now.
-                        var dijkstra = new Dijkstra<Node>();
-                        path = dijkstra.findPath(nodeList, startNode, endNode);
+                        //Adjustment of manually modified line failed, so switch back to "automatic mode":
+                        HasManualModification = false;
                     }
-
-                    if (path != null)
-                    {
-                        var list = path.ToList();
-                        PointList.Clear();
-                        Point startPoint = StartPoint, curPoint, prevPoint = startPoint;
-                        bool isStart = true;
-                        for (int c = 0; c < list.Count; ++c)
-                        {
-                            var i = list[c];
-                            curPoint = i.Point;
-                            //this.PointList.Add(new FromTo(prevPoint, curPoint));
-                            if ((startPoint.X != curPoint.X && startPoint.Y != curPoint.Y))
-                            {
-                                if (isStart)
-                                {
-                                    this.PointList.Add(new FromTo(startPoint, prevPoint, FromToMeta.HasStartPoint));
-                                    isStart = false;
-                                }
-                                else
-                                    this.PointList.Add(new FromTo(startPoint, prevPoint));
-
-                                startPoint = prevPoint;
-                            }
-                            if (c == list.Count - 1)
-                                if ((startPoint.X != EndPoint.X && startPoint.Y != EndPoint.Y))
-                                {
-                                    this.PointList.Add(new FromTo(startPoint, curPoint));
-                                    startPoint = curPoint;
-                                }
-
-                            prevPoint = curPoint;
-                        }
-                        this.PointList.Add(new FromTo(startPoint, EndPoint, FromToMeta.HasEndpoint));
-                        AdjustLineSegments(this.PointList);
-
-                        HasComputed = true;
-                        raiseComputationDone(true);
-                        return;
-                    }
-                    failed = true;
                 }
 
-                //Failsafe
-                if (IsDragged || failed || isSubstituteLine)
+                if (!HasManualModification)
                 {
-                    if (StartPoint.X < EndPoint.X)
+                    bool failed = false;
+                    if (!isSubstituteLine && !IsDragged && !HasComputed && !loaded)
                     {
-                        PointList.Clear();
-                        PointList.Add(new FromTo(StartPoint, new Point((EndPoint.X + StartPoint.X) / 2, StartPoint.Y)));
-                        PointList.Add(new FromTo(new Point((EndPoint.X + StartPoint.X) / 2, StartPoint.Y), new Point((EndPoint.X + StartPoint.X) / 2, EndPoint.Y)));
-                        PointList.Add(new FromTo(new Point((EndPoint.X + StartPoint.X) / 2, EndPoint.Y), EndPoint));
+                        var startNode = new Node() { Point = LineUtil.Cheat42(StartPoint, StartPointSource, 1) };
+                        var endNode = new Node() { Point = LineUtil.Cheat42(EndPoint, EndPointSource, -1) };
+                        var nodeList = new List<Node>() { startNode, endNode };
+                        var potentialStopNodes = GetPotentialStopNodes().ToList();
+                        //nodeList contains all nodes (start, end and potential stop nodes):
+                        nodeList.AddRange(potentialStopNodes);
+                        var quadTreePlugins = helper.PluginTree;
+
+                        LinkedList<Node> path = null;
+                        if (SearchPath(startNode, endNode, potentialStopNodes, nodeList, quadTreePlugins))
+                        {
+                            //If a connection is found, use Dijskstra algorithm anyway to find the best one.
+                            //It will run on "nodeList", which may contain some additional stops added by "SearchPath" now.
+                            var dijkstra = new Dijkstra<Node>();
+                            path = dijkstra.findPath(nodeList, startNode, endNode);
+                        }
+
+                        if (path != null)
+                        {
+                            var list = path.ToList();
+                            PointList.Clear();
+                            Point startPoint = StartPoint, curPoint, prevPoint = startPoint;
+                            bool isStart = true;
+                            for (int c = 0; c < list.Count; ++c)
+                            {
+                                var i = list[c];
+                                curPoint = i.Point;
+                                //this.PointList.Add(new FromTo(prevPoint, curPoint));
+                                if ((startPoint.X != curPoint.X && startPoint.Y != curPoint.Y))
+                                {
+                                    if (isStart)
+                                    {
+                                        this.PointList.Add(new FromTo(startPoint, prevPoint, FromToMeta.HasStartPoint));
+                                        isStart = false;
+                                    }
+                                    else
+                                        this.PointList.Add(new FromTo(startPoint, prevPoint));
+
+                                    startPoint = prevPoint;
+                                }
+                                if (c == list.Count - 1)
+                                    if ((startPoint.X != EndPoint.X && startPoint.Y != EndPoint.Y))
+                                    {
+                                        this.PointList.Add(new FromTo(startPoint, curPoint));
+                                        startPoint = curPoint;
+                                    }
+
+                                prevPoint = curPoint;
+                            }
+                            this.PointList.Add(new FromTo(startPoint, EndPoint, FromToMeta.HasEndpoint));
+                            AdjustLineSegments(this.PointList);
+
+                            HasComputed = true;
+                            raiseComputationDone(true);
+                            return;
+                        }
+                        failed = true;
                     }
-                    else
+
+                    //Failsafe
+                    if (IsDragged || failed || isSubstituteLine)
                     {
-                        if (StartPoint.X > EndPoint.X)
+                        if (StartPoint.X < EndPoint.X)
                         {
                             PointList.Clear();
-                            PointList.Add(new FromTo(StartPoint, new Point((StartPoint.X + EndPoint.X) / 2, StartPoint.Y)));
-                            PointList.Add(new FromTo(new Point((StartPoint.X + EndPoint.X) / 2, StartPoint.Y), new Point((StartPoint.X + EndPoint.X) / 2, EndPoint.Y)));
-                            PointList.Add(new FromTo(new Point((StartPoint.X + EndPoint.X) / 2, EndPoint.Y), EndPoint));
+                            PointList.Add(new FromTo(StartPoint, new Point((EndPoint.X + StartPoint.X) / 2, StartPoint.Y)));
+                            PointList.Add(new FromTo(new Point((EndPoint.X + StartPoint.X) / 2, StartPoint.Y), new Point((EndPoint.X + StartPoint.X) / 2, EndPoint.Y)));
+                            PointList.Add(new FromTo(new Point((EndPoint.X + StartPoint.X) / 2, EndPoint.Y), EndPoint));
+                        }
+                        else
+                        {
+                            if (StartPoint.X > EndPoint.X)
+                            {
+                                PointList.Clear();
+                                PointList.Add(new FromTo(StartPoint, new Point((StartPoint.X + EndPoint.X) / 2, StartPoint.Y)));
+                                PointList.Add(new FromTo(new Point((StartPoint.X + EndPoint.X) / 2, StartPoint.Y), new Point((StartPoint.X + EndPoint.X) / 2, EndPoint.Y)));
+                                PointList.Add(new FromTo(new Point((StartPoint.X + EndPoint.X) / 2, EndPoint.Y), EndPoint));
+                            }
                         }
                     }
+                    raiseComputationDone(false);
                 }
-                raiseComputationDone(false);
             }
+
             HasComputed = true; //Set to "true" here as well, to avoid unnecessary recomputation.
             raiseComputationDone(true);
+        }
+
+        /// <summary>
+        /// Adjusts only start and end points of an already existing path which was modified manually.
+        /// </summary>
+        /// <param name="points">The points of the old line.</param>
+        /// <param name="newStartPoint">The new start point to adjust to.</param>
+        /// <param name="newEndPoint">The new end point to adjust to.</param>
+        /// <returns>Whether adjustment was possible.</returns>
+        private static bool AdjustManuallyModifiedLine(IEnumerable<FromTo> points, Point newStartPoint, Point newEndPoint)
+        {
+            //Zip point lists to create adjacent points:
+            var adjacentPoints = points.Zip(points.Skip(1), (a, b) => (First: a, Second: b));
+            //Get start point and its neighbor:
+            var (startPoint, startPointNeighbor) = adjacentPoints.SingleOrDefault(
+                pair => pair.First.MetaData == FromToMeta.HasStartPoint || pair.First.MetaData == FromToMeta.HasEndStartPoint);
+            //Get end point and its neighbor:
+            var (endPointNeighbor, endPoint) = adjacentPoints.SingleOrDefault(
+                pair => pair.Second.MetaData == FromToMeta.HasEndpoint || pair.Second.MetaData == FromToMeta.HasEndStartPoint);
+
+            if (startPoint == null || startPointNeighbor == null || endPoint == null || endPointNeighbor == null)
+            {
+                return false;
+            }
+
+            if (startPoint.IsXDir == startPointNeighbor.IsXDir || endPoint.IsXDir == endPointNeighbor.IsXDir)
+            {
+                //start and end points need to have different directions in relation to their neighbors for the adjustment to work.
+                return false;
+            }
+
+            //Adjust start point (and neighbor):
+            if (newStartPoint != startPoint.From)
+            {
+                var startDiff = Point.Subtract(newStartPoint, startPoint.From);
+                var startAdj = startPoint.IsXDir ? new Vector(0, startDiff.Y) : new Vector(startDiff.X, 0);
+                startPoint.From = newStartPoint;
+                startPoint.To = Point.Add(startPoint.To, startAdj);
+                startPointNeighbor.From = startPoint.To;
+            }
+
+            //Adjust end point (and neighbor):
+            if (newEndPoint != endPoint.To)
+            {
+                var endDiff = Point.Subtract(newEndPoint, endPoint.To);
+                var endAdj = endPoint.IsXDir ? new Vector(0, endDiff.Y) : new Vector(endDiff.X, 0);
+                endPoint.To = newEndPoint;
+                endPoint.From = Point.Add(endPoint.From, endAdj);
+                endPointNeighbor.To = endPoint.From;
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -1010,6 +1081,17 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
             {
                 reset();
             }
+        }
+
+        public void Rearrange()
+        {
+            HasManualModification = false;
+            HasComputed = false;
+            loaded = false;
+            InvalidateVisual();
+            InvalidateArrange();
+            InvalidateMeasure();
+            UpdateLayout();
         }
 
         #endregion

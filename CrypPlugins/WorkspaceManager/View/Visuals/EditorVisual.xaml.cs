@@ -42,7 +42,6 @@ namespace WorkspaceManager.View.Visuals
         private Popup pop;
 
         internal Line part = new Line();
-        LinkedList<FromTo> linkedPointList = new LinkedList<FromTo>();
         public ObservableCollection<UIElement> Visuals { get; set; }
         public QuadTreeLib.QuadTree<FakeNode> PluginTree { get; set; }
         public QuadTreeLib.QuadTree<FakeNode> FromToTree { get; set; }
@@ -211,25 +210,22 @@ namespace WorkspaceManager.View.Visuals
                 Vector delta = Point.Subtract((Point)startDragPoint, currentPoint);
                 delta.Negate();
 
+                var linkedPointList = new LinkedList<FromTo>(CurrentLine.Line.PointList);
                 var data = draggedFT;
-                foreach (var p in CurrentLine.Line.PointList)
-                {
-                    linkedPointList.AddLast(p);
-                }
-
-                var curData = linkedPointList.Find(data);
+                var curData = linkedPointList.Find(draggedFT);
                 if (curData == null)
                     return;
 
-                var prevData = linkedPointList.Find(data).Previous;
+                var prevData = curData.Previous;
                 if (prevData == null)
                     return;
 
-                var nextData = linkedPointList.Find(data).Next;
+                var nextData = curData.Next;
                 if (nextData == null)
                     return;
 
                 CurrentLine.Line.IsEditingPoint = true;
+                CurrentLine.Line.HasManualModification = true;
 
                 if (draggedFrom == null || draggedTo == null)
                 {
@@ -1366,6 +1362,20 @@ namespace WorkspaceManager.View.Visuals
         public static RoutedCommand SmallestWidth = new RoutedCommand("SmallestWidth", typeof(RoutedCommand), new InputGestureCollection() { new KeyGesture(Key.W, ModifierKeys.Control) });
         public static RoutedCommand BiggestHeight = new RoutedCommand("BiggestHeight", typeof(RoutedCommand), new InputGestureCollection() { new KeyGesture(Key.H, ModifierKeys.Control | ModifierKeys.Shift) });
         public static RoutedCommand SmallestHeight = new RoutedCommand("SmallestHeight", typeof(RoutedCommand), new InputGestureCollection() { new KeyGesture(Key.H, ModifierKeys.Control) });
+        public static RoutedCommand RearrangeAllLines = new RoutedCommand("RearrangeAllLines", typeof(RoutedCommand), new InputGestureCollection() { new KeyGesture(Key.R, ModifierKeys.Control) });
+
+        private void RearrangeAllLinesCommandCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = !MyEditor.isExecuting();
+        }
+
+        private void RearrangeAllLinesCommandExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            foreach (var line in VisualCollection.OfType<CryptoLineView>())
+            {
+                line.Line.Rearrange();
+            }
+        }
 
         private void LayoutCommandCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -1702,6 +1712,11 @@ namespace WorkspaceManager.View.Visuals
             {
                 VisualsHelper.LastLine.Model.WorkspaceModel.ModifyModel(new DeleteConnectionModelOperation(VisualsHelper.LastLine.Model));
             }
+        }
+
+        private void RearrangeLineContextMenuClick(object sender, RoutedEventArgs e)
+        {
+            VisualsHelper.LastLine?.Line.Rearrange();
         }
 
         private void MouseRightButtonDownHandler(object sender, MouseButtonEventArgs e)
