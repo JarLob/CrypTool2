@@ -105,8 +105,6 @@ namespace DCAPathFinder.UI.Controls
                 OnPropertyChanged("BitThirteenThickness");
                 OnPropertyChanged("BitFourteenThickness");
                 OnPropertyChanged("BitFifteenThickness");
-
-
             }
         }
 

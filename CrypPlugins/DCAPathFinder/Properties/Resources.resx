@@ -168,9 +168,6 @@
   <data name="DCAOptions" xml:space="preserve">
     <value>Differential cryptanalysis options</value>
   </data>
-  <data name="DescriptionContent1" xml:space="preserve">
-    <value>The following is a short description of the ciphers of the individual parts of the tutorial:</value>
-  </data>
   <data name="DescriptionContent2" xml:space="preserve">
     <value>Tutorial 1 uses cipher 1 of the ToyChiffren component. This cipher works on 16 bit blocks and uses two round keys. One encryption round is executed. In this tutorial two unknown 16 bit round keys are restored.</value>
   </data>
@@ -275,9 +272,6 @@
   </data>
   <data name="StartMaskContent1" xml:space="preserve">
     <value>The tutorial starts when you start the workspace.</value>
-  </data>
-  <data name="StartMaskContent2" xml:space="preserve">
-    <value>You have currently selected Tutorial {0}.</value>
   </data>
   <data name="StartMaskHeader" xml:space="preserve">
     <value>Ready for execution</value>
@@ -917,11 +911,11 @@ differential cryptanalysis is a so called "chosen plaintext attack", which means
     <value>The maximum number of threads for your system is {0} threads. This number is limited by your processor.</value>
   </data>
   <data name="UseOfflinePaths" xml:space="preserve">
-    <value>Offline data</value>
+    <value>Precalculated data</value>
   </data>
   <data name="UseOfflinePathsToolTip" xml:space="preserve">
     <value>If this setting is selected, the program does not search for
-characteristics, but uses pre-calculated data stored in the component
+characteristics, but uses precalculated data stored in the component
 and specific for the particular cipher. This allows long calculation
 times to be minimized.</value>
   </data>
@@ -939,5 +933,82 @@ times to be minimized.</value>
   </data>
   <data name="R5" xml:space="preserve">
     <value>Round 5</value>
+  </data>
+  <data name="Tutorial3WaitingSlideContent3Run1" xml:space="preserve">
+    <value>Summary of the analysis results:</value>
+  </data>
+  <data name="Tutorial3WaitingSlideContent3Run2" xml:space="preserve">
+    <value>Input difference: </value>
+  </data>
+  <data name="Tutorial3WaitingSlideContent3Run3" xml:space="preserve">
+    <value>Expected difference: </value>
+  </data>
+  <data name="Tutorial3WaitingSlideContent3Run4" xml:space="preserve">
+    <value>Probability: </value>
+  </data>
+  <data name="Tutorial2WaitingSlideContent3Run1" xml:space="preserve">
+    <value>Summary of the analysis results:</value>
+  </data>
+  <data name="Tutorial2WaitingSlideContent3Run2" xml:space="preserve">
+    <value>Input difference: </value>
+  </data>
+  <data name="Tutorial2WaitingSlideContent3Run3" xml:space="preserve">
+    <value>Expected difference: </value>
+  </data>
+  <data name="Tutorial2WaitingSlideContent3Run4" xml:space="preserve">
+    <value>Probability: </value>
+  </data>
+  <data name="Tutorial3FilterHeader" xml:space="preserve">
+    <value>2. Filterung</value>
+  </data>
+  <data name="Tutorial3FilterSlide1Content1" xml:space="preserve">
+    <value>Bei der Durchführung der DKA werden viele Klartext-Paare generiert, die eine bestimmte Differenz aufweisen. Es kann vorkommen, dass die NAchrichten
+dem im Differenzial gefundenen Weg durch die Chiffre nicht folgen.</value>
+  </data>
+  <data name="Tutorial3FilterSlide1Content2" xml:space="preserve">
+    <value>Erfüllt ein Paar die Eingabedifferenz, bedeutet es noch nicht, dass es auch die letzte Differenz erfüllt.</value>
+  </data>
+  <data name="Tutorial3FilterSlide1Content3" xml:space="preserve">
+    <value>Wenn ein Paar den Fluss des Differenzials folgt, wird von einem richten Paar gesprochen. Dahingegen wird ein Paar, das nicht dem Differenzial
+folgt, als falsches Paar bezeichnet.</value>
+  </data>
+  <data name="Tutorial3FilterSlide1Header" xml:space="preserve">
+    <value>Filterung</value>
+  </data>
+  <data name="Tutorial3IntroductionHeader" xml:space="preserve">
+    <value>1. Einführung</value>
+  </data>
+  <data name="Tutorial3IntroductionSlide1Content1" xml:space="preserve">
+    <value>In Tutorial 1 wurde die Idee der differenziellen Kryptoanalyse vorgestellt und an einer Chiffre bestehend aus einer Verschlüsselungsrunde mit zwei Rundenschlüsseln demonstriert. In Turorial 2 wurde die Idee vertieft und an einer Chiffre mit drei Verschlüsselungsrudnen gezeigt.</value>
+  </data>
+  <data name="Tutorial3IntroductionSlide1Content2" xml:space="preserve">
+    <value>Dazu wurden Strukturen wie Charakteristiken und Differenziale eingeführt.</value>
+  </data>
+  <data name="Tutorial3IntroductionSlide1Content3" xml:space="preserve">
+    <value>In diesem Tutorial werden weitere Techniken gezeigt, die bei der DKA verwendet werden.</value>
+  </data>
+  <data name="Tutorial3IntroductionSlide1Content4" xml:space="preserve">
+    <value>Chiffre 3 besteht aus fünf Verschlüsselungsrunden und sechs Rundenschlüsseln. Das bereits demonstrierte soll an dieser Chiffre darüber hinaus nochmal vertieft werden.</value>
+  </data>
+  <data name="Tutorial3TitleHeader" xml:space="preserve">
+    <value>Tutorial Differenzielle Kryptoanalyse symmetrischer Blockchiffren</value>
+  </data>
+  <data name="AbortingThresholdDifferentialSearch" xml:space="preserve">
+    <value>Probability (differential)</value>
+  </data>
+  <data name="AbortingThresholdDifferentialSearchToolTip" xml:space="preserve">
+    <value>Defines the probability at which the search for characteristics for a differential is aborted</value>
+  </data>
+  <data name="OverviewPreambleHeader" xml:space="preserve">
+    <value>Preamble</value>
+  </data>
+  <data name="StartMaskContent2Run1" xml:space="preserve">
+    <value>In this </value>
+  </data>
+  <data name="StartMaskContent2Run2" xml:space="preserve">
+    <value>Tutorial {0}</value>
+  </data>
+  <data name="StartMaskContent2Run3" xml:space="preserve">
+    <value> is selected.</value>
   </data>
 </root>

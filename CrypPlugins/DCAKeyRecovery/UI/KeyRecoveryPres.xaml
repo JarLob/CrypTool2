@@ -33,6 +33,13 @@
                 </Viewbox>
             </TabItem>
         </TabControl>
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="2,2,2,2" Background="Yellow" Visibility="{Binding IsNextStepPanelVisible, Mode=OneWay}">
+            <TextBlock FontWeight="Bold" FontSize="8" VerticalAlignment="Center">
+                <Run Text="{Loc nextStepTextRun1}"></Run>
+                <LineBreak/>
+                <Run Text="{Loc nextStepTextRun2}"></Run>
+            </TextBlock>
+        </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="2,2,2,2">
             <Button Name="BtnStart" Background="LightGray" Content="{Loc BtnStart}" Width="80" IsEnabled="{Binding StartEnabled, Mode=OneWay}" Click="StartButton_Clicked"></Button>
             <!-- 

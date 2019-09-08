@@ -46,8 +46,6 @@ namespace DCAPathFinder.UI.Tutorial3
 
             DataContext = this;
             InitializeComponent();
-
-
         }
 
         #region properties

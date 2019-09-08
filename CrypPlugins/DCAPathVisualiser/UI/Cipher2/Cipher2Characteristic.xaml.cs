@@ -7,6 +7,7 @@ namespace DCAPathVisualiser.UI.Cipher2
     /// <summary>
     /// Interaktionslogik für Cipher2Characteristic.xaml
     /// </summary>
+    [Cryptool.PluginBase.Attributes.Localization("DCAPathVisualiser.Properties.Resources")]
     public partial class Cipher2Characteristic : UserControl, INotifyPropertyChanged
     {
         private string _inputDiff;

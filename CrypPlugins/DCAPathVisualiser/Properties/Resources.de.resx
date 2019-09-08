@@ -243,4 +243,19 @@
   <data name="OutputDiffR4Header1Run2" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="R1" xml:space="preserve">
+    <value>Runde 1</value>
+  </data>
+  <data name="R2" xml:space="preserve">
+    <value>Runde 2</value>
+  </data>
+  <data name="R3" xml:space="preserve">
+    <value>Runde 3</value>
+  </data>
+  <data name="R4" xml:space="preserve">
+    <value>Runde 4</value>
+  </data>
+  <data name="R5" xml:space="preserve">
+    <value>Runde 5</value>
+  </data>
 </root>

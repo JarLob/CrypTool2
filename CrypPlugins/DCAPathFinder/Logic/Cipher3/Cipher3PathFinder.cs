@@ -1,10 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Threading;
 using System.Threading.Tasks;
+using DCAPathFinder.Properties;
+using DCAPathFinder.UI.Models;
 using DCAPathFinder.UI.Tutorial3;
+using DCAPathFinder.Util;
+using Newtonsoft.Json;
 
 namespace DCAPathFinder.Logic.Cipher3
 {
@@ -118,7 +125,7 @@ namespace DCAPathFinder.Logic.Cipher3
         /// <param name="roundConfiguration"></param>
         /// <param name="differentialsList"></param>
         /// <returns></returns>
-        public List<Characteristic>[] FindAllDifferentialsDepthSearch(
+        public List<Characteristic>[] FindAllCharacteristicsDepthSearch(
             DifferentialAttackRoundConfiguration roundConfiguration, List<Differential> differentialsList)
         {
             ushort round = (ushort) roundConfiguration.Round;
@@ -126,20 +133,6 @@ namespace DCAPathFinder.Logic.Cipher3
             //calculate loop border
             int loopBorder = CalculateLoopBorder(roundConfiguration.ActiveSBoxes);
             double increment = _maxProgress / (loopBorder - 1);
-
-            DateTime startTime = DateTime.Now;
-
-            SearchResult e = new SearchResult();
-            e.activeSBoxes = roundConfiguration.ActiveSBoxes;
-            e.round = roundConfiguration.Round;
-            e.startTime = startTime;
-            e.currentAlgorithm = Algorithms.Cipher3;
-            e.result = null;
-
-            if (AttackSearchResultOccured != null)
-            {
-                AttackSearchResultOccured.Invoke(this, e);
-            }
 
             //result list
             List<Characteristic>[] resultList = new List<Characteristic>[loopBorder];
@@ -191,68 +184,6 @@ namespace DCAPathFinder.Logic.Cipher3
             {
                 return null;
             }
-
-            DateTime endTime = DateTime.Now;
-
-            e = new SearchResult();
-            e.activeSBoxes = roundConfiguration.ActiveSBoxes;
-            e.round = roundConfiguration.Round;
-            e.startTime = startTime;
-            e.endTime = endTime;
-            e.currentAlgorithm = Algorithms.Cipher3;
-
-            for (int i = 0; i < resultList.Length; i++)
-            {
-                if (resultList[i] != null)
-                {
-                    foreach (var chara in resultList[i])
-                    {
-                        Cipher3CharacteristicUI data = new Cipher3CharacteristicUI()
-                        {
-                            InputDiffInt = chara.InputDifferentials[0],
-                            InputDiff =
-                                Convert.ToString(chara.InputDifferentials[0], 2).PadLeft(16, '0').Insert(8, " "),
-                            InputDiffR1Int = chara.InputDifferentials[0],
-                            InputDiffR1 = Convert.ToString(chara.InputDifferentials[0], 2).PadLeft(16, '0')
-                                .Insert(8, " "),
-                            OutputDiffR1Int = chara.OutputDifferentials[0],
-                            OutputDiffR1 = Convert.ToString(chara.OutputDifferentials[0], 2).PadLeft(16, '0')
-                                .Insert(8, " "),
-                            InputDiffR2Int = chara.InputDifferentials[1],
-                            InputDiffR2 = Convert.ToString(chara.InputDifferentials[1], 2).PadLeft(16, '0')
-                                .Insert(8, " "),
-                            OutputDiffR2Int = chara.OutputDifferentials[1],
-                            OutputDiffR2 = Convert.ToString(chara.OutputDifferentials[1], 2).PadLeft(16, '0')
-                                .Insert(8, " "),
-                            InputDiffR3Int = chara.InputDifferentials[2],
-                            InputDiffR3 = Convert.ToString(chara.InputDifferentials[2], 2).PadLeft(16, '0')
-                                .Insert(8, " "),
-                            OutputDiffR3Int = chara.OutputDifferentials[2],
-                            OutputDiffR3 = Convert.ToString(chara.OutputDifferentials[2], 2).PadLeft(16, '0')
-                                .Insert(8, " "),
-                            InputDiffR4Int = chara.InputDifferentials[3],
-                            InputDiffR4 = Convert.ToString(chara.InputDifferentials[3], 2).PadLeft(16, '0')
-                                .Insert(8, " "),
-                            OutputDiffR4Int = chara.OutputDifferentials[3],
-                            OutputDiffR4 = Convert.ToString(chara.OutputDifferentials[3], 2).PadLeft(16, '0')
-                                .Insert(8, " "),
-                            InputDiffR5Int = chara.InputDifferentials[4],
-                            InputDiffR5 = Convert.ToString(chara.InputDifferentials[4], 2).PadLeft(16, '0')
-                                .Insert(8, " "),
-                            Probability = string.Format("{0:0.000000}", chara.Probability)
-                        };
-
-                        e.result.Add(data);
-                    }
-                }
-            }
-
-            if (Stop)
-            {
-                return null;
-            }
-
-            if (AttackSearchResultOccured != null) AttackSearchResultOccured.Invoke(this, e);
 
             return resultList;
         }
@@ -531,20 +462,6 @@ namespace DCAPathFinder.Logic.Cipher3
                 _currentGlobalMax = null;
             }
 
-            DateTime startTime = DateTime.Now;
-
-            SearchResult e = new SearchResult();
-            e.activeSBoxes = roundConfiguration.ActiveSBoxes;
-            e.round = roundConfiguration.Round;
-            e.startTime = startTime;
-            e.currentAlgorithm = Algorithms.Cipher2;
-            e.result = null;
-
-            if (AttackSearchResultOccured != null)
-            {
-                AttackSearchResultOccured.Invoke(this, e);
-            }
-
             UInt16 round = (UInt16) roundConfiguration.Round;
 
             //Decrement round for recursive call
@@ -567,7 +484,6 @@ namespace DCAPathFinder.Logic.Cipher3
             //for (int i = 1; i < loopBorder;i++)
             Parallel.For(1, loopBorder, po, i =>
             {
-
                 Characteristic inputObj = new Cipher3Characteristic();
 
                 ProgressEventArgs ev = new ProgressEventArgs()
@@ -575,7 +491,10 @@ namespace DCAPathFinder.Logic.Cipher3
                     Increment = increment
                 };
 
-                ProgressChangedOccured.Invoke(this, ev);
+                if (ProgressChangedOccured != null)
+                {
+                    ProgressChangedOccured.Invoke(this, ev);
+                }
 
                 //expected difference
                 UInt16 expectedDifference = GenerateValue(roundConfiguration.ActiveSBoxes, (UInt16) i);
@@ -645,103 +564,16 @@ namespace DCAPathFinder.Logic.Cipher3
 
             var sorted = resultList.OrderByDescending(elem => elem.Probability).ToList();
 
-            e = new SearchResult();
-            e.activeSBoxes = roundConfiguration.ActiveSBoxes;
-            e.round = roundConfiguration.Round;
-            e.startTime = startTime;
-            e.currentAlgorithm = Algorithms.Cipher2;
-
             if (abortingPolicy == AbortingPolicy.Threshold)
             {
-                foreach (var characteristic in sorted)
-                {
-                    Cipher3CharacteristicUI data = new Cipher3CharacteristicUI()
-                    {
-                        InputDiffInt = characteristic.InputDifferentials[0],
-                        InputDiff = Convert.ToString(characteristic.InputDifferentials[0], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        InputDiffR1Int = characteristic.InputDifferentials[0],
-                        InputDiffR1 = Convert.ToString(characteristic.InputDifferentials[0], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        OutputDiffR1Int = characteristic.OutputDifferentials[0],
-                        OutputDiffR1 = Convert.ToString(characteristic.OutputDifferentials[0], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        InputDiffR2Int = characteristic.InputDifferentials[1],
-                        InputDiffR2 = Convert.ToString(characteristic.InputDifferentials[1], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        OutputDiffR2Int = characteristic.OutputDifferentials[1],
-                        OutputDiffR2 = Convert.ToString(characteristic.OutputDifferentials[1], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        InputDiffR3Int = characteristic.InputDifferentials[2],
-                        InputDiffR3 = Convert.ToString(characteristic.InputDifferentials[2], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        OutputDiffR3Int = characteristic.OutputDifferentials[2],
-                        OutputDiffR3 = Convert.ToString(characteristic.OutputDifferentials[2], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        InputDiffR4Int = characteristic.InputDifferentials[3],
-                        InputDiffR4 = Convert.ToString(characteristic.InputDifferentials[3], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        OutputDiffR4Int = characteristic.OutputDifferentials[3],
-                        OutputDiffR4 = Convert.ToString(characteristic.OutputDifferentials[3], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        InputDiffR5Int = characteristic.InputDifferentials[4],
-                        InputDiffR5 = Convert.ToString(characteristic.InputDifferentials[4], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        Probability = string.Format("{0:0.000000}", characteristic.Probability)
-                    };
-                    e.result.Add(data);
-                }
-
-                if (AttackSearchResultOccured != null) AttackSearchResultOccured.Invoke(this, e);
-
                 return sorted;
             }
             else
             {
                 sorted.Add(_currentGlobalMax);
-
-                foreach (var characteristic in sorted)
-                {
-                    Cipher3CharacteristicUI data = new Cipher3CharacteristicUI()
-                    {
-                        InputDiffInt = characteristic.InputDifferentials[0],
-                        InputDiff = Convert.ToString(characteristic.InputDifferentials[0], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        InputDiffR1Int = characteristic.InputDifferentials[0],
-                        InputDiffR1 = Convert.ToString(characteristic.InputDifferentials[0], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        OutputDiffR1Int = characteristic.OutputDifferentials[0],
-                        OutputDiffR1 = Convert.ToString(characteristic.OutputDifferentials[0], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        InputDiffR2Int = characteristic.InputDifferentials[1],
-                        InputDiffR2 = Convert.ToString(characteristic.InputDifferentials[1], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        OutputDiffR2Int = characteristic.OutputDifferentials[1],
-                        OutputDiffR2 = Convert.ToString(characteristic.OutputDifferentials[1], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        InputDiffR3Int = characteristic.InputDifferentials[2],
-                        InputDiffR3 = Convert.ToString(characteristic.InputDifferentials[2], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        OutputDiffR3Int = characteristic.OutputDifferentials[2],
-                        OutputDiffR3 = Convert.ToString(characteristic.OutputDifferentials[2], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        InputDiffR4Int = characteristic.InputDifferentials[3],
-                        InputDiffR4 = Convert.ToString(characteristic.InputDifferentials[3], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        OutputDiffR4Int = characteristic.OutputDifferentials[3],
-                        OutputDiffR4 = Convert.ToString(characteristic.OutputDifferentials[3], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        InputDiffR5Int = characteristic.InputDifferentials[4],
-                        InputDiffR5 = Convert.ToString(characteristic.InputDifferentials[4], 2).PadLeft(16, '0')
-                            .Insert(8, " "),
-                        Probability = string.Format("{0:0.000000}", characteristic.Probability)
-                    };
-                    e.result.Add(data);
-                }
-
-                if (AttackSearchResultOccured != null) AttackSearchResultOccured.Invoke(this, e);
-                return sorted;
             }
+
+            return sorted;
         }
 
         /// <summary> 
@@ -974,10 +806,277 @@ namespace DCAPathFinder.Logic.Cipher3
             return best;
         }
 
+        /// <summary>
+        /// Searches for characteristics heuristic based: from the current difference take the best predecessor difference
+        /// </summary>
+        /// <param name="roundConfiguration"></param>
+        /// <param name="differentialsList"></param>
+        /// <returns></returns>
         public List<Characteristic> FindBestCharacteristicsHeuristic(
             DifferentialAttackRoundConfiguration roundConfiguration, List<Differential> differentialsList)
         {
-            throw new NotImplementedException();
+            int round = roundConfiguration.Round;
+
+            List<Characteristic> resultList = new List<Characteristic>();
+
+            round--;
+
+            //calculate loop border
+            int loopBorder = CalculateLoopBorder(roundConfiguration.ActiveSBoxes);
+
+            double increment = _maxProgress / 2 / (loopBorder - 1);
+
+            ParallelOptions po = new ParallelOptions();
+            Cts = new CancellationTokenSource();
+            po.CancellationToken = Cts.Token;
+            po.CancellationToken.ThrowIfCancellationRequested();
+            po.MaxDegreeOfParallelism = threadCount;
+
+            //for(int i = 1; i < loopBorder; i++)
+            Parallel.For(1, loopBorder, po, i =>
+            {
+                Characteristic inputObj = new Cipher3Characteristic();
+
+                //expected difference
+                ushort expectedDifference = GenerateValue(roundConfiguration.ActiveSBoxes, (ushort) i);
+
+                inputObj.InputDifferentials[round] = expectedDifference;
+                inputObj.OutputDifferentials[round - 1] = ReversePBoxBlock(expectedDifference);
+
+                Characteristic retVal = FindBestPredecessorDifference(round, inputObj, differentialsList);
+
+                ProgressEventArgs ev = new ProgressEventArgs()
+                {
+                    Increment = increment
+                };
+
+                if (ProgressChangedOccured != null)
+                {
+                    ProgressChangedOccured.Invoke(this, ev);
+                }
+
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                if (retVal.Probability != -1)
+                {
+                    _semaphoreSlim.Wait();
+                    try
+                    {
+                        resultList.Add(retVal);
+                    }
+                    finally
+                    {
+                        _semaphoreSlim.Release();
+                    }
+                }
+            });
+
+            //Sort by probability
+            var sorted = resultList.OrderByDescending(elem => elem.Probability).ToList();
+
+            return sorted;
+        }
+
+        /// <summary>
+        /// Searches for best predecessor difference from a given difference
+        /// </summary>
+        /// <param name="round"></param>
+        /// <param name="inputCharacteristic"></param>
+        /// <param name="differentialsList"></param>
+        /// <returns></returns>
+        private Characteristic FindBestPredecessorDifference(int round, Characteristic inputCharacteristic,
+            List<Differential> differentialsList)
+        {
+            //end of rekursion
+            if (round == 0)
+                return inputCharacteristic;
+
+            //check active sboxes
+            int zeroToThreeRoundOutput = GetSubBlockFromBlock(inputCharacteristic.OutputDifferentials[round - 1], 0);
+            int fourToSevenRoundOutput = GetSubBlockFromBlock(inputCharacteristic.OutputDifferentials[round - 1], 1);
+            int eightToElevenRoundOutput = GetSubBlockFromBlock(inputCharacteristic.OutputDifferentials[round - 1], 2);
+            int twelveToFifteenRoundOutput =
+                GetSubBlockFromBlock(inputCharacteristic.OutputDifferentials[round - 1], 3);
+
+            //resultList
+            List<Characteristic> charList = new List<Characteristic>();
+
+            //copy object
+            Characteristic characteristic = inputCharacteristic.Clone() as Characteristic;
+
+            double bestValueSBox4 = 0.0;
+            double bestValueSBox3 = 0.0;
+            double bestValueSBox2 = 0.0;
+            double bestValueSBox1 = 0.0;
+
+            double probabilityAccumulated = 1.0;
+
+            int inputDiffSBox4 = 0;
+            int inputDiffSBox3 = 0;
+            int inputDiffSBox2 = 0;
+            int inputDiffSBox1 = 0;
+
+            //check if SBox4 is active
+            if (zeroToThreeRoundOutput > 0)
+            {
+                //find best Diff in that list
+                foreach (var curDiff in differentialsList)
+                {
+                    if (curDiff.OutputDifferential == zeroToThreeRoundOutput)
+                    {
+                        if ((curDiff.Count / 16.0) > bestValueSBox4)
+                        {
+                            bestValueSBox4 = curDiff.Count / 16.0;
+                            inputDiffSBox4 = curDiff.InputDifferential;
+                        }
+                    }
+                }
+            }
+
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (bestValueSBox4 != 0)
+            {
+                probabilityAccumulated *= bestValueSBox4;
+            }
+
+            //check if SBox3 is active
+            if (fourToSevenRoundOutput > 0)
+            {
+                //find best Diff in that list
+                foreach (var curDiff in differentialsList)
+                {
+                    if (curDiff.OutputDifferential == fourToSevenRoundOutput)
+                    {
+                        if ((curDiff.Count / 16.0) > bestValueSBox3)
+                        {
+                            bestValueSBox3 = curDiff.Count / 16.0;
+                            inputDiffSBox3 = curDiff.InputDifferential;
+                        }
+                    }
+                }
+            }
+
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (bestValueSBox3 != 0)
+            {
+                probabilityAccumulated *= bestValueSBox3;
+            }
+
+            //check if SBox2 is active
+            if (eightToElevenRoundOutput > 0)
+            {
+                //find best Diff in that list
+                foreach (var curDiff in differentialsList)
+                {
+                    if (curDiff.OutputDifferential == eightToElevenRoundOutput)
+                    {
+                        if ((curDiff.Count / 16.0) > bestValueSBox2)
+                        {
+                            bestValueSBox2 = curDiff.Count / 16.0;
+                            inputDiffSBox2 = curDiff.InputDifferential;
+                        }
+                    }
+                }
+            }
+
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (bestValueSBox2 != 0)
+            {
+                probabilityAccumulated *= bestValueSBox2;
+            }
+
+            //check if SBox1 is active
+            if (twelveToFifteenRoundOutput > 0)
+            {
+                //find best Diff in that list
+                foreach (var curDiff in differentialsList)
+                {
+                    if (curDiff.OutputDifferential == twelveToFifteenRoundOutput)
+                    {
+                        if ((curDiff.Count / 16.0) > bestValueSBox1)
+                        {
+                            bestValueSBox1 = curDiff.Count / 16.0;
+                            inputDiffSBox1 = curDiff.InputDifferential;
+                        }
+                    }
+                }
+            }
+
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (bestValueSBox1 != 0)
+            {
+                probabilityAccumulated *= bestValueSBox1;
+            }
+
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (characteristic != null && characteristic.Probability != -1)
+            {
+                characteristic.Probability *= probabilityAccumulated;
+            }
+            else
+            {
+                if (characteristic != null) characteristic.Probability = probabilityAccumulated;
+            }
+
+            if (characteristic != null)
+            {
+                characteristic.InputDifferentials[round - 1] =
+                    (ushort) BuildBlockFromPartialBlocks(inputDiffSBox1, inputDiffSBox2, inputDiffSBox3,
+                        inputDiffSBox4);
+
+                if (round - 2 >= 0)
+                {
+                    ushort t = ReversePBoxBlock(characteristic.InputDifferentials[round - 1]);
+                    characteristic.OutputDifferentials[round - 2] = t;
+                }
+
+                Characteristic retVal = FindBestPredecessorDifference(round - 1, characteristic, differentialsList);
+
+                charList.Add(retVal);
+            }
+
+            //search for the best result
+            Characteristic best = new Cipher3Characteristic();
+            foreach (var curChar in charList)
+            {
+                if (best.Probability < curChar.Probability)
+                {
+                    best = curChar;
+                }
+            }
+
+            return best;
+        }
+
+        /// <summary>
+        /// returns a block build from the arguments pb3, pb2, pb1, pb1
+        /// </summary>
+        /// <param name="pb3"></param>
+        /// <param name="pb2"></param>
+        /// <param name="pb1"></param>
+        /// <param name="pb0"></param>
+        /// <returns></returns>
+        public int BuildBlockFromPartialBlocks(int pb3, int pb2, int pb1, int pb0)
+        {
+            BitArray zeroToThree = new BitArray(BitConverter.GetBytes(pb0));
+            BitArray fourToSeven = new BitArray(BitConverter.GetBytes(pb1));
+            BitArray eightToEleven = new BitArray(BitConverter.GetBytes(pb2));
+            BitArray twelveToFifteen = new BitArray(BitConverter.GetBytes(pb3));
+
+            BitArray resultBits = new BitArray(16);
+
+            for (int i = 0; i < 4; i++)
+            {
+                resultBits[i] = zeroToThree[i];
+                resultBits[i + 4] = fourToSeven[i];
+                resultBits[i + 8] = eightToEleven[i];
+                resultBits[i + 12] = twelveToFifteen[i];
+            }
+
+            byte[] resultBytes = new byte[4];
+            resultBits.CopyTo(resultBytes, 0);
+
+            int resultInt = BitConverter.ToInt32(resultBytes, 0);
+            return resultInt;
         }
 
         /// <summary>
@@ -988,7 +1087,7 @@ namespace DCAPathFinder.Logic.Cipher3
         /// <param name="round"></param>
         /// <param name="differentialNumList"></param>
         /// <returns></returns>
-        public List<Characteristic> FindSpecifiedDifferentialDepthSearch(UInt16 inputDiff, UInt16 outputDiff,
+        public List<Characteristic> FindSpecifiedCharacteristicsDepthSearch(UInt16 inputDiff, UInt16 outputDiff,
             UInt16 round, List<Differential> differentialNumList)
         {
             //Decrement round
@@ -1025,11 +1124,12 @@ namespace DCAPathFinder.Logic.Cipher3
         /// </summary>
         /// <param name="round"></param>
         /// <param name="sBoxesToAttack"></param>
+        /// <param name="useOfflinePaths"></param>
         /// <param name="abortingPolicy"></param>
         /// <param name="searchPolicy"></param>
         /// <param name="diffListOfSBox"></param>
         /// <returns></returns>
-        public DifferentialAttackRoundConfiguration GenerateConfigurationAttack(int round, bool[] sBoxesToAttack,
+        public DifferentialAttackRoundConfiguration GenerateConfigurationAttack(int round, bool[] sBoxesToAttack, bool useOfflinePaths,
             AbortingPolicy abortingPolicy, SearchPolicy searchPolicy, List<Differential> diffListOfSBox)
         {
             DifferentialAttackRoundConfiguration result = new DifferentialAttackRoundConfiguration
@@ -1075,233 +1175,406 @@ namespace DCAPathFinder.Logic.Cipher3
                 return null;
             }
 
-            switch (result.SearchPolicy)
+            if (!useOfflinePaths)
             {
-                case SearchPolicy.FirstAllCharacteristicsDepthSearch:
+                switch (result.SearchPolicy)
                 {
-                    //search for all differentials to find the best one on the given SBoxes
-                    List<Characteristic>[] allCharacteristics = FindAllDifferentialsDepthSearch(result, diffListOfSBox);
-
-                    if (Stop)
-                    {
-                        return null;
-                    }
-
-                    ParallelOptions po = new ParallelOptions();
-                    Cts = new CancellationTokenSource();
-                    po.CancellationToken = Cts.Token;
-                    po.CancellationToken.ThrowIfCancellationRequested();
-                    po.MaxDegreeOfParallelism = threadCount;
-
-                    //calculate the results to find the best differential
-                    //for (int i = 1; i < allCharacteristics.Length; i++)
-                    Parallel.For(1, allCharacteristics.Length, po, i =>
-                    {
-                        if (allCharacteristics[i] == null)
+                    case SearchPolicy.FirstAllCharacteristicsDepthSearch:
                         {
-                            return;
-                            //continue;
-                        }
+                            DateTime startTime = DateTime.Now;
 
-                        foreach (var characteristicToComp in allCharacteristics[i])
-                        {
-                            bool possible = true;
+                            SearchResult e = new SearchResult();
+                            e.activeSBoxes = result.ActiveSBoxes;
+                            e.round = result.Round;
+                            e.startTime = startTime;
+                            e.currentAlgorithm = Algorithms.Cipher3;
+                            e.result = null;
 
-                            for (int j = 0; j < Cipher3Configuration.SBOXNUM; j++)
+                            if (AttackSearchResultOccured != null)
                             {
-                                if (sBoxesToAttack[j])
+                                AttackSearchResultOccured.Invoke(this, e);
+                            }
+
+                            //search for all differentials to find the best one on the given SBoxes
+                            List<Characteristic>[] allCharacteristics = FindAllCharacteristicsDepthSearch(result, diffListOfSBox);
+
+                            if (Stop)
+                            {
+                                return null;
+                            }
+
+                            ParallelOptions po = new ParallelOptions();
+                            Cts = new CancellationTokenSource();
+                            po.CancellationToken = Cts.Token;
+                            po.CancellationToken.ThrowIfCancellationRequested();
+                            po.MaxDegreeOfParallelism = threadCount;
+
+                            //calculate the results to find the best differential
+                            //for (int i = 1; i < allCharacteristics.Length; i++)
+                            Parallel.For(1, allCharacteristics.Length, po, i =>
+                            {
+                                if (allCharacteristics[i] == null)
                                 {
-                                    if (GetSubBlockFromBlock(characteristicToComp.InputDifferentials[round - 1],
-                                            (ushort) j) == 0)
+                                    return;
+                                    //continue;
+                                }
+
+                                foreach (var characteristicToComp in allCharacteristics[i])
+                                {
+                                    bool possible = true;
+
+                                    for (int j = 0; j < Cipher3Configuration.SBOXNUM; j++)
                                     {
-                                        possible = false;
+                                        if (sBoxesToAttack[j])
+                                        {
+                                            if (GetSubBlockFromBlock(characteristicToComp.InputDifferentials[round - 1],
+                                                    (ushort)j) == 0)
+                                            {
+                                                possible = false;
+                                            }
+                                        }
+                                    }
+
+                                    if (!possible)
+                                    {
+                                        continue;
+                                    }
+
+                                    double roundProb = 0.0;
+                                    List<Characteristic> roundCharacteristics = new List<Characteristic>();
+
+                                    foreach (var characteristic in allCharacteristics[i])
+                                    {
+                                        if (characteristicToComp.InputDifferentials[0] == characteristic.InputDifferentials[0])
+                                        {
+                                            roundProb += characteristic.Probability;
+                                            roundCharacteristics.Add(characteristic);
+                                        }
+                                    }
+
+                                    _semaphoreSlim.Wait();
+                                    try
+                                    {
+                                        if (roundProb > probabilityAccumulated)
+                                        {
+                                            probabilityAccumulated = roundProb;
+                                            bestCharacteristics = roundCharacteristics;
+                                        }
+                                    }
+                                    finally
+                                    {
+                                        _semaphoreSlim.Release();
+                                    }
+                                }
+                            });
+
+                            if (Stop)
+                            {
+                                return null;
+                            }
+
+                            inputDifference = bestCharacteristics[0].InputDifferentials[0];
+                            expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
+
+                            e = new SearchResult();
+                            e.activeSBoxes = result.ActiveSBoxes;
+                            e.round = result.Round;
+                            e.startTime = startTime;
+                            e.currentAlgorithm = Algorithms.Cipher3;
+
+                            for (int i = 0; i < allCharacteristics.Length; i++)
+                            {
+                                if (allCharacteristics[i] != null)
+                                {
+                                    foreach (var chara in allCharacteristics[i])
+                                    {
+                                        Cipher3CharacteristicUI data = new Cipher3CharacteristicUI()
+                                        {
+                                            InputDiffInt = chara.InputDifferentials[0],
+                                            InputDiff =
+                                                Convert.ToString(chara.InputDifferentials[0], 2).PadLeft(16, '0')
+                                                    .Insert(8, " "),
+                                            InputDiffR1Int = chara.InputDifferentials[0],
+                                            InputDiffR1 = Convert.ToString(chara.InputDifferentials[0], 2).PadLeft(16, '0')
+                                                .Insert(8, " "),
+                                            OutputDiffR1Int = chara.OutputDifferentials[0],
+                                            OutputDiffR1 = Convert.ToString(chara.OutputDifferentials[0], 2).PadLeft(16, '0')
+                                                .Insert(8, " "),
+                                            InputDiffR2Int = chara.InputDifferentials[1],
+                                            InputDiffR2 = Convert.ToString(chara.InputDifferentials[1], 2).PadLeft(16, '0')
+                                                .Insert(8, " "),
+                                            OutputDiffR2Int = chara.OutputDifferentials[1],
+                                            OutputDiffR2 = Convert.ToString(chara.OutputDifferentials[1], 2).PadLeft(16, '0')
+                                                .Insert(8, " "),
+                                            InputDiffR3Int = chara.InputDifferentials[2],
+                                            InputDiffR3 = Convert.ToString(chara.InputDifferentials[2], 2).PadLeft(16, '0')
+                                                .Insert(8, " "),
+                                            OutputDiffR3Int = chara.OutputDifferentials[2],
+                                            OutputDiffR3 = Convert.ToString(chara.OutputDifferentials[2], 2).PadLeft(16, '0')
+                                                .Insert(8, " "),
+                                            InputDiffR4Int = chara.InputDifferentials[3],
+                                            InputDiffR4 = Convert.ToString(chara.InputDifferentials[3], 2).PadLeft(16, '0')
+                                                .Insert(8, " "),
+                                            OutputDiffR4Int = chara.OutputDifferentials[3],
+                                            OutputDiffR4 = Convert.ToString(chara.OutputDifferentials[3], 2).PadLeft(16, '0')
+                                                .Insert(8, " "),
+                                            InputDiffR5Int = chara.InputDifferentials[4],
+                                            InputDiffR5 = Convert.ToString(chara.InputDifferentials[4], 2).PadLeft(16, '0')
+                                                .Insert(8, " "),
+                                            Probability = string.Format("{0:0.000000}", chara.Probability),
+                                            ColBackgroundColor = "White"
+                                        };
+
+                                        foreach (var bestCharacteristic in bestCharacteristics)
+                                        {
+                                            if (chara.InputDifferentials[0] == bestCharacteristic.InputDifferentials[0] &&
+                                                chara.InputDifferentials[1] == bestCharacteristic.InputDifferentials[1] &&
+                                                chara.InputDifferentials[2] == bestCharacteristic.InputDifferentials[2] &&
+                                                chara.InputDifferentials[3] == bestCharacteristic.InputDifferentials[3] &&
+                                                chara.InputDifferentials[4] == bestCharacteristic.InputDifferentials[4] &&
+                                                chara.OutputDifferentials[0] == bestCharacteristic.OutputDifferentials[0] &&
+                                                chara.OutputDifferentials[1] == bestCharacteristic.OutputDifferentials[1] &&
+                                                chara.OutputDifferentials[2] == bestCharacteristic.OutputDifferentials[2] &&
+                                                chara.OutputDifferentials[3] == bestCharacteristic.OutputDifferentials[3])
+                                            {
+                                                data.ColBackgroundColor = "LimeGreen";
+                                                break;
+                                            }
+                                        }
+
+                                        e.result.Add(data);
                                     }
                                 }
                             }
 
-                            if (!possible)
+                            DateTime endTime = DateTime.Now;
+                            e.endTime = endTime;
+
+                            if (AttackSearchResultOccured != null)
                             {
-                                continue;
+                                AttackSearchResultOccured.Invoke(this, e);
+                            }
+                        }
+                        break;
+
+                    case SearchPolicy.FirstBestCharacteristicDepthSearch:
+                        {
+                            DateTime startTime = DateTime.Now;
+
+                            SearchResult e = new SearchResult();
+                            e.activeSBoxes = result.ActiveSBoxes;
+                            e.round = result.Round;
+                            e.startTime = startTime;
+                            e.currentAlgorithm = Algorithms.Cipher3;
+                            e.result = null;
+
+                            if (AttackSearchResultOccured != null)
+                            {
+                                AttackSearchResultOccured.Invoke(this, e);
                             }
 
-                            double roundProb = 0.0;
-                            List<Characteristic> roundCharacteristics = new List<Characteristic>();
+                            //search for THE best characteristic on the given SBoxes
+                            List<Characteristic> characteristics =
+                                FindBestCharacteristicsDepthSearch(result, diffListOfSBox, abortingPolicy);
 
-                            foreach (var characteristic in allCharacteristics[i])
+                            if (Stop)
                             {
-                                if (characteristicToComp.InputDifferentials[0] == characteristic.InputDifferentials[0])
+                                return null;
+                            }
+
+                            //Delete Characteristics which are not usable
+                            List<Characteristic> toDelete = new List<Characteristic>();
+                            foreach (var curCharacteristic in characteristics)
+                            {
+                                bool[] conditionArray = new bool[Cipher3Configuration.SBOXNUM];
+
+                                for (ushort i = 0; i < Cipher3Configuration.SBOXNUM; i++)
                                 {
-                                    roundProb += characteristic.Probability;
-                                    roundCharacteristics.Add(characteristic);
+                                    conditionArray[i] = true;
+
+                                    if (sBoxesToAttack[i])
+                                    {
+                                        if (GetSubBlockFromBlock(curCharacteristic.InputDifferentials[round - 1], i) == 0)
+                                        {
+                                            conditionArray[i] = false;
+                                        }
+                                    }
+                                }
+
+                                for (ushort i = 0; i < Cipher3Configuration.SBOXNUM; i++)
+                                {
+                                    if (conditionArray[i] == false)
+                                    {
+                                        toDelete.Add(curCharacteristic);
+                                    }
                                 }
                             }
 
-                            _semaphoreSlim.Wait();
-                            try
+                            //delete unusable characteristics
+                            foreach (var characteristicToDelete in toDelete)
                             {
-                                if (roundProb > probabilityAccumulated)
+                                characteristics.Remove(characteristicToDelete);
+                            }
+
+                            double inrement = _maxProgress / 2 / (characteristics.Count);
+
+                            ParallelOptions po = new ParallelOptions();
+                            Cts = new CancellationTokenSource();
+                            po.CancellationToken = Cts.Token;
+                            po.CancellationToken.ThrowIfCancellationRequested();
+                            po.MaxDegreeOfParallelism = threadCount;
+
+                            List<Characteristic> allFoundCharacteristics = new List<Characteristic>();
+                            allFoundCharacteristics.AddRange(characteristics);
+
+                            //check for other useable characteristics
+                            //foreach (Characteristic characteristic in characteristics)
+                            Parallel.ForEach(characteristics, po, (characteristic) =>
+                            {
+                                List<Characteristic> differentialList =
+                                    FindSpecifiedCharacteristicsDepthSearch(characteristic.InputDifferentials[0],
+                                        characteristic.InputDifferentials[round - 1], (UInt16)round, diffListOfSBox);
+
+                                if (differentialList == null || differentialList.Count == 0)
                                 {
-                                    probabilityAccumulated = roundProb;
-                                    bestCharacteristics = roundCharacteristics;
+                                    return;
+                                    //continue;
                                 }
-                            }
-                            finally
-                            {
-                                _semaphoreSlim.Release();
-                            }
-                        }
-                    });
 
-                    if (Stop)
-                    {
-                        return null;
-                    }
-
-                    inputDifference = bestCharacteristics[0].InputDifferentials[0];
-                    expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
-                }
-                    break;
-
-                case SearchPolicy.FirstBestCharacteristicDepthSearch:
-                {
-                    SearchResult e = new SearchResult();
-
-                    //search for THE best characteristic on the given SBoxes
-                    List<Characteristic> characteristics =
-                        FindBestCharacteristicsDepthSearch(result, diffListOfSBox, abortingPolicy);
-
-                    if (Stop)
-                    {
-                        return null;
-                    }
-
-                    //Delete Characteristics which are not usable
-                    List<Characteristic> toDelete = new List<Characteristic>();
-                    foreach (var curCharacteristic in characteristics)
-                    {
-                        bool[] conditionArray = new bool[Cipher3Configuration.SBOXNUM];
-
-                        for (ushort i = 0; i < Cipher3Configuration.SBOXNUM; i++)
-                        {
-                            conditionArray[i] = true;
-
-                            if (sBoxesToAttack[i])
-                            {
-                                if (GetSubBlockFromBlock(curCharacteristic.InputDifferentials[round - 1], i) == 0)
+                                ProgressEventArgs ev = new ProgressEventArgs()
                                 {
-                                    conditionArray[i] = false;
+                                    Increment = inrement
+                                };
+
+                                if (ProgressChangedOccured != null)
+                                {
+                                    ProgressChangedOccured.Invoke(this, ev);
                                 }
-                            }
-                        }
 
-                        for (ushort i = 0; i < Cipher3Configuration.SBOXNUM; i++)
-                        {
-                            if (conditionArray[i] == false)
+                                double testProbability = 0.0;
+
+                                foreach (var curCharacteristic in differentialList)
+                                {
+                                    testProbability += curCharacteristic.Probability;
+                                }
+
+                                _semaphoreSlim.Wait();
+                                try
+                                {
+                                    List<Characteristic> toAdd = new List<Characteristic>();
+                                    foreach (var curProbNewChar in differentialList)
+                                    {
+                                        bool found = false;
+                                        foreach (var curChar in allFoundCharacteristics)
+                                        {
+                                            if (curChar.InputDifferentials[0] == curProbNewChar.InputDifferentials[0] &&
+                                                curChar.InputDifferentials[1] == curProbNewChar.InputDifferentials[1] &&
+                                                curChar.InputDifferentials[2] == curProbNewChar.InputDifferentials[2] &&
+                                                curChar.InputDifferentials[3] == curProbNewChar.InputDifferentials[3] &&
+                                                curChar.InputDifferentials[4] == curProbNewChar.InputDifferentials[4] &&
+                                                curChar.OutputDifferentials[0] == curProbNewChar.OutputDifferentials[0] &&
+                                                curChar.OutputDifferentials[1] == curProbNewChar.OutputDifferentials[1] &&
+                                                curChar.OutputDifferentials[2] == curProbNewChar.OutputDifferentials[2] &&
+                                                curChar.OutputDifferentials[3] == curProbNewChar.OutputDifferentials[3])
+                                            {
+                                                found = true;
+                                            }
+                                        }
+
+                                        if (!found)
+                                        {
+                                            toAdd.Add(curProbNewChar);
+                                        }
+                                    }
+
+                                    allFoundCharacteristics.AddRange(toAdd);
+
+                                    //if(differentialList.Count > bestCharacteristics.Count)
+                                    if (testProbability > probabilityAccumulated)
+                                    {
+                                        probabilityAccumulated = testProbability;
+                                        bestCharacteristics = differentialList;
+                                    }
+                                }
+                                finally
+                                {
+                                    _semaphoreSlim.Release();
+                                }
+                            });
+
+                            if (Stop)
                             {
-                                toDelete.Add(curCharacteristic);
+                                return null;
                             }
-                        }
-                    }
 
-                    //delete unusable characteristics
-                    foreach (var characteristicToDelete in toDelete)
-                    {
-                        characteristics.Remove(characteristicToDelete);
-                    }
+                            inputDifference = bestCharacteristics[0].InputDifferentials[0];
+                            expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
 
-                        double inrement = _maxProgress / 2 / (characteristics.Count);
-
-                        ParallelOptions po = new ParallelOptions();
-                    Cts = new CancellationTokenSource();
-                    po.CancellationToken = Cts.Token;
-                    po.CancellationToken.ThrowIfCancellationRequested();
-                    po.MaxDegreeOfParallelism = threadCount;
-
-                    //check for other useable characteristics
-                    //foreach (Characteristic characteristic in characteristics)
-                    Parallel.ForEach(characteristics, po, (characteristic) =>
-                    {
-                        List<Characteristic> differentialList =
-                            FindSpecifiedDifferentialDepthSearch(characteristic.InputDifferentials[0],
-                                characteristic.InputDifferentials[round - 1], (UInt16) round, diffListOfSBox);
-
-                        if (differentialList == null || differentialList.Count == 0)
-                        {
-                            return;
-                            //continue;
-                        }
-
-                        ProgressEventArgs ev = new ProgressEventArgs()
-                        {
-                            Increment = inrement
-                        };
-
-                        this.ProgressChangedOccured.Invoke(this, ev);
-
-                        double testProbability = 0.0;
-
-                        foreach (var curCharacteristic in differentialList)
-                        {
-                            testProbability += curCharacteristic.Probability;
-                        }
-
-                        _semaphoreSlim.Wait();
-                        try
-                        {
+                            DateTime endTime = DateTime.Now;
                             e = new SearchResult();
                             e.startTime = DateTime.MinValue;
                             e.activeSBoxes = result.ActiveSBoxes;
                             e.round = result.Round;
                             e.currentAlgorithm = Algorithms.Cipher3;
+                            e.result = new List<CharacteristicUI>();
+                            e.endTime = endTime;
 
-                            foreach (var chara in differentialList)
+
+                            foreach (var characteristic in allFoundCharacteristics)
                             {
-                                if (characteristic.InputDifferentials[1] == chara.InputDifferentials[1] &&
-                                    characteristic.InputDifferentials[2] == chara.InputDifferentials[2] &&
-                                    characteristic.InputDifferentials[3] == chara.InputDifferentials[3] &&
-                                    characteristic.InputDifferentials[4] == chara.InputDifferentials[4] &&
-                                    characteristic.OutputDifferentials[0] == chara.OutputDifferentials[0] &&
-                                    characteristic.OutputDifferentials[1] == chara.OutputDifferentials[1] &&
-                                    characteristic.OutputDifferentials[2] == chara.OutputDifferentials[2] &&
-                                    characteristic.OutputDifferentials[3] == chara.OutputDifferentials[3])
-                                {
-                                    continue;
-                                }
-
                                 Cipher3CharacteristicUI data = new Cipher3CharacteristicUI()
                                 {
-                                    InputDiffInt = chara.InputDifferentials[0],
-                                    InputDiff = Convert.ToString(chara.InputDifferentials[0], 2).PadLeft(16, '0')
+                                    InputDiffInt = characteristic.InputDifferentials[0],
+                                    InputDiff = Convert.ToString(characteristic.InputDifferentials[0], 2).PadLeft(16, '0')
                                         .Insert(8, " "),
-                                    InputDiffR1Int = chara.InputDifferentials[0],
-                                    InputDiffR1 = Convert.ToString(chara.InputDifferentials[0], 2).PadLeft(16, '0')
+                                    InputDiffR1Int = characteristic.InputDifferentials[0],
+                                    InputDiffR1 = Convert.ToString(characteristic.InputDifferentials[0], 2).PadLeft(16, '0')
                                         .Insert(8, " "),
-                                    OutputDiffR1Int = chara.OutputDifferentials[0],
-                                    OutputDiffR1 = Convert.ToString(chara.OutputDifferentials[0], 2).PadLeft(16, '0')
+                                    OutputDiffR1Int = characteristic.OutputDifferentials[0],
+                                    OutputDiffR1 = Convert.ToString(characteristic.OutputDifferentials[0], 2).PadLeft(16, '0')
                                         .Insert(8, " "),
-                                    InputDiffR2Int = chara.InputDifferentials[1],
-                                    InputDiffR2 = Convert.ToString(chara.InputDifferentials[1], 2).PadLeft(16, '0')
+                                    InputDiffR2Int = characteristic.InputDifferentials[1],
+                                    InputDiffR2 = Convert.ToString(characteristic.InputDifferentials[1], 2).PadLeft(16, '0')
                                         .Insert(8, " "),
-                                    OutputDiffR2Int = chara.OutputDifferentials[1],
-                                    OutputDiffR2 = Convert.ToString(chara.OutputDifferentials[1], 2).PadLeft(16, '0')
+                                    OutputDiffR2Int = characteristic.OutputDifferentials[1],
+                                    OutputDiffR2 = Convert.ToString(characteristic.OutputDifferentials[1], 2).PadLeft(16, '0')
                                         .Insert(8, " "),
-                                    InputDiffR3Int = chara.InputDifferentials[2],
-                                    InputDiffR3 = Convert.ToString(chara.InputDifferentials[2], 2).PadLeft(16, '0')
+                                    InputDiffR3Int = characteristic.InputDifferentials[2],
+                                    InputDiffR3 = Convert.ToString(characteristic.InputDifferentials[2], 2).PadLeft(16, '0')
                                         .Insert(8, " "),
-                                    OutputDiffR3Int = chara.OutputDifferentials[2],
-                                    OutputDiffR3 = Convert.ToString(chara.OutputDifferentials[2], 2).PadLeft(16, '0')
+                                    OutputDiffR3Int = characteristic.OutputDifferentials[2],
+                                    OutputDiffR3 = Convert.ToString(characteristic.OutputDifferentials[2], 2).PadLeft(16, '0')
                                         .Insert(8, " "),
-                                    InputDiffR4Int = chara.InputDifferentials[3],
-                                    InputDiffR4 = Convert.ToString(chara.InputDifferentials[3], 2).PadLeft(16, '0')
+                                    InputDiffR4Int = characteristic.InputDifferentials[3],
+                                    InputDiffR4 = Convert.ToString(characteristic.InputDifferentials[3], 2).PadLeft(16, '0')
                                         .Insert(8, " "),
-                                    OutputDiffR4Int = chara.OutputDifferentials[3],
-                                    OutputDiffR4 = Convert.ToString(chara.OutputDifferentials[3], 2).PadLeft(16, '0')
+                                    OutputDiffR4Int = characteristic.OutputDifferentials[3],
+                                    OutputDiffR4 = Convert.ToString(characteristic.OutputDifferentials[3], 2).PadLeft(16, '0')
                                         .Insert(8, " "),
-                                    InputDiffR5Int = chara.InputDifferentials[4],
-                                    InputDiffR5 = Convert.ToString(chara.InputDifferentials[4], 2).PadLeft(16, '0')
+                                    InputDiffR5Int = characteristic.InputDifferentials[4],
+                                    InputDiffR5 = Convert.ToString(characteristic.InputDifferentials[4], 2).PadLeft(16, '0')
                                         .Insert(8, " "),
-                                    Probability = string.Format("{0:0.000000}", chara.Probability)
+                                    Probability = string.Format("{0:0.000000}", characteristic.Probability),
+                                    ColBackgroundColor = "White"
                                 };
+
+                                foreach (var bestCharacteristic in bestCharacteristics)
+                                {
+                                    if (characteristic.InputDifferentials[0] == bestCharacteristic.InputDifferentials[0] &&
+                                        characteristic.InputDifferentials[1] == bestCharacteristic.InputDifferentials[1] &&
+                                        characteristic.InputDifferentials[2] == bestCharacteristic.InputDifferentials[2] &&
+                                        characteristic.InputDifferentials[3] == bestCharacteristic.InputDifferentials[3] &&
+                                        characteristic.InputDifferentials[4] == bestCharacteristic.InputDifferentials[4] &&
+                                        characteristic.OutputDifferentials[0] == bestCharacteristic.OutputDifferentials[0] &&
+                                        characteristic.OutputDifferentials[1] == bestCharacteristic.OutputDifferentials[1] &&
+                                        characteristic.OutputDifferentials[2] == bestCharacteristic.OutputDifferentials[2] &&
+                                        characteristic.OutputDifferentials[3] == bestCharacteristic.OutputDifferentials[3])
+                                    {
+                                        data.ColBackgroundColor = "LimeGreen";
+                                        break;
+                                    }
+                                }
+
                                 e.result.Add(data);
                             }
 
@@ -1309,52 +1582,436 @@ namespace DCAPathFinder.Logic.Cipher3
                             {
                                 AttackSearchResultOccured.Invoke(this, e);
                             }
-
-                            //if(differentialList.Count > bestCharacteristics.Count)
-                            if (testProbability > probabilityAccumulated)
+                        }
+                        break;
+                    case SearchPolicy.FirstBestCharacteristicHeuristic:
+                        {
+                            if (Stop)
                             {
-                                probabilityAccumulated = testProbability;
-                                bestCharacteristics = differentialList;
+                                return null;
+                            }
+
+                            DateTime startTime = DateTime.Now;
+
+                            SearchResult e = new SearchResult();
+                            e.activeSBoxes = result.ActiveSBoxes;
+                            e.round = result.Round;
+                            e.startTime = startTime;
+                            e.currentAlgorithm = Algorithms.Cipher3;
+                            e.result = null;
+
+                            if (AttackSearchResultOccured != null)
+                            {
+                                AttackSearchResultOccured.Invoke(this, e);
+                            }
+
+                            List<Characteristic> characteristics = FindBestCharacteristicsHeuristic(result, diffListOfSBox);
+
+                            //Delete Characteristics which are not usable
+                            List<Characteristic> toDelete = new List<Characteristic>();
+                            foreach (var curCharacteristic in characteristics)
+                            {
+                                bool[] conditionArray = new bool[Cipher3Configuration.SBOXNUM];
+
+                                for (ushort i = 0; i < Cipher3Configuration.SBOXNUM; i++)
+                                {
+                                    conditionArray[i] = true;
+
+                                    if (sBoxesToAttack[i])
+                                    {
+                                        if (GetSubBlockFromBlock(curCharacteristic.InputDifferentials[round - 1], i) == 0)
+                                        {
+                                            conditionArray[i] = false;
+                                        }
+                                    }
+                                }
+
+                                for (int i = 0; i < Cipher3Configuration.SBOXNUM; i++)
+                                {
+                                    if (conditionArray[i] == false)
+                                    {
+                                        toDelete.Add(curCharacteristic);
+                                    }
+                                }
+                            }
+
+                            //delete unusable characteristics
+                            foreach (var characteristicToDelete in toDelete)
+                            {
+                                characteristics.Remove(characteristicToDelete);
+                            }
+
+                            List<Characteristic> allFoundCharacteristics = new List<Characteristic>();
+                            allFoundCharacteristics.AddRange(characteristics);
+
+                            double inrement = _maxProgress / 2 / (characteristics.Count);
+
+                            //check for other useable characteristics
+                            //foreach (Characteristic characteristic in characteristics)
+                            Parallel.ForEach(characteristics, (characteristic) =>
+                            {
+                                List<Characteristic> differentialList =
+                                    FindSpecifiedCharacteristicsDepthSearch(characteristic.InputDifferentials[0],
+                                        characteristic.InputDifferentials[round - 1], (ushort)round, diffListOfSBox);
+
+                                ProgressEventArgs ev = new ProgressEventArgs()
+                                {
+                                    Increment = inrement
+                                };
+
+                                if (ProgressChangedOccured != null)
+                                {
+                                    ProgressChangedOccured.Invoke(this, ev);
+                                }
+
+                                if (differentialList.Count == 0)
+                                {
+                                    return;
+                                }
+
+                                double testProbability = 0.0;
+
+                                foreach (var curCharacteristic in differentialList)
+                                {
+                                    testProbability += curCharacteristic.Probability;
+                                }
+
+                                _semaphoreSlim.Wait();
+                                try
+                                {
+                                    List<Characteristic> toAdd = new List<Characteristic>();
+                                    foreach (var curProbNewChar in differentialList)
+                                    {
+                                        bool found = false;
+                                        foreach (var curChar in allFoundCharacteristics)
+                                        {
+                                            if (curChar.InputDifferentials[0] == curProbNewChar.InputDifferentials[0] &&
+                                                curChar.InputDifferentials[1] == curProbNewChar.InputDifferentials[1] &&
+                                                curChar.InputDifferentials[2] == curProbNewChar.InputDifferentials[2] &&
+                                                curChar.InputDifferentials[3] == curProbNewChar.InputDifferentials[3] &&
+                                                curChar.InputDifferentials[4] == curProbNewChar.InputDifferentials[4] &&
+                                                curChar.OutputDifferentials[0] == curProbNewChar.OutputDifferentials[0] &&
+                                                curChar.OutputDifferentials[1] == curProbNewChar.OutputDifferentials[1] &&
+                                                curChar.OutputDifferentials[2] == curProbNewChar.OutputDifferentials[2] &&
+                                                curChar.OutputDifferentials[3] == curProbNewChar.OutputDifferentials[3])
+                                            {
+                                                found = true;
+                                            }
+                                        }
+
+                                        if (!found)
+                                        {
+                                            toAdd.Add(curProbNewChar);
+                                        }
+                                    }
+
+                                    allFoundCharacteristics.AddRange(toAdd);
+
+                                    if (testProbability > probabilityAccumulated)
+                                    {
+                                        probabilityAccumulated = testProbability;
+                                        bestCharacteristics = differentialList;
+                                    }
+                                }
+                                finally
+                                {
+                                    _semaphoreSlim.Release();
+                                }
+                            });
+
+                            inputDifference = bestCharacteristics[0].InputDifferentials[0];
+                            expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
+
+                            DateTime endTime = DateTime.Now;
+                            e = new SearchResult();
+                            e.startTime = DateTime.MinValue;
+                            e.activeSBoxes = result.ActiveSBoxes;
+                            e.round = result.Round;
+                            e.currentAlgorithm = Algorithms.Cipher3;
+                            e.result = new List<CharacteristicUI>();
+                            e.endTime = endTime;
+
+                            foreach (var characteristic in allFoundCharacteristics)
+                            {
+                                Cipher3CharacteristicUI data = new Cipher3CharacteristicUI()
+                                {
+                                    InputDiffInt = characteristic.InputDifferentials[0],
+                                    InputDiff = Convert.ToString(characteristic.InputDifferentials[0], 2).PadLeft(16, '0')
+                                        .Insert(8, " "),
+                                    InputDiffR1Int = characteristic.InputDifferentials[0],
+                                    InputDiffR1 = Convert.ToString(characteristic.InputDifferentials[0], 2).PadLeft(16, '0')
+                                        .Insert(8, " "),
+                                    OutputDiffR1Int = characteristic.OutputDifferentials[0],
+                                    OutputDiffR1 = Convert.ToString(characteristic.OutputDifferentials[0], 2).PadLeft(16, '0')
+                                        .Insert(8, " "),
+                                    InputDiffR2Int = characteristic.InputDifferentials[1],
+                                    InputDiffR2 = Convert.ToString(characteristic.InputDifferentials[1], 2).PadLeft(16, '0')
+                                        .Insert(8, " "),
+                                    OutputDiffR2Int = characteristic.OutputDifferentials[1],
+                                    OutputDiffR2 = Convert.ToString(characteristic.OutputDifferentials[1], 2).PadLeft(16, '0')
+                                        .Insert(8, " "),
+                                    InputDiffR3Int = characteristic.InputDifferentials[2],
+                                    InputDiffR3 = Convert.ToString(characteristic.InputDifferentials[2], 2).PadLeft(16, '0')
+                                        .Insert(8, " "),
+                                    OutputDiffR3Int = characteristic.OutputDifferentials[2],
+                                    OutputDiffR3 = Convert.ToString(characteristic.OutputDifferentials[2], 2).PadLeft(16, '0')
+                                        .Insert(8, " "),
+                                    InputDiffR4Int = characteristic.InputDifferentials[3],
+                                    InputDiffR4 = Convert.ToString(characteristic.InputDifferentials[3], 2).PadLeft(16, '0')
+                                        .Insert(8, " "),
+                                    OutputDiffR4Int = characteristic.OutputDifferentials[3],
+                                    OutputDiffR4 = Convert.ToString(characteristic.OutputDifferentials[3], 2).PadLeft(16, '0')
+                                        .Insert(8, " "),
+                                    InputDiffR5Int = characteristic.InputDifferentials[4],
+                                    InputDiffR5 = Convert.ToString(characteristic.InputDifferentials[4], 2).PadLeft(16, '0')
+                                        .Insert(8, " "),
+                                    Probability = string.Format("{0:0.000000}", characteristic.Probability),
+                                    ColBackgroundColor = "White"
+                                };
+
+                                foreach (var bestCharacteristic in bestCharacteristics)
+                                {
+                                    if (characteristic.InputDifferentials[0] == bestCharacteristic.InputDifferentials[0] &&
+                                        characteristic.InputDifferentials[1] == bestCharacteristic.InputDifferentials[1] &&
+                                        characteristic.InputDifferentials[2] == bestCharacteristic.InputDifferentials[2] &&
+                                        characteristic.InputDifferentials[3] == bestCharacteristic.InputDifferentials[3] &&
+                                        characteristic.InputDifferentials[4] == bestCharacteristic.InputDifferentials[4] &&
+                                        characteristic.OutputDifferentials[0] == bestCharacteristic.OutputDifferentials[0] &&
+                                        characteristic.OutputDifferentials[1] == bestCharacteristic.OutputDifferentials[1] &&
+                                        characteristic.OutputDifferentials[2] == bestCharacteristic.OutputDifferentials[2] &&
+                                        characteristic.OutputDifferentials[3] == bestCharacteristic.OutputDifferentials[3])
+                                    {
+                                        data.ColBackgroundColor = "LimeGreen";
+                                        break;
+                                    }
+                                }
+
+                                e.result.Add(data);
+                            }
+
+                            if (AttackSearchResultOccured != null)
+                            {
+                                AttackSearchResultOccured.Invoke(this, e);
                             }
                         }
-                        finally
-                        {
-                            _semaphoreSlim.Release();
-                        }
-                    });
-
-                    if (Stop)
-                    {
-                        return null;
-                    }
-
-                    inputDifference = bestCharacteristics[0].InputDifferentials[0];
-                    expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
-
-                    DateTime endTime = DateTime.Now;
-                    e = new SearchResult();
-                    e.startTime = DateTime.MinValue;
-                    e.activeSBoxes = result.ActiveSBoxes;
-                    e.round = result.Round;
-                    e.currentAlgorithm = Algorithms.Cipher3;
-                    e.result = null;
-                    e.endTime = endTime;
-
-                    if (AttackSearchResultOccured != null)
-                    {
-                        AttackSearchResultOccured.Invoke(this, e);
-                    }
+                        break;
                 }
-                    break;
-                case SearchPolicy.FirstBestCharacteristicHeuristic:
-                {
-                    if (Stop)
-                    {
-                        return null;
-                    }
-                }
-                    break;
             }
+            else
+            {
+                switch (result.SearchPolicy)
+                {
+                    case SearchPolicy.FirstAllCharacteristicsDepthSearch:
+                        string resName = "Cipher3_AllCharacteristics_R" + round + "_SBoxes" + Helper.BoolArrayToString(sBoxesToAttack) + "_Reduced.json";
+                        result = Helper.LoadConfigurationFromDisk(resName);
+
+                        DateTime tTime = DateTime.Now;
+                        SearchResult e = new SearchResult();
+                        e.activeSBoxes = result.ActiveSBoxes;
+                        e.round = result.Round;
+                        e.startTime = tTime;
+                        e.endTime = tTime;
+                        e.currentAlgorithm = Algorithms.Cipher3;
+
+                        //read all characteristics to add them into the UI
+                        foreach (var curChar in result.Characteristics)
+                        {
+                            Cipher3CharacteristicUI data = new Cipher3CharacteristicUI()
+                            {
+                                InputDiffInt = curChar.InputDifferentials[0],
+                                InputDiff = Convert.ToString(curChar.InputDifferentials[0], 2).PadLeft(16, '0').Insert(8, " "),
+                                InputDiffR1Int = curChar.InputDifferentials[0],
+                                InputDiffR1 = Convert.ToString(curChar.InputDifferentials[0], 2).PadLeft(16, '0').Insert(8, " "),
+                                OutputDiffR1Int = curChar.OutputDifferentials[0],
+                                OutputDiffR1 = Convert.ToString(curChar.OutputDifferentials[0], 2).PadLeft(16, '0').Insert(8, " "),
+                                InputDiffR2Int = curChar.InputDifferentials[1],
+                                InputDiffR2 = Convert.ToString(curChar.InputDifferentials[1], 2).PadLeft(16, '0').Insert(8, " "),
+                                OutputDiffR2Int = curChar.OutputDifferentials[1],
+                                OutputDiffR2 = Convert.ToString(curChar.OutputDifferentials[1], 2).PadLeft(16, '0').Insert(8, " "),
+                                InputDiffR3Int = curChar.InputDifferentials[2],
+                                InputDiffR3 = Convert.ToString(curChar.InputDifferentials[2], 2).PadLeft(16, '0').Insert(8, " "),
+                                OutputDiffR3Int = curChar.OutputDifferentials[2],
+                                OutputDiffR3 = Convert.ToString(curChar.OutputDifferentials[2], 2).PadLeft(16, '0').Insert(8, " "),
+                                InputDiffR4Int = curChar.InputDifferentials[3],
+                                InputDiffR4 = Convert.ToString(curChar.InputDifferentials[3], 2).PadLeft(16, '0').Insert(8, " "),
+                                OutputDiffR4Int = curChar.OutputDifferentials[3],
+                                OutputDiffR4 = Convert.ToString(curChar.OutputDifferentials[3], 2).PadLeft(16, '0').Insert(8, " "),
+                                InputDiffR5Int = curChar.InputDifferentials[4],
+                                InputDiffR5 = Convert.ToString(curChar.InputDifferentials[4], 2).PadLeft(16, '0').Insert(8, " "),
+                                Probability = string.Format("{0:0.000000}", curChar.Probability),
+                                ColBackgroundColor = "LimeGreen"
+                            };
+                            e.result.Add(data);
+                        }
+
+                        //fire event
+                        if (AttackSearchResultOccured != null)
+                        {
+                            AttackSearchResultOccured.Invoke(this, e);
+                        }
+
+                        break;
+                    case SearchPolicy.FirstBestCharacteristicDepthSearch:
+
+                        //check aborting policy
+                        if (abortingPolicy == AbortingPolicy.Threshold)
+                        {
+                            resName = "Cipher3_BestCharacteristicDepthSearch_globalThreshold_R" + round + "_SBoxes" + Helper.BoolArrayToString(sBoxesToAttack) + "_Reduced.json";
+                            result = Helper.LoadConfigurationFromDisk(resName);
+
+                            tTime = DateTime.Now;
+                            e = new SearchResult();
+                            e.activeSBoxes = result.ActiveSBoxes;
+                            e.round = result.Round;
+                            e.startTime = tTime;
+                            e.endTime = tTime;
+                            e.currentAlgorithm = Algorithms.Cipher3;
+
+                            //read all characteristics to add them into the UI
+                            foreach (var curChar in result.Characteristics)
+                            {
+                                Cipher3CharacteristicUI data = new Cipher3CharacteristicUI()
+                                {
+                                    InputDiffInt = curChar.InputDifferentials[0],
+                                    InputDiff = Convert.ToString(curChar.InputDifferentials[0], 2).PadLeft(16, '0').Insert(8, " "),
+                                    InputDiffR1Int = curChar.InputDifferentials[0],
+                                    InputDiffR1 = Convert.ToString(curChar.InputDifferentials[0], 2).PadLeft(16, '0').Insert(8, " "),
+                                    OutputDiffR1Int = curChar.OutputDifferentials[0],
+                                    OutputDiffR1 = Convert.ToString(curChar.OutputDifferentials[0], 2).PadLeft(16, '0').Insert(8, " "),
+                                    InputDiffR2Int = curChar.InputDifferentials[1],
+                                    InputDiffR2 = Convert.ToString(curChar.InputDifferentials[1], 2).PadLeft(16, '0').Insert(8, " "),
+                                    OutputDiffR2Int = curChar.OutputDifferentials[1],
+                                    OutputDiffR2 = Convert.ToString(curChar.OutputDifferentials[1], 2).PadLeft(16, '0').Insert(8, " "),
+                                    InputDiffR3Int = curChar.InputDifferentials[2],
+                                    InputDiffR3 = Convert.ToString(curChar.InputDifferentials[2], 2).PadLeft(16, '0').Insert(8, " "),
+                                    OutputDiffR3Int = curChar.OutputDifferentials[2],
+                                    OutputDiffR3 = Convert.ToString(curChar.OutputDifferentials[2], 2).PadLeft(16, '0').Insert(8, " "),
+                                    InputDiffR4Int = curChar.InputDifferentials[3],
+                                    InputDiffR4 = Convert.ToString(curChar.InputDifferentials[3], 2).PadLeft(16, '0').Insert(8, " "),
+                                    OutputDiffR4Int = curChar.OutputDifferentials[3],
+                                    OutputDiffR4 = Convert.ToString(curChar.OutputDifferentials[3], 2).PadLeft(16, '0').Insert(8, " "),
+                                    InputDiffR5Int = curChar.InputDifferentials[4],
+                                    InputDiffR5 = Convert.ToString(curChar.InputDifferentials[4], 2).PadLeft(16, '0').Insert(8, " "),
+                                    Probability = string.Format("{0:0.000000}", curChar.Probability),
+                                    ColBackgroundColor = "LimeGreen"
+                                };
+                                e.result.Add(data);
+                            }
+
+                            //fire event
+                            if (AttackSearchResultOccured != null)
+                            {
+                                AttackSearchResultOccured.Invoke(this, e);
+                            }
+                        }
+                        else
+                        {
+                            resName = "Cipher3_BestCharacteristicDepthSearch_globalMaximum_R" + round + "_SBoxes" + Helper.BoolArrayToString(sBoxesToAttack) + "_Reduced.json";
+                            result = Helper.LoadConfigurationFromDisk(resName);
+
+                            tTime = DateTime.Now;
+                            e = new SearchResult();
+                            e.activeSBoxes = result.ActiveSBoxes;
+                            e.round = result.Round;
+                            e.startTime = tTime;
+                            e.endTime = tTime;
+                            e.currentAlgorithm = Algorithms.Cipher3;
+
+                            //read all characteristics to add them into the UI
+                            foreach (var curChar in result.Characteristics)
+                            {
+                                Cipher3CharacteristicUI data = new Cipher3CharacteristicUI()
+                                {
+                                    InputDiffInt = curChar.InputDifferentials[0],
+                                    InputDiff = Convert.ToString(curChar.InputDifferentials[0], 2).PadLeft(16, '0').Insert(8, " "),
+                                    InputDiffR1Int = curChar.InputDifferentials[0],
+                                    InputDiffR1 = Convert.ToString(curChar.InputDifferentials[0], 2).PadLeft(16, '0').Insert(8, " "),
+                                    OutputDiffR1Int = curChar.OutputDifferentials[0],
+                                    OutputDiffR1 = Convert.ToString(curChar.OutputDifferentials[0], 2).PadLeft(16, '0').Insert(8, " "),
+                                    InputDiffR2Int = curChar.InputDifferentials[1],
+                                    InputDiffR2 = Convert.ToString(curChar.InputDifferentials[1], 2).PadLeft(16, '0').Insert(8, " "),
+                                    OutputDiffR2Int = curChar.OutputDifferentials[1],
+                                    OutputDiffR2 = Convert.ToString(curChar.OutputDifferentials[1], 2).PadLeft(16, '0').Insert(8, " "),
+                                    InputDiffR3Int = curChar.InputDifferentials[2],
+                                    InputDiffR3 = Convert.ToString(curChar.InputDifferentials[2], 2).PadLeft(16, '0').Insert(8, " "),
+                                    OutputDiffR3Int = curChar.OutputDifferentials[2],
+                                    OutputDiffR3 = Convert.ToString(curChar.OutputDifferentials[2], 2).PadLeft(16, '0').Insert(8, " "),
+                                    InputDiffR4Int = curChar.InputDifferentials[3],
+                                    InputDiffR4 = Convert.ToString(curChar.InputDifferentials[3], 2).PadLeft(16, '0').Insert(8, " "),
+                                    OutputDiffR4Int = curChar.OutputDifferentials[3],
+                                    OutputDiffR4 = Convert.ToString(curChar.OutputDifferentials[3], 2).PadLeft(16, '0').Insert(8, " "),
+                                    InputDiffR5Int = curChar.InputDifferentials[4],
+                                    InputDiffR5 = Convert.ToString(curChar.InputDifferentials[4], 2).PadLeft(16, '0').Insert(8, " "),
+                                    Probability = string.Format("{0:0.000000}", curChar.Probability),
+                                    ColBackgroundColor = "LimeGreen"
+                                };
+                                e.result.Add(data);
+                            }
+
+                            //fire event
+                            if (AttackSearchResultOccured != null)
+                            {
+                                AttackSearchResultOccured.Invoke(this, e);
+                            }
+                        }
+                        break;
+                    case SearchPolicy.FirstBestCharacteristicHeuristic:
+                        resName = "Cipher3_BestCharacteristicHeuristic_R" + round + "_SBoxes" + Helper.BoolArrayToString(sBoxesToAttack) + "_Reduced.json";
+                        result = Helper.LoadConfigurationFromDisk(resName);
+
+                        tTime = DateTime.Now;
+                        e = new SearchResult();
+                        e.activeSBoxes = result.ActiveSBoxes;
+                        e.round = result.Round;
+                        e.startTime = tTime;
+                        e.endTime = tTime;
+                        e.currentAlgorithm = Algorithms.Cipher3;
+
+                        //read all characteristics to add them into the UI
+                        foreach (var curChar in result.Characteristics)
+                        {
+                            Cipher3CharacteristicUI data = new Cipher3CharacteristicUI()
+                            {
+                                InputDiffInt = curChar.InputDifferentials[0],
+                                InputDiff = Convert.ToString(curChar.InputDifferentials[0], 2).PadLeft(16, '0').Insert(8, " "),
+                                InputDiffR1Int = curChar.InputDifferentials[0],
+                                InputDiffR1 = Convert.ToString(curChar.InputDifferentials[0], 2).PadLeft(16, '0').Insert(8, " "),
+                                OutputDiffR1Int = curChar.OutputDifferentials[0],
+                                OutputDiffR1 = Convert.ToString(curChar.OutputDifferentials[0], 2).PadLeft(16, '0').Insert(8, " "),
+                                InputDiffR2Int = curChar.InputDifferentials[1],
+                                InputDiffR2 = Convert.ToString(curChar.InputDifferentials[1], 2).PadLeft(16, '0').Insert(8, " "),
+                                OutputDiffR2Int = curChar.OutputDifferentials[1],
+                                OutputDiffR2 = Convert.ToString(curChar.OutputDifferentials[1], 2).PadLeft(16, '0').Insert(8, " "),
+                                InputDiffR3Int = curChar.InputDifferentials[2],
+                                InputDiffR3 = Convert.ToString(curChar.InputDifferentials[2], 2).PadLeft(16, '0').Insert(8, " "),
+                                OutputDiffR3Int = curChar.OutputDifferentials[2],
+                                OutputDiffR3 = Convert.ToString(curChar.OutputDifferentials[2], 2).PadLeft(16, '0').Insert(8, " "),
+                                InputDiffR4Int = curChar.InputDifferentials[3],
+                                InputDiffR4 = Convert.ToString(curChar.InputDifferentials[3], 2).PadLeft(16, '0').Insert(8, " "),
+                                OutputDiffR4Int = curChar.OutputDifferentials[3],
+                                OutputDiffR4 = Convert.ToString(curChar.OutputDifferentials[3], 2).PadLeft(16, '0').Insert(8, " "),
+                                InputDiffR5Int = curChar.InputDifferentials[4],
+                                InputDiffR5 = Convert.ToString(curChar.InputDifferentials[4], 2).PadLeft(16, '0').Insert(8, " "),
+                                Probability = string.Format("{0:0.000000}", curChar.Probability),
+                                ColBackgroundColor = "LimeGreen"
+                            };
+                            e.result.Add(data);
+                        }
+
+                        //fire event
+                        if (AttackSearchResultOccured != null)
+                        {
+                            AttackSearchResultOccured.Invoke(this, e);
+                        }
+
+                        break;
+                }
+
+                //exit method with deserialized result
+                return result;
+            }
+
+
 
             if (Stop)
             {
@@ -1475,25 +2132,17 @@ namespace DCAPathFinder.Logic.Cipher3
             return outputBlock;
         }
 
-
-
-
-
-
-
-
-
         //Methoden zur offline Speicherung 15.08.2019
 
-        public DifferentialAttackRoundConfiguration GenerateOfflineConfiguration(int round, bool[] sBoxesToAttack, List<Differential> diffListOfSBox)
+        public DifferentialAttackRoundConfiguration GenerateOfflineConfiguration(int round, bool[] sBoxesToAttack, List<Differential> diffListOfSBox, AbortingPolicy abPol)
         {
             DifferentialAttackRoundConfiguration result = new DifferentialAttackRoundConfiguration
             {
                 ActiveSBoxes = sBoxesToAttack,
                 Round = round,
-                AbortingPolicy = AbortingPolicy.Threshold,
-                SearchPolicy = SearchPolicy.FirstAllCharacteristicsDepthSearch,
-                SelectedAlgorithm = Algorithms.Cipher3                
+                AbortingPolicy = abPol,
+                SearchPolicy = SearchPolicy.FirstBestCharacteristicHeuristic,
+                SelectedAlgorithm = Algorithms.Cipher3
             };
 
             int inputDifference = -1;
@@ -1504,95 +2153,259 @@ namespace DCAPathFinder.Logic.Cipher3
             switch (round)
             {
                 case 5:
-                    {
-                        result.IsLast = true;
-                        result.IsBeforeLast = false;
-                        result.IsFirst = false;
-                    }
+                {
+                    result.IsLast = true;
+                    result.IsBeforeLast = false;
+                    result.IsFirst = false;
+                }
                     break;
                 case 4:
-                    {
-                        result.IsLast = false;
-                        result.IsBeforeLast = true;
-                        result.IsFirst = false;
-                    }
+                {
+                    result.IsLast = false;
+                    result.IsBeforeLast = true;
+                    result.IsFirst = false;
+                }
                     break;
                 case 3:
-                    {
-                        result.IsLast = false;
-                        result.IsBeforeLast = false;
-                        result.IsFirst = false;
-                    }
+                {
+                    result.IsLast = false;
+                    result.IsBeforeLast = false;
+                    result.IsFirst = false;
+                }
                     break;
             }
 
 
-            //search for all differentials to find the best one on the given SBoxes
-            List<Characteristic>[] allCharacteristics = FindAllDifferentialsDepthSearchOffline(result, diffListOfSBox);
-
-            ParallelOptions po = new ParallelOptions();
-            Cts = new CancellationTokenSource();
-            po.CancellationToken = Cts.Token;
-            po.CancellationToken.ThrowIfCancellationRequested();
-            po.MaxDegreeOfParallelism = threadCount;
-
-            //calculate the results to find the best differential
-            Parallel.For(1, allCharacteristics.Length, po, i =>
-            //for (int i = 1; i < AllCharacteristics.Length; i++)
+            if(result.SearchPolicy == SearchPolicy.FirstAllCharacteristicsDepthSearch)
             {
-                if (allCharacteristics[i] == null)
-                {
-                    return;
-                }
+                //search for all differentials to find the best one on the given SBoxes
+                List<Characteristic>[] allCharacteristics = FindAllDifferentialsDepthSearchOffline(result, diffListOfSBox);
 
-                foreach (var characteristicToComp in allCharacteristics[i])
-                {
-                    bool possible = true;
+                ParallelOptions po = new ParallelOptions();
+                Cts = new CancellationTokenSource();
+                po.CancellationToken = Cts.Token;
+                po.CancellationToken.ThrowIfCancellationRequested();
+                po.MaxDegreeOfParallelism = threadCount;
 
-                    for (int j = 0; j < Cipher3Configuration.SBOXNUM; j++)
+                //calculate the results to find the best differential
+                Parallel.For(1, allCharacteristics.Length, po, i =>
+                //for (int i = 1; i < AllCharacteristics.Length; i++)
+                {
+                    if (allCharacteristics[i] == null)
                     {
-                        if (sBoxesToAttack[j])
+                        return;
+                    }
+
+                    foreach (var characteristicToComp in allCharacteristics[i])
+                    {
+                        bool possible = true;
+
+                        for (int j = 0; j < Cipher3Configuration.SBOXNUM; j++)
                         {
-                            if (GetSubBlockFromBlock(characteristicToComp.InputDifferentials[round - 1],
-                                    (ushort)j) == 0)
+                            if (sBoxesToAttack[j])
                             {
-                                possible = false;
+                                if (GetSubBlockFromBlock(characteristicToComp.InputDifferentials[round - 1],
+                                        (ushort)j) == 0)
+                                {
+                                    possible = false;
+                                }
+                            }
+                        }
+
+                        if (!possible)
+                        {
+                            continue;
+                        }
+
+                        double roundProb = 0.0;
+                        List<Characteristic> roundCharacteristics = new List<Characteristic>();
+
+                        foreach (var characteristic in allCharacteristics[i])
+                        {
+                            if (characteristicToComp.InputDifferentials[0] == characteristic.InputDifferentials[0])
+                            {
+                                roundProb += characteristic.Probability;
+                                roundCharacteristics.Add(characteristic);
+                            }
+                        }
+
+                        _semaphoreSlim.Wait();
+                        try
+                        {
+                            if (roundProb > probabilityAccumulated)
+                            {
+                                probabilityAccumulated = roundProb;
+                                bestCharacteristics = roundCharacteristics;
+                            }
+                        }
+                        finally
+                        {
+                            _semaphoreSlim.Release();
+                        }
+                    }
+                });
+
+            }else if(result.SearchPolicy == SearchPolicy.FirstBestCharacteristicDepthSearch)
+            {
+                List<Characteristic> characteristics = FindBestCharacteristicsDepthSearchOffline(result, diffListOfSBox, result.AbortingPolicy);
+
+                //Delete Characteristics which are not usable
+                List<Characteristic> toDelete = new List<Characteristic>();
+                foreach (var curCharacteristic in characteristics)
+                {
+                    bool[] conditionArray = new bool[Cipher3Configuration.SBOXNUM];
+
+                    for (ushort i = 0; i < Cipher3Configuration.SBOXNUM; i++)
+                    {
+                        conditionArray[i] = true;
+
+                        if (sBoxesToAttack[i])
+                        {
+                            if (GetSubBlockFromBlock(curCharacteristic.InputDifferentials[round - 1], i) == 0)
+                            {
+                                conditionArray[i] = false;
                             }
                         }
                     }
 
-                    if (!possible)
+                    for (ushort i = 0; i < Cipher3Configuration.SBOXNUM; i++)
                     {
-                        continue;
+                        if (conditionArray[i] == false)
+                        {
+                            toDelete.Add(curCharacteristic);
+                        }
+                    }
+                }
+
+                //delete unusable characteristics
+                foreach (var characteristicToDelete in toDelete)
+                {
+                    characteristics.Remove(characteristicToDelete);
+                }
+
+                double inrement = _maxProgress / 2 / (characteristics.Count);
+
+                ParallelOptions po = new ParallelOptions();
+                Cts = new CancellationTokenSource();
+                po.CancellationToken = Cts.Token;
+                po.CancellationToken.ThrowIfCancellationRequested();
+                po.MaxDegreeOfParallelism = threadCount;
+
+                List<Characteristic> allFoundCharacteristics = new List<Characteristic>();
+                allFoundCharacteristics.AddRange(characteristics);
+
+                //check for other useable characteristics
+                //foreach (Characteristic characteristic in characteristics)
+                Parallel.ForEach(characteristics, po, (characteristic) =>
+                {
+                    List<Characteristic> differentialList =
+                        FindSpecifiedCharacteristicsDepthSearch(characteristic.InputDifferentials[0],
+                            characteristic.InputDifferentials[round - 1], (UInt16)round, diffListOfSBox);
+
+                    if (differentialList == null || differentialList.Count == 0)
+                    {
+                        return;
+                        //continue;
                     }
 
-                    double roundProb = 0.0;
-                    List<Characteristic> roundCharacteristics = new List<Characteristic>();
 
-                    foreach (var characteristic in allCharacteristics[i])
+                    double testProbability = 0.0;
+
+                    foreach (var curCharacteristic in differentialList)
                     {
-                        if (characteristicToComp.InputDifferentials[0] == characteristic.InputDifferentials[0])
-                        {
-                            roundProb += characteristic.Probability;
-                            roundCharacteristics.Add(characteristic);
-                        }
+                        testProbability += curCharacteristic.Probability;
                     }
 
                     _semaphoreSlim.Wait();
                     try
                     {
-                        if (roundProb > probabilityAccumulated)
+                        //if(differentialList.Count > bestCharacteristics.Count)
+                        if (testProbability > probabilityAccumulated)
                         {
-                            probabilityAccumulated = roundProb;
-                            bestCharacteristics = roundCharacteristics;
+                            probabilityAccumulated = testProbability;
+                            bestCharacteristics = differentialList;
                         }
                     }
                     finally
                     {
                         _semaphoreSlim.Release();
                     }
+                });
+
+            }
+            else if (result.SearchPolicy == SearchPolicy.FirstBestCharacteristicHeuristic)
+            {
+                List<Characteristic> characteristics = FindBestCharacteristicsHeuristicOffline(result, diffListOfSBox);
+
+                //Delete Characteristics which are not usable
+                List<Characteristic> toDelete = new List<Characteristic>();
+                foreach (var curCharacteristic in characteristics)
+                {
+                    bool[] conditionArray = new bool[Cipher3Configuration.SBOXNUM];
+
+                    for (ushort i = 0; i < Cipher3Configuration.SBOXNUM; i++)
+                    {
+                        conditionArray[i] = true;
+
+                        if (sBoxesToAttack[i])
+                        {
+                            if (GetSubBlockFromBlock(curCharacteristic.InputDifferentials[round - 1], i) == 0)
+                            {
+                                conditionArray[i] = false;
+                            }
+                        }
+                    }
+
+                    for (int i = 0; i < Cipher3Configuration.SBOXNUM; i++)
+                    {
+                        if (conditionArray[i] == false)
+                        {
+                            toDelete.Add(curCharacteristic);
+                        }
+                    }
                 }
-            });
+
+                //delete unusable characteristics
+                foreach (var characteristicToDelete in toDelete)
+                {
+                    characteristics.Remove(characteristicToDelete);
+                }
+
+                //check for other useable characteristics
+                //foreach (Characteristic characteristic in characteristics)
+                Parallel.ForEach(characteristics, (characteristic) =>
+                {
+                    List<Characteristic> differentialList =
+                        FindSpecifiedCharacteristicsDepthSearch(characteristic.InputDifferentials[0],
+                            characteristic.InputDifferentials[round - 1], (ushort)round, diffListOfSBox);
+
+                    if (differentialList.Count == 0)
+                    {
+                        return;
+                    }
+
+                    double testProbability = 0.0;
+
+                    foreach (var curCharacteristic in differentialList)
+                    {
+                        testProbability += curCharacteristic.Probability;
+                    }
+
+                    _semaphoreSlim.Wait();
+                    try
+                    {
+                        if (testProbability > probabilityAccumulated)
+                        {
+                            probabilityAccumulated = testProbability;
+                            bestCharacteristics = differentialList;
+                        }
+                    }
+                    finally
+                    {
+                        _semaphoreSlim.Release();
+                    }
+                });
+            }
 
             inputDifference = bestCharacteristics[0].InputDifferentials[0];
             expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
@@ -1605,9 +2418,56 @@ namespace DCAPathFinder.Logic.Cipher3
             return result;
         }
 
-        public List<Characteristic>[] FindAllDifferentialsDepthSearchOffline(DifferentialAttackRoundConfiguration roundConfiguration, List<Differential> differentialsList)
+        public List<Characteristic> FindBestCharacteristicsHeuristicOffline(
+            DifferentialAttackRoundConfiguration roundConfiguration, List<Differential> differentialsList)
         {
-            ushort round = (ushort)roundConfiguration.Round;
+            int round = roundConfiguration.Round;
+
+            List<Characteristic> resultList = new List<Characteristic>();
+
+            round--;
+
+            //calculate loop border
+            int loopBorder = CalculateLoopBorder(roundConfiguration.ActiveSBoxes);
+
+            //for(int i = 1; i < loopBorder; i++)
+            Parallel.For(1, loopBorder, i =>
+            {
+                Characteristic inputObj = new Cipher3Characteristic();
+
+                //expected difference
+                ushort expectedDifference = GenerateValue(roundConfiguration.ActiveSBoxes, (ushort)i);
+
+                inputObj.InputDifferentials[round] = expectedDifference;
+                inputObj.OutputDifferentials[round - 1] = ReversePBoxBlock(expectedDifference);
+
+                Characteristic retVal = FindBestPredecessorDifference(round, inputObj, differentialsList);
+
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                if (retVal.Probability != -1)
+                {
+                    _semaphoreSlim.Wait();
+                    try
+                    {
+                        resultList.Add(retVal);
+                    }
+                    finally
+                    {
+                        _semaphoreSlim.Release();
+                    }
+                }
+            });
+
+            //Sort by probability
+            var sorted = resultList.OrderByDescending(elem => elem.Probability).ToList();
+
+            return sorted;
+        }
+
+        public List<Characteristic>[] FindAllDifferentialsDepthSearchOffline(
+            DifferentialAttackRoundConfiguration roundConfiguration, List<Differential> differentialsList)
+        {
+            ushort round = (ushort) roundConfiguration.Round;
 
             //calculate loop border
             int loopBorder = CalculateLoopBorder(roundConfiguration.ActiveSBoxes);
@@ -1624,9 +2484,8 @@ namespace DCAPathFinder.Logic.Cipher3
             //for(int i = 1; i < loopBorder;i++)
             Parallel.For(1, loopBorder, po, i =>
             {
-
                 //expected difference
-                ushort expectedDifference = GenerateValue(roundConfiguration.ActiveSBoxes, (ushort)i);
+                ushort expectedDifference = GenerateValue(roundConfiguration.ActiveSBoxes, (ushort) i);
 
                 bool skip = false;
 
@@ -1653,6 +2512,109 @@ namespace DCAPathFinder.Logic.Cipher3
             });
 
             return resultList;
+        }
+
+        public List<Characteristic> FindBestCharacteristicsDepthSearchOffline(DifferentialAttackRoundConfiguration roundConfiguration, List<Differential> differentialsList, AbortingPolicy abortingPolicy)
+        {
+            //clean possible older result 
+            if (abortingPolicy == AbortingPolicy.GlobalMaximum)
+            {
+                _currentGlobalMax = null;
+            }
+
+            UInt16 round = (UInt16)roundConfiguration.Round;
+
+            //Decrement round for recursive call
+            round--;
+
+            //result list
+            List<Characteristic> resultList = new List<Characteristic>();
+
+            //calculate loop border
+            int loopBorder = CalculateLoopBorder(roundConfiguration.ActiveSBoxes);
+
+            ParallelOptions po = new ParallelOptions();
+            Cts = new CancellationTokenSource();
+            po.CancellationToken = Cts.Token;
+            po.CancellationToken.ThrowIfCancellationRequested();
+            po.MaxDegreeOfParallelism = threadCount;
+
+            //for (int i = 1; i < loopBorder;i++)
+            Parallel.For(1, loopBorder, po, i =>
+            {
+                Characteristic inputObj = new Cipher3Characteristic();
+
+                //expected difference
+                UInt16 expectedDifference = GenerateValue(roundConfiguration.ActiveSBoxes, (UInt16)i);
+                UInt16 outputDifferencePreviousRound = ReversePBoxBlock(expectedDifference);
+
+                bool skip = false;
+
+                for (ushort j = 0; j < Cipher3Configuration.SBOXNUM; j++)
+                {
+                    if (roundConfiguration.ActiveSBoxes[j])
+                    {
+                        if (GetSubBlockFromBlock(expectedDifference, j) == 0)
+                        {
+                            skip = true;
+                        }
+                    }
+                }
+
+                if (skip)
+                {
+                    return;
+                }
+
+                inputObj.InputDifferentials[round] = expectedDifference;
+
+                //start depth-first search
+                Characteristic retVal = FindBestCharacteristic(round, differentialsList, outputDifferencePreviousRound, inputObj, abortingPolicy);
+
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                if (retVal.Probability != -1)
+                {
+                    _semaphoreSlim.Wait();
+                    try
+                    {
+                        if (abortingPolicy == AbortingPolicy.Threshold)
+                        {
+                            resultList.Add(retVal);
+                        }
+                        else
+                        {
+                            if (_currentGlobalMax == null)
+                            {
+                                _currentGlobalMax = retVal;
+                            }
+                            else
+                            {
+                                if (_currentGlobalMax.Probability < retVal.Probability)
+                                {
+                                    _currentGlobalMax = retVal;
+                                }
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        _semaphoreSlim.Release();
+                    }
+                }
+            });
+
+            var sorted = resultList.OrderByDescending(elem => elem.Probability).ToList();
+
+            if (abortingPolicy == AbortingPolicy.Threshold)
+            {
+                return sorted;
+            }
+            else
+            {
+                sorted.Add(_currentGlobalMax);
+            }
+
+            return sorted;
         }
     }
 }

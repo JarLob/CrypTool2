@@ -619,6 +619,24 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The differential cryptanalysis has to be ähnelt.
+        /// </summary>
+        internal static string nextStepTextRun1 {
+            get {
+                return ResourceManager.GetString("nextStepTextRun1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die continued in the PathFinder component ähnelt.
+        /// </summary>
+        internal static string nextStepTextRun2 {
+            get {
+                return ResourceManager.GetString("nextStepTextRun2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Speed settings ähnelt.
         /// </summary>
         internal static string PerformanceSettingsGroup {

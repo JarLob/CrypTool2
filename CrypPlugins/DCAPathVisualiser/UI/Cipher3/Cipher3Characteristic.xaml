@@ -7,6 +7,9 @@
              xmlns:controls="clr-namespace:DCAPathVisualiser.UI.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="1400" d:DesignWidth="600">
+    <UserControl.Resources>
+        <RotateTransform x:Key="HeaderRotate" Angle="270" />
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -27,6 +30,12 @@
                 <Label Name="InputBlock" Grid.Row="0" Grid.Column="0" FontFamily="Courier New" FontSize="20" HorizontalAlignment="Center" FontWeight="Bold" Content="{Binding InputDiff, Mode=OneWay}" Margin="40,0,0,0"/>
 
                 <!-- Round 1 -->
+                <Image Source="/DCAPathVisualiser;component/images/curlyBracet.png" Height="240" Grid.Row="0" Grid.Column="0" Margin="-280,-1010,0,0"></Image>
+
+                <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="0" FontSize="25" HorizontalAlignment="Left" LayoutTransform="{StaticResource HeaderRotate}" Margin="0,0,0,1160">
+                    <Run Text="{Loc R1}"></Run>
+                </TextBlock>
+
                 <controls:_16BitKeyRoundInOut x:Name="KeyRound1" Grid.Row="0" Grid.Column="0" Margin="50,0,0,0"></controls:_16BitKeyRoundInOut>
 
                 <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="1" FontSize="20" HorizontalAlignment="Left" Margin="0,82.5,0,0">
@@ -55,6 +64,12 @@
                 <!-- /Round 1 -->
 
                 <!-- Round 2 -->
+                <Image Source="/DCAPathVisualiser;component/images/curlyBracet.png" Height="240" Grid.Row="0" Grid.Column="0" Margin="-280,-530,0,0"></Image>
+
+                <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="0" FontSize="25" HorizontalAlignment="Left" LayoutTransform="{StaticResource HeaderRotate}" Margin="0,0,0,922">
+                    <Run Text="{Loc R2}"></Run>
+                </TextBlock>
+
                 <controls:_16BitKeyRoundOut x:Name="KeyRound2" Grid.Row="0" Grid.Column="0" Margin="50,240,0,0"></controls:_16BitKeyRoundOut>
 
                 <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="1" FontSize="20" HorizontalAlignment="Left" Margin="0,387,0,0">
@@ -79,6 +94,12 @@
                 <!-- /Round 2 -->
 
                 <!-- Round 3 -->
+                <Image Source="/DCAPathVisualiser;component/images/curlyBracet.png" Height="240" Grid.Row="0" Grid.Column="0" Margin="-280,-50,0,0"></Image>
+
+                <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="0" FontSize="25" HorizontalAlignment="Left" LayoutTransform="{StaticResource HeaderRotate}" Margin="0,0,0,682">
+                    <Run Text="{Loc R3}"></Run>
+                </TextBlock>
+
                 <controls:_16BitKeyRoundOut x:Name="KeyRound3" Grid.Row="0" Grid.Column="0" Margin="50,480,0,0"></controls:_16BitKeyRoundOut>
 
                 <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="1" FontSize="20" HorizontalAlignment="Left" Margin="0,627,0,0">
@@ -103,6 +124,12 @@
                 <!-- /Round 3 -->
 
                 <!-- Round 4 -->
+                <Image Source="/DCAPathVisualiser;component/images/curlyBracet.png" Height="240" Grid.Row="0" Grid.Column="0" Margin="-280,430,0,0"></Image>
+
+                <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="0" FontSize="25" HorizontalAlignment="Left" LayoutTransform="{StaticResource HeaderRotate}" Margin="0,0,0,440">
+                    <Run Text="{Loc R4}"></Run>
+                </TextBlock>
+
                 <controls:_16BitKeyRoundOut x:Name="KeyRound4" Grid.Row="0" Grid.Column="0" Margin="50,720,0,0"></controls:_16BitKeyRoundOut>
 
                 <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="1" FontSize="20" HorizontalAlignment="Left" Margin="0,867,0,0">
@@ -127,6 +154,12 @@
                 <!-- /Round 4 -->
 
                 <!-- Round 5 -->
+                <Image Source="/DCAPathVisualiser;component/images/curlyBracet.png" Height="235" Grid.Row="0" Grid.Column="0" Margin="-280,905,0,0"></Image>
+
+                <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="0" FontSize="25" HorizontalAlignment="Left" LayoutTransform="{StaticResource HeaderRotate}" Margin="0,0,0,205">
+                    <Run Text="{Loc R5}"></Run>
+                </TextBlock>
+
                 <controls:_16BitKeyRoundOut x:Name="KeyRound5" Grid.Row="0" Grid.Column="0" Margin="50,960,0,0"></controls:_16BitKeyRoundOut>
 
                 <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="1" FontSize="20" HorizontalAlignment="Left" Margin="0,1107,0,0">
@@ -143,11 +176,7 @@
                 <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="1" FontSize="25" HorizontalAlignment="Left" Margin="0,1230,0,0">
                     <Run Text="k"></Run><Run Text="5" BaselineAlignment="Subscript" FontSize="15"></Run>
                 </TextBlock>
-
                 <!-- /Round 5 -->
-
-
-
             </Grid>
         </ScrollViewer>
     </Grid>

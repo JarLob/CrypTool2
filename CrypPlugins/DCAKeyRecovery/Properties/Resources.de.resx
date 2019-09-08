@@ -393,4 +393,10 @@
   <data name="UnencryptedMessagePairsInputToolTip" xml:space="preserve">
     <value>Eingang für die Klartext-Nachrichtenpaare</value>
   </data>
+  <data name="nextStepTextRun1" xml:space="preserve">
+    <value>Die differenzielle Kryptoanalyse wird in der</value>
+  </data>
+  <data name="nextStepTextRun2" xml:space="preserve">
+    <value>PfadFinder-Komponente fortgesetzt</value>
+  </data>
 </root>

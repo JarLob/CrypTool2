@@ -22,8 +22,6 @@ namespace DCAPathFinder.UI.Tutorial2
     [Cryptool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
     public partial class AnalysisOfSBoxSlide1 : UserControl
     {
-
-      
         /// <summary>
         /// Constructor
         /// </summary>
@@ -32,7 +30,5 @@ namespace DCAPathFinder.UI.Tutorial2
             DataContext = this;
             InitializeComponent();
         }
-
-       
     }
 }

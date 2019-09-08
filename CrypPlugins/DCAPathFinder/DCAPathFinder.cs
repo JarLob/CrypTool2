@@ -64,6 +64,8 @@ namespace Cryptool.Plugins.DCAPathFinder
         private double _currentProgress;
         private double _maxProgress = 1.0;
 
+        private bool _serializeData = false;
+
         #endregion
 
         /// <summary>
@@ -214,7 +216,7 @@ namespace Cryptool.Plugins.DCAPathFinder
             _activePresentation.workDataEvent.Reset();
 
             //prepare thread to run
-            ThreadStart tStart = new ThreadStart(executeDifferentialAttack);
+            ThreadStart tStart = new ThreadStart(ExecuteDifferentialAttack);
             _workerThread = new Thread(tStart);
             _workerThread.Name = "DCA-PathFinder Workerthread";
             _workerThread.IsBackground = true;
@@ -250,7 +252,7 @@ namespace Cryptool.Plugins.DCAPathFinder
         /// <summary>
         /// Executes the main work
         /// </summary>
-        private void executeDifferentialAttack()
+        private void ExecuteDifferentialAttack()
         {
             switch (settings.CurrentAlgorithm)
             {
@@ -325,49 +327,91 @@ namespace Cryptool.Plugins.DCAPathFinder
                 {
                     List<Differential> diffList = pathFinder.CountDifferentialsSingleSBox();
                     DifferentialAttackRoundConfiguration conf;
-                    Cipher2DifferentialKeyRecoveryAttack c2Attack =
-                        _differentialKeyRecoveryAttack as Cipher2DifferentialKeyRecoveryAttack;
+                    Cipher2DifferentialKeyRecoveryAttack c2Attack = _differentialKeyRecoveryAttack as Cipher2DifferentialKeyRecoveryAttack;
 
-                    //Start with saving offline data 15.08.2019
-                    /*  
-                                      {
+                    //serialize data for offline search?
+                    if (_serializeData)
+                    {
+                        Cipher2PathFinder c2PathFinder = pathFinder as Cipher2PathFinder;
+                        c2PathFinder.threadCount = settings.ThreadCount;
 
-                                        Cipher2PathFinder c2PathFinder = pathFinder as Cipher2PathFinder;
-                                        c2PathFinder.threadCount = settings.ThreadCount;
+                        for (int round = 3; round > 1; round--)
+                        {
+                            for (int i = 1; i < 16; i++)
+                            {
+                                string binaryString = Convert.ToString(i, 2).PadLeft(4, '0');
+                                BitArray bitArray = new BitArray(binaryString.Length);
+                                for (int j = 0; j < bitArray.Length; j++)
+                                {
+                                    bitArray[j] = (binaryString[j] == '1');
+                                }
 
-                                        for(int round = 3; round > 1; round--)
+                                bool[] activeSBoxes = new bool[] {bitArray[3], bitArray[2], bitArray[1], bitArray[0]};
+
+                                    /*
+                                    System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+                                    sw.Start();
+                                    DifferentialAttackRoundConfiguration data = c2PathFinder.GenerateOfflineConfiguration(round, activeSBoxes, diffList, AbortingPolicy.Threshold);
+                                    sw.Stop();
+                                    data.SelectedAlgorithm = Algorithms.Cipher2;
+
+
+                                        SaveConfigurationToDisk(data, "Cipher2_BestCharacteristicDepthSearch_globalThreshold_R" + round + "_SBoxes" + binaryString + "_Reduced.json");
+
+                                        //to benchmark the results
+                                        using (StreamWriter writer = File.AppendText("Results_BestCharacteristicDepthSearch_globalThreshold.txt"))
                                         {
-                                            for (int i = 1; i < 16; i++)
-                                            {
-                                                string binaryString = Convert.ToString(i, 2).PadLeft(4, '0');
-                                                BitArray bitArray = new BitArray(binaryString.Length);
-                                                for (int j = 0; j < bitArray.Length; j++)
-                                                {
-                                                    bitArray[j] = (binaryString[j] == '1');
-                                                }
-
-                                                if(!File.Exists("Cipher2_AllCharacteristics_R" + round + "_SBoxes" + binaryString + "_Reduced.json"))
-                                                {
-                                                    bool[] activeSBoxes = new bool[] { bitArray[3], bitArray[2], bitArray[1], bitArray[0] };
-                                                    DifferentialAttackRoundConfiguration data = c2PathFinder.GenerateOfflineConfiguration(round, activeSBoxes, diffList);
-                                                    data.SelectedAlgorithm = Algorithms.Cipher2;
-
-                                                    SaveConfigurationToDisk(data, "Cipher2_AllCharacteristics_R" + round + "_SBoxes" + binaryString + "_Reduced.json");
-                                                }
-                                                else
-                                                {
-                                                    continue;
-                                                }
-                                            }
+                                            writer.WriteLine("Cipher2_BestCharacteristicDepthSearch_globalThreshold_R" + round + "_SBoxes" + binaryString + ". Time: " + sw.ElapsedMilliseconds / 1000 + " seconds");
+                                            writer.WriteLine("----------------");
                                         }
+
+                                        sw = new System.Diagnostics.Stopwatch();
+                                        sw.Start();
+                                        data = c2PathFinder.GenerateOfflineConfiguration(round, activeSBoxes, diffList, AbortingPolicy.GlobalMaximum);
+                                        sw.Stop();
+                                        data.SelectedAlgorithm = Algorithms.Cipher2;
+
+                                        SaveConfigurationToDisk(data, "Cipher2_BestCharacteristicDepthSearch_globalMaximum" + round + "_SBoxes" + binaryString + "_Reduced.json");
+
+                                        using (StreamWriter writer = File.AppendText("Results_BestCharacteristicDepthSearch_globalMaximum.txt"))
+                                        {
+                                            writer.WriteLine("Cipher2_BestCharacteristicDepthSearch_globalMaximum_R" + round + "_SBoxes" + binaryString + ". Time: " + sw.ElapsedMilliseconds / 1000 + " seconds");
+                                            writer.WriteLine("----------------");
                                         }
-                    */
-                    //End with saving offline data 15.08.2019
+                                        */
+
+                                    /* */
+                                System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+                                sw.Start();
+                                DifferentialAttackRoundConfiguration data = c2PathFinder.GenerateOfflineConfiguration(round, activeSBoxes, diffList, AbortingPolicy.Threshold);
+                                sw.Stop();
+                                data.SelectedAlgorithm = Algorithms.Cipher2;
+
+                                SaveConfigurationToDisk(data, "Cipher2_BestCharacteristicHeuristic_R" + round + "_SBoxes" + binaryString + "_Reduced.json");
+
+                                using (StreamWriter writer = File.AppendText("Results_BestCharacteristicHeuristic.txt"))
+                                {
+                                    writer.WriteLine("Cipher2_BestCharacteristicHeuristic_R" + round + "_SBoxes" + binaryString + ". Time: " + sw.ElapsedMilliseconds / 1000 + " seconds");
+                                    writer.WriteLine("----------------");
+                                }
+                                
+                            }
+                        }
+                    }
 
                     if (!settings.AutomaticMode)
                     {
                         Cipher2PathFinder c2PathFinder = pathFinder as Cipher2PathFinder;
-                        c2PathFinder._maxProgress = 0.5;
+
+                        if (!settings.PresentationMode)
+                        {
+                            c2PathFinder._maxProgress = 1.0;
+                        }
+                        else
+                        {
+                            c2PathFinder._maxProgress = 0.5;
+                        }
+
                         c2PathFinder.threadCount = settings.ThreadCount;
                         bool firstIteration = true;
 
@@ -449,7 +493,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             try
                             {
                                 conf = pathFinder.GenerateConfigurationAttack(3,
-                                    _activePresentation.SBoxesCurrentAttack,
+                                    _activePresentation.SBoxesCurrentAttack, settings.UseOfflinePaths,
                                     settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
 
                                 if (_stop)
@@ -466,7 +510,13 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     (SendOrPostCallback) delegate
                                     {
                                         _activePresentation.IsNextPossible = true;
+                                        _activePresentation.ArrowNextOpacity = 1.0;
                                         _activePresentation.HighlightDispatcher.Start();
+                                        _activePresentation.probability = String.Format("{0:0.0000}", conf.Probability);
+                                        _activePresentation.inputDifference = Convert.ToString(conf.InputDifference, 2)
+                                            .PadLeft(16, '0').Insert(8, " ");
+                                        _activePresentation.expectedDifference = Convert
+                                            .ToString(conf.ExpectedDifference, 2).PadLeft(16, '0').Insert(8, " ");
                                     }, null);
 
                                 if (_stop)
@@ -597,7 +647,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             try
                             {
                                 conf = pathFinder.GenerateConfigurationAttack(2,
-                                    _activePresentation.SBoxesCurrentAttack,
+                                    _activePresentation.SBoxesCurrentAttack, settings.UseOfflinePaths,
                                     AbortingPolicy.GlobalMaximum, settings.CurrentSearchPolicy, diffList);
 
                                 if (_stop)
@@ -614,7 +664,13 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     (SendOrPostCallback) delegate
                                     {
                                         _activePresentation.IsNextPossible = true;
+                                        _activePresentation.ArrowNextOpacity = 1.0;
                                         _activePresentation.HighlightDispatcher.Start();
+                                        _activePresentation.probability = String.Format("{0:0.0000}", conf.Probability);
+                                        _activePresentation.inputDifference = Convert.ToString(conf.InputDifference, 2)
+                                            .PadLeft(16, '0').Insert(8, " ");
+                                        _activePresentation.expectedDifference = Convert
+                                            .ToString(conf.ExpectedDifference, 2).PadLeft(16, '0').Insert(8, " ");
                                     }, null);
 
                                 _nextRound.WaitOne();
@@ -709,9 +765,8 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 3 run 1
                             bool[] sboxesToAttack = new bool[] {false, false, false, true};
 
-                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack,
-                                settings.CurrentAbortingPolicy,
-                                settings.CurrentSearchPolicy,
+                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths,
+                                settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy,
                                 diffList);
 
                             if (_stop)
@@ -774,7 +829,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                         {
                             bool[] sboxesToAttack = new bool[] {false, false, true, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy,
                                 diffList);
 
@@ -838,7 +893,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                         {
                             bool[] sboxesToAttack = new bool[] {false, true, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy,
                                 diffList);
 
@@ -902,7 +957,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                         {
                             bool[] sboxesToAttack = new bool[] {true, false, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy,
                                 diffList);
 
@@ -966,7 +1021,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                         {
                             bool[] sboxesToAttack = new bool[] {false, false, false, true};
 
-                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy,
                                 diffList);
 
@@ -1030,7 +1085,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                         {
                             bool[] sboxesToAttack = new bool[] {false, false, true, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy,
                                 diffList);
 
@@ -1094,7 +1149,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                         {
                             bool[] sboxesToAttack = new bool[] {false, true, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy,
                                 diffList);
 
@@ -1158,7 +1213,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                         {
                             bool[] sboxesToAttack = new bool[] {true, false, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy,
                                 diffList);
 
@@ -1249,9 +1304,7 @@ namespace Cryptool.Plugins.DCAPathFinder
 
                     Cipher3PathFinder c3PathFinder = pathFinder as Cipher3PathFinder;
 
-
-/*
-                    //Start with saving offline data 15.08.2019
+                    if (_serializeData)
                     {
                         c3PathFinder.threadCount = settings.ThreadCount;
 
@@ -1267,31 +1320,77 @@ namespace Cryptool.Plugins.DCAPathFinder
                                 }
 
                                 bool[] activeSBoxes = new bool[] { bitArray[3], bitArray[2], bitArray[1], bitArray[0] };
-                                DifferentialAttackRoundConfiguration data = c3PathFinder.GenerateOfflineConfiguration(round, activeSBoxes, diffList);
+                                System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+                                sw.Start();
+                                DifferentialAttackRoundConfiguration data = c3PathFinder.GenerateOfflineConfiguration(round, activeSBoxes, diffList, AbortingPolicy.Threshold);
+                                sw.Stop();
+                                data.SelectedAlgorithm = Algorithms.Cipher3;
+                                SaveConfigurationToDisk(data, "Cipher3_BestCharacteristicDepthSearch_globalThreshold_R" + round + "_SBoxes" + binaryString + "_Reduced.json");
+
+                                using (StreamWriter writer = File.AppendText("Results_BestCharacteristicDepthSearch_globalThreshold.txt"))
+                                {
+                                    writer.WriteLine("Cipher3_BestCharacteristicDepthSearch_globalThreshold_R" + round + "_SBoxes" + binaryString + ". Time: " + sw.ElapsedMilliseconds / 1000 + " seconds");
+                                    writer.WriteLine("----------------");
+                                }
+
+                                /*
+                                sw = new System.Diagnostics.Stopwatch();
+                                sw.Start();
+                                data = c3PathFinder.GenerateOfflineConfiguration(round, activeSBoxes, diffList, AbortingPolicy.GlobalMaximum);
+                                sw.Stop();
+                                data.SelectedAlgorithm = Algorithms.Cipher3;
+                                SaveConfigurationToDisk(data, "Cipher3_BestCharacteristicDepthSearch_globalMaximum_R" + round + "_SBoxes" + binaryString + "_Reduced.json");
+
+                                using (StreamWriter writer = File.AppendText("Results_BestCharacteristicDepthSearch_globalMaximum.txt"))
+                                {
+                                    writer.WriteLine("Cipher3_BestCharacteristicDepthSearch_globalMaximum_R" + round + "_SBoxes" + binaryString + ". Time: " + sw.ElapsedMilliseconds / 1000 + " seconds");
+                                    writer.WriteLine("----------------");
+                                }
+
+                                sw = new System.Diagnostics.Stopwatch();
+                                sw.Start();
+                                data = c3PathFinder.GenerateOfflineConfiguration(round, activeSBoxes, diffList, AbortingPolicy.Threshold);
+                                sw.Stop();
                                 data.SelectedAlgorithm = Algorithms.Cipher3;
 
-                                SaveConfigurationToDisk(data, "Cipher3_AllCharacteristics_R" + round + "_SBoxes" + binaryString + "_Reduced.json");
+                                SaveConfigurationToDisk(data, "Cipher3_BestCharacteristicHeuristic_R" + round + "_SBoxes" + binaryString + "_Reduced.json");
 
+                                using (StreamWriter writer = File.AppendText("Results_BestCharacteristicHeuristic.txt"))
+                                {
+                                    writer.WriteLine("Cipher3_BestCharacteristicHeuristic_R" + round + "_SBoxes" +binaryString + ". Time: " + sw.ElapsedMilliseconds / 1000 +" seconds");
+                                    writer.WriteLine("----------------");
+                                }
+                                */
                             }
                         }
                     }
-                    //End with saving offline data 15.08.2019
-*/
-
 
                     if (!settings.AutomaticMode)
                     {
-                        c3PathFinder._maxProgress = 1.0;
+                        if (!settings.PresentationMode)
+                        {
+                            c3PathFinder._maxProgress = 1.0;
+                        }
+                        else
+                        {
+                            c3PathFinder._maxProgress = 0.5;
+                        }
+
                         _currentProgress = 0.0;
                         ProgressChanged(_currentProgress, _maxProgress);
                         c3PathFinder.threadCount = settings.ThreadCount;
+                        bool firstIteration = true;
 
                         //break round 5
                         while (!c3Attack.recoveredSubkey5)
                         {
+                            if (!firstIteration)
+                            {
+                                c3PathFinder._maxProgress = 1.0;
+                                _currentProgress = 0;
+                            }
+
                             _activePresentation.workDataEvent.WaitOne();
-                            _currentProgress = 0.0;
-                            ProgressChanged(_currentProgress, _maxProgress);
 
                             if (_stop)
                             {
@@ -1358,7 +1457,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             try
                             {
                                 conf = pathFinder.GenerateConfigurationAttack(5,
-                                    _activePresentation.SBoxesCurrentAttack,
+                                    _activePresentation.SBoxesCurrentAttack, settings.UseOfflinePaths,
                                     settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
 
                                 if (_stop)
@@ -1372,7 +1471,13 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     (SendOrPostCallback) delegate
                                     {
                                         _activePresentation.IsNextPossible = true;
+                                        _activePresentation.ArrowNextOpacity = 1.0;
                                         _activePresentation.HighlightDispatcher.Start();
+                                        _activePresentation.probability = String.Format("{0:0.0000}", conf.Probability);
+                                        _activePresentation.inputDifference = Convert.ToString(conf.InputDifference, 2)
+                                            .PadLeft(16, '0').Insert(8, " ");
+                                        _activePresentation.expectedDifference = Convert
+                                            .ToString(conf.ExpectedDifference, 2).PadLeft(16, '0').Insert(8, " ");
                                     }, null);
 
                                 _nextRound.WaitOne();
@@ -1415,6 +1520,10 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     _semaphoreSlim.Release();
                                 }
                             }
+
+                            firstIteration = false;
+                            _currentProgress = 1.0;
+                            ProgressChanged(_currentProgress, _maxProgress);
 
                             if (_stop)
                             {
@@ -1498,7 +1607,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             try
                             {
                                 conf = pathFinder.GenerateConfigurationAttack(4,
-                                    _activePresentation.SBoxesCurrentAttack,
+                                    _activePresentation.SBoxesCurrentAttack, settings.UseOfflinePaths,
                                     settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
 
                                 if (_stop)
@@ -1512,7 +1621,13 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     (SendOrPostCallback) delegate
                                     {
                                         _activePresentation.IsNextPossible = true;
+                                        _activePresentation.ArrowNextOpacity = 1.0;
                                         _activePresentation.HighlightDispatcher.Start();
+                                        _activePresentation.probability = String.Format("{0:0.0000}", conf.Probability);
+                                        _activePresentation.inputDifference = Convert.ToString(conf.InputDifference, 2)
+                                            .PadLeft(16, '0').Insert(8, " ");
+                                        _activePresentation.expectedDifference = Convert
+                                            .ToString(conf.ExpectedDifference, 2).PadLeft(16, '0').Insert(8, " ");
                                     }, null);
 
                                 _nextRound.WaitOne();
@@ -1555,6 +1670,9 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     _semaphoreSlim.Release();
                                 }
                             }
+
+                            _currentProgress = 1.0;
+                            ProgressChanged(_currentProgress, _maxProgress);
 
                             if (_stop)
                             {
@@ -1638,7 +1756,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             try
                             {
                                 conf = pathFinder.GenerateConfigurationAttack(3,
-                                    _activePresentation.SBoxesCurrentAttack,
+                                    _activePresentation.SBoxesCurrentAttack, settings.UseOfflinePaths,
                                     settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
 
                                 if (_stop)
@@ -1652,7 +1770,13 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     (SendOrPostCallback) delegate
                                     {
                                         _activePresentation.IsNextPossible = true;
+                                        _activePresentation.ArrowNextOpacity = 1.0;
                                         _activePresentation.HighlightDispatcher.Start();
+                                        _activePresentation.probability = String.Format("{0:0.0000}", conf.Probability);
+                                        _activePresentation.inputDifference = Convert.ToString(conf.InputDifference, 2)
+                                            .PadLeft(16, '0').Insert(8, " ");
+                                        _activePresentation.expectedDifference = Convert
+                                            .ToString(conf.ExpectedDifference, 2).PadLeft(16, '0').Insert(8, " ");
                                     }, null);
 
                                 _nextRound.WaitOne();
@@ -1695,6 +1819,9 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     _semaphoreSlim.Release();
                                 }
                             }
+
+                            _currentProgress = 1.0;
+                            ProgressChanged(_currentProgress, _maxProgress);
 
                             if (_stop)
                             {
@@ -1777,7 +1904,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             try
                             {
                                 conf = pathFinder.GenerateConfigurationAttack(2,
-                                    _activePresentation.SBoxesCurrentAttack,
+                                    _activePresentation.SBoxesCurrentAttack, settings.UseOfflinePaths,
                                     settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
 
                                 if (_stop)
@@ -1791,7 +1918,13 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     (SendOrPostCallback) delegate
                                     {
                                         _activePresentation.IsNextPossible = true;
+                                        _activePresentation.ArrowNextOpacity = 1.0;
                                         _activePresentation.HighlightDispatcher.Start();
+                                        _activePresentation.probability = String.Format("{0:0.0000}", conf.Probability);
+                                        _activePresentation.inputDifference = Convert.ToString(conf.InputDifference, 2)
+                                            .PadLeft(16, '0').Insert(8, " ");
+                                        _activePresentation.expectedDifference = Convert
+                                            .ToString(conf.ExpectedDifference, 2).PadLeft(16, '0').Insert(8, " ");
                                     }, null);
 
                                 _nextRound.WaitOne();
@@ -1834,6 +1967,9 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     _semaphoreSlim.Release();
                                 }
                             }
+
+                            _currentProgress = 1.0;
+                            ProgressChanged(_currentProgress, _maxProgress);
 
                             if (_stop)
                             {
@@ -1889,7 +2025,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 5 run 1
                             bool[] sboxesToAttack = new bool[] {false, false, false, true};
 
-                            conf = pathFinder.GenerateConfigurationAttack(5, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(5, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy,
                                 settings.CurrentSearchPolicy,
                                 diffList);
@@ -1954,7 +2090,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 5 run 2
                             bool[] sboxesToAttack = new bool[] {false, false, true, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(5, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(5, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy,
                                 settings.CurrentSearchPolicy,
                                 diffList);
@@ -2019,7 +2155,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 5 run 3
                             bool[] sboxesToAttack = new bool[] {false, true, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(5, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(5, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy,
                                 settings.CurrentSearchPolicy,
                                 diffList);
@@ -2084,7 +2220,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 5 run 4
                             bool[] sboxesToAttack = new bool[] {true, false, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(5, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(5, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy,
                                 settings.CurrentSearchPolicy,
                                 diffList);
@@ -2149,7 +2285,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 4 run 1
                             bool[] sboxesToAttack = new bool[] {false, false, false, true};
 
-                            conf = pathFinder.GenerateConfigurationAttack(4, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(4, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy,
                                 settings.CurrentSearchPolicy,
                                 diffList);
@@ -2214,7 +2350,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 4 run 2
                             bool[] sboxesToAttack = new bool[] {false, false, true, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(4, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(4, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy,
                                 settings.CurrentSearchPolicy,
                                 diffList);
@@ -2279,7 +2415,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 4 run 3
                             bool[] sboxesToAttack = new bool[] {false, true, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(4, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(4, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy,
                                 settings.CurrentSearchPolicy,
                                 diffList);
@@ -2344,7 +2480,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 4 run 4
                             bool[] sboxesToAttack = new bool[] {true, false, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(4, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(4, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy,
                                 settings.CurrentSearchPolicy,
                                 diffList);
@@ -2409,7 +2545,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 3 run 1
                             bool[] sboxesToAttack = new bool[] {false, false, false, true};
 
-                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy,
                                 settings.CurrentSearchPolicy,
                                 diffList);
@@ -2474,7 +2610,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 3 run 2
                             bool[] sboxesToAttack = new bool[] {false, false, true, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy,
                                 settings.CurrentSearchPolicy,
                                 diffList);
@@ -2539,7 +2675,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 3 run 3
                             bool[] sboxesToAttack = new bool[] {false, true, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy,
                                 settings.CurrentSearchPolicy,
                                 diffList);
@@ -2604,7 +2740,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 3 run 4
                             bool[] sboxesToAttack = new bool[] {true, false, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy,
                                 settings.CurrentSearchPolicy,
                                 diffList);
@@ -2669,7 +2805,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 2 run 1
                             bool[] sboxesToAttack = new bool[] {false, false, false, true};
 
-                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy,
                                 settings.CurrentSearchPolicy,
                                 diffList);
@@ -2734,7 +2870,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 2 run 2
                             bool[] sboxesToAttack = new bool[] {false, false, true, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy,
                                 settings.CurrentSearchPolicy,
                                 diffList);
@@ -2799,7 +2935,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 2 run 3
                             bool[] sboxesToAttack = new bool[] {false, true, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy,
                                 settings.CurrentSearchPolicy,
                                 diffList);
@@ -2864,7 +3000,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 2 run 4
                             bool[] sboxesToAttack = new bool[] {true, false, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack,
+                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths,
                                 settings.CurrentAbortingPolicy,
                                 settings.CurrentSearchPolicy,
                                 diffList);
@@ -2987,23 +3123,6 @@ namespace Cryptool.Plugins.DCAPathFinder
             return sb.ToString();
         }
 
-        private Cipher2OfflineData LoadConfigurationFromDisk(string fileName)
-        {
-            Cipher2OfflineData data = null;
-
-            using (StreamReader file = File.OpenText(fileName))
-            {
-                data = JsonConvert.DeserializeObject<Cipher2OfflineData>(File.ReadAllText(fileName),
-                    new Newtonsoft.Json.JsonSerializerSettings
-                    {
-                        TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Auto,
-                        NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
-                    });
-            }
-
-            return data;
-        }
-
         private void SaveConfigurationToDisk(DifferentialAttackRoundConfiguration data, string fileName)
         {
             StringBuilder sb = new StringBuilder();
@@ -3050,16 +3169,14 @@ namespace Cryptool.Plugins.DCAPathFinder
                 _workerThread.Start();
             }
 
-
             //dispatch action {DEBUG}: show slide 17 to save time
             /*
             _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
             {
-                _activePresentation.StepCounter = 14;
+                _activePresentation.StepCounter = 16;
                 _activePresentation.SetupView();
             }, null);
             */
-
 
             //prepare handles for pausing the state machine
             WaitHandle[] waitHandles = new WaitHandle[]
@@ -3215,31 +3332,11 @@ namespace Cryptool.Plugins.DCAPathFinder
                             {
                                 if (settings.PresentationMode)
                                 {
-                                    //_activePresentation.StepCounter = 22;
+                                    _activePresentation.StepCounter = 15;
                                 }
                                 else
                                 {
                                     _activePresentation.StepCounter = 1;
-                                }
-
-                                if (settings.UseOfflinePaths)
-                                {
-                                    _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send,
-                                        (SendOrPostCallback) delegate
-                                        {
-                                            _activePresentation.SBoxesCurrentAttack = new bool[]
-                                                {false, false, false, false};
-                                            if (!_activePresentation.SBoxesAlreadyAttacked[0])
-                                            {
-                                                _activePresentation.SBoxesCurrentAttack = new bool[]
-                                                    {true, false, false, false};
-                                            }
-                                            else if (!_activePresentation.SBoxesAlreadyAttacked[1])
-                                            {
-                                                _activePresentation.SBoxesCurrentAttack = new bool[]
-                                                    {false, true, false, false};
-                                            }
-                                        }, null);
                                 }
 
                                 if (!settings.AutomaticMode)
@@ -3250,33 +3347,15 @@ namespace Cryptool.Plugins.DCAPathFinder
                             }, null);
                         }
 
-                        if (firstIteration && settings.UseOfflinePaths)
-                        {
-                            _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback) delegate
-                            {
-                                _activePresentation.SBoxesCurrentAttack = new bool[] {false, false, false, false};
-                                if (!_activePresentation.SBoxesAlreadyAttacked[0])
-                                {
-                                    _activePresentation.SBoxesCurrentAttack = new bool[] {true, false, false, false};
-                                }
-                            }, null);
-                        }
 
                         firstIteration = false;
 
-                        //reset SBoxes to attack in the UI
-                        if (!settings.UseOfflinePaths)
+                        _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback) delegate
                         {
-                            _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send,
-                                (SendOrPostCallback) delegate
-                                {
-                                    _activePresentation.SBoxesCurrentAttack = new bool[] {false, false, false, false};
-                                },
-                                null);
-                        }
+                            _activePresentation.SBoxesCurrentAttack = new bool[4];
+                        }, null);
 
-
-                        //check mode
+                            //check mode
                         if (!settings.AutomaticMode)
                         {
                             //wait until data is sent or workspace stopped
@@ -3292,7 +3371,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                         {
                             if (settings.PresentationMode)
                             {
-                                //_activePresentation.StepCounter = 22;
+                                _activePresentation.StepCounter = 18;
                             }
                             else
                             {
@@ -3327,7 +3406,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                         {
                             if (settings.PresentationMode)
                             {
-                                //_activePresentation.StepCounter = 22;
+                                _activePresentation.StepCounter = 21;
                             }
                             else
                             {
@@ -3362,7 +3441,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                         {
                             if (settings.PresentationMode)
                             {
-                                //_activePresentation.StepCounter = 22;
+                                _activePresentation.StepCounter = 24;
                             }
                             else
                             {
@@ -3396,7 +3475,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                         {
                             if (settings.PresentationMode)
                             {
-                                //_activePresentation.StepCounter = 28;
+                                _activePresentation.StepCounter = 27;
                             }
                             else
                             {
@@ -3439,6 +3518,11 @@ namespace Cryptool.Plugins.DCAPathFinder
             {
                 _activePresentation.SlideCounterVisibility = Visibility.Hidden;
                 _activePresentation.WorkspaceRunning = false;
+                _activePresentation.ArrowBeforeOpacity = 0.25;
+                _activePresentation.ArrowNextOpacity = 0.25;
+                _activePresentation.IsNextPossible = false;
+                _activePresentation.IsPreviousPossible = false;
+                _activePresentation.IsSkipChapterVisible = Visibility.Hidden;
                 _activePresentation.HighlightDispatcher.Stop();
                 _activePresentation.sendDataEvent.Reset();
                 _activePresentation.workDataEvent.Reset();

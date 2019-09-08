@@ -11,7 +11,7 @@ namespace DCAPathFinder.UI.Tutorial1
     [Cryptool.PluginBase.Attributes.Localization("DCAPathFinder.Properties.Resources")]
     public partial class IntroductionSlide1 : UserControl, INotifyPropertyChanged
     {
-        private ObservableCollection<XorTableMapping> _xorData = null; 
+        private ObservableCollection<XorTableMapping> _xorData = null;
 
         /// <summary>
         /// Constructor

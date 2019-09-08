@@ -35,8 +35,8 @@ namespace DCAPathFinder.Logic.Cipher2
         {
             Characteristic obj = new Cipher2Characteristic
             {
-                InputDifferentials = (UInt16[])this.InputDifferentials.Clone(),
-                OutputDifferentials = (UInt16[])this.OutputDifferentials.Clone(),
+                InputDifferentials = (UInt16[]) this.InputDifferentials.Clone(),
+                OutputDifferentials = (UInt16[]) this.OutputDifferentials.Clone(),
                 Probability = this.Probability
             };
 

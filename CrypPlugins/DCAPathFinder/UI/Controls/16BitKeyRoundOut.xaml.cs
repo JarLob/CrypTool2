@@ -135,7 +135,7 @@ namespace DCAPathFinder.UI.Controls
         {
             get
             {
-                if(ColoredBits[0])
+                if (ColoredBits[0])
                 {
                     return _activeThickness;
                 }
@@ -415,7 +415,7 @@ namespace DCAPathFinder.UI.Controls
                 }
             }
         }
-        
+
         /// <summary>
         /// Property for OutputBitZeroThickness
         /// </summary>
@@ -433,7 +433,7 @@ namespace DCAPathFinder.UI.Controls
                 }
             }
         }
-   
+
         /// <summary>
         /// Property for OutputBitOneThickness
         /// </summary>
@@ -487,7 +487,7 @@ namespace DCAPathFinder.UI.Controls
                 }
             }
         }
-   
+
         /// <summary>
         /// Property for OutputBitFourThickness
         /// </summary>
@@ -1289,7 +1289,7 @@ namespace DCAPathFinder.UI.Controls
         }
 
         #endregion
-        
+
         /// <summary>
         /// OnPropertyChanged-method for INotifyPropertyChanged
         /// </summary>

@@ -44,11 +44,7 @@ namespace DCAPathFinder.UI.Tutorial2
         public ObservableCollection<DifferenceDistribution> DifferenceDistributionData
         {
             get { return _differenceDistributionData; }
-            set
-            {
-                _differenceDistributionData = value;
-
-            }
+            set { _differenceDistributionData = value; }
         }
 
         /// <summary>
@@ -86,7 +82,8 @@ namespace DCAPathFinder.UI.Tutorial2
                 for (int j = 0; j < 16; j++)
                 {
                     int inputDiff = i ^ j;
-                    int outputDiff = DCAPathFinder.Logic.Cipher2.Cipher2Configuration.SBOX[i] ^ DCAPathFinder.Logic.Cipher2.Cipher2Configuration.SBOX[j];
+                    int outputDiff = DCAPathFinder.Logic.Cipher2.Cipher2Configuration.SBOX[i] ^
+                                     DCAPathFinder.Logic.Cipher2.Cipher2Configuration.SBOX[j];
                     ddt[inputDiff, outputDiff]++;
                 }
             }
@@ -135,7 +132,7 @@ namespace DCAPathFinder.UI.Tutorial2
         private void Grid_OnLoadingRow(object sender, DataGridRowEventArgs e)
         {
             var item = e.Row.Item as DifferenceDistribution;
-            if (item != null && item.FifteenOutVal == "F") 
+            if (item != null && item.FifteenOutVal == "F")
             {
                 e.Row.Background = new SolidColorBrush(Colors.LightGray);
             }

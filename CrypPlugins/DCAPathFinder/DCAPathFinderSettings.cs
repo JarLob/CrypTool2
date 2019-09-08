@@ -41,6 +41,8 @@ namespace Cryptool.Plugins.DCAPathFinder
         private int _maxThreads = Environment.ProcessorCount;
         private int _threadCount;
         private bool _useOfflinePaths;
+        private double _thresholdDifferentialSearch;
+        private double _thresholdCharacteristicSearch;
 
         #endregion
 
@@ -92,13 +94,11 @@ namespace Cryptool.Plugins.DCAPathFinder
         /// <summary>
         /// Selection of the toy cipher algorithm
         /// </summary>
-        [TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", "ChoiceOfAlgorithmGroup", 1, false, ControlType.ComboBox, new string[] { "Cipher1", "Cipher2", "Cipher3" })]
+        [TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", "ChoiceOfAlgorithmGroup", 1, false,
+            ControlType.ComboBox, new string[] {"Cipher1", "Cipher2", "Cipher3"})]
         public string ChoiceOfAlgorithm
         {
-            get
-            {
-                return _choiceOfAlgorithm;
-            }
+            get { return _choiceOfAlgorithm; }
             set
             {
                 if (_choiceOfAlgorithm != value)
@@ -139,6 +139,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                             showSettingsElement("UseOfflinePaths");
                             break;
                     }
+
                     OnPropertyChanged("ChoiceOfAlgorithm");
                 }
             }
@@ -150,10 +151,7 @@ namespace Cryptool.Plugins.DCAPathFinder
         [TaskPane("ThreadCount", "ThreadCountToolTip", "PerformanceSettingsGroup", 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 64)]
         public int ThreadCount
         {
-            get
-            {
-                return _threadCount;
-            }
+            get { return _threadCount; }
             set
             {
                 if (value <= _maxThreads)
@@ -181,7 +179,7 @@ namespace Cryptool.Plugins.DCAPathFinder
         /// <summary>
         /// textbox to specify the count of chosen message pairs
         /// </summary>
-        [TaskPane("ChosenMessagePairsCount", "ChosenMessagePairsCountToolTip", "DCAOptions",1, false, ControlType.TextBox)]
+        [TaskPane("ChosenMessagePairsCount", "ChosenMessagePairsCountToolTip", "DCAOptions", 1, false, ControlType.TextBox)]
         public int ChosenMessagePairsCount
         {
             get { return _chosenMessagePairsCount; }
@@ -195,7 +193,7 @@ namespace Cryptool.Plugins.DCAPathFinder
         /// <summary>
         /// setting to specify that paths should be loaded from a file to prevent long search times
         /// </summary>
-        [TaskPane("UseOfflinePaths", "UseOfflinePathsToolTip", "PerformanceSettingsGroup", 2, false, ControlType.CheckBox)]
+        [TaskPane("UseOfflinePaths", "UseOfflinePathsToolTip", "PerformanceSettingsGroup", 2, false,ControlType.CheckBox)]
         public bool UseOfflinePaths
         {
             get { return _useOfflinePaths; }
@@ -205,7 +203,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                 OnPropertyChanged("UseOfflinePaths");
             }
         }
-
+        
         /// <summary>
         /// checkbox to activate the automatic mode (no user interaction needed)
         /// </summary>
@@ -226,7 +224,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                 {
                     showSettingsElement("PresentationMode");
                 }
-                
+
                 OnPropertyChanged("AutomaticMode");
             }
         }
@@ -234,7 +232,8 @@ namespace Cryptool.Plugins.DCAPathFinder
         /// <summary>
         /// checkbox to activate the presentation mode
         /// </summary>
-        [TaskPane("PresentationMode", "PresentationModeToolTip", "ChoiceOfAlgorithmGroup", 2, false, ControlType.CheckBox)]
+        [TaskPane("PresentationMode", "PresentationModeToolTip", "ChoiceOfAlgorithmGroup", 2, false,
+            ControlType.CheckBox)]
         public bool PresentationMode
         {
             get { return _presentationMode; }
@@ -256,10 +255,25 @@ namespace Cryptool.Plugins.DCAPathFinder
             }
         }
 
+        /*
+        [TaskPane("AbortingThresholdDifferentialSearch", "AbortingThresholdDifferentialSearchToolTip", "DCAOptions", 4, false, ControlType.NumericUpDown)]
+        public double AbortingThresholdDifferentialSearch
+        {
+            get { return _thresholdDifferentialSearch; }
+            set
+            {
+                _thresholdDifferentialSearch = value;
+                OnPropertyChanged("AbortingThresholdDifferentialSearch");
+            }
+        }
+        */
+
+
         /// <summary>
         /// Selection of the search policy
         /// </summary>
-        [TaskPane("ChoiceOfSearchPolicy", "ChoiceOfSearchPolicyToolTop", "DCAOptions", 2, false, ControlType.ComboBox, new string[] { "SearchPolicy1", "SearchPolicy2", "SearchPolicy3" })]
+        [TaskPane("ChoiceOfSearchPolicy", "ChoiceOfSearchPolicyToolTop", "DCAOptions", 2, false, ControlType.ComboBox,
+            new string[] {"SearchPolicy1", "SearchPolicy2", "SearchPolicy3"})]
         public string ChoiceOfSearchPolicy
         {
             get { return _choiceOfSearchPolicy; }
@@ -289,6 +303,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                         }
                             break;
                     }
+
                     OnPropertyChanged("ChoiceOfSearchPolicy");
                 }
             }
@@ -297,7 +312,7 @@ namespace Cryptool.Plugins.DCAPathFinder
         /// <summary>
         /// Selection of the aborting policy
         /// </summary>
-        [TaskPane("ChoiceAbortingPolicyPolicy", "ChoiceOfAbortingPolicyToolTop", "DCAOptions", 3, false, ControlType.ComboBox, new string[] { "AbortingPolicy1", "AbortingPolicy2" })]
+        [TaskPane("ChoiceAbortingPolicyPolicy", "ChoiceOfAbortingPolicyToolTop", "DCAOptions", 3, false, ControlType.ComboBox, new string[] {"AbortingPolicy1", "AbortingPolicy2"})]
         public string ChoiceOfAbortingPolicy
         {
             get { return _choiceOfAbortingPolicy; }
@@ -319,6 +334,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                         }
                             break;
                     }
+
                     OnPropertyChanged("ChoiceOfAbortingPolicy");
                 }
             }
@@ -349,7 +365,8 @@ namespace Cryptool.Plugins.DCAPathFinder
         {
             if (TaskPaneAttributeChanged != null)
             {
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Visible)));
+                TaskPaneAttributeChanged(this,
+                    new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Visible)));
             }
         }
 
@@ -361,7 +378,9 @@ namespace Cryptool.Plugins.DCAPathFinder
         {
             if (TaskPaneAttributeChanged != null)
             {
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Collapsed)));
+                TaskPaneAttributeChanged(this,
+                    new TaskPaneAttributeChangedEventArgs(
+                        new TaskPaneAttribteContainer(element, Visibility.Collapsed)));
             }
         }
 
@@ -378,19 +397,10 @@ namespace Cryptool.Plugins.DCAPathFinder
                 showSettingsElement("PresentationMode");
                 hideSettingsElement("AutomaticMode");
             }
-            else if(_automaticMode)
+            else if (_automaticMode)
             {
                 showSettingsElement("AutomaticMode");
                 hideSettingsElement("PresentationMode");
-            }
-                        
-            if(_choiceOfSearchPolicy == "1")
-            {
-                showSettingsElement("ChoiceOfAbortingPolicy");
-            }
-            else
-            {
-                hideSettingsElement("ChoiceOfAbortingPolicy");
             }
 
             //check which algorithm is chosen
@@ -408,6 +418,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                     showSettingsElement("ChoiceOfSearchPolicy");
                     showSettingsElement("ThreadCount");
                     showSettingsElement("UseOfflinePaths");
+                    /*
                     if (_choiceOfSearchPolicy == "2")
                     {
                         hideSettingsElement("ChoiceOfAbortingPolicy");
@@ -417,10 +428,22 @@ namespace Cryptool.Plugins.DCAPathFinder
                     {
                         showSettingsElement("ChoiceOfAbortingPolicy");
                     }
-                    
+                    */
                     break;
             }
-           
+
+            if (_choiceOfSearchPolicy != null)
+            {
+                if (_choiceOfSearchPolicy.Equals("1"))
+                {
+                    showSettingsElement("ChoiceOfAbortingPolicy");
+                }
+                else
+                {
+                    hideSettingsElement("ChoiceOfAbortingPolicy");
+                }
+            }
+            
         }
     }
 }

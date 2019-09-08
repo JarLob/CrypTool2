@@ -12,7 +12,6 @@ namespace DCAPathFinder
 
         public SettingsErrorMessagsEventArgs()
         {
-
         }
 
         public SettingsErrorMessagsEventArgs(string message)

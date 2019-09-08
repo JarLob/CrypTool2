@@ -84,6 +84,9 @@ namespace DCAPathFinder.UI.Tutorial3
 
             SBox1Round1.AlreadyAttacked = false;
             SBox1Round1.IsClickable = false;
+
+            //Round4
+            scrollviewerCipher.ScrollToVerticalOffset(420);
         }
 
         /// <summary>

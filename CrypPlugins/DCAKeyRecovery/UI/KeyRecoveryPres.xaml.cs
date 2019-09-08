@@ -45,6 +45,7 @@ namespace DCAKeyRecovery.UI
         private bool _nextMessageEnabled;
         private bool _nextKeyEnabled;
         private DispatcherTimer _dispatcher;
+        private Visibility _isNextStepPanelVisible = Visibility.Hidden;
 
         public AutoResetEvent StartClickEvent;
 
@@ -195,6 +196,19 @@ namespace DCAKeyRecovery.UI
             }
         }
 
+        /// <summary>
+        /// Visibility of NextStepPanel
+        /// </summary>
+        public Visibility IsNextStepPanelVisible
+        {
+            get { return _isNextStepPanelVisible; }
+            set
+            {
+                _isNextStepPanelVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region methods
@@ -273,6 +287,7 @@ namespace DCAKeyRecovery.UI
                     {
                         v3.KeyResults.Clear();
                     }
+
                     break;
             }
         }
@@ -325,7 +340,7 @@ namespace DCAKeyRecovery.UI
                             v.KeyResults.Add(curKeyResult);
                         }
                     }
-                    }
+                }
                     break;
             }
         }
@@ -493,23 +508,26 @@ namespace DCAKeyRecovery.UI
                     {
                         v1.RoundResults.Add(eventArgs.RoundResult);
                     }
+
                     break;
 
                 case Algorithms.Cipher2:
                     //add the data
-                    Cipher2LastRoundResultView v2 = (Cipher2LastRoundResultView)_tableView;
+                    Cipher2LastRoundResultView v2 = (Cipher2LastRoundResultView) _tableView;
                     if (v2 != null)
                     {
                         v2.RoundResults.Add(eventArgs.RoundResult);
                     }
+
                     break;
                 case Algorithms.Cipher3:
                     //add the data
-                    Cipher3LastRoundResultView v3 = (Cipher3LastRoundResultView)_tableView;
+                    Cipher3LastRoundResultView v3 = (Cipher3LastRoundResultView) _tableView;
                     if (v3 != null)
                     {
                         v3.RoundResults.Add(eventArgs.RoundResult);
                     }
+
                     break;
             }
         }

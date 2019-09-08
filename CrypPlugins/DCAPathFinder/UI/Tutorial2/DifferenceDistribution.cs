@@ -37,7 +37,6 @@ namespace DCAPathFinder.UI.Tutorial2
         /// </summary>
         public DifferenceDistribution()
         {
-            
         }
 
         /// <summary>
@@ -260,7 +259,7 @@ namespace DCAPathFinder.UI.Tutorial2
                 OnPropertyChanged();
             }
         }
-        
+
         /// <summary>
         /// Event
         /// </summary>

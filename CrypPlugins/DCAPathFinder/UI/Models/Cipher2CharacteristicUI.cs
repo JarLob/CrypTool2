@@ -25,12 +25,26 @@ namespace DCAPathFinder.UI.Models
         private int _outputDiffR2Int;
         private int _expectedDiffInt;
 
+        private string _colBackgroundColor;
+
         /// <summary>
         /// Constructor
         /// </summary>
         public Cipher2CharacteristicUI()
         {
+        }
 
+        /// <summary>
+        /// Property for the background color of the displaying row
+        /// </summary>
+        public string ColBackgroundColor
+        {
+            get { return _colBackgroundColor; }
+            set
+            {
+                _colBackgroundColor = value;
+                OnPropertyChanged();
+            }
         }
 
         /// <summary>
@@ -64,10 +78,7 @@ namespace DCAPathFinder.UI.Models
         /// </summary>
         public int InputDiffR1Int
         {
-            get
-            {
-                return _inputDiffR1Int;
-            }
+            get { return _inputDiffR1Int; }
             set
             {
                 _inputDiffR1Int = value;
@@ -93,10 +104,7 @@ namespace DCAPathFinder.UI.Models
         /// </summary>
         public int InputDiffR2Int
         {
-            get
-            {
-                return _inputDiffR2Int;
-            }
+            get { return _inputDiffR2Int; }
             set
             {
                 _inputDiffR2Int = value;
@@ -109,10 +117,7 @@ namespace DCAPathFinder.UI.Models
         /// </summary>
         public int OutputDiffR2Int
         {
-            get
-            {
-                return _outputDiffR2Int;
-            }
+            get { return _outputDiffR2Int; }
             set
             {
                 _outputDiffR2Int = value;
@@ -125,10 +130,7 @@ namespace DCAPathFinder.UI.Models
         /// </summary>
         public int ExpectedDiffInt
         {
-            get
-            {
-                return _expectedDiffInt;
-            }
+            get { return _expectedDiffInt; }
             set
             {
                 _expectedDiffInt = value;

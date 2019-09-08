@@ -71,7 +71,6 @@ namespace DCAPathFinder.UI.Tutorial2
 
             SBox1Round1.AlreadyAttacked = false;
             SBox1Round1.IsClickable = false;
-
         }
 
         /// <summary>

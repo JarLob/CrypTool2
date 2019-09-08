@@ -39,27 +39,33 @@ namespace DCAPathFinder.Logic.Cipher1
             throw new System.NotImplementedException();
         }
 
-        public List<Characteristic>[] FindAllDifferentialsDepthSearch(DifferentialAttackRoundConfiguration roundConfiguration, List<Differential> differentialsList)
+        public List<Characteristic>[] FindAllCharacteristicsDepthSearch(
+            DifferentialAttackRoundConfiguration roundConfiguration, List<Differential> differentialsList)
         {
             throw new System.NotImplementedException();
         }
 
-        public List<Characteristic> FindBestCharacteristicsDepthSearch(DifferentialAttackRoundConfiguration roundConfiguration, List<Differential> differentialsList, AbortingPolicy abortingPolicy)
+        public List<Characteristic> FindBestCharacteristicsDepthSearch(
+            DifferentialAttackRoundConfiguration roundConfiguration, List<Differential> differentialsList,
+            AbortingPolicy abortingPolicy)
         {
             throw new System.NotImplementedException();
         }
 
-        public List<Characteristic> FindBestCharacteristicsHeuristic(DifferentialAttackRoundConfiguration roundConfiguration, List<Differential> differentialsList)
+        public List<Characteristic> FindBestCharacteristicsHeuristic(
+            DifferentialAttackRoundConfiguration roundConfiguration, List<Differential> differentialsList)
         {
             throw new System.NotImplementedException();
         }
 
-        public List<Characteristic> FindSpecifiedDifferentialDepthSearch(ushort inputDiff, ushort outputDiff, ushort round, List<Differential> differentialNumList)
+        public List<Characteristic> FindSpecifiedCharacteristicsDepthSearch(ushort inputDiff, ushort outputDiff,
+            ushort round, List<Differential> differentialNumList)
         {
             throw new NotImplementedException();
         }
 
-        public DifferentialAttackRoundConfiguration GenerateConfigurationAttack(int round, bool[] sBoxesToAttack, AbortingPolicy abortingPolicy, SearchPolicy searchPolicy, List<Differential> diffListOfSBox)
+        public DifferentialAttackRoundConfiguration GenerateConfigurationAttack(int round, bool[] sBoxesToAttack, bool useOfflinePaths,
+            AbortingPolicy abortingPolicy, SearchPolicy searchPolicy, List<Differential> diffListOfSBox)
         {
             throw new System.NotImplementedException();
         }

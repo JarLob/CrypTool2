@@ -29,10 +29,15 @@ namespace DCAPathFinder.Logic
         UInt16 GetSubBlockFromBlock(UInt16 block, UInt16 subblockNum);
         UInt16 ReversePBoxBlock(UInt16 data);
         List<Differential> CountDifferentialsSingleSBox();
-        DifferentialAttackRoundConfiguration GenerateConfigurationAttack(int round, bool[] sBoxesToAttack, AbortingPolicy abortingPolicy, SearchPolicy searchPolicy, List<Differential> diffListOfSBox);
-        List<Characteristic>[] FindAllDifferentialsDepthSearch(DifferentialAttackRoundConfiguration roundConfiguration, List<Differential> differentialsList);
-        List<Characteristic> FindBestCharacteristicsHeuristic(DifferentialAttackRoundConfiguration roundConfiguration, List<Differential> differentialsList);
-        List<Characteristic> FindSpecifiedDifferentialDepthSearch(UInt16 inputDiff, UInt16 outputDiff, UInt16 round, List<Differential> differentialNumList);
-        List<Characteristic> FindBestCharacteristicsDepthSearch(DifferentialAttackRoundConfiguration roundConfiguration, List<Differential> differentialsList, AbortingPolicy abortingPolicy);
+        DifferentialAttackRoundConfiguration GenerateConfigurationAttack(int round, bool[] sBoxesToAttack, bool useOfflinePaths,
+            AbortingPolicy abortingPolicy, SearchPolicy searchPolicy, List<Differential> diffListOfSBox);
+        List<Characteristic>[] FindAllCharacteristicsDepthSearch(DifferentialAttackRoundConfiguration roundConfiguration,
+            List<Differential> differentialsList);
+        List<Characteristic> FindBestCharacteristicsHeuristic(DifferentialAttackRoundConfiguration roundConfiguration,
+            List<Differential> differentialsList);
+        List<Characteristic> FindSpecifiedCharacteristicsDepthSearch(UInt16 inputDiff, UInt16 outputDiff, UInt16 round,
+            List<Differential> differentialNumList);
+        List<Characteristic> FindBestCharacteristicsDepthSearch(DifferentialAttackRoundConfiguration roundConfiguration,
+            List<Differential> differentialsList, AbortingPolicy abortingPolicy);
     }
 }

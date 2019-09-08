@@ -174,6 +174,9 @@
     <Compile Include="UI\Tutorial1\DifferentialCryptanalysisSlide9.xaml.cs">
       <DependentUpon>DifferentialCryptanalysisSlide9.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Tutorial1\DifferentialCryptanalysisSlide9b.xaml.cs">
+      <DependentUpon>DifferentialCryptanalysisSlide9b.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Tutorial1\IntroductionHeader.xaml.cs">
       <DependentUpon>IntroductionHeader.xaml</DependentUpon>
     </Compile>
@@ -304,12 +307,49 @@
       <DependentUpon>AttackSearchResult.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Models\Cipher3CharacteristicUI.cs" />
+    <Compile Include="UI\Tutorial3\FilterHeader.xaml.cs">
+      <DependentUpon>FilterHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial3\FilterSlide1.xaml.cs">
+      <DependentUpon>FilterSlide1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial3\FilterSlide2.xaml.cs">
+      <DependentUpon>FilterSlide2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial3\FilterSlide3.xaml.cs">
+      <DependentUpon>FilterSlide3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial3\FilterSlide4.xaml.cs">
+      <DependentUpon>FilterSlide4.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial3\IntroductionHeader.xaml.cs">
+      <DependentUpon>IntroductionHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial3\IntroductionSlide1.xaml.cs">
+      <DependentUpon>IntroductionSlide1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial3\NeededPairsHeader.xaml.cs">
+      <DependentUpon>NeededPairsHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial3\NeededPairsSlide1.xaml.cs">
+      <DependentUpon>NeededPairsSlide1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial3\SignalToNoiseHeader.xaml.cs">
+      <DependentUpon>SignalToNoiseHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial3\SignalToNoiseSlide1.xaml.cs">
+      <DependentUpon>SignalToNoiseSlide1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Tutorial3\Title.xaml.cs">
+      <DependentUpon>Title.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Tutorial3\WaitingSlide.xaml.cs">
       <DependentUpon>WaitingSlide.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\TutorialDescriptions.xaml.cs">
       <DependentUpon>TutorialDescriptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\Helper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CrypPluginBase\CrypPluginBase.csproj">
@@ -343,7 +383,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
@@ -432,6 +472,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Tutorial1\DifferentialCryptanalysisSlide9.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial1\DifferentialCryptanalysisSlide9b.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -603,6 +647,54 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\Tutorial3\FilterHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial3\FilterSlide1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial3\FilterSlide2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial3\FilterSlide3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial3\FilterSlide4.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial3\IntroductionHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial3\IntroductionSlide1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial3\NeededPairsHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial3\NeededPairsSlide1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial3\SignalToNoiseHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial3\SignalToNoiseSlide1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Tutorial3\Title.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Tutorial3\WaitingSlide.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -688,6 +780,387 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\curlyBracet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R5_SBoxes1111_Reduced.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R5_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R5_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R5_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R5_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R5_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R5_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R5_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R5_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R5_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R5_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R5_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R5_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R5_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R5_SBoxes1110_Reduced.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R2_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R2_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R2_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R2_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R2_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R2_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R2_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R2_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R2_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R2_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R2_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R2_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R2_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R2_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R2_SBoxes1111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R3_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R3_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R3_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R3_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R3_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R3_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R3_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R3_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R3_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R3_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R3_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R3_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R3_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R3_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R3_SBoxes1111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R4_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R4_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R4_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R4_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R4_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R4_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R4_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R4_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R4_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R4_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R4_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R4_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R4_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R4_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R4_SBoxes1111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R5_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R5_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R5_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R5_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R5_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R5_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R5_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R5_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R5_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R5_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R5_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R5_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R5_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R5_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicHeuristic\Cipher3_BestCharacteristicHeuristic_R5_SBoxes1111_Reduced.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes1111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes1111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R4_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R4_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R4_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R4_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R4_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R4_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R4_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R4_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R4_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R4_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R4_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R4_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R4_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R4_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R4_SBoxes1111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R5_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R5_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R5_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R5_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R5_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R5_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R5_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R5_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R5_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R5_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R5_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R5_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R5_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R5_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalThreshold\Cipher3_BestCharacteristicDepthSearch_globalThreshold_R5_SBoxes1111_Reduced.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R2_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R2_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R2_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R2_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R2_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R2_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R2_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R2_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R2_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R2_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R2_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R2_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R2_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R2_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R2_SBoxes1111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R3_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R3_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R3_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R3_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R3_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R3_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R3_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R3_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R3_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R3_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R3_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R3_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R3_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R3_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R3_SBoxes1111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R4_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R4_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R4_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R4_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R4_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R4_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R4_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R4_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R4_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R4_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R4_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R4_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R4_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R4_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\AllCharacteristics\Cipher3_AllCharacteristics_R4_SBoxes1111_Reduced.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes1111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes1111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R4_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R4_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R4_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R4_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R4_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R4_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R4_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R4_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R4_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R4_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R4_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R4_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R4_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R4_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R4_SBoxes1111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R5_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R5_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R5_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R5_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R5_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R5_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R5_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R5_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R5_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R5_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R5_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R5_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R5_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R5_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher3\BestCharacteristicDepthSearch\globalMaximum\Cipher3_BestCharacteristicDepthSearch_globalMaximum_R5_SBoxes1111_Reduced.json" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R2_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R2_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R2_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R2_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R2_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R2_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R2_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R2_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R2_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R2_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R2_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R2_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R2_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R2_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R2_SBoxes1111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R3_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R3_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R3_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R3_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R3_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R3_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R3_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R3_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R3_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R3_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R3_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R3_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R3_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R3_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\AllCharacteristics\Cipher2_AllCharacteristics_R3_SBoxes1111_Reduced.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R2_SBoxes1111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalMaximum\Cipher2_BestCharacteristicDepthSearch_globalMaximum_R3_SBoxes1111_Reduced.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R2_SBoxes1111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicDepthSearch\globalThreshold\Cipher2_BestCharacteristicDepthSearch_globalThreshold_R3_SBoxes1111_Reduced.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R2_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R2_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R2_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R2_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R2_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R2_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R2_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R2_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R2_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R2_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R2_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R2_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R2_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R2_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R2_SBoxes1111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R3_SBoxes0001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R3_SBoxes0010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R3_SBoxes0011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R3_SBoxes0100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R3_SBoxes0101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R3_SBoxes0110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R3_SBoxes0111_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R3_SBoxes1000_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R3_SBoxes1001_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R3_SBoxes1010_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R3_SBoxes1011_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R3_SBoxes1100_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R3_SBoxes1101_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R3_SBoxes1110_Reduced.json" />
+    <EmbeddedResource Include="Util\PreCalculatedData\Cipher2\BestCharacteristicHeuristic\Cipher2_BestCharacteristicHeuristic_R3_SBoxes1111_Reduced.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

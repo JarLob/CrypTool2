@@ -83,6 +83,7 @@ namespace DCAPathFinder.UI.Controls
                     OutputColor = "LimeGreen";
                     LabelTextColor = Brushes.LimeGreen;
                 }
+
                 OnPropertyChanged();
             }
         }
@@ -133,6 +134,7 @@ namespace DCAPathFinder.UI.Controls
                 {
                     SelectionChanged.Invoke(this, null);
                 }
+
                 OnPropertyChanged();
             }
         }
@@ -149,7 +151,7 @@ namespace DCAPathFinder.UI.Controls
                 return;
             }
 
-            Rectangle elem = (Rectangle)sender;
+            Rectangle elem = (Rectangle) sender;
             /*
             if (elem.Stroke == Brushes.Black)
             {

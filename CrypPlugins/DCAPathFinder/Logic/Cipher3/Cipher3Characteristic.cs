@@ -35,8 +35,8 @@ namespace DCAPathFinder.Logic.Cipher3
         {
             Characteristic obj = new Cipher3Characteristic
             {
-                InputDifferentials = (UInt16[])this.InputDifferentials.Clone(),
-                OutputDifferentials = (UInt16[])this.OutputDifferentials.Clone(),
+                InputDifferentials = (UInt16[]) this.InputDifferentials.Clone(),
+                OutputDifferentials = (UInt16[]) this.OutputDifferentials.Clone(),
                 Probability = this.Probability
             };
 

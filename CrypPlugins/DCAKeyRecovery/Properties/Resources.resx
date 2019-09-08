@@ -387,4 +387,10 @@
   <data name="UnencryptedMessagePairsInputToolTip" xml:space="preserve">
     <value>Input for the plaintext-pairs</value>
   </data>
+  <data name="nextStepTextRun1" xml:space="preserve">
+    <value>The differential cryptanalysis has to be</value>
+  </data>
+  <data name="nextStepTextRun2" xml:space="preserve">
+    <value>continued in the PathFinder component</value>
+  </data>
 </root>

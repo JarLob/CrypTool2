@@ -277,6 +277,51 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 1 ähnelt.
+        /// </summary>
+        internal static string R1 {
+            get {
+                return ResourceManager.GetString("R1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 2 ähnelt.
+        /// </summary>
+        internal static string R2 {
+            get {
+                return ResourceManager.GetString("R2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 3 ähnelt.
+        /// </summary>
+        internal static string R3 {
+            get {
+                return ResourceManager.GetString("R3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 4 ähnelt.
+        /// </summary>
+        internal static string R4 {
+            get {
+                return ResourceManager.GetString("R4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 5 ähnelt.
+        /// </summary>
+        internal static string R5 {
+            get {
+                return ResourceManager.GetString("R5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Attacked encryption round: ähnelt.
         /// </summary>
         internal static string Round {

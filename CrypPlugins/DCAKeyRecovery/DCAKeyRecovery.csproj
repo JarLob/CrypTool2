@@ -101,6 +101,7 @@
     <Compile Include="Logic\Cipher3\Cipher3Configuration.cs" />
     <Compile Include="Logic\Cipher3\Cipher3DifferentialKeyRecoveryAttack.cs" />
     <Compile Include="Logic\Cipher3\Cipher3KeyRecovery.cs" />
+    <Compile Include="Logic\Differential.cs" />
     <Compile Include="Logic\ProgressEventArgs.cs" />
     <Compile Include="Logic\ResultViewAnyRoundKeyResultEventArgs.cs" />
     <Compile Include="Logic\CipherViewLastRoundEventArgs.cs" />

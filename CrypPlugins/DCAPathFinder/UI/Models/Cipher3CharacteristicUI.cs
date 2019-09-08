@@ -36,7 +36,22 @@ namespace DCAPathFinder.UI.Tutorial3
         private int _inputDiffR5Int;
         private int _outputDiffR5Int;
 
+        private string _colBackgroundColor;
+
         #region properties
+
+        /// <summary>
+        /// Property for the background color of the displaying row
+        /// </summary>
+        public string ColBackgroundColor
+        {
+            get { return _colBackgroundColor; }
+            set
+            {
+                _colBackgroundColor = value;
+                OnPropertyChanged();
+            }
+        }
 
         /// <summary>
         /// Property for _probability

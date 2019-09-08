@@ -8,6 +8,5 @@ namespace DCAPathFinder.Logic
 {
     public abstract class DifferentialKeyRecoveryAttack
     {
-
     }
 }

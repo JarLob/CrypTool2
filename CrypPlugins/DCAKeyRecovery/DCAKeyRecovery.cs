@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -232,6 +233,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                 _pres.TutorialNumber = _settings.CurrentAlgorithm;
                 _pres.StartClickEvent.Reset();
                 _pres.ResetUI();
+                _pres.IsNextStepPanelVisible = Visibility.Hidden;
             }, null);
 
             //IKeyRecovery: Methods for differential attack
@@ -280,7 +282,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                 (SendOrPostCallback) delegate { _pres.WorkspaceRunning = true; }, null);
 
             //prepare thread to run
-            ThreadStart tStart = new ThreadStart(executeDifferentialAttack);
+            ThreadStart tStart = new ThreadStart(ExecuteDifferentialAttack);
             _workerThread = new Thread(tStart);
             _workerThread.Name = "DCA-KeyRecovery-WorkerThread";
             _workerThread.IsBackground = true;
@@ -380,6 +382,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                                 {
                                     _pres.StartEnabled = true;
                                     _pres.HighlightDispatcher.Start();
+                                    _pres.IsNextStepPanelVisible = Visibility.Hidden;
                                 }, null);
 
                                 _pres.StartClickEvent.WaitOne();
@@ -407,6 +410,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                                     {
                                         _pres.HighlightDispatcher.Start();
                                         _pres.StartEnabled = true;
+                                        _pres.IsNextStepPanelVisible = Visibility.Hidden;
                                     }, null);
 
                                     _pres.StartClickEvent.WaitOne();
@@ -435,6 +439,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                                 {
                                     _pres.HighlightDispatcher.Start();
                                     _pres.StartEnabled = true;
+                                    _pres.IsNextStepPanelVisible = Visibility.Hidden;
                                 }, null);
 
                                 _pres.StartClickEvent.WaitOne();
@@ -480,6 +485,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                                     {
                                         _pres.HighlightDispatcher.Start();
                                         _pres.StartEnabled = true;
+                                        _pres.IsNextStepPanelVisible = Visibility.Hidden;
                                     }, null);
 
                                     _pres.StartClickEvent.WaitOne();
@@ -508,6 +514,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                                 {
                                     _pres.HighlightDispatcher.Start();
                                     _pres.StartEnabled = true;
+                                    _pres.IsNextStepPanelVisible = Visibility.Hidden;
                                 }, null);
 
                                 _pres.StartClickEvent.WaitOne();
@@ -547,6 +554,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                 _pres.StartEnabled = false;
                 _pres.HighlightDispatcher.Stop();
                 _pres.BtnStart.Background = Brushes.LightGray;
+                _pres.IsNextStepPanelVisible = Visibility.Hidden;
             }, null);
 
             _hasNewDifferential = false;
@@ -740,7 +748,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
         /// <summary>
         /// Executes the main work
         /// </summary>
-        private void executeDifferentialAttack()
+        private void ExecuteDifferentialAttack()
         {
             switch (_currentAlgorithm)
             {
@@ -878,6 +886,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                     while (!c2Attack.recoveredSubkey3)
                     {
                         _nextStep.WaitOne();
+
                         _currentProgressValue = 0.0;
                         ProgressChanged(_currentProgressValue, _progressMaximum);
 
@@ -994,6 +1003,15 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                         firstIteration = false;
                         _currentProgressValue = 1.0;
                         ProgressChanged(_currentProgressValue, _progressMaximum);
+
+                        if (!_settings.AutomaticMode)
+                        {
+                            //prepare UI
+                            _pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                            {
+                                _pres.IsNextStepPanelVisible = Visibility.Visible;
+                            },null);
+                        }
                     }
 
                     //reset iteration indicators for events
@@ -1122,6 +1140,15 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                         firstIteration = false;
                         _currentProgressValue = 1.0;
                         ProgressChanged(_currentProgressValue, _progressMaximum);
+
+                        if (!_settings.AutomaticMode)
+                        {
+                            //prepare UI
+                            _pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                            {
+                                _pres.IsNextStepPanelVisible = Visibility.Visible;
+                            }, null);
+                        }
                     }
 
                     //exit thread
@@ -1394,6 +1421,15 @@ namespace Cryptool.Plugins.DCAKeyRecovery
 
                         _currentProgressValue = 1.0;
                         ProgressChanged(_currentProgressValue, _progressMaximum);
+
+                        if (!_settings.AutomaticMode)
+                        {
+                            //prepare UI
+                            _pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                            {
+                                _pres.IsNextStepPanelVisible = Visibility.Visible;
+                            }, null);
+                        }
                     }
 
                     //reset iteration indicators for events
@@ -1522,7 +1558,15 @@ namespace Cryptool.Plugins.DCAKeyRecovery
 
                         _currentProgressValue = 1.0;
                         ProgressChanged(_currentProgressValue, _progressMaximum);
+                        if (!_settings.AutomaticMode)
+                        {
+                            //prepare UI
+                            _pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                            {
+                                _pres.IsNextStepPanelVisible = Visibility.Visible;
+                            }, null);
                         }
+                    }
 
                     //reset iteration indicators for events
                     firstIteration = true;
@@ -1649,7 +1693,15 @@ namespace Cryptool.Plugins.DCAKeyRecovery
 
                         _currentProgressValue = 1.0;
                         ProgressChanged(_currentProgressValue, _progressMaximum);
+                        if (!_settings.AutomaticMode)
+                        {
+                            //prepare UI
+                            _pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                            {
+                                _pres.IsNextStepPanelVisible = Visibility.Visible;
+                            }, null);
                         }
+                    }
 
                     //reset iteration indicators for events
                     firstIteration = true;
@@ -1776,7 +1828,15 @@ namespace Cryptool.Plugins.DCAKeyRecovery
 
                         _currentProgressValue = 1.0;
                         ProgressChanged(_currentProgressValue, _progressMaximum);
+                        if (!_settings.AutomaticMode)
+                        {
+                            //prepare UI
+                            _pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                            {
+                                _pres.IsNextStepPanelVisible = Visibility.Visible;
+                            }, null);
                         }
+                    }
 
                     //exit thread
                     if (_stop)
