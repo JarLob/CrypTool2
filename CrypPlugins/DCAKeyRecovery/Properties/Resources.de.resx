@@ -309,6 +309,12 @@
   <data name="NeededMessageCountOutputToolTip" xml:space="preserve">
     <value>Ausgang für die Anzahl an angeforderten Nachrichtenpaare</value>
   </data>
+  <data name="nextStepTextRun1" xml:space="preserve">
+    <value>Die differenzielle Kryptoanalyse wird in der</value>
+  </data>
+  <data name="nextStepTextRun2" xml:space="preserve">
+    <value>PfadFinder-Komponente fortgesetzt</value>
+  </data>
   <data name="PerformanceSettingsGroup" xml:space="preserve">
     <value>Geschwindigkeitsoptionen</value>
   </data>
@@ -316,7 +322,7 @@
     <value>DKA KeyRecovery</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Die DKA KeyRecovery-Komponente führt die Wiederherstellung von Schlüsselbits von Rundenschlüsseln durch</value>
+    <value>Diese Komponente führt die Wiederherstellung von Schlüsselbits von Rundenschlüsseln durch.</value>
   </data>
   <data name="RoundKeysOutput" xml:space="preserve">
     <value>Rundenschlüssel</value>
@@ -392,11 +398,5 @@
   </data>
   <data name="UnencryptedMessagePairsInputToolTip" xml:space="preserve">
     <value>Eingang für die Klartext-Nachrichtenpaare</value>
-  </data>
-  <data name="nextStepTextRun1" xml:space="preserve">
-    <value>Die differenzielle Kryptoanalyse wird in der</value>
-  </data>
-  <data name="nextStepTextRun2" xml:space="preserve">
-    <value>PfadFinder-Komponente fortgesetzt</value>
   </data>
 </root>

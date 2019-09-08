@@ -172,7 +172,7 @@
     <value>DCA PathVisualiser</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>The DCA PathVisualiser component visualizes the characteristics found by the DCA PathFinder component</value>
+    <value>This component visualizes the characteristics found by the DCA PathFinder component.</value>
   </data>
   <data name="Probability" xml:space="preserve">
     <value>Probability:</value>

@@ -247,7 +247,7 @@
     <value>DKA PfadFinder</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Die DKA PfadFinder-Komponente sucht in Abhängigkeit von durch den User spezifizierten Parametern nach Differenzialen in einer symmetrischen Blockchiffre.</value>
+    <value>Diese Komponente sucht in Abhängigkeit von durch den User spezifizierten Parametern nach Differenzialen in einer symmetrischen Blockchiffre.</value>
   </data>
   <data name="PresentationMode" xml:space="preserve">
     <value>Tutorialmodus</value>

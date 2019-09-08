@@ -655,7 +655,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The DCA KeyRecovery component performs recovery of key bits from round keys ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This component performs recovery of key bits from round keys. ähnelt.
         /// </summary>
         internal static string PluginTooltip {
             get {

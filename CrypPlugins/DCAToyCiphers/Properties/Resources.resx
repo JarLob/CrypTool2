@@ -258,7 +258,7 @@
     <value>DCA ToyCipher</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>The ToyCipher component contains various symmetric algorithms for encryption. The algorithms are very simple and short to demonstrate cryptographic principles or cryptoanalytical methods.</value>
+    <value>This component contains various symmetric algorithms for encryption. The algorithms are very simple and short to demonstrate cryptographic principles or cryptoanalytical methods.</value>
   </data>
   <data name="TablePermutationInput" xml:space="preserve">
     <value>Position of input</value>

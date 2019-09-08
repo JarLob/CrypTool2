@@ -172,7 +172,7 @@
     <value>DKA PfadVisualisierer</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Die DKA PfadVisualisierer-Komponente visualisiert die durch die PfadFinder-Komponente gefundenen Charakteristiken</value>
+    <value>Diese Komponente visualisiert die durch die PfadFinder-Komponente gefundenen Charakteristiken.</value>
   </data>
   <data name="Probability" xml:space="preserve">
     <value>Wahrscheinlichkeit:</value>

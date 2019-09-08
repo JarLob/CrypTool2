@@ -259,7 +259,7 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The DCA PathVisualiser component visualizes the characteristics found by the DCA PathFinder component ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This component visualizes the characteristics found by the DCA PathFinder component. ähnelt.
         /// </summary>
         internal static string PluginTooltip {
             get {

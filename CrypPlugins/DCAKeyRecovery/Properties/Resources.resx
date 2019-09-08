@@ -303,6 +303,12 @@
   <data name="NeededMessageCountOutputToolTip" xml:space="preserve">
     <value>Input for the message pair count</value>
   </data>
+  <data name="nextStepTextRun1" xml:space="preserve">
+    <value>The differential cryptanalysis has to be</value>
+  </data>
+  <data name="nextStepTextRun2" xml:space="preserve">
+    <value>continued in the PathFinder component</value>
+  </data>
   <data name="PerformanceSettingsGroup" xml:space="preserve">
     <value>Speed settings</value>
   </data>
@@ -310,7 +316,7 @@
     <value>DCA KeyRecovery</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>The DCA KeyRecovery component performs recovery of key bits from round keys</value>
+    <value>This component performs recovery of key bits from round keys.</value>
   </data>
   <data name="RoundKeysOutput" xml:space="preserve">
     <value>Roundkeys</value>
@@ -386,11 +392,5 @@
   </data>
   <data name="UnencryptedMessagePairsInputToolTip" xml:space="preserve">
     <value>Input for the plaintext-pairs</value>
-  </data>
-  <data name="nextStepTextRun1" xml:space="preserve">
-    <value>The differential cryptanalysis has to be</value>
-  </data>
-  <data name="nextStepTextRun2" xml:space="preserve">
-    <value>continued in the PathFinder component</value>
   </data>
 </root>

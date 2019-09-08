@@ -124,7 +124,7 @@ namespace DCAOracle.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This component generates randomly selected message pairs, where the messages of a pair have a definable difference ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This component generates randomly selected message pairs, where the messages of a pair have a definable difference. ähnelt.
         /// </summary>
         internal static string PluginTooltip {
             get {

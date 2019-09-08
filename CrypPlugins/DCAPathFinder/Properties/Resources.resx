@@ -235,7 +235,7 @@
     <value>DCA PathFinder</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>The DCA PathFinder component searches for differentials in a symmetric block cipher depending on parameters specified by the user.</value>
+    <value>This component searches for differentials in a symmetric block cipher depending on parameters specified by the user.</value>
   </data>
   <data name="PresentationMode" xml:space="preserve">
     <value>Tutorial mode</value>

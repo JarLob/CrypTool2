@@ -139,7 +139,7 @@
     <value>DKA Orakel</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Diese Komponente generiert zufällig gewählte Nachrichtenpaare, wobei die Nachrichten eines Paares eine definierbare Differenz aufweisen</value>
+    <value>Diese Komponente generiert zufällig gewählte Nachrichtenpaare, wobei die Nachrichten eines Paares eine definierbare Differenz aufweisen.</value>
   </data>
   <data name="WarningMessageCountMustBeSpecified" xml:space="preserve">
     <value>Die Anzahl der Nachrichtenpaare muss größer als 0 sein!</value>

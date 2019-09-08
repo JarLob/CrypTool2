@@ -457,7 +457,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The DCA PathFinder component searches for differentials in a symmetric block cipher depending on parameters specified by the user. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This component searches for differentials in a symmetric block cipher depending on parameters specified by the user. ähnelt.
         /// </summary>
         public static string PluginTooltip {
             get {
