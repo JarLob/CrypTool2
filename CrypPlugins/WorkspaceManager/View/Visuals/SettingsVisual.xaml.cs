@@ -208,7 +208,7 @@ namespace WorkspaceManager.View.Visuals
 
             foreach (List<ControlEntry> cel in entgrou.entryList)
             {
-                entgrou.gorupPanel[entgrou.entryList.IndexOf(cel)].Visibility = Visibility.Visible;
+                entgrou.groupPanel[entgrou.entryList.IndexOf(cel)].Visibility = Visibility.Visible;
                 Boolean allinvisble = true;
 
                 foreach (ControlEntry ce in cel)
@@ -229,7 +229,7 @@ namespace WorkspaceManager.View.Visuals
                 }
                 if (allinvisble)
                 {
-                    entgrou.gorupPanel[entgrou.entryList.IndexOf(cel)].Visibility = Visibility.Collapsed;
+                    entgrou.groupPanel[entgrou.entryList.IndexOf(cel)].Visibility = Visibility.Collapsed;
                 }
             }
         }
@@ -343,7 +343,7 @@ namespace WorkspaceManager.View.Visuals
 
                 parameterPanel = new ParameterPanel(isSideBar);
 
-                entgrou.gorupPanel.Add(testexpander);
+                entgrou.groupPanel.Add(testexpander);
 
                 parameterPanel.Name = "border1";
 
@@ -1093,7 +1093,7 @@ namespace WorkspaceManager.View.Visuals
 
         public List<String> listAdmin = new List<String>();
         public List<List<ControlEntry>> entryList = new List<List<ControlEntry>>();
-        public List<Expander> gorupPanel = new List<Expander>();
+        public List<Expander> groupPanel = new List<Expander>();
 
 
         public void AddNewEntry(String groupname, ControlEntry entry)
