@@ -513,7 +513,7 @@ namespace KeySearcher
                 ((QuickWatch)Presentation).Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     openClPresentationMutex.WaitOne();
-                    ((QuickWatch)Presentation).OpenCLPresentation.AmountOfDevices++;
+                    ((QuickWatch)Presentation).LocalQuickWatchPresentation.AmountOfDevices++;
                     openClPresentationMutex.ReleaseMutex();
                 }, null);
                 Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
@@ -556,7 +556,7 @@ namespace KeySearcher
                                     GuiLogMessage(string.Format("Using OpenCL failed: {0}", ex.Message), NotificationLevel.Error);
                                     UpdateQuickwatchSettings();
                                     openClPresentationMutex.WaitOne();
-                                    ((QuickWatch)Presentation).OpenCLPresentation.AmountOfDevices--;
+                                    ((QuickWatch)Presentation).LocalQuickWatchPresentation.AmountOfDevices--;
                                     openClPresentationMutex.ReleaseMutex();
                                 }, null);
                                 continue;
@@ -618,7 +618,7 @@ namespace KeySearcher
                 int subbatchSize = keyTranslator.GetOpenCLBatchSize() / subbatches;
                 ((QuickWatch) Presentation).Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
                                                                     {
-                                                                        ((QuickWatch)Presentation).OpenCLPresentation.workItems.Content = subbatchSize;
+                                                                        ((QuickWatch)Presentation).LocalQuickWatchPresentation.WorkItems.Value = subbatchSize.ToString();
                                                                     }, null);
                 //GuiLogMessage(string.Format("Now using {0} subbatches", subbatches), NotificationLevel.Info);
                 
@@ -964,7 +964,7 @@ namespace KeySearcher
             ((QuickWatch) Presentation).Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
             {
                 openClPresentationMutex.WaitOne();
-                ((QuickWatch) Presentation).OpenCLPresentation.AmountOfDevices = 0;
+                ((QuickWatch) Presentation).LocalQuickWatchPresentation.AmountOfDevices = 0;
                 openClPresentationMutex.ReleaseMutex();
             }, null);
 
@@ -1052,11 +1052,11 @@ namespace KeySearcher
                 ((QuickWatch) Presentation).Dispatcher.BeginInvoke(DispatcherPriority.Normal,
                     (SendOrPostCallback) delegate
                     {
-                        ((QuickWatch) Presentation).OpenCLPresentation.keysPerSecondOpenCL.Content =
+                        ((QuickWatch) Presentation).LocalQuickWatchPresentation.KeysPerSecondOpenCL.Value =
                             string.Format("{0:N}", openCLKeysPerSecond);
-                        ((QuickWatch) Presentation).OpenCLPresentation.keysPerSecondCPU.Content = string.Format(
+                        ((QuickWatch) Presentation).LocalQuickWatchPresentation.KeysPerSecondCPU.Value = string.Format(
                             "{0:N}", (keysPerSecond - openCLKeysPerSecond));
-                        ((QuickWatch) Presentation).OpenCLPresentation.ratio.Content = string.Format("{0:P}", ratio);
+                        ((QuickWatch) Presentation).LocalQuickWatchPresentation.Ratio.Value = string.Format("{0:P}", ratio);
                     }, null);
 
                 #region set doneKeys to 0
@@ -1122,7 +1122,7 @@ namespace KeySearcher
 
         private void SetStartDate()
         {
-            localQuickWatchPresentation.startTime.Content = DateTime.Now.ToString("g", Thread.CurrentThread.CurrentCulture);
+            localQuickWatchPresentation.StartTime.Value = DateTime.Now.ToString("g", Thread.CurrentThread.CurrentCulture);
         }
 
         internal void showProgress(LinkedList<ValueKey> costList, BigInteger size, BigInteger keycounter, long keysPerSecond)
@@ -1166,26 +1166,26 @@ namespace KeySearcher
 
             localQuickWatchPresentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                localQuickWatchPresentation.testedBits.Content = String.Format("{0}", testetBits);
-                localQuickWatchPresentation.elapsedTime.Content = TimeSpanString(localBruteForceStopwatch.Elapsed);
-                localQuickWatchPresentation.keysPerSecond.Content = String.Format("{0:0,0}", keysPerSecond);
+                localQuickWatchPresentation.TestedBits.Value = String.Format("{0}", testetBits);
+                localQuickWatchPresentation.ElapsedTime.Value = TimeSpanString(localBruteForceStopwatch.Elapsed);
+                localQuickWatchPresentation.KeysPerSecond.Value = String.Format("{0:0,0}", keysPerSecond);
 
                 if (timeleft != new TimeSpan(-1))
                 {
-                    localQuickWatchPresentation.timeLeft.Content = TimeSpanString(timeleft);
+                    localQuickWatchPresentation.TimeLeft.Value = TimeSpanString(timeleft);
                     try
                     {
-                        localQuickWatchPresentation.endTime.Content = "" + DateTime.Now.Add(timeleft).ToString("g", Thread.CurrentThread.CurrentCulture);
+                        localQuickWatchPresentation.EndTime.Value = "" + DateTime.Now.Add(timeleft).ToString("g", Thread.CurrentThread.CurrentCulture);
                     }
                     catch
                     {
-                        localQuickWatchPresentation.endTime.Content = Resources.in_a_galaxy_far__far_away___;
+                        localQuickWatchPresentation.EndTime.Value = Resources.in_a_galaxy_far__far_away___;
                     }
                 }
                 else
                 {
-                    localQuickWatchPresentation.timeLeft.Content = Resources.incalculable____;
-                    localQuickWatchPresentation.endTime.Content = Resources.in_a_galaxy_far__far_away___;
+                    localQuickWatchPresentation.TimeLeft.Value = Resources.incalculable____;
+                    localQuickWatchPresentation.EndTime.Value = Resources.in_a_galaxy_far__far_away___;
                 }
 
                 printEntries(costList);
