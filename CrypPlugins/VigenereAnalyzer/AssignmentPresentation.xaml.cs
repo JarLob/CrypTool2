@@ -31,7 +31,7 @@ namespace Cryptool.VigenereAnalyzer
     public partial class AssignmentPresentation : UserControl
     {
 
-        public ObservableCollection<ResultEntry> BestList { get; } = new ObservableCollection<ResultEntry>();
+        public ObservableCollection<ResultEntry> BestList = new ObservableCollection<ResultEntry>();
         //public event EventHandler doppelClick;
 
         #region Variables
@@ -66,7 +66,7 @@ namespace Cryptool.VigenereAnalyzer
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                IsEnabled = false;
+                ListView.IsEnabled = false;
             }, null);
         }
 
@@ -74,7 +74,7 @@ namespace Cryptool.VigenereAnalyzer
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                IsEnabled = true;
+                ListView.IsEnabled = true;
             }, null);
         }
 

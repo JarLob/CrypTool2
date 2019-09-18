@@ -337,9 +337,9 @@ namespace Cryptool.VigenereAnalyzer
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 _startTime = DateTime.Now;
-                ((AssignmentPresentation)Presentation).StartTime.Value = "" + _startTime;
-                ((AssignmentPresentation)Presentation).EndTime.Value = "";
-                ((AssignmentPresentation)Presentation).ElapsedTime.Value = "";
+                ((AssignmentPresentation)Presentation).startTime.Content = "" + _startTime;
+                ((AssignmentPresentation)Presentation).endTime.Content = "";
+                ((AssignmentPresentation)Presentation).elapsedTime.Content = "";
             }, null);
         }
 
@@ -353,9 +353,9 @@ namespace Cryptool.VigenereAnalyzer
                 _endTime = DateTime.Now;
                 var elapsedtime = _endTime.Subtract(_startTime);
                 var elapsedspan = new TimeSpan(elapsedtime.Days, elapsedtime.Hours, elapsedtime.Minutes, elapsedtime.Seconds, 0);
-                ((AssignmentPresentation)Presentation).EndTime.Value = "" + _endTime;
-                ((AssignmentPresentation)Presentation).ElapsedTime.Value = "" + elapsedspan;
-                ((AssignmentPresentation)Presentation).CurrentAnalysedKeylength.Value = "" + keylength;
+                ((AssignmentPresentation)Presentation).endTime.Content = "" + _endTime;
+                ((AssignmentPresentation)Presentation).elapsedTime.Content = "" + elapsedspan;
+                ((AssignmentPresentation)Presentation).currentAnalysedKeylength.Content = "" + keylength;
 
             }, null);
         }
@@ -509,7 +509,7 @@ namespace Cryptool.VigenereAnalyzer
                                 {
                                     try
                                     {
-                                        _presentation.CurrentSpeed.Value = string.Format("{0:0,0}", keysDispatcher);
+                                        _presentation.currentSpeed.Content = string.Format("{0:0,0}", keysDispatcher);
                                     }
                                     // ReSharper disable once EmptyGeneralCatchClause
                                     catch (Exception e)
@@ -550,7 +550,7 @@ namespace Cryptool.VigenereAnalyzer
             {
                 try
                 {
-                    _presentation.CurrentSpeed.Value = string.Format("{0:0,0}", Math.Round(keysDispatcher2 * 1000 / (DateTime.Now - lasttimeDispatcher2).TotalMilliseconds, 0));
+                    _presentation.currentSpeed.Content = string.Format("{0:0,0}", Math.Round(keysDispatcher2 * 1000 / (DateTime.Now - lasttimeDispatcher2).TotalMilliseconds, 0));
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
                 catch (Exception e)
@@ -599,10 +599,8 @@ namespace Cryptool.VigenereAnalyzer
                     {
                         return;
                     }
-                    //Insert new entry at correct place to sustain order of list:
-                    var insertIndex = _presentation.BestList.TakeWhile(e => e.Value > entry.Value).Count();
-                    _presentation.BestList.Insert(insertIndex, entry);
-
+                    _presentation.BestList.Add(entry);
+                    _presentation.BestList = new ObservableCollection<ResultEntry>(_presentation.BestList.OrderByDescending(i => i.Value));
                     if (_presentation.BestList.Count > MaxBestListEntries)
                     {
                         _presentation.BestList.RemoveAt(MaxBestListEntries);
@@ -613,6 +611,7 @@ namespace Cryptool.VigenereAnalyzer
                         e.Ranking = ranking;
                         ranking++;
                     }
+                    _presentation.ListView.DataContext = _presentation.BestList;
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
                 catch (Exception e)

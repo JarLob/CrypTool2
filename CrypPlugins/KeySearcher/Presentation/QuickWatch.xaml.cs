@@ -44,6 +44,14 @@ namespace KeySearcherPresentation
             }
         }
 
+        public OpenCLPresentation OpenCLPresentation
+        {
+            get
+            {
+               return LocalQuickWatchPresentation.OpenCLPresentation;
+            }
+        }
+
         public Boolean ShowStatistics
         {
             get { return (Boolean)GetValue(ShowStatisticsProperty); }

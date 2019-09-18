@@ -151,6 +151,9 @@
     <Compile Include="OpenCL\KeySearcherOpenCLSubbatchOptimizer.cs" />
     <Compile Include="KeyTranslators\ByteArrayKeyTranslator.cs" />
     <Compile Include="OpenCL\KeySearcherOpenCLCode.cs" />
+    <Compile Include="Presentation\Controls\OpenCLPresentation.xaml.cs">
+      <DependentUpon>OpenCLPresentation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Controls\LocalQuickWatchPresentation.xaml.cs">
       <DependentUpon>LocalQuickWatchPresentation.xaml</DependentUpon>
     </Compile>
@@ -191,11 +194,6 @@
       <Name>CrypPluginBase</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\LibSource\CrypAnalysisViewControl\CrypAnalysisViewControl.csproj">
-      <Project>{4ab9be96-3e34-40cb-9270-a64480c851ee}</Project>
-      <Name>CrypAnalysisViewControl</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\..\LibSource\KeyTextBox\KeyTextBox.csproj">
       <Project>{FD4214D8-FFB9-406F-9202-BB5EC0645E8F}</Project>
       <Name>KeyTextBox</Name>
@@ -218,6 +216,10 @@
     <Page Include="KeysearcherSettingsTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Controls\OpenCLPresentation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Presentation\Controls\OrgChartTreeViewItemStyle.xaml">
       <Generator>MSBuild:Compile</Generator>

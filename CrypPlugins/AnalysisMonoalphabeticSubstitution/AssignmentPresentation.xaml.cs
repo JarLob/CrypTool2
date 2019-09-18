@@ -15,7 +15,8 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
     public partial class AssignmentPresentation : UserControl
     {
 
-        public ObservableCollection<ResultEntry> Entries { get; } = new ObservableCollection<ResultEntry>();
+        public ObservableCollection<ResultEntry> entries = new ObservableCollection<ResultEntry>();
+        //public event EventHandler doppelClick;
 
         #region Variables
 
@@ -38,7 +39,8 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         public AssignmentPresentation()
         {
             InitializeComponent();
-            DataContext = Entries;
+            this.DataContext = entries;
+
         }
 
         #endregion
@@ -49,7 +51,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         {
             this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                IsEnabled = false;
+                this.ListView.IsEnabled = false;
             }, null);
         }
 
@@ -57,7 +59,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         {
             this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                IsEnabled = true;
+                this.ListView.IsEnabled = true;
             }, null);
         }
 
@@ -119,7 +121,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                 else if (tag == "copy_all")
                 {
                     List<string> lines = new List<string>();
-                    foreach (var e in Entries) lines.Add(entryToText(e));
+                    foreach (var e in entries) lines.Add(entryToText(e));
                     Clipboard.SetText(String.Join("\n\n", lines));
                 }
             }
@@ -130,6 +132,5 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         }
 
         #endregion
-        
     }
 }

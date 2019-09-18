@@ -20,21 +20,10 @@ namespace KeySearcherPresentation.Controls
 
         public ObservableCollection<ResultEntry> entries = new ObservableCollection<ResultEntry>();
 
-        private int amountOfDevices;
-        public int AmountOfDevices
-        {
-            get { return amountOfDevices; }
-            set
-            {
-                amountOfDevices = value;
-                Devices.Value = amountOfDevices.ToString();
-            }
-        }
-
         public static readonly DependencyProperty IsOpenCLEnabledProperty =
             DependencyProperty.Register("IsOpenCLEnabled",
                 typeof(Boolean),
-                typeof(LocalQuickWatchPresentation), new PropertyMetadata(false, IsOpenCLEnabledChanged));
+                typeof(LocalQuickWatchPresentation), new PropertyMetadata(false));
 
         public Boolean IsOpenCLEnabled
         {
@@ -46,7 +35,10 @@ namespace KeySearcherPresentation.Controls
         {
             InitializeComponent();
             this.DataContext = entries;
-            OpenCLSection.IsSectionVisible = IsOpenCLEnabled;
+        }
+
+        private void OpenCLPresentation_Loaded(object sender, RoutedEventArgs e)
+        {
         }
         
         // Strings with nul characters are not displayed correctly in the clipboard
@@ -100,11 +92,16 @@ namespace KeySearcherPresentation.Controls
                 Clipboard.SetText("");
             }
         }
-        
-        private static void IsOpenCLEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+
+        public void HandleDoubleClick(Object sender, EventArgs eventArgs)
         {
-            var self = d as LocalQuickWatchPresentation;
-            self.OpenCLSection.IsSectionVisible = (bool) e.NewValue;
+            var lvi = sender as ListViewItem;
+            var r = lvi.Content as ResultEntry;
+
+            if (r != null)
+            {
+                _updateOutputFromUserChoice(r.Key, r.FullText);
+            }
         }
     }
 }
