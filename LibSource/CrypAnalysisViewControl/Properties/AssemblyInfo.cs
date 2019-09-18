@@ -5,9 +5,9 @@ using System.Windows;
 [assembly: AssemblyTitle("CrypAnalysisViewControl")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("CrypTool 2 Team")]
 [assembly: AssemblyProduct("CrypAnalysisViewControl")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCopyright("Copyright © CrypTool 2 Team")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
