@@ -25,7 +25,7 @@ namespace Cryptool.Plugins.DCAOracle
     {
         #region Private Variables
 
-        private int _wordSize;
+        private int _wordSize = 16;
 
         #endregion
 

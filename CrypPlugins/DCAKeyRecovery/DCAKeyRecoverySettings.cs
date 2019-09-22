@@ -28,12 +28,12 @@ namespace Cryptool.Plugins.DCAKeyRecovery
     {
         #region Private Variables
 
-        private string _choiceOfAlgorithm;
-        private Algorithms _currentAlgorithm;
-        private bool _automaticMode;
-        private bool _UIUpdateWhileExecution;
+        private string _choiceOfAlgorithm = "0";
+        private Algorithms _currentAlgorithm = Algorithms.Cipher1;
+        private bool _automaticMode = false;
+        private bool _UIUpdateWhileExecution = true;
         private int _maxThreads = Environment.ProcessorCount;
-        private int _threadCount;
+        private int _threadCount = 1;
 
         #endregion
 

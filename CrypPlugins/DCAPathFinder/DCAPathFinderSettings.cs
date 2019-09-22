@@ -29,18 +29,18 @@ namespace Cryptool.Plugins.DCAPathFinder
     {
         #region Private Variables
 
-        private int _chosenMessagePairsCount;
-        private string _choiceOfAlgorithm;
-        private Algorithms _currentAlgorithm;
-        private string _choiceOfSearchPolicy;
-        private SearchPolicy _currentSearchPolicy;
-        private string _choiceOfAbortingPolicy;
-        private AbortingPolicy _currentAbortingPolicy;
-        private bool _presentationMode;
-        private bool _automaticMode;
+        private int _chosenMessagePairsCount = 5000;
+        private string _choiceOfAlgorithm = "0";
+        private Algorithms _currentAlgorithm = Algorithms.Cipher1;
+        private string _choiceOfSearchPolicy = "0";
+        private SearchPolicy _currentSearchPolicy = SearchPolicy.FirstAllCharacteristicsDepthSearch;
+        private string _choiceOfAbortingPolicy = "0";
+        private AbortingPolicy _currentAbortingPolicy = AbortingPolicy.Threshold;
+        private bool _presentationMode = true;
+        private bool _automaticMode =false;
         private int _maxThreads = Environment.ProcessorCount;
-        private int _threadCount;
-        private bool _useOfflinePaths;
+        private int _threadCount = 1;
+        private bool _useOfflinePaths = false;
         private double _thresholdDifferentialSearch;
         private double _thresholdCharacteristicSearch;
 

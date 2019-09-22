@@ -26,10 +26,10 @@ namespace Cryptool.Plugins.DCAToyCiphers
     {
         #region Private Variables
 
-        private string _choiceOfAlgorithm;
-        private string _choiceOfMode;
-        private Algorithms _currentAlgorithm;
-        private Mode _currentMode;
+        private string _choiceOfAlgorithm = "0";
+        private string _choiceOfMode ="0";
+        private Algorithms _currentAlgorithm = Algorithms.Cipher1;
+        private Mode _currentMode = Mode.Decrypt;
 
         #endregion
 

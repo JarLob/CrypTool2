@@ -53,7 +53,7 @@ namespace Cryptool.Plugins.DCAPathVisualiser
         /// <summary>
         /// Input for the differential
         /// </summary>
-        [PropertyInfo(Direction.InputData, "DifferentialInput", "DifferentialInputToolTip")]
+        [PropertyInfo(Direction.InputData, "DifferentialInput", "DifferentialInputToolTip", true)]
         public string Differential
         {
             get { return _differential; }
@@ -93,6 +93,7 @@ namespace Cryptool.Plugins.DCAPathVisualiser
             _pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
             {
                 _pres.WorkspaceRunning = true;
+                _pres.CurrentAlgorithm = _settings.CurrentAlgorithm;
             }, null);
         }
 
@@ -102,6 +103,10 @@ namespace Cryptool.Plugins.DCAPathVisualiser
         public void Execute()
         {
             ProgressChanged(0, 1);
+
+            //check for null
+            if (Differential == null)
+                return;
 
             DifferentialAttackRoundConfiguration conf = ReadConfiguration(Differential);
 

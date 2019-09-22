@@ -26,8 +26,8 @@ namespace Cryptool.Plugins.DCAPathVisualiser
     {
         #region Private Variables
 
-        private string _choiceOfAlgorithm;
-        private Algorithms _currentAlgorithm;
+        private string _choiceOfAlgorithm = "0";
+        private Algorithms _currentAlgorithm = Algorithms.Cipher1;
 
         #endregion
 

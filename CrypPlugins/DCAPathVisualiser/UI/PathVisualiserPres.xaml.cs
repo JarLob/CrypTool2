@@ -536,10 +536,12 @@ namespace DCAPathVisualiser.UI
                 {
                     case Algorithms.Cipher1:
                     {
+                        /* */
                         _cipherControl = new Cipher1Characteristic();
                         _tableControl = new Cipher1Table();
                         TabItemCipher.Content = _cipherControl;
                         TabItemTable.Child = _tableControl;
+                        
                     }
                         break;
                     case Algorithms.Cipher2:

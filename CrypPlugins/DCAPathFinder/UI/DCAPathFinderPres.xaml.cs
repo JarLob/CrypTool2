@@ -863,11 +863,19 @@ namespace DCAPathFinder.UI
                                         view.SBox4Round2.AlreadyAttacked = true;
                                         view.SBox4Round2.IsClickable = false;
                                     }
+                                    else
+                                    {
+                                        view.SBox4Round2.IsClickable = true;
+                                    }
 
                                     if (SBoxesAlreadyAttacked[2])
                                     {
                                         view.SBox3Round2.AlreadyAttacked = true;
                                         view.SBox3Round2.IsClickable = false;
+                                    }
+                                    else
+                                    {
+                                        view.SBox3Round2.IsClickable = true;
                                     }
 
                                     if (SBoxesAlreadyAttacked[1])
@@ -875,11 +883,19 @@ namespace DCAPathFinder.UI
                                         view.SBox2Round2.AlreadyAttacked = true;
                                         view.SBox2Round2.IsClickable = false;
                                     }
+                                    else
+                                    {
+                                        view.SBox2Round2.IsClickable = true;
+                                    }
 
                                     if (SBoxesAlreadyAttacked[0])
                                     {
                                         view.SBox1Round2.AlreadyAttacked = true;
                                         view.SBox1Round2.IsClickable = false;
+                                    }
+                                    else
+                                    {
+                                        view.SBox1Round2.IsClickable = true;
                                     }
 
                                     //setup pres content
@@ -1192,39 +1208,6 @@ namespace DCAPathFinder.UI
                                     {
                                         view.SBox1Round5.IsClickable = true;
                                     }
-
-                                    if (UseOfflinePaths)
-                                    {
-                                        if (_SBoxesCurrentAttack[3])
-                                        {
-                                            view.SBox4Round5.IsClickable = false;
-                                            view.SBox4Round5.SetOfflineSelected();
-                                        }
-
-                                        if (_SBoxesCurrentAttack[2])
-                                        {
-                                            view.SBox3Round5.IsClickable = false;
-                                            view.SBox3Round5.SetOfflineSelected();
-                                        }
-
-                                        if (_SBoxesCurrentAttack[1])
-                                        {
-                                            view.SBox2Round5.IsClickable = false;
-                                            view.SBox2Round5.SetOfflineSelected();
-                                        }
-
-                                        if (_SBoxesCurrentAttack[0])
-                                        {
-                                            view.SBox1Round5.IsClickable = false;
-                                            view.SBox1Round5.SetOfflineSelected();
-                                        }
-
-                                        view.SBox4Round5.IsClickable = false;
-                                        view.SBox3Round5.IsClickable = false;
-                                        view.SBox2Round5.IsClickable = false;
-                                        view.SBox1Round5.IsClickable = false;
-                                    }
-
 
                                     //setup pres content
                                     SlideCounterVisibility = Visibility.Visible;
@@ -2573,25 +2556,28 @@ namespace DCAPathFinder.UI
                 case 2:
                 {
                     //check if next is possible
-                    if (!_SBoxesCurrentAttack[0] && !_SBoxesCurrentAttack[1] && !_SBoxesCurrentAttack[2] &&
-                        !_SBoxesCurrentAttack[3] && PresentationMode && (StepCounter == 22 || StepCounter == 25))
+                    if (!_SBoxesCurrentAttack[0] && !_SBoxesCurrentAttack[1] && !_SBoxesCurrentAttack[2] && !_SBoxesCurrentAttack[3] && PresentationMode && (StepCounter == 22 || StepCounter == 25))
                     {
                         if (MessageToDisplayOccured != null)
+                        {
                             MessageToDisplayOccured.Invoke(this, new MessageEventArgs()
                             {
                                 message = Properties.Resources.SBoxWarning
                             });
+                        }
+
                         return;
                     }
-                    else if (!_SBoxesCurrentAttack[0] && !_SBoxesCurrentAttack[1] && !_SBoxesCurrentAttack[2] &&
-                             !_SBoxesCurrentAttack[3] && !PresentationMode &&
-                             (StepCounter == 1 || StepCounter == 4))
+                    else if (!_SBoxesCurrentAttack[0] && !_SBoxesCurrentAttack[1] && !_SBoxesCurrentAttack[2] && !_SBoxesCurrentAttack[3] && !PresentationMode && (StepCounter == 1 || StepCounter == 4))
                     {
                         if (MessageToDisplayOccured != null)
+                        {
                             MessageToDisplayOccured.Invoke(this, new MessageEventArgs()
                             {
                                 message = Properties.Resources.SBoxWarning
                             });
+                        }
+
                         return;
                     }
                 }
@@ -2600,26 +2586,28 @@ namespace DCAPathFinder.UI
                 case 3:
                 {
                     //check if next is possible
-                    if (!_SBoxesCurrentAttack[0] && !_SBoxesCurrentAttack[1] && !_SBoxesCurrentAttack[2] &&
-                        !_SBoxesCurrentAttack[3] && PresentationMode &&
-                        (StepCounter == 15 || StepCounter == 18 || StepCounter == 21 || StepCounter == 24))
+                    if (!_SBoxesCurrentAttack[0] && !_SBoxesCurrentAttack[1] && !_SBoxesCurrentAttack[2] && !_SBoxesCurrentAttack[3] && PresentationMode && (StepCounter == 15 || StepCounter == 18 || StepCounter == 21 || StepCounter == 24))
                     {
                         if (MessageToDisplayOccured != null)
+                        {
                             MessageToDisplayOccured.Invoke(this, new MessageEventArgs()
                             {
                                 message = Properties.Resources.SBoxWarning
                             });
+                        }
+
                         return;
                     }
-                    else if (!_SBoxesCurrentAttack[0] && !_SBoxesCurrentAttack[1] && !_SBoxesCurrentAttack[2] &&
-                             !_SBoxesCurrentAttack[3] && !PresentationMode &&
-                             (StepCounter == 1 || StepCounter == 4 || StepCounter == 7 || StepCounter == 10))
+                    else if (!_SBoxesCurrentAttack[0] && !_SBoxesCurrentAttack[1] && !_SBoxesCurrentAttack[2] && !_SBoxesCurrentAttack[3] && !PresentationMode && (StepCounter == 1 || StepCounter == 4 || StepCounter == 7 || StepCounter == 10))
                     {
                         if (MessageToDisplayOccured != null)
+                        {
                             MessageToDisplayOccured.Invoke(this, new MessageEventArgs()
                             {
                                 message = Properties.Resources.SBoxWarning
                             });
+                        }
+
                         return;
                     }
                 }
@@ -2634,7 +2622,10 @@ namespace DCAPathFinder.UI
                 if (PresentationMode && !AutomaticMode)
                 {
                     ev.Increment = _progressIncrement * StepCounter;
-                    ProgressChangedOccured.Invoke(this, ev);
+                    if (ProgressChangedOccured != null)
+                    {
+                        ProgressChangedOccured.Invoke(this, ev);
+                    }
                 }
                 else if (!PresentationMode && !AutomaticMode)
                 {
