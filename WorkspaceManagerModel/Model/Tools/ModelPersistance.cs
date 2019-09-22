@@ -48,6 +48,13 @@ namespace WorkspaceManager.Model
             PersistantModel persistantModel = (PersistantModel)XMLSerialization.XMLSerialization.Deserialize(filename, true);
             WorkspaceModel workspacemodel = persistantModel.WorkspaceModel;
             restoreSettings(persistantModel, workspacemodel);
+
+            workspacemodel.AllConnectionModels = CheckModelListForCorruption(workspacemodel.AllConnectionModels);
+            workspacemodel.AllConnectorModels = CheckModelListForCorruption(workspacemodel.AllConnectorModels);
+            workspacemodel.AllImageModels = CheckModelListForCorruption(workspacemodel.AllImageModels);
+            workspacemodel.AllPluginModels = CheckModelListForCorruption(workspacemodel.AllPluginModels);
+            workspacemodel.AllTextModels = CheckModelListForCorruption(workspacemodel.AllTextModels);
+
             if (handleTemplateReplacement)
             {
                 try
@@ -61,6 +68,19 @@ namespace WorkspaceManager.Model
             }            
             workspacemodel.UndoRedoManager.ClearStacks();
             return workspacemodel;
+        }
+
+        private List<T> CheckModelListForCorruption<T>(List<T> modelList)
+        {
+            //There has been a bug in CT2, which led to double entries of the same objects in internal model lists.
+            var distinctModelList = modelList.Distinct().ToList();
+            if (distinctModelList.Count != modelList.Count)
+            {
+                GuiLogMessage("The workspace model is corrupt due to double entries in internal lists. It has been repaired by the load routine.", NotificationLevel.Error);
+                return distinctModelList;
+            }
+
+            return modelList;
         }
 
         public WorkspaceModel loadModel(StreamWriter writer)

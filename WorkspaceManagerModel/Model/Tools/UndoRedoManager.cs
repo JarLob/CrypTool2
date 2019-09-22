@@ -69,6 +69,7 @@ namespace WorkspaceManager.Model.Tools
                 op.Undo(WorkspaceModel);
                 RedoStack.Push(op);
 
+                Operation nextOp = null;
                 while (UndoStack.Count > 0 &&
                     op.GetType().Equals(UndoStack.Peek().GetType()) &&
                     UndoStack.Peek().Identifier ==  op.Identifier &&
@@ -76,10 +77,14 @@ namespace WorkspaceManager.Model.Tools
                     UndoStack.Peek() is ResizeModelElementOperation ||
                     UndoStack.Peek() is MultiOperation))
                 {
-                    op = UndoStack.Pop();                    
-                    RedoStack.Push(op);
+                    nextOp = UndoStack.Pop();
+                    RedoStack.Push(nextOp);
                 }
-                op.Undo(WorkspaceModel);
+
+                if (nextOp != null)
+                {
+                    nextOp.Undo(WorkspaceModel);
+                }
             }
             finally
             {
@@ -104,6 +109,7 @@ namespace WorkspaceManager.Model.Tools
                 op.Execute(WorkspaceModel);
                 UndoStack.Push(op);
 
+                Operation nextOp = null;
                 while (RedoStack.Count > 0 &&
                     op.GetType().Equals(RedoStack.Peek().GetType()) &&
                     RedoStack.Peek().Identifier == op.Identifier &&
@@ -111,10 +117,14 @@ namespace WorkspaceManager.Model.Tools
                     RedoStack.Peek() is ResizeModelElementOperation ||
                     RedoStack.Peek() is MultiOperation))
                 {
-                    op = RedoStack.Pop();                    
-                    UndoStack.Push(op);
+                    nextOp = RedoStack.Pop();                    
+                    UndoStack.Push(nextOp);
                 }
-                op.Execute(WorkspaceModel);
+
+                if (nextOp != null)
+                {
+                    nextOp.Execute(WorkspaceModel);
+                }
             }
             finally
             {
