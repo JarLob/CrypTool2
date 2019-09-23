@@ -259,8 +259,8 @@ namespace DCAPathFinder.Logic.Cipher2
             po.CancellationToken.ThrowIfCancellationRequested();
             po.MaxDegreeOfParallelism = threadCount;
 
-            //for(int i = 1; i < loopBorder;i++)
-            Parallel.For(1, loopBorder, po, i =>
+            for(int i = 1; i < loopBorder;i++)
+            //Parallel.For(1, loopBorder, po, i =>
             {
                 Characteristic inputObj = new Cipher2Characteristic();
 
@@ -293,7 +293,8 @@ namespace DCAPathFinder.Logic.Cipher2
 
                 if (skip)
                 {
-                    return;
+                    //return;
+                    continue;
                 }
 
                 inputObj.InputDifferentials[round] = expectedDifference;
@@ -304,7 +305,8 @@ namespace DCAPathFinder.Logic.Cipher2
 
                 if (Stop)
                 {
-                    return;
+                    //return;
+                    continue;
                 }
 
                 // ReSharper disable once CompareOfFloatsByEqualityOperator
@@ -337,7 +339,7 @@ namespace DCAPathFinder.Logic.Cipher2
                         _semaphoreSlim.Release();
                     }
                 }
-            });
+            }//);
 
             if (Stop)
             {
@@ -1264,8 +1266,11 @@ namespace DCAPathFinder.Logic.Cipher2
                                 return null;
                             }
 
-                            inputDifference = bestCharacteristics[0].InputDifferentials[0];
-                            expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
+                            if (bestCharacteristics != null && bestCharacteristics.Count > 0)
+                            {
+                                inputDifference = bestCharacteristics[0].InputDifferentials[0];
+                                expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
+                            }
 
                             e = new SearchResult();
                             e.activeSBoxes = result.ActiveSBoxes;
@@ -1485,8 +1490,11 @@ namespace DCAPathFinder.Logic.Cipher2
                                 return null;
                             }
 
-                            inputDifference = bestCharacteristics[0].InputDifferentials[0];
-                            expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
+                            if (bestCharacteristics != null && bestCharacteristics.Count > 0)
+                            {
+                                inputDifference = bestCharacteristics[0].InputDifferentials[0];
+                                expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
+                            }
 
                             DateTime endTime = DateTime.Now;
                             e = new SearchResult();
@@ -1679,8 +1687,19 @@ namespace DCAPathFinder.Logic.Cipher2
                                 }
                             });
 
-                            inputDifference = bestCharacteristics[0].InputDifferentials[0];
-                            expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
+                            if (bestCharacteristics != null && bestCharacteristics.Count > 0)
+                            {
+                                inputDifference = bestCharacteristics[0].InputDifferentials[0];
+                                expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
+                            }
+                            else if (characteristics != null && characteristics.Count > 0)
+                            {
+                                Characteristic best = characteristics.OrderByDescending(curElement => curElement.Probability).ToList()[0];
+                                bestCharacteristics.Add(best);
+                                inputDifference = best.InputDifferentials[0];
+                                expectedDifference = best.InputDifferentials[round - 1];
+                                probabilityAccumulated = best.Probability;
+                            }
 
                             DateTime endTime = DateTime.Now;
                             e = new SearchResult();

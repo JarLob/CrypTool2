@@ -61,6 +61,41 @@ namespace Cryptool.Plugins.DCAToyCiphers
         public DCAToyCiphers()
         {
             settings.PropertyChanged += new PropertyChangedEventHandler(SettingChangedListener);
+
+            //Check specific algorithm and invoke the selection into the UI class
+            if (settings.CurrentAlgorithm == Algorithms.Cipher1)
+            {
+                //dispatch action: clear the active grid and add the specific algorithm visualization
+                _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                {
+                    _activePresentation.MainGrid.Children.Clear();
+                    _activePresentation.MainGrid.Children.Add(new Cipher1Pres());
+                }, null);
+            }
+            else if (settings.CurrentAlgorithm == Algorithms.Cipher2)
+            {
+                _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                {
+                    _activePresentation.MainGrid.Children.Clear();
+                    _activePresentation.MainGrid.Children.Add(new Cipher2Pres());
+                }, null);
+            }
+            else if (settings.CurrentAlgorithm == Algorithms.Cipher3)
+            {
+                _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                {
+                    _activePresentation.MainGrid.Children.Clear();
+                    _activePresentation.MainGrid.Children.Add(new Cipher3Pres());
+                }, null);
+            }
+            else if (settings.CurrentAlgorithm == Algorithms.Cipher4)
+            {
+                _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                {
+                    _activePresentation.MainGrid.Children.Clear();
+                    _activePresentation.MainGrid.Children.Add(new Cipher4Pres());
+                }, null);
+            }
         }
 
         #region Data Properties

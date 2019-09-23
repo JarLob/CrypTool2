@@ -16,5 +16,9 @@ namespace DCAPathFinder.Logic.Cipher2
         public static readonly UInt16[] PBOXREVERSE = {4, 9, 14, 3, 8, 13, 2, 7, 12, 1, 6, 11, 0, 5, 10, 15};
         public static readonly double PROBABILITYBOUNDBESTCHARACTERISTICSEARCH = 0.001;
         public static readonly double PROBABILITYBOUNDDIFFERENTIALSEARCH = 0.0001;
+
+        //Testing purpose to check if there are no results
+        //public static readonly double PROBABILITYBOUNDBESTCHARACTERISTICSEARCH = 0.1;
+        //public static readonly double PROBABILITYBOUNDDIFFERENTIALSEARCH = 0.1;
     }
 }

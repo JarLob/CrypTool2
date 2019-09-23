@@ -1011,4 +1011,7 @@ folgt, als falsches Paar bezeichnet.</value>
   <data name="StartMaskContent2Run3" xml:space="preserve">
     <value> is selected.</value>
   </data>
+  <data name="NoCharacteristicFoundError" xml:space="preserve">
+    <value>No characteristics found. Please check the settings for the search and abort strategy.</value>
+  </data>
 </root>

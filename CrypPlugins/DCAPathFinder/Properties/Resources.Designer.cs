@@ -358,6 +358,15 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No characteristics found. Please check the settings for the search and abort strategy. ähnelt.
+        /// </summary>
+        public static string NoCharacteristicFoundError {
+            get {
+                return ResourceManager.GetString("NoCharacteristicFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Welcome to the differential cryptanalysis (DCA) tutorial. This method for the analysis of round-based symmetric block ciphers aims at recovering single bits up to complete round keys. This method was published in 1991 by the two Israeli researchers, Eli Biham and Adi Shamir. ähnelt.
         /// </summary>
         public static string OverviewContent1 {

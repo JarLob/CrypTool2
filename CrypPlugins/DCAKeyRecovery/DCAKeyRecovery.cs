@@ -88,6 +88,28 @@ namespace Cryptool.Plugins.DCAKeyRecovery
             _settings.SettingsErrorOccured += HandleSettingsError;
 
             _nextStep = new AutoResetEvent(false);
+
+            //Check specific algorithm and invoke the selection into the UI class
+            if (_settings.CurrentAlgorithm == Algorithms.Cipher1)
+            {
+                _currentAlgorithm = Algorithms.Cipher1;
+                _pres.Dispatcher.Invoke(DispatcherPriority.Send,
+                    (SendOrPostCallback)delegate { _pres.TutorialNumber = Algorithms.Cipher1; }, null);
+            }
+            else if (_settings.CurrentAlgorithm == Algorithms.Cipher2)
+            {
+                _currentAlgorithm = Algorithms.Cipher2;
+                _pres.Dispatcher.Invoke(DispatcherPriority.Send,
+                    (SendOrPostCallback)delegate { _pres.TutorialNumber = Algorithms.Cipher2; }, null);
+            }
+            else if (_settings.CurrentAlgorithm == Algorithms.Cipher3)
+            {
+                _currentAlgorithm = Algorithms.Cipher3;
+                _pres.Dispatcher.Invoke(DispatcherPriority.Send,
+                    (SendOrPostCallback)delegate { _pres.TutorialNumber = Algorithms.Cipher3; }, null);
+            }
+
+
         }
 
         #region Data Properties
@@ -95,7 +117,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
         /// <summary>
         /// Input for the differential
         /// </summary>
-        [PropertyInfo(Direction.InputData, "DifferentialInput", "DifferentialInputToolTip")]
+        [PropertyInfo(Direction.InputData, "DifferentialInput", "DifferentialInputToolTip", true)]
         public string Differential
         {
             get { return _differential; }
@@ -110,7 +132,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
         /// <summary>
         /// input of the plaintext message pairs
         /// </summary>
-        [PropertyInfo(Direction.InputData, "UnencryptedMessagePairsInput", "UnencryptedMessagePairsInputToolTip")]
+        [PropertyInfo(Direction.InputData, "UnencryptedMessagePairsInput", "UnencryptedMessagePairsInputToolTip", true)]
         public ICryptoolStream UnencryptedMessagePairs
         {
             get { return _unencryptedMessagePairs; }
@@ -125,7 +147,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
         /// <summary>
         /// Input if the encrypted message pairs
         /// </summary>
-        [PropertyInfo(Direction.InputData, "EncryptedMessagePairsInput", "EncryptedMessagePairsInputToolTip")]
+        [PropertyInfo(Direction.InputData, "EncryptedMessagePairsInput", "EncryptedMessagePairsInputToolTip", true)]
         public ICryptoolStream EncryptedMessagePairs
         {
             get { return _encryptedMessagePairs; }

@@ -46,6 +46,24 @@ namespace Cryptool.Plugins.DCAPathVisualiser
         public DCAPathVisualiser()
         {
             _settings.PropertyChanged += new PropertyChangedEventHandler(SettingChangedListener);
+
+            //Check specific algorithm and invoke the selection into the UI class
+            if (_settings.CurrentAlgorithm == Algorithms.Cipher1)
+            {
+                //dispatch action: clear the active grid and add the specific algorithm visualization
+                _pres.Dispatcher.Invoke(DispatcherPriority.Send,
+                    (SendOrPostCallback)delegate { _pres.CurrentAlgorithm = Algorithms.Cipher1; }, null);
+            }
+            else if (_settings.CurrentAlgorithm == Algorithms.Cipher2)
+            {
+                _pres.Dispatcher.Invoke(DispatcherPriority.Send,
+                    (SendOrPostCallback)delegate { _pres.CurrentAlgorithm = Algorithms.Cipher2; }, null);
+            }
+            else if (_settings.CurrentAlgorithm == Algorithms.Cipher3)
+            {
+                _pres.Dispatcher.Invoke(DispatcherPriority.Send,
+                    (SendOrPostCallback)delegate { _pres.CurrentAlgorithm = Algorithms.Cipher3; }, null);
+            }
         }
 
         #region Data Properties

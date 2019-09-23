@@ -1395,11 +1395,11 @@ sind. Dadurch können lange Berechnungszeiten minimiert werden.</value>
   <data name="Tutorial3TitleHeaderRun1" xml:space="preserve">
     <value>Tutorial</value>
   </data>
-  <data name="AbortingThresholdDifferentialSearch" xml:space="preserve">
-    <value>Wahrscheinlichkeit (Differenzial)</value>
+  <data name="AbortingThresholdBestCharacteristicSearch" xml:space="preserve">
+    <value>Schwellwert zum Abbruch (beste Charakteristik)</value>
   </data>
-  <data name="AbortingThresholdDifferentialSearchToolTip" xml:space="preserve">
-    <value>Legt fest, bei welcher Wahrscheinlichkeit die Suche nach Charakteristiken für ein Differenzial abgebrochen wird</value>
+  <data name="AbortingThresholdBestCharacteristicSearchToolTip" xml:space="preserve">
+    <value>Legt fest, bei welcher Wahrscheinlichkeit die Suche nach der besteb Charakteristikenl abgebrochen wird</value>
   </data>
   <data name="BtnPrevChapter" xml:space="preserve">
     <value>Kapitel zurück</value>
@@ -1478,5 +1478,14 @@ sind. Dadurch können lange Berechnungszeiten minimiert werden.</value>
   </data>
   <data name="Tutorial3TitleHeaderRun2" xml:space="preserve">
     <value>Differenzielle Kryptoanalyse symmetrischer Blockchiffren</value>
+  </data>
+  <data name="AbortingThresholdDifferentialSearch" xml:space="preserve">
+    <value>Schwellwert zum Abbruch (Differenzial)</value>
+  </data>
+  <data name="AbortingThresholdDifferentialSearchToolTip" xml:space="preserve">
+    <value>Legt fest, bei welcher Wahrscheinlichkeit die Suche nach Charakteristiken zur Differenzialbildung abgebrochen wird</value>
+  </data>
+  <data name="NoCharacteristicFoundError" xml:space="preserve">
+    <value>Es wurden keine Charakteristik(en) gefunden. Bitte die Einstellungen zur Such- und Abbruchstrategie kontrollieren.</value>
   </data>
 </root>

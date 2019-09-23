@@ -33,6 +33,7 @@ using DCAPathFinder.Logic;
 using DCAPathFinder.Logic.Cipher1;
 using DCAPathFinder.Logic.Cipher2;
 using DCAPathFinder.Logic.Cipher3;
+using DCAPathFinder.Properties;
 using DCAPathFinder.UI;
 using DCAPathFinder.UI.Tutorial2;
 using Newtonsoft.Json;
@@ -76,6 +77,36 @@ namespace Cryptool.Plugins.DCAPathFinder
             _stop = false;
             settings.PropertyChanged += new PropertyChangedEventHandler(SettingChangedListener);
             settings.SettingsErrorOccured += HandleSettingsError;
+
+            //Check specific algorithm and invoke the selection into the UI class
+            if (settings.CurrentAlgorithm == Algorithms.Cipher1)
+            {
+                //dispatch action: set active tutorial number
+                _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send,
+                    (SendOrPostCallback)delegate { _activePresentation.TutorialNumber = 1; }, null);
+            }
+            else if (settings.CurrentAlgorithm == Algorithms.Cipher2)
+            {
+                //dispatch action: set active tutorial number
+                _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send,
+                    (SendOrPostCallback)delegate { _activePresentation.TutorialNumber = 2; }, null);
+            }
+            else if (settings.CurrentAlgorithm == Algorithms.Cipher3)
+            {
+                //dispatch action: set active tutorial number
+                _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send,
+                    (SendOrPostCallback)delegate { _activePresentation.TutorialNumber = 3; }, null);
+            }
+            else if (settings.CurrentAlgorithm == Algorithms.Cipher4)
+            {
+                //dispatch action: set active tutorial number
+                _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send,
+                    (SendOrPostCallback)delegate { _activePresentation.TutorialNumber = 4; }, null);
+            }
+
+            //dispatch action: setup view
+            _activePresentation.Dispatcher.Invoke(DispatcherPriority.Send,
+                (SendOrPostCallback)delegate { _activePresentation.SetupView(); }, null);
         }
 
         #region Data Properties
@@ -496,6 +527,15 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     _activePresentation.SBoxesCurrentAttack, settings.UseOfflinePaths,
                                     settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
 
+                                //check if there is a result
+                                if (conf.Characteristics.Count == 0)
+                                {
+                                    GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                    _currentProgress = 1.0;
+                                    ProgressChanged(_currentProgress, _maxProgress);
+                                    return;
+                                }
+
                                 if (_stop)
                                 {
                                     return;
@@ -648,7 +688,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                             {
                                 conf = pathFinder.GenerateConfigurationAttack(2,
                                     _activePresentation.SBoxesCurrentAttack, settings.UseOfflinePaths,
-                                    AbortingPolicy.GlobalMaximum, settings.CurrentSearchPolicy, diffList);
+                                    settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                                //check if there is a result
+                                if (conf.Characteristics.Count == 0)
+                                {
+                                    GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                    _currentProgress = 1.0;
+                                    ProgressChanged(_currentProgress, _maxProgress);
+                                    return;
+                                }
 
                                 if (_stop)
                                 {
@@ -1460,6 +1509,15 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     _activePresentation.SBoxesCurrentAttack, settings.UseOfflinePaths,
                                     settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
 
+                                //check if there is a result
+                                if (conf.Characteristics.Count == 0)
+                                {
+                                    GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                    _currentProgress = 1.0;
+                                    ProgressChanged(_currentProgress, _maxProgress);
+                                    return;
+                                }
+
                                 if (_stop)
                                 {
                                     return;
@@ -1610,6 +1668,15 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     _activePresentation.SBoxesCurrentAttack, settings.UseOfflinePaths,
                                     settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
 
+                                //check if there is a result
+                                if (conf.Characteristics.Count == 0)
+                                {
+                                    GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                    _currentProgress = 1.0;
+                                    ProgressChanged(_currentProgress, _maxProgress);
+                                    return;
+                                }
+
                                 if (_stop)
                                 {
                                     return;
@@ -1759,6 +1826,15 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     _activePresentation.SBoxesCurrentAttack, settings.UseOfflinePaths,
                                     settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
 
+                                //check if there is a result
+                                if (conf.Characteristics.Count == 0)
+                                {
+                                    GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                    _currentProgress = 1.0;
+                                    ProgressChanged(_currentProgress, _maxProgress);
+                                    return;
+                                }
+
                                 if (_stop)
                                 {
                                     return;
@@ -1906,6 +1982,15 @@ namespace Cryptool.Plugins.DCAPathFinder
                                 conf = pathFinder.GenerateConfigurationAttack(2,
                                     _activePresentation.SBoxesCurrentAttack, settings.UseOfflinePaths,
                                     settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                                //check if there is a result
+                                if (conf.Characteristics.Count == 0)
+                                {
+                                    GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                    _currentProgress = 1.0;
+                                    ProgressChanged(_currentProgress, _maxProgress);
+                                    return;
+                                }
 
                                 if (_stop)
                                 {

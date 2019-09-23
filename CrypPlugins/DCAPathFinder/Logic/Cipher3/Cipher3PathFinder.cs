@@ -1273,8 +1273,11 @@ namespace DCAPathFinder.Logic.Cipher3
                                 return null;
                             }
 
-                            inputDifference = bestCharacteristics[0].InputDifferentials[0];
-                            expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
+                            if (bestCharacteristics != null && bestCharacteristics.Count > 0)
+                            {
+                                inputDifference = bestCharacteristics[0].InputDifferentials[0];
+                                expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
+                            }
 
                             e = new SearchResult();
                             e.activeSBoxes = result.ActiveSBoxes;
@@ -1381,6 +1384,8 @@ namespace DCAPathFinder.Logic.Cipher3
                             {
                                 return null;
                             }
+
+
 
                             //Delete Characteristics which are not usable
                             List<Characteristic> toDelete = new List<Characteristic>();
@@ -1507,9 +1512,12 @@ namespace DCAPathFinder.Logic.Cipher3
                                 return null;
                             }
 
-                            inputDifference = bestCharacteristics[0].InputDifferentials[0];
-                            expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
-
+                            if (bestCharacteristics != null && bestCharacteristics.Count > 0)
+                            {
+                                inputDifference = bestCharacteristics[0].InputDifferentials[0];
+                                expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
+                            }
+                            
                             DateTime endTime = DateTime.Now;
                             e = new SearchResult();
                             e.startTime = DateTime.MinValue;
@@ -1518,8 +1526,7 @@ namespace DCAPathFinder.Logic.Cipher3
                             e.currentAlgorithm = Algorithms.Cipher3;
                             e.result = new List<CharacteristicUI>();
                             e.endTime = endTime;
-
-
+                            
                             foreach (var characteristic in allFoundCharacteristics)
                             {
                                 Cipher3CharacteristicUI data = new Cipher3CharacteristicUI()
@@ -1719,8 +1726,18 @@ namespace DCAPathFinder.Logic.Cipher3
                                 }
                             });
 
-                            inputDifference = bestCharacteristics[0].InputDifferentials[0];
-                            expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
+                            if (bestCharacteristics != null && bestCharacteristics.Count > 0)
+                            {
+                                inputDifference = bestCharacteristics[0].InputDifferentials[0];
+                                expectedDifference = bestCharacteristics[0].InputDifferentials[round - 1];
+                            }else if (characteristics != null && characteristics.Count > 0)
+                            {
+                                Characteristic best = characteristics.OrderByDescending(curElement => curElement.Probability).ToList()[0];
+                                bestCharacteristics.Add(best);
+                                inputDifference = best.InputDifferentials[0];
+                                expectedDifference = best.InputDifferentials[round - 1];
+                                probabilityAccumulated = best.Probability;
+                            }
 
                             DateTime endTime = DateTime.Now;
                             e = new SearchResult();

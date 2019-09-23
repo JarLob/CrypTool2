@@ -58,7 +58,7 @@ namespace Cryptool.Plugins.DCAOracle
         /// <summary>
         /// Property for the count of message pairs
         /// </summary>
-        [PropertyInfo(Direction.InputData, "MessagePairsCountInput", "MessagePairsCountInputToolTip")]
+        [PropertyInfo(Direction.InputData, "MessagePairsCountInput", "MessagePairsCountInputToolTip", true)]
         public int MessagePairsCount
         {
             get { return _messagePairsCount; }
@@ -73,7 +73,7 @@ namespace Cryptool.Plugins.DCAOracle
         /// <summary>
         /// Property for the difference of the messages of a pair
         /// </summary>
-        [PropertyInfo(Direction.InputData, "MessageDifferenceInput", "MessageDifferenceInputToolTip")]
+        [PropertyInfo(Direction.InputData, "MessageDifferenceInput", "MessageDifferenceInputToolTip", true)]
         public int MessageDifference
         {
             get { return _messageDifference; }
