@@ -129,6 +129,7 @@ namespace Cryptool.PluginBase
         public readonly int IntegerMaxValue;
         public readonly double DoubleMinValue;
         public readonly double DoubleMaxValue;
+        public readonly double DoubleIncrement;
 
         public bool ChangeableWhileExecuting;
 
@@ -211,7 +212,7 @@ namespace Cryptool.PluginBase
         }
         
         /// <summary>
-        /// NumericUpDown int.
+        /// NumericUpDown integer
         /// </summary>
         public TaskPaneAttribute(string caption, string toolTip, string groupName, int order, bool changeableWhileExecuting, ControlType controlType, ValidationType validationType, int integerMinValue, int integerMaxValue)
         {
@@ -227,19 +228,20 @@ namespace Cryptool.PluginBase
         }
 
         /// <summary>
-        /// NumericUpDown double.
+        /// NumericUpDown double
         /// </summary>
-        public TaskPaneAttribute(string caption, string toolTip, string groupName, int order, bool changeableWhileExecuting,  ControlType controlType, ValidationType validationType, double doubleMinValue, double doubleMaxValue)
+        public TaskPaneAttribute(string caption, string toolTip, string groupName, int order, bool changeableWhileExecuting, ControlType controlType, ValidationType validationType, double minValue, double maxValue, double increment)
         {
-          this.caption = caption;
-          this.toolTip = toolTip;
-          this.groupName = groupName;
-          this.Order = order;
-          this.ControlType = controlType;
-          this.ValidationType = validationType;
-          this.DoubleMinValue = doubleMinValue;
-          this.DoubleMaxValue = doubleMaxValue;
-          this.ChangeableWhileExecuting = changeableWhileExecuting;
+            this.caption = caption;
+            this.toolTip = toolTip;
+            this.groupName = groupName;            
+            this.Order = order;
+            this.ControlType = controlType;
+            this.ValidationType = validationType;
+            this.ChangeableWhileExecuting = changeableWhileExecuting;
+            this.DoubleMinValue = minValue;
+            this.DoubleMaxValue = maxValue;
+            this.DoubleIncrement = increment;
         }
 
         /// <summary>
