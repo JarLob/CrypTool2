@@ -26,7 +26,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         private double _matchThreshold;      
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [TaskPane("MatchThresholdCaption", "MatchThresholdTooltip", null, 1, false, ControlType.TextBox)]
+        [TaskPane("MatchThresholdCaption", "MatchThresholdTooltip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeDouble, 0, 100.0, 0.5)]
         public double MatchThreshold
         {
             get { return _matchThreshold; }
