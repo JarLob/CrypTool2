@@ -91,6 +91,21 @@
             <Setter Property="HeaderTemplate" Value="{StaticResource ResourceKey=HeaderStyle}"/>
         </Style>
 
+        <Style x:Key="SelectedItemContainerStyle" TargetType="{x:Type ListBoxItem}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsSelected}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ActiveItemContainerStyle" TargetType="{x:Type ListBoxItem}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsActive}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
 
         <DataTemplate x:Key="SelectedTemplate" DataType="{x:Type local:ComponentVisual}">
             <Grid x:Name="Root">
@@ -170,9 +185,11 @@
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Path=IsFullscreenOpen}" Value="True">
                     <Setter Property="ItemTemplate" Value="{StaticResource ResourceKey=ActiveTemplate}"></Setter>
+                    <Setter Property="ItemContainerStyle" Value="{StaticResource ActiveItemContainerStyle}" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Path=IsFullscreenOpen}" Value="False">
                     <Setter Property="ItemTemplate" Value="{StaticResource ResourceKey=SelectedTemplate}"></Setter>
+                    <Setter Property="ItemContainerStyle" Value="{StaticResource SelectedItemContainerStyle}" />
                 </DataTrigger>
             </Style.Triggers>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
