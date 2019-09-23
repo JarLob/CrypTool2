@@ -201,7 +201,8 @@ namespace WorkspaceManager.View.Visuals
 
         private void HandleTaskPaneAttributeChanges(IEnumerable<TaskPaneAttribteContainer> attributeChanges)
         {
-            if (!attributeChanges.Any())
+            var attributeChangesDict = attributeChanges.ToDictionary(att => att.Property, att => att);
+            if (!attributeChangesDict.Any())
             {
                 return;
             }
@@ -209,25 +210,22 @@ namespace WorkspaceManager.View.Visuals
             foreach (List<ControlEntry> cel in entgrou.entryList)
             {
                 entgrou.groupPanel[entgrou.entryList.IndexOf(cel)].Visibility = Visibility.Visible;
-                Boolean allinvisble = true;
+                var allInGroupInvisible = true;
 
                 foreach (ControlEntry ce in cel)
                 {
-                    foreach (TaskPaneAttribteContainer tpac in attributeChanges)
+                    if (attributeChangesDict.TryGetValue(ce.tpa.PropertyName, out var tpac))
                     {
-                        if (ce.tpa.PropertyName == tpac.Property)
-                        {
-                            ce.element.Visibility = tpac.Visibility;
-                            ce.caption.Visibility = tpac.Visibility;
-                        }
-                        if (ce.element.Visibility == Visibility.Visible)
-                        {
-                            allinvisble = false;
-                        }
+                        ce.element.Visibility = tpac.Visibility;
+                        ce.caption.Visibility = tpac.Visibility;
                     }
-
+                    if (ce.element.Visibility == Visibility.Visible)
+                    {
+                        allInGroupInvisible = false;
+                    }
                 }
-                if (allinvisble)
+
+                if (allInGroupInvisible)
                 {
                     entgrou.groupPanel[entgrou.entryList.IndexOf(cel)].Visibility = Visibility.Collapsed;
                 }
