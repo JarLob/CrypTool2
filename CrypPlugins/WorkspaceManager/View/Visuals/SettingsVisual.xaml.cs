@@ -521,8 +521,6 @@ namespace WorkspaceManager.View.Visuals
 
         }
 
-
-
         private EntryGroup createContentSettings(IPlugin plugin)
         {
             EntryGroup entgrou = new EntryGroup();          
@@ -566,12 +564,9 @@ namespace WorkspaceManager.View.Visuals
                         case ControlType.TextBox:
 
                             TextBox textbox = new TextBox();
-
                             textbox.Tag = tpa.ToolTip;
                             textbox.ToolTip = tpa.ToolTip;
-                            textbox.MouseEnter += Control_MouseEnter;
-                            
-                            
+                            textbox.MouseEnter += Control_MouseEnter;                                                       
                             if (tpa.RegularExpression != null && tpa.RegularExpression != string.Empty)
                             {
                                 ControlTemplate validationTemplate = Application.Current.Resources["validationTemplate"] as ControlTemplate;
@@ -581,14 +576,8 @@ namespace WorkspaceManager.View.Visuals
                                 dataBinding.ValidationRules.Add(regExRule);
                                 dataBinding.NotifyOnValidationError = true;
                             }
-
                             textbox.SetBinding(TextBox.TextProperty, dataBinding);
                             textbox.TextWrapping = TextWrapping.Wrap;
-
-                            
-
-
-                            //controlList.Add(new ControlEntry(textbox,tpa,sfa));
                             entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(textbox, tpa, sfa, b, bcv.Model));
                             break;
 
@@ -598,39 +587,38 @@ namespace WorkspaceManager.View.Visuals
                         case ControlType.NumericUpDown:
                             if (tpa.ValidationType == ValidationType.RangeInteger)
                             {
-                                IntegerUpDown intInput = new IntegerUpDown();
-                                
+                                IntegerUpDown intInput = new IntegerUpDown();                                
                                 intInput.SelectAllOnGotFocus = true;
                                 intInput.Tag = tpa.ToolTip;
                                 intInput.ToolTip = tpa.ToolTip;
                                 intInput.MouseEnter += Control_MouseEnter;
                                 intInput.Maximum = tpa.IntegerMaxValue;
                                 intInput.Minimum = tpa.IntegerMinValue;
-
-                                String s = tpa.IntegerMaxValue+"";
+                                string s = tpa.IntegerMaxValue + "";
                                 FormattedText ft = new FormattedText(s, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, new Typeface(intInput.FontFamily, intInput.FontStyle, intInput.FontWeight, intInput.FontStretch), intInput.FontSize, Brushes.Black);
                                 intInput.MaxWidth = ft.WidthIncludingTrailingWhitespace + 30;
                                 intInput.Width = ft.WidthIncludingTrailingWhitespace + 30;
                                 intInput.SetBinding(IntegerUpDown.ValueProperty, dataBinding);
                                 entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(intInput, tpa, sfa, b, bcv.Model));
-                                intInput.IsEnabled = true;
-                                
-                              
+                                intInput.IsEnabled = true;                                                              
                             }
                             else if (tpa.ValidationType == ValidationType.RangeDouble)
                             {
-                                throw new InvalidOperationException("Double types for NumericUpDown are currently not supported");
-                                /*NumericUpDown doubleInput = new NumericUpDown();
-                                doubleInput.ValueType = typeof(double);
+                                DoubleUpDown doubleInput = new DoubleUpDown();
                                 doubleInput.SelectAllOnGotFocus = true;
                                 doubleInput.Tag = tpa.ToolTip;
                                 doubleInput.ToolTip = tpa.ToolTip;
                                 doubleInput.MouseEnter += Control_MouseEnter;
                                 doubleInput.Maximum = tpa.DoubleMaxValue;
                                 doubleInput.Minimum = tpa.DoubleMinValue;
-                                doubleInput.SetBinding(NumericUpDown.ValueProperty, dataBinding);
-                                entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(doubleInput, tpa, sfa));
-                                doubleInput.Background = Brushes.Black;*/
+                                doubleInput.Increment = tpa.DoubleIncrement;
+                                string s = double.MaxValue + "";
+                                FormattedText ft = new FormattedText(s, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, new Typeface(doubleInput.FontFamily, doubleInput.FontStyle, doubleInput.FontWeight, doubleInput.FontStretch), doubleInput.FontSize, Brushes.Black);
+                                doubleInput.MaxWidth = ft.WidthIncludingTrailingWhitespace + 30;
+                                doubleInput.Width = ft.WidthIncludingTrailingWhitespace + 30;
+                                doubleInput.SetBinding(DoubleUpDown.ValueProperty, dataBinding);
+                                entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(doubleInput, tpa, sfa, b, bcv.Model));
+                                doubleInput.IsEnabled = true;
                             }
                             break;
                         # endregion NumericUpDown
