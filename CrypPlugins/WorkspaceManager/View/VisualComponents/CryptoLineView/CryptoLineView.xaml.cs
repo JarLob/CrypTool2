@@ -870,50 +870,80 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
         /// <summary>
         /// Adjusts only start and end points of an already existing path which was modified manually.
         /// </summary>
-        /// <param name="points">The points of the old line.</param>
+        /// <param name="segments">The segments of the old line.</param>
         /// <param name="newStartPoint">The new start point to adjust to.</param>
         /// <param name="newEndPoint">The new end point to adjust to.</param>
         /// <returns>Whether adjustment was possible.</returns>
-        private static bool AdjustManuallyModifiedLine(IEnumerable<FromTo> points, Point newStartPoint, Point newEndPoint)
+        private static bool AdjustManuallyModifiedLine(IEnumerable<FromTo> segments, Point newStartPoint, Point newEndPoint)
         {
-            //Zip point lists to create adjacent points:
-            var adjacentPoints = points.Zip(points.Skip(1), (a, b) => (First: a, Second: b));
-            //Get start point and its neighbor:
-            var (startPoint, startPointNeighbor) = adjacentPoints.SingleOrDefault(
+            //Zip segment lists to create adjacent segments:
+            var adjacentSegments = segments.Zip(segments.Skip(1), (a, b) => (First: a, Second: b));
+            //Get start segment and its neighbor:
+            var (startSeg, startSegNeighbor) = adjacentSegments.SingleOrDefault(
                 pair => pair.First.MetaData == FromToMeta.HasStartPoint || pair.First.MetaData == FromToMeta.HasEndStartPoint);
-            //Get end point and its neighbor:
-            var (endPointNeighbor, endPoint) = adjacentPoints.SingleOrDefault(
+            //Get end segment and its neighbor:
+            var (endSegNeighbor, endSeg) = adjacentSegments.SingleOrDefault(
                 pair => pair.Second.MetaData == FromToMeta.HasEndpoint || pair.Second.MetaData == FromToMeta.HasEndStartPoint);
 
-            if (startPoint == null || startPointNeighbor == null || endPoint == null || endPointNeighbor == null)
+            if (startSeg == null || startSegNeighbor == null || endSeg == null || endSegNeighbor == null)
             {
                 return false;
             }
 
-            if (startPoint.IsXDir == startPointNeighbor.IsXDir || endPoint.IsXDir == endPointNeighbor.IsXDir)
+            if (startSeg.IsXDir == startSegNeighbor.IsXDir || endSeg.IsXDir == endSegNeighbor.IsXDir)
             {
-                //start and end points need to have different directions in relation to their neighbors for the adjustment to work.
+                //start and end segments need to have different directions in relation to their neighbors for the adjustment to work.
                 return false;
             }
 
-            //Adjust start point (and neighbor):
-            if (newStartPoint != startPoint.From)
+            var initialStartDir = startSeg.DirSort;
+            var initialEndDir = endSeg.DirSort;
+
+            //If both start segment and end segment are new, try to translate overall line construct accordingly:
+            if ((newStartPoint != startSeg.From) && (newEndPoint != endSeg.To))
             {
-                var startDiff = Point.Subtract(newStartPoint, startPoint.From);
-                var startAdj = startPoint.IsXDir ? new Vector(0, startDiff.Y) : new Vector(startDiff.X, 0);
-                startPoint.From = newStartPoint;
-                startPoint.To = Point.Add(startPoint.To, startAdj);
-                startPointNeighbor.From = startPoint.To;
+                var startDiff = Point.Subtract(newStartPoint, startSeg.From);
+                var endDiff = Point.Subtract(newEndPoint, endSeg.To);
+
+                double getNearerToZero(double val1, double val2) => Math.Abs(val1) < Math.Abs(val2) ? val1 : val2;
+                bool hasSameSign(double val1, double val2) => Math.Sign(val1) * Math.Sign(val2) >= 0;
+                double getTotalTransVal(double val1, double val2) => hasSameSign(val1, val2) ? getNearerToZero(val1, val2) : 0;
+                Vector getTotalTransVector(Vector v1, Vector v2) => new Vector(getTotalTransVal(v1.X, v2.X), getTotalTransVal(v1.Y, v2.Y));
+
+                var totalTrans = getTotalTransVector(startDiff, endDiff);
+                foreach (var seg in segments)
+                {
+                    seg.From = Point.Add(seg.From, totalTrans);
+                    seg.To = Point.Add(seg.To, totalTrans);
+                }
             }
 
-            //Adjust end point (and neighbor):
-            if (newEndPoint != endPoint.To)
+            //Adjust start segment (and neighbor):
+            if (newStartPoint != startSeg.From)
             {
-                var endDiff = Point.Subtract(newEndPoint, endPoint.To);
-                var endAdj = endPoint.IsXDir ? new Vector(0, endDiff.Y) : new Vector(endDiff.X, 0);
-                endPoint.To = newEndPoint;
-                endPoint.From = Point.Add(endPoint.From, endAdj);
-                endPointNeighbor.To = endPoint.From;
+                var startDiff = Point.Subtract(newStartPoint, startSeg.From);
+                var startAdj = startSeg.IsXDir ? new Vector(0, startDiff.Y) : new Vector(startDiff.X, 0);
+                startSeg.From = newStartPoint;
+                startSeg.To = Point.Add(startSeg.To, startAdj);
+                startSegNeighbor.From = startSeg.To;
+            }
+
+            //Adjust end segment (and neighbor):
+            if (newEndPoint != endSeg.To)
+            {
+                var endDiff = Point.Subtract(newEndPoint, endSeg.To);
+                var endAdj = endSeg.IsXDir ? new Vector(0, endDiff.Y) : new Vector(endDiff.X, 0);
+                endSeg.To = newEndPoint;
+                endSeg.From = Point.Add(endSeg.From, endAdj);
+                endSegNeighbor.To = endSeg.From;
+            }
+
+            if (initialStartDir != startSeg.DirSort || initialEndDir != endSeg.DirSort)
+            {
+                //If initial directions of start or end segments differ from directions after adjustment,
+                //the adjustment is potentially more confusing than helpful.
+                //Therefore, do not use it:
+                return false;
             }
 
             return true;
