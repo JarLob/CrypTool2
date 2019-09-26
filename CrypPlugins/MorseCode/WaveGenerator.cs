@@ -76,7 +76,20 @@ namespace MorseCode
             writer.Write(DataChunk.Data, 0, DataChunk.Data.Length);
             writer.Flush();
         }
-        
+    }
+
+
+    public class Tone
+    {
+        private byte[] data;
+
+        public void WriteToStream(Stream stream)
+        {
+            var writer = new BinaryWriter(stream);
+            writer.Write(data, 0, data.Length);
+            writer.Flush();
+        }
+
         /// <summary>
         /// Generates a wave with the given amplitude, frequency, and duration in miliseconds
         /// </summary>
@@ -86,19 +99,35 @@ namespace MorseCode
         public void GenerateSound(double amplitude, double frequency, double duration)
         {
             int size = (int)((duration / 1000.0) * 44100.0 * 2.0);
-            if(size % 2 == 1)
+            if (size % 2 == 1)
             {
                 size++;
             }
-            DataChunk.Data = new byte[size];
+            data =  new byte[size];
             for (int i = 0; i < size; i = i + 2)
             {
-                int value = (int)Math.Round(amplitude * Math.Sin(2.0 * Math.PI * (((double)i) / 88200.0 * frequency)));
-                DataChunk.Data[i] = (byte)(value);
-                DataChunk.Data[i + 1] = (byte)(value);
-            }
-            DataChunk.DwLength = (UInt32)DataChunk.Data.Length;
-            RiffHeader.ChunkSize = 36 + DataChunk.DwLength - 8;
+                double currentAmplitude = 0;
+                double percentageValue = (i / (double)size) * 100;
+                //attack phase 10%
+                if(percentageValue < 10)
+                {
+                    currentAmplitude = amplitude * (percentageValue / 10);
+                }               
+                //sustain phase 80%
+                else if(percentageValue >= 10 && percentageValue < 90)
+                {
+                    currentAmplitude = amplitude;
+                }
+                //release phase 10%
+                else if(percentageValue >= 90)                
+                {
+                    percentageValue = 100 - percentageValue;
+                    currentAmplitude = amplitude * ((double)percentageValue / 10);
+                }                
+                int value = (int)Math.Round(currentAmplitude * Math.Sin(2.0 * Math.PI * (((double)i) / 88200.0 * frequency)));
+                data[i] = (byte)(value);
+                data[i + 1] = (byte)(value);
+            }            
         }
     }
 }

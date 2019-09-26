@@ -17,7 +17,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Media;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
@@ -25,7 +24,8 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using MorseCode;
 using System.Threading;
-
+using System;
+using System.Media;
 
 namespace Cryptool.Plugins.MorseCode
 {
@@ -34,7 +34,11 @@ namespace Cryptool.Plugins.MorseCode
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class MorseCode : ICrypComponent
     {
-        //private SoundPlayer _player = new SoundPlayer();
+        const int DIT_TIME = 100 / 2;
+        const int DAH_TIME = 300 / 2;
+        const int DIT_DAH_BREAK = 100 / 2;
+        const int LETTER_BREAK = 300 / 2;
+        const int WORD_BREAK = 700 / 2;
 
         /// <summary>
         /// Constructs our mapping and creates our MorseCode object
@@ -188,54 +192,74 @@ namespace Cryptool.Plugins.MorseCode
         /// Plays the given Morse Code
         /// </summary>
         private void Play()
-        {            
-            using(Stream ditStream = new MemoryStream())
-            using(Stream daStream = new MemoryStream())
+        {
+            using (MemoryStream toneStream = new MemoryStream())
             {
-                var ditPlayer = new SoundPlayer(ditStream);
-                var daPlayer = new SoundPlayer(daStream);
-                var dit = new Wave();
-                dit.GenerateSound(128, 600, 100);
-                dit.WriteToStream(ditStream);
-                var dah = new Wave();
-                dah.GenerateSound(128, 600, 200);
-                dah.WriteToStream(daStream);
-                int charnumber = 0;
+                using (MemoryStream dataStream = new MemoryStream())
+                {                    
+                    var dit = new Tone();
+                    dit.GenerateSound(128, 600, DIT_TIME);
 
-                foreach (char c in InputText)
-                {
-                    charnumber++;
-                    if(_stopped)
+                    var dah = new Tone();
+                    dah.GenerateSound(128, 600, DAH_TIME);
+
+                    var dit_dah_break = new Tone();
+                    dit_dah_break.GenerateSound(0, 0, DIT_DAH_BREAK);
+
+                    var letter_break = new Tone();
+                    letter_break.GenerateSound(0, 0, LETTER_BREAK);
+
+                    var word_break = new Tone();
+                    word_break.GenerateSound(0, 0, WORD_BREAK);
+
+                    TimeSpan span = new TimeSpan();
+                    foreach (char c in InputText)
                     {
-                        ditPlayer.Stop();
-                        daPlayer.Stop();
-                        return;
+                        if (c == '.')
+                        {
+                            dit.WriteToStream(toneStream);
+                            span = span.Add(new TimeSpan(0, 0, 0, 0, DIT_TIME));
+                            dit_dah_break.WriteToStream(toneStream);
+                            span = span.Add(new TimeSpan(0, 0, 0, 0, DIT_DAH_BREAK));
+                        }
+                        else if (c == '-')
+                        {
+                            dah.WriteToStream(toneStream);
+                            span = span.Add(new TimeSpan(0, 0, 0, 0, DAH_TIME));
+                            dit_dah_break.WriteToStream(toneStream);
+                            span = span.Add(new TimeSpan(0, 0, 0, 0, DIT_DAH_BREAK));
+                        }
+                        else if (c == '/')
+                        {
+                            word_break.WriteToStream(toneStream);
+                            span = span.Add(new TimeSpan(0, 0, 0, 0, WORD_BREAK));
+                        }
+                        else if (c == ' ')
+                        {
+                            letter_break.WriteToStream(toneStream);
+                            span = span.Add(new TimeSpan(0, 0, 0, 0, LETTER_BREAK));
+                        }
                     }
-                    if (c == '.')
+
+                    Wave wave = new Wave();                    
+                    wave.DataChunk.Data = toneStream.ToArray();
+                    wave.DataChunk.DwLength = (uint)wave.DataChunk.Data.Length;
+                    wave.RiffHeader.ChunkSize = 36 + wave.DataChunk.DwLength - 8;
+                    wave.WriteToStream(dataStream);
+
+                    var soundPlayer = new SoundPlayer();
+                    soundPlayer.Stream = dataStream;
+                    dataStream.Seek(0, SeekOrigin.Begin);
+                    DateTime end = DateTime.Now.Add(span);
+                    soundPlayer.Play();
+
+                    while (DateTime.Now < end && !_stopped)
                     {
-                        ditStream.Position = 0;
-                        ditPlayer.PlaySync();                                
+                        Thread.Sleep(5);
                     }
-                    else if (c == '-')
-                    {
-                        daStream.Position = 0;
-                        daPlayer.PlaySync();                        
-                    }
-                    else if (c == '/')
-                    {
-                        //between words, there is a long break
-                        Thread.Sleep(400);
-                    }
-                    else if (c == ' ')
-                    {
-                        //between characters, there is a short break
-                        Thread.Sleep(200);
-                    }
-                    ProgressChanged(((double)charnumber) / InputText.Length, 1);
+                    soundPlayer.Stop();
                 }
-                ditPlayer.Stop();
-                daPlayer.Stop(); 
-            }            
+            }
         }
 
         /// <summary>
