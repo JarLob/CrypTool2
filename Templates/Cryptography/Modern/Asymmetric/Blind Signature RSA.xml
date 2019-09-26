@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+  <title lang="en">Blind Signature RSA</title>
+  <title lang="ru">Слепая подпись RSA</title>
+  <summary lang="en">Usage of the <i>Blind Signature</i> with RSA</summary>
+  <summary lang="ru">Использование <i>Слепой подписи</i> с RSA</summary>
+  <description lang="en">This template shows the usage of the <i>Blind Signature</i> with the RSA crypto system.</description>
+  <description lang="ru">Этот шаблон показывает использование <i>Blind Signature</i> с шифрованием RSA.</description>
+  <keywords>RSA, blind, signature, hash</keywords>
+  <keywords lang="ru">RSA, слепой, подпись, хэш</keywords>
+  <title lang="de">Blinde Signatur RSA</title>
+  <summary lang="de">Benutzung der <i>Blinden Signatur</i> mit RSA</summary>
+  <description lang="de">Diese Vorlage zeigt die Benutzung der <i>Blinden Signatur</i> mit der RSA-Verschlüsselung.</description>
+  <keywords lang="de">RSA, blinde, Signatur, Hash</keywords>
+  <icon file="Blind Signature.png" />
+  <relevantPlugins>
+    <plugin name="BlindSignatureGenerator" />
+    <plugin name="Paillier" />
+  </relevantPlugins>
+  <replacements lang="de">
+    <replacement key="$MSG$" value="10 Euro Gutschein" />
+	<replacement key="$message$" value="Nachricht M" />
+	<replacement key="$rsa$" value="RSA" />
+	<replacement key="$bs$" value="BS-Generator" />
+	<replacement key="$results$" value="Anzeige Zwischenergebnisse" />
+	<replacement key="$verifier$" value="BS-Verifizierer" />
+	<replacement key="$converter$" value="Konvertierer" />
+	<replacement key="$decrypted$" value="Entschlüsselte blinde Signatur" />
+	<replacement key="$memo1$" value="{\b Blind Signatur (mit RSA) nach Chaum}\line
+Als Signatur-Algorithmus ist RSA eingestellt (es gibt auch ein Template mit Paillier als Signieralgorithmus).
+In diesem Beispiel erstellt Alice einen digitalen Geldschein und löst diesen für einen Einkauf bei Bob ein. Der Geldschein wird von Charlie blind signiert und kann von Bob auf Echtheit geprüft werden." />
+	<replacement key="$memo2$" value="Charlie ist in diesem Beispiel die dritte, unabhängige Instanz (bspw. eine Bank), der sowohl Alice als auch Bob vertrauen. Alice und Bob kennen den öffentlichen Schlüssel von Charlie und können so prüfen, ob dieser etwas signiert hat oder nicht." />
+	<replacement key="$memo3$" value="Bob erhält von Alice die von Charlie signierte Nachricht (wahlweise auch gehasht). Nur wenn Charlie tatsächlich die Nachricht signiert hat und sie echt ist, wird bei der entschlüsselten blinden Signatur ein sinnvolles Ergebnis stehen." />
+  </replacements>
+<replacements lang = "ru">
+	<replacement key =  "$MSG$" value =  "купон на 10 евро" />
+	<replacement key =  "$message$" value =  "сообщение М" />
+	<replacement key =  "$rsa$" value =  "RSA" />
+	<replacement key = "$bs$" value = "Генератор ОС" />
+	<replacement key = "$results$" value = "Показать промежуточные результаты" />
+	<replacement key =  "$verifyier$" value = "BS verifyier" />
+	<replacement key =  "$converter$" value =  "конвертер" />
+	<replacement key = "$ decrypted $" value = "Расшифрованная слепая подпись" />
+	<replacement key =  "$memo1$" value =  "{\b слепая подпись (с RSA) для Chaum} \line
+Алгоритм подписи - RSA (есть также шаблон с Paillier в качестве алгоритма подписи).
+В этом примере Алиса создает цифровой счет и решает его для покупки у Боба. Законопроект слепо подписан Чарли и может быть проверен Бобом на подлинность. "/>
+	<replace key = "$memo2$" value = "В этом примере Чарли - это третий независимый экземпляр (например, банк), доверяющий Алисе и Бобу, а Алиса и Боб знают открытый ключ Чарли и могут его проверить подписал ли он что-то или нет." />
+	<replace key = "$memo3$" value = "Боб получает подписанное Чарли сообщение (или также хэшированное) от Алисы, но только если Чарли подписал сообщение и оно подлинное, дешифрованная слепая подпись будет иметь смысл." />
+  </replacements>
+    <replacements lang = "en">
+    <replacement key = "$MSG$" value = "10 Euro coupon" />
+    <replacement key = "$message$" value = "Message M" />
+    <replacement key = "$rsa$" value = "RSA" />
+    <replacement key = "$bs$" value = "BS Generator" />
+    <replacement key = "$results$" value = "Display intermediate results" />
+    <replacement key = "$verifier$" value = "BS Verifier" />
+    <replacement key = "$converter$" value = "Converter" />
+    <replacement key = "$decrypted$" value = "Decrypted blind signature" />
+    <replacement key = "$memo1$" value = "{\b Blind signature (with RSA) by Chaum} \line
+The signature algorithm is RSA (there is also a template with Paillier as a signature algorithm).
+In this example, Alice creates a digital bill and uses it for a purchase from Bob. The bill is blindly signed by Charlie and can be checked for authenticity by Bob."/>
+    <replacement key = "$memo2$" value = "In this example, Charlie is the third independent instance (for example, a bank) trusting both Alice and Bob, and Alice and Bob know Charlie's public key and can whether he has signed something or not." />
+    <replacement key = "$memo3$" value = "Bob receives Charlie's signed message (or hashed as well) from Alice. But only if Charlie has signed the message and it is genuine, the decrypted blind signature will be meaningful." />
+  </replacements>
+</sample>
