@@ -1399,7 +1399,7 @@ sind. Dadurch können lange Berechnungszeiten minimiert werden.</value>
     <value>Schwellwert zum Abbruch (beste Charakteristik)</value>
   </data>
   <data name="AbortingThresholdBestCharacteristicSearchToolTip" xml:space="preserve">
-    <value>Legt fest, bei welcher Wahrscheinlichkeit die Suche nach der besten Charakteristiken abgebrochen wird</value>
+    <value>Legt fest, bei welcher Wahrscheinlichkeit die Suche nach der besten Charakteristik abgebrochen wird</value>
   </data>
   <data name="BtnPrevChapter" xml:space="preserve">
     <value>Kapitel zurück</value>

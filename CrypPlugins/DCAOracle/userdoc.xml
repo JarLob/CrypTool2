@@ -9,6 +9,10 @@
   </introduction>
 
   <introduction lang="de-DE">    
+	<list>
+		<item>Beschreibung der DKA PFadVisualisierer-Komponente</item>
+		<item>Hinweis auf übrige DKA-Komponenten (gehören zusammen)</item>
+	</list>
   </introduction>
 
   <usage lang="en">

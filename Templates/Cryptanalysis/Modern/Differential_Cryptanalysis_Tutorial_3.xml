@@ -13,8 +13,13 @@
   <keywords lang="de">Differenzielle Kryptoanalyse, Differenzielle Kryptoanalyse Tutorial 3, Kryptoanalyse, symmetrische Blockchiffren, symmetrische Algorithmen, DKA, DCA, Differenzielle, DKA Tutorial 3</keywords>
   
   <icon file="Differential_Cryptanalysis.png" />
+  
   <relevantPlugins>
-    <plugin name="ToyCiphers" />
+	<plugin name="DCAKeyRecovery" />
+	<plugin name="DCAOracle" />
+	<plugin name="DCAPathFinder" />
+	<plugin name="DCAPathVisualiser" />
+	<plugin name="DCAToyCiphers" />
   </relevantPlugins>
   
   <replacements lang="de">

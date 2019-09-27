@@ -9,6 +9,26 @@
   </introduction>
 
   <introduction lang="de-DE">
+	<list>
+		<item>Einleitung über differenzielle Kryptoanalyse.</item>
+		<item>Beschreibung der DKA PfadFinder-Komponente</item>
+		<item>Hinweis auf übrige DKA-Komponenten (gehören zusammen)</item>
+	</list>
+		
+	<section headline="Tutorials">
+		<list>
+			<item>Tutorial 1 Beschreibung</item>
+			<item>Tutorial 2 Beschreibung</item>
+			<item>Tutorial 3 Beschreibung</item>
+		</list>
+	</section>
+		
+	<section headline="Suchstrategien">
+		<list>
+			<item>Suchstrategien beschreiben</item>
+		</list>
+	</section>
+	
   </introduction>
 
   <usage lang="en">
