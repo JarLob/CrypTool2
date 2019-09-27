@@ -14,6 +14,7 @@
    limitations under the License.
 */
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
@@ -146,6 +147,15 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
                 char[] mapping = Alphabet.ToCharArray();
                 int radix = mapping.Length;
 
+                //store all positions of spaces and then remove these (only if space is not part of alphabet)
+                string input = Input;
+                List<int> whitespacePositions = new List<int>();
+                if (!Alphabet.Contains(" "))
+                {
+                    whitespacePositions = StoreAndRemoveSpaces(ref input);
+                }
+                Input = input;
+
                 if (!ValidateInput(Input))
                 {
                     return;
@@ -163,9 +173,17 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
                     GuiLogMessage(e.Message, NotificationLevel.Error);
                     return;
                 }
-                //int[] -> string
-                Output = IntArrayToString(intOutput, mapping);
 
+                //int[] -> string
+                string output = IntArrayToString(intOutput, mapping);
+
+                //restore spaces
+                foreach(int i in whitespacePositions)
+                {
+                    output = output.Insert(i, " ");
+                }
+
+                Output = output;
                 OnPropertyChanged("Output");
                 ProgressChanged(1, 1);
 
@@ -212,13 +230,22 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
                         XmlNodeList nodes = xmlDoc.SelectNodes(xpath);
                         foreach (XmlNode node in nodes)
                         {
+                            //store all positions of spaces and then remove these (only if space is not part of alphabet)
+                            string text = node.InnerText;
+                            List<int> whitespacePositions = new List<int>();
+                            if (!task.Contains(" "))
+                            {
+                                whitespacePositions = StoreAndRemoveSpaces(ref text);
+                            }
+
                             //validate Plaintext
-                            if (!ValidateInput(node.InnerText))
+                            if (!ValidateInput(text))
                             {
                                 continue;
                             }
+                            
                             //string -> int[]
-                            int[] intInput = StringToIntArray(node.InnerText, taskAlphabet);
+                            int[] intInput = StringToIntArray(text, taskAlphabet);
                             int[] intOutput;
                             try
                             {
@@ -231,6 +258,13 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
                             }
                             //int[] -> string
                             string stringOutput = IntArrayToString(intOutput, mapping);
+
+                            //restore spaces
+                            foreach (int i in whitespacePositions)
+                            {
+                                stringOutput = stringOutput.Insert(i, " ");
+                            }
+
                             node.InnerText = stringOutput;
 
                             xmlDoc.ImportNode(node, true);
@@ -259,6 +293,27 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
             Log = logBuilder.ToString();
             OnPropertyChanged("Log");
 
+        }
+
+        /// <summary>
+        /// Searches for all spaces and removes these
+        /// returns the positions in a list
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private List<int> StoreAndRemoveSpaces(ref string input)
+        {
+            List<int> whitespacePositions = new List<int>();
+            for(int i = 0; i < input.Length; i++)
+            {
+                if(input[i] == ' ')
+                {
+                    whitespacePositions.Add(i);
+                }
+            }
+
+            input = input.Replace(" ", "");
+            return whitespacePositions;
         }
 
         /// <summary>

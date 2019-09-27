@@ -15,6 +15,7 @@
 */
 
 using System.ComponentModel;
+using System.Windows;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 
@@ -70,18 +71,26 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
         [TaskPane("ModeCaption", "ModeTooltip", null, 3, false, ControlType.ComboBox, new string[] { "Normal", "XML" })]
         public int Mode
         {
-            get { return this.mode; }
+            get { return mode; }
             set
             {
                 if (((int)value) != mode)
                 {
-                    this.mode = (int)value;
+                    mode = (int)value;
+                    if (value == (int)Modes.Normal)
+                    {
+                        hideSettingsElement("PassPlaintext");
+                    }
+                    else
+                    {
+                        showSettingsElement("PassPlaintext");
+                    }
                     OnPropertyChanged("Mode");
                 }
             }
         }
 
-        [TaskPane("PassPlaintextCaption", "PassPlaintextTooltip", null, 3, false, ControlType.CheckBox, new string[] {"Pass plaintext to ciphertext output"})]
+        [TaskPane("PassPlaintextCaption", "PassPlaintextTooltip", null, 3, false, ControlType.CheckBox)]
         public bool PassPlaintext
         {
             get { return this.passPlaintext; }
@@ -111,7 +120,35 @@ namespace Cryptool.Plugins.FormatPreservingEncryption
 
         public void Initialize()
         {
+            if(Mode == (int)Modes.Normal)
+            {
+                hideSettingsElement("PassPlaintext");
+            }
+            else
+            {
+                showSettingsElement("PassPlaintext");
+            }
+        }
 
+        /// <summary>
+        /// This event is needed in order to render settings elements visible/invisible
+        /// </summary>
+        public event TaskPaneAttributeChangedHandler TaskPaneAttributeChanged;
+
+        private void showSettingsElement(string element)
+        {
+            if (TaskPaneAttributeChanged != null)
+            {
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Visible)));
+            }
+        }
+
+        private void hideSettingsElement(string element)
+        {
+            if (TaskPaneAttributeChanged != null)
+            {
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Collapsed)));
+            }
         }
     }
 }

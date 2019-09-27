@@ -178,7 +178,7 @@
     <value>This option can be used in XML mode to create a diff of the XML document.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Format Preserving Encryption.</value>
+    <value>Format Preserving Encryption (FPE)</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Provides the FF1, FF2, FF3 and DFF encryption standards.</value>

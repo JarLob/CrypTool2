@@ -5,16 +5,32 @@
   <language culture="en"/>
   <language culture="de-DE"/>
 
-  <introduction lang="en">    
+  <introduction lang="en">
+    Format Preserving Encryption (FPE) allows the length and valid symbols of the input to be obtained during an encryption process. The data does not necessarily have to be binary and it can also contain formatting marks such as hyphens or currency symbols. Thus, a format-preserving encryption method would encrypt a plaintext from the set of valid credit card numbers to a ciphertext that is also an element of that set, thus not only consisting of blocks of four decimal digits, but possibly even satisfying the check value.
+
+    This particular discipline of cryptography has been explored since 1997, but has only been able to make a breakthrough in the last decade. In 2016, the US National Institute of Standards and Technology released the two standards FF1 and FF3, which use a Feistel network to provide format-preserving encryption for any symmetric block cipher. However, due to a vulnerability found, the FF3 standard was withdrawn within a few months of its release, and the additionally investigated FF2 method could not provide the required security.
   </introduction>
 
-  <introduction lang="de-DE">    
+  <introduction lang="de-DE">
+    Formaterhaltende Verschlüsselung (FPE von Format Preserving Encryption) ermöglicht, die Länge und die gültigen Symbole der Eingabe bei einem Verschlüsselungsvorgang zu erhalten. Die Daten müssen nicht zwingend binär sein und es können auch Formatierungszeichen wie Trennstriche oder Währungssymbole enthalten sein. So würde ein Format-erhaltendes Verschlüsselungsverfahren einen Klartext aus der Menge der gültigen Kreditkartennummern zu einem Geheimtext verschlüsseln, der ebenfalls ein Element dieser Menge ist, also nicht nur aus Viererblöcken von Dezimalziffern besteht, sondern evtl. sogar auch den Prüfwert erfüllt. 
+    
+    Diese spezielle Disziplin der Kryptografie wird seit 1997 erforscht, konnte aber erst im letzten Jahrzehnt einen Durchbruch erzielen. Das amerikanische National Institute of Standards and Technology veröffentlichte 2016 die beiden Standards FF1 und FF3, die mithilfe eines Feistel-Netzwerks eine Format-erhaltende Verschlüsselung für eine beliebige symmetrische Blockchiffre realisieren. Der Standard FF3 wurde jedoch aufgrund einer gefundenen Schwachstelle schon innerhalb weniger  Monate nach der Veröffentlichung zurückgezogen und auch das zusätzlich untersuchte Verfahren FF2 konnte nicht die geforderte Sicherheit bieten.
   </introduction>
 
   <usage lang="en">
+    The component offers two modes. The "normal" mode allows the format-preserving encryption and decryption of text. The XML mode allows to encrypt or decrypt parts of XML documents, e.g. Credit card numbers, names, etc.
+
+    Both modes require an alphabet of valid characters.
+
+    The XML mode requires different alphabets and XPath expressions that indicate which data in the XML should be encrypted. The template "Format Preserving Encryption (XML)" exemplifies how this works.
   </usage>
 
   <usage lang="de-DE">
+    Die Komponente bietet zwei Modi. Der "normale" Modus ermöglicht das formaterhaltende Verschlüsseln und Entschlüsseln von Text. Der XML-Modus ermöglicht es, Teile von XML-Dokumenten, z.B. Kreditkartennummern, Namen, etc formaterhaltend zu verschlüsseln oder entschlüsseln.
+
+    Für beide Modi muss ein Alphabet der gültigen Zeichen angegeben werden.
+
+    Der XML-Modus benötigt verschiedene Alphabete und XPath-Pfade, die angeben, welche Daten im XML verschlüsselt werden sollen. Die Vorlage "Formaterhaltende Verschlüsselung (XML)" zeigt beispielhaft, wie dies funktioniert.
   </usage>
   
   <presentation lang="en">

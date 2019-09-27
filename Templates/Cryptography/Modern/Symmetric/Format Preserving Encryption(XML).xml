@@ -21,7 +21,8 @@
 	<replacement key="$tweak$" value="Tweak" />
 	<replacement key="$String Decoder$" value="String Decoder" />
 	<replacement key="$tweak radix$" value="Tweak Radix" />
-	<replacement key="$memo$" value="In this template, an XML document is encrypted with a randomly selected key and tweak format-preserving. The elements of the XML document to be encrypted are defined via the alphabet input by means of an XPath ausdruck and an alphabet. The selected elements are then encrypted or decrypted by the selected method and replaced in the XML document. Note that a single XPath expression can be used to address multiple elements. The selected entries must all be in the same format to enable encryption.\line
+	<replacement key="$memo$" value="{\b Format preserving encryption (FPE) inside an xml document}\line
+In this template, an XML document is encrypted with a randomly selected key and tweak format-preserving. The elements of the XML document to be encrypted are defined via the alphabet input by means of an XPath ausdruck and an alphabet. The selected elements are then encrypted or decrypted by the selected method and replaced in the XML document. Note that a single XPath expression can be used to address multiple elements. The selected entries must all be in the same format to enable encryption.\line
 \line
 In the component the checkbox was selected to forward the unencrypted XML document once to the output. Together with the option &quot;Show changes&quot; of the text output component Output the differences between the unmodified and encrypted XML document can be displayed.\line
 \line
@@ -39,11 +40,12 @@ Decryption is also possible: The encrypted XML document must be copied into the 
 	<replacement key="$tweak$" value="Tweak" />
 	<replacement key="$String Decoder$" value="Zeichenketten-Decodierer" />
 	<replacement key="$tweak radix$" value="Tweak Radix" />
-	<replacement key="$memo$" value="In dieser Vorlage wird ein XML-Dokument mit einen zufällig gewählten Schlüssel und Tweak Format-erhaltend verschlüsselt. Die zu verschlüsselnden Elemente des XML-Dokumentes werden über den Eingang Alphabet mittels eines XPath-Asudrucks und eines Alphabetes definiert. Die ausgewählten Elemente werden daraufhin von dem ausgewählten Verfahren ver- oder entschlüsselt und in dem XML-Dokument ersetzt. Hierbei ist zu beachten, dass durch einen einzigen XPath-Ausdruck auch mehrere Elemente angesprochen werden können. Die ausgewählten Einträge müssen alle unter dem gleichen Format vorliegen, um eine Verschlüsselung zu ermöglichen.\line
+	<replacement key="$memo$" value="{\b Formaterhaltende Verschlüsselung (FPE) innerhalb eines XML-Dokuments}\line
+In dieser Vorlage wird ein XML-Dokument mit einen zufällig gewählten Schlüssel und Tweak Format-erhaltend verschlüsselt. Die zu verschlüsselnden Elemente des XML-Dokumentes werden über den Eingang Alphabet mittels eines XPath-Ausdrucks  und eines Alphabets definiert. Die ausgewählten Elemente werden daraufhin von dem ausgewählten Verfahren ver- oder entschlüsselt und in dem XML-Dokument ersetzt. Hierbei ist zu beachten, dass durch einen einzigen XPath-Ausdruck auch mehrere Elemente angesprochen werden können. Die ausgewählten Einträge müssen alle unter dem gleichen Format vorliegen, um eine Verschlüsselung zu ermöglichen.\line
 \line
-In der Komponente wurde die Checkbox ausgewählt um das unverschlüsselte XML-Dokument einmalig an den Ausgang weiterzuleiten. Zusammen mit der Option &quot;Zeige Änderungen&quot; der Textausgabe-Komponente Ausgabe können die Unterschiede zwischen den unveränderten und verschlüsselten XML-Dokument dargestellt werden. \line
+In der FPE-Komponente hier wurde die Checkbox unten bei den Parametern ausgewählt, um das unverschlüsselte XML-Dokument einmalig an den Ausgang der FPE-Komponente weiterzuleiten.   Zusammen mit der Option &quot;Zeige Änderungen&quot; der Textausgabe-Komponente &quot;Diff-Ausgabe&quot; werden die Unterschiede zwischen dem unveränderten und dem verschlüsselten XML-Dokument farblich hervorgehoben.\line
 \line
 Zur Auswahl stehen die vier Algorithmen FF1, FF2, FF3 und DFF, die alle mit den vorab eingestellten Werten ausgeführt werden können. \line
-Eine Entschlüsselung ist auch möglich: Das verschlüsselte XML-Dokument muss in die Texteingabe Eingabe &quot;XML-Dokument&quot; kopiert werden und in der Komponente &quot;Formaterhaltende Verschlüsselung&quot; die Operation Entschlüsseln ausgewählt werden." />
+Eine Entschlüsselung ist auch möglich: Das verschlüsselte XML-Dokument muss in die Texteingabe &quot;XML-Dokument&quot; kopiert werden und in der Komponente &quot;Formaterhaltende Verschlüsselung&quot; die Operation Entschlüsseln ausgewählt werden." />
   </replacements>
 </sample>

@@ -127,13 +127,19 @@
     <value>Algorithmus</value>
   </data>
   <data name="AlgorithmTooltip" xml:space="preserve">
-    <value>Alogrithmus</value>
+    <value>Algorithmus</value>
   </data>
   <data name="AlphabetCaption" xml:space="preserve">
     <value>Alphabet</value>
   </data>
   <data name="AlphabetTooltip" xml:space="preserve">
     <value>Das Alphabet.</value>
+  </data>
+  <data name="Decrypt" xml:space="preserve">
+    <value>Entschlüsseln</value>
+  </data>
+  <data name="Encrypt" xml:space="preserve">
+    <value>Verschlüsseln</value>
   </data>
   <data name="ErrorKey" xml:space="preserve">
     <value>Der Schlüssel muss 128bit groß sein.</value>
@@ -175,13 +181,13 @@
     <value>Übergebe den Wert von "Eingabe" an den Ausgang "Ausgabe".</value>
   </data>
   <data name="PassPlaintextTooltip" xml:space="preserve">
-    <value>Diese Option kann im XML-Modus genutzt werden um ein Diff des XML-Dokumentes zu erstellen.</value>
+    <value>Diese Option kann im XML-Modus genutzt werden, um ein Diff des XML-Dokuments zu erstellen.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Format erhaltende Verschlüsselung.</value>
+    <value>Formaterhaltende Verschlüsselung (FPE)</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Enthält die FF1, FF2, FF3 und DFF Verschlüsselungsstandards.</value>
+    <value>Enthält die Verschlüsselungsstandards FF1, FF2, FF3 und DFF.</value>
   </data>
   <data name="TweakCaption" xml:space="preserve">
     <value>Tweak</value>

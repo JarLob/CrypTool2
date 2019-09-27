@@ -257,7 +257,7 @@ namespace FormatPreservingEncryptionWeydstone
                 A = C;
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
-                    OnOutputChanged(new OutputChangedEventArgs("\tStep 4.viii\n\t\tA is " + Common.intArrayToString(A)));
+                    OnOutputChanged(new OutputChangedEventArgs("\tStep 4.viii\n\tA is " + Common.intArrayToString(A)));
                 }
             }
             // 5. Return A || B.
@@ -437,7 +437,7 @@ namespace FormatPreservingEncryptionWeydstone
                 B = C;
                 if (Constants.CONFORMANCE_OUTPUT)
                 {
-                    OnOutputChanged(new OutputChangedEventArgs("\tStep 4.viii\n\t\tB is " + Common.intArrayToString(B)));
+                    OnOutputChanged(new OutputChangedEventArgs("\tStep 4.viii\n\tB is " + Common.intArrayToString(B)));
                 }
             }
             // 5. Return A || B.
