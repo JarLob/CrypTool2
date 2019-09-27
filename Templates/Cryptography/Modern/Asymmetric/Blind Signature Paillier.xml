@@ -4,13 +4,13 @@
   <title lang="ru"></title>
   <summary lang="en">Usage of the <i>Blind Signature</i> with Pailler</summary>
   <summary lang="ru"></summary>
-  <description lang="en">This template shows the usage of the <i>Blind Signature</i> with the Paillier crypto system.</description>
-  <description lang="ru"></description>
-  <keywords>pailler, blind, signature, hash</keywords>
+   <description lang="en">In this template a three party scenario of a blind signature is demonstrated. Charlie signs a message from Alice so that Bob can verify the message received from Alice. Here, Paillier is used for the signature.</description>
+  <description lang="ru">В этом шаблоне демонстрируется трехсторонний сценарий слепой подписи. Чарли подписывает сообщение от Алисы, чтобы Боб мог проверить сообщение, полученное от Алисы. Здесь Paillier используется для подписи.</description>
+ <keywords>pailler, blind, signature, hash</keywords>
   <keywords lang="ru"></keywords>
   <title lang="de">Blinde Signature Paillier</title>
   <summary lang="de">Benutzung der <i>Blinden Signatur</i> mit Paillier</summary>
-  <description lang="de">Diese Vorlage zeigt die Benutzung der <i>Blinden Signatur</i> mit der Paillier-Verschlüsselung.</description>
+  <description lang="de">In dieser Vorlage wird ein Drei-Parteien-Szenario einer blinden Signatur gezeigt. Charlie signiert eine Nachricht von Alice, damit Bob die von Alice empfangene Nachricht überprüfen kann. Hier wird Paillier für die Signatur verwendet.</description>
   <keywords lang="de">Paillier, blinde, Signatur, Hash</keywords>
   <icon file="Blind Signature.png" />
   <relevantPlugins>
@@ -26,9 +26,8 @@
 	<replacement key="$verifier$" value="BS-Verifizierer" />
 	<replacement key="$converter$" value="Konvertierer" />
 	<replacement key="$decrypted$" value="Entschlüsselte blinde Signatur" />
-	<replacement key="$memo1$" value="{\b Blind Signatur (mit Paillier) nach Chaum}\line
-Als Signatur-Algorithmus ist Paillier eingestellt (es gibt auch ein Template mit RSA als Signieralgorithmus).\line
-In diesem Beispiel erstellt Alice einen digitalen Geldschein und löst diesen für einen Einkauf bei Bob ein. Der Geldschein wird von Charlie blind signiert und kann von Bob auf Echtheit geprüft werden." />
+	<replacement key="$memo1$" value="{\b Blinde Signatur (mit Paillier) nach Chaum}\line
+Als Signatur-Algorithmus ist Paillier eingestellt (es gibt auch ein Template mit RSA als Signieralgorithmus). In diesem Beispiel erstellt Alice einen digitalen Geldschein und löst diesen für einen Einkauf bei Bob ein. Der Geldschein wird von Charlie blind signiert und kann von Bob auf Echtheit geprüft werden." />
 	<replacement key="$memo2$" value="Charlie ist in diesem Beispiel die dritte, unabhängige Instanz (bspw. eine Bank), der sowohl Alice als auch Bob vertrauen. Alice und Bob kennen den öffentlichen Schlüssel von Charlie und können so prüfen, ob dieser etwas signiert hat oder nicht." />
 	<replacement key="$memo3$" value="Bob erhält von Alice die von Charlie signierte Nachricht (wahlweise auch gehasht). Nur wenn Charlie tatsächlich die Nachricht signiert hat und sie echt ist, wird bei der entschlüsselten blinden Signatur ein sinnvolles Ergebnis stehen." />    
   </replacements>
