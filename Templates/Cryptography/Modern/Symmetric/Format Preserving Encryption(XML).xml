@@ -6,7 +6,7 @@
   <title lang="de">Formaterhaltende Verschlüsselung (XML)</title>
   <summary lang="de">Verwendung von <i>Format Preserving Encryption</i> mit einem xml-Dokument.</summary>
   <description lang="de">Diese Vorlage zeigt, wie die Komponente <i>Format Preserving Encryption</i> verwendet werden kann, um Teile eines Xml-Dokuments zu verschlüsseln.</description>
-  <keywords>FF1, FF2, FF3, DFF, XML</keywords>
+  <keywords>FF1, FF2, FF3, DFF, XML, FPE</keywords>
   <icon file="Format Preserving Encryption.png" />
   <relevantPlugins>
     <plugin name="Format Preserving Encryption" />
@@ -27,11 +27,11 @@ In the component the checkbox was selected to forward the unencrypted XML docume
 \line
 The four algorithms FF1, FF2, FF3 and DFF are available for selection, all of which can be executed with the preset values. \line
 \line
-Decryption is also possible: The encrypted XML document must be copied to the text input input and the Decrypt operation must be selected in the component." />
+Decryption is also possible: The encrypted XML document must be copied into the text input component &quot;XML Document&quot; and the Decrypt operation must be selected in the component &quot;Format Preserving Encryption&quot;." />
   </replacements>
    <replacements lang="de">
     <replacement key="$Alphabet$" value="Alphabet" />
-	<replacement key="$Format Preserving Encryption$" value="Format-erhaltende Verschlüsselung" />
+	<replacement key="$Format Preserving Encryption$" value="Formaterhaltende Verschlüsselung" />
 	<replacement key="$Output$" value="Ausgabe" />
 	<replacement key="$Log$" value="Log" />
 	<replacement key="$xml$" value="XML-Dokument" />
@@ -44,6 +44,6 @@ Decryption is also possible: The encrypted XML document must be copied to the te
 In der Komponente wurde die Checkbox ausgewählt um das unverschlüsselte XML-Dokument einmalig an den Ausgang weiterzuleiten. Zusammen mit der Option &quot;Zeige Änderungen&quot; der Textausgabe-Komponente Ausgabe können die Unterschiede zwischen den unveränderten und verschlüsselten XML-Dokument dargestellt werden. \line
 \line
 Zur Auswahl stehen die vier Algorithmen FF1, FF2, FF3 und DFF, die alle mit den vorab eingestellten Werten ausgeführt werden können. \line
-Eine Entschlüsselung ist auch möglich: Das verschlüsselte XML-Dokument muss in die Texteingabe Eingabe kopiert werden und in der Komponente die Operation Entschlüsseln ausgewählt werden." />
+Eine Entschlüsselung ist auch möglich: Das verschlüsselte XML-Dokument muss in die Texteingabe Eingabe &quot;XML-Dokument&quot; kopiert werden und in der Komponente &quot;Formaterhaltende Verschlüsselung&quot; die Operation Entschlüsseln ausgewählt werden." />
   </replacements>
 </sample>
