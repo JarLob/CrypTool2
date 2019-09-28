@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -41,10 +42,5 @@ namespace Cryptool.CrypAnalysisViewControl
 
         public static readonly DependencyProperty IsSectionVisibleProperty = DependencyProperty.Register(
           "IsSectionVisible", typeof(bool), typeof(SectionControl), new PropertyMetadata(true));
-
-        static SectionControl()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(SectionControl), new FrameworkPropertyMetadata(typeof(SectionControl)));
-        }
     }
 }

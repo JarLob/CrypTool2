@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace Cryptool.CrypAnalysisViewControl
 {
-    public class ViewLabel : DependencyObject
+    public class ViewLabel : FrameworkContentElement
     {
         public string Caption
         {
@@ -22,9 +22,5 @@ namespace Cryptool.CrypAnalysisViewControl
 
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
           "Value", typeof(string), typeof(ViewLabel), new PropertyMetadata(""));
-
-        public ViewLabel()
-        {
-        }
     }
 }

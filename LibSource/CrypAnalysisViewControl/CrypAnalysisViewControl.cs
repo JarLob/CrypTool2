@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -40,9 +41,22 @@ namespace Cryptool.CrypAnalysisViewControl
 
         public List<SectionControl> AdditionalSections { get; } = new List<SectionControl>();
 
-        static CrypAnalysisViewControl()
+        public CrypAnalysisViewControl()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(CrypAnalysisViewControl), new FrameworkPropertyMetadata(typeof(CrypAnalysisViewControl)));
+            string packUri = @"CrypAnalysisViewControl;component/Themes/Generic.xaml";
+            var resourceDictionary = Application.LoadComponent(new Uri(packUri, UriKind.Relative)) as ResourceDictionary;
+            Resources.MergedDictionaries.Add(resourceDictionary);
+
+            Loaded += CrypAnalysisViewControl_Loaded;
+        }
+
+        private void CrypAnalysisViewControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Add non-component children as logical children to enable binding:
+            foreach (var element in ResultHeaderLabels.Union<object>(ResultProgressLabels).Union(AdditionalSections))
+            {
+                AddLogicalChild(element);
+            }
         }
     }
 }

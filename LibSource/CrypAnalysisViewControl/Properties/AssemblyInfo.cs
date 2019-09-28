@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Windows;
 
 [assembly: AssemblyTitle("CrypAnalysisViewControl")]
 [assembly: AssemblyDescription("")]
@@ -13,10 +12,11 @@ using System.Windows;
 
 [assembly: ComVisible(false)]
 
-[assembly:ThemeInfo(
-    ResourceDictionaryLocation.None,
-    ResourceDictionaryLocation.SourceAssembly
-)]
+//Theme info cannot be set here because of constraints in CT2 build system. Components will load themes in code instead.
+//[assembly:ThemeInfo(
+//    ResourceDictionaryLocation.None,
+//    ResourceDictionaryLocation.SourceAssembly
+//)]
 
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

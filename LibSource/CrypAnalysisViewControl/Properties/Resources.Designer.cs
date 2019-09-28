@@ -19,10 +19,10 @@ namespace Cryptool.CrypAnalysisViewControl.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Cryptool.CrypAnalysisViewControl.Properties {
         ///   Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cryptool.CrypAnalysisViewControl.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Cryptool.CrypAnalysisViewControl.Properties {
         ///   Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Cryptool.CrypAnalysisViewControl.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Copy all lines ähnelt.
         /// </summary>
-        internal static string Copy_all {
+        public static string Copy_all {
             get {
                 return ResourceManager.GetString("Copy_all", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Cryptool.CrypAnalysisViewControl.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Copy key ähnelt.
         /// </summary>
-        internal static string Copy_key {
+        public static string Copy_key {
             get {
                 return ResourceManager.GetString("Copy_key", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Cryptool.CrypAnalysisViewControl.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Copy selected line ähnelt.
         /// </summary>
-        internal static string Copy_line {
+        public static string Copy_line {
             get {
                 return ResourceManager.GetString("Copy_line", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Cryptool.CrypAnalysisViewControl.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Copy text ähnelt.
         /// </summary>
-        internal static string Copy_text {
+        public static string Copy_text {
             get {
                 return ResourceManager.GetString("Copy_text", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Cryptool.CrypAnalysisViewControl.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Copy value ähnelt.
         /// </summary>
-        internal static string Copy_value {
+        public static string Copy_value {
             get {
                 return ResourceManager.GetString("Copy_value", resourceCulture);
             }
