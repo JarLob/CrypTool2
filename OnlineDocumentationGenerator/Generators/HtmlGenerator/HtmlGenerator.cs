@@ -132,7 +132,10 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
         {
             AllTemplatesList.Clear();
             WalkTemplateDirectory2(_templatesDir);
-            var groups = AllTemplatesList.OrderBy(t => t.CurrentLocalization.Name).GroupBy(t => t.CurrentLocalization.Name[0]);
+            var groups = AllTemplatesList
+                .Where(t => !string.IsNullOrWhiteSpace(t.CurrentLocalization.Name))
+                .OrderBy(t => t.CurrentLocalization.Name)
+                .GroupBy(t => t.CurrentLocalization.Name[0]);
 
             var anchor = "<p>" + String.Concat(groups.Select(g => string.Format("<a href=\"#{0}\"><b>{0}</b></a>&nbsp;\n", g.Key))) + "</p>";
 
