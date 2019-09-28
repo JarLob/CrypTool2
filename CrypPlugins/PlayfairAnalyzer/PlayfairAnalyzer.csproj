@@ -165,6 +165,7 @@
     <ProjectReference Include="..\..\CrypToolStore\CrypToolStore.csproj">
       <Project>{0182e69c-7f75-4b4f-953d-748d9a6d168e}</Project>
       <Name>CrypToolStore</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\LibSource\CT2IPC\CT2IPC.csproj">
       <Project>{539863ec-3333-489f-a315-c1ec8340dd40}</Project>
