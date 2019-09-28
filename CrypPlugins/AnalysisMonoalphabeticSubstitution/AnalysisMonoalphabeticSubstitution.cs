@@ -27,7 +27,7 @@ using System.Windows.Threading;
 using System.Threading;
 using Cryptool.AnalysisMonoalphabeticSubstitution.Properties;
 using Cryptool.PluginBase.Utils;
-
+using Cryptool.CrypAnalysisViewControl;
 
 namespace Cryptool.AnalysisMonoalphabeticSubstitution
 {
@@ -152,7 +152,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             {
                 try
                 {
-                    ((AssignmentPresentation)Presentation).entries.Clear();
+                    ((AssignmentPresentation)Presentation).Entries.Clear();
                 }
                 catch (Exception ex)
                 {
@@ -449,7 +449,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                         {
                             try
                             {
-                                ((AssignmentPresentation) Presentation).entries.Clear();
+                                ((AssignmentPresentation) Presentation).Entries.Clear();
 
                                 for (int i = 0; i < this.keyCandidates.Count; i++)
                                 {
@@ -478,7 +478,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                                     }
                                     double f = keyCandidate.Fitness;
                                     entry.Value = string.Format("{0:0.00000} ", f);
-                                    ((AssignmentPresentation) Presentation).entries.Add(entry);
+                                    ((AssignmentPresentation) Presentation).Entries.Add(entry);
                                 }
                             }
                             catch (Exception ex)
@@ -500,11 +500,11 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                  try
                  {
                      startTime = DateTime.Now;
-                     ((AssignmentPresentation)Presentation).startTime.Content = "" + startTime;
-                     ((AssignmentPresentation)Presentation).endTime.Content = "";
-                     ((AssignmentPresentation)Presentation).elapsedTime.Content = "";
-                     ((AssignmentPresentation)Presentation).totalKeys.Content = "";
-                     ((AssignmentPresentation)Presentation).keysPerSecond.Content = "";
+                     ((AssignmentPresentation)Presentation).StartTime.Value = "" + startTime;
+                     ((AssignmentPresentation)Presentation).EndTime.Value = "";
+                     ((AssignmentPresentation)Presentation).ElapsedTime.Value = "";
+                     ((AssignmentPresentation)Presentation).TotalKeys.Value = "";
+                     ((AssignmentPresentation)Presentation).KeysPerSecond.Value = "";
                  }
                  catch (Exception ex)
                  {
@@ -529,10 +529,10 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                     if (totalSeconds == 0) totalSeconds = 0.001;
                     keysPerSecond = totalKeys / totalSeconds;
 
-                    ((AssignmentPresentation)Presentation).endTime.Content = "" + endTime;
-                    ((AssignmentPresentation)Presentation).elapsedTime.Content = "" + elapsedspan;
-                    ((AssignmentPresentation)Presentation).totalKeys.Content = String.Format(culture, "{0:##,#}", totalKeys);
-                    ((AssignmentPresentation)Presentation).keysPerSecond.Content = String.Format(culture, "{0:##,#}", (ulong)keysPerSecond);
+                    ((AssignmentPresentation)Presentation).EndTime.Value = "" + endTime;
+                    ((AssignmentPresentation)Presentation).ElapsedTime.Value = "" + elapsedspan;
+                    ((AssignmentPresentation)Presentation).TotalKeys.Value = String.Format(culture, "{0:##,#}", totalKeys);
+                    ((AssignmentPresentation)Presentation).KeysPerSecond.Value = String.Format(culture, "{0:##,#}", (ulong)keysPerSecond);
                 }
                 catch (Exception ex)
                 {
@@ -584,13 +584,23 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         #endregion
     }
 
-    public class ResultEntry
+    public class ResultEntry : ICrypAnalysisResultListEntry
     {
         public string Ranking { get; set; }
         public string Value { get; set; }
         public string Key { get; set; }
         public string Text { get; set; }
         public string Attack { get; set; }
+
+        public string ClipboardValue => Value;
+        public string ClipboardKey => Key;
+        public string ClipboardText => Text;
+        public string ClipboardEntry =>
+            "Rank: " + Ranking + Environment.NewLine +
+            "Value: " + Value + Environment.NewLine +
+            "Attack: " + Attack + Environment.NewLine +
+            "Key: " + Key + Environment.NewLine +
+            "Text: " + Text;
     }
 
     public class StopFlag

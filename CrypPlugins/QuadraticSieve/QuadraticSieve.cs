@@ -111,10 +111,10 @@ namespace Cryptool.Plugins.QuadraticSieve
 
                 quadraticSieveQuickWatchPresentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    quadraticSieveQuickWatchPresentation.peer2peer.Visibility = settings.UsePeer2Peer ? Visibility.Visible : Visibility.Collapsed;
-                    quadraticSieveQuickWatchPresentation.timeLeft.Content = "-";
-                    quadraticSieveQuickWatchPresentation.endTime.Content = "-";
-                    quadraticSieveQuickWatchPresentation.coresUsed.Content = "-";
+                    quadraticSieveQuickWatchPresentation.Peer2PeerSection.Visibility = settings.UsePeer2Peer ? Visibility.Visible : Visibility.Collapsed;
+                    quadraticSieveQuickWatchPresentation.TimeLeft.Value = "";
+                    quadraticSieveQuickWatchPresentation.EndTime.Value = "";
+                    quadraticSieveQuickWatchPresentation.CoresUsed.Value = "";
                 }
                 , null);
 
@@ -149,7 +149,7 @@ namespace Cryptool.Plugins.QuadraticSieve
                 {
                     quadraticSieveQuickWatchPresentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
-                        quadraticSieveQuickWatchPresentation.peer2peer.Visibility = settings.UsePeer2Peer ? Visibility.Visible : Visibility.Collapsed;                        
+                        quadraticSieveQuickWatchPresentation.Peer2PeerSection.Visibility = settings.UsePeer2Peer ? Visibility.Visible : Visibility.Collapsed;                        
                     }, null);
                 }
             }
@@ -202,11 +202,11 @@ namespace Cryptool.Plugins.QuadraticSieve
                 quadraticSieveQuickWatchPresentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     quadraticSieveQuickWatchPresentation.ProgressRelationPackages.Clear();
-                    quadraticSieveQuickWatchPresentation.information.Content = info_message;
-                    quadraticSieveQuickWatchPresentation.endTime.Content = "-";
-                    quadraticSieveQuickWatchPresentation.timeLeft.Content = "-";
-                    quadraticSieveQuickWatchPresentation.elapsedTime.Content = "-";
-                    quadraticSieveQuickWatchPresentation.startTime.Content = "" + start_time;
+                    quadraticSieveQuickWatchPresentation.Information.Value = info_message;
+                    quadraticSieveQuickWatchPresentation.EndTime.Value = "";
+                    quadraticSieveQuickWatchPresentation.TimeLeft.Value = "";
+                    quadraticSieveQuickWatchPresentation.ElapsedTime.Value = "";
+                    quadraticSieveQuickWatchPresentation.StartTime.Value = "" + start_time;
                     quadraticSieveQuickWatchPresentation.factorList.Items.Clear();
                     quadraticSieveQuickWatchPresentation.factorInfo.Content = typeof(QuadraticSieve).GetPluginStringResource("Searching_trivial_factors");
                     if (usePeer2Peer)
@@ -247,9 +247,9 @@ namespace Cryptool.Plugins.QuadraticSieve
 
                     quadraticSieveQuickWatchPresentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
-                        quadraticSieveQuickWatchPresentation.information.Content = string.Format(typeof(QuadraticSieve).GetPluginStringResource("Sieving_finished"), OutputFactors.Count());
-                        quadraticSieveQuickWatchPresentation.endTime.Content = endtime_message;
-                        quadraticSieveQuickWatchPresentation.timeLeft.Content = timeLeft_message;
+                        quadraticSieveQuickWatchPresentation.Information.Value = string.Format(typeof(QuadraticSieve).GetPluginStringResource("Sieving_finished"), OutputFactors.Count());
+                        quadraticSieveQuickWatchPresentation.EndTime.Value = endtime_message;
+                        quadraticSieveQuickWatchPresentation.TimeLeft.Value = timeLeft_message;
                         quadraticSieveQuickWatchPresentation.factorInfo.Content = "";
                     }
                     , null);
@@ -263,11 +263,11 @@ namespace Cryptool.Plugins.QuadraticSieve
                     GuiLogMessage(info_message, NotificationLevel.Info);
                     quadraticSieveQuickWatchPresentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
-                        quadraticSieveQuickWatchPresentation.information.Content = typeof(QuadraticSieve).GetPluginStringResource("Stopped_by_user");
-                        quadraticSieveQuickWatchPresentation.endTime.Content = "-";
-                        quadraticSieveQuickWatchPresentation.timeLeft.Content = "-";
-                        quadraticSieveQuickWatchPresentation.startTime.Content = "-";
-                        quadraticSieveQuickWatchPresentation.elapsedTime.Content = "-";
+                        quadraticSieveQuickWatchPresentation.Information.Value = typeof(QuadraticSieve).GetPluginStringResource("Stopped_by_user");
+                        quadraticSieveQuickWatchPresentation.EndTime.Value = "";
+                        quadraticSieveQuickWatchPresentation.TimeLeft.Value = "";
+                        quadraticSieveQuickWatchPresentation.StartTime.Value = "";
+                        quadraticSieveQuickWatchPresentation.ElapsedTime.Value = "";
                         quadraticSieveQuickWatchPresentation.factorInfo.Content = "";
                     }
                     , null);
@@ -459,8 +459,8 @@ namespace Cryptool.Plugins.QuadraticSieve
                 {
                     String message = typeof(QuadraticSieve).GetPluginStringResource("Sieving_now");
                     GuiLogMessage(message, NotificationLevel.Info);
-                    quadraticSieveQuickWatchPresentation.coresUsed.Content = (threads+1);
-                    quadraticSieveQuickWatchPresentation.information.Content = message;
+                    quadraticSieveQuickWatchPresentation.CoresUsed.Value = (threads+1).ToString();
+                    quadraticSieveQuickWatchPresentation.Information.Value = message;
                     if (usePeer2Peer)
                         quadraticSieveQuickWatchPresentation.localSieving.Visibility = Visibility.Hidden;
                 }
@@ -490,8 +490,8 @@ namespace Cryptool.Plugins.QuadraticSieve
                 GuiLogMessage(Resources.SievingFinished2, NotificationLevel.Info);
                 quadraticSieveQuickWatchPresentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    quadraticSieveQuickWatchPresentation.timeLeft.Content = "-";
-                    quadraticSieveQuickWatchPresentation.endTime.Content = "-";
+                    quadraticSieveQuickWatchPresentation.TimeLeft.Value = "";
+                    quadraticSieveQuickWatchPresentation.EndTime.Value = "";
                     quadraticSieveQuickWatchPresentation.factorInfo.Content = typeof(QuadraticSieve).GetPluginStringResource("Found_enough_relations");
                 }, null);
 
@@ -504,8 +504,8 @@ namespace Cryptool.Plugins.QuadraticSieve
                 GuiLogMessage("Another peer already finished factorization of composite factor. Sieving next one...", NotificationLevel.Info);
                 quadraticSieveQuickWatchPresentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    quadraticSieveQuickWatchPresentation.timeLeft.Content = "-";
-                    quadraticSieveQuickWatchPresentation.endTime.Content = "-";
+                    quadraticSieveQuickWatchPresentation.TimeLeft.Value = "";
+                    quadraticSieveQuickWatchPresentation.EndTime.Value = "";
                     quadraticSieveQuickWatchPresentation.factorInfo.Content = typeof(QuadraticSieve).GetPluginStringResource("Other_peer_finished_sieving");
                 }, null);
                 otherPeerFinished = true;
@@ -594,17 +594,17 @@ namespace Cryptool.Plugins.QuadraticSieve
 
             if (globalPerformance == 0 || double.IsInfinity(msleft))
             {
-                timeLeft_message = "-";
-                endtime_message = "-";
+                timeLeft_message = "";
+                endtime_message = "";
             }
 
             quadraticSieveQuickWatchPresentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                quadraticSieveQuickWatchPresentation.foundRelations.Content = num_relations;
-                quadraticSieveQuickWatchPresentation.maxRelations.Content = max_relations;
-                quadraticSieveQuickWatchPresentation.timeLeft.Content = timeLeft_message;
-                quadraticSieveQuickWatchPresentation.endTime.Content = endtime_message;
-                quadraticSieveQuickWatchPresentation.elapsedTime.Content = timeSpanString(now.Subtract(start_time));
+                quadraticSieveQuickWatchPresentation.FoundRelations.Value = num_relations.ToString();
+                quadraticSieveQuickWatchPresentation.MaxRelations.Value = max_relations.ToString();
+                quadraticSieveQuickWatchPresentation.TimeLeft.Value = timeLeft_message;
+                quadraticSieveQuickWatchPresentation.EndTime.Value = endtime_message;
+                quadraticSieveQuickWatchPresentation.ElapsedTime.Value = timeSpanString(now.Subtract(start_time));
             }, null);
 
             if (useGnuplot)

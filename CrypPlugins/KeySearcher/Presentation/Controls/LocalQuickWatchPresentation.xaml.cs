@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using KeySearcher;
+using Cryptool.CrypAnalysisViewControl;
 
 namespace KeySearcherPresentation.Controls
 {
@@ -18,7 +19,18 @@ namespace KeySearcherPresentation.Controls
             set { _updateOutputFromUserChoice = value; }
         }
 
-        public ObservableCollection<ResultEntry> entries = new ObservableCollection<ResultEntry>();
+        public ObservableCollection<ResultEntry> Entries { get; } = new ObservableCollection<ResultEntry>();
+
+        private int amountOfDevices;
+        public int AmountOfDevices
+        {
+            get { return amountOfDevices; }
+            set
+            {
+                amountOfDevices = value;
+                Devices.Value = amountOfDevices.ToString();
+            }
+        }
 
         public static readonly DependencyProperty IsOpenCLEnabledProperty =
             DependencyProperty.Register("IsOpenCLEnabled",
@@ -34,73 +46,14 @@ namespace KeySearcherPresentation.Controls
         public LocalQuickWatchPresentation()
         {
             InitializeComponent();
-            this.DataContext = entries;
+            this.DataContext = this;
         }
 
-        private void OpenCLPresentation_Loaded(object sender, RoutedEventArgs e)
+        private void HandleResultItemAction(ICrypAnalysisResultListEntry item)
         {
-        }
-        
-        // Strings with nul characters are not displayed correctly in the clipboard
-        string removeNuls(string s)
-        {
-            return s.Replace(Convert.ToChar(0x0).ToString(), "");
-        }
-
-        string entryToText(ResultEntry entry)
-        {
-            return "Rank: " + entry.Ranking + "\r\n" +
-                   "Value: " + entry.Value + "\r\n" +
-                   "Key: " + entry.Key + "\r\n" +
-                   "Text: " + removeNuls(entry.FullText);
-        }
-
-        public void ContextMenuHandler(Object sender, EventArgs eventArgs)
-        {
-            try
+            if (item is ResultEntry resultItem)
             {
-                MenuItem menu = (MenuItem)((RoutedEventArgs)eventArgs).Source;
-                ResultEntry entry = (ResultEntry)menu.CommandParameter;
-                if (entry == null) return;
-                string tag = (string)menu.Tag;
-
-                if (tag == "copy_text")
-                {
-                    Clipboard.SetText(removeNuls(entry.Text));
-                }
-                else if (tag == "copy_value")
-                {
-                    Clipboard.SetText(entry.Value);
-                }
-                else if (tag == "copy_key")
-                {
-                    Clipboard.SetText(entry.Key);
-                }
-                else if (tag == "copy_line")
-                {
-                    Clipboard.SetText(entryToText(entry));
-                }
-                else if (tag == "copy_all")
-                {
-                    List<string> lines = new List<string>();
-                    foreach (var e in entries) lines.Add(entryToText(e));
-                    Clipboard.SetText(String.Join("\r\n\r\n", lines));
-                }
-            } 
-            catch(Exception ex)
-            {
-                Clipboard.SetText("");
-            }
-        }
-
-        public void HandleDoubleClick(Object sender, EventArgs eventArgs)
-        {
-            var lvi = sender as ListViewItem;
-            var r = lvi.Content as ResultEntry;
-
-            if (r != null)
-            {
-                _updateOutputFromUserChoice(r.Key, r.FullText);
+                _updateOutputFromUserChoice(resultItem.Key, resultItem.FullText);
             }
         }
     }

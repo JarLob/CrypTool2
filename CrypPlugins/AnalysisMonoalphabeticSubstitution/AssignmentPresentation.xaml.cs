@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System.Threading;
+using Cryptool.CrypAnalysisViewControl;
 
 namespace Cryptool.AnalysisMonoalphabeticSubstitution
 {
@@ -15,8 +16,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
     public partial class AssignmentPresentation : UserControl
     {
 
-        public ObservableCollection<ResultEntry> entries = new ObservableCollection<ResultEntry>();
-        //public event EventHandler doppelClick;
+        public ObservableCollection<ResultEntry> Entries { get; } = new ObservableCollection<ResultEntry>();
 
         #region Variables
 
@@ -39,8 +39,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         public AssignmentPresentation()
         {
             InitializeComponent();
-            this.DataContext = entries;
-
+            DataContext = Entries;
         }
 
         #endregion
@@ -51,7 +50,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         {
             this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                this.ListView.IsEnabled = false;
+                IsEnabled = false;
             }, null);
         }
 
@@ -59,7 +58,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         {
             this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                this.ListView.IsEnabled = true;
+                IsEnabled = true;
             }, null);
         }
 
@@ -67,70 +66,15 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
 
         #region Helper Methods
 
-        public void HandleDoubleClick(Object sender, EventArgs eventArgs)
+        private void HandleResultItemAction(ICrypAnalysisResultListEntry item)
         {
-            ListViewItem lvi = sender as ListViewItem;
-            ResultEntry r = lvi.Content as ResultEntry;
-
-            if (r != null)
+            if (item is ResultEntry resultItem)
             {
-                this.updateOutputFromUserChoice(r.Key, r.Text);
-            }
-        }
-
-        // Strings with nul characters are not displayed correctly in the clipboard
-        string removeNuls(string s)
-        {
-            return s.Replace(Convert.ToChar(0x0).ToString(), "");
-        }
-
-        string entryToText(ResultEntry entry)
-        {
-            return "Rank: " + entry.Ranking + "\n" +
-                   "Value: " + entry.Value + "\n" +
-                   "Attack: " + entry.Attack + "\n" +
-                   "Key: " + entry.Key + "\n" +
-                   "Text: " + removeNuls(entry.Text);
-        }
-
-        public void ContextMenuHandler(Object sender, EventArgs eventArgs)
-        {
-            try
-            {
-                MenuItem menu = (MenuItem)((RoutedEventArgs)eventArgs).Source;
-                ResultEntry entry = (ResultEntry)menu.CommandParameter;
-                if (entry == null) return;
-                string tag = (string)menu.Tag;
-
-                if (tag == "copy_text")
-                {
-                    Clipboard.SetText(removeNuls(entry.Text));
-                }
-                else if (tag == "copy_value")
-                {
-                    Clipboard.SetText(entry.Value);
-                }
-                else if (tag == "copy_key")
-                {
-                    Clipboard.SetText(entry.Key);
-                }
-                else if (tag == "copy_line")
-                {
-                    Clipboard.SetText(entryToText(entry));
-                }
-                else if (tag == "copy_all")
-                {
-                    List<string> lines = new List<string>();
-                    foreach (var e in entries) lines.Add(entryToText(e));
-                    Clipboard.SetText(String.Join("\n\n", lines));
-                }
-            }
-            catch (Exception ex)
-            {
-                Clipboard.SetText("");
+                updateOutputFromUserChoice(resultItem.Key, resultItem.Text);
             }
         }
 
         #endregion
+        
     }
 }

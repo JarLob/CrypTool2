@@ -506,6 +506,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitCommitmentScheme", "Cryp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlindSignatureGenerator", "CrypPlugins\BlindSignatureGenerator\BlindSignatureGenerator.csproj", "{A965E0DF-B2E6-4A79-8841-ACD415CA0D93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrypAnalysisViewControl", "LibSource\CrypAnalysisViewControl\CrypAnalysisViewControl.csproj", "{4AB9BE96-3E34-40CB-9270-A64480C851EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -3455,6 +3457,18 @@ Global
 		{A965E0DF-B2E6-4A79-8841-ACD415CA0D93}.Test|x64.Build.0 = Debug|x64
 		{A965E0DF-B2E6-4A79-8841-ACD415CA0D93}.Test|x86.ActiveCfg = Debug|x86
 		{A965E0DF-B2E6-4A79-8841-ACD415CA0D93}.Test|x86.Build.0 = Debug|x86
+		{4AB9BE96-3E34-40CB-9270-A64480C851EE}.Debug|x64.ActiveCfg = Debug|x64
+		{4AB9BE96-3E34-40CB-9270-A64480C851EE}.Debug|x64.Build.0 = Debug|x64
+		{4AB9BE96-3E34-40CB-9270-A64480C851EE}.Debug|x86.ActiveCfg = Debug|x86
+		{4AB9BE96-3E34-40CB-9270-A64480C851EE}.Debug|x86.Build.0 = Debug|x86
+		{4AB9BE96-3E34-40CB-9270-A64480C851EE}.Release|x64.ActiveCfg = Release|x64
+		{4AB9BE96-3E34-40CB-9270-A64480C851EE}.Release|x64.Build.0 = Release|x64
+		{4AB9BE96-3E34-40CB-9270-A64480C851EE}.Release|x86.ActiveCfg = Release|x86
+		{4AB9BE96-3E34-40CB-9270-A64480C851EE}.Release|x86.Build.0 = Release|x86
+		{4AB9BE96-3E34-40CB-9270-A64480C851EE}.Test|x64.ActiveCfg = Release|x64
+		{4AB9BE96-3E34-40CB-9270-A64480C851EE}.Test|x64.Build.0 = Release|x64
+		{4AB9BE96-3E34-40CB-9270-A64480C851EE}.Test|x86.ActiveCfg = Release|x86
+		{4AB9BE96-3E34-40CB-9270-A64480C851EE}.Test|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -3697,6 +3711,7 @@ Global
 		{3F92F927-E6FA-4048-AB98-04D98B82B69E} = {88B851F6-9E3D-484F-A317-ECED5B98C618}
 		{E86CE9A5-BBF2-48E3-80F1-80BD935670EF} = {88B851F6-9E3D-484F-A317-ECED5B98C618}
 		{A965E0DF-B2E6-4A79-8841-ACD415CA0D93} = {88B851F6-9E3D-484F-A317-ECED5B98C618}
+		{4AB9BE96-3E34-40CB-9270-A64480C851EE} = {1E472920-3A9C-413A-98B2-8372F0E283C5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {92042D62-2CDA-4393-9D74-4FB5AC571A2D}
