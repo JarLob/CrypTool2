@@ -764,17 +764,19 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
         {
             if (!IsEditingPoint)
             {
-                if (HasManualModification)
+                bool hasBeenAdjusted = false;
+                if (HasManualModification || IsDragged)
                 {
                     //Keep manually modified connections "as is", but adjust start and end point if necessary:
-                    if (!AdjustManuallyModifiedLine(PointList, StartPoint, EndPoint))
+                    hasBeenAdjusted = AdjustLine(PointList, StartPoint, EndPoint);
+                    if (!hasBeenAdjusted && HasManualModification)
                     {
                         //Adjustment of manually modified line failed, so switch back to "automatic mode":
                         HasManualModification = false;
                     }
                 }
 
-                if (!HasManualModification)
+                if (!hasBeenAdjusted)
                 {
                     bool failed = false;
                     if (!isSubstituteLine && !IsDragged && !HasComputed && !loaded)
@@ -868,13 +870,13 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
         }
 
         /// <summary>
-        /// Adjusts only start and end points of an already existing path which was modified manually.
+        /// Adjusts only start and end points of an already existing line path.
         /// </summary>
         /// <param name="segments">The segments of the old line.</param>
         /// <param name="newStartPoint">The new start point to adjust to.</param>
         /// <param name="newEndPoint">The new end point to adjust to.</param>
         /// <returns>Whether adjustment was possible.</returns>
-        private static bool AdjustManuallyModifiedLine(IEnumerable<FromTo> segments, Point newStartPoint, Point newEndPoint)
+        private static bool AdjustLine(IEnumerable<FromTo> segments, Point newStartPoint, Point newEndPoint)
         {
             //Zip segment lists to create adjacent segments:
             var adjacentSegments = segments.Zip(segments.Skip(1), (a, b) => (First: a, Second: b));
