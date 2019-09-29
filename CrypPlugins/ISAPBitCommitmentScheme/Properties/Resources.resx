@@ -163,10 +163,10 @@
     <value>P</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Bit Commitment Scheme</value>
+    <value>ISAP Bit Commitment Scheme</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>This plugin implements the Bit Commitment Scheme.</value>
+    <value>This plugin implements the ISAP Bit Commitment Scheme.</value>
   </data>
   <data name="PTooltip" xml:space="preserve">
     <value>Array of P values</value>

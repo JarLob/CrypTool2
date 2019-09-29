@@ -6,14 +6,14 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using ISAPCommitmentSchemeWrapper;
 
-namespace BitCommitmentScheme
+namespace ISAPBitCommitmentScheme
 {
     [Author("Sven Rech and Martin Schmidt", "rech@cryptool.org", "Uni Duisburg-Essen", "http://www.vs.uni-duisburg-essen.de")]
-    [PluginInfo("BitCommitmentScheme.Properties.Resources", "PluginCaption", "PluginTooltip", "BitCommitmentScheme/DetailedDescription/doc.xml", "BitCommitmentScheme/Images/icon.png")]
+    [PluginInfo("ISAPBitCommitmentScheme.Properties.Resources", "PluginCaption", "PluginTooltip", "ISAPBitCommitmentScheme/DetailedDescription/doc.xml", "ISAPBitCommitmentScheme/Images/icon.png")]
     [ComponentCategory(ComponentCategory.Protocols)]
-    public class BitCommitmentScheme : ICrypComponent
+    public class ISAPBitCommitmentScheme : ICrypComponent
     {
-        private readonly BitCommitmentSchemeSettings _settings = new BitCommitmentSchemeSettings();
+        private readonly ISAPBitCommitmentSchemeSettings _settings = new ISAPBitCommitmentSchemeSettings();
         private string _logMessage;
         private Wrapper _ISAPalgorithmWrapper = new Wrapper();
 

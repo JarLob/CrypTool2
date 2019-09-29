@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using Cryptool.PluginBase;
 
-namespace BitCommitmentScheme
+namespace ISAPBitCommitmentScheme
 {
-    class BitCommitmentSchemeSettings : ISettings
+    class ISAPBitCommitmentSchemeSettings : ISettings
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public void Initialize()

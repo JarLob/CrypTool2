@@ -502,7 +502,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DCAToyCiphers", "CrypPlugin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatticeCrypto", "CrypPlugins\LatticeCrypto\LatticeCrypto.csproj", "{3F92F927-E6FA-4048-AB98-04D98B82B69E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitCommitmentScheme", "CrypPlugins\BitCommitmentScheme\BitCommitmentScheme.csproj", "{E86CE9A5-BBF2-48E3-80F1-80BD935670EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISAPBitCommitmentScheme", "CrypPlugins\ISAPBitCommitmentScheme\ISAPBitCommitmentScheme.csproj", "{E86CE9A5-BBF2-48E3-80F1-80BD935670EF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlindSignatureGenerator", "CrypPlugins\BlindSignatureGenerator\BlindSignatureGenerator.csproj", "{A965E0DF-B2E6-4A79-8841-ACD415CA0D93}"
 EndProject
