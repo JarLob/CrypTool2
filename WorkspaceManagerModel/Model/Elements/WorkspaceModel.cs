@@ -195,10 +195,10 @@ namespace WorkspaceManager.Model
             pluginModel.Name = pluginType.GetPluginInfoAttribute().Caption;
             pluginModel.RepeatStart = false;
             pluginModel.generateConnectors();
-            pluginModel.Plugin.Initialize();
             pluginModel.Plugin.OnGuiLogNotificationOccured += this.GuiLogMessage;
             pluginModel.Plugin.OnPluginProgressChanged += pluginModel.PluginProgressChanged;
             pluginModel.Plugin.OnPluginStatusChanged += pluginModel.PluginStatusChanged;
+            pluginModel.Plugin.Initialize();
             if (pluginModel.Plugin.Settings != null)
             {
                 pluginModel.Plugin.Settings.PropertyChanged += pluginModel.SettingsPropertyChanged;
