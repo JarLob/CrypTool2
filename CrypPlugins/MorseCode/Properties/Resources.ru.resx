@@ -129,6 +129,12 @@
   <data name="Encode" xml:space="preserve">
     <value>шифровать</value>
   </data>
+  <data name="FrequencyCaption" xml:space="preserve">
+    <value>частота</value>
+  </data>
+  <data name="FrequencyTooltip" xml:space="preserve">
+    <value>Устанавливает частоту тонов Морзе.</value>
+  </data>
   <data name="InputTextCaption" xml:space="preserve">
     <value>Ввод текста</value>
   </data>

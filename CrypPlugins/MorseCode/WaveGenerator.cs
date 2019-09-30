@@ -124,7 +124,7 @@ namespace MorseCode
                     percentageValue = 100 - percentageValue;
                     currentAmplitude = amplitude * ((double)percentageValue / 10);
                 }                
-                int value = (int)Math.Round(currentAmplitude * Math.Sin(2.0 * Math.PI * (((double)i) / 88200.0 * frequency)));
+                int value = (int)Math.Sign(currentAmplitude * Math.Sin(2.0 * Math.PI * (((double)i) / 88200.0 * frequency)));
                 data[i] = (byte)(value);
                 data[i + 1] = (byte)(value);
             }            

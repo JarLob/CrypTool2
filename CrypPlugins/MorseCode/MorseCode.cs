@@ -38,7 +38,7 @@ namespace Cryptool.Plugins.MorseCode
         const int DAH_TIME = 300 / 2;
         const int DIT_DAH_BREAK = 100 / 2;
         const int LETTER_BREAK = 300 / 2;
-        const int WORD_BREAK = 700 / 2;
+        const int WORD_BREAK = 700 / 2;        
 
         /// <summary>
         /// Constructs our mapping and creates our MorseCode object
@@ -174,13 +174,13 @@ namespace Cryptool.Plugins.MorseCode
             {
                 switch (_settings.Action)
                 {
-                    case 0:
+                    case MorseCodeSettings.ActionType.Encode:
                         Encode();
                         break;
-                    case 1:
+                    case MorseCodeSettings.ActionType.Decode:
                         Decode();
                         break;
-                    case 2:
+                    case MorseCodeSettings.ActionType.Play:
                         Play();
                         break;
                 }
@@ -198,10 +198,10 @@ namespace Cryptool.Plugins.MorseCode
                 using (MemoryStream dataStream = new MemoryStream())
                 {                    
                     var dit = new Tone();
-                    dit.GenerateSound(128, 600, DIT_TIME);
+                    dit.GenerateSound(128, _settings.Frequency, DIT_TIME);
 
                     var dah = new Tone();
-                    dah.GenerateSound(128, 600, DAH_TIME);
+                    dah.GenerateSound(128, _settings.Frequency, DAH_TIME);
 
                     var dit_dah_break = new Tone();
                     dit_dah_break.GenerateSound(0, 0, DIT_DAH_BREAK);
@@ -253,11 +253,15 @@ namespace Cryptool.Plugins.MorseCode
                     DateTime end = DateTime.Now.Add(span);
                     soundPlayer.Play();
 
+                    DateTime start = DateTime.Now;
                     while (DateTime.Now < end && !_stopped)
                     {
+                        double percentage = (double)(DateTime.Now.Ticks - start.Ticks) / (double)(end.Ticks - start.Ticks);
+                        ProgressChanged(percentage, 1);
                         Thread.Sleep(5);
                     }
                     soundPlayer.Stop();
+                    ProgressChanged(1, 1);
                 }
             }
         }

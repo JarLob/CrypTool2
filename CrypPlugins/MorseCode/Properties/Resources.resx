@@ -129,6 +129,12 @@
   <data name="Encode" xml:space="preserve">
     <value>Encode</value>
   </data>
+  <data name="FrequencyCaption" xml:space="preserve">
+    <value>Frequency</value>
+  </data>
+  <data name="FrequencyTooltip" xml:space="preserve">
+    <value>Sets the frequency of the morse tones.</value>
+  </data>
   <data name="InputTextCaption" xml:space="preserve">
     <value>Text input</value>
   </data>

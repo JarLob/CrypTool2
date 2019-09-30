@@ -15,31 +15,56 @@
 */
 
 using System.ComponentModel;
+using System.Windows;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.Plugins.MorseCode
 {
     public class MorseCodeSettings : ISettings
-    {
+    {        
+        public enum ActionType
+        {
+            Encode = 0,
+            Decode = 1,
+            Play = 2
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
         #region Private Variables
 
-        private int _action;
-
+        private ActionType _action;
+        private int _frequency = 600;
+        
         #endregion
 
         #region TaskPane Settings
 
-        [TaskPane("ActionCaption", "ActionTooltip", null, 2, false, ControlType.ComboBox, new string[] { "Encode", "Decode", "Play" })]
-        public int Action
+        [TaskPane("ActionCaption", "ActionTooltip", null, 0, false, ControlType.ComboBox, new string[] { "Encode", "Decode", "Play" })]
+        public ActionType Action
         {
             get { return _action; }
             set
             {
                 if (value != _action)
-                {
-                    _action = value;
+                {                    
+                     _action = value;
                     OnPropertyChanged("Action");
+                    Initialize(); // we call this to show and hide settings
+                }
+            }
+        }
+
+        [TaskPane("FrequencyCaption", "FrequencyTooltip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 300, 1200)]
+        public int Frequency
+        {
+            get { return _frequency; }
+            set
+            {
+                if (value != _frequency)
+                {
+                    _frequency = value;
+                    OnPropertyChanged("Frequency");
                 }
             }
         }
@@ -48,15 +73,43 @@ namespace Cryptool.Plugins.MorseCode
 
         #region Events
 
-        public event PropertyChangedEventHandler PropertyChanged;
         public void Initialize()
         {
-            
+            if (Action == ActionType.Play)
+            {
+                //only show frequency and volume settings for play-mode
+                showSettingsElement("Frequency");
+            }
+            else
+            {
+                hideSettingsElement("Frequency");
+            }
         }
 
         private void OnPropertyChanged(string propertyName)
         {
             EventsHelper.PropertyChanged(PropertyChanged, this, propertyName);
+        }
+
+        /// <summary>
+        /// This event is needed in order to render settings elements visible/invisible
+        /// </summary>
+        public event TaskPaneAttributeChangedHandler TaskPaneAttributeChanged;
+
+        private void showSettingsElement(string element)
+        {
+            if (TaskPaneAttributeChanged != null)
+            {
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Visible)));
+            }
+        }
+
+        private void hideSettingsElement(string element)
+        {
+            if (TaskPaneAttributeChanged != null)
+            {
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Collapsed)));
+            }
         }
 
         #endregion

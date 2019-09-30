@@ -19,7 +19,7 @@ namespace MorseCode.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -93,6 +93,24 @@ namespace MorseCode.Properties {
         internal static string Encode {
             get {
                 return ResourceManager.GetString("Encode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Frequency ähnelt.
+        /// </summary>
+        internal static string FrequencyCaption {
+            get {
+                return ResourceManager.GetString("FrequencyCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sets the frequency of the morse tones. ähnelt.
+        /// </summary>
+        internal static string FrequencyTooltip {
+            get {
+                return ResourceManager.GetString("FrequencyTooltip", resourceCulture);
             }
         }
         
