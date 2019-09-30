@@ -18,7 +18,7 @@
   </introduction>
 
   <usage lang="en">
-    The component offers two modes. The "normal" mode allows the format-preserving encryption and decryption of text. The XML mode allows to encrypt or decrypt parts of XML documents, e.g. Credit card numbers, names, etc.
+    The component offers two modes. The "normal" mode allows the format-preserving encryption and decryption of text. The XML mode allows to encrypt or decrypt parts of XML documents, e.g. credit card numbers, names, etc.
 
     Both modes require an alphabet of valid characters.
 
