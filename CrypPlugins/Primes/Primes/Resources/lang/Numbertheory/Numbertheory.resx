@@ -190,13 +190,10 @@
     <value>clockwise</value>
   </data>
   <data name="powermod_execution" xml:space="preserve">
-    <value>{0}. {1} * {2} mod {3} = {4}</value>
-  </data>
-  <data name="powermod_executionfirst" xml:space="preserve">
-    <value>{0}. {1} mod {2} = {3}</value>
+    <value>{0}.	{1}^{2} mod {3} = {4}</value>
   </data>
   <data name="powermod_exponent" xml:space="preserve">
-    <value>Exponent</value>
+    <value>Max. Exponent</value>
   </data>
   <data name="powermod_inputgroupbox" xml:space="preserve">
     <value>Input parameter</value>

@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:comps="clr-namespace:Primes.WpfControls.Components"
     xmlns:lang="clr-namespace:Primes.Resources.lang.Numbertheory"
-    xmlns:this="clr-namespace:Primes.WpfControls.NumberTheory.PowerMod">
+    xmlns:this="clr-namespace:Primes.WpfControls.NumberTheory.PowerMod"
+             xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -106,7 +107,13 @@
 
             </DockPanel>
             <GroupBox Header="{x:Static lang:Numbertheory.powermod_progress}" Grid.Column="1">
-                <comps:LogControl x:Name="log" Title="" />
+                <DockPanel>
+                    <controls:FormulaControl DockPanel.Dock="Top" x:Name="Formula" HorizontalAlignment="Center" 
+                                             TextOptions.TextRenderingMode="ClearType"
+                                             TextOptions.TextHintingMode="Fixed"
+                                             TextOptions.TextFormattingMode="Display" />
+                    <comps:LogControl x:Name="log" Title="" />
+                </DockPanel>
             </GroupBox>
         </Grid>
     </Grid>

@@ -69,9 +69,12 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
 
         void log_RowMouseOver(PrimesBigInteger value)
         {
-            ArrowLine al = null;
-            Polyline pl = null;
-            if (m_ArrowsMark.TryGetValue(value, out al))
+            MarkPath(value);
+        }
+
+        public void MarkPath(PrimesBigInteger iteration)
+        {
+            if (m_ArrowsMark.TryGetValue(iteration, out ArrowLine al))
             {
                 foreach (ArrowLine alTmp in m_ArrowsWithSourceAndDestination.Values)
                 {
@@ -79,7 +82,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                 }
                 al.Stroke = Brushes.Red;
             }
-            else if (m_CirclesMark.TryGetValue(value, out pl))
+            else if (m_CirclesMark.TryGetValue(iteration, out Polyline pl))
             {
                 foreach (Polyline plTmp in m_CirclesSource.Values)
                 {
@@ -586,6 +589,11 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             }
         }
 
+        public void SetFormula()
+        {
+            Formula.Formula = $"{m_Base}^i \\text{{ mod }} {m_Mod} \\text{{          }} i = 1,\\ldots,{m_Exp}";
+        }
+
         private void DoExecuteGraphic()
         {
             FireStartEvent();
@@ -593,6 +601,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             ClearArrows();
             m_SourceDestination.Clear();
             log.Clear();
+            log.Columns = 1;
 
             lock (m_RunningLockObject)
             {
@@ -611,6 +620,8 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                 ControlHandler.SetPropertyValue(e, "Stroke", Brushes.Red);
             }
 
+            ControlHandler.ExecuteMethod(this, nameof(SetFormula), new object[0]);
+
             PrimesBigInteger i = 1;
             while (i <= m_Exp)
             {
@@ -619,14 +630,12 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                 if (result == null)
                 {
                     result = m_Base.Mod(m_Mod);
-                    log.Info(string.Format(Primes.Resources.lang.Numbertheory.Numbertheory.powermod_executionfirst, 1, m_Base, m_Mod, result ));
                 }
                 else
                 {
-                    PrimesBigInteger tmpResult = result;
                     result = (result * m_Base).Mod(m_Mod);
-                    log.Info(string.Format(Primes.Resources.lang.Numbertheory.Numbertheory.powermod_execution, i, tmpResult, m_Base, m_Mod, result ));
                 }
+                log.Info(string.Format(Primes.Resources.lang.Numbertheory.Numbertheory.powermod_execution, i, m_Base, i, m_Mod, result));
 
                 if (lastPoint.X == -1 && lastPoint.Y == -1)
                 {
@@ -745,8 +754,10 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                 {
                     l = m_ArrowsWithSourceAndDestination[pair];
                     ResetLine(counter, l);
-                }
+                }                
             }
+
+            ControlHandler.ExecuteMethod(this, nameof(MarkPath), new object[] { counter });
         }
 
         //class myc : IValueConverter

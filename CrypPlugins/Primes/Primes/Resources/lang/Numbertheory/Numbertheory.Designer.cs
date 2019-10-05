@@ -19,7 +19,7 @@ namespace Primes.Resources.lang.Numbertheory {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Numbertheory {
@@ -277,7 +277,7 @@ namespace Primes.Resources.lang.Numbertheory {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {0}. {1} * {2} mod {3} = {4} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0}.	{1}^{2} mod {3} = {4} ähnelt.
         /// </summary>
         public static string powermod_execution {
             get {
@@ -286,16 +286,7 @@ namespace Primes.Resources.lang.Numbertheory {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {0}. {1} mod {2} = {3} ähnelt.
-        /// </summary>
-        public static string powermod_executionfirst {
-            get {
-                return ResourceManager.GetString("powermod_executionfirst", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Exponent ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Max. Exponent ähnelt.
         /// </summary>
         public static string powermod_exponent {
             get {
