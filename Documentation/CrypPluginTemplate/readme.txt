@@ -1,1 +1,1 @@
-Place the template zip file into 'Visual Studio 2013\Templates\Project Templates'. Do not unpack the zip file.
+Place the template zip file into 'C:\Users\youruser\Documents\Visual Studio 2019\Templates\ProjectTemplates\Visual C#'. Unpack it in folder 'CrypTool 2 Plugin'.
