@@ -273,4 +273,7 @@
   <data name="UseBoolClockList1" xml:space="preserve">
     <value>Использовать внешние часы?</value>
   </data>
+  <data name="RoundNumber" xml:space="preserve">
+    <value>Round: </value>
+  </data>
 </root>

@@ -273,4 +273,18 @@
   <data name="UseBoolClockList1" xml:space="preserve">
     <value>Externen Takt verwenden?</value>
   </data>
+  <data name="MaxRecordedRoundsCaption" xml:space="preserve">
+    <value>Max. aufgezeichnete Rundenergebnisse</value>
+  </data>
+  <data name="MaxRecordedRoundsTooltip" xml:space="preserve">
+    <value>Maximale Runden für die Ergebnisse zwischengespeichert werden</value>
+  </data>  <data name="PresentationShiftCaption" xml:space="preserve">
+    <value>Präsentation um n Runden nach hinten verschieben</value>
+  </data>
+  <data name="PresentationShiftTooltip" xml:space="preserve">
+    <value>Die Präsentation zeigt die Runde, welche so viele Runden vor der aktuellen Runde kam.</value>
+  </data>
+  <data name="RoundNumber" xml:space="preserve">
+    <value>Runde: </value>
+  </data>
 </root>

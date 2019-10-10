@@ -273,4 +273,19 @@
   <data name="UseBoolClockList1" xml:space="preserve">
     <value>Use external clock?</value>
   </data>
+  <data name="MaxRecordedRoundsCaption" xml:space="preserve">
+    <value>Max. intermediate results recorded</value>
+  </data>
+  <data name="MaxRecordedRoundsTooltip" xml:space="preserve">
+    <value>The maximum number of intermediate states (shifts) to keep in memory</value>
+  </data>
+  <data name="PresentationShiftCaption" xml:space="preserve">
+    <value>Rewind count of rounds in presentation</value>
+  </data>
+  <data name="PresentationShiftTooltip" xml:space="preserve">
+    <value>The presentation shows the round that is this many rounds behind the current one</value>
+  </data>
+  <data name="RoundNumber" xml:space="preserve">
+    <value>Round:</value>
+  </data>
 </root>
