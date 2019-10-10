@@ -37,6 +37,7 @@ namespace Cryptool.LFSR
             api = parameters;
             Ids = new Dictionary<object, string>()
             {
+                [api.SeedFlipped] = "SeedFlipped",
                 [api.PresentationShift] = "PresentationShift",
                 [api.Rounds] = "Rounds",
                 [api.MaxRecordedRounds] = "MaxRecordedRounds",
@@ -81,6 +82,18 @@ namespace Cryptool.LFSR
             ValidationType.RangeInteger, 1, int.MaxValue
             )]
         public int Rounds { get => api.Rounds; set => api.Rounds.Set(value); }
+        #endregion
+
+        #region UI binding: api.SeedFlipped <-> NoQuickwatch (attributed property)
+        [TaskPane(
+            "SeedFlippedCaption", "SeedFlippedTooltip",
+            null,
+            2,
+            false,
+            ControlType.CheckBox,
+            "", null
+            )]
+        public bool SeedFlipped { get => api.SeedFlipped; set => api.SeedFlipped.Set(value); }
         #endregion
 
         #region UI binding: api.DisablePresentation <-> NoQuickwatch (attributed property)
@@ -224,44 +237,39 @@ namespace Cryptool.LFSR
         {
             var shift = api.Parameters.PresentationShift.Value;
             var currentRound = api.currentRound; 
-            if (currentRound == null)
+            if (currentRound == null || currentRound.ParentRound.IsNone)
             {
                 deletePresentation();
                 return;
             }
-            int effectiveRoundNr = currentRound.RoundNumber - shift - 1;
-            LFSRRound myRound = currentRound;
-            while (effectiveRoundNr < myRound.RoundNumber)
+            var roundThatHasFinished = api.currentRound.ParentRound.Get(); 
+            LFSRRound presentationRound = roundThatHasFinished;
+            while (presentationRound.RoundNumber > roundThatHasFinished.RoundNumber - shift)
             {
-                if (myRound.ParentRound.IsSome)
+                if (presentationRound.ParentRound.IsSome)
                 {
-                    myRound = myRound.ParentRound.Get();
+                    presentationRound = presentationRound.ParentRound.Get();
                 }
                 else
                 {
-                    if (myRound.RoundNumber == 1)
+                    if (presentationRound.RoundNumber > 1)
                     {
-                        api.Log("Cannot display an earlier round number than number " + myRound.RoundNumber, LogLevels.Info);
-                        deletePresentation();
-                        try
-                        {
-                            this.isResettingShift = true; // lock to prevent infinite recursion
-                            if (api.currentRound == null)
-                            {
-                                api.Parameters.PresentationShift.Value = 0;
-                            }
-                            api.Parameters.PresentationShift.Value = Math.Max(0, api.currentRound.RoundNumber-myRound.RoundNumber);
-                        }
-                        finally { this.isResettingShift = false; }
+                        api.Log(String.Format("Rounds earlier round number {0} are not kept in memory.", presentationRound.RoundNumber), LogLevels.Info);
                     }
+//                     try
+//                     {
+//                         this.isResettingShift = true; // lock to prevent infinite recursion
+//                         api.Parameters.PresentationShift.Value = Math.Max(0, roundThatHasFinished.RoundNumber - presentationRound.RoundNumber);
+//                     }
+//                     finally { this.isResettingShift = false; }
+                    break;
                 }
             }
-            var round = myRound;
-            List<bool> registerContent = round.RegInitial.Bits;
-            List<bool> tapSequence = round.Polynom.taps;
-            Option<bool> output = Some(round.GetShiftOutBit());
-            bool newBit = round.RegAfter.Bits[0];
-            this.showPresentation(registerContent, tapSequence, output, newBit, round.RoundNumber);
+            List<bool> registerContent = presentationRound.RegInitial.Bits;
+            List<bool> tapSequence = presentationRound.Polynom.taps;
+            Option<bool> output = Some(presentationRound.GetShiftOutBit());
+            bool newBit = presentationRound.RegAfter.Bits[0];
+            this.showPresentation(registerContent, tapSequence, output, newBit, presentationRound.RoundNumber);
         }
 
         public void showPresentation(List<bool> registerContent, List<bool> tapSequence, Option<bool> output, bool newBit, int roundNumber)

@@ -288,4 +288,10 @@
   <data name="RoundNumber" xml:space="preserve">
     <value>Round:</value>
   </data>
+  <data name="SeedFlippedCaption" xml:space="preserve">
+    <value>Seed: left bit first in</value>
+  </data>
+  <data name="SeedFlippedTooltip" xml:space="preserve">
+    <value>The seed is initially shifted into the register with the leftmost bit first (so that it appears in the register in flipped order compared to the input)</value>
+  </data>
 </root>

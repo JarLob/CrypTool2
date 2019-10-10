@@ -493,6 +493,24 @@ namespace Cryptool.LFSR.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seed: left bit first in.
+        /// </summary>
+        public static string SeedFlippedCaption {
+            get {
+                return ResourceManager.GetString("SeedFlippedCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The seed is initially shifted into the register with the leftmost bit first (so that it appears in the register in flipped order compared to the input).
+        /// </summary>
+        public static string SeedFlippedTooltip {
+            get {
+                return ResourceManager.GetString("SeedFlippedTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Define the seed (initial state) of the LFSR. For example 11100..
         /// </summary>
         public static string SeedTooltip {

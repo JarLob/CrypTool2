@@ -278,7 +278,8 @@
   </data>
   <data name="MaxRecordedRoundsTooltip" xml:space="preserve">
     <value>Maximale Runden für die Ergebnisse zwischengespeichert werden</value>
-  </data>  <data name="PresentationShiftCaption" xml:space="preserve">
+  </data>
+  <data name="PresentationShiftCaption" xml:space="preserve">
     <value>Präsentation um n Runden nach hinten verschieben</value>
   </data>
   <data name="PresentationShiftTooltip" xml:space="preserve">
@@ -286,5 +287,11 @@
   </data>
   <data name="RoundNumber" xml:space="preserve">
     <value>Runde: </value>
+  </data>
+  <data name="SeedFlippedCaption" xml:space="preserve">
+    <value>Seed: Linked Bit zuerst</value>
+  </data>
+  <data name="SeedFlippedTooltip" xml:space="preserve">
+    <value>Gibt an, ob der Seed mit dem linken Bit zuerst in das Register eingeschoben wird. Dies führt dazu, dass die Eingabezeichenfolge dieselbe Reihenfolge wie die Bits im Shiftregister haben.</value>
   </data>
 </root>

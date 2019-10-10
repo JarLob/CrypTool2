@@ -92,7 +92,7 @@ namespace Cryptool.LFSR
         {
             OnRoundStarting();
             var poly = Fun.ToPoly(InputPoly.Value);
-            var taps = Fun.ToSeed(InputSeed.Value);
+            var taps = Fun.ToSeed(InputSeed.Value, Parameters.SeedFlipped);
             Fun.ValidateNonrecurrentParams((poly, taps));
 
             this.isAlreadyBusy = true;
@@ -128,6 +128,7 @@ namespace Cryptool.LFSR
             {
                 if (!this.Parameters.UseClock)
                 {
+                    // self-propell with a rising clock edge if no external clock is present
                     this.internalClk.Value = false;
                     this.internalClk.Value = true;
                 }
@@ -163,6 +164,7 @@ namespace Cryptool.LFSR
         public Parameter<int> MaxRecordedRounds = new Parameter<int>(100);
         public Parameter<bool> UseClock = new Parameter<bool>(false);
         public Parameter<bool> DisablePresentation = new Parameter<bool>(false);
+        public Parameter<bool> SeedFlipped = new Parameter<bool>(true);
     }
 
     namespace Implementation
@@ -350,6 +352,7 @@ namespace Cryptool.LFSR
                     if (match.Success)
                     {
                         hasMathMatch = true;
+                        if (lastBoolMatchPos > -1) throw new LFSRInputInvalidException(InputInvalidReason.MixedPolyFormat);
                         positions.Add((Convert.ToInt32(match.Groups[1].Value), true));
                     } 
                     else
@@ -357,6 +360,7 @@ namespace Cryptool.LFSR
                         match = boolPos.Match(remaining);
                         if (match.Success)
                         {
+                            if (hasMathMatch) throw new LFSRInputInvalidException(InputInvalidReason.MixedPolyFormat);
                             lastBoolMatchPos++;
                             positions.Add((Convert.ToInt32(lastBoolMatchPos), match.Groups[0].Value == "0" ? false : true));
                         }
@@ -390,7 +394,8 @@ namespace Cryptool.LFSR
 
                 return new Polynom(result);
             }
-            public static ShiftReg ToSeed(String seed)
+
+            public static ShiftReg ToSeed(String seed, bool flipped)
             {
                 var noWhitespace = RemoveWhitespace(seed);
                 var result = new List<Boolean>();
@@ -409,7 +414,12 @@ namespace Cryptool.LFSR
                         throw new LFSRInputInvalidException(InputInvalidReason.IsNoBitstring);
                     }
                 }
-                result.Reverse();
+                // if the seed is read in flipped (in reverse direction of the screen)
+                if (flipped)
+                {
+                    result.Reverse();
+                }
+
                 return new ShiftReg(result);
             }
 
@@ -466,7 +476,8 @@ namespace Cryptool.LFSR
             SeedIsEmpty,
             PolyDoublePos,
             PolyIsUnset,
-            SeedIsUnset
+            SeedIsUnset,
+            MixedPolyFormat
         }
 
         public class LFSRInputInvalidException : LFSRException
@@ -545,30 +556,32 @@ namespace Cryptool.LFSR
                         return string.Format("{0} Input is not well-formed.", inputName);
                     case InputInvalidReason.IsNoBitstring:
                         inputName = seed;
-                        return string.Format("{0} Input is no bitstring", inputName);
+                        return string.Format("{0} Input is no bitstring.", inputName);
                     case InputInvalidReason.RightmostBitNotOne:
                         inputName = poly;
                         return string.Format("{0} Input is no valid tap sequence. The rightmost tap bit must be one.", inputName);
                     case InputInvalidReason.BitstringsNotSameLength:
-                        return string.Format("The two inputs must have the same length");
+                        return string.Format("The two inputs must have the same length.");
                     case InputInvalidReason.ClockTooFast:
                         return string.Format("The clock input changed too fast - the shift register was still calculating feedback.");
                     case InputInvalidReason.PolyIsEmpty:
                         inputName = poly;
-                        return string.Format("{0} Input is empty", inputName);
+                        return string.Format("{0} Input is empty.", inputName);
                     case InputInvalidReason.SeedIsEmpty:
                         inputName = seed;
-                        return string.Format("{0} Input is empty", inputName);
+                        return string.Format("{0} Input is empty.", inputName);
                     case InputInvalidReason.PolyDoublePos:
                         inputName = poly;
                         return string.Format("{0} Input is not well-formed. Reason: Doubly-defined tap position.", inputName);
+                    case InputInvalidReason.MixedPolyFormat:
+                        return string.Format("Polynom input has as well tap-sequence (0/1) as well as power-of-x notation parts which may not be mixed.");
                     default:
-                        return string.Format("Some error with the Inputs of the Component occured", e.context);
+                        return string.Format("Some error with the Inputs of the Component occured.", e.context);
                 }
             }
             else
             {
-                return ex.ToString();
+                return ex.Message;
             }
         }
     }
