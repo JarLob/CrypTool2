@@ -143,6 +143,7 @@ namespace Cryptool.LFSR
                 {
                     Log(ConvertTo.InputErrorToString(e), LogLevels.Warning);
                 }
+                this.ChangeStateToWontcomplete(e);
             }
         }
 
@@ -337,37 +338,59 @@ namespace Cryptool.LFSR
             {
                 var polynom = Fun.RemoveWhitespace(rawPolynomString);
                 List<(int, bool)> positions = new List<(int, bool)>();
-                Regex mathPos = new Regex(@"^x^(\d+)");
+                Regex mathPos = new Regex(@"^(x\^(\d+)|x|1)\+?");
                 Regex boolPos = new Regex(@"^[01]");
 
                 String remaining = polynom;
                 bool hasMathMatch = false;
-                int lastBoolMatchPos = -1;
+                int lastBoolMatchPos = 0;
+                (int,bool) parsedPos = default;
 
                 while(remaining.Length > 0)
                 {
-                    Match match;
+                    int hasParsed = -1;
 
-                    match = mathPos.Match(remaining);
-                    if (match.Success)
+                    //TODO: leading 1+ doesnt work yet
+                    var matchMath = mathPos.Match(remaining);
+                    if (matchMath.Success)
                     {
-                        hasMathMatch = true;
-                        if (lastBoolMatchPos > -1) throw new LFSRInputInvalidException(InputInvalidReason.MixedPolyFormat);
-                        positions.Add((Convert.ToInt32(match.Groups[1].Value), true));
-                    } 
-                    else
-                    {
-                        match = boolPos.Match(remaining);
-                        if (match.Success)
+                        if (hasMathMatch && matchMath.Groups[1].Value.Equals("1"))
                         {
-                            if (hasMathMatch) throw new LFSRInputInvalidException(InputInvalidReason.MixedPolyFormat);
-                            lastBoolMatchPos++;
-                            positions.Add((Convert.ToInt32(lastBoolMatchPos), match.Groups[0].Value == "0" ? false : true));
+                            if (lastBoolMatchPos > 0) throw new LFSRInputInvalidException(InputInvalidReason.MixedPolyFormat);
+
+                            parsedPos = (0, true);
+                            hasParsed = matchMath.Value.Length;
+                            hasMathMatch = true;
                         }
-                    }
-                    if (match.Success)
+                        else if(matchMath.Groups[1].Value.Equals("x"))
+                        {
+                            if (lastBoolMatchPos > 0) throw new LFSRInputInvalidException(InputInvalidReason.MixedPolyFormat);
+                            parsedPos = (1, true);
+                            hasParsed = matchMath.Value.Length;
+                            hasMathMatch = true;
+                        }
+                        else if(matchMath.Groups[0].Value.StartsWith("x"))
+                        {
+                            if (lastBoolMatchPos > 0) throw new LFSRInputInvalidException(InputInvalidReason.MixedPolyFormat);
+                            parsedPos = (Convert.ToInt32(matchMath.Groups[2].Value), true);
+                            hasParsed = matchMath.Value.Length;
+                            hasMathMatch = true;
+                        }
+                    } 
+
+                    var matchBool = boolPos.Match(remaining);
+                    if ((hasParsed<0) && matchBool.Success)
                     {
-                        remaining = remaining.Substring(match.Value.Length);
+                        if (hasMathMatch) throw new LFSRInputInvalidException(InputInvalidReason.MixedPolyFormat);
+                        lastBoolMatchPos++;
+                        parsedPos = (lastBoolMatchPos, matchBool.Groups[0].Value == "0" ? false : true);
+                        hasParsed = matchBool.Value.Length;
+                    }
+
+                    if (hasParsed > -1)
+                    {
+                        positions.Add(parsedPos);
+                        remaining = remaining.Substring(hasParsed);
                         continue;
                     }
                     throw new LFSRErrors.LFSRInputInvalidException(InputInvalidReason.IsMalformedPolynom, remaining);
@@ -379,7 +402,12 @@ namespace Cryptool.LFSR
                     if (setPositions.Contains(pos.Item1)) throw new LFSRErrors.LFSRInputInvalidException(InputInvalidReason.PolyDoublePos, pos);
                     setPositions.Add(pos.Item1);
                 }
+
                 positions.Sort((pos1, pos2) => pos1.Item1 > pos2.Item1 ? 1 : -1);
+                if (positions[0].Item1 == 0)
+                {
+                    positions.RemoveAt(0);
+                }
                 if (! positions[positions.Count-1].Item2)
                 {
                     throw new LFSRErrors.LFSRInputInvalidException(InputInvalidReason.RightmostBitNotOne);
@@ -387,10 +415,10 @@ namespace Cryptool.LFSR
 
                 var result = new List<Boolean>(); 
 
-                for (int i = 0; i < positions.Count; i++) 
+                for (int i = 0; i < positions[positions.Count-1].Item1; i++) 
                     result.Add(false);
                 foreach ((int ord, bool val) pos in positions) 
-                    result[pos.ord] = pos.val;
+                    result[pos.ord-1] = pos.val;
 
                 return new Polynom(result);
             }
