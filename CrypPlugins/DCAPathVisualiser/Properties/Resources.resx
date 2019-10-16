@@ -169,7 +169,7 @@
     <value>Output diff. R2</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>DCA PathVisualiser</value>
+    <value>DCA PathVisualizer</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>This component visualizes the characteristics found by the DCA PathFinder component.</value>

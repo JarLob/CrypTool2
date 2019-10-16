@@ -253,7 +253,7 @@
     <value>Ausgabe</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>DKA ToyCipher</value>
+    <value>DKA-ToyCipher</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Diese Komponente enthält verschiedene symmetrische Algorithmen zur Verschlüsselung. Die Algorithmen sind sehr einfach und kurz, um an ihnen kryptographische Prinzipien oder kryptoanalytische Verfahren demonstrieren zu können.</value>

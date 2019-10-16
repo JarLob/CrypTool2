@@ -169,7 +169,7 @@
     <value>v</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>DKA PfadVisualisierer</value>
+    <value>DKA-PfadVisualisierer</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Diese Komponente visualisiert die durch die PfadFinder-Komponente gefundenen Charakteristiken.</value>

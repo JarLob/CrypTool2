@@ -250,7 +250,7 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die DCA PathVisualiser ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die DCA PathVisualizer ähnelt.
         /// </summary>
         internal static string PluginCaption {
             get {

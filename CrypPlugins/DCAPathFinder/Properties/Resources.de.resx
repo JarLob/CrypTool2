@@ -181,13 +181,13 @@
     <value>Differenzielle Kryptoanalyse Optionen</value>
   </data>
   <data name="DescriptionContent2" xml:space="preserve">
-    <value>Tutorial 1 verwendet Chiffre 1 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet zwei je 16 Bit lange Rundenschlüssel. Es wird eine Verschlüsselungsrunde ausgeführt. In diesem Tutorial werden beide unbekannte Rundenschlüssel wiederhergestellt.</value>
+    <value>Tutorial 1 verwendet Chiffre 1 der DKA-ToyCipher-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet zwei je 16 Bit lange Rundenschlüssel. Es wird eine Verschlüsselungsrunde ausgeführt. In diesem Tutorial werden beide unbekannte Rundenschlüssel wiederhergestellt.</value>
   </data>
   <data name="DescriptionContent3" xml:space="preserve">
-    <value>Tutorial 2 verwendet Chiffre 2 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet vier je 16 Bit lange Rundenschlüssel. Es werden drei Verschlüsselungsrunden ausgeführt. In diesem Tutorial werden alle unbekannte Rundenschlüssel wiederhergestellt.</value>
+    <value>Tutorial 2 verwendet Chiffre 2 der DKA-ToyCipher-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet vier je 16 Bit lange Rundenschlüssel. Es werden drei Verschlüsselungsrunden ausgeführt. In diesem Tutorial werden alle unbekannte Rundenschlüssel wiederhergestellt.</value>
   </data>
   <data name="DescriptionContent4" xml:space="preserve">
-    <value>Tutorial 3 verwendet Chiffre 3 der ToyChiffren-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet sechs je 16 Bit lange Rundenschlüssel. Es werden fünf Verschlüsselungsrunden ausgeführt. In diesem Tutorial werden alle unbekannte Rundenschlüssel wiederhergestellt.</value>
+    <value>Tutorial 3 verwendet Chiffre 3 der DKA-ToyCipher-Komponente. Diese Chiffre arbeitet auf 16 Bit Blöcken und verwendet sechs je 16 Bit lange Rundenschlüssel. Es werden fünf Verschlüsselungsrunden ausgeführt. In diesem Tutorial werden alle unbekannte Rundenschlüssel wiederhergestellt.</value>
   </data>
   <data name="DescriptionHeader" xml:space="preserve">
     <value>Beschreibung der Tutorials</value>
@@ -244,7 +244,7 @@
     <value>Beschreibt den Fluss der Differenzen durch eine Chiffre</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>DKA PfadFinder</value>
+    <value>DKA-PfadFinder</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Diese Komponente sucht in Abhängigkeit von durch den User spezifizierten Parametern nach Differenzialen in einer symmetrischen Blockchiffre.</value>
@@ -259,7 +259,7 @@
     <value>Bereit</value>
   </data>
   <data name="ReadyInputToolTip" xml:space="preserve">
-    <value>Der Bereit-Eingang signalisiert der PfadFinder-Komponente, dass die Schlüsselwiederherstellungs-Komponente ihre Berechnung abgeschlossen hat</value>
+    <value>Der Bereit-Eingang signalisiert der DKA-PfadFinder-Komponente, dass die Schlüsselwiederherstellungs-Komponente ihre Berechnung abgeschlossen hat</value>
   </data>
   <data name="Round" xml:space="preserve">
     <value>Angegriffene Verschlüsselungsrunde:</value>
@@ -517,10 +517,10 @@
     <value>Einführung</value>
   </data>
   <data name="Tutorial1LastSlideContent1" xml:space="preserve">
-    <value>Die DKA wird nun in der KeyRecovery-Komponente weitergeführt.</value>
+    <value>Die DKA wird nun in der DKA-KeyRecovery-Komponente weitergeführt.</value>
   </data>
   <data name="Tutorial1LastSlideContent2Run1" xml:space="preserve">
-    <value>Sie können nun in der KeyRecovery-Komponente die Rundenschlüssel k</value>
+    <value>Sie können nun in der DKA-KeyRecovery-Komponente die Rundenschlüssel k</value>
   </data>
   <data name="Tutorial1LastSlideContent2Run2" xml:space="preserve">
     <value>1</value>
@@ -607,10 +607,10 @@
     <value>Analyse von Chiffre 2</value>
   </data>
   <data name="Tutorial2AttackFinishedContent1" xml:space="preserve">
-    <value>Tutorial 2 zur differenziellen Kryptoanalyse in der DKA PfadFinder-Komponente ist beendet. </value>
+    <value>Tutorial 2 zur differenziellen Kryptoanalyse in der DKA-PfadFinder-Komponente ist beendet. </value>
   </data>
   <data name="Tutorial2AttackFinishedContent2Run1" xml:space="preserve">
-    <value>Durch ein letztes klicken auf Start in der KeyRecovery-Komponente werden die letzten zwei Rundenschlüssel k</value>
+    <value>Durch ein letztes klicken auf Start in der DKA-KeyRecovery-Komponente werden die letzten zwei Rundenschlüssel k</value>
   </data>
   <data name="Tutorial2AttackFinishedContent2Run2" xml:space="preserve">
     <value>1</value>
@@ -703,7 +703,7 @@
     <value> als differenzielle charakteristik unter der Operation der SBox. Wie zuvor gesehen, hat eine differenzielle Charakteristik eine feste Wahrscheinlichkeit.</value>
   </data>
   <data name="Tutorial2CharacteristicSlide1Content3" xml:space="preserve">
-    <value>Ziel bei der Suche ist es einen Weg zu finden, der eine möglichst hohe Wahrscheinlichkeit aufweist. Diese Wege können in der PfadVisualisierer-Komponente graphisch dargestellt werden.</value>
+    <value>Ziel bei der Suche ist es einen Weg zu finden, der eine möglichst hohe Wahrscheinlichkeit aufweist. Diese Wege können in der DKA-PfadVisualisierer-Komponente graphisch dargestellt werden.</value>
   </data>
   <data name="Tutorial2CharacteristicSlide1Header" xml:space="preserve">
     <value>Charakteristiken</value>
@@ -724,7 +724,7 @@
     <value>Die differenziellen Charakteristiken einzelner Runde sollen jetzt zu einem Weg von Differenzen durch die gesamte Chiffre kombiniert werden. Die Suche nach Pfaden mit hoher Wahrscheinlichkeit ist ein aufwändiges und zeitaufwändiges Problem bei Chiffren mit vielen Verschlüsselungsrunden und langen Blöcken.</value>
   </data>
   <data name="Tutorial2CharacteristicSlide3Content2" xml:space="preserve">
-    <value>Die PfadFinder-Komponente verfügt über verschiedene Suchoptionen zur Bestimmung von solchen Pfaden.</value>
+    <value>Die DKA-PfadFinder-Komponente verfügt über verschiedene Suchoptionen zur Bestimmung von solchen Pfaden.</value>
   </data>
   <data name="Tutorial2CharacteristicSlide3Content3" xml:space="preserve">
     <value>Die zuvor eingeführte Notation wird verwendet, um differenzielle Charakteristiken einer Runde zu differenziellen Charakteristiken für n-Verschlüsselungsrunden (hier: 3) zu bezeichnen:</value>
@@ -790,10 +790,10 @@
     <value>Tutorial</value>
   </data>
   <data name="Tutorial2WaitingSlideContent1" xml:space="preserve">
-    <value>Sie können nun in der KeyRecovery-Komponente die in der PfadFinder-Komponente generierte Angriffskonfiguration verwenden, um Schlüsselbits wiederherzustellen. Dazu müssen Sie auf den Start-Button klicken.</value>
+    <value>Sie können nun in der DKA-KeyRecovery-Komponente die in der DKA-PfadFinder-Komponente generierte Angriffskonfiguration verwenden, um Schlüsselbits wiederherzustellen. Dazu müssen Sie auf den Start-Button klicken.</value>
   </data>
   <data name="Tutorial2WaitingSlideContent2" xml:space="preserve">
-    <value>Optional können Sie sich in der PfadVisualiserer-Komponente das ermittelte Differenzial und die darin enthaltenen Charakteristiken anzeigen lassen.</value>
+    <value>Optional können Sie sich in der DKA-PfadVisualiserer-Komponente das ermittelte Differenzial und die darin enthaltenen Charakteristiken anzeigen lassen.</value>
   </data>
   <data name="Tutorial2WaitingSlideHeader" xml:space="preserve">
     <value>Differenzielle Kryptoanalyse wird in den nachfolgenden Komponenten weitergeführt</value>
@@ -874,10 +874,10 @@
     <value> anzugreifen</value>
   </data>
   <data name="Tutorial3WaitingSlideContent1" xml:space="preserve">
-    <value>Sie können nun in der KeyRecovery-Komponente die in der PfadFinder-Komponente generierte Angriffskonfiguration verwenden, um Schlüsselbits wiederherzustellen. Dazu müssen Sie auf den Start-Button klicken.</value>
+    <value>Sie können nun in der DKA-KeyRecovery-Komponente die in der DKA-PfadFinder-Komponente generierte Angriffskonfiguration verwenden, um Schlüsselbits wiederherzustellen. Dazu müssen Sie auf den Start-Button klicken.</value>
   </data>
   <data name="Tutorial3WaitingSlideContent2" xml:space="preserve">
-    <value>Optional können Sie sich in der PfadVisualiserer-Komponente das ermittelte Differenzial und die darin enthaltenen Charakteristiken anzeigen lassen.</value>
+    <value>Optional können Sie sich in der DKA-PfadVisualiserer-Komponente das ermittelte Differenzial und die darin enthaltenen Charakteristiken anzeigen lassen.</value>
   </data>
   <data name="Tutorial3WaitingSlideHeader" xml:space="preserve">
     <value>Differenzielle Kryptoanalyse wird in den nachfolgenden Komponenten weitergeführt</value>
@@ -886,7 +886,7 @@
     <value>3. Durchführung differenziellen Kryptoanalyse</value>
   </data>
   <data name="Tutorial1PracticalDifferentialCryptanalysisSlide1Content2" xml:space="preserve">
-    <value>Durch einen Klick auf Weiter (Rechtspfeil unten) wird der Angriff gestartet. Dazu wird die Kontrolle an die KeyRecovery-Komponente weitergegeben.</value>
+    <value>Durch einen Klick auf Weiter (Rechtspfeil unten) wird der Angriff gestartet. Dazu wird die Kontrolle an die DKA-KeyRecovery-Komponente weitergegeben.</value>
   </data>
   <data name="Tutorial1PracticalDifferentialCryptanalysisSlide1Header" xml:space="preserve">
     <value>Durchführung differenziellen Kryptoanalyse</value>
@@ -1075,10 +1075,10 @@
     <value>Aufgrund der mehrfachen Verschlüsselungsrunden kann diese Chiffre nicht wie Chiffre 1 angegriffen werden. Für Chiffre 2 wird ein Ansatz benötigt, der die Änderungen von Differenzen über mehrere Verschlüsselungsrunden mit einer gewissen Wahrscheinlichkeit vorraussagt.</value>
   </data>
   <data name="Tutorial3AttackFinishedContent1" xml:space="preserve">
-    <value>Tutorial 3 zur differenziellen Kryptoanalyse in der DKA PfadFinder-Komponente ist beendet. </value>
+    <value>Tutorial 3 zur differenziellen Kryptoanalyse in der DKA-PfadFinder-Komponente ist beendet. </value>
   </data>
   <data name="Tutorial3AttackFinishedContent2Run1" xml:space="preserve">
-    <value>Durch ein letztes klicken auf Start in der KeyRecovery-Komponente werden die letzten zwei Rundenschlüssel k</value>
+    <value>Durch ein letztes klicken auf Start in der DKA-KeyRecovery-Komponente werden die letzten zwei Rundenschlüssel k</value>
   </data>
   <data name="Tutorial3AttackFinishedContent2Run2" xml:space="preserve">
     <value>1</value>
@@ -1387,7 +1387,7 @@ sind. Dadurch können lange Berechnungszeiten minimiert werden.</value>
     <value>Zur Bestimmung des Rauschverhältnis sind zum Teil experimentell zu bestimmtende Durchschnittswerte notwendig, wie beispielsweise der Anteil der Paare, die durch die Filterng entfernt werden oder die Durchschnittliche Anzahl der Teilschlüsselkandidaten, die ein Paar vorschlägt.</value>
   </data>
   <data name="Tutorial3SignalToNoiseSlide1Content4" xml:space="preserve">
-    <value>An dieser Stelle sei der interessierte Anwender auf die in der Online-Hilfe der PfadFinder-Komponente hinterlegten Literatur-Angaben hingewiesen.</value>
+    <value>An dieser Stelle sei der interessierte Anwender auf die in der Online-Hilfe der DKA-PfadFinder-Komponente hinterlegten Literatur-Angaben hingewiesen.</value>
   </data>
   <data name="Tutorial3SignalToNoiseSlide1Header" xml:space="preserve">
     <value>Rauschverhältnis</value>
@@ -1426,7 +1426,7 @@ sind. Dadurch können lange Berechnungszeiten minimiert werden.</value>
     <value> durch und jedes Mal, wenn</value>
   </data>
   <data name="Tutorial1DifferentialCryptanalysisSlide1Content2Run2" xml:space="preserve">
-    <value> besteht aus Schlüsseladdition und Substitution. Der Aufbau kann in der ToyChiffre-Komponente betrachtet werden. Wir versuchen nun, die zwei unbekannten Rundenschlüssel k</value>
+    <value> besteht aus Schlüsseladdition und Substitution. Der Aufbau kann in der DKA-ToyCipher-Komponente betrachtet werden. Wir versuchen nun, die zwei unbekannten Rundenschlüssel k</value>
   </data>
   <data name="Tutorial1DifferentialCryptanalysisSlide9bContent6Run1" xml:space="preserve">
     <value>Allerdings können diese Werte nicht direkt mit den internen Werten u</value>
@@ -1468,7 +1468,7 @@ sind. Dadurch können lange Berechnungszeiten minimiert werden.</value>
     <value>Start-Button</value>
   </data>
   <data name="Tutorial1LastSlideContent3Run3" xml:space="preserve">
-    <value>in der KeyRecovery-Komponente klicken.</value>
+    <value>in der DKA-KeyRecovery-Komponente klicken.</value>
   </data>
   <data name="Tutorial1TitleHeaderRun2" xml:space="preserve">
     <value>Differenzielle Kryptoanalyse symmetrischer Blockchiffren</value>
