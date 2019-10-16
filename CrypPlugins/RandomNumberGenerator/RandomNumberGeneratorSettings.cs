@@ -36,7 +36,8 @@ namespace Cryptool.Plugins.RandomNumberGenerator
         RNGCryptoServiceProvider = 1,   //.net RNGCryptoServiceProvider
         X2modN = 2,
         LCG = 3,
-        ICG = 4
+        ICG = 4,
+        SubtractiveGenerator = 5
     }
 
     public enum OutputType
@@ -78,7 +79,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
 
         #region TaskPane Settings
 
-        [TaskPane("AlgorithmTypeCaption", "AlgorithmTypeTooltip", "GeneralSettingsGroup", 0, false, ControlType.ComboBox, new string[] { "Random.Random", "RNGCryptoServiceProvider", "X^2 mod N", "LCG", "ICG" })]
+        [TaskPane("AlgorithmTypeCaption", "AlgorithmTypeTooltip", "GeneralSettingsGroup", 0, false, ControlType.ComboBox, new string[] { "Random.Random", "RNGCryptoServiceProvider", "X^2 mod N", "LCG", "ICG", "Subtractive Generator" })]
         public AlgorithmType AlgorithmType
         {
             get
@@ -224,6 +225,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             _settingsVisibility[AlgorithmType.LCG].Add("Modulus");
             _settingsVisibility[AlgorithmType.LCG].Add("a");
             _settingsVisibility[AlgorithmType.LCG].Add("b");
+            _settingsVisibility[AlgorithmType.SubtractiveGenerator].Add("Seed");
             UpdateTaskPaneVisibility();
         }
 

@@ -25,6 +25,7 @@ using RandomNumberGenerator.Properties;
 using System;
 using Cryptool.PluginBase.IO;
 using System.Security.Cryptography;
+using RandomNumberGenerator;
 
 namespace Cryptool.Plugins.RandomNumberGenerator
 {
@@ -109,6 +110,9 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                 case AlgorithmType.ICG:
                     executedWithoutError = ExecuteICG();
                     break;
+                case AlgorithmType.SubtractiveGenerator:
+                    executedWithoutError = ExecuteXpat2();
+                    break;
                 default:
                     throw new Exception(String.Format("Algorithm type {0} not implemented", _Settings.AlgorithmType.ToString()));
             }
@@ -117,7 +121,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             {
                 ProgressChanged(1, 1);
             }
-        }
+        }      
 
         /// <summary>
         /// This method executes the basic random number generator of .net
@@ -738,6 +742,114 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                     {
                         ICG icgGenerator = new ICG(seed, modulus, a, b, outputlength);
                         _output = icgGenerator.randBit() == 0;
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                default:
+                    throw new Exception(String.Format("Output type {0} not implemented", _Settings.OutputType.ToString()));
+            }
+            return true;
+        }
+
+        private bool ExecuteXpat2()
+        {
+            BigInteger seed;
+            int outputlength;
+            try
+            {
+                seed = BigInteger.Parse(_Settings.Seed);
+            }
+            catch (Exception)
+            {
+                GuiLogMessage(String.Format(Resources.InvalidSeedValue, _Settings.Seed), NotificationLevel.Error);
+                return false;
+            }           
+            if (String.IsNullOrEmpty(_Settings.OutputLength))
+            {
+                outputlength = 0;
+            }
+            else
+            {
+                try
+                {
+                    outputlength = int.Parse(_Settings.OutputLength);
+                }
+                catch (Exception)
+                {
+                    GuiLogMessage(String.Format(Resources.InvalidOutputLength, _Settings.Modulus), NotificationLevel.Error);
+                    return false;
+                }
+            }
+          
+            switch (_Settings.OutputType)
+            {
+                case OutputType.ByteArray:
+                    {
+                        SubtractiveGenerator xpat2Generator = new SubtractiveGenerator(seed, outputlength);
+                        _output = xpat2Generator.generateRNDNums();
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.CrypToolStream:
+                    {
+                        SubtractiveGenerator icgGenerator = new SubtractiveGenerator(seed, outputlength);
+                        byte[] output = icgGenerator.generateRNDNums();
+                        _output = new CStreamWriter(output);
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.Number:
+                    {
+                        SubtractiveGenerator xpat2Generator = new SubtractiveGenerator(seed, outputlength);
+                        byte[] output = xpat2Generator.generateRNDNums();
+                        OnPropertyChanged("Output");
+                        _output = new CStreamWriter(output);
+                        if (output.Length > 0)
+                        {
+                            output[output.Length - 1] &= (byte)0x7F; // set sign bit 0 = positive
+                        }
+                        _output = new BigInteger(output);
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.NumberArray:
+                    {
+                        int outputamount;
+                        if (String.IsNullOrEmpty(_Settings.OutputAmount))
+                        {
+                            outputamount = 1;
+                        }
+                        else
+                        {
+                            try
+                            {
+                                outputamount = int.Parse(_Settings.OutputAmount);
+                            }
+                            catch (Exception)
+                            {
+                                GuiLogMessage(String.Format(Resources.InvalidOutputAmount, _Settings.Modulus), NotificationLevel.Error);
+                                return false;
+                            }
+                        }
+                        BigInteger[] array = new BigInteger[outputamount];
+                        SubtractiveGenerator xpat2Generator = new SubtractiveGenerator(seed, outputlength);
+                        for (int i = 0; i < outputamount; i++)
+                        {
+                            byte[] output = xpat2Generator.generateRNDNums();
+                            if (output.Length > 0)
+                            {
+                                output[output.Length - 1] &= (byte)0x7F; // set sign bit 0 = positive
+                            }
+                            array[i] = new BigInteger(output);
+                        }
+                        _output = array;
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.Bool:
+                    {
+                        SubtractiveGenerator xpat2Generator = new SubtractiveGenerator(seed, outputlength);
+                        _output = xpat2Generator.randBit() == 0;
                         OnPropertyChanged("Output");
                     }
                     break;

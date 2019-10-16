@@ -129,6 +129,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="SubtractiveGenerator.cs" />
     <Compile Include="X2.cs" />
   </ItemGroup>
   <ItemGroup>

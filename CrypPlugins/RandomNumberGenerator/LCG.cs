@@ -73,7 +73,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
         /// </summary>
         public override void randomize()
         {
-            RandNo= (A * RandNo + B) % Modulus;
+            RandNo = (A * RandNo + B) % Modulus;
         }
     }
 }
