@@ -70,7 +70,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Choice of the algorithm ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Choice of algorithm ähnelt.
         /// </summary>
         internal static string ChoiceOfAlgorithm {
             get {
@@ -79,7 +79,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die At this point one of the algorithms contained in the list can be selected. This algorithm can be examined by differential cryptanalysis. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Here you can select one of the ciphers contained in the list. It can then be examined by differential cryptanalysis. ähnelt.
         /// </summary>
         internal static string ChoiceOfAlgorithmToolTop {
             get {
@@ -97,7 +97,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Data is encrypted or decrypted depending on the selected operating option ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Data is encrypted or decrypted depending on the selected operating option. ähnelt.
         /// </summary>
         internal static string ChoiceOfModeToolTop {
             get {
@@ -106,7 +106,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 1: 16 bit blocksize, 2 subkeys, 32 bit keylength ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 1: 16 bit block size, 2 round keys, 32 bit key length ähnelt.
         /// </summary>
         internal static string Cipher1 {
             get {
@@ -124,7 +124,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Inputblock ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input block ähnelt.
         /// </summary>
         internal static string Cipher1LblInputBlock {
             get {
@@ -133,7 +133,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Outpublock ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output block ähnelt.
         /// </summary>
         internal static string Cipher1LblOutputBlock {
             get {
@@ -142,7 +142,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This block cipher works on 16 bit blocks. One encryption round is executed using a total of two round keys. The following steps are performed in the encryption round: Key addition, substitution and key addition. The round keys have a size of 16 bits, the SBoxes each process 4 bits. The keylength is 32 bit. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This block cipher works on 16 bit blocks. One encryption round is executed using a total of two round keys. The following steps are performed in the encryption round: Key addition, substitution and key addition. The round keys are 16 bits long, the S boxes each process 4 bits. The key length is therefore 32 bits. ähnelt.
         /// </summary>
         internal static string Cipher1LblText {
             get {
@@ -151,7 +151,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 2: 16 bit blocksize, 4 subkeys, 64 bit keylength ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 2: 16 bit block size, 4 round keys, 64 bit key length ähnelt.
         /// </summary>
         internal static string Cipher2 {
             get {
@@ -169,7 +169,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Inputblock ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input block ähnelt.
         /// </summary>
         internal static string Cipher2LblInputBlock {
             get {
@@ -178,7 +178,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Outpublock ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output block ähnelt.
         /// </summary>
         internal static string Cipher2LblOutputBlock {
             get {
@@ -187,7 +187,9 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This block cipher works on 16 bit blocks. Three encryption rounds are performed, whereby a total of four round keys are used. Two round keys are used in the last encryption round. Each round consists of three sub-steps: key addition, substitution and permutation - in the last round the permutation is omitted. The round keys have a size of 16 bits, the SBoxes each process 4 bits. The keylength is 64 bit. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This block cipher works on 16 bit blocks. Three encryption rounds are performed, whereby a total of four round keys are used. Two round keys are used in the last encryption round. Each round consists of three sub-steps: key addition, substitution and permutation - in the last round the permutation is omitted and the last round key is added. The round keys are 16 bits long, the S boxes each process 4 bits. The key length is thus 64 bits.
+        ///
+        /// ähnelt.
         /// </summary>
         internal static string Cipher2LblText {
             get {
@@ -196,7 +198,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 3: 16 bit blocksize, 6 subkeys, 96 bit keylength ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 3: 16 bit block size, 6 round keys, 96 bit key length ähnelt.
         /// </summary>
         internal static string Cipher3 {
             get {
@@ -214,7 +216,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Inputblock ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input block ähnelt.
         /// </summary>
         internal static string Cipher3LblInputBlock {
             get {
@@ -223,7 +225,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Outputblock ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output block ähnelt.
         /// </summary>
         internal static string Cipher3LblOutputBlock {
             get {
@@ -232,7 +234,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This block cipher works on 16 bit blocks. 5 encryption rounds are performed, whereby a total of six round keys are used. In the last encryption round two round keys are used. Each round consists of three sub-steps: key addition, substitution and permutation - in the last round the permutation unfolds and the last round key is added. The round keys are 16 bits in size, the SBoxes each process 4 bits. The keylength is 96 bit.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This block cipher works on 16 bit blocks. 5 encryption rounds are performed, whereby a total of six round keys are used. In the last encryption round two round keys are used. Each round consists of three sub-steps: key addition, substitution and permutation - in the last round the permutation unfolds and the last round key is added. The round keys are 16 bits long, the S boxes each process 4 bits. The key length is thus 96 bits.
         ///
         /// ähnelt.
         /// </summary>
@@ -243,7 +245,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 4: 4 bit blocksize, 4 subkeys, 16 bit keylength ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 4: 4 bit block size , 4 round keys, 16 bit key length ähnelt.
         /// </summary>
         internal static string Cipher4 {
             get {
@@ -261,7 +263,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Inputblock ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input block ähnelt.
         /// </summary>
         internal static string Cipher4LblInputBlock {
             get {
@@ -270,7 +272,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Outputblock ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output block ähnelt.
         /// </summary>
         internal static string Cipher4LblOutputBlock {
             get {
@@ -279,7 +281,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This block cipher works on 4 bit blocks. Three encryption rounds are performed, whereby a total of four round keys are used. Two round keys are used in the last encryption round. Each round consists of two sub-steps: key addition and substitution. In the last round, the last round key is then added. The round keys have a size of 4 bits and the SBoxes each work on 4 bits.  The keylength is 16 bit. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This block cipher works on 4 bit blocks. Three encryption rounds are performed, whereby a total of four round keys are used. Two round keys are used in the last encryption round. Each round consists of two sub-steps: key addition and substitution. In the last round, the last round key is then added. The lap keys are 4 bits long and the S boxes each work on 4 bits. The key length is thus 16 bits. ähnelt.
         /// </summary>
         internal static string Cipher4LblText {
             get {
@@ -288,7 +290,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Feal-4 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die FEAL-4 ähnelt.
         /// </summary>
         internal static string Cipher5 {
             get {
@@ -315,7 +317,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The permutation swaps the fixed position i of an input bit to a position j in the output. The following table describes the permutation, with the first line representing the decimal position of a bit in the input and the second line representing the position of the corresponding bit in the output. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The permutation swaps the fixed position i of an input bit to a position j in the output. The following table describes the permutation, with the first row representing the position of a bit in the input and the second row representing the position of the corresponding bit in the output. ähnelt.
         /// </summary>
         internal static string DescPermutation {
             get {
@@ -324,7 +326,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The SBox substitutes fixed input bits for other output bits. The following table describes the SBox, where the first line represents the value of the input bits and the second line represents the output bits. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The S box substitutes fixed input bits for other output bits. The following table describes the SBox, where the first line represents the value of the input bits and the second line represents the output bits. ähnelt.
         /// </summary>
         internal static string DescSBox {
             get {
@@ -333,7 +335,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Table of the permutation: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Table of permutation: ähnelt.
         /// </summary>
         internal static string HeaderPermutation {
             get {
@@ -342,7 +344,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Table of the SBox: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Table of S box: ähnelt.
         /// </summary>
         internal static string HeaderSBox {
             get {
@@ -405,7 +407,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input for the plaintext / ciphertext (depending on selected operating mode) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Eingang für den Klartext / Geheimtext (je nach gewähltem Betriebsmodus) ähnelt.
         /// </summary>
         internal static string MessageInputTooltip {
             get {
@@ -423,7 +425,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output for the plaintext / ciphertext (depending on selected operating mode) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input for plain text / ciphertext (depending on selected operating mode) ähnelt.
         /// </summary>
         internal static string MessageOutputTooltip {
             get {
@@ -450,7 +452,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Operating options ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Modes of operation ähnelt.
         /// </summary>
         internal static string OperatingOptions {
             get {
@@ -477,7 +479,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This component contains various symmetric algorithms for encryption. The algorithms are very simple and short to demonstrate cryptographic principles or cryptoanalytical methods. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This component contains several symmetric block ciphers for encryption. The ciphers are very simple and short to demonstrate cryptographic principles or cryptoanalytic methods. ähnelt.
         /// </summary>
         internal static string PluginTooltip {
             get {
@@ -486,7 +488,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Position of input ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Position in input ähnelt.
         /// </summary>
         internal static string TablePermutationInput {
             get {
@@ -495,7 +497,7 @@ namespace DCAToyCiphers.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Position of output ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Position in output ähnelt.
         /// </summary>
         internal static string TablePermutationOutput {
             get {

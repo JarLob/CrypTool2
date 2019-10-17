@@ -121,81 +121,83 @@
     <value>Switch view</value>
   </data>
   <data name="ChoiceOfAlgorithm" xml:space="preserve">
-    <value>Choice of the algorithm</value>
+    <value>Choice of algorithm</value>
   </data>
   <data name="ChoiceOfAlgorithmToolTop" xml:space="preserve">
-    <value>At this point one of the algorithms contained in the list can be selected. This algorithm can be examined by differential cryptanalysis.</value>
+    <value>Here you can select one of the ciphers contained in the list. It can then be examined by differential cryptanalysis.</value>
   </data>
   <data name="ChoiceOfMode" xml:space="preserve">
     <value>Encrypt/Decrypt</value>
   </data>
   <data name="ChoiceOfModeToolTop" xml:space="preserve">
-    <value>Data is encrypted or decrypted depending on the selected operating option</value>
+    <value>Data is encrypted or decrypted depending on the selected operating option.</value>
   </data>
   <data name="Cipher1" xml:space="preserve">
-    <value>Cipher 1: 16 bit blocksize, 2 subkeys, 32 bit keylength</value>
+    <value>Cipher 1: 16 bit block size, 2 round keys, 32 bit key length</value>
   </data>
   <data name="Cipher1LblHeading" xml:space="preserve">
     <value>Cipher 1</value>
   </data>
   <data name="Cipher1LblInputBlock" xml:space="preserve">
-    <value>Inputblock</value>
+    <value>Input block</value>
   </data>
   <data name="Cipher1LblOutputBlock" xml:space="preserve">
-    <value>Outpublock</value>
+    <value>Output block</value>
   </data>
   <data name="Cipher1LblText" xml:space="preserve">
-    <value>This block cipher works on 16 bit blocks. One encryption round is executed using a total of two round keys. The following steps are performed in the encryption round: Key addition, substitution and key addition. The round keys have a size of 16 bits, the SBoxes each process 4 bits. The keylength is 32 bit.</value>
+    <value>This block cipher works on 16 bit blocks. One encryption round is executed using a total of two round keys. The following steps are performed in the encryption round: Key addition, substitution and key addition. The round keys are 16 bits long, the S boxes each process 4 bits. The key length is therefore 32 bits.</value>
   </data>
   <data name="Cipher2" xml:space="preserve">
-    <value>Cipher 2: 16 bit blocksize, 4 subkeys, 64 bit keylength</value>
+    <value>Cipher 2: 16 bit block size, 4 round keys, 64 bit key length</value>
   </data>
   <data name="Cipher2LblHeading" xml:space="preserve">
     <value>Cipher 2</value>
   </data>
   <data name="Cipher2LblInputBlock" xml:space="preserve">
-    <value>Inputblock</value>
+    <value>Input block</value>
   </data>
   <data name="Cipher2LblOutputBlock" xml:space="preserve">
-    <value>Outpublock</value>
+    <value>Output block</value>
   </data>
   <data name="Cipher2LblText" xml:space="preserve">
-    <value>This block cipher works on 16 bit blocks. Three encryption rounds are performed, whereby a total of four round keys are used. Two round keys are used in the last encryption round. Each round consists of three sub-steps: key addition, substitution and permutation - in the last round the permutation is omitted. The round keys have a size of 16 bits, the SBoxes each process 4 bits. The keylength is 64 bit.</value>
+    <value>This block cipher works on 16 bit blocks. Three encryption rounds are performed, whereby a total of four round keys are used. Two round keys are used in the last encryption round. Each round consists of three sub-steps: key addition, substitution and permutation - in the last round the permutation is omitted and the last round key is added. The round keys are 16 bits long, the S boxes each process 4 bits. The key length is thus 64 bits.
+
+</value>
   </data>
   <data name="Cipher3" xml:space="preserve">
-    <value>Cipher 3: 16 bit blocksize, 6 subkeys, 96 bit keylength</value>
+    <value>Cipher 3: 16 bit block size, 6 round keys, 96 bit key length</value>
   </data>
   <data name="Cipher3LblHeading" xml:space="preserve">
     <value>Cipher 3</value>
   </data>
   <data name="Cipher3LblInputBlock" xml:space="preserve">
-    <value>Inputblock</value>
+    <value>Input block</value>
   </data>
   <data name="Cipher3LblOutputBlock" xml:space="preserve">
-    <value>Outputblock</value>
+    <value>Output block</value>
   </data>
   <data name="Cipher3LblText" xml:space="preserve">
-    <value>This block cipher works on 16 bit blocks. 5 encryption rounds are performed, whereby a total of six round keys are used. In the last encryption round two round keys are used. Each round consists of three sub-steps: key addition, substitution and permutation - in the last round the permutation unfolds and the last round key is added. The round keys are 16 bits in size, the SBoxes each process 4 bits. The keylength is 96 bit.
+    <value>This block cipher works on 16 bit blocks. 5 encryption rounds are performed, whereby a total of six round keys are used. In the last encryption round two round keys are used. Each round consists of three sub-steps: key addition, substitution and permutation - in the last round the permutation unfolds and the last round key is added. The round keys are 16 bits long, the S boxes each process 4 bits. The key length is thus 96 bits.
 
 </value>
   </data>
   <data name="Cipher4" xml:space="preserve">
-    <value>Cipher 4: 4 bit blocksize, 4 subkeys, 16 bit keylength</value>
+    <value>Cipher 4: 4 bit block size , 4 round keys, 16 bit key length</value>
   </data>
   <data name="Cipher4LblHeading" xml:space="preserve">
     <value>Cipher 4</value>
   </data>
   <data name="Cipher4LblInputBlock" xml:space="preserve">
-    <value>Inputblock</value>
+    <value>Input block</value>
   </data>
   <data name="Cipher4LblOutputBlock" xml:space="preserve">
-    <value>Outputblock</value>
+    <value>Output block</value>
   </data>
   <data name="Cipher4LblText" xml:space="preserve">
-    <value>This block cipher works on 4 bit blocks. Three encryption rounds are performed, whereby a total of four round keys are used. Two round keys are used in the last encryption round. Each round consists of two sub-steps: key addition and substitution. In the last round, the last round key is then added. The round keys have a size of 4 bits and the SBoxes each work on 4 bits.  The keylength is 16 bit.</value>
+    <value>This block cipher works on 4 bit blocks. Three encryption rounds are performed, whereby a total of four round keys are used. Two round keys are used in the last encryption round. Each round consists of two sub-steps: key addition and substitution. In the last round, the last round key is then added. The lap keys are 4 bits long and the S boxes each work on 4 bits. The key length is thus 16 bits.</value>
   </data>
   <data name="Cipher5" xml:space="preserve">
-    <value>Feal-4</value>
+    <value>FEAL-4</value>
   </data>
   <data name="CipherDetails" xml:space="preserve">
     <value>Details</value>
@@ -204,16 +206,16 @@
     <value>Cipher</value>
   </data>
   <data name="DescPermutation" xml:space="preserve">
-    <value>The permutation swaps the fixed position i of an input bit to a position j in the output. The following table describes the permutation, with the first line representing the decimal position of a bit in the input and the second line representing the position of the corresponding bit in the output.</value>
+    <value>The permutation swaps the fixed position i of an input bit to a position j in the output. The following table describes the permutation, with the first row representing the position of a bit in the input and the second row representing the position of the corresponding bit in the output.</value>
   </data>
   <data name="DescSBox" xml:space="preserve">
-    <value>The SBox substitutes fixed input bits for other output bits. The following table describes the SBox, where the first line represents the value of the input bits and the second line represents the output bits.</value>
+    <value>The S box substitutes fixed input bits for other output bits. The following table describes the SBox, where the first line represents the value of the input bits and the second line represents the output bits.</value>
   </data>
   <data name="HeaderPermutation" xml:space="preserve">
-    <value>Table of the permutation:</value>
+    <value>Table of permutation:</value>
   </data>
   <data name="HeaderSBox" xml:space="preserve">
-    <value>Table of the SBox:</value>
+    <value>Table of S box:</value>
   </data>
   <data name="Input" xml:space="preserve">
     <value>Input</value>
@@ -234,13 +236,13 @@
     <value>Plaintext / Ciphertext</value>
   </data>
   <data name="MessageInputTooltip" xml:space="preserve">
-    <value>Input for the plaintext / ciphertext (depending on selected operating mode)</value>
+    <value>Eingang für den Klartext / Geheimtext (je nach gewähltem Betriebsmodus)</value>
   </data>
   <data name="MessageOutput" xml:space="preserve">
     <value>Plaintext / Ciphertext</value>
   </data>
   <data name="MessageOutputTooltip" xml:space="preserve">
-    <value>Output for the plaintext / ciphertext (depending on selected operating mode)</value>
+    <value>Input for plain text / ciphertext (depending on selected operating mode)</value>
   </data>
   <data name="Mode1" xml:space="preserve">
     <value>Encrypt</value>
@@ -249,7 +251,7 @@
     <value>Decrypt</value>
   </data>
   <data name="OperatingOptions" xml:space="preserve">
-    <value>Operating options</value>
+    <value>Modes of operation</value>
   </data>
   <data name="Output" xml:space="preserve">
     <value>Output</value>
@@ -258,12 +260,12 @@
     <value>DCA ToyCipher</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>This component contains various symmetric algorithms for encryption. The algorithms are very simple and short to demonstrate cryptographic principles or cryptoanalytical methods.</value>
+    <value>This component contains several symmetric block ciphers for encryption. The ciphers are very simple and short to demonstrate cryptographic principles or cryptoanalytic methods.</value>
   </data>
   <data name="TablePermutationInput" xml:space="preserve">
-    <value>Position of input</value>
+    <value>Position in input</value>
   </data>
   <data name="TablePermutationOutput" xml:space="preserve">
-    <value>Position of output</value>
+    <value>Position in output</value>
   </data>
 </root>
