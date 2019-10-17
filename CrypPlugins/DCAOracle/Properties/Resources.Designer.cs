@@ -133,7 +133,7 @@ namespace DCAOracle.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The count of message pairs must be greater than 0! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The number of message pairs must be greater than 0! ähnelt.
         /// </summary>
         internal static string WarningMessageCountMustBeSpecified {
             get {

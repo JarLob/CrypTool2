@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AnyRoundAttackDataColHeader1" xml:space="preserve">
-    <value>Key candidate</value>
+    <value>key candidate</value>
   </data>
   <data name="AnyRoundAttackDataColHeader2" xml:space="preserve">
-    <value>Hitcount</value>
+    <value>Number of hits</value>
   </data>
   <data name="AnyRoundAttackDataColHeader3" xml:space="preserve">
     <value>Probability</value>
@@ -142,19 +142,19 @@
     <value>Status</value>
   </data>
   <data name="AnyRoundExpectedHitCount" xml:space="preserve">
-    <value>Expected hitcount:</value>
+    <value>Expected number of hits:</value>
   </data>
   <data name="AnyRoundExpectedProbability" xml:space="preserve">
     <value>Expected probability:</value>
   </data>
   <data name="AnyRoundMessagePairCount" xml:space="preserve">
-    <value>Count of Messagepairs:</value>
+    <value>Count of message pairs:</value>
   </data>
   <data name="AnyRoundRecoveredRoundKey" xml:space="preserve">
-    <value>Recovered roundkey:</value>
+    <value>Recovered round key:</value>
   </data>
   <data name="AttackLastRoundHeader" xml:space="preserve">
-    <value>{0} key restore</value>
+    <value>{0} key recovery</value>
   </data>
   <data name="AutomaticMode" xml:space="preserve">
     <value>Automatic mode</value>
@@ -175,22 +175,22 @@
     <value>Start</value>
   </data>
   <data name="ChoiceOfAlgorithm" xml:space="preserve">
-    <value>Cipher selection</value>
+    <value>Choice of cipher</value>
   </data>
   <data name="ChoiceOfAlgorithmToolTop" xml:space="preserve">
-    <value>At this point one of the ciphers contained in the list can be selected. This cipher can be examined by differential cryptanalysis.</value>
+    <value>At this point, you can select one of the ciphers contained in the list. This can be examined by differential cryptanalysis.</value>
   </data>
   <data name="Cipher1" xml:space="preserve">
-    <value>Cipher 1 (16 bit blocksize, 2 subkeys, keylength is 32 bit)</value>
+    <value>Cipher 1 (16 bit block size, 2 round keys, 32 bit key length)</value>
   </data>
   <data name="Cipher1CipherViewCol" xml:space="preserve">
-    <value>Key candidate</value>
+    <value>key candidate</value>
   </data>
-  <data name="Cipher1SummaryResultViewTotalSummary1" xml:space="preserve">
+  <data name="Cipher1SummaryResultViewTotalSummary" xml:space="preserve">
     <value>Total</value>
   </data>
   <data name="Cipher2" xml:space="preserve">
-    <value>Cipher 2 (16 bit blocksize, 4 subkeys, keylength is 64 bit)</value>
+    <value>Cipher 2 (16 bit block size, 4 round keys, 64 bit key length)</value>
   </data>
   <data name="Cipher2SummaryResultViewRound1" xml:space="preserve">
     <value>Round 1</value>
@@ -205,7 +205,7 @@
     <value>Total</value>
   </data>
   <data name="Cipher3" xml:space="preserve">
-    <value>Cipher 3 (16 bit blocksize, 6 subkeys, keylength is 96 bit)</value>
+    <value>Cipher 3 (16 bit block size, 6 round keys, 96 bit key length)</value>
   </data>
   <data name="Cipher3SummaryResultViewRound1" xml:space="preserve">
     <value>Round 1</value>
@@ -232,19 +232,25 @@
     <value>Input for the differential</value>
   </data>
   <data name="EncryptedMessagePairsInput" xml:space="preserve">
-    <value>Ciphertext-pairs</value>
+    <value>ciphertext message pairs</value>
   </data>
   <data name="EncryptedMessagePairsInputToolTip" xml:space="preserve">
-    <value>Input for the ciphertext-pairs</value>
+    <value>Input for the ciphertext message pairs</value>
+  </data>
+  <data name="ExpectedDifferential" xml:space="preserve">
+    <value>Expected difference</value>
+  </data>
+  <data name="ExpectedDifferentialToolTip" xml:space="preserve">
+    <value>Output for the expected difference</value>
   </data>
   <data name="FinishedOutput" xml:space="preserve">
     <value>Finished</value>
   </data>
   <data name="FinishedOutputToolTip" xml:space="preserve">
-    <value>The output indicates to the PathFinder component that the calculation has been completed</value>
+    <value>The output indicates to the DCA PathFinder component that the calculation has been completed.</value>
   </data>
   <data name="Lang" xml:space="preserve">
-    <value>ENG</value>
+    <value>GER</value>
   </data>
   <data name="LastRoundAttackCurrentCiphertext" xml:space="preserve">
     <value>Current ciphertext:</value>
@@ -253,7 +259,7 @@
     <value>Current key candidate:</value>
   </data>
   <data name="LastRoundAttackCurrentKeyOfAll" xml:space="preserve">
-    <value>Number of keys to test:</value>
+    <value>Number of keys to be tested:</value>
   </data>
   <data name="LastRoundAttackCurrentPlaintext" xml:space="preserve">
     <value>Current plaintext:</value>
@@ -271,13 +277,13 @@
     <value>Expected difference:</value>
   </data>
   <data name="LastRoundAttackNumberOfExaminedPairs" xml:space="preserve">
-    <value>Examined plaintext/keytext pairs:</value>
+    <value>Examined plaintext/ciphertext pairs:</value>
   </data>
   <data name="LastRoundAttackRemainingKeyCandidates" xml:space="preserve">
     <value>Remaining key candidates:</value>
   </data>
   <data name="LastRoundAttackRound" xml:space="preserve">
-    <value>Attacked round:</value>
+    <value>Attacked encryption round:</value>
   </data>
   <data name="LastRoundAttackRoundResults" xml:space="preserve">
     <value>Iterations</value>
@@ -289,46 +295,46 @@
     <value>Status</value>
   </data>
   <data name="MessageDifferenceOutput" xml:space="preserve">
-    <value>Expected difference</value>
+    <value>Expected difference:</value>
   </data>
   <data name="MessageDifferenceOutputToolTip" xml:space="preserve">
     <value>Output for the expected difference</value>
   </data>
   <data name="MessageNoResult" xml:space="preserve">
-    <value>The last subkeys could not be restored. This can happen if one of the previous subkeys was incorrectly calculated. Possibly the parameters in the PathFinder component should be selected again.</value>
+    <value>The last round keys could not be restored. This can happen if one of the previous round keys was incorrectly calculated. Possibly the parameters in the DCA PathFinder component should be selected again.</value>
   </data>
   <data name="NeededMessageCountOutput" xml:space="preserve">
-    <value>Message pair count</value>
+    <value>Number of message pairs</value>
   </data>
   <data name="NeededMessageCountOutputToolTip" xml:space="preserve">
-    <value>Input for the message pair count</value>
+    <value>Output for the number of requested message pairs</value>
   </data>
   <data name="nextStepTextRun1" xml:space="preserve">
-    <value>The differential cryptanalysis has to be</value>
+    <value>Differential cryptanalysis is continued in the</value>
   </data>
   <data name="nextStepTextRun2" xml:space="preserve">
-    <value>continued in the PathFinder component</value>
+    <value>DCA PathFinder componend</value>
   </data>
   <data name="PerformanceSettingsGroup" xml:space="preserve">
-    <value>Speed settings</value>
+    <value>speed options</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>DCA KeyRecovery</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>This component performs recovery of key bits from round keys.</value>
+    <value>This component performs the recovery of key bits from round keys.</value>
   </data>
   <data name="RoundKeysOutput" xml:space="preserve">
-    <value>Roundkeys</value>
+    <value>Round keys</value>
   </data>
   <data name="RoundKeysOutputToolTip" xml:space="preserve">
-    <value>Output for the roundkeys</value>
+    <value>Output of the round keys</value>
   </data>
   <data name="SummaryResultViewCountOfDecryptions" xml:space="preserve">
-    <value>Decryption count:</value>
+    <value>Number of decryptions:</value>
   </data>
   <data name="SummaryResultViewCountOfMessages" xml:space="preserve">
-    <value>Message count:</value>
+    <value>Number of messages:</value>
   </data>
   <data name="SummaryResultViewCurrentRound" xml:space="preserve">
     <value>Attacked encryption round:</value>
@@ -337,28 +343,28 @@
     <value>End:</value>
   </data>
   <data name="SummaryResultViewRecoveredK0" xml:space="preserve">
-    <value>Recovered subkey K0:</value>
+    <value>Restored round key K0:</value>
   </data>
   <data name="SummaryResultViewRecoveredK1" xml:space="preserve">
-    <value>Recovered subkey K1:</value>
+    <value>Restored round key K1:</value>
   </data>
   <data name="SummaryResultViewRecoveredK2" xml:space="preserve">
-    <value>Recovered subkey K2:</value>
+    <value>Restored round key K2:</value>
   </data>
   <data name="SummaryResultViewRecoveredK3" xml:space="preserve">
-    <value>Recovered subkey K3:</value>
+    <value>Restored round key K3:</value>
   </data>
   <data name="SummaryResultViewRecoveredK4" xml:space="preserve">
-    <value>Recovered subkey K4:</value>
+    <value>Restored round key K4:</value>
   </data>
   <data name="SummaryResultViewRecoveredK5" xml:space="preserve">
-    <value>Recovered subkey K5:</value>
+    <value>Restored round key K5:</value>
   </data>
   <data name="SummaryResultViewStartTime" xml:space="preserve">
     <value>Start:</value>
   </data>
   <data name="SummaryResultViewTestedKeys" xml:space="preserve">
-    <value>Tried keys:</value>
+    <value>Tested keys:</value>
   </data>
   <data name="TabItemHeaderCipher" xml:space="preserve">
     <value>Detailed view</value>
@@ -367,10 +373,10 @@
     <value>Round status</value>
   </data>
   <data name="TabItemHeaderSummary" xml:space="preserve">
-    <value>Full status</value>
+    <value>Overall status</value>
   </data>
   <data name="ThreadCount" xml:space="preserve">
-    <value>Usable threads</value>
+    <value>Threads to be used</value>
   </data>
   <data name="ThreadCountToolTip" xml:space="preserve">
     <value>Specifies the number of threads to use for the calculation.</value>
@@ -388,9 +394,9 @@
     <value>Determines whether the user interface is updated during calculations or only after the calculation has been completed. This setting affects the execution speed of the component.</value>
   </data>
   <data name="UnencryptedMessagePairsInput" xml:space="preserve">
-    <value>Plaintext-pairs</value>
+    <value>Plaintext message pairs</value>
   </data>
   <data name="UnencryptedMessagePairsInputToolTip" xml:space="preserve">
-    <value>Input for the plaintext-pairs</value>
+    <value>Input for the plaintext message pairs</value>
   </data>
 </root>

@@ -117,20 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActiveSBoxes" xml:space="preserve">
+    <value>Active S boxes:</value>
+  </data>
+  <data name="Characteristics" xml:space="preserve">
+    <value>Characteristics</value>
+  </data>
   <data name="ChoiceOfAlgorithm" xml:space="preserve">
-    <value>Choice of the algorithm</value>
+    <value>Choice of the cipher</value>
   </data>
   <data name="ChoiceOfAlgorithmToolTop" xml:space="preserve">
-    <value>At this point, you can select one of the ciphers contained in the list. This one is used to display the differential.</value>
+    <value>At this point, you can select one of the ciphers contained in the list. This is used to display the differential.</value>
   </data>
   <data name="Cipher1" xml:space="preserve">
-    <value>Cipher 1 (16 bit blocksize, 2 subkeys, 32 bit keylength)</value>
+    <value>Cipher 1 (16 bit block size, 2 round keys, 32 bit key length)</value>
   </data>
   <data name="Cipher2" xml:space="preserve">
-    <value>Cipher 2 (16 bit blocksize, 4 subkeys, 64 bit keylength)</value>
+    <value>Cipher 2 (16 bit block size, 4 round keys, 64 bit key length)</value>
   </data>
   <data name="Cipher3" xml:space="preserve">
-    <value>Cipher 3 (16 bit blocksize, 6 subkeys, 96 bit keylength)</value>
+    <value>Cipher 3 (16 bit block size, 6 round keys, 96 bit key length)</value>
   </data>
   <data name="CountOfDifferentials" xml:space="preserve">
     <value>#Characteristics:</value>
@@ -142,31 +148,70 @@
     <value>Differential</value>
   </data>
   <data name="DifferentialInputToolTip" xml:space="preserve">
-    <value>Input of the differential to show </value>
+    <value>Input of the differential to be visualized</value>
   </data>
   <data name="ExpectedDifferential" xml:space="preserve">
     <value>Expected difference:</value>
-  </data>
-  <data name="InputDiffR3Header1Run1" xml:space="preserve">
-    <value>Expected Diff.</value>
   </data>
   <data name="InputDifferential" xml:space="preserve">
     <value>Input difference:</value>
   </data>
   <data name="InputDiffHeader1" xml:space="preserve">
-    <value>Input diff.</value>
+    <value>Input difference</value>
   </data>
-  <data name="InputDiffR1Header1" xml:space="preserve">
-    <value>Input diff. R1</value>
+  <data name="InputDiffR1Header1Run1" xml:space="preserve">
+    <value>u</value>
   </data>
-  <data name="InputDiffR2Header1" xml:space="preserve">
-    <value>Input diff. R2</value>
+  <data name="InputDiffR1Header1Run2" xml:space="preserve">
+    <value>1</value>
   </data>
-  <data name="OutputDiffR1Header1" xml:space="preserve">
-    <value>Output diff. R1</value>
+  <data name="InputDiffR2Header1Run1" xml:space="preserve">
+    <value>u</value>
   </data>
-  <data name="OutputDiffR2Header1" xml:space="preserve">
-    <value>Output diff. R2</value>
+  <data name="InputDiffR2Header1Run2" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="InputDiffR3Header1Run1" xml:space="preserve">
+    <value>u</value>
+  </data>
+  <data name="InputDiffR3Header1Run2" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="InputDiffR4Header1Run1" xml:space="preserve">
+    <value>u</value>
+  </data>
+  <data name="InputDiffR4Header1Run2" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="InputDiffR5Header1Run1" xml:space="preserve">
+    <value>u</value>
+  </data>
+  <data name="InputDiffR5Header1Run2" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="OutputDiffR1Header1Run1" xml:space="preserve">
+    <value>v</value>
+  </data>
+  <data name="OutputDiffR1Header1Run2" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="OutputDiffR2Header1Run1" xml:space="preserve">
+    <value>v</value>
+  </data>
+  <data name="OutputDiffR2Header1Run2" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="OutputDiffR3Header1Run1" xml:space="preserve">
+    <value>v</value>
+  </data>
+  <data name="OutputDiffR3Header1Run2" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="OutputDiffR4Header1Run1" xml:space="preserve">
+    <value>v</value>
+  </data>
+  <data name="OutputDiffR4Header1Run2" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>DCA PathVisualizer</value>
@@ -176,42 +221,6 @@
   </data>
   <data name="Probability" xml:space="preserve">
     <value>Probability:</value>
-  </data>
-  <data name="Round" xml:space="preserve">
-    <value>Attacked encryption round:</value>
-  </data>
-  <data name="TabItemHeaderCipher" xml:space="preserve">
-    <value>Characteristic visualisation</value>
-  </data>
-  <data name="TabItemHeaderTable" xml:space="preserve">
-    <value>Characteristics table</value>
-  </data>
-  <data name="ActiveSBoxes" xml:space="preserve">
-    <value>Active SBoxes:</value>
-  </data>
-  <data name="WarningWrongAlgorithm" xml:space="preserve">
-    <value>The wrong cipher is selected in the DCA PathVisualiser component. Please check the configuration of the component.</value>
-  </data>
-  <data name="TableHeaderLastRoundExpectedDiff" xml:space="preserve">
-    <value>Depending on the message pair</value>
-  </data>
-  <data name="TableHeaderLastRoundInputDiff" xml:space="preserve">
-    <value>Depending on the message pair</value>
-  </data>
-  <data name="TableHeaderLastRoundProbability" xml:space="preserve">
-    <value>Depending on the difference that occurs</value>
-  </data>
-  <data name="String1" xml:space="preserve">
-    <value>Characteristics</value>
-  </data>
-  <data name="InputDiffR3Header1Run2" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="OutputDiffR3Header1Run1" xml:space="preserve">
-    <value>Differenz v</value>
-  </data>
-  <data name="OutputDiffR3Header1Run2" xml:space="preserve">
-    <value>3</value>
   </data>
   <data name="R1" xml:space="preserve">
     <value>Round 1</value>
@@ -227,5 +236,26 @@
   </data>
   <data name="R5" xml:space="preserve">
     <value>Round 5</value>
+  </data>
+  <data name="Round" xml:space="preserve">
+    <value>Attacked encryption round:</value>
+  </data>
+  <data name="TabItemHeaderCipher" xml:space="preserve">
+    <value>Characteristic visualization</value>
+  </data>
+  <data name="TabItemHeaderTable" xml:space="preserve">
+    <value>Characteristic table</value>
+  </data>
+  <data name="TableHeaderLastRoundExpectedDiff" xml:space="preserve">
+    <value>Depending on the message pair</value>
+  </data>
+  <data name="TableHeaderLastRoundInputDiff" xml:space="preserve">
+    <value>Depending on the message pair</value>
+  </data>
+  <data name="TableHeaderLastRoundProbability" xml:space="preserve">
+    <value>Depending on the difference that occurs</value>
+  </data>
+  <data name="WarningWrongAlgorithm" xml:space="preserve">
+    <value>The wrong cipher is selected in the DCA PathVisualizer component. Please check the configuration of the component.</value>
   </data>
 </root>

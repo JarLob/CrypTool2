@@ -77,13 +77,14 @@ namespace DCAKeyRecovery.Logic.Cipher1
             DifferentialAttackLastRoundResult result = new DifferentialAttackLastRoundResult();
             ResultViewLastRoundEventArgs lastRoundEventArgsIterationResultViewLastRound = null;
             int decryptionCounter = 0;
+            int keyCounter = 0;
             usedPairCount = 2;
             int roundCounter = 0;
             double progress = 0.0;
             ProgressEventArgs e;
 
             List<int> possibleKeyList = new List<int>();
-            for (int i = 0; i < 65535; i++)
+            for (int i = 0; i <= 65535; i++)
             {
                 possibleKeyList.Add(i);
             }
@@ -160,6 +161,7 @@ namespace DCAKeyRecovery.Logic.Cipher1
                     UInt16 decryptedRightMember = (ushort)(encryptedPair.RightMember ^ item);
                     decryptionCounter++;
                     decryptionCounter++;
+                    keyCounter++;
 
                     decryptedLeftMember = ReverseSBoxBlock(decryptedLeftMember);
                     decryptedRightMember = ReverseSBoxBlock(decryptedRightMember);
@@ -298,6 +300,7 @@ namespace DCAKeyRecovery.Logic.Cipher1
             result.SubKey0 = (ushort) (cipherText ^ plainText);
 
             decryptionCounter++;
+            keyCounter++;
 
             inc = 1.0 - progress;
             progress = 1.0;
@@ -320,7 +323,8 @@ namespace DCAKeyRecovery.Logic.Cipher1
             }
 
             result.DecryptionCounter = decryptionCounter;
-
+            result.KeyCounter = keyCounter;
+            
             return result;
         }
 

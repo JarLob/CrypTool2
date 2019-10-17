@@ -247,7 +247,7 @@
     <value>Fertig</value>
   </data>
   <data name="FinishedOutputToolTip" xml:space="preserve">
-    <value>Der Ausgang zeigt der PfadFinder-Komponente an, dass die Berechnung abgeschlossen ist</value>
+    <value>Der Ausgang zeigt der DKA-PfadFinder-Komponente an, dass die Berechnung abgeschlossen ist</value>
   </data>
   <data name="Lang" xml:space="preserve">
     <value>GER</value>
@@ -301,7 +301,7 @@
     <value>Ausgang für die erwartete Differenz</value>
   </data>
   <data name="MessageNoResult" xml:space="preserve">
-    <value>Die letzten Rundenschlüssel konnten nicht wiederhergestellt werden. Das kann passieren, wenn einer der vorigen Rundenschlüssel falsch berechnet wurde. Möglicherweise sollten die Parameter in der PfadFinder-Komponente neu gewählt werden.</value>
+    <value>Die letzten Rundenschlüssel konnten nicht wiederhergestellt werden. Das kann passieren, wenn einer der vorigen Rundenschlüssel falsch berechnet wurde. Möglicherweise sollten die Parameter in der DKA-PfadFinder-Komponente neu gewählt werden.</value>
   </data>
   <data name="NeededMessageCountOutput" xml:space="preserve">
     <value>Anzahl Nachrichtenpaare</value>
@@ -313,7 +313,7 @@
     <value>Die differenzielle Kryptoanalyse wird in der</value>
   </data>
   <data name="nextStepTextRun2" xml:space="preserve">
-    <value>PfadFinder-Komponente fortgesetzt</value>
+    <value>DKA-PfadFinder-Komponente fortgesetzt</value>
   </data>
   <data name="PerformanceSettingsGroup" xml:space="preserve">
     <value>Geschwindigkeitsoptionen</value>

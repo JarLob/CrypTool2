@@ -23,5 +23,6 @@ namespace DCAKeyRecovery.Logic
         public UInt16 SubKey0 = 0;
         public UInt16 SubKey1 = 0;
         public int DecryptionCounter = 0;
+        public int KeyCounter = 0;
     }
 }

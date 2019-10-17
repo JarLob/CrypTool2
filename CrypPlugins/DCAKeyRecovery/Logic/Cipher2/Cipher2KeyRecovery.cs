@@ -99,9 +99,10 @@ namespace DCAKeyRecovery.Logic.Cipher2
             int roundCounter = 0;
             double progress = 0.0;
             ProgressEventArgs e;
+            int keyCounter = 0;
 
             List<int> possibleKeyList = new List<int>();
-            for (int i = 0; i < 65535; i++)
+            for (int i = 0; i <= 65535; i++)
             {
                 possibleKeyList.Add(i);
             }
@@ -168,14 +169,11 @@ namespace DCAKeyRecovery.Logic.Cipher2
                         return null;
                     }
 
-                    UInt16 decryptedLeftMember =
-                        (UInt16) (ReverseSBoxBlock(ReversePBoxBlock(PartialDecrypt(attack, encryptedPair.LeftMember))) ^
-                                  item);
-                    UInt16 decryptedRightMember =
-                        (UInt16) (ReverseSBoxBlock(
-                                      ReversePBoxBlock(PartialDecrypt(attack, encryptedPair.RightMember))) ^ item);
+                    UInt16 decryptedLeftMember = (UInt16) (ReverseSBoxBlock(ReversePBoxBlock(PartialDecrypt(attack, encryptedPair.LeftMember))) ^ item);
+                    UInt16 decryptedRightMember = (UInt16) (ReverseSBoxBlock( ReversePBoxBlock(PartialDecrypt(attack, encryptedPair.RightMember))) ^ item);
                     decryptionCounter++;
                     decryptionCounter++;
+                    keyCounter++;
 
                     decryptedLeftMember = ReverseSBoxBlock(ReversePBoxBlock(decryptedLeftMember));
                     decryptedRightMember = ReverseSBoxBlock(ReversePBoxBlock(decryptedRightMember));
@@ -350,6 +348,7 @@ namespace DCAKeyRecovery.Logic.Cipher2
             }
 
             decryptionCounter++;
+            keyCounter++;
 
             //refresh UI
             if (lastRoundEventArgsIterationResultViewLastRound != null)
@@ -362,6 +361,7 @@ namespace DCAKeyRecovery.Logic.Cipher2
             }
 
             result.DecryptionCounter = decryptionCounter;
+            result.KeyCounter = keyCounter;
 
             return result;
         }

@@ -160,7 +160,7 @@
     <value>Output block</value>
   </data>
   <data name="Cipher2LblText" xml:space="preserve">
-    <value>This block cipher works on 16 bit blocks. Three encryption rounds are performed, whereby a total of four round keys are used. Two round keys are used in the last encryption round. Each round consists of three sub-steps: key addition, substitution and permutation - in the last round the permutation is omitted and the last round key is added. The round keys are 16 bits long, the S boxes each process 4 bits. The key length is thus 64 bits.
+    <value>This block cipher works on 16 bit blocks. Three encryption rounds are performed, whereby a total of four round keys are used. Two round keys are used in the last encryption round. Each round consists of three sub-steps: key addition, substitution and permutation &#x2013; in the last round the permutation is omitted and the last round key is added. The round keys are 16 bits long, the S boxes each process 4 bits. The key length is thus 64 bits.
 
 </value>
   </data>
@@ -177,7 +177,7 @@
     <value>Output block</value>
   </data>
   <data name="Cipher3LblText" xml:space="preserve">
-    <value>This block cipher works on 16 bit blocks. 5 encryption rounds are performed, whereby a total of six round keys are used. In the last encryption round two round keys are used. Each round consists of three sub-steps: key addition, substitution and permutation - in the last round the permutation unfolds and the last round key is added. The round keys are 16 bits long, the S boxes each process 4 bits. The key length is thus 96 bits.
+    <value>This block cipher works on 16 bit blocks. 5 encryption rounds are performed, whereby a total of six round keys are used. In the last encryption round two round keys are used. Each round consists of three sub-steps: key addition, substitution and permutation &#x2013; in the last round the permutation unfolds and the last round key is added. The round keys are 16 bits long, the S boxes each process 4 bits. The key length is thus 96 bits.
 
 </value>
   </data>

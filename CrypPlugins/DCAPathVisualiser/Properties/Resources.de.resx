@@ -172,7 +172,7 @@
     <value>DKA-PfadVisualisierer</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Diese Komponente visualisiert die durch die PfadFinder-Komponente gefundenen Charakteristiken.</value>
+    <value>Diese Komponente visualisiert die durch die DKA-PfadFinder-Komponente gefundenen Charakteristiken.</value>
   </data>
   <data name="Probability" xml:space="preserve">
     <value>Wahrscheinlichkeit:</value>
@@ -187,10 +187,10 @@
     <value>Charakteristik-Tabelle</value>
   </data>
   <data name="ActiveSBoxes" xml:space="preserve">
-    <value>Aktive SBoxen:</value>
+    <value>Aktive S-Boxen:</value>
   </data>
   <data name="WarningWrongAlgorithm" xml:space="preserve">
-    <value>In der DKA PfadVisualisierer-Komponente ist die falsche Chiffre ausgewählt. Bitte prüfen Sie die Konfiguration der Komponente. </value>
+    <value>In der DKA-PfadVisualisierer-Komponente ist die falsche Chiffre ausgewählt. Bitte prüfen Sie die Konfiguration der Komponente. </value>
   </data>
   <data name="TableHeaderLastRoundExpectedDiff" xml:space="preserve">
     <value>Abhängig vom Nachrichtenpaar</value>

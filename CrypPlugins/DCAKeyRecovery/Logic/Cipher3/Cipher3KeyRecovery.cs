@@ -105,6 +105,7 @@ namespace DCAKeyRecovery.Logic.Cipher3
             DifferentialAttackLastRoundResult result = new DifferentialAttackLastRoundResult();
             ResultViewLastRoundEventArgs lastRoundEventArgsIterationResultViewLastRound = null;
 
+            int keyCounter = 0;
             int decryptionCounter = 0;
             usedPairCount = 2;
             int roundCounter = 0;
@@ -112,7 +113,7 @@ namespace DCAKeyRecovery.Logic.Cipher3
             ProgressEventArgs e;
 
             List<int> possibleKeyList = new List<int>();
-            for (int i = 0; i < 65535; i++)
+            for (int i = 0; i <= 65535; i++)
             {
                 possibleKeyList.Add(i);
             }
@@ -184,6 +185,7 @@ namespace DCAKeyRecovery.Logic.Cipher3
                                       ReversePBoxBlock(PartialDecrypt(attack, encryptedPair.RightMember))) ^ item);
                     decryptionCounter++;
                     decryptionCounter++;
+                    keyCounter++;
 
                     decryptedLeftMember = ReverseSBoxBlock(ReversePBoxBlock(decryptedLeftMember));
                     decryptedRightMember = ReverseSBoxBlock(ReversePBoxBlock(decryptedRightMember));
@@ -337,15 +339,11 @@ namespace DCAKeyRecovery.Logic.Cipher3
             UInt16 plainText = inputPair2.LeftMember;
             UInt16 cipherText = encryptedPair2.LeftMember;
 
-            cipherText = (UInt16) (ReverseSBoxBlock(ReversePBoxBlock(PartialDecrypt(attack, cipherText))) ^
-                                   result.SubKey1);
+            cipherText = (UInt16) (ReverseSBoxBlock(ReversePBoxBlock(PartialDecrypt(attack, cipherText))) ^ result.SubKey1);
             cipherText = ReverseSBoxBlock(ReversePBoxBlock(cipherText));
-            ;
-
             result.SubKey0 = (ushort) (cipherText ^ plainText);
 
             inc = 1.0 - progress;
-            progress = 1.0;
             e = new ProgressEventArgs()
             {
                 Increment = inc
@@ -357,6 +355,7 @@ namespace DCAKeyRecovery.Logic.Cipher3
             }
 
             decryptionCounter++;
+            keyCounter++;
 
             //refresh UI
             if (lastRoundEventArgsIterationResultViewLastRound != null)
@@ -367,6 +366,7 @@ namespace DCAKeyRecovery.Logic.Cipher3
             }
 
             result.DecryptionCounter = decryptionCounter;
+            result.KeyCounter = keyCounter;
 
             return result;
         }
@@ -512,6 +512,7 @@ namespace DCAKeyRecovery.Logic.Cipher3
             ProgressEventArgs e = null;
 
             Cipher3DifferentialKeyRecoveryAttack c3Attack = attack as Cipher3DifferentialKeyRecoveryAttack;
+
             int partialKey = 0;
 
             switch (configuration.Round)
@@ -599,8 +600,7 @@ namespace DCAKeyRecovery.Logic.Cipher3
                         currentKeyCandidate = Convert.ToString((ushort)curTry.Key, 2).PadLeft(16, '0'),
                         currentKeysToTestThisRound = loopBorder,
                         currentRecoveredRoundKey = Convert.ToString((ushort)partialKey, 2).PadLeft(16, '0'),
-                        expectedDifference =
-                            Convert.ToString((ushort)configuration.ExpectedDifference, 2).PadLeft(16, '0'),
+                        expectedDifference = Convert.ToString((ushort)configuration.ExpectedDifference, 2).PadLeft(16, '0'),
                         expectedHitCount = (int)(configuration.Probability * configuration.UnfilteredPairList.Count),
                         messagePairCountToExamine = configuration.FilteredPairList.Count
                     };
@@ -627,10 +627,8 @@ namespace DCAKeyRecovery.Logic.Cipher3
                     encryptedPair.RightMember = PartialDecrypt(attack, encryptedPair.RightMember);
 
                     //reverse round with the guessed key
-                    UInt16 leftMemberSingleDecrypted = DecryptSingleRound(encryptedPair.LeftMember, curTry.Key,
-                        configuration.IsBeforeLast, configuration.IsLast);
-                    UInt16 rightMemberSingleDecrypted = DecryptSingleRound(encryptedPair.RightMember, curTry.Key,
-                        configuration.IsBeforeLast, configuration.IsLast);
+                    UInt16 leftMemberSingleDecrypted = DecryptSingleRound(encryptedPair.LeftMember, curTry.Key, configuration.IsBeforeLast, configuration.IsLast);
+                    UInt16 rightMemberSingleDecrypted = DecryptSingleRound(encryptedPair.RightMember, curTry.Key, configuration.IsBeforeLast, configuration.IsLast);
 
                     if (configuration.IsLast)
                     {
@@ -731,8 +729,7 @@ namespace DCAKeyRecovery.Logic.Cipher3
             roundResult.PossibleKey = bestPossibleKey.Key;
             roundResult.Probability = bestPossibleKey.Counter / (double) configuration.UnfilteredPairList.Count;
             roundResult.ExpectedProbability = configuration.Probability;
-            roundResult.KeyCandidateProbabilities = roundResult.KeyCandidateProbabilities
-                .OrderByDescending(item => item.Counter).ToList();
+            roundResult.KeyCandidateProbabilities = roundResult.KeyCandidateProbabilities.OrderByDescending(item => item.Counter).ToList();
 
             return roundResult;
         }

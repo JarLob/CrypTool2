@@ -61,7 +61,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Key candidate ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die key candidate ähnelt.
         /// </summary>
         internal static string AnyRoundAttackDataColHeader1 {
             get {
@@ -70,7 +70,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hitcount ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of hits ähnelt.
         /// </summary>
         internal static string AnyRoundAttackDataColHeader2 {
             get {
@@ -133,7 +133,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Expected hitcount: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Expected number of hits: ähnelt.
         /// </summary>
         internal static string AnyRoundExpectedHitCount {
             get {
@@ -151,7 +151,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Count of Messagepairs: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Count of message pairs: ähnelt.
         /// </summary>
         internal static string AnyRoundMessagePairCount {
             get {
@@ -160,7 +160,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Recovered roundkey: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Recovered round key: ähnelt.
         /// </summary>
         internal static string AnyRoundRecoveredRoundKey {
             get {
@@ -169,7 +169,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {0} key restore ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0} key recovery ähnelt.
         /// </summary>
         internal static string AttackLastRoundHeader {
             get {
@@ -232,7 +232,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher selection ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Choice of cipher ähnelt.
         /// </summary>
         internal static string ChoiceOfAlgorithm {
             get {
@@ -241,7 +241,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die At this point one of the ciphers contained in the list can be selected. This cipher can be examined by differential cryptanalysis. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die At this point, you can select one of the ciphers contained in the list. This can be examined by differential cryptanalysis. ähnelt.
         /// </summary>
         internal static string ChoiceOfAlgorithmToolTop {
             get {
@@ -250,7 +250,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 1 (16 bit blocksize, 2 subkeys, keylength is 32 bit) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 1 (16 bit block size, 2 round keys, 32 bit key length) ähnelt.
         /// </summary>
         internal static string Cipher1 {
             get {
@@ -259,7 +259,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Key candidate ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die key candidate ähnelt.
         /// </summary>
         internal static string Cipher1CipherViewCol {
             get {
@@ -270,14 +270,14 @@ namespace DCAKeyRecovery.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Total ähnelt.
         /// </summary>
-        internal static string Cipher1SummaryResultViewTotalSummary1 {
+        internal static string Cipher1SummaryResultViewTotalSummary {
             get {
-                return ResourceManager.GetString("Cipher1SummaryResultViewTotalSummary1", resourceCulture);
+                return ResourceManager.GetString("Cipher1SummaryResultViewTotalSummary", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 2 (16 bit blocksize, 4 subkeys, keylength is 64 bit) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 2 (16 bit block size, 4 round keys, 64 bit key length) ähnelt.
         /// </summary>
         internal static string Cipher2 {
             get {
@@ -322,7 +322,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 3 (16 bit blocksize, 6 subkeys, keylength is 96 bit) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 3 (16 bit block size, 6 round keys, 96 bit key length) ähnelt.
         /// </summary>
         internal static string Cipher3 {
             get {
@@ -403,7 +403,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext-pairs ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die ciphertext message pairs ähnelt.
         /// </summary>
         internal static string EncryptedMessagePairsInput {
             get {
@@ -412,11 +412,29 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input for the ciphertext-pairs ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input for the ciphertext message pairs ähnelt.
         /// </summary>
         internal static string EncryptedMessagePairsInputToolTip {
             get {
                 return ResourceManager.GetString("EncryptedMessagePairsInputToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Expected difference ähnelt.
+        /// </summary>
+        internal static string ExpectedDifferential {
+            get {
+                return ResourceManager.GetString("ExpectedDifferential", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output for the expected difference ähnelt.
+        /// </summary>
+        internal static string ExpectedDifferentialToolTip {
+            get {
+                return ResourceManager.GetString("ExpectedDifferentialToolTip", resourceCulture);
             }
         }
         
@@ -430,7 +448,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The output indicates to the PathFinder component that the calculation has been completed ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The output indicates to the DCA PathFinder component that the calculation has been completed. ähnelt.
         /// </summary>
         internal static string FinishedOutputToolTip {
             get {
@@ -439,7 +457,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die ENG ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die GER ähnelt.
         /// </summary>
         internal static string Lang {
             get {
@@ -466,7 +484,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Number of keys to test: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of keys to be tested: ähnelt.
         /// </summary>
         internal static string LastRoundAttackCurrentKeyOfAll {
             get {
@@ -520,7 +538,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Examined plaintext/keytext pairs: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Examined plaintext/ciphertext pairs: ähnelt.
         /// </summary>
         internal static string LastRoundAttackNumberOfExaminedPairs {
             get {
@@ -538,7 +556,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Attacked round: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Attacked encryption round: ähnelt.
         /// </summary>
         internal static string LastRoundAttackRound {
             get {
@@ -574,7 +592,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Expected difference ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Expected difference: ähnelt.
         /// </summary>
         internal static string MessageDifferenceOutput {
             get {
@@ -592,7 +610,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The last subkeys could not be restored. This can happen if one of the previous subkeys was incorrectly calculated. Possibly the parameters in the PathFinder component should be selected again. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The last round keys could not be restored. This can happen if one of the previous round keys was incorrectly calculated. Possibly the parameters in the DCA PathFinder component should be selected again. ähnelt.
         /// </summary>
         internal static string MessageNoResult {
             get {
@@ -601,7 +619,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Message pair count ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of message pairs ähnelt.
         /// </summary>
         internal static string NeededMessageCountOutput {
             get {
@@ -610,7 +628,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input for the message pair count ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output for the number of requested message pairs ähnelt.
         /// </summary>
         internal static string NeededMessageCountOutputToolTip {
             get {
@@ -619,7 +637,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The differential cryptanalysis has to be ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differential cryptanalysis is continued in the ähnelt.
         /// </summary>
         internal static string nextStepTextRun1 {
             get {
@@ -628,7 +646,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die continued in the PathFinder component ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die DCA PathFinder componend ähnelt.
         /// </summary>
         internal static string nextStepTextRun2 {
             get {
@@ -637,7 +655,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Speed settings ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die speed options ähnelt.
         /// </summary>
         internal static string PerformanceSettingsGroup {
             get {
@@ -655,7 +673,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This component performs recovery of key bits from round keys. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This component performs the recovery of key bits from round keys. ähnelt.
         /// </summary>
         internal static string PluginTooltip {
             get {
@@ -664,7 +682,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Roundkeys ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round keys ähnelt.
         /// </summary>
         internal static string RoundKeysOutput {
             get {
@@ -673,7 +691,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output for the roundkeys ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output of the round keys ähnelt.
         /// </summary>
         internal static string RoundKeysOutputToolTip {
             get {
@@ -682,7 +700,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Decryption count: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of decryptions: ähnelt.
         /// </summary>
         internal static string SummaryResultViewCountOfDecryptions {
             get {
@@ -691,7 +709,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Message count: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of messages: ähnelt.
         /// </summary>
         internal static string SummaryResultViewCountOfMessages {
             get {
@@ -718,7 +736,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Recovered subkey K0: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restored round key K0: ähnelt.
         /// </summary>
         internal static string SummaryResultViewRecoveredK0 {
             get {
@@ -727,7 +745,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Recovered subkey K1: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restored round key K1: ähnelt.
         /// </summary>
         internal static string SummaryResultViewRecoveredK1 {
             get {
@@ -736,7 +754,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Recovered subkey K2: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restored round key K2: ähnelt.
         /// </summary>
         internal static string SummaryResultViewRecoveredK2 {
             get {
@@ -745,7 +763,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Recovered subkey K3: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restored round key K3: ähnelt.
         /// </summary>
         internal static string SummaryResultViewRecoveredK3 {
             get {
@@ -754,7 +772,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Recovered subkey K4: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restored round key K4: ähnelt.
         /// </summary>
         internal static string SummaryResultViewRecoveredK4 {
             get {
@@ -763,7 +781,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Recovered subkey K5: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restored round key K5: ähnelt.
         /// </summary>
         internal static string SummaryResultViewRecoveredK5 {
             get {
@@ -781,7 +799,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tried keys: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tested keys: ähnelt.
         /// </summary>
         internal static string SummaryResultViewTestedKeys {
             get {
@@ -808,7 +826,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Full status ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Overall status ähnelt.
         /// </summary>
         internal static string TabItemHeaderSummary {
             get {
@@ -817,7 +835,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Usable threads ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Threads to be used ähnelt.
         /// </summary>
         internal static string ThreadCount {
             get {
@@ -871,7 +889,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext-pairs ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext message pairs ähnelt.
         /// </summary>
         internal static string UnencryptedMessagePairsInput {
             get {
@@ -880,7 +898,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input for the plaintext-pairs ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input for the plaintext message pairs ähnelt.
         /// </summary>
         internal static string UnencryptedMessagePairsInputToolTip {
             get {

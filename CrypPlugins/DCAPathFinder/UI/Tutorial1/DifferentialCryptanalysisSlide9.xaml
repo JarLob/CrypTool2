@@ -14,12 +14,12 @@
             <RowDefinition Height="40" />
             <RowDefinition Height="70" />
             <RowDefinition Height="20" />
-            <RowDefinition Height="65" />
+            <RowDefinition Height="73" />
             <RowDefinition Height="22" />
-            <RowDefinition Height="20" />
+            <RowDefinition Height="18" />
+            <RowDefinition Height="26" />
             <RowDefinition Height="25" />
-            <RowDefinition Height="25" />
-            <RowDefinition Height="20" />
+            <RowDefinition Height="15" />
             <RowDefinition Height="25" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>

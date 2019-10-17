@@ -116,9 +116,9 @@
 
                         <Label Grid.Row="0" FontFamily="Courier New" FontSize="20" FontWeight="Bold"
                                Content="{Loc Cipher3LblHeading}" HorizontalAlignment="Center" />
-                        <TextBlock Grid.Row="1" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0"
-                                   Text="{Loc Cipher3LblText}" TextWrapping="Wrap" />
 
+                        <TextBlock Grid.Row="1" FontFamily="Courier New" FontSize="12" Margin="10,0,10,0" Text="{Loc Cipher3LblText}" TextWrapping="Wrap" />
+                        
                         <Grid Grid.Row="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />

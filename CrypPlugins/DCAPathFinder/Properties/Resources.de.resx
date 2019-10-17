@@ -265,10 +265,10 @@
     <value>Angegriffene Verschlüsselungsrunde:</value>
   </data>
   <data name="SBoxes" xml:space="preserve">
-    <value>Angegriffene SBoxen:</value>
+    <value>Angegriffene S-Boxen:</value>
   </data>
   <data name="SBoxWarning" xml:space="preserve">
-    <value>Es muss mindestens eine SBox makiert werden, um mit dem Angriff fortzufahren.</value>
+    <value>Es muss mindestens eine S-Box makiert werden, um mit dem Angriff fortzufahren.</value>
   </data>
   <data name="SearchPolicy" xml:space="preserve">
     <value>Suchstrategie:</value>
@@ -547,16 +547,16 @@
     <value>2. Analyse von Chiffre 2</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxHeader" xml:space="preserve">
-    <value>3. Analyse der SBoxen</value>
+    <value>3. Analyse der S-Boxen</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide1Content1" xml:space="preserve">
-    <value>Aufgrund der Schlüsseladdition verhält sich die SBox nicht-linear. Ein Rateversuch für K3 kann nicht direkt überprüft werden.</value>
+    <value>Aufgrund der Schlüsseladdition verhält sich die S-Box nicht-linear. Ein Rateversuch für K3 kann nicht direkt überprüft werden.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide1Content2" xml:space="preserve">
-    <value>Alle SBoxen von Chiffre 2 verhalten sind identisch. Aus diesem Grund ist es aussreichend, wenn die Funktionsweise einer einzelnen SBox analysiert wird. Grundsätzlich ist es möglich, 4 parallele SBoxen als eine große SBox zu betrachten, dies würde aber den Analyseaufwand erhöhen. Die SBox erhält als Eingabe 4 Bits und gibt auch 4 Bits als Ausgabe aus. Die 4 Eingabe-Bits werden durch 4 andere Ausgabe-Bits ersetzt.</value>
+    <value>Alle S-Boxen von Chiffre 2 verhalten sind identisch. Aus diesem Grund ist es aussreichend, wenn die Funktionsweise einer einzelnen SBox analysiert wird. Grundsätzlich ist es möglich, 4 parallele SBoxen als eine große SBox zu betrachten, dies würde aber den Analyseaufwand erhöhen. Die SBox erhält als Eingabe 4 Bits und gibt auch 4 Bits als Ausgabe aus. Die 4 Eingabe-Bits werden durch 4 andere Ausgabe-Bits ersetzt.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide1Content3" xml:space="preserve">
-    <value>Zur Erinnerung: Bei der differenziellen Kryptoanalyse wird mit Differenzen von Nachrichten gearbeitet. Um die SBox zu untersuchen, werden alle Kombinationen von Eingabe-Klartexten betrachtet und deren Differenz gebildet. Je Paar werden die Klartexte einzelnt in die SBox gegeben und anschließend die Differenz der substituierte Ausgaben berechnet. Dabei werden die Übergänge von Eingabe- zu Ausgabe-Differenz notiert.</value>
+    <value>Zur Erinnerung: Bei der differenziellen Kryptoanalyse wird mit Differenzen von Nachrichten gearbeitet. Um die S-Box zu untersuchen, werden alle Kombinationen von Eingabe-Klartexten betrachtet und deren Differenz gebildet. Je Paar werden die Klartexte einzelnt in die S-Box gegeben und anschließend die Differenz der substituierte Ausgaben berechnet. Dabei werden die Übergänge von Eingabe- zu Ausgabe-Differenz notiert.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide1Content4" xml:space="preserve">
     <value>Die Tabelle auf der nächsten Seite visualisiert dieses Vorgehen. Für jede mögliche Eingabe-Differenz existiert eine Zeile. Für jede mögliche Ausgabe-Differenz gibt es eine Spalte. Die Anzahl des Auftretens einer speziellen Differenz wird durch die Einträge der Tabelle beschrieben.</value>
@@ -565,28 +565,28 @@
     <value>Um die Wahrscheinlichkeit des Auftretens einer Differenz zu Berechnen, muss die Anzahl durch 16 geteilt werden.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide1Header" xml:space="preserve">
-    <value>Analyse der SBoxen</value>
+    <value>Analyse der S-Boxen</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide2Content1" xml:space="preserve">
     <value>Im Folgenden ist die Differenz-Verteilungstabelle zu sehen:</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide2Header" xml:space="preserve">
-    <value>Analyse der SBoxen</value>
+    <value>Analyse der S-Boxen</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide3Content1" xml:space="preserve">
     <value>Die Ein- und Ausgabe-Differenzen sowie die Einträge der Differenzverteilungs-Tabelle sind hexadezimal.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide3Content2" xml:space="preserve">
-    <value>Bei einer 4 Bit SBox gibt es je 16 verschiedene Eingaben und Ausgaben. Kombiniert man 2 Nachrichten zu einem Nachrichtenpaar mit je disjunkten Differenzen, können 256 verschiedene Übergänge von Differenzen beobachtet werden.</value>
+    <value>Bei einer 4 Bit S-Box gibt es je 16 verschiedene Eingaben und Ausgaben. Kombiniert man 2 Nachrichten zu einem Nachrichtenpaar mit je disjunkten Differenzen, können 256 verschiedene Übergänge von Differenzen beobachtet werden.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide3Content3" xml:space="preserve">
     <value>Eine wichtige Beobachtung ist, dass es Differenzen gibt, die häufiger vorkommen als andere. Es gibt auch Differenzen, die gar nicht auftreten. Zum Beispiel wird die Eingabe-Differenz 8 insgesamt 8 mal auf die Ausgabe-Differenz D abgebildet.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide3Content4" xml:space="preserve">
-    <value>Die Verteilung der Differenzen ist offensichtlich nicht gleichverteilt. In der Praxis sind SBoxen nicht perfekt. Diesen Fakt macht sich der Kryptoanalyst zu nutze. Besonders hohe Wahrscheinlichkeiten helfen bei der differenziellen Kryptoanalyse.</value>
+    <value>Die Verteilung der Differenzen ist offensichtlich nicht gleichverteilt. In der Praxis sind S-Boxen nicht perfekt. Diesen Fakt macht sich der Kryptoanalyst zu nutze. Besonders hohe Wahrscheinlichkeiten helfen bei der differenziellen Kryptoanalyse.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide3Header" xml:space="preserve">
-    <value>Analyse der SBoxen</value>
+    <value>Analyse der S-Boxen</value>
   </data>
   <data name="Tutorial2AnalysisSlide1Content1" xml:space="preserve">
     <value>Chiffre 2 besteht aus drei Verschlüsselungsrunden mit vier Rundenschlüsseln. Jede Runde besteht aus Schlüsseladdition, Substitution und einer Permutation. In der letzten Runde wird zusätzlich noch eine weitere Schlüsseladdition durchgeführt.</value>
@@ -637,7 +637,7 @@
     <value>2</value>
   </data>
   <data name="Tutorial2AttackKeyRound2Content1Run3" xml:space="preserve">
-    <value> angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
+    <value> angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde S-Boxen ausgewählt werden. Durch die Auswahl einer S-Box werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
   </data>
   <data name="Tutorial2AttackKeyRound2Content1Run4" xml:space="preserve">
     <value>Der Angriff läuft nahezu analog zu dem auf den Rundenschlüssel k</value>
@@ -655,16 +655,16 @@
     <value>3</value>
   </data>
   <data name="Tutorial2AttackKeyRound3Content1Run3" xml:space="preserve">
-    <value> der Chiffre angegriffen werden. Dazu können in der dritten Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
+    <value> der Chiffre angegriffen werden. Dazu können in der dritten Verschlüsselungsrunde S-Boxen ausgewählt werden. Durch die Auswahl einer S-Box werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
   </data>
   <data name="Tutorial2AttackKeyRound3Content1Run4" xml:space="preserve">
-    <value>Bei der differenziellen Kryptoanalyse wird die Veränderung von Differenzen an den SBoxen betrachtet. Daher sind an dieser Stelle SBoxen auszuwählen.</value>
+    <value>Bei der differenziellen Kryptoanalyse wird die Veränderung von Differenzen an den S-Boxen betrachtet. Daher sind an dieser Stelle S-Boxen auszuwählen.</value>
   </data>
   <data name="Tutorial2AttackKeyRound3Content1Run5" xml:space="preserve">
-    <value>Je mehr Schlüsselbits ausgewählt werden, desto komplizierter ist die Suche nach einem Differenzial. Allerdings kann durchaus sinnvoll sein, mehrere SBoxen gleichzeitig anzugreifen. Je nach Beschaffenheit der Chiffre finden sich so bessere oder schlechtere Differenziale.</value>
+    <value>Je mehr Schlüsselbits ausgewählt werden, desto komplizierter ist die Suche nach einem Differenzial. Allerdings kann durchaus sinnvoll sein, mehrere S-Boxen gleichzeitig anzugreifen. Je nach Beschaffenheit der Chiffre finden sich so bessere oder schlechtere Differenziale.</value>
   </data>
   <data name="Tutorial2AttackRound2HeaderRun1" xml:space="preserve">
-    <value>SBoxen aus Runde 2 auswählen, um Schlüsselbits von k</value>
+    <value>S-Boxen aus Runde 2 auswählen, um Schlüsselbits von k</value>
   </data>
   <data name="Tutorial2AttackRound2HeaderRun2" xml:space="preserve">
     <value>2</value>
@@ -673,7 +673,7 @@
     <value> anzugreifen</value>
   </data>
   <data name="Tutorial2AttackRound3HeaderRun1" xml:space="preserve">
-    <value>SBoxen aus Runde 3 auswählen, um Schlüsselbits von k</value>
+    <value>S-Boxen aus Runde 3 auswählen, um Schlüsselbits von k</value>
   </data>
   <data name="Tutorial2AttackRound3HeaderRun2" xml:space="preserve">
     <value>3</value>
@@ -688,7 +688,7 @@
     <value>Zwei Eingaben, die sich durch eine Differenz </value>
   </data>
   <data name="Tutorial2CharacteristicSlide1Content1Run2" xml:space="preserve">
-    <value> unterscheiden, werden unter Verwendung der SBox durch ein Paar von Ausgaben substitutiert, welche sich durch eine Differenz </value>
+    <value> unterscheiden, werden unter Verwendung der S-Box durch ein Paar von Ausgaben substitutiert, welche sich durch eine Differenz </value>
   </data>
   <data name="Tutorial2CharacteristicSlide1Content1Run3" xml:space="preserve">
     <value> unterscheiden. Notiert wird dies durch </value>
@@ -700,7 +700,7 @@
     <value>Wir bezeichnen ein solches Paar </value>
   </data>
   <data name="Tutorial2CharacteristicSlide1Content2Run2" xml:space="preserve">
-    <value> als differenzielle charakteristik unter der Operation der SBox. Wie zuvor gesehen, hat eine differenzielle Charakteristik eine feste Wahrscheinlichkeit.</value>
+    <value> als differenzielle charakteristik unter der Operation der S-Box. Wie zuvor gesehen, hat eine differenzielle Charakteristik eine feste Wahrscheinlichkeit.</value>
   </data>
   <data name="Tutorial2CharacteristicSlide1Content3" xml:space="preserve">
     <value>Ziel bei der Suche ist es einen Weg zu finden, der eine möglichst hohe Wahrscheinlichkeit aufweist. Diese Wege können in der DKA-PfadVisualisierer-Komponente graphisch dargestellt werden.</value>
@@ -709,7 +709,7 @@
     <value>Charakteristiken</value>
   </data>
   <data name="Tutorial2CharacteristicSlide2Content1" xml:space="preserve">
-    <value>Eine Verschlüsselungsrunde besteht bei Chiffre 2 aus Schlüsseladdition, Substitution und Permutation. Die Chiffre arbeitet auf 16 Bit Blöcken. Die vorige Notation wird wie folgt erweitert, um eine differenzielle Charakteristik einer SBox für 16 Bit Blöcke zu bezeichnen</value>
+    <value>Eine Verschlüsselungsrunde besteht bei Chiffre 2 aus Schlüsseladdition, Substitution und Permutation. Die Chiffre arbeitet auf 16 Bit Blöcken. Die vorige Notation wird wie folgt erweitert, um eine differenzielle Charakteristik einer S-Box für 16 Bit Blöcke zu bezeichnen</value>
   </data>
   <data name="Tutorial2CharacteristicSlide2Content2" xml:space="preserve">
     <value>Nach der Substitution werden die Bits in Chiffre 2 permutiert. Die Permutation der Chiffre ist bekannt und daher kann die differenzielle Charakteristik der Permutation wie folgt bezeichnet werden</value>
@@ -730,7 +730,7 @@
     <value>Die zuvor eingeführte Notation wird verwendet, um differenzielle Charakteristiken einer Runde zu differenziellen Charakteristiken für n-Verschlüsselungsrunden (hier: 3) zu bezeichnen:</value>
   </data>
   <data name="Tutorial2CharacteristicSlide3Content4" xml:space="preserve">
-    <value>Im ersten 4-Tupel sind die Eingangsdifferenzen der SBoxen der ersten 4 SBoxen in der ersten Verschlüsselungsrunde angegeben. Im 2. 4-Tupel ist sowohl die Ausgangsdifferenz der ersten als auch die Eingangsdifferenz der zweiten Verschlüsselungsrunde notiert. Im 3. 4-Tupel ist die Ausgangsdifferenz der zweiten und die Eingangsdifferenz der letzten Verschlüsselungsrunde notiert.</value>
+    <value>Im ersten 4-Tupel sind die Eingangsdifferenzen der SBoxen der ersten 4 S-Boxen in der ersten Verschlüsselungsrunde angegeben. Im 2. 4-Tupel ist sowohl die Ausgangsdifferenz der ersten als auch die Eingangsdifferenz der zweiten Verschlüsselungsrunde notiert. Im 3. 4-Tupel ist die Ausgangsdifferenz der zweiten und die Eingangsdifferenz der letzten Verschlüsselungsrunde notiert.</value>
   </data>
   <data name="Tutorial2CharacteristicSlide3Content5" xml:space="preserve">
     <value>Ziel bei der Suche ist es, einen Weg zu finden, der eine möglichst hohe Wahrscheinlichkeit aufweist.</value>
@@ -769,7 +769,7 @@
     <value>6. Schlüsselinformationen wiederherstellen</value>
   </data>
   <data name="Tutorial2RecoverKeyInformationSlide1Content1" xml:space="preserve">
-    <value>Sobald ein Differenzial mit hoher Wahrscheinlichkeit gefunden wurde, kann damit begonnen werden, Schlüsselbits wiederherzustellen. Dazu werden die SBoxen betrachtet, an denen die erwartete Differenz von 0 verschieden ist.</value>
+    <value>Sobald ein Differenzial mit hoher Wahrscheinlichkeit gefunden wurde, kann damit begonnen werden, Schlüsselbits wiederherzustellen. Dazu werden die S-Boxen betrachtet, an denen die erwartete Differenz von 0 verschieden ist.</value>
   </data>
   <data name="Tutorial2RecoverKeyInformationSlide1Content2" xml:space="preserve">
     <value>Für jeden möglichen Schlüsselkandidat wird ein Zähler erzeugt. Der Kryptoanalyst generiert eine Anzahl von Nachrichten, die die Eingabedifferenz erfüllen. Diese werden verschlüsselt und mit dem Schlüsselkandidat partiell entschlüsselt. Erfüllt die Differenz der partiell entschlüsselten Nachrichten die erwartete Differenz, wird der Zähler um 1 erhöht. Diesen Prozess wiederholt man mit allen generierten Nachrichtenpaaren.</value>
@@ -865,7 +865,7 @@
     <value>5. Differenzielle Kryptoanalyse von Chiffre 3</value>
   </data>
   <data name="Tutorial3AttackRound5HeaderRun1" xml:space="preserve">
-    <value>SBoxen aus Runde 5 auswählen, um Schlüsselbits von k</value>
+    <value>S-Boxen aus Runde 5 auswählen, um Schlüsselbits von k</value>
   </data>
   <data name="Tutorial3AttackRound5HeaderRun2" xml:space="preserve">
     <value>5</value>
@@ -892,7 +892,7 @@
     <value>Durchführung differenziellen Kryptoanalyse</value>
   </data>
   <data name="Tutorial3AttackRound4HeaderRun1" xml:space="preserve">
-    <value>SBoxen aus Runde 4 auswählen, um Schlüsselbits von k</value>
+    <value>S-Boxen aus Runde 4 auswählen, um Schlüsselbits von k</value>
   </data>
   <data name="Tutorial3AttackRound4HeaderRun2" xml:space="preserve">
     <value>4</value>
@@ -901,7 +901,7 @@
     <value> anzugreifen</value>
   </data>
   <data name="Tutorial3AttackRound2HeaderRun1" xml:space="preserve">
-    <value>SBoxen aus Runde 2 auswählen, um Schlüsselbits von k</value>
+    <value>S-Boxen aus Runde 2 auswählen, um Schlüsselbits von k</value>
   </data>
   <data name="Tutorial3AttackRound2HeaderRun2" xml:space="preserve">
     <value>2</value>
@@ -910,7 +910,7 @@
     <value> anzugreifen</value>
   </data>
   <data name="Tutorial3AttackRound3HeaderRun1" xml:space="preserve">
-    <value>SBoxen aus Runde 3 auswählen, um Schlüsselbits von k</value>
+    <value>S-Boxen aus Runde 3 auswählen, um Schlüsselbits von k</value>
   </data>
   <data name="Tutorial3AttackRound3HeaderRun2" xml:space="preserve">
     <value>3</value>
@@ -1009,7 +1009,7 @@
     <value> ebenfalls unbekannt ist, könnte man nun die Differenz der u</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content2Run1" xml:space="preserve">
-    <value>Aufgrund des Exclusive-Oder verhält sich die SBox nicht-linear, sodass man die Differenz der v</value>
+    <value>Aufgrund des Exclusive-Oder verhält sich die S-Box nicht-linear, sodass man die Differenz der v</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content2Run2" xml:space="preserve">
     <value>0</value>
@@ -1024,7 +1024,7 @@
     <value> durch Nutzung von Differenzen zu prüfen.</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content3" xml:space="preserve">
-    <value>Um dieses Problem zu lösen, betrachten wir die Funktionsweise der SBoxen genauer.</value>
+    <value>Um dieses Problem zu lösen, betrachten wir die Funktionsweise der S-Boxen genauer.</value>
   </data>
   <data name="Tutorial2AttackFirstRoundContent1Run1" xml:space="preserve">
     <value>Im letzten Schritt werden die letzten beiden Rundenschlüssel k</value>
@@ -1174,7 +1174,7 @@
     <value>2</value>
   </data>
   <data name="Tutorial3AttackKeyRound2Content1Run3" xml:space="preserve">
-    <value> angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
+    <value> angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde S-Boxen ausgewählt werden. Durch die Auswahl einer S-Box werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
   </data>
   <data name="Tutorial3AttackKeyRound2Content1Run4" xml:space="preserve">
     <value>Der Angriff läuft nahezu analog zu dem auf den Rundenschlüssel k</value>
@@ -1192,7 +1192,7 @@
     <value>3</value>
   </data>
   <data name="Tutorial3AttackKeyRound3Content1Run3" xml:space="preserve">
-    <value> angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
+    <value> angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde S-Boxen ausgewählt werden. Durch die Auswahl einer S-Box werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
   </data>
   <data name="Tutorial3AttackKeyRound3Content1Run4" xml:space="preserve">
     <value>Der Angriff läuft nahezu analog zu dem auf den Rundenschlüssel k</value>
@@ -1210,7 +1210,7 @@
     <value>4</value>
   </data>
   <data name="Tutorial3AttackKeyRound4Content1Run3" xml:space="preserve">
-    <value> angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
+    <value> angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde S-Boxen ausgewählt werden. Durch die Auswahl einer S-Box werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
   </data>
   <data name="Tutorial3AttackKeyRound4Content1Run4" xml:space="preserve">
     <value>Der Angriff läuft nahezu analog zu dem auf den Rundenschlüssel k</value>
@@ -1228,13 +1228,13 @@
     <value>5</value>
   </data>
   <data name="Tutorial3AttackKeyRound5Content1Run3" xml:space="preserve">
-    <value> der Chiffre angegriffen werden. Dazu können in der fünften Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
+    <value> der Chiffre angegriffen werden. Dazu können in der fünften Verschlüsselungsrunde S-Boxen ausgewählt werden. Durch die Auswahl einer S-Box werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
   </data>
   <data name="Tutorial3AttackKeyRound5Content1Run4" xml:space="preserve">
-    <value>Bei der differenziellen Kryptoanalyse wird die Veränderung von Differenzen an den SBoxen betrachtet. Daher sind an dieser Stelle SBoxen auszuwählen.</value>
+    <value>Bei der differenziellen Kryptoanalyse wird die Veränderung von Differenzen an den S-Boxen betrachtet. Daher sind an dieser Stelle S-Boxen auszuwählen.</value>
   </data>
   <data name="Tutorial3AttackKeyRound5Content1Run5" xml:space="preserve">
-    <value>Je mehr Schlüsselbits ausgewählt werden, desto komplizierter ist die Suche nach einem Differenzial. Allerdings kann durchaus sinnvoll sein, mehrere SBoxen gleichzeitig anzugreifen. Je nach Beschaffenheit der Chiffre finden sich so bessere oder schlechtere Differenziale.</value>
+    <value>Je mehr Schlüsselbits ausgewählt werden, desto komplizierter ist die Suche nach einem Differenzial. Allerdings kann durchaus sinnvoll sein, mehrere S-Boxen gleichzeitig anzugreifen. Je nach Beschaffenheit der Chiffre finden sich so bessere oder schlechtere Differenziale.</value>
   </data>
   <data name="UseOfflinePaths" xml:space="preserve">
     <value>Vorberechnete Daten</value>
@@ -1487,5 +1487,8 @@ sind. Dadurch können lange Berechnungszeiten minimiert werden.</value>
   </data>
   <data name="NoCharacteristicFoundError" xml:space="preserve">
     <value>Es wurden keine Charakteristik(en) gefunden. Bitte die Einstellungen zur Such- und Abbruchstrategie kontrollieren.</value>
+  </data>
+  <data name="Tutorial1DifferentialCryptanalysisSlide9Content2Run2" xml:space="preserve">
+    <value>1</value>
   </data>
 </root>

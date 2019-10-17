@@ -61,7 +61,7 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Active SBoxes: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Active S boxes: ähnelt.
         /// </summary>
         internal static string ActiveSBoxes {
             get {
@@ -70,7 +70,16 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Choice of the algorithm ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Characteristics ähnelt.
+        /// </summary>
+        internal static string Characteristics {
+            get {
+                return ResourceManager.GetString("Characteristics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Choice of the cipher ähnelt.
         /// </summary>
         internal static string ChoiceOfAlgorithm {
             get {
@@ -79,7 +88,7 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die At this point, you can select one of the ciphers contained in the list. This one is used to display the differential. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die At this point, you can select one of the ciphers contained in the list. This is used to display the differential. ähnelt.
         /// </summary>
         internal static string ChoiceOfAlgorithmToolTop {
             get {
@@ -88,7 +97,7 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 1 (16 bit blocksize, 2 subkeys, 32 bit keylength) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 1 (16 bit block size, 2 round keys, 32 bit key length) ähnelt.
         /// </summary>
         internal static string Cipher1 {
             get {
@@ -97,7 +106,7 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 2 (16 bit blocksize, 4 subkeys, 64 bit keylength) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 2 (16 bit block size, 4 round keys, 64 bit key length) ähnelt.
         /// </summary>
         internal static string Cipher2 {
             get {
@@ -106,7 +115,7 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 3 (16 bit blocksize, 6 subkeys, 96 bit keylength) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 3 (16 bit block size, 6 round keys, 96 bit key length) ähnelt.
         /// </summary>
         internal static string Cipher3 {
             get {
@@ -142,7 +151,7 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input of the differential to show  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input of the differential to be visualized ähnelt.
         /// </summary>
         internal static string DifferentialInputToolTip {
             get {
@@ -169,7 +178,7 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input diff. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input difference ähnelt.
         /// </summary>
         internal static string InputDiffHeader1 {
             get {
@@ -178,25 +187,43 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input diff. R1 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die u ähnelt.
         /// </summary>
-        internal static string InputDiffR1Header1 {
+        internal static string InputDiffR1Header1Run1 {
             get {
-                return ResourceManager.GetString("InputDiffR1Header1", resourceCulture);
+                return ResourceManager.GetString("InputDiffR1Header1Run1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input diff. R2 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
         /// </summary>
-        internal static string InputDiffR2Header1 {
+        internal static string InputDiffR1Header1Run2 {
             get {
-                return ResourceManager.GetString("InputDiffR2Header1", resourceCulture);
+                return ResourceManager.GetString("InputDiffR1Header1Run2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Expected Diff. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die u ähnelt.
+        /// </summary>
+        internal static string InputDiffR2Header1Run1 {
+            get {
+                return ResourceManager.GetString("InputDiffR2Header1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 2 ähnelt.
+        /// </summary>
+        internal static string InputDiffR2Header1Run2 {
+            get {
+                return ResourceManager.GetString("InputDiffR2Header1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die u ähnelt.
         /// </summary>
         internal static string InputDiffR3Header1Run1 {
             get {
@@ -214,25 +241,79 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output diff. R1 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die u ähnelt.
         /// </summary>
-        internal static string OutputDiffR1Header1 {
+        internal static string InputDiffR4Header1Run1 {
             get {
-                return ResourceManager.GetString("OutputDiffR1Header1", resourceCulture);
+                return ResourceManager.GetString("InputDiffR4Header1Run1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output diff. R2 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 4 ähnelt.
         /// </summary>
-        internal static string OutputDiffR2Header1 {
+        internal static string InputDiffR4Header1Run2 {
             get {
-                return ResourceManager.GetString("OutputDiffR2Header1", resourceCulture);
+                return ResourceManager.GetString("InputDiffR4Header1Run2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Differenz v ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die u ähnelt.
+        /// </summary>
+        internal static string InputDiffR5Header1Run1 {
+            get {
+                return ResourceManager.GetString("InputDiffR5Header1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 5 ähnelt.
+        /// </summary>
+        internal static string InputDiffR5Header1Run2 {
+            get {
+                return ResourceManager.GetString("InputDiffR5Header1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die v ähnelt.
+        /// </summary>
+        internal static string OutputDiffR1Header1Run1 {
+            get {
+                return ResourceManager.GetString("OutputDiffR1Header1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        /// </summary>
+        internal static string OutputDiffR1Header1Run2 {
+            get {
+                return ResourceManager.GetString("OutputDiffR1Header1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die v ähnelt.
+        /// </summary>
+        internal static string OutputDiffR2Header1Run1 {
+            get {
+                return ResourceManager.GetString("OutputDiffR2Header1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 2 ähnelt.
+        /// </summary>
+        internal static string OutputDiffR2Header1Run2 {
+            get {
+                return ResourceManager.GetString("OutputDiffR2Header1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die v ähnelt.
         /// </summary>
         internal static string OutputDiffR3Header1Run1 {
             get {
@@ -246,6 +327,24 @@ namespace DCAPathVisualiser.Properties {
         internal static string OutputDiffR3Header1Run2 {
             get {
                 return ResourceManager.GetString("OutputDiffR3Header1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die v ähnelt.
+        /// </summary>
+        internal static string OutputDiffR4Header1Run1 {
+            get {
+                return ResourceManager.GetString("OutputDiffR4Header1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 4 ähnelt.
+        /// </summary>
+        internal static string OutputDiffR4Header1Run2 {
+            get {
+                return ResourceManager.GetString("OutputDiffR4Header1Run2", resourceCulture);
             }
         }
         
@@ -331,16 +430,7 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Characteristics ähnelt.
-        /// </summary>
-        internal static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Characteristic visualisation ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Characteristic visualization ähnelt.
         /// </summary>
         internal static string TabItemHeaderCipher {
             get {
@@ -349,7 +439,7 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Characteristics table ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Characteristic table ähnelt.
         /// </summary>
         internal static string TabItemHeaderTable {
             get {
@@ -385,7 +475,7 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The wrong cipher is selected in the DCA PathVisualiser component. Please check the configuration of the component. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The wrong cipher is selected in the DCA PathVisualizer component. Please check the configuration of the component. ähnelt.
         /// </summary>
         internal static string WarningWrongAlgorithm {
             get {

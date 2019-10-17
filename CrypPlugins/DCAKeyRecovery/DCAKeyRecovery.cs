@@ -841,7 +841,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                             messageCount = neededMessageCounterLastRound * 2,
                             recoveredSubKey0 = Convert.ToString(c1Attack.subkey0, 2).PadLeft(16, '0'),
                             recoveredSubKey1 = Convert.ToString(c1Attack.subkey1, 2).PadLeft(16, '0'),
-                            testedKeys = 65536
+                            testedKeys = lastRoundResult.KeyCounter
                         };
 
                         summaryViewRefreshArgs = new SummaryViewRefreshArgs()
@@ -1256,7 +1256,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                             messageCount = neededMessageCounterLastRound * 2,
                             recoveredSubKey0 = Convert.ToString(c2Attack.subkey0, 2).PadLeft(16, '0'),
                             recoveredSubKey1 = Convert.ToString(c2Attack.subkey1, 2).PadLeft(16, '0'),
-                            testedKeys = 65536
+                            testedKeys = lastRoundResult.KeyCounter
                         };
 
                         summaryViewRefreshArgs = new SummaryViewRefreshArgs()
@@ -1942,7 +1942,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                             messageCount = neededMessageCounterLastRound * 2,
                             recoveredSubKey0 = Convert.ToString(c3Attack.subkey0, 2).PadLeft(16, '0'),
                             recoveredSubKey1 = Convert.ToString(c3Attack.subkey1, 2).PadLeft(16, '0'),
-                            testedKeys = 65536
+                            testedKeys = lastRoundResult.KeyCounter
                         };
 
                         summaryViewRefreshArgs = new SummaryViewRefreshArgs()

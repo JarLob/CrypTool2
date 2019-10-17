@@ -61,7 +61,43 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Probability (differential) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Global maximum ähnelt.
+        /// </summary>
+        public static string AbortingPolicy1 {
+            get {
+                return ResourceManager.GetString("AbortingPolicy1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Global threshold ähnelt.
+        /// </summary>
+        public static string AbortingPolicy2 {
+            get {
+                return ResourceManager.GetString("AbortingPolicy2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Threshold value for abort (best characteristic) ähnelt.
+        /// </summary>
+        public static string AbortingThresholdBestCharacteristicSearch {
+            get {
+                return ResourceManager.GetString("AbortingThresholdBestCharacteristicSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Determines the probability at which the search for the best characteristic will be aborted. ähnelt.
+        /// </summary>
+        public static string AbortingThresholdBestCharacteristicSearchToolTip {
+            get {
+                return ResourceManager.GetString("AbortingThresholdBestCharacteristicSearchToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Threshold value for abort (differential) ähnelt.
         /// </summary>
         public static string AbortingThresholdDifferentialSearch {
             get {
@@ -70,7 +106,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the probability at which the search for characteristics for a differential is aborted ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Determines the probability at which the search for characteristics for differential formation is aborted. ähnelt.
         /// </summary>
         public static string AbortingThresholdDifferentialSearchToolTip {
             get {
@@ -88,7 +124,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die PathFinder running in the automatic mode. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die DCA PfadFinder works in automatic mode. ähnelt.
         /// </summary>
         public static string AutomaticModeHeader {
             get {
@@ -102,6 +138,15 @@ namespace DCAPathFinder.Properties {
         public static string AutomaticModeToolTip {
             get {
                 return ResourceManager.GetString("AutomaticModeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Chapter back ähnelt.
+        /// </summary>
+        public static string BtnPrevChapter {
+            get {
+                return ResourceManager.GetString("BtnPrevChapter", resourceCulture);
             }
         }
         
@@ -124,7 +169,34 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher selection ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Aborting policy ähnelt.
+        /// </summary>
+        public static string ChoiceAbortingPolicyPolicy {
+            get {
+                return ResourceManager.GetString("ChoiceAbortingPolicyPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die search options ähnelt.
+        /// </summary>
+        public static string ChoiceOfAbortingPolicyGroup {
+            get {
+                return ResourceManager.GetString("ChoiceOfAbortingPolicyGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die By selecting the aborting policy, the behavior of the search for the best differential is controlled. ähnelt.
+        /// </summary>
+        public static string ChoiceOfAbortingPolicyToolTop {
+            get {
+                return ResourceManager.GetString("ChoiceOfAbortingPolicyToolTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Choice of the cipher ähnelt.
         /// </summary>
         public static string ChoiceOfAlgorithm {
             get {
@@ -142,7 +214,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die At this point one of the ciphers contained in the list can be selected. This cipher can be examined by differential cryptanalysis. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die At this point, you can select one of the ciphers contained in the list. This can be examined by differential cryptanalysis. ähnelt.
         /// </summary>
         public static string ChoiceOfAlgorithmToolTop {
             get {
@@ -151,7 +223,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Search strategy ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Search policy ähnelt.
         /// </summary>
         public static string ChoiceOfSearchPolicy {
             get {
@@ -169,7 +241,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die By selecting a search strategy, the behavior of the search for the best differential is controlled ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die By selecting a search policy, the behavior of the search for the best differential is controlled. ähnelt.
         /// </summary>
         public static string ChoiceOfSearchPolicyToolTop {
             get {
@@ -187,7 +259,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Determines the number of message pairs to be generated ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Determines the number of message pairs to be generated. ähnelt.
         /// </summary>
         public static string ChosenMessagePairsCountToolTip {
             get {
@@ -196,7 +268,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 1: Cipher 1 (16 bit blocksize, 2 subkeys, keylength is 32 bit) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 1: Cipher 1 (16 bit block size, 2 round keys, 32 bit key length) ähnelt.
         /// </summary>
         public static string Cipher1 {
             get {
@@ -205,7 +277,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 2: Cipher 2 (16 bit blocksize, 4 subkeys, keylength is 64 bit) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 2: Cipher 2 (16 bit block size, 4 round keys, 64 bit key length) ähnelt.
         /// </summary>
         public static string Cipher2 {
             get {
@@ -214,7 +286,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 3: Cipher 3 (16 bit blocksize, 6 subkeys, keylength is 96 bit) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 3: Cipher 3 (16 bit block size, 6 round keys, 96 bit key length) ähnelt.
         /// </summary>
         public static string Cipher3 {
             get {
@@ -223,7 +295,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 4: Cipher 4 (4 bit blocksize, 4 subkeys, keylength is16 bit) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 4: Cipher 4 (4 bit block size , 4 round keys, 16 bit key length) ähnelt.
         /// </summary>
         public static string Cipher4 {
             get {
@@ -232,7 +304,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Differential cryptanalysis options ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differential cryptanalysis Options ähnelt.
         /// </summary>
         public static string DCAOptions {
             get {
@@ -241,7 +313,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 1 uses cipher 1 of the ToyChiffren component. This cipher works on 16 bit blocks and uses two round keys. One encryption round is executed. In this tutorial two unknown 16 bit round keys are restored. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 1 uses cipher 1 of the DCA ToyCipher component. This cipher works on 16 bit blocks and uses two 16 bit round keys. One encryption round is executed. In this tutorial both unknown round keys are restored. ähnelt.
         /// </summary>
         public static string DescriptionContent2 {
             get {
@@ -250,7 +322,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 2 uses cipher 2 of the ToyChiffren component. This cipher works on 16 bit blocks and uses four round keys. Three encryption rounds are executed. In this tutorial four unknown 16 bit roundkeys are restored. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 2 uses cipher 2 of the DCA ToyCipher component. This cipher works on 16 bit blocks and uses four 16 bit round keys. Three encryption rounds are executed. In this tutorial all unknown round keys are restored. ähnelt.
         /// </summary>
         public static string DescriptionContent3 {
             get {
@@ -259,7 +331,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 3 uses cipher 3 of the ToyChiffren component. This cipher works on 16 bit blocks and uses six round keys. Five encryption rounds are executed. In this tutorial six unknown 16 bit round keys are restored. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 3 uses cipher 3 of the DKA ToyCipher component. This cipher works on 16 bit blocks and uses six 16 bit round keys. Five encryption rounds are executed. In this tutorial all unknown round keys are restored. ähnelt.
         /// </summary>
         public static string DescriptionContent4 {
             get {
@@ -304,7 +376,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Display options ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die display options ähnelt.
         /// </summary>
         public static string DisplayOptions {
             get {
@@ -340,7 +412,106 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Messagecount ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input difference ähnelt.
+        /// </summary>
+        public static string InputDiffHeader1 {
+            get {
+                return ResourceManager.GetString("InputDiffHeader1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die u ähnelt.
+        /// </summary>
+        public static string InputDiffR1Header1Run1 {
+            get {
+                return ResourceManager.GetString("InputDiffR1Header1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        /// </summary>
+        public static string InputDiffR1Header1Run2 {
+            get {
+                return ResourceManager.GetString("InputDiffR1Header1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die u ähnelt.
+        /// </summary>
+        public static string InputDiffR2Header1Run1 {
+            get {
+                return ResourceManager.GetString("InputDiffR2Header1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 2 ähnelt.
+        /// </summary>
+        public static string InputDiffR2Header1Run2 {
+            get {
+                return ResourceManager.GetString("InputDiffR2Header1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die u ähnelt.
+        /// </summary>
+        public static string InputDiffR3Header1Run1 {
+            get {
+                return ResourceManager.GetString("InputDiffR3Header1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3 ähnelt.
+        /// </summary>
+        public static string InputDiffR3Header1Run2 {
+            get {
+                return ResourceManager.GetString("InputDiffR3Header1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die u ähnelt.
+        /// </summary>
+        public static string InputDiffR4Header1Run1 {
+            get {
+                return ResourceManager.GetString("InputDiffR4Header1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 4 ähnelt.
+        /// </summary>
+        public static string InputDiffR4Header1Run2 {
+            get {
+                return ResourceManager.GetString("InputDiffR4Header1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die u ähnelt.
+        /// </summary>
+        public static string InputDiffR5Header1Run1 {
+            get {
+                return ResourceManager.GetString("InputDiffR5Header1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 5 ähnelt.
+        /// </summary>
+        public static string InputDiffR5Header1Run2 {
+            get {
+                return ResourceManager.GetString("InputDiffR5Header1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die message pair count ähnelt.
         /// </summary>
         public static string MessageCount {
             get {
@@ -349,7 +520,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output for the number of messages ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output for the message pair count ähnelt.
         /// </summary>
         public static string MessageCountToolTip {
             get {
@@ -358,7 +529,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die No characteristics found. Please check the settings for the search and abort strategy. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die No characteristics found. Please check the settings for the search and abort policy ähnelt.
         /// </summary>
         public static string NoCharacteristicFoundError {
             get {
@@ -367,7 +538,79 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Welcome to the differential cryptanalysis (DCA) tutorial. This method for the analysis of round-based symmetric block ciphers aims at recovering single bits up to complete round keys. This method was published in 1991 by the two Israeli researchers, Eli Biham and Adi Shamir. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die v ähnelt.
+        /// </summary>
+        public static string OutputDiffR1Header1Run1 {
+            get {
+                return ResourceManager.GetString("OutputDiffR1Header1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        /// </summary>
+        public static string OutputDiffR1Header1Run2 {
+            get {
+                return ResourceManager.GetString("OutputDiffR1Header1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die v ähnelt.
+        /// </summary>
+        public static string OutputDiffR2Header1Run1 {
+            get {
+                return ResourceManager.GetString("OutputDiffR2Header1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 2 ähnelt.
+        /// </summary>
+        public static string OutputDiffR2Header1Run2 {
+            get {
+                return ResourceManager.GetString("OutputDiffR2Header1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die v ähnelt.
+        /// </summary>
+        public static string OutputDiffR3Header1Run1 {
+            get {
+                return ResourceManager.GetString("OutputDiffR3Header1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3 ähnelt.
+        /// </summary>
+        public static string OutputDiffR3Header1Run2 {
+            get {
+                return ResourceManager.GetString("OutputDiffR3Header1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die v ähnelt.
+        /// </summary>
+        public static string OutputDiffR4Header1Run1 {
+            get {
+                return ResourceManager.GetString("OutputDiffR4Header1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 4 ähnelt.
+        /// </summary>
+        public static string OutputDiffR4Header1Run2 {
+            get {
+                return ResourceManager.GetString("OutputDiffR4Header1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Welcome to the differential cryptanalysis (dca) tutorial. This method for the analysis of turn-based symmetric block ciphers aims at recovering single bits up to complete round keys. This procedure was published in 1991 by the two Israeli researchers Eli Biham and Adi Shamir. ähnelt.
         /// </summary>
         public static string OverviewContent1 {
             get {
@@ -376,7 +619,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This tutorial describes the differential cryptanalysis procedure in three parts. Part 1 explains the basic idea of DCA using a cipher with one encryption round. Part 2 deepens this idea using a cipher with three encryption rounds. Part three deepens the knowledge by increasing the complexity of the cipher to 5 encryption rounds. In part three the knowledge is deepened by increasing the complexity of the cipher to 5 encryption rounds. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This tutorial covers the dca in three parts. Part 1 conveys the basic idea of the dca by means of a cipher with an encryption round. Part 2 deepens this idea using a cipher with three encryption rounds. Part 3 deepens the knowledge by increasing the complexity of the cipher to five encryption rounds. ähnelt.
         /// </summary>
         public static string OverviewContent2 {
             get {
@@ -385,7 +628,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In the configuration of this component the different parts of the tutorial can be selected. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In the configuration of this component the number of the tutorial and the tutorial mode can be selected. ähnelt.
         /// </summary>
         public static string OverviewContent3 {
             get {
@@ -439,7 +682,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Describes the flow of the differential through a cipher ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Describes the flow of differences through a cipher ähnelt.
         /// </summary>
         public static string PathToolTip {
             get {
@@ -448,7 +691,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Speed settings ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Speed options ähnelt.
         /// </summary>
         public static string PerformanceSettingsGroup {
             get {
@@ -484,7 +727,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die If tutorial mode is activated, a presentation with information on differential cryptanalysis is made for each tutorial ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die If tutorial mode is activated, a presentation with information on differential cryptanalysis is displayed for each tutorial. ähnelt.
         /// </summary>
         public static string PresentationModeToolTip {
             get {
@@ -547,7 +790,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ready ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Trigger ähnelt.
         /// </summary>
         public static string ReadyInput {
             get {
@@ -556,7 +799,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The ready input signals to the PathFinder component that the key recovery component has completed its calculation ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The trigger input signals to the DCA PathFinder component that the DCA KeyRecovery component has completed its calculation. ähnelt.
         /// </summary>
         public static string ReadyInputToolTip {
             get {
@@ -574,7 +817,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Attacked SBoxes: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Attacked S boxes: ähnelt.
         /// </summary>
         public static string SBoxes {
             get {
@@ -583,7 +826,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die At least one SBox must be marked to continue the attack. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die At least one S box must be marked to continue the attack. ähnelt.
         /// </summary>
         public static string SBoxWarning {
             get {
@@ -601,7 +844,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Searchpolicy: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Search policy: ähnelt.
         /// </summary>
         public static string SearchPolicy {
             get {
@@ -637,7 +880,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Results ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Result ähnelt.
         /// </summary>
         public static string SearchResults {
             get {
@@ -646,7 +889,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The tutorial starts when you start the workspace. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The tutorial beginns when you start the workspace. ähnelt.
         /// </summary>
         public static string StartMaskContent1 {
             get {
@@ -655,7 +898,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In this  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In this template, the  ähnelt.
         /// </summary>
         public static string StartMaskContent2Run1 {
             get {
@@ -664,7 +907,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial {0} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die tutorial {0} ähnelt.
         /// </summary>
         public static string StartMaskContent2Run2 {
             get {
@@ -700,7 +943,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Usable threads ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Threads to be used ähnelt.
         /// </summary>
         public static string ThreadCount {
             get {
@@ -727,15 +970,6 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial differential cryptanalysis of symmetric block ciphers ähnelt.
-        /// </summary>
-        public static string TitleHeader {
-            get {
-                return ResourceManager.GetString("TitleHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die 2. Differential cryptanalysis of cipher 1 ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisHeader {
@@ -754,7 +988,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die is already known. The cryptoanalyst now tries all values t of k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die is already known. As indicated on the previous page, the values of k ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide10Content2Run1 {
             get {
@@ -772,7 +1006,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die and every time ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  guessed. Here is explained how to limit the set of possible correct values: The cryptanalyst tries all values t of k ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide10Content2Run3 {
             get {
@@ -781,7 +1015,25 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die is valid, t is noted as a candidate for k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide10Content2Run4 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide10Content2Run4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  through and if ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide10Content2Run5 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide10Content2Run5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die holds true, t is considered a candidate for k ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide10Content3Run1 {
             get {
@@ -799,7 +1051,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die . If more than one candidate remains at the end, the attack will be reshuffled with new pairs of plaintext and ciphertext. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die . If more than one candidate remains at the end, the attack is repeated with new pairs of plaintext and ciphertext. ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide10Content3Run3 {
             get {
@@ -808,11 +1060,65 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die By clicking the &quot;next&quot; button again, differential cryptanalysis can be performed on cipher 1 in the &quot;Key Recovery&quot; component. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die By clicking the &quot;Next&quot; button again, differential cryptanalysis can be performed on cipher 1 in the &quot;DCA KeyRecovery&quot; component. ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide10Content4 {
             get {
                 return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide10Content4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die After successful recovery of k ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide10Content4Run1 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide10Content4Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide10Content4Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide10Content4Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  can k ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide10Content4Run3 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide10Content4Run3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 0 ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide10Content4Run4 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide10Content4Run4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  be calculated immediately. This can be done by calculating the equation ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide10Content4Run5 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide10Content4Run5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die be determined. ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide10Content5Run1 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide10Content5Run1", resourceCulture);
             }
         }
         
@@ -826,7 +1132,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die At this point we apply the idea of differential cryptanalysis to cipher 1. The structure of a cipher is usually public, so that all components and their functionality are known. The security of a cipher should never be based on the secrecy of the construction, but on the secrecy of the key. This requirement is also called Kerckhoffs&apos; principle. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Here we apply the idea of the dca to Chiffre 1. The structure of a cipher is usually public, so that all components and their functionality are known. The security of a cipher should never be based on the secrecy of the construction, but on the secrecy of the key. This requirement is also called Kerckhoff&apos;s principle. ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide1Content1 {
             get {
@@ -835,7 +1141,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 1 consists of key addition and substitution. The structure can be viewed in the ToyCipher component. We now try to restore the two unknown round keys k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 1 ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide1Content2Run1 {
             get {
@@ -844,7 +1150,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 0 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  consists of key addition and substitution. The structure can be viewed in the DCA ToyCipher component. We now try to find the two unknown round keys k ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide1Content2Run2 {
             get {
@@ -853,7 +1159,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die and k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 0 ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide1Content2Run3 {
             get {
@@ -862,7 +1168,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die and k ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide1Content2Run4 {
             get {
@@ -871,7 +1177,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die . To do this, we first look at the individual steps of the encryption. First, a key addition to the input block is performed with k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide1Content2Run5 {
             get {
@@ -880,7 +1186,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 0 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  to recover. To do this, we look at the individual steps of encryption. First the key k ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide1Content2Run6 {
             get {
@@ -889,7 +1195,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die . We get: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 0 ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide1Content2Run7 {
             get {
@@ -898,7 +1204,16 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Subsequently, a substitution by the SBoxes takes place: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  is added to the input block m: ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide1Content2Run8 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide1Content2Run8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The intermediate result u is then substituted by the S boxes: ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide1Content3 {
             get {
@@ -916,7 +1231,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Finally, a key addition with k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Finally, a key addition takes place again (intermediate result v is indicated with k ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide2Content1Run1 {
             get {
@@ -934,11 +1249,56 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  takes place again: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  added): ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide2Content1Run3 {
             get {
                 return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide2Content1Run3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The internal variables u and v of the cipher are of great importance in the following, because we use these intermediate results to recover the unknown keys k ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide2Content2Run1 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide2Content2Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide2Content2Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide2Content2Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  and k ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide2Content2Run3 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide2Content2Run3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 0 ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide2Content2Run4 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide2Content2Run4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die . ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide2Content2Run5 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide2Content2Run5", resourceCulture);
             }
         }
         
@@ -952,7 +1312,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The following figure summarizes the encryption process as outlined above: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The following figure summarizes the encryption process outlined above on slides 11 to 16. ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide3Content1 {
             get {
@@ -970,7 +1330,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The following figure summarizes the encryption process as outlined above: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The following figure summarizes the encryption process outlined above on slides 11 to 16. ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide4Content1 {
             get {
@@ -988,7 +1348,79 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The cryptoanalyst knows the parameters m and c, but the internal intermediate values u and v are unknown, as k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die However, these values cannot be directly compared with the internal values u ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide9bContent6Run1 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9bContent6Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide9bContent6Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9bContent6Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  and u ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide9bContent6Run3 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9bContent6Run3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 2 ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide9bContent6Run4 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9bContent6Run4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  as these are unknown. ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide9bContent6Run5 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9bContent6Run5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die From equation (1) it follows that if the round key is correctly guessed k ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide9bContent7Run1 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9bContent7Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide9bContent7Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9bContent7Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  the following applies: ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide9bContent7Run3 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9bContent7Run3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The cryptanalyst knows the parameters m and c, but not the internal intermediate values u and v, since k ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide9Content1Run1 {
             get {
@@ -1006,7 +1438,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die and k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  and k ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide9Content1Run3 {
             get {
@@ -1024,7 +1456,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die are unknown. However, the cryptanalyst knows the difference between the internal values. In the following, we look at two messages m ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  are unknown. However, the cryptanalyst can calculate the difference between the two internal u intermediate values from the difference between the two plaintexts. In the following we consider two messages m ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide9Content1Run5 {
             get {
@@ -1042,7 +1474,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die and m ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  and m ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide9Content1Run7 {
             get {
@@ -1060,7 +1492,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die and perform the encryption process partially: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  and build their difference: ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide9Content1Run9 {
             get {
@@ -1069,7 +1501,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This knowledge can be used to get k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This knowledge can be used to calculate k ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide9Content2Run1 {
             get {
@@ -1087,11 +1519,65 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die ). We can calculate ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die ). According to equation (1), the difference of the u-values is equal to the difference of m ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide9Content2Run11 {
             get {
                 return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content2Run11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide9Content2Run12 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content2Run12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  and m ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide9Content2Run13 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content2Run13", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 2 ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide9Content2Run14 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content2Run14", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die . Next, k ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide9Content2Run15 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content2Run15", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide9Content2Run16 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content2Run16", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  is &quot;advised&quot; so that from ähnelt.
+        /// </summary>
+        public static string Tutorial1DifferentialCryptanalysisSlide9Content2Run17 {
+            get {
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content2Run17", resourceCulture);
             }
         }
         
@@ -1105,7 +1591,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die . We consider two plaintext-ciphertext pairs (m ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die . For this we will consider two pairs of plaintext and ciphertext (m ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide9Content2Run3 {
             get {
@@ -1168,29 +1654,11 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die by difference calculation of m ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die the values of v ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide9Content3Run1 {
             get {
                 return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content3Run1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 2 ähnelt.
-        /// </summary>
-        public static string Tutorial1DifferentialCryptanalysisSlide9Content3Run10 {
-            get {
-                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content3Run10", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die because the functionality of the SBox is public and therefore invertible. This allows the cryptoanalyst to calculate ähnelt.
-        /// </summary>
-        public static string Tutorial1DifferentialCryptanalysisSlide9Content3Run11 {
-            get {
-                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content3Run11", resourceCulture);
             }
         }
         
@@ -1204,7 +1672,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die and m ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  and v ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide9Content3Run3 {
             get {
@@ -1222,7 +1690,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die . Next step is k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  can be calculated. ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide9Content3Run5 {
             get {
@@ -1231,43 +1699,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
-        /// </summary>
-        public static string Tutorial1DifferentialCryptanalysisSlide9Content3Run6 {
-            get {
-                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content3Run6", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die and the values of v ähnelt.
-        /// </summary>
-        public static string Tutorial1DifferentialCryptanalysisSlide9Content3Run7 {
-            get {
-                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content3Run7", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
-        /// </summary>
-        public static string Tutorial1DifferentialCryptanalysisSlide9Content3Run8 {
-            get {
-                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content3Run8", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die and v ähnelt.
-        /// </summary>
-        public static string Tutorial1DifferentialCryptanalysisSlide9Content3Run9 {
-            get {
-                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content3Run9", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die However, these values cannot be directly compared with the internal values u ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Because the functionality of the S-Box is public and therefore also invertible, the cryptoanalyst can calculate with ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide9Content4Run1 {
             get {
@@ -1276,43 +1708,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
-        /// </summary>
-        public static string Tutorial1DifferentialCryptanalysisSlide9Content4Run2 {
-            get {
-                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content4Run2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die and u ähnelt.
-        /// </summary>
-        public static string Tutorial1DifferentialCryptanalysisSlide9Content4Run3 {
-            get {
-                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content4Run3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 2 ähnelt.
-        /// </summary>
-        public static string Tutorial1DifferentialCryptanalysisSlide9Content4Run4 {
-            get {
-                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content4Run4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die as these are unknown. ähnelt.
-        /// </summary>
-        public static string Tutorial1DifferentialCryptanalysisSlide9Content4Run5 {
-            get {
-                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content4Run5", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die However, the cryptoanalyst knows that if the round key k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die the values of ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide9Content5Run1 {
             get {
@@ -1321,20 +1717,11 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die   ähnelt.
         /// </summary>
-        public static string Tutorial1DifferentialCryptanalysisSlide9Content5Run2 {
+        public static string Tutorial1DifferentialCryptanalysisSlide9Content6Run1 {
             get {
-                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content5Run2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die is valid, the following applies: ähnelt.
-        /// </summary>
-        public static string Tutorial1DifferentialCryptanalysisSlide9Content5Run3 {
-            get {
-                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content5Run3", resourceCulture);
+                return ResourceManager.GetString("Tutorial1DifferentialCryptanalysisSlide9Content6Run1", resourceCulture);
             }
         }
         
@@ -1348,7 +1735,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 1. IntroductionHeader ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1. Introduction ähnelt.
         /// </summary>
         public static string Tutorial1IntroductionHeader {
             get {
@@ -1357,16 +1744,25 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In this section we consider the basic idea of differential cryptanalysis. Many symmetric round-based block ciphers consist of three basic operations: Key addition, substitution and permutation. In this section, we limit ourselves to key addition and substitution. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In this section we consider the basic idea of differential cryptanalysis. ähnelt.
         /// </summary>
-        public static string Tutorial1IntroductionSlide1Content1 {
+        public static string Tutorial1IntroductionSlide1Content1Run1 {
             get {
-                return ResourceManager.GetString("Tutorial1IntroductionSlide1Content1", resourceCulture);
+                return ResourceManager.GetString("Tutorial1IntroductionSlide1Content1Run1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Many ciphers use the XOR operation (exclusive-OR) for key addition. The XOR operation is a two-digit operator that can be described by the following value table: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Most modern round-based block ciphers consist of three basic operations: key addition, substitution, and permutation. Cipher 1 consists of key addition and substitution. Ciphers 2 and 3 also contain a permutation. ähnelt.
+        /// </summary>
+        public static string Tutorial1IntroductionSlide1Content1Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial1IntroductionSlide1Content1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The XOR operation (exclusive OR) is usually used for key addition. The XOR operation is a two-digit operator that can be described by the following value table: ähnelt.
         /// </summary>
         public static string Tutorial1IntroductionSlide1Content2 {
             get {
@@ -1375,7 +1771,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Inputbit A ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input bit A ähnelt.
         /// </summary>
         public static string Tutorial1IntroductionSlide1DataColHeader1 {
             get {
@@ -1384,7 +1780,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Inputbit B ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input bit B ähnelt.
         /// </summary>
         public static string Tutorial1IntroductionSlide1DataColHeader2 {
             get {
@@ -1393,7 +1789,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Resultbit ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die result bit ähnelt.
         /// </summary>
         public static string Tutorial1IntroductionSlide1DataColHeader3 {
             get {
@@ -1411,7 +1807,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die If the XOR operation is performed with a message m and key k, the ciphertext is generated: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die If the XOR operation is used to encrypt a message m with key k, the ciphertext c is obtained as follows: ähnelt.
         /// </summary>
         public static string Tutorial1IntroductionSlide2Content1 {
             get {
@@ -1420,7 +1816,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The core idea of differential cryptanalysis is now to use the key twice. Let&apos;s look at the impact at this point: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The basic idea of differential cryptanalysis is to use the effect of a property of the XOR operation by using the key k twice. If the key addition is performed twice, the following applies: ähnelt.
         /// </summary>
         public static string Tutorial1IntroductionSlide2Content2 {
             get {
@@ -1429,17 +1825,25 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die We get back the original message m. The XOR operation is often referred to as the difference operator. This is what we will do in this tutorial. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die We get back the original message m. ähnelt.
         /// </summary>
-        public static string Tutorial1IntroductionSlide2Content3 {
+        public static string Tutorial1IntroductionSlide2Content3Run1 {
             get {
-                return ResourceManager.GetString("Tutorial1IntroductionSlide2Content3", resourceCulture);
+                return ResourceManager.GetString("Tutorial1IntroductionSlide2Content3Run1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In reality, ciphers are more extensive, more complicated and do not consist exclusively of key additions. The
-        ///differential cryptanalysis is a so called &quot;chosen plaintext attack&quot;, which means the cryptanalyst can select plaintext messages and encrypt them to have matching plaintext/ciphertext pairs. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The XOR operator is often referred to as the difference operator. This name is also used in this tutorial. ähnelt.
+        /// </summary>
+        public static string Tutorial1IntroductionSlide2Content3Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial1IntroductionSlide2Content3Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differential cryptanalysis is a so-called &quot;chosen plaintext attack&quot;, which means that the cryptanalyst can select plaintext messages and encrypt them to have matching plaintext/ciphertext pairs. ähnelt.
         /// </summary>
         public static string Tutorial1IntroductionSlide2Content4 {
             get {
@@ -1457,11 +1861,11 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Die Idee des zweimaligen Anwendens des Schlüssels nutzen wir, indem wir Paare von Nachrichten m  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die We take advantage of the idea of using the key twice by using pairs of messages m ähnelt.
         /// </summary>
-        public static string Tutorial1IntroductionSlide3Content1Run11 {
+        public static string Tutorial1IntroductionSlide3Content1Run1 {
             get {
-                return ResourceManager.GetString("Tutorial1IntroductionSlide3Content1Run11", resourceCulture);
+                return ResourceManager.GetString("Tutorial1IntroductionSlide3Content1Run1", resourceCulture);
             }
         }
         
@@ -1475,7 +1879,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  und m ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  and m ähnelt.
         /// </summary>
         public static string Tutorial1IntroductionSlide3Content1Run3 {
             get {
@@ -1493,7 +1897,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  betrachen. Dann kann folgendes berechnet werden: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die . If the difference between the ciphertexts is now formed, the following holds true: ähnelt.
         /// </summary>
         public static string Tutorial1IntroductionSlide3Content1Run5 {
             get {
@@ -1502,7 +1906,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die It is valid: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die It follows: ähnelt.
         /// </summary>
         public static string Tutorial1IntroductionSlide3Content2 {
             get {
@@ -1511,7 +1915,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In words, we get the difference of the plain texts by calculating the difference of the key texts. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die We obtain the difference of the plaintexts by calculating the difference of the ciphertexts. This can be used to obtain information about the round keys at dca. ähnelt.
         /// </summary>
         public static string Tutorial1IntroductionSlide3Content3 {
             get {
@@ -1529,7 +1933,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Differential cryptanalysis continues in the KeyRecovery component. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The dca is now continued in the DCA KeyRecovery component. ähnelt.
         /// </summary>
         public static string Tutorial1LastSlideContent1 {
             get {
@@ -1538,7 +1942,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die You can now restore the round keys K ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In the DCA KeyRecovery component, you can now recover the round keys k ähnelt.
         /// </summary>
         public static string Tutorial1LastSlideContent2Run1 {
             get {
@@ -1556,7 +1960,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  and K ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  and k ähnelt.
         /// </summary>
         public static string Tutorial1LastSlideContent2Run3 {
             get {
@@ -1574,7 +1978,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  in the KeyRecovery component using differential cryptanalysis. The attack is as described above. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die . ähnelt.
         /// </summary>
         public static string Tutorial1LastSlideContent2Run5 {
             get {
@@ -1583,11 +1987,29 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die To do this, you must click the Start button in the KeyRecovery component. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die To do this, you must click on the ähnelt.
         /// </summary>
-        public static string Tutorial1LastSlideContent3 {
+        public static string Tutorial1LastSlideContent3Run1 {
             get {
-                return ResourceManager.GetString("Tutorial1LastSlideContent3", resourceCulture);
+                return ResourceManager.GetString("Tutorial1LastSlideContent3Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start-Button ähnelt.
+        /// </summary>
+        public static string Tutorial1LastSlideContent3Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial1LastSlideContent3Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die in the DCA KeyRecovery component. ähnelt.
+        /// </summary>
+        public static string Tutorial1LastSlideContent3Run3 {
+            get {
+                return ResourceManager.GetString("Tutorial1LastSlideContent3Run3", resourceCulture);
             }
         }
         
@@ -1601,7 +2023,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 3. Execution of differential cryptanalysis ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3. Performing differential cryptanalysis ähnelt.
         /// </summary>
         public static string Tutorial1PracticalDifferentialCryptanalysisHeader {
             get {
@@ -1610,7 +2032,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Es werden die letzten beiden Rundenschlüssel k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In the dca against cipher 1, the round keys k ähnelt.
         /// </summary>
         public static string Tutorial1PracticalDifferentialCryptanalysisSlide1Content1Run1 {
             get {
@@ -1628,7 +2050,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  und k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  and k ähnelt.
         /// </summary>
         public static string Tutorial1PracticalDifferentialCryptanalysisSlide1Content1Run3 {
             get {
@@ -1646,7 +2068,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  angegriffen. Der Angriff verläuft wie in diesem Tutorial vorgestellt wurde. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  will be attacked. The attack proceeds as described in this tutorial. ähnelt.
         /// </summary>
         public static string Tutorial1PracticalDifferentialCryptanalysisSlide1Content1Run5 {
             get {
@@ -1655,7 +2077,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Click on continue to start the attack. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Click on Next (right arrow below) to start the attack. The control is passed on to the DCA KeyRecovery component. ähnelt.
         /// </summary>
         public static string Tutorial1PracticalDifferentialCryptanalysisSlide1Content2 {
             get {
@@ -1664,7 +2086,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Execution of differential cryptanalysis ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Performing differential cryptanalysis ähnelt.
         /// </summary>
         public static string Tutorial1PracticalDifferentialCryptanalysisSlide1Header {
             get {
@@ -1673,7 +2095,25 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 2. Analysis of Cipher 2 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial ähnelt.
+        /// </summary>
+        public static string Tutorial1TitleHeaderRun1 {
+            get {
+                return ResourceManager.GetString("Tutorial1TitleHeaderRun1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differential cryptanalysis of symmetric block ciphers ähnelt.
+        /// </summary>
+        public static string Tutorial1TitleHeaderRun2 {
+            get {
+                return ResourceManager.GetString("Tutorial1TitleHeaderRun2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 2. Analyse von Chiffre 2 ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisHeader {
             get {
@@ -1682,7 +2122,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 3. Analysis of the SBoxes ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3. Analyse der SBoxen ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxHeader {
             get {
@@ -1691,7 +2131,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Due to the key addition, the SBox behaves non-linear. A guess attempt for K3 cannot be checked directly. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Aufgrund der Schlüsseladdition verhält sich die SBox nicht-linear. Ein Rateversuch für K3 kann nicht direkt überprüft werden. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide1Content1 {
             get {
@@ -1700,7 +2140,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die All SBoxes of cipher 2 behave identically. For this reason it is sufficient to analyze the functionality of a single SBox. Basically it is possible to consider 4 parallel SBoxes as one big SBox, but this would increase the analysis complexity. The SBox receives 4 bits as input and also outputs 4 bits as output. The 4 input bits are replaced by 4 other output bits. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Alle SBoxen von Chiffre 2 verhalten sind identisch. Aus diesem Grund ist es aussreichend, wenn die Funktionsweise einer einzelnen SBox analysiert wird. Grundsätzlich ist es möglich, 4 parallele SBoxen als eine große SBox zu betrachten, dies würde aber den Analyseaufwand erhöhen. Die SBox erhält als Eingabe 4 Bits und gibt auch 4 Bits als Ausgabe aus. Die 4 Eingabe-Bits werden durch 4 andere Ausgabe-Bits ersetzt. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide1Content2 {
             get {
@@ -1709,7 +2149,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Remember: Differential cryptanalysis works with differences of messages. In order to examine the SBox, all combinations of input plaintext are considered and their differences are calculated. For each pair, the plain texts are given individually into the SBox and then the difference of the substituted outputs is calculated. The transitions from input to output difference are noted. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Zur Erinnerung: Bei der differenziellen Kryptoanalyse wird mit Differenzen von Nachrichten gearbeitet. Um die SBox zu untersuchen, werden alle Kombinationen von Eingabe-Klartexten betrachtet und deren Differenz gebildet. Je Paar werden die Klartexte einzelnt in die SBox gegeben und anschließend die Differenz der substituierte Ausgaben berechnet. Dabei werden die Übergänge von Eingabe- zu Ausgabe-Differenz notiert. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide1Content3 {
             get {
@@ -1718,7 +2158,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The table on the next page visualizes this procedure. There is one line for each possible input difference. There is one column for each possible output difference. The number of occurrences of a particular difference is described by the entries in the table. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Die Tabelle auf der nächsten Seite visualisiert dieses Vorgehen. Für jede mögliche Eingabe-Differenz existiert eine Zeile. Für jede mögliche Ausgabe-Differenz gibt es eine Spalte. Die Anzahl des Auftretens einer speziellen Differenz wird durch die Einträge der Tabelle beschrieben. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide1Content4 {
             get {
@@ -1727,7 +2167,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die To calculate the probability of a difference occurring, the number must be divided by 16. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Um die Wahrscheinlichkeit des Auftretens einer Differenz zu Berechnen, muss die Anzahl durch 16 geteilt werden. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide1Content5 {
             get {
@@ -1736,7 +2176,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis of the SBoxes ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analyse der SBoxen ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide1Header {
             get {
@@ -1745,7 +2185,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The difference distribution table is shown below: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Im Folgenden ist die Differenz-Verteilungstabelle zu sehen: ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide2Content1 {
             get {
@@ -1754,7 +2194,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis of the SBoxes ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analyse der SBoxen ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide2Header {
             get {
@@ -1763,7 +2203,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input difference ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Eingabe-Differenz ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide2InputDifference {
             get {
@@ -1772,7 +2212,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output difference ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ausgabe-Differenz ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide2OutputDifference {
             get {
@@ -1781,7 +2221,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The table is called the difference distribution table. The input and output differences are hexadecimal. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Die Ein- und Ausgabe-Differenzen sowie die Einträge der Differenzverteilungs-Tabelle sind hexadezimal. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide3Content1 {
             get {
@@ -1790,7 +2230,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die A 4 Bit SBox has 16 different inputs and 16 different outputs. If 2 messages are combined to a message pair with disjunct differences, 256 different transitions of differences can be observed. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bei einer 4 Bit SBox gibt es je 16 verschiedene Eingaben und Ausgaben. Kombiniert man 2 Nachrichten zu einem Nachrichtenpaar mit je disjunkten Differenzen, können 256 verschiedene Übergänge von Differenzen beobachtet werden. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide3Content2 {
             get {
@@ -1799,7 +2239,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die An important observation is that there are differences that occur more frequently than others. There are also differences that do not occur at all. For example, the input difference 8 is mapped to the output difference D 8 times. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Eine wichtige Beobachtung ist, dass es Differenzen gibt, die häufiger vorkommen als andere. Es gibt auch Differenzen, die gar nicht auftreten. Zum Beispiel wird die Eingabe-Differenz 8 insgesamt 8 mal auf die Ausgabe-Differenz D abgebildet. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide3Content3 {
             get {
@@ -1808,7 +2248,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The distribution of differences is obviously not uniform. In practice, SBoxes are not perfect. The cryptanalyst makes use of this fact. Particularly high probabilities help with differential cryptanalysis. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Die Verteilung der Differenzen ist offensichtlich nicht gleichverteilt. In der Praxis sind SBoxen nicht perfekt. Diesen Fakt macht sich der Kryptoanalyst zu nutze. Besonders hohe Wahrscheinlichkeiten helfen bei der differenziellen Kryptoanalyse. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide3Content4 {
             get {
@@ -1817,7 +2257,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis of the SBoxes ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analyse der SBoxen ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide3Header {
             get {
@@ -1826,7 +2266,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 2 consists of three encryption rounds with four round keys. Each round consists of key addition, substitution and permutation. In the last round an additional key addition is performed. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Chiffre 2 besteht aus drei Verschlüsselungsrunden mit vier Rundenschlüsseln. Jede Runde besteht aus Schlüsseladdition, Substitution und einer Permutation. In der letzten Runde wird zusätzlich noch eine weitere Schlüsseladdition durchgeführt. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide1Content1 {
             get {
@@ -1835,7 +2275,16 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die A permutation is also used in this cipher. This permutation exchanges the bit positions of the block. In the schema the permutation is called P(). In addition to the internal states u and v, w is introduced. This state represents the value after a permutation. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Im Folgenden wird die Verschlüsselung eines Klartextblocks schematisch dargestellt. Analog zu Tutorial 1 werden die internen Zustände während des Verschlüsselungsprozesses mit Variablen u und v bezeichnet. ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide1Content2 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide1Content2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die In dieser Chiffre wird zusätzlich eine Permutation verwendet. Diese vertauscht die Bitpositionen eines Blocks. Im Schema wird die Permutation mit P() bezeichnet. Zusätzlich zu den internen Zuständen u und v wird w eingeführt. Dieser Zustand repräsentiert den Wert nach einer Permutation. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide1Content3 {
             get {
@@ -1844,7 +2293,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis of Cipher 2 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analyse von Chiffre 2 ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide1Header {
             get {
@@ -1853,7 +2302,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis of Cipher 2 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analyse von Chiffre 2 ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide2Header {
             get {
@@ -1862,16 +2311,178 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die You could now try to attack the keys of cipher 2 in a similar way to attack cipher 1. However, it is not possible to check a guess for K3, because cipher 2 has more internal states due to the number of rounds. For this reason the functionality of the SBoxes must be examined. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Man könnte nun versuchen, den Schlüssel k ähnelt.
         /// </summary>
-        public static string Tutorial2AnalysisSlide3Content1 {
+        public static string Tutorial2AnalysisSlide3Content1Run1 {
             get {
-                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content1", resourceCulture);
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content1Run1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis of Cipher 2 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3 ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide3Content1Run10 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content1Run10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  berechnen. Mit den Klartexten ist man noch in der Lage, die Differenz der u ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide3Content1Run11 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content1Run11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 0 ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide3Content1Run12 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content1Run12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  zu berechnen. ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide3Content1Run13 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content1Run13", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3 ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide3Content1Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  in ähnlicher Art und Weise wie bei Chiffre 1 anzugreifen. Dazu hätte man ein Paar von Klartexten und ihre entsprechenden Geheimtexte vorliegen. Dann würde man einen möglichen Rundenschlüssel t raten und die jeweiligen internen Variablen v ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide3Content1Run3 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content1Run3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3 ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide3Content1Run4 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content1Run4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  berechnen. Dadurch könnte man u ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide3Content1Run5 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content1Run5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3 ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide3Content1Run6 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content1Run6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  berechnen. Da der Rundenschlüssel k ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide3Content1Run7 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content1Run7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 2 ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide3Content1Run8 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content1Run8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ebenfalls unbekannt ist, könnte man nun die Differenz der u ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide3Content1Run9 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content1Run9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Aufgrund des Exclusive-Oder verhält sich die SBox nicht-linear, sodass man die Differenz der v ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide3Content2Run1 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content2Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 0 ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide3Content2Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content2Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  nicht bestimmen kann. Daher ist es nicht möglich einen Rateversuch von k ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide3Content2Run3 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content2Run3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3 ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide3Content2Run4 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content2Run4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  durch Nutzung von Differenzen zu prüfen. ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide3Content2Run5 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content2Run5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Um dieses Problem zu lösen, betrachten wir die Funktionsweise der SBoxen genauer. ähnelt.
+        /// </summary>
+        public static string Tutorial2AnalysisSlide3Content3 {
+            get {
+                return ResourceManager.GetString("Tutorial2AnalysisSlide3Content3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analyse von Chiffre 2 ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Header {
             get {
@@ -1880,7 +2491,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 2 on differential cryptanalysis in the DCA PathFinder component is finished. All key bits were attacked. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 2 zur differenziellen Kryptoanalyse in der DKA-PfadFinder-Komponente ist beendet.  ähnelt.
         /// </summary>
         public static string Tutorial2AttackFinishedContent1 {
             get {
@@ -1889,7 +2500,52 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 2 finished ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Durch ein letztes Klicken auf &quot;Start&quot; in der DKA-KeyRecovery-Komponente werden die letzten zwei Rundenschlüssel k ähnelt.
+        /// </summary>
+        public static string Tutorial2AttackFinishedContent2Run1 {
+            get {
+                return ResourceManager.GetString("Tutorial2AttackFinishedContent2Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        /// </summary>
+        public static string Tutorial2AttackFinishedContent2Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial2AttackFinishedContent2Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  und k ähnelt.
+        /// </summary>
+        public static string Tutorial2AttackFinishedContent2Run3 {
+            get {
+                return ResourceManager.GetString("Tutorial2AttackFinishedContent2Run3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 0 ähnelt.
+        /// </summary>
+        public static string Tutorial2AttackFinishedContent2Run4 {
+            get {
+                return ResourceManager.GetString("Tutorial2AttackFinishedContent2Run4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  versucht wiederherzustellen. ähnelt.
+        /// </summary>
+        public static string Tutorial2AttackFinishedContent2Run5 {
+            get {
+                return ResourceManager.GetString("Tutorial2AttackFinishedContent2Run5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 2 beendet ähnelt.
         /// </summary>
         public static string Tutorial2AttackFinishedHeader {
             get {
@@ -1898,34 +2554,133 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In the last step, the last two round keys K1 and K0 are attacked. This attack is identical to the procedure described in Tutorial 1. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Im letzten Schritt werden die letzten beiden Rundenschlüssel k ähnelt.
         /// </summary>
-        public static string Tutorial2AttackFirstRoundContent1 {
+        public static string Tutorial2AttackFirstRoundContent1Run1 {
             get {
-                return ResourceManager.GetString("Tutorial2AttackFirstRoundContent1", resourceCulture);
+                return ResourceManager.GetString("Tutorial2AttackFirstRoundContent1Run1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Click on continue to attack the first two round keys. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
         /// </summary>
-        public static string Tutorial2AttackFirstRoundContent2 {
+        public static string Tutorial2AttackFirstRoundContent1Run2 {
             get {
-                return ResourceManager.GetString("Tutorial2AttackFirstRoundContent2", resourceCulture);
+                return ResourceManager.GetString("Tutorial2AttackFirstRoundContent1Run2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Calculation of round keys K1 and K0 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  und k ähnelt.
         /// </summary>
-        public static string Tutorial2AttackFirstRoundHeader {
+        public static string Tutorial2AttackFirstRoundContent1Run3 {
             get {
-                return ResourceManager.GetString("Tutorial2AttackFirstRoundHeader", resourceCulture);
+                return ResourceManager.GetString("Tutorial2AttackFirstRoundContent1Run3", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 7. Differential cryptanalysis of cipher 2 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 0 ähnelt.
+        /// </summary>
+        public static string Tutorial2AttackFirstRoundContent1Run4 {
+            get {
+                return ResourceManager.GetString("Tutorial2AttackFirstRoundContent1Run4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  angegriffen. Dieser Angriff läuft analog zu dem Verfahren ab, wie es in Tutorial 1 durchgeführt wurde. ähnelt.
+        /// </summary>
+        public static string Tutorial2AttackFirstRoundContent1Run5 {
+            get {
+                return ResourceManager.GetString("Tutorial2AttackFirstRoundContent1Run5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Durch einen Klick auf weiter werden die ersten beiden Rundenschlüssel k ähnelt.
+        /// </summary>
+        public static string Tutorial2AttackFirstRoundContent2Run1 {
+            get {
+                return ResourceManager.GetString("Tutorial2AttackFirstRoundContent2Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        /// </summary>
+        public static string Tutorial2AttackFirstRoundContent2Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial2AttackFirstRoundContent2Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  und k ähnelt.
+        /// </summary>
+        public static string Tutorial2AttackFirstRoundContent2Run3 {
+            get {
+                return ResourceManager.GetString("Tutorial2AttackFirstRoundContent2Run3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 0 ähnelt.
+        /// </summary>
+        public static string Tutorial2AttackFirstRoundContent2Run4 {
+            get {
+                return ResourceManager.GetString("Tutorial2AttackFirstRoundContent2Run4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  angegriffen. ähnelt.
+        /// </summary>
+        public static string Tutorial2AttackFirstRoundContent2Run5 {
+            get {
+                return ResourceManager.GetString("Tutorial2AttackFirstRoundContent2Run5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Berechnung der Rundenschlüssel k ähnelt.
+        /// </summary>
+        public static string Tutorial2AttackFirstRoundHeaderRun1 {
+            get {
+                return ResourceManager.GetString("Tutorial2AttackFirstRoundHeaderRun1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        /// </summary>
+        public static string Tutorial2AttackFirstRoundHeaderRun2 {
+            get {
+                return ResourceManager.GetString("Tutorial2AttackFirstRoundHeaderRun2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  und k ähnelt.
+        /// </summary>
+        public static string Tutorial2AttackFirstRoundHeaderRun3 {
+            get {
+                return ResourceManager.GetString("Tutorial2AttackFirstRoundHeaderRun3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 0 ähnelt.
+        /// </summary>
+        public static string Tutorial2AttackFirstRoundHeaderRun4 {
+            get {
+                return ResourceManager.GetString("Tutorial2AttackFirstRoundHeaderRun4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 7. Differenzielle Kryptoanalyse von Chiffre 2 ähnelt.
         /// </summary>
         public static string Tutorial2AttackHeader {
             get {
@@ -1934,7 +2689,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die At this point, the second round key K ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die An dieser Stelle soll der zweite Rundenschlüssel k ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound2Content1Run1 {
             get {
@@ -1952,7 +2707,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  is to be attacked. SBoxes can be selected for this in the second encryption round. By selecting an SBox, the respective 4 bits of the round key are attacked and an attempt is made to restore them. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen. ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound2Content1Run3 {
             get {
@@ -1961,7 +2716,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The attack is almost analogous to the one on the K ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Der Angriff läuft nahezu analog zu dem auf den Rundenschlüssel k ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound2Content1Run4 {
             get {
@@ -1979,7 +2734,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  round key. However, when searching for differentials, the cipher does not have to be searched so deeply any more, since an encryption round has already been completely attacked. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ab. Allerdings muss bei der Suche nach Differenzialen die Chiffre nicht mehr so tief durchsucht werden, da bereits eine Verschlüsselungsrunde vollständig angegriffen wurde. ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound2Content1Run6 {
             get {
@@ -1988,7 +2743,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die At this point, the first round key K ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die An dieser Stelle soll der erste Rundenschlüssel k ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound3Content1Run1 {
             get {
@@ -2006,7 +2761,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  of the cipher is to be attacked. SBoxes can be selected for this in the third encryption round. By selecting an SBox the respective 4 bits of the round key are attacked and an attempt is made to restore them. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  der Chiffre angegriffen werden. Dazu können in der dritten Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen. ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound3Content1Run3 {
             get {
@@ -2015,7 +2770,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In differential cryptanalysis, the change of differences at the SBoxes is observed. SBoxes should therefore be selected at this point. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bei der differenziellen Kryptoanalyse wird die Veränderung von Differenzen an den SBoxen betrachtet. Daher sind an dieser Stelle SBoxen auszuwählen. ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound3Content1Run4 {
             get {
@@ -2024,7 +2779,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The more key bits that are selected, the more complicated the search for a differential. However, it can make sense to attack several SBoxes at the same time. Depending on the properties of the cipher, better or worse differentials can be found. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Je mehr Schlüsselbits ausgewählt werden, desto komplizierter ist die Suche nach einem Differenzial. Allerdings kann durchaus sinnvoll sein, mehrere SBoxen gleichzeitig anzugreifen. Je nach Beschaffenheit der Chiffre finden sich so bessere oder schlechtere Differenziale. ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound3Content1Run5 {
             get {
@@ -2033,7 +2788,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select SBoxes from round 2 to attack key bits from K ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die SBoxen aus Runde 2 auswählen, um Schlüsselbits von k ähnelt.
         /// </summary>
         public static string Tutorial2AttackRound2HeaderRun1 {
             get {
@@ -2051,7 +2806,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  anzugreifen ähnelt.
         /// </summary>
         public static string Tutorial2AttackRound2HeaderRun3 {
             get {
@@ -2060,7 +2815,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select SBoxes from round 3 to attack key bits from K ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die SBoxen aus Runde 3 auswählen, um Schlüsselbits von k ähnelt.
         /// </summary>
         public static string Tutorial2AttackRound3HeaderRun1 {
             get {
@@ -2078,7 +2833,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  anzugreifen ähnelt.
         /// </summary>
         public static string Tutorial2AttackRound3HeaderRun3 {
             get {
@@ -2087,20 +2842,11 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 4. Characteristics ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 4. Charakteristiken ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicHeader {
             get {
                 return ResourceManager.GetString("Tutorial2CharacteristicHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Differentials are... ähnelt.
-        /// </summary>
-        public static string Tutorial2CharacteristicSlide1Content1 {
-            get {
-                return ResourceManager.GetString("Tutorial2CharacteristicSlide1Content1", resourceCulture);
             }
         }
         
@@ -2159,7 +2905,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ziel bei der Suche ist es, einen Weg zu finden, der eine möglichst hohe Wahrscheinlichkeit aufweist. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ziel bei der Suche ist es einen Weg zu finden, der eine möglichst hohe Wahrscheinlichkeit aufweist. Diese Wege können in der DKA-PfadVisualisierer-Komponente graphisch dargestellt werden. ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide1Content3 {
             get {
@@ -2168,11 +2914,47 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Characteristics ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Charakteristiken ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide1Header {
             get {
                 return ResourceManager.GetString("Tutorial2CharacteristicSlide1Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Eine Verschlüsselungsrunde besteht bei Chiffre 2 aus Schlüsseladdition, Substitution und Permutation. Die Chiffre arbeitet auf 16 Bit Blöcken. Die vorige Notation wird wie folgt erweitert, um eine differenzielle Charakteristik einer SBox für 16 Bit Blöcke zu bezeichnen ähnelt.
+        /// </summary>
+        public static string Tutorial2CharacteristicSlide2Content1 {
+            get {
+                return ResourceManager.GetString("Tutorial2CharacteristicSlide2Content1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Nach der Substitution werden die Bits in Chiffre 2 permutiert. Die Permutation der Chiffre ist bekannt und daher kann die differenzielle Charakteristik der Permutation wie folgt bezeichnet werden ähnelt.
+        /// </summary>
+        public static string Tutorial2CharacteristicSlide2Content2 {
+            get {
+                return ResourceManager.GetString("Tutorial2CharacteristicSlide2Content2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Zusammenfassend wird eine differenzielle Charakteristik einer Verschlüsselungsrunde als Komination von Substitution und Permutation wie folgt notiert ähnelt.
+        /// </summary>
+        public static string Tutorial2CharacteristicSlide2Content3 {
+            get {
+                return ResourceManager.GetString("Tutorial2CharacteristicSlide2Content3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Charakteristiken ähnelt.
+        /// </summary>
+        public static string Tutorial2CharacteristicSlide2Header {
+            get {
+                return ResourceManager.GetString("Tutorial2CharacteristicSlide2Header", resourceCulture);
             }
         }
         
@@ -2186,7 +2968,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Die PfadFinder-Komponente verfügt über verschiedene Suchoptionen zur Bestimmung von solchen Pfaden. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Die DKA-PfadFinder-Komponente verfügt über verschiedene Suchoptionen zur Bestimmung von solchen Pfaden. ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide3Content2 {
             get {
@@ -2213,7 +2995,16 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Characteristics ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ziel bei der Suche ist es, einen Weg zu finden, der eine möglichst hohe Wahrscheinlichkeit aufweist. ähnelt.
+        /// </summary>
+        public static string Tutorial2CharacteristicSlide3Content5 {
+            get {
+                return ResourceManager.GetString("Tutorial2CharacteristicSlide3Content5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Charakteristiken ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide3Header {
             get {
@@ -2222,7 +3013,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 5. Differentials ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 5. Differenziale ähnelt.
         /// </summary>
         public static string Tutorial2DifferentialHeader {
             get {
@@ -2258,7 +3049,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Differentials ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differenziale ähnelt.
         /// </summary>
         public static string Tutorial2DifferentialSlide1Header {
             get {
@@ -2267,7 +3058,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 1. Introduction ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1. Einführung ähnelt.
         /// </summary>
         public static string Tutorial2IntroductionHeader {
             get {
@@ -2276,7 +3067,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In tutorial 1 the idea of differential cryptanalysis was introduced and demonstrated with a cipher consisting of one encryption round with two round keys. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In Tutorial 1 wurde die Idee der differenziellen Kryptoanalyse vorgestellt und an einer Chiffre bestehend aus einer Verschlüsselungsrunde mit zwei Rundenschlüsseln demonstriert. ähnelt.
         /// </summary>
         public static string Tutorial2IntroductionSlide1Content1 {
             get {
@@ -2285,7 +3076,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In this tutorial the idea is deepened and shown at a cipher with three encryption rounds with four round keys. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In diesem Tutorial wird die Idee vertieft und an einer Chiffre mit drei Verschlüsselungsrunden mit vier Rundenschlüsseln gezeigt. ähnelt.
         /// </summary>
         public static string Tutorial2IntroductionSlide1Content2 {
             get {
@@ -2303,7 +3094,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Aufgrund der mehrfachen Verschlüsselungsrunden kann diese Chiffre nicht wie Chiffre 1 angegriffen werden. Für Chiffre 2 wird ein Ansatz benötigt, der die Änderungen von differenzen über mehrere Verschlüsselungsrunden mit einer gewissen Wahrscheinlichkeit vorraussagt. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Aufgrund der mehrfachen Verschlüsselungsrunden kann diese Chiffre nicht wie Chiffre 1 angegriffen werden. Für Chiffre 2 wird ein Ansatz benötigt, der die Änderungen von Differenzen über mehrere Verschlüsselungsrunden mit einer gewissen Wahrscheinlichkeit vorraussagt. ähnelt.
         /// </summary>
         public static string Tutorial2IntroductionSlide1Content4 {
             get {
@@ -2312,7 +3103,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Introduction ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Einführung ähnelt.
         /// </summary>
         public static string Tutorial2IntroductionSlide1Header {
             get {
@@ -2321,7 +3112,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 6. Recover key information ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 6. Schlüsselinformationen wiederherstellen ähnelt.
         /// </summary>
         public static string Tutorial2RecoverKeyInformationHeader {
             get {
@@ -2357,7 +3148,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Recover key information ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Schlüsselinformationen wiederherstellen ähnelt.
         /// </summary>
         public static string Tutorial2RecoverKeyInformationSlide1Header {
             get {
@@ -2366,16 +3157,25 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial Differenzielle Kryptoanalyse symmetrischer Blockchiffren ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial ähnelt.
         /// </summary>
-        public static string Tutorial2TitleHeader {
+        public static string Tutorial2TitleHeaderRun1 {
             get {
-                return ResourceManager.GetString("Tutorial2TitleHeader", resourceCulture);
+                return ResourceManager.GetString("Tutorial2TitleHeaderRun1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die You can now use the attack configuration generated in the PathFinder component in the KeyRecovery component to restore key bits. To do this, click the start button. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differenzielle Kryptoanalyse symmetrischer Blockchiffren ähnelt.
+        /// </summary>
+        public static string Tutorial2TitleHeaderRun2 {
+            get {
+                return ResourceManager.GetString("Tutorial2TitleHeaderRun2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sie können nun in der DKA-KeyRecovery-Komponente die in der DKA-PfadFinder-Komponente generierte Angriffskonfiguration verwenden, um Schlüsselbits wiederherzustellen. Dazu müssen Sie auf den Start-Button klicken. ähnelt.
         /// </summary>
         public static string Tutorial2WaitingSlideContent1 {
             get {
@@ -2384,7 +3184,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Optionally, you can display the determined differential and its characteristics in the PathVisualiser component. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Optional können Sie sich in der DKA-PfadVisualiserer-Komponente das ermittelte Differenzial und die darin enthaltenen Charakteristiken anzeigen lassen. ähnelt.
         /// </summary>
         public static string Tutorial2WaitingSlideContent2 {
             get {
@@ -2393,7 +3193,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Summary of the analysis results: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Zusammenfassung der Analyse-Ergebnisse: ähnelt.
         /// </summary>
         public static string Tutorial2WaitingSlideContent3Run1 {
             get {
@@ -2402,7 +3202,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input difference:  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Eingabedifferenz:  ähnelt.
         /// </summary>
         public static string Tutorial2WaitingSlideContent3Run2 {
             get {
@@ -2411,7 +3211,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Expected difference:  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Erwartete Differenz:  ähnelt.
         /// </summary>
         public static string Tutorial2WaitingSlideContent3Run3 {
             get {
@@ -2420,7 +3220,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Probability:  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Wahrscheinlichkeit:  ähnelt.
         /// </summary>
         public static string Tutorial2WaitingSlideContent3Run4 {
             get {
@@ -2429,7 +3229,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Differential cryptanalysis is continued in the following components. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differenzielle Kryptoanalyse wird in den nachfolgenden Komponenten weitergeführt ähnelt.
         /// </summary>
         public static string Tutorial2WaitingSlideHeader {
             get {
@@ -2438,7 +3238,196 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die X. Differential cryptanalysis of cipher 3 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 3 zur differenziellen Kryptoanalyse in der DKA-PfadFinder-Komponente ist beendet.  ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFinishedContent1 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFinishedContent1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Durch ein letztes Klicken auf &quot;Start&quot; in der DKA-KeyRecovery-Komponente werden die letzten zwei Rundenschlüssel k ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFinishedContent2Run1 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFinishedContent2Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFinishedContent2Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFinishedContent2Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  und k ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFinishedContent2Run3 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFinishedContent2Run3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 0 ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFinishedContent2Run4 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFinishedContent2Run4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  versucht wiederherzustellen. ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFinishedContent2Run5 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFinishedContent2Run5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 3 beendet ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFinishedHeader {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFinishedHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Im letzten Schritt werden die letzten beiden Rundenschlüssel k ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFirstRoundContent1Run1 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFirstRoundContent1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFirstRoundContent1Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFirstRoundContent1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  und k ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFirstRoundContent1Run3 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFirstRoundContent1Run3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 0 ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFirstRoundContent1Run4 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFirstRoundContent1Run4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  angegriffen. Dieser Angriff läuft analog zu dem Verfahren ab, wie es in Tutorial 1 durchgeführt wurde. ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFirstRoundContent1Run5 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFirstRoundContent1Run5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Durch einen Klick auf weiter werden die ersten beiden Rundenschlüssel k ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFirstRoundContent2Run1 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFirstRoundContent2Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFirstRoundContent2Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFirstRoundContent2Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  und k ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFirstRoundContent2Run3 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFirstRoundContent2Run3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 0 ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFirstRoundContent2Run4 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFirstRoundContent2Run4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  angegriffen. ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFirstRoundContent2Run5 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFirstRoundContent2Run5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Berechnung der Rundenschlüssel k ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFirstRoundHeaderRun1 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFirstRoundHeaderRun1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFirstRoundHeaderRun2 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFirstRoundHeaderRun2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  und k ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFirstRoundHeaderRun3 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFirstRoundHeaderRun3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 0 ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackFirstRoundHeaderRun4 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackFirstRoundHeaderRun4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 5. Differenzielle Kryptoanalyse von Chiffre 3 ähnelt.
         /// </summary>
         public static string Tutorial3AttackHeader {
             get {
@@ -2447,7 +3436,214 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die SBoxen aus Runde 2 auswählen, um Schlüsselbits von K ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die An dieser Stelle soll der zweite Rundenschlüssel k ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound2Content1Run1 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound2Content1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 2 ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound2Content1Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound2Content1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen. ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound2Content1Run3 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound2Content1Run3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Der Angriff läuft nahezu analog zu dem auf den Rundenschlüssel k ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound2Content1Run4 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound2Content1Run4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 5 ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound2Content1Run5 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound2Content1Run5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ab. Allerdings muss bei der Suche nach Differenzialen die Chiffre nicht mehr so tief durchsucht werden, da bereits eine Verschlüsselungsrunde vollständig angegriffen wurde. ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound2Content1Run6 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound2Content1Run6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die An dieser Stelle soll der zweite Rundenschlüssel k ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound3Content1Run1 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound3Content1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3 ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound3Content1Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound3Content1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen. ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound3Content1Run3 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound3Content1Run3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Der Angriff läuft nahezu analog zu dem auf den Rundenschlüssel k ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound3Content1Run4 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound3Content1Run4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 5 ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound3Content1Run5 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound3Content1Run5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ab. Allerdings muss bei der Suche nach Differenzialen die Chiffre nicht mehr so tief durchsucht werden, da bereits eine Verschlüsselungsrunde vollständig angegriffen wurde. ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound3Content1Run6 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound3Content1Run6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die An dieser Stelle soll der zweite Rundenschlüssel k ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound4Content1Run1 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound4Content1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 4 ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound4Content1Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound4Content1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen. ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound4Content1Run3 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound4Content1Run3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Der Angriff läuft nahezu analog zu dem auf den Rundenschlüssel k ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound4Content1Run4 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound4Content1Run4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 5 ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound4Content1Run5 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound4Content1Run5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ab. Allerdings muss bei der Suche nach Differenzialen die Chiffre nicht mehr so tief durchsucht werden, da bereits eine Verschlüsselungsrunde vollständig angegriffen wurde. ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound4Content1Run6 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound4Content1Run6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die An dieser Stelle soll der erste Rundenschlüssel k ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound5Content1Run1 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound5Content1Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 5 ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound5Content1Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound5Content1Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  der Chiffre angegriffen werden. Dazu können in der fünften Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen. ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound5Content1Run3 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound5Content1Run3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bei der differenziellen Kryptoanalyse wird die Veränderung von Differenzen an den SBoxen betrachtet. Daher sind an dieser Stelle SBoxen auszuwählen. ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound5Content1Run4 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound5Content1Run4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Je mehr Schlüsselbits ausgewählt werden, desto komplizierter ist die Suche nach einem Differenzial. Allerdings kann durchaus sinnvoll sein, mehrere SBoxen gleichzeitig anzugreifen. Je nach Beschaffenheit der Chiffre finden sich so bessere oder schlechtere Differenziale. ähnelt.
+        /// </summary>
+        public static string Tutorial3AttackKeyRound5Content1Run5 {
+            get {
+                return ResourceManager.GetString("Tutorial3AttackKeyRound5Content1Run5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SBoxen aus Runde 2 auswählen, um Schlüsselbits von k ähnelt.
         /// </summary>
         public static string Tutorial3AttackRound2HeaderRun1 {
             get {
@@ -2465,7 +3661,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die anzugreifen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  anzugreifen ähnelt.
         /// </summary>
         public static string Tutorial3AttackRound2HeaderRun3 {
             get {
@@ -2474,7 +3670,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die SBoxen aus Runde 3 auswählen, um Schlüsselbits von K ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die SBoxen aus Runde 3 auswählen, um Schlüsselbits von k ähnelt.
         /// </summary>
         public static string Tutorial3AttackRound3HeaderRun1 {
             get {
@@ -2492,7 +3688,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die anzugreifen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  anzugreifen ähnelt.
         /// </summary>
         public static string Tutorial3AttackRound3HeaderRun3 {
             get {
@@ -2501,7 +3697,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die SBoxen aus Runde 4 auswählen, um Schlüsselbits von K ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die SBoxen aus Runde 4 auswählen, um Schlüsselbits von k ähnelt.
         /// </summary>
         public static string Tutorial3AttackRound4HeaderRun1 {
             get {
@@ -2528,7 +3724,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select SBoxes from round 5 to attack key bits from K ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die SBoxen aus Runde 5 auswählen, um Schlüsselbits von k ähnelt.
         /// </summary>
         public static string Tutorial3AttackRound5HeaderRun1 {
             get {
@@ -2546,7 +3742,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  anzugreifen ähnelt.
         /// </summary>
         public static string Tutorial3AttackRound5HeaderRun3 {
             get {
@@ -2564,8 +3760,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Bei der Durchführung der DKA werden viele Klartext-Paare generiert, die eine bestimmte Differenz aufweisen. Es kann vorkommen, dass die NAchrichten
-        ///dem im Differenzial gefundenen Weg durch die Chiffre nicht folgen. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bei der Durchführung der DKA werden viele Klartext-Paare generiert, die eine bestimmte Differenz aufweisen. Es kann vorkommen, dass die Nachrichten dem im Differenzial gefundenen Weg durch die Chiffre nicht folgen. ähnelt.
         /// </summary>
         public static string Tutorial3FilterSlide1Content1 {
             get {
@@ -2583,8 +3778,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Wenn ein Paar den Fluss des Differenzials folgt, wird von einem richten Paar gesprochen. Dahingegen wird ein Paar, das nicht dem Differenzial
-        ///folgt, als falsches Paar bezeichnet. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Wenn ein Paar den Fluss des Differenzials folgt, wird von einem richten Paar gesprochen. Dahingegen wird ein Paar, das nicht dem Differenzial folgt, als falsches Paar bezeichnet. ähnelt.
         /// </summary>
         public static string Tutorial3FilterSlide1Content3 {
             get {
@@ -2598,6 +3792,33 @@ namespace DCAPathFinder.Properties {
         public static string Tutorial3FilterSlide1Header {
             get {
                 return ResourceManager.GetString("Tutorial3FilterSlide1Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Falsche Paare können bei der Wiederherstellung des gesuchten Rundenschlüssels Probleme darstellen. Diese erschweren die Identifizierung des korrekten Rundenschlüssels durch Treffer von falschen Rundenschlüsseln bei der Wiederherstellung. ähnelt.
+        /// </summary>
+        public static string Tutorial3FilterSlide2Content1 {
+            get {
+                return ResourceManager.GetString("Tutorial3FilterSlide2Content1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Es ist daher sinnvoll, falsche Paare vor der Wiederherstellung des Rundenschlüssels zu identifizieren und nicht weiter zu betrachten. ähnelt.
+        /// </summary>
+        public static string Tutorial3FilterSlide2Content2 {
+            get {
+                return ResourceManager.GetString("Tutorial3FilterSlide2Content2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Filterung ähnelt.
+        /// </summary>
+        public static string Tutorial3FilterSlide2Header {
+            get {
+                return ResourceManager.GetString("Tutorial3FilterSlide2Header", resourceCulture);
             }
         }
         
@@ -2647,16 +3868,232 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial Differenzielle Kryptoanalyse symmetrischer Blockchiffren ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Einführung ähnelt.
         /// </summary>
-        public static string Tutorial3TitleHeader {
+        public static string Tutorial3IntroductionSlide1Header {
             get {
-                return ResourceManager.GetString("Tutorial3TitleHeader", resourceCulture);
+                return ResourceManager.GetString("Tutorial3IntroductionSlide1Header", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sie können nun in der KeyRecovery-Komponente die in der PfadFinder-Komponente generierte Angriffskonfiguration verwenden, um Schlüsselbits wiederherzustellen. Dazu müssen Sie auf den Start-Button klicken. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Zur Filterung werden im Folgenden zwei Techniken vorgestellt. ähnelt.
+        /// </summary>
+        public static string Tutorial3IntroductionSlide3Content1 {
+            get {
+                return ResourceManager.GetString("Tutorial3IntroductionSlide3Content1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Als erste Technik wird die Differenz der Geheimtexte eines Paares betrachtet. Beim Angriff mittels DKA werden oft aus Gründen des Aufwands nicht alle S-Boxen eiener Verschlüsselungsrunde gleichzeitig angegriffen, sondern oft nur eine Teilmenge. ähnelt.
+        /// </summary>
+        public static string Tutorial3IntroductionSlide3Content2 {
+            get {
+                return ResourceManager.GetString("Tutorial3IntroductionSlide3Content2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Die S-Boxen, an denen die Differenz 0 hineingeht, kommt auch die Differenz 0 heraus. Folglich durch Betrachtung der Geheimtext-Differenz einige Paare schon ausgeschlossen werden, wenn die Differenz an den entsprechenden Stellen von 0 verschieden ist. ähnelt.
+        /// </summary>
+        public static string Tutorial3IntroductionSlide3Content3 {
+            get {
+                return ResourceManager.GetString("Tutorial3IntroductionSlide3Content3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Filterung ähnelt.
+        /// </summary>
+        public static string Tutorial3IntroductionSlide3Header {
+            get {
+                return ResourceManager.GetString("Tutorial3IntroductionSlide3Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Als zweites kann die letzte (erwartete) Differenz des Differenzials betrachtet werden. ähnelt.
+        /// </summary>
+        public static string Tutorial3IntroductionSlide4Content1 {
+            get {
+                return ResourceManager.GetString("Tutorial3IntroductionSlide4Content1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Dieser Wert ist bekannt und durch Betrachtung der Differenzenverteilungstabelle der S-Box kann auch der Ausgabewert der S-Box ermittelt werden. Im allgemeinen sind hier mehrere verschiedene Werte möglich. Diese Werte können ebenfalls bei der Betrachtung der Differenz der Geheimtexte verwendet werden. ähnelt.
+        /// </summary>
+        public static string Tutorial3IntroductionSlide4Content2 {
+            get {
+                return ResourceManager.GetString("Tutorial3IntroductionSlide4Content2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Entspricht die Geheimtext-Differenz an der Stelle der S-Box nicht einem der verschiedenen Ausgangswerte der S-Box, kann dieses Paar ebenfalls als falsches Paar indentifiziert werden. ähnelt.
+        /// </summary>
+        public static string Tutorial3IntroductionSlide4Content3 {
+            get {
+                return ResourceManager.GetString("Tutorial3IntroductionSlide4Content3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Filterung ähnelt.
+        /// </summary>
+        public static string Tutorial3IntroductionSlide4Header {
+            get {
+                return ResourceManager.GetString("Tutorial3IntroductionSlide4Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3. Anzahl der notwendigen Paare ähnelt.
+        /// </summary>
+        public static string Tutorial3NeededPairsHeader {
+            get {
+                return ResourceManager.GetString("Tutorial3NeededPairsHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Die notwendige Anzahl an Paaren ist im wesentlichen von bestimmten Faktoren abhängig. Diese sind die Wahrscheinlichkeit des gefundenen Differenzials, die Anzahl der angegriffenen Schlüsselbits durch das Differenzial und die Filterungstechnik. ähnelt.
+        /// </summary>
+        public static string Tutorial3NeededPairsSlide1Content1 {
+            get {
+                return ResourceManager.GetString("Tutorial3NeededPairsSlide1Content1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Es beschreibt das Verhältnis der Anzahl von Paaren, die dem Differenzial folgen zu der durchschnittlichen Häufigkeit der falschen Teilschlüssel. ähnelt.
+        /// </summary>
+        public static string Tutorial3NeededPairsSlide1Content2 {
+            get {
+                return ResourceManager.GetString("Tutorial3NeededPairsSlide1Content2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Eine gängige Formel zur bestimmung der notwendigen Paare N ähnelt.
+        /// </summary>
+        public static string Tutorial3NeededPairsSlide1Content2Run1 {
+            get {
+                return ResourceManager.GetString("Tutorial3NeededPairsSlide1Content2Run1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die D ähnelt.
+        /// </summary>
+        public static string Tutorial3NeededPairsSlide1Content2Run2 {
+            get {
+                return ResourceManager.GetString("Tutorial3NeededPairsSlide1Content2Run2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ist ähnelt.
+        /// </summary>
+        public static string Tutorial3NeededPairsSlide1Content2Run3 {
+            get {
+                return ResourceManager.GetString("Tutorial3NeededPairsSlide1Content2Run3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die wobei c eine kleine Konstante und DP die Wahrscheinlichkeit des Differenzials ist. ähnelt.
+        /// </summary>
+        public static string Tutorial3NeededPairsSlide1Content3 {
+            get {
+                return ResourceManager.GetString("Tutorial3NeededPairsSlide1Content3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ein beispielhafter Wert für c ist beispielsweise 10. ähnelt.
+        /// </summary>
+        public static string Tutorial3NeededPairsSlide1Content4 {
+            get {
+                return ResourceManager.GetString("Tutorial3NeededPairsSlide1Content4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Anzahl der notwendigen Paare ähnelt.
+        /// </summary>
+        public static string Tutorial3NeededPairsSlide1Header {
+            get {
+                return ResourceManager.GetString("Tutorial3NeededPairsSlide1Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 4. Rauschverhältnis ähnelt.
+        /// </summary>
+        public static string Tutorial3SignalToNoiseHeader {
+            get {
+                return ResourceManager.GetString("Tutorial3SignalToNoiseHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ein Werkzeug zur Beurteilung der Erfolgsaussichten, ist das so genannte Rauschverhältnis. ähnelt.
+        /// </summary>
+        public static string Tutorial3SignalToNoiseSlide1Content1 {
+            get {
+                return ResourceManager.GetString("Tutorial3SignalToNoiseSlide1Content1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Zur Bestimmung des Rauschverhältnis sind zum Teil experimentell zu bestimmtende Durchschnittswerte notwendig, wie beispielsweise der Anteil der Paare, die durch die Filterng entfernt werden oder die Durchschnittliche Anzahl der Teilschlüsselkandidaten, die ein Paar vorschlägt. ähnelt.
+        /// </summary>
+        public static string Tutorial3SignalToNoiseSlide1Content3 {
+            get {
+                return ResourceManager.GetString("Tutorial3SignalToNoiseSlide1Content3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die In der Online-Hilfe der DKA-PfadFinder-Komponente sind weitere Literatur-Angaben zu dem DKA-Verfahren hinterlegt. ähnelt.
+        /// </summary>
+        public static string Tutorial3SignalToNoiseSlide1Content4 {
+            get {
+                return ResourceManager.GetString("Tutorial3SignalToNoiseSlide1Content4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Rauschverhältnis ähnelt.
+        /// </summary>
+        public static string Tutorial3SignalToNoiseSlide1Header {
+            get {
+                return ResourceManager.GetString("Tutorial3SignalToNoiseSlide1Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial ähnelt.
+        /// </summary>
+        public static string Tutorial3TitleHeaderRun1 {
+            get {
+                return ResourceManager.GetString("Tutorial3TitleHeaderRun1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differenzielle Kryptoanalyse symmetrischer Blockchiffren ähnelt.
+        /// </summary>
+        public static string Tutorial3TitleHeaderRun2 {
+            get {
+                return ResourceManager.GetString("Tutorial3TitleHeaderRun2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sie können nun in der DKA-KeyRecovery-Komponente die in der DKA-PfadFinder-Komponente generierte Angriffskonfiguration verwenden, um Schlüsselbits wiederherzustellen. Dazu müssen Sie auf den Start-Button klicken. ähnelt.
         /// </summary>
         public static string Tutorial3WaitingSlideContent1 {
             get {
@@ -2665,7 +4102,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Optional können Sie sich in der PfadVisualiserer-Komponente das ermittelte Differenzial und die darin enthaltenen Charakteristiken anzeigen lassen. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Optional können Sie sich in der DKA-PfadVisualiserer-Komponente das ermittelte Differenzial und die darin enthaltenen Charakteristiken anzeigen lassen. ähnelt.
         /// </summary>
         public static string Tutorial3WaitingSlideContent2 {
             get {
@@ -2674,7 +4111,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Summary of the analysis results: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Zusammenfassung der Analyse-Ergebnisse: ähnelt.
         /// </summary>
         public static string Tutorial3WaitingSlideContent3Run1 {
             get {
@@ -2683,7 +4120,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input difference:  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Eingabedifferenz:  ähnelt.
         /// </summary>
         public static string Tutorial3WaitingSlideContent3Run2 {
             get {
@@ -2692,7 +4129,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Expected difference:  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Erwartete Differenz:  ähnelt.
         /// </summary>
         public static string Tutorial3WaitingSlideContent3Run3 {
             get {
@@ -2701,7 +4138,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Probability:  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Wahrscheinlichkeit:  ähnelt.
         /// </summary>
         public static string Tutorial3WaitingSlideContent3Run4 {
             get {
@@ -2710,16 +4147,16 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Differenzielle Kryptoanalyse wird in den nachfolgenden Komponenten weitergeführt.  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differenzielle Kryptoanalyse wird in den nachfolgenden Komponenten weitergeführt ähnelt.
         /// </summary>
-        public static string Tutorial3WaitingSlideHeader1 {
+        public static string Tutorial3WaitingSlideHeader {
             get {
-                return ResourceManager.GetString("Tutorial3WaitingSlideHeader1", resourceCulture);
+                return ResourceManager.GetString("Tutorial3WaitingSlideHeader", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Precalculated data ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Vorberechnete Daten ähnelt.
         /// </summary>
         public static string UseOfflinePaths {
             get {
@@ -2728,10 +4165,10 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die If this setting is selected, the program does not search for
-        ///characteristics, but uses precalculated data stored in the component
-        ///and specific for the particular cipher. This allows long calculation
-        ///times to be minimized. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ist diese Einstellung angewählt, wird keine Suche nach
+        ///Charakteristiken durchgeführt, sondern es werden für die jeweilige
+        ///Chiffre vorberechnete Daten verwendet, die in der Komponente hinterlegt
+        ///sind. Dadurch können lange Berechnungszeiten minimiert werden. ähnelt.
         /// </summary>
         public static string UseOfflinePathsToolTip {
             get {

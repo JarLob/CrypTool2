@@ -160,7 +160,7 @@
     <value>Ausgabeblock</value>
   </data>
   <data name="Cipher2LblText" xml:space="preserve">
-    <value>Diese Blockchiffre arbeitet auf 16 Bit großen Blöcken. Es werden drei Verschlüsselungsrunden durchgeführt, wobei insgesamt vier Rundenschlüssel verwendet werden. In der letzten Verschlüsselungsrunde werden zwei Rundenschlüssel angewandt. Jede Runde besteht aus drei Teilschritten: Schlüsseladdition, Substitution und Permutation - in der letzten Runde entfällt die Permutation und es wird der letzte Rundenschlüssel addiert. Die Rundenschlüssel sind 16 Bit lang, die S-Boxen verarbeiten jeweils 4 Bit. Die Schlüssellänge beträgt damit 64 Bit.</value>
+    <value>Diese Blockchiffre arbeitet auf 16 Bit großen Blöcken. Es werden drei Verschlüsselungsrunden durchgeführt, wobei insgesamt vier Rundenschlüssel verwendet werden. In der letzten Verschlüsselungsrunde werden zwei Rundenschlüssel angewandt. Jede Runde besteht aus drei Teilschritten: Schlüsseladdition, Substitution und Permutation – in der letzten Runde entfällt die Permutation und es wird der letzte Rundenschlüssel addiert. Die Rundenschlüssel sind 16 Bit lang, die S-Boxen verarbeiten jeweils 4 Bit. Die Schlüssellänge beträgt damit 64 Bit.</value>
   </data>
   <data name="Cipher3" xml:space="preserve">
     <value>Chiffre 3: 16 Bit Blockgröße, 6 Rundenschlüssel, 96 Bit Schlüssellänge</value>
@@ -175,7 +175,7 @@
     <value>Ausgabeblock</value>
   </data>
   <data name="Cipher3LblText" xml:space="preserve">
-    <value>Diese Blockchiffre arbeitet auf 16 Bit großen Blöcken. Es werden 5 Verschlüsselungsrunden durchgeführt, wobei insgesamt sechs Rundenschlüssel verwendet werden. In der letzten Verschlüsselungsrunde werden zwei Rundenschlüssel angewandt. Jede Runde besteht aus drei Teilschritten: Schlüsseladdition, Substitution und Permutation - in der letzten Runde entfält die Permutation und es wird der letzte Rundenschlüssel addiert. Die Rundenschlüssel sind 16 Bit lang, die S-Boxen verarbeiten jeweils 4 Bit. Die Schlüssellänge beträgt damit 96 Bit.</value>
+    <value>Diese Blockchiffre arbeitet auf 16 Bit großen Blöcken. Es werden 5 Verschlüsselungsrunden durchgeführt, wobei insgesamt sechs Rundenschlüssel verwendet werden. In der letzten Verschlüsselungsrunde werden zwei Rundenschlüssel angewandt. Jede Runde besteht aus drei Teilschritten: Schlüsseladdition, Substitution und Permutation – in der letzten Runde entfält die Permutation und es wird der letzte Rundenschlüssel addiert. Die Rundenschlüssel sind 16 Bit lang, die S-Boxen verarbeiten jeweils 4 Bit. Die Schlüssellänge beträgt damit 96 Bit.</value>
   </data>
   <data name="Cipher4" xml:space="preserve">
     <value>Chiffre 4: 4 Bit Blockgröße , 4 Rundenschlüssel, 16 Bit Schlüssellänge</value>

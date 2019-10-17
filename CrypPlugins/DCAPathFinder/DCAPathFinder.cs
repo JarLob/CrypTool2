@@ -528,7 +528,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
 
                                 //check if there is a result
-                                if (conf.Characteristics.Count == 0)
+                                if (conf != null && conf.Characteristics.Count == 0)
                                 {
                                     GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
                                     _currentProgress = 1.0;
@@ -691,7 +691,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
 
                                 //check if there is a result
-                                if (conf.Characteristics.Count == 0)
+                                if (conf != null && conf.Characteristics.Count == 0)
                                 {
                                     GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
                                     _currentProgress = 1.0;
@@ -1510,7 +1510,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
 
                                 //check if there is a result
-                                if (conf.Characteristics.Count == 0)
+                                if (conf != null && conf.Characteristics.Count == 0)
                                 {
                                     GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
                                     _currentProgress = 1.0;
@@ -1669,7 +1669,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
 
                                 //check if there is a result
-                                if (conf.Characteristics.Count == 0)
+                                if (conf != null && conf.Characteristics.Count == 0)
                                 {
                                     GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
                                     _currentProgress = 1.0;
@@ -1827,7 +1827,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
 
                                 //check if there is a result
-                                if (conf.Characteristics.Count == 0)
+                                if (conf != null && conf.Characteristics.Count == 0)
                                 {
                                     GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
                                     _currentProgress = 1.0;
@@ -1984,7 +1984,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                                     settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
 
                                 //check if there is a result
-                                if (conf.Characteristics.Count == 0)
+                                if (conf != null && conf.Characteristics.Count == 0)
                                 {
                                     GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
                                     _currentProgress = 1.0;
