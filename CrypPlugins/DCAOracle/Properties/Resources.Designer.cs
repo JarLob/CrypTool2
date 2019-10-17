@@ -70,7 +70,7 @@ namespace DCAOracle.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Specifies the difference between the messages of a pair ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Specifies the difference between the messages of a pair. ähnelt.
         /// </summary>
         internal static string MessageDifferenceInputToolTip {
             get {
@@ -79,7 +79,7 @@ namespace DCAOracle.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Count of message pairs ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of message pair ähnelt.
         /// </summary>
         internal static string MessagePairsCountInput {
             get {
@@ -133,7 +133,7 @@ namespace DCAOracle.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The number of message pairs must be greater than 0! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The count of message pairs must be greater than 0! ähnelt.
         /// </summary>
         internal static string WarningMessageCountMustBeSpecified {
             get {
@@ -142,7 +142,7 @@ namespace DCAOracle.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Blocksize ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die block size ähnelt.
         /// </summary>
         internal static string WorSizeParameter {
             get {
@@ -151,7 +151,7 @@ namespace DCAOracle.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This parameter specifies the blocksize of the used cipher. Each message will contain exactly one block. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This parameter specifies the block size of the cipher used. Each message contains exactly one block. ähnelt.
         /// </summary>
         internal static string WorSizeParameterToolTip {
             get {

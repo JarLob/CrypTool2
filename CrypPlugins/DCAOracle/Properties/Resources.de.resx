@@ -124,25 +124,25 @@
     <value>Spezifiziert die Differenz der Nachrichten eines Paares</value>
   </data>
   <data name="MessagePairsCountInput" xml:space="preserve">
-    <value>Anzahl Nachrichtenpaare</value>
+    <value>Anzahl Nachrichten-Paare</value>
   </data>
   <data name="MessagePairsCountInputToolTip" xml:space="preserve">
-    <value>Spezifiziert die Anzahl der zu generierenden Nachrichtenpaare</value>
+    <value>Spezifiziert die Anzahl der zu generierenden Nachrichten-Paare</value>
   </data>
   <data name="MessagePairsOutput" xml:space="preserve">
-    <value>Nachrichtenpaare</value>
+    <value>Nachrichten-Paare</value>
   </data>
   <data name="MessagePairsOutputToolTip" xml:space="preserve">
-    <value>Ausgabe der Nachrichtenpaare mit spezifizierter Differenz</value>
+    <value>Ausgabe der Nachrichten-Paare mit spezifizierter Differenz</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>DKA-Orakel</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Diese Komponente generiert zufällig gewählte Nachrichtenpaare, wobei die Nachrichten eines Paares eine definierbare Differenz aufweisen.</value>
+    <value>Diese Komponente generiert zufällig gewählte Nachrichten-Paare, wobei die Nachrichten eines Paares eine definierbare Differenz aufweisen.</value>
   </data>
   <data name="WarningMessageCountMustBeSpecified" xml:space="preserve">
-    <value>Die Anzahl der Nachrichtenpaare muss größer als 0 sein!</value>
+    <value>Die Anzahl der Nachrichten-Paare muss größer als 0 sein!</value>
   </data>
   <data name="WorSizeParameter" xml:space="preserve">
     <value>Blockgröße</value>

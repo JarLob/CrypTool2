@@ -121,10 +121,10 @@
     <value>Difference of messages</value>
   </data>
   <data name="MessageDifferenceInputToolTip" xml:space="preserve">
-    <value>Specifies the difference between the messages of a pair</value>
+    <value>Specifies the difference between the messages of a pair.</value>
   </data>
   <data name="MessagePairsCountInput" xml:space="preserve">
-    <value>Count of message pairs</value>
+    <value>Number of message pair</value>
   </data>
   <data name="MessagePairsCountInputToolTip" xml:space="preserve">
     <value>Specifies the number of message pairs to be generated</value>
@@ -142,12 +142,12 @@
     <value>This component generates randomly selected message pairs, where the messages of a pair have a definable difference.</value>
   </data>
   <data name="WarningMessageCountMustBeSpecified" xml:space="preserve">
-    <value>The number of message pairs must be greater than 0!</value>
+    <value>The count of message pairs must be greater than 0!</value>
   </data>
   <data name="WorSizeParameter" xml:space="preserve">
-    <value>Blocksize</value>
+    <value>block size</value>
   </data>
   <data name="WorSizeParameterToolTip" xml:space="preserve">
-    <value>This parameter specifies the blocksize of the used cipher. Each message will contain exactly one block.</value>
+    <value>This parameter specifies the block size of the cipher used. Each message contains exactly one block.</value>
   </data>
 </root>
