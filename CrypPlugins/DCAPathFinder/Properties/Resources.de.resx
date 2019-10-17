@@ -610,7 +610,7 @@
     <value>Tutorial 2 zur differenziellen Kryptoanalyse in der DKA-PfadFinder-Komponente ist beendet. </value>
   </data>
   <data name="Tutorial2AttackFinishedContent2Run1" xml:space="preserve">
-    <value>Durch ein letztes klicken auf Start in der DKA-KeyRecovery-Komponente werden die letzten zwei Rundenschlüssel k</value>
+    <value>Durch ein letztes Klicken auf "Start" in der DKA-KeyRecovery-Komponente werden die letzten zwei Rundenschlüssel k</value>
   </data>
   <data name="Tutorial2AttackFinishedContent2Run2" xml:space="preserve">
     <value>1</value>
@@ -1078,7 +1078,7 @@
     <value>Tutorial 3 zur differenziellen Kryptoanalyse in der DKA-PfadFinder-Komponente ist beendet. </value>
   </data>
   <data name="Tutorial3AttackFinishedContent2Run1" xml:space="preserve">
-    <value>Durch ein letztes klicken auf Start in der DKA-KeyRecovery-Komponente werden die letzten zwei Rundenschlüssel k</value>
+    <value>Durch ein letztes Klicken auf "Start" in der DKA-KeyRecovery-Komponente werden die letzten zwei Rundenschlüssel k</value>
   </data>
   <data name="Tutorial3AttackFinishedContent2Run2" xml:space="preserve">
     <value>1</value>
@@ -1387,7 +1387,7 @@ sind. Dadurch können lange Berechnungszeiten minimiert werden.</value>
     <value>Zur Bestimmung des Rauschverhältnis sind zum Teil experimentell zu bestimmtende Durchschnittswerte notwendig, wie beispielsweise der Anteil der Paare, die durch die Filterng entfernt werden oder die Durchschnittliche Anzahl der Teilschlüsselkandidaten, die ein Paar vorschlägt.</value>
   </data>
   <data name="Tutorial3SignalToNoiseSlide1Content4" xml:space="preserve">
-    <value>An dieser Stelle sei der interessierte Anwender auf die in der Online-Hilfe der DKA-PfadFinder-Komponente hinterlegten Literatur-Angaben hingewiesen.</value>
+    <value>In der Online-Hilfe der DKA-PfadFinder-Komponente sind weitere Literatur-Angaben zu dem DKA-Verfahren hinterlegt.</value>
   </data>
   <data name="Tutorial3SignalToNoiseSlide1Header" xml:space="preserve">
     <value>Rauschverhältnis</value>
