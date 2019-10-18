@@ -164,6 +164,7 @@
     <Resource Include="downloaded.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="icon_resource.png" />
     <Content Include="updateavailable.png" />
   </ItemGroup>
   <ItemGroup>

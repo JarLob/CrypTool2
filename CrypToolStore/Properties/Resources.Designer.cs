@@ -19,7 +19,7 @@ namespace Cryptool.CrypToolStore.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -273,6 +273,15 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Resource {0} successfully installed. ähnelt.
+        /// </summary>
+        internal static string CrypToolStorePresentation_ResourceSuccessfullyInstalled {
+            get {
+                return ResourceManager.GetString("CrypToolStorePresentation_ResourceSuccessfullyInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Exception during restart. ähnelt.
         /// </summary>
         internal static string CrypToolStorePresentation_RestartButton_Click_Exception_during_restart_ {
@@ -361,6 +370,16 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_resource {
+            get {
+                object obj = ResourceManager.GetObject("icon_resource", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Install ähnelt.
         /// </summary>
         internal static string Install {
@@ -420,6 +439,15 @@ namespace Cryptool.CrypToolStore.Properties {
         internal static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show resources ähnelt.
+        /// </summary>
+        internal static string ShowResources {
+            get {
+                return ResourceManager.GetString("ShowResources", resourceCulture);
             }
         }
         

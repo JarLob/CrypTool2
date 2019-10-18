@@ -63,7 +63,7 @@ namespace Cryptool.CrypToolStore
         }
 
         /// <summary>
-        /// Tries to download a zip
+        /// Tries to download a resource
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -89,7 +89,7 @@ namespace Cryptool.CrypToolStore
         }
 
         /// <summary>
-        /// Downloads the selected zip file
+        /// Downloads the selected file
         /// stops, if the window is closed
         /// </summary>
         private void DownloadResourceZipFile()
@@ -172,7 +172,7 @@ namespace Cryptool.CrypToolStore
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during download of resource zip file: {0}", ex.Message), "Exception");
+                MessageBox.Show(String.Format("Exception during download of resource file: {0}", ex.Message), "Exception");
 
                 try
                 {

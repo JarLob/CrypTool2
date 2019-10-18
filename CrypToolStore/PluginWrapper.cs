@@ -16,19 +16,21 @@
 using CrypToolStoreLib.DataObjects;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Cryptool.CrypToolStore
 {
+    
     /// <summary>
     /// This class wraps a PluginAndData object, offering comfort functions, thus, it can be easier shown in the UI
     /// </summary>
-    public class PluginWrapper
+    public class PluginWrapper 
     {
-        public int PluginId { get; set; }
-        public int PluginVersion { get; set; }
         public string Name { get; set; }
         public string ShortDescription { get; set; }
+        public int PluginId { get; set; }
+        public int PluginVersion { get; set; }               
         public string LongDescription { get; set; }
         public string Authornames { get; set; }
         public string Authoremails { get; set; }
@@ -37,9 +39,13 @@ namespace Cryptool.CrypToolStore
         public bool IsInstalled { get; set; }
         public bool UpdateAvailable { get; set; }
         public string FileSize { get; set; }
-        private byte[] IconData { get; set; }
+        private byte[] IconData { get; set; }        
+        public Brush BackgroundColor { get; set; }
 
-        public PublishState PublishState { get; set; }
+        public PluginWrapper()
+        {
+
+        }
 
         /// <summary>
         /// Constructor
@@ -61,6 +67,9 @@ namespace Cryptool.CrypToolStore
             BuildVersion = pluginAndSource.Source.BuildVersion;            
             IconData = plugin.Icon;
             FileSize = CrypToolStoreLib.Tools.Tools.FormatFileSizeString(pluginAndSource.FileSize);
+            
+            Color color = Color.FromArgb(0xFF, 0xC8, 0xDC, 0xF5);
+            BackgroundColor = new SolidColorBrush(color);
         }
 
         /// <summary>
@@ -72,7 +81,16 @@ namespace Cryptool.CrypToolStore
             get
             {
                 byte[] data;
-                if (IconData == null || IconData.Length == 0)
+                if(this is ResourceWrapper)
+                {
+                    //this is a resource, thus, we use the icon_resource
+                    MemoryStream stream = new MemoryStream();
+                    Properties.Resources.icon_resource.Save(stream, ImageFormat.Png);
+                    stream.Position = 0;
+                    data = stream.ToArray();
+                    stream.Close();
+                }
+                else if (IconData == null || IconData.Length == 0)
                 {
                     //we have no icon, thus, we display the default icon
                     MemoryStream stream = new MemoryStream();
@@ -141,4 +159,28 @@ namespace Cryptool.CrypToolStore
             }
         }
     }
+
+    /// <summary>
+    /// This class wraps a ResourceAndResourceData object, offering comfort functions, thus, it can be easier shown in the UI
+    /// Actually, we "misuse" the PluginWrapper by using it as a ResourceWrapper, thus, some of the namings are not 100% correct
+    /// e.g. PluginId is the ResourceId
+    /// </summary>
+    public class ResourceWrapper : PluginWrapper
+    {      
+        public ResourceWrapper(ResourceAndResourceData resourceAndResource)
+        {
+            Resource resource = resourceAndResource.Resource;
+            ResourceData resourceData = resourceAndResource.ResourceData;
+            PluginId = resource.Id;
+            PluginVersion = resourceData.ResourceVersion;
+            Name = resource.Name;
+            ShortDescription = resource.Description;
+            LongDescription = string.Empty;
+            //todo: add filesize to protocol
+            //FileSize = CrypToolStoreLib.Tools.Tools.FormatFileSizeString(resourceAndResource.FileSize);
+            Color color = Color.FromArgb(0xFF, 0xEB, 0xEF, 0xF6);
+            BackgroundColor = new SolidColorBrush(color);
+        }
+    }
+
 }

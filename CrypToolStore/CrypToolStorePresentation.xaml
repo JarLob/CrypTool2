@@ -49,7 +49,8 @@
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,0,5,0" Content="{Loc Search}"/>
                 <TextBox Grid.Row="0" Height="25" Width="Auto" VerticalAlignment="Top" Margin="100,0,5,0" Name="Filter" TextChanged="Filter_TextChanged" VerticalContentAlignment="Center"/>
-                <Border Grid.Row="0" Background="#FFEBEFF6" Margin="3,30,0,5">
+                <CheckBox Name="ShowResources" Grid.Row="0" VerticalAlignment="Top" Margin="100,30,0,0" Checked="ShowResources_Checked" Unchecked="ShowResources_Unchecked" VerticalContentAlignment="Center"><Label Content="{Loc ShowResources}" VerticalAlignment="Center"/></CheckBox>
+                <Border Grid.Row="0" Background="#FFEBEFF6" Margin="3,60,0,5">
                     <ListView Name="PluginListView" Height="Auto" Width="Auto" MinWidth="700" BorderBrush="#FFEBEFF6" Background="#FFEBEFF6"  Margin="8,5,5,5"
                               ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
                               ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -63,7 +64,7 @@
                                         <Setter Property="CornerRadius" Value="5"/>
                                         <Setter Property="BorderBrush" Value="LightSeaGreen"/>
                                         <Setter Property="BorderThickness" Value="2"/>
-                                        <Setter Property="Background" Value="#FFC8DCF5"/>
+                                        <Setter Property="Background" Value="{Binding Path=BackgroundColor}"/>
                                         <Setter Property="Margin" Value="15,5"/>
                                     </Style>
                                 </DataTemplate.Resources>

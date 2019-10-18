@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2018 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
+   Copyright 2019 Nils Kopal <kopal<AT>cryptool.de>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -149,16 +149,18 @@ namespace Cryptool.CrypToolStore
                 //Connect to CrypToolStoreServer
                 client.Connect();
 
-                //get list of published plugins
-                DataModificationOrRequestResult result = client.GetPublishedPluginList(publishState);
+                //get list of published plugins and resources
+                DataModificationOrRequestResult result_plugins = client.GetPublishedPluginList(publishState);
+                DataModificationOrRequestResult result_resources = client.GetPublishedResourceList(publishState);
 
                 //Disconnect from CrypToolStoreServer
                 client.Disconnect();
 
                 //Display result or in case of error an error message
-                if (result.Success)
+                if (result_plugins.Success && result_resources.Success)
                 {
-                    List<PluginAndSource> pluginsAndSources = ((List<PluginAndSource>)result.DataObject);
+                    List<PluginAndSource> pluginsAndSources = ((List<PluginAndSource>)result_plugins.DataObject);
+                    List<ResourceAndResourceData> resourcesAndData = ((List<ResourceAndResourceData>)result_resources.DataObject);
 
                     //add elements to observed list to show them in the UI
                     _context.Send(callback =>
@@ -169,8 +171,18 @@ namespace Cryptool.CrypToolStore
                             foreach (PluginAndSource pluginAndSource in pluginsAndSources)
                             {
                                 PluginWrapper wrapper = new PluginWrapper(pluginAndSource);
-                                CheckIfAlreadyInstalled(wrapper);                                
+                                CheckIfAlreadyInstalledPlugin(wrapper);                                
                                 Plugins.Add(wrapper);
+                            }
+
+                            if (ShowResources.IsChecked == true)
+                            {
+                                foreach (ResourceAndResourceData pluginAndSource in resourcesAndData)
+                                {
+                                    ResourceWrapper wrapper = new ResourceWrapper(pluginAndSource);
+                                    CheckIfAlreadyInstalledResource(wrapper);
+                                    Plugins.Add(wrapper);
+                                }
                             }
 
                             //Search for old selected plugin and select it
@@ -201,7 +213,7 @@ namespace Cryptool.CrypToolStore
                 }
                 else
                 {
-                    _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_UpdateStorePluginList_Error_occured_during_retrieval_of_current_list_of_plugins_from_CrypToolStore___0_, result.Message), NotificationLevel.Error);
+                    _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_UpdateStorePluginList_Error_occured_during_retrieval_of_current_list_of_plugins_from_CrypToolStore___0_, result_plugins.Message), NotificationLevel.Error);
                 }
             }
             catch (Exception ex)
@@ -278,9 +290,9 @@ namespace Cryptool.CrypToolStore
         /// Checks, if a plugin is already installed
         /// </summary>
         /// <param name="plugin"></param>
-        private void CheckIfAlreadyInstalled(PluginWrapper plugin)
+        private void CheckIfAlreadyInstalledPlugin(PluginWrapper plugin)
         {
-            string xmlfilename = System.IO.Path.Combine(GetPluginsFolder(plugin), String.Format("install-{0}-{1}.xml", plugin.PluginId, plugin.PluginVersion));
+            string xmlfilename = System.IO.Path.Combine(GetPluginsFolder(), String.Format("install-{0}-{1}.xml", plugin.PluginId, plugin.PluginVersion));
             if (Directory.Exists(GetPluginFolder(plugin)) || File.Exists(xmlfilename))
             {
                 try
@@ -318,24 +330,48 @@ namespace Cryptool.CrypToolStore
         }
 
         /// <summary>
+        /// Checks, if a resource is already installed
+        /// </summary>
+        /// <param name="resource"></param>
+        private void CheckIfAlreadyInstalledResource(ResourceWrapper resource)
+        {
+            if (Directory.Exists(GetResourceFolder(resource)))
+            {               
+                resource.IsInstalled = true;
+            }
+            else
+            {
+                resource.IsInstalled = false;
+            }
+        }
+
+        /// <summary>
         /// Returns the absolute path to the plugin folder
         /// </summary>
         /// <param name="plugin"></param>
         /// <returns></returns>
         private string GetPluginFolder(PluginWrapper plugin)
         {           
-            return System.IO.Path.Combine(GetPluginsFolder(plugin), "plugin-" + plugin.PluginId);
+            return System.IO.Path.Combine(GetPluginsFolder(), "plugin-" + plugin.PluginId);
+        }
+
+        /// <summary>
+        /// Returns the absolute path to the resource folder
+        /// </summary>
+        /// <param name="plugin"></param>
+        /// <returns></returns>
+        private string GetResourceFolder(ResourceWrapper resource)
+        {
+            return System.IO.Path.Combine(GetResourcesFolder(), "resource-" + resource.PluginId + "-" + resource.PluginVersion);
         }
 
         /// <summary>
         /// Returns the absolute path to the plugins folder
         /// </summary>
-        /// <param name="plugin"></param>
-        /// <returns></returns>
-        private string GetPluginsFolder(PluginWrapper plugin)
+        private string GetPluginsFolder()
         {
             //Translate the Ct2BuildType to a folder name for CrypToolStore plugins                
-            string crypToolStoreSubFolder = "";
+            string crypToolStoreSubFolder;
             switch (AssemblyHelper.BuildType)
             {
                 case Ct2BuildType.Developer:
@@ -361,6 +397,37 @@ namespace Cryptool.CrypToolStore
         }
 
         /// <summary>
+        /// Returns the absolute path to the resources folder
+        /// </summary>
+        public string GetResourcesFolder()
+        {
+            //Translate the Ct2BuildType to a folder name for CrypToolStore plugins                
+            string crypToolStoreSubFolder;
+            switch (AssemblyHelper.BuildType)
+            {
+                case Ct2BuildType.Developer:
+                    crypToolStoreSubFolder = "Developer";
+                    break;
+                case Ct2BuildType.Nightly:
+                    crypToolStoreSubFolder = "Nightly";
+                    break;
+                case Ct2BuildType.Beta:
+                    crypToolStoreSubFolder = "Beta";
+                    break;
+                case Ct2BuildType.Stable:
+                    crypToolStoreSubFolder = "Release";
+                    break;
+                default: //if no known version is given, we assume developer
+                    crypToolStoreSubFolder = "Developer";
+                    break;
+            }
+            string crypToolStorePluginFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), PluginManager.CrypToolStoreDirectory);
+            crypToolStorePluginFolder = System.IO.Path.Combine(crypToolStorePluginFolder, crypToolStoreSubFolder);
+            crypToolStorePluginFolder = System.IO.Path.Combine(crypToolStorePluginFolder, "resources");
+            return crypToolStorePluginFolder;
+        }
+
+        /// <summary>
         /// User clicked InstallButton
         /// </summary>
         /// <param name="sender"></param>
@@ -374,8 +441,38 @@ namespace Cryptool.CrypToolStore
             MessageBoxResult result = MessageBox.Show(_windowToBlockForMessageBoxes, String.Format(Properties.Resources.CrypToolStorePresentation_InstallButton_Click_Do_you_really_want_to_download_and_install___0___from_CrypTool_Store_, SelectedPlugin.Name), String.Format(Properties.Resources.CrypToolStorePresentation_InstallButton_Click_Start_download_and_installation_of___0___, SelectedPlugin.Name), MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
-                
-                Task.Run(() => InstallPlugin());
+                if (SelectedPlugin is ResourceWrapper)
+                {
+                    Task.Run(() =>
+                    {
+                        try
+                        {
+                            InstallResource();
+                        }
+                        catch (Exception ex)
+                        {
+                            string message = String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_downloading_and_installing___0_, ex.Message);
+                            _crypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
+                            _context.Send(callback => MessageBox.Show(_windowToBlockForMessageBoxes, message, Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_, MessageBoxButton.OK), null);
+                        }
+                    });
+                }
+                else if (SelectedPlugin is PluginWrapper)
+                {
+                    Task.Run(() =>
+                    {
+                        try
+                        {
+                            InstallPlugin();
+                        }
+                        catch (Exception ex)
+                        {
+                            string message = String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_downloading_and_installing___0_, ex.Message);
+                            _crypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
+                            _context.Send(callback => MessageBox.Show(_windowToBlockForMessageBoxes, message, Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_, MessageBoxButton.OK), null);
+                        }
+                    });
+                }
             }
         }     
 
@@ -385,8 +482,8 @@ namespace Cryptool.CrypToolStore
         private void InstallPlugin()
         {
             bool errorOccured = false;
-            string assemblyfilename = System.IO.Path.Combine(GetPluginsFolder(SelectedPlugin), String.Format("assembly-{0}-{1}.zip", SelectedPlugin.PluginId, SelectedPlugin.PluginVersion));
-            string xmlfilename = System.IO.Path.Combine(GetPluginsFolder(SelectedPlugin), String.Format("install-{0}-{1}.xml", SelectedPlugin.PluginId, SelectedPlugin.PluginVersion));
+            string assemblyfilename = System.IO.Path.Combine(GetPluginsFolder(), String.Format("assembly-{0}-{1}.zip", SelectedPlugin.PluginId, SelectedPlugin.PluginVersion));
+            string xmlfilename = System.IO.Path.Combine(GetPluginsFolder(), String.Format("install-{0}-{1}.xml", SelectedPlugin.PluginId, SelectedPlugin.PluginVersion));
 
             //Step 0: delete files before download
             try
@@ -573,6 +670,159 @@ namespace Cryptool.CrypToolStore
         }
 
         /// <summary>
+        /// Installs the resource in an own thread
+        /// </summary>
+        private void InstallResource()
+        {
+            bool errorOccured = false;
+            string resourceFileName = System.IO.Path.Combine(GetResourceFolder((ResourceWrapper)SelectedPlugin), String.Format("resource-{0}-{1}.bin", SelectedPlugin.PluginId, SelectedPlugin.PluginVersion));
+
+            //Step 0: create folder
+            if (Directory.Exists(GetResourceFolder((ResourceWrapper)SelectedPlugin)))
+            {
+                Directory.Delete(GetResourceFolder((ResourceWrapper)SelectedPlugin), true);
+            }
+            Directory.CreateDirectory(GetResourceFolder((ResourceWrapper)SelectedPlugin));
+
+            //Step 1: Lock everything in the UI, thus, the user can not do anything while downloading
+            _context.Send(callback =>
+            {
+                try
+                {
+                    PluginListView.IsEnabled = false;
+                    InstallButton.IsEnabled = false;
+                    DeleteButton.IsEnabled = false;
+                    Filter.IsEnabled = false;
+
+                    InstallationProgressBar.Visibility = Visibility.Visible;
+                    InstallationProgressText.Visibility = Visibility.Visible;
+                }
+                catch (Exception ex)
+                {
+                    _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_locking_of_everything___0_, ex.Message), NotificationLevel.Error);
+                }
+            }, null);
+
+            //Step 2: download resource file
+            try
+            {
+                //Download resource file
+                CrypToolStoreClient client = new CrypToolStoreClient();
+                client.ServerCertificate = new X509Certificate2(Properties.Resources.CTStoreTLS);
+                client.ServerAddress = Cryptool.CrypToolStore.Constants.ServerAddress;
+                client.ServerPort = Cryptool.CrypToolStore.Constants.ServerPort;
+                client.UploadDownloadProgressChanged += client_UploadDownloadProgressChanged;
+
+                //Translate the Ct2BuildType to PublishState
+                PublishState publishState;
+                switch (AssemblyHelper.BuildType)
+                {
+                    case Ct2BuildType.Developer:
+                        publishState = PublishState.DEVELOPER;
+                        break;
+                    case Ct2BuildType.Nightly:
+                        publishState = PublishState.NIGHTLY;
+                        break;
+                    case Ct2BuildType.Beta:
+                        publishState = PublishState.BETA;
+                        break;
+                    case Ct2BuildType.Stable:
+                        publishState = PublishState.RELEASE;
+                        break;
+                    default: //if no known version is given, we assume release
+                        publishState = PublishState.RELEASE;
+                        break;
+                }
+
+                //Connect to CrypToolStoreServer
+                client.Connect();
+
+                //get list of published resources
+                DataModificationOrRequestResult result = client.GetPublishedResource(SelectedPlugin.PluginId, publishState);
+                if (result.Success == false)
+                {
+                    client.Disconnect();
+                    string message = String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Could_not_download_from_CrypToolStore_Server__Message_was___0_, result.Message);
+                    _crypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
+                    _context.Send(callback => MessageBox.Show(_windowToBlockForMessageBoxes, message, Properties.Resources.CrypToolStorePresentation_InstallPlugin_Error_during_download_, MessageBoxButton.OK), null);
+                }
+
+                ResourceAndResourceData resourceAndResourceData = (ResourceAndResourceData)result.DataObject;
+                bool stop = false;
+                result = client.DownloadResourceDataFile(resourceAndResourceData.ResourceData, resourceFileName, ref stop);
+                client.Disconnect();
+                if (result.Success == false)
+                {
+                    client.Disconnect();
+                    string message = String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Could_not_download_from_CrypToolStore_Server__Message_was___0_, result.Message);
+                    _crypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
+                    _context.Send(callback => MessageBox.Show(_windowToBlockForMessageBoxes, message, Properties.Resources.CrypToolStorePresentation_InstallPlugin_Error_during_download_, MessageBoxButton.OK), null);
+                    errorOccured = true;
+                    return;
+                }
+              
+                //Step 3: Notify user
+                _context.Send(callback =>
+                {
+                    //set progress bar to 100%
+                    InstallationProgressBar.Maximum = 1;
+                    InstallationProgressBar.Value = 1;
+                    InstallationProgressText.Content = "100 %";
+                    //show messagebox
+                    MessageBox.Show(_windowToBlockForMessageBoxes, String.Format(Properties.Resources.CrypToolStorePresentation_ResourceSuccessfullyInstalled, SelectedPlugin.Name), Properties.Resources.CrypToolStorePresentation_ResourceSuccessfullyInstalled, MessageBoxButton.OK);
+                }, null);
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_downloading_and_installing___0_, ex.Message);
+                _crypToolStoreEditor.GuiLogMessage(message, NotificationLevel.Error);
+                _context.Send(callback => MessageBox.Show(_windowToBlockForMessageBoxes, message, Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_, MessageBoxButton.OK), null);
+                errorOccured = true;
+            }
+            finally
+            {
+                try
+                {
+                    //if something went wrong, we delete the folder
+                    if (errorOccured)
+                    {
+                        if (Directory.Exists(GetResourceFolder((ResourceWrapper)SelectedPlugin)))
+                        {
+                            Directory.Delete(GetResourceFolder((ResourceWrapper)SelectedPlugin), true);
+                        }                                  
+                    }
+                }
+                catch (Exception)
+                {
+                    //wtf?
+                }
+
+                //Step 5: Unlock everything in the UI
+                _context.Send(callback =>
+                {
+                    try
+                    {
+                        PluginListView.IsEnabled = true;
+                        InstallButton.IsEnabled = true;
+                        DeleteButton.IsEnabled = true;
+                        Filter.IsEnabled = true;
+
+                        InstallationProgressBar.Visibility = Visibility.Collapsed;
+                        InstallationProgressText.Visibility = Visibility.Collapsed;
+                    }
+                    catch (Exception ex)
+                    {
+                        _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_unlocking_of_everything___0_, ex.Message), NotificationLevel.Error);
+                    }
+                }, null);
+
+                //Step 6: Update StorePluginListTask
+                Task updateStorePluginListTask = new Task(UpdateStorePluginList);
+                updateStorePluginListTask.Start();
+            }
+        }
+
+        /// <summary>
         /// Updates the download progress bar
         /// </summary>
         /// <param name="sender"></param>
@@ -606,50 +856,17 @@ namespace Cryptool.CrypToolStore
             }
             try
             {
-                MessageBoxResult result = MessageBox.Show(_windowToBlockForMessageBoxes,String.Format(Properties.Resources.CrypToolStorePresentation_DeleteButton_Click_Do_you_really_want_to_uninstall___0___from_CrypTool_Store_, SelectedPlugin.Name), Properties.Resources.CrypToolStorePresentation_DeleteButton_Click_Unistallation_, MessageBoxButton.YesNo);                
+                MessageBoxResult result = MessageBox.Show(_windowToBlockForMessageBoxes,String.Format(Properties.Resources.CrypToolStorePresentation_DeleteButton_Click_Do_you_really_want_to_uninstall___0___from_CrypTool_Store_, SelectedPlugin.Name), Properties.Resources.CrypToolStorePresentation_DeleteButton_Click_Unistallation_, MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    string assemblyfilename = System.IO.Path.Combine(GetPluginsFolder(SelectedPlugin), String.Format("assembly-{0}-{1}.zip", SelectedPlugin.PluginId, SelectedPlugin.PluginVersion));
-                    string xmlfilename = System.IO.Path.Combine(GetPluginsFolder(SelectedPlugin), String.Format("install-{0}-{1}.xml", SelectedPlugin.PluginId, SelectedPlugin.PluginVersion));
-
-                    //Step 0: delete files before creating new xml file
-                    try
+                    if (SelectedPlugin is ResourceWrapper)
                     {
-                        if (File.Exists(assemblyfilename))
-                        {
-                            File.Delete(assemblyfilename);
-                        }
-                        if (File.Exists(xmlfilename))
-                        {
-                            File.Delete(xmlfilename);
-                        }
+                        DeleteResource();
                     }
-                    catch (Exception ex)
+                    else if(SelectedPlugin is PluginWrapper)
                     {
-                        _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_deleting_old_installation_files___0_, ex.Message), NotificationLevel.Error);
-                        return;
+                        DeletePlugin();
                     }
-
-                    using (StreamWriter xmlfile = new StreamWriter(xmlfilename))
-                    {
-                        string type = "deletion";
-                        xmlfile.WriteLine(String.Format("<installation type=\"{0}\">", type));
-                        xmlfile.WriteLine("  <plugin>");
-                        xmlfile.WriteLine(String.Format("    <name>{0}</name>", SelectedPlugin.Name));
-                        xmlfile.WriteLine(String.Format("    <id>{0}</id>", SelectedPlugin.PluginId));
-                        xmlfile.WriteLine(String.Format("    <version>{0}</version>", SelectedPlugin.PluginVersion));
-                        xmlfile.WriteLine("  </plugin>");
-                        xmlfile.WriteLine("</installation>");
-                    }
-
-                    MessageBox.Show(_windowToBlockForMessageBoxes,String.Format(Properties.Resources.CrypToolStorePresentation_DeleteButton_Click___0___has_been_marked_for_uninstallation__You_need_to_restart_CrypTool_2_to_complete_installation_, SelectedPlugin.Name), "Marked for uninstallation.", MessageBoxButton.OK);
-
-                    PendingChanges = true;
-                    OnStaticPropertyChanged("PendingChanges");
-
-                    //update StorePluginList
-                    Task updateStorePluginListTask = new Task(UpdateStorePluginList);
-                    updateStorePluginListTask.Start();
                 }
             }
             catch (Exception ex)
@@ -659,6 +876,78 @@ namespace Cryptool.CrypToolStore
                 MessageBox.Show(_windowToBlockForMessageBoxes,message, Properties.Resources.CrypToolStorePresentation_DeleteButton_Click_Exception_during_uninstallation_, MessageBoxButton.OK);
             }
         }
+
+        /// <summary>
+        /// Deletes a plugin
+        /// </summary>
+        private void DeletePlugin()
+        {
+            string assemblyfilename = System.IO.Path.Combine(GetPluginsFolder(), String.Format("assembly-{0}-{1}.zip", SelectedPlugin.PluginId, SelectedPlugin.PluginVersion));
+            string xmlfilename = System.IO.Path.Combine(GetPluginsFolder(), String.Format("install-{0}-{1}.xml", SelectedPlugin.PluginId, SelectedPlugin.PluginVersion));
+
+            try
+            {
+                if (File.Exists(assemblyfilename))
+                {
+                    File.Delete(assemblyfilename);
+                }
+                if (File.Exists(xmlfilename))
+                {
+                    File.Delete(xmlfilename);
+                }
+            }
+            catch (Exception ex)
+            {
+                _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_deleting_old_installation_files___0_, ex.Message), NotificationLevel.Error);
+                return;
+            }
+
+            using (StreamWriter xmlfile = new StreamWriter(xmlfilename))
+            {
+                string type = "deletion";
+                xmlfile.WriteLine(String.Format("<installation type=\"{0}\">", type));
+                xmlfile.WriteLine("  <plugin>");
+                xmlfile.WriteLine(String.Format("    <name>{0}</name>", SelectedPlugin.Name));
+                xmlfile.WriteLine(String.Format("    <id>{0}</id>", SelectedPlugin.PluginId));
+                xmlfile.WriteLine(String.Format("    <version>{0}</version>", SelectedPlugin.PluginVersion));
+                xmlfile.WriteLine("  </plugin>");
+                xmlfile.WriteLine("</installation>");
+            }
+
+            MessageBox.Show(_windowToBlockForMessageBoxes, String.Format(Properties.Resources.CrypToolStorePresentation_DeleteButton_Click___0___has_been_marked_for_uninstallation__You_need_to_restart_CrypTool_2_to_complete_installation_, SelectedPlugin.Name), "Marked for uninstallation.", MessageBoxButton.OK);
+
+            PendingChanges = true;
+            OnStaticPropertyChanged("PendingChanges");
+
+            //update StorePluginList
+            Task updateStorePluginListTask = new Task(UpdateStorePluginList);
+            updateStorePluginListTask.Start();
+        }
+
+        /// <summary>
+        /// Deletes a resource
+        /// </summary>
+        private void DeleteResource()
+        {         
+            try
+            {
+                string resourceDirectory = GetResourceFolder((ResourceWrapper)SelectedPlugin);
+                if (Directory.Exists(resourceDirectory))
+                {
+                    Directory.Delete(resourceDirectory, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                _crypToolStoreEditor.GuiLogMessage(String.Format(Properties.Resources.CrypToolStorePresentation_InstallPlugin_Exception_occured_while_deleting_old_installation_files___0_, ex.Message), NotificationLevel.Error);
+                return;
+            }
+
+            //update StorePluginList
+            Task updateStorePluginListTask = new Task(UpdateStorePluginList);
+            updateStorePluginListTask.Start();
+        }
+
 
         /// <summary>
         /// User pressed RestartButton
@@ -695,7 +984,21 @@ namespace Cryptool.CrypToolStore
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public static event PropertyChangedEventHandler StaticPropertyChanged;       
+        public static event PropertyChangedEventHandler StaticPropertyChanged;
+
+        private void ShowResources_Checked(object sender, RoutedEventArgs e)
+        {
+            //update StorePluginList
+            Task updateStorePluginListTask = new Task(UpdateStorePluginList);
+            updateStorePluginListTask.Start();
+        }
+
+        private void ShowResources_Unchecked(object sender, RoutedEventArgs e)
+        {
+            //update StorePluginList
+            Task updateStorePluginListTask = new Task(UpdateStorePluginList);
+            updateStorePluginListTask.Start();
+        }
     }
 
     /// <summary>
