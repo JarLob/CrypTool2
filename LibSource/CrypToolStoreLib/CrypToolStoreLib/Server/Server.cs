@@ -1936,6 +1936,19 @@ namespace CrypToolStoreLib.Server
                 else
                 {
                     List<ResourceAndResourceData> resourcesAndResourceDatas = Database.GetPublishedResources(requestPublishedResourceListMessage.PublishState);
+                    foreach (ResourceAndResourceData resourceAndResourceData in resourcesAndResourceDatas)
+                    {
+                        try
+                        {
+                            string filename = Constants.CLIENTHANDLER_RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + "ResourceData-" + resourceAndResourceData.ResourceData.ResourceId + "-" + resourceAndResourceData.ResourceData.ResourceVersion + ".bin";
+                            FileInfo fileInfo = new FileInfo(filename);
+                            resourceAndResourceData.FileSize = fileInfo.Length;
+                        }
+                        catch (Exception)
+                        {
+                            resourceAndResourceData.FileSize = 0;
+                        }
+                    }
                     ResponsePublishedResourceListMessage response = new ResponsePublishedResourceListMessage();
                     response.ResourcesAndResourceDatas = resourcesAndResourceDatas;
                     string message = String.Format("Responding with published resource list containing {0} elements", resourcesAndResourceDatas.Count);
