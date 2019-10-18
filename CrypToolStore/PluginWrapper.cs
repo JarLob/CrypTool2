@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2018 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
+   Copyright 2019 Nils Kopal <kopal<AT>cryptool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -176,8 +176,7 @@ namespace Cryptool.CrypToolStore
             Name = resource.Name;
             ShortDescription = resource.Description;
             LongDescription = string.Empty;
-            //todo: add filesize to protocol
-            //FileSize = CrypToolStoreLib.Tools.Tools.FormatFileSizeString(resourceAndResource.FileSize);
+            FileSize = CrypToolStoreLib.Tools.Tools.FormatFileSizeString(resourceAndResource.FileSize);
             Color color = Color.FromArgb(0xFF, 0xEB, 0xEF, 0xF6);
             BackgroundColor = new SolidColorBrush(color);
         }

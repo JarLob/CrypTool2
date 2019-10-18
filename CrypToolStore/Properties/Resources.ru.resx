@@ -239,7 +239,7 @@
     <value>Размер файла:</value>
   </data>
   <data name="CrypToolStorePresentation_ResourceSuccessfullyInstalled" xml:space="preserve">
-    <value>Ресурс {0} успешно установлен.</value>
+    <value>Ресурс "{0}" успешно установлен.</value>
   </data>
   <data name="ShowResources" xml:space="preserve">
     <value>Показать ресурсы</value>

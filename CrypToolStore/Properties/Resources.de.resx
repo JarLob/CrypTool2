@@ -242,7 +242,7 @@
     <value>Dateigröße:</value>
   </data>
   <data name="CrypToolStorePresentation_ResourceSuccessfullyInstalled" xml:space="preserve">
-    <value>Resource {0} erfolgreich installiert.</value>
+    <value>Resource "{0}" erfolgreich installiert.</value>
   </data>
   <data name="ShowResources" xml:space="preserve">
     <value>Zeige Resourcen</value>

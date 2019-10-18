@@ -273,7 +273,7 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Resource {0} successfully installed. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Resource &quot;{0}&quot; successfully installed. ähnelt.
         /// </summary>
         internal static string CrypToolStorePresentation_ResourceSuccessfullyInstalled {
             get {

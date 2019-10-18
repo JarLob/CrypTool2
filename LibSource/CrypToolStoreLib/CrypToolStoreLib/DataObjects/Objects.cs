@@ -390,7 +390,7 @@ namespace CrypToolStoreLib.DataObjects
                         writer.Write((Int32)sourcebytes.Length);
                         writer.Write(sourcebytes);
 
-                        //3. serialize files ize of assembly zip
+                        //3. serialize file size of assembly zip
                         writer.Write(FileSize);
 
                         return stream.ToArray();
@@ -427,7 +427,7 @@ namespace CrypToolStoreLib.DataObjects
                         reader.Read(sourcebytes, 0, sourcebyteslength);
                         Source.Deserialize(sourcebytes);
 
-                        //3. serialize files ize of assembly zip
+                        //3. deserialize files ize of assembly zip
                         FileSize = reader.ReadInt64();
                     }
                 }
@@ -625,7 +625,7 @@ namespace CrypToolStoreLib.DataObjects
     {
         public Resource Resource { get; set; }
         public ResourceData ResourceData { get; set; }
-
+        public long FileSize { get; set; }
 
         /// <summary>
         /// Default Constructor
@@ -656,7 +656,11 @@ namespace CrypToolStoreLib.DataObjects
                         //2. serialize resourcedata
                         byte[] resourcedatabytes = ResourceData.Serialize();
                         writer.Write((Int32)resourcedatabytes.Length);
-                        writer.Write(resourcedatabytes);
+                        writer.Write(resourcedatabytes);                        
+
+                        //3. serialize file size
+                        writer.Write(FileSize);
+
                         return stream.ToArray();
                     }
                 }
@@ -690,6 +694,19 @@ namespace CrypToolStoreLib.DataObjects
                         byte[] resourcedatabytes = new byte[resourcedatabyteslength];
                         reader.Read(resourcedatabytes, 0, resourcedatabyteslength);
                         ResourceData.Deserialize(resourcedatabytes);
+
+                        //3. deserialize filesize
+                        try
+                        {
+                            if (reader.BaseStream.Position < reader.BaseStream.Length)
+                            {
+                                FileSize = reader.ReadInt64();
+                            }
+                        }
+                        catch(Exception ex)
+                        {
+                            //old versions do not have a file size, thus, it could crash here
+                        }
                     }
                 }
             }
