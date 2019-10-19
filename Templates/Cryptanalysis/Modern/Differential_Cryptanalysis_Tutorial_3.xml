@@ -3,7 +3,7 @@
   <title lang="en">Differential Cryptanalysis Tutorial 3</title>
   <title lang="de">Differenzielle Kryptoanalyse Tutorial 3</title>
   
-  <summary lang="en">Differential cryptanalysis (dca) tutorial for different ciphers</summary>
+  <summary lang="en">Differential cryptanalysis (DCA) tutorial for different ciphers</summary>
   <summary lang="de">Tutorial zur differenziellen Kryptoanalyse (DKA) für verschiedene Chiffren</summary>
   
   <description lang="en">In this template, differential cryptanalysis is demonstrated as a tutorial. Different ciphers are available. The tutorial starts with a small toy cipher and presents the core idea of the method. Building on this, the attack is further refined and expanded so that larger and larger ciphers can be analyzed as the process progresses.</description>
