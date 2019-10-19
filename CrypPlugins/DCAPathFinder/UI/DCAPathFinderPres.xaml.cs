@@ -2405,90 +2405,92 @@ namespace DCAPathFinder.UI
         /// <param name="e"></param>
         private void SBoxSelectionChanged(object sender, EventArgs e)
         {
-            _4BitSBox box = sender as _4BitSBox;
-            switch (box.Name)
+            if (sender is _4BitSBox box)
             {
-                case "SBox4Round5":
+                switch (box.Name)
                 {
-                    _SBoxesCurrentAttack[3] = !_SBoxesCurrentAttack[3];
-                }
-                    break;
-                case "SBox3Round5":
-                {
-                    _SBoxesCurrentAttack[2] = !_SBoxesCurrentAttack[2];
-                }
-                    break;
-                case "SBox2Round5":
-                {
-                    _SBoxesCurrentAttack[1] = !_SBoxesCurrentAttack[1];
-                }
-                    break;
-                case "SBox1Round5":
-                {
-                    _SBoxesCurrentAttack[0] = !_SBoxesCurrentAttack[0];
-                }
-                    break;
+                    case "SBox4Round5":
+                        {
+                            _SBoxesCurrentAttack[3] = !_SBoxesCurrentAttack[3];
+                        }
+                        break;
+                    case "SBox3Round5":
+                        {
+                            _SBoxesCurrentAttack[2] = !_SBoxesCurrentAttack[2];
+                        }
+                        break;
+                    case "SBox2Round5":
+                        {
+                            _SBoxesCurrentAttack[1] = !_SBoxesCurrentAttack[1];
+                        }
+                        break;
+                    case "SBox1Round5":
+                        {
+                            _SBoxesCurrentAttack[0] = !_SBoxesCurrentAttack[0];
+                        }
+                        break;
 
-                case "SBox4Round4":
-                {
-                    _SBoxesCurrentAttack[3] = !_SBoxesCurrentAttack[3];
+                    case "SBox4Round4":
+                        {
+                            _SBoxesCurrentAttack[3] = !_SBoxesCurrentAttack[3];
+                        }
+                        break;
+                    case "SBox3Round4":
+                        {
+                            _SBoxesCurrentAttack[2] = !_SBoxesCurrentAttack[2];
+                        }
+                        break;
+                    case "SBox2Round4":
+                        {
+                            _SBoxesCurrentAttack[1] = !_SBoxesCurrentAttack[1];
+                        }
+                        break;
+                    case "SBox1Round4":
+                        {
+                            _SBoxesCurrentAttack[0] = !_SBoxesCurrentAttack[0];
+                        }
+                        break;
+                    case "SBox4Round3":
+                        {
+                            _SBoxesCurrentAttack[3] = !_SBoxesCurrentAttack[3];
+                        }
+                        break;
+                    case "SBox3Round3":
+                        {
+                            _SBoxesCurrentAttack[2] = !_SBoxesCurrentAttack[2];
+                        }
+                        break;
+                    case "SBox2Round3":
+                        {
+                            _SBoxesCurrentAttack[1] = !_SBoxesCurrentAttack[1];
+                        }
+                        break;
+                    case "SBox1Round3":
+                        {
+                            _SBoxesCurrentAttack[0] = !_SBoxesCurrentAttack[0];
+                        }
+                        break;
+                    case "SBox4Round2":
+                        {
+                            _SBoxesCurrentAttack[3] = !_SBoxesCurrentAttack[3];
+                        }
+                        break;
+                    case "SBox3Round2":
+                        {
+                            _SBoxesCurrentAttack[2] = !_SBoxesCurrentAttack[2];
+                        }
+                        break;
+                    case "SBox2Round2":
+                        {
+                            _SBoxesCurrentAttack[1] = !_SBoxesCurrentAttack[1];
+                        }
+                        break;
+                    case "SBox1Round2":
+                        {
+                            _SBoxesCurrentAttack[0] = !_SBoxesCurrentAttack[0];
+                        }
+                        break;
                 }
-                    break;
-                case "SBox3Round4":
-                {
-                    _SBoxesCurrentAttack[2] = !_SBoxesCurrentAttack[2];
-                }
-                    break;
-                case "SBox2Round4":
-                {
-                    _SBoxesCurrentAttack[1] = !_SBoxesCurrentAttack[1];
-                }
-                    break;
-                case "SBox1Round4":
-                {
-                    _SBoxesCurrentAttack[0] = !_SBoxesCurrentAttack[0];
-                }
-                    break;
-                case "SBox4Round3":
-                {
-                    _SBoxesCurrentAttack[3] = !_SBoxesCurrentAttack[3];
-                }
-                    break;
-                case "SBox3Round3":
-                {
-                    _SBoxesCurrentAttack[2] = !_SBoxesCurrentAttack[2];
-                }
-                    break;
-                case "SBox2Round3":
-                {
-                    _SBoxesCurrentAttack[1] = !_SBoxesCurrentAttack[1];
-                }
-                    break;
-                case "SBox1Round3":
-                {
-                    _SBoxesCurrentAttack[0] = !_SBoxesCurrentAttack[0];
-                }
-                    break;
-                case "SBox4Round2":
-                {
-                    _SBoxesCurrentAttack[3] = !_SBoxesCurrentAttack[3];
-                }
-                    break;
-                case "SBox3Round2":
-                {
-                    _SBoxesCurrentAttack[2] = !_SBoxesCurrentAttack[2];
-                }
-                    break;
-                case "SBox2Round2":
-                {
-                    _SBoxesCurrentAttack[1] = !_SBoxesCurrentAttack[1];
-                }
-                    break;
-                case "SBox1Round2":
-                {
-                    _SBoxesCurrentAttack[0] = !_SBoxesCurrentAttack[0];
-                }
-                    break;
             }
         }
 

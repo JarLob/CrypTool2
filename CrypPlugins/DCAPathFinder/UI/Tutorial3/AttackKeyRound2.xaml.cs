@@ -93,7 +93,10 @@ namespace DCAPathFinder.UI.Tutorial3
         /// <param name="e"></param>
         private void SBoxSelectionChanged(object sender, EventArgs e)
         {
-            SelectionChanged.Invoke(sender, e);
+            if (SelectionChanged != null)
+            {
+                SelectionChanged.Invoke(sender, e);
+            }
         }
     }
 }

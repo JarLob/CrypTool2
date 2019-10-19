@@ -301,10 +301,10 @@
     <value>4</value>
   </data>
   <data name="OverviewContent1" xml:space="preserve">
-    <value>Welcome to the differential cryptanalysis (dca) tutorial. This method for the analysis of turn-based symmetric block ciphers aims at recovering single bits up to complete round keys. This procedure was published in 1991 by the two Israeli researchers Eli Biham and Adi Shamir.</value>
+    <value>Welcome to the differential cryptanalysis (DCA) tutorial. This method for the analysis of turn-based symmetric block ciphers aims at recovering single bits up to complete round keys. This procedure was published in 1991 by the two Israeli researchers Eli Biham and Adi Shamir.</value>
   </data>
   <data name="OverviewContent2" xml:space="preserve">
-    <value>This tutorial covers the dca in three parts. Part 1 conveys the basic idea of the dca by means of a cipher with an encryption round. Part 2 deepens this idea using a cipher with three encryption rounds. Part 3 deepens the knowledge by increasing the complexity of the cipher to five encryption rounds.</value>
+    <value>This tutorial covers the DCA in three parts. Part 1 conveys the basic idea of the DCA by means of a cipher with an encryption round. Part 2 deepens this idea using a cipher with three encryption rounds. Part 3 deepens the knowledge by increasing the complexity of the cipher to five encryption rounds.</value>
   </data>
   <data name="OverviewContent3" xml:space="preserve">
     <value>In the configuration of this component the number of the tutorial and the tutorial mode can be selected.</value>
@@ -475,7 +475,7 @@
     <value>Differential cryptanalysis of cipher 1</value>
   </data>
   <data name="Tutorial1DifferentialCryptanalysisSlide1Content1" xml:space="preserve">
-    <value>Here we apply the idea of the dca to Chiffre 1. The structure of a cipher is usually public, so that all components and their functionality are known. The security of a cipher should never be based on the secrecy of the construction, but on the secrecy of the key. This requirement is also called Kerckhoff's principle.</value>
+    <value>Here we apply the idea of the DCA to Chiffre 1. The structure of a cipher is usually public, so that all components and their functionality are known. The security of a cipher should never be based on the secrecy of the construction, but on the secrecy of the key. This requirement is also called Kerckhoff's principle.</value>
   </data>
   <data name="Tutorial1DifferentialCryptanalysisSlide1Content2Run1" xml:space="preserve">
     <value>Cipher 1</value>
@@ -736,13 +736,13 @@
     <value>It follows:</value>
   </data>
   <data name="Tutorial1IntroductionSlide3Content3" xml:space="preserve">
-    <value>We obtain the difference of the plaintexts by calculating the difference of the ciphertexts. This can be used to obtain information about the round keys at dca.</value>
+    <value>We obtain the difference of the plaintexts by calculating the difference of the ciphertexts. This can be used to obtain information about the round keys at DCA.</value>
   </data>
   <data name="Tutorial1IntroductionSlide3Header" xml:space="preserve">
     <value>Introduction</value>
   </data>
   <data name="Tutorial1LastSlideContent1" xml:space="preserve">
-    <value>The dca is now continued in the DCA KeyRecovery component.</value>
+    <value>The DCA is now continued in the DCA KeyRecovery component.</value>
   </data>
   <data name="Tutorial1LastSlideContent2Run1" xml:space="preserve">
     <value>In the DCA KeyRecovery component, you can now recover the round keys k</value>
@@ -775,7 +775,7 @@
     <value>3. Performing differential cryptanalysis</value>
   </data>
   <data name="Tutorial1PracticalDifferentialCryptanalysisSlide1Content1Run1" xml:space="preserve">
-    <value>In the dca against cipher 1, the round keys k</value>
+    <value>In the DCA against cipher 1, the round keys k</value>
   </data>
   <data name="Tutorial1PracticalDifferentialCryptanalysisSlide1Content1Run2" xml:space="preserve">
     <value>1</value>
@@ -802,379 +802,381 @@
     <value>Differential cryptanalysis of symmetric block ciphers</value>
   </data>
   <data name="Tutorial2AnalysisHeader" xml:space="preserve">
-    <value>2. Analyse von Chiffre 2</value>
+    <value>2. Analysis of cipher 2</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxHeader" xml:space="preserve">
-    <value>3. Analyse der SBoxen</value>
+    <value>3. Analysis of the S boxes</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide1Content1" xml:space="preserve">
-    <value>Aufgrund der Schlüsseladdition verhält sich die SBox nicht-linear. Ein Rateversuch für K3 kann nicht direkt überprüft werden.</value>
+    <value>Due to the key addition, the S box behaves non-linear. A guess attempt for K3 cannot be checked directly.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide1Content2" xml:space="preserve">
-    <value>Alle SBoxen von Chiffre 2 verhalten sind identisch. Aus diesem Grund ist es aussreichend, wenn die Funktionsweise einer einzelnen SBox analysiert wird. Grundsätzlich ist es möglich, 4 parallele SBoxen als eine große SBox zu betrachten, dies würde aber den Analyseaufwand erhöhen. Die SBox erhält als Eingabe 4 Bits und gibt auch 4 Bits als Ausgabe aus. Die 4 Eingabe-Bits werden durch 4 andere Ausgabe-Bits ersetzt.</value>
+    <value>All S boxes of cipher 2 behave identically. For this reason it is sufficient to analyze the functionality of a single S box. Basically it is possible to consider 4 parallel S boxes as one big S box, but this would increase the analysis effort. The S box receives 4 bits as input and also outputs 4 bits as output. The 4 input bits are replaced by 4 other output bits.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide1Content3" xml:space="preserve">
-    <value>Zur Erinnerung: Bei der differenziellen Kryptoanalyse wird mit Differenzen von Nachrichten gearbeitet. Um die SBox zu untersuchen, werden alle Kombinationen von Eingabe-Klartexten betrachtet und deren Differenz gebildet. Je Paar werden die Klartexte einzelnt in die SBox gegeben und anschließend die Differenz der substituierte Ausgaben berechnet. Dabei werden die Übergänge von Eingabe- zu Ausgabe-Differenz notiert.</value>
+    <value>Remember: Differential cryptanalysis works with differences of messages. In order to examine the S box, all combinations of input plaintext are considered and their differences are formed. For each pair, the plaintexts are entered individually into the S box and then the difference of the substituted outputs is calculated. The transitions from input to output difference are noted.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide1Content4" xml:space="preserve">
-    <value>Die Tabelle auf der nächsten Seite visualisiert dieses Vorgehen. Für jede mögliche Eingabe-Differenz existiert eine Zeile. Für jede mögliche Ausgabe-Differenz gibt es eine Spalte. Die Anzahl des Auftretens einer speziellen Differenz wird durch die Einträge der Tabelle beschrieben.</value>
+    <value>The table on the next page visualizes this procedure. There is one line for each possible input difference. There is one column for each possible output difference. The number of occurrences of a particular difference is described by the entries in the table.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide1Content5" xml:space="preserve">
-    <value>Um die Wahrscheinlichkeit des Auftretens einer Differenz zu Berechnen, muss die Anzahl durch 16 geteilt werden.</value>
+    <value>To calculate the probability of a difference occurring, the number must be divided by 16.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide1Header" xml:space="preserve">
-    <value>Analyse der SBoxen</value>
+    <value>Analysis of the S boxes</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide2Content1" xml:space="preserve">
-    <value>Im Folgenden ist die Differenz-Verteilungstabelle zu sehen:</value>
+    <value>The difference distribution table is shown below:</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide2Header" xml:space="preserve">
-    <value>Analyse der SBoxen</value>
+    <value>Analysis of the S boxes</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide2InputDifference" xml:space="preserve">
-    <value>Eingabe-Differenz</value>
+    <value>Input difference</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide2OutputDifference" xml:space="preserve">
-    <value>Ausgabe-Differenz</value>
+    <value>Output difference</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide3Content1" xml:space="preserve">
-    <value>Die Ein- und Ausgabe-Differenzen sowie die Einträge der Differenzverteilungs-Tabelle sind hexadezimal.</value>
+    <value>The input and output differences and the entries of the difference distribution table are hexadecimal.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide3Content2" xml:space="preserve">
-    <value>Bei einer 4 Bit SBox gibt es je 16 verschiedene Eingaben und Ausgaben. Kombiniert man 2 Nachrichten zu einem Nachrichtenpaar mit je disjunkten Differenzen, können 256 verschiedene Übergänge von Differenzen beobachtet werden.</value>
+    <value>A 4 bit S box has 16 different inputs and 16 different outputs. If 2 messages are combined to a message pair with disjoint differences, 256 different transitions of differences can be observed.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide3Content3" xml:space="preserve">
-    <value>Eine wichtige Beobachtung ist, dass es Differenzen gibt, die häufiger vorkommen als andere. Es gibt auch Differenzen, die gar nicht auftreten. Zum Beispiel wird die Eingabe-Differenz 8 insgesamt 8 mal auf die Ausgabe-Differenz D abgebildet.</value>
+    <value>An important observation is that there are differences that occur more frequently than others. There are also differences that do not occur at all. For example, the input difference 8 is mapped to the output difference D 8 times.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide3Content4" xml:space="preserve">
-    <value>Die Verteilung der Differenzen ist offensichtlich nicht gleichverteilt. In der Praxis sind SBoxen nicht perfekt. Diesen Fakt macht sich der Kryptoanalyst zu nutze. Besonders hohe Wahrscheinlichkeiten helfen bei der differenziellen Kryptoanalyse.</value>
+    <value>The distribution of differences is obviously not equally distributed. In practice, S boxes are not perfect. The cryptanalyst makes use of this fact. Particularly high probabilities help with differential cryptanalysis.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide3Header" xml:space="preserve">
-    <value>Analyse der SBoxen</value>
+    <value>Analysis of the S boxes</value>
   </data>
   <data name="Tutorial2AnalysisSlide1Content1" xml:space="preserve">
-    <value>Chiffre 2 besteht aus drei Verschlüsselungsrunden mit vier Rundenschlüsseln. Jede Runde besteht aus Schlüsseladdition, Substitution und einer Permutation. In der letzten Runde wird zusätzlich noch eine weitere Schlüsseladdition durchgeführt.</value>
+    <value>Cipher 2 consists of three encryption rounds with four round keys. Each round consists of key addition, substitution and permutation. In the last round an additional key addition is performed.</value>
   </data>
   <data name="Tutorial2AnalysisSlide1Content2" xml:space="preserve">
-    <value>Im Folgenden wird die Verschlüsselung eines Klartextblocks schematisch dargestellt. Analog zu Tutorial 1 werden die internen Zustände während des Verschlüsselungsprozesses mit Variablen u und v bezeichnet.</value>
+    <value>In the following, the encryption of a plain text block is shown schematically. As in tutorial 1, the internal states during the encryption process are described with variables u and v. The following table shows the encryption of a plain text block.</value>
   </data>
   <data name="Tutorial2AnalysisSlide1Content3" xml:space="preserve">
-    <value>In dieser Chiffre wird zusätzlich eine Permutation verwendet. Diese vertauscht die Bitpositionen eines Blocks. Im Schema wird die Permutation mit P() bezeichnet. Zusätzlich zu den internen Zuständen u und v wird w eingeführt. Dieser Zustand repräsentiert den Wert nach einer Permutation.</value>
+    <value>A permutation is also used in this cipher. This permutation exchanges the bit positions of a block. In the schema the permutation is called P(). In addition to the internal states u and v, w is introduced. This state represents the value after a permutation.</value>
   </data>
   <data name="Tutorial2AnalysisSlide1Header" xml:space="preserve">
-    <value>Analyse von Chiffre 2</value>
+    <value>Analysis of cipher 2</value>
   </data>
   <data name="Tutorial2AnalysisSlide2Header" xml:space="preserve">
-    <value>Analyse von Chiffre 2</value>
+    <value>Analysis of cipher 2</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run1" xml:space="preserve">
-    <value>Man könnte nun versuchen, den Schlüssel k</value>
+    <value>One could now try to get the key k</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run10" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run11" xml:space="preserve">
-    <value> berechnen. Mit den Klartexten ist man noch in der Lage, die Differenz der u</value>
+    <value>. With the plaintexts one is still able to calculate the difference of the u</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run12" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run13" xml:space="preserve">
-    <value> zu berechnen.</value>
+    <value>.</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run2" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run3" xml:space="preserve">
-    <value> in ähnlicher Art und Weise wie bei Chiffre 1 anzugreifen. Dazu hätte man ein Paar von Klartexten und ihre entsprechenden Geheimtexte vorliegen. Dann würde man einen möglichen Rundenschlüssel t raten und die jeweiligen internen Variablen v</value>
+    <value> in a similar way to cipher 1. For this you would have a pair of plaintext and their corresponding secret texts available. Then you would guess a possible round key t to calculate the internal variables v</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run4" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run5" xml:space="preserve">
-    <value> berechnen. Dadurch könnte man u</value>
+    <value>. This would allow u</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run6" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run7" xml:space="preserve">
-    <value> berechnen. Da der Rundenschlüssel k</value>
+    <value> to be calculated. Since the round key k</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run8" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run9" xml:space="preserve">
-    <value> ebenfalls unbekannt ist, könnte man nun die Differenz der u</value>
+    <value> is also unknown, one could now calculate the difference of u</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content2Run1" xml:space="preserve">
-    <value>Aufgrund des Exclusive-Oder verhält sich die SBox nicht-linear, sodass man die Differenz der v</value>
+    <value>Due to the Exclusive-Or, the S box behaves non-linear, so that the difference of the v</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content2Run2" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content2Run3" xml:space="preserve">
-    <value> nicht bestimmen kann. Daher ist es nicht möglich einen Rateversuch von k</value>
+    <value> cannot be determined. Therefore, it is not possible to check a guess attempt of k</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content2Run4" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content2Run5" xml:space="preserve">
-    <value> durch Nutzung von Differenzen zu prüfen.</value>
+    <value> by using differences.</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content3" xml:space="preserve">
-    <value>Um dieses Problem zu lösen, betrachten wir die Funktionsweise der SBoxen genauer.</value>
+    <value>To solve this problem, lets take a closer look at how the S boxes work.</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Header" xml:space="preserve">
-    <value>Analyse von Chiffre 2</value>
+    <value>Analysis of cipher 2</value>
   </data>
   <data name="Tutorial2AttackFinishedContent1" xml:space="preserve">
-    <value>Tutorial 2 zur differenziellen Kryptoanalyse in der DKA-PfadFinder-Komponente ist beendet. </value>
+    <value>Tutorial 2 on differential cryptanalysis in the DCA PathFinder component is finished.</value>
   </data>
   <data name="Tutorial2AttackFinishedContent2Run1" xml:space="preserve">
-    <value>Durch ein letztes Klicken auf "Start" in der DKA-KeyRecovery-Komponente werden die letzten zwei Rundenschlüssel k</value>
+    <value>A last click on "Start" in the DCA KeyRecovery component attempts to recover the last two round keys k</value>
   </data>
   <data name="Tutorial2AttackFinishedContent2Run2" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="Tutorial2AttackFinishedContent2Run3" xml:space="preserve">
-    <value> und k</value>
+    <value> and k</value>
   </data>
   <data name="Tutorial2AttackFinishedContent2Run4" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="Tutorial2AttackFinishedContent2Run5" xml:space="preserve">
-    <value> versucht wiederherzustellen.</value>
+    <value>.</value>
   </data>
   <data name="Tutorial2AttackFinishedHeader" xml:space="preserve">
-    <value>Tutorial 2 beendet</value>
+    <value>Tutorial 2 finished</value>
   </data>
   <data name="Tutorial2AttackFirstRoundContent1Run1" xml:space="preserve">
-    <value>Im letzten Schritt werden die letzten beiden Rundenschlüssel k</value>
+    <value>In the last step, the last two round keys k</value>
   </data>
   <data name="Tutorial2AttackFirstRoundContent1Run2" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="Tutorial2AttackFirstRoundContent1Run3" xml:space="preserve">
-    <value> und k</value>
+    <value> and k</value>
   </data>
   <data name="Tutorial2AttackFirstRoundContent1Run4" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="Tutorial2AttackFirstRoundContent1Run5" xml:space="preserve">
-    <value> angegriffen. Dieser Angriff läuft analog zu dem Verfahren ab, wie es in Tutorial 1 durchgeführt wurde.</value>
+    <value> are attacked. This attack is similar to the procedure described in Tutorial 1</value>
   </data>
   <data name="Tutorial2AttackFirstRoundContent2Run1" xml:space="preserve">
-    <value>Durch einen Klick auf weiter werden die ersten beiden Rundenschlüssel k</value>
+    <value>By clicking on continue, the first two round keys k</value>
   </data>
   <data name="Tutorial2AttackFirstRoundContent2Run2" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="Tutorial2AttackFirstRoundContent2Run3" xml:space="preserve">
-    <value> und k</value>
+    <value> and k</value>
   </data>
   <data name="Tutorial2AttackFirstRoundContent2Run4" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="Tutorial2AttackFirstRoundContent2Run5" xml:space="preserve">
-    <value> angegriffen.</value>
+    <value> are attacked.</value>
   </data>
   <data name="Tutorial2AttackFirstRoundHeaderRun1" xml:space="preserve">
-    <value>Berechnung der Rundenschlüssel k</value>
+    <value>Calculation of round keys k</value>
   </data>
   <data name="Tutorial2AttackFirstRoundHeaderRun2" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="Tutorial2AttackFirstRoundHeaderRun3" xml:space="preserve">
-    <value> und k</value>
+    <value> and k</value>
   </data>
   <data name="Tutorial2AttackFirstRoundHeaderRun4" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="Tutorial2AttackHeader" xml:space="preserve">
-    <value>7. Differenzielle Kryptoanalyse von Chiffre 2</value>
+    <value>7. Differential cryptanalysis of cipher 2</value>
   </data>
   <data name="Tutorial2AttackKeyRound2Content1Run1" xml:space="preserve">
-    <value>An dieser Stelle soll der zweite Rundenschlüssel k</value>
+    <value>At this point, the second round key k</value>
   </data>
   <data name="Tutorial2AttackKeyRound2Content1Run2" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="Tutorial2AttackKeyRound2Content1Run3" xml:space="preserve">
-    <value> angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
+    <value> is to be attacked. S boxes can be selected for this in the second encryption round.  By selecting an S box, the respective 4 bits of the round key are attacked and an attempt is made to restore them.</value>
   </data>
   <data name="Tutorial2AttackKeyRound2Content1Run4" xml:space="preserve">
-    <value>Der Angriff läuft nahezu analog zu dem auf den Rundenschlüssel k</value>
+    <value>The attack is almost analogous to the attack on the round key k</value>
   </data>
   <data name="Tutorial2AttackKeyRound2Content1Run5" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="Tutorial2AttackKeyRound2Content1Run6" xml:space="preserve">
-    <value> ab. Allerdings muss bei der Suche nach Differenzialen die Chiffre nicht mehr so tief durchsucht werden, da bereits eine Verschlüsselungsrunde vollständig angegriffen wurde.</value>
+    <value>. However, when searching for differentials, the cipher does not have to be searched so deeply any more, since an encryption round has already been completely attacked.</value>
   </data>
   <data name="Tutorial2AttackKeyRound3Content1Run1" xml:space="preserve">
-    <value>An dieser Stelle soll der erste Rundenschlüssel k</value>
+    <value>At this point, the first round key k</value>
   </data>
   <data name="Tutorial2AttackKeyRound3Content1Run2" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="Tutorial2AttackKeyRound3Content1Run3" xml:space="preserve">
-    <value> der Chiffre angegriffen werden. Dazu können in der dritten Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
+    <value> of the cipher will be attacked. S boxes can be selected for this in the third encryption round. By selecting an Sbox the respective 4 bits of the round key are attacked and an attempt is made to restore them.</value>
   </data>
   <data name="Tutorial2AttackKeyRound3Content1Run4" xml:space="preserve">
-    <value>Bei der differenziellen Kryptoanalyse wird die Veränderung von Differenzen an den SBoxen betrachtet. Daher sind an dieser Stelle SBoxen auszuwählen.</value>
+    <value>In differential cryptanalysis, the change of differences at the S boxes is considered. S boxes should therefore be selected at this point.</value>
   </data>
   <data name="Tutorial2AttackKeyRound3Content1Run5" xml:space="preserve">
-    <value>Je mehr Schlüsselbits ausgewählt werden, desto komplizierter ist die Suche nach einem Differenzial. Allerdings kann durchaus sinnvoll sein, mehrere SBoxen gleichzeitig anzugreifen. Je nach Beschaffenheit der Chiffre finden sich so bessere oder schlechtere Differenziale.</value>
+    <value>The more key bits that are selected, the more complicated the search for a differential. However, it can make sense to attack several S boxes at the same time. Depending on the nature of the cipher, better or worse differentials can be found.</value>
   </data>
   <data name="Tutorial2AttackRound2HeaderRun1" xml:space="preserve">
-    <value>SBoxen aus Runde 2 auswählen, um Schlüsselbits von k</value>
+    <value>Select S boxes from round 2 to get key bits from k</value>
   </data>
   <data name="Tutorial2AttackRound2HeaderRun2" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="Tutorial2AttackRound2HeaderRun3" xml:space="preserve">
-    <value> anzugreifen</value>
+    <value />
   </data>
   <data name="Tutorial2AttackRound3HeaderRun1" xml:space="preserve">
-    <value>SBoxen aus Runde 3 auswählen, um Schlüsselbits von k</value>
+    <value>Select S boxes from round 3 to get key bits from k</value>
   </data>
   <data name="Tutorial2AttackRound3HeaderRun2" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="Tutorial2AttackRound3HeaderRun3" xml:space="preserve">
-    <value> anzugreifen</value>
+    <value />
   </data>
   <data name="Tutorial2CharacteristicHeader" xml:space="preserve">
-    <value>4. Charakteristiken</value>
+    <value>4. Characteristics</value>
   </data>
   <data name="Tutorial2CharacteristicSlide1Content1Run1" xml:space="preserve">
-    <value>Zwei Eingaben, die sich durch eine Differenz </value>
+    <value>Two entries that differ by a difference </value>
   </data>
   <data name="Tutorial2CharacteristicSlide1Content1Run2" xml:space="preserve">
-    <value> unterscheiden, werden unter Verwendung der SBox durch ein Paar von Ausgaben substitutiert, welche sich durch eine Differenz </value>
+    <value> are substituted using the S box by a pair of outputs differing by a difference </value>
   </data>
   <data name="Tutorial2CharacteristicSlide1Content1Run3" xml:space="preserve">
-    <value> unterscheiden. Notiert wird dies durch </value>
+    <value>. This is noted by</value>
   </data>
   <data name="Tutorial2CharacteristicSlide1Content2" xml:space="preserve">
-    <value>Charakteristiken können miteinander kombiniert und so über mehrere Runden verbunden werden. Vorraussetzung dafür ist, dass die Ausgangsdifferenz der vorgänger Charakteristik denselben Wert wie die Eingangsdifferenz der nachfolgenden Charakteristik aufweist. Unter der Annahme, dass Charakteristiken unabhängig voneinander sind, können die Wahrscheinlichkeiten multipliziert werden. Auf diese Weise kann ein Weg von Differenzen durch die Chiffre gesucht werden.</value>
+    <value>Characteristics can be combined with each other and thus connected over several rounds. The prerequisite for this is that the output difference of the preceding characteristic has the same value as the input difference of the following characteristic. Assuming that characteristics are independent of each other, the probabilities can be multiplied. In this way, a path of differences through the cipher can be searched.
+
+</value>
   </data>
   <data name="Tutorial2CharacteristicSlide1Content2Run1" xml:space="preserve">
-    <value>Wir bezeichnen ein solches Paar </value>
+    <value>We call such a pair </value>
   </data>
   <data name="Tutorial2CharacteristicSlide1Content2Run2" xml:space="preserve">
-    <value> als differenzielle charakteristik unter der Operation der SBox. Wie zuvor gesehen, hat eine differenzielle Charakteristik eine feste Wahrscheinlichkeit.</value>
+    <value> a differential characteristic under the operation of the S box. As seen before, a differential characteristic has a fixed probability.</value>
   </data>
   <data name="Tutorial2CharacteristicSlide1Content3" xml:space="preserve">
     <value>Ziel bei der Suche ist es einen Weg zu finden, der eine möglichst hohe Wahrscheinlichkeit aufweist. Diese Wege können in der DKA-PfadVisualisierer-Komponente graphisch dargestellt werden.</value>
   </data>
   <data name="Tutorial2CharacteristicSlide1Header" xml:space="preserve">
-    <value>Charakteristiken</value>
+    <value>Characteristics</value>
   </data>
   <data name="Tutorial2CharacteristicSlide2Content1" xml:space="preserve">
-    <value>Eine Verschlüsselungsrunde besteht bei Chiffre 2 aus Schlüsseladdition, Substitution und Permutation. Die Chiffre arbeitet auf 16 Bit Blöcken. Die vorige Notation wird wie folgt erweitert, um eine differenzielle Charakteristik einer SBox für 16 Bit Blöcke zu bezeichnen</value>
+    <value>An encryption round for cipher 2 consists of key addition, substitution and permutation. The cipher works on 16 bit blocks. The previous notation is extended as follows to denote a differential characteristic of an S box for 16 bit blocks</value>
   </data>
   <data name="Tutorial2CharacteristicSlide2Content2" xml:space="preserve">
-    <value>Nach der Substitution werden die Bits in Chiffre 2 permutiert. Die Permutation der Chiffre ist bekannt und daher kann die differenzielle Charakteristik der Permutation wie folgt bezeichnet werden</value>
+    <value>After substitution, the bits in cipher 2 are permuted. The permutation of the cipher is known and therefore the differential characteristic of the permutation can be described as follows</value>
   </data>
   <data name="Tutorial2CharacteristicSlide2Content3" xml:space="preserve">
-    <value>Zusammenfassend wird eine differenzielle Charakteristik einer Verschlüsselungsrunde als Komination von Substitution und Permutation wie folgt notiert</value>
+    <value>In summary, a differential characteristic of an encryption round as a combination of substitution and permutation is noted as follows</value>
   </data>
   <data name="Tutorial2CharacteristicSlide2Header" xml:space="preserve">
-    <value>Charakteristiken</value>
+    <value>Characteristics</value>
   </data>
   <data name="Tutorial2CharacteristicSlide3Content1" xml:space="preserve">
-    <value>Die differenziellen Charakteristiken einzelner Runde sollen jetzt zu einem Weg von Differenzen durch die gesamte Chiffre kombiniert werden. Die Suche nach Pfaden mit hoher Wahrscheinlichkeit ist ein aufwändiges und zeitaufwändiges Problem bei Chiffren mit vielen Verschlüsselungsrunden und langen Blöcken.</value>
+    <value>The differential characteristics of individual rounds are now to be combined into a path of differences through the entire cipher. The search for paths with high probability is a complex and time-consuming problem for ciphers with many encryption rounds and big blocks.</value>
   </data>
   <data name="Tutorial2CharacteristicSlide3Content2" xml:space="preserve">
-    <value>Die DKA-PfadFinder-Komponente verfügt über verschiedene Suchoptionen zur Bestimmung von solchen Pfaden.</value>
+    <value>The DCA PathFinder component has various search options for determining such paths.</value>
   </data>
   <data name="Tutorial2CharacteristicSlide3Content3" xml:space="preserve">
-    <value>Die zuvor eingeführte Notation wird verwendet, um differenzielle Charakteristiken einer Runde zu differenziellen Charakteristiken für n-Verschlüsselungsrunden (hier: 3) zu bezeichnen:</value>
+    <value>The previously introduced notation is used to denote differential characteristics of a round to differential characteristics for n-encryption rounds (here: 3):</value>
   </data>
   <data name="Tutorial2CharacteristicSlide3Content4" xml:space="preserve">
-    <value>Im ersten 4-Tupel sind die Eingangsdifferenzen der SBoxen der ersten 4 SBoxen in der ersten Verschlüsselungsrunde angegeben. Im 2. 4-Tupel ist sowohl die Ausgangsdifferenz der ersten als auch die Eingangsdifferenz der zweiten Verschlüsselungsrunde notiert. Im 3. 4-Tupel ist die Ausgangsdifferenz der zweiten und die Eingangsdifferenz der letzten Verschlüsselungsrunde notiert.</value>
+    <value>In the first 4-tuple the input differences of the S boxes of the first 4 S boxes are given in the first encryption round. In the second 4-tuple, both the output difference of the first and the input difference of the second encryption round are noted. In the 3rd 4-tuple, the output difference of the second and the input difference of the last encryption round are noted.</value>
   </data>
   <data name="Tutorial2CharacteristicSlide3Content5" xml:space="preserve">
-    <value>Ziel bei der Suche ist es, einen Weg zu finden, der eine möglichst hohe Wahrscheinlichkeit aufweist.</value>
+    <value>The aim of the search is to find a way with the highest possible probability.</value>
   </data>
   <data name="Tutorial2CharacteristicSlide3Header" xml:space="preserve">
-    <value>Charakteristiken</value>
+    <value>Characteristics</value>
   </data>
   <data name="Tutorial2DifferentialHeader" xml:space="preserve">
-    <value>5. Differenziale</value>
+    <value>5. Differentials</value>
   </data>
   <data name="Tutorial2DifferentialSlide1Content1" xml:space="preserve">
-    <value>Bei der Suche nach Charakteristiken über n Runden kann es vorkommen, dass dass verschiedene Charakteristiken gefunden werden, die die selbe Eingangsdifferenz der ersten und Ausgangsdifferenz der letzten Verschlüsselungsrunde haben. Die Charakteristiken haben also die Form</value>
+    <value>When searching for characteristics over n rounds, it can happen that different characteristics are found that have the same input difference of the first and output difference of the last encryption round. The characteristics therefore have the form</value>
   </data>
   <data name="Tutorial2DifferentialSlide1Content2" xml:space="preserve">
-    <value>Entscheidend bei der Verwendung von Charakteristiken für die differenzielle Kryptoanalyse sind Eingangs- und Ausgangswert der Differenz. Findet man mehrere Charakteristiken mit selben Eingangs- und Ausgangswert, können die Wahrscheinlichkeiten addiert werden. Eine Struktur, die aus mehreren Charakteristiken besteht, wird Differenzial genannt.</value>
+    <value>The input and output values of the difference are decisive for the use of characteristics for differential cryptanalysis. If several characteristics with the same input and output values are found, the probabilities can be added together. A structure consisting of several characteristics is called a differential.</value>
   </data>
   <data name="Tutorial2DifferentialSlide1Content3" xml:space="preserve">
-    <value>Ziel bei der Analyse einer Chiffre ist es also, das Differenzial mit der höchsten Wahrscheinlichkeit zu finden.</value>
+    <value>The goal in the analysis of a cipher is therefore to find the differential with the highest probability.</value>
   </data>
   <data name="Tutorial2DifferentialSlide1Header" xml:space="preserve">
-    <value>Differenziale</value>
+    <value>Differentials</value>
   </data>
   <data name="Tutorial2IntroductionHeader" xml:space="preserve">
-    <value>1. Einführung</value>
+    <value>1. Introduction</value>
   </data>
   <data name="Tutorial2IntroductionSlide1Content1" xml:space="preserve">
-    <value>In Tutorial 1 wurde die Idee der differenziellen Kryptoanalyse vorgestellt und an einer Chiffre bestehend aus einer Verschlüsselungsrunde mit zwei Rundenschlüsseln demonstriert.</value>
+    <value>In tutorial 1 the idea of differential cryptanalysis was introduced and demonstrated with a cipher consisting of one encryption round with two round keys.</value>
   </data>
   <data name="Tutorial2IntroductionSlide1Content2" xml:space="preserve">
-    <value>In diesem Tutorial wird die Idee vertieft und an einer Chiffre mit drei Verschlüsselungsrunden mit vier Rundenschlüsseln gezeigt.</value>
+    <value>In this tutorial the idea is deepened and shown at a cipher with three encryption rounds with four round keys.</value>
   </data>
   <data name="Tutorial2IntroductionSlide1Content3" xml:space="preserve">
-    <value>Um eine Chiffre mit mehreren Verschlüsselgsrunden und Rundenschlüsseln mittels differenzieller Kryptoanalyse anzugreifen, muss diese genauer untersucht werden. Von Interesse sind die einzelnen Bestandteile der Verschlüsselungsrunden und wie diese sich verhalten.</value>
+    <value>To attack a cipher with multiple encryption rounds and round keys by differential cryptanalysis, it must be examined more closely. Of interest are the individual components of the encryption rounds and how they behave.</value>
   </data>
   <data name="Tutorial2IntroductionSlide1Content4" xml:space="preserve">
-    <value>Aufgrund der mehrfachen Verschlüsselungsrunden kann diese Chiffre nicht wie Chiffre 1 angegriffen werden. Für Chiffre 2 wird ein Ansatz benötigt, der die Änderungen von Differenzen über mehrere Verschlüsselungsrunden mit einer gewissen Wahrscheinlichkeit vorraussagt.</value>
+    <value>Due to the multiple encryption rounds, this cipher cannot be attacked like cipher 1. For cipher 2, an approach is needed that predicts the changes of differences over several encryption rounds with a certain probability.</value>
   </data>
   <data name="Tutorial2IntroductionSlide1Header" xml:space="preserve">
-    <value>Einführung</value>
+    <value>Introduction</value>
   </data>
   <data name="Tutorial2RecoverKeyInformationHeader" xml:space="preserve">
-    <value>6. Schlüsselinformationen wiederherstellen</value>
+    <value>6. Recover key information</value>
   </data>
   <data name="Tutorial2RecoverKeyInformationSlide1Content1" xml:space="preserve">
-    <value>Sobald ein Differenzial mit hoher Wahrscheinlichkeit gefunden wurde, kann damit begonnen werden, Schlüsselbits wiederherzustellen. Dazu werden die SBoxen betrachtet, an denen die erwartete Differenz von 0 verschieden ist.</value>
+    <value>Once a differential has been found with a high probability, key bits can be recovered. For this purpose, the S boxes are considered where the expected difference is different from 0.</value>
   </data>
   <data name="Tutorial2RecoverKeyInformationSlide1Content2" xml:space="preserve">
-    <value>Für jeden möglichen Schlüsselkandidat wird ein Zähler erzeugt. Der Kryptoanalyst generiert eine Anzahl von Nachrichten, die die Eingabedifferenz erfüllen. Diese werden verschlüsselt und mit dem Schlüsselkandidat partiell entschlüsselt. Erfüllt die Differenz der partiell entschlüsselten Nachrichten die erwartete Differenz, wird der Zähler um 1 erhöht. Diesen Prozess wiederholt man mit allen generierten Nachrichtenpaaren.</value>
+    <value>A counter is generated for each possible key candidate. The cryptoanalyst generates a number of messages that fulfill the input difference. These are encrypted and partially decrypted with the key candidate. If the difference between the partially decrypted messages meets the expected difference, the counter is increased by 1. This process is repeated with all generated message pairs.</value>
   </data>
   <data name="Tutorial2RecoverKeyInformationSlide1Content3" xml:space="preserve">
-    <value>Der Schlüsselkandidat mit den meisten Treffern, sollte den höchsten Zähler haben. Dieser sollte sehr nah am Erwartungswert des Differenzial liegen.</value>
+    <value>The key candidate with the most hits should have the highest counter. This should be very close to the expected value of the differential.</value>
   </data>
   <data name="Tutorial2RecoverKeyInformationSlide1Header" xml:space="preserve">
-    <value>Schlüsselinformationen wiederherstellen</value>
+    <value>Recover key information</value>
   </data>
   <data name="Tutorial2TitleHeaderRun1" xml:space="preserve">
     <value>Tutorial</value>
   </data>
   <data name="Tutorial2TitleHeaderRun2" xml:space="preserve">
-    <value>Differenzielle Kryptoanalyse symmetrischer Blockchiffren</value>
+    <value>Differential cryptanalysis of symmetric block ciphers</value>
   </data>
   <data name="Tutorial2WaitingSlideContent1" xml:space="preserve">
-    <value>Sie können nun in der DKA-KeyRecovery-Komponente die in der DKA-PfadFinder-Komponente generierte Angriffskonfiguration verwenden, um Schlüsselbits wiederherzustellen. Dazu müssen Sie auf den Start-Button klicken.</value>
+    <value>You can now use the attack configuration generated in the DCA PathFinder component in the DCA KeyRecovery component to restore key bits. To do this, you must click the Start button.</value>
   </data>
   <data name="Tutorial2WaitingSlideContent2" xml:space="preserve">
-    <value>Optional können Sie sich in der DKA-PfadVisualiserer-Komponente das ermittelte Differenzial und die darin enthaltenen Charakteristiken anzeigen lassen.</value>
+    <value>Optionally, you can display the determined differential and its characteristics in the DCA PathVisualizer component.</value>
   </data>
   <data name="Tutorial2WaitingSlideContent3Run1" xml:space="preserve">
-    <value>Zusammenfassung der Analyse-Ergebnisse:</value>
+    <value>Summary of the analysis results:</value>
   </data>
   <data name="Tutorial2WaitingSlideContent3Run2" xml:space="preserve">
-    <value>Eingabedifferenz: </value>
+    <value>Input difference: </value>
   </data>
   <data name="Tutorial2WaitingSlideContent3Run3" xml:space="preserve">
-    <value>Erwartete Differenz: </value>
+    <value>Expected difference: </value>
   </data>
   <data name="Tutorial2WaitingSlideContent3Run4" xml:space="preserve">
-    <value>Wahrscheinlichkeit: </value>
+    <value>Probability: </value>
   </data>
   <data name="Tutorial2WaitingSlideHeader" xml:space="preserve">
-    <value>Differenzielle Kryptoanalyse wird in den nachfolgenden Komponenten weitergeführt</value>
+    <value>Differential cryptanalysis is continued in the following components</value>
   </data>
   <data name="Tutorial3AttackFinishedContent1" xml:space="preserve">
     <value>Tutorial 3 zur differenziellen Kryptoanalyse in der DKA-PfadFinder-Komponente ist beendet. </value>
@@ -1483,12 +1485,12 @@
     <value>Differenzielle Kryptoanalyse wird in den nachfolgenden Komponenten weitergeführt</value>
   </data>
   <data name="UseOfflinePaths" xml:space="preserve">
-    <value>Vorberechnete Daten</value>
+    <value>Precalculated data</value>
   </data>
   <data name="UseOfflinePathsToolTip" xml:space="preserve">
-    <value>Ist diese Einstellung angewählt, wird keine Suche nach
-Charakteristiken durchgeführt, sondern es werden für die jeweilige
-Chiffre vorberechnete Daten verwendet, die in der Komponente hinterlegt
-sind. Dadurch können lange Berechnungszeiten minimiert werden.</value>
+    <value>If this setting is selected, no search for
+characteristics, but are used for the respective
+box number uses precalculated data that is stored in the component.
+are. This allows long calculation times to be minimized.</value>
   </data>
 </root>

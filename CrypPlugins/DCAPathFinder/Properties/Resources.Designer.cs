@@ -2113,7 +2113,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 2. Analyse von Chiffre 2 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 2. Analysis of cipher 2 ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisHeader {
             get {
@@ -2122,7 +2122,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 3. Analyse der SBoxen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3. Analysis of the S boxes ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxHeader {
             get {
@@ -2131,7 +2131,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Aufgrund der Schlüsseladdition verhält sich die SBox nicht-linear. Ein Rateversuch für K3 kann nicht direkt überprüft werden. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Due to the key addition, the S box behaves non-linear. A guess attempt for K3 cannot be checked directly. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide1Content1 {
             get {
@@ -2140,7 +2140,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Alle SBoxen von Chiffre 2 verhalten sind identisch. Aus diesem Grund ist es aussreichend, wenn die Funktionsweise einer einzelnen SBox analysiert wird. Grundsätzlich ist es möglich, 4 parallele SBoxen als eine große SBox zu betrachten, dies würde aber den Analyseaufwand erhöhen. Die SBox erhält als Eingabe 4 Bits und gibt auch 4 Bits als Ausgabe aus. Die 4 Eingabe-Bits werden durch 4 andere Ausgabe-Bits ersetzt. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die All S boxes of cipher 2 behave identically. For this reason it is sufficient to analyze the functionality of a single S box. Basically it is possible to consider 4 parallel S boxes as one big S box, but this would increase the analysis effort. The S box receives 4 bits as input and also outputs 4 bits as output. The 4 input bits are replaced by 4 other output bits. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide1Content2 {
             get {
@@ -2149,7 +2149,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Zur Erinnerung: Bei der differenziellen Kryptoanalyse wird mit Differenzen von Nachrichten gearbeitet. Um die SBox zu untersuchen, werden alle Kombinationen von Eingabe-Klartexten betrachtet und deren Differenz gebildet. Je Paar werden die Klartexte einzelnt in die SBox gegeben und anschließend die Differenz der substituierte Ausgaben berechnet. Dabei werden die Übergänge von Eingabe- zu Ausgabe-Differenz notiert. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Remember: Differential cryptanalysis works with differences of messages. In order to examine the S box, all combinations of input plaintext are considered and their differences are formed. For each pair, the plaintexts are entered individually into the S box and then the difference of the substituted outputs is calculated. The transitions from input to output difference are noted. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide1Content3 {
             get {
@@ -2158,7 +2158,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Die Tabelle auf der nächsten Seite visualisiert dieses Vorgehen. Für jede mögliche Eingabe-Differenz existiert eine Zeile. Für jede mögliche Ausgabe-Differenz gibt es eine Spalte. Die Anzahl des Auftretens einer speziellen Differenz wird durch die Einträge der Tabelle beschrieben. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The table on the next page visualizes this procedure. There is one line for each possible input difference. There is one column for each possible output difference. The number of occurrences of a particular difference is described by the entries in the table. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide1Content4 {
             get {
@@ -2167,7 +2167,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Um die Wahrscheinlichkeit des Auftretens einer Differenz zu Berechnen, muss die Anzahl durch 16 geteilt werden. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die To calculate the probability of a difference occurring, the number must be divided by 16. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide1Content5 {
             get {
@@ -2176,7 +2176,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analyse der SBoxen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis of the S boxes ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide1Header {
             get {
@@ -2185,7 +2185,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Im Folgenden ist die Differenz-Verteilungstabelle zu sehen: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The difference distribution table is shown below: ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide2Content1 {
             get {
@@ -2194,7 +2194,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analyse der SBoxen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis of the S boxes ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide2Header {
             get {
@@ -2203,7 +2203,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Eingabe-Differenz ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input difference ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide2InputDifference {
             get {
@@ -2212,7 +2212,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ausgabe-Differenz ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output difference ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide2OutputDifference {
             get {
@@ -2221,7 +2221,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Die Ein- und Ausgabe-Differenzen sowie die Einträge der Differenzverteilungs-Tabelle sind hexadezimal. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The input and output differences and the entries of the difference distribution table are hexadecimal. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide3Content1 {
             get {
@@ -2230,7 +2230,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Bei einer 4 Bit SBox gibt es je 16 verschiedene Eingaben und Ausgaben. Kombiniert man 2 Nachrichten zu einem Nachrichtenpaar mit je disjunkten Differenzen, können 256 verschiedene Übergänge von Differenzen beobachtet werden. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die A 4 bit S box has 16 different inputs and 16 different outputs. If 2 messages are combined to a message pair with disjoint differences, 256 different transitions of differences can be observed. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide3Content2 {
             get {
@@ -2239,7 +2239,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Eine wichtige Beobachtung ist, dass es Differenzen gibt, die häufiger vorkommen als andere. Es gibt auch Differenzen, die gar nicht auftreten. Zum Beispiel wird die Eingabe-Differenz 8 insgesamt 8 mal auf die Ausgabe-Differenz D abgebildet. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die An important observation is that there are differences that occur more frequently than others. There are also differences that do not occur at all. For example, the input difference 8 is mapped to the output difference D 8 times. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide3Content3 {
             get {
@@ -2248,7 +2248,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Die Verteilung der Differenzen ist offensichtlich nicht gleichverteilt. In der Praxis sind SBoxen nicht perfekt. Diesen Fakt macht sich der Kryptoanalyst zu nutze. Besonders hohe Wahrscheinlichkeiten helfen bei der differenziellen Kryptoanalyse. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The distribution of differences is obviously not equally distributed. In practice, S boxes are not perfect. The cryptanalyst makes use of this fact. Particularly high probabilities help with differential cryptanalysis. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide3Content4 {
             get {
@@ -2257,7 +2257,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analyse der SBoxen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis of the S boxes ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide3Header {
             get {
@@ -2266,7 +2266,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Chiffre 2 besteht aus drei Verschlüsselungsrunden mit vier Rundenschlüsseln. Jede Runde besteht aus Schlüsseladdition, Substitution und einer Permutation. In der letzten Runde wird zusätzlich noch eine weitere Schlüsseladdition durchgeführt. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher 2 consists of three encryption rounds with four round keys. Each round consists of key addition, substitution and permutation. In the last round an additional key addition is performed. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide1Content1 {
             get {
@@ -2275,7 +2275,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Im Folgenden wird die Verschlüsselung eines Klartextblocks schematisch dargestellt. Analog zu Tutorial 1 werden die internen Zustände während des Verschlüsselungsprozesses mit Variablen u und v bezeichnet. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In the following, the encryption of a plain text block is shown schematically. As in tutorial 1, the internal states during the encryption process are described with variables u and v. The following table shows the encryption of a plain text block. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide1Content2 {
             get {
@@ -2284,7 +2284,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In dieser Chiffre wird zusätzlich eine Permutation verwendet. Diese vertauscht die Bitpositionen eines Blocks. Im Schema wird die Permutation mit P() bezeichnet. Zusätzlich zu den internen Zuständen u und v wird w eingeführt. Dieser Zustand repräsentiert den Wert nach einer Permutation. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die A permutation is also used in this cipher. This permutation exchanges the bit positions of a block. In the schema the permutation is called P(). In addition to the internal states u and v, w is introduced. This state represents the value after a permutation. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide1Content3 {
             get {
@@ -2293,7 +2293,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analyse von Chiffre 2 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis of cipher 2 ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide1Header {
             get {
@@ -2302,7 +2302,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analyse von Chiffre 2 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis of cipher 2 ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide2Header {
             get {
@@ -2311,7 +2311,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Man könnte nun versuchen, den Schlüssel k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die One could now try to get the key k ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Content1Run1 {
             get {
@@ -2329,7 +2329,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  berechnen. Mit den Klartexten ist man noch in der Lage, die Differenz der u ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die . With the plaintexts one is still able to calculate the difference of the u ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Content1Run11 {
             get {
@@ -2347,7 +2347,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  zu berechnen. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die . ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Content1Run13 {
             get {
@@ -2365,7 +2365,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  in ähnlicher Art und Weise wie bei Chiffre 1 anzugreifen. Dazu hätte man ein Paar von Klartexten und ihre entsprechenden Geheimtexte vorliegen. Dann würde man einen möglichen Rundenschlüssel t raten und die jeweiligen internen Variablen v ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  in a similar way to cipher 1. For this you would have a pair of plaintext and their corresponding secret texts available. Then you would guess a possible round key t to calculate the internal variables v ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Content1Run3 {
             get {
@@ -2383,7 +2383,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  berechnen. Dadurch könnte man u ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die . This would allow u ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Content1Run5 {
             get {
@@ -2401,7 +2401,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  berechnen. Da der Rundenschlüssel k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  to be calculated. Since the round key k ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Content1Run7 {
             get {
@@ -2419,7 +2419,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  ebenfalls unbekannt ist, könnte man nun die Differenz der u ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  is also unknown, one could now calculate the difference of u ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Content1Run9 {
             get {
@@ -2428,7 +2428,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Aufgrund des Exclusive-Oder verhält sich die SBox nicht-linear, sodass man die Differenz der v ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Due to the Exclusive-Or, the S box behaves non-linear, so that the difference of the v ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Content2Run1 {
             get {
@@ -2446,7 +2446,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  nicht bestimmen kann. Daher ist es nicht möglich einen Rateversuch von k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  cannot be determined. Therefore, it is not possible to check a guess attempt of k ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Content2Run3 {
             get {
@@ -2464,7 +2464,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  durch Nutzung von Differenzen zu prüfen. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  by using differences. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Content2Run5 {
             get {
@@ -2473,7 +2473,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Um dieses Problem zu lösen, betrachten wir die Funktionsweise der SBoxen genauer. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die To solve this problem, lets take a closer look at how the S boxes work. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Content3 {
             get {
@@ -2482,7 +2482,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analyse von Chiffre 2 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis of cipher 2 ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Header {
             get {
@@ -2491,7 +2491,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 2 zur differenziellen Kryptoanalyse in der DKA-PfadFinder-Komponente ist beendet.  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 2 on differential cryptanalysis in the DCA PathFinder component is finished. ähnelt.
         /// </summary>
         public static string Tutorial2AttackFinishedContent1 {
             get {
@@ -2500,7 +2500,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Durch ein letztes Klicken auf &quot;Start&quot; in der DKA-KeyRecovery-Komponente werden die letzten zwei Rundenschlüssel k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die A last click on &quot;Start&quot; in the DCA KeyRecovery component attempts to recover the last two round keys k ähnelt.
         /// </summary>
         public static string Tutorial2AttackFinishedContent2Run1 {
             get {
@@ -2518,7 +2518,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  und k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  and k ähnelt.
         /// </summary>
         public static string Tutorial2AttackFinishedContent2Run3 {
             get {
@@ -2536,7 +2536,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  versucht wiederherzustellen. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die . ähnelt.
         /// </summary>
         public static string Tutorial2AttackFinishedContent2Run5 {
             get {
@@ -2545,7 +2545,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 2 beendet ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial 2 finished ähnelt.
         /// </summary>
         public static string Tutorial2AttackFinishedHeader {
             get {
@@ -2554,7 +2554,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Im letzten Schritt werden die letzten beiden Rundenschlüssel k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In the last step, the last two round keys k ähnelt.
         /// </summary>
         public static string Tutorial2AttackFirstRoundContent1Run1 {
             get {
@@ -2572,7 +2572,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  und k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  and k ähnelt.
         /// </summary>
         public static string Tutorial2AttackFirstRoundContent1Run3 {
             get {
@@ -2590,7 +2590,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  angegriffen. Dieser Angriff läuft analog zu dem Verfahren ab, wie es in Tutorial 1 durchgeführt wurde. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  are attacked. This attack is similar to the procedure described in Tutorial 1 ähnelt.
         /// </summary>
         public static string Tutorial2AttackFirstRoundContent1Run5 {
             get {
@@ -2599,7 +2599,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Durch einen Klick auf weiter werden die ersten beiden Rundenschlüssel k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die By clicking on continue, the first two round keys k ähnelt.
         /// </summary>
         public static string Tutorial2AttackFirstRoundContent2Run1 {
             get {
@@ -2617,7 +2617,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  und k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  and k ähnelt.
         /// </summary>
         public static string Tutorial2AttackFirstRoundContent2Run3 {
             get {
@@ -2635,7 +2635,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  angegriffen. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  are attacked. ähnelt.
         /// </summary>
         public static string Tutorial2AttackFirstRoundContent2Run5 {
             get {
@@ -2644,7 +2644,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Berechnung der Rundenschlüssel k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Calculation of round keys k ähnelt.
         /// </summary>
         public static string Tutorial2AttackFirstRoundHeaderRun1 {
             get {
@@ -2662,7 +2662,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  und k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  and k ähnelt.
         /// </summary>
         public static string Tutorial2AttackFirstRoundHeaderRun3 {
             get {
@@ -2680,7 +2680,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 7. Differenzielle Kryptoanalyse von Chiffre 2 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 7. Differential cryptanalysis of cipher 2 ähnelt.
         /// </summary>
         public static string Tutorial2AttackHeader {
             get {
@@ -2689,7 +2689,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die An dieser Stelle soll der zweite Rundenschlüssel k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die At this point, the second round key k ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound2Content1Run1 {
             get {
@@ -2707,7 +2707,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  is to be attacked. S boxes can be selected for this in the second encryption round.  By selecting an S box, the respective 4 bits of the round key are attacked and an attempt is made to restore them. ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound2Content1Run3 {
             get {
@@ -2716,7 +2716,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Der Angriff läuft nahezu analog zu dem auf den Rundenschlüssel k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The attack is almost analogous to the attack on the round key k ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound2Content1Run4 {
             get {
@@ -2734,7 +2734,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  ab. Allerdings muss bei der Suche nach Differenzialen die Chiffre nicht mehr so tief durchsucht werden, da bereits eine Verschlüsselungsrunde vollständig angegriffen wurde. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die . However, when searching for differentials, the cipher does not have to be searched so deeply any more, since an encryption round has already been completely attacked. ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound2Content1Run6 {
             get {
@@ -2743,7 +2743,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die An dieser Stelle soll der erste Rundenschlüssel k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die At this point, the first round key k ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound3Content1Run1 {
             get {
@@ -2761,7 +2761,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  der Chiffre angegriffen werden. Dazu können in der dritten Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  of the cipher will be attacked. S boxes can be selected for this in the third encryption round. By selecting an Sbox the respective 4 bits of the round key are attacked and an attempt is made to restore them. ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound3Content1Run3 {
             get {
@@ -2770,7 +2770,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Bei der differenziellen Kryptoanalyse wird die Veränderung von Differenzen an den SBoxen betrachtet. Daher sind an dieser Stelle SBoxen auszuwählen. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In differential cryptanalysis, the change of differences at the S boxes is considered. S boxes should therefore be selected at this point. ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound3Content1Run4 {
             get {
@@ -2779,7 +2779,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Je mehr Schlüsselbits ausgewählt werden, desto komplizierter ist die Suche nach einem Differenzial. Allerdings kann durchaus sinnvoll sein, mehrere SBoxen gleichzeitig anzugreifen. Je nach Beschaffenheit der Chiffre finden sich so bessere oder schlechtere Differenziale. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The more key bits that are selected, the more complicated the search for a differential. However, it can make sense to attack several S boxes at the same time. Depending on the nature of the cipher, better or worse differentials can be found. ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound3Content1Run5 {
             get {
@@ -2788,7 +2788,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die SBoxen aus Runde 2 auswählen, um Schlüsselbits von k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select S boxes from round 2 to get key bits from k ähnelt.
         /// </summary>
         public static string Tutorial2AttackRound2HeaderRun1 {
             get {
@@ -2806,7 +2806,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  anzugreifen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
         /// </summary>
         public static string Tutorial2AttackRound2HeaderRun3 {
             get {
@@ -2815,7 +2815,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die SBoxen aus Runde 3 auswählen, um Schlüsselbits von k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select S boxes from round 3 to get key bits from k ähnelt.
         /// </summary>
         public static string Tutorial2AttackRound3HeaderRun1 {
             get {
@@ -2833,7 +2833,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  anzugreifen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
         /// </summary>
         public static string Tutorial2AttackRound3HeaderRun3 {
             get {
@@ -2842,7 +2842,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 4. Charakteristiken ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 4. Characteristics ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicHeader {
             get {
@@ -2851,7 +2851,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Zwei Eingaben, die sich durch eine Differenz  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Two entries that differ by a difference  ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide1Content1Run1 {
             get {
@@ -2860,7 +2860,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  unterscheiden, werden unter Verwendung der SBox durch ein Paar von Ausgaben substitutiert, welche sich durch eine Differenz  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  are substituted using the S box by a pair of outputs differing by a difference  ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide1Content1Run2 {
             get {
@@ -2869,7 +2869,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  unterscheiden. Notiert wird dies durch  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die . This is noted by ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide1Content1Run3 {
             get {
@@ -2878,7 +2878,9 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Charakteristiken können miteinander kombiniert und so über mehrere Runden verbunden werden. Vorraussetzung dafür ist, dass die Ausgangsdifferenz der vorgänger Charakteristik denselben Wert wie die Eingangsdifferenz der nachfolgenden Charakteristik aufweist. Unter der Annahme, dass Charakteristiken unabhängig voneinander sind, können die Wahrscheinlichkeiten multipliziert werden. Auf diese Weise kann ein Weg von Differenzen durch die Chiffre gesucht werden. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Characteristics can be combined with each other and thus connected over several rounds. The prerequisite for this is that the output difference of the preceding characteristic has the same value as the input difference of the following characteristic. Assuming that characteristics are independent of each other, the probabilities can be multiplied. In this way, a path of differences through the cipher can be searched.
+        ///
+        /// ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide1Content2 {
             get {
@@ -2887,7 +2889,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Wir bezeichnen ein solches Paar  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die We call such a pair  ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide1Content2Run1 {
             get {
@@ -2896,7 +2898,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  als differenzielle charakteristik unter der Operation der SBox. Wie zuvor gesehen, hat eine differenzielle Charakteristik eine feste Wahrscheinlichkeit. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  a differential characteristic under the operation of the S box. As seen before, a differential characteristic has a fixed probability. ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide1Content2Run2 {
             get {
@@ -2914,7 +2916,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Charakteristiken ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Characteristics ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide1Header {
             get {
@@ -2923,7 +2925,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Eine Verschlüsselungsrunde besteht bei Chiffre 2 aus Schlüsseladdition, Substitution und Permutation. Die Chiffre arbeitet auf 16 Bit Blöcken. Die vorige Notation wird wie folgt erweitert, um eine differenzielle Charakteristik einer SBox für 16 Bit Blöcke zu bezeichnen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die An encryption round for cipher 2 consists of key addition, substitution and permutation. The cipher works on 16 bit blocks. The previous notation is extended as follows to denote a differential characteristic of an S box for 16 bit blocks ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide2Content1 {
             get {
@@ -2932,7 +2934,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Nach der Substitution werden die Bits in Chiffre 2 permutiert. Die Permutation der Chiffre ist bekannt und daher kann die differenzielle Charakteristik der Permutation wie folgt bezeichnet werden ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die After substitution, the bits in cipher 2 are permuted. The permutation of the cipher is known and therefore the differential characteristic of the permutation can be described as follows ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide2Content2 {
             get {
@@ -2941,7 +2943,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Zusammenfassend wird eine differenzielle Charakteristik einer Verschlüsselungsrunde als Komination von Substitution und Permutation wie folgt notiert ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In summary, a differential characteristic of an encryption round as a combination of substitution and permutation is noted as follows ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide2Content3 {
             get {
@@ -2950,7 +2952,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Charakteristiken ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Characteristics ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide2Header {
             get {
@@ -2959,7 +2961,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Die differenziellen Charakteristiken einzelner Runde sollen jetzt zu einem Weg von Differenzen durch die gesamte Chiffre kombiniert werden. Die Suche nach Pfaden mit hoher Wahrscheinlichkeit ist ein aufwändiges und zeitaufwändiges Problem bei Chiffren mit vielen Verschlüsselungsrunden und langen Blöcken. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The differential characteristics of individual rounds are now to be combined into a path of differences through the entire cipher. The search for paths with high probability is a complex and time-consuming problem for ciphers with many encryption rounds and big blocks. ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide3Content1 {
             get {
@@ -2968,7 +2970,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Die DKA-PfadFinder-Komponente verfügt über verschiedene Suchoptionen zur Bestimmung von solchen Pfaden. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The DCA PathFinder component has various search options for determining such paths. ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide3Content2 {
             get {
@@ -2977,7 +2979,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Die zuvor eingeführte Notation wird verwendet, um differenzielle Charakteristiken einer Runde zu differenziellen Charakteristiken für n-Verschlüsselungsrunden (hier: 3) zu bezeichnen: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The previously introduced notation is used to denote differential characteristics of a round to differential characteristics for n-encryption rounds (here: 3): ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide3Content3 {
             get {
@@ -2986,7 +2988,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Im ersten 4-Tupel sind die Eingangsdifferenzen der SBoxen der ersten 4 SBoxen in der ersten Verschlüsselungsrunde angegeben. Im 2. 4-Tupel ist sowohl die Ausgangsdifferenz der ersten als auch die Eingangsdifferenz der zweiten Verschlüsselungsrunde notiert. Im 3. 4-Tupel ist die Ausgangsdifferenz der zweiten und die Eingangsdifferenz der letzten Verschlüsselungsrunde notiert. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In the first 4-tuple the input differences of the S boxes of the first 4 S boxes are given in the first encryption round. In the second 4-tuple, both the output difference of the first and the input difference of the second encryption round are noted. In the 3rd 4-tuple, the output difference of the second and the input difference of the last encryption round are noted. ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide3Content4 {
             get {
@@ -2995,7 +2997,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ziel bei der Suche ist es, einen Weg zu finden, der eine möglichst hohe Wahrscheinlichkeit aufweist. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The aim of the search is to find a way with the highest possible probability. ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide3Content5 {
             get {
@@ -3004,7 +3006,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Charakteristiken ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Characteristics ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide3Header {
             get {
@@ -3013,7 +3015,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 5. Differenziale ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 5. Differentials ähnelt.
         /// </summary>
         public static string Tutorial2DifferentialHeader {
             get {
@@ -3022,7 +3024,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Bei der Suche nach Charakteristiken über n Runden kann es vorkommen, dass dass verschiedene Charakteristiken gefunden werden, die die selbe Eingangsdifferenz der ersten und Ausgangsdifferenz der letzten Verschlüsselungsrunde haben. Die Charakteristiken haben also die Form ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die When searching for characteristics over n rounds, it can happen that different characteristics are found that have the same input difference of the first and output difference of the last encryption round. The characteristics therefore have the form ähnelt.
         /// </summary>
         public static string Tutorial2DifferentialSlide1Content1 {
             get {
@@ -3031,7 +3033,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Entscheidend bei der Verwendung von Charakteristiken für die differenzielle Kryptoanalyse sind Eingangs- und Ausgangswert der Differenz. Findet man mehrere Charakteristiken mit selben Eingangs- und Ausgangswert, können die Wahrscheinlichkeiten addiert werden. Eine Struktur, die aus mehreren Charakteristiken besteht, wird Differenzial genannt. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The input and output values of the difference are decisive for the use of characteristics for differential cryptanalysis. If several characteristics with the same input and output values are found, the probabilities can be added together. A structure consisting of several characteristics is called a differential. ähnelt.
         /// </summary>
         public static string Tutorial2DifferentialSlide1Content2 {
             get {
@@ -3040,7 +3042,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ziel bei der Analyse einer Chiffre ist es also, das Differenzial mit der höchsten Wahrscheinlichkeit zu finden. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The goal in the analysis of a cipher is therefore to find the differential with the highest probability. ähnelt.
         /// </summary>
         public static string Tutorial2DifferentialSlide1Content3 {
             get {
@@ -3049,7 +3051,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Differenziale ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differentials ähnelt.
         /// </summary>
         public static string Tutorial2DifferentialSlide1Header {
             get {
@@ -3058,7 +3060,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 1. Einführung ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1. Introduction ähnelt.
         /// </summary>
         public static string Tutorial2IntroductionHeader {
             get {
@@ -3067,7 +3069,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In Tutorial 1 wurde die Idee der differenziellen Kryptoanalyse vorgestellt und an einer Chiffre bestehend aus einer Verschlüsselungsrunde mit zwei Rundenschlüsseln demonstriert. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In tutorial 1 the idea of differential cryptanalysis was introduced and demonstrated with a cipher consisting of one encryption round with two round keys. ähnelt.
         /// </summary>
         public static string Tutorial2IntroductionSlide1Content1 {
             get {
@@ -3076,7 +3078,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In diesem Tutorial wird die Idee vertieft und an einer Chiffre mit drei Verschlüsselungsrunden mit vier Rundenschlüsseln gezeigt. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In this tutorial the idea is deepened and shown at a cipher with three encryption rounds with four round keys. ähnelt.
         /// </summary>
         public static string Tutorial2IntroductionSlide1Content2 {
             get {
@@ -3085,7 +3087,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Um eine Chiffre mit mehreren Verschlüsselgsrunden und Rundenschlüsseln mittels differenzieller Kryptoanalyse anzugreifen, muss diese genauer untersucht werden. Von Interesse sind die einzelnen Bestandteile der Verschlüsselungsrunden und wie diese sich verhalten. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die To attack a cipher with multiple encryption rounds and round keys by differential cryptanalysis, it must be examined more closely. Of interest are the individual components of the encryption rounds and how they behave. ähnelt.
         /// </summary>
         public static string Tutorial2IntroductionSlide1Content3 {
             get {
@@ -3094,7 +3096,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Aufgrund der mehrfachen Verschlüsselungsrunden kann diese Chiffre nicht wie Chiffre 1 angegriffen werden. Für Chiffre 2 wird ein Ansatz benötigt, der die Änderungen von Differenzen über mehrere Verschlüsselungsrunden mit einer gewissen Wahrscheinlichkeit vorraussagt. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Due to the multiple encryption rounds, this cipher cannot be attacked like cipher 1. For cipher 2, an approach is needed that predicts the changes of differences over several encryption rounds with a certain probability. ähnelt.
         /// </summary>
         public static string Tutorial2IntroductionSlide1Content4 {
             get {
@@ -3103,7 +3105,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Einführung ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Introduction ähnelt.
         /// </summary>
         public static string Tutorial2IntroductionSlide1Header {
             get {
@@ -3112,7 +3114,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 6. Schlüsselinformationen wiederherstellen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 6. Recover key information ähnelt.
         /// </summary>
         public static string Tutorial2RecoverKeyInformationHeader {
             get {
@@ -3121,7 +3123,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sobald ein Differenzial mit hoher Wahrscheinlichkeit gefunden wurde, kann damit begonnen werden, Schlüsselbits wiederherzustellen. Dazu werden die SBoxen betrachtet, an denen die erwartete Differenz von 0 verschieden ist. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Once a differential has been found with a high probability, key bits can be recovered. For this purpose, the S boxes are considered where the expected difference is different from 0. ähnelt.
         /// </summary>
         public static string Tutorial2RecoverKeyInformationSlide1Content1 {
             get {
@@ -3130,7 +3132,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Für jeden möglichen Schlüsselkandidat wird ein Zähler erzeugt. Der Kryptoanalyst generiert eine Anzahl von Nachrichten, die die Eingabedifferenz erfüllen. Diese werden verschlüsselt und mit dem Schlüsselkandidat partiell entschlüsselt. Erfüllt die Differenz der partiell entschlüsselten Nachrichten die erwartete Differenz, wird der Zähler um 1 erhöht. Diesen Prozess wiederholt man mit allen generierten Nachrichtenpaaren. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die A counter is generated for each possible key candidate. The cryptoanalyst generates a number of messages that fulfill the input difference. These are encrypted and partially decrypted with the key candidate. If the difference between the partially decrypted messages meets the expected difference, the counter is increased by 1. This process is repeated with all generated message pairs. ähnelt.
         /// </summary>
         public static string Tutorial2RecoverKeyInformationSlide1Content2 {
             get {
@@ -3139,7 +3141,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Der Schlüsselkandidat mit den meisten Treffern, sollte den höchsten Zähler haben. Dieser sollte sehr nah am Erwartungswert des Differenzial liegen. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The key candidate with the most hits should have the highest counter. This should be very close to the expected value of the differential. ähnelt.
         /// </summary>
         public static string Tutorial2RecoverKeyInformationSlide1Content3 {
             get {
@@ -3148,7 +3150,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Schlüsselinformationen wiederherstellen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Recover key information ähnelt.
         /// </summary>
         public static string Tutorial2RecoverKeyInformationSlide1Header {
             get {
@@ -3166,7 +3168,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Differenzielle Kryptoanalyse symmetrischer Blockchiffren ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differential cryptanalysis of symmetric block ciphers ähnelt.
         /// </summary>
         public static string Tutorial2TitleHeaderRun2 {
             get {
@@ -3175,7 +3177,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sie können nun in der DKA-KeyRecovery-Komponente die in der DKA-PfadFinder-Komponente generierte Angriffskonfiguration verwenden, um Schlüsselbits wiederherzustellen. Dazu müssen Sie auf den Start-Button klicken. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die You can now use the attack configuration generated in the DCA PathFinder component in the DCA KeyRecovery component to restore key bits. To do this, you must click the Start button. ähnelt.
         /// </summary>
         public static string Tutorial2WaitingSlideContent1 {
             get {
@@ -3184,7 +3186,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Optional können Sie sich in der DKA-PfadVisualiserer-Komponente das ermittelte Differenzial und die darin enthaltenen Charakteristiken anzeigen lassen. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Optionally, you can display the determined differential and its characteristics in the DCA PathVisualizer component. ähnelt.
         /// </summary>
         public static string Tutorial2WaitingSlideContent2 {
             get {
@@ -3193,7 +3195,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Zusammenfassung der Analyse-Ergebnisse: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Summary of the analysis results: ähnelt.
         /// </summary>
         public static string Tutorial2WaitingSlideContent3Run1 {
             get {
@@ -3202,7 +3204,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Eingabedifferenz:  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input difference:  ähnelt.
         /// </summary>
         public static string Tutorial2WaitingSlideContent3Run2 {
             get {
@@ -3211,7 +3213,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Erwartete Differenz:  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Expected difference:  ähnelt.
         /// </summary>
         public static string Tutorial2WaitingSlideContent3Run3 {
             get {
@@ -3220,7 +3222,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Wahrscheinlichkeit:  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Probability:  ähnelt.
         /// </summary>
         public static string Tutorial2WaitingSlideContent3Run4 {
             get {
@@ -3229,7 +3231,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Differenzielle Kryptoanalyse wird in den nachfolgenden Komponenten weitergeführt ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Differential cryptanalysis is continued in the following components ähnelt.
         /// </summary>
         public static string Tutorial2WaitingSlideHeader {
             get {
@@ -4156,7 +4158,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Vorberechnete Daten ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Precalculated data ähnelt.
         /// </summary>
         public static string UseOfflinePaths {
             get {
@@ -4165,10 +4167,10 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ist diese Einstellung angewählt, wird keine Suche nach
-        ///Charakteristiken durchgeführt, sondern es werden für die jeweilige
-        ///Chiffre vorberechnete Daten verwendet, die in der Komponente hinterlegt
-        ///sind. Dadurch können lange Berechnungszeiten minimiert werden. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die If this setting is selected, no search for
+        ///characteristics, but are used for the respective
+        ///box number uses precalculated data that is stored in the component.
+        ///are. This allows long calculation times to be minimized. ähnelt.
         /// </summary>
         public static string UseOfflinePathsToolTip {
             get {
