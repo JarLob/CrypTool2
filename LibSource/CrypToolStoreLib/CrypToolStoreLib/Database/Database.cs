@@ -1191,6 +1191,7 @@ namespace CrypToolStoreLib.Database
                 resource.Id = (int)entry["id"];
                 resource.Username = (string)entry["username"];
                 resource.Name = (string)entry["name"];
+                resource.Description = (string)entry["description"];
 
                 ResourceData resourceData = new ResourceData();
                 resourceData.ResourceId = resource.Id;
