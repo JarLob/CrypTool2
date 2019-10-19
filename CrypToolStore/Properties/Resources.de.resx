@@ -232,9 +232,6 @@
   <data name="CrypToolStorePresentation_CheckIfAlreadyInstalled_Exception_occured_during_check_of__0__for_updates___1_" xml:space="preserve">
     <value>Ausnahme bei der Überprüfung von "{0}" auf Updates: {1}</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="Update" xml:space="preserve">
     <value>Updaten</value>
   </data>
@@ -242,9 +239,9 @@
     <value>Dateigröße:</value>
   </data>
   <data name="CrypToolStorePresentation_ResourceSuccessfullyInstalled" xml:space="preserve">
-    <value>Resource "{0}" erfolgreich installiert.</value>
+    <value>Ressource "{0}" erfolgreich installiert.</value>
   </data>
   <data name="ShowResources" xml:space="preserve">
-    <value>Zeige Resourcen</value>
+    <value>Zeige Ressourcen</value>
   </data>
 </root>
