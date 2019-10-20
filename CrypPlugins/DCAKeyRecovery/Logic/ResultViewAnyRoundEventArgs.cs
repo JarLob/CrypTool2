@@ -16,6 +16,7 @@ namespace DCAKeyRecovery.Logic
         public int expectedHitCount;
         public string currentKeyCandidate;
         public int messagePairCountToExamine;
+        public int messagePairCountFilteredToExamine;
         public string currentRecoveredRoundKey;
         public int currentKeysToTestThisRound;
     }

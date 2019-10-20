@@ -32,7 +32,7 @@ namespace DCAKeyRecovery.UI.Cipher3
         private string _expectedDifference;
         private int _expectedHitCount;
         private string _currentKeyCandidate;
-        private int _messagePairCountToExamine;
+        private string _messagePairCountToExamine;
         private string _currentRecoveredRoundKey;
         private int _currentKeysToTestThisRound;
         private ObservableCollection<KeyResult> _keyResults;
@@ -150,7 +150,7 @@ namespace DCAKeyRecovery.UI.Cipher3
         /// <summary>
         /// Property for _messagePairCountToExamine
         /// </summary>
-        public int MessagePairCountToExamine
+        public string MessagePairCountToExamine
         {
             get { return _messagePairCountToExamine; }
             set

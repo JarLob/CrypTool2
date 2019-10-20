@@ -151,7 +151,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Count of message pairs: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Count of message pairs (unfiltered/filtered): ähnelt.
         /// </summary>
         internal static string AnyRoundMessagePairCount {
             get {

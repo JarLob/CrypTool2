@@ -22,7 +22,7 @@
             <Grid Height="150" Background="#AFFFD4C1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="25" />
-                    <ColumnDefinition Width="100*" />
+                    <ColumnDefinition Width="80*" />
                     <ColumnDefinition Width="100*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>

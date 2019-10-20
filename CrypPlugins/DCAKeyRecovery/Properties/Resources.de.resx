@@ -148,7 +148,7 @@
     <value>Erwartete Wahrscheinlichkeit:</value>
   </data>
   <data name="AnyRoundMessagePairCount" xml:space="preserve">
-    <value>Anzahl Nachrichtenpaare:</value>
+    <value>Anzahl Nachrichtenpaare (ungefilter/gefiltert):</value>
   </data>
   <data name="AnyRoundRecoveredRoundKey" xml:space="preserve">
     <value>Wiederhergesteller Rundenschlüssel:</value>

@@ -454,18 +454,13 @@ namespace DCAKeyRecovery.UI
                     ((Cipher2AnyRoundResultView) _tableView).StartTime = anyRoundEventArgs.startTime;
                     ((Cipher2AnyRoundResultView) _tableView).EndTime = anyRoundEventArgs.endTime;
                     ((Cipher2AnyRoundResultView) _tableView).Round = anyRoundEventArgs.round;
-                    ((Cipher2AnyRoundResultView) _tableView).CurrentExpectedProbability =
-                        anyRoundEventArgs.currentExpectedProbability;
+                    ((Cipher2AnyRoundResultView) _tableView).CurrentExpectedProbability = anyRoundEventArgs.currentExpectedProbability;
                     ((Cipher2AnyRoundResultView) _tableView).ExpectedDifference = anyRoundEventArgs.expectedDifference;
                     ((Cipher2AnyRoundResultView) _tableView).ExpectedHitCount = anyRoundEventArgs.expectedHitCount;
-                    ((Cipher2AnyRoundResultView) _tableView).CurrentKeyCandidate =
-                        anyRoundEventArgs.currentKeyCandidate;
-                    ((Cipher2AnyRoundResultView) _tableView).MessagePairCountToExamine =
-                        anyRoundEventArgs.messagePairCountToExamine;
-                    ((Cipher2AnyRoundResultView) _tableView).CurrentRecoveredRoundKey =
-                        anyRoundEventArgs.currentRecoveredRoundKey;
-                    ((Cipher2AnyRoundResultView) _tableView).CurrentKeysToTestThisRound =
-                        anyRoundEventArgs.currentKeysToTestThisRound;
+                    ((Cipher2AnyRoundResultView) _tableView).CurrentKeyCandidate = anyRoundEventArgs.currentKeyCandidate;
+                    ((Cipher2AnyRoundResultView) _tableView).MessagePairCountToExamine = anyRoundEventArgs.messagePairCountToExamine.ToString() + "/" + anyRoundEventArgs.messagePairCountFilteredToExamine.ToString();
+                    ((Cipher2AnyRoundResultView) _tableView).CurrentRecoveredRoundKey = anyRoundEventArgs.currentRecoveredRoundKey;
+                    ((Cipher2AnyRoundResultView) _tableView).CurrentKeysToTestThisRound = anyRoundEventArgs.currentKeysToTestThisRound;
 
                     break;
                 case Algorithms.Cipher3:
@@ -474,18 +469,13 @@ namespace DCAKeyRecovery.UI
                     ((Cipher3AnyRoundResultView) _tableView).StartTime = anyRoundEventArgs.startTime;
                     ((Cipher3AnyRoundResultView) _tableView).EndTime = anyRoundEventArgs.endTime;
                     ((Cipher3AnyRoundResultView) _tableView).Round = anyRoundEventArgs.round;
-                    ((Cipher3AnyRoundResultView) _tableView).CurrentExpectedProbability =
-                        anyRoundEventArgs.currentExpectedProbability;
+                    ((Cipher3AnyRoundResultView) _tableView).CurrentExpectedProbability = anyRoundEventArgs.currentExpectedProbability;
                     ((Cipher3AnyRoundResultView) _tableView).ExpectedDifference = anyRoundEventArgs.expectedDifference;
                     ((Cipher3AnyRoundResultView) _tableView).ExpectedHitCount = anyRoundEventArgs.expectedHitCount;
-                    ((Cipher3AnyRoundResultView) _tableView).CurrentKeyCandidate =
-                        anyRoundEventArgs.currentKeyCandidate;
-                    ((Cipher3AnyRoundResultView) _tableView).MessagePairCountToExamine =
-                        anyRoundEventArgs.messagePairCountToExamine;
-                    ((Cipher3AnyRoundResultView) _tableView).CurrentRecoveredRoundKey =
-                        anyRoundEventArgs.currentRecoveredRoundKey;
-                    ((Cipher3AnyRoundResultView) _tableView).CurrentKeysToTestThisRound =
-                        anyRoundEventArgs.currentKeysToTestThisRound;
+                    ((Cipher3AnyRoundResultView) _tableView).CurrentKeyCandidate = anyRoundEventArgs.currentKeyCandidate;
+                    ((Cipher3AnyRoundResultView) _tableView).MessagePairCountToExamine = anyRoundEventArgs.messagePairCountToExamine.ToString() + "/" + anyRoundEventArgs.messagePairCountFilteredToExamine.ToString();
+                    ((Cipher3AnyRoundResultView) _tableView).CurrentRecoveredRoundKey = anyRoundEventArgs.currentRecoveredRoundKey;
+                    ((Cipher3AnyRoundResultView) _tableView).CurrentKeysToTestThisRound = anyRoundEventArgs.currentKeysToTestThisRound;
 
                     break;
             }

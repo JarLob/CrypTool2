@@ -415,6 +415,241 @@ namespace DCAKeyRecovery.Logic.Cipher2
             return BitConverter.ToUInt16(bytesOfResult, 0);
         }
 
+        public List<Pair> FilterPairs(DifferentialAttackRoundConfiguration roundConfig, List<Differential> diffListOfSBox, DifferentialKeyRecoveryAttack attack, int expectedDifferential)
+        {
+            //cast to use the object
+            Cipher2DifferentialKeyRecoveryAttack c2Attack = attack as Cipher2DifferentialKeyRecoveryAttack;
+
+            if (c2Attack == null)
+            {
+                throw new ArgumentNullException(nameof(attack));
+            }
+
+            //contains the filtered pairs
+            List<Pair> resultList = new List<Pair>();
+
+            List<int>[] arrayOfPossibleDifferentialsForSBoxes = new List<int>[Cipher2Configuration.SBOXNUM];
+            int[] arrayOfExpectedInputDifferentialsForSBoxes = new int[Cipher2Configuration.SBOXNUM];
+
+            for (int i = 0; i < Cipher2Configuration.SBOXNUM; i++)
+            {
+                arrayOfPossibleDifferentialsForSBoxes[i] = new List<int>();
+                arrayOfExpectedInputDifferentialsForSBoxes[i] = GetSubBlockFromBlock((ushort)expectedDifferential, (ushort)i);
+
+                if (arrayOfExpectedInputDifferentialsForSBoxes[i] == 0)
+                {
+                    arrayOfPossibleDifferentialsForSBoxes[i].Add(0);
+                }
+            }
+
+            //iterate over the differentials
+            foreach (var curDiff in diffListOfSBox)
+            {
+                //Skip 0 InputDiff / OutputDiff
+                if (curDiff.InputDifferential == 0)
+                {
+                    continue;
+                }
+
+                for (int i = 0; i < Cipher2Configuration.SBOXNUM; i++)
+                {
+                    if (arrayOfExpectedInputDifferentialsForSBoxes[i] == curDiff.InputDifferential)
+                    {
+                        arrayOfPossibleDifferentialsForSBoxes[i].Add(curDiff.OutputDifferential);
+                    }
+                }
+            }
+
+            //check all pairs for the conditions
+            foreach (var curPair in roundConfig.EncrypedPairList)
+            {
+                ushort cipherTextLeftMember = curPair.LeftMember;
+                ushort cipherTextRightMember = curPair.RightMember;
+
+                cipherTextLeftMember = PartialDecrypt(attack, cipherTextLeftMember);
+                cipherTextRightMember = PartialDecrypt(attack, cipherTextRightMember);
+
+                if ((c2Attack.recoveredSubkey3) && (!c2Attack.recoveredSubkey2))
+                {
+                    cipherTextLeftMember = ReverseSBoxBlock(cipherTextLeftMember);
+                    cipherTextRightMember = ReverseSBoxBlock(cipherTextRightMember);
+                }
+                else if ((c2Attack.recoveredSubkey3) && (c2Attack.recoveredSubkey2))
+                {
+                    cipherTextLeftMember = ReverseSBoxBlock(ReversePBoxBlock(cipherTextLeftMember));
+                    cipherTextRightMember = ReverseSBoxBlock(ReversePBoxBlock(cipherTextRightMember));
+                }
+
+                ushort diffOfCipherText = (ushort)(cipherTextLeftMember ^ cipherTextRightMember);
+
+                if (c2Attack.recoveredSubkey3)
+                {
+                    diffOfCipherText = ReversePBoxBlock(diffOfCipherText);
+                }
+
+                int[] diffOfCipherTextSBoxes = new int[Cipher2Configuration.SBOXNUM];
+                bool[] conditionsOfSBoxes = new bool[Cipher2Configuration.SBOXNUM];
+                for (int i = 0; i < Cipher2Configuration.SBOXNUM; i++)
+                {
+                    diffOfCipherTextSBoxes[i] = GetSubBlockFromBlock(diffOfCipherText, (ushort)i);
+                    conditionsOfSBoxes[i] = false;
+                }
+
+                for (int i = 0; i < Cipher2Configuration.SBOXNUM; i++)
+                {
+                    foreach (var possibleOutputDiff in arrayOfPossibleDifferentialsForSBoxes[i])
+                    {
+                        if (possibleOutputDiff == diffOfCipherTextSBoxes[i])
+                        {
+                            conditionsOfSBoxes[i] = true;
+                        }
+                    }
+                }
+
+                bool satisfied = true;
+                for (int i = 0; i < Cipher2Configuration.SBOXNUM; i++)
+                {
+                    if (conditionsOfSBoxes[i] == false)
+                    {
+                        satisfied = false;
+                    }
+                }
+
+                if (satisfied)
+                {
+                    resultList.Add(curPair);
+                }
+            }
+
+            return resultList;
+        }
+
+        /// <summary>
+        /// returns the specified sub block from the input block
+        /// </summary>
+        /// <param name="block"></param>
+        /// <param name="subblockNum"></param>
+        /// <returns></returns>
+        public ushort GetSubBlockFromBlock(ushort block, ushort subblockNum)
+        {
+            BitArray bitsOfBlock = new BitArray(BitConverter.GetBytes(block));
+            BitArray resultBits = new BitArray(4);
+
+            switch (subblockNum)
+            {
+                case 0:
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        resultBits[i] = bitsOfBlock[i];
+                    }
+                }
+                    break;
+                case 1:
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        resultBits[i] = bitsOfBlock[i + 4];
+                    }
+                }
+                    break;
+                case 2:
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        resultBits[i] = bitsOfBlock[i + 8];
+                    }
+                }
+                    break;
+                case 3:
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        resultBits[i] = bitsOfBlock[i + 12];
+                    }
+                }
+                    break;
+            }
+
+            byte[] resultBytes = new byte[4];
+            resultBits.CopyTo(resultBytes, 0);
+
+            ushort resultInt = BitConverter.ToUInt16(resultBytes, 0);
+            return resultInt;
+        }
+
+        /// <summary>
+        /// Analyzes a SBox
+        /// </summary>
+        /// <returns></returns>
+        public List<Differential> CountDifferentialsSingleSBox()
+        {
+            List<Differential> result = new List<Differential>();
+
+            for (ushort i = 0; i < 16; i++)
+            {
+                for (ushort j = 0; j < 16; j++)
+                {
+                    ushort inputDiff = (ushort)(i ^ j);
+                    ushort outputDiff = (ushort)(ApplySingleSBox(i) ^ ApplySingleSBox(j));
+                    bool found = false;
+
+                    foreach (var curDiff in result)
+                    {
+                        if (curDiff.InputDifferential == inputDiff && curDiff.OutputDifferential == outputDiff)
+                        {
+                            curDiff.Count++;
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found)
+                    {
+                        result.Add(new Differential()
+                        {
+                            Count = 1,
+                            InputDifferential = inputDiff,
+                            OutputDifferential = outputDiff
+                        });
+                    }
+                }
+            }
+
+            foreach (var curDiff in result)
+            {
+                curDiff.Probability = curDiff.Count / 16.0;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Applies a single SBox
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public ushort ApplySingleSBox(ushort data)
+        {
+            BitArray bitsOfBlock = new BitArray(BitConverter.GetBytes(data));
+            BitArray zeroToThree = new BitArray(4);
+
+            for (int i = 0; i < 4; i++)
+            {
+                zeroToThree[i] = bitsOfBlock[i];
+            }
+
+            byte[] zeroToThreeBytes = new byte[4];
+            zeroToThree.CopyTo(zeroToThreeBytes, 0);
+
+            ushort zeroToThreeInt = BitConverter.ToUInt16(zeroToThreeBytes, 0);
+
+            //use sbox
+            zeroToThreeInt = Cipher2Configuration.SBOX[zeroToThreeInt];
+
+            return zeroToThreeInt;
+        }
+
         /// <summary>
         /// Recovers key information with the given configuration
         /// </summary>
@@ -466,6 +701,9 @@ namespace DCAKeyRecovery.Logic.Cipher2
             po.CancellationToken.ThrowIfCancellationRequested();
             po.MaxDegreeOfParallelism = threadCount;
 
+            List<Differential> diffList = CountDifferentialsSingleSBox();
+            configuration.FilteredPairList = FilterPairs(configuration, diffList, attack, configuration.ExpectedDifference);
+
             anyRoundEventArgs = new ResultViewAnyRoundEventArgs()
             {
                 startTime = startTime,
@@ -475,10 +713,10 @@ namespace DCAKeyRecovery.Logic.Cipher2
                 currentKeyCandidate = Convert.ToString((ushort)0, 2).PadLeft(16, '0'),
                 currentKeysToTestThisRound = loopBorder,
                 currentRecoveredRoundKey = Convert.ToString((ushort)partialKey, 2).PadLeft(16, '0'),
-                expectedDifference =
-                    Convert.ToString((ushort)configuration.ExpectedDifference, 2).PadLeft(16, '0'),
-                expectedHitCount = (int)(configuration.Probability * configuration.FilteredPairList.Count),
-                messagePairCountToExamine = configuration.FilteredPairList.Count
+                expectedDifference = Convert.ToString((ushort)configuration.ExpectedDifference, 2).PadLeft(16, '0'),
+                expectedHitCount = (int)(configuration.Probability * configuration.UnfilteredPairList.Count),
+                messagePairCountToExamine = configuration.UnfilteredPairList.Count,
+                messagePairCountFilteredToExamine = configuration.FilteredPairList.Count
             };
 
             if (AnyRoundResultViewRefreshOccured != null)
@@ -514,10 +752,10 @@ namespace DCAKeyRecovery.Logic.Cipher2
                         currentKeyCandidate = Convert.ToString((ushort)curTry.Key, 2).PadLeft(16, '0'),
                         currentKeysToTestThisRound = loopBorder,
                         currentRecoveredRoundKey = Convert.ToString((ushort)partialKey, 2).PadLeft(16, '0'),
-                        expectedDifference =
-                            Convert.ToString((ushort)configuration.ExpectedDifference, 2).PadLeft(16, '0'),
-                        expectedHitCount = (int)(configuration.Probability * configuration.FilteredPairList.Count),
-                        messagePairCountToExamine = configuration.FilteredPairList.Count
+                        expectedDifference =Convert.ToString((ushort)configuration.ExpectedDifference, 2).PadLeft(16, '0'),
+                        expectedHitCount = (int)(configuration.Probability * configuration.UnfilteredPairList.Count),
+                        messagePairCountToExamine = configuration.UnfilteredPairList.Count,
+                        messagePairCountFilteredToExamine = configuration.FilteredPairList.Count
                     };
 
                     //synchronize access to resultList
@@ -535,7 +773,7 @@ namespace DCAKeyRecovery.Logic.Cipher2
                     }
                 }
 
-                foreach (var curPair in configuration.EncrypedPairList)
+                foreach (var curPair in configuration.FilteredPairList)
                 {
                     if (stop)
                     {
@@ -543,16 +781,17 @@ namespace DCAKeyRecovery.Logic.Cipher2
                     }
 
                     Pair encryptedPair = new Pair()
-                        {LeftMember = curPair.LeftMember, RightMember = curPair.RightMember};
+                    {
+                        LeftMember = curPair.LeftMember,
+                        RightMember = curPair.RightMember
+                    };
 
                     encryptedPair.LeftMember = PartialDecrypt(attack, encryptedPair.LeftMember);
                     encryptedPair.RightMember = PartialDecrypt(attack, encryptedPair.RightMember);
 
                     //reverse round with the guessed key
-                    UInt16 leftMemberSingleDecrypted = DecryptSingleRound(encryptedPair.LeftMember, curTry.Key,
-                        configuration.IsBeforeLast, configuration.IsLast);
-                    UInt16 rightMemberSingleDecrypted = DecryptSingleRound(encryptedPair.RightMember, curTry.Key,
-                        configuration.IsBeforeLast, configuration.IsLast);
+                    UInt16 leftMemberSingleDecrypted = DecryptSingleRound(encryptedPair.LeftMember, curTry.Key, configuration.IsBeforeLast, configuration.IsLast);
+                    UInt16 rightMemberSingleDecrypted = DecryptSingleRound(encryptedPair.RightMember, curTry.Key, configuration.IsBeforeLast, configuration.IsLast);
 
                     if (configuration.IsLast)
                     {
@@ -632,7 +871,7 @@ namespace DCAKeyRecovery.Logic.Cipher2
                     Key = curKey.Key,
                     BinaryKey = Convert.ToString(curKey.Key, 2).PadLeft(16, '0'),
                     HitCount = curKey.Counter,
-                    Probability = (curKey.Counter / (double) configuration.FilteredPairList.Count)
+                    Probability = (curKey.Counter / (double) configuration.UnfilteredPairList.Count)
                 });
 
                 if (curKey.Counter > bestPossibleKey.Counter)
@@ -663,8 +902,7 @@ namespace DCAKeyRecovery.Logic.Cipher2
             roundResult.PossibleKey = bestPossibleKey.Key;
             roundResult.Probability = bestPossibleKey.Counter / (double) configuration.UnfilteredPairList.Count;
             roundResult.ExpectedProbability = configuration.Probability;
-            roundResult.KeyCandidateProbabilities = roundResult.KeyCandidateProbabilities
-                .OrderByDescending(item => item.Counter).ToList();
+            roundResult.KeyCandidateProbabilities = roundResult.KeyCandidateProbabilities.OrderByDescending(item => item.Counter).ToList();
 
             return roundResult;
         }

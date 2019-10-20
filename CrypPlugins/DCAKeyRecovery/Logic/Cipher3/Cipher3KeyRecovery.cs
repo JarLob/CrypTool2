@@ -566,10 +566,10 @@ namespace DCAKeyRecovery.Logic.Cipher3
                 currentKeyCandidate = Convert.ToString((ushort)0, 2).PadLeft(16, '0'),
                 currentKeysToTestThisRound = loopBorder,
                 currentRecoveredRoundKey = Convert.ToString((ushort)partialKey, 2).PadLeft(16, '0'),
-                expectedDifference =
-                    Convert.ToString((ushort)configuration.ExpectedDifference, 2).PadLeft(16, '0'),
+                expectedDifference = Convert.ToString((ushort)configuration.ExpectedDifference, 2).PadLeft(16, '0'),
                 expectedHitCount = (int)(configuration.Probability * configuration.UnfilteredPairList.Count),
-                messagePairCountToExamine = configuration.FilteredPairList.Count
+                messagePairCountToExamine = configuration.UnfilteredPairList.Count,
+                messagePairCountFilteredToExamine = configuration.FilteredPairList.Count
             };
 
             if (AnyRoundResultViewRefreshOccured != null)
@@ -602,7 +602,8 @@ namespace DCAKeyRecovery.Logic.Cipher3
                         currentRecoveredRoundKey = Convert.ToString((ushort)partialKey, 2).PadLeft(16, '0'),
                         expectedDifference = Convert.ToString((ushort)configuration.ExpectedDifference, 2).PadLeft(16, '0'),
                         expectedHitCount = (int)(configuration.Probability * configuration.UnfilteredPairList.Count),
-                        messagePairCountToExamine = configuration.FilteredPairList.Count
+                        messagePairCountToExamine = configuration.UnfilteredPairList.Count,
+                        messagePairCountFilteredToExamine = configuration.FilteredPairList.Count
                     };
 
                     //synchronize access to resultList

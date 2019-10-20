@@ -148,7 +148,7 @@
     <value>Expected probability:</value>
   </data>
   <data name="AnyRoundMessagePairCount" xml:space="preserve">
-    <value>Count of message pairs:</value>
+    <value>Count of message pairs (unfiltered/filtered):</value>
   </data>
   <data name="AnyRoundRecoveredRoundKey" xml:space="preserve">
     <value>Recovered round key:</value>

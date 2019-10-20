@@ -965,7 +965,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                                                   roundConfiguration.ActiveSBoxes.Count(b => b),
                                 startTime = DateTime.Now,
                                 endTime = DateTime.MinValue,
-                                messageCount = roundConfiguration.FilteredPairList.Count * 2,
+                                messageCount = roundConfiguration.UnfilteredPairList.Count * 2,
                                 recoveredSubKey = Convert.ToString(c2Attack.subkey3, 2).PadLeft(16, '0'),
                                 testedKeys = round3Result.KeyCandidateProbabilities.Count
                             };
@@ -1102,7 +1102,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                                                   roundConfiguration.ActiveSBoxes.Count(b => b),
                                 startTime = DateTime.Now,
                                 endTime = DateTime.MinValue,
-                                messageCount = roundConfiguration.FilteredPairList.Count * 2,
+                                messageCount = roundConfiguration.UnfilteredPairList.Count * 2,
                                 recoveredSubKey = Convert.ToString(c2Attack.subkey2, 2).PadLeft(16, '0'),
                                 testedKeys = round2Result.KeyCandidateProbabilities.Count
                             };
@@ -1338,8 +1338,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                         try
                         {
                             //try to recover key bits and save results
-                            DifferentialAttackRoundResult round5Result =
-                                keyRecovery.RecoverKeyInformation(c3Attack, roundConfiguration);
+                            DifferentialAttackRoundResult round5Result = keyRecovery.RecoverKeyInformation(c3Attack, roundConfiguration);
 
                             if (round5Result == null)
                             {
@@ -1382,7 +1381,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                                                   roundConfiguration.ActiveSBoxes.Count(b => b),
                                 startTime = DateTime.Now,
                                 endTime = DateTime.MinValue,
-                                messageCount = roundConfiguration.FilteredPairList.Count * 2,
+                                messageCount = roundConfiguration.UnfilteredPairList.Count * 2,
                                 recoveredSubKey = Convert.ToString(c3Attack.subkey5, 2).PadLeft(16, '0'),
                                 testedKeys = round5Result.KeyCandidateProbabilities.Count
                             };
@@ -1518,7 +1517,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                                                   roundConfiguration.ActiveSBoxes.Count(b => b),
                                 startTime = DateTime.Now,
                                 endTime = DateTime.MinValue,
-                                messageCount = roundConfiguration.FilteredPairList.Count * 2,
+                                messageCount = roundConfiguration.UnfilteredPairList.Count * 2,
                                 recoveredSubKey = Convert.ToString(c3Attack.subkey4, 2).PadLeft(16, '0'),
                                 testedKeys = round4Result.KeyCandidateProbabilities.Count
                             };
@@ -1654,7 +1653,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                                                   roundConfiguration.ActiveSBoxes.Count(b => b),
                                 startTime = DateTime.Now,
                                 endTime = DateTime.MinValue,
-                                messageCount = roundConfiguration.FilteredPairList.Count * 2,
+                                messageCount = roundConfiguration.UnfilteredPairList.Count * 2,
                                 recoveredSubKey = Convert.ToString(c3Attack.subkey3, 2).PadLeft(16, '0'),
                                 testedKeys = round3Result.KeyCandidateProbabilities.Count
                             };
@@ -1789,7 +1788,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                                                   roundConfiguration.ActiveSBoxes.Count(b => b),
                                 startTime = DateTime.Now,
                                 endTime = DateTime.MinValue,
-                                messageCount = roundConfiguration.FilteredPairList.Count * 2,
+                                messageCount = roundConfiguration.UnfilteredPairList.Count * 2,
                                 recoveredSubKey = Convert.ToString(c3Attack.subkey2, 2).PadLeft(16, '0'),
                                 testedKeys = round2Result.KeyCandidateProbabilities.Count
                             };
