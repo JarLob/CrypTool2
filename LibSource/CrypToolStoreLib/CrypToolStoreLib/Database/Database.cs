@@ -1186,22 +1186,22 @@ namespace CrypToolStoreLib.Database
             List<ResourceAndResourceData> resourcesAndResourceDatas = new List<ResourceAndResourceData>();
 
             foreach (var entry in resultset)
-            {
+            {               
                 Resource resource = new Resource();
-                resource.Id = (int)entry["id"];
+                resource.Id = Int32.Parse(entry["id"].ToString());
                 resource.Username = (string)entry["username"];
                 resource.Name = (string)entry["name"];
                 resource.Description = (string)entry["description"];
 
                 ResourceData resourceData = new ResourceData();
                 resourceData.ResourceId = resource.Id;
-                resourceData.ResourceVersion = (int)entry["resourceversion"];
+                resourceData.ResourceVersion = Int32.Parse(entry["resourceversion"].ToString());
                 resourceData.PublishState = (string)entry["publishstate"];
 
                 ResourceAndResourceData resourceAndResourceData = new ResourceAndResourceData();
                 resourceAndResourceData.Resource = resource;
                 resourceAndResourceData.ResourceData = resourceData;
-                resourcesAndResourceDatas.Add(resourceAndResourceData);
+                resourcesAndResourceDatas.Add(resourceAndResourceData);               
             }
             return resourcesAndResourceDatas;
         }

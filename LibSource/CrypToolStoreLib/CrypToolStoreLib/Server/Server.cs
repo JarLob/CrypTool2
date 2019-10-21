@@ -128,12 +128,14 @@ namespace CrypToolStoreLib.Server
                                 catch (Exception ex)
                                 {
                                     logger.LogText(String.Format("Exception during handling of client from IP/Port={0} : {1}", client.Client.RemoteEndPoint, ex.Message), this, Logtype.Error);
+                                    logger.LogException(ex, this, Logtype.Error);
                                 }                            
                                 UnregisterClientHandler(handler);
                             }
                             catch (Exception ex)
                             {
                                 logger.LogText(String.Format("Exception during handling of client from IP/Port={0} : {1}", client.Client.RemoteEndPoint, ex.Message), this, Logtype.Error);
+                                logger.LogException(ex, this, Logtype.Error);
                             }    
                         });                        
 
@@ -144,6 +146,7 @@ namespace CrypToolStoreLib.Server
                         if (Running)
                         {
                             logger.LogText(String.Format("Exception in ListenThread: {0}", ex.Message), this, Logtype.Error);
+                            logger.LogException(ex, this, Logtype.Error);
                         }
                     }
                 }
@@ -154,6 +157,7 @@ namespace CrypToolStoreLib.Server
                 if (Running)
                 {
                     logger.LogText(String.Format("Exception in ListenThread: {0}", ex.Message), this, Logtype.Error);
+                    logger.LogException(ex, this, Logtype.Error);
                 }
             }
         }
@@ -224,6 +228,7 @@ namespace CrypToolStoreLib.Server
             catch (Exception ex)
             {
                 logger.LogText(String.Format("Exception during stopping of server: {0}", ex.Message), this, Logtype.Error);
+                logger.LogException(ex, this, Logtype.Error);
             }
         }
     }
@@ -297,6 +302,7 @@ namespace CrypToolStoreLib.Server
                 catch (Exception ex)
                 {
                     Logger.LogText(String.Format("Exception during HandleClient: {0}", ex.Message), this, Logtype.Error);
+                    Logger.LogException(ex, this, Logtype.Error);
                     return;
                 }
                 finally
@@ -642,6 +648,7 @@ namespace CrypToolStoreLib.Server
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.ModifiedDeveloper = false;
                 Logger.LogText(String.Format("User {0} tried to create a new developer. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during creation of new developer";
                 SendMessage(response, sslStream);       
             }
@@ -697,6 +704,7 @@ namespace CrypToolStoreLib.Server
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.ModifiedDeveloper = false;
                 Logger.LogText(String.Format("User {0} tried to update an existing developer. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during update of existing developer";
                 SendMessage(response, sslStream);
             }
@@ -740,6 +748,7 @@ namespace CrypToolStoreLib.Server
                 ResponseDeveloperModificationMessage response = new ResponseDeveloperModificationMessage();
                 response.ModifiedDeveloper = false;
                 Logger.LogText(String.Format("User {0} tried to delete an existing developer. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during deletion of existing developer";
                 SendMessage(response, sslStream);
             }
@@ -795,6 +804,7 @@ namespace CrypToolStoreLib.Server
                 ResponseDeveloperMessage response = new ResponseDeveloperMessage();
                 response.DeveloperExists = false;
                 Logger.LogText(String.Format("User {0} tried to get an existing developer. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during request of existing developer:";
                 SendMessage(response, sslStream);
             }
@@ -840,6 +850,7 @@ namespace CrypToolStoreLib.Server
                 ResponseDeveloperListMessage response = new ResponseDeveloperListMessage();
                 response.AllowedToViewList = false;
                 Logger.LogText(String.Format("User {0} tried to get a developer list. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during request of developer list";
                 SendMessage(response, sslStream);
             }
@@ -883,6 +894,7 @@ namespace CrypToolStoreLib.Server
                 ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
                 response.ModifiedPlugin = false;
                 Logger.LogText(String.Format("User {0} tried to create a new plugin. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during creation of new plugin";
                 SendMessage(response, sslStream);
             }
@@ -959,6 +971,7 @@ namespace CrypToolStoreLib.Server
                 ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
                 response.ModifiedPlugin = false;
                 Logger.LogText(String.Format("User {0} tried to update an existing plugin. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during update of existing plugin";
                 SendMessage(response, sslStream);
             }
@@ -1025,6 +1038,7 @@ namespace CrypToolStoreLib.Server
                 ResponsePluginModificationMessage response = new ResponsePluginModificationMessage();
                 response.ModifiedPlugin = false;
                 Logger.LogText(String.Format("User {0} tried to delete an existing plugin={1}. But an exception occured: {2}", Username, deletePluginMessage.Plugin.Id, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during delete of existing plugin";
                 SendMessage(response, sslStream);
             }
@@ -1079,6 +1093,7 @@ namespace CrypToolStoreLib.Server
                 //request failed; logg to logfile and return exception to client
                 ResponsePluginMessage response = new ResponsePluginMessage();
                 Logger.LogText(String.Format("User {0} tried to get an existing plugin. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during request of existing plugin";
                 SendMessage(response, sslStream);
             }
@@ -1113,6 +1128,7 @@ namespace CrypToolStoreLib.Server
                 //request failed; logg to logfile and return exception to client
                 ResponsePluginMessage response = new ResponsePluginMessage();
                 Logger.LogText(String.Format("User {0} tried to get a plugin list. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during request of source list";
                 SendMessage(response, sslStream);
             }
@@ -1169,6 +1185,7 @@ namespace CrypToolStoreLib.Server
                 //request failed; logg to logfile and return exception to client
                 ResponsePublishedPluginListMessage response = new ResponsePublishedPluginListMessage();
                 Logger.LogText(String.Format("User {0} tried to get a published plugin list. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during request of source list";
                 SendMessage(response, sslStream);
             }
@@ -1212,6 +1229,7 @@ namespace CrypToolStoreLib.Server
                 //request failed; logg to logfile and return exception to client
                 ResponsePublishedPluginMessage response = new ResponsePublishedPluginMessage();
                 Logger.LogText(String.Format("User {0} tried to get a published plugin. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during request of published plugin";
                 SendMessage(response, sslStream);
             }
@@ -1281,6 +1299,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
                 Logger.LogText(String.Format("User {0} tried to create a new source. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during creation of new source";
                 SendMessage(response, sslStream);
             }
@@ -1348,6 +1367,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
                 Logger.LogText(String.Format("User {0} tried to update an existing source. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during update of existing source";
                 SendMessage(response, sslStream);
             }
@@ -1435,6 +1455,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
                 Logger.LogText(String.Format("User {0} tried to update the publish state of an existing source. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during update of publish state of existing source";
                 SendMessage(response, sslStream);
             }
@@ -1518,6 +1539,7 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
                 Logger.LogText(String.Format("User {0} tried to delete an existing source={1}-{2}. But an exception occured: {3}", Username, deleteSourceMessage.Source.PluginId, deleteSourceMessage.Source.PluginVersion, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during delete of existing source";
                 SendMessage(response, sslStream);
             }
@@ -1574,6 +1596,7 @@ namespace CrypToolStoreLib.Server
                 //request failed; logg to logfile and return exception to client
                 ResponseSourceMessage response = new ResponseSourceMessage();
                 Logger.LogText(String.Format("User {0} tried to get an existing source={1}-{2}. But an exception occured: {3}", Username, requestSourceMessage.PluginId, requestSourceMessage.PluginVersion, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during request of existing source";
                 SendMessage(response, sslStream);
             }
@@ -1641,6 +1664,7 @@ namespace CrypToolStoreLib.Server
                 //request failed; logg to logfile and return exception to client
                 ResponseSourceListMessage response = new ResponseSourceListMessage();
                 Logger.LogText(String.Format("User {0} tried to get a source list. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during request of source list";
                 SendMessage(response, sslStream);
             }                                   
@@ -1684,6 +1708,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceModificationMessage response = new ResponseResourceModificationMessage();
                 response.ModifiedResource = false;
                 Logger.LogText(String.Format("User {0} tried to create a new resource. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during creation of new resource";
                 SendMessage(response, sslStream);
             }
@@ -1751,6 +1776,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceModificationMessage response = new ResponseResourceModificationMessage();                
                 response.ModifiedResource = false;
                 Logger.LogText(String.Format("User {0} tried to update an existing resource={1}. But an exception occured: {2}", Username, resource.Id, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during update of existing resource";
                 SendMessage(response, sslStream);
             }
@@ -1795,7 +1821,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceModificationMessage response = new ResponseResourceModificationMessage();
                 response.ModifiedResource = false;
                 response.Message = "Unauthorized to delete that resource";
-                Logger.LogText(String.Format("Unauthorized user {0} tried to delete resource={1} from IP={2}", Username, deleteResourceMessage.Resource.Id, IPAddress), this, Logtype.Warning);
+                Logger.LogText(String.Format("Unauthorized user {0} tried to delete resource={1} from IP={2}", Username, deleteResourceMessage.Resource.Id, IPAddress), this, Logtype.Warning);                
                 SendMessage(response, sslStream);
                 return;
             }
@@ -1817,6 +1843,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceModificationMessage response = new ResponseResourceModificationMessage();
                 response.ModifiedResource = false;
                 Logger.LogText(String.Format("User {0} tried to delete an existing resource={1}. But an exception occured: {2}", Username, deleteResourceMessage.Resource.Id, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during delete of existing resource";
                 SendMessage(response, sslStream);
             }
@@ -1872,6 +1899,7 @@ namespace CrypToolStoreLib.Server
                 //request failed; logg to logfile and return exception to client
                 ResponseResourceMessage response = new ResponseResourceMessage();
                 Logger.LogText(String.Format("User {0} tried to get an existing resource. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during request of existing resource";
                 SendMessage(response, sslStream);
             }
@@ -1906,6 +1934,7 @@ namespace CrypToolStoreLib.Server
                 //request failed; logg to logfile and return exception to client
                 ResponseResourceMessage response = new ResponseResourceMessage();
                 Logger.LogText(String.Format("User {0} tried to get a resource list. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during request of resource list";
                 SendMessage(response, sslStream);
             }
@@ -1962,6 +1991,7 @@ namespace CrypToolStoreLib.Server
                 //request failed; logg to logfile and return exception to client
                 ResponsePublishedResourceListMessage response = new ResponsePublishedResourceListMessage();
                 Logger.LogText(String.Format("User {0} tried to get a published resource list. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during request of source list";
                 SendMessage(response, sslStream);
             }
@@ -2005,6 +2035,7 @@ namespace CrypToolStoreLib.Server
                 //request failed; logg to logfile and return exception to client
                 ResponsePublishedResourceMessage response = new ResponsePublishedResourceMessage();
                 Logger.LogText(String.Format("User {0} tried to get a published resource. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during request of published resource";
                 SendMessage(response, sslStream);
             }
@@ -2074,6 +2105,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 Logger.LogText(String.Format("User {0} tried to create a new resource data={1}-{2}. But an exception occured: {3}", Username, createNewResourceDataMessage.ResourceData.ResourceId, createNewResourceDataMessage.ResourceData.ResourceVersion, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during creation of new resource data";
                 SendMessage(response, sslStream);
             }
@@ -2141,6 +2173,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 Logger.LogText(String.Format("User {0} tried to update an existing resource data={1}-{2}. But an exception occured: {3}", Username, updateResourceDataMessage.ResourceData.ResourceId, updateResourceDataMessage.ResourceData.ResourceVersion, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during update of existing resource data";
                 SendMessage(response, sslStream);
             }
@@ -2228,12 +2261,11 @@ namespace CrypToolStoreLib.Server
                 ResponseSourceModificationMessage response = new ResponseSourceModificationMessage();
                 response.ModifiedSource = false;
                 Logger.LogText(String.Format("User {0} tried to update the publish state of an existing source. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during update of publish state of existing source";
                 SendMessage(response, sslStream);
             }
         }
-
-
 
         /// <summary>
         /// Handles DeleteResourceDataMessage
@@ -2284,6 +2316,16 @@ namespace CrypToolStoreLib.Server
             //Here, the user is authorized; thus, deletion of existing sourceData in database is started
             try
             {
+                //1. delete files in file system
+                string filename = Constants.CLIENTHANDLER_RESOURCEDATA_FOLDER + Path.DirectorySeparatorChar + "ResourceData-" + deleteResourceDataMessage.ResourceData.ResourceId + "-" + deleteResourceDataMessage.ResourceData.ResourceVersion + ".bin";               
+                if (File.Exists(filename))
+                {
+                    Logger.LogText(String.Format("Deleting resource data file: {0}", filename), this, Logtype.Info);
+                    File.Delete(filename);
+                    Logger.LogText(String.Format("Deleted resource data file: {0}", filename), this, Logtype.Info);
+                }
+
+                //2. delete entry in database
                 Database.DeleteResourceData(deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion);
                 Logger.LogText(String.Format("User {0} deleted existing resource data={1}-{2} in database", Username, deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion), this, Logtype.Info);
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
@@ -2297,6 +2339,7 @@ namespace CrypToolStoreLib.Server
                 ResponseResourceDataModificationMessage response = new ResponseResourceDataModificationMessage();
                 response.ModifiedResourceData = false;
                 Logger.LogText(String.Format("User {0} tried to delete an existing resource data={1}-{2}. But an exception occured: {3}", Username, deleteResourceDataMessage.ResourceData.ResourceId, deleteResourceDataMessage.ResourceData.ResourceVersion, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during delete of existing resource data";
                 SendMessage(response, sslStream);
             }
@@ -2353,6 +2396,7 @@ namespace CrypToolStoreLib.Server
                 //request failed; logg to logfile and return exception to client
                 ResponseResourceDataMessage response = new ResponseResourceDataMessage();
                 Logger.LogText(String.Format("User {0} tried to get an existing resource data={1}-{2}. But an exception occured: {3}", Username, requestResourceDataMessage.ResourceId, requestResourceDataMessage.ResourceVersion, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during request of existing resource data";
                 SendMessage(response, sslStream);
             }
@@ -2409,6 +2453,7 @@ namespace CrypToolStoreLib.Server
                 //request failed; logg to logfile and return exception to client
                 ResponseResourceDataListMessage response = new ResponseResourceDataListMessage();
                 Logger.LogText(String.Format("User {0} tried to get a resource data list. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during request of resource data list";
                 SendMessage(response, sslStream);
             }
@@ -2546,6 +2591,7 @@ namespace CrypToolStoreLib.Server
                 ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                 response.Success = false;
                 Logger.LogText(String.Format("User {0} tried to upload a source zipfile. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during upload of source zipfile";
                 SendMessage(response, sslStream);
             }
@@ -2694,6 +2740,7 @@ namespace CrypToolStoreLib.Server
                 ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                 response.Success = false;
                 Logger.LogText(String.Format("User {0} tried to upload a zipfile. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during upload of zipfile";
                 SendMessage(response, sslStream);
             }
@@ -2844,6 +2891,7 @@ namespace CrypToolStoreLib.Server
                 ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                 response.Success = false;
                 Logger.LogText(String.Format("User {0} tried to upload a resourcedata file. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during upload of resourcedata file";
                 SendMessage(response, sslStream);
             }
@@ -3013,6 +3061,7 @@ namespace CrypToolStoreLib.Server
                 ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                 response.Success = false;
                 Logger.LogText(String.Format("User {0} tried to download a source zipfile. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during download of source zipfile";
                 SendMessage(response, sslStream);
             }          
@@ -3173,6 +3222,7 @@ namespace CrypToolStoreLib.Server
                 ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                 response.Success = false;
                 Logger.LogText(String.Format("User {0} tried to download an assembly zipfile. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during download of assembly zipfile";
                 SendMessage(response, sslStream);
             }
@@ -3331,6 +3381,7 @@ namespace CrypToolStoreLib.Server
                 ResponseUploadDownloadDataMessage response = new ResponseUploadDownloadDataMessage();
                 response.Success = false;
                 Logger.LogText(String.Format("User {0} tried to download an resourcedata file. But an exception occured: {1}", Username, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
                 response.Message = "Exception during download of resourcedata file";
                 SendMessage(response, sslStream);
             }
