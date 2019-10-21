@@ -790,7 +790,7 @@
     <value>Tutorial</value>
   </data>
   <data name="Tutorial2WaitingSlideContent1" xml:space="preserve">
-    <value>Sie können nun in der DKA-KeyRecovery-Komponente die in der DKA-PfadFinder-Komponente generierte Angriffskonfiguration verwenden, um Schlüsselbits wiederherzustellen. Dazu müssen Sie auf den Start-Button klicken.</value>
+    <value>Sie können nun in der DKA-KeyRecovery-Komponente die in der DKA-PfadFinder-Komponente generierte Angriffskonfiguration verwenden, um Schlüsselbits wiederherzustellen. Dazu müssen Sie auf den Button "Start" klicken.</value>
   </data>
   <data name="Tutorial2WaitingSlideContent2" xml:space="preserve">
     <value>Optional können Sie sich in der DKA-PfadVisualiserer-Komponente das ermittelte Differenzial und die darin enthaltenen Charakteristiken anzeigen lassen.</value>
@@ -874,7 +874,7 @@
     <value> anzugreifen</value>
   </data>
   <data name="Tutorial3WaitingSlideContent1" xml:space="preserve">
-    <value>Sie können nun in der DKA-KeyRecovery-Komponente die in der DKA-PfadFinder-Komponente generierte Angriffskonfiguration verwenden, um Schlüsselbits wiederherzustellen. Dazu müssen Sie auf den Start-Button klicken.</value>
+    <value>Sie können nun in der DKA-KeyRecovery-Komponente die in der DKA-PfadFinder-Komponente generierte Angriffskonfiguration verwenden, um Schlüsselbits wiederherzustellen. Dazu müssen Sie auf den Button "Start" klicken.</value>
   </data>
   <data name="Tutorial3WaitingSlideContent2" xml:space="preserve">
     <value>Optional können Sie sich in der DKA-PfadVisualiserer-Komponente das ermittelte Differenzial und die darin enthaltenen Charakteristiken anzeigen lassen.</value>

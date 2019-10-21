@@ -370,10 +370,10 @@
     <value>Attacked encryption round:</value>
   </data>
   <data name="SBoxes" xml:space="preserve">
-    <value>Attacked S boxes:</value>
+    <value>Attacked S-boxes:</value>
   </data>
   <data name="SBoxWarning" xml:space="preserve">
-    <value>At least one S box must be marked to continue the attack.</value>
+    <value>At least one S-box must be marked to continue the attack.</value>
   </data>
   <data name="SearchConfiguration" xml:space="preserve">
     <value>Configuration</value>
@@ -400,7 +400,7 @@
     <value>In this template, the </value>
   </data>
   <data name="StartMaskContent2Run2" xml:space="preserve">
-    <value>tutorial {0}</value>
+    <value>Tutorial {0}</value>
   </data>
   <data name="StartMaskContent2Run3" xml:space="preserve">
     <value> is selected.</value>
@@ -502,7 +502,7 @@
     <value> is added to the input block m:</value>
   </data>
   <data name="Tutorial1DifferentialCryptanalysisSlide1Content3" xml:space="preserve">
-    <value>The intermediate result u is then substituted by the S boxes:</value>
+    <value>The intermediate result u is then substituted by the S-boxes:</value>
   </data>
   <data name="Tutorial1DifferentialCryptanalysisSlide1Header" xml:space="preserve">
     <value>Differential cryptanalysis of cipher 1</value>
@@ -805,16 +805,16 @@
     <value>2. Analysis of cipher 2</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxHeader" xml:space="preserve">
-    <value>3. Analysis of the S boxes</value>
+    <value>3. Analysis of the S-boxes</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide1Content1" xml:space="preserve">
-    <value>Due to the key addition, the S box behaves non-linear. A guess attempt for K3 cannot be checked directly.</value>
+    <value>Due to the key addition, the S-box behaves non-linear. A guess attempt for k3 cannot be checked directly.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide1Content2" xml:space="preserve">
-    <value>All S boxes of cipher 2 behave identically. For this reason it is sufficient to analyze the functionality of a single S box. Basically it is possible to consider 4 parallel S boxes as one big S box, but this would increase the analysis effort. The S box receives 4 bits as input and also outputs 4 bits as output. The 4 input bits are replaced by 4 other output bits.</value>
+    <value>All S-boxes of cipher 2 behave identically. For this reason it is sufficient to analyze the functionality of a single S-box. Basically it is possible to consider 4 parallel S-boxes as one big S-box, but this would increase the analysis effort. The S-box receives 4 bits as input and also outputs 4 bits as output. The 4 input bits are replaced by 4 other output bits.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide1Content3" xml:space="preserve">
-    <value>Remember: Differential cryptanalysis works with differences of messages. In order to examine the S box, all combinations of input plaintext are considered and their differences are formed. For each pair, the plaintexts are entered individually into the S box and then the difference of the substituted outputs is calculated. The transitions from input to output difference are noted.</value>
+    <value>Remember: Differential cryptanalysis works with differences of messages. In order to examine the S-box, all combinations of input plaintext are considered and their differences are formed. For each pair, the plaintexts are entered individually into the S-box and then the difference of the substituted outputs is calculated. The transitions from input to output difference are noted.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide1Content4" xml:space="preserve">
     <value>The table on the next page visualizes this procedure. There is one line for each possible input difference. There is one column for each possible output difference. The number of occurrences of a particular difference is described by the entries in the table.</value>
@@ -823,13 +823,13 @@
     <value>To calculate the probability of a difference occurring, the number must be divided by 16.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide1Header" xml:space="preserve">
-    <value>Analysis of the S boxes</value>
+    <value>Analysis of the S-boxes</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide2Content1" xml:space="preserve">
     <value>The difference distribution table is shown below:</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide2Header" xml:space="preserve">
-    <value>Analysis of the S boxes</value>
+    <value>Analysis of the S-boxes</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide2InputDifference" xml:space="preserve">
     <value>Input difference</value>
@@ -838,25 +838,25 @@
     <value>Output difference</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide3Content1" xml:space="preserve">
-    <value>The input and output differences and the entries of the difference distribution table are hexadecimal.</value>
+    <value>The input and output differences and the entries of the difference distribution table are displayed in hexadecimal format.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide3Content2" xml:space="preserve">
-    <value>A 4 bit S box has 16 different inputs and 16 different outputs. If 2 messages are combined to a message pair with disjoint differences, 256 different transitions of differences can be observed.</value>
+    <value>A 4 bit S-box has 16 different inputs and 16 different outputs. If 2 messages are combined to a message pair with disjoint differences, 256 different transitions of differences can be observed.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide3Content3" xml:space="preserve">
     <value>An important observation is that there are differences that occur more frequently than others. There are also differences that do not occur at all. For example, the input difference 8 is mapped to the output difference D 8 times.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide3Content4" xml:space="preserve">
-    <value>The distribution of differences is obviously not equally distributed. In practice, S boxes are not perfect. The cryptanalyst makes use of this fact. Particularly high probabilities help with differential cryptanalysis.</value>
+    <value>The distribution of differences is obviously not equally distributed. In practice, S-boxes are not perfect. The cryptanalyst makes use of this fact. Particularly high probabilities help with differential cryptanalysis.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide3Header" xml:space="preserve">
-    <value>Analysis of the S boxes</value>
+    <value>Analysis of the S-boxes</value>
   </data>
   <data name="Tutorial2AnalysisSlide1Content1" xml:space="preserve">
     <value>Cipher 2 consists of three encryption rounds with four round keys. Each round consists of key addition, substitution and permutation. In the last round an additional key addition is performed.</value>
   </data>
   <data name="Tutorial2AnalysisSlide1Content2" xml:space="preserve">
-    <value>In the following, the encryption of a plain text block is shown schematically. As in tutorial 1, the internal states during the encryption process are described with variables u and v. The following table shows the encryption of a plain text block.</value>
+    <value>In the following, the encryption of a plain text block is shown schematically. As in Tutorial 1, the internal states during the encryption process are described with variables u and v. The following table shows the encryption of a plaintext block.</value>
   </data>
   <data name="Tutorial2AnalysisSlide1Content3" xml:space="preserve">
     <value>A permutation is also used in this cipher. This permutation exchanges the bit positions of a block. In the schema the permutation is called P(). In addition to the internal states u and v, w is introduced. This state represents the value after a permutation.</value>
@@ -868,13 +868,13 @@
     <value>Analysis of cipher 2</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run1" xml:space="preserve">
-    <value>One could now try to get the key k</value>
+    <value>You could now try to get the key k</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run10" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run11" xml:space="preserve">
-    <value>. With the plaintexts one is still able to calculate the difference of the u</value>
+    <value>. With the plaintexts you are still able to calculate the difference of the u</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run12" xml:space="preserve">
     <value>0</value>
@@ -886,7 +886,7 @@
     <value>3</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run3" xml:space="preserve">
-    <value> in a similar way to cipher 1. For this you would have a pair of plaintext and their corresponding secret texts available. Then you would guess a possible round key t to calculate the internal variables v</value>
+    <value> in a similar way to cipher 1. To do so, you would use a pair of plaintext and their corresponding ciphertexts. Then you would guess a possible round key t to calculate the internal variables v</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run4" xml:space="preserve">
     <value>3</value>
@@ -904,10 +904,10 @@
     <value>2</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content1Run9" xml:space="preserve">
-    <value> is also unknown, one could now calculate the difference of u</value>
+    <value> is also unknown, you could now calculate the difference of u</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content2Run1" xml:space="preserve">
-    <value>Due to the Exclusive-Or, the S box behaves non-linear, so that the difference of the v</value>
+    <value>Due to the Exclusive-Or, the S-box behaves non-linear, so that the difference of the v</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content2Run2" xml:space="preserve">
     <value>0</value>
@@ -922,7 +922,7 @@
     <value> by using differences.</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Content3" xml:space="preserve">
-    <value>To solve this problem, lets take a closer look at how the S boxes work.</value>
+    <value>To solve this problem, lets take a closer look at how the S-boxes work.</value>
   </data>
   <data name="Tutorial2AnalysisSlide3Header" xml:space="preserve">
     <value>Analysis of cipher 2</value>
@@ -964,7 +964,7 @@
     <value> are attacked. This attack is similar to the procedure described in Tutorial 1</value>
   </data>
   <data name="Tutorial2AttackFirstRoundContent2Run1" xml:space="preserve">
-    <value>By clicking on continue, the first two round keys k</value>
+    <value>By clicking on "Continue", the first two round keys k</value>
   </data>
   <data name="Tutorial2AttackFirstRoundContent2Run2" xml:space="preserve">
     <value>1</value>
@@ -1000,7 +1000,7 @@
     <value>2</value>
   </data>
   <data name="Tutorial2AttackKeyRound2Content1Run3" xml:space="preserve">
-    <value> is to be attacked. S boxes can be selected for this in the second encryption round.  By selecting an S box, the respective 4 bits of the round key are attacked and an attempt is made to restore them.</value>
+    <value> is to be attacked. S-boxes can be selected for this in the second encryption round.  By selecting an S-box, the respective 4 bits of the round key are attacked and an attempt is made to restore them.</value>
   </data>
   <data name="Tutorial2AttackKeyRound2Content1Run4" xml:space="preserve">
     <value>The attack is almost analogous to the attack on the round key k</value>
@@ -1018,16 +1018,16 @@
     <value>3</value>
   </data>
   <data name="Tutorial2AttackKeyRound3Content1Run3" xml:space="preserve">
-    <value> of the cipher will be attacked. S boxes can be selected for this in the third encryption round. By selecting an Sbox the respective 4 bits of the round key are attacked and an attempt is made to restore them.</value>
+    <value> of the cipher will be attacked. S-boxes can be selected for this in the third encryption round. By selecting an S-box the respective 4 bits of the round key are attacked and an attempt is made to restore them.</value>
   </data>
   <data name="Tutorial2AttackKeyRound3Content1Run4" xml:space="preserve">
-    <value>In differential cryptanalysis, the change of differences at the S boxes is considered. S boxes should therefore be selected at this point.</value>
+    <value>In differential cryptanalysis, the change of differences at the S-boxes is considered. S-boxes should therefore be selected at this point.</value>
   </data>
   <data name="Tutorial2AttackKeyRound3Content1Run5" xml:space="preserve">
-    <value>The more key bits that are selected, the more complicated the search for a differential. However, it can make sense to attack several S boxes at the same time. Depending on the nature of the cipher, better or worse differentials can be found.</value>
+    <value>The more key bits that are selected, the more complicated the search for a differential. However, it can make sense to attack several S-boxes at the same time. Depending on the nature of the cipher, better or worse differentials can be found.</value>
   </data>
   <data name="Tutorial2AttackRound2HeaderRun1" xml:space="preserve">
-    <value>Select S boxes from round 2 to get key bits from k</value>
+    <value>Select S-boxes from round 2 to get key bits from k</value>
   </data>
   <data name="Tutorial2AttackRound2HeaderRun2" xml:space="preserve">
     <value>2</value>
@@ -1036,7 +1036,7 @@
     <value />
   </data>
   <data name="Tutorial2AttackRound3HeaderRun1" xml:space="preserve">
-    <value>Select S boxes from round 3 to get key bits from k</value>
+    <value>Select S-boxes from round 3 to get key bits from k</value>
   </data>
   <data name="Tutorial2AttackRound3HeaderRun2" xml:space="preserve">
     <value>3</value>
@@ -1051,7 +1051,7 @@
     <value>Two entries that differ by a difference </value>
   </data>
   <data name="Tutorial2CharacteristicSlide1Content1Run2" xml:space="preserve">
-    <value> are substituted using the S box by a pair of outputs differing by a difference </value>
+    <value> are substituted using the S-box by a pair of outputs differing by a difference </value>
   </data>
   <data name="Tutorial2CharacteristicSlide1Content1Run3" xml:space="preserve">
     <value>. This is noted by</value>
@@ -1065,7 +1065,7 @@
     <value>We call such a pair </value>
   </data>
   <data name="Tutorial2CharacteristicSlide1Content2Run2" xml:space="preserve">
-    <value> a differential characteristic under the operation of the S box. As seen before, a differential characteristic has a fixed probability.</value>
+    <value> a differential characteristic under the operation of the S-box. As seen before, a differential characteristic has a fixed probability.</value>
   </data>
   <data name="Tutorial2CharacteristicSlide1Content3" xml:space="preserve">
     <value>Ziel bei der Suche ist es einen Weg zu finden, der eine möglichst hohe Wahrscheinlichkeit aufweist. Diese Wege können in der DKA-PfadVisualisierer-Komponente graphisch dargestellt werden.</value>
@@ -1074,7 +1074,7 @@
     <value>Characteristics</value>
   </data>
   <data name="Tutorial2CharacteristicSlide2Content1" xml:space="preserve">
-    <value>An encryption round for cipher 2 consists of key addition, substitution and permutation. The cipher works on 16 bit blocks. The previous notation is extended as follows to denote a differential characteristic of an S box for 16 bit blocks</value>
+    <value>An encryption round for cipher 2 consists of key addition, substitution and permutation. The cipher works on 16 bit blocks. The previous notation is extended as follows to denote a differential characteristic of an S-box for 16 bit blocks</value>
   </data>
   <data name="Tutorial2CharacteristicSlide2Content2" xml:space="preserve">
     <value>After substitution, the bits in cipher 2 are permuted. The permutation of the cipher is known and therefore the differential characteristic of the permutation can be described as follows</value>
@@ -1095,7 +1095,7 @@
     <value>The previously introduced notation is used to denote differential characteristics of a round to differential characteristics for n-encryption rounds (here: 3):</value>
   </data>
   <data name="Tutorial2CharacteristicSlide3Content4" xml:space="preserve">
-    <value>In the first 4-tuple the input differences of the S boxes of the first 4 S boxes are given in the first encryption round. In the second 4-tuple, both the output difference of the first and the input difference of the second encryption round are noted. In the 3rd 4-tuple, the output difference of the second and the input difference of the last encryption round are noted.</value>
+    <value>In the first 4-tuple the input differences of the S-boxes of the first 4 S-boxes are given in the first encryption round. In the second 4-tuple, both the output difference of the first and the input difference of the second encryption round are noted. In the 3rd 4-tuple, the output difference of the second and the input difference of the last encryption round are noted.</value>
   </data>
   <data name="Tutorial2CharacteristicSlide3Content5" xml:space="preserve">
     <value>The aim of the search is to find a way with the highest possible probability.</value>
@@ -1122,7 +1122,7 @@
     <value>1. Introduction</value>
   </data>
   <data name="Tutorial2IntroductionSlide1Content1" xml:space="preserve">
-    <value>In tutorial 1 the idea of differential cryptanalysis was introduced and demonstrated with a cipher consisting of one encryption round with two round keys.</value>
+    <value>In Tutorial 1 the idea of differential cryptanalysis was introduced and demonstrated with a cipher consisting of one encryption round with two round keys.</value>
   </data>
   <data name="Tutorial2IntroductionSlide1Content2" xml:space="preserve">
     <value>In this tutorial the idea is deepened and shown at a cipher with three encryption rounds with four round keys.</value>
@@ -1140,7 +1140,7 @@
     <value>6. Recover key information</value>
   </data>
   <data name="Tutorial2RecoverKeyInformationSlide1Content1" xml:space="preserve">
-    <value>Once a differential has been found with a high probability, key bits can be recovered. For this purpose, the S boxes are considered where the expected difference is different from 0.</value>
+    <value>Once a differential has been found with a high probability, key bits can be recovered. For this purpose, the S-boxes are considered where the expected difference is different from 0.</value>
   </data>
   <data name="Tutorial2RecoverKeyInformationSlide1Content2" xml:space="preserve">
     <value>A counter is generated for each possible key candidate. The cryptoanalyst generates a number of messages that fulfill the input difference. These are encrypted and partially decrypted with the key candidate. If the difference between the partially decrypted messages meets the expected difference, the counter is increased by 1. This process is repeated with all generated message pairs.</value>
@@ -1464,7 +1464,7 @@
     <value>Differenzielle Kryptoanalyse symmetrischer Blockchiffren</value>
   </data>
   <data name="Tutorial3WaitingSlideContent1" xml:space="preserve">
-    <value>Sie können nun in der DKA-KeyRecovery-Komponente die in der DKA-PfadFinder-Komponente generierte Angriffskonfiguration verwenden, um Schlüsselbits wiederherzustellen. Dazu müssen Sie auf den Start-Button klicken.</value>
+    <value>Sie können nun in der DKA-KeyRecovery-Komponente die in der DKA-PfadFinder-Komponente generierte Angriffskonfiguration verwenden, um Schlüsselbits wiederherzustellen. Dazu müssen Sie auf den Button "Start" klicken.</value>
   </data>
   <data name="Tutorial3WaitingSlideContent2" xml:space="preserve">
     <value>Optional können Sie sich in der DKA-PfadVisualiserer-Komponente das ermittelte Differenzial und die darin enthaltenen Charakteristiken anzeigen lassen.</value>

@@ -61,7 +61,7 @@ namespace DCAPathVisualiser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Active S boxes: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Active S-boxes: ähnelt.
         /// </summary>
         internal static string ActiveSBoxes {
             get {

@@ -70,7 +70,7 @@
                 </TextBlock>
                 <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="1" FontSize="20"
                            HorizontalAlignment="Left" Margin="0,217,0,0">
-                    <controls1:FormulaControl Formula="v_1 = SBox(u_1)" Scale="25" />
+                    <controls1:FormulaControl Formula="v_1 = S(u_1)" Scale="25" />
                 </TextBlock>
 
                 <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="50,170,0,0" IsClickable="False" />
@@ -110,7 +110,7 @@
                 </TextBlock>
                 <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="1" FontSize="20"
                            HorizontalAlignment="Left" Margin="0,455,0,0">
-                    <controls1:FormulaControl Formula="v_2 = SBox(u_2)" Scale="25" />
+                    <controls1:FormulaControl Formula="v_2 = S(u_2)" Scale="25" />
                 </TextBlock>
 
                 <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="50,410,0,0" IsClickable="False" />
@@ -150,7 +150,7 @@
 
                 <TextBlock FontFamily="Courier New" Grid.Row="0" Grid.Column="1" FontSize="20"
                            HorizontalAlignment="Left" Margin="0,695,0,0">
-                    <controls1:FormulaControl Formula="v_3 = SBox(u_3)" Scale="25" />
+                    <controls1:FormulaControl Formula="v_3 = S(u_3)" Scale="25" />
                 </TextBlock>
 
                 <controls:_4BitSBox Grid.Row="0" Grid.Column="0" Margin="50,650,0,0" IsClickable="False" />

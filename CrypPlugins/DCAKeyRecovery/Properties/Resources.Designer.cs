@@ -736,7 +736,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Restored round key K0: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restored round key k0: ähnelt.
         /// </summary>
         internal static string SummaryResultViewRecoveredK0 {
             get {
@@ -745,7 +745,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Restored round key K1: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restored round key k1: ähnelt.
         /// </summary>
         internal static string SummaryResultViewRecoveredK1 {
             get {
@@ -754,7 +754,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Restored round key K2: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restored round key k2: ähnelt.
         /// </summary>
         internal static string SummaryResultViewRecoveredK2 {
             get {
@@ -763,7 +763,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Restored round key K3: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restored round key k3: ähnelt.
         /// </summary>
         internal static string SummaryResultViewRecoveredK3 {
             get {
@@ -772,7 +772,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Restored round key K4: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restored round key k4: ähnelt.
         /// </summary>
         internal static string SummaryResultViewRecoveredK4 {
             get {
@@ -781,7 +781,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Restored round key K5: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restored round key k5: ähnelt.
         /// </summary>
         internal static string SummaryResultViewRecoveredK5 {
             get {

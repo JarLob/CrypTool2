@@ -610,7 +610,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Welcome to the differential cryptanalysis (dca) tutorial. This method for the analysis of turn-based symmetric block ciphers aims at recovering single bits up to complete round keys. This procedure was published in 1991 by the two Israeli researchers Eli Biham and Adi Shamir. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Welcome to the differential cryptanalysis (DCA) tutorial. This method for the analysis of turn-based symmetric block ciphers aims at recovering single bits up to complete round keys. This procedure was published in 1991 by the two Israeli researchers Eli Biham and Adi Shamir. ähnelt.
         /// </summary>
         public static string OverviewContent1 {
             get {
@@ -619,7 +619,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This tutorial covers the dca in three parts. Part 1 conveys the basic idea of the dca by means of a cipher with an encryption round. Part 2 deepens this idea using a cipher with three encryption rounds. Part 3 deepens the knowledge by increasing the complexity of the cipher to five encryption rounds. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This tutorial covers the DCA in three parts. Part 1 conveys the basic idea of the DCA by means of a cipher with an encryption round. Part 2 deepens this idea using a cipher with three encryption rounds. Part 3 deepens the knowledge by increasing the complexity of the cipher to five encryption rounds. ähnelt.
         /// </summary>
         public static string OverviewContent2 {
             get {
@@ -817,7 +817,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Attacked S boxes: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Attacked S-boxes: ähnelt.
         /// </summary>
         public static string SBoxes {
             get {
@@ -826,7 +826,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die At least one S box must be marked to continue the attack. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die At least one S-box must be marked to continue the attack. ähnelt.
         /// </summary>
         public static string SBoxWarning {
             get {
@@ -907,7 +907,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die tutorial {0} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tutorial {0} ähnelt.
         /// </summary>
         public static string StartMaskContent2Run2 {
             get {
@@ -1132,7 +1132,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Here we apply the idea of the dca to Chiffre 1. The structure of a cipher is usually public, so that all components and their functionality are known. The security of a cipher should never be based on the secrecy of the construction, but on the secrecy of the key. This requirement is also called Kerckhoff&apos;s principle. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Here we apply the idea of the DCA to Chiffre 1. The structure of a cipher is usually public, so that all components and their functionality are known. The security of a cipher should never be based on the secrecy of the construction, but on the secrecy of the key. This requirement is also called Kerckhoff&apos;s principle. ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide1Content1 {
             get {
@@ -1213,7 +1213,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The intermediate result u is then substituted by the S boxes: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The intermediate result u is then substituted by the S-boxes: ähnelt.
         /// </summary>
         public static string Tutorial1DifferentialCryptanalysisSlide1Content3 {
             get {
@@ -1915,7 +1915,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die We obtain the difference of the plaintexts by calculating the difference of the ciphertexts. This can be used to obtain information about the round keys at dca. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die We obtain the difference of the plaintexts by calculating the difference of the ciphertexts. This can be used to obtain information about the round keys at DCA. ähnelt.
         /// </summary>
         public static string Tutorial1IntroductionSlide3Content3 {
             get {
@@ -1933,7 +1933,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The dca is now continued in the DCA KeyRecovery component. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The DCA is now continued in the DCA KeyRecovery component. ähnelt.
         /// </summary>
         public static string Tutorial1LastSlideContent1 {
             get {
@@ -2032,7 +2032,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In the dca against cipher 1, the round keys k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In the DCA against cipher 1, the round keys k ähnelt.
         /// </summary>
         public static string Tutorial1PracticalDifferentialCryptanalysisSlide1Content1Run1 {
             get {
@@ -2122,7 +2122,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 3. Analysis of the S boxes ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3. Analysis of the S-boxes ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxHeader {
             get {
@@ -2131,7 +2131,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Due to the key addition, the S box behaves non-linear. A guess attempt for K3 cannot be checked directly. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Due to the key addition, the S-box behaves non-linear. A guess attempt for k3 cannot be checked directly. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide1Content1 {
             get {
@@ -2140,7 +2140,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die All S boxes of cipher 2 behave identically. For this reason it is sufficient to analyze the functionality of a single S box. Basically it is possible to consider 4 parallel S boxes as one big S box, but this would increase the analysis effort. The S box receives 4 bits as input and also outputs 4 bits as output. The 4 input bits are replaced by 4 other output bits. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die All S-boxes of cipher 2 behave identically. For this reason it is sufficient to analyze the functionality of a single S-box. Basically it is possible to consider 4 parallel S-boxes as one big S-box, but this would increase the analysis effort. The S-box receives 4 bits as input and also outputs 4 bits as output. The 4 input bits are replaced by 4 other output bits. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide1Content2 {
             get {
@@ -2149,7 +2149,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Remember: Differential cryptanalysis works with differences of messages. In order to examine the S box, all combinations of input plaintext are considered and their differences are formed. For each pair, the plaintexts are entered individually into the S box and then the difference of the substituted outputs is calculated. The transitions from input to output difference are noted. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Remember: Differential cryptanalysis works with differences of messages. In order to examine the S-box, all combinations of input plaintext are considered and their differences are formed. For each pair, the plaintexts are entered individually into the S-box and then the difference of the substituted outputs is calculated. The transitions from input to output difference are noted. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide1Content3 {
             get {
@@ -2176,7 +2176,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis of the S boxes ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis of the S-boxes ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide1Header {
             get {
@@ -2194,7 +2194,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis of the S boxes ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis of the S-boxes ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide2Header {
             get {
@@ -2221,7 +2221,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The input and output differences and the entries of the difference distribution table are hexadecimal. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The input and output differences and the entries of the difference distribution table are displayed in hexadecimal format. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide3Content1 {
             get {
@@ -2230,7 +2230,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die A 4 bit S box has 16 different inputs and 16 different outputs. If 2 messages are combined to a message pair with disjoint differences, 256 different transitions of differences can be observed. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die A 4 bit S-box has 16 different inputs and 16 different outputs. If 2 messages are combined to a message pair with disjoint differences, 256 different transitions of differences can be observed. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide3Content2 {
             get {
@@ -2248,7 +2248,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The distribution of differences is obviously not equally distributed. In practice, S boxes are not perfect. The cryptanalyst makes use of this fact. Particularly high probabilities help with differential cryptanalysis. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The distribution of differences is obviously not equally distributed. In practice, S-boxes are not perfect. The cryptanalyst makes use of this fact. Particularly high probabilities help with differential cryptanalysis. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide3Content4 {
             get {
@@ -2257,7 +2257,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis of the S boxes ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis of the S-boxes ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisOfSBoxSlide3Header {
             get {
@@ -2275,7 +2275,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In the following, the encryption of a plain text block is shown schematically. As in tutorial 1, the internal states during the encryption process are described with variables u and v. The following table shows the encryption of a plain text block. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In the following, the encryption of a plain text block is shown schematically. As in Tutorial 1, the internal states during the encryption process are described with variables u and v. The following table shows the encryption of a plaintext block. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide1Content2 {
             get {
@@ -2311,7 +2311,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die One could now try to get the key k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die You could now try to get the key k ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Content1Run1 {
             get {
@@ -2329,7 +2329,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die . With the plaintexts one is still able to calculate the difference of the u ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die . With the plaintexts you are still able to calculate the difference of the u ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Content1Run11 {
             get {
@@ -2365,7 +2365,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  in a similar way to cipher 1. For this you would have a pair of plaintext and their corresponding secret texts available. Then you would guess a possible round key t to calculate the internal variables v ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  in a similar way to cipher 1. To do so, you would use a pair of plaintext and their corresponding ciphertexts. Then you would guess a possible round key t to calculate the internal variables v ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Content1Run3 {
             get {
@@ -2419,7 +2419,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  is also unknown, one could now calculate the difference of u ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  is also unknown, you could now calculate the difference of u ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Content1Run9 {
             get {
@@ -2428,7 +2428,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Due to the Exclusive-Or, the S box behaves non-linear, so that the difference of the v ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Due to the Exclusive-Or, the S-box behaves non-linear, so that the difference of the v ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Content2Run1 {
             get {
@@ -2473,7 +2473,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die To solve this problem, lets take a closer look at how the S boxes work. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die To solve this problem, lets take a closer look at how the S-boxes work. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide3Content3 {
             get {
@@ -2599,7 +2599,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die By clicking on continue, the first two round keys k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die By clicking on &quot;Continue&quot;, the first two round keys k ähnelt.
         /// </summary>
         public static string Tutorial2AttackFirstRoundContent2Run1 {
             get {
@@ -2707,7 +2707,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  is to be attacked. S boxes can be selected for this in the second encryption round.  By selecting an S box, the respective 4 bits of the round key are attacked and an attempt is made to restore them. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  is to be attacked. S-boxes can be selected for this in the second encryption round.  By selecting an S-box, the respective 4 bits of the round key are attacked and an attempt is made to restore them. ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound2Content1Run3 {
             get {
@@ -2761,7 +2761,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  of the cipher will be attacked. S boxes can be selected for this in the third encryption round. By selecting an Sbox the respective 4 bits of the round key are attacked and an attempt is made to restore them. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  of the cipher will be attacked. S-boxes can be selected for this in the third encryption round. By selecting an S-box the respective 4 bits of the round key are attacked and an attempt is made to restore them. ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound3Content1Run3 {
             get {
@@ -2770,7 +2770,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In differential cryptanalysis, the change of differences at the S boxes is considered. S boxes should therefore be selected at this point. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In differential cryptanalysis, the change of differences at the S-boxes is considered. S-boxes should therefore be selected at this point. ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound3Content1Run4 {
             get {
@@ -2779,7 +2779,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The more key bits that are selected, the more complicated the search for a differential. However, it can make sense to attack several S boxes at the same time. Depending on the nature of the cipher, better or worse differentials can be found. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The more key bits that are selected, the more complicated the search for a differential. However, it can make sense to attack several S-boxes at the same time. Depending on the nature of the cipher, better or worse differentials can be found. ähnelt.
         /// </summary>
         public static string Tutorial2AttackKeyRound3Content1Run5 {
             get {
@@ -2788,7 +2788,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select S boxes from round 2 to get key bits from k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select S-boxes from round 2 to get key bits from k ähnelt.
         /// </summary>
         public static string Tutorial2AttackRound2HeaderRun1 {
             get {
@@ -2815,7 +2815,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select S boxes from round 3 to get key bits from k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select S-boxes from round 3 to get key bits from k ähnelt.
         /// </summary>
         public static string Tutorial2AttackRound3HeaderRun1 {
             get {
@@ -2860,7 +2860,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  are substituted using the S box by a pair of outputs differing by a difference  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  are substituted using the S-box by a pair of outputs differing by a difference  ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide1Content1Run2 {
             get {
@@ -2898,7 +2898,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  a differential characteristic under the operation of the S box. As seen before, a differential characteristic has a fixed probability. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  a differential characteristic under the operation of the S-box. As seen before, a differential characteristic has a fixed probability. ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide1Content2Run2 {
             get {
@@ -2925,7 +2925,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die An encryption round for cipher 2 consists of key addition, substitution and permutation. The cipher works on 16 bit blocks. The previous notation is extended as follows to denote a differential characteristic of an S box for 16 bit blocks ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die An encryption round for cipher 2 consists of key addition, substitution and permutation. The cipher works on 16 bit blocks. The previous notation is extended as follows to denote a differential characteristic of an S-box for 16 bit blocks ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide2Content1 {
             get {
@@ -2988,7 +2988,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In the first 4-tuple the input differences of the S boxes of the first 4 S boxes are given in the first encryption round. In the second 4-tuple, both the output difference of the first and the input difference of the second encryption round are noted. In the 3rd 4-tuple, the output difference of the second and the input difference of the last encryption round are noted. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In the first 4-tuple the input differences of the S-boxes of the first 4 S-boxes are given in the first encryption round. In the second 4-tuple, both the output difference of the first and the input difference of the second encryption round are noted. In the 3rd 4-tuple, the output difference of the second and the input difference of the last encryption round are noted. ähnelt.
         /// </summary>
         public static string Tutorial2CharacteristicSlide3Content4 {
             get {
@@ -3069,7 +3069,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In tutorial 1 the idea of differential cryptanalysis was introduced and demonstrated with a cipher consisting of one encryption round with two round keys. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In Tutorial 1 the idea of differential cryptanalysis was introduced and demonstrated with a cipher consisting of one encryption round with two round keys. ähnelt.
         /// </summary>
         public static string Tutorial2IntroductionSlide1Content1 {
             get {
@@ -3123,7 +3123,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Once a differential has been found with a high probability, key bits can be recovered. For this purpose, the S boxes are considered where the expected difference is different from 0. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Once a differential has been found with a high probability, key bits can be recovered. For this purpose, the S-boxes are considered where the expected difference is different from 0. ähnelt.
         /// </summary>
         public static string Tutorial2RecoverKeyInformationSlide1Content1 {
             get {
@@ -4095,7 +4095,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sie können nun in der DKA-KeyRecovery-Komponente die in der DKA-PfadFinder-Komponente generierte Angriffskonfiguration verwenden, um Schlüsselbits wiederherzustellen. Dazu müssen Sie auf den Start-Button klicken. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sie können nun in der DKA-KeyRecovery-Komponente die in der DKA-PfadFinder-Komponente generierte Angriffskonfiguration verwenden, um Schlüsselbits wiederherzustellen. Dazu müssen Sie auf den Button &quot;Start&quot; klicken. ähnelt.
         /// </summary>
         public static string Tutorial3WaitingSlideContent1 {
             get {

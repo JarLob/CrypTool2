@@ -343,22 +343,22 @@
     <value>End:</value>
   </data>
   <data name="SummaryResultViewRecoveredK0" xml:space="preserve">
-    <value>Restored round key K0:</value>
+    <value>Restored round key k0:</value>
   </data>
   <data name="SummaryResultViewRecoveredK1" xml:space="preserve">
-    <value>Restored round key K1:</value>
+    <value>Restored round key k1:</value>
   </data>
   <data name="SummaryResultViewRecoveredK2" xml:space="preserve">
-    <value>Restored round key K2:</value>
+    <value>Restored round key k2:</value>
   </data>
   <data name="SummaryResultViewRecoveredK3" xml:space="preserve">
-    <value>Restored round key K3:</value>
+    <value>Restored round key k3:</value>
   </data>
   <data name="SummaryResultViewRecoveredK4" xml:space="preserve">
-    <value>Restored round key K4:</value>
+    <value>Restored round key k4:</value>
   </data>
   <data name="SummaryResultViewRecoveredK5" xml:space="preserve">
-    <value>Restored round key K5:</value>
+    <value>Restored round key k5:</value>
   </data>
   <data name="SummaryResultViewStartTime" xml:space="preserve">
     <value>Start:</value>
