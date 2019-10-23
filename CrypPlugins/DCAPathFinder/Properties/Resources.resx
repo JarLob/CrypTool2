@@ -301,7 +301,7 @@
     <value>4</value>
   </data>
   <data name="OverviewContent1" xml:space="preserve">
-    <value>Welcome to the differential cryptanalysis (DCA) tutorial. This method for the analysis of turn-based symmetric block ciphers aims at recovering single bits up to complete round keys. This procedure was published in 1991 by the two Israeli researchers Eli Biham and Adi Shamir.</value>
+    <value>Welcome to the differential cryptanalysis (DCA) tutorial. This method for the analysis of round based symmetric block ciphers aims at recovering single bits up to complete round keys. This procedure was published in 1991 by the two Israeli researchers Eli Biham and Adi Shamir.</value>
   </data>
   <data name="OverviewContent2" xml:space="preserve">
     <value>This tutorial covers the DCA in three parts. Part 1 conveys the basic idea of the DCA by means of a cipher with an encryption round. Part 2 deepens this idea using a cipher with three encryption rounds. Part 3 deepens the knowledge by increasing the complexity of the cipher to five encryption rounds.</value>
@@ -859,7 +859,7 @@
     <value>In the following, the encryption of a plain text block is shown schematically. As in Tutorial 1, the internal states during the encryption process are described with variables u and v. The following table shows the encryption of a plaintext block.</value>
   </data>
   <data name="Tutorial2AnalysisSlide1Content3" xml:space="preserve">
-    <value>A permutation is also used in this cipher. This permutation exchanges the bit positions of a block. In the schema the permutation is called P(). In addition to the internal states u and v, w is introduced. This state represents the value after a permutation.</value>
+    <value>A permutation is also used in this cipher. This permutation exchanges the bit positions of a block. The permutation is called P(). In addition to the internal states u and v, w is introduced. This state represents the value after a permutation.</value>
   </data>
   <data name="Tutorial2AnalysisSlide1Header" xml:space="preserve">
     <value>Analysis of cipher 2</value>
