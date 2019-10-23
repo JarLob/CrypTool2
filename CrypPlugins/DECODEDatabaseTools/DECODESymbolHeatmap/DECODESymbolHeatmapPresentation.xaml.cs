@@ -101,8 +101,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 }
             }
 
-            int maxvalue = 0;
-
+            int maxvalue = 0;            
             //count <token, token> combinations
             for (int position = 0; position <= symbolList.Count - (firstGramsCount + secondGramsCount); position++)
             {
@@ -123,37 +122,84 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 {
                     maxvalue = dictionary[tuple].Count;
                 }
-            }
+            }            
 
             var entries = dictionary.Values.ToList();
+            
+            int averageValue = 0;
+            int number = 0;
+            //compute average value
+            foreach (var entry in entries)
+            {
+                if (!entry.IsAxisValue && entry.Count > 0)
+                {
+                    averageValue += entry.Count;
+                    number++;
+                }
+            }
+            averageValue = (int)((float)averageValue / (float)number);
+
             //compute colors based on (percentaged) distance to maxvalue
             //also set output strings
+            Exception exception = null;
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                Color hotColor = Colors.Tomato;
-                Color coldColor = Colors.DodgerBlue;
-
-                foreach (var entry in entries)
+            {                
+                try
                 {
-                    if (entry.IsAxisValue)
-                    {
-                        continue;
-                    }
-                    float distance = 1;
-                    if (maxvalue > 0)
-                    {
-                        distance = (maxvalue - entry.Count) / (float)maxvalue;
-                    }
+                    Color coldColor = Colors.DodgerBlue;
+                    Color averageColor = Colors.LightGreen;
+                    Color hotColor = Colors.Tomato;
 
-                    byte r = (byte)(coldColor.R * distance + hotColor.R * (1 - distance));
-                    byte g = (byte)(coldColor.G * distance + hotColor.G * (1 - distance));
-                    byte b = (byte)(coldColor.B * distance + hotColor.B * (1 - distance));
+                    foreach (var entry in entries)
+                    {
+                        if (entry.IsAxisValue)
+                        {
+                            continue;
+                        }
 
-                    Color entryColor = Color.FromRgb(r, g, b);
-                    entry.Color = new SolidColorBrush(entryColor);
-                    entry.Value = string.Format("{0}", entry.Count);
+                        if (entry.Count > averageValue)
+                        {
+                            float distance = 1;
+                            if (maxvalue > 0)
+                            {
+                                distance = ((maxvalue - averageValue) - (entry.Count - averageValue)) / (float)(maxvalue - averageValue);
+                            }
+
+                            byte r = (byte)(averageColor.R * distance + hotColor.R * (1 - distance));
+                            byte g = (byte)(averageColor.G * distance + hotColor.G * (1 - distance));
+                            byte b = (byte)(averageColor.B * distance + hotColor.B * (1 - distance));
+
+                            Color entryColor = Color.FromRgb(r, g, b);
+                            entry.Color = new SolidColorBrush(entryColor);
+                            entry.Value = string.Format("{0}", entry.Count);
+                        }
+                        else
+                        {
+                            float distance = 1;
+                            if (averageValue > 0)
+                            {
+                                distance = ((averageValue) - entry.Count) / (float)(averageValue);
+                            }
+
+                            byte r = (byte)(coldColor.R * distance + averageColor.R * (1 - distance));
+                            byte g = (byte)(coldColor.G * distance + averageColor.G * (1 - distance));
+                            byte b = (byte)(coldColor.B * distance + averageColor.B * (1 - distance));
+
+                            Color entryColor = Color.FromRgb(r, g, b);
+                            entry.Color = new SolidColorBrush(entryColor);
+                            entry.Value = string.Format("{0}", entry.Count);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
                 }
             }, null);
+            if (exception != null)
+            {
+                throw exception;
+            }
 
             //output data to user interface
             var lists = new List<List<HeatmapEntry>>();            

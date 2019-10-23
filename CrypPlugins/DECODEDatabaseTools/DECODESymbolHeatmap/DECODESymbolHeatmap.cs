@@ -16,6 +16,7 @@
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.Plugins.DECODEDatabaseTools.Util;
+using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Controls;
@@ -91,6 +92,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
         public void Execute()
         {
+            //we only generate the heatmap if we have at minimum two grams besides each other in the text
+            if (_DECODETextDocument.Length < (int)(_settings.FirstGrams) + (int)(_settings.SecondGrams) + 2)
+            {
+                return;
+            }
+
             var parser = new NoNomenclatureParser(1, null);
             parser.DECODETextDocument = _DECODETextDocument;
             var textDocument = parser.GetTextDocument();
@@ -99,7 +106,14 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             parser2.DECODETextDocument = _alphabet;
             var alphabetTokens = parser2.GetTextDocument().ToList();
 
-            _presentation.GenerateNewHeatmap(textDocument, alphabetTokens, _settings);
+            try
+            {                
+                _presentation.GenerateNewHeatmap(textDocument, alphabetTokens, _settings);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(string.Format("Exception occured during generation of heatmap: {0}", ex.Message), NotificationLevel.Error);
+            }
 
         }
 
