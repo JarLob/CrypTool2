@@ -31,7 +31,7 @@ using Newtonsoft.Json;
 namespace Cryptool.Plugins.DCAPathVisualiser
 {
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
-    [PluginInfo("DCAPathVisualiser.Properties.Resources", "PluginCaption", "PluginTooltip", "DCAPathFinder/userdoc.xml", new[] { "DCAPathVisualiser/Images/IC_PathVisualizer.png" })]
+    [PluginInfo("DCAPathVisualiser.Properties.Resources", "PluginCaption", "PluginTooltip", "DCAPathVisualiser/userdoc.xml", new[] { "DCAPathVisualiser/Images/IC_PathVisualizer.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class DCAPathVisualiser : ICrypComponent
     {
