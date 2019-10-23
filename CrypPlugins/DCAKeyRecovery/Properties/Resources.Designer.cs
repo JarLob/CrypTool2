@@ -655,7 +655,7 @@ namespace DCAKeyRecovery.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die speed options ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Speed options ähnelt.
         /// </summary>
         internal static string PerformanceSettingsGroup {
             get {

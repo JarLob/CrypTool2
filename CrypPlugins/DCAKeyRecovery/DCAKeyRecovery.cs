@@ -41,8 +41,7 @@ using Newtonsoft.Json;
 namespace Cryptool.Plugins.DCAKeyRecovery
 {
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
-    [PluginInfo("DCAKeyRecovery.Properties.Resources", "PluginCaption", "PluginTooltip", "DCAPathFinder/userdoc.xml",
-        new[] {"DCAKeyRecovery/Images/IC_KeyRecovery.png"})]
+    [PluginInfo("DCAKeyRecovery.Properties.Resources", "PluginCaption", "PluginTooltip", "DCAKeyRecovery/userdoc.xml", new[] {"DCAKeyRecovery/Images/IC_KeyRecovery.png"})]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     [AutoAssumeFullEndProgress(false)]
     public class DCAKeyRecovery : ICrypComponent

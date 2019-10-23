@@ -316,7 +316,7 @@
     <value>DCA PathFinder componend</value>
   </data>
   <data name="PerformanceSettingsGroup" xml:space="preserve">
-    <value>speed options</value>
+    <value>Speed options</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>DCA KeyRecovery</value>
