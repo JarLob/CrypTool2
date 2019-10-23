@@ -790,7 +790,7 @@
     <value> will be attacked. The attack proceeds as described in this tutorial.</value>
   </data>
   <data name="Tutorial1PracticalDifferentialCryptanalysisSlide1Content2" xml:space="preserve">
-    <value>Click on Next (right arrow below) to start the attack. The control is passed on to the DCA KeyRecovery component.</value>
+    <value>Click on "Next" (right arrow below) to start the attack. The control is passed on to the DCA KeyRecovery component.</value>
   </data>
   <data name="Tutorial1PracticalDifferentialCryptanalysisSlide1Header" xml:space="preserve">
     <value>Performing differential cryptanalysis</value>
@@ -1158,7 +1158,7 @@
     <value>Differential cryptanalysis of symmetric block ciphers</value>
   </data>
   <data name="Tutorial2WaitingSlideContent1" xml:space="preserve">
-    <value>You can now use the attack configuration generated in the DCA PathFinder component in the DCA KeyRecovery component to restore key bits. To do this, you must click the Start button.</value>
+    <value>You can now use the attack configuration generated in the DCA PathFinder component in the DCA KeyRecovery component to restore key bits. To do this, you must click the button "Start".</value>
   </data>
   <data name="Tutorial2WaitingSlideContent2" xml:space="preserve">
     <value>Optionally, you can display the determined differential and its characteristics in the DCA PathVisualizer component.</value>

@@ -2077,7 +2077,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Click on Next (right arrow below) to start the attack. The control is passed on to the DCA KeyRecovery component. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Click on &quot;Next&quot; (right arrow below) to start the attack. The control is passed on to the DCA KeyRecovery component. ähnelt.
         /// </summary>
         public static string Tutorial1PracticalDifferentialCryptanalysisSlide1Content2 {
             get {
@@ -3177,7 +3177,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die You can now use the attack configuration generated in the DCA PathFinder component in the DCA KeyRecovery component to restore key bits. To do this, you must click the Start button. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die You can now use the attack configuration generated in the DCA PathFinder component in the DCA KeyRecovery component to restore key bits. To do this, you must click the button &quot;Start&quot;. ähnelt.
         /// </summary>
         public static string Tutorial2WaitingSlideContent1 {
             get {

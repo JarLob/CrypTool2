@@ -886,7 +886,7 @@
     <value>3. Durchführung differenziellen Kryptoanalyse</value>
   </data>
   <data name="Tutorial1PracticalDifferentialCryptanalysisSlide1Content2" xml:space="preserve">
-    <value>Durch einen Klick auf Weiter (Rechtspfeil unten) wird der Angriff gestartet. Dazu wird die Kontrolle an die DKA-KeyRecovery-Komponente weitergegeben.</value>
+    <value>Durch einen Klick auf "Weiter" (Rechtspfeil unten) wird der Angriff gestartet. Dazu wird die Kontrolle an die DKA-KeyRecovery-Komponente weitergegeben.</value>
   </data>
   <data name="Tutorial1PracticalDifferentialCryptanalysisSlide1Header" xml:space="preserve">
     <value>Durchführung differenziellen Kryptoanalyse</value>
