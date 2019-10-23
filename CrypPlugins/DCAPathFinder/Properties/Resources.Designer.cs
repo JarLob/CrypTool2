@@ -610,7 +610,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Welcome to the differential cryptanalysis (DCA) tutorial. This method for the analysis of round based symmetric block ciphers aims at recovering single bits up to complete round keys. This procedure was published in 1991 by the two Israeli researchers Eli Biham and Adi Shamir. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Welcome to the differential cryptanalysis (DCA) tutorial. This method for the analysis of round-based symmetric block ciphers aims at recovering single bits up to complete round keys. This procedure was published in 1991 by the two Israeli researchers Eli Biham and Adi Shamir. ähnelt.
         /// </summary>
         public static string OverviewContent1 {
             get {
@@ -2284,7 +2284,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die A permutation is also used in this cipher. This permutation exchanges the bit positions of a block. The permutation is called P(). In addition to the internal states u and v, w is introduced. This state represents the value after a permutation. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In addition, a permutation P() is used in this cipher. This permutation exchanges the bit positions of a block. In addition to the internal states u and v, w is introduced. This state w represents the value after a permutation. ähnelt.
         /// </summary>
         public static string Tutorial2AnalysisSlide1Content3 {
             get {

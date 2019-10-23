@@ -595,7 +595,7 @@
     <value>Im Folgenden wird die Verschlüsselung eines Klartextblocks schematisch dargestellt. Analog zu Tutorial 1 werden die internen Zustände während des Verschlüsselungsprozesses mit Variablen u und v bezeichnet.</value>
   </data>
   <data name="Tutorial2AnalysisSlide1Content3" xml:space="preserve">
-    <value>In dieser Chiffre wird zusätzlich eine Permutation verwendet. Diese vertauscht die Bitpositionen eines Blocks. Die Permutation mit P() bezeichnet. Zusätzlich zu den internen Zuständen u und v wird w eingeführt. Dieser Zustand repräsentiert den Wert nach einer Permutation.</value>
+    <value>In dieser Chiffre wird zusätzlich eine Permutation P() verwendet. Diese vertauscht die Bitpositionen eines Blocks. Zusätzlich zu den internen Zuständen u und v wird w eingeführt. Dieser Zustand w repräsentiert den Wert nach einer Permutation.</value>
   </data>
   <data name="Tutorial2AnalysisSlide1Header" xml:space="preserve">
     <value>Analyse von Chiffre 2</value>
