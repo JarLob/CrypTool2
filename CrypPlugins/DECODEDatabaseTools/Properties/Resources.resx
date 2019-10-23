@@ -310,4 +310,10 @@
   <data name="LoggedInAs" xml:space="preserve">
     <value>You are logged in as {0}.</value>
   </data>
+  <data name="DECODEDeciphererCaption" xml:space="preserve">
+    <value>DECODE Decipherer</value>
+  </data>
+  <data name="DECODEDeciphererTooltip" xml:space="preserve">
+    <value>Performs tokenization and decryption of texts using DECODE parsers.</value>
+  </data>
 </root>

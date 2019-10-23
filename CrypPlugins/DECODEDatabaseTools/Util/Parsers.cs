@@ -491,7 +491,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
                         {
                             if (!string.IsNullOrEmpty(document.CatalogName))
                             {
-                                GuiLogMessage("Catalog name is defined twice in this document. Ignoring second definition", NotificationLevel.Warning);
+                                GuiLogMessage(string.Format("Catalog name is defined twice in document: {0}. Ignoring second definition", document.CatalogName), NotificationLevel.Warning);
                             }
                             else
                             {

@@ -102,6 +102,12 @@
     </Compile>
     <Compile Include="DECODEParserTester\DECODEParserTester.cs" />
     <Compile Include="DECODEParserTester\DECODEParserTesterSettings.cs" />
+    <Compile Include="DECODESymbolHeatmap\DECODESymbolHeatmapPresentation.xaml.cs">
+      <DependentUpon>DECODESymbolHeatmapPresentation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DECODESymbolHeatmap\DECODESymbolHeatmap.cs" />
+    <Compile Include="DECODESymbolHeatmap\DECODESymbolHeatmapSettings.cs" />
+    <Compile Include="DECODESyntaxAnalyzer\DECODESyntaxAnalyzer.cs" />
     <Compile Include="Util\Clustering.cs" />
     <Compile Include="Util\Decoder.cs" />
     <Compile Include="Util\Extensions.cs" />
@@ -204,6 +210,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DECODEDecipherer\DECODEDeciphererPresentation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DECODESymbolHeatmap\DECODESymbolHeatmapPresentation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

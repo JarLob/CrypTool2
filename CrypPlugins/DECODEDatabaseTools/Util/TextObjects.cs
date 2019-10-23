@@ -61,6 +61,23 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
         }
 
         /// <summary>
+        /// Returns all tokens in a single list
+        /// </summary>
+        /// <returns></returns>
+        public List<Token> ToList()
+        {
+            var tokenList = new List<Token>();
+            foreach(var page in Pages)
+            {
+                foreach(var line in page.Lines)
+                {
+                    tokenList.AddRange(line.Tokens);
+                }
+            }
+            return tokenList;
+        }
+
+        /// <summary>
         /// The name of the image(s) representing the cipher, e.g. 117r.jpg-117v.jpg
         /// </summary>
         public string ImageName

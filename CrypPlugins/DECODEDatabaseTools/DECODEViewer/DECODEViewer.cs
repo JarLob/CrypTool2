@@ -226,6 +226,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 {
                     DoDownloadDocument(newestTranscription);
                 }
+                else
+                {
+                    OutputDocument = Encoding.UTF8.GetBytes("n/a");
+                    OnPropertyChanged("OutputDocument");
+                }
 
                 ProgressChanged(0, 0);
 

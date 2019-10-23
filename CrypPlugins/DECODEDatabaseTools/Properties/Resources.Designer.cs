@@ -224,6 +224,24 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die DECODE Decipherer ähnelt.
+        /// </summary>
+        internal static string DECODEDeciphererCaption {
+            get {
+                return ResourceManager.GetString("DECODEDeciphererCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Performs tokenization and decryption of texts using DECODE parsers. ähnelt.
+        /// </summary>
+        internal static string DECODEDeciphererTooltip {
+            get {
+                return ResourceManager.GetString("DECODEDeciphererTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die DECODE Downloader ähnelt.
         /// </summary>
         internal static string DecodeDownloaderPluginCaption {
