@@ -6,11 +6,11 @@
   <language culture="de-DE"/>
 
   <introduction lang="en">
-	The DCA KeyRecovery component performs the key recovery of a differential cryptanalysis. There are two categories of settings in the settings. The box number can be specified in the "Tutorial options". In the "Speed options" you can choose the automatic mode, the number of threads and an option to update the user interface during key recovery or at the end of the process. This option affects the speed of the component. When the component is ready to run, the "Start" button is activated and it starts flashing green.
+	The DCA KeyRecovery component performs the key recovery of a differential cryptanalysis. There are two categories of settings in the component. The cipher can be specified in the "Tutorial options". In the "Speed options" you can choose the automatic mode, the number of threads and an option to update the user interface during key recovery or at the end of the process. This option affects the speed of the component. When the component is ready to run, the "Start" button is activated and it starts flashing green.
   </introduction>
 
   <introduction lang="de-DE">    
-	Die DKA-KeyRecovery-Komponente führt die Schlüsselwiederherstellung einer differenziellen Kryptoanalyse (DKA) durch. In den Einstellungen gibt es zwei Kategorien von Einstellungen. In den "Tutorialoptionen" kann die Chiffre festgelegt werden. In den "Geschwindigkeitsoptionen" kann der automatische Modus, die Anzahl an Threads und eine Option gewählt werden, ob die Benutzerschnittstelle während der Schlüsselwiederherstellung aktualisiert werden soll oder erst am Ende des Vorgangs. Durch diese Option wird die Geschwindigkeit der Komponente beeinflusst. Wenn die Komponente bereit zur Ausführung ist, wird der Button "Start" aktiviert und dieser beginnt grün zu blinken.  
+	Die DKA-KeyRecovery-Komponente führt die Schlüsselwiederherstellung einer differenziellen Kryptoanalyse durch. In den Einstellungen gibt es zwei Kategorien. In den "Tutorialoptionen" kann die Chiffre festgelegt werden. In den "Geschwindigkeitsoptionen" kann der automatische Modus, die Anzahl an Threads und eine Option gewählt werden, ob die Benutzerschnittstelle während der Schlüsselwiederherstellung aktualisiert werden soll oder erst am Ende des Vorgangs. Durch diese Option wird die Geschwindigkeit der Komponente beeinflusst. Wenn die Komponente bereit zur Ausführung ist, wird der Button "Start" aktiviert und dieser beginnt grün zu blinken.  
   </introduction>
 
   <usage lang="en">
