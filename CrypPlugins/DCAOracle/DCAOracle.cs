@@ -28,7 +28,7 @@ using DCAOracle.Properties;
 namespace Cryptool.Plugins.DCAOracle
 {
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
-    [PluginInfo("DCAOracle.Properties.Resources", "PluginCaption", "PluginTooltip", "DCAPathFinder/userdoc.xml", new[] { "DCAOracle/Images/IC_Oracle.png" })]
+    [PluginInfo("DCAOracle.Properties.Resources", "PluginCaption", "PluginTooltip", "DCAOracle/userdoc.xml", new[] { "DCAOracle/Images/IC_Oracle.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class DCAOracle : ICrypComponent
     {

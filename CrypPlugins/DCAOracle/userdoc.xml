@@ -5,20 +5,20 @@
   <language culture="en"/>
   <language culture="de-DE"/>
 
-  <introduction lang="en">    
+  <introduction lang="en">
+	The DCA Oracle component generates randomly selected plaintext message pairs that differ in a definable (XOR) difference. The count of message pairs and the difference are defined by inputs of the component. The block size of the messages can be defined in the settings of the component. Messages are generated using System.Random <ref id="rand" />.
   </introduction>
 
   <introduction lang="de-DE">    
-	<list>
-		<item>Beschreibung der DKA PFadVisualisierer-Komponente</item>
-		<item>Hinweis auf übrige DKA-Komponenten (gehören zusammen)</item>
-	</list>
+	Die DKA-Orakel-Komponente generiert zufällig gewählte Klartext-Nachrichten-Paare, die sich in einer definierbaren (XOR-) Differenz unterscheiden. Die Anzahl der Nachrichten-Paare und die Differenz werden Mittels Eingaben der Komponente definiert. In den Einstellungen der Komponente kann die Blockgröße der Nachrichten festgelegt werden. Eine Nachrichten werden mittels System.Random <ref id="rand" /> generiert.
   </introduction>
 
   <usage lang="en">
+	To use the component, the block size must be specified in the settings. The plaintext difference and the count of message pairs are defined via inputs.
   </usage>
 
   <usage lang="de-DE">
+	Zur Benutzung der Komponente muss in den Einstellungen die Blockgröße spezifiziert werden. Die Klartext-Differenz und die Anzahl der Nachrichten-Paare wird über Eingänge definiert.
   </usage>
   
   <presentation lang="en">
@@ -28,5 +28,14 @@
   </presentation>
   
   <references>
+	<linkReference id="rand">
+		<link url="https://docs.microsoft.com/en-us/dotnet/api/system.random?view=netframework-4.8" lang="en" />
+		<caption lang="en">System.Random documentation</caption>
+		<link url="https://docs.microsoft.com/de-de/dotnet/api/system.random.next?view=netframework-4.8" lang="de-DE" />
+		<caption lang="de-DE">System.Random Dokumentation</caption>
+	</linkReference>
+  
+  
+  
   </references>
 </documentation>
