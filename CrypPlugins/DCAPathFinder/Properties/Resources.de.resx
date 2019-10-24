@@ -631,7 +631,7 @@
     <value>7. Differenzielle Kryptoanalyse von Chiffre 2</value>
   </data>
   <data name="Tutorial2AttackKeyRound2Content1Run1" xml:space="preserve">
-    <value>An dieser Stelle soll der zweite Rundenschlüssel k</value>
+    <value>An dieser Stelle soll der Rundenschlüssel k</value>
   </data>
   <data name="Tutorial2AttackKeyRound2Content1Run2" xml:space="preserve">
     <value>2</value>
@@ -649,7 +649,7 @@
     <value> ab. Allerdings muss bei der Suche nach Differenzialen die Chiffre nicht mehr so tief durchsucht werden, da bereits eine Verschlüsselungsrunde vollständig angegriffen wurde.</value>
   </data>
   <data name="Tutorial2AttackKeyRound3Content1Run1" xml:space="preserve">
-    <value>An dieser Stelle soll der erste Rundenschlüssel k</value>
+    <value>An dieser Stelle soll der Rundenschlüssel k</value>
   </data>
   <data name="Tutorial2AttackKeyRound3Content1Run2" xml:space="preserve">
     <value>3</value>
@@ -1168,7 +1168,7 @@
     <value>Die maximale Anzahl an Threads für Ihr System beträgt {0} Threads. Diese Anzahl ist durch Ihren Prozessor limitiert.</value>
   </data>
   <data name="Tutorial3AttackKeyRound2Content1Run1" xml:space="preserve">
-    <value>An dieser Stelle soll der zweite Rundenschlüssel k</value>
+    <value>An dieser Stelle soll der Rundenschlüssel k</value>
   </data>
   <data name="Tutorial3AttackKeyRound2Content1Run2" xml:space="preserve">
     <value>2</value>
@@ -1186,13 +1186,13 @@
     <value> ab. Allerdings muss bei der Suche nach Differenzialen die Chiffre nicht mehr so tief durchsucht werden, da bereits eine Verschlüsselungsrunde vollständig angegriffen wurde.</value>
   </data>
   <data name="Tutorial3AttackKeyRound3Content1Run1" xml:space="preserve">
-    <value>An dieser Stelle soll der zweite Rundenschlüssel k</value>
+    <value>An dieser Stelle soll der Rundenschlüssel k</value>
   </data>
   <data name="Tutorial3AttackKeyRound3Content1Run2" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="Tutorial3AttackKeyRound3Content1Run3" xml:space="preserve">
-    <value> angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde S-Boxen ausgewählt werden. Durch die Auswahl einer S-Box werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
+    <value> angegriffen werden. Dazu können in der dritten Verschlüsselungsrunde S-Boxen ausgewählt werden. Durch die Auswahl einer S-Box werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
   </data>
   <data name="Tutorial3AttackKeyRound3Content1Run4" xml:space="preserve">
     <value>Der Angriff läuft nahezu analog zu dem auf den Rundenschlüssel k</value>
@@ -1204,13 +1204,13 @@
     <value> ab. Allerdings muss bei der Suche nach Differenzialen die Chiffre nicht mehr so tief durchsucht werden, da bereits eine Verschlüsselungsrunde vollständig angegriffen wurde.</value>
   </data>
   <data name="Tutorial3AttackKeyRound4Content1Run1" xml:space="preserve">
-    <value>An dieser Stelle soll der zweite Rundenschlüssel k</value>
+    <value>An dieser Stelle soll der Rundenschlüssel k</value>
   </data>
   <data name="Tutorial3AttackKeyRound4Content1Run2" xml:space="preserve">
     <value>4</value>
   </data>
   <data name="Tutorial3AttackKeyRound4Content1Run3" xml:space="preserve">
-    <value> angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde S-Boxen ausgewählt werden. Durch die Auswahl einer S-Box werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
+    <value> angegriffen werden. Dazu können in der vierten Verschlüsselungsrunde S-Boxen ausgewählt werden. Durch die Auswahl einer S-Box werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
   </data>
   <data name="Tutorial3AttackKeyRound4Content1Run4" xml:space="preserve">
     <value>Der Angriff läuft nahezu analog zu dem auf den Rundenschlüssel k</value>
@@ -1222,7 +1222,7 @@
     <value> ab. Allerdings muss bei der Suche nach Differenzialen die Chiffre nicht mehr so tief durchsucht werden, da bereits eine Verschlüsselungsrunde vollständig angegriffen wurde.</value>
   </data>
   <data name="Tutorial3AttackKeyRound5Content1Run1" xml:space="preserve">
-    <value>An dieser Stelle soll der erste Rundenschlüssel k</value>
+    <value>An dieser Stelle soll der Rundenschlüssel k</value>
   </data>
   <data name="Tutorial3AttackKeyRound5Content1Run2" xml:space="preserve">
     <value>5</value>

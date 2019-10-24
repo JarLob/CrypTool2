@@ -1425,10 +1425,15 @@ namespace DCAPathFinder.Logic.Cipher2
                                     FindSpecifiedCharacteristicsDepthSearch(characteristic.InputDifferentials[0],
                                         characteristic.InputDifferentials[round - 1], (UInt16)round, diffListOfSBox);
 
-                                if (differentialList == null || differentialList.Count == 0)
+                                if (differentialList == null)
                                 {
                                     return;
                                     //continue;
+                                }
+
+                                if (differentialList.Count == 0)
+                                {
+                                    differentialList.Add(characteristic);
                                 }
 
                                 ProgressEventArgs ev = new ProgressEventArgs()

@@ -230,7 +230,9 @@ namespace Cryptool.Plugins.DCAPathFinder
                     _differentialKeyRecoveryAttack = new Cipher2DifferentialKeyRecoveryAttack();
                     pathFinder.AttackSearchResultOccured += handleSearchresult;
                     pathFinder.ProgressChangedOccured += RefreshProgress;
-                }
+                    Cipher2Configuration.PROBABILITYBOUNDBESTCHARACTERISTICSEARCH = settings.AbortingThresholdCharacteristicSearch;
+                    Cipher2Configuration.PROBABILITYBOUNDDIFFERENTIALSEARCH = settings.AbortingThresholdDifferentialSearch;
+                    }
                     break;
                 case Algorithms.Cipher3:
                 {
@@ -238,6 +240,8 @@ namespace Cryptool.Plugins.DCAPathFinder
                     _differentialKeyRecoveryAttack = new Cipher3DifferentialKeyRecoveryAttack();
                     pathFinder.AttackSearchResultOccured += handleSearchresult;
                     pathFinder.ProgressChangedOccured += RefreshProgress;
+                    Cipher3Configuration.PROBABILITYBOUNDBESTCHARACTERISTICSEARCH = settings.AbortingThresholdCharacteristicSearch;
+                    Cipher3Configuration.PROBABILITYBOUNDDIFFERENTIALSEARCH = settings.AbortingThresholdDifferentialSearch;
                 }
                     break;
             }
@@ -814,9 +818,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 3 run 1
                             bool[] sboxesToAttack = new bool[] {false, false, false, true};
 
-                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -878,9 +889,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                         {
                             bool[] sboxesToAttack = new bool[] {false, false, true, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -942,9 +960,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                         {
                             bool[] sboxesToAttack = new bool[] {false, true, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -1006,9 +1031,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                         {
                             bool[] sboxesToAttack = new bool[] {true, false, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+                                
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -1070,9 +1102,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                         {
                             bool[] sboxesToAttack = new bool[] {false, false, false, true};
 
-                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -1134,9 +1173,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                         {
                             bool[] sboxesToAttack = new bool[] {false, false, true, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -1198,9 +1244,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                         {
                             bool[] sboxesToAttack = new bool[] {false, true, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+                                
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -1262,9 +1315,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                         {
                             bool[] sboxesToAttack = new bool[] {true, false, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -2110,10 +2170,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 5 run 1
                             bool[] sboxesToAttack = new bool[] {false, false, false, true};
 
-                            conf = pathFinder.GenerateConfigurationAttack(5, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy,
-                                settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(5, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -2175,10 +2241,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 5 run 2
                             bool[] sboxesToAttack = new bool[] {false, false, true, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(5, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy,
-                                settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(5, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -2240,10 +2312,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 5 run 3
                             bool[] sboxesToAttack = new bool[] {false, true, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(5, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy,
-                                settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(5, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -2305,10 +2383,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 5 run 4
                             bool[] sboxesToAttack = new bool[] {true, false, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(5, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy,
-                                settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(5, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -2370,10 +2454,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 4 run 1
                             bool[] sboxesToAttack = new bool[] {false, false, false, true};
 
-                            conf = pathFinder.GenerateConfigurationAttack(4, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy,
-                                settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(4, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -2435,10 +2525,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 4 run 2
                             bool[] sboxesToAttack = new bool[] {false, false, true, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(4, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy,
-                                settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(4, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -2500,10 +2596,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 4 run 3
                             bool[] sboxesToAttack = new bool[] {false, true, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(4, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy,
-                                settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(4, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -2565,10 +2667,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 4 run 4
                             bool[] sboxesToAttack = new bool[] {true, false, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(4, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy,
-                                settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(4, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -2630,10 +2738,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 3 run 1
                             bool[] sboxesToAttack = new bool[] {false, false, false, true};
 
-                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy,
-                                settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -2695,10 +2809,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 3 run 2
                             bool[] sboxesToAttack = new bool[] {false, false, true, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy,
-                                settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -2760,10 +2880,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 3 run 3
                             bool[] sboxesToAttack = new bool[] {false, true, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy,
-                                settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -2825,10 +2951,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 3 run 4
                             bool[] sboxesToAttack = new bool[] {true, false, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy,
-                                settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(3, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -2890,10 +3022,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 2 run 1
                             bool[] sboxesToAttack = new bool[] {false, false, false, true};
 
-                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy,
-                                settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -2955,10 +3093,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 2 run 2
                             bool[] sboxesToAttack = new bool[] {false, false, true, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy,
-                                settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -3020,10 +3164,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 2 run 3
                             bool[] sboxesToAttack = new bool[] {false, true, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy,
-                                settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {
@@ -3085,10 +3235,16 @@ namespace Cryptool.Plugins.DCAPathFinder
                             //round 2 run 4
                             bool[] sboxesToAttack = new bool[] {true, false, false, false};
 
-                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths,
-                                settings.CurrentAbortingPolicy,
-                                settings.CurrentSearchPolicy,
-                                diffList);
+                            conf = pathFinder.GenerateConfigurationAttack(2, sboxesToAttack, settings.UseOfflinePaths, settings.CurrentAbortingPolicy, settings.CurrentSearchPolicy, diffList);
+
+                            //check if there is a result
+                            if (conf != null && conf.Characteristics.Count == 0)
+                            {
+                                GuiLogMessage(Resources.NoCharacteristicFoundError, NotificationLevel.Warning);
+                                _currentProgress = 1.0;
+                                ProgressChanged(_currentProgress, _maxProgress);
+                                return;
+                            }
 
                             if (_stop)
                             {

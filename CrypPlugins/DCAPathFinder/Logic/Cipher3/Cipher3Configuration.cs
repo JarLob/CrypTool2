@@ -14,11 +14,11 @@ namespace DCAPathFinder.Logic.Cipher3
         public static readonly UInt16[] PBOX = {0, 4, 8, 12, 1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15};
         public static readonly UInt16[] SBOXREVERSE = {4, 8, 6, 10, 1, 3, 0, 5, 12, 14, 13, 15, 2, 11, 7, 9};
         public static readonly UInt16[] PBOXREVERSE = {0, 4, 8, 12, 1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15};
-        public static readonly double PROBABILITYBOUNDBESTCHARACTERISTICSEARCH = 0.001;
-        public static readonly double PROBABILITYBOUNDDIFFERENTIALSEARCH = 0.0001;
+        public static double PROBABILITYBOUNDBESTCHARACTERISTICSEARCH = 0.001;
+        public static double PROBABILITYBOUNDDIFFERENTIALSEARCH = 0.0001;
 
-        //Testing purpose to check if there are no results
-        //public static readonly double PROBABILITYBOUNDBESTCHARACTERISTICSEARCH = 0.1;
-        //public static readonly double PROBABILITYBOUNDDIFFERENTIALSEARCH = 0.1;
+        //default values:
+        //public static readonly double PROBABILITYBOUNDBESTCHARACTERISTICSEARCH = 0.001;
+        //public static readonly double PROBABILITYBOUNDDIFFERENTIALSEARCH = 0.0001;
     }
 }

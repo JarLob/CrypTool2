@@ -1179,310 +1179,310 @@
     <value>Differential cryptanalysis is continued in the following components</value>
   </data>
   <data name="Tutorial3AttackFinishedContent1" xml:space="preserve">
-    <value>Tutorial 3 zur differenziellen Kryptoanalyse in der DKA-PfadFinder-Komponente ist beendet. </value>
+    <value>Tutorial 3 on differential cryptanalysis in the DCA PathFinder component is finished.</value>
   </data>
   <data name="Tutorial3AttackFinishedContent2Run1" xml:space="preserve">
-    <value>Durch ein letztes Klicken auf "Start" in der DKA-KeyRecovery-Komponente werden die letzten zwei Rundenschlüssel k</value>
+    <value>A last click on "Start" in the DKA KeyRecovery component will attempt to recover the last two round keys k</value>
   </data>
   <data name="Tutorial3AttackFinishedContent2Run2" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="Tutorial3AttackFinishedContent2Run3" xml:space="preserve">
-    <value> und k</value>
+    <value> and k</value>
   </data>
   <data name="Tutorial3AttackFinishedContent2Run4" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="Tutorial3AttackFinishedContent2Run5" xml:space="preserve">
-    <value> versucht wiederherzustellen.</value>
+    <value>.</value>
   </data>
   <data name="Tutorial3AttackFinishedHeader" xml:space="preserve">
-    <value>Tutorial 3 beendet</value>
+    <value>Tutorial 3 finished</value>
   </data>
   <data name="Tutorial3AttackFirstRoundContent1Run1" xml:space="preserve">
-    <value>Im letzten Schritt werden die letzten beiden Rundenschlüssel k</value>
+    <value>In the last step, the last two round keys k</value>
   </data>
   <data name="Tutorial3AttackFirstRoundContent1Run2" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="Tutorial3AttackFirstRoundContent1Run3" xml:space="preserve">
-    <value> und k</value>
+    <value> and k</value>
   </data>
   <data name="Tutorial3AttackFirstRoundContent1Run4" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="Tutorial3AttackFirstRoundContent1Run5" xml:space="preserve">
-    <value> angegriffen. Dieser Angriff läuft analog zu dem Verfahren ab, wie es in Tutorial 1 durchgeführt wurde.</value>
+    <value> are attacked. This attack is similar to the procedure described in Tutorial 1.</value>
   </data>
   <data name="Tutorial3AttackFirstRoundContent2Run1" xml:space="preserve">
-    <value>Durch einen Klick auf weiter werden die ersten beiden Rundenschlüssel k</value>
+    <value>By clicking on "continue", the first two round keys k</value>
   </data>
   <data name="Tutorial3AttackFirstRoundContent2Run2" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="Tutorial3AttackFirstRoundContent2Run3" xml:space="preserve">
-    <value> und k</value>
+    <value> and k</value>
   </data>
   <data name="Tutorial3AttackFirstRoundContent2Run4" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="Tutorial3AttackFirstRoundContent2Run5" xml:space="preserve">
-    <value> angegriffen.</value>
+    <value> are attacked.</value>
   </data>
   <data name="Tutorial3AttackFirstRoundHeaderRun1" xml:space="preserve">
-    <value>Berechnung der Rundenschlüssel k</value>
+    <value>Calculation of round keys k</value>
   </data>
   <data name="Tutorial3AttackFirstRoundHeaderRun2" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="Tutorial3AttackFirstRoundHeaderRun3" xml:space="preserve">
-    <value> und k</value>
+    <value> and k</value>
   </data>
   <data name="Tutorial3AttackFirstRoundHeaderRun4" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="Tutorial3AttackHeader" xml:space="preserve">
-    <value>5. Differenzielle Kryptoanalyse von Chiffre 3</value>
+    <value>5. Differential cryptanalysis of cipher 3</value>
   </data>
   <data name="Tutorial3AttackKeyRound2Content1Run1" xml:space="preserve">
-    <value>An dieser Stelle soll der zweite Rundenschlüssel k</value>
+    <value>At this point, the second round key k</value>
   </data>
   <data name="Tutorial3AttackKeyRound2Content1Run2" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="Tutorial3AttackKeyRound2Content1Run3" xml:space="preserve">
-    <value> angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
+    <value> is to be attacked. S-boxes can be selected for this in the second encryption round. By selecting an S-ox, the respective 4 bits of the round key are attacked and an attempt is made to restore them.</value>
   </data>
   <data name="Tutorial3AttackKeyRound2Content1Run4" xml:space="preserve">
-    <value>Der Angriff läuft nahezu analog zu dem auf den Rundenschlüssel k</value>
+    <value>The attack is almost analogous to the attack on the round key k</value>
   </data>
   <data name="Tutorial3AttackKeyRound2Content1Run5" xml:space="preserve">
     <value>5</value>
   </data>
   <data name="Tutorial3AttackKeyRound2Content1Run6" xml:space="preserve">
-    <value> ab. Allerdings muss bei der Suche nach Differenzialen die Chiffre nicht mehr so tief durchsucht werden, da bereits eine Verschlüsselungsrunde vollständig angegriffen wurde.</value>
+    <value>. However, when searching for differentials, the cipher no longer has to be searched so deeply, since an encryption round has already been completely attacked.</value>
   </data>
   <data name="Tutorial3AttackKeyRound3Content1Run1" xml:space="preserve">
-    <value>An dieser Stelle soll der zweite Rundenschlüssel k</value>
+    <value>At this point, the third round key k</value>
   </data>
   <data name="Tutorial3AttackKeyRound3Content1Run2" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="Tutorial3AttackKeyRound3Content1Run3" xml:space="preserve">
-    <value> angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
+    <value> is to be attacked. S-boxes can be selected for this in the third encryption round. By selecting an S-box, the respective 4 bits of the round key are attacked and an attempt is made to restore them.</value>
   </data>
   <data name="Tutorial3AttackKeyRound3Content1Run4" xml:space="preserve">
-    <value>Der Angriff läuft nahezu analog zu dem auf den Rundenschlüssel k</value>
+    <value>The attack is almost analogous to the attack on the round key k</value>
   </data>
   <data name="Tutorial3AttackKeyRound3Content1Run5" xml:space="preserve">
     <value>5</value>
   </data>
   <data name="Tutorial3AttackKeyRound3Content1Run6" xml:space="preserve">
-    <value> ab. Allerdings muss bei der Suche nach Differenzialen die Chiffre nicht mehr so tief durchsucht werden, da bereits eine Verschlüsselungsrunde vollständig angegriffen wurde.</value>
+    <value> . However, when searching for differentials, the cipher no longer has to be searched so deeply, since an encryption round has already been completely attacked.</value>
   </data>
   <data name="Tutorial3AttackKeyRound4Content1Run1" xml:space="preserve">
-    <value>An dieser Stelle soll der zweite Rundenschlüssel k</value>
+    <value>At this point, the fourth round key k</value>
   </data>
   <data name="Tutorial3AttackKeyRound4Content1Run2" xml:space="preserve">
     <value>4</value>
   </data>
   <data name="Tutorial3AttackKeyRound4Content1Run3" xml:space="preserve">
-    <value> angegriffen werden. Dazu können in der zweiten Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
+    <value> is to be attacked. S-boxes can be selected for this in the fourth encryption round. By selecting an S-ox, the respective 4 bits of the round key are attacked and an attempt is made to restore them.</value>
   </data>
   <data name="Tutorial3AttackKeyRound4Content1Run4" xml:space="preserve">
-    <value>Der Angriff läuft nahezu analog zu dem auf den Rundenschlüssel k</value>
+    <value>The attack is almost analogous to the attack on the round key k</value>
   </data>
   <data name="Tutorial3AttackKeyRound4Content1Run5" xml:space="preserve">
     <value>5</value>
   </data>
   <data name="Tutorial3AttackKeyRound4Content1Run6" xml:space="preserve">
-    <value> ab. Allerdings muss bei der Suche nach Differenzialen die Chiffre nicht mehr so tief durchsucht werden, da bereits eine Verschlüsselungsrunde vollständig angegriffen wurde.</value>
+    <value>. However, when searching for differentials, the cipher no longer has to be searched so deeply, since an encryption round has already been completely attacked.</value>
   </data>
   <data name="Tutorial3AttackKeyRound5Content1Run1" xml:space="preserve">
-    <value>An dieser Stelle soll der erste Rundenschlüssel k</value>
+    <value>At this point, the fifth round key k</value>
   </data>
   <data name="Tutorial3AttackKeyRound5Content1Run2" xml:space="preserve">
     <value>5</value>
   </data>
   <data name="Tutorial3AttackKeyRound5Content1Run3" xml:space="preserve">
-    <value> der Chiffre angegriffen werden. Dazu können in der fünften Verschlüsselungsrunde SBoxen ausgewählt werden. Durch die Auswahl einer SBox werden die jeweiligen 4 Bits des Rundenschlüssels angegriffen und versucht wiederherzustellen.</value>
+    <value> is to be attacked. S-boxes can be selected for this in the fifth encryption round. By selecting an S-ox, the respective 4 bits of the round key are attacked and an attempt is made to restore them.</value>
   </data>
   <data name="Tutorial3AttackKeyRound5Content1Run4" xml:space="preserve">
-    <value>Bei der differenziellen Kryptoanalyse wird die Veränderung von Differenzen an den SBoxen betrachtet. Daher sind an dieser Stelle SBoxen auszuwählen.</value>
+    <value>In differential cryptanalysis, the change of differences at the S-boxes is considered. S-boxes should therefore be selected at this point.</value>
   </data>
   <data name="Tutorial3AttackKeyRound5Content1Run5" xml:space="preserve">
-    <value>Je mehr Schlüsselbits ausgewählt werden, desto komplizierter ist die Suche nach einem Differenzial. Allerdings kann durchaus sinnvoll sein, mehrere SBoxen gleichzeitig anzugreifen. Je nach Beschaffenheit der Chiffre finden sich so bessere oder schlechtere Differenziale.</value>
+    <value>The more key bits that are selected, the more complicated the search for a differential. However, it can make sense to attack several S-boxes at the same time. Depending on the nature of the cipher, better or worse differentials can be found.</value>
   </data>
   <data name="Tutorial3AttackRound2HeaderRun1" xml:space="preserve">
-    <value>SBoxen aus Runde 2 auswählen, um Schlüsselbits von k</value>
+    <value>Select S-boxes from round 2 to attack key bits from k</value>
   </data>
   <data name="Tutorial3AttackRound2HeaderRun2" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="Tutorial3AttackRound2HeaderRun3" xml:space="preserve">
-    <value> anzugreifen</value>
+    <value />
   </data>
   <data name="Tutorial3AttackRound3HeaderRun1" xml:space="preserve">
-    <value>SBoxen aus Runde 3 auswählen, um Schlüsselbits von k</value>
+    <value>Select S-boxes from round 3 to attack key bits from k</value>
   </data>
   <data name="Tutorial3AttackRound3HeaderRun2" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="Tutorial3AttackRound3HeaderRun3" xml:space="preserve">
-    <value> anzugreifen</value>
+    <value />
   </data>
   <data name="Tutorial3AttackRound4HeaderRun1" xml:space="preserve">
-    <value>SBoxen aus Runde 4 auswählen, um Schlüsselbits von k</value>
+    <value>Select S-boxes from round 4 to attack key bits from k</value>
   </data>
   <data name="Tutorial3AttackRound4HeaderRun2" xml:space="preserve">
     <value>4</value>
   </data>
   <data name="Tutorial3AttackRound4HeaderRun3" xml:space="preserve">
-    <value> anzugreifen</value>
+    <value />
   </data>
   <data name="Tutorial3AttackRound5HeaderRun1" xml:space="preserve">
-    <value>SBoxen aus Runde 5 auswählen, um Schlüsselbits von k</value>
+    <value>Select S-boxes from round 5 to attack key bits from k</value>
   </data>
   <data name="Tutorial3AttackRound5HeaderRun2" xml:space="preserve">
     <value>5</value>
   </data>
   <data name="Tutorial3AttackRound5HeaderRun3" xml:space="preserve">
-    <value> anzugreifen</value>
+    <value />
   </data>
   <data name="Tutorial3FilterHeader" xml:space="preserve">
-    <value>2. Filterung</value>
+    <value>2. Filtering</value>
   </data>
   <data name="Tutorial3FilterSlide1Content1" xml:space="preserve">
-    <value>Bei der Durchführung der DKA werden viele Klartext-Paare generiert, die eine bestimmte Differenz aufweisen. Es kann vorkommen, dass die Nachrichten dem im Differenzial gefundenen Weg durch die Chiffre nicht folgen.</value>
+    <value>During the execution of the DCA, many plaintext pairs are generated which have a certain difference. It may happen that the messages do not follow the path found in the differential through the cipher.</value>
   </data>
   <data name="Tutorial3FilterSlide1Content2" xml:space="preserve">
-    <value>Erfüllt ein Paar die Eingabedifferenz, bedeutet es noch nicht, dass es auch die letzte Differenz erfüllt.</value>
+    <value>If a pair meets the input difference, it does not yet mean that it also meets the last difference.</value>
   </data>
   <data name="Tutorial3FilterSlide1Content3" xml:space="preserve">
-    <value>Wenn ein Paar den Fluss des Differenzials folgt, wird von einem richten Paar gesprochen. Dahingegen wird ein Paar, das nicht dem Differenzial folgt, als falsches Paar bezeichnet.</value>
+    <value>When a pair follows the flow of the differential, one speaks of a right pair. On the other hand, a pair that does not follow the differential is called a wrong pair.</value>
   </data>
   <data name="Tutorial3FilterSlide1Header" xml:space="preserve">
-    <value>Filterung</value>
+    <value>Filtering</value>
   </data>
   <data name="Tutorial3FilterSlide2Content1" xml:space="preserve">
-    <value>Falsche Paare können bei der Wiederherstellung des gesuchten Rundenschlüssels Probleme darstellen. Diese erschweren die Identifizierung des korrekten Rundenschlüssels durch Treffer von falschen Rundenschlüsseln bei der Wiederherstellung.</value>
+    <value>Wrong pairs can cause problems when restoring the round key you are looking for. These make it difficult to identify the correct round key by hitting incorrect round keys during recovery.</value>
   </data>
   <data name="Tutorial3FilterSlide2Content2" xml:space="preserve">
-    <value>Es ist daher sinnvoll, falsche Paare vor der Wiederherstellung des Rundenschlüssels zu identifizieren und nicht weiter zu betrachten.</value>
+    <value>It is therefore useful to identify the wrong pairs before restoring the round key and not to consider them further.</value>
   </data>
   <data name="Tutorial3FilterSlide2Header" xml:space="preserve">
-    <value>Filterung</value>
+    <value>Filtering</value>
   </data>
   <data name="Tutorial3IntroductionHeader" xml:space="preserve">
-    <value>1. Einführung</value>
+    <value>1. Introduction</value>
   </data>
   <data name="Tutorial3IntroductionSlide1Content1" xml:space="preserve">
-    <value>In Tutorial 1 wurde die Idee der differenziellen Kryptoanalyse vorgestellt und an einer Chiffre bestehend aus einer Verschlüsselungsrunde mit zwei Rundenschlüsseln demonstriert. In Turorial 2 wurde die Idee vertieft und an einer Chiffre mit drei Verschlüsselungsrudnen gezeigt.</value>
+    <value>In Tutorial 1 the idea of differential cryptanalysis was introduced and demonstrated with a cipher consisting of one encryption round with two round keys. In Turorial 2 the idea was deepened and shown on a cipher with three encryption rounds.</value>
   </data>
   <data name="Tutorial3IntroductionSlide1Content2" xml:space="preserve">
-    <value>Dazu wurden Strukturen wie Charakteristiken und Differenziale eingeführt.</value>
+    <value>For this purpose, structures such as characteristics and differentials were introduced.</value>
   </data>
   <data name="Tutorial3IntroductionSlide1Content3" xml:space="preserve">
-    <value>In diesem Tutorial werden weitere Techniken gezeigt, die bei der DKA verwendet werden.</value>
+    <value>In this tutorial further techniques are shown, which are used with the DCA.</value>
   </data>
   <data name="Tutorial3IntroductionSlide1Content4" xml:space="preserve">
-    <value>Chiffre 3 besteht aus fünf Verschlüsselungsrunden und sechs Rundenschlüsseln. Das bereits demonstrierte soll an dieser Chiffre darüber hinaus nochmal vertieft werden.</value>
+    <value>Cipher 3 consists of five encryption rounds and six round keys. The already demonstrated code will be deepened with this cipher.</value>
   </data>
   <data name="Tutorial3IntroductionSlide1Header" xml:space="preserve">
-    <value>Einführung</value>
+    <value>Introduction</value>
   </data>
   <data name="Tutorial3IntroductionSlide3Content1" xml:space="preserve">
-    <value>Zur Filterung werden im Folgenden zwei Techniken vorgestellt.</value>
+    <value>Two techniques for filtering are presented below.</value>
   </data>
   <data name="Tutorial3IntroductionSlide3Content2" xml:space="preserve">
-    <value>Als erste Technik wird die Differenz der Geheimtexte eines Paares betrachtet. Beim Angriff mittels DKA werden oft aus Gründen des Aufwands nicht alle S-Boxen eiener Verschlüsselungsrunde gleichzeitig angegriffen, sondern oft nur eine Teilmenge.</value>
+    <value>The first technique considered is the difference between the ciphertexts of a pair. When attacking with DCA not all S-boxes of an encryption round are attacked at the same time, but often only a subset.</value>
   </data>
   <data name="Tutorial3IntroductionSlide3Content3" xml:space="preserve">
-    <value>Die S-Boxen, an denen die Differenz 0 hineingeht, kommt auch die Differenz 0 heraus. Folglich durch Betrachtung der Geheimtext-Differenz einige Paare schon ausgeschlossen werden, wenn die Differenz an den entsprechenden Stellen von 0 verschieden ist.</value>
+    <value>The S-boxes where the difference 0 goes in, also the difference 0 comes out. Consequently, by considering the ciphertext difference some pairs are already excluded if the difference at the corresponding places is different from 0.</value>
   </data>
   <data name="Tutorial3IntroductionSlide3Header" xml:space="preserve">
-    <value>Filterung</value>
+    <value>Filtering</value>
   </data>
   <data name="Tutorial3IntroductionSlide4Content1" xml:space="preserve">
-    <value>Als zweites kann die letzte (erwartete) Differenz des Differenzials betrachtet werden.</value>
+    <value>Second, the last (expected) difference of the differential can be considered.</value>
   </data>
   <data name="Tutorial3IntroductionSlide4Content2" xml:space="preserve">
-    <value>Dieser Wert ist bekannt und durch Betrachtung der Differenzenverteilungstabelle der S-Box kann auch der Ausgabewert der S-Box ermittelt werden. Im allgemeinen sind hier mehrere verschiedene Werte möglich. Diese Werte können ebenfalls bei der Betrachtung der Differenz der Geheimtexte verwendet werden.</value>
+    <value>This value is known and the output value of the S-box can be determined by looking at the difference distribution table of the S-box. In general, several different values are possible here. These values can also be used when considering the difference of the ciphertext.</value>
   </data>
   <data name="Tutorial3IntroductionSlide4Content3" xml:space="preserve">
-    <value>Entspricht die Geheimtext-Differenz an der Stelle der S-Box nicht einem der verschiedenen Ausgangswerte der S-Box, kann dieses Paar ebenfalls als falsches Paar indentifiziert werden.</value>
+    <value>If the ciphertext difference at the position of the S-box does not correspond to one of the different output values of the S-box, this pair can also be identified as the wrong pair.</value>
   </data>
   <data name="Tutorial3IntroductionSlide4Header" xml:space="preserve">
-    <value>Filterung</value>
+    <value>Filtering</value>
   </data>
   <data name="Tutorial3NeededPairsHeader" xml:space="preserve">
-    <value>3. Anzahl der notwendigen Paare</value>
+    <value>3. Number of necessary pairs</value>
   </data>
   <data name="Tutorial3NeededPairsSlide1Content1" xml:space="preserve">
-    <value>Die notwendige Anzahl an Paaren ist im wesentlichen von bestimmten Faktoren abhängig. Diese sind die Wahrscheinlichkeit des gefundenen Differenzials, die Anzahl der angegriffenen Schlüsselbits durch das Differenzial und die Filterungstechnik.</value>
+    <value>The necessary number of pairs depends essentially on certain factors. These are the probability of the differential found, the number of key bits attacked by the differential, and the filtering technique.</value>
   </data>
   <data name="Tutorial3NeededPairsSlide1Content2" xml:space="preserve">
-    <value>Es beschreibt das Verhältnis der Anzahl von Paaren, die dem Differenzial folgen zu der durchschnittlichen Häufigkeit der falschen Teilschlüssel.</value>
+    <value>It describes the ratio of the number of pairs following the differential to the average frequency of the wrong subkeys.</value>
   </data>
   <data name="Tutorial3NeededPairsSlide1Content2Run1" xml:space="preserve">
-    <value>Eine gängige Formel zur bestimmung der notwendigen Paare N</value>
+    <value>A common formula for determining the necessary pairs N</value>
   </data>
   <data name="Tutorial3NeededPairsSlide1Content2Run2" xml:space="preserve">
     <value>D</value>
   </data>
   <data name="Tutorial3NeededPairsSlide1Content2Run3" xml:space="preserve">
-    <value> ist</value>
+    <value> is</value>
   </data>
   <data name="Tutorial3NeededPairsSlide1Content3" xml:space="preserve">
-    <value>wobei c eine kleine Konstante und DP die Wahrscheinlichkeit des Differenzials ist.</value>
+    <value>where c is a small constant and DP is the probability of the difference.</value>
   </data>
   <data name="Tutorial3NeededPairsSlide1Content4" xml:space="preserve">
-    <value>Ein beispielhafter Wert für c ist beispielsweise 10.</value>
+    <value>An example value for c is 10.</value>
   </data>
   <data name="Tutorial3NeededPairsSlide1Header" xml:space="preserve">
-    <value>Anzahl der notwendigen Paare</value>
+    <value>Number of necessary pairs</value>
   </data>
   <data name="Tutorial3SignalToNoiseHeader" xml:space="preserve">
-    <value>4. Rauschverhältnis</value>
+    <value>4. Signal-to-noise ratio</value>
   </data>
   <data name="Tutorial3SignalToNoiseSlide1Content1" xml:space="preserve">
-    <value>Ein Werkzeug zur Beurteilung der Erfolgsaussichten, ist das so genannte Rauschverhältnis.</value>
+    <value>A tool for assessing the chances of success is the so-called signal-to-noise ratio.</value>
   </data>
   <data name="Tutorial3SignalToNoiseSlide1Content3" xml:space="preserve">
-    <value>Zur Bestimmung des Rauschverhältnis sind zum Teil experimentell zu bestimmtende Durchschnittswerte notwendig, wie beispielsweise der Anteil der Paare, die durch die Filterng entfernt werden oder die Durchschnittliche Anzahl der Teilschlüsselkandidaten, die ein Paar vorschlägt.</value>
+    <value>To determine the signal-to-noise ratio, average values to be determined experimentally are sometimes necessary, such as the percentage of pairs that are removed by the filterng or the average number of subkey candidates that a pair proposes.</value>
   </data>
   <data name="Tutorial3SignalToNoiseSlide1Content4" xml:space="preserve">
-    <value>In der Online-Hilfe der DKA-PfadFinder-Komponente sind weitere Literatur-Angaben zu dem DKA-Verfahren hinterlegt.</value>
+    <value>The online help of the DCA PathFinder component contains further literature information on the DCA procedure.</value>
   </data>
   <data name="Tutorial3SignalToNoiseSlide1Header" xml:space="preserve">
-    <value>Rauschverhältnis</value>
+    <value>Signal-to-noise ratio</value>
   </data>
   <data name="Tutorial3TitleHeaderRun1" xml:space="preserve">
     <value>Tutorial</value>
   </data>
   <data name="Tutorial3TitleHeaderRun2" xml:space="preserve">
-    <value>Differenzielle Kryptoanalyse symmetrischer Blockchiffren</value>
+    <value>Differential cryptanalysis of symmetric block ciphers</value>
   </data>
   <data name="Tutorial3WaitingSlideContent1" xml:space="preserve">
-    <value>Sie können nun in der DKA-KeyRecovery-Komponente die in der DKA-PfadFinder-Komponente generierte Angriffskonfiguration verwenden, um Schlüsselbits wiederherzustellen. Dazu müssen Sie auf den Button "Start" klicken.</value>
+    <value>You can now use the attack configuration generated in the DCA PathFinder component in the DCA KeyRecovery component to restore key bits. To do this, click the "Start" button.</value>
   </data>
   <data name="Tutorial3WaitingSlideContent2" xml:space="preserve">
-    <value>Optional können Sie sich in der DKA-PfadVisualiserer-Komponente das ermittelte Differenzial und die darin enthaltenen Charakteristiken anzeigen lassen.</value>
+    <value>Optionally, you can display the determined differential and its characteristics in the DCA PathVisualizer component.</value>
   </data>
   <data name="Tutorial3WaitingSlideContent3Run1" xml:space="preserve">
-    <value>Zusammenfassung der Analyse-Ergebnisse:</value>
+    <value>Summary of the analysis results:</value>
   </data>
   <data name="Tutorial3WaitingSlideContent3Run2" xml:space="preserve">
-    <value>Eingabedifferenz: </value>
+    <value>Input difference:</value>
   </data>
   <data name="Tutorial3WaitingSlideContent3Run3" xml:space="preserve">
-    <value>Erwartete Differenz: </value>
+    <value>Expected difference:</value>
   </data>
   <data name="Tutorial3WaitingSlideContent3Run4" xml:space="preserve">
-    <value>Wahrscheinlichkeit: </value>
+    <value>Probability: </value>
   </data>
   <data name="Tutorial3WaitingSlideHeader" xml:space="preserve">
-    <value>Differenzielle Kryptoanalyse wird in den nachfolgenden Komponenten weitergeführt</value>
+    <value>Differential cryptanalysis is continued in the following components</value>
   </data>
   <data name="UseOfflinePaths" xml:space="preserve">
     <value>Precalculated data</value>
