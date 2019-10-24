@@ -2599,7 +2599,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die By clicking on &quot;Continue&quot;, the first two round keys k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die By clicking on &quot;Continue&quot; (right arrow below), the first two round keys k ähnelt.
         /// </summary>
         public static string Tutorial2AttackFirstRoundContent2Run1 {
             get {
@@ -3348,7 +3348,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die By clicking on &quot;continue&quot;, the first two round keys k ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die By clicking on &quot;Continue&quot; (right arrow below), the first two round keys k ähnelt.
         /// </summary>
         public static string Tutorial3AttackFirstRoundContent2Run1 {
             get {
@@ -3456,7 +3456,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  is to be attacked. S-boxes can be selected for this in the second encryption round. By selecting an S-ox, the respective 4 bits of the round key are attacked and an attempt is made to restore them. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  is to be attacked. S-boxes can be selected for this in the second encryption round. By selecting an S-box, the respective 4 bits of the round key are attacked and an attempt is made to restore them. ähnelt.
         /// </summary>
         public static string Tutorial3AttackKeyRound2Content1Run3 {
             get {
@@ -3564,7 +3564,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  is to be attacked. S-boxes can be selected for this in the fourth encryption round. By selecting an S-ox, the respective 4 bits of the round key are attacked and an attempt is made to restore them. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  is to be attacked. S-boxes can be selected for this in the fourth encryption round. By selecting an S-box, the respective 4 bits of the round key are attacked and an attempt is made to restore them. ähnelt.
         /// </summary>
         public static string Tutorial3AttackKeyRound4Content1Run3 {
             get {
@@ -3618,7 +3618,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  is to be attacked. S-boxes can be selected for this in the fifth encryption round. By selecting an S-ox, the respective 4 bits of the round key are attacked and an attempt is made to restore them. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  is to be attacked. S-boxes can be selected for this in the fifth encryption round. By selecting an S-box, the respective 4 bits of the round key are attacked and an attempt is made to restore them. ähnelt.
         /// </summary>
         public static string Tutorial3AttackKeyRound5Content1Run3 {
             get {
@@ -3834,7 +3834,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In Tutorial 1 the idea of differential cryptanalysis was introduced and demonstrated with a cipher consisting of one encryption round with two round keys. In Turorial 2 the idea was deepened and shown on a cipher with three encryption rounds. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In Tutorial 1 the idea of differential cryptanalysis was introduced and demonstrated with a cipher consisting of one encryption round with two round keys. In Tutorial 2 the idea was deepened and shown on a cipher with three encryption rounds. ähnelt.
         /// </summary>
         public static string Tutorial3IntroductionSlide1Content1 {
             get {
@@ -3915,7 +3915,7 @@ namespace DCAPathFinder.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Second, the last (expected) difference of the differential can be considered. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Secondly, the last (expected) difference of the differential can be considered. ähnelt.
         /// </summary>
         public static string Tutorial3IntroductionSlide4Content1 {
             get {

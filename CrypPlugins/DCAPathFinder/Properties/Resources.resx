@@ -964,7 +964,7 @@
     <value> are attacked. This attack is similar to the procedure described in Tutorial 1</value>
   </data>
   <data name="Tutorial2AttackFirstRoundContent2Run1" xml:space="preserve">
-    <value>By clicking on "Continue", the first two round keys k</value>
+    <value>By clicking on "Continue" (right arrow below), the first two round keys k</value>
   </data>
   <data name="Tutorial2AttackFirstRoundContent2Run2" xml:space="preserve">
     <value>1</value>
@@ -1215,7 +1215,7 @@
     <value> are attacked. This attack is similar to the procedure described in Tutorial 1.</value>
   </data>
   <data name="Tutorial3AttackFirstRoundContent2Run1" xml:space="preserve">
-    <value>By clicking on "continue", the first two round keys k</value>
+    <value>By clicking on "Continue" (right arrow below), the first two round keys k</value>
   </data>
   <data name="Tutorial3AttackFirstRoundContent2Run2" xml:space="preserve">
     <value>1</value>
@@ -1251,7 +1251,7 @@
     <value>2</value>
   </data>
   <data name="Tutorial3AttackKeyRound2Content1Run3" xml:space="preserve">
-    <value> is to be attacked. S-boxes can be selected for this in the second encryption round. By selecting an S-ox, the respective 4 bits of the round key are attacked and an attempt is made to restore them.</value>
+    <value> is to be attacked. S-boxes can be selected for this in the second encryption round. By selecting an S-box, the respective 4 bits of the round key are attacked and an attempt is made to restore them.</value>
   </data>
   <data name="Tutorial3AttackKeyRound2Content1Run4" xml:space="preserve">
     <value>The attack is almost analogous to the attack on the round key k</value>
@@ -1287,7 +1287,7 @@
     <value>4</value>
   </data>
   <data name="Tutorial3AttackKeyRound4Content1Run3" xml:space="preserve">
-    <value> is to be attacked. S-boxes can be selected for this in the fourth encryption round. By selecting an S-ox, the respective 4 bits of the round key are attacked and an attempt is made to restore them.</value>
+    <value> is to be attacked. S-boxes can be selected for this in the fourth encryption round. By selecting an S-box, the respective 4 bits of the round key are attacked and an attempt is made to restore them.</value>
   </data>
   <data name="Tutorial3AttackKeyRound4Content1Run4" xml:space="preserve">
     <value>The attack is almost analogous to the attack on the round key k</value>
@@ -1305,7 +1305,7 @@
     <value>5</value>
   </data>
   <data name="Tutorial3AttackKeyRound5Content1Run3" xml:space="preserve">
-    <value> is to be attacked. S-boxes can be selected for this in the fifth encryption round. By selecting an S-ox, the respective 4 bits of the round key are attacked and an attempt is made to restore them.</value>
+    <value> is to be attacked. S-boxes can be selected for this in the fifth encryption round. By selecting an S-box, the respective 4 bits of the round key are attacked and an attempt is made to restore them.</value>
   </data>
   <data name="Tutorial3AttackKeyRound5Content1Run4" xml:space="preserve">
     <value>In differential cryptanalysis, the change of differences at the S-boxes is considered. S-boxes should therefore be selected at this point.</value>
@@ -1377,7 +1377,7 @@
     <value>1. Introduction</value>
   </data>
   <data name="Tutorial3IntroductionSlide1Content1" xml:space="preserve">
-    <value>In Tutorial 1 the idea of differential cryptanalysis was introduced and demonstrated with a cipher consisting of one encryption round with two round keys. In Turorial 2 the idea was deepened and shown on a cipher with three encryption rounds.</value>
+    <value>In Tutorial 1 the idea of differential cryptanalysis was introduced and demonstrated with a cipher consisting of one encryption round with two round keys. In Tutorial 2 the idea was deepened and shown on a cipher with three encryption rounds.</value>
   </data>
   <data name="Tutorial3IntroductionSlide1Content2" xml:space="preserve">
     <value>For this purpose, structures such as characteristics and differentials were introduced.</value>
@@ -1404,7 +1404,7 @@
     <value>Filtering</value>
   </data>
   <data name="Tutorial3IntroductionSlide4Content1" xml:space="preserve">
-    <value>Second, the last (expected) difference of the differential can be considered.</value>
+    <value>Secondly, the last (expected) difference of the differential can be considered.</value>
   </data>
   <data name="Tutorial3IntroductionSlide4Content2" xml:space="preserve">
     <value>This value is known and the output value of the S-box can be determined by looking at the difference distribution table of the S-box. In general, several different values are possible here. These values can also be used when considering the difference of the ciphertext.</value>

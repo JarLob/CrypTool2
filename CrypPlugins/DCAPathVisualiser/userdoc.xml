@@ -10,7 +10,7 @@
   </introduction>
 
   <introduction lang="de-DE">    
-	In der DKA-PfadVisualiser-Komponente können Differenziale in tabellarischer Form oder graphisch betrachtet werden. In der tabellarischen Form gibt es eine Zusammenfassung des Differenzials, die Folgendes enthält: die aktuell angegriffene Verschlüsselungsrunde, die Wahrscheinlichkeit des Differenzials, die Eingabedifferenz, die erwartete Differenz, die Anzahl der Charakteristiken und die aktiven S-Boxen. Die Tabelle präsentiert die einzelnen Charakteristiken und die Werte ihre internen Zustände. Einzelne Charakteristiken können markiert werden, um sie in der graphischen Darstellung der Chiffre visuell zu betrachten. Dabei sieht man das Blockschaltbild der Chiffre; die gewählte Charakteristik wird als roter Pfad durch die Chiffre hindurch angezeigt. Die Chiffre muss in den Einstellungen der Komponente konfiguriert werden. 
+	In der DKA-PfadVisualiser-Komponente können Differenziale in tabellarischer Form oder graphisch betrachtet werden. In der tabellarischen Form gibt es eine Zusammenfassung des Differenzials, die Folgendes enthält: die aktuell angegriffene Verschlüsselungsrunde, die Wahrscheinlichkeit des Differenzials, die Eingabedifferenz, die erwartete Differenz, die Anzahl der Charakteristiken und die aktiven S-Boxen. Die Tabelle präsentiert die einzelnen Charakteristiken und die Werte ihrer internen Zustände. Einzelne Charakteristiken können markiert werden, um sie in der graphischen Darstellung der Chiffre visuell zu betrachten. Dabei sieht man das Blockschaltbild der Chiffre; die gewählte Charakteristik wird als roter Pfad durch die Chiffre hindurch angezeigt. Die Chiffre muss in den Einstellungen der Komponente konfiguriert werden. 
   </introduction>
   
   <usage lang="en">

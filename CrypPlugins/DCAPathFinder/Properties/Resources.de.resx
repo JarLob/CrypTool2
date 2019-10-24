@@ -316,7 +316,7 @@
     <value> notiert. Falls mehr als ein Kandidat am Ende übrig bleibt, wird der Angriff wiederholt mit neuen Paaren von Klartext und Geheimtext.</value>
   </data>
   <data name="Tutorial1DifferentialCryptanalysisSlide10Content4" xml:space="preserve">
-    <value>Durch ein weiteres Klicken auf den "Weiter"-Button kann die differenzielle Kryptoanalyse an Chiffre 1 in der Komponente "Schlüssel-Wiederherstellung" ausgeführt werden.</value>
+    <value>Durch ein weiteres Klicken auf den "Weiter"-Button (Rechtspfeil unten) kann die differenzielle Kryptoanalyse an Chiffre 1 in der Komponente "Schlüssel-Wiederherstellung" ausgeführt werden.</value>
   </data>
   <data name="Tutorial1DifferentialCryptanalysisSlide10Header" xml:space="preserve">
     <value>Differenzielle Kryptoanalyse von Chiffre 1</value>
@@ -1042,7 +1042,7 @@
     <value> angegriffen. Dieser Angriff läuft analog zu dem Verfahren ab, wie es in Tutorial 1 durchgeführt wurde.</value>
   </data>
   <data name="Tutorial2AttackFirstRoundContent2Run1" xml:space="preserve">
-    <value>Durch einen Klick auf weiter werden die ersten beiden Rundenschlüssel k</value>
+    <value>Durch einen Klick auf "Weiter" (Rechtspfeil unten) werden die ersten beiden Rundenschlüssel k</value>
   </data>
   <data name="Tutorial2AttackFirstRoundContent2Run2" xml:space="preserve">
     <value>1</value>
@@ -1111,7 +1111,7 @@
     <value> angegriffen. Dieser Angriff läuft analog zu dem Verfahren ab, wie es in Tutorial 1 durchgeführt wurde.</value>
   </data>
   <data name="Tutorial3AttackFirstRoundContent2Run1" xml:space="preserve">
-    <value>Durch einen Klick auf weiter werden die ersten beiden Rundenschlüssel k</value>
+    <value>Durch einen Klick auf "Weiter" (Rechtspfeil unten) werden die ersten beiden Rundenschlüssel k</value>
   </data>
   <data name="Tutorial3AttackFirstRoundContent2Run2" xml:space="preserve">
     <value>1</value>
