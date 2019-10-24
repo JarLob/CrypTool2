@@ -96,6 +96,11 @@ namespace WorkspaceManager.View.Visuals
 
                     myConnectorName = "None, I'm the master!";
 
+                    foreach (var control in bcv.IControlCollection)
+                    {
+                        control.PluginModelChanged += new EventHandler(icm_PluginModelChanged);
+                        HandleControlMasterElementChange(control);
+                    }
                 }
 
                 else
@@ -129,18 +134,19 @@ namespace WorkspaceManager.View.Visuals
 
         private void CollectionChangedHandler(Object sender, NotifyCollectionChangedEventArgs args)
         {
-            
-            for (int i = 0; i < args.NewItems.Count; i++)
+            foreach (var icm in args.NewItems.OfType<IControlMasterElement>())
             {
-                IControlMasterElement icm = args.NewItems[i] as IControlMasterElement;
                 icm.PluginModelChanged += new EventHandler(icm_PluginModelChanged);
-
             }
         }
 
         void icm_PluginModelChanged(object sender, EventArgs e)
         {
-            IControlMasterElement master = (IControlMasterElement)sender;
+            HandleControlMasterElementChange(sender as IControlMasterElement);
+        }
+
+        void HandleControlMasterElementChange(IControlMasterElement master)
+        {
             if (master.PluginModel != null)
             {
                 Boolean b = true;
