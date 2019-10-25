@@ -97,7 +97,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 for (int x = 0; x < secondCombinationsCount; x++)
                 {
                     var secondToken = GenerateSymbolCombination(x, alphabetTokens, secondGramsCount);
-                    dictionary.Add(new Tuple<Token, Token>(firstToken, secondToken), new HeatmapEntry());
+                    dictionary.Add(new Tuple<Token, Token>(firstToken, secondToken), new HeatmapEntry() { ToolTip = firstToken.ToString() + secondToken.ToString() });
                 }
             }
 
@@ -271,6 +271,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             get;
             set;
+        }
+
+        public string ToolTip
+        {
+            get;set;
         }
     }
 }

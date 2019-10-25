@@ -7,7 +7,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <DataTemplate x:Key="DataTemplate_Level2">
-            <Label FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="{Binding Path=Value}" Background="{Binding Path=Color}" Height="40" Width="40" Margin="4,4,4,4"/>
+            <Label FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="{Binding Path=Value}" Background="{Binding Path=Color}" ToolTip="{Binding Path=ToolTip}" Height="40" Width="40" Margin="4,4,4,4"/>
         </DataTemplate>
         <DataTemplate x:Key="DataTemplate_Level1">
             <ItemsControl ItemsSource="{Binding}" ItemTemplate="{DynamicResource DataTemplate_Level2}">
