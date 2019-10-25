@@ -29,10 +29,10 @@
                     <RepeatButton Name="NUDButtonDown"  Grid.Column="2" FontSize="8"  FontFamily="Marlett" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="NUDButtonDown_Click" Margin="0.8,15,89.2,0.2" Grid.RowSpan="2">6</RepeatButton>
 
                     <Label Grid.Column="0" Grid.Row="1" Content="{Loc EnableOpenCL}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" Height="30" Margin="2,11.4,2,23.4" Grid.RowSpan="3" />
-                    <CheckBox Grid.Column="1" Grid.Row="2" Name="EnableOpenCL"  VerticalAlignment="Center" HorizontalAlignment="Left" Height="15" Width="15" Click="EnableOpenCL_Click"/>
+                    <CheckBox IsEnabled="False" Grid.Column="1" Grid.Row="2" Name="EnableOpenCL"  VerticalAlignment="Center" HorizontalAlignment="Left" Height="15" Width="15" Click="EnableOpenCL_Click"/>
 
                     <Label Grid.Column="0" Grid.Row="2" Content="{Loc OpenCLDevice}" HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="12" Height="30" Margin="2,23.8,2,-2.6" Grid.RowSpan="2" />
-                    <ComboBox Name="OpenCLDevice"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" Margin="0.2,29.8,-96.8,1.2" SelectionChanged="OpenCLDevice_SelectionChanged" Grid.RowSpan="2"/>
+                    <ComboBox IsEnabled="False" Name="OpenCLDevice"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" Margin="0.2,29.8,-96.8,1.2" SelectionChanged="OpenCLDevice_SelectionChanged" Grid.RowSpan="2"/>
 
                     <Label Grid.Column="0" Grid.Row="4" Content="{Loc WritePerformanceLog}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" Height="30"/>
                     <CheckBox Grid.Column="1" Grid.Row="4" Name="WritePerformanceLog"  VerticalAlignment="Center" HorizontalAlignment="Left" Height="15" Width="15" Click="WritePerformanceLog_Click"/>

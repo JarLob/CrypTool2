@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cryptool.PluginBase.Control;
+using System;
 using System.Linq;
 using System.Text;
 using VoluntLib2.Tools;
@@ -9,12 +10,16 @@ namespace KeySearcher.CrypCloud
     {
         public KeyResultEntry()
         {
+            RelationOperator = RelationOperator.LargerThen;
         }
 
         public KeyResultEntry(byte[] bytes)
         {
             Deserialize(bytes);
+            RelationOperator = RelationOperator.LargerThen;
         }
+
+        public RelationOperator RelationOperator { get; set; }
 
         public double Costs { get; set; }
         public byte[] KeyBytes { get; set; }
@@ -23,7 +28,8 @@ namespace KeySearcher.CrypCloud
         public override bool Equals(object obj)
         {
             var other = obj as KeyResultEntry;
-            if(other == null){
+            if (other == null)
+            {
                 return false;
             }
 
@@ -32,14 +38,15 @@ namespace KeySearcher.CrypCloud
 
         public override int GetHashCode()
         {
-            return KeyBytes.Aggregate(KeyBytes.Length, (current, t) => unchecked(current*314159 + t));
+            return KeyBytes.Aggregate(KeyBytes.Length, (current, t) => unchecked(current * 314159 + t));
         }
 
         #region IComparable
 
         public int CompareTo(object obj)
         {
-            if (Equals(obj)) {
+            if (Equals(obj))
+            {
                 return 0;
             }
 
@@ -59,27 +66,39 @@ namespace KeySearcher.CrypCloud
                     return -1;
                 }
             }
-                     
-            var epsilon = .000001; 
+
+            var epsilon = .000001;
             var compare = Math.Abs(Costs - entry.Costs);
 
             if (compare > epsilon)
             {
-                if (Costs > entry.Costs)
+                if (RelationOperator == RelationOperator.LargerThen)
                 {
-                    return 1;
+                    if (Costs > entry.Costs)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return -1;
+                    }
                 }
                 else
                 {
-                    return -1;
+                    if (Costs > entry.Costs)
+                    {
+                        return -1;
+                    }
+                    else
+                    {
+                        return 1;
+                    }
                 }
-            }            
+            }
             return 0;
         }
 
         #endregion IComparable
-
-        
 
         public override string ToString()
         {
@@ -91,9 +110,9 @@ namespace KeySearcher.CrypCloud
         public byte[] Serialize()
         {
             return BitConverter.GetBytes(Costs)
-                .Concat(BitConverter.GetBytes((ushort) KeyBytes.Length))
+                .Concat(BitConverter.GetBytes((ushort)KeyBytes.Length))
                 .Concat(KeyBytes)
-                .Concat(BitConverter.GetBytes((ushort) Decryption.Length))
+                .Concat(BitConverter.GetBytes((ushort)Decryption.Length))
                 .Concat(Decryption).ToArray();
         }
 
@@ -101,15 +120,15 @@ namespace KeySearcher.CrypCloud
         {
             var startIndex = 0;
             Costs = BitConverter.ToDouble(bytes, startIndex);
-            startIndex += sizeof (double);
+            startIndex += sizeof(double);
 
             var length = BitConverter.ToUInt16(bytes, startIndex);
-            startIndex += sizeof (ushort);
+            startIndex += sizeof(ushort);
             KeyBytes = bytes.Skip(startIndex).Take(length).ToArray();
             startIndex += length;
 
             length = BitConverter.ToUInt16(bytes, startIndex);
-            startIndex += sizeof (ushort);
+            startIndex += sizeof(ushort);
             Decryption = bytes.Skip(startIndex).Take(length).ToArray();
         }
 

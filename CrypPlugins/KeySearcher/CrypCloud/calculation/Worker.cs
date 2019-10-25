@@ -243,7 +243,8 @@ namespace KeySearcher
                     var key = keyTranslator.GetKeyFromRepresentation(keyTranslator.GetKeyRepresentation(i + add));
                     var entry = new KeyResultEntry { Costs = cost,
                                                      KeyBytes = key,
-                                                     Decryption = sender.Decrypt(jobData.Ciphertext, key, jobData.InitVector, jobData.BytesToUse)
+                                                     Decryption = sender.Decrypt(jobData.Ciphertext, key, jobData.InitVector, jobData.BytesToUse),
+                                                     RelationOperator = relationOperator
                     };                                        
                     bestkeys.Add(entry);
                     bestkeys.Sort();
