@@ -9,26 +9,39 @@
   </introduction>
 
   <introduction lang="de-DE">
-	<list>
-		<item>Einleitung über differenzielle Kryptoanalyse.</item>
-		<item>Beschreibung der DKA PfadFinder-Komponente</item>
-		<item>Hinweis auf übrige DKA-Komponenten (gehören zusammen)</item>
-	</list>
-		
-	<section headline="Tutorials">
-		<list>
-			<item>Tutorial 1 Beschreibung</item>
-			<item>Tutorial 2 Beschreibung</item>
-			<item>Tutorial 3 Beschreibung</item>
-		</list>
+  Differenzielle Kryptoanalyse (DKA) ist ein Verfahren zur Analyse von symmetrischen Blockchiffren. Mit diesem Angriff versucht man iterativ, die Rundenschlüssel wiederherzustellen. Hauptelement der DKA sind Paare von Klartext-Blöcken, die sich in einer bestimmten Differenz unterscheiden. Es wird versucht, auf Basis von Wahrscheinlichkeiten, den Fluss der Blöcke durch die Chiffre zu bestimmen und dadurch die Rundenschlüssel zu bestimmen.
+  
+  <section headline="DKA-PfadFinder-Komponente">
+	Die DKA-PfadFinder-Komponente ist die zentrale Komponente bei DKA. Die Komponente hat zwei Funktionen: Einerseits enthält sie eine Präsentation mit den Grundlagen zur DKA und anderseits steuert sie den Angriff, indem sie Chiffren nach Differenzialen untersucht und auf deren Basis eine Konfiguration für die nachfolgenden Komponenten bereitstellt.
+	In der Komponente gibt es drei Kategorien von Einstellungen: Es gibt Tutorial-Optionen, Geschwindigkeitsoptionen und Optionen zur Differenziellen Kryptoanalyse. In den Tutorial-Optionen kann das Tutorial ausgewählt und der Modus der Komponente bestimmt werden. Im Tutorialmodus zeigt der DKA-PfadFinder Slides an. Ist diese Option nicht gesetzt, werden die Slides übersprungen und es kann der Angriff der DKA interaktiv durch den Anwender durchgeführt werden.
+	Im automatischen Modus sind keine Eingaben seitens des Anwenders notwendig. In den Geschwindigkeitsoptionen kann die Anzahl der Threads konfiguriert werden und ob die Komponente vorberechnete Daten verwenden soll. In den Optionen zur DKA kann die Anzahl der Nachrichten-Paare spezifiziert werden und mit welche Suchstrategie die Komponente nach Differenzialen bzw. Charakteristiken suchen soll.
 	</section>
-		
 	<section headline="Suchstrategien">
+		Es stehen vier verschiedene Suchstrategien zur Suche nach Differenzialen bzw. Charakteristiken bereit. Diese sind:
 		<list>
-			<item>Suchstrategien beschreiben</item>
+			<item>Alle Charakteristiken mittels Tiefensuche (ACT) </item>
+			<item>Beste Characteristik (Heuristik, globaler Schwellwert), dann Differenzialsuche (HGS)</item>
+			<item>Beste Characteristik (Tiefensuche, globaler Schwellwert), dann Differenzialsuche (TGS)</item>
+			<item>Beste Characteristik (Tiefensuche, globales Maximum), dann Differenzialsuche (TGM)</item>
 		</list>
+		Bei ACT werden alle Charakteristiken mittels Tiefensuche ermittelt. Um Zeit bei der Suche zu sparen, kann in den Einstellungen ein Schwellwert definiert werden, ab dem die Suche abgebrochen wird.
+		Bei HGS werden Charakteristiken heuristisch gesucht. Die Heuristik besteht darin, dass bei der Betrachtung der Differenzenverteilungstabelle der S-Boxen jeweils nur die Differenz verwendet wird, die die höchste Wahrscheinlichkeit hat. Anschließend wird die Charakteristik mit der höchsten Wahrscheinlichkeit verwendet, um ein Differenzial zu bilden. Die Differenzialsuche ist eine Tiefensuche, die bei einem definierbarem Schwellwert abbricht.
+		Bei TGS werden Charakteristiken mittels Tiefensuche ermittelt. Die Suche bricht bei einem definierbaren Schwellwert ab (dieser sollte höher sein als bei ACT). Anschließend wird die Charakteristik mit der höchsten Wahrscheinlichkeit verwendet, um ein Differenzial zu bilden. Die Differenzialsuche ist eine Tiefensuche, die bei einem definierbarem Schwellwert abbricht.
+		Bei TGM werden Charakteristiken mittels Tiefensuche ermittelt. Die Suche ermittelt das globale Maximum. Anschließend wird das globale Maximum verwendet, um ein Differenzial zu bilden. Die Differenzialsuche ist eine Tiefensuche, die bei einem definierbarem Schwellwert abbricht.
+	</section>
+	<section headline="Tutorials">
+		Das Tutorial zur DKA ist in drei Teile aufgeteilt. Dazu gibt es je drei Voragen, wobei alle Komponenten mit voreingestellten Einstellungen enthalten sind. 
+		In Tutorial 1 wird eine Chiffre mit einer Verschlüsselungsrunde und zwei Rundenschlüsseln angegriffen. In Tutorial 2 wird eine Chiffre mit drei Verschlüsselungsrunden und vier Rundenschlüsseln angegriffen. 
+		In Tutorial 3 wird eine Chiffre mit fünf Verschlüsselungsrunden und sechs Rundenschlüsseln angegriffen.
+		Zu jeder Vorlage gibt es zwei Varianten: Einmal mit aktiviertem Tutorialmodus und einmal mit aktiviertem automatischem Modus.
+	</section>
+	<section headline="Weitere Komponenten">
+	Neben der DKA-PfadFinder-Komponente werden vier weitere Komponenten zur DKA in CT2 verwendet: DKA-PfadVisualisierer, DKA-Orakel, DKA-ToyCipher und DKA-KeyRecovery. Informationen zu diesen Komponenten sind in der CT2-Onlinehilfe zu finden.
 	</section>
 	
+	<section headline="Literaturhinweis">
+	Ein Standardwerk für symmetrische Blockchiffren ist das Buch "The Block Cipher Companion" <ref id="TBC" /> von Lars Knudsen und Matthew Robshaw. Dieses Buch gibt einen sehr umfangreichen und grundlegenden Überblick über symmetrische Blockchiffren und verschiedene Angriffe. Der Angriff der differenziellen Kryptoanalyse wird grundlegend beschrieben.
+	</section>
   </introduction>
 
   <usage lang="en">
@@ -41,8 +54,16 @@
   </presentation>
 
   <presentation lang="de-DE">
+	Die Präsentation führt den Anwender durch den Angriff der DKA. Mittels einer Präsentation werden die Grundlagen der DKA vermittelt. Beim Angriff auf eine Chiffre können vom Anwender S-Boxen selektiert werden, um den Angriff zu steuern.
   </presentation>
 
   <references>
+  <linkReference id="TBC">
+      <link url="https://www.springer.com/de/book/9783642173417" lang="en" />
+      <caption lang="en">The Block Cipher Companion</caption>
+      <link url="https://www.springer.com/de/book/9783642173417" lang="de-DE" />
+      <caption lang="de-DE">The Block Cipher Companion</caption>
+    </linkReference>
+ 
   </references>
 </documentation>
