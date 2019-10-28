@@ -160,10 +160,10 @@
     <value>Durch Auswahl einer Suchstrategie wird das Verhalten der Suche nach dem besten Differenzial gesteuert</value>
   </data>
   <data name="ChosenMessagePairsCount" xml:space="preserve">
-    <value>Anzahl Nachrichtenpaare</value>
+    <value>Anzahl Nachrichten-Paare</value>
   </data>
   <data name="ChosenMessagePairsCountToolTip" xml:space="preserve">
-    <value>Bestimmt die Anzahl der zu generierenden Nachrichtenpaare</value>
+    <value>Bestimmt die Anzahl der zu generierenden Nachrichten-Paare</value>
   </data>
   <data name="Cipher1" xml:space="preserve">
     <value>Tutorial 1: Chiffre 1 (16 Bit Blockgröße, 2 Rundenschlüssel, 32 Bit Schlüssellänge)</value>
@@ -577,7 +577,7 @@
     <value>Die Ein- und Ausgabe-Differenzen sowie die Einträge der Differenzverteilungs-Tabelle sind hexadezimal.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide3Content2" xml:space="preserve">
-    <value>Bei einer 4 Bit S-Box gibt es je 16 verschiedene Eingaben und Ausgaben. Kombiniert man 2 Nachrichten zu einem Nachrichtenpaar mit je disjunkten Differenzen, können 256 verschiedene Übergänge von Differenzen beobachtet werden.</value>
+    <value>Bei einer 4 Bit S-Box gibt es je 16 verschiedene Eingaben und Ausgaben. Kombiniert man 2 Nachrichten zu einem Nachrichten-Paar mit je disjunkten Differenzen, können 256 verschiedene Übergänge von Differenzen beobachtet werden.</value>
   </data>
   <data name="Tutorial2AnalysisOfSBoxSlide3Content3" xml:space="preserve">
     <value>Eine wichtige Beobachtung ist, dass es Differenzen gibt, die häufiger vorkommen als andere. Es gibt auch Differenzen, die gar nicht auftreten. Zum Beispiel wird die Eingabe-Differenz 8 insgesamt 8 mal auf die Ausgabe-Differenz D abgebildet.</value>
@@ -772,7 +772,7 @@
     <value>Sobald ein Differenzial mit hoher Wahrscheinlichkeit gefunden wurde, kann damit begonnen werden, Schlüsselbits wiederherzustellen. Dazu werden die S-Boxen betrachtet, an denen die erwartete Differenz von 0 verschieden ist.</value>
   </data>
   <data name="Tutorial2RecoverKeyInformationSlide1Content2" xml:space="preserve">
-    <value>Für jeden möglichen Schlüsselkandidat wird ein Zähler erzeugt. Der Kryptoanalyst generiert eine Anzahl von Nachrichten, die die Eingabedifferenz erfüllen. Diese werden verschlüsselt und mit dem Schlüsselkandidat partiell entschlüsselt. Erfüllt die Differenz der partiell entschlüsselten Nachrichten die erwartete Differenz, wird der Zähler um 1 erhöht. Diesen Prozess wiederholt man mit allen generierten Nachrichtenpaaren.</value>
+    <value>Für jeden möglichen Schlüsselkandidat wird ein Zähler erzeugt. Der Kryptoanalyst generiert eine Anzahl von Nachrichten, die die Eingabedifferenz erfüllen. Diese werden verschlüsselt und mit dem Schlüsselkandidat partiell entschlüsselt. Erfüllt die Differenz der partiell entschlüsselten Nachrichten die erwartete Differenz, wird der Zähler um 1 erhöht. Diesen Prozess wiederholt man mit allen generierten Nachrichten-Paaren.</value>
   </data>
   <data name="Tutorial2RecoverKeyInformationSlide1Content3" xml:space="preserve">
     <value>Der Schlüsselkandidat mit den meisten Treffern, sollte den höchsten Zähler haben. Dieser sollte sehr nah am Erwartungswert des Differenzial liegen.</value>
