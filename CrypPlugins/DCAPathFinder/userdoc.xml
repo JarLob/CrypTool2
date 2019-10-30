@@ -6,11 +6,45 @@
   <language culture="de-DE" />
 
   <introduction lang="en">
+	Differential Cryptanalysis (DCA) is an attack method against symmetrical block ciphers. With this attack we try to iteratively restore the round keys. The main element of the DCA are pairs of ciphertext blocks whose plaintext differs in a certain difference. An attempt is made to determine the flow of the blocks through the cipher on the basis of probabilities and thus to find the round keys.
+	<section headline="DCA PathFinder component">
+	The DCA PathFinder component is the central component at DCA. The component has two functions: On the one hand it contains a presentation with the basics of DCA and on the other hand it controls the attack by examining ciphers for differentials and providing a configuration for the following components. There are three categories of settings in the component: There are tutorial options, speed options, and differential cryptanalysis options. In the tutorial options, the tutorial can be selected and the mode of the component determined. In tutorial mode, the DCA PathFinder displays slides. If this option is not set, the slides are skipped and the user can execute the DCA attack interactively. In automatic mode, no user input is necessary. In the speed options, the number of threads can be configured and whether the component should use precalculated data. In the options for the DCA, you can specify the number of message pairs and the search strategy with which the component search strategy should search the component for differentials or characteristics.
+	</section>
+	<section headline="Search strategies">
+		Four different search strategies are available for searching for differentials or characteristics. These are:
+		<list>
+			<item>All characteristics by depth search (ACD)</item>
+			<item>Best characteristic (heuristic), then differential search (HGT)</item>
+			<item>Best characteristic (depth search, global threshold), then differential search (DGT)</item>
+			<item>Best characteristic (depth search, global maximum), then differential search (DGM)</item>
+		</list>
+		ACD determines all characteristics by depth search. In order to save time during the search, a threshold value can be defined in the settings from which the search is aborted.
+		HGT searches characteristics heuristiclly. The heuristic consists in the fact that only the difference with the highest probability is used when looking at the difference distribution table of the S-boxes. The characteristic with the highest probability is then used to form a differential. The differential search is a depth search that stops at a definable threshold value.
+		DGT also determines characteristics by depth search. The search stops at a definable threshold (which should be higher than ACD). The characteristic with the highest probability is then used to form a differential. The differential search is a depth search that stops at a definable threshold value.
+		DGM characteristics are also determined by depth search. The search determines the global maximum. The global maximum is then used to form a differential. The differential search is a depth search that stops at a definable threshold value.
+	</section>
+	<section headline="Tutorials">
+		The DCA tutorial is divided into 3 parts, each of which analyzes a different cipher as the difficulty level increases. 
+		In each tutorial a certain part of the procedure is presented in small steps, so that at the end of tutorial 3 a good idea of the attack was given. 
+		For each tutorial there is a template, whereby all components are contained with preset settings. 
+		In tutorial 1 a cipher is attacked with one encryption round and two round keys. Tutorial 2 attacks a cipher with three encryption rounds and four round keys. 
+		Tutorial 3 attacks a cipher with five encryption rounds and six round keys.
+		There are two variants of each template: One with activated tutorial mode and one with activated automatic mode.
+	</section>
+	<section headline="Further components">
+	In addition to the DCA PathFinder component, four other components are used for DCA in CT2: DCA PathVisualizer, DCA Oracle, DCA ToyCipher and DCA KeyRecovery. Information on these components can be found in the CT2 online help.
+	</section>
+	
+	<section headline="Literature reference">
+	A basic work for symmetric block ciphers is the book "The Block Cipher Companion" <ref id="TBC" /> by Lars Knudsen and Matthew Robshaw. This book gives a very comprehensive and basic overview of symmetric block ciphers and various attacks. The attack of differential cryptanalysis is fundamentally described.
+	</section>
+	
+	
   </introduction>
 
   <introduction lang="de-DE">
-  Differenzielle Kryptoanalyse (DKA) ist ein Angriffsverfahren gegen symmetrische Blockchiffren. Mit diesem Angriff versucht man, iterativ die Rundenschlüssel wiederherzustellen. Hauptelement der DKA sind Paare von Klartext-Blöcken, die sich in einer bestimmten Differenz unterscheiden. Es wird versucht, auf Basis von Wahrscheinlichkeiten den Fluss der Blöcke durch die Chiffre zu bestimmen und dadurch die Rundenschlüssel zu finden.
-  <section headline="DKA-PfadFinder-Komponente">
+  Differenzielle Kryptoanalyse (DKA) ist ein Angriffsverfahren gegen symmetrische Blockchiffren. Mit diesem Angriff versucht man, iterativ die Rundenschlüssel wiederherzustellen. Hauptelement der DKA sind Paare von Geheimtext-Blöcken, deren Klartexte sich in einer bestimmten Differenz unterscheiden. Es wird versucht, auf Basis von Wahrscheinlichkeiten den Fluss der Blöcke durch die Chiffre zu bestimmen und dadurch die Rundenschlüssel zu finden.
+	<section headline="DKA-PfadFinder-Komponente">
 	Die DKA-PfadFinder-Komponente ist die zentrale Komponente bei DKA. Die Komponente hat zwei Funktionen: Einerseits enthält sie eine Präsentation mit den Grundlagen zur DKA und anderseits steuert sie den Angriff, indem sie Chiffren nach Differenzialen untersucht und auf deren Basis eine Konfiguration für die nachfolgenden Komponenten bereitstellt. In der Komponente gibt es drei Kategorien von Einstellungen: Es gibt Tutorial-Optionen, Geschwindigkeitsoptionen und Optionen zur differenziellen Kryptoanalyse. In den Tutorial-Optionen kann das Tutorial ausgewählt und der Modus der Komponente bestimmt werden. Im Tutorialmodus zeigt der DKA-PfadFinder Slides an. Ist diese Option nicht gesetzt, werden die Slides übersprungen und der Anwender kann den DKA-Angriff interaktiv durchgeführen. Im automatischen Modus sind keine Eingaben seitens des Anwenders notwendig. In den Geschwindigkeitsoptionen kann die Anzahl der Threads konfiguriert werden und ob die Komponente vorberechnete Daten verwenden soll. In den Optionen zur DKA kann die Anzahl der Nachrichten-Paare spezifiziert werden und mit welcher Suchstrategie die Komponente Suchstrategie die Komponente nach Differenzialen bzw. Charakteristiken suchen soll.
 	</section>
 	<section headline="Suchstrategien">
@@ -50,6 +84,7 @@
   </usage>
 
   <presentation lang="en">
+	The presentation leads the user through the attack of the DCA. By means of a presentation the basics of the DCA are explained. When attacking a cipher, the user can select S-boxes to control the attack.
   </presentation>
 
   <presentation lang="de-DE">
