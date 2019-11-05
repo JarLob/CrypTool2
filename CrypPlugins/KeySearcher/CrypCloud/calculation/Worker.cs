@@ -39,6 +39,11 @@ namespace KeySearcher
             this.keyPool = keyPool;
             this.keysearcher = keysearcher;
             this.enableOpenCL = enableOpenCL;
+
+            //kopal, 2019-11-05:
+            //disable opencl since we have problems right now with this
+            this.enableOpenCL = false;
+
             relationOperator = jobData.CostAlgorithm.GetRelationOperator();            
             if (OpenCL.NumberOfPlatforms > 0 && enableOpenCL)
             {

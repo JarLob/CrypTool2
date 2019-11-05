@@ -15,9 +15,9 @@
 
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical">
-                <Label Content="OpenCL:" FontWeight="Bold" />
+                <!--<Label Content="OpenCL:" FontWeight="Bold" />
                 <CheckBox Name="UseOpenCL" Content="{Loc Use_OpenCL_in_KeySearcher}" IsChecked="{Binding Source={x:Static Properties:Settings.Default}, Path=KeySearcher_UseOpenCL, Mode=TwoWay}" ToolTip="{Loc Use_OpenCL_in_KeySearcher_Tooltip}" Style="{StaticResource ResourceKey=settingsStyle}" />
-                <CheckBox Content="{Loc Enable_using_OpenCL_with_high_load__not_recommended_}" IsChecked="{Binding Source={x:Static Properties:Settings.Default}, Path=KeySearcher_EnableHighLoad, Mode=TwoWay}" IsEnabled="{Binding ElementName=KeySearcher_UseOpenCL, Path=IsChecked}" Style="{StaticResource ResourceKey=settingsStyle}" Margin="40,5,0,0" />                
+                <CheckBox Content="{Loc Enable_using_OpenCL_with_high_load__not_recommended_}" IsChecked="{Binding Source={x:Static Properties:Settings.Default}, Path=KeySearcher_EnableHighLoad, Mode=TwoWay}" IsEnabled="{Binding ElementName=KeySearcher_UseOpenCL, Path=IsChecked}" Style="{StaticResource ResourceKey=settingsStyle}" Margin="40,5,0,0" />                -->
 
                 <Label Content="{Loc Network_}" FontWeight="Bold" />
                 <StackPanel Orientation="Horizontal" Style="{StaticResource ResourceKey=settingsStyle}">
