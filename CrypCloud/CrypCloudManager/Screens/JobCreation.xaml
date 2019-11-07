@@ -9,8 +9,8 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <converter:BoolToVisibilityConverter FalseValue="Collapsed" x:Key="show" />
-            <converter:BoolToVisibilityConverter TrueValue="Collapsed" FalseValue="Visible" x:Key="hide" />
+            <converter:BoolToWidthConverter FalseValue="Collapsed" x:Key="show" />
+            <converter:BoolToWidthConverter TrueValue="Collapsed" FalseValue="Visible" x:Key="hide" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/Button.xaml" />
             </ResourceDictionary.MergedDictionaries>

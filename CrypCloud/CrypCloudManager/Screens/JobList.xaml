@@ -5,10 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels="clr-namespace:CrypCloud.Manager.ViewModels"
              xmlns:converter="clr-namespace:CrypCloud.Manager.Screens.Converter"
-             mc:Ignorable="d" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+             mc:Ignorable="d" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+             x:Name="JobListRoot">
 
     <UserControl.Resources>
         <ResourceDictionary>
+            <converter:BoolToWidthConverter x:Key="BoolToWidth"/>
             <converter:BoolToVisibilityConverter FalseValue="Collapsed" x:Key="show" />
             <converter:BoolToVisibilityConverter TrueValue="Collapsed" FalseValue="Visible" x:Key="hide" />
             <converter:DateTimeConverter x:Key="DateTimeConverter" />
@@ -138,7 +140,8 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn x:Name="DeleteJobCommand" Header="" Width="120">
+                        <GridViewColumn x:Name="DeleteJobCommand" Width="{Binding ElementName=JobListRoot, Path=DataContext.UserCanDeleteJob, Converter={StaticResource BoolToWidth}}">
+                            
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">

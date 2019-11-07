@@ -50,11 +50,12 @@ namespace CrypCloud.Manager.ViewModels
             DeleteJobCommand = new RelayCommand(DeleteJob);
             DownloadWorkspaceCommand = new RelayCommand(DownloadJob);            
         }
-
+   
         protected override void HasBeenActivated()
         {
             base.HasBeenActivated();
-            RunningJobs = crypCloudCore.GetJoblist();            
+            RunningJobs = crypCloudCore.GetJoblist();
+            RunningJobs.CollectionChanged += RunningJobs_CollectionChanged;
             RaisePropertyChanged("RunningJobs");
             if (RunningJobs.Count > 0)
             {
@@ -98,7 +99,7 @@ namespace CrypCloud.Manager.ViewModels
             }
         }
 
-        #region open job       
+        #region job handling
 
         private void DownloadJob(object obj)
         {
@@ -178,6 +179,45 @@ namespace CrypCloud.Manager.ViewModels
                 }
                 return true;
             }
+        }
+
+        /// <summary>
+        /// Returns true, if the user can delete a job
+        /// </summary>
+        public bool UserCanDeleteJob
+        {
+            get
+            {
+                try
+                {
+                    if (CrypCloudCore.Instance.GetUsername().ToLower().Equals("anonymous"))
+                    {
+                        return false;
+                    }
+                    foreach(var job in RunningJobs)
+                    {
+                        if (job.UserCanDeleteJob)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the "Delete Job" column of JobList in case there is a change of the RunningJobsCollection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RunningJobs_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            RaisePropertyChanged("UserCanDeleteJob");
         }
 
         #endregion

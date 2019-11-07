@@ -129,10 +129,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.ru.resx</DependentUpon>
     </Compile>
+    <Compile Include="Screens\Converter\BoolToVisibilityConverter.cs" />
     <Compile Include="Screens\Converter\DateTimeConverter.cs" />
     <Compile Include="Screens\Converter\InvertBoolConverter.cs" />
     <Compile Include="Screens\Converter\AddMarginForProgressBarConverter.cs" />
-    <Compile Include="Screens\Converter\BoolToVisibilityConverter.cs" />
+    <Compile Include="Screens\Converter\BoolToWidthConverter.cs" />
     <Compile Include="Screens\Converter\HideWhenStringIsEmptyConverter.cs" />
     <Compile Include="Screens\Converter\JobIdConverter.cs" />
     <Compile Include="Screens\Converter\JobSizeConverter.cs" />
