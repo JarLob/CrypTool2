@@ -15,7 +15,7 @@
             <converter:BoolToVisibilityConverter TrueValue="Collapsed" FalseValue="Visible" x:Key="hide" />
             <converter:DateTimeConverter x:Key="DateTimeConverter" />
             <converter:JobIdConverter x:Key="JobIdConverter" />
-            <converter:JobSizeConverter x:Key="JobSizeConverter" />            
+            <converter:JobSizeConverter x:Key="JobSizeConverter" />
             <converter:InvertBoolConverter x:Key="not" />
             <converter:PeerIdConverter x:Key="PeerIdConverter" />
             <ResourceDictionary.MergedDictionaries>
@@ -37,12 +37,14 @@
             <RowDefinition Height="50" />
             <RowDefinition Height="25" />
             <RowDefinition Height="500*" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="80" />
             <RowDefinition Height="65" />
         </Grid.RowDefinitions>
         <!-- top controls -->
+        <Image Height="70" Source="../Images/cloud_300.png" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.RowSpan="2"/>
         <Grid Grid.Row="0">
-            <Label Content="{Loc _JobList_Header}" FontSize="14" HorizontalAlignment="Center" Margin="10" />
+            <Label Content="{Loc _JobList_Header}" FontSize="24" Height="70" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Margin="10" />
+
             <Label Content="{Loc _JobList_LoggedInAs}" FontSize="14" HorizontalContentAlignment="Right"
                    HorizontalAlignment="Right" Margin="0,10,217,10" Width="204" />
 
@@ -141,7 +143,7 @@
                         </GridViewColumn>
 
                         <GridViewColumn x:Name="DeleteJobCommand" Width="{Binding ElementName=JobListRoot, Path=DataContext.UserCanDeleteJob, Converter={StaticResource BoolToWidth}}">
-                            
+
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -171,6 +173,11 @@
 
             <!-- Right -->
             <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="{Loc _copyJobInformation}" Click="CopyJobInfo_Click" />
+                    </ContextMenu>
+                </ScrollViewer.ContextMenu>
                 <Grid  Background="White">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="75" />
@@ -214,7 +221,7 @@
             </ScrollViewer>
         </Grid>
         <!-- bottom controls -->
-        <Grid Grid.Row="3" VerticalAlignment="Bottom">
+        <Grid Grid.Row="3" VerticalAlignment="Top">
             <Button Command="{Binding Path=RefreshJobListCommand}" HorizontalAlignment="Left" Margin="5" Width="110"
                     Height="30" ToolTip="{Loc _JobList_btn_refresh_tooltip}">
                 <StackPanel Orientation="Horizontal">
@@ -222,6 +229,7 @@
                     <Label Content="{Loc _JobList_btn_refresh}"/>
                 </StackPanel>
             </Button>
+            <TextBlock Margin="150,0,0,0" Text="{Loc _JobList_instructions}" VerticalAlignment="Top" Width="1400" Height="80" HorizontalAlignment="Left"/>
 
             <Button Command="{Binding Path=CreateNewJobCommand}" HorizontalAlignment="Right" Margin="5" Width="150"
                     Height="30" ToolTip="{Loc _JobList_btn_createNew_tooltip}" Visibility="{Binding Path=UserCanCreateJob, Converter={converter:BoolToVisibilityConverter}}">

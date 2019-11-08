@@ -215,7 +215,7 @@
     <value>Прогресс</value>
   </data>
   <data name="_JobList_Header" xml:space="preserve">
-    <value>Список вакансий</value>
+    <value>CrypCloud – Список заданий</value>
   </data>
   <data name="_Login_btn_connect" xml:space="preserve">
     <value>соединять</value>
@@ -363,5 +363,18 @@
   </data>
   <data name="_Port" xml:space="preserve">
     <value>порт</value>
+  </data>
+  <data name="_copyJobInformation" xml:space="preserve">
+    <value>Копировать информацию о работе</value>
+  </data>
+  <data name="_JobList_instructions" xml:space="preserve">
+    <value>a) Этот список содержит длительные задания, которые можно решить, запустив параллельные подзадачи. Таким образом, разные люди могут внести свой вклад, работая над подзадачами на своих компьютерах.
+б) Выберите работу в списке и нажмите «Открыть», чтобы внести свой вклад.
+d) После нажатия кнопки «Открыть» соответствующая рабочая область CT2 загружается новым CT2 Workspace Manager.
+e) Запустите «Play», чтобы запустить рабочую область загрузки. Облачный компонент рабочей области затем делится своими результатами со всеми другими участвующими участниками.
+Если кто-то из участников нашел решение, это решение также будет доступно всем остальным и сразу же станет видимым. Информация о самих участниках не разглашается.</value>
+  </data>
+  <data name="_Login_anonymous" xml:space="preserve">
+    <value>Для входа без регистрации используйте «anonymous/anonymous».</value>
   </data>
 </root>

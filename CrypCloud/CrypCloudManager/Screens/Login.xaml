@@ -79,7 +79,7 @@
                     </Underline>
                 </TextBlock>
 
-                <TextBlock    Width="200" FontSize="12" Name="GetACertificateLabel" Cursor="Hand" HorizontalAlignment="Center">
+                <TextBlock Width="200" FontSize="12" Name="GetACertificateLabel" Cursor="Hand" HorizontalAlignment="Center">
                     <TextBlock.InputBindings>
                         <MouseBinding Command="{Binding Path=CreateNewAccountCommand}" MouseAction="LeftClick" />
                     </TextBlock.InputBindings>
@@ -87,6 +87,8 @@
                         <ContentControl  Content="{Loc _Login_link_createNewAccount}"/>
                     </Underline>
                 </TextBlock>
+                <Label/>
+                <TextBlock Width="200" Height="80" TextWrapping="WrapWithOverflow" FontSize="12" Text="{Loc _Login_anonymous}" VerticalAlignment="Top"/>
                 <Label/>
             </StackPanel>
         </ScrollViewer>

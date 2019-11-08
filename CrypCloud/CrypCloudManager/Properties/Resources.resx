@@ -215,7 +215,7 @@
     <value>Progress</value>
   </data>
   <data name="_JobList_Header" xml:space="preserve">
-    <value>Job list</value>
+    <value>CrypCloud – Job list</value>
   </data>
   <data name="_Login_btn_connect" xml:space="preserve">
     <value>Connect</value>
@@ -366,5 +366,18 @@
   </data>
   <data name="anonymous" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\anonymous.p12;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_copyJobInformation" xml:space="preserve">
+    <value>Copy job information</value>
+  </data>
+  <data name="_JobList_instructions" xml:space="preserve">
+    <value>a) This list contains long-running jobs which can be solved by running parallel sub-jobs. So different people can contribute by working on sub-jobs on their computers.
+b) Select a job in the list and click "Open" to contribute.
+d) After clicking "Open" the according CT2 workspace is loaded by a new CT2 Workspace Manager.
+e) Please start "Play" to run the download workspace. The cloud component of the workspace then shares it's results with all other participating contributors.
+If someone of the contributors found a solution this solution is also shared with all others and immediately visible. There is no information shared about the contributors themselves.</value>
+  </data>
+  <data name="_Login_anonymous" xml:space="preserve">
+    <value>To login without registration use "anonymous/anonymous".</value>
   </data>
 </root>

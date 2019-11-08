@@ -231,9 +231,9 @@ namespace KeySearcher.CrypCloud
         {
             get
             {
-                if (jobName == null || jobName.Length < 25) return jobName;
+                if (jobName == null || jobName.Length < 40) return jobName;
 
-                return jobName.Substring(0, 25) + "...";
+                return jobName.Substring(0, 40) + "...";
             }
             set
             {

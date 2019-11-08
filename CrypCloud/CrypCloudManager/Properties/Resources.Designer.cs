@@ -19,7 +19,7 @@ namespace CrypCloud.Manager.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -111,6 +111,15 @@ namespace CrypCloud.Manager.Properties {
         public static string _ConnectingError {
             get {
                 return ResourceManager.GetString("_ConnectingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy job information ähnelt.
+        /// </summary>
+        public static string _copyJobInformation {
+            get {
+                return ResourceManager.GetString("_copyJobInformation", resourceCulture);
             }
         }
         
@@ -376,7 +385,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Job list ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die CrypCloud – Job list ähnelt.
         /// </summary>
         public static string _JobList_Header {
             get {
@@ -390,6 +399,19 @@ namespace CrypCloud.Manager.Properties {
         public static string _JobList_helpText {
             get {
                 return ResourceManager.GetString("_JobList_helpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die a) This list contains long-running jobs which can be solved by running parallel sub-jobs. So different people can contribute by working on sub-jobs on their computers.
+        ///b) Select a job in the list and click &quot;Open&quot; to contribute.
+        ///d) After clicking &quot;Open&quot; the according CT2 workspace is loaded by a new CT2 Workspace Manager.
+        ///e) Please start &quot;Play&quot; to run the download workspace. The cloud component of the workspace then shares it&apos;s results with all other participating contributors.
+        ///If someone of the contribu [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        public static string _JobList_instructions {
+            get {
+                return ResourceManager.GetString("_JobList_instructions", resourceCulture);
             }
         }
         
@@ -426,6 +448,15 @@ namespace CrypCloud.Manager.Properties {
         public static string _JobList_LoggedInAs {
             get {
                 return ResourceManager.GetString("_JobList_LoggedInAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die To login without registration use &quot;anonymous/anonymous&quot;. ähnelt.
+        /// </summary>
+        public static string _Login_anonymous {
+            get {
+                return ResourceManager.GetString("_Login_anonymous", resourceCulture);
             }
         }
         
