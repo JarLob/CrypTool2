@@ -62,7 +62,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>..\CrypBuild\Release\</OutputPath>
+    <OutputPath>..\..\CrypBuild\Release\CrypPlugins\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -72,7 +72,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\CrypBuild\Debug\</OutputPath>
+    <OutputPath>..\..\CrypBuild\Debug\CrypPlugins\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -181,6 +181,7 @@
     <ProjectReference Include="..\..\CrypCore\CrypCore.csproj">
       <Project>{FF5D473C-0716-4D3E-9078-2EBD979F94C6}</Project>
       <Name>CrypCore</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\CrypPluginBase\CrypPluginBase.csproj">
       <Project>{25DB2B47-A457-4EC2-960B-395CE07AE093}</Project>
@@ -195,10 +196,12 @@
     <ProjectReference Include="..\..\LibSource\Certificate\CertificateLibrary\CertificateLibrary.csproj">
       <Project>{aba78840-2321-4dd3-91c6-84cc722d794b}</Project>
       <Name>CertificateLibrary</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\LibSource\OpenCLNet\OpenCLNet.csproj">
       <Project>{0946e1a6-5488-4711-ad10-d54d6a5d2f32}</Project>
       <Name>OpenCLNet</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\LibSource\VoluntLib2\VoluntLib2.csproj">
       <Project>{1b68fdaa-c5a7-4f8a-bd5b-5876e8ac1879}</Project>
@@ -212,6 +215,7 @@
     <ProjectReference Include="..\CrypCloudCore\CrypCloudCore.csproj">
       <Project>{5AA65CEE-66BF-4B99-B46B-339E15C1A2C4}</Project>
       <Name>CrypCloudCore</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -230,9 +234,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="userdoc.xml" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="CrypCloudPresentation.xaml">
@@ -308,7 +309,7 @@
     <Resource Include="Images\ButtonIcons\angle-double-right_16.png" />
     <Resource Include="Images\ButtonIcons\forward.png" />
     <Resource Include="Images\ButtonIcons\chevron-right.png" />
-    <Resource Include="DetailedDescription\doc.xml" />
+    <Resource Include="doc.xml" />
     <Resource Include="Images\ButtonIcons\download.png" />
     <Content Include="Images\ButtonIcons\license.txt" />
   </ItemGroup>

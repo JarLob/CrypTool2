@@ -799,7 +799,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die CrypCloud ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die CrypCloud Manager ähnelt.
         /// </summary>
         public static string PluginCaption {
             get {

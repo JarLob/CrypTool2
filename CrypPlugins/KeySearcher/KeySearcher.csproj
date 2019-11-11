@@ -185,6 +185,7 @@
     <ProjectReference Include="..\..\CrypCloud\CrypCloudCore\CrypCloudCore.csproj">
       <Project>{5aa65cee-66bf-4b99-b46b-339e15c1a2c4}</Project>
       <Name>CrypCloudCore</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\CrypPluginBase\CrypPluginBase.csproj">
       <Project>{25DB2B47-A457-4EC2-960B-395CE07AE093}</Project>

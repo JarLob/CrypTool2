@@ -227,7 +227,7 @@
     <value>Создать новый аккаунт</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>CrypCloud</value>
+    <value>CrypCloud Manager</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Рациональное облачное решение на основе P2P</value>

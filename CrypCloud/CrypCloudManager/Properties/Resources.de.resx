@@ -227,7 +227,7 @@
     <value>Neuen Account erstellen</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>CrypCloud</value>
+    <value>CrypCloud Manager</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Eine P2P-basierte Volunteer-Cloud</value>

@@ -513,10 +513,12 @@
     <ProjectReference Include="..\CrypCloud\CrypCloudCore\CrypCloudCore.csproj">
       <Project>{5aa65cee-66bf-4b99-b46b-339e15c1a2c4}</Project>
       <Name>CrypCloudCore</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\CrypCloud\CrypCloudManager\CrypCloudManager.csproj">
       <Project>{9925a476-c298-4224-bf66-a18688202e64}</Project>
       <Name>CrypCloudManager</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\CrypCore\CrypCore.csproj">
       <Project>{FF5D473C-0716-4D3E-9078-2EBD979F94C6}</Project>

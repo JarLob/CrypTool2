@@ -35,11 +35,11 @@ namespace CrypCloud.Manager
     [TabColor("white")]
     [EditorInfo("CrypCloud", true, true, false, true, false, false)]
     [Author("Christopher Konze", "c.konze@uni.de", "Universität Kassel", "")]
-    [PluginInfo("CrypCloud.Manager.Properties.Resources", "PluginCaption", "PluginTooltip", "CrypCloudManager/DetailedDescription/doc.xml", "CrypCloudManager/images/icon.png")]
+    [PluginInfo("CrypCloud.Manager.Properties.Resources", "PluginCaption", "PluginTooltip", "CrypCloudManager/doc.xml", "CrypCloudManager/images/icon.png")]
     public class CrypCloudManager : IEditor
     {
         private readonly ScreenNavigator screenNavigator = new ScreenNavigator();
-        public const string DefaultTabName = "CrypCloud Project";
+        public const string DefaultTabName = "CrypCloud";
 
         public CrypCloudManager()
         {
