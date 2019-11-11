@@ -26,6 +26,10 @@
     <replacement key="$StringDecoder$" value="String-Dekodierer" />
     <replacement key="$Converter$" value="Konvertierer" />
     <replacement key="$KeySearcher$" value="Schlüsselsuche" />
+	<replacement key="$memo$" value="Diese Vorlage zeigt, wie man einen mit AES verschlüsselten Text mittels Brute-Force-Suche angreifen kann.\line
+Die Schlüsselsucher-Komponente durchsucht einen Teilraum des AES-Schlüsselraums und nutzt die Entropie der entschlüsselten Klartexte, um den richtigen zu finden\line
+Der Klartext, welcher die geringste Entropie hat, wird in der Bestenliste an erster Stelle stehen.\line
+Als Eingabe erhält der Schlüsselsucher einen Geheimtext, welcher hex-codiert eingegeben wurde." />	
   </replacements>
   <replacements lang="ru">
     <replacement key="$Ciphertext$" value="шифротекста" />
@@ -35,6 +39,10 @@
     <replacement key="$StringDecoder$" value="Строка декодера" />
     <replacement key="$Converter$" value="преобразование" />
     <replacement key="$KeySearcher$" value="ключ поиска" />
+	<replacement key="$memo$" value="Этот шаблон показывает, как использовать поиск Brute Force для атаки на AES-зашифрованный текст.\line
+Компонент поиска ключей ищет подпространство в пространстве ключей AES и использует энтропию дешифрованного открытого текста, чтобы найти правильную строку.\line
+Открытый текст с наименьшей энтропией будет занимать первое место в таблице лидеров.\line
+В качестве входных данных ключ поиска получает зашифрованный текст, который был введен в шестнадцатеричном коде." />
   </replacements>
   <replacements lang="en">
     <replacement key="$Ciphertext$" value="Ciphertext" />
@@ -44,5 +52,9 @@
     <replacement key="$StringDecoder$" value="StringDecoder" />
     <replacement key="$Converter$" value="Converter" />
     <replacement key="$KeySearcher$" value="KeySearcher" />
+	<replacement key="$memo$" value="This template shows how to use a brute-force search to attack an AES-encrypted text. \line
+The Keysearcher component searches a subspace of the AES keyspace and uses the entropy of the decrypted plaintexts to find the correct one.\line
+The plaintext that has the lowest entropy will rank first in the bestlist. \line
+As input, the Keysearcher receives a ciphertext, which was entered hex-encoded." />
   </replacements>
 </sample>

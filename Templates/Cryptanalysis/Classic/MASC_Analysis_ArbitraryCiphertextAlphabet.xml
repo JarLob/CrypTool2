@@ -28,6 +28,10 @@
     <replacement key="$Cryptanalysis$" value="Kryptoanalyse des Geheimtextes" />
     <replacement key="$Output of the key$" value="Ausgabe des Schlüssels" />
     <replacement key="$Recovered plaintext$" value="Ermittelter Klartext" />
+	<replacement key="$memo$" value="Diese Vorlage zeigt, wie man Texte, die mit beliebigen Zeichen monoalphabetisch substituiert wurden, brechen kann.\line
+Zunächst wird ein Beispielklartext mi Hilfe der Substitutions-Komponente, welches das Geheimtextalphabet nutzt, verschlüsselt.\line
+Danach wird der Geheimext mittels der Monoalphabetischen Substitutionsanalyse gebrochen.\line
+Als Ergebnis wird der Klartext, das Klartextalphabet und der Schlüssel ausgegeben." />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Plaintext$" value="обычный текст" />
@@ -40,6 +44,10 @@
     <replacement key="$Cryptanalysis$" value="Криптоанализ зашифрованного текста" />
     <replacement key="$Output of the key$" value="Проблема с ключом" />
     <replacement key="$Recovered plaintext$" value="Определенный открытый текст" />
+	<replacement key="$memo plaintext$" value="Этот шаблон показывает, как разбивать тексты, которые были заменены в алфавитном порядке произвольными символами.\line
+Сначала пример открытого текста шифруется с использованием компонента замещения, который использует заданный алфавит зашифрованного текста.\line
+Затем зашифрованный текст прерывается с помощью анализа моно-алфавитного замещения.\line
+В результате отображается открытый текст, алфавит открытого текста и ключ." />
   </replacements>
   <replacements lang="en">
     <replacement key="$Plaintext$" value="Plaintext" />
@@ -52,5 +60,9 @@
     <replacement key="$Output of the plaintext alphabet$" value="Output of the plaintext alphabet" />
     <replacement key="$Output of the key$" value="Output of the key" />
     <replacement key="$Recovered plaintext$" value="Recovered plaintext" />
+	<replacement key="$memo plaintext$" value="This template shows how to break texts that have been monoalphabetically substituted with arbritrary symbols.\line
+First, an example plaintext is encrypted using the substitution component that uses the given ciphertext alphabet.\line
+Then, ciperhtext is broken using the mono-alphabetical substitution analysis.\line
+As a result, the plaintext, the plaintext alphabet and the key are shown." />
   </replacements>
 </sample>
