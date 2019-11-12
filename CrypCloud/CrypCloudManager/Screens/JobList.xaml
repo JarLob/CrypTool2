@@ -36,8 +36,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="25" />
-            <RowDefinition Height="500*" />
-            <RowDefinition Height="80" />
+            <RowDefinition Height="450*" />
+            <RowDefinition Height="100" />
             <RowDefinition Height="65" />
         </Grid.RowDefinitions>
         <!-- top controls -->
@@ -60,7 +60,7 @@
                 </StackPanel>
             </Button>
         </Grid>
-        <!-- errorBox    -->
+        <!-- errorBox -->
         <Border Grid.Row="1"  Visibility="{Binding Path=ErrorMessage, Converter={converter:HideWhenStringIsEmptyConverter}}" BorderThickness="1" BorderBrush="PaleVioletRed" Background="White" HorizontalAlignment="Center">
             <TextBlock Text="{Binding Path=ErrorMessage}" Margin="5,2,5,0" Foreground="Red" TextWrapping="NoWrap" />
         </Border>
@@ -71,10 +71,15 @@
                 <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
             <!-- Job List-->
-            <ListView  Grid.Column="0"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ItemsSource="{Binding RunningJobs}"
+            <ListView Margin="0"  Grid.Column="0"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ItemsSource="{Binding RunningJobs}"
                       SelectedItem="{Binding SelectedJob, Mode=TwoWay}"
                       x:Name="JobListView" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                       ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="{Loc _copy}" Click="CopyJobList_Click" />
+                    </ContextMenu>
+                </ListView.ContextMenu>
                 <ListView.View>
                     <GridView>
                         <GridView.ColumnHeaderContainerStyle>
@@ -92,7 +97,7 @@
                                         DisplayMemberBinding="{Binding JobName}" Width="375" />
                         <GridViewColumn x:Name="JobSize" Header="{Loc  _JobList_col_JobSize}" 
                                         DisplayMemberBinding="{Binding JobSize, Converter={StaticResource JobSizeConverter}}" Width="100" />
-                        <GridViewColumn x:Name="CreatorName" Header="{Loc  _JobList_col_Creator}"
+                        <GridViewColumn x:Name="CreatorName" Header="{Loc _JobList_col_Creator}"
                                         DisplayMemberBinding="{Binding CreatorName}" Width="125" />
                         <GridViewColumn x:Name="Progress" Header="{Loc _JobList_col_Progress}"
                                         Width="260">
@@ -111,7 +116,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn x:Name="OpenJobCommand" Header="" Width="120">
+                        <GridViewColumn x:Name="OpenJobCommand" Header="{Loc _JobList_col_Action}" Width="120">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -142,8 +147,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn x:Name="DeleteJobCommand" Width="{Binding ElementName=JobListRoot, Path=DataContext.UserCanDeleteJob, Converter={StaticResource BoolToWidth}}">
-
+                        <GridViewColumn x:Name="DeleteJobCommand" Width="{Binding ElementName=JobListRoot, Path=DataContext.UserCanDeleteJob, Converter={StaticResource BoolToWidth}}" Header="{Loc _JobList_col_Action}">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -178,38 +182,38 @@
                         <MenuItem Header="{Loc _copyJobInformation}" Click="CopyJobInfo_Click" />
                     </ContextMenu>
                 </ScrollViewer.ContextMenu>
-                <Grid  Background="White">
+                <Grid Background="White" Margin="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="75" />
                         <ColumnDefinition Width="225" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="5"/>
-                        <RowDefinition Height="26"/>
-                        <RowDefinition Height="26"/>
-                        <RowDefinition Height="26"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="26"/>
-                        <RowDefinition Height="220"/>
-                        <RowDefinition Height="26"/>
-                        <RowDefinition Height="160"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="48"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="210"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="50*"/>
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Column="0" Grid.Row="1" FontWeight="Bold" Content="{Loc _JobList_JobId}" />
-                    <TextBlock Grid.Column="1" Grid.Row="1"  TextWrapping="Wrap" Text="{Binding ElementName=JobListView, Path=SelectedItem.JobId, Converter={StaticResource JobIdConverter}}"  Margin="0,5,5,0"  />
+                    <Label VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" FontWeight="Bold" Content="{Loc _JobList_JobId}" />
+                    <TextBlock VerticalAlignment="Center" Grid.Column="1" Grid.Row="1"  TextWrapping="Wrap" Text="{Binding ElementName=JobListView, Path=SelectedItem.JobId, Converter={StaticResource JobIdConverter}}"   />
 
-                    <Label Grid.Column="0" Grid.Row="2" FontWeight="Bold" Content="{Loc _JobList_jobName}" />
-                    <TextBlock Grid.Column="1" Grid.Row="2"  TextWrapping="Wrap" Text="{Binding ElementName=JobListView, Path=SelectedItem.JobName}"  Margin="0,5,5,0"  />
+                    <Label VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" FontWeight="Bold" Content="{Loc _JobList_jobName}" />
+                    <TextBlock VerticalAlignment="Center" Grid.Column="1" Grid.Row="2"  TextWrapping="Wrap" Text="{Binding ElementName=JobListView, Path=SelectedItem.JobName}"   />
 
-                    <Label Grid.Column="0"  Grid.Row="3" Grid.ColumnSpan="2" FontWeight="Bold" Content="{Loc _JobList_EpochProgress}" />
-                    <ProgressBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Minimum="0" 
+                    <Label VerticalAlignment="Center" Grid.Column="0"  Grid.Row="3" Grid.ColumnSpan="2" FontWeight="Bold" Content="{Loc _JobList_EpochProgress}" />
+                    <ProgressBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Minimum="0"
                              Value="{Binding ElementName=JobListView, Path=SelectedItem.EpochProgress}" Margin="50,12" />
                     <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Text="{Binding ElementName=JobListView, Path=SelectedItem.EpochProgressText}" 
                                HorizontalAlignment="Center" VerticalAlignment="Center" Height="16"/>
 
                     <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" FontWeight="Bold" Content="{Loc _JobList_bitmask}" />
-                    <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6"  BorderThickness="1" Margin="50,10,50,0" Height="199" BorderBrush="#FF000000"
-                        VerticalAlignment="Top">
+                    <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6"  BorderThickness="1" Margin="50,0,50,0" Height="199" BorderBrush="#FF000000"
+                        VerticalAlignment="Center">
                         <Image Width="200" Height="200" RenderOptions.BitmapScalingMode="NearestNeighbor"
                            Source="{Binding ElementName=JobListView, Path=SelectedItem.EpochVisualization, UpdateSourceTrigger=PropertyChanged}" />
                     </Border>
@@ -221,30 +225,47 @@
             </ScrollViewer>
         </Grid>
         <!-- bottom controls -->
-        <Grid Grid.Row="3" VerticalAlignment="Top">
-            <Button Command="{Binding Path=RefreshJobListCommand}" HorizontalAlignment="Left" Margin="5" Width="110"
+        <Grid Grid.Row="3" VerticalAlignment="Stretch" Margin="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            <ScrollViewer Margin="0" Grid.Column="0" Background="White"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <TextBlock Margin="10,1,10,1" Text="{Loc _JobList_instructions}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch">
+                    <TextBlock.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="{Loc _copy}" Click="CopyInstructions_Click" />
+                        </ContextMenu>
+                    </TextBlock.ContextMenu>
+                </TextBlock>
+            </ScrollViewer>
+            <Grid Grid.Column="1" Background="White" Margin="0">
+                <Button Command="{Binding Path=CreateNewJobCommand}" HorizontalAlignment="Center" Margin="5,40,0,5" Width="140"
+                        Height="30" ToolTip="{Loc _JobList_btn_createNew_tooltip}" Visibility="{Binding Path=UserCanCreateJob, Converter={converter:BoolToVisibilityConverter}}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../Images/ButtonIcons/plus.png" Width="16" />
+                        <Label Content="{Loc _JobList_btn_createNew}"/>
+                    </StackPanel>
+                </Button>
+                <Button  Command="{Binding Path=RefreshJobListCommand}" HorizontalAlignment="Center" Margin="5,-40,0,5" Width="140"
                     Height="30" ToolTip="{Loc _JobList_btn_refresh_tooltip}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="../Images/ButtonIcons/refresh.png" Width="16" />
-                    <Label Content="{Loc _JobList_btn_refresh}"/>
-                </StackPanel>
-            </Button>
-            <TextBlock Margin="150,0,0,0" Text="{Loc _JobList_instructions}" VerticalAlignment="Top" Width="1400" Height="80" HorizontalAlignment="Left"/>
-
-            <Button Command="{Binding Path=CreateNewJobCommand}" HorizontalAlignment="Right" Margin="5" Width="150"
-                    Height="30" ToolTip="{Loc _JobList_btn_createNew_tooltip}" Visibility="{Binding Path=UserCanCreateJob, Converter={converter:BoolToVisibilityConverter}}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="../Images/ButtonIcons/plus.png" Width="16" />
-                    <Label Content="{Loc _JobList_btn_createNew}"/>
-                </StackPanel>
-            </Button>
-
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../Images/ButtonIcons/refresh.png" Width="16" />
+                        <Label Content="{Loc _JobList_btn_refresh}"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
         </Grid>
         <!-- Connection List-->
-        <Grid Grid.Row="4" Margin="5" VerticalAlignment="Stretch">
+        <Grid Grid.Row="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <ListView VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ItemsSource="{Binding Contacts}"
                       x:Name="ContactsListView" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                       ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="{Loc _copy}" Click="CopyConnectedContacts_Click" />
+                    </ContextMenu>
+                </ListView.ContextMenu>
                 <ListView.View>
                     <GridView>
                         <GridView.ColumnHeaderContainerStyle>

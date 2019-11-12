@@ -855,11 +855,11 @@ namespace VoluntLib2.ManagementLayer
                 if (oldEpochProgress != EpochProgress)
                 {
                     Progress = (double)((NumberOfCalculatedBlocks * 10000000000) / (NumberOfBlocks)) / 100000000;
-                    ProgressText = NumberOfCalculatedBlocks + " / " + NumberOfBlocks;
+                    ProgressText = string.Format("{0:n0}", NumberOfCalculatedBlocks) + " / " + string.Format("{0:n0}", NumberOfBlocks);
                     OnPropertyChanged("Progress");
                     OnPropertyChanged("ProgressText");
 
-                    EpochProgressText = JobEpochState.Bitmask.GetSetBitsCount() + " / " + JobEpochState.Bitmask.mask.Length * 8;
+                    EpochProgressText = string.Format("{0:n0}", JobEpochState.Bitmask.GetSetBitsCount()) + " / " + string.Format("{0:n0}", JobEpochState.Bitmask.mask.Length * 8);
                     OnPropertyChanged("EpochProgress");
                     OnPropertyChanged("EpochProgressText");
                 }

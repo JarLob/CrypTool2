@@ -167,10 +167,10 @@
     <value>Please enter your account data below.</value>
   </data>
   <data name="_CreateAccount_successHeader" xml:space="preserve">
-    <value>Account successfully requested</value>
+    <value>Account successfully requested.</value>
   </data>
   <data name="_CreateAccount_successText" xml:space="preserve">
-    <value />
+    <value>Account successfully requested.</value>
   </data>
   <data name="_CreateAccount_Title" xml:space="preserve">
     <value>Create a new account </value>
@@ -215,7 +215,7 @@
     <value>Progress</value>
   </data>
   <data name="_JobList_Header" xml:space="preserve">
-    <value>CrypCloud – Job list</value>
+    <value>CrypCloud – Job List</value>
   </data>
   <data name="_Login_btn_connect" xml:space="preserve">
     <value>Connect</value>
@@ -359,7 +359,7 @@
     <value>IP Address</value>
   </data>
   <data name="_PeerId" xml:space="preserve">
-    <value>Peer ID</value>
+    <value>Peer Id</value>
   </data>
   <data name="_Port" xml:space="preserve">
     <value>Port</value>
@@ -371,13 +371,20 @@
     <value>Copy job information</value>
   </data>
   <data name="_JobList_instructions" xml:space="preserve">
-    <value>a) This list contains long-running jobs which can be solved by running parallel sub-jobs. So different people can contribute by working on sub-jobs on their computers.
+    <value>a) This list contains long-running jobs which can be solved faster by running parallel sub-jobs. So different people can contribute by running the same job and computing different sub-jobs on their computers.
 b) Select a job in the list and click "Open" to contribute.
-d) After clicking "Open" the according CT2 workspace is loaded by a new CT2 Workspace Manager.
-e) Please start "Play" to run the download workspace. The cloud component of the workspace then shares it's results with all other participating contributors.
-If someone of the contributors found a solution this solution is also shared with all others and immediately visible. There is no information shared about the contributors themselves.</value>
+d) After clicking "Open" the according job is downloaded and opened in a new CT2 Workspace Manager tab.
+e) Please click "Play" (F5) to run the downloaded CT2 workspace in the new tab. The CrypCloud component in the workspace then shares the results with all other participating contributors.
+If someone of the contributors found a solution, this solution is also shared with all others and is immediately visible. There is no information shared about the contributors themselves.
+The list below contains all peers (IP-address and port), which this computer is currently connected to.</value>
   </data>
   <data name="_Login_anonymous" xml:space="preserve">
     <value>To login without registration use "anonymous/anonymous".</value>
+  </data>
+  <data name="_copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="_JobList_col_Action" xml:space="preserve">
+    <value>Action</value>
   </data>
 </root>

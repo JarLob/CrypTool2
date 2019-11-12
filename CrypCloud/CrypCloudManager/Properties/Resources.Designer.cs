@@ -115,6 +115,15 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy ähnelt.
+        /// </summary>
+        public static string _copy {
+            get {
+                return ResourceManager.GetString("_copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Copy job information ähnelt.
         /// </summary>
         public static string _copyJobInformation {
@@ -133,7 +142,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Account successfully requested ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Account successfully requested. ähnelt.
         /// </summary>
         public static string _CreateAccount_successHeader {
             get {
@@ -142,7 +151,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Account successfully requested. ähnelt.
         /// </summary>
         public static string _CreateAccount_successText {
             get {
@@ -322,6 +331,15 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Action ähnelt.
+        /// </summary>
+        public static string _JobList_col_Action {
+            get {
+                return ResourceManager.GetString("_JobList_col_Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Creator ähnelt.
         /// </summary>
         public static string _JobList_col_Creator {
@@ -385,7 +403,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die CrypCloud – Job list ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die CrypCloud – Job List ähnelt.
         /// </summary>
         public static string _JobList_Header {
             get {
@@ -403,11 +421,10 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die a) This list contains long-running jobs which can be solved by running parallel sub-jobs. So different people can contribute by working on sub-jobs on their computers.
+        ///   Sucht eine lokalisierte Zeichenfolge, die a) This list contains long-running jobs which can be solved faster by running parallel sub-jobs. So different people can contribute by running the same job and computing different sub-jobs on their computers.
         ///b) Select a job in the list and click &quot;Open&quot; to contribute.
-        ///d) After clicking &quot;Open&quot; the according CT2 workspace is loaded by a new CT2 Workspace Manager.
-        ///e) Please start &quot;Play&quot; to run the download workspace. The cloud component of the workspace then shares it&apos;s results with all other participating contributors.
-        ///If someone of the contribu [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///d) After clicking &quot;Open&quot; the according job is downloaded and opened in a new CT2 Workspace Manager tab.
+        ///e) Please click &quot;Play&quot; (F5) to run the downloaded CT2 workspace in the new tab. The CrypCloud component in the workspace then shares the [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         public static string _JobList_instructions {
             get {
@@ -533,7 +550,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Peer ID ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Peer Id ähnelt.
         /// </summary>
         public static string _PeerId {
             get {

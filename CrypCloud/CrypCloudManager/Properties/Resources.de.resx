@@ -170,7 +170,7 @@
     <value>Ihr Account wurde erfolgreich erstellt.</value>
   </data>
   <data name="_CreateAccount_successText" xml:space="preserve">
-    <value />
+    <value>Ihr Account wurde erfolgreich erstellt.</value>
   </data>
   <data name="_CreateAccount_Title" xml:space="preserve">
     <value>Neuen Account erstellen</value>
@@ -353,7 +353,7 @@
     <value>IP-Adresse</value>
   </data>
   <data name="_PeerId" xml:space="preserve">
-    <value>Peer-ID</value>
+    <value>Peer-Id</value>
   </data>
   <data name="_Port" xml:space="preserve">
     <value>Port</value>
@@ -362,13 +362,20 @@
     <value>Kopiere Job-Informationen</value>
   </data>
   <data name="_JobList_instructions" xml:space="preserve">
-    <value>a) Diese Liste enthält Jobs mit langer Laufzeit, die durch Ausführen von parallelen Sub-Jobs gelöst werden können. So können verschiedene Personen einen Beitrag leisten, indem sie an Sub-Jobs auf ihren Computern arbeiten.
+    <value>a) Diese Liste enthält Jobs mit langer Laufzeit, die durch die Ausführung paralleler Sub-Jobs schneller gelöst werden können. So können verschiedene Personen einen Beitrag leisten, indem sie denselben Job ausführen und verschiedene Sub-Jobs auf ihren Computern bearbeiten.
 b) Wählen Sie einen Job in der Liste aus und klicken Sie auf "Öffnen", um einen Beitrag zu leisten.
-d) Nach dem Klicken auf "Öffnen" wird der entsprechende CT2-Arbeitsbereich von einem neuen CT2-Workspace Manager geladen.
-e) Bitte drücken Sie "Play", um den heruntergeladenen Arbeitsbereich zu starten. Die Cloud-Komponente des Arbeitsbereichs teilt dann ihre Ergebnisse mit allen anderen teilnehmenden Mitwirkenden.
-Wenn einer der Mitwirkenden eine Lösung gefunden hat, wird diese Lösung auch für alle anderen freigegeben und sofort sichtbar. Es werden keine Informationen über die Mitwirkenden selbst weitergegeben.</value>
+d) Nach Klick auf "Öffnen" wird der entsprechende Job heruntergeladen und in einer neuen Registerkarte in einem neuen CT2 Workspace Manager geöffnet.
+e) Klicken Sie auf "Abspielen" (F5), um den heruntergeladenen CT2-Arbeitsbereich in der neuen Registerkarte auszuführen. Die CrypCloud-Komponente im Arbeitsbereich teilt dann die Ergebnisse mit allen anderen beteiligten Mitwirkenden.
+Wenn einer der Mitwirkenden eine Lösung gefunden hat, wird diese Lösung auch für alle anderen freigegeben und ist sofort sichtbar. Es werden keine Informationen über die Mitwirkenden selbst weitergegeben.
+Die folgende Liste enthält alle Peers (IP-Adresse und Port), mit denen dieser Computer derzeit verbunden ist.</value>
   </data>
   <data name="_Login_anonymous" xml:space="preserve">
-    <value>Um sich ohne Registrierung einzuloggen benutzen Sie "anonymous/anonymous".</value>
+    <value>Um sich ohne Registrierung einzuloggen, benutzen Sie "anonymous/anonymous"</value>
+  </data>
+  <data name="_copy" xml:space="preserve">
+    <value>Kopieren</value>
+  </data>
+  <data name="_JobList_col_Action" xml:space="preserve">
+    <value>Aktion</value>
   </data>
 </root>

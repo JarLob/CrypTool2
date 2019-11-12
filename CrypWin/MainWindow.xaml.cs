@@ -1997,6 +1997,7 @@ namespace Cryptool.CrypWin
                 if (editorType == typeof(CrypCloud.Manager.CrypCloudManager))
                 {
                     info.Title = CrypCloud.Manager.Properties.Resources.Tab_Caption;
+                    info.Tooltip = new Span(new Run(CrypCloud.Manager.Properties.Resources.PluginTooltip));
                 }
                 else if (editorType == typeof(WorkspaceManager.WorkspaceManagerClass))
                 {
