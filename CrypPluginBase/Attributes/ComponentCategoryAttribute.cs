@@ -33,6 +33,7 @@ namespace Cryptool.PluginBase
         ToolsDataInputOutput,
         ToolsMisc,
         ToolsP2P,
+        DECRYPTProjectComponent,
         Undefined
     }
 

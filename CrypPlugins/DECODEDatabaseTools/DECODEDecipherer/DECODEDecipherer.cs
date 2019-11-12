@@ -27,7 +27,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 {
     [Author("Nils Kopal", "nils.kopal@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
     [PluginInfo("Cryptool.Plugins.DECODEDatabaseTools.Properties.Resources", "DECODEDeciphererCaption", "DECODEDeciphererTooltip", "DECODEDatabaseTools/userdoc.xml", "DECODEDatabaseTools/icon.png")]
-    [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
+    [ComponentCategory(ComponentCategory.DECRYPTProjectComponent)]
     public class DECODEDecipherer: ICrypComponent
     {
         #region Private Variables

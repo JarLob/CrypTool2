@@ -1448,7 +1448,7 @@ namespace Cryptool.CrypWin
                             cont = new GUIContainerElementsForPlugins(type, pia, navPaneItemTools, navListBoxToolsP2P, Properties.Resources.PeerToPeer);
                             break;
                         case ComponentCategory.DECRYPTProjectComponent:
-                            cont = new GUIContainerElementsForPlugins(type, pia, navPaneItemDECRYPTProject, navListBoxDECRYPTProject, Properties.Resources.Steganography);
+                            cont = new GUIContainerElementsForPlugins(type, pia, navPaneItemDECRYPTProject, navListBoxDECRYPTProject, Properties.Resources.DECRYPTProject);
                             break;
                         default:
                             GuiLogMessage(string.Format("Category {0} of plugin {1} not handled in CrypWin", attr.Category, pia.Caption), NotificationLevel.Error);

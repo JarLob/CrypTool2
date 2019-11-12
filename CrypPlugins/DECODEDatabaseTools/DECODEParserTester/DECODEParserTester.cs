@@ -30,7 +30,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 {
     [Author("Nils Kopal", "nils.kopal@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
     [PluginInfo("Cryptool.Plugins.DECODEDatabaseTools.Properties.Resources", "DecodeParserTesterCaption", "DecodeParserTesterTooltip", "DECODEDatabaseTools/userdoc.xml", "DECODEDatabaseTools/icon.png")]
-    [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
+    [ComponentCategory(ComponentCategory.DECRYPTProjectComponent)]
     public class DECODEParserTester : ICrypComponent
     {
         private DECODEParserTestPresentation _presentation = new DECODEParserTestPresentation();

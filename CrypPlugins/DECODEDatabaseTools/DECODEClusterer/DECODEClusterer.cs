@@ -28,7 +28,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 {
     [Author("Nils Kopal", "nils.kopal@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
     [PluginInfo("Cryptool.Plugins.DECODEDatabaseTools.Properties.Resources", "DECODEClustererCaption", "DECODEClustererTooltip", "DECODEDatabaseTools/userdoc.xml", "DECODEDatabaseTools/icon.png")]
-    [ComponentCategory(ComponentCategory.ToolsMisc)]
+    [ComponentCategory(ComponentCategory.DECRYPTProjectComponent)]
     public class DECODEClusterer : ICrypComponent
     {
         private ClusterSet _clusterset;

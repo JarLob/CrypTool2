@@ -626,6 +626,15 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die DECRYPT Project ähnelt.
+        /// </summary>
+        internal static string DECRYPTProject {
+            get {
+                return ResourceManager.GetString("DECRYPTProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Description ähnelt.
         /// </summary>
         internal static string Description {

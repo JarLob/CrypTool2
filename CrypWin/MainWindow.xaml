@@ -1014,7 +1014,7 @@
                                     </Grid>
 
                                     <!--NavigationPane-->
-                                    <dc:NavigationPane Grid.Column="0" Grid.Row="1" Name="naviPane" DockPanel.Dock="Left" LargeItemsCount="7"
+                                    <dc:NavigationPane Grid.Column="0" Grid.Row="1" Name="naviPane" DockPanel.Dock="Left" LargeItemsCount="8"
                             LicenseKey="{proprietary:LicenseKey}" IsExpanded="True" SnapsToDevicePixels="False" 
                             DisplayMemberPath="Name" SelectedValuePath="Name" Margin="0,0,0,0"
                             Visibility="Visible" Collapsed="naviPane_Collapsed">
@@ -1139,9 +1139,10 @@
                                         </dc:PaneItem>
 
                                         <dc:PaneItem Visibility="Collapsed" Name="navPaneItemDECRYPTProject" Header="{Loc DECRYPTProject}" 
-                                            Title="{Loc DECRYPTProject}" Height="35" IsSelected="True"
-                                            ImageSource="images/03-Stego-28x26.png" ImageSmallSource="images/03-Stego-28x26.png"
-                                            MouseLeftButtonDown="navPaneItem_MouseLeftButtonDown">      
+                                            ImageSmallSource="images/decrypt-logo.png"
+                                            ImageSource="images/decrypt-logo.png"
+                                            Title="{Loc DECRYPTProject}" Height="35" IsSelected="True"                                            
+                                            MouseLeftButtonDown="navPaneItem_MouseLeftButtonDown">
                                             <ScrollViewer VerticalScrollBarVisibility="Auto">
                                                 <StackPanel CanVerticallyScroll="True">
                                                     <ListBox Name="navListBoxDECRYPTProject" BorderThickness="0" Margin="0"/>
