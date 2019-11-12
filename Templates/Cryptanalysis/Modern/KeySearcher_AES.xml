@@ -8,7 +8,7 @@
   <description lang="ru">Этот шаблон показывает криптоанализ алгоритма AES с использованием компонента KeySearcher и энтропийной функции. Для этой цели данный открытый текст зашифрован с помощью AES, и полученный зашифрованный текст отправляется в Keysearcher. Теперь KeySearcher пробует все ключи данного пространства ключей и оценивает полученные текстовые тексты с помощью функции энтропии. Исходный текст с лучшим счетом отправляется на выход и должен быть идентичен оригинальному текстуре.</description>
   <keywords>advanced, Daemen, symmetric, NIST, Rijmen, Rijndael, keysearcher, Attack, Analysis</keywords>
   <keywords lang="ru">продвинутый, Daemen, симметричный, NIST, Rijmen, Rijndael, keyearcher, Attack, Analysis</keywords>
-  <title lang="de">AES Analyse per Entropie (2) – mit veränderbarem Klartext</title>
+  <title lang="de">AES-Analyse per Entropie (2) – mit veränderbarem Klartext</title>
   <summary lang="de">Kryptoanalyse der <i>AES</i>-Verschlüsselung mittels der <i>KeySearcher</i>-Komponente und einer Entropie-Funktion</summary>
   <description lang="de">Diese Vorlage zeigt die Kryptoanalyse der <i>AES</i>-Verschlüsselung mittels der <i>KeySearcher</i>-Komponente und einer Entropie-Funktion. Hierzu wird ein gegebener Klartext mit <i>AES</i> verschlüsselt und der entstehende Geheimtext an den <i>Keysearcher</i> weitergeleitet. Der <i>KeySearcher</i> probiert nun alle Schlüssel des angegebenen Schlüsselraumes und bewertet die resultierenden Klartexte mittels der Entropie-Funktion. Der Klartext mit der besten Bewertung wird ausgegeben und sollte dem ursprünglichen Klartext entsprechen.</description>
   <keywords lang="de">asymmetrisch, Daemen, NIST, Rijmen, Rijndael, Keysearcher, Angriff</keywords>
@@ -26,8 +26,8 @@
     <replacement key="$Key$" value="Schlüssel" />
     <replacement key="$KeySearcher$" value="Schlüsselsuche" />
 	<replacement key="$memo$" value="Diese Vorlage zeigt, wie man einen mit AES verschlüsselten Text mittels Brute-Force-Suche angreifen kann.\line
-Die Schlüsselsucher-Komponente durchsucht einen Teilraum des AES-Schlüsselraums und nutzt die Entropie der entschlüsselten Klartexte, um den richtigen zu finden\line
-Der Klartext, welcher die geringste Entropie hat, wird in der Bestenliste an erster Stelle stehen.\line
+Die Schlüsselsucher-Komponente durchsucht einen Teilraum des AES-Schlüsselraums und nutzt die Entropie der entschlüsselten Klartexte, um den richtigen zu finden.\line
+Der Klartext, der die geringste Entropie hat, steht dann in der Bestenliste an erster Stelle.\line
 Als Eingabe erhält der Keysearcher einen Geheimtext, der als Klartext eingegeben und dann mit AES verschlüsselt wurde." />	
   </replacements>
   <replacements lang="ru">

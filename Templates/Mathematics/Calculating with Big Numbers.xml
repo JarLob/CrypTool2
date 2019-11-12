@@ -9,9 +9,9 @@
   <description lang="en">In this template, an equation is calculated using math components. It also shows, how to enter big numbers into a NumberInput component.</description>
   <description lang="de">In dieser Vorlage wird eine Gleichung mit mathematischen Komponenten berechnet. Es wird auch gezeigt, wie große Zahlen in eine Zahleneingabe-Komponente eingegeben werden können.</description>
   <description lang="ru">В этом шаблоне уравнение рассчитывается с использованием математических компонентов. Также показано, как вводить большие числа в компонент NumberInput.</description>
-  <keywords>mathematics, calculation, big numbers</keywords>
-  <keywords lang="ru">математика, расчет, большие числа</keywords>	
-  <keywords lang="de">Mathematik, Berechnung, große Zahlen</keywords>
+  <keywords>mathematics, calculation, big numbers, modulo, power</keywords>
+  <keywords lang="ru">математика, расчет, большие числа, По модулю, потенция</keywords>	
+  <keywords lang="de">Mathematik, Berechnung, große Zahlen, Modulo , Potenz</keywords>
   <icon file="math.png" />
   <replacements lang="de">
     <replacement key="$memo$" value="Diese Vorlage zeigt, wie mit großen Zahlen gerechnet wird. \line
