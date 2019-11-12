@@ -423,8 +423,8 @@ namespace CrypCloud.Manager.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die a) This list contains long-running jobs which can be solved faster by running parallel sub-jobs. So different people can contribute by running the same job and computing different sub-jobs on their computers.
         ///b) Select a job in the list and click &quot;Open&quot; to contribute.
-        ///d) After clicking &quot;Open&quot; the according job is downloaded and opened in a new CT2 Workspace Manager tab.
-        ///e) Please click &quot;Play&quot; (F5) to run the downloaded CT2 workspace in the new tab. The CrypCloud component in the workspace then shares the [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///d) After clicking &quot;Open&quot; the according job is downloaded and opened in a new CT2 workspace tab.
+        ///e) Please click &quot;Play&quot; (F5) to run the downloaded CT2 workspace in the new tab. The CrypCloud component in the workspace then shares the results [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         public static string _JobList_instructions {
             get {

@@ -373,7 +373,7 @@
   <data name="_JobList_instructions" xml:space="preserve">
     <value>a) This list contains long-running jobs which can be solved faster by running parallel sub-jobs. So different people can contribute by running the same job and computing different sub-jobs on their computers.
 b) Select a job in the list and click "Open" to contribute.
-d) After clicking "Open" the according job is downloaded and opened in a new CT2 Workspace Manager tab.
+d) After clicking "Open" the according job is downloaded and opened in a new CT2 workspace tab.
 e) Please click "Play" (F5) to run the downloaded CT2 workspace in the new tab. The CrypCloud component in the workspace then shares the results with all other participating contributors.
 If someone of the contributors found a solution, this solution is also shared with all others and is immediately visible. There is no information shared about the contributors themselves.
 The list below contains all peers (IP-address and port), which this computer is currently connected to.</value>
