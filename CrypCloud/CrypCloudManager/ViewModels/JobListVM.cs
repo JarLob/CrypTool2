@@ -38,8 +38,20 @@ namespace CrypCloud.Manager.ViewModels
         public RelayCommand OpenJobCommand { get; set; }
         public RelayCommand DeleteJobCommand { get; set; }
         public RelayCommand DownloadWorkspaceCommand { get; set; }
-        public RelayCommand LogOutCommand { get; set; }        
-        public string Username { get; set; }
+        public RelayCommand LogOutCommand { get; set; }
+
+        private string _username;
+        public string Username
+        {
+            get
+            {
+                return Resources._JobList_LoggedInAs + " " +_username;
+            }
+            set
+            {
+                _username = value;
+            }
+        }
 
         public JobListVM()
         {

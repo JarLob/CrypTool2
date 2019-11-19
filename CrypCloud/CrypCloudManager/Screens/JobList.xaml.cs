@@ -45,10 +45,10 @@ namespace CrypCloud.Manager.Screens
                 JobListVM jobListVM = (JobListVM)DataContext;
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.AppendLine("CrypCloud – Job from " + DateTime.Now);
-                stringBuilder.AppendLine("- Job id: " + ByteArrayToString(jobListVM.SelectedJob.JobId.ToByteArray()));
+                stringBuilder.AppendLine("- Job ID: " + ByteArrayToString(jobListVM.SelectedJob.JobId.ToByteArray()));
                 stringBuilder.AppendLine("- Job name: " + jobListVM.SelectedJob.JobName);
                 stringBuilder.AppendLine("- Job size (bytes): " + jobListVM.SelectedJob.JobSize);
-                stringBuilder.AppendLine("- Creation date: " + jobListVM.SelectedJob.CreationDate);
+                stringBuilder.AppendLine("- Creation date: " + jobListVM.SelectedJob.CreationDate.ToLocalTime().ToString("g"));
                 stringBuilder.AppendLine("- Creator name: " + jobListVM.SelectedJob.CreatorName);
                 stringBuilder.AppendLine("- Job description: " + jobListVM.SelectedJob.JobDescription);
                 stringBuilder.AppendLine("- Number of blocks: " + jobListVM.SelectedJob.NumberOfBlocks);
@@ -96,7 +96,7 @@ namespace CrypCloud.Manager.Screens
                     stringBuilder.AppendLine("- PeerId:" + ByteArrayToString(element.PeerId));
                     stringBuilder.AppendLine("- IP:" + element.IPAddress);
                     stringBuilder.AppendLine("- Port:" + element.Port);
-                    stringBuilder.AppendLine("- Last seen:" + element.LastSeen);
+                    stringBuilder.AppendLine("- Last seen:" + element.LastSeen.ToLocalTime().ToString("g"));
 
                 }
                 Clipboard.SetText(stringBuilder.ToString());
@@ -122,10 +122,10 @@ namespace CrypCloud.Manager.Screens
                 foreach (var job in jobListVM.RunningJobs)
                 {
                     stringBuilder.AppendLine("Job:");
-                    stringBuilder.AppendLine("- Id: " + ByteArrayToString(job.JobId.ToByteArray()));
+                    stringBuilder.AppendLine("- ID: " + ByteArrayToString(job.JobId.ToByteArray()));
                     stringBuilder.AppendLine("- Name: " + job.JobName);
                     stringBuilder.AppendLine("- Size (bytes): " + job.JobSize);
-                    stringBuilder.AppendLine("- Creation date: " + job.CreationDate);
+                    stringBuilder.AppendLine("- Creation date: " + job.CreationDate.ToLocalTime().ToString("g"));
                     stringBuilder.AppendLine("- Creator name: " + job.CreatorName);
                     stringBuilder.AppendLine("- Job description: " + job.JobDescription);
                     stringBuilder.AppendLine("- Number of blocks: " + job.NumberOfBlocks);

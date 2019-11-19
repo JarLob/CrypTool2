@@ -362,7 +362,7 @@
     <value>Kopiere Job-Informationen</value>
   </data>
   <data name="_JobList_instructions" xml:space="preserve">
-    <value>a) Diese Liste enthält Jobs mit langer Laufzeit, die durch die Ausführung paralleler Sub-Jobs schneller gelöst werden können. So können sich verschiedene Personen an demselben Job beteiligen und verschiedene Sub-Jobs auf ihren Computern bearbeiten.
+    <value>a) Die obige Liste enthält Jobs mit langer Laufzeit, die durch die Ausführung paralleler Sub-Jobs schneller gelöst werden können. So können sich verschiedene Personen an demselben Job beteiligen und verschiedene Sub-Jobs auf ihren Computern bearbeiten.
 b) Wählen Sie einen Job in der Liste aus und klicken Sie auf "Öffnen", um einen Beitrag zu leisten.
 d) Nach Klick auf "Öffnen" wird der entsprechende Job heruntergeladen und in einer neuen Registerkarte in einem neuen CT2 Workspace geöffnet.
 e) Klicken Sie auf "Starten" (F5), um den heruntergeladenen CT2-Arbeitsbereich in der neuen Registerkarte auszuführen. Die CrypCloud-Komponente im Arbeitsbereich teilt dann die Ergebnisse mit allen anderen beteiligten Mitwirkenden.
