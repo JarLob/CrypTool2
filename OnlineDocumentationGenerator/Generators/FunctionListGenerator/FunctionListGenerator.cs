@@ -73,14 +73,14 @@ namespace OnlineDocumentationGenerator.Generators.FunctionListGenerator
         private string GenerateDescription()
         {
             var list = itemlist.Keys.ToList();
-            list.Sort();
+            //list.Sort();
 
             StringBuilder result = new StringBuilder();
 
             foreach (var key in list)
             {
                 var types = itemlist[key].Keys.ToList();
-                types.Sort();
+                //types.Sort();
                 String occuringTypes = String.Join("/", types.Select(i => ItemType2Char(i)));
 
                 bool firstLine = true;
@@ -104,14 +104,14 @@ namespace OnlineDocumentationGenerator.Generators.FunctionListGenerator
         private string GenerateCSVDescription()
         {
             var list = itemlist.Keys.ToList();
-            list.Sort();
+            //list.Sort();
 
             StringBuilder result = new StringBuilder();
 
             foreach (var key in list)
             {
                 var types = itemlist[key].Keys.ToList();
-                types.Sort();
+                //types.Sort();
                 String occuringTypes = String.Join("/", types.Select(i => ItemType2Char(i)));
 
                 result.Append(String.Format("{0};{1};\n", key, occuringTypes));
