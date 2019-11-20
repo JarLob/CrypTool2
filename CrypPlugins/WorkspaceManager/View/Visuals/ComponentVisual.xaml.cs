@@ -1516,11 +1516,14 @@ typeof(SolidColorBrush), typeof(ComponentVisual), new FrameworkPropertyMetadata(
             }
         }
         public ConnectorModel ConnectorModel { get; private set; }
+        
+        public PluginSettingsContainer PluginSettingsContainer { get; }
 
         public IControlMasterElement(ConnectorModel connectorModel, PluginModel pluginModel)
         {
             this.ConnectorModel = connectorModel;
             this.PluginModel = pluginModel;
+            this.PluginSettingsContainer = new PluginSettingsContainer(pluginModel.Plugin);
         }
     }
 

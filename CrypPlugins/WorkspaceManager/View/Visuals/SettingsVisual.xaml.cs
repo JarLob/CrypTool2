@@ -155,7 +155,7 @@ namespace WorkspaceManager.View.Visuals
                     if (vtbI.Uid == master.ConnectorModel.PropertyName)
                     {
 
-                        vtbI.Content = new SettingsVisual(new PluginSettingsContainer(master.PluginModel.Plugin), bcv, false, isSideBar);
+                        vtbI.Content = new SettingsVisual(master.PluginSettingsContainer, bcv, false, isSideBar);
                         vtbI.Header = master.PluginModel.GetName();
                         b = false;
                     }
@@ -165,7 +165,7 @@ namespace WorkspaceManager.View.Visuals
                 {
                     TabItem tbI = new TabItem();
                     tbI.Uid = master.ConnectorModel.PropertyName;
-                    tbI.Content = new SettingsVisual(new PluginSettingsContainer(master.PluginModel.Plugin), bcv, false, isSideBar);
+                    tbI.Content = new SettingsVisual(master.PluginSettingsContainer, bcv, false, isSideBar);
                     tbI.Header = master.PluginModel.Plugin.GetPluginInfoAttribute().Caption;
                     tbC.Items.Add(tbI);
                 }
