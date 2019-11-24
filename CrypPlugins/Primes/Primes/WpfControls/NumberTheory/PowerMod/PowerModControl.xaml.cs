@@ -30,6 +30,7 @@ using System.Threading;
 using Primes.WpfControls.Components;
 using Primes.WpfControls.Components.Arrows;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace Primes.WpfControls.NumberTheory.PowerMod
 {
@@ -74,19 +75,30 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
 
         public void MarkPath(PrimesBigInteger iteration)
         {
-            if (m_ArrowsMark.TryGetValue(iteration, out ArrowLine al))
+            if (m_ArrowsMark.TryGetValue(iteration, out ArrowLine targetArrowLine))
             {
+                var beforeTarget = true;
                 foreach (ArrowLine alTmp in m_ArrowsWithSourceAndDestination.Values)
                 {
-                    alTmp.Stroke = Brushes.Black;
+                    if (alTmp != targetArrowLine)
+                    {
+                        alTmp.Stroke = beforeTarget ? Brushes.Black : Brushes.LightGray;
+                    }
+                    else
+                    {
+                        beforeTarget = false;
+                        targetArrowLine.Stroke = Brushes.Red;
+                    }
                 }
-                al.Stroke = Brushes.Red;
             }
             else if (m_CirclesMark.TryGetValue(iteration, out Polyline pl))
             {
                 foreach (Polyline plTmp in m_CirclesSource.Values)
                 {
-                    plTmp.Stroke = Brushes.Black;
+                    if (pl != plTmp)
+                    {
+                        plTmp.Stroke = Brushes.Black;
+                    }
                 }
                 pl.Stroke = Brushes.Red;
             }
@@ -484,6 +496,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             iscMod.LockControls();
             rbAutomatic.IsEnabled = false;
             rbStepwise.IsEnabled = false;
+            slidermodulus.IsEnabled = false;
         }
 
         private void SetupStop()
@@ -504,6 +517,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             iscMod.UnLockControls();
             rbAutomatic.IsEnabled = true;
             rbStepwise.IsEnabled = true;
+            slidermodulus.IsEnabled = true;
         }
 
         #endregion
@@ -736,10 +750,13 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                 //ControlHandler.SetPropertyValue(l, "Y1", (double)ControlHandler.ExecuteMethod(PaintArea, "GetTop", from)+3);
                 //ControlHandler.SetPropertyValue(l, "X2", (double)ControlHandler.ExecuteMethod(PaintArea, "GetLeft", to)+3);
                 //ControlHandler.SetPropertyValue(l, "Y2", (double)ControlHandler.ExecuteMethod(PaintArea, "GetTop", to)+3);
-                ControlHandler.ExecuteMethod(l, "SetBinding", new object[] { ArrowLine.X1Property, new Binding("(Canvas.Left)") { Source = from }, new Type[] { typeof(DependencyProperty), typeof(BindingBase) } });
-                ControlHandler.ExecuteMethod(l, "SetBinding", new object[] { ArrowLine.Y1Property, new Binding("(Canvas.Top)") { Source = from }, new Type[] { typeof(DependencyProperty), typeof(BindingBase) } });
-                ControlHandler.ExecuteMethod(l, "SetBinding", new object[] { ArrowLine.X2Property, new Binding("(Canvas.Left)") { Source = to }, new Type[] { typeof(DependencyProperty), typeof(BindingBase) } });
-                ControlHandler.ExecuteMethod(l, "SetBinding", new object[] { ArrowLine.Y2Property, new Binding("(Canvas.Top)") { Source = to }, new Type[] { typeof(DependencyProperty), typeof(BindingBase) } });
+                var arrowPositionConverter = new ArrowPositionConverter(PointRadius);
+                ControlHandler.ExecuteMethod(l, "SetBinding", new object[] { ArrowLine.X1Property, new Binding("(Canvas.Left)") { Source = from, Converter = arrowPositionConverter }, new Type[] { typeof(DependencyProperty), typeof(BindingBase) } });
+                ControlHandler.ExecuteMethod(l, "SetBinding", new object[] { ArrowLine.Y1Property, new Binding("(Canvas.Top)") { Source = from, Converter = arrowPositionConverter }, new Type[] { typeof(DependencyProperty), typeof(BindingBase) } });
+                ControlHandler.ExecuteMethod(l, "SetBinding", new object[] { ArrowLine.X2Property, new Binding("(Canvas.Left)") { Source = to, Converter = arrowPositionConverter }, new Type[] { typeof(DependencyProperty), typeof(BindingBase) } });
+                ControlHandler.ExecuteMethod(l, "SetBinding", new object[] { ArrowLine.Y2Property, new Binding("(Canvas.Top)") { Source = to, Converter = arrowPositionConverter }, new Type[] { typeof(DependencyProperty), typeof(BindingBase) } });
+                //ControlHandler.SetPropertyValue(l, "RenderTransform", new TranslateTransform(PointRadius, PointRadius));
+                //l.RenderTransform = new TranslateTransform(PointRadius, PointRadius);
 
                 Pair<Ellipse, Ellipse> pair = new Pair<Ellipse, Ellipse>(from, to);
                 if (!m_SourceDestination.Contains(pair))
@@ -758,6 +775,27 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             }
 
             ControlHandler.ExecuteMethod(this, nameof(MarkPath), new object[] { counter });
+        }
+
+        private class ArrowPositionConverter : IValueConverter
+        {
+            private readonly double offset;
+
+            public ArrowPositionConverter(double offset)
+            {
+                this.offset = offset;
+            }
+
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                //Correct for the fact that arrow target positions are not pointing exactly at the middle of target ellipses:
+                return (double)value + offset;
+            }
+
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                throw new NotSupportedException();
+            }
         }
 
         //class myc : IValueConverter
@@ -784,7 +822,6 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                 m_ArrowsMark.Add(counter, l);
                 UIElementCollection children = ControlHandler.GetPropertyValue(ArrowArea, "Children") as UIElementCollection;
                 ControlHandler.ExecuteMethod(children, "Remove", new object[] { l });
-                Thread.Sleep(100);
                 ControlHandler.ExecuteMethod(children, "Add", new object[] { l });
             }
         }
