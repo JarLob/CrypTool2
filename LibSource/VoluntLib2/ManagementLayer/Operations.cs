@@ -223,13 +223,13 @@ namespace VoluntLib2.ManagementLayer
                 bool jobListChanged = false;
                 foreach (var job in responseJobListMessage.Jobs)
                 {
-                    if (!job.HasValidCreatorSignature())
+                    if (!job.HasValidCreatorSignature)
                     {
                         Logger.LogText(String.Format("Received job {0} with invalid creator signature from {1} ", BitConverter.ToString(job.JobId.ToByteArray()), BitConverter.ToString(message.PeerId)), this, Logtype.Warning);
                         continue;
                     }
 
-                    if (job.HasValidDeletionSignature())
+                    if (job.HasValidDeletionSignature)
                     {                        
                         job.IsDeleted = true;
                     }
@@ -303,12 +303,12 @@ namespace VoluntLib2.ManagementLayer
                 //We don't know the job. Thus, we add it
                 if (!JobManager.Jobs.ContainsKey(job.JobId))
                 {
-                    if (!job.HasValidCreatorSignature())
+                    if (!job.HasValidCreatorSignature)
                     {
                         Logger.LogText(String.Format("Received job {0} with invalid Creator Signature from {1}. Ignore it", BitConverter.ToString(job.JobId.ToByteArray()), message.PeerId), this, Logtype.Warning);
                         return;
                     }
-                    if (job.HasValidDeletionSignature())
+                    if (job.HasValidDeletionSignature)
                     {
                         Logger.LogText(String.Format("Received job {0} has a valid deletion signature", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Warning);
                         job.IsDeleted = true;
@@ -351,31 +351,15 @@ namespace VoluntLib2.ManagementLayer
                     return;
                 }
 
-                //here, we check, if the local job is not deleted AND the receivd job has a valid deletion signature
-                if (JobManager.Jobs[job.JobId].IsDeleted == false && job.HasValidDeletionSignature())
-                {
-                    //check, if the creator signature is valid
-                    if (!job.HasValidCreatorSignature())
-                    {
-                        Logger.LogText(String.Format("Received job {0} with invalid creator signature from {1}. ", BitConverter.ToString(job.JobId.ToByteArray()), message.PeerId), this, Logtype.Warning);
-                        return;
-                    }           
-
-                    Logger.LogText(String.Format("Received valid deletion signature for job {0}", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Debug);
-                    JobManager.Jobs[job.JobId].JobDeletionSignatureData = job.JobDeletionSignatureData;
-                    JobManager.Jobs[job.JobId].IsDeleted = true;
-                    JobManager.OnJobListChanged();                    
-                }
-
                 //We know the job but have no payload but the job has payload
                 if (!JobManager.Jobs[job.JobId].HasPayload && job.HasPayload)
                 {
                     //check, if the creator signature is valid
-                    if (!job.HasValidCreatorSignature())
+                    if (!job.HasValidCreatorSignature)
                     {
                         Logger.LogText(String.Format("Received job {0} with invalid creator signature from {1}. ", BitConverter.ToString(job.JobId.ToByteArray()), message.PeerId), this, Logtype.Warning);
                         return;
-                    }                   
+                    }
 
                     //check, if the hash of the payload is ok
                     var jobPayloadHash = CertificateService.GetCertificateService().ComputeHash(job.JobPayload);
@@ -403,13 +387,22 @@ namespace VoluntLib2.ManagementLayer
                     }
                 }
 
+                //here, we add a valid deletion signature to our local job
+                if (job.HasValidDeletionSignature)
+                {                    
+                    Logger.LogText(String.Format("Received valid deletion signature for job {0}", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Debug);
+                    JobManager.Jobs[job.JobId].JobDeletionSignatureData = job.JobDeletionSignatureData;
+                    JobManager.Jobs[job.JobId].IsDeleted = true;
+                    JobManager.OnJobListChanged();                    
+                }               
+
                 //case 1: we have no epoch state but received one
                 if (job.JobEpochState != null && JobManager.Jobs[job.JobId].JobEpochState == null)
                 {
                     JobManager.Jobs[job.JobId].JobEpochState = (EpochState)job.JobEpochState.Clone();                    
                 }
                 //case 2: we have an epoch state and received one
-                else   if (job.JobEpochState != null && JobManager.Jobs[job.JobId].JobEpochState != null)
+                else if (job.JobEpochState != null && JobManager.Jobs[job.JobId].JobEpochState != null)
                 {
                     //to don't get into trouble with race conditions, we created an operation for ComputationManager...
                     MergeResultsOperation mergeResultsOperation = new MergeResultsOperation(JobManager.Jobs[job.JobId], job) { ComputationManager = JobManager.VoluntLib.ComputationManager };
@@ -599,7 +592,7 @@ namespace VoluntLib2.ManagementLayer
                     Job job = new Job(BigInteger.MinusOne);
                     byte[] data = File.ReadAllBytes(file);
                     job.Deserialize(data);
-                    if (!job.HasValidCreatorSignature())
+                    if (!job.HasValidCreatorSignature)
                     {
                         Logger.LogText(String.Format("Job {0} has no valid Creator Signature. File may be corrupted. Delete it now!", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Warning);
                         try
@@ -642,7 +635,7 @@ namespace VoluntLib2.ManagementLayer
                         }
                     }
                     
-                    if (job.HasValidDeletionSignature())
+                    if (job.HasValidDeletionSignature)
                     {
                         job.IsDeleted = true;
                     }

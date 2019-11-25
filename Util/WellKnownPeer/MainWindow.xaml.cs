@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2018 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
+   Copyright 2019 Nils Kopal <Nils<AT>kopaldev.de>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,27 +14,13 @@
    limitations under the License.
 */
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Collections.ObjectModel;
-using VoluntLib2.ConnectionLayer;
-using System.Net;
-using System.Threading;
-using System.Collections;
 using VoluntLib2;
 using System.Security.Cryptography.X509Certificates;
 using VoluntLib2.Tools;
+using VoluntLib2.ManagementLayer;
 
 namespace WellKnownPeer
 {
@@ -51,7 +37,6 @@ namespace WellKnownPeer
         {
             InitializeComponent();            
             Closing += MainWindow_Closing;
-
             try
             {
                 Logger.SetLogLevel(Logtype.Info);
@@ -67,12 +52,14 @@ namespace WellKnownPeer
                 {
                     _VoluntLib.WellKnownPeers.AddRange(wellKnownPeers);
                 }
+             
+                LogListView.DataContext = _Logs;
+                _VoluntLib.Start(rootCA, ownKey);
 
                 var administrators = Properties.Settings.Default.Administrators.Split(';');
                 if (administrators.Length != 0)
                 {
                     CertificateService.GetCertificateService().AdminCertificateList.AddRange(administrators);
-
                 }
 
                 var bannedCertificates = Properties.Settings.Default.BannedCertificates.Split(';');
@@ -82,8 +69,6 @@ namespace WellKnownPeer
 
                 }
 
-                LogListView.DataContext = _Logs;
-                _VoluntLib.Start(rootCA, ownKey);
 
                 ContactListView.DataContext = _VoluntLib.GetContactList();
                 JobList.DataContext = _VoluntLib.GetJoblist();
@@ -175,6 +160,17 @@ namespace WellKnownPeer
             }
         }
 
+        /// <summary>
+        /// Shows details of the selected job
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void JobList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            JobViewer viewer = new JobViewer();
+            viewer.Job = (Job)JobList.SelectedItem;
+            viewer.ShowDialog();
+        }
     }
 
     public class LogEntry

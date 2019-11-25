@@ -31,7 +31,7 @@ using VoluntLib2.Tools;
 namespace VoluntLib2.ManagementLayer
 {
     public class Job : IComparable<Job>, INotifyPropertyChanged, IVoluntLibSerializable
-    {        
+    {
         private Logger Logger = Logger.GetLogger();
 
         /// <summary>
@@ -64,6 +64,17 @@ namespace VoluntLib2.ManagementLayer
 
         public event PropertyChangedEventHandler PropertyChanged;
         public BigInteger JobId { get; set; }
+        public string JobIdAsString
+        {
+            get
+            {
+                if (JobId != null)
+                {
+                    return ConvertJobId(JobId);
+                }
+                return string.Empty;
+            }
+        }
         public string JobName { get; set; }
         public string JobType { get; set; }
         public string JobDescription { get; set; }
@@ -391,11 +402,11 @@ namespace VoluntLib2.ManagementLayer
             Array.Copy(data, offset, JobCreatorSignatureData, 0, jobCreatorSignatureDataLength);
             offset += jobCreatorSignatureDataLength;
 
-            ushort jobDeleteionSignatureDataLength = BitConverter.ToUInt16(data, offset);
+            ushort jobDeletionSignatureDataLength = BitConverter.ToUInt16(data, offset);
             offset += 2;
-            JobDeletionSignatureData = new byte[jobDeleteionSignatureDataLength];
-            Array.Copy(data, offset, JobDeletionSignatureData, 0, jobDeleteionSignatureDataLength);
-            offset += jobDeleteionSignatureDataLength;
+            JobDeletionSignatureData = new byte[jobDeletionSignatureDataLength];
+            Array.Copy(data, offset, JobDeletionSignatureData, 0, jobDeletionSignatureDataLength);
+            offset += jobDeletionSignatureDataLength;
 
             ushort jobPayloadLength = BitConverter.ToUInt16(data, offset);
             offset += 2;
@@ -452,56 +463,59 @@ namespace VoluntLib2.ManagementLayer
         /// Checks the creator signature
         /// </summary>
         /// <returns></returns>
-        public bool HasValidCreatorSignature()
+        public bool HasValidCreatorSignature
         {
-            try
+            get
             {
-                X509Certificate2 creatorCertificate = new X509Certificate2(CreatorCertificateData);
-
-                //some checks on the certificate                
-                if (creatorCertificate.SubjectName.Name.ToLower().Equals(Constants.JOB_ANONYMOUS_USER))
+                try
                 {
-                    //it is not allowed to create a job using the anonymous user
+                    X509Certificate2 creatorCertificate = new X509Certificate2(CreatorCertificateData);
+
+                    //some checks on the certificate                
+                    if (creatorCertificate.SubjectName.Name.ToLower().Equals(Constants.JOB_ANONYMOUS_USER))
+                    {
+                        //it is not allowed to create a job using the anonymous user
+                        return false;
+                    }
+                    if (!CertificateService.GetCertificateService().IsValidCertificate(creatorCertificate))
+                    {
+                        return false;
+                    }
+                    if (CertificateService.GetCertificateService().IsBannedCertificate(creatorCertificate))
+                    {
+                        return false;
+                    }
+
+                    //1. Backup some fields and remove them, since they are not used in signature
+                    byte[] jobCreatorSignatureDataBackup = JobCreatorSignatureData;
+                    JobCreatorSignatureData = new byte[0];
+                    byte[] jobDeletionSignatureDataBackup = JobDeletionSignatureData;
+                    JobDeletionSignatureData = new byte[0];
+                    byte[] payloadBackup = JobPayload;
+                    JobPayload = new byte[0];
+                    EpochState epochState = JobEpochState;
+                    JobEpochState = null;
+
+                    //2. Serialize for signature check
+                    byte[] data = Serialize();
+
+                    //3. Copy backups back
+                    JobCreatorSignatureData = jobCreatorSignatureDataBackup;
+                    JobDeletionSignatureData = jobDeletionSignatureDataBackup;
+                    JobPayload = payloadBackup;
+                    JobEpochState = epochState;
+
+                    //5. Check signature; return false if not valid
+                    if (!CertificateService.GetCertificateService().VerifySignature(data, JobCreatorSignatureData, creatorCertificate).Equals(CertificateValidationState.Valid))
+                    {
+                        return false;
+                    }
+                    return true;
+                }
+                catch (Exception)
+                {
                     return false;
                 }
-                if (!CertificateService.GetCertificateService().IsValidCertificate(creatorCertificate))
-                {
-                    return false;
-                }
-                if (CertificateService.GetCertificateService().IsBannedCertificate(creatorCertificate))
-                {
-                    return false;
-                }
-
-                //1. Backup some fields and remove them, since they are not used in signature
-                byte[] jobCreatorSignatureDataBackup = JobCreatorSignatureData;
-                JobCreatorSignatureData = new byte[0];
-                byte[] jobDeletionSignatureDataBackup = JobDeletionSignatureData;
-                JobDeletionSignatureData = new byte[0];
-                byte[] payloadBackup = JobPayload;
-                JobPayload = new byte[0];
-                EpochState epochState = JobEpochState;
-                JobEpochState = null;
-
-                //2. Serialize for signature check
-                byte[] data = Serialize();
-
-                //3. Copy backups back
-                JobCreatorSignatureData = jobCreatorSignatureDataBackup;
-                JobDeletionSignatureData = jobDeletionSignatureDataBackup;
-                JobPayload = payloadBackup;
-                JobEpochState = epochState;
-
-                //5. Check signature; return false if not valid
-                if (!CertificateService.GetCertificateService().VerifySignature(data, JobCreatorSignatureData, creatorCertificate).Equals(CertificateValidationState.Valid))
-                {
-                    return false;
-                }
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
             }
         }
 
@@ -595,91 +609,107 @@ namespace VoluntLib2.ManagementLayer
         /// Checks if job has a valid deletion signature
         /// </summary>
         /// <returns></returns>
-        public bool HasValidDeletionSignature()
+        public bool HasValidDeletionSignature
         {
-            try
+            get
             {
-                //1. Check if we have a DeletionSignature
-                if (JobDeletionSignatureData == null || JobDeletionSignatureData.Length == 0)
+                try
                 {
-                    return false;
+                    //1. Check if we have a DeletionSignature
+                    if (JobDeletionSignatureData == null || JobDeletionSignatureData.Length == 0)
+                    {
+                        return false;
+                    }
+
+                    //2. Check magic number
+                    string magicNumber = UTF8Encoding.UTF8.GetString(JobDeletionSignatureData, 0, 4);
+
+                    // user deleted
+                    if (magicNumber.Equals("USER"))
+                    {
+                        int offset = 4;
+                        byte[] jobIdLengthBytes = new byte[4];
+                        Array.Copy(JobDeletionSignatureData, offset, jobIdLengthBytes, 0, 4);
+                        uint jobIdLength = BitConverter.ToUInt32(jobIdLengthBytes, 0);
+                        offset += 4;
+                        byte[] jobIdData = new byte[jobIdLength];
+                        Array.Copy(JobDeletionSignatureData, offset, jobIdData, 0, jobIdData.Length);
+                        BigInteger jobid = new BigInteger(jobIdData);
+                        if (jobid != JobId)
+                        {
+                            //invalid JobId in deletion signature
+                            Logger.LogText(string.Format("Job has invalid deletion signature {0}", ConvertJobId(JobId)), this, Logtype.Debug);
+                            return false;
+                        }
+                        offset += jobIdData.Length;
+                        offset += 8; //+8 for deletion time in structure
+
+                        byte[] data = new byte[offset];
+                        Array.Copy(JobDeletionSignatureData, 0, data, 0, data.Length);
+                        byte[] signature = new byte[JobDeletionSignatureData.Length - offset];
+                        Array.Copy(JobDeletionSignatureData, offset, signature, 0, signature.Length);
+
+                        //finally check signature
+                        var validDeletionSignature = CertificateService.GetCertificateService().VerifySignature(data, signature, new X509Certificate2(CreatorCertificateData)).Equals(CertificateValidationState.Valid);
+                        Logger.LogText(string.Format("Job has valid deletion signature (USER) {0}: {1}", ConvertJobId(JobId), validDeletionSignature), this, Logtype.Debug);
+                        return validDeletionSignature;
+
+                    }
+                    // admin deleted
+                    else if (magicNumber.Equals("ADMN"))
+                    {
+                        int offset = 4;
+                        byte[] jobIdLengthBytes = new byte[4];
+                        Array.Copy(JobDeletionSignatureData, offset, jobIdLengthBytes, 0, 4);
+                        uint jobIdLength = BitConverter.ToUInt32(jobIdLengthBytes, 0);
+                        offset += 4;
+                        byte[] jobIdData = new byte[jobIdLength];
+                        Array.Copy(JobDeletionSignatureData, offset, jobIdData, 0, jobIdData.Length);
+                        BigInteger jobid = new BigInteger(jobIdData);
+                        if (jobid != JobId)
+                        {
+                            //invalid JobId in deletion signature
+                            return false;
+                        }
+                        offset += jobIdData.Length;
+                        offset += 8; //+8 for deletion time in structure
+                        uint certificateDataLength = BitConverter.ToUInt32(JobDeletionSignatureData, offset);
+                        offset += 4;
+                        byte[] certificateData = new byte[certificateDataLength];
+                        Array.Copy(JobDeletionSignatureData, offset, certificateData, 0, certificateDataLength);
+                        offset += certificateData.Length;
+                        byte[] data = new byte[offset];
+                        Array.Copy(JobDeletionSignatureData, 0, data, 0, data.Length);
+                        byte[] signature = new byte[JobDeletionSignatureData.Length - offset];
+                        Array.Copy(JobDeletionSignatureData, offset, signature, 0, signature.Length);
+
+                        X509Certificate2 adminCertificate = new X509Certificate2(certificateData);
+                        //check, if the certificate is an admin certificate
+                        if (!CertificateService.GetCertificateService().IsAdminCertificate(adminCertificate))
+                        {
+                            Logger.LogText(string.Format("Job {0} was deleted by a non-admin user", ConvertJobId(JobId)), this, Logtype.Debug);
+                            return false;
+                        }
+
+                        //finally check signature
+                        var validDeletionSignature = CertificateService.GetCertificateService().VerifySignature(data, signature, adminCertificate).Equals(CertificateValidationState.Valid);
+                        Logger.LogText(string.Format("Job has valid deletion signature (ADMIN) {0}: {1}", ConvertJobId(JobId), validDeletionSignature), this, Logtype.Debug);                 
+                        return validDeletionSignature;
+                    }
                 }
-
-                //2. Check magic number
-                string magicNumber = UTF8Encoding.UTF8.GetString(JobDeletionSignatureData, 0, 4);
-                
-                // user deleted
-                if (magicNumber.Equals("USER"))
+                catch (Exception ex)
                 {
-                    int offset = 4;
-                    byte[] jobIdLengthBytes = new byte[4];
-                    Array.Copy(JobDeletionSignatureData, offset, jobIdLengthBytes, 0, 4);
-                    uint jobIdLength = BitConverter.ToUInt32(jobIdLengthBytes, 0);
-                    offset += 4;
-                    byte[] jobIdData = new byte[jobIdLength];
-                    Array.Copy(JobDeletionSignatureData, offset, jobIdData, 0, jobIdData.Length);
-                    BigInteger jobid = new BigInteger(jobIdData);
-                    if (jobid != JobId)
-                    {
-                        //invalid JobId in deletion signature
-                        return false;
-                    }
-                    offset += jobIdData.Length;
-                    offset += 8; //+8 for deletion time in structure
-
-                    byte[] data = new byte[offset];
-                    Array.Copy(JobDeletionSignatureData, 0, data, 0, data.Length);
-                    byte[] signature = new byte[JobDeletionSignatureData.Length - offset];
-                    Array.Copy(JobDeletionSignatureData, offset, signature, 0, signature.Length);
-                    
-                    //finally check signature
-                    return (CertificateService.GetCertificateService().VerifySignature(data, signature, new X509Certificate2(CreatorCertificateData)).Equals(CertificateValidationState.Valid));
-
+                    Logger.LogText(string.Format("Problems with deserialization of job {0}: {1}", ConvertJobId(JobId), ex), this, Logtype.Debug);
+                    Logger.LogException(ex, this, Logtype.Debug);
                 }
-                // admin deleted
-                else if (magicNumber.Equals("ADMN"))
-                {
-                    int offset = 4;
-                    byte[] jobIdLengthBytes = new byte[4];
-                    Array.Copy(JobDeletionSignatureData, offset, jobIdLengthBytes, 0, 4);
-                    uint jobIdLength = BitConverter.ToUInt32(jobIdLengthBytes, 0);
-                    offset += 4;
-                    byte[] jobIdData = new byte[jobIdLength];
-                    Array.Copy(JobDeletionSignatureData, offset, jobIdData, 0, jobIdData.Length);
-                    BigInteger jobid = new BigInteger(jobIdData);
-                    if (jobid != JobId)
-                    {
-                        //invalid JobId in deletion signature
-                        return false;
-                    }
-                    offset += jobIdData.Length;
-                    offset += 8; //+8 for deletion time in structure
-                    uint certificateDataLength = BitConverter.ToUInt32(JobDeletionSignatureData, offset);
-                    offset += 4;
-                    byte[] certificateData = new byte[certificateDataLength];
-                    Array.Copy(JobDeletionSignatureData, offset, certificateData, 0, certificateDataLength);
-                    offset += certificateData.Length;
-                    byte[] data = new byte[offset];
-                    Array.Copy(JobDeletionSignatureData, 0, data, 0, data.Length);
-                    byte[] signature = new byte[JobDeletionSignatureData.Length - offset];
-                    Array.Copy(JobDeletionSignatureData, offset, signature, 0, signature.Length);
-
-                    X509Certificate2 adminCertificate = new X509Certificate2(certificateData);
-                    //check, if the certificate is an admin certificate
-                    if(!CertificateService.GetCertificateService().IsAdminCertificate(adminCertificate))
-                    {
-                        return false;
-                    }
-
-                    //finally check signature
-                    return (CertificateService.GetCertificateService().VerifySignature(data, signature, adminCertificate).Equals(CertificateValidationState.Valid));
-                }                          
+                return false;
             }
-            catch (Exception)
-            {
-                // do nothing, just return false              
-            }
-            return false;
+        }
+
+        private string ConvertJobId(BigInteger value)
+        {
+            byte[] idbytes = value.ToByteArray();
+            return BitConverter.ToString(idbytes).Replace("-", "");
         }
 
         /// <summary>

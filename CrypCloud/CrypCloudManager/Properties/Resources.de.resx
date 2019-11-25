@@ -362,15 +362,14 @@
     <value>Kopiere Job-Informationen</value>
   </data>
   <data name="_JobList_instructions" xml:space="preserve">
-    <value>a) Die obige Liste enthält Jobs mit langer Laufzeit, die durch die Ausführung paralleler Sub-Jobs schneller gelöst werden können. So können sich verschiedene Personen an demselben Job beteiligen und verschiedene Sub-Jobs auf ihren Computern bearbeiten.
-b) Wählen Sie einen Job in der Liste aus und klicken Sie auf "Öffnen", um einen Beitrag zu leisten.
-d) Nach Klick auf "Öffnen" wird der entsprechende Job heruntergeladen und in einer neuen Registerkarte in einem neuen CT2 Workspace geöffnet.
-e) Klicken Sie auf "Starten" (F5), um den heruntergeladenen CT2-Arbeitsbereich in der neuen Registerkarte auszuführen. Die CrypCloud-Komponente im Arbeitsbereich teilt dann die Ergebnisse mit allen anderen beteiligten Mitwirkenden.
-Wenn einer der Mitwirkenden eine Lösung gefunden hat, wird diese Lösung auch für alle anderen freigegeben und ist sofort sichtbar. Es werden keine Informationen über die Mitwirkenden selbst weitergegeben.
-Die folgende Liste enthält alle Peers (IP-Adresse und Port), mit denen dieser Computer derzeit verbunden ist.</value>
+    <value>Die obige Liste enthält Jobs mit langer Laufzeit, die durch die Ausführung paralleler Sub-Jobs schneller gelöst werden können. So können sich verschiedene Personen an demselben Job beteiligen und verschiedene Sub-Jobs auf ihren Computern bearbeiten:
+a) Um sich zu beteiligen, wählen Sie einen Job in der Liste aus und klicken Sie auf "Öffnen".
+b) Nach Klick auf "Öffnen" wird der entsprechende Job heruntergeladen und in einer neuen Registerkarte in einem neuen CT2-Workspace (Arbeitsbereich) geöffnet.
+c) Klicken Sie dann auf "Starten" (F5), um den heruntergeladenen CT2-Arbeitsbereich in der neuen Registerkarte auszuführen. Die CrypCloud-Komponente im Arbeitsbereich teilt dann die Ergebnisse mit allen anderen beteiligten Mitwirkenden. Wenn einer der Mitwirkenden eine Lösung gefunden hat, wird diese Lösung auch für alle anderen freigegeben und ist sofort sichtbar. Es werden keine Informationen über die Mitwirkenden selbst weitergegeben. 
+Die folgende Liste enthält alle Peers (IP-Adresse und Port), mit denen dieser Computer derzeit direkt verbunden ist.</value>
   </data>
   <data name="_Login_anonymous" xml:space="preserve">
-    <value>Um sich ohne Registrierung einzuloggen, benutzen Sie "anonymous/anonymous"</value>
+    <value>Um sich ohne Registrierung einzuloggen, benutzen Sie "anonymous/anonymous".</value>
   </data>
   <data name="_copy" xml:space="preserve">
     <value>Kopieren</value>

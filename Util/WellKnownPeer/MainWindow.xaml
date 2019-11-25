@@ -24,8 +24,8 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>                                
                 <Label Grid.Row="0" Name="MyPeerID" Content="My PeerId: 0"/>
-                
-                <ListView Grid.Row="2" Name="JobList" Background="White" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="12" FontFamily="Courier" Height="Auto" Foreground="Black">
+
+                <ListView Grid.Row="2" Name="JobList" Background="White" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="12" FontFamily="Courier" Height="Auto" Foreground="Black" MouseDoubleClick="JobList_MouseDoubleClick">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="CreationDate" DisplayMemberBinding="{Binding Path=CreationDate}" Width="150">

@@ -791,7 +791,7 @@
     <value>Kopiere Wert</value>
   </data>
   <data name="Abort_Chunks_" xml:space="preserve">
-    <value>Abgebrochende Blöcke:</value>
+    <value>Abgebrochene Blöcke:</value>
   </data>
   <data name="Avg_Time_Per_Chunk" xml:space="preserve">
     <value>Zeit pro Block:</value>
