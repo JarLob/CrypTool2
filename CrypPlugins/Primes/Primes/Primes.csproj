@@ -217,6 +217,7 @@
     <Compile Include="WpfControls\NumberTheory\NumberTheoryFunctions\ExtEuclid.cs" />
     <Compile Include="WpfControls\NumberTheory\NumberTheoryFunctions\LCM.cs" />
     <Compile Include="WpfControls\NumberTheory\NumberTheoryFunctions\ModInverse.cs" />
+    <Compile Include="WpfControls\NumberTheory\PowerMod\PowerBaseModControl.cs" />
     <Compile Include="WpfControls\NumberTheory\PowerMod\PowerModCommands.cs" />
     <Compile Include="Library\ControlHandler.cs" />
     <Compile Include="Library\Delegates.cs" />

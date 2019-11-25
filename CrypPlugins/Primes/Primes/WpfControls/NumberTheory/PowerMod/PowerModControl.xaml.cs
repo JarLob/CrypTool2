@@ -35,7 +35,7 @@ using System.Globalization;
 namespace Primes.WpfControls.NumberTheory.PowerMod
 {
     /// <summary>
-    /// Interaction logic for TestOfFermatControl.xaml
+    /// Power Mod tutorial which iterates the exponent.
     /// </summary>
     public partial class PowerModControl : UserControl
     {
@@ -52,6 +52,9 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
         {
             InitializeComponent();
             initBindings();
+            this.Exp = DefaultExp;
+            this.Base = DefaultBase;
+            this.Mod = DefaultMod;
             ConfigureIntegerInputs();
             m_Points = new Dictionary<int, Point>();
             //m_Ellipses = new Dictionary<int, Ellipse>();
@@ -60,83 +63,112 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             m_ArrowsWithSourceAndDestination = new Dictionary<Pair<Ellipse, Ellipse>, ArrowLine>();
             //m_Arrows = new List<ArrowLine>();
             m_ArrowsMark = new Dictionary<PrimesBigInteger, ArrowLine>();
+            m_ArrowsMarkReverse = new Dictionary<ArrowLine, PrimesBigInteger>();
             //m_Circles = new List<Polyline>();
             m_CirclesMark = new Dictionary<PrimesBigInteger, Polyline>();
+            m_CirclesMarkReverse = new Dictionary<Polyline, PrimesBigInteger>();
             m_RunningLockObject = new object();
             m_Initialized = true;
             m_StepWiseEvent = new ManualResetEvent(false);
             log.RowMouseOver += new ExecuteIntegerDelegate(log_RowMouseOver);
         }
 
-        void log_RowMouseOver(PrimesBigInteger value)
+        void log_RowMouseOver(PrimesBigInteger row)
         {
-            MarkPath(value);
+            MarkPath(row + IterationStart - 1);
         }
+
+        protected virtual bool SameArrowMarksCycle => true;
 
         public void MarkPath(PrimesBigInteger iteration)
         {
-            if (m_ArrowsMark.TryGetValue(iteration, out ArrowLine targetArrowLine))
+            if (!m_ArrowsMark.TryGetValue(iteration, out ArrowLine targetArrowLine))
             {
-                var beforeTarget = true;
-                foreach (ArrowLine alTmp in m_ArrowsWithSourceAndDestination.Values)
+                targetArrowLine = null;
+            }
+
+            var foundTargetArrow = false;
+            foreach (ArrowLine currentArrow in m_ArrowsWithSourceAndDestination.Values)
+            {
+                //if (!m_ArrowsMarkReverse.TryGetValue(currentArrow, out var i))
+                //{
+                //    i = -1;
+                //}
+
+                if (currentArrow != targetArrowLine)
                 {
-                    if (alTmp != targetArrowLine)
-                    {
-                        alTmp.Stroke = beforeTarget ? Brushes.Black : Brushes.LightGray;
-                    }
-                    else
-                    {
-                        beforeTarget = false;
-                        targetArrowLine.Stroke = Brushes.Red;
-                    }
+                    var markGray = (SameArrowMarksCycle && foundTargetArrow);
+                    currentArrow.Stroke = markGray ? Brushes.LightGray : Brushes.Black;
+                }
+                else
+                {
+                    foundTargetArrow = true;
+                    targetArrowLine.Stroke = Brushes.Red;
                 }
             }
-            else if (m_CirclesMark.TryGetValue(iteration, out Polyline pl))
+
+            if (!m_CirclesMark.TryGetValue(iteration, out Polyline targetCircle))
             {
-                foreach (Polyline plTmp in m_CirclesSource.Values)
+                targetCircle = null;
+            }
+
+            var foundTargetCircle = false;
+            foreach (Polyline currentCircle in m_CirclesSource.Values)
+            {
+                //if (!m_CirclesMarkReverse.TryGetValue(currentCircle, out var i))
+                //{
+                //    i = -1;
+                //}
+
+                if (targetCircle != currentCircle)
                 {
-                    if (pl != plTmp)
-                    {
-                        plTmp.Stroke = Brushes.Black;
-                    }
+                    var markGray = (SameArrowMarksCycle && foundTargetCircle);
+                    currentCircle.Stroke = markGray ? Brushes.LightGray : Brushes.Black;
                 }
-                pl.Stroke = Brushes.Red;
+                else
+                {
+                    foundTargetCircle = true;
+                    targetCircle.Stroke = Brushes.Red;
+                }
             }
         }
 
+        protected virtual InputSingleControl ActiveExpControl => iscMaxExp;
+
+        protected virtual InputSingleControl ActiveBaseControl => iscBase;
+
+        protected virtual PrimesBigInteger DefaultExp => 28;
+        protected virtual PrimesBigInteger DefaultBase => 2;
+        protected virtual PrimesBigInteger DefaultMod => 13;
+
         private void ConfigureIntegerInputs()
         {
-            iscBase.Execute += new ExecuteSingleDelegate(iscBase_Execute);
-            iscBase.SetText(InputSingleControl.Free, "2");
+            var baseControl = ActiveBaseControl;
+            baseControl.Visibility = Visibility.Visible;
+            baseControl.Execute += new ExecuteSingleDelegate(iscBase_Execute);
+            baseControl.SetText(InputSingleControl.Free, Base.ToString());
             InputValidator<PrimesBigInteger> ivBase = new InputValidator<PrimesBigInteger>();
             ivBase.Validator = new BigIntegerMinValueValidator(null, PrimesBigInteger.Two);
-            iscBase.AddInputValidator(
-              Primes.WpfControls.Components.InputSingleControl.Free,
-              ivBase);
+            baseControl.AddInputValidator(InputSingleControl.Free, ivBase);
 
-            iscExp.Execute += new ExecuteSingleDelegate(iscExp_Execute);
-            iscExp.SetText(InputSingleControl.Free, "28");
+            var expControl = ActiveExpControl;
+            expControl.Visibility = Visibility.Visible;
+            expControl.Execute += new ExecuteSingleDelegate(iscExp_Execute);
+            expControl.SetText(InputSingleControl.Free, Exp.ToString());
             InputValidator<PrimesBigInteger> ivExp = new InputValidator<PrimesBigInteger>();
             ivExp.Validator = new BigIntegerMinValueValidator(null, PrimesBigInteger.One);
-            iscExp.AddInputValidator(
-              Primes.WpfControls.Components.InputSingleControl.Free,
-              ivExp);
+            expControl.AddInputValidator(InputSingleControl.Free, ivExp);
 
             iscMod.Execute += new ExecuteSingleDelegate(iscMod_Execute);
             iscMod.KeyDown += new ExecuteSingleDelegate(iscMod_KeyDown);
-            iscMod.SetText(InputSingleControl.Free, "13");
+            iscMod.SetText(InputSingleControl.Free, Mod.ToString());
             InputValidator<PrimesBigInteger> ivMod = new InputValidator<PrimesBigInteger>();
             ivMod.Validator = new BigIntegerMinValueMaxValueValidator(null, PrimesBigInteger.Two, PrimesBigInteger.ValueOf(150));
-            iscMod.AddInputValidator(
-              Primes.WpfControls.Components.InputSingleControl.Free,
-              ivMod);
+            iscMod.AddInputValidator(InputSingleControl.Free, ivMod);
 
             this.Start += new VoidDelegate(PowerModControl_Start);
             this.Stop += new VoidDelegate(PowerModControl_Stop);
             this.Cancel += new VoidDelegate(PowerModControl_Cancel);
-            this.Exp = PrimesBigInteger.ValueOf(28);
-            this.Base = PrimesBigInteger.ValueOf(2);
-            this.Mod = PrimesBigInteger.ValueOf(13);
         }
 
         void iscMod_KeyDown(PrimesBigInteger value)
@@ -180,9 +212,11 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
         //private IList<Polyline> m_Circles;
         private IDictionary<Ellipse, Polyline> m_CirclesSource;
         private IDictionary<PrimesBigInteger, Polyline> m_CirclesMark;
+        private IDictionary<Polyline, PrimesBigInteger> m_CirclesMarkReverse;
         //private IList<ArrowLine> m_Arrows;
         private IDictionary<Pair<Ellipse, Ellipse>, ArrowLine> m_ArrowsWithSourceAndDestination;
         private IDictionary<PrimesBigInteger, ArrowLine> m_ArrowsMark;
+        private IDictionary<ArrowLine, PrimesBigInteger> m_ArrowsMarkReverse;
 
         double offset = 0;
 
@@ -242,8 +276,10 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             m_ArrowsWithSourceAndDestination.Clear();
             //m_Arrows.Clear();
             m_ArrowsMark.Clear();
+            m_ArrowsMarkReverse.Clear();
             //m_Circles.Clear();
             m_CirclesMark.Clear();
+            m_CirclesMarkReverse.Clear();
             ControlHandler.ClearChildren(PaintArea);
             ControlHandler.ClearChildren(ArrowArea);
             ControlHandler.ClearChildren(LabelArea);
@@ -433,7 +469,9 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             m_ArrowsWithSourceAndDestination.Clear();
             m_CirclesSource.Clear();
             m_ArrowsMark.Clear();
+            m_ArrowsMarkReverse.Clear();
             m_CirclesMark.Clear();
+            m_CirclesMarkReverse.Clear();
         }
 
         #endregion
@@ -492,7 +530,9 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             btnExecute.IsEnabled = false;
             dpStepwiseButtons.Visibility = (!rbAutomatic.IsChecked.Value) ? Visibility.Visible : Visibility.Collapsed;
             iscBase.LockControls();
+            iscMaxBase.LockControls();
             iscExp.LockControls();
+            iscMaxExp.LockControls();
             iscMod.LockControls();
             rbAutomatic.IsEnabled = false;
             rbStepwise.IsEnabled = false;
@@ -513,7 +553,9 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             btnResumeAutomatic.IsEnabled = true;
             m_Resume = false;
             iscBase.UnLockControls();
+            iscMaxBase.UnLockControls();
             iscExp.UnLockControls();
+            iscMaxExp.UnLockControls();
             iscMod.UnLockControls();
             rbAutomatic.IsEnabled = true;
             rbStepwise.IsEnabled = true;
@@ -540,8 +582,8 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
 
         private void StartThread()
         {
-            m_Base = iscBase.GetValue();
-            m_Exp = iscExp.GetValue();
+            m_Base = ActiveBaseControl.GetValue();
+            m_Exp = ActiveExpControl.GetValue();
             m_Mod = iscMod.GetValue();
             if (m_Base != null && m_Exp != null && m_Mod != null)
             {
@@ -603,9 +645,29 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             }
         }
 
-        public void SetFormula()
+        public virtual void SetFormula()
         {
-            Formula.Formula = $"{m_Base}^i \\text{{ mod }} {m_Mod} \\text{{          }} i = 1,\\ldots,{m_Exp}";
+            Formula.Formula = $"{Base}^i \\text{{ mod }} {Mod} \\text{{          }} i = 1,\\ldots,{Exp}";
+        }
+
+        protected virtual PrimesBigInteger MaxIteration => Exp;
+
+        protected virtual PrimesBigInteger IterationStart => 1;
+        
+        protected virtual PrimesBigInteger DoIterationStep(PrimesBigInteger lastResult, PrimesBigInteger iteration)
+        {
+            PrimesBigInteger result;
+            if (lastResult == null)
+            {
+                result = Base.Mod(Mod);
+            }
+            else
+            {
+                result = (lastResult * Base).Mod(Mod);
+            }
+            log.Info(string.Format(Primes.Resources.lang.Numbertheory.Numbertheory.powermod_execution,
+                iteration, Base, iteration, Mod, result));
+            return result;
         }
 
         private void DoExecuteGraphic()
@@ -622,52 +684,45 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                 m_Running = true;
             }
 
+            //Reset colors of ellipses of all points (the starting point will be set to red below):
+            ResetPointEllipseColor();
+
             Point lastPoint = new Point(-1, -1);
             Ellipse lastEllipse = null;
             PrimesBigInteger result = null;
-            PrimesBigInteger tmp = m_Base.Mod(m_Mod);
-            Ellipse e = this.GetEllipseAt(m_Points[tmp.IntValue]);
-
-            if (e != null)
-            {
-                ControlHandler.SetPropertyValue(e, "Fill", Brushes.Red);
-                ControlHandler.SetPropertyValue(e, "Stroke", Brushes.Red);
-            }
 
             ControlHandler.ExecuteMethod(this, nameof(SetFormula), new object[0]);
 
-            PrimesBigInteger i = 1;
-            while (i <= m_Exp)
+            PrimesBigInteger i = IterationStart;
+            while (i <= MaxIteration)
             {
                 Thread.Sleep(100);
 
-                if (result == null)
-                {
-                    result = m_Base.Mod(m_Mod);
-                }
-                else
-                {
-                    result = (result * m_Base).Mod(m_Mod);
-                }
-                log.Info(string.Format(Primes.Resources.lang.Numbertheory.Numbertheory.powermod_execution, i, m_Base, i, m_Mod, result));
+                result = DoIterationStep(result, i);
 
                 if (lastPoint.X == -1 && lastPoint.Y == -1)
                 {
                     lastPoint = m_Points[result.IntValue];
+                    //First point, mark ellipse red:
+                    var e = GetEllipseAt(lastPoint);
+                    if (e != null)
+                    {
+                        ControlHandler.SetPropertyValue(e, "Fill", Brushes.Red);
+                        ControlHandler.SetPropertyValue(e, "Stroke", Brushes.Red);
+                    }
                     lastEllipse = e;
                 }
                 else
                 {
-                    Ellipse _e = this.GetEllipseAt(m_Points[result.IntValue]);
+                    var e = this.GetEllipseAt(m_Points[result.IntValue]);
                     Point newPoint = m_Points[result.IntValue];
-                    //CreateArrow(i.Subtract(PrimesBigInteger.One), lastPoint, newPoint);
-                    CreateArrow(i-1, lastEllipse, _e);
+                    CreateArrow(i - 1, lastEllipse, e);
                     lastPoint = newPoint;
-                    lastEllipse = _e;
+                    lastEllipse = e;
                 }
 
-                i = i+1;
-                if (i>=3)
+                i += 1;
+                if (i > IterationStart + 1)
                     WaitStepWise();
             }
 
@@ -677,6 +732,19 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             }
 
             FireStopEvent();
+        }
+
+        private void ResetPointEllipseColor()
+        {
+            foreach (var point in m_Points.Values)
+            {
+                var e = GetEllipseAt(point);
+                if (e != null)
+                {
+                    ControlHandler.SetPropertyValue(e, "Fill", Brushes.Black);
+                    ControlHandler.SetPropertyValue(e, "Stroke", Brushes.Black);
+                }
+            }
         }
 
         private Ellipse GetEllipseAt(Point p)
@@ -765,6 +833,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                     m_ArrowsWithSourceAndDestination.Add(pair, l);
                     ControlHandler.AddChild(l, ArrowArea);
                     //m_Arrows.Add(l);
+                    m_ArrowsMarkReverse[l] = counter;
                     m_ArrowsMark.Add(counter, l);
                 }
                 else if (m_ArrowsWithSourceAndDestination.ContainsKey(pair))
@@ -820,6 +889,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             if (l != null)
             {
                 m_ArrowsMark.Add(counter, l);
+                m_ArrowsMarkReverse[l] = counter;
                 UIElementCollection children = ControlHandler.GetPropertyValue(ArrowArea, "Children") as UIElementCollection;
                 ControlHandler.ExecuteMethod(children, "Remove", new object[] { l });
                 ControlHandler.ExecuteMethod(children, "Add", new object[] { l });
@@ -887,7 +957,9 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             int c = 16;
             double radius = 25;
             double x = (double)ControlHandler.ExecuteMethod(PaintArea, "GetLeft", source);
+            x += (PointRadius - radius) / 2;
             double y = (double)ControlHandler.ExecuteMethod(PaintArea, "GetTop", source);
+            y += (PointRadius - radius) / 2;
 
             for (int value = 0; value <= c; value++)
             {
@@ -900,6 +972,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             {
                 m_CirclesSource.Add(source, p);
                 m_CirclesMark.Add(counter, p);
+                m_CirclesMarkReverse[p] = counter;
                 ControlHandler.ExecuteMethod(ArrowArea, "SetLeft", new object[] { p, x });
                 ControlHandler.ExecuteMethod(ArrowArea, "SetTop", new object[] { p, y });
                 ControlHandler.AddChild(p, ArrowArea);
@@ -925,6 +998,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             if (p != null)
             {
                 m_CirclesMark.Add(counter, p);
+                m_CirclesMarkReverse[p] = counter;
 
                 UIElementCollection children = ControlHandler.GetPropertyValue(ArrowArea, "Children") as UIElementCollection;
                 ControlHandler.ExecuteMethod(children, "Remove", new object[] { p });

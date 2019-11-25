@@ -34,6 +34,7 @@ namespace Primes.WpfControls.NumberTheory
         public void Dispose()
         {
             power.CleanUp();
+            powerBase.CleanUp();
         }
 
         public void Init()
@@ -58,6 +59,11 @@ namespace Primes.WpfControls.NumberTheory
             }
             else if (sender == tabItemPower)
             {
+                OnlineHelp.OnlineHelpAccess.ShowOnlineHelp(Primes.OnlineHelp.OnlineHelpActions.Modular_Exponentiation);
+            }
+            else if (sender == tabItemPowerBase)
+            {
+                //TODO!
                 OnlineHelp.OnlineHelpAccess.ShowOnlineHelp(Primes.OnlineHelp.OnlineHelpActions.Modular_Exponentiation);
             }
             else if (sender == tabItemPRoots)

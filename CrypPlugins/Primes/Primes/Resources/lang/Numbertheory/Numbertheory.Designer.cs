@@ -286,7 +286,7 @@ namespace Primes.Resources.lang.Numbertheory {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Max. Exponent ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Exponent ähnelt.
         /// </summary>
         public static string powermod_exponent {
             get {
@@ -300,6 +300,24 @@ namespace Primes.Resources.lang.Numbertheory {
         public static string powermod_inputgroupbox {
             get {
                 return ResourceManager.GetString("powermod_inputgroupbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Max. Base ähnelt.
+        /// </summary>
+        public static string powermod_max_base {
+            get {
+                return ResourceManager.GetString("powermod_max_base", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Max. Exponent ähnelt.
+        /// </summary>
+        public static string powermod_max_exponent {
+            get {
+                return ResourceManager.GetString("powermod_max_exponent", resourceCulture);
             }
         }
         
@@ -597,6 +615,15 @@ namespace Primes.Resources.lang.Numbertheory {
         public static string tabitemheader_power {
             get {
                 return ResourceManager.GetString("tabitemheader_power", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Powering (RSA) ähnelt.
+        /// </summary>
+        public static string tabitemheader_powerBase {
+            get {
+                return ResourceManager.GetString("tabitemheader_powerBase", resourceCulture);
             }
         }
         

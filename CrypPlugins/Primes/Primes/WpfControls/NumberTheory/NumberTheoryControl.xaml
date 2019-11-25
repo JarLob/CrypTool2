@@ -21,6 +21,9 @@
             <comps:HelpTabItem Header="{x:Static lang:Numbertheory.tabitemheader_power}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="tabItemPower" HelpButtonClick="TabItem_HelpButtonClick">
                 <power:PowerModControl x:Name="power" />
             </comps:HelpTabItem>
+            <comps:HelpTabItem Header="{x:Static lang:Numbertheory.tabitemheader_powerBase}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="tabItemPowerBase" HelpButtonClick="TabItem_HelpButtonClick">
+                <power:PowerBaseModControl x:Name="powerBase" />
+            </comps:HelpTabItem>
             <comps:HelpTabItem Header="{x:Static lang:Numbertheory.tabitemheader_ntfunctions}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="tabItemNTFunctions" HelpButtonClick="TabItem_HelpButtonClick">
                 <ntfunctions:NumberTheoryFunctionsControl x:Name="ntfunctions" />
             </comps:HelpTabItem>

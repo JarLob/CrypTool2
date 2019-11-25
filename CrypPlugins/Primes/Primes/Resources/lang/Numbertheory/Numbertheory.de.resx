@@ -171,6 +171,9 @@
   <data name="powermod_base" xml:space="preserve">
     <value>Basis</value>
   </data>
+  <data name="powermod_max_base" xml:space="preserve">
+    <value>Max. Basis</value>
+  </data>
   <data name="powermod_btncancel" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
@@ -189,8 +192,11 @@
   <data name="powermod_cw" xml:space="preserve">
     <value>im Uhrzeigersinn</value>
   </data>
-  <data name="powermod_exponent" xml:space="preserve">
+  <data name="powermod_max_exponent" xml:space="preserve">
     <value>Max. Exponent</value>
+  </data>
+  <data name="powermod_exponent" xml:space="preserve">
+    <value>Exponent</value>
   </data>
   <data name="powermod_inputgroupbox" xml:space="preserve">
     <value>Eingabeparameter</value>
@@ -293,6 +299,9 @@
   </data>
   <data name="tabitemheader_power" xml:space="preserve">
     <value>Potenzieren</value>
+  </data>
+  <data name="tabitemheader_powerBase" xml:space="preserve">
+    <value>Potenzieren (RSA)</value>
   </data>
   <data name="tabitemheader_proots" xml:space="preserve">
     <value>Primitivwurzeln</value>
