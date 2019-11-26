@@ -185,5 +185,10 @@
   <ItemGroup>
     <Resource Include="cryptool.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="vcruntime140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
