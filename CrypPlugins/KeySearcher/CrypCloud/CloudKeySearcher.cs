@@ -89,16 +89,24 @@ namespace KeySearcher
             }
         }
 
+        private DateTime _lastUpdateTime = DateTime.Now;
         private void TaskProgress(object sender, TaskEventArgs e)
         {
-           if (e.JobId != jobId) return;
-
-           localSpeedStatistics.AddEntry(e.TaskProgress);
-           var localApproximateKeysPerSecond = localSpeedStatistics.ApproximateKeysPerSecond();
-           RunInUiContext(() =>
-           { 
-               viewModel.UpdateLocalSpeed(localApproximateKeysPerSecond);
-           });
+            if (e.JobId != jobId)
+            {
+                return;
+            }
+            localSpeedStatistics.AddEntry(e.TaskProgress);
+            
+            if (DateTime.Now >= _lastUpdateTime.AddSeconds(1))
+            {
+                var localApproximateKeysPerSecond = localSpeedStatistics.ApproximateKeysPerSecond();
+                RunInUiContext(() =>
+                {
+                    viewModel.UpdateLocalSpeed(localApproximateKeysPerSecond);
+                });
+                _lastUpdateTime = DateTime.Now;
+            }
         }
 
         private void NewTaskStarted(object sender, TaskEventArgs taskArgs)

@@ -142,17 +142,17 @@ namespace KeySearcher
                 }
 
                 index++;
-                if (index%100000 == 0)
+                if (index % 100000 == 0)
                 {
                     cancelToken.ThrowIfCancellationRequested();
                     if (index % 500000 == 0)
                     {
                         OnProgressChanged(blockId, 500000);
                     }
-                }                              
+                }                           
             }
 
-            OnProgressChanged(blockId, index % 500000);
+            OnProgressChanged(blockId, index % 1500000);
             return top10Keys;
         }
 

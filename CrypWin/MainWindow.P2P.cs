@@ -36,7 +36,6 @@ namespace Cryptool.CrypWin
         {
             try
             {
-                CrypCloudCore.Instance.ApplicationLog += OnGuiLogNotificationOccured;
                 CrypCloudCore.Instance.ConnectionStateChanged += UpdateIcons;
                 UpdateIcons(connected: false);
                 GuiLogMessage("Cloud initialized", NotificationLevel.Debug);
