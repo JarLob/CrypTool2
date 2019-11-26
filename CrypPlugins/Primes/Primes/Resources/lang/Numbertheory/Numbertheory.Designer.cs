@@ -277,7 +277,7 @@ namespace Primes.Resources.lang.Numbertheory {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cycle contains duplicate values. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die (cycle contains duplicate values) ähnelt.
         /// </summary>
         public static string powermod_cycle_duplicate_values {
             get {
