@@ -112,7 +112,7 @@ namespace WellKnownPeer
         /// </summary>
         private void CreateAndOpenLogFile()
         {
-            string logfilename = "logs\\WellKnownPeer_" + DateTime.Now.Year + "_" + DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + ".log";
+            string logfilename = "logs\\log_" + DateTime.Now.Year + "_" + DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + ".log";
             _FileStream = new FileStream(logfilename, FileMode.Create, FileAccess.Write);
             _StreamWriter = new StreamWriter(_FileStream);
             _LogFileOpenedTime = DateTime.Now;

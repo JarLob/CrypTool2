@@ -62,7 +62,7 @@ namespace KeySearcher.CrypCloud
         { 
             if (!CrypCloudCore.Instance.IsRunning) return;
              
-            var job = CrypCloudCore.Instance.GetJobsById(jobId);
+            var job = CrypCloudCore.Instance.GetJobById(jobId);
             if(job == null) return;
 
             JobName = job.JobName;

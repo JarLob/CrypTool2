@@ -207,7 +207,7 @@ namespace CrypCloud.Core
             return voluntLib.GetContactList();
         }
 
-        public Job GetJobsById(BigInteger jobid)
+        public Job GetJobById(BigInteger jobid)
         {
             if (!voluntLib.IsStarted)
             {
@@ -395,7 +395,6 @@ namespace CrypCloud.Core
 
         #region events  
 
-        public event EventHandler<GuiLogEventArgs> ApplicationLog;
         public event Action<bool> ConnectionStateChanged;
         public event EventHandler JobListChanged;
         public event EventHandler<JobProgressEventArgs> JobStateChanged;
