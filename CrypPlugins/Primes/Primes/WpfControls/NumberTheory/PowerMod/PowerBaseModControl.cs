@@ -38,7 +38,9 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
         protected override PrimesBigInteger DoIterationStep(PrimesBigInteger lastResult, PrimesBigInteger iteration)
         {
             var result = iteration.ModPow(Exp, Mod);
-            log.Info(string.Format(Numbertheory.powermod_execution, iteration, iteration, Exp, Mod, result));
+            AddIterationLogEntry(iteration.IntValue,
+                $"{iteration}^{{{Exp}}} \\text{{ mod }} {Mod} = {result}",
+                string.Format(Numbertheory.powermod_execution, iteration, iteration, Exp, Mod, result));
             return result;
         }
 

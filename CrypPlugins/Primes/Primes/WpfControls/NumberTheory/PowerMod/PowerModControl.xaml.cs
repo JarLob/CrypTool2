@@ -32,6 +32,8 @@ using Primes.WpfControls.Components.Arrows;
 using System.Diagnostics;
 using System.Globalization;
 using Primes.Resources.lang.Numbertheory;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Primes.WpfControls.NumberTheory.PowerMod
 {
@@ -49,10 +51,20 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
         private const double Margin = 25.0;
         private const double PointRadius = 3.0;
 
+        public struct IterationLogEntry
+        {
+            public int Iteration { get; set; }
+            public string Formula { get; set; }
+            public string LogEntry { get; set; }
+        }
+
+        private readonly ObservableCollection<IterationLogEntry> iterationLogEntries = new ObservableCollection<IterationLogEntry>();
+
         public PowerModControl()
         {
             InitializeComponent();
             initBindings();
+            iterationLog.ItemsSource = iterationLogEntries;
             this.Exp = DefaultExp;
             this.Base = DefaultBase;
             this.Mod = DefaultMod;
@@ -71,12 +83,38 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             m_RunningLockObject = new object();
             m_Initialized = true;
             m_StepWiseEvent = new ManualResetEvent(false);
-            log.RowMouseOver += new ExecuteIntegerDelegate(log_RowMouseOver);
         }
 
-        void log_RowMouseOver(PrimesBigInteger row)
+        private void LogEntry_MouseMove(object sender, MouseEventArgs e)
         {
-            MarkPath(row + IterationStart - 1);
+            if ((sender as FrameworkElement)?.DataContext is IterationLogEntry log)
+            {
+                MarkPath(log.Iteration - 1);
+            }
+        }
+
+        private void CopyLogSelection_Click(object sender, RoutedEventArgs e)
+        {
+            var contextMenu = (sender as MenuItem)?.Parent as ContextMenu;
+            if (contextMenu?.DataContext is IterationLogEntry)
+            {
+                var logEntry = (IterationLogEntry)contextMenu.DataContext;
+                try
+                {
+                    Clipboard.SetText($"{logEntry.LogEntry}\n", TextDataFormat.Text);
+                }
+                catch { /* Ignore */}
+            }
+        }
+
+        private void CopyLogAll_Click(object sender, RoutedEventArgs e)
+        {
+            var log = string.Join("\n", iterationLogEntries.Select(entry => entry.LogEntry));
+            try
+            {
+                Clipboard.SetText($"{log}\n", TextDataFormat.Text);
+            }
+            catch { /* Ignore */}
         }
 
         protected virtual bool SameArrowMarksCycle => true;
@@ -382,7 +420,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                 if (m_Initialized)
                 {
                     //ClearArrows();
-                    log.RenderSize = sizeInfo.NewSize;
+                    iterationLog.RenderSize = sizeInfo.NewSize;
                     ArrowArea.Width = PaintArea.Width = CircleArea.Width = LabelArea.Width = ContentArea.Width = Math.Max(0, PaintPanel.ActualWidth - 20);
                     ArrowArea.Height = PaintArea.Height = CircleArea.Height = ContentArea.Height = LabelArea.Height = Math.Max(0, PaintPanel.ActualHeight - spslider.ActualHeight - 30);
                     //ContentArea.Width = PaintPanel.ActualWidth;
@@ -672,7 +710,30 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
         protected virtual PrimesBigInteger MaxIteration => Exp;
 
         protected virtual PrimesBigInteger IterationStart => 1;
-        
+
+        public void AddIterationLogEntry(int iteration, string formula, string logEntry)
+        {
+            ControlHandler.ExecuteMethod(this, nameof(_AddIterationLogEntry), new object[] {
+                new IterationLogEntry
+                {
+                    Iteration = iteration,
+                    Formula = formula,
+                    LogEntry = logEntry
+                }
+            });
+        }
+
+        public void _AddIterationLogEntry(IterationLogEntry iterationLogEntry)
+        {
+            iterationLogEntries.Add(iterationLogEntry);
+            iterationLogScroll.ScrollToBottom();
+        }
+
+        public void _ClearIterationLogEntries()
+        {
+            iterationLogEntries.Clear();
+        }
+
         protected virtual PrimesBigInteger DoIterationStep(PrimesBigInteger lastResult, PrimesBigInteger iteration)
         {
             PrimesBigInteger result;
@@ -684,8 +745,11 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             {
                 result = (lastResult * Base).Mod(Mod);
             }
-            log.Info(string.Format(Primes.Resources.lang.Numbertheory.Numbertheory.powermod_execution,
-                iteration, Base, iteration, Mod, result));
+
+            AddIterationLogEntry(iteration.IntValue, 
+                $"{Base}^{{{iteration}}} \\text{{ mod }} {Mod} = {result}",
+                string.Format(Numbertheory.powermod_execution, iteration, Base, iteration, Mod, result));
+
             return result;
         }
 
@@ -695,9 +759,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
 
             ClearArrows();
             m_SourceDestination.Clear();
-            log.Clear();
-            log.Columns = 1;
-
+            ControlHandler.ExecuteMethod(this, nameof(_ClearIterationLogEntries), new object[0]);
             lock (m_RunningLockObject)
             {
                 m_Running = true;
