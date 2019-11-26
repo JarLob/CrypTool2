@@ -15,7 +15,9 @@
 */
 
 using Primes.Bignum;
+using Primes.Resources.lang.Numbertheory;
 using Primes.WpfControls.Components;
+using System.Collections.Generic;
 
 namespace Primes.WpfControls.NumberTheory.PowerMod
 {
@@ -29,19 +31,47 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
         protected override InputSingleControl ActiveExpControl => iscExp;
         protected override InputSingleControl ActiveBaseControl => iscMaxBase;
 
-        protected override PrimesBigInteger DefaultExp => 28;
-        protected override PrimesBigInteger DefaultBase => 20;
+        protected override PrimesBigInteger DefaultExp => 5;
+        protected override PrimesBigInteger DefaultBase => 24;
+        protected override PrimesBigInteger DefaultMod => 12;
 
         protected override PrimesBigInteger DoIterationStep(PrimesBigInteger lastResult, PrimesBigInteger iteration)
         {
             var result = iteration.ModPow(Exp, Mod);
-            log.Info(string.Format(Primes.Resources.lang.Numbertheory.Numbertheory.powermod_execution, iteration, iteration, Exp, Mod, result));
+            log.Info(string.Format(Numbertheory.powermod_execution, iteration, iteration, Exp, Mod, result));
             return result;
+        }
+
+        private bool ContainsDuplicateValues()
+        {
+            var i = IterationStart;
+            var previousValues = new HashSet<int>();
+            while (i < Mod)
+            {
+                var value = i.ModPow(Exp, Mod);
+                if (previousValues.Contains(value.IntValue))
+                {
+                    return true;
+                }
+                previousValues.Add(value.IntValue);
+                i += 1;
+            }
+            return false;
+        }
+
+        public override void SetCycleInfo()
+        {
+            var cycleLengthInfo = string.Format(Numbertheory.powermod_cycle_length, Mod);
+            if (ContainsDuplicateValues())
+            {
+                cycleLengthInfo += $"\t{Numbertheory.powermod_cycle_duplicate_values}";
+            }
+            CycleInfo.Text = cycleLengthInfo;
         }
 
         public override void SetFormula()
         {
-            Formula.Formula = $"b^{{{Exp}}} \\text{{ mod }} {Mod} \\text{{          }} b = 0,\\ldots,{Base}";
+            Formula.Formula = $"i^{{{Exp}}} \\text{{ mod }} {Mod} \\text{{          }} i = 0,\\ldots,{Base}";
         }
 
         protected override PrimesBigInteger MaxIteration => Base;

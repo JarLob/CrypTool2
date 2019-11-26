@@ -195,6 +195,12 @@
   <data name="powermod_execution" xml:space="preserve">
     <value>{0}.	{1}^{2} mod {3} = {4}</value>
   </data>
+  <data name="powermod_cycle_length" xml:space="preserve">
+    <value>Cycle length: {0}</value>
+  </data>
+  <data name="powermod_cycle_duplicate_values" xml:space="preserve">
+    <value>Cycle contains duplicate values.</value>
+  </data>
   <data name="powermod_max_exponent" xml:space="preserve">
     <value>Max. Exponent</value>
   </data>
@@ -212,6 +218,9 @@
   </data>
   <data name="powermod_progress" xml:space="preserve">
     <value>Progress</value>
+  </data>
+  <data name="powermod_rsa_description" xml:space="preserve">
+    <value>Description: Typical parameters for RSA: (N, e) = (33, 3), (55, 7), (143, 23)</value>
   </data>
   <data name="powermod_rbautomatic" xml:space="preserve">
     <value>automatic execution</value>
@@ -301,10 +310,10 @@
     <value>Number-theoretic functions</value>
   </data>
   <data name="tabitemheader_power" xml:space="preserve">
-    <value>Powering</value>
+    <value>Powering (iterating exponent)</value>
   </data>
   <data name="tabitemheader_powerBase" xml:space="preserve">
-    <value>Powering (RSA)</value>
+    <value>Powering (iterating base)(RSA)</value>
   </data>
   <data name="tabitemheader_proots" xml:space="preserve">
     <value>Primitive roots</value>

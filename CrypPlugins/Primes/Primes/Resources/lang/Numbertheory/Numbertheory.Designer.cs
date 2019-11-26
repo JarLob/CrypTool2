@@ -277,6 +277,24 @@ namespace Primes.Resources.lang.Numbertheory {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cycle contains duplicate values. ähnelt.
+        /// </summary>
+        public static string powermod_cycle_duplicate_values {
+            get {
+                return ResourceManager.GetString("powermod_cycle_duplicate_values", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cycle length: {0} ähnelt.
+        /// </summary>
+        public static string powermod_cycle_length {
+            get {
+                return ResourceManager.GetString("powermod_cycle_length", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {0}.	{1}^{2} mod {3} = {4} ähnelt.
         /// </summary>
         public static string powermod_execution {
@@ -354,6 +372,15 @@ namespace Primes.Resources.lang.Numbertheory {
         public static string powermod_rbautomatic {
             get {
                 return ResourceManager.GetString("powermod_rbautomatic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Description: Typical parameters for RSA: (N, e) = (33, 3), (55, 7), (143, 23) ähnelt.
+        /// </summary>
+        public static string powermod_rsa_description {
+            get {
+                return ResourceManager.GetString("powermod_rsa_description", resourceCulture);
             }
         }
         
@@ -610,7 +637,7 @@ namespace Primes.Resources.lang.Numbertheory {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Powering ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Powering (iterating exponent) ähnelt.
         /// </summary>
         public static string tabitemheader_power {
             get {
@@ -619,7 +646,7 @@ namespace Primes.Resources.lang.Numbertheory {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Powering (RSA) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Powering (iterating base)(RSA) ähnelt.
         /// </summary>
         public static string tabitemheader_powerBase {
             get {

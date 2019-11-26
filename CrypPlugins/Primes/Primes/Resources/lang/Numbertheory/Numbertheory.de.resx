@@ -192,6 +192,12 @@
   <data name="powermod_cw" xml:space="preserve">
     <value>im Uhrzeigersinn</value>
   </data>
+  <data name="powermod_cycle_length" xml:space="preserve">
+    <value>Zykluslänge: {0}</value>
+  </data>
+  <data name="powermod_cycle_duplicate_values" xml:space="preserve">
+    <value>Zyklus beinhaltet doppelte Werte.</value>
+  </data>
   <data name="powermod_max_exponent" xml:space="preserve">
     <value>Max. Exponent</value>
   </data>
@@ -209,6 +215,9 @@
   </data>
   <data name="powermod_progress" xml:space="preserve">
     <value>Fortschritt</value>
+  </data>
+  <data name="powermod_rsa_description" xml:space="preserve">
+    <value>Erklärung: Typische Parameter für RSA: (N, e) = (33, 3), (55, 7), (143, 23)</value>
   </data>
   <data name="powermod_rbautomatic" xml:space="preserve">
     <value>Automatische Ausführung</value>
@@ -298,10 +307,10 @@
     <value>Zahlentheoretische Funktionen</value>
   </data>
   <data name="tabitemheader_power" xml:space="preserve">
-    <value>Potenzieren</value>
+    <value>Potenzieren (laufender Exponent)</value>
   </data>
   <data name="tabitemheader_powerBase" xml:space="preserve">
-    <value>Potenzieren (RSA)</value>
+    <value>Potenzieren (laufende Basis)(RSA)</value>
   </data>
   <data name="tabitemheader_proots" xml:space="preserve">
     <value>Primitivwurzeln</value>

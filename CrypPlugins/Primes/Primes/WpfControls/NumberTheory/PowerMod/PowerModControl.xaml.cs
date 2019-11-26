@@ -31,6 +31,7 @@ using Primes.WpfControls.Components;
 using Primes.WpfControls.Components.Arrows;
 using System.Diagnostics;
 using System.Globalization;
+using Primes.Resources.lang.Numbertheory;
 
 namespace Primes.WpfControls.NumberTheory.PowerMod
 {
@@ -254,6 +255,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                     {
                         iscMod.SetText(InputSingleControl.Free, m_Mod.ToString());
                     }
+                    CycleInfo.Text = string.Empty;
                     if (m_Initialized)
                     {
                         Reset();
@@ -645,6 +647,23 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             }
         }
 
+        public virtual void SetCycleInfo()
+        {
+            var value = Base.Mod(Mod);
+            var previousValues = new Dictionary<int, int>();
+            var counter = 0;
+            do
+            {
+                previousValues.Add(value.IntValue, counter);
+                value = (value * Base).Mod(Mod);
+                counter++;
+                Debug.Assert(counter < Mod);
+            } while (!previousValues.ContainsKey(value.IntValue));
+
+            var cycleLength = counter - previousValues[value.IntValue];
+            CycleInfo.Text = string.Format(Numbertheory.powermod_cycle_length, cycleLength);
+        }
+
         public virtual void SetFormula()
         {
             Formula.Formula = $"{Base}^i \\text{{ mod }} {Mod} \\text{{          }} i = 1,\\ldots,{Exp}";
@@ -691,6 +710,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             Ellipse lastEllipse = null;
             PrimesBigInteger result = null;
 
+            ControlHandler.ExecuteMethod(this, nameof(SetCycleInfo), new object[0]);
             ControlHandler.ExecuteMethod(this, nameof(SetFormula), new object[0]);
 
             PrimesBigInteger i = IterationStart;
