@@ -63,12 +63,12 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
 
         public override void SetCycleInfo()
         {
-            var cycleLengthInfo = string.Format(Numbertheory.powermod_cycle_length, Mod);
+            CycleInfo1.Text = string.Format(Numbertheory.powermod_cycle_length, Mod);
+            CycleInfo2.Text = null;
             if (ContainsDuplicateValues())
             {
-                cycleLengthInfo += $"\t{Numbertheory.powermod_cycle_duplicate_values}";
+                CycleInfo2.Text = Numbertheory.powermod_cycle_duplicate_values;
             }
-            CycleInfo.Text = cycleLengthInfo;
         }
 
         public override void SetFormula()

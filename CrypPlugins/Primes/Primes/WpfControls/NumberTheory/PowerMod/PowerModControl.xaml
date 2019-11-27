@@ -27,11 +27,11 @@
         </Grid.RowDefinitions>
         <GroupBox Grid.Row="0" Margin="7" 	Header="{x:Static lang:Numbertheory.powermod_inputgroupbox}">
             <StackPanel>
-
                 <DockPanel HorizontalAlignment="Left">
                     <Button Name="btnExecute" Click="btnExecute_Click" Margin="7" Content="{x:Static lang:Numbertheory.powermod_btnexecute}" Width="100" />
                     <Button Name="btnCancel" Margin="7" Content="{x:Static lang:Numbertheory.powermod_btncancel}" Width="100" IsEnabled="False" Click="btnCancel_Click" />
                     <TextBlock Text="{x:Static lang:Numbertheory.powermod_rsa_description}" Style="{StaticResource DescriptionTextStyle}" Visibility="{Binding Visibility, ElementName=iscExp}" VerticalAlignment="Center" />
+                    <TextBlock Text="{x:Static lang:Numbertheory.powermod_cycle_length_description}" Style="{StaticResource DescriptionTextStyle}" Visibility="{Binding Visibility, ElementName=iscBase}" VerticalAlignment="Center" />
                 </DockPanel>
                 <Grid Height="43">
                     <Grid.ColumnDefinitions>
@@ -50,45 +50,46 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" MinWidth="100" />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="Auto" MinWidth="100" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <TextBlock Visibility="{Binding Visibility, ElementName=iscBase}" Text="{x:Static lang:Numbertheory.powermod_base}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="5" />
-                    <comps:InputSingleControl x:Name="iscBase" Visibility="Collapsed" InputRangeControlType="Horizontal" ShowCalcInput="False" ShowButtons="False" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Margin="5" />
+                    <TextBlock Grid.Column="0" Grid.Row="0" Visibility="{Binding Visibility, ElementName=iscBase}" Style="{StaticResource DescriptionTextStyle}" Text="b" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5" />
+                    <comps:InputSingleControl x:Name="iscBase" Visibility="Collapsed" InputRangeControlType="Horizontal" ShowCalcInput="False" ShowButtons="False" Grid.Column="1" Grid.Row="0" Margin="5" />
                     <TextBlock Visibility="{Binding Visibility, ElementName=iscMaxExp}" Text="{x:Static lang:Numbertheory.powermod_max_exponent}" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="5" />
-                    <comps:InputSingleControl x:Name="iscMaxExp" Visibility="Collapsed" InputRangeControlType="Horizontal" ShowCalcInput="False" ShowButtons="False" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="5" />
+                    <comps:InputSingleControl x:Name="iscMaxExp" Visibility="Collapsed" InputRangeControlType="Horizontal" ShowCalcInput="False" ShowButtons="False" Grid.Column="1" Grid.Row="1" Margin="5" />
 
                     <TextBlock Visibility="{Binding Visibility, ElementName=iscExp}" Text="{x:Static lang:Numbertheory.powermod_exponent}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="5" />
                     <TextBlock Visibility="{Binding Visibility, ElementName=iscExp}" Style="{StaticResource DescriptionTextStyle}" Text="e" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5" />
-                    <comps:InputSingleControl x:Name="iscExp" Visibility="Collapsed" InputRangeControlType="Horizontal" ShowCalcInput="False" ShowButtons="False" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Margin="5" />
+                    <comps:InputSingleControl x:Name="iscExp" Visibility="Collapsed" InputRangeControlType="Horizontal" ShowCalcInput="False" ShowButtons="False" Grid.Column="1" Grid.Row="0" Margin="5" />
                     <TextBlock Visibility="{Binding Visibility, ElementName=iscMaxBase}" Text="{x:Static lang:Numbertheory.powermod_max_base}" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="5" />
-                    <comps:InputSingleControl x:Name="iscMaxBase" Visibility="Collapsed" InputRangeControlType="Horizontal" ShowCalcInput="False" ShowButtons="False" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="5" />
+                    <comps:InputSingleControl x:Name="iscMaxBase" Visibility="Collapsed" InputRangeControlType="Horizontal" ShowCalcInput="False" ShowButtons="False" Grid.Column="1" Grid.Row="1" Margin="5" />
 
-                    <TextBlock x:Name="CycleInfo" Style="{StaticResource DescriptionTextStyle}" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" />
+                    <TextBlock x:Name="CycleInfo1" Style="{StaticResource DescriptionTextStyle}" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" />
+                    <TextBlock x:Name="CycleInfo2" Style="{StaticResource DescriptionTextStyle}" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" />
 
-                    <TextBlock Text="{x:Static lang:Numbertheory.powermod_modulus}" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Margin="5" />                    
-                    <comps:InputSingleControl x:Name="iscMod" InputRangeControlType="Horizontal" ShowCalcInput="False" ShowButtons="False" Grid.Column="1" Grid.Row="2" Margin="5" />
-                    <Slider Name="slidermodulus" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Minimum="2" Maximum="150" Value="2" ValueChanged="slidermodulus_ValueChanged" Margin="5" />
-                    
-                    <TextBlock Visibility="{Binding Visibility, ElementName=iscExp}" Style="{StaticResource DescriptionTextStyle}" Text="N" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5" />
+                    <TextBlock Text="{x:Static lang:Numbertheory.powermod_modulus}" Grid.Column="3" Grid.Row="0" VerticalAlignment="Center" Margin="5" />
+                    <TextBlock Grid.Column="3" Grid.Row="0" Visibility="{Binding Visibility, ElementName=iscBase}" Style="{StaticResource DescriptionTextStyle}" Text="N" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5" />
+                    <comps:InputSingleControl x:Name="iscMod" InputRangeControlType="Horizontal" ShowCalcInput="False" ShowButtons="False" Grid.Column="4" Grid.Row="0" Margin="5" />
+                    <Slider Name="slidermodulus" Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" Minimum="2" Maximum="150" Value="2" ValueChanged="slidermodulus_ValueChanged" Margin="5" />
+                    <TextBlock Grid.Column="3" Grid.Row="0" Visibility="{Binding Visibility, ElementName=iscExp}" Style="{StaticResource DescriptionTextStyle}" Text="N" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5" />
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="{x:Static lang:Numbertheory.powermod_points}" VerticalAlignment="Center" />
-                    <DockPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
+                    <TextBlock Grid.Row="1" Grid.Column="3" Text="{x:Static lang:Numbertheory.powermod_points}" VerticalAlignment="Center" Margin="5" />
+                    <DockPanel Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2">
                         <RadioButton Name="rbOne" Margin="5" Command="this:PowerModCommands.ReOrderPointsCommand" Content="{x:Static lang:Numbertheory.powermod_cw}" IsChecked="True" />
                         <RadioButton Name="rbTwo" Margin="5" Command="this:PowerModCommands.ReOrderPointsCommand" Content="{x:Static lang:Numbertheory.powermod_ccw}" />
                     </DockPanel>
                 </Grid>
             </StackPanel>
         </GroupBox>
-
-        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-        </ScrollViewer>
 
         <Grid Grid.Row="2" Margin="7">
 
@@ -126,11 +127,17 @@
             </DockPanel>
             <GroupBox Header="{x:Static lang:Numbertheory.powermod_progress}" Grid.Column="1">
                 <DockPanel>
-                    <controls:FormulaControl DockPanel.Dock="Top" x:Name="Formula" HorizontalAlignment="Center" 
-                                             TextOptions.TextRenderingMode="ClearType"
-                                             TextOptions.TextHintingMode="Fixed"
-                                             TextOptions.TextFormattingMode="Display" />
-                    <ScrollViewer x:Name="iterationLogScroll" VerticalScrollBarVisibility="Auto" Margin="5" Focusable="False">
+                    <ScrollViewer DockPanel.Dock="Top" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden" Focusable="False">
+                        <controls:FormulaControl x:Name="Formula" 
+                                                Margin="5"
+                                                HorizontalAlignment="Center"
+                                                TextOptions.TextRenderingMode="ClearType"
+                                                TextOptions.TextHintingMode="Fixed"
+                                                TextOptions.TextFormattingMode="Display" />
+                    </ScrollViewer>
+                    <ScrollViewer x:Name="iterationLogScroll" 
+                                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" 
+                                  Margin="5" Focusable="False">
                         <ItemsControl x:Name="iterationLog">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -161,13 +168,13 @@
                                                     <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock FontSize="12" VerticalAlignment="Center">
-                                                    <Run Text="{Binding Iteration, Mode=OneWay}" />.
+                                                        <Run Text="{Binding Iteration, Mode=OneWay}" />.
                                                 </TextBlock>
                                                 <controls:FormulaControl Formula="{Binding Formula}"
-                                                                            Grid.Column="1"
-                                                                            TextOptions.TextRenderingMode="ClearType"
-                                                                            TextOptions.TextHintingMode="Fixed"
-                                                                            TextOptions.TextFormattingMode="Display">
+                                                                        Grid.Column="1"
+                                                                        TextOptions.TextRenderingMode="ClearType"
+                                                                        TextOptions.TextHintingMode="Fixed"
+                                                                        TextOptions.TextFormattingMode="Display">
                                                     <controls:FormulaControl.RenderTransform>
                                                         <ScaleTransform ScaleX="0.7" ScaleY="0.7" />
                                                     </controls:FormulaControl.RenderTransform>

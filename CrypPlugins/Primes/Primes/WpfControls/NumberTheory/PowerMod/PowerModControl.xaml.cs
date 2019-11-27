@@ -293,7 +293,8 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                     {
                         iscMod.SetText(InputSingleControl.Free, m_Mod.ToString());
                     }
-                    CycleInfo.Text = string.Empty;
+                    CycleInfo1.Text = string.Empty;
+                    CycleInfo2.Text = string.Empty;
                     if (m_Initialized)
                     {
                         Reset();
@@ -699,7 +700,8 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             } while (!previousValues.ContainsKey(value.IntValue));
 
             var cycleLength = counter - previousValues[value.IntValue];
-            CycleInfo.Text = string.Format(Numbertheory.powermod_cycle_length, cycleLength);
+            CycleInfo1.Text = string.Format(Numbertheory.powermod_cycle_length, cycleLength);
+            CycleInfo2.Text = string.Empty;
         }
 
         public virtual void SetFormula()

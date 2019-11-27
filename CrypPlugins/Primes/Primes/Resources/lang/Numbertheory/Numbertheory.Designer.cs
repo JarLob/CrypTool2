@@ -295,6 +295,15 @@ namespace Primes.Resources.lang.Numbertheory {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The maximum cycle length is phi(N). It can be reached for the multiplicative group Z*_N, e.g. with N=11, phi(N)=10. ähnelt.
+        /// </summary>
+        public static string powermod_cycle_length_description {
+            get {
+                return ResourceManager.GetString("powermod_cycle_length_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {0}.	{1}^{2} mod {3} = {4} ähnelt.
         /// </summary>
         public static string powermod_execution {
@@ -376,7 +385,7 @@ namespace Primes.Resources.lang.Numbertheory {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Description: Typical parameters for RSA: (N, e) = (33, 3), (55, 7), (143, 23) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Typical parameters for RSA: (N, e) = (33, 3), (55, 7), (143, 23) ähnelt.
         /// </summary>
         public static string powermod_rsa_description {
             get {
