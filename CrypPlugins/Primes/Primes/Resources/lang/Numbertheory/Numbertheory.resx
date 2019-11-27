@@ -184,7 +184,7 @@
     <value>Next step</value>
   </data>
   <data name="powermod_btnresume" xml:space="preserve">
-    <value>Resume</value>
+    <value>Continue with automatic execution</value>
   </data>
   <data name="powermod_ccw" xml:space="preserve">
     <value>anti-clockwise</value>

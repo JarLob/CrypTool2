@@ -568,15 +568,11 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
         public void _SetupStart()
         {
             btnCancel.IsEnabled = true;
-            btnExecute.IsEnabled = false;
-            dpStepwiseButtons.Visibility = (!rbAutomatic.IsChecked.Value) ? Visibility.Visible : Visibility.Collapsed;
             iscBase.LockControls();
             iscMaxBase.LockControls();
             iscExp.LockControls();
             iscMaxExp.LockControls();
             iscMod.LockControls();
-            rbAutomatic.IsEnabled = false;
-            rbStepwise.IsEnabled = false;
             slidermodulus.IsEnabled = false;
         }
 
@@ -588,8 +584,6 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
         public void _SetupStop()
         {
             btnCancel.IsEnabled = false;
-            btnExecute.IsEnabled = true;
-            dpStepwiseButtons.Visibility = Visibility.Collapsed;
             btnNextStep.IsEnabled = true;
             btnResumeAutomatic.IsEnabled = true;
             m_Resume = false;
@@ -598,8 +592,6 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             iscExp.UnLockControls();
             iscMaxExp.UnLockControls();
             iscMod.UnLockControls();
-            rbAutomatic.IsEnabled = true;
-            rbStepwise.IsEnabled = true;
             slidermodulus.IsEnabled = true;
         }
 
@@ -670,16 +662,11 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             }
         }
 
-        private void btnExecute_Click(object sender, RoutedEventArgs e)
-        {
-            StartThread();
-        }
-
         private ManualResetEvent m_StepWiseEvent;
 
         private void WaitStepWise()
         {
-            if (m_StepWiseEvent != null && _ExecutionMethod == ExecutionMethod.stepwise && !m_Resume)
+            if (m_StepWiseEvent != null && !m_Resume)
             {
                 m_StepWiseEvent.Reset();
                 m_StepWiseEvent.WaitOne();
@@ -1125,20 +1112,16 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
 
         #endregion
 
-        private ExecutionMethod _ExecutionMethod
-        {
-            get
-            {
-                bool? ischecked = (bool?)ControlHandler.GetPropertyValue(rbAutomatic, "IsChecked");
-                return (ischecked.Value) ? ExecutionMethod.auto : ExecutionMethod.stepwise;
-            }
-        }
-
-        private enum ExecutionMethod { auto, stepwise }
-
         private void btnNextStep_Click(object sender, RoutedEventArgs e)
         {
-            m_StepWiseEvent.Set();
+            if (!m_Running)
+            {
+                StartThread();
+            }
+            else
+            {
+                m_StepWiseEvent.Set();
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -1154,6 +1137,11 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
 
         private void btnResumeAutomatic_Click(object sender, RoutedEventArgs e)
         {
+            if (!m_Running)
+            {
+                StartThread();
+            }
+
             m_Resume = true;
             m_StepWiseEvent.Set();
             ControlHandler.SetPropertyValue(btnNextStep, "IsEnabled", false);

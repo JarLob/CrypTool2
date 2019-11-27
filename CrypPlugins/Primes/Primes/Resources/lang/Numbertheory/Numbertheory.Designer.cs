@@ -250,7 +250,7 @@ namespace Primes.Resources.lang.Numbertheory {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Resume ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Continue with automatic execution ähnelt.
         /// </summary>
         public static string powermod_btnresume {
             get {

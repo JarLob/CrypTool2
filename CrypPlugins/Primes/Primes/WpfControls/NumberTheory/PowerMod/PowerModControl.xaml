@@ -28,24 +28,9 @@
         <GroupBox Grid.Row="0" Margin="7" 	Header="{x:Static lang:Numbertheory.powermod_inputgroupbox}">
             <StackPanel>
                 <DockPanel HorizontalAlignment="Left">
-                    <Button Name="btnExecute" Click="btnExecute_Click" Margin="7" Content="{x:Static lang:Numbertheory.powermod_btnexecute}" Width="100" />
-                    <Button Name="btnCancel" Margin="7" Content="{x:Static lang:Numbertheory.powermod_btncancel}" Width="100" IsEnabled="False" Click="btnCancel_Click" />
                     <TextBlock Text="{x:Static lang:Numbertheory.powermod_rsa_description}" Style="{StaticResource DescriptionTextStyle}" Visibility="{Binding Visibility, ElementName=iscExp}" VerticalAlignment="Center" />
                     <TextBlock Text="{x:Static lang:Numbertheory.powermod_cycle_length_description}" Style="{StaticResource DescriptionTextStyle}" Visibility="{Binding Visibility, ElementName=iscBase}" VerticalAlignment="Center" />
                 </DockPanel>
-                <Grid Height="43">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <RadioButton Name="rbAutomatic" Grid.Column="0" Content="{x:Static lang:Numbertheory.powermod_rbautomatic}" Margin="7" VerticalAlignment="Center" />
-                    <RadioButton Name="rbStepwise" Grid.Column="1" Content="{x:Static lang:Numbertheory.powermod_stepwise}" IsChecked="True" Margin="7" VerticalAlignment="Center" />
-                    <DockPanel Name="dpStepwiseButtons" Grid.Column="2" Visibility="Collapsed">
-                        <Button Name="btnNextStep" Click="btnNextStep_Click" Margin="7" Content="{x:Static lang:Numbertheory.powermod_btnnextstep}" Width="100" VerticalAlignment="Top" />
-                        <Button Name="btnResumeAutomatic" Click="btnResumeAutomatic_Click" Margin="7" Content="{x:Static lang:Numbertheory.powermod_btnresume}" Width="210" VerticalAlignment="Top" />
-                    </DockPanel>
-                </Grid>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" MinWidth="100" />
@@ -86,6 +71,18 @@
                     <DockPanel Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2">
                         <RadioButton Name="rbOne" Margin="5" Command="this:PowerModCommands.ReOrderPointsCommand" Content="{x:Static lang:Numbertheory.powermod_cw}" IsChecked="True" />
                         <RadioButton Name="rbTwo" Margin="5" Command="this:PowerModCommands.ReOrderPointsCommand" Content="{x:Static lang:Numbertheory.powermod_ccw}" />
+                    </DockPanel>
+                </Grid>
+                <Grid Height="43">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <DockPanel Grid.Column="2">
+                        <Button Name="btnNextStep" Click="btnNextStep_Click" Margin="7" Content="{x:Static lang:Numbertheory.powermod_btnnextstep}" Width="100" VerticalAlignment="Top" />
+                        <Button Name="btnResumeAutomatic" Click="btnResumeAutomatic_Click" Margin="7" Content="{x:Static lang:Numbertheory.powermod_btnresume}" Width="210" VerticalAlignment="Top" />
+                        <Button Name="btnCancel" Margin="7" Content="{x:Static lang:Numbertheory.powermod_btncancel}" Width="100" IsEnabled="False" VerticalAlignment="Top" Click="btnCancel_Click" />
                     </DockPanel>
                 </Grid>
             </StackPanel>
