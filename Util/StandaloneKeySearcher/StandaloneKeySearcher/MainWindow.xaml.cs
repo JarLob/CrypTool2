@@ -29,7 +29,7 @@ using WellKnownPeer;
 using WorkspaceManager.Execution;
 using WorkspaceManager.Model;
 
-namespace CloudSearcherStandalone
+namespace StandaloneKeySearcher
 {    
     public partial class MainWindow : Window, IEditor
     {
