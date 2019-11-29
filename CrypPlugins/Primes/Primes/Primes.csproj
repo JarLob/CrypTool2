@@ -937,6 +937,8 @@
     <None Include="OnlineHelp\Resources\sigma.jpg" />
     <Content Include="OnlineHelp\HelpFiles\template.de.html" />
     <Content Include="OnlineHelp\HelpFiles\template.html" />
+    <Resource Include="Resources\icons\restart.png" />
+    <Resource Include="Resources\icons\restart_disabled.png" />
     <Content Include="WpfControls\Start.de.html" />
     <Content Include="WpfControls\Start.html" />
     <Resource Include="Resources\icons\application_edit.png" />

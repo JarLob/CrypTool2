@@ -286,7 +286,41 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <TabPanel Grid.Row="0" IsItemsHost="true" />
+                        <DockPanel>
+                            <Button DockPanel.Dock="Right" 
+                                    Command="{Binding SelectedItem.Content.Restart, RelativeSource={RelativeSource AncestorType=TabControl}}" 
+                                    BorderThickness="1" BorderBrush="LightGray" Margin="3"
+                                    Width="{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}}"
+                                    Background="Transparent"
+                                    ToolTip="Restart">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Style.Triggers>
+                                            <Trigger Property="Command" Value="{x:Null}">
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </Trigger>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <Image Width="16" Height="16">
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Source" Value="../../Resources/icons/restart.png" />
+                                            <Style.Triggers>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter Property="Opacity" Value="0.5" />
+                                                    <Setter Property="Source" Value="../../Resources/icons/restart_disabled.png" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                            </Button>
+                            <TabPanel Grid.Row="0" IsItemsHost="true" />
+                        </DockPanel>
                         <Border BorderThickness="0,0,1,1" BorderBrush="#D0CEBF" Grid.Row="1">
                             <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
                                 <Border Background="{TemplateBinding Background}">

@@ -60,14 +60,13 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
 
         private readonly ObservableCollection<IterationLogEntry> iterationLogEntries = new ObservableCollection<IterationLogEntry>();
 
+        public ICommand Restart { get; }
+
         public PowerModControl()
         {
             InitializeComponent();
             initBindings();
             iterationLog.ItemsSource = iterationLogEntries;
-            this.Exp = DefaultExp;
-            this.Base = DefaultBase;
-            this.Mod = DefaultMod;
             ConfigureIntegerInputs();
             m_Points = new Dictionary<int, Point>();
             //m_Ellipses = new Dictionary<int, Ellipse>();
@@ -83,6 +82,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             m_RunningLockObject = new object();
             m_Initialized = true;
             m_StepWiseEvent = new ManualResetEvent(false);
+            Restart = new RestartCommand(this);
         }
 
         private void LogEntry_MouseMove(object sender, MouseEventArgs e)
@@ -185,7 +185,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             var baseControl = ActiveBaseControl;
             baseControl.Visibility = Visibility.Visible;
             baseControl.Execute += new ExecuteSingleDelegate(iscBase_Execute);
-            baseControl.SetText(InputSingleControl.Free, Base.ToString());
+            baseControl.SetText(InputSingleControl.Free, DefaultBase.ToString());
             InputValidator<PrimesBigInteger> ivBase = new InputValidator<PrimesBigInteger>();
             ivBase.Validator = new BigIntegerMinValueValidator(null, PrimesBigInteger.Two);
             baseControl.AddInputValidator(InputSingleControl.Free, ivBase);
@@ -193,17 +193,21 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             var expControl = ActiveExpControl;
             expControl.Visibility = Visibility.Visible;
             expControl.Execute += new ExecuteSingleDelegate(iscExp_Execute);
-            expControl.SetText(InputSingleControl.Free, Exp.ToString());
+            expControl.SetText(InputSingleControl.Free, DefaultExp.ToString());
             InputValidator<PrimesBigInteger> ivExp = new InputValidator<PrimesBigInteger>();
             ivExp.Validator = new BigIntegerMinValueValidator(null, PrimesBigInteger.One);
             expControl.AddInputValidator(InputSingleControl.Free, ivExp);
 
             iscMod.Execute += new ExecuteSingleDelegate(iscMod_Execute);
             iscMod.KeyDown += new ExecuteSingleDelegate(iscMod_KeyDown);
-            iscMod.SetText(InputSingleControl.Free, Mod.ToString());
+            iscMod.SetText(InputSingleControl.Free, DefaultMod.ToString());
             InputValidator<PrimesBigInteger> ivMod = new InputValidator<PrimesBigInteger>();
             ivMod.Validator = new BigIntegerMinValueMaxValueValidator(null, PrimesBigInteger.Two, PrimesBigInteger.ValueOf(150));
             iscMod.AddInputValidator(InputSingleControl.Free, ivMod);
+
+            this.Exp = DefaultExp;
+            this.Base = DefaultBase;
+            this.Mod = DefaultMod;
 
             this.Start += new VoidDelegate(PowerModControl_Start);
             this.Stop += new VoidDelegate(PowerModControl_Stop);
@@ -742,20 +746,28 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             return result;
         }
 
-        private void DoExecuteGraphic()
+        private void ResetProcessView()
         {
-            FireStartEvent();
-
             ClearArrows();
             m_SourceDestination.Clear();
             ControlHandler.ExecuteMethod(this, nameof(_ClearIterationLogEntries), new object[0]);
+            ResetPointEllipseColor();
+
+            ControlHandler.SetPropertyValue(CycleInfo1, "Text", string.Empty);
+            ControlHandler.SetPropertyValue(CycleInfo2, "Text", string.Empty);
+            ControlHandler.SetPropertyValue(Formula, "Formula", string.Empty);
+        }
+
+        private void DoExecuteGraphic()
+        {
+            ResetProcessView();
+            FireStartEvent();
+
             lock (m_RunningLockObject)
             {
                 m_Running = true;
             }
-
-            //Reset colors of ellipses of all points (the starting point will be set to red below):
-            ResetPointEllipseColor();
+            ControlHandler.ExecuteMethod(Restart, nameof(RestartCommand.SetRunning), new object[0]);
 
             Point lastPoint = new Point(-1, -1);
             Ellipse lastEllipse = null;
@@ -1225,6 +1237,42 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                     offset += diffXp;
                     CreatePoints();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Command for restarting the process.
+        /// </summary>
+        private class RestartCommand : ICommand
+        {
+            private readonly PowerModControl powerModControl;
+            private bool canExecute = false;
+
+            public RestartCommand(PowerModControl powerModControl)
+            {
+                this.powerModControl = powerModControl;
+            }
+
+            public event EventHandler CanExecuteChanged;
+
+            public bool CanExecute(object parameter) => canExecute;
+
+            public void Execute(object parameter)
+            {
+                if (powerModControl.m_Running)
+                {
+                    powerModControl.FireCancelEvent();
+                    powerModControl.CancelThread();
+                }
+                powerModControl.ResetProcessView();
+                canExecute = false;
+                CanExecuteChanged?.Invoke(this, new EventArgs());
+            }
+
+            public void SetRunning()
+            {
+                canExecute = true;
+                CanExecuteChanged?.Invoke(this, new EventArgs());
             }
         }
     }
