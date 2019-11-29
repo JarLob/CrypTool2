@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="SERVER" Type="System.String" Scope="User">
-      <Value Profile="(Default)">141.51.125.18</Value>
+      <Value Profile="(Default)">cloud.cryptool.org</Value>
     </Setting>
     <Setting Name="PORT" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">44443</Value>
+      <Value Profile="(Default)">10443</Value>
     </Setting>
   </Settings>
 </SettingsFile>

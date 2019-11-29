@@ -61,7 +61,7 @@ namespace WellKnownPeer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("141.51.125.18:10000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string WellKnownPeers {
             get {
                 return ((string)(this["WellKnownPeers"]));
@@ -73,7 +73,7 @@ namespace WellKnownPeer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("kopal")]
+        [global::System.Configuration.DefaultSettingValueAttribute("kopal;niko")]
         public string Administrators {
             get {
                 return ((string)(this["Administrators"]));

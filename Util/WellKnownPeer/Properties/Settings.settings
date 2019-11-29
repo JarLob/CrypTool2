@@ -12,10 +12,10 @@
       <Value Profile="(Default)">anonymous</Value>
     </Setting>
     <Setting Name="WellKnownPeers" Type="System.String" Scope="User">
-      <Value Profile="(Default)">141.51.125.18:10000</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Administrators" Type="System.String" Scope="User">
-      <Value Profile="(Default)">kopal</Value>
+      <Value Profile="(Default)">kopal;niko</Value>
     </Setting>
     <Setting Name="BannedCertificates" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

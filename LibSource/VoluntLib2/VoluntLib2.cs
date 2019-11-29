@@ -105,7 +105,26 @@ namespace VoluntLib2
                     }
                     catch (Exception)
                     {
-                        Logger.LogText(String.Format("List of WellKnownPeers contained invalid entry (invalid ip): {0}. Ignore it", wellknownpeer), this, Logtype.Warning);
+                        try
+                        {
+                            //if its not an ip, it may be a dns name, thus we look it up
+                            var ips = Dns.GetHostAddresses(ipport[0]);
+                            try
+                            {
+                                port = ushort.Parse(ipport[1]);
+                            }
+                            catch (Exception)
+                            {
+                                Logger.LogText(String.Format("List of WellKnownPeers contained invalid entry (invalid port): {0}. Ignore it", wellknownpeer), this, Logtype.Warning);
+                                continue;
+                            }
+                            ConnectionManager.AddWellknownPeer(ips[0], port);
+                            continue;
+                        }
+                        catch (Exception)
+                        {
+                            Logger.LogText(String.Format("List of WellKnownPeers contained invalid entry (invalid ip/hostname): {0}. Ignore it", wellknownpeer), this, Logtype.Warning);
+                        }
                         continue;
                     }
                     try

@@ -12,7 +12,7 @@ namespace CrypTool.CertificateClientSimpleGUI.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.3.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,7 +25,7 @@ namespace CrypTool.CertificateClientSimpleGUI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("141.51.125.18")]
+        [global::System.Configuration.DefaultSettingValueAttribute("cloud.cryptool.org")]
         public string SERVER {
             get {
                 return ((string)(this["SERVER"]));
@@ -37,7 +37,7 @@ namespace CrypTool.CertificateClientSimpleGUI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("44443")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10443")]
         public int PORT {
             get {
                 return ((int)(this["PORT"]));

@@ -18,8 +18,7 @@ namespace Cryptool.CrypToolStore
 {
     public class Constants
     {
-        public static string ServerAddress = "141.51.125.19";
+        public static string ServerAddress = "store.cryptool.org";
         public static int ServerPort = 15151;
-
     }
 }

@@ -43,7 +43,7 @@ namespace CrypTool.CertificateServer
 
         #region Fallback values (if settings are invalid)
 
-        private const int FALLBACK_LISTEN_PORT = 443;
+        private const int FALLBACK_LISTEN_PORT = 10443;
 
         private const int FALLBACK_LISTEN_HTTP_PORT = 8080;
 
