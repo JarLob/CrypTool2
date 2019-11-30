@@ -98,7 +98,10 @@
             <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="0" Name="PaintPanel">
 
                 <GroupBox HorizontalAlignment="Stretch" DockPanel.Dock="Bottom" Name="spslider" Margin="10" Header="{x:Static lang:Numbertheory.powermod_zoom}">
-                    <Slider Name="slider" Maximum="3" Minimum="0.1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Value="1" />
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Right" Margin="5,0,0,0" Text="{Binding Value, ElementName=slider, StringFormat={}{0:#.0}}" />
+                        <Slider Name="slider" Maximum="3" Minimum="0.1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Value="1" Interval="1" />
+                    </DockPanel>
                 </GroupBox>
 
                 <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" BorderThickness="0" Name="sv" Margin="5">

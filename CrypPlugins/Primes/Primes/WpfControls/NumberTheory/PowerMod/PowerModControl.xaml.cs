@@ -182,6 +182,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             var baseControl = ActiveBaseControl;
             baseControl.Visibility = Visibility.Visible;
             baseControl.Execute += new ExecuteSingleDelegate(iscBase_Execute);
+            baseControl.KeyDown += new ExecuteSingleDelegate(iscBase_KeyDown);
             baseControl.SetText(InputSingleControl.Free, DefaultBase.ToString());
             InputValidator<PrimesBigInteger> ivBase = new InputValidator<PrimesBigInteger>();
             ivBase.Validator = new BigIntegerMinValueValidator(null, PrimesBigInteger.Two);
@@ -190,6 +191,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             var expControl = ActiveExpControl;
             expControl.Visibility = Visibility.Visible;
             expControl.Execute += new ExecuteSingleDelegate(iscExp_Execute);
+            expControl.KeyDown += new ExecuteSingleDelegate(iscExp_KeyDown);
             expControl.SetText(InputSingleControl.Free, DefaultExp.ToString());
             InputValidator<PrimesBigInteger> ivExp = new InputValidator<PrimesBigInteger>();
             ivExp.Validator = new BigIntegerMinValueValidator(null, PrimesBigInteger.One);
@@ -228,10 +230,22 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             this.Mod = PrimesBigInteger.ValueOf((long)e.NewValue);
         }
 
+        void iscExp_KeyDown(PrimesBigInteger value)
+        {
+            if (value != null)
+                this.Exp = value;
+        }
+
         void iscExp_Execute(PrimesBigInteger value)
         {
             this.Exp = value;
             StartThread();
+        }
+
+        void iscBase_KeyDown(PrimesBigInteger value)
+        {
+            if (value != null)
+                this.Base = value;
         }
 
         void iscBase_Execute(PrimesBigInteger value)
@@ -265,7 +279,14 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
         public PrimesBigInteger Base
         {
             get { return m_Base; }
-            set { m_Base = value; }
+            set
+            {
+                if (m_Base != value)
+                {
+                    m_Base = value;
+                    ResetProcessView();
+                }
+            }
         }
 
         private PrimesBigInteger m_Exp;
@@ -273,7 +294,14 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
         public PrimesBigInteger Exp
         {
             get { return m_Exp; }
-            set { m_Exp = value; }
+            set
+            {
+                if (m_Exp != value)
+                {
+                    m_Exp = value;
+                    ResetProcessView();
+                }
+            }
         }
 
         private PrimesBigInteger m_Mod;
@@ -294,8 +322,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                     {
                         iscMod.SetText(InputSingleControl.Free, m_Mod.ToString());
                     }
-                    CycleInfo1.Text = string.Empty;
-                    CycleInfo2.Text = string.Empty;
+                    ResetProcessView();
                     if (m_Initialized)
                     {
                         Reset();
@@ -745,14 +772,17 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
 
         private void ResetProcessView()
         {
-            ClearArrows();
-            m_SourceDestination.Clear();
-            ControlHandler.ExecuteMethod(this, nameof(_ClearIterationLogEntries), new object[0]);
-            ResetPointEllipseColor();
+            if (m_Initialized)
+            {
+                ClearArrows();
+                m_SourceDestination.Clear();
+                ControlHandler.ExecuteMethod(this, nameof(_ClearIterationLogEntries), new object[0]);
+                ResetPointEllipseColor();
 
-            ControlHandler.SetPropertyValue(CycleInfo1, "Text", string.Empty);
-            ControlHandler.SetPropertyValue(CycleInfo2, "Text", string.Empty);
-            ControlHandler.SetPropertyValue(Formula, "Formula", string.Empty);
+                ControlHandler.SetPropertyValue(CycleInfo1, "Text", string.Empty);
+                ControlHandler.SetPropertyValue(CycleInfo2, "Text", string.Empty);
+                ControlHandler.SetPropertyValue(Formula, "Formula", string.Empty);
+            }
         }
 
         private void DoExecuteGraphic()
