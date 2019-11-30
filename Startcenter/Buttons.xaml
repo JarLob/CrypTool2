@@ -4,17 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="500">
+             d:DesignHeight="600" d:DesignWidth="500">
     <Grid>
         <Grid.Resources>
             <Style TargetType="Button">
-                <Setter Property="Margin" Value="15,10,10,10"/>
+                <Setter Property="Margin" Value="15,7,10,10"/>
                 <Setter Property="Width" Value="50"/>
                 <Setter Property="Height" Value="50"/>
                 <Setter Property="Cursor" Value="Hand"/>
             </Style>
         </Grid.Resources>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -76,12 +77,18 @@
                 <Image Stretch="Fill" Source="/Startcenter;component/browser.png" />
             </Button.Content>
         </Button>
-        <TextBlock Grid.Column="1" Grid.Row="6" Text="{Loc Visit_the_official_CrypTool_2_0_website_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
-        <Button Grid.Column="0" Grid.Row="7" Click="FacebookButton_Click">
+        <TextBlock Grid.Column="1" Grid.Row="6" Text="{Loc Visit_official_YouTube_channel}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        <Button Grid.Column="0" Grid.Row="7" Click="YouTubeButton_Click">
+            <Button.Content>
+                <Image Stretch="Fill" Source="/Startcenter;component/youtube.png" />
+            </Button.Content>
+        </Button>
+        <TextBlock Grid.Column="1" Grid.Row="7" Text="{Loc Visit_official_YouTube_channel}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        <Button Grid.Column="0" Grid.Row="8" Click="FacebookButton_Click">
             <Button.Content>
                 <Image Stretch="Fill" Source="/Startcenter;component/facebook.png" />
             </Button.Content>
         </Button>
-        <TextBlock Grid.Column="1" Grid.Row="7" Text="{Loc Follow_us_on_Facebook_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        <TextBlock Grid.Column="1" Grid.Row="8" Text="{Loc Follow_us_on_Facebook_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
     </Grid>
 </UserControl>

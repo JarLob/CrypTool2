@@ -70,6 +70,18 @@ namespace Startcenter
             }
         }
 
+        private void YouTubeButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("https://www.youtube.com/channel/UC8_FqvQWJfZYxcSoEJ5ob-Q");
+            }
+            catch (Exception)
+            {
+                //do nothing
+            }
+        }
+
         private void FacebookButton_Click(object sender, RoutedEventArgs e)
         {
             try

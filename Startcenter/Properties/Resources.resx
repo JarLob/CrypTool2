@@ -231,4 +231,10 @@
   <data name="OpenCrypToolStore" xml:space="preserve">
     <value>Open CrypTool Store</value>
   </data>
+  <data name="Visit_official_YouTube_channel" xml:space="preserve">
+    <value>Visit the official YouTube channel of CrypTool 2 to learn more about working with CrypTool 2</value>
+  </data>
+  <data name="YoutubeVideos" xml:space="preserve">
+    <value>YouTube Videos</value>
+  </data>
 </root>

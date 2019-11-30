@@ -19,7 +19,7 @@ namespace Startcenter.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -385,6 +385,15 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Visit the official YouTube channel of CrypTool 2 to learn more about working with CrypTool 2 ähnelt.
+        /// </summary>
+        internal static string Visit_official_YouTube_channel {
+            get {
+                return ResourceManager.GetString("Visit_official_YouTube_channel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Visit the official CrypTool 2 website. ähnelt.
         /// </summary>
         internal static string Visit_the_official_CrypTool_2_0_website_ {
@@ -399,6 +408,15 @@ namespace Startcenter.Properties {
         internal static string Welcome_to_CrypTool_2_0 {
             get {
                 return ResourceManager.GetString("Welcome_to_CrypTool_2_0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die YouTube Videos ähnelt.
+        /// </summary>
+        internal static string YoutubeVideos {
+            get {
+                return ResourceManager.GetString("YoutubeVideos", resourceCulture);
             }
         }
     }

@@ -29,9 +29,9 @@
 
         <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFAEBBD4" HorizontalContentAlignment="Center" />
 
-        <Expander IsExpanded="True" Header="{Loc News}" Grid.Column="2" Grid.Row="0">
+        <Expander IsExpanded="True" Header="{Loc YoutubeVideos}" Grid.Column="2" Grid.Row="0">
             <Expander.Tag>
-                <BitmapImage UriSource="/Startcenter;component/news.png" DecodePixelWidth="25" DecodePixelHeight="25"/>
+                <BitmapImage UriSource="/Startcenter;component/youtube.png" DecodePixelWidth="25" DecodePixelHeight="25"/>
             </Expander.Tag>
             <Border>
                 <Startcenter:RSSViewer/>

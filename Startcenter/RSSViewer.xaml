@@ -66,14 +66,14 @@
                                 <TextBlock Text="{Loc Date}" FontWeight="Bold" Grid.Row="1"/>
                                 <TextBlock Text="{Binding Path=PublishingDate}" Grid.Row="1" Grid.Column="2" FontStyle="Italic" HorizontalAlignment="Left" Foreground="Red" />
                                 <Border Grid.ColumnSpan="3" Grid.Row="2" CornerRadius="5" BorderBrush="LightSeaGreen" BorderThickness="2" Background="#FFC8DCF5">
-                                    <HtmlTextBlock:HtmlTextBlock Html="{Binding Path=Message}" TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding Path=Message}" TextWrapping="Wrap"/>
                                 </Border>
                             </Grid>
                         </Label.ToolTip>
                         
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="/Startcenter;component/rssicon.png" Stretch="None" />
-                            <TextBlock Text="{Binding Path=Title}" Margin="3,0,0,0" Foreground="DarkBlue"/>
+                            <Image Source="/Startcenter;component/youtube.png" Width="16" Height="16" />
+                            <TextBlock Text="{Binding Path=Title}" Margin="3,0,0,0"  Foreground="DarkBlue"/>
                         </StackPanel>
                     </Label>
                 </DataTemplate>

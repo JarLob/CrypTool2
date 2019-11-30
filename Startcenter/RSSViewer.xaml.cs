@@ -21,10 +21,8 @@ namespace Startcenter
     public partial class RSSViewer : UserControl
     {
         private List<RssItem> _rssItems;
-        private const string RSSUrl = "https://www.cryptool.org/trac/CrypTool2/timeline?changeset=on&max=50&daysback=90&format=rss";
-        //private const string RSSUrl = "http://www.facebook.com/feeds/page.php?id=243959195696509&format=rss20";
-        //Thx to facebook... they shut down RSS... instead you should use THEIR api with json and get a session token... 
-        //thus, we reactivated obtaining the news from the svn
+        //exchanged svn logs with our YouTube channel
+        private const string RSSUrl = "https://www.youtube.com/feeds/videos.xml?channel_id=UC8_FqvQWJfZYxcSoEJ5ob-Q";
 
         public static readonly DependencyProperty IsUpdatingProperty =
             DependencyProperty.Register("IsUpdating",
@@ -82,21 +80,21 @@ namespace Startcenter
             {
                 var req = (HttpWebRequest)WebRequest.Create(rssFeedURL);
                 req.Method = "GET";
-                req.UserAgent = "CrypZilla";
-
+                req.UserAgent = "CrypTool 2/Startcenter RSS Viewer";
                 var rep = req.GetResponse();
                 var reader = XmlReader.Create(rep.GetResponseStream());
-
-                var items = from x in XDocument.Load(reader).Descendants("channel").Descendants("item") where !(String.IsNullOrEmpty(x.Descendants("title").Single().Value.Trim()) || String.IsNullOrEmpty(x.Descendants("description").Single().Value.Trim()))
-                            select new RssItem()
-                                       {
-                                           Title = WebUtility.HtmlDecode( x.Descendants("title").Single().Value.Trim() ),
-                                           Message = WebUtility.HtmlDecode( x.Descendants("description").Single().Value
-                                                                             .Replace("[", "(").Replace("]", ")")
-                                                                             .Replace('<', '[').Replace('>', ']').Trim() ),
-                                           PublishingDate = DateTime.Parse(x.Descendants("pubDate").Single().Value),
-                                           URL = x.Descendants("link").Single().Value.Trim()
-                                       };
+                var doc = XDocument.Load(reader);
+                XNamespace ns = "http://www.w3.org/2005/Atom";
+                XNamespace media_ns = "http://search.yahoo.com/mrss/";
+                var entries = doc.Root.Elements(ns + "entry");
+                var items = from entry in entries
+                    select new RssItem()
+                    {
+                        Title = entry.Element(ns + "title").Value.Trim(),
+                        Message = entry.Element(media_ns + "group").Element(media_ns + "description").Value.Trim(),
+                        PublishingDate = DateTime.Parse(entry.Element(ns + "published").Value.Trim()),
+                        URL = entry.Element(ns + "link").Attribute("href").Value.Trim()
+                    };
                 return items.ToList();
             }
             catch (Exception)
