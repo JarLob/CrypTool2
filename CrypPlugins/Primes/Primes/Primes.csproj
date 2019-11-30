@@ -208,6 +208,7 @@
     <Compile Include="WpfControls\Components\LogControl2.xaml.cs">
       <DependentUpon>LogControl2.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WpfControls\Components\ResettableTabItem.cs" />
     <Compile Include="WpfControls\NumberTheory\Goldbach\GoldbachControl.xaml.cs">
       <DependentUpon>GoldbachControl.xaml</DependentUpon>
     </Compile>

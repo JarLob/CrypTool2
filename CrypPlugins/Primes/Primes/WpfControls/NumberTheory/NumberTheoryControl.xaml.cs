@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using Primes.WpfControls.NumberTheory.PowerMod;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -33,8 +34,8 @@ namespace Primes.WpfControls.NumberTheory
 
         public void Dispose()
         {
-            power.CleanUp();
-            powerBase.CleanUp();
+            ((PowerModControl)tabItemPower.Content).CleanUp();
+            ((PowerModControl)tabItemPowerBase.Content).CleanUp();
         }
 
         public void Init()

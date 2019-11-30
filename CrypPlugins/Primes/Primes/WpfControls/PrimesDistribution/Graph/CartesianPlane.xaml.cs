@@ -24,6 +24,7 @@ using Primes.Library;
 using Primes.Library.Function;
 using Primes.WpfControls.Threads;
 using Primes.Bignum;
+using System.Threading;
 
 namespace Primes.WpfControls.PrimesDistribution.Graph
 {
@@ -303,14 +304,25 @@ namespace Primes.WpfControls.PrimesDistribution.Graph
         //  return result;
         //}
 
+        private void AddChildSafe(UIElement child)
+        {
+            if (this.Dispatcher.Thread != Thread.CurrentThread)
+            {
+                this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, ac, child);
+            }
+            else
+            {
+                ac(child);
+            }
+        }
         private void AddLine(Line l)
         {
-            this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, ac, l);
+            AddChildSafe(l);
         }
 
         private void AddLabel(TextBlock l)
         {
-            this.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, ac, l);
+            AddChildSafe(l);
         }
 
         private void AddChild(UIElement element)

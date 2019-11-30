@@ -20,16 +20,24 @@
     <DockPanel Margin="10">
         <TabControl Grid.Row="1" Name="tbctrl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="tbctrl_SelectionChanged">
             <comps:HelpTabItem x:Name="tabItemNumberline" Header="{x:Static lang:Distribution.tabitemnumberline}" HelpButtonClick="tabitem_HelpButtonClick">
-                <numberline:NumberlineControl x:Name="numberlinectrl" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                <DataTemplate>
+                    <numberline:NumberlineControl x:Name="NumberLineCtrl" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                </DataTemplate>
             </comps:HelpTabItem>
             <comps:HelpTabItem x:Name="tabItemNumbergrid" Header="{x:Static lang:Distribution.tabitemnumbergrid}" HelpButtonClick="tabitem_HelpButtonClick">
-                <numberrect:NumberRectangleControl x:Name="numberrectctrl" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                <DataTemplate>
+                    <numberrect:NumberRectangleControl x:Name="NumberRectCtrl" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                </DataTemplate>
             </comps:HelpTabItem>
             <comps:HelpTabItem x:Name="tabItemGraph" Header="{x:Static lang:Distribution.tabitemgraph}" HelpButtonClick="tabitem_HelpButtonClick">
-                <graph:GraphControl x:Name="graphcontrol" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                <DataTemplate>
+                    <graph:GraphControl x:Name="graphcontrol" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                </DataTemplate>
             </comps:HelpTabItem>
             <comps:HelpTabItem x:Name="tabItemUlam" Header="{x:Static lang:Distribution.tabitemulam}" HelpButtonClick="tabitem_HelpButtonClick">
-                <ulam:PrimesprialControl x:Name="spiralCtrl" />
+                <DataTemplate>
+                    <ulam:PrimesprialControl x:Name="spiralCtrl" />
+                </DataTemplate>
             </comps:HelpTabItem>
             <!--<comps:HelpTabItem x:Name="tabItemGoldbach" Header="{x:Static lang:Distribution.tabitemgoldbach}" HelpButtonClick="tabitem_HelpButtonClick">
                 <goldbach:GoldbachControl x:Name="goldbachCtrl" />

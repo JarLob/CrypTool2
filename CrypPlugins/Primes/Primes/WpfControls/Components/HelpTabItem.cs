@@ -19,7 +19,7 @@ using System.Windows;
 
 namespace Primes.WpfControls.Components
 {
-    public class HelpTabItem : TabItem
+    public class HelpTabItem : ResettableTabItem
     {
         static HelpTabItem()
         {

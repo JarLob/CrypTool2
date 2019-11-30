@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using Primes.WpfControls.PrimesDistribution.Numberline;
+using Primes.WpfControls.PrimesDistribution.NumberRectangle;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,6 +32,22 @@ namespace Primes.WpfControls.PrimesDistribution
             InitializeComponent();
             //numberlinectrl.Execute += new VoidDelegate(numberlinectrl_Execute);
             //numberlinectrl.Stop += new VoidDelegate(numberlinectrl_Stop);
+
+            tabItemNumberline.OnTabContentChanged += content =>
+            {
+                if (tbctrl.SelectedItem == tabItemNumberline)
+                {
+                    NumberLineCtrl.Init();
+                }
+            };
+
+            tabItemNumbergrid.OnTabContentChanged += content =>
+            {
+                if (tbctrl.SelectedItem == tabItemNumbergrid)
+                {
+                    NumberRectCtrl.Init();
+                }
+            };
         }
 
         #region IPrimeUserControl Members
@@ -40,28 +58,29 @@ namespace Primes.WpfControls.PrimesDistribution
 
         #endregion
 
-        IPrimeDistribution ActualControl
-        {
-            get
-            {
-                if (tbctrl.SelectedIndex == 0) return numberlinectrl;
-                return numberrectctrl;
-            }
-        }
+        private NumberlineControl NumberLineCtrl => (NumberlineControl) tabItemNumberline.Content;
+        private NumberRectangleControl NumberRectCtrl => (NumberRectangleControl) tabItemNumbergrid.Content;
 
         private void tbctrl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            numberlinectrl.Dispose();
-            numberrectctrl.Dispose();
+            NumberLineCtrl.Dispose();
+            NumberRectCtrl.Dispose();
 
-            ActualControl.Init();
+            if (tbctrl.SelectedItem == tabItemNumberline)
+            {
+                NumberLineCtrl.Init();
+            }
+            else if (tbctrl.SelectedItem == tabItemNumbergrid)
+            {
+                NumberRectCtrl.Init();
+            }
         }
 
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
             base.OnRenderSizeChanged(sizeInfo);
-            numberlinectrl.Width = sizeInfo.NewSize.Width;
-            numberlinectrl.Init();
+            NumberLineCtrl.Width = sizeInfo.NewSize.Width;
+            NumberLineCtrl.Init();
         }
 
         #region IPrimeUserControl Members

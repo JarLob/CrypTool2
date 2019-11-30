@@ -78,13 +78,19 @@
 
             <TabControl Grid.Row="2" Background="White" Name="tbctrl" SelectionChanged="tbctrl_SelectionChanged" Margin="10">
                 <comps:HelpTabItem Header="{x:Static lang:Factorization.fac_bruteforce}" x:Name="tabItemBruteForce" HelpButtonClick="HelpTabItem_HelpButtonClick">
-                    <this:FactorizationGraph x:Name="graph" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" />
+                    <DataTemplate>
+                        <this:FactorizationGraph x:Name="graph" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" />
+                    </DataTemplate>
                 </comps:HelpTabItem>
                 <comps:HelpTabItem Header="Rho-Methode" x:Name="tabItemRho" Visibility="Collapsed" HelpButtonClick="HelpTabItem_HelpButtonClick">
-                    <thisrho:RhoControl x:Name="rhoctrl" />
+                    <DataTemplate>
+                        <thisrho:RhoControl x:Name="rhoctrl" />
+                    </DataTemplate>
                 </comps:HelpTabItem>
                 <comps:HelpTabItem Header="{x:Static lang:Factorization.fac_qs}" x:Name="tabItemQS" HelpButtonClick="HelpTabItem_HelpButtonClick">
-                    <thisqs:QuadraticSieveControl x:Name="qsctrl" />
+                    <DataTemplate>
+                        <thisqs:QuadraticSieveControl x:Name="qsctrl" />
+                    </DataTemplate>
                 </comps:HelpTabItem>
             </TabControl>
 

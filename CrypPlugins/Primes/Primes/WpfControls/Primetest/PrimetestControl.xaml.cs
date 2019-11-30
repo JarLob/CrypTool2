@@ -20,6 +20,10 @@ using System.Windows.Controls;
 using Primes.Bignum;
 using Primes.WpfControls.Components;
 using Primes.Library;
+using Primes.WpfControls.Primetest.SieveOfEratosthenes;
+using Primes.WpfControls.Primetest.TestOfFermat;
+using Primes.WpfControls.Primetest.MillerRabin;
+using Primes.WpfControls.Primegeneration.SieveOfAtkin;
 
 namespace Primes.WpfControls.Primetest
 {
@@ -28,25 +32,50 @@ namespace Primes.WpfControls.Primetest
     /// </summary>
     public partial class PrimetestControl : UserControl, IPrimeMethodDivision
     {
+        private SieveOfEratosthenes.SieveOfEratosthenes sieveoferatosthenes;
+        private TestOfFermatControl fermat;
+        private MillerRabinControl millerrabin;
+        private SieveOfAtkinControl soa;
+
         public PrimetestControl(Navigate nav = null)
         {
             InitializeComponent();
 
-            sieveoferatosthenes.Start += new VoidDelegate(sieveoferatosthenes_Execute);
-            sieveoferatosthenes.Stop += new VoidDelegate(sieveoferatosthenes_Cancel);
-            sieveoferatosthenes.ForceGetInteger += new CallbackDelegateGetInteger(sieveoferatosthenes_ForceGetInteger);
+            tabItemSieveOfEratosthenes.OnTabContentChanged += content =>
+            {
+                iscNumber.UnLockControls();
+                sieveoferatosthenes = (SieveOfEratosthenes.SieveOfEratosthenes)((ScrollViewer)content).Content;
+                sieveoferatosthenes.Start += new VoidDelegate(sieveoferatosthenes_Execute);
+                sieveoferatosthenes.Stop += new VoidDelegate(sieveoferatosthenes_Cancel);
+                sieveoferatosthenes.ForceGetInteger += new CallbackDelegateGetInteger(sieveoferatosthenes_ForceGetInteger);
+            };
 
-            fermat.ForceGetInteger += new CallbackDelegateGetInteger(sieveoferatosthenes_ForceGetInteger);
-            fermat.ExecuteTest += new VoidDelegate(fermat_Start);
-            fermat.CancelTest += new VoidDelegate(fermat_Stop);
-            //fermat.ForceGetValue += new Primes.Library.CallBackDelegate(PrimeTestForceGetValue);
+            tabItemTestOfFermat.OnTabContentChanged += content =>
+            {
+                iscNumber.UnLockControls();
+                fermat = (TestOfFermat.TestOfFermatControl)content;
+                fermat.ForceGetInteger += new CallbackDelegateGetInteger(sieveoferatosthenes_ForceGetInteger);
+                fermat.ExecuteTest += new VoidDelegate(fermat_Start);
+                fermat.CancelTest += new VoidDelegate(fermat_Stop);
+                //fermat.ForceGetValue += new Primes.Library.CallBackDelegate(PrimeTestForceGetValue);
+            };
 
-            millerrabin.Start += new VoidDelegate(millerrabin_ExecuteTest);
-            millerrabin.Stop += new VoidDelegate(millerrabin_CancelTest);
-            millerrabin.ForceGetInteger += new CallbackDelegateGetInteger(sieveoferatosthenes_ForceGetInteger);
+            tabItemMillerRabin.OnTabContentChanged += content =>
+            {
+                iscNumber.UnLockControls();
+                millerrabin = (MillerRabin.MillerRabinControl)content;
+                millerrabin.Start += new VoidDelegate(millerrabin_ExecuteTest);
+                millerrabin.Stop += new VoidDelegate(millerrabin_CancelTest);
+                millerrabin.ForceGetInteger += new CallbackDelegateGetInteger(sieveoferatosthenes_ForceGetInteger);
+            };
 
-            soa.Start += new VoidDelegate(millerrabin_ExecuteTest);
-            soa.Stop += new VoidDelegate(millerrabin_CancelTest);
+            tabItemSoa.OnTabContentChanged += content =>
+            {
+                iscNumber.UnLockControls();
+                soa = (Primegeneration.SieveOfAtkin.SieveOfAtkinControl)content;
+                soa.Start += new VoidDelegate(millerrabin_ExecuteTest);
+                soa.Stop += new VoidDelegate(millerrabin_CancelTest);
+            };
 
             iscNumber.SetText(InputSingleControl.Free, "100");
             iscNumber.SetText(InputSingleControl.CalcFactor, "1");

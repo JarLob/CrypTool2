@@ -60,8 +60,6 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
 
         private readonly ObservableCollection<IterationLogEntry> iterationLogEntries = new ObservableCollection<IterationLogEntry>();
 
-        public ICommand Restart { get; }
-
         public PowerModControl()
         {
             InitializeComponent();
@@ -82,7 +80,6 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             m_RunningLockObject = new object();
             m_Initialized = true;
             m_StepWiseEvent = new ManualResetEvent(false);
-            Restart = new RestartCommand(this);
         }
 
         private void LogEntry_MouseMove(object sender, MouseEventArgs e)
@@ -767,7 +764,6 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             {
                 m_Running = true;
             }
-            ControlHandler.ExecuteMethod(Restart, nameof(RestartCommand.SetRunning), new object[0]);
 
             Point lastPoint = new Point(-1, -1);
             Ellipse lastEllipse = null;
@@ -1237,42 +1233,6 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                     offset += diffXp;
                     CreatePoints();
                 }
-            }
-        }
-
-        /// <summary>
-        /// Command for restarting the process.
-        /// </summary>
-        private class RestartCommand : ICommand
-        {
-            private readonly PowerModControl powerModControl;
-            private bool canExecute = false;
-
-            public RestartCommand(PowerModControl powerModControl)
-            {
-                this.powerModControl = powerModControl;
-            }
-
-            public event EventHandler CanExecuteChanged;
-
-            public bool CanExecute(object parameter) => canExecute;
-
-            public void Execute(object parameter)
-            {
-                if (powerModControl.m_Running)
-                {
-                    powerModControl.FireCancelEvent();
-                    powerModControl.CancelThread();
-                }
-                powerModControl.ResetProcessView();
-                canExecute = false;
-                CanExecuteChanged?.Invoke(this, new EventArgs());
-            }
-
-            public void SetRunning()
-            {
-                canExecute = true;
-                CanExecuteChanged?.Invoke(this, new EventArgs());
             }
         }
     }

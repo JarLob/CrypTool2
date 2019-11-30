@@ -288,7 +288,7 @@
                         </Grid.RowDefinitions>
                         <DockPanel>
                             <Button DockPanel.Dock="Right" 
-                                    Command="{Binding SelectedItem.Content.Restart, RelativeSource={RelativeSource AncestorType=TabControl}}" 
+                                    Command="{Binding SelectedItem.Reset, RelativeSource={RelativeSource AncestorType=TabControl}}" 
                                     BorderThickness="1" BorderBrush="LightGray" Margin="3"
                                     Width="{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}}"
                                     Background="Transparent"

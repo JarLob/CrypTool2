@@ -27,6 +27,7 @@ using Primes.WpfControls.Validation.Validator;
 using Primes.Bignum;
 using Primes.WpfControls.Components;
 using Primes.Library;
+using Primes.WpfControls.Factorization.QS;
 
 namespace Primes.WpfControls.Factorization
 {
@@ -78,26 +79,37 @@ namespace Primes.WpfControls.Factorization
             BF.CalcExpText = "2";
             BF.CalcSumText = "7";
 
-            _bruteforce = graph;
-            _bruteforce.Start += OnFactorizationStart;
-            _bruteforce.Stop += OnFactorizationStop_BF;
-            _bruteforce.FoundFactor += OnFoundFactor;
-            _bruteforce.Cancel += new VoidDelegate(_bruteforce_Cancel);
+            tabItemBruteForce.OnTabContentChanged += content =>
+            {
+                OnFactorizationStop_BF();
+                _bruteforce = (IFactorizer) content;
+                _bruteforce.Start += OnFactorizationStart;
+                _bruteforce.Stop += OnFactorizationStop_BF;
+                _bruteforce.FoundFactor += OnFoundFactor;
+                _bruteforce.Cancel += new VoidDelegate(_bruteforce_Cancel);
+                _bruteforce.ForceGetInteger += new CallbackDelegateGetInteger(_rho_ForceGetValue);
+            };
 
-            _rho = rhoctrl;
-            _rho.Start += OnFactorizationStart;
-            _rho.Stop += OnFactorizationStop;
-            _rho.FoundFactor += OnFoundFactor;
-            _rho.Cancel += new VoidDelegate(_rho_Cancel);
+            tabItemRho.OnTabContentChanged += content =>
+            {
+                OnFactorizationStop();
+                _rho = (IFactorizer) content;
+                _rho.Start += OnFactorizationStart;
+                _rho.Stop += OnFactorizationStop;
+                _rho.FoundFactor += OnFoundFactor;
+                _rho.Cancel += new VoidDelegate(_rho_Cancel);
+                _rho.ForceGetInteger += new CallbackDelegateGetInteger(_rho_ForceGetValue);
+            };
 
-            _qs = qsctrl;
-            _qs.Start += OnFactorizationStart;
-            _qs.Stop += OnFactorizationStop_QS;
-            _qs.FoundFactor += OnFoundFactor;
-            _qs.Cancel += new VoidDelegate(_qs_Cancel);
-
-            _rho.ForceGetInteger += new CallbackDelegateGetInteger(_rho_ForceGetValue);
-            _bruteforce.ForceGetInteger += new CallbackDelegateGetInteger(_rho_ForceGetValue);
+            tabItemQS.OnTabContentChanged += content =>
+            {
+                OnFactorizationStop_QS();
+                _qs = (IFactorizer) content;
+                _qs.Start += OnFactorizationStart;
+                _qs.Stop += OnFactorizationStop_QS;
+                _qs.FoundFactor += OnFoundFactor;
+                _qs.Cancel += new VoidDelegate(_qs_Cancel);
+            };
 
             inputnumbermanager.Execute += new ExecuteSingleDelegate(InputSingleNumberControl_Execute);
             inputnumbermanager.Cancel += new VoidDelegate(InputSingleNumberControl_Cancel);
@@ -239,17 +251,17 @@ namespace Primes.WpfControls.Factorization
 
         public void Dispose()
         {
-            if (_bruteforce.isRunning)
+            if (_bruteforce?.isRunning ?? false)
             {
                 _bruteforce.CancelExecute();
                 _bruteforce.CancelFactorization();
             }
-            if (_rho.isRunning)
+            if (_rho?.isRunning ?? false)
             {
                 _rho.CancelExecute();
                 _rho.CancelFactorization();
             }
-            if (_qs.isRunning)
+            if (_qs?.isRunning ?? false)
             {
                 _qs.CancelExecute();
                 _qs.CancelFactorization();
@@ -504,7 +516,7 @@ namespace Primes.WpfControls.Factorization
                     break;
                 case KOF.QS:
                     inputnumbermanager.SetValueValidator(InputSingleControl.Value, _qs.Validator);
-                    inputnumbermanager.generateNumberControlVertFree.MaxValue = qsctrl.MaxValue;
+                    inputnumbermanager.generateNumberControlVertFree.MaxValue = (_qs as QuadraticSieveControl).MaxValue;
                     break;
             }
 

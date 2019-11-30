@@ -19,19 +19,29 @@
     <Grid Margin="10">
         <TabControl Name="tbctrl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <comps:HelpTabItem Header="{x:Static lang:Numbertheory.tabitemheader_power}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="tabItemPower" HelpButtonClick="TabItem_HelpButtonClick">
-                <power:PowerModControl x:Name="power" />
+                <DataTemplate>
+                    <power:PowerModControl x:Name="power" />
+                </DataTemplate>
             </comps:HelpTabItem>
             <comps:HelpTabItem Header="{x:Static lang:Numbertheory.tabitemheader_powerBase}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="tabItemPowerBase" HelpButtonClick="TabItem_HelpButtonClick">
-                <power:PowerBaseModControl x:Name="powerBase" />
+                <DataTemplate>
+                    <power:PowerBaseModControl x:Name="powerBase" />
+                </DataTemplate>
             </comps:HelpTabItem>
             <comps:HelpTabItem Header="{x:Static lang:Numbertheory.tabitemheader_ntfunctions}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="tabItemNTFunctions" HelpButtonClick="TabItem_HelpButtonClick">
-                <ntfunctions:NumberTheoryFunctionsControl x:Name="ntfunctions" />
+                <DataTemplate>
+                    <ntfunctions:NumberTheoryFunctionsControl x:Name="ntfunctions" />
+                </DataTemplate>
             </comps:HelpTabItem>
             <comps:HelpTabItem Header="{x:Static lang:Numbertheory.tabitemheader_proots}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="tabItemPRoots" HelpButtonClick="TabItem_HelpButtonClick">
-                <proots:PrimitivRootControl x:Name="proots" />
+                <DataTemplate>
+                    <proots:PrimitivRootControl x:Name="proots" />
+                </DataTemplate>
             </comps:HelpTabItem>
             <comps:HelpTabItem  Header="{x:Static lang:Numbertheory.tabitemheader_goldbach}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="tabItemGoldbach" HelpButtonClick="TabItem_HelpButtonClick">
-                <goldbach:GoldbachControl x:Name="goldbachCtrl" />
+                <DataTemplate>
+                    <goldbach:GoldbachControl x:Name="goldbachCtrl" />
+                </DataTemplate>
             </comps:HelpTabItem>
         </TabControl>
     </Grid>
