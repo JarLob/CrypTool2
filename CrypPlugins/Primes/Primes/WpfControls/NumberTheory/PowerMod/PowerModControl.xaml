@@ -99,8 +99,8 @@
 
                 <GroupBox HorizontalAlignment="Stretch" DockPanel.Dock="Bottom" Name="spslider" Margin="10" Header="{x:Static lang:Numbertheory.powermod_zoom}">
                     <DockPanel>
-                        <TextBlock DockPanel.Dock="Right" Margin="5,0,0,0" Text="{Binding Value, ElementName=slider, StringFormat={}{0:#.0}}" />
-                        <Slider Name="slider" Maximum="3" Minimum="0.1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Value="1" Interval="1" />
+                        <TextBlock DockPanel.Dock="Right" Margin="5,0,0,0" Text="{Binding Value, ElementName=slider, StringFormat={}{0:0.00}}" />
+                        <Slider Name="slider" Maximum="3" Minimum="0.1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Value="1" Interval="1" LargeChange="0.3" />
                     </DockPanel>
                 </GroupBox>
 
