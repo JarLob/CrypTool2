@@ -43,19 +43,7 @@
                             </Border>
                         </Border>
                     </Border>
-                    
-                    
-                    <!--<Border x:Name="Border" BorderThickness="1" CornerRadius="1" TextBlock.Foreground="Black" Padding="5" HorizontalAlignment="Stretch" Background="{StaticResource SelectedBackgroundBrush}" BorderBrush="Gray" Margin="0,0,0,0">
-                        <DockPanel Name="dp">
-                            <TextBlock Text="{TemplateBinding Header}" Margin="0,0,10,0" />
-                            <Image Cursor="Hand" Source="../../Resources/icons/help.png" Width="16" Height="16" HorizontalAlignment="Left" x:Name="PART_Close" />
-                        </DockPanel>
-                    </Border>-->
                     <ControlTemplate.Triggers>
-                        <!--<Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource HorizontalLightBrush}" />
-                        </Trigger>-->
-
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Panel.ZIndex" Value="100" />
                             <Setter TargetName="Border2" Property="BorderThickness" Value="1.5,1.5,1.5,0" />

@@ -20,11 +20,11 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" Name="cdStep1" />
-                    <RowDefinition Height="1.5" />
+                    <RowDefinition Height="3" />
                     <RowDefinition Height="Auto" Name="cdStep2" />
-                    <RowDefinition Height="1.5" />
+                    <RowDefinition Height="3" />
                     <RowDefinition Height="Auto" Name="cdStep3" />
-                    <RowDefinition Height="1.5" />
+                    <RowDefinition Height="3" />
                     <RowDefinition Height="Auto" Name="cdStep4" />
                 </Grid.RowDefinitions>
 

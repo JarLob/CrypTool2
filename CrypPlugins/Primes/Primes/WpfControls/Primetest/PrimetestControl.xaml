@@ -48,7 +48,7 @@
                 </GroupBox>
             </Grid>
 
-            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="2" HorizontalContentAlignment="Center" Margin="0,0,0,0" ResizeBehavior="PreviousAndNext" />
+            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="3" HorizontalContentAlignment="Center" Margin="0,0,0,0" ResizeBehavior="PreviousAndNext" />
 
             <TabControl Grid.Row="2" Name="tbctrl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="tbctrl_SelectionChanged" Margin="10">
                 <comps:HelpTabItem Header="{x:Static lang:Primetest.test_soe}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="tabItemSieveOfEratosthenes" HelpButtonClick="TabItem_HelpButtonClick">
