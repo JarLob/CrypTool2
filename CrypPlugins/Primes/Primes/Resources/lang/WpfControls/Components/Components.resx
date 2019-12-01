@@ -159,4 +159,7 @@
   <data name="generaternd_prime" xml:space="preserve">
     <value>A random prime number</value>
   </data>
+  <data name="reset_tab" xml:space="preserve">
+    <value>Reset tab</value>
+  </data>
 </root>
