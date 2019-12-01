@@ -5,15 +5,14 @@
     xmlns:lang="clr-namespace:Primes.Resources.lang.Options"
     Title="Optionen" WindowStyle="ToolWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Width="550" Height="235" Icon="../Resources/icons/application_edit.png">
 
-    <Window.Resources>
-        <ResourceDictionary x:Uid="ResourceDictionary_1">
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary x:Uid="ResourceDictionary_2" Source="Resources/Shared.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-
     <StackPanel x:Uid="StackPanel_1">
+        <StackPanel.Resources>
+            <ResourceDictionary x:Uid="ResourceDictionary_1">
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary x:Uid="ResourceDictionary_2" Source="Resources/Shared.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </StackPanel.Resources>
         <Grid Height="170">
             <loc:OptionsUserControl x:Uid="options" x:Name="options" />
         </Grid>

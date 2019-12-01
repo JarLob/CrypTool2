@@ -33,6 +33,7 @@ namespace Primes.Library
         Numberline,
         PrimitivRoot,
         PowerMod,
+        PowerBaseMod,
         NumberTheoryFunctions,
         PrimeDistrib_Numberline,
         PrimeDistrib_Numberrec,

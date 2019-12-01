@@ -13,7 +13,7 @@
 
     </UserControl.Resources>
 
-    <GroupBox Name="gbTitle" Header="" BorderBrush="Transparent" Margin="7">
+    <GroupBox Name="gbTitle" Header="" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" Margin="7">
         <StackPanel Name="pnlParent" >
             <StackPanel Name="pnlHorizontal">
 

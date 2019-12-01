@@ -154,7 +154,13 @@
     <value>Zahlentheorie</value>
   </data>
   <data name="powermod" xml:space="preserve">
-    <value>Potenzieren</value>
+    <value>Potenzieren (laufender Exponent)</value>
+  </data>
+  <data name="powerbasemod" xml:space="preserve">
+    <value>Potenzieren (laufende Basis)(RSA)</value>
+  </data>
+  <data name="content" xml:space="preserve">
+    <value>Inhalt</value>
   </data>
   <data name="primetest" xml:space="preserve">
     <value>Primzahltests</value>

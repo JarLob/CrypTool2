@@ -19,7 +19,7 @@ namespace Primes.Resources.lang.Navigation {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Navigation {
@@ -66,6 +66,15 @@ namespace Primes.Resources.lang.Navigation {
         public static string bruteforce {
             get {
                 return ResourceManager.GetString("bruteforce", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Content ähnelt.
+        /// </summary>
+        public static string content {
+            get {
+                return ResourceManager.GetString("content", resourceCulture);
             }
         }
         
@@ -169,7 +178,16 @@ namespace Primes.Resources.lang.Navigation {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Powering ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Powering (iterating base)(RSA) ähnelt.
+        /// </summary>
+        public static string powerbasemod {
+            get {
+                return ResourceManager.GetString("powerbasemod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Powering (iterating exponent) ähnelt.
         /// </summary>
         public static string powermod {
             get {

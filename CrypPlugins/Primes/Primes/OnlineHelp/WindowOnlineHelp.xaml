@@ -6,15 +6,14 @@
         Title="{x:Static lang:Onlinehelp.helptitle}" Height="400" Width="600"
         WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen">
 
-    <Window.Resources>
-        <ResourceDictionary x:Uid="ResourceDictionary_1">
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary x:Uid="ResourceDictionary_2" Source="../WpfResources/Primes.WpfResources.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-
     <Grid x:Uid="Grid_1">
+        <Grid.Resources>
+            <ResourceDictionary x:Uid="ResourceDictionary_1">
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary x:Uid="ResourceDictionary_2" Source="../WpfResources/Primes.WpfResources.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Grid.Resources>
 
         <Grid.RowDefinitions>
             <RowDefinition x:Uid="RowDefinition_1" Height="60" />

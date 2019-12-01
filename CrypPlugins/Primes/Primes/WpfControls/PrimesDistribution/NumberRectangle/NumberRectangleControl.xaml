@@ -133,7 +133,7 @@
             <TextBlock Margin="0,0,5,0" Name="lblActualNumberInfo" Text="{x:Static lang:Distribution.numbergrid_actualnumber}"></TextBlock>
             <TextBlock Name="lblActualNumber" />
         </DockPanel>
-        <Border BorderBrush="Black" BorderThickness="0.5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="1">
+        <Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="1">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Name="sv" Margin="5">
                 <Viewbox Grid.Row="0" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
                     <Viewbox.LayoutTransform>

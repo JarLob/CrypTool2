@@ -16,7 +16,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="Transparent">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" Name="cdStep1" />
@@ -51,7 +51,7 @@
                     </Expander>
                 </StackPanel>
 
-                <GridSplitter Grid.Row="1" Background="{StaticResource PressedBorderBrush}" HorizontalAlignment="Stretch" />
+                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" />
 
                 <StackPanel Grid.Row="2">
                     <Expander Name="expSecond" Header="{x:Static lang:Factorization.qs_step2}" IsExpanded="True" MouseLeftButtonDown="exp_MouseLeftButtonDown">
@@ -75,7 +75,7 @@
                     </Expander>
                 </StackPanel>
 
-                <GridSplitter Grid.Row="3" Background="Gray" HorizontalAlignment="Stretch" />
+                <GridSplitter Grid.Row="3" HorizontalAlignment="Stretch" />
 
                 <StackPanel Grid.Row="4">
                     <Expander Name="expThird" Header="{x:Static lang:Factorization.qs_step3}" IsExpanded="True" MouseLeftButtonDown="exp_MouseLeftButtonDown">
@@ -96,7 +96,7 @@
                     </Expander>
                 </StackPanel>
 
-                <GridSplitter Grid.Row="5" Background="Gray" HorizontalAlignment="Stretch" />
+                <GridSplitter Grid.Row="5" HorizontalAlignment="Stretch" />
 
                 <StackPanel Grid.Row="6">
                     <Expander Name="expFourth" Header="{x:Static lang:Factorization.qs_step4}" IsExpanded="True" MouseLeftButtonDown="exp_MouseLeftButtonDown">

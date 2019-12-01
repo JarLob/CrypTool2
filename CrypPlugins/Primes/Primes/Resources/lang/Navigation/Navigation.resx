@@ -154,7 +154,13 @@
     <value>Number theory</value>
   </data>
   <data name="powermod" xml:space="preserve">
-    <value>Powering</value>
+    <value>Powering (iterating exponent)</value>
+  </data>
+  <data name="powerbasemod" xml:space="preserve">
+    <value>Powering (iterating base)(RSA)</value>
+  </data>
+  <data name="content" xml:space="preserve">
+    <value>Content</value>
   </data>
   <data name="primetest" xml:space="preserve">
     <value>Primality test</value>

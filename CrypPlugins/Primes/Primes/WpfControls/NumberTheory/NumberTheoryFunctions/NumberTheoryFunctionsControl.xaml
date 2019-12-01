@@ -58,7 +58,7 @@
             </GroupBox>
         </Grid>
 
-        <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="2" Background="#000000" HorizontalContentAlignment="Center" Margin="0" ResizeBehavior="PreviousAndNext" />
+        <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="2" HorizontalContentAlignment="Center" Margin="0" ResizeBehavior="PreviousAndNext" />
 
         <DockPanel Name="spGrid" Grid.Row="2" Background="AntiqueWhite" Margin="5">
             <WindowsFormsHost Name="DataGridViewHost">

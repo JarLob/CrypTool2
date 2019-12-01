@@ -66,7 +66,7 @@
       </Button>
     </Grid>
 -->
-        <Border BorderBrush="Black" BorderThickness="1" Name="border" Grid.Column="1">
+        <Border Name="border" Grid.Column="1">
             <Grid Name="numbergrid" MouseWheel="numbergrid_MouseWheel">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.1*" />

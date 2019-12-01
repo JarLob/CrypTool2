@@ -72,14 +72,6 @@ namespace Primes.WpfControls.Components
                 if (gbHeader != null)
                 {
                     gbHeader.Header = value;
-                    if (string.IsNullOrEmpty(value.ToString()))
-                    {
-                        this.gbHeader.BorderThickness = new Thickness(0.0, 0.0, 0.0, 0.0);
-                    }
-                    else
-                    {
-                        this.gbHeader.BorderThickness = new Thickness(0.1, 0.1, 0.1, 0.1);
-                    }
                 }
             }
         }

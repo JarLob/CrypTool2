@@ -5,7 +5,7 @@
     xmlns:lang="clr-namespace:Primes.Resources.lang.Numbertheory"
     xmlns:lang2="clr-namespace:Primes.Resources.lang.WpfControls.Components"
     xmlns:this="clr-namespace:Primes.WpfControls.NumberTheory.PowerMod"
-             xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath">
+    xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -19,7 +19,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Name="test">
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -68,7 +68,7 @@
                     <TextBlock Grid.Column="3" Grid.Row="0" Visibility="{Binding Visibility, ElementName=iscExp}" Style="{StaticResource DescriptionTextStyle}" Text="N" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5" />
 
                     <TextBlock Grid.Row="1" Grid.Column="3" Text="{x:Static lang:Numbertheory.powermod_points}" VerticalAlignment="Center" Margin="5" />
-                    <DockPanel Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2">
+                    <DockPanel Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" VerticalAlignment="Center">
                         <RadioButton Name="rbOne" Margin="5" Command="this:PowerModCommands.ReOrderPointsCommand" Content="{x:Static lang:Numbertheory.powermod_cw}" IsChecked="True" />
                         <RadioButton Name="rbTwo" Margin="5" Command="this:PowerModCommands.ReOrderPointsCommand" Content="{x:Static lang:Numbertheory.powermod_ccw}" />
                     </DockPanel>
@@ -141,7 +141,7 @@
                         <ItemsControl x:Name="iterationLog">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border BorderThickness="0,1,0,1" BorderBrush="WhiteSmoke">
+                                    <Border BorderThickness="0,1,0,0" CornerRadius="0" BorderBrush="{StaticResource CTBorderBrush}">
                                         <Label MouseMove="LogEntry_MouseMove">
                                             <Label.Style>
                                                 <Style TargetType="Label">

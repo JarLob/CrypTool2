@@ -100,6 +100,7 @@ namespace Primes.WpfVisualization.Navigation
                 else if (sender == lnkSieveOfAtkin) commandtype = NavigationCommandType.SieveOfAtkin;
                 else if (sender == lnkDistribGoldbach) commandtype = NavigationCommandType.PrimeDistrib_Goldbach;
                 else if (sender == lnkPowMod) commandtype = NavigationCommandType.PowerMod;
+                else if (sender == lnkPowBaseMod) commandtype = NavigationCommandType.PowerBaseMod;
 
                 OnNavigate(commandtype);
             }

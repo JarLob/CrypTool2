@@ -74,9 +74,9 @@
                 </GroupBox>
             </Grid>
 
-            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="2" Background="#000000" HorizontalContentAlignment="Center" Margin="0,0,0,0" ResizeBehavior="PreviousAndNext" />
+            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="2" HorizontalContentAlignment="Center" Margin="0,0,0,0" ResizeBehavior="PreviousAndNext" />
 
-            <TabControl Grid.Row="2" Background="White" Name="tbctrl" SelectionChanged="tbctrl_SelectionChanged" Margin="10">
+            <TabControl Grid.Row="2" Name="tbctrl" SelectionChanged="tbctrl_SelectionChanged" Margin="10">
                 <comps:HelpTabItem Header="{x:Static lang:Factorization.fac_bruteforce}" x:Name="tabItemBruteForce" HelpButtonClick="HelpTabItem_HelpButtonClick">
                     <DataTemplate>
                         <this:FactorizationGraph x:Name="graph" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" />
