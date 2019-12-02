@@ -105,7 +105,7 @@
                 <Border Grid.Column="0" BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FF479308">
                     <Label Content="{Loc AnyRoundAttackRoundResults}" FontSize="12" HorizontalAlignment="Center" Foreground="White" />
                 </Border>
-                <DataGrid Grid.Row="0" Grid.Column="1" Background="#AFE2FFCE"  CanUserAddRows="false" AutoGenerateColumns="False" Margin="0,0,0,0" ItemsSource="{Binding KeyResults, Mode=OneWay}">
+                <DataGrid x:Name="Cipher2AnyRoundResultDatagrid" SelectionMode="Single" Grid.Row="0" Grid.Column="1" Background="#AFE2FFCE"  CanUserAddRows="false" AutoGenerateColumns="False" Margin="0,0,0,0" ItemsSource="{Binding KeyResults, Mode=OneWay}">
                     <DataGrid.Columns >
                         <DataGridTextColumn Binding="{Binding Path=BinaryKey, Mode=OneWay}" Width="3*" Header="{Loc AnyRoundAttackDataColHeader1}" MinWidth="25" IsReadOnly="True">
                             <DataGridTextColumn.ElementStyle>

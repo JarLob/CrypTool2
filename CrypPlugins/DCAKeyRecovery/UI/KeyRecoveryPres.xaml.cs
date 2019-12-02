@@ -273,19 +273,41 @@ namespace DCAKeyRecovery.UI
             switch (TutorialNumber)
             {
                 case Algorithms.Cipher2:
-                    Cipher2AnyRoundResultView v2 = _tableView as Cipher2AnyRoundResultView;
-                    if (v2 != null)
+                    try
                     {
-                        v2.KeyResults.Clear();
+                        Cipher2AnyRoundResultView v2 = _tableView as Cipher2AnyRoundResultView;
+                        if (v2 != null)
+                        {
+                            if (v2.KeyResults != null)
+                            {
+                                v2.Cipher2AnyRoundResultDatagrid.SelectedItem = null;
+                                v2.KeyResults.Clear();
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
                     }
 
                     break;
 
                 case Algorithms.Cipher3:
-                    Cipher3AnyRoundResultView v3 = _tableView as Cipher3AnyRoundResultView;
-                    if (v3 != null)
+                    try
                     {
-                        v3.KeyResults.Clear();
+                        Cipher3AnyRoundResultView v3 = _tableView as Cipher3AnyRoundResultView;
+                        if (v3 != null)
+                        {
+                            if (v3.KeyResults != null)
+                            {
+                                v3.Cipher3AnyRoundResultDatagrid.SelectedItem = null;
+                                v3.KeyResults.Clear();
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
                     }
 
                     break;
@@ -857,9 +879,13 @@ namespace DCAKeyRecovery.UI
         /// <param name="e"></param>
         private void TabControl_ItemChanged(object sender, SelectionChangedEventArgs e)
         {
-            TabItem selectedTab = e.AddedItems[0] as TabItem;
-
-
+            if (e.AddedItems != null)
+            {
+                if (e.AddedItems.Count != 0 )
+                {
+                    TabItem selectedTab = e.AddedItems[0] as TabItem;
+                }
+            }
             e.Handled = true;
         }
 

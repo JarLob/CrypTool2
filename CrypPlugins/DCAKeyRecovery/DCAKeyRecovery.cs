@@ -483,7 +483,17 @@ namespace Cryptool.Plugins.DCAKeyRecovery
 
                             //clear last round results
                             _pres.Dispatcher.Invoke(DispatcherPriority.Send,
-                                (SendOrPostCallback) delegate { _pres.clearLastKeyResults(); }, null);
+                                (SendOrPostCallback) delegate
+                                {
+                                    try
+                                    {
+                                        _pres.clearLastKeyResults();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.WriteLine(ex.Message);
+                                    }
+                                }, null);
                         }
 
                         _nextStep.Set();
@@ -548,7 +558,17 @@ namespace Cryptool.Plugins.DCAKeyRecovery
 
                             //clear last round results
                             _pres.Dispatcher.Invoke(DispatcherPriority.Send,
-                                (SendOrPostCallback) delegate { _pres.clearLastKeyResults(); }, null);
+                                (SendOrPostCallback) delegate
+                                {
+                                    try
+                                    {
+                                        _pres.clearLastKeyResults();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.WriteLine(ex.Message);
+                                    }
+                                }, null);
                         }
 
                         _nextStep.Set();
