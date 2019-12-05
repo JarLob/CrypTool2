@@ -12,7 +12,14 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Resources/Shared.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style TargetType="TextBlock" x:Key="DescriptionTextStyle">
+            <Style TargetType="TextBox" x:Key="LabelTextBox">
+                <!--Style a TextBox as a text label to make it selectable-->
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="IsReadOnly" Value="True" />
+                <Setter Property="TextWrapping" Value="Wrap" />
+            </Style>
+            <Style TargetType="TextBox" BasedOn="{StaticResource LabelTextBox}" x:Key="DescriptionTextStyle">
                 <Setter Property="Foreground" Value="OrangeRed" />
                 <Setter Property="FontWeight" Value="Bold" />
             </Style>
@@ -28,8 +35,8 @@
         <GroupBox Grid.Row="0" Margin="7" 	Header="{x:Static lang:Numbertheory.powermod_inputgroupbox}">
             <StackPanel>
                 <DockPanel HorizontalAlignment="Left">
-                    <TextBlock Text="{x:Static lang:Numbertheory.powermod_rsa_description}" Style="{StaticResource DescriptionTextStyle}" Visibility="{Binding Visibility, ElementName=iscExp}" VerticalAlignment="Center" />
-                    <TextBlock Text="{x:Static lang:Numbertheory.powermod_cycle_length_description}" Style="{StaticResource DescriptionTextStyle}" Visibility="{Binding Visibility, ElementName=iscBase}" VerticalAlignment="Center" />
+                    <TextBox Text="{x:Static lang:Numbertheory.powermod_rsa_description}" Style="{StaticResource DescriptionTextStyle}" Visibility="{Binding Visibility, ElementName=iscExp}" VerticalAlignment="Center" />
+                    <TextBox Text="{x:Static lang:Numbertheory.powermod_cycle_length_description}" Style="{StaticResource DescriptionTextStyle}" Visibility="{Binding Visibility, ElementName=iscBase}" VerticalAlignment="Center" />
                 </DockPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -46,28 +53,28 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Visibility="{Binding Visibility, ElementName=iscBase}" Text="{x:Static lang:Numbertheory.powermod_base}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="5" />
-                    <TextBlock Grid.Column="0" Grid.Row="0" Visibility="{Binding Visibility, ElementName=iscBase}" Style="{StaticResource DescriptionTextStyle}" Text="b" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5" />
+                    <TextBox Style="{StaticResource LabelTextBox}" Visibility="{Binding Visibility, ElementName=iscBase}" Text="{x:Static lang:Numbertheory.powermod_base}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="5" />
+                    <TextBox Grid.Column="0" Grid.Row="0" Visibility="{Binding Visibility, ElementName=iscBase}" Style="{StaticResource DescriptionTextStyle}" Text="b" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5" />
                     <comps:InputSingleControl x:Name="iscBase" Visibility="Collapsed" InputRangeControlType="Horizontal" ShowCalcInput="False" ShowButtons="False" Grid.Column="1" Grid.Row="0" Margin="5" />
-                    <TextBlock Visibility="{Binding Visibility, ElementName=iscMaxExp}" Text="{x:Static lang:Numbertheory.powermod_max_exponent}" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="5" />
+                    <TextBox Style="{StaticResource LabelTextBox}" Visibility="{Binding Visibility, ElementName=iscMaxExp}" Text="{x:Static lang:Numbertheory.powermod_max_exponent}" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="5" />
                     <comps:InputSingleControl x:Name="iscMaxExp" Visibility="Collapsed" InputRangeControlType="Horizontal" ShowCalcInput="False" ShowButtons="False" Grid.Column="1" Grid.Row="1" Margin="5" />
 
-                    <TextBlock Visibility="{Binding Visibility, ElementName=iscExp}" Text="{x:Static lang:Numbertheory.powermod_exponent}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="5" />
-                    <TextBlock Visibility="{Binding Visibility, ElementName=iscExp}" Style="{StaticResource DescriptionTextStyle}" Text="e" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5" />
+                    <TextBox Style="{StaticResource LabelTextBox}" Visibility="{Binding Visibility, ElementName=iscExp}" Text="{x:Static lang:Numbertheory.powermod_exponent}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="5" />
+                    <TextBox Visibility="{Binding Visibility, ElementName=iscExp}" Style="{StaticResource DescriptionTextStyle}" Text="e" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5" />
                     <comps:InputSingleControl x:Name="iscExp" Visibility="Collapsed" InputRangeControlType="Horizontal" ShowCalcInput="False" ShowButtons="False" Grid.Column="1" Grid.Row="0" Margin="5" />
-                    <TextBlock Visibility="{Binding Visibility, ElementName=iscMaxBase}" Text="{x:Static lang:Numbertheory.powermod_max_base}" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="5" />
+                    <TextBox Style="{StaticResource LabelTextBox}" Visibility="{Binding Visibility, ElementName=iscMaxBase}" Text="{x:Static lang:Numbertheory.powermod_max_base}" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="5" />
                     <comps:InputSingleControl x:Name="iscMaxBase" Visibility="Collapsed" InputRangeControlType="Horizontal" ShowCalcInput="False" ShowButtons="False" Grid.Column="1" Grid.Row="1" Margin="5" />
 
-                    <TextBlock x:Name="CycleInfo1" Style="{StaticResource DescriptionTextStyle}" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" />
-                    <TextBlock x:Name="CycleInfo2" Style="{StaticResource DescriptionTextStyle}" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" />
+                    <TextBox x:Name="CycleInfo1" Style="{StaticResource DescriptionTextStyle}" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" />
+                    <TextBox x:Name="CycleInfo2" Style="{StaticResource DescriptionTextStyle}" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" />
 
-                    <TextBlock Text="{x:Static lang:Numbertheory.powermod_modulus}" Grid.Column="3" Grid.Row="0" VerticalAlignment="Center" Margin="5" />
-                    <TextBlock Grid.Column="3" Grid.Row="0" Visibility="{Binding Visibility, ElementName=iscBase}" Style="{StaticResource DescriptionTextStyle}" Text="N" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5" />
+                    <TextBox Style="{StaticResource LabelTextBox}" Text="{x:Static lang:Numbertheory.powermod_modulus}" Grid.Column="3" Grid.Row="0" VerticalAlignment="Center" Margin="5" />
+                    <TextBox Grid.Column="3" Grid.Row="0" Visibility="{Binding Visibility, ElementName=iscBase}" Style="{StaticResource DescriptionTextStyle}" Text="N" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5" />
                     <comps:InputSingleControl x:Name="iscMod" InputRangeControlType="Horizontal" ShowCalcInput="False" ShowButtons="False" Grid.Column="4" Grid.Row="0" Margin="5" />
                     <Slider Name="slidermodulus" Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" Minimum="2" Maximum="150" Value="2" ValueChanged="slidermodulus_ValueChanged" Margin="5" />
-                    <TextBlock Grid.Column="3" Grid.Row="0" Visibility="{Binding Visibility, ElementName=iscExp}" Style="{StaticResource DescriptionTextStyle}" Text="N" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5" />
+                    <TextBox Grid.Column="3" Grid.Row="0" Visibility="{Binding Visibility, ElementName=iscExp}" Style="{StaticResource DescriptionTextStyle}" Text="N" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="3" Text="{x:Static lang:Numbertheory.powermod_points}" VerticalAlignment="Center" Margin="5" />
+                    <TextBox Style="{StaticResource LabelTextBox}" Grid.Row="1" Grid.Column="3" Text="{x:Static lang:Numbertheory.powermod_points}" VerticalAlignment="Center" Margin="5" />
                     <DockPanel Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" VerticalAlignment="Center">
                         <RadioButton Name="rbOne" Margin="5" Command="this:PowerModCommands.ReOrderPointsCommand" Content="{x:Static lang:Numbertheory.powermod_cw}" IsChecked="True" />
                         <RadioButton Name="rbTwo" Margin="5" Command="this:PowerModCommands.ReOrderPointsCommand" Content="{x:Static lang:Numbertheory.powermod_ccw}" />

@@ -295,7 +295,7 @@ namespace Primes.Resources.lang.Numbertheory {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The maximum cycle length is phi(N). It can be reached for the multiplicative group Z*_N, e.g. with N=11, phi(N)=10. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The maximum cycle length is phi(N). It can be reached for the multiplicative group Z*_N, e.g. with N=11 and b=2 or b=6: phi(N)=10. ähnelt.
         /// </summary>
         public static string powermod_cycle_length_description {
             get {
@@ -331,7 +331,7 @@ namespace Primes.Resources.lang.Numbertheory {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Max. Base ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Max. base ähnelt.
         /// </summary>
         public static string powermod_max_base {
             get {
@@ -340,7 +340,7 @@ namespace Primes.Resources.lang.Numbertheory {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Max. Exponent ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Max. exponent ähnelt.
         /// </summary>
         public static string powermod_max_exponent {
             get {

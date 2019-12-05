@@ -220,7 +220,7 @@
     <value>Typische Parameter für RSA: (N, e) = (33, 3), (55, 7), (143, 23)</value>
   </data>
   <data name="powermod_cycle_length_description" xml:space="preserve">
-    <value>Die maximale Zykluslänge ist phi(N). Sie kann für die multiplikative Gruppe Z*_N erreicht werden, z.B. mit N=11, phi(N)=10.</value>
+    <value>Die maximale Zykluslänge ist phi(N). Sie kann für die multiplikative Gruppe Z*_N erreicht werden, z.B. mit N=11 und b=2 oder b=6: phi(N)=10.</value>
   </data>
   <data name="powermod_rbautomatic" xml:space="preserve">
     <value>Automatische Ausführung</value>
