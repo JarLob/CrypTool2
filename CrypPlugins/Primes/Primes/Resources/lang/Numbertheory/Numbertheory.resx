@@ -225,6 +225,12 @@
   <data name="powermod_cycle_length_description" xml:space="preserve">
     <value>The maximum cycle length is phi(N). It can be reached for the multiplicative group Z*_N, e.g. with N=11 and b=2 or b=6: phi(N)=10.</value>
   </data>
+  <data name="powermod_missing_values" xml:space="preserve">
+    <value>Missing values: {0}</value>
+  </data>
+  <data name="powermod_no_missing_values" xml:space="preserve">
+    <value>No values are missing.</value>
+  </data>
   <data name="powermod_rbautomatic" xml:space="preserve">
     <value>automatic execution</value>
   </data>

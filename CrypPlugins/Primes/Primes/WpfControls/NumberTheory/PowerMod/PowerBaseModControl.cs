@@ -18,6 +18,7 @@ using Primes.Bignum;
 using Primes.Resources.lang.Numbertheory;
 using Primes.WpfControls.Components;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Primes.WpfControls.NumberTheory.PowerMod
 {
@@ -44,31 +45,42 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             return result;
         }
 
-        private bool ContainsDuplicateValues()
+        private IEnumerable<int> GetAllIterationValues()
         {
             var i = IterationStart;
-            var previousValues = new HashSet<int>();
             while (i < Mod)
             {
                 var value = i.ModPow(Exp, Mod);
-                if (previousValues.Contains(value.IntValue))
-                {
-                    return true;
-                }
-                previousValues.Add(value.IntValue);
+                yield return value.IntValue;
                 i += 1;
             }
-            return false;
         }
 
         public override void SetCycleInfo()
         {
+            var allValues = GetAllIterationValues().ToList();
+            var allValuesSet = new HashSet<int>(allValues);
+
             CycleInfo1.Text = string.Format(Numbertheory.powermod_cycle_length, Mod);
             CycleInfo2.Text = null;
-            if (ContainsDuplicateValues())
+            //Check for duplicate values:
+            if (allValues.Count() > allValuesSet.Count())
             {
                 CycleInfo2.Text = Numbertheory.powermod_cycle_duplicate_values;
             }
+
+            //Get all values which are not contained in the iteration:
+            var missedValues = Enumerable.Range(1, Mod.IntValue - 1)
+                .Where(val => !allValuesSet.Contains(val)).ToList();
+            if (missedValues.Any())
+            {
+                CycleInfo1.ToolTip = string.Format(Numbertheory.powermod_missing_values, string.Join(", ", missedValues));
+            }
+            else
+            {
+                CycleInfo1.ToolTip = Numbertheory.powermod_no_missing_values;
+            }
+            CycleInfo2.ToolTip = CycleInfo1.ToolTip;
         }
 
         public override void SetFormula()

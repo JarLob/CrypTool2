@@ -706,6 +706,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             var value = Base.Mod(Mod);
             var previousValues = new Dictionary<int, int>();
             var counter = 0;
+            ///Search for cycle:
             do
             {
                 previousValues.Add(value.IntValue, counter);
@@ -717,6 +718,20 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             var cycleLength = counter - previousValues[value.IntValue];
             CycleInfo1.Text = string.Format(Numbertheory.powermod_cycle_length, cycleLength);
             CycleInfo2.Text = string.Empty;
+            CycleInfo2.ToolTip = null;
+
+            //Get all values which are not contained in the iteration:
+            var missedValues = Enumerable.Range(1, Mod.IntValue - 1)
+                .Where(val => !previousValues.ContainsKey(val)).ToList();
+
+            if (missedValues.Any())
+            {
+                CycleInfo1.ToolTip = string.Format(Numbertheory.powermod_missing_values, string.Join(", ", missedValues));
+            }
+            else
+            {
+                CycleInfo1.ToolTip = Numbertheory.powermod_no_missing_values;
+            }
         }
 
         public virtual void SetFormula()
@@ -780,7 +795,9 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                 ResetPointEllipseColor();
 
                 ControlHandler.SetPropertyValue(CycleInfo1, "Text", string.Empty);
+                ControlHandler.SetPropertyValue(CycleInfo1, nameof(CycleInfo1.ToolTip), null);
                 ControlHandler.SetPropertyValue(CycleInfo2, "Text", string.Empty);
+                ControlHandler.SetPropertyValue(CycleInfo2, nameof(CycleInfo2.ToolTip), null);
                 ControlHandler.SetPropertyValue(Formula, "Formula", string.Empty);
             }
         }

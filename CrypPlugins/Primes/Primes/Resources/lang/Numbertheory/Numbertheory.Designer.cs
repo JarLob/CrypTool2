@@ -349,11 +349,29 @@ namespace Primes.Resources.lang.Numbertheory {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Missing values: {0} ähnelt.
+        /// </summary>
+        public static string powermod_missing_values {
+            get {
+                return ResourceManager.GetString("powermod_missing_values", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Modulus ähnelt.
         /// </summary>
         public static string powermod_modulus {
             get {
                 return ResourceManager.GetString("powermod_modulus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No values are missing. ähnelt.
+        /// </summary>
+        public static string powermod_no_missing_values {
+            get {
+                return ResourceManager.GetString("powermod_no_missing_values", resourceCulture);
             }
         }
         
