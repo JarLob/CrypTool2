@@ -114,59 +114,72 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             catch { /* Ignore */}
         }
 
-        protected virtual bool SameArrowMarksCycle => true;
-
         public void MarkPath(PrimesBigInteger iteration)
         {
-            if (!m_ArrowsMark.TryGetValue(iteration, out ArrowLine targetArrowLine))
+            var normalizedIteration = GetNormalizedIterationIndex(iteration.IntValue);
+
+            foreach (var currentArrow in m_ArrowsWithSourceAndDestination.Values)
             {
-                targetArrowLine = null;
+                currentArrow.Stroke = Brushes.LightGray;
             }
 
-            var foundTargetArrow = false;
-            foreach (ArrowLine currentArrow in m_ArrowsWithSourceAndDestination.Values)
+            for (int i = IterationStart.IntValue; i < normalizedIteration; i++)
             {
-                //if (!m_ArrowsMarkReverse.TryGetValue(currentArrow, out var i))
-                //{
-                //    i = -1;
-                //}
-
-                if (currentArrow != targetArrowLine)
+                if (m_ArrowsMark.TryGetValue(i, out var iterationArrowLine))
                 {
-                    var markGray = (SameArrowMarksCycle && foundTargetArrow);
-                    currentArrow.Stroke = markGray ? Brushes.LightGray : Brushes.Black;
-                }
-                else
-                {
-                    foundTargetArrow = true;
-                    targetArrowLine.Stroke = Brushes.Red;
+                    iterationArrowLine.Stroke = Brushes.Black;
                 }
             }
 
-            if (!m_CirclesMark.TryGetValue(iteration, out Polyline targetCircle))
+            if (m_ArrowsMark.TryGetValue(normalizedIteration, out var targetArrowLine))
             {
-                targetCircle = null;
+                targetArrowLine.Stroke = Brushes.Red;
             }
 
-            var foundTargetCircle = false;
-            foreach (Polyline currentCircle in m_CirclesSource.Values)
+            foreach (var currentCircle in m_CirclesSource.Values)
             {
-                //if (!m_CirclesMarkReverse.TryGetValue(currentCircle, out var i))
-                //{
-                //    i = -1;
-                //}
+                currentCircle.Stroke = Brushes.LightGray;
+            }
 
-                if (targetCircle != currentCircle)
+            for (int i = IterationStart.IntValue; i < normalizedIteration; i++)
+            {
+                if (m_CirclesMark.TryGetValue(i, out var iterationCircle))
                 {
-                    var markGray = (SameArrowMarksCycle && foundTargetCircle);
-                    currentCircle.Stroke = markGray ? Brushes.LightGray : Brushes.Black;
-                }
-                else
-                {
-                    foundTargetCircle = true;
-                    targetCircle.Stroke = Brushes.Red;
+                    iterationCircle.Stroke = Brushes.Black;
                 }
             }
+
+            if (m_CirclesMark.TryGetValue(normalizedIteration, out var targetCircle))
+            {
+                targetCircle.Stroke = Brushes.Red;
+            }
+        }
+
+        /// <summary>
+        /// Transforms an interation index into the smallest equivalent index when resolving the cycle.
+        /// The returned index is meant to be used for visualization purposes, 
+        /// in order to show the iteration part until the "normalized" iteration index.
+        /// </summary>
+        protected virtual int GetNormalizedIterationIndex(int index)
+        {
+            if (index < 1)
+            {
+                return index;
+            }
+            var (cycleStartIndex, cycleEndIndex, _) = FindCycle();
+            var cycleLength = cycleEndIndex - cycleStartIndex;
+            var normalizedIndex = (index - cycleStartIndex) % cycleLength + cycleStartIndex;
+            if (normalizedIndex == 0)
+            {
+                //Avoid iteration 0, because there is no arrow for it:
+                normalizedIndex += cycleLength;
+            }
+            if (cycleLength == 1 && normalizedIndex >= cycleStartIndex && normalizedIndex < index)
+            {
+                //Special case: If cycle length is 1 and index is within the cycle, take the next index for visualisation purposes.
+                normalizedIndex++;
+            }
+            return normalizedIndex;
         }
 
         protected virtual InputSingleControl ActiveExpControl => iscMaxExp;
@@ -701,12 +714,11 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             }
         }
 
-        public virtual void SetCycleInfo()
+        private (int cycleStartIndex, int cycleEndIndex, HashSet<int> allValues) FindCycle()
         {
             var value = Base.Mod(Mod);
             var previousValues = new Dictionary<int, int>();
             var counter = 0;
-            ///Search for cycle:
             do
             {
                 previousValues.Add(value.IntValue, counter);
@@ -715,14 +727,21 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                 Debug.Assert(counter < Mod);
             } while (!previousValues.ContainsKey(value.IntValue));
 
-            var cycleLength = counter - previousValues[value.IntValue];
+            return (previousValues[value.IntValue], counter, previousValues.Keys.ToHashSet());
+        }
+
+        public virtual void SetCycleInfo()
+        {
+            var (cycleStartIndex, cycleEndIndex, allValues) = FindCycle();
+
+            var cycleLength = cycleEndIndex - cycleStartIndex;
             CycleInfo1.Text = string.Format(Numbertheory.powermod_cycle_length, cycleLength);
             CycleInfo2.Text = string.Empty;
             CycleInfo2.ToolTip = null;
 
             //Get all values which are not contained in the iteration:
             var missedValues = Enumerable.Range(1, Mod.IntValue - 1)
-                .Where(val => !previousValues.ContainsKey(val)).ToList();
+                .Where(val => !allValues.Contains(val)).ToList();
 
             if (missedValues.Any())
             {

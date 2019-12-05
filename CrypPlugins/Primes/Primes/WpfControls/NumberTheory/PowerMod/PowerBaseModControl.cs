@@ -27,8 +27,6 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
     /// </summary>
     public class PowerBaseModControl : PowerModControl
     {
-        protected override bool SameArrowMarksCycle => false;
-
         protected override InputSingleControl ActiveExpControl => iscExp;
         protected override InputSingleControl ActiveBaseControl => iscMaxBase;
 
@@ -91,5 +89,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
         protected override PrimesBigInteger MaxIteration => Base;
 
         protected override PrimesBigInteger IterationStart => 0;
+
+        protected override int GetNormalizedIterationIndex(int iteration) => iteration % Mod.IntValue;
     }
 }
