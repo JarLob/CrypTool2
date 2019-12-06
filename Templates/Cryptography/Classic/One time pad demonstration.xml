@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">One Time Pad Demo</title>
-  <title lang="ru">Демо-версия One Time Pad</title>
-  <summary lang="en">Usage of the <i>One time pad</i></summary>
+  <title lang="en">One-time Pad Demo</title>
+  <title lang="ru">Демо-версия One-time Pad</title>
+  <summary lang="en">Usage of the <i>One-time pad</i></summary>
   <summary lang="ru">Использование одноразовой прокладки</summary>
-  <description lang="en">This template shows the usage of the <i>One time pad</i>.</description>
+  <description lang="en">This template shows the usage of the <i>One-time pad</i>.</description>
   <description lang="ru">Этот шаблон показывает использование одноразового пэда.</description>
-  <keywords>One time pad, XOR, perfect security</keywords>
-  <keywords lang="ru">Одна временная панель, XOR, совершенная защита</keywords>
+  <keywords>One-time pad,OTP, XOR, perfect security</keywords>
+  <keywords lang="ru">Одна временная панель,OTP, XOR, совершенная защита</keywords>
   <title lang="de">One-Time-Pad-Demo</title>
   <summary lang="de">Benutzung eines <i>One-Time-Pads</i></summary>
   <description lang="de">Diese Vorlage zeigt die Benutzung eines <i>One-Time-Pads</i>.</description>
-  <keywords lang="de">One time pad, perfekte Sicherheit, XOR</keywords>
+  <keywords lang="de">One-time pad,OTP,perfekte Sicherheit,XOR</keywords>
   <icon file="One time pad demonstration.png" />
   <relevantPlugins>
     <plugin name="Xor" />
@@ -40,7 +40,7 @@
     <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext" />
     <replacement key="$StringEncoder$" value="StringEncoder" />
     <replacement key="$StringDecoder$" value="StringDecoder" />
-    <replacement key="$One time pad$" value="One time pad" />
-    <replacement key="$memo$" value="This sample demonstrates a one time pad (OTP). The plaintext and the pad being used are shown at the top left. The resulting ciphertext is shown at the top right.\line At the bottom there are two additional XOR operations to demonstrate, that you can generate any plaintext by choosing a different pad. This output may look correctly decrypted, but has nothing to do with the actual message." />
+    <replacement key="$One time pad$" value="One-time pad" />
+    <replacement key="$memo$" value="This sample demonstrates a one-time pad (OTP). The plaintext and the pad being used are shown at the top left. The resulting ciphertext is shown at the top right.\line At the bottom there are two additional XOR operations to demonstrate, that you can generate any plaintext by choosing a different pad. This output may look correctly decrypted, but has nothing to do with the actual message." />
   </replacements>
 </sample>

@@ -18,9 +18,8 @@
 Bei der Vernam-Chiffre wird ein alphanumerischer Klartext mit einem alphanumerischem Schlüsseltext kombiniert um einen verschlüsselten Text zu erhalten.
 Die Kombination der Texte geschieht durch zyklisches Verschieben jedes einzelnen Buchstabens des Klartextes um den Wert des jeweiligen Buchstabens des Schlüsseltextes.
 Wenn z.B. der Klartext "a" und der Schlüsseltext "c" lautet und das Alphabet aus den Zeichen a-z besteht, würde der Buchstabe "a" um 3 Stellen verschoben werden und verschlüsselt "d" ergeben.
- 
   </description>
-  <keywords>Vernam</keywords>
+  <keywords>Vernam, OTP, One-time pad</keywords>
   <keywords lang="ru">Вернама</keywords>
   <keywords lang="de">Vernam</keywords>
   <icon file="VernamCipher.png" />
