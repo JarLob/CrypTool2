@@ -23,8 +23,14 @@ namespace OnlineDocumentationGenerator.Generators.FunctionListGenerator
         {
             public void Add(String name, ItemType typ, String path)
             {
-                if (!ContainsKey(name)) this.Add(name, new Dictionary<ItemType, HashSet<String>>());
-                if (!this[name].ContainsKey(typ)) this[name].Add(typ, new HashSet<String>());
+                if (!ContainsKey(name))
+                {
+                    Add(name, new Dictionary<ItemType, HashSet<String>>());
+                }
+                if (!this[name].ContainsKey(typ))
+                {
+                    this[name].Add(typ, new HashSet<String>());
+                }
                 this[name][typ].Add(path);
             }
         }
@@ -81,7 +87,7 @@ namespace OnlineDocumentationGenerator.Generators.FunctionListGenerator
             {
                 var types = itemlist[key].Keys.ToList();
                 //types.Sort();
-                String occuringTypes = String.Join("/", types.Select(i => ItemType2Char(i)));
+                string occuringTypes = string.Join("/", types.Select(i => ItemType2Char(i)));
 
                 bool firstLine = true;
 
@@ -89,8 +95,8 @@ namespace OnlineDocumentationGenerator.Generators.FunctionListGenerator
                 {
                     foreach (var path in itemlist[key][itemtype])
                     {
-                        result.Append(String.Format("{0,-50} {1,-10}", firstLine ? key : "", firstLine ? occuringTypes : ""));
-                        result.Append(String.Format(" [{0}] {1}\n", ItemType2Char(itemtype), path));
+                        result.Append(string.Format("{0,-50} {1,-10}", firstLine ? key : "", firstLine ? occuringTypes : ""));
+                        result.Append(string.Format(" [{0}] {1}\n", ItemType2Char(itemtype), path));
                         firstLine = false;
                     }
                 }
@@ -112,13 +118,17 @@ namespace OnlineDocumentationGenerator.Generators.FunctionListGenerator
             {
                 var types = itemlist[key].Keys.ToList();
                 //types.Sort();
-                String occuringTypes = String.Join("/", types.Select(i => ItemType2Char(i)));
+                string occuringTypes = string.Join("/", types.Select(i => ItemType2Char(i)));
 
-                result.Append(String.Format("{0};{1};\n", key, occuringTypes));
+                result.Append(string.Format("{0};{1};\n", key, occuringTypes));
 
                 foreach (var itemtype in types)
+                {
                     foreach (var path in itemlist[key][itemtype])
-                        result.Append(String.Format(";[{0}];{1}\n", ItemType2Char(itemtype), path));
+                    {
+                        result.Append(string.Format(";[{0}];{1}\n", ItemType2Char(itemtype), path));
+                    }
+                }
 
                 result.Append("\n");
             }
@@ -294,6 +304,8 @@ namespace OnlineDocumentationGenerator.Generators.FunctionListGenerator
                     return Properties.Resources.Category_FL_ToolsMisc;
                 case ComponentCategory.ToolsP2P:
                     return Properties.Resources.Category_FL_ToolsP2P;
+                case ComponentCategory.DECRYPTProjectComponent:
+                    return Properties.Resources.Category_FL_DECRYPT;
                 default:
                     return Properties.Resources.Category_FL_Unknown;
             }

@@ -373,4 +373,7 @@
   <data name="LanguageSelector" xml:space="preserve">
     <value>Language Selector</value>
   </data>
+  <data name="Category_FL_DECRYPT" xml:space="preserve">
+    <value>DECRYPT Project</value>
+  </data>
 </root>

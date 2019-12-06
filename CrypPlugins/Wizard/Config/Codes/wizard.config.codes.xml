@@ -133,7 +133,7 @@
   </input>
   <!-- Morse Code -->
   <input image="MorseCode">
-    <name lang="en">Morse code</name>
+    <name lang="en">Morse Code</name>
     <name lang="ru">азбука Морзе</name>
     <name lang="de">Morsecode</name>
     <description lang="en">

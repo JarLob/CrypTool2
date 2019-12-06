@@ -19,7 +19,7 @@ namespace OnlineDocumentationGenerator.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -173,6 +173,15 @@ namespace OnlineDocumentationGenerator.Properties {
         public static string Category_FL_CryptanalysisSpecific {
             get {
                 return ResourceManager.GetString("Category_FL_CryptanalysisSpecific", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die DECRYPT Project ähnelt.
+        /// </summary>
+        public static string Category_FL_DECRYPT {
+            get {
+                return ResourceManager.GetString("Category_FL_DECRYPT", resourceCulture);
             }
         }
         
