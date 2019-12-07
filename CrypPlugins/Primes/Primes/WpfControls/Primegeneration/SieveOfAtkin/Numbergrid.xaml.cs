@@ -465,8 +465,15 @@ namespace Primes.WpfControls.Primegeneration.SieveOfAtkin
         private NumberButton GetNumberButton(int index)
         {
             UIElementCollection buttons =
-              ControlHandler.GetPropertyValue(numbergrid, "Children") as UIElementCollection;
-            return buttons[index] as NumberButton;
+                ControlHandler.GetPropertyValue(numbergrid, "Children") as UIElementCollection;
+            try
+            {
+                return buttons[index] as NumberButton;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                return null;
+            }
         }
 
         private PrimesBigInteger GetMaxVisibleValue()
