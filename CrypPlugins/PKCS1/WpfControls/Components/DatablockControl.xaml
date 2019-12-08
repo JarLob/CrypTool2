@@ -36,8 +36,8 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0" Height="20" MinWidth="270" Margin="5,0,5,5" IsReadOnly="True" Name="tbInputFile" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                            <Button Grid.Column="1" Height="20" Margin="5,0,5,5" Name="bOpenFile" VerticalAlignment="Top" HorizontalAlignment="Left" Click="bOpenFile_Click">
+                            <TextBox Grid.Column="0" Height="20" MinWidth="270" Margin="5,0,5,5" IsReadOnly="True" Name="tbInputFile" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                            <Button Grid.Column="1" Height="25" Margin="5,0,5,5" Name="bOpenFile" VerticalAlignment="Top" HorizontalAlignment="Left" Click="bOpenFile_Click">
                                 <x:Static Member="lang:DatablockCtrl.fileOpen"></x:Static>
                             </Button>
                         </Grid>

@@ -129,4 +129,7 @@
   <data name="startTitle" xml:space="preserve">
     <value>Angriffe auf PKCS#1</value>
   </data>
+  <data name="reset_tab" xml:space="preserve">
+    <value>Reiter zurücksetzen</value>
+  </data>
 </root>

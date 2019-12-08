@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:comp="clr-namespace:PKCS1.WpfControls.Components"
     xmlns:lang="clr-namespace:PKCS1.Resources.lang.Gui"             
-    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White">
+    VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -18,17 +18,21 @@
                     <comp:HelpTabItem.Header>
                         <x:Static Member="lang:DatablockCtrl.genDatablock"></x:Static>
                     </comp:HelpTabItem.Header>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                        <comp:DatablockControl x:Name="Datablockcontrol2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-                    </ScrollViewer>
+                    <DataTemplate>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                            <comp:DatablockControl x:Name="Datablockcontrol2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                        </ScrollViewer>
+                    </DataTemplate>
                 </comp:HelpTabItem>
                 <comp:HelpTabItem HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="tabGenSignature" HelpButtonClick="TabItem_HelpButtonClick">
                     <comp:HelpTabItem.Header>
                         <x:Static Member="lang:SigGenBleichenbCtrl.genSig"></x:Static>
                     </comp:HelpTabItem.Header>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                        <comp:SigGenBleichenbControl x:Name="sigGen2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></comp:SigGenBleichenbControl>
-                    </ScrollViewer>
+                    <DataTemplate>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                            <comp:SigGenBleichenbControl x:Name="sigGen2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></comp:SigGenBleichenbControl>
+                        </ScrollViewer>
+                    </DataTemplate>
                 </comp:HelpTabItem>                
             </TabControl>
 

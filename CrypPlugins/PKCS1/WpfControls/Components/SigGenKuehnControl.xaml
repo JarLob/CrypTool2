@@ -70,7 +70,7 @@
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <GroupBox Grid.Row="0" Name="gbStruct" Height="47" Width="200" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <GroupBox Grid.Row="0" Name="gbStruct" Height="57" Width="200" HorizontalAlignment="Right" VerticalAlignment="Top">
                         <GroupBox.Header>
                             <x:Static Member="lang:SigGenKuehnCtrl.structure"></x:Static>
                         </GroupBox.Header>

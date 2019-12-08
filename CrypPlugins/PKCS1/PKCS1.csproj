@@ -269,6 +269,7 @@
     <Compile Include="WpfControls\Components\KeyInputControl.xaml.cs">
       <DependentUpon>KeyInputControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WpfControls\Components\ResettableTabItem.cs" />
     <Compile Include="WpfControls\Components\SigGenBleichenbControl.xaml.cs">
       <DependentUpon>SigGenBleichenbControl.xaml</DependentUpon>
     </Compile>
@@ -450,10 +451,12 @@
     <EmbeddedResource Include="Resources\lang\Gui\Common.de.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Common.de.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\Gui\Common.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Common.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\Gui\RsaKeyInputCtrl.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -490,6 +493,7 @@
     <EmbeddedResource Include="Resources\lang\Gui\RsaKeyGenCtrl.de.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RsaKeyGenCtrl.de.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\Gui\SigValCtrl.de.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -498,6 +502,7 @@
     <EmbeddedResource Include="Resources\lang\Gui\SigGenBleichenbCtrl.de.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SigGenBleichenbCtrl.de.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\Gui\SigGenRsaCtrl.de.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -506,6 +511,7 @@
     <EmbeddedResource Include="Resources\lang\Gui\DatablockCtrl.de.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DatablockCtrl.de.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\lang\Gui\SigGenKuehnCtrl.de.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -614,6 +620,8 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="OnlineHelp\HelpFiles\template.de.htm" />
+    <Resource Include="Resources\icons\restart.png" />
+    <Resource Include="Resources\icons\restart_disabled.png" />
     <Content Include="WpfControls\Start.htm" />
     <Content Include="WpfControls\Start.de.htm">
       <SubType>Designer</SubType>

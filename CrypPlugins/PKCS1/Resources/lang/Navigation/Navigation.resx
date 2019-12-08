@@ -144,4 +144,7 @@
   <data name="startpage" xml:space="preserve">
     <value>Start</value>
   </data>
+  <data name="content" xml:space="preserve">
+    <value>Content</value>
+  </data>
 </root>

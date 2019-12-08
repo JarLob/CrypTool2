@@ -4,14 +4,15 @@
     xmlns:help="clr-namespace:PKCS1.OnlineHelp.HelpFiles"
     Title="{x:Static help:Help.title}" Height="400" Width="600"
         xmlns:my="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <ResourceDictionary x:Uid="ResourceDictionary_1">
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary x:Uid="ResourceDictionary_2" Source="../WpfResources/PKCS1.WpfResources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-    <Grid x:Uid="Grid_1" >
+    <Grid x:Uid="Grid_1">
+        <Grid.Resources>
+            <ResourceDictionary x:Uid="ResourceDictionary_1">
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary x:Uid="ResourceDictionary_2" Source="../WpfResources/PKCS1.WpfResources.xaml"/>
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Grid.Resources>
+        
         <Grid.RowDefinitions>
             <RowDefinition x:Uid="RowDefinition_1" Height="60" />
             <RowDefinition x:Uid="RowDefinition_2" Height="*" />

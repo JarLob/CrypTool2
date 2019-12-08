@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:comp="clr-namespace:PKCS1.WpfControls.Components"
     xmlns:lang="clr-namespace:PKCS1.Resources.lang.Gui"
-    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White">
+    HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -23,17 +23,21 @@
                     <comp:HelpTabItem.Header>
                         <x:Static Member="lang:RsaKeyGenCtrl.genKey"></x:Static>
                     </comp:HelpTabItem.Header>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                        <comp:KeyGenControl x:Name="KeyGenControl" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-                    </ScrollViewer>
+                    <DataTemplate>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                            <comp:KeyGenControl x:Name="KeyGenControl" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                        </ScrollViewer>
+                    </DataTemplate>
                 </comp:HelpTabItem>
                 <comp:HelpTabItem HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="tabInputKey" HelpButtonClick="TabItem_HelpButtonClick">
                     <comp:HelpTabItem.Header>
                         <x:Static Member="lang:RsaKeyInputCtrl.inputKey"></x:Static>
                     </comp:HelpTabItem.Header>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                        <comp:KeyInputControl x:Name="KeyInputControl" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-                    </ScrollViewer>
+                    <DataTemplate>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                            <comp:KeyInputControl x:Name="KeyInputControl" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                        </ScrollViewer>
+                    </DataTemplate>
                 </comp:HelpTabItem>
             </TabControl>
 

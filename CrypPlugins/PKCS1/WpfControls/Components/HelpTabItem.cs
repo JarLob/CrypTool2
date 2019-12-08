@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace PKCS1.WpfControls.Components
 {
-    public class HelpTabItem : TabItem
+    public class HelpTabItem : ResettableTabItem
     {
         static HelpTabItem()
         {

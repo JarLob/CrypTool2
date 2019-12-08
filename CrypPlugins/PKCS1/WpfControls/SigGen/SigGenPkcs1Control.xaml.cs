@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using PKCS1.Library;
+using PKCS1.WpfControls.Components;
 
 namespace PKCS1.WpfControls.SigGen
 {
@@ -16,7 +17,12 @@ namespace PKCS1.WpfControls.SigGen
         {
             InitializeComponent();
             RsaKey.Instance.RaiseKeyGeneratedEvent += handleKeyGenerated;
-            Datablockcontrol.RaiseDataBlockGenerated += handleKeyGenerated;
+
+            tabGenDatablock.OnTabContentChanged += content =>
+            {
+                var datablockcontrol = ((DatablockControl)((ScrollViewer)content).Content);
+                datablockcontrol.RaiseDataBlockGenerated += handleKeyGenerated;
+            };
 
             if (RsaKey.Instance.isKeyGenerated())
             {

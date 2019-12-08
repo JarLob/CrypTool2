@@ -3,15 +3,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:navi="clr-namespace:PKCS1.WpfVisualization.Navigation"
     xmlns:controls="clr-namespace:PKCS1.WpfControls.Start"
-    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Loaded="UserControl_Loaded" Background="White">
-    
-    <Grid>
+    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <ResourceDictionary Source="../WpfResources/PKCS1.WpfResources.xaml" />
+    </UserControl.Resources>
+    <Grid Background="{StaticResource CTBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="330" />
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -20,16 +22,15 @@
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10"/>
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <navi:Navigation HorizontalAlignment="Left" Grid.Row="1" MinWidth="200"  x:Name="navigator"/>
+            <navi:Navigation HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" MinWidth="200"  x:Name="navigator"/>
             <Button VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="0,0,0,0" Grid.Row="2"  Content="Beenden" Visibility="Hidden"></Button>
         </Grid>
         
-        <!-- mittlere Spalte nur als Trennung da, Width 1 -->
-        <Rectangle Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="1" Fill="Gray"/>
-        
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="2" HorizontalContentAlignment="Center" Margin="0,0,0,0" ResizeBehavior="PreviousAndNext" />
+
         <!-- hier ist die contentarea -->
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
