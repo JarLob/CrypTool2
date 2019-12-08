@@ -402,22 +402,6 @@
                             </Border>
                         </Border>
                     </Border>
-
-
-                        <!--<Border>
-                        <Grid>
-                            <Grid>
-                                <Border CornerRadius="3,3,0,0" Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}" />
-                            </Grid>
-                            <Border BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
-                                <ContentPresenter ContentSource="Header"
-                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                            </Border>
-                        </Grid>
-                    </Border>-->
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

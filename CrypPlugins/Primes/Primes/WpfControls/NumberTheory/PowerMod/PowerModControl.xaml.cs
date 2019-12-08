@@ -67,16 +67,11 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             iterationLog.ItemsSource = iterationLogEntries;
             ConfigureIntegerInputs();
             m_Points = new Dictionary<int, Point>();
-            //m_Ellipses = new Dictionary<int, Ellipse>();
             m_SourceDestination = new List<Pair<Ellipse, Ellipse>>();
             m_CirclesSource = new Dictionary<Ellipse, Polyline>();
             m_ArrowsWithSourceAndDestination = new Dictionary<Pair<Ellipse, Ellipse>, ArrowLine>();
-            //m_Arrows = new List<ArrowLine>();
             m_ArrowsMark = new Dictionary<PrimesBigInteger, ArrowLine>();
-            m_ArrowsMarkReverse = new Dictionary<ArrowLine, PrimesBigInteger>();
-            //m_Circles = new List<Polyline>();
             m_CirclesMark = new Dictionary<PrimesBigInteger, Polyline>();
-            m_CirclesMarkReverse = new Dictionary<Polyline, PrimesBigInteger>();
             m_RunningLockObject = new object();
             m_Initialized = true;
             m_StepWiseEvent = new ManualResetEvent(false);
@@ -274,16 +269,11 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
         private object m_RunningLockObject;
         private bool m_Running;
         private IDictionary<int, Point> m_Points;
-        //private IDictionary<int, Ellipse> m_Ellipses;
         private IList<Pair<Ellipse, Ellipse>> m_SourceDestination;
-        //private IList<Polyline> m_Circles;
         private IDictionary<Ellipse, Polyline> m_CirclesSource;
         private IDictionary<PrimesBigInteger, Polyline> m_CirclesMark;
-        private IDictionary<Polyline, PrimesBigInteger> m_CirclesMarkReverse;
-        //private IList<ArrowLine> m_Arrows;
         private IDictionary<Pair<Ellipse, Ellipse>, ArrowLine> m_ArrowsWithSourceAndDestination;
         private IDictionary<PrimesBigInteger, ArrowLine> m_ArrowsMark;
-        private IDictionary<ArrowLine, PrimesBigInteger> m_ArrowsMarkReverse;
 
         double offset = 0;
 
@@ -352,16 +342,11 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
         private void Reset()
         {
             m_Points.Clear();
-            //m_Ellipses.Clear();
             m_SourceDestination.Clear();
             m_CirclesSource.Clear();
             m_ArrowsWithSourceAndDestination.Clear();
-            //m_Arrows.Clear();
             m_ArrowsMark.Clear();
-            m_ArrowsMarkReverse.Clear();
-            //m_Circles.Clear();
             m_CirclesMark.Clear();
-            m_CirclesMarkReverse.Clear();
             ControlHandler.ClearChildren(PaintArea);
             ControlHandler.ClearChildren(ArrowArea);
             ControlHandler.ClearChildren(LabelArea);
@@ -483,43 +468,11 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                             Paint();
                             if (this.m_Mod != null)
                             {
-                                //IDictionary<ArrowLine, int> m_StartPoints = new Dictionary<ArrowLine, int>();
-                                //IDictionary<ArrowLine, int> m_EndPoints = new Dictionary<ArrowLine, int>();
-
-                                //foreach (ArrowLine al in m_Arrows)
-                                //{
-                                //    Point from = new Point(al.X1, al.Y1);
-                                //    Point to = new Point(al.X2, al.Y2);
-                                //    foreach (int key in m_Points.Keys)
-                                //    {
-                                //        Point p = m_Points[key];
-                                //        if (from.X == p.X && from.Y == p.Y)
-                                //        {
-                                //            m_StartPoints.Add(al, key);
-                                //        }
-                                //        else if (to.X == p.X && to.Y == p.Y)
-                                //        {
-                                //            m_EndPoints.Add(al, key);
-                                //        }
-                                //    }
-                                //}
                                 CreatePoints();
                                 foreach (Ellipse e in m_CirclesSource.Keys)
                                 {
                                     MoveCircle(e);
                                 }
-                                //foreach (ArrowLine al in m_StartPoints.Keys)
-                                //{
-                                //    al.X1 = m_Points[m_StartPoints[al]].X;
-                                //    al.Y1 = m_Points[m_StartPoints[al]].Y;
-
-                                //}
-                                //foreach (ArrowLine al in m_EndPoints.Keys)
-                                //{
-                                //    al.X2 = m_Points[m_EndPoints[al]].X;
-                                //    al.Y2 = m_Points[m_EndPoints[al]].Y;
-
-                                //}
                             }
                         }
                     }
@@ -551,9 +504,7 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             m_ArrowsWithSourceAndDestination.Clear();
             m_CirclesSource.Clear();
             m_ArrowsMark.Clear();
-            m_ArrowsMarkReverse.Clear();
             m_CirclesMark.Clear();
-            m_CirclesMarkReverse.Clear();
         }
 
         #endregion
@@ -668,27 +619,6 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                 //rteDoExecuteGraphic();
             }
         }
-
-        //public void Execute(PrimesBigInteger value)
-        //{
-        //  tabItemGraphic.IsEnabled = true;
-        //  tcStats.SelectedIndex = 0;
-
-        //  this.m_Value = value;
-        //  m_Arrows.Clear();
-        //  ArrowArea.Children.Clear();
-        //  log.Columns = 1;
-        //  log.Clear();
-        //  if (value.CompareTo(PrimesBigInteger.ValueOf(150))>0)
-        //  {
-        //    tcStats.SelectedIndex = 1;
-        //    tabItemGraphic.IsEnabled = false;
-        //  }
-        //  else
-        //  {
-        //    CreatePoints();
-        //  }
-        //}
 
         private bool m_SortAsc = true;
 
@@ -910,44 +840,6 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             return null;
         }
 
-        //private void CreateArrow(PrimesBigInteger counter, Point from, Point to)
-        //{
-        //    ArrowLine l = null;
-        //    if (from.X == to.X && from.Y == to.Y)
-        //    {
-        //        AddCircle(counter, from.X, from.Y);
-        //    }
-        //    else
-        //    {
-        //        l = ControlHandler.CreateObject(typeof(ArrowLine)) as ArrowLine;
-        //        ControlHandler.SetPropertyValue(l, "Stroke", Brushes.Black);
-        //        ControlHandler.SetPropertyValue(l, "StrokeThickness", 1.5);
-        //        //ControlHandler.ExecuteMethod(l, "SetBinding", new object[] { ArrowLine.X1Property, new Binding("(Point.X)") { Source = from  }, new Type[] { typeof(DependencyProperty), typeof(BindingBase) } });
-        //        //ControlHandler.ExecuteMethod(l, "SetBinding", new object[] { ArrowLine.Y1Property, new Binding("(Point.Y)") { Source = from }, new Type[] { typeof(DependencyProperty), typeof(BindingBase) } });
-        //        //ControlHandler.ExecuteMethod(l, "SetBinding", new object[] { ArrowLine.X2Property, new Binding("(Point.X)") { Source = to }, new Type[] { typeof(DependencyProperty), typeof(BindingBase) } });
-        //        //ControlHandler.ExecuteMethod(l, "SetBinding", new object[] { ArrowLine.Y2Property, new Binding("(Point.Y)") { Source = to }, new Type[] { typeof(DependencyProperty), typeof(BindingBase) } });
-        //        //l.SetBinding(Line.X1Property, new Binding("(Point.X)") { Source = from, Converter = new myc() });
-        //        //l.SetBinding(Line.Y1Property, new Binding("(Point.Y)") { Source = from, Converter = new myc() });
-        //        //l.SetBinding(Line.X2Property, new Binding("(Point.X)") { Source = to, Converter = new myc() });
-        //        //l.SetBinding(Line.Y2Property, new Binding("(Point.Y)") { Source = to, Converter = new myc() });
-
-        //        ControlHandler.SetPropertyValue(l, "X1", from.X);
-        //        ControlHandler.SetPropertyValue(l, "Y1", from.Y);
-        //        ControlHandler.SetPropertyValue(l, "X2", to.X);
-        //        ControlHandler.SetPropertyValue(l, "Y2", to.Y);
-        //        if (!ContainsLine(l))
-        //        {
-        //            ControlHandler.AddChild(l, ArrowArea);
-        //            m_Arrows.Add(l);
-        //            m_ArrowsMark.Add(counter, l);
-        //        }
-        //        else
-        //        {
-        //            ResetLine(counter, l);
-        //        }
-        //    }
-        //}
-
         private void CreateArrow(PrimesBigInteger counter, Ellipse from, Ellipse to)
         {
             if (from == to)
@@ -959,17 +851,11 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                 ArrowLine l = ControlHandler.CreateObject(typeof(ArrowLine)) as ArrowLine;
                 ControlHandler.SetPropertyValue(l, "Stroke", Brushes.Black);
                 ControlHandler.SetPropertyValue(l, "StrokeThickness", 1.5);
-                //ControlHandler.SetPropertyValue(l, "X1", (double)ControlHandler.ExecuteMethod(PaintArea, "GetLeft", from)+3);
-                //ControlHandler.SetPropertyValue(l, "Y1", (double)ControlHandler.ExecuteMethod(PaintArea, "GetTop", from)+3);
-                //ControlHandler.SetPropertyValue(l, "X2", (double)ControlHandler.ExecuteMethod(PaintArea, "GetLeft", to)+3);
-                //ControlHandler.SetPropertyValue(l, "Y2", (double)ControlHandler.ExecuteMethod(PaintArea, "GetTop", to)+3);
                 var arrowPositionConverter = new ArrowPositionConverter(PointRadius);
                 ControlHandler.ExecuteMethod(l, "SetBinding", new object[] { ArrowLine.X1Property, new Binding("(Canvas.Left)") { Source = from, Converter = arrowPositionConverter }, new Type[] { typeof(DependencyProperty), typeof(BindingBase) } });
                 ControlHandler.ExecuteMethod(l, "SetBinding", new object[] { ArrowLine.Y1Property, new Binding("(Canvas.Top)") { Source = from, Converter = arrowPositionConverter }, new Type[] { typeof(DependencyProperty), typeof(BindingBase) } });
                 ControlHandler.ExecuteMethod(l, "SetBinding", new object[] { ArrowLine.X2Property, new Binding("(Canvas.Left)") { Source = to, Converter = arrowPositionConverter }, new Type[] { typeof(DependencyProperty), typeof(BindingBase) } });
                 ControlHandler.ExecuteMethod(l, "SetBinding", new object[] { ArrowLine.Y2Property, new Binding("(Canvas.Top)") { Source = to, Converter = arrowPositionConverter }, new Type[] { typeof(DependencyProperty), typeof(BindingBase) } });
-                //ControlHandler.SetPropertyValue(l, "RenderTransform", new TranslateTransform(PointRadius, PointRadius));
-                //l.RenderTransform = new TranslateTransform(PointRadius, PointRadius);
 
                 Pair<Ellipse, Ellipse> pair = new Pair<Ellipse, Ellipse>(from, to);
                 if (!m_SourceDestination.Contains(pair))
@@ -977,8 +863,6 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                     m_SourceDestination.Add(pair);
                     m_ArrowsWithSourceAndDestination.Add(pair, l);
                     ControlHandler.AddChild(l, ArrowArea);
-                    //m_Arrows.Add(l);
-                    m_ArrowsMarkReverse[l] = counter;
                     m_ArrowsMark.Add(counter, l);
                 }
                 else if (m_ArrowsWithSourceAndDestination.ContainsKey(pair))
@@ -1012,86 +896,16 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             }
         }
 
-        //class myc : IValueConverter
-        //{
-        //    #region IValueConverter Members
-
-        //    public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        //    {
-        //        return value;
-        //    }
-
-        //    public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        //    {
-        //        return value;
-        //    }
-
-        //    #endregion
-        //}
-
         private void ResetLine(PrimesBigInteger counter, ArrowLine l)
         {
             if (l != null)
             {
                 m_ArrowsMark.Add(counter, l);
-                m_ArrowsMarkReverse[l] = counter;
                 UIElementCollection children = ControlHandler.GetPropertyValue(ArrowArea, "Children") as UIElementCollection;
                 ControlHandler.ExecuteMethod(children, "Remove", new object[] { l });
                 ControlHandler.ExecuteMethod(children, "Add", new object[] { l });
             }
         }
-
-        //private ArrowLine GetLine(ArrowLine l)
-        //{
-        //    foreach (ArrowLine line in m_Arrows)
-        //    {
-        //        double srcx1 = (double)ControlHandler.GetPropertyValue(line, "X1");
-        //        double srcx2 = (double)ControlHandler.GetPropertyValue(line, "X2");
-        //        double srcy1 = (double)ControlHandler.GetPropertyValue(line, "Y1");
-        //        double srcy2 = (double)ControlHandler.GetPropertyValue(line, "Y2");
-        //        double destx1 = (double)ControlHandler.GetPropertyValue(l, "X1");
-        //        double destx2 = (double)ControlHandler.GetPropertyValue(l, "X2");
-        //        double desty1 = (double)ControlHandler.GetPropertyValue(l, "Y1");
-        //        double desty2 = (double)ControlHandler.GetPropertyValue(l, "Y2");
-
-        //        if (srcx1 == destx1 && srcx2 == destx2 && srcy1 == desty1 && srcy2 == desty2) return line;
-        //    }
-        //    return null;
-        //}
-
-        //private bool ContainsLine(ArrowLine l)
-        //{
-        //    return GetLine(l) != null;
-        //}
-
-        //public void AddCircle(PrimesBigInteger counter, double x, double y)
-        //{
-        //    Polyline p = ControlHandler.CreateObject(typeof(Polyline)) as Polyline;
-        //    ControlHandler.SetPropertyValue(p, "Stroke", Brushes.Black);
-        //    ControlHandler.SetPropertyValue(p, "StrokeThickness", 1.5);
-        //    PointCollection pc = ControlHandler.GetPropertyValue(p, "Points") as PointCollection;
-        //    int c = 16;
-        //    double radius = 25;
-        //    for (int value = 0; value <= c; value++)
-        //    {
-        //        double angle = (360.0 / (double)c) * value;
-        //        double top = radius / 2 + (Math.Sin((angle * 2 * Math.PI) / 360.0) * radius / 2);
-        //        double left = radius / 2 + (Math.Cos((angle * 2 * Math.PI) / 360.0) * radius / 2);
-        //        ControlHandler.ExecuteMethod(pc, "Add", new object[] { new Point(top, left) });
-        //    }
-        //    if (!ContainsCircle(x, y))
-        //    {
-        //        m_Circles.Add(p);
-        //        m_CirclesMark.Add(counter, p);
-        //        ControlHandler.ExecuteMethod(ArrowArea, "SetLeft", new object[] { p, x });
-        //        ControlHandler.ExecuteMethod(ArrowArea, "SetTop", new object[] { p, y });
-        //        ControlHandler.AddChild(p, ArrowArea);
-        //    }
-        //    else
-        //    {
-        //        ResetCircle(counter, x, y);
-        //    }
-        //}
 
         public void AddCircle(PrimesBigInteger counter, Ellipse source)
         {
@@ -1117,7 +931,6 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             {
                 m_CirclesSource.Add(source, p);
                 m_CirclesMark.Add(counter, p);
-                m_CirclesMarkReverse[p] = counter;
                 ControlHandler.ExecuteMethod(ArrowArea, "SetLeft", new object[] { p, x });
                 ControlHandler.ExecuteMethod(ArrowArea, "SetTop", new object[] { p, y });
                 ControlHandler.AddChild(p, ArrowArea);
@@ -1143,7 +956,6 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
             if (p != null)
             {
                 m_CirclesMark.Add(counter, p);
-                m_CirclesMarkReverse[p] = counter;
 
                 UIElementCollection children = ControlHandler.GetPropertyValue(ArrowArea, "Children") as UIElementCollection;
                 ControlHandler.ExecuteMethod(children, "Remove", new object[] { p });
@@ -1151,38 +963,6 @@ namespace Primes.WpfControls.NumberTheory.PowerMod
                 ControlHandler.ExecuteMethod(children, "Add", new object[] { p });
             }
         }
-
-        //private void ResetCircle(PrimesBigInteger counter, double x, double y)
-        //{
-
-        //    Polyline ltmp = GetCircle(x, y);
-        //    if (ltmp != null)
-        //    {
-        //        m_CirclesMark.Add(counter, ltmp);
-
-        //        UIElementCollection children = ControlHandler.GetPropertyValue(ArrowArea, "Children") as UIElementCollection;
-        //        ControlHandler.ExecuteMethod(children, "Remove", new object[] { ltmp });
-        //        Thread.Sleep(100);
-        //        ControlHandler.ExecuteMethod(children, "Add", new object[] { ltmp });
-        //    }
-        //}
-
-        //private Polyline GetCircle(double x, double y)
-        //{
-        //    foreach (Polyline line in m_Circles)
-        //    {
-        //        double _top = (double)ControlHandler.ExecuteMethod(ArrowArea, "GetTop", new object[] { line });
-        //        double _left = (double)ControlHandler.ExecuteMethod(ArrowArea, "GetLeft", new object[] { line });
-        //        if (y == _top && x == _left) return line;
-        //    }
-        //    return null;
-        //}
-
-        //private bool ContainsCircle(double x, double y)
-        //{
-        //    return GetCircle(x, y) != null;
-        //}
-		  //
 
         #endregion
 
