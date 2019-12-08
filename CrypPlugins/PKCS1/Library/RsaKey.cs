@@ -3,6 +3,9 @@ using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Crypto.Generators;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
+using System;
+using System.Windows;
+using PKCS1.Resources.lang.Gui;
 
 namespace PKCS1.Library
 {
@@ -71,9 +74,17 @@ namespace PKCS1.Library
 
         public void setInputParams()
         {
-            AsymmetricKeyParameter publicKey = new RsaKeyParameters(false, this.m_Modulus, this.m_PubExponent);
-            AsymmetricKeyParameter privateKey = new RsaKeyParameters(true, this.m_Modulus, this.m_PrivKey);
-            this.keyPair = new AsymmetricCipherKeyPair(publicKey, privateKey);
+            try
+            {
+                AsymmetricKeyParameter publicKey = new RsaKeyParameters(false, this.m_Modulus, this.m_PubExponent);
+                AsymmetricKeyParameter privateKey = new RsaKeyParameters(true, this.m_Modulus, this.m_PrivKey);
+                this.keyPair = new AsymmetricCipherKeyPair(publicKey, privateKey);
+            }
+            catch (ArgumentException)
+            {
+                MessageBox.Show(RsaKeyInputCtrl.invalidInput, RsaKeyInputCtrl.invalidInput, MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             this.m_bRsaKeyGenerated = true;
             OnRaiseKeyGenerated(ParameterChangeType.RsaKey);

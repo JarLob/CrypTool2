@@ -153,4 +153,7 @@
   <data name="takeInput" xml:space="preserve">
     <value>Eingabe übernehmen</value>
   </data>
+  <data name="invalidInput" xml:space="preserve">
+    <value>Ungültige Eingabe.</value>
+  </data>
 </root>
