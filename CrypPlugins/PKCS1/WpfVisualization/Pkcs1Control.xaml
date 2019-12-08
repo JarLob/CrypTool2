@@ -29,7 +29,7 @@
             <Button VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="0,0,0,0" Grid.Row="2"  Content="Beenden" Visibility="Hidden"></Button>
         </Grid>
         
-        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="2" HorizontalContentAlignment="Center" Margin="0,0,0,0" ResizeBehavior="PreviousAndNext" />
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="3" HorizontalContentAlignment="Center" Margin="0,0,0,0" ResizeBehavior="PreviousAndNext" />
 
         <!-- hier ist die contentarea -->
         <Grid Grid.Column="2">

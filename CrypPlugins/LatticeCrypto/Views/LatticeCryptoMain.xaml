@@ -18,7 +18,7 @@
         
         <Views:Navigation x:Name="navigator"/>
 
-        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="2" HorizontalContentAlignment="Center" ResizeBehavior="PreviousAndNext" />
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="3" HorizontalContentAlignment="Center" ResizeBehavior="PreviousAndNext" />
 
         <Grid Grid.Column="2" Name="mainGrid">
             <Grid.RowDefinitions>
