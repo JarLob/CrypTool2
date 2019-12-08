@@ -561,4 +561,7 @@
   <data name="PluginTooltip" xml:space="preserve">
     <value>Lattice-based cryptography</value>
   </data>
+  <data name="content" xml:space="preserve">
+    <value>Content</value>
+  </data>
 </root>

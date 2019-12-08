@@ -561,4 +561,7 @@
   <data name="PluginTooltip" xml:space="preserve">
     <value>Gitterbasierte Kryptographie</value>
   </data>
+  <data name="content" xml:space="preserve">
+    <value>Inhalt</value>
+  </data>
 </root>
