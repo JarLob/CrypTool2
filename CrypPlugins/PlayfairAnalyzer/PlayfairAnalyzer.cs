@@ -27,6 +27,7 @@ using Google.Protobuf;
 using System.Windows.Threading;
 using Cryptool.PluginBase.IO;
 using System.IO;
+using System.Text;
 
 namespace Cryptool.PlayfairAnalyzer
 {
@@ -56,6 +57,8 @@ namespace Cryptool.PlayfairAnalyzer
         private string _Key = null;
         private string _Score = null;
 
+        private const string PLAYFAIR_ALPHABET = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
+
         private ConcurrentQueue<OutgoingData> _SendingQueue;
         private PlayfairAnalyzerSettings _settings = new PlayfairAnalyzerSettings();
         private AssignmentPresentation _presentation = new AssignmentPresentation();
@@ -70,9 +73,32 @@ namespace Cryptool.PlayfairAnalyzer
             {
                 if (!String.IsNullOrEmpty(value))
                 {
-                    _SendingQueue.Enqueue(new OutgoingData() { outputId = 1, value = value });
+                    value = RemoveInvalidSymbols(value);
+                    if (value.Length > 1)
+                    {
+                        _SendingQueue.Enqueue(new OutgoingData() { outputId = 1, value = value });
+                    }
                 }
             }
+        }
+
+        /// <summary>
+        /// Removes all invalid symbols, which are not part of the PLAYFAIR_ALPHABET
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private string RemoveInvalidSymbols(string value)
+        {
+            value = value.ToUpper();
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < value.Length; i++)
+            {
+                if (PLAYFAIR_ALPHABET.Contains(value.Substring(i, 1)))
+                {
+                    builder.Append(value.Substring(i, 1));
+                }
+            }
+            return builder.ToString();
         }
 
         [PropertyInfo(Direction.InputData, "CribCaption", "CribTooltip", false)]
