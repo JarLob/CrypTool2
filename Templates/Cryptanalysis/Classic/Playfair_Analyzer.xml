@@ -21,26 +21,23 @@
     <replacement key="$Ciphertext$" value="Geheimtext" />
     <replacement key="$Plaintext$" value="Klartext" />
     <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext" />
-    <replacement key="$Revealed Key$" value="Entschlüsselter Klartext" />
-    <replacement key="$Encrypt$" value="Verschlüsselung" />
+    <replacement key="$Revealed Key$" value="Gefundener Schlüssel" />
     <replacement key="$PlayfairAnalyzer$" value="Playfair-Analyse" />
     <replacement key="$memo$" value="Diese Vorlage demonstriert einen Ciphertext-only-Angriff auf die Playfair-Chiffre. Der oben angegebene Klartext wird mit der Playfair-Komponente verschlüsselt und der resultierende Geheimtext wird an die Playfair-Analyse-Komponente geschickt.\line\line Bitte beachten Sie, dass bei Playfair für jeden Schlüssel mehrere äquivalente Schlüssel existieren, die denselben Geheimtext erzeugen." />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Ciphertext$" value="шифротекста" />
     <replacement key="$Plaintext$" value="обычный текст" />
-    <replacement key="$Revealed Plaintext$" value="Расшифрованный открытый текст" />
-    <replacement key="$Revealed Key$" value="Расшифрованный открытый текст" />
-    <replacement key="$Encrypt$" value="кодирование" />
+    <replacement key="$Revealed Plaintext$" value="Найден простой текст" />
+    <replacement key="$Revealed Key$" value="Ключ найден" />
     <replacement key="$PlayfairAnalyzer$" value="Плайфаир-анализ" />
     <replacement key="$memo$" value="Этот шаблон демонстрирует атаку только зашифрованным текстом на шифр Playfair. Открытый текст выше зашифрован с помощью компонента Playfair, а полученный зашифрованный текст отправляется компоненту Playfair Analysis. \line\line Обратите внимание, что Playfair имеет несколько эквивалентных ключей для каждого ключа." />
   </replacements>
   <replacements lang="en">
     <replacement key="$Ciphertext$" value="Ciphertext" />
     <replacement key="$Plaintext$" value="Plaintext" />
-    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext" />
-    <replacement key="$Revealed Key$" value="Revealed Key" />
-    <replacement key="$Encrypt$" value="Encrypt" />
+    <replacement key="$Revealed Plaintext$" value="Decrypted plaintext" />
+    <replacement key="$Revealed Key$" value="Found key" />
     <replacement key="$PlayfairAnalyzer$" value="Playfair Analyzer" />
     <replacement key="$memo$" value="This template demonstrates a ciphertext-only attack on the Playfair cipher. The plaintext above is encrypted with the Playfair component and the resulting ciphertext is sent to the Playfair Analyzer.\line\line Please note that in Playfair for every key there exist several equivalent keys that generate the same ciphertext." />
   </replacements>
