@@ -1203,7 +1203,7 @@ namespace KeySearcher
             {
                 string plaintext = Encoding.GetEncoding(1252).GetString(node.Value.decryption);
                 ResultEntry entry = new ResultEntry();
-                entry.Ranking = "" + i++;
+                entry.Ranking = i++;
                 entry.Value = "" + Math.Round(node.Value.value, 3);
                 entry.Key = node.Value.key;
                 entry.Text = plaintext.Length > 32 ? plaintext.Substring(0,32) + "..." : plaintext;

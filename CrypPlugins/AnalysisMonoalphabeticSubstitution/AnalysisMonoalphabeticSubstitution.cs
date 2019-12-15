@@ -456,7 +456,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                                     KeyCandidate keyCandidate = this.keyCandidates[i];
 
                                     ResultEntry entry = new ResultEntry();
-                                    entry.Ranking = (i+1).ToString();
+                                    entry.Ranking = i+1;
                                     entry.Text = keyCandidate.Plaintext;
                                     entry.Key = keyCandidate.Key_string;
 
@@ -584,9 +584,21 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         #endregion
     }
 
-    public class ResultEntry : ICrypAnalysisResultListEntry
+    public class ResultEntry : ICrypAnalysisResultListEntry, INotifyPropertyChanged
     {
-        public string Ranking { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private int ranking;
+        public int Ranking
+        {
+            get => ranking;
+            set
+            {
+                ranking = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Ranking)));
+            }
+        }
+
         public string Value { get; set; }
         public string Key { get; set; }
         public string Text { get; set; }

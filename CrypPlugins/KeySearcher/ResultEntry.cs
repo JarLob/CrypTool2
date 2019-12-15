@@ -1,14 +1,27 @@
 ﻿using Cryptool.CrypAnalysisViewControl;
 using System;
+using System.ComponentModel;
 
 namespace KeySearcher
 {
     /// <summary>
     /// Represents one entry in our result list
     /// </summary>
-    public class ResultEntry : ICrypAnalysisResultListEntry
+    public class ResultEntry : ICrypAnalysisResultListEntry, INotifyPropertyChanged
     {
-        public string Ranking { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private int ranking;
+        public int Ranking
+        {
+            get => ranking;
+            set
+            {
+                ranking = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Ranking)));
+            }
+        }
+
         public string Value { get; set; }
         public string Key { get; set; }
         public string Text { get; set; }

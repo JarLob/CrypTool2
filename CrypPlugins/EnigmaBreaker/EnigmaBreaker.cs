@@ -778,9 +778,21 @@ namespace Cryptool.EnigmaBreaker
 
     }
 
-    public class ResultEntry : ICrypAnalysisResultListEntry
+    public class ResultEntry : ICrypAnalysisResultListEntry, INotifyPropertyChanged
     {
-        public int Ranking { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private int ranking;
+        public int Ranking
+        {
+            get => ranking;
+            set
+            {
+                ranking = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Ranking)));
+            }
+        }
+
         public double Value { get; set; }
         public string Key { get; set; }
         public string Text { get; set; }
