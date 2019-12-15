@@ -28,7 +28,7 @@ using System.Threading;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.Media;
-
+using Cryptool.CrypAnalysisViewControl;
 
 namespace Cryptool.M138Analyzer
 {
@@ -86,7 +86,7 @@ namespace Cryptool.M138Analyzer
             settings = new M138AnalyzerSettings();
             settings.UpdateTaskPaneVisibility();
             settings.PropertyChanged += new PropertyChangedEventHandler(settings_PropertyChanged);
-            _presentation.doppelClick += new EventHandler(this.doppelClick);
+            _presentation.SelectedResultEntry += this.SelectedResultEntry;
         }
         #endregion
 
@@ -149,14 +149,12 @@ namespace Cryptool.M138Analyzer
             get { return _presentation; }
         }
 
-        private void doppelClick(object sender, EventArgs e)
+        private void SelectedResultEntry(ResultEntry resultEntry)
         {
             try
             {
-                ListViewItem lvi = sender as ListViewItem;
-                ResultEntry rse = lvi.Content as ResultEntry;
-                CalculatedKey = rse.Key;
-                ResultText = rse.Text;
+                CalculatedKey = resultEntry.Key;
+                ResultText = resultEntry.Text;
                 OnPropertyChanged("CalculatedKey");
                 OnPropertyChanged("ResultText");
             }
@@ -1143,9 +1141,9 @@ namespace Cryptool.M138Analyzer
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 _startTime = DateTime.Now;
-                ((M138AnalyzerPresentation)Presentation).startTime.Content = "" + _startTime;
-                ((M138AnalyzerPresentation)Presentation).endTime.Content = "";
-                ((M138AnalyzerPresentation)Presentation).elapsedTime.Content = "";
+                ((M138AnalyzerPresentation)Presentation).StartTime.Value = "" + _startTime;
+                ((M138AnalyzerPresentation)Presentation).EndTime.Value = "";
+                ((M138AnalyzerPresentation)Presentation).ElapsedTime.Value = "";
             }, null);
         }
 
@@ -1155,9 +1153,9 @@ namespace Cryptool.M138Analyzer
             {
                 var elapsedtime = DateTime.Now - _startTime;
                 var elapsedspan = new TimeSpan(elapsedtime.Days, elapsedtime.Hours, elapsedtime.Minutes, elapsedtime.Seconds, 0);
-                ((M138AnalyzerPresentation)Presentation).endTime.Content = "" + _estimatedEnd;
-                ((M138AnalyzerPresentation)Presentation).elapsedTime.Content = "" + elapsedspan;
-                ((M138AnalyzerPresentation)Presentation).currentAnalysedKeylength.Content = "" + _offset;
+                ((M138AnalyzerPresentation)Presentation).EndTime.Value = "" + _estimatedEnd;
+                ((M138AnalyzerPresentation)Presentation).ElapsedTime.Value = "" + elapsedspan;
+                ((M138AnalyzerPresentation)Presentation).CurrentAnalysedKeylength.Value = "" + _offset;
             }, null);
         }
 
@@ -1167,8 +1165,8 @@ namespace Cryptool.M138Analyzer
             {
                 var culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
                 
-                ((M138AnalyzerPresentation)Presentation).keysPerSecondAverageLabel.Content = String.Format(culture, "{0:##,#}", _average);
-                ((M138AnalyzerPresentation)Presentation).keysPerSecondCurrentLabel.Content = String.Format(culture, "{0:##,#}", _current);
+                ((M138AnalyzerPresentation)Presentation).KeysPerSecondAverageLabel.Value = String.Format(culture, "{0:##,#}", _average);
+                ((M138AnalyzerPresentation)Presentation).KeysPerSecondCurrentLabel.Value = String.Format(culture, "{0:##,#}", _current);
             }, null);
         }
 
@@ -1197,13 +1195,14 @@ namespace Cryptool.M138Analyzer
                                     _lastbeeptime = DateTime.Now;
                                 }
                     }
-                    _presentation.BestList.Add(entry);
-                    _presentation.BestList = new ObservableCollection<ResultEntry>(_presentation.BestList.OrderByDescending(i => i.Value));
+                    //Insert new entry at correct place to sustain order of list:
+                    var insertIndex = _presentation.BestList.TakeWhile(e => e.Value > entry.Value).Count();
+                    _presentation.BestList.Insert(insertIndex, entry);
+
                     if (_presentation.BestList.Count > BestListLength)
                         _presentation.BestList.RemoveAt(BestListLength);
                     int z = 1;
                     foreach (ResultEntry r in _presentation.BestList) r.Ranking = z++;
-                    _presentation.ListView.DataContext = _presentation.BestList;
                 }
                 catch (Exception e)
                 {
@@ -1229,10 +1228,8 @@ namespace Cryptool.M138Analyzer
                 try
                 {
                     _presentation.BestList.Add(entry);
-                    _presentation.BestList = new ObservableCollection<ResultEntry>(_presentation.BestList);
                     int z = 1;
                     foreach (ResultEntry r in _presentation.BestList) r.Ranking = z++;
-                    _presentation.ListView.DataContext = _presentation.BestList;
                 }
                 catch (Exception e)
                 {
@@ -1284,17 +1281,35 @@ namespace Cryptool.M138Analyzer
         #endregion
     }
 
-    public class ResultEntry
+    public class ResultEntry : ICrypAnalysisResultListEntry, INotifyPropertyChanged
     {
-        public int Ranking { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private int ranking;
+        public int Ranking
+        {
+            get => ranking;
+            set
+            {
+                ranking = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Ranking)));
+            }
+        }
+
         public double Value { get; set; }
         public string Key { get; set; }
         public string Text { get; set; }
         public int Offset { get; set; }
 
-        public double ExactValue
-        {
-            get { return Value; }
-        }
+        public double ExactValue => Value;
+
+        public string ClipboardValue => ExactValue.ToString();
+        public string ClipboardKey => Key;
+        public string ClipboardText => Text;
+        public string ClipboardEntry =>
+            "Rank: " + Ranking + Environment.NewLine +
+            "Value: " + ExactValue + Environment.NewLine +
+            "Key: " + Key + Environment.NewLine +
+            "Text: " + Text;
     }
 }
