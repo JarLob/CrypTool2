@@ -38,13 +38,13 @@
                     <Image Source="/LatticeCrypto;component/Utilities/Images/clipboard_copy_icon.png" Width="20" Height="20"/>
                 </Button>
                 <Separator Width="2"/>
-                <ToggleButton Name="toggleChangeLattice" Checked="toggleChangeLattice_Checked" Margin="4,0,2,0" ToolTip="{x:Static Properties:Languages.tooltipAdjustLatticeVectors}">
+                <ToggleButton ToolTipService.ShowOnDisabled="True" Name="toggleChangeLattice" Checked="toggleChangeLattice_Checked" Margin="4,0,2,0" ToolTip="{x:Static Properties:Languages.tooltipAdjustLatticeVectors}">
                     <Image Source="/LatticeCrypto;component/Utilities/Images/cursor_hand.png" Width="20" Height="20" />
                 </ToggleButton>
-                <ToggleButton Name="toggleScrollLattice" IsChecked="True" IsEnabled="False" Checked="toggleScrollLattice_Checked" Margin="2,0,2,0" ToolTip="{x:Static Properties:Languages.tooltipMoveLattice}">
+                <ToggleButton ToolTipService.ShowOnDisabled="True" Name="toggleScrollLattice" IsChecked="True" IsEnabled="False" Checked="toggleScrollLattice_Checked" Margin="2,0,2,0" ToolTip="{x:Static Properties:Languages.tooltipMoveLattice}">
                     <Image Source="/LatticeCrypto;component/Utilities/Images/cursor_drag_arrow.png" Width="20" Height="20" />
                 </ToggleButton>
-                <ToggleButton Margin="2,0,4,0" ToolTip="{x:Static Properties:Languages.tooltipSetTargetPoint}" IsEnabled="False" Opacity="0.5">
+                <ToggleButton ToolTipService.ShowOnDisabled="True" Margin="2,0,4,0" ToolTip="{x:Static Properties:Languages.tooltipSetTargetPoint}" IsEnabled="False" Opacity="0.5">
                     <Image Source="/LatticeCrypto;component/Utilities/Images/cursor_CVP.png" Width="20" Height="20" />
                 </ToggleButton>
                 <Separator Width="2"/>
