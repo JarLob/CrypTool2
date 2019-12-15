@@ -28,6 +28,7 @@ using System.Windows.Threading;
 using Cryptool.PluginBase.IO;
 using System.IO;
 using System.Text;
+using Cryptool.CrypAnalysisViewControl;
 
 namespace Cryptool.PlayfairAnalyzer
 {
@@ -241,9 +242,9 @@ namespace Cryptool.PlayfairAnalyzer
                 {
                     try
                     {
-                        _presentation.startTime.Content = _startTime;
-                        _presentation.endTime.Content = string.Empty;
-                        _presentation.elapsedTime.Content = string.Empty;
+                        _presentation.StartTime.Value = _startTime.ToString();
+                        _presentation.EndTime.Value = string.Empty;
+                        _presentation.ElapsedTime.Value = string.Empty;
                     }
                     catch (Exception)
                     {
@@ -341,7 +342,7 @@ namespace Cryptool.PlayfairAnalyzer
                             try
                             {              
                                 var elapsedTime =  (DateTime.Now - _startTime);
-                                _presentation.elapsedTime.Content = new TimeSpan(elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds);
+                                _presentation.ElapsedTime.Value = new TimeSpan(elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds).ToString();
                             }
                             catch (Exception)
                             {
@@ -410,9 +411,9 @@ namespace Cryptool.PlayfairAnalyzer
                 {
                     try
                     {
-                        _presentation.endTime.Content = DateTime.Now;
+                        _presentation.EndTime.Value = DateTime.Now.ToString();
                         var elapsedTime = (DateTime.Now - _startTime);
-                        _presentation.elapsedTime.Content = new TimeSpan(elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds);
+                        _presentation.ElapsedTime.Value = new TimeSpan(elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds).ToString();
                     }
                     catch (Exception)
                     {
@@ -639,7 +640,7 @@ namespace Cryptool.PlayfairAnalyzer
                         continue;
                     }
                     ResultEntry resultEntry = new ResultEntry();
-                    resultEntry.Ranking = values[0];
+                    resultEntry.Ranking = int.Parse(values[0]);
                     resultEntry.Value = values[1];
                     resultEntry.Key = values[2];
                     resultEntry.Text = values[3];
@@ -774,12 +775,35 @@ namespace Cryptool.PlayfairAnalyzer
         public string value;
     }
 
-    public class ResultEntry
+    public class ResultEntry : ICrypAnalysisResultListEntry, INotifyPropertyChanged
     {
-        public string Ranking { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private int ranking;
+        public int Ranking
+        {
+            get => ranking;
+            set
+            {
+                ranking = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Ranking)));
+            }
+        }
+
         public string Value { get; set; }
         public string Key { get; set; }
         public string Text { get; set; }
-        public string Info { get; set; }    
-    }    
+        public string Info { get; set; }
+
+        public string ClipboardValue => Value.ToString();
+        public string ClipboardKey => Key;
+        public string ClipboardText => Text;
+        public string ClipboardEntry =>
+            "Rank: " + Ranking + Environment.NewLine +
+            "Value: " + Value + Environment.NewLine +
+            "Key: " + Key + Environment.NewLine +
+            "Text: " + Text + Environment.NewLine +
+            "Info: " + Info;
+
+    }
 }
