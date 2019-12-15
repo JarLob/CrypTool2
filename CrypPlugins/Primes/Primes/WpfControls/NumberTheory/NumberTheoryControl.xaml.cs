@@ -64,7 +64,6 @@ namespace Primes.WpfControls.NumberTheory
             }
             else if (sender == tabItemPowerBase)
             {
-                //TODO!
                 OnlineHelp.OnlineHelpAccess.ShowOnlineHelp(Primes.OnlineHelp.OnlineHelpActions.Modular_Exponentiation);
             }
             else if (sender == tabItemPRoots)
