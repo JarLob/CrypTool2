@@ -33,7 +33,7 @@ using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.PluginBase.IO;
 using System.Windows.Threading;
 using Cryptool.PluginBase.Attributes;
-
+using Cryptool.CrypAnalysisViewControl;
 
 namespace Cryptool.EnigmaBreaker
 {
@@ -113,9 +113,9 @@ namespace Cryptool.EnigmaBreaker
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 _startTime = DateTime.Now;
-                ((AssignmentPresentation)Presentation).startTime.Content = "" + _startTime;
-                ((AssignmentPresentation)Presentation).endTime.Content = "";
-                ((AssignmentPresentation)Presentation).elapsedTime.Content = "";
+                ((AssignmentPresentation)Presentation).StartTime.Value = "" + _startTime;
+                ((AssignmentPresentation)Presentation).EndTime.Value = "";
+                ((AssignmentPresentation)Presentation).ElapsedTime.Value = "";
             }, null);
         }
 
@@ -129,9 +129,9 @@ namespace Cryptool.EnigmaBreaker
                 _endTime = DateTime.Now;
                 var elapsedtime = _endTime.Subtract(_startTime);
                 var elapsedspan = new TimeSpan(elapsedtime.Days, elapsedtime.Hours, elapsedtime.Minutes, elapsedtime.Seconds, 0);
-                ((AssignmentPresentation)Presentation).endTime.Content = "" + _endTime;
-                ((AssignmentPresentation)Presentation).elapsedTime.Content = "" + elapsedspan;
-                ((AssignmentPresentation)Presentation).currentlyAnalysed.Content = currentlyAnalyzed;
+                ((AssignmentPresentation)Presentation).EndTime.Value = "" + _endTime;
+                ((AssignmentPresentation)Presentation).ElapsedTime.Value = "" + elapsedspan;
+                ((AssignmentPresentation)Presentation).CurrentlyAnalysed.Value = currentlyAnalyzed;
 
             }, null);
         }
@@ -146,8 +146,8 @@ namespace Cryptool.EnigmaBreaker
                 _endTime = DateTime.Now;
                 var elapsedtime = _endTime.Subtract(_startTime);
                 var elapsedspan = new TimeSpan(elapsedtime.Days, elapsedtime.Hours, elapsedtime.Minutes, elapsedtime.Seconds, 0);
-                ((AssignmentPresentation)Presentation).endTime.Content = "" + _endTime;
-                ((AssignmentPresentation)Presentation).elapsedTime.Content = "" + elapsedspan;
+                ((AssignmentPresentation)Presentation).EndTime.Value = "" + _endTime;
+                ((AssignmentPresentation)Presentation).ElapsedTime.Value = "" + elapsedspan;
 
             }, null);
         }
@@ -778,24 +778,25 @@ namespace Cryptool.EnigmaBreaker
 
     }
 
-    public class ResultEntry
+    public class ResultEntry : ICrypAnalysisResultListEntry
     {
         public int Ranking { get; set; }
         public double Value { get; set; }
         public string Key { get; set; }
         public string Text { get; set; }
 
-        public double ExactValue
-        {
-            get { return Math.Abs(Value); }
-        }
+        public double ExactValue => Math.Abs(Value);
 
-        public int KeyLength
-        {
-            get
-            {
-                return Key.Length;
-            }
-        }
-    }    
+        public int KeyLength => Key.Length;
+
+        public string ClipboardValue => ExactValue.ToString();
+        public string ClipboardKey => Key;
+        public string ClipboardText => Text;
+        public string ClipboardEntry =>
+            "Rank: " + Ranking + Environment.NewLine +
+            "Value: " + ExactValue + Environment.NewLine +
+            "Key: " + Key + Environment.NewLine +
+            "KeyLength: " + KeyLength + Environment.NewLine +
+            "Text: " + Text;
+    }
 }

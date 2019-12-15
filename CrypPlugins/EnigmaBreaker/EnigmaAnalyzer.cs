@@ -112,8 +112,9 @@ namespace Cryptool.EnigmaBreaker
                     {
                         return;
                     }
-                    _presentation.BestList.Add(entry);
-                    _presentation.BestList = new ObservableCollection<ResultEntry>(_presentation.BestList.OrderByDescending(i => i.Value));
+                    //Insert new entry at correct place to sustain order of list:
+                    var insertIndex = _presentation.BestList.TakeWhile(e => e.Value > entry.Value).Count();
+                    _presentation.BestList.Insert(insertIndex, entry);
                     if (_presentation.BestList.Count > _maxBestListEntries)
                     {
                         _presentation.BestList.RemoveAt(_maxBestListEntries);
@@ -124,7 +125,6 @@ namespace Cryptool.EnigmaBreaker
                         e.Ranking = ranking;
                         ranking++;
                     }
-                    _presentation.ListView.DataContext = _presentation.BestList;
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
                 catch (Exception e)
@@ -147,7 +147,7 @@ namespace Cryptool.EnigmaBreaker
                 {
                     try
                     {
-                        _presentation.currentSpeed.Content = string.Format("{0:0,0}", keysDispatcher);
+                        _presentation.CurrentSpeed.Value = string.Format("{0:0,0}", keysDispatcher);
                     }
                     // ReSharper disable once EmptyGeneralCatchClause
                     catch (Exception e)
@@ -1254,7 +1254,7 @@ namespace Cryptool.EnigmaBreaker
             {
                 try
                 {
-                    _presentation.currentSpeed.Content = string.Format("{0:0,0}", Math.Round(keysDispatcher2 * 1000 / (DateTime.Now - lasttimeDispatcher2).TotalMilliseconds, 0));
+                    _presentation.CurrentSpeed.Value = string.Format("{0:0,0}", Math.Round(keysDispatcher2 * 1000 / (DateTime.Now - lasttimeDispatcher2).TotalMilliseconds, 0));
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
                 catch (Exception e)
