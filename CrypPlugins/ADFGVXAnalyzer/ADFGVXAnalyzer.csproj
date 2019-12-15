@@ -129,6 +129,10 @@
       <Name>CrypPluginBase</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\LibSource\CrypAnalysisViewControl\CrypAnalysisViewControl.csproj">
+      <Project>{4ab9be96-3e34-40cb-9270-a64480c851ee}</Project>
+      <Name>CrypAnalysisViewControl</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

@@ -24,6 +24,7 @@ using common;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Cryptool.CrypAnalysisViewControl;
 
 namespace ADFGVXAnalyzer
 {
@@ -58,7 +59,7 @@ namespace ADFGVXAnalyzer
         {
             settings = new ADFGVXANalyzerSettings();
             myPresentation = new ADFGVXAnalyzerPresentation();
-            myPresentation.getTranspositionResult += new EventHandler(this.getTranspositionResult);
+            myPresentation.getTranspositionResult += this.getTranspositionResult;
             Presentation = myPresentation;
             log = new Logger();
 
@@ -262,8 +263,11 @@ namespace ADFGVXAnalyzer
                         {
                             return;
                         }
-                        ((ADFGVXAnalyzerPresentation)Presentation).BestList.Add(entry);
-                        ((ADFGVXAnalyzerPresentation)Presentation).BestList = new ObservableCollection<ResultEntry>(((ADFGVXAnalyzerPresentation)Presentation).BestList.OrderByDescending(i => i.Score));
+
+                        //Insert new entry at correct place to sustain order of list:
+                        var insertIndex = myPresentation.BestList.TakeWhile(e => e.Score > entry.Score).Count();
+                        myPresentation.BestList.Insert(insertIndex, entry);
+
                         if (((ADFGVXAnalyzerPresentation)Presentation).BestList.Count > MaxBestListEntries)
                         {
                             ((ADFGVXAnalyzerPresentation)Presentation).BestList.RemoveAt(MaxBestListEntries);
@@ -274,7 +278,6 @@ namespace ADFGVXAnalyzer
                             e.Ranking = ranking;
                             ranking++;
                         }
-                        ((ADFGVXAnalyzerPresentation)Presentation).ListView.DataContext = ((ADFGVXAnalyzerPresentation)Presentation).BestList;
                     }
                     // ReSharper disable once EmptyGeneralCatchClause
                     catch (Exception e)
@@ -301,12 +304,12 @@ namespace ADFGVXAnalyzer
             {
                 Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    ((ADFGVXAnalyzerPresentation)Presentation).startTime.Content = "";
-                    ((ADFGVXAnalyzerPresentation)Presentation).endTime.Content = "";
-                    ((ADFGVXAnalyzerPresentation)Presentation).elapsedTime.Content = "";
-                    ((ADFGVXAnalyzerPresentation)Presentation).currentAnalysedKeylength.Content = "";
-                    ((ADFGVXAnalyzerPresentation)Presentation).keys.Content = "";
-                    ((ADFGVXAnalyzerPresentation)Presentation).messageCount.Content = "";
+                    ((ADFGVXAnalyzerPresentation)Presentation).StartTime.Value = "";
+                    ((ADFGVXAnalyzerPresentation)Presentation).EndTime.Value = "";
+                    ((ADFGVXAnalyzerPresentation)Presentation).ElapsedTime.Value = "";
+                    ((ADFGVXAnalyzerPresentation)Presentation).CurrentAnalysedKeylength.Value = "";
+                    ((ADFGVXAnalyzerPresentation)Presentation).Keys.Value = "";
+                    ((ADFGVXAnalyzerPresentation)Presentation).MessageCount.Value = "";
                     ((ADFGVXAnalyzerPresentation)Presentation).BestList.Clear();
                 }, null);
             }
@@ -324,9 +327,9 @@ namespace ADFGVXAnalyzer
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 startTime = DateTime.Now;
-                ((ADFGVXAnalyzerPresentation)Presentation).startTime.Content = "" + startTime;
-                ((ADFGVXAnalyzerPresentation)Presentation).endTime.Content = "";
-                ((ADFGVXAnalyzerPresentation)Presentation).elapsedTime.Content = "";
+                ((ADFGVXAnalyzerPresentation)Presentation).StartTime.Value = "" + startTime;
+                ((ADFGVXAnalyzerPresentation)Presentation).EndTime.Value = "";
+                ((ADFGVXAnalyzerPresentation)Presentation).ElapsedTime.Value = "";
             }, null);
 
 
@@ -344,11 +347,11 @@ namespace ADFGVXAnalyzer
                 double totalSeconds = elapsedtime.TotalSeconds;
                 keysPerSecond = (int)(decryptions / totalSeconds);
                 var elapsedspan = new TimeSpan(elapsedtime.Days, elapsedtime.Hours, elapsedtime.Minutes, elapsedtime.Seconds, 0);
-                ((ADFGVXAnalyzerPresentation)Presentation).endTime.Content = "" + endTime;
-                ((ADFGVXAnalyzerPresentation)Presentation).elapsedTime.Content = "" + elapsedspan;
-                ((ADFGVXAnalyzerPresentation)Presentation).currentAnalysedKeylength.Content = "" + keylength;
-                ((ADFGVXAnalyzerPresentation)Presentation).keys.Content = "" + keysPerSecond + " (" + decryptions + ")";
-                ((ADFGVXAnalyzerPresentation)Presentation).messageCount.Content = "" + messages.Length;
+                ((ADFGVXAnalyzerPresentation)Presentation).EndTime.Value = "" + endTime;
+                ((ADFGVXAnalyzerPresentation)Presentation).ElapsedTime.Value = "" + elapsedspan;
+                ((ADFGVXAnalyzerPresentation)Presentation).CurrentAnalysedKeylength.Value = "" + keylength;
+                ((ADFGVXAnalyzerPresentation)Presentation).Keys.Value = "" + keysPerSecond + " (" + decryptions + ")";
+                ((ADFGVXAnalyzerPresentation)Presentation).MessageCount.Value = "" + messages.Length;
 
             }, null);
 
@@ -491,13 +494,11 @@ namespace ADFGVXAnalyzer
         }
 
         //Method to send a transactionhash by doubleclick
-        private void getTranspositionResult(object sender, EventArgs e)
+        private void getTranspositionResult(ResultEntry resultEntry)
         {
             try
             {
-                ListViewItem lvi = sender as ListViewItem;
-                ResultEntry entry = lvi.Content as ResultEntry;
-                TranspositionResult = entry.TranspositionResult;
+                TranspositionResult = resultEntry.TranspositionResult;
             }
             catch (Exception ex)
             {
@@ -511,7 +512,7 @@ namespace ADFGVXAnalyzer
 
     #region Helper Classes
 
-    public class ResultEntry
+    public class ResultEntry : ICrypAnalysisResultListEntry
     {
         public int Ranking { get; set; }
         public double Score { get; set; }
@@ -520,6 +521,16 @@ namespace ADFGVXAnalyzer
         public string TransKey { get; set; }
         public string TranspositionResult { get; set; }
 
+        public string ClipboardValue => $"Score: {Score}\tIc1: {Ic1}\tIc2: {Ic2}";
+        public string ClipboardKey => TransKey;
+        public string ClipboardText => TranspositionResult;
+        public string ClipboardEntry =>
+            "Ranking: " + Ranking + Environment.NewLine +
+            "Score: " + Score + Environment.NewLine +
+            "Ic1: " + Ic1 + Environment.NewLine +
+            "Ic2: " + Ic2 + Environment.NewLine +
+            "TransKey: " + TransKey + Environment.NewLine +
+            "Plaintext: " + TranspositionResult;
     }
 
     #endregion

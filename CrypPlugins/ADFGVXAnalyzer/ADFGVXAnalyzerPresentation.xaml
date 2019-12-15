@@ -5,128 +5,66 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:ADFGVXAnalyzer.Properties"
+    xmlns:crypanalysisviewcontrol="clr-namespace:Cryptool.CrypAnalysisViewControl;assembly=CrypAnalysisViewControl"
     d:DesignHeight="263">
 
-    <UserControl.Resources>
-        <RotateTransform x:Key="HeaderRotate" Angle="270" />
-        <Style x:Key="ValueRow1">
-            <Setter Property="Label.Margin" Value="80,0,0,0" />
-        </Style>
-        <Style x:Key="ValueRow2">
-            <Setter Property="Label.Margin" Value="80,0,0,0" />
-        </Style>
-    </UserControl.Resources>
-    <Viewbox>
-        <StackPanel Width="646">
-            <Border BorderBrush="Silver" BorderThickness="2,2,2,2">
-                <Grid Height="78" Background="#AFFFD4C1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="26" />
-                        <ColumnDefinition Width="200*" />
-                        <ColumnDefinition Width="200*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="26" />
-                        <RowDefinition Height="26" />
-                        <RowDefinition Height="26" />
-                    </Grid.RowDefinitions>
-                    <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FFE56B00" Grid.Column="0" Grid.RowSpan="3">
-                        <Label Name="localLabel" Content="{x:Static properties:Resources.LocalLabel}" FontSize="11" HorizontalAlignment="Center" Foreground="White" />
-                    </Border>
-                    <Label Name="startLabel" Content="{x:Static properties:Resources.StartLabel}" Grid.Column="1" />
-                    <Label Name="startTime" Style="{StaticResource ValueRow1}" Grid.Column="1" Margin="120,0,0,0" />
-                    <Label Name="endLabel" Content="{x:Static properties:Resources.EndLabel}" HorizontalAlignment="Left" Grid.Column="2" />
-                    <Label Name="keysLabel" Content="{x:Static properties:Resources.KeysLabel}" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="1" />
-                    <Label Name="endTime" Style="{StaticResource ValueRow2}" Grid.Column="2" Margin="120,0,0,0"/>
-                    <Label Name="elapsedLabel" Content="{x:Static properties:Resources.ElapsedLabel}" Grid.Column="1" Grid.Row="1" />
-                    <Label Name="elapsedTime" Style="{StaticResource ValueRow1}" Grid.Column="1" Grid.Row="1" Margin="120,0,0,0" />
-                    <Label Name="messageLabel" Content="{x:Static properties:Resources.MessagesLabel}" Grid.Column="1" Grid.Row="2" />
-                    <Label Name="messageCount" Style="{StaticResource ValueRow1}" Grid.Column="1" Grid.Row="2" Margin="120,0,0,0" />
-                    <Label Name="timeLeft" Style="{StaticResource ValueRow2}" Grid.Column="2" Grid.Row="1" Margin="120,0,0,0" />
-                    <Label Name="keyLengthLabel" Content="{x:Static properties:Resources.KeyLengthLabel}" Grid.Column="2" Grid.Row="2"/>
-                    <Label Name="keys" Style="{StaticResource ValueRow2}" Margin="120,0,0,0" Grid.Column="2" Grid.Row="1" />
-                    <Label Name="currentAnalysedKeylength" Style="{StaticResource ValueRow2}" Margin="230,0,0,0" Grid.Column="2" Grid.Row="2" />
-                </Grid>
-            </Border>
-            <Border BorderBrush="Silver" BorderThickness="2,0,2,2">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="26" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FF479308" Grid.Column="0">
-                        <Label Name="topTenLabel" Content="{x:Static properties:Resources.TopTenLabel}" FontSize="11" HorizontalAlignment="Center" Foreground="White" Width="100" />
-                    </Border>
-                    <ListView Name="ListView" Background="#AFE2FFCE" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="10" Grid.Column="1" Height="250">
+    <crypanalysisviewcontrol:CrypAnalysisViewControl ResultHeaderCaption="{Loc LocalLabel}" ResultListCaption="{Loc TopTenLabel}">
+        <crypanalysisviewcontrol:CrypAnalysisViewControl.ResultHeaderLabels>
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc StartLabel}" x:Name="StartTime" />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc EndLabel}" x:Name="EndTime" />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc ElapsedLabel}" x:Name="ElapsedTime" />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc KeysLabel}" x:Name="Keys" />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc MessageLabel}" x:Name="MessageCount" />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc KeyLengthLabel}" x:Name="CurrentAnalysedKeylength" />
+        </crypanalysisviewcontrol:CrypAnalysisViewControl.ResultHeaderLabels>
 
-                        <ListView.Resources>
-                            <ContextMenu x:Key="ItemContextMenu">
-                                <MenuItem Header="{x:Static properties:Resources.Copy_score}" Tag="copy_score" CommandParameter="{Binding}" Click="ContextMenuHandler" />
-                                <MenuItem Header="{x:Static properties:Resources.Copy_ic1}" Tag="copy_ic1" CommandParameter="{Binding}" Click="ContextMenuHandler" />
-                                <MenuItem Header="{x:Static properties:Resources.Copy_ic2}" Tag="copy_ic2" CommandParameter="{Binding}" Click="ContextMenuHandler" />
-                                <MenuItem Header="{x:Static properties:Resources.Copy_transkey}" Tag="copy_transkey" CommandParameter="{Binding}" Click="ContextMenuHandler" />
-                                <MenuItem Header="{x:Static properties:Resources.Copy_plaintext}" Tag="copy_plaintext" CommandParameter="{Binding}" Click="ContextMenuHandler" />
-                                <MenuItem Header="{x:Static properties:Resources.Copy_line}" Tag="copy_line" CommandParameter="{Binding}" Click="ContextMenuHandler" />
-                                <MenuItem Header="{x:Static properties:Resources.Copy_all}" Tag="copy_all" CommandParameter="{Binding}" Click="ContextMenuHandler" />
-                            </ContextMenu>
-                        </ListView.Resources>
-
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListViewItem}">
-                                <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}"/>
-                                <EventSetter Event= "MouseDoubleClick" Handler="HandleDoubleClick" />
-                            </Style>
-                        </ListView.ItemContainerStyle>
-
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="#" DisplayMemberBinding="{Binding Path=Ranking}" Width="25">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Header="{x:Static properties:Resources.ScoreHeader}" DisplayMemberBinding="{Binding Path=Score}" Width="50">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Header="{x:Static properties:Resources.IoC1Header}" DisplayMemberBinding="{Binding Path=Ic1}" Width="50">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Header="{x:Static properties:Resources.IoC2Header}" DisplayMemberBinding="{Binding Path=Ic2}" Width="50">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Header="{x:Static properties:Resources.TranskeyHeader}" DisplayMemberBinding="{Binding Path=TransKey}" Width="170">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Header="{x:Static properties:Resources.PlaintextHeader}" DisplayMemberBinding="{Binding Path=TranspositionResult}" Width="270">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </Grid>
-            </Border>
-        </StackPanel>
-    </Viewbox>
+        <crypanalysisviewcontrol:CrypAnalysisResultListView ItemsSource="{Binding}" ResultItemAction="HandleResultItemAction">
+            <crypanalysisviewcontrol:CrypAnalysisResultListView.View>
+                <GridView>
+                    <GridViewColumn Header="#" DisplayMemberBinding="{Binding Path=Ranking}" Width="25">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{x:Static properties:Resources.ScoreHeader}" DisplayMemberBinding="{Binding Path=Score}" Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{x:Static properties:Resources.IoC1Header}" DisplayMemberBinding="{Binding Path=Ic1}" Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{x:Static properties:Resources.IoC2Header}" DisplayMemberBinding="{Binding Path=Ic2}" Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{x:Static properties:Resources.TranskeyHeader}" DisplayMemberBinding="{Binding Path=TransKey}" Width="170">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{x:Static properties:Resources.PlaintextHeader}" DisplayMemberBinding="{Binding Path=TranspositionResult}" Width="270">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </crypanalysisviewcontrol:CrypAnalysisResultListView.View>
+        </crypanalysisviewcontrol:CrypAnalysisResultListView>
+    </crypanalysisviewcontrol:CrypAnalysisViewControl>
 </UserControl>
