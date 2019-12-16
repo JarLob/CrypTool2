@@ -1,42 +1,29 @@
-﻿using System;
+﻿using Cryptool.CrypAnalysisViewControl;
+using System;
 using System.Collections.ObjectModel;
-using System.Threading;
 using System.Windows.Controls;
-using System.Windows.Threading;
 
 
 namespace SigabaKnownPlaintext
 {
-    /// <summary>
-    /// Interaction logic for StampChallenge2Presentation.xaml
-    /// </summary>
    [global::Cryptool.PluginBase.Attributes.Localization("SIgabaKnownPlaintext.Properties.Resources")]
     public partial class SigabaKnownPlaintextPresentaion : UserControl
     {
-        public ObservableCollection<ResultEntry> entries = new ObservableCollection<ResultEntry>();
-        public event EventHandler doppelClick;
+        public ObservableCollection<ResultEntry> Entries { get; } = new ObservableCollection<ResultEntry>();
+        public event Action<ResultEntry> SelectedResultEntry;
 
         public SigabaKnownPlaintextPresentaion()
         {
             InitializeComponent();
-            this.DataContext = entries;
+            this.DataContext = Entries;
         }
 
-        public void HandleDoubleClick(Object sender, EventArgs eventArgs)
+        private void HandleResultItemAction(ICrypAnalysisResultListEntry item)
         {
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
-                                                                                       {
-                                                                                           doppelClick(sender,
-                                                                                                       eventArgs);
-                                                                                       } , null);
-
+            if (item is ResultEntry resultItem)
+            {
+                SelectedResultEntry(resultItem);
+            }
         }
-
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-       
     }
 }

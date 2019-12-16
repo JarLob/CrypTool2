@@ -30,7 +30,7 @@ using System.Windows.Threading;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Control;
 using Cryptool.PluginBase.Miscellaneous;
-
+using Cryptool.CrypAnalysisViewControl;
 
 namespace SigabaKnownPlaintext
 {
@@ -63,7 +63,7 @@ namespace SigabaKnownPlaintext
             _sigpa = new SigabaKnownPlaintextPresentaion();
             _core = new SigabaCoreFastKnownPlaintext(this);
             this.Presentation = _sigpa;
-            _sigpa.doppelClick += doppelClick;
+            _sigpa.SelectedResultEntry += SelectedResultEntry;
             //         _coreP2 = new SigabaCoreFastPhaseII(this);
         }
 
@@ -1197,17 +1197,13 @@ namespace SigabaKnownPlaintext
 
 
 
-        private void doppelClick(object sender, EventArgs e)
+        private void SelectedResultEntry(ResultEntry rse)
         {
             SigabaCoreFastKnownPlaintext _coreTemp = new SigabaCoreFastKnownPlaintext(this);
-            var lvi = sender as ListViewItem;
-            var rse = lvi.Content as ResultEntry;
-            
-            
             if (rse != null)
-            if (!list1.ElementAt(Int32.Parse(rse.Ranking) - 1).tested) 
+            if (!list1.ElementAt(rse.Ranking - 1).tested) 
             {
-                Console.WriteLine(Int32.Parse(rse.Ranking) - 1 + "TEst");
+                Console.WriteLine(rse.Ranking - 1 + "TEst");
                 int[] rotorTypReal = new int[]
                                          {
                                              rse.ControlRotors[0] - 48, rse.ControlRotors[2] - 48,
@@ -1240,7 +1236,7 @@ namespace SigabaKnownPlaintext
                                                   rse.ControlRotors[5] == 'R'
                                               }
                                               ,
-                                      Pseudo = list1.ElementAt(Int32.Parse(rse.Ranking) - 1).winner.Pseudo
+                                      Pseudo = list1.ElementAt(rse.Ranking - 1).winner.Pseudo
                                   };
 
                 _coreTemp.setCodeWheels(new int[]
@@ -1250,41 +1246,41 @@ namespace SigabaKnownPlaintext
                                                 rse.CipherRotors[8] - 48
                                             });
                 
-                String[] s = _coreTemp.FindSteppingMazeCompletionCompact2(bestlist[Int32.Parse(rse.Ranking)-1].input2, c,
-                                                            bestlist[Int32.Parse(rse.Ranking)-1].temp2,
-                                                            bestlist[Int32.Parse(rse.Ranking)-1].pseudo);
+                String[] s = _coreTemp.FindSteppingMazeCompletionCompact2(bestlist[rse.Ranking-1].input2, c,
+                                                            bestlist[rse.Ranking-1].temp2,
+                                                            bestlist[rse.Ranking-1].pseudo);
                 
                 rse.IndexKey = "";
-                ValueKey valkey = bestlist[rse.Ranking[0] - 49];
+                ValueKey valkey = bestlist[rse.Ranking];
                 valkey.indexKey = "";
-                bestlist[rse.Ranking[0] - 49] = valkey;
+                bestlist[rse.Ranking] = valkey;
 
                 
                 if (s != null)
                 {
-                    ValueKey valkey2 = list1.ElementAt(Int32.Parse(rse.Ranking) - 1);
+                    ValueKey valkey2 = list1.ElementAt(rse.Ranking - 1);
                     valkey2.indexKey = s[3];
                     valkey2.indexRotors = s[4];
                     valkey2.controlKey = valkey2.controlKey + s[1];
                     valkey2.controlRotors = valkey2.controlRotors + s[0] + s[2];
                     valkey2.tested = true;
 
-                    list1.Find(list1.ElementAt(Int32.Parse(rse.Ranking)-1)).Value = valkey2;
+                    list1.Find(list1.ElementAt(rse.Ranking-1)).Value = valkey2;
 
-                    ((SigabaKnownPlaintextPresentaion) Presentation).entries[Int32.Parse(rse.Ranking)-1] = rse;
+                    ((SigabaKnownPlaintextPresentaion) Presentation).Entries[rse.Ranking-1] = rse;
                     UpdatePresentationList(0, 0, startime);
                 }
                 else
                 {
-                    ValueKey valkey2 = list1.ElementAt(rse.Ranking[0] - 49);
+                    ValueKey valkey2 = list1.ElementAt(rse.Ranking);
                     valkey2.indexKey = "NOT VALID";
                     valkey2.controlKey = "NOT VALID";
                     valkey2.controlRotors = "NOT VALID";
                     valkey2.tested = true;
 
-                    list1.Find(list1.ElementAt(Int32.Parse(rse.Ranking) - 1)).Value = valkey2;
+                    list1.Find(list1.ElementAt(rse.Ranking - 1)).Value = valkey2;
 
-                    ((SigabaKnownPlaintextPresentaion)Presentation).entries[Int32.Parse(rse.Ranking)-1] = rse;
+                    ((SigabaKnownPlaintextPresentaion)Presentation).Entries[rse.Ranking-1] = rse;
                     UpdatePresentationList(0, 0, startime);
                 }
             }
@@ -1378,9 +1374,9 @@ namespace SigabaKnownPlaintext
                                                                                                                )
                                                                                                                Presentation)
                                                                                                                   .
-                                                                                                                  startTime
+                                                                                                                  StartTime
                                                                                                                   .
-                                                                                                                  Content
+                                                                                                                  Value
                                                                                                                   = "" +
                                                                                                                     startTime;
                                                                                                               ((
@@ -1388,9 +1384,9 @@ namespace SigabaKnownPlaintext
                                                                                                                )
                                                                                                                Presentation)
                                                                                                                   .
-                                                                                                                  keysPerSecond
+                                                                                                                  KeysPerSecond
                                                                                                                   .
-                                                                                                                  Content
+                                                                                                                  Value
                                                                                                                   = "" +
                                                                                                                     keysPerSec;
 
@@ -1407,9 +1403,9 @@ namespace SigabaKnownPlaintext
                                                                                                                    )
                                                                                                                    Presentation)
                                                                                                                       .
-                                                                                                                      timeLeft
+                                                                                                                      TimeLeft
                                                                                                                       .
-                                                                                                                      Content
+                                                                                                                      Value
                                                                                                                       =
                                                                                                                       "" +
                                                                                                                       endTime
@@ -1426,9 +1422,9 @@ namespace SigabaKnownPlaintext
                                                                                                                    )
                                                                                                                    Presentation)
                                                                                                                       .
-                                                                                                                      elapsedTime
+                                                                                                                      ElapsedTime
                                                                                                                       .
-                                                                                                                      Content
+                                                                                                                      Value
                                                                                                                       =
                                                                                                                       "" +
                                                                                                                       elapsedspan;
@@ -1437,9 +1433,9 @@ namespace SigabaKnownPlaintext
                                                                                                                    )
                                                                                                                    Presentation)
                                                                                                                       .
-                                                                                                                      endTime
+                                                                                                                      EndTime
                                                                                                                       .
-                                                                                                                      Content
+                                                                                                                      Value
                                                                                                                       =
                                                                                                                       "" +
                                                                                                                       endTime;
@@ -1451,9 +1447,9 @@ namespace SigabaKnownPlaintext
                                                                                                                    )
                                                                                                                    Presentation)
                                                                                                                       .
-                                                                                                                      timeLeft
+                                                                                                                      TimeLeft
                                                                                                                       .
-                                                                                                                      Content
+                                                                                                                      Value
                                                                                                                       =
                                                                                                                       "incalculable";
 
@@ -1462,9 +1458,9 @@ namespace SigabaKnownPlaintext
                                                                                                                    )
                                                                                                                    Presentation)
                                                                                                                       .
-                                                                                                                      endTime
+                                                                                                                      EndTime
                                                                                                                       .
-                                                                                                                      Content
+                                                                                                                      Value
                                                                                                                       =
                                                                                                                       "in a galaxy far, far away...";
                                                                                                               }
@@ -1482,7 +1478,7 @@ namespace SigabaKnownPlaintext
                                                                                                                    )
                                                                                                                    Presentation)
                                                                                                                       .
-                                                                                                                      entries
+                                                                                                                      Entries
                                                                                                                       .
                                                                                                                       Clear
                                                                                                                       ();
@@ -1505,12 +1501,7 @@ namespace SigabaKnownPlaintext
                                                                                                                           .
                                                                                                                           Ranking
                                                                                                                           =
-                                                                                                                          i
-                                                                                                                              .
-                                                                                                                              ToString
-                                                                                                                              (CultureInfo
-                                                                                                                                   .
-                                                                                                                                   InvariantCulture);
+                                                                                                                          i;
 
 
                                                                                                                       String
@@ -1619,7 +1610,7 @@ namespace SigabaKnownPlaintext
                                                                                                                       ((
                                                                                                                        SigabaKnownPlaintextPresentaion
                                                                                                                        )
-                                                                                                                       Presentation).entries.Add(entry);
+                                                                                                                       Presentation).Entries.Add(entry);
 
                                                                                                                       linkedListNode =linkedListNode.Next;
                                                                                                                   }
@@ -1716,9 +1707,21 @@ namespace SigabaKnownPlaintext
         public Candidate winner;
     };
 
-    public class ResultEntry
+    public class ResultEntry : ICrypAnalysisResultListEntry, INotifyPropertyChanged
     {
-        public string Ranking { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private int ranking;
+        public int Ranking
+        {
+            get => ranking;
+            set
+            {
+                ranking = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Ranking)));
+            }
+        }
+
         public string Value { get; set; }
         public string CipherKey { get; set; }
         public string ControlKey { get; set; }
@@ -1728,6 +1731,15 @@ namespace SigabaKnownPlaintext
         public string IndexRotors { get; set; }
         public string Text { get; set; }
         public System.Web.UI.WebControls.Button Button { get; set; }
+
+        public string ClipboardValue => Value;
+        public string ClipboardKey => $"Cipher Key: {CipherKey} - Control Key: {ControlKey} - Index Key: {IndexKey}";
+        public string ClipboardText => Text;
+        public string ClipboardEntry =>
+            "Rank: " + Ranking + Environment.NewLine +
+            "Value: " + Value + Environment.NewLine +
+            ClipboardKey + Environment.NewLine +
+            "Text: " + Text;
     }
     #endregion
 
