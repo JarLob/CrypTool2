@@ -10,6 +10,7 @@ using System.Threading;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Control;
 using Cryptool.PluginBase.Miscellaneous;
+using Cryptool.CrypAnalysisViewControl;
 
 namespace TranspositionAnalyser
 {
@@ -93,17 +94,15 @@ namespace TranspositionAnalyser
             settings = new TranspositionAnalyserSettings();
             myPresentation = new TranspositionAnalyserQuickWatchPresentation();
             Presentation = myPresentation;
-            myPresentation.doppelClick += new EventHandler(this.doppelClick);
+            myPresentation.SelectedResultEntry += this.SelectedResultEntry;
             ars = new AutoResetEvent(false);
         }
 
-        private void doppelClick(object sender, EventArgs e)
+        private void SelectedResultEntry(ResultEntry resultEntry)
         {
             try
             {
-                ListViewItem lvi = sender as ListViewItem;
-                ResultEntry rse = lvi.Content as ResultEntry;
-                Output = System.Text.Encoding.GetEncoding(1252).GetBytes(rse.Text);
+                Output = Encoding.GetEncoding(1252).GetBytes(resultEntry.Text);
             }
             catch (Exception ex)
             {
@@ -205,7 +204,7 @@ namespace TranspositionAnalyser
             comparer = new ValueKeyComparer(costMaster.GetRelationOperator() != RelationOperator.LargerThen);
             TOPLIST = new HighscoreList(comparer, 10);
 
-            myPresentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate { myPresentation.entries.Clear(); }, null);
+            myPresentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate { myPresentation.Entries.Clear(); }, null);
 
             switch (this.settings.Analysis_method)
             {
@@ -298,29 +297,29 @@ namespace TranspositionAnalyser
             {
                 var culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 
-                myPresentation.startTime.Content = "" + startTime;
-                myPresentation.elapsedTime.Content = "" + elapsedtime;
-                myPresentation.keysPerSecond.Content = String.Format(culture, "{0:##,#}", (ulong)keysPerSec);
+                myPresentation.StartTime.Value = "" + startTime;
+                myPresentation.ElapsedTime.Value = "" + elapsedtime;
+                myPresentation.KeysPerSecond.Value = String.Format(culture, "{0:##,#}", (ulong)keysPerSec);
 
                 if (!endsInInfinity)
                 {
-                    myPresentation.timeLeft.Content = "" + timeleft;
-                    myPresentation.endTime.Content = "" + endTime;
+                    myPresentation.TimeLeft.Value = "" + timeleft;
+                    myPresentation.EndTime.Value = "" + endTime;
                 }
                 else
                 {
-                    myPresentation.timeLeft.Content = "incalculable";
-                    myPresentation.endTime.Content = "in a galaxy far, far away...";
+                    myPresentation.TimeLeft.Value = "incalculable";
+                    myPresentation.EndTime.Value = "in a galaxy far, far away...";
                 }
 
-                myPresentation.entries.Clear();
+                myPresentation.Entries.Clear();
 
                 for (int i = 0; i < TOPLIST.Count; i++)
                 {
                     ValueKey v = TOPLIST[i];
                     ResultEntry entry = new ResultEntry();
 
-                    entry.Ranking = (i + 1).ToString();
+                    entry.Ranking = i + 1;
                     entry.Value = String.Format("{0:0.00000}", v.score);
                     entry.KeyArray = v.key;
                     if (v.word == null)
@@ -334,7 +333,7 @@ namespace TranspositionAnalyser
                     entry.Mode = v.mode;
                     entry.Text = Encoding.GetEncoding(1252).GetString(v.plaintext);
 
-                    myPresentation.entries.Add(entry);
+                    myPresentation.Entries.Add(entry);
                 }
             }
             , null);
@@ -1308,13 +1307,61 @@ namespace TranspositionAnalyser
         }
     }
 
-    public class ResultEntry
+    public class ResultEntry : ICrypAnalysisResultListEntry, INotifyPropertyChanged
     {
-        public string Ranking { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private int ranking;
+        public int Ranking
+        {
+            get => ranking;
+            set
+            {
+                ranking = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Ranking)));
+            }
+        }
+
         public string Value { get; set; }
         public string Key { get; set; }
         public byte[] KeyArray { get; set; }
         public string Mode { get; set; }
         public string Text { get; set; }
+
+        public string ClipboardValue => Value;
+        public string ClipboardKey => Key;
+        public string ClipboardText => Text;
+
+        public string ClipboardEntry
+        {
+            get
+            {
+                string keyword = getKeyword(KeyArray);
+
+                string key = string.IsNullOrEmpty(keyword)
+                    ? "Key: " + string.Join(" ", KeyArray)
+                    : "Key (numeric): " + String.Join(" ", KeyArray) + Environment.NewLine + "Key (alphabetic): " + keyword;
+
+                return "Rank: " + Ranking + Environment.NewLine +
+                    "Value: " + Value + Environment.NewLine +
+                    key + Environment.NewLine +
+                    "Mode: " + Mode + Environment.NewLine +
+                    "Text: " + Text;
+            }
+        }
+
+        // Alphabets used for converting the numeric key to a key word
+        const string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; // for key sizes <= 52
+        const string alphabet2 = "0123456789" + alphabet;                               // for key sizes <= 62 (use numbers only if letters do not suffice)
+
+        // Convert the numeric key to a keyword based upon the alphabet string
+        string getKeyword(byte[] key)
+        {
+            if (key.Length >= alphabet2.Length) return null;
+            string abc = (key.Length <= alphabet.Length) ? alphabet : alphabet2;
+            string keyword = "";
+            foreach (var i in key) keyword += abc[i];
+            return keyword;
+        }
     }
 }
