@@ -1,30 +1,29 @@
-﻿using System;
+﻿using Cryptool.CrypAnalysisViewControl;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
 
 
 namespace SigabaBruteforce
 {
-    /// <summary>
-    /// Interaction logic for SigabaBruteforceQuickWatchPresentation.xaml
-    /// </summary>
     [global::Cryptool.PluginBase.Attributes.Localization("SigabaBruteforce.Properties.Resources")]
     public partial class SigabaBruteforceQuickWatchPresentation : UserControl
     {
-        public ObservableCollection<ResultEntry> entries = new ObservableCollection<ResultEntry>();
-        public event EventHandler doppelClick;
-
-        
+        public ObservableCollection<ResultEntry> Entries { get; } = new ObservableCollection<ResultEntry>();
+        public event Action<ResultEntry> SelectedResultEntry;
 
         public SigabaBruteforceQuickWatchPresentation()
         {
             InitializeComponent();
-            this.DataContext = entries;
+            this.DataContext = Entries;
         }
-        public void HandleDoubleClick(Object sender, EventArgs eventArgs)
+
+        private void HandleResultItemAction(ICrypAnalysisResultListEntry item)
         {
-            if(sender!=null)
-               doppelClick(sender,eventArgs);
+            if (item is ResultEntry resultItem)
+            {
+                SelectedResultEntry(resultItem);
+            }
         }
     }
 }

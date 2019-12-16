@@ -25,6 +25,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using Cryptool.CrypAnalysisViewControl;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Control;
 using Cryptool.PluginBase.Miscellaneous;
@@ -48,7 +49,7 @@ namespace SigabaBruteforce
         {
             var sigpa = new SigabaBruteforceQuickWatchPresentation();
             Presentation = sigpa;
-            sigpa.doppelClick += doppelClick;
+            sigpa.SelectedResultEntry += SelectedResultEntry;
         }
 
         #endregion
@@ -357,11 +358,9 @@ namespace SigabaBruteforce
             UpdatePresentationList(isummax, icount, starttime);
         }
 
-        private void doppelClick(object sender, EventArgs e)
+        private void SelectedResultEntry(ResultEntry resultEntry)
         {
-            var lvi = sender as ListViewItem;
-            var rse = lvi.Content as ResultEntry;
-            Output = rse.Text;
+            Output = resultEntry.Text;
             OnPropertyChanged("Output");
         }
 
@@ -438,31 +437,31 @@ namespace SigabaBruteforce
                 (Presentation).Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     var presentation = (SigabaBruteforceQuickWatchPresentation)Presentation;
-                    presentation.startTime.Content = "" + startTime;
-                    presentation.elapsedTime.Content = "" + elapsedspan;
-                    presentation.keysPerSecond.Content = "" + keysPerSec;
+                    presentation.StartTime.Value = "" + startTime;
+                    presentation.ElapsedTime.Value = "" + elapsedspan;
+                    presentation.KeysPerSecond.Value = "" + keysPerSec;
 
                     if (endTime != (new DateTime(1970, 1, 1)))
                     {
-                        presentation.timeLeft.Content = "" + endTime.Subtract(DateTime.Now).ToString(@"dd\.hh\:mm\:ss");
-                        presentation.endTime.Content = "" + endTime;
+                        presentation.TimeLeft.Value = "" + endTime.Subtract(DateTime.Now).ToString(@"dd\.hh\:mm\:ss");
+                        presentation.EndTime.Value = "" + endTime;
                     }
                     else
                     {
-                        presentation.timeLeft.Content = "incalculable";
-                        presentation.endTime.Content = "in a galaxy far, far away...";
+                        presentation.TimeLeft.Value = "incalculable";
+                        presentation.EndTime.Value = "in a galaxy far, far away...";
                     }
 
                     if (list1 != null)
                     {
                         linkedListNode = list1.First;
-                        presentation.entries.Clear();
+                        presentation.Entries.Clear();
                         int i = 0;
                         while (linkedListNode != null)
                         {
                             i++;
                             var entry = new ResultEntry();
-                            entry.Ranking = i.ToString(CultureInfo.InvariantCulture);
+                            entry.Ranking = i;
 
                             String dec = Encoding.ASCII.GetString(linkedListNode.Value.decryption);
                             if (dec.Length > 2500) // Short strings need not be cut off
@@ -477,7 +476,7 @@ namespace SigabaBruteforce
                             entry.IndexRotors = linkedListNode.Value.indexRotors;
                             entry.Value = Math.Round(linkedListNode.Value.value, 2) + "";
 
-                            presentation.entries.Add(entry);
+                            presentation.Entries.Add(entry);
 
                             linkedListNode = linkedListNode.Next;
                         }
@@ -591,9 +590,21 @@ namespace SigabaBruteforce
         public double value;
     };
 
-    public class ResultEntry
+    public class ResultEntry : ICrypAnalysisResultListEntry, INotifyPropertyChanged
     {
-        public string Ranking { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private int ranking;
+        public int Ranking
+        {
+            get => ranking;
+            set
+            {
+                ranking = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Ranking)));
+            }
+        }
+
         public string Value { get; set; }
         public string CipherKey { get; set; }
         public string ControlKey { get; set; }
@@ -602,36 +613,14 @@ namespace SigabaBruteforce
         public string ControlRotors { get; set; }
         public string IndexRotors { get; set; }
         public string Text { get; set; }
+
+        public string ClipboardValue => Value;
+        public string ClipboardKey => $"Cipher Key: {CipherKey} - Control Key: {ControlKey} - Index Key: {IndexKey}";
+        public string ClipboardText => Text;
+        public string ClipboardEntry =>
+            "Rank: " + Ranking + Environment.NewLine +
+            "Value: " + Value + Environment.NewLine +
+            ClipboardKey + Environment.NewLine +
+            "Text: " + Text;
     }
-
-    /*namespace Cryptool.PluginBase.Control
-    {
-        public interface IControlSigabaEncryption : IControl, IDisposable
-        {
-            string Decrypt(string ciphertext);
-            void setInternalConfig();
-            void changeSettings(string setting, object value);
-
-            byte[] DecryptFast(byte[] ciphertext, int[] a, byte[] positions);
-
-            void setCipherRotors(int i, byte a);
-
-            void setControlRotors(byte i, byte b);
-
-            void setIndexRotors(byte i, byte c);
-
-            void setIndexMaze();
-
-            void setIndexMaze(int[] indexmaze);
-
-            void setBool(byte ix, byte i, bool rev);
-
-            void setPositionsControl(byte ix, byte i, byte position);
-
-            void setPositionsIndex(byte ix, byte i, byte position);
-
-            string preFormatInput(string text);
-            string postFormatOutput(string text);
-        }
-    }*/
 }
