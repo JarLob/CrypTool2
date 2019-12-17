@@ -26,6 +26,7 @@ using System.Collections.Concurrent;
 using Cryptool.Plugins.Ipc.Messages;
 using Google.Protobuf;
 using System.Windows.Threading;
+using Cryptool.CrypAnalysisViewControl;
 
 namespace Cryptool.ProcessExecutor
 {
@@ -188,9 +189,9 @@ namespace Cryptool.ProcessExecutor
                 {
                     try
                     {
-                        _presentation.startTime.Content = _startTime;
-                        _presentation.endTime.Content = string.Empty;
-                        _presentation.elapsedTime.Content = string.Empty;
+                        _presentation.StartTime.Value = _startTime.ToString();
+                        _presentation.EndTime.Value = string.Empty;
+                        _presentation.ElapsedTime.Value = string.Empty;
                     }
                     catch (Exception)
                     {
@@ -284,7 +285,7 @@ namespace Cryptool.ProcessExecutor
                             try
                             {              
                                 var elapsedTime =  (DateTime.Now - _startTime);
-                                _presentation.elapsedTime.Content = new TimeSpan(elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds);
+                                _presentation.ElapsedTime.Value = new TimeSpan(elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds).ToString();
                             }
                             catch (Exception)
                             {
@@ -353,9 +354,9 @@ namespace Cryptool.ProcessExecutor
                 {
                     try
                     {
-                        _presentation.endTime.Content = DateTime.Now;
+                        _presentation.EndTime.Value = DateTime.Now.ToString();
                         var elapsedTime = (DateTime.Now - _startTime);
-                        _presentation.elapsedTime.Content = new TimeSpan(elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds);
+                        _presentation.ElapsedTime.Value = new TimeSpan(elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds).ToString();
                     }
                     catch (Exception)
                     {
@@ -718,12 +719,35 @@ namespace Cryptool.ProcessExecutor
         public string value;
     }
 
-    public class ResultEntry
+    public class ResultEntry : ICrypAnalysisResultListEntry, INotifyPropertyChanged
     {
-        public string Ranking { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private string ranking;
+        public string Ranking
+        {
+            get => ranking;
+            set
+            {
+                ranking = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Ranking)));
+            }
+        }
+
         public string Value { get; set; }
         public string Key { get; set; }
         public string Text { get; set; }
-        public string Info { get; set; }    
-    }    
+        public string Info { get; set; }
+
+
+        public string ClipboardValue => Value.ToString();
+        public string ClipboardKey => Key;
+        public string ClipboardText => Text;
+        public string ClipboardEntry =>
+            "Rank: " + Ranking + Environment.NewLine +
+            "Value: " + Value + Environment.NewLine +
+            "Key: " + Key + Environment.NewLine +
+            "Text: " + Text + Environment.NewLine +
+            "Info: " + Info;
+    }
 }
