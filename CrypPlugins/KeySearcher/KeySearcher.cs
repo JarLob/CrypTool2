@@ -82,7 +82,7 @@ namespace KeySearcher
         private readonly LocalQuickWatchPresentation localQuickWatchPresentation;
 
         private readonly Mutex openClPresentationMutex = new Mutex();
-        private readonly OpenCLManager oclManager;
+        private OpenCLManager oclManager;
         private readonly Stopwatch localBruteForceStopwatch;
 
         private KeyPattern.KeyPattern pattern;
@@ -291,12 +291,33 @@ namespace KeySearcher
 
         public KeySearcher()
         {         
-            try
-            { 
-                IsKeySearcherRunning = false;
-                username = "";
-                maschineid = 0; 
+            IsKeySearcherRunning = false;
+            username = "";
+            maschineid = 0;
 
+            InitializeOpenCL();
+            settings = new KeySearcherSettings(this, oclManager);
+
+            Presentation = new QuickWatch();
+            localQuickWatchPresentation = ((QuickWatch)Presentation).LocalQuickWatchPresentation;
+            p2PQuickWatchPresentation = ((QuickWatch)Presentation).P2PQuickWatchPresentation;
+               
+            settings.PropertyChanged += SettingsPropertyChanged;
+            ((QuickWatch)Presentation).IsOpenCLEnabled = (settings.DeviceSettings.Count(x => x.UseDevice) > 0);
+            localBruteForceStopwatch = new Stopwatch();
+            if (JobId != 0)
+            {
+                p2PQuickWatchPresentation.ViewModel.UpdateStaticView(JobId, this, settings);
+            }
+
+            localQuickWatchPresentation.UpdateOutputFromUserChoice += UpdateOutputFromUserChoice;
+            p2PQuickWatchPresentation.UpdateOutputFromUserChoice += UpdateOutputFromUserChoice;
+        }
+
+        private void InitializeOpenCL()
+        {
+            try
+            {
                 if (OpenCL.NumberOfPlatforms > 0)
                 {
                     var directoryName = Path.Combine(DirectoryHelper.DirectoryLocalTemp, "KeySearcher");
@@ -310,27 +331,13 @@ namespace KeySearcher
                     };
                     oclManager.CreateDefaultContext(0, DeviceType.ALL);
                 }
-
-                settings = new KeySearcherSettings(this, oclManager);
-
-                Presentation = new QuickWatch();
-                localQuickWatchPresentation = ((QuickWatch)Presentation).LocalQuickWatchPresentation;
-                p2PQuickWatchPresentation = ((QuickWatch)Presentation).P2PQuickWatchPresentation;
-               
-                settings.PropertyChanged += SettingsPropertyChanged;
-                ((QuickWatch)Presentation).IsOpenCLEnabled = (settings.DeviceSettings.Count(x => x.UseDevice) > 0);
-                localBruteForceStopwatch = new Stopwatch();
-                if (JobId != 0)
-                {
-                    p2PQuickWatchPresentation.ViewModel.UpdateStaticView(JobId, this, settings);
-                }
-
-                localQuickWatchPresentation.UpdateOutputFromUserChoice += UpdateOutputFromUserChoice;
-                p2PQuickWatchPresentation.UpdateOutputFromUserChoice += UpdateOutputFromUserChoice;
             }
             catch (Exception ex)
             {
-                GuiLogMessage(string.Format("Error trying to initialize KeySearcher component: {0}", ex.Message), NotificationLevel.Error);
+                GuiLogMessage(
+                    string.Format("Error trying to initialize OpenCL in KeySearcher component: {0}", ex.Message), 
+                    NotificationLevel.Error);
+                oclManager = null;
             }
         }
 
@@ -504,7 +511,7 @@ namespace KeySearcher
             //If this is a thread that should use OpenCL:
             KeySearcherOpenCLCode keySearcherOpenCLCode = null;
             KeySearcherOpenCLSubbatchOptimizer keySearcherOpenCLSubbatchOptimizer = null;
-            if (openCLDeviceSettings != null)
+            if (openCLDeviceSettings != null && oclManager != null)
             {
                 keySearcherOpenCLCode = new KeySearcherOpenCLCode(this, this.encryptedDataOptimized, this.initVectorOptimized, sender, CostMaster, 256 * 256 * 256 * 16);
                 keySearcherOpenCLSubbatchOptimizer = new KeySearcherOpenCLSubbatchOptimizer(openCLDeviceSettings.mode, 
@@ -537,7 +544,7 @@ namespace KeySearcher
                         //if we are the thread with most keys left, we have to share them:
                         keyTranslator = ShareKeys(patterns, threadid, keysLeft, keyTranslator, threadStack);
 
-                        if (openCLDeviceSettings == null || !openCLDeviceSettings.UseDevice)         //CPU
+                        if (openCLDeviceSettings == null || oclManager == null || !openCLDeviceSettings.UseDevice) //CPU
                         {
                             finish = BruteforceCPU(keyTranslator, sender, bytesToUse);
                         }
