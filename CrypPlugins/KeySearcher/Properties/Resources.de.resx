@@ -255,6 +255,9 @@
   <data name="Local_" xml:space="preserve">
     <value>Lokal</value>
   </data>
+  <data name="Global_" xml:space="preserve">
+    <value>Global</value>
+  </data>
   <data name="Node_was_already_calculated_" xml:space="preserve">
     <value>Block wurde bereits berechnet.</value>
   </data>

@@ -46,8 +46,8 @@ namespace KeySearcher.CrypCloud
 
         public TaskFactory UiContext { get; set; }
 
-        public ObservableCollection<BigInteger> CurrentChunks { get; set; } 
-        public ObservableCollection<KeyResultEntry> TopList { get; set; }
+        public ObservableCollection<BigInteger> CurrentChunks { get; } 
+        public ObservableCollection<KeyResultEntry> TopList { get; }
 
 
         public P2PPresentationVM()

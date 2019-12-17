@@ -1,4 +1,5 @@
-﻿using Cryptool.PluginBase.Control;
+﻿using Cryptool.CrypAnalysisViewControl;
+using Cryptool.PluginBase.Control;
 using System;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using VoluntLib2.Tools;
 
 namespace KeySearcher.CrypCloud
 {
-    public class KeyResultEntry : IVoluntLibSerializable, IComparable
+    public class KeyResultEntry : IVoluntLibSerializable, IComparable, ICrypAnalysisResultListEntry
     {
         public KeyResultEntry()
         {
@@ -24,6 +25,18 @@ namespace KeySearcher.CrypCloud
         public double Costs { get; set; }
         public byte[] KeyBytes { get; set; }
         public byte[] Decryption { get; set; }
+
+        public string Plaintext => Encoding.GetEncoding(1252).GetString(Decryption);
+        
+        public string Key => BitConverter.ToString(KeyBytes).Replace("-", "");
+
+        public string ClipboardValue => Costs.ToString();
+        public string ClipboardKey => Key;
+        public string ClipboardText => Plaintext;
+        public string ClipboardEntry =>
+            "Value: " + Costs + Environment.NewLine +
+            "Key: " + Key + Environment.NewLine +
+            "Text: " + Plaintext;
 
         public override bool Equals(object obj)
         {

@@ -3,6 +3,7 @@
              xmlns:con="clr-namespace:KeySearcher.Converter"
              xmlns:crypCloud="clr-namespace:KeySearcher.CrypCloud"
              xmlns:properties="clr-namespace:KeySearcher.Properties"
+             xmlns:crypanalysisviewcontrol="clr-namespace:Cryptool.CrypAnalysisViewControl;assembly=CrypAnalysisViewControl"
              x:Name="P2PQuickWatch">
 
     <UserControl.Resources>
@@ -11,13 +12,8 @@
         <con:BigIntegerToHexStringConverter x:Key="BigIntegerToHexStringConverter" />
         <con:ByteArrayToUtf8StringConverter x:Key="ByteArrayToUtf8StringConverter" />
         <con:ListToStringConverter x:Key="ListToStringConverter" />
-        <Converter:DateTimeConverter x:Key="DateTimeConverter" /> 
+        <Converter:DateTimeConverter x:Key="DateTimeConverter" />
         <Converter:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
-        <RotateTransform x:Key="HeaderRotate" Angle="270" />
-        <Style x:Key="ValueRow">
-            <Setter Property="Label.Padding" Value="5,5,20,5" />
-            <Setter Property="Label.HorizontalContentAlignment" Value="Right" />
-        </Style>
     </UserControl.Resources>
 
 
@@ -25,173 +21,56 @@
         <crypCloud:P2PPresentationVM/>
     </UserControl.DataContext>
 
-    <Viewbox>
-        <Grid Width="646" >
-            <StackPanel>
-                <!-- static -->
-                <Border BorderBrush="Silver" BorderThickness="2,2,2,2">
-                    <Grid Height="60" Background="#AFE2E2FF">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30" />
-                            <RowDefinition Height="30" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="26" />
-                            <ColumnDefinition Width="200*" />
-                            <ColumnDefinition Width="200*" />
-                        </Grid.ColumnDefinitions>
-                        <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Grid.RowSpan="3" Grid.Column="0" Background="#FF5C5CFF">
-                            <Label Content="{Loc Static_}" FontSize="11" HorizontalAlignment="Center" Foreground="White" />
-                        </Border>
-                        <Label Content="{Loc JobName}" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="1" />
-                        <Label Content="{Binding JobName, FallbackValue=-}" Grid.Row="0" VerticalAlignment="Center" Grid.Column="1" Style="{StaticResource ValueRow}" />
 
-                        <Label Content="{Loc JobID_}" Grid.Column="2" />
-                        <Label Content="{Binding JobID, FallbackValue=-, Converter={StaticResource BigIntegerToHexStringConverter}}" Grid.Column="2" Style="{StaticResource ValueRow}" />
+    <crypanalysisviewcontrol:CrypAnalysisViewControl ResultHeaderCaption="{Loc Local_}" ResultListCaption="{Loc Top_Ten_}">
+        <crypanalysisviewcontrol:CrypAnalysisViewControl.ResultHeaderLabels>
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc Finished_Chunks_}" Value="{Binding LocalFinishedChunks,  FallbackValue=-}" />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc Abort_Chunks_}" Value="{Binding LocalAbortChunks,  FallbackValue=-}" />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc Avg_Time_Per_Chunk}" Value="{Binding AvgTimePerChunk, FallbackValue=-,  Converter={StaticResource TimeSpanToStringConverter}}" />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc Keys_Sec_}" Value="{Binding KeysPerSecond, FallbackValue=-, Converter={StaticResource BigIntegerToStringConverter}}" />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc local_throughput_sec}" Value="{Binding LocalThroughput}" />
+            <!--Empty for layouting purposes:-->
+            <crypanalysisviewcontrol:ViewLabel />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc Current_Chunk_}" Value="{Binding CurrentChunks, FallbackValue=~, Converter={StaticResource ListToStringConverter}}" />
+        </crypanalysisviewcontrol:CrypAnalysisViewControl.ResultHeaderLabels>
 
-                        <Label Content="{Loc Total_Chunks_}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" />
-                        <Label Content="{Binding TotalAmountOfChunks, FallbackValue=-, Converter={StaticResource BigIntegerToStringConverter}}" Grid.Row="2" Name="TotalAmountOfChunks" VerticalAlignment="Center" Grid.Column="1" Style="{StaticResource ValueRow}" />
+        <crypanalysisviewcontrol:CrypAnalysisResultListView ItemsSource="{Binding TopList}" ResultItemAction="HandleResultItemAction">
+            <crypanalysisviewcontrol:CrypAnalysisResultListView.View>
+                <GridView>
+                    <GridViewColumn Header="{Loc Value}" Width="73" DisplayMemberBinding="{Binding Path=Costs}"/>
+                    <GridViewColumn Header="{Loc Text}" Width="300" DisplayMemberBinding="{Binding Path=Decryption, Converter={StaticResource ByteArrayToUtf8StringConverter}}"/>
+                    <GridViewColumn Header="{Loc Key}" Width="250" DisplayMemberBinding="{Binding Path=KeyBytes, Converter={StaticResource ByteArrayToHexStringConverter}}"/>
+                </GridView>
+            </crypanalysisviewcontrol:CrypAnalysisResultListView.View>
+        </crypanalysisviewcontrol:CrypAnalysisResultListView>
 
-                        <Label Content="{Loc Keys_Per_Chunk_}" VerticalAlignment="Center" Grid.Row="2"  Grid.Column="2" />
-                        <Label Content="{Binding KeysPerBlock, FallbackValue=-, Converter={StaticResource BigIntegerToStringConverter}}" Name="KeysPerChunk" Grid.Row="2"  VerticalAlignment="Center" Grid.Column="2" Style="{StaticResource ValueRow}" />
+        <crypanalysisviewcontrol:CrypAnalysisViewControl.AdditionalSections>
+            <crypanalysisviewcontrol:SectionControl SectionHeaderCaption="{Loc Static_}" SectionHeaderBackground="#FF5C5CFF" SectionBackground="#AFE2E2FF">
+                <crypanalysisviewcontrol:SectionViewLabelsControl>
+                    <crypanalysisviewcontrol:ViewLabel Caption="{Loc JobName}" Value="{Binding JobName, FallbackValue=-}" />
+                    <crypanalysisviewcontrol:ViewLabel Caption="{Loc JobID_}" Value="{Binding JobID, FallbackValue=-, Converter={StaticResource BigIntegerToHexStringConverter}}" />
+                    <crypanalysisviewcontrol:ViewLabel Caption="{Loc Total_Chunks_}" Value="{Binding TotalAmountOfChunks, FallbackValue=-, Converter={StaticResource BigIntegerToStringConverter}}" />
+                    <crypanalysisviewcontrol:ViewLabel Caption="{Loc Keys_Per_Chunk_}" Value="{Binding KeysPerBlock, FallbackValue=-, Converter={StaticResource BigIntegerToStringConverter}}" />
+                </crypanalysisviewcontrol:SectionViewLabelsControl>
+            </crypanalysisviewcontrol:SectionControl>
+            <crypanalysisviewcontrol:SectionControl SectionHeaderCaption="{Loc Global_}" SectionHeaderBackground="#FF099BA7" SectionBackground="#AFAAE1E8">
+                <StackPanel Orientation="Vertical">
+                    <crypanalysisviewcontrol:SectionViewLabelsControl>
+                        <crypanalysisviewcontrol:ViewLabel Caption="{Loc Avg_Time_Per_Chunk}" Value="{Binding AvgTimePerChunkGlobal, FallbackValue=-,Converter={StaticResource TimeSpanToStringConverter}}" />
+                        <crypanalysisviewcontrol:ViewLabel Caption="{Loc Keys_Sec_}" Value="{Binding KeysPerSecondGlobal, FallbackValue=-, Converter={StaticResource BigIntegerToStringConverter}}" />
+                        <crypanalysisviewcontrol:ViewLabel Caption="{Loc Dataspace}" Value="{Binding Dataspace}" />
+                        <crypanalysisviewcontrol:ViewLabel Caption="{Loc global_throughput_sec}" Value="{Binding GlobalThroughput}" />
+                        <crypanalysisviewcontrol:ViewLabel Caption="{Loc End_}" Value="{Binding EstimatedFinishDate, FallbackValue=-, Converter={StaticResource DateTimeConverter}}" />
+                        <crypanalysisviewcontrol:ViewLabel Caption="{Loc Remaining_}" Value="{Binding RemainingTimeTotal, FallbackValue=-, Converter={StaticResource TimeSpanToStringConverter}}" />
+                    </crypanalysisviewcontrol:SectionViewLabelsControl>
+                    <Grid Height="26">
+                        <ProgressBar Value="{Binding GlobalProgress, FallbackValue=0}" Maximum="100" />
+                        <Viewbox>
+                            <Label Content="{Binding GlobalProgressString, FallbackValue=~}" HorizontalAlignment="Center" />
+                        </Viewbox>
                     </Grid>
-                </Border>
-
-                <!-- global -->
-                <Border BorderBrush="Silver" BorderThickness="2,0,2,2">
-                    <Grid Height="104" Background="#AFAAE1E8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="26" />
-                            <ColumnDefinition Width="200*" />
-                            <ColumnDefinition Width="200*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="26" />
-                            <RowDefinition Height="26" />
-                            <RowDefinition Height="26" />
-                            <RowDefinition Height="26" />
-                        </Grid.RowDefinitions>
-                        <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FF099BA7" Grid.Column="0" Grid.RowSpan="99">
-                            <Label Content="Global" FontSize="11" HorizontalAlignment="Center" Foreground="White" />
-                        </Border>
-
-                        <Label Content="{Loc Avg_Time_Per_Chunk}" Grid.Column="1" Grid.Row="0" />
-                        <Label Content="{Binding AvgTimePerChunkGlobal, FallbackValue=-,Converter={StaticResource TimeSpanToStringConverter}}" Grid.Column="1" Grid.Row="0" Style="{StaticResource ValueRow}" />
-
-                        <Label Content="{Loc Keys_Sec_}" Grid.Column="2" Grid.Row="0" />
-                        <Label Content="{Binding KeysPerSecondGlobal, FallbackValue=-, Converter={StaticResource BigIntegerToStringConverter}}" Grid.Column="2" Grid.Row="0" Style="{StaticResource ValueRow}" />
-  
-                        <Label Content="{Loc Dataspace}" Grid.Column="1" Grid.Row="1" />
-                        <Label Content="{Binding Dataspace}" Grid.Column="1" Grid.Row="1" Style="{StaticResource ValueRow}" />
-
-                        <Label Content="{Loc global_throughput_sec}" Grid.Column="2" Grid.Row="1" />
-                        <Label Content="{Binding GlobalThroughput}" Grid.Column="2" Grid.Row="1" Style="{StaticResource ValueRow}" />
-
-                        <Label Content="{Loc End_}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" />
-                        <Label Content="{Binding EstimatedFinishDate, FallbackValue=-, Converter={StaticResource DateTimeConverter}}" Grid.Column="1" Style="{StaticResource ValueRow}" Grid.Row="2" />
-
-                        <Label Content="{Loc Remaining_}" Grid.Column="2" Grid.Row="2" />
-                        <Label Content="{Binding RemainingTimeTotal, FallbackValue=-, Converter={StaticResource TimeSpanToStringConverter}}" Grid.Column="2" Grid.Row="2" Style="{StaticResource ValueRow}" />
-
-                        <Grid  Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3">
-                            <ProgressBar Value="{Binding GlobalProgress, FallbackValue=0}" Maximum="100" />
-                            <Viewbox>
-                                <Label Content="{Binding GlobalProgressString, FallbackValue=~}" HorizontalAlignment="Center" />
-                            </Viewbox>
-                        </Grid>
-                    </Grid>
-                </Border>
-
-                <!-- local -->
-                <Border BorderBrush="Silver" BorderThickness="2,0,2,2">
-                    <Grid Height="104" Background="#AFFFD4C1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="26" />
-                            <ColumnDefinition Width="200*" />
-                            <ColumnDefinition Width="200*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="26" />
-                            <RowDefinition Height="26" />
-                            <RowDefinition Height="26" />
-                            <RowDefinition Height="26" />
-                        </Grid.RowDefinitions>
-                        <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FFE56B00" Grid.Column="0" Grid.RowSpan="99">
-                            <Label Content="{Loc Local_}" FontSize="11" HorizontalAlignment="Center" Foreground="White" />
-                        </Border>
-
-                        <Label Content="{Loc Finished_Chunks_}" Grid.Column="1" Grid.Row="0" />
-                        <Label Content="{Binding LocalFinishedChunks,  FallbackValue=-}" Grid.Column="1" Grid.Row="0" Style="{StaticResource ValueRow}" />
-                       
-
-                        <Label Content="{Loc Abort_Chunks_}" Grid.Column="2" Grid.Row="0" /> 
-                        <Label Content="{Binding LocalAbortChunks,  FallbackValue=-}"  Grid.Column="2" Grid.Row="0"  Style="{StaticResource ValueRow}" />
-
-                        <Label Content="{Loc local_throughput_sec}" Grid.Column="1" Grid.Row="2" />
-                        <Label Content="{Binding LocalThroughput}" Grid.Column="1" Grid.Row="2" Style="{StaticResource ValueRow}" />
-                        
-                        <Label Content="{Loc Avg_Time_Per_Chunk}" Grid.Column="1" Grid.Row="1" />
-                        <Label Content="{Binding AvgTimePerChunk, FallbackValue=-,  Converter={StaticResource TimeSpanToStringConverter}}" Grid.Column="1" Grid.Row="1" Style="{StaticResource ValueRow}" />
-
-                        <Label Content="{Loc Keys_Sec_}" Grid.Column="2" Grid.Row="1" />
-                        <Label Content="{Binding KeysPerSecond, FallbackValue=-, Converter={StaticResource BigIntegerToStringConverter}}" Grid.Column="2" Grid.Row="1" Style="{StaticResource ValueRow}" />
-
-                        
-                        <Label Content="{Loc Current_Chunk_}" Grid.Column="1" Grid.Row="3" />
-                        <Label Content="{Binding CurrentChunks, FallbackValue=~, Converter={StaticResource ListToStringConverter}}"  HorizontalContentAlignment="Left" 
-                               Margin="150,0, 0,0"
-                               Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Style="{StaticResource ValueRow}" />
-
-
-                    </Grid>
-                </Border>
-                <!-- top ten -->
-                <Border BorderBrush="Silver" BorderThickness="2,0,2,2">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="200" />
-                            <RowDefinition Height="3" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="26" />
-                            <ColumnDefinition Width="13*" />
-                            <ColumnDefinition Width="141*"/>
-                        </Grid.ColumnDefinitions>
-                        <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FF479308" Margin="0,0,0,1" Grid.RowSpan="2">
-                            <Label Content="{Loc Top_Ten_}" FontSize="11" HorizontalAlignment="Center" Foreground="White" Width="50" />
-                        </Border>
-                        
-                        <ListView Name="ToplistView" Background="#AFE2FFCE" ItemsSource="{Binding TopList}" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
-                                  ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                                  Height="200" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="0,2,0,1">
-
-                            <ListView.Resources>
-                                <ContextMenu x:Key="ItemContextMenu">
-                                    <MenuItem Header="{x:Static properties:Resources.Copy_value}" Tag="copy_value" CommandParameter="{Binding}" Click="ContextMenuHandler" />
-                                    <MenuItem Header="{x:Static properties:Resources.Copy_key}" Tag="copy_key" CommandParameter="{Binding}" Click="ContextMenuHandler" />
-                                    <MenuItem Header="{x:Static properties:Resources.Copy_text}" Tag="copy_text" CommandParameter="{Binding}" Click="ContextMenuHandler" />
-                                    <MenuItem Header="{x:Static properties:Resources.Copy_line}" Tag="copy_line" CommandParameter="{Binding}" Click="ContextMenuHandler" />
-                                </ContextMenu>
-                            </ListView.Resources>
-
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="{x:Type ListViewItem}">
-                                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}"/>
-                                    <EventSetter Event="MouseDoubleClick" Handler="HandleDoubleClick" />
-                                </Style>
-                            </ListView.ItemContainerStyle>
-
-                            <ListView.View> 
-                                <GridView>
-                                    <GridViewColumn Header="{Loc Value}" Width="73" DisplayMemberBinding="{Binding Path=Costs}"/>
-                                    <GridViewColumn Header="{Loc Text}" Width="300" DisplayMemberBinding="{Binding Path=Decryption, Converter={StaticResource ByteArrayToUtf8StringConverter}}"/>
-                                    <GridViewColumn Header="{Loc Key}" Width="250" DisplayMemberBinding="{Binding Path=KeyBytes, Converter={StaticResource ByteArrayToHexStringConverter}}"/>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                    </Grid>
-                </Border>
-            </StackPanel>
-        </Grid>
-    </Viewbox>
+                </StackPanel>
+            </crypanalysisviewcontrol:SectionControl>
+        </crypanalysisviewcontrol:CrypAnalysisViewControl.AdditionalSections>
+    </crypanalysisviewcontrol:CrypAnalysisViewControl>
 </UserControl>

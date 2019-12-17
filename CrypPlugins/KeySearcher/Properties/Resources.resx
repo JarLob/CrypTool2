@@ -372,6 +372,9 @@
   <data name="Local_" xml:space="preserve">
     <value>Local</value>
   </data>
+  <data name="Global_" xml:space="preserve">
+    <value>Global</value>
+  </data>
   <data name="Node_was_already_calculated_" xml:space="preserve">
     <value>Chunk was already calculated.</value>
   </data>
