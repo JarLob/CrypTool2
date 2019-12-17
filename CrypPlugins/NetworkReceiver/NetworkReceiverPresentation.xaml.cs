@@ -22,9 +22,6 @@ using Cryptool.PluginBase;
 
 namespace Cryptool.Plugins.NetworkReceiver
 {
-    /// <summary>
-    /// Interaktionslogik für UDPReceiverQuickWatchPresentation.xaml
-    /// </summary>
     [Cryptool.PluginBase.Attributes.Localization("NetworkReceiver.Properties.Resources")]
     public partial class NetworkReceiverPresentation : UserControl
     {
@@ -51,8 +48,8 @@ namespace Cryptool.Plugins.NetworkReceiver
                 {
                     try
                     {
-                        startTime.Content = starttime;
-                        lisPort.Content = port;
+                        StartTime.Value = starttime;
+                        LisPort.Value = port;
                     }
                     catch (Exception e)
                     {
@@ -75,8 +72,8 @@ namespace Cryptool.Plugins.NetworkReceiver
                 {
                    entries.Insert(0,package);
 
-                   amount.Content = amountOfReceivedPackages;
-                   uniqueIP.Content = amountOfUniqueIps;
+                   Amount.Value = amountOfReceivedPackages.ToString();
+                   UniqueIP.Value = amountOfUniqueIps.ToString();
 
                     //Delets old entries from List if the amount is > 100
                    if (entries.Count > MaxStoredPackage)
@@ -98,7 +95,7 @@ namespace Cryptool.Plugins.NetworkReceiver
                 {
                     try
                     {
-                        uniqueIP.Content = amountOfUniqueIps;
+                        UniqueIP.Value = amountOfUniqueIps.ToString();
                     }
                     catch (Exception e)
                     {
@@ -110,13 +107,13 @@ namespace Cryptool.Plugins.NetworkReceiver
         /// <summary>
         ///  invoke presentation in order to  update the speedrate
         ///  </summary>
-        public void UpdateSpeedrate(String Speedrate)
+        public void UpdateSpeedrate(string speedrate)
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Background, (SendOrPostCallback)(state =>
             {
                 try
                 {
-                    speedrate.Content = Speedrate;
+                    Speedrate.Value = speedrate;
                 }
                 catch (Exception e)
                 {
@@ -135,9 +132,9 @@ namespace Cryptool.Plugins.NetworkReceiver
                 try
                 {
                     entries.Clear();
-                    amount.Content = 0;
-                    uniqueIP.Content = 0;
-                    speedrate.Content = "0 B/s";
+                    Amount.Value = "0";
+                    UniqueIP.Value = "0";
+                    Speedrate.Value = "0 B/s";
 
                 }
                 catch (Exception e)

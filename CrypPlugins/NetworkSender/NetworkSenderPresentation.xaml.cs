@@ -7,9 +7,6 @@ using Cryptool.PluginBase;
 
 namespace Cryptool.Plugins.NetworkSender
 {
-    /// <summary>
-    /// Interaktionslogik für NetworkInputPresentation.xaml
-    /// </summary>
     [Cryptool.PluginBase.Attributes.Localization("NetworkSender.Properties.Resources")]
     public partial class NetworkSenderPresentation : UserControl
     {
@@ -29,9 +26,7 @@ namespace Cryptool.Plugins.NetworkSender
             {
                 try
                 {
-                    amount.Content = amountOfSendedPackages;
-
-                
+                    Amount.Value = amountOfSendedPackages.ToString();
                 }
                 catch (Exception e)
                 {
@@ -47,8 +42,8 @@ namespace Cryptool.Plugins.NetworkSender
             {
                 try
                 {
-                    startTime.Content = jar[0];
-                    lisPort.Content = jar[1];
+                    StartTime.Value = jar[0];
+                    LisPort.Value = jar[1];
                 }
                 catch (Exception e)
                 {
@@ -98,13 +93,13 @@ namespace Cryptool.Plugins.NetworkSender
         /// <summary>
         ///  invoke presentation in order to  update the speedrate
         ///  </summary>
-        public void UpdateSpeedrate(String Speedrate)
+        public void UpdateSpeedrate(string speedrate)
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Background, (SendOrPostCallback)(state =>
             {
                 try
                 {
-                    speedrate.Content = Speedrate;
+                    Speedrate.Value = speedrate;
                 }
                 catch (Exception e)
                 {
