@@ -26,12 +26,10 @@ using System.Windows.Threading;
 using Cryptool.PluginBase.Utils;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using Cryptool.CrypAnalysisViewControl;
 
 namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 {
-    /// <summary>
-    /// Interaktionslogik für HomophoneSubstitutionAnalyzerPresentation.xaml
-    /// </summary>
     [PluginBase.Attributes.Localization("Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties.Resources")]
     public partial class HomophoneSubstitutionAnalyzerPresentation : UserControl
     {
@@ -59,7 +57,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public event EventHandler<NewBestValueEventArgs> NewBestValue;
         public event EventHandler<UserChangedTextEventArgs> UserChangedText;
 
-        private ObservableCollection<ResultEntry> BestList = new ObservableCollection<ResultEntry>();
+        private ObservableCollection<ResultEntry> BestList { get; } = new ObservableCollection<ResultEntry>();
         private int _restart = 0;
 
         private List<string> _originalCiphertextSymbols = new List<string>();
@@ -616,8 +614,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     newTopEntry = true;
                 }
 
-                BestList.Add(entry);
-                BestList = new ObservableCollection<ResultEntry>(BestList.OrderByDescending(i => i.Value));                    
+
+                //Insert new entry at correct place to sustain order of list:
+                var insertIndex = BestList.TakeWhile(e => e.Value > entry.Value).Count();
+                BestList.Insert(insertIndex, entry);
+
                 if (BestList.Count > MaxBestListEntries)
                 {
                     BestList.RemoveAt(MaxBestListEntries);
@@ -628,8 +629,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     e.Ranking = ranking;
                     ranking++;
                 }
-                BestListView.DataContext = BestList;                    
-            }               
+            }
             catch (Exception e)
             {
                 //wtf?
@@ -1192,70 +1192,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             }
         }
 
-        /// <summary>
-        /// Handler for the copy-context menu
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="routedEventArgs"></param>
-        private void ContextMenuHandler(object sender, RoutedEventArgs routedEventArgs)
+        private void HandleResultItemAction(ICrypAnalysisResultListEntry item)
         {
-            try
+            if (item is ResultEntry resultItem)
             {
-                MenuItem menu = (MenuItem)((RoutedEventArgs)routedEventArgs).Source;
-                ResultEntry entry = (ResultEntry)menu.CommandParameter;
-                if (entry == null) return;
-                string tag = (string)menu.Tag;
-
-                if (tag == "copy_text")
-                {
-                    Clipboard.SetText(entry.Text);
-                }
-                else if (tag == "copy_value")
-                {
-                    Clipboard.SetText("" + entry.Value);
-                }
-                else if (tag == "copy_key")
-                {
-                    Clipboard.SetText(entry.Key);
-                }
-                else if (tag == "copy_line")
-                {
-                    Clipboard.SetText(entryToText(entry));
-                }
-                else if (tag == "copy_all")
-                {
-                    List<string> lines = new List<string>();
-                    foreach (var e in BestList)
-                    {
-                        lines.Add(entryToText(e));
-
-                    }
-                    Clipboard.SetText(String.Join(Environment.NewLine, lines));
-                }
             }
-            catch (Exception ex)
-            {
-                Clipboard.SetText("");
-            }
-        }
-    
-
-        /// <summary>
-        /// Converts an entry to text
-        /// </summary>
-        /// <param name="entry"></param>
-        /// <returns></returns>
-        private string entryToText(ResultEntry entry)
-        {
-            return "Rank: " + entry.Ranking + Environment.NewLine +
-                   "Value: " + entry.Value + Environment.NewLine + 
-                   "Key: " + entry.Key + Environment.NewLine +
-                   "Text: " + entry.Text;
-        }
-
-        private void BestListDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            
         }
     }
 
@@ -1274,11 +1215,33 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
     /// <summary>
     /// ResultEntry of best list
     /// </summary>
-    public class ResultEntry 
+    public class ResultEntry : ICrypAnalysisResultListEntry, INotifyPropertyChanged
     {
-        public int Ranking { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private int ranking;
+        public int Ranking
+        {
+            get => ranking;
+            set
+            {
+                ranking = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Ranking)));
+            }
+        }
+
         public double Value { get; set; }
         public string Key { get; set; }
         public string Text { get; set; }
-    }    
+
+
+        public string ClipboardValue => Value.ToString();
+        public string ClipboardKey => Key;
+        public string ClipboardText => Text;
+        public string ClipboardEntry =>
+            "Rank: " + Ranking + Environment.NewLine +
+            "Value: " + Value + Environment.NewLine +
+            "Key: " + Key + Environment.NewLine +
+            "Text: " + Text;
+    }
 }
