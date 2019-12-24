@@ -61,6 +61,7 @@ namespace Cryptool.PlayfairAnalyzer
         private const string PLAYFAIR_ALPHABET = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
 
         private ConcurrentQueue<OutgoingData> _SendingQueue;
+        private AutoResetEvent _SendingQueueEvent;
         private PlayfairAnalyzerSettings _settings = new PlayfairAnalyzerSettings();
         private AssignmentPresentation _presentation = new AssignmentPresentation();
         private DateTime _startTime;
@@ -77,7 +78,7 @@ namespace Cryptool.PlayfairAnalyzer
                     value = RemoveInvalidSymbols(value);
                     if (value.Length > 1)
                     {
-                        _SendingQueue.Enqueue(new OutgoingData() { outputId = 1, value = value });
+                        SendToQueue(new OutgoingData() { outputId = 1, value = value });
                     }
                 }
             }
@@ -109,7 +110,7 @@ namespace Cryptool.PlayfairAnalyzer
             {
                 if (!String.IsNullOrEmpty(value))
                 {
-                    _SendingQueue.Enqueue(new OutgoingData() { outputId = 2, value = value });
+                    SendToQueue(new OutgoingData() { outputId = 2, value = value });
                 }
             }
         }        
@@ -154,9 +155,10 @@ namespace Cryptool.PlayfairAnalyzer
         }
 
         public void PreExecution()
-        {          
+        {
             //reset inputs, outputs, and sending queue
             _SendingQueue = new ConcurrentQueue<OutgoingData>();
+            _SendingQueueEvent = new AutoResetEvent(true);
             _Plaintext = String.Empty;
             _alreadyExecuted = false;
         }
@@ -257,7 +259,7 @@ namespace Cryptool.PlayfairAnalyzer
                 _Process = new Process();
                 _Process.StartInfo.WorkingDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CrypTool2");
                 _Process.StartInfo.FileName = "java.exe";
-                _Process.StartInfo.Arguments = String.Format("-jar \"{0}\" -h \"{1}\"", jarfilename, hexfilename);
+                _Process.StartInfo.Arguments = String.Format("-Xmx1024M -Xms1024M -jar \"{0}\" -h \"{1}\"", jarfilename, hexfilename);
                 _Process.StartInfo.CreateNoWindow = true;
                 if (_settings.ShowWindow)
                 {
@@ -310,8 +312,8 @@ namespace Cryptool.PlayfairAnalyzer
                 //Step 5:
                 //Send settings and
                 //create and start sending and receiving thread                
-                _SendingQueue.Enqueue(new OutgoingData() { outputId = 100, value = "" + (_settings.Threads + 1)}); //index starts at 0; thus +1
-                _SendingQueue.Enqueue(new OutgoingData() { outputId = 200, value = "" + _settings.Cycles });
+                SendToQueue(new OutgoingData() { outputId = 100, value = "" + (_settings.Threads + 1)}); //index starts at 0; thus +1
+                SendToQueue(new OutgoingData() { outputId = 200, value = "" + _settings.Cycles });
                 //_SendingQueue.Enqueue(new OutgoingData() { outputId = 300, value = "" + _settings.ResourceDirectory });
                 
                 Thread receivingThread = new Thread(ReceivingMethod);
@@ -379,6 +381,9 @@ namespace Cryptool.PlayfairAnalyzer
                         GuiLogMessage("Could not close named pipe for client: " + ex.Message, NotificationLevel.Error);
                     }
                 }
+
+                _SendingQueueEvent.Set();   //set to enable sending thread to shut down
+
                 //Step 8: wait for process to terminate
                 //        If process does not terminate in time, we kill it                
                 int time = 0;
@@ -499,7 +504,11 @@ namespace Cryptool.PlayfairAnalyzer
                     {
                         GuiLogMessage(String.Format("Exception while sending data: {0}", ex.Message), NotificationLevel.Error);
                     }
-                }                        
+                }
+                else
+                {
+                    _SendingQueueEvent.WaitOne();
+                }
             }
         }
 
@@ -733,6 +742,12 @@ namespace Cryptool.PlayfairAnalyzer
                 GuiLogMessage("Exception during establishing of connection to client Pipe: " + ex.Message, NotificationLevel.Error);
                 _Running = false;
             }
+        }
+
+        private void SendToQueue(OutgoingData data)
+        {
+            _SendingQueue.Enqueue(data);
+            _SendingQueueEvent.Set();
         }
 
         public void Stop()
