@@ -30,14 +30,12 @@ namespace KeySearcher
         private bool opencl_initialized = false;        
         private int opencl_mode = 1; //normal mode
         private CommandQueue opencl_cq;
-        private KeySearcher keysearcher = null;
         private bool enableOpenCL = false;
 
         public Worker(JobDataContainer jobData, KeyPatternPool keyPool, KeySearcher keysearcher, bool enableOpenCL, int openCLDevice)
         {
             this.jobData = jobData;
             this.keyPool = keyPool;
-            this.keysearcher = keysearcher;
             this.enableOpenCL = enableOpenCL;
 
             relationOperator = jobData.CostAlgorithm.GetRelationOperator();            
@@ -58,7 +56,7 @@ namespace KeySearcher
                 {
                     keySearcherOpenCLCode = new KeySearcherOpenCLCode(keysearcher, jobData.Ciphertext, jobData.InitVector, jobData.CryptoAlgorithm, jobData.CostAlgorithm, 256 * 256 * 256 * 16);
                     keySearcherOpenCLSubbatchOptimizer = new KeySearcherOpenCLSubbatchOptimizer(opencl_mode,
-                    opencl_cq.Device.MaxWorkItemSizes.Aggregate(1, (x, y) => (x * (int)y)) / 8);
+                        opencl_cq.Device.MaxWorkItemSizes.Aggregate(1, (x, y) => (x * (int)y)) / 8);
                     opencl_initialized = true;
                 }
             }
@@ -211,6 +209,7 @@ namespace KeySearcher
                         e.Wait();                        
                         bestkeys.AddRange(checkOpenCLResults(keyTranslator, costArray, jobData.CryptoAlgorithm, i * subbatchSize));
                         bestkeys.Sort();
+                        bestkeys.Reverse();
                         if (bestkeys.Count > 10)
                         {
                             bestkeys.RemoveRange(10, bestkeys.Count - 10);
@@ -252,21 +251,23 @@ namespace KeySearcher
             {
                 float cost = costArray[i];
                 if (((relationOperator == RelationOperator.LargerThen) && (cost > valueThreshold))
-                    || (relationOperator == RelationOperator.LessThen) && (cost < valueThreshold))
+                    || ((relationOperator == RelationOperator.LessThen) && (cost < valueThreshold)))
                 {
                     var key = keyTranslator.GetKeyFromRepresentation(keyTranslator.GetKeyRepresentation(i + add));
                     var entry = new KeyResultEntry { Costs = cost,
                                                      KeyBytes = key,
                                                      Decryption = sender.Decrypt(jobData.Ciphertext, key, jobData.InitVector, jobData.BytesToUse),
                                                      RelationOperator = relationOperator
-                    };                                        
+                    };
                     bestkeys.Add(entry);
+
                     bestkeys.Sort();
+                    bestkeys.Reverse();
                     if (bestkeys.Count > 10)
                     {
                         bestkeys.RemoveAt(10);
                     }
-                    valueThreshold = bestkeys.Last().Costs;
+                    valueThreshold = bestkeys.First().Costs;
                 }
             }
             return bestkeys;
