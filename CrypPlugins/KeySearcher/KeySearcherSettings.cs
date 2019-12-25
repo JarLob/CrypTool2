@@ -70,12 +70,16 @@ namespace KeySearcher
             int c = 0;
             if (oclManager != null)
             {
-                foreach (var device in oclManager.Context.Devices)
+                for (var id = 0; id < OpenCL.GetPlatforms().Length; id++)
                 {
-                    string deviceName = device.Vendor + ":" + device.Name;
-                    deviceSettings.Add(new OpenCLDeviceSettings(this) { name = deviceName, index = c, mode = 1, UseDevice = false });
-                    devicesAvailable.Add(deviceName);
-                    c++;
+                    oclManager.CreateDefaultContext(id, DeviceType.ALL);
+                    foreach (var device in oclManager.Context.Devices)
+                    {
+                        string deviceName = device.Vendor + ":" + device.Name;
+                        deviceSettings.Add(new OpenCLDeviceSettings(this) { name = deviceName, index = c, mode = 1, UseDevice = false });
+                        devicesAvailable.Add(deviceName);
+                        c++;
+                    }
                 }
             }
             DevicesAvailable = devicesAvailable;    //refresh list

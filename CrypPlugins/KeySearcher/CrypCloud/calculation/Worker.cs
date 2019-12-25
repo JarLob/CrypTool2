@@ -29,20 +29,16 @@ namespace KeySearcher
         private static object opencl_lockobject = new object();
         private bool opencl_initialized = false;        
         private int opencl_mode = 1; //normal mode
-        private int opencl_deviceIndex = 0;
+        private CommandQueue opencl_cq;
         private KeySearcher keysearcher = null;
         private bool enableOpenCL = false;
 
-        public Worker(JobDataContainer jobData, KeyPatternPool keyPool, KeySearcher keysearcher, bool enableOpenCL)
+        public Worker(JobDataContainer jobData, KeyPatternPool keyPool, KeySearcher keysearcher, bool enableOpenCL, int openCLDevice)
         {
             this.jobData = jobData;
             this.keyPool = keyPool;
             this.keysearcher = keysearcher;
             this.enableOpenCL = enableOpenCL;
-
-            //kopal, 2019-11-05:
-            //disable opencl since we have problems right now with this
-            this.enableOpenCL = false;
 
             relationOperator = jobData.CostAlgorithm.GetRelationOperator();            
             if (OpenCL.NumberOfPlatforms > 0 && enableOpenCL)
@@ -57,33 +53,39 @@ namespace KeySearcher
                     BuildOptions = "-cl-opt-disable"
                 };
 
-                for (var id = 0; id < OpenCL.GetPlatforms().Length; id++)
+                opencl_cq = GetDeviceCQAndSwitchContext(oclManager, openCLDevice);
+                if (opencl_cq != null)
                 {
-                    oclManager.CreateDefaultContext(id, DeviceType.ALL);
-                    var deviceCounter = 0;
-                    if (oclManager != null)
-                    {
-                        var deviceIndex = 0;
-                        foreach (var device in oclManager.Context.Devices)
-                        {
-                            if (deviceCounter == opencl_deviceIndex)
-                            {
-                                //we found the correct platform and correct device
-                                //thus, we set the opencl_deviceIndex to the deviceIndex of the platform
-                                //and stop searching. Now, we already set the correct context
-                                opencl_deviceIndex = deviceIndex;
-                                break;
-                            }
-                            deviceCounter++;
-                        }
-                    }
-                }                
+                    keySearcherOpenCLCode = new KeySearcherOpenCLCode(keysearcher, jobData.Ciphertext, jobData.InitVector, jobData.CryptoAlgorithm, jobData.CostAlgorithm, 256 * 256 * 256 * 16);
+                    keySearcherOpenCLSubbatchOptimizer = new KeySearcherOpenCLSubbatchOptimizer(opencl_mode,
+                    opencl_cq.Device.MaxWorkItemSizes.Aggregate(1, (x, y) => (x * (int)y)) / 8);
+                    opencl_initialized = true;
+                }
+            }
+        }
 
-                keySearcherOpenCLCode = new KeySearcherOpenCLCode(keysearcher, jobData.Ciphertext, jobData.InitVector, jobData.CryptoAlgorithm, jobData.CostAlgorithm, 256 * 256 * 256 * 16);
-                keySearcherOpenCLSubbatchOptimizer = new KeySearcherOpenCLSubbatchOptimizer(opencl_mode,
-                oclManager.CQ[opencl_deviceIndex].Device.MaxWorkItemSizes.Aggregate(1, (x, y) => (x * (int)y)) / 8);
-                opencl_initialized = true;
-            }                       
+        public static CommandQueue GetDeviceCQAndSwitchContext(OpenCLManager oclManager, int globalDeviceIndex)
+        {
+            var deviceCounter = 0;
+            for (var id = 0; id < OpenCL.GetPlatforms().Length; id++)
+            {
+                oclManager.CreateDefaultContext(id, DeviceType.ALL);
+                if (oclManager != null)
+                {
+                    for (int contextDeviceIndex = 0; contextDeviceIndex < oclManager.Context.Devices.Length; contextDeviceIndex++)
+                    {
+                        if (deviceCounter == globalDeviceIndex)
+                        {
+                            //we found the correct platform and correct device
+                            //thus, we set the opencl_deviceIndex to the deviceIndex of the platform
+                            //and stop searching. Now, we already set the correct context
+                            return oclManager.CQ[contextDeviceIndex];
+                        }
+                        deviceCounter++;
+                    }
+                }
+            }
+            return null;
         }
 
         public override CalculationResult DoWork(byte[] jobPayload, BigInteger blockId, CancellationToken cancelToken)
@@ -93,9 +95,16 @@ namespace KeySearcher
             
             if (opencl_initialized && enableOpenCL)
             {
-                if(Monitor.TryEnter(opencl_lockobject, 0)){
-                    bestKeys = FindBestKeysInBlock_OpenCL(keySet, cancelToken, blockId);
-                    Monitor.Exit(opencl_lockobject);
+                if (Monitor.TryEnter(opencl_lockobject, 0))
+                {
+                    try
+                    {
+                        bestKeys = FindBestKeysInBlock_OpenCL(keySet, cancelToken, blockId);
+                    }
+                    finally
+                    {
+                        Monitor.Exit(opencl_lockobject);
+                    }
                 }
                 else
                 {
@@ -192,12 +201,12 @@ namespace KeySearcher
                         bruteforceKernel.SetArg(0, userKey);
                         bruteforceKernel.SetArg(1, costs);
                         bruteforceKernel.SetArg(2, i * subbatchSize);
-                        oclManager.CQ[opencl_deviceIndex].EnqueueNDRangeKernel(bruteforceKernel, 3, null, globalWorkSize, null);
-                        oclManager.CQ[opencl_deviceIndex].EnqueueBarrier();
+                        opencl_cq.EnqueueNDRangeKernel(bruteforceKernel, 3, null, globalWorkSize, null);
+                        opencl_cq.EnqueueBarrier();
 
                         Event e;
                         fixed (float* costa = costArray)
-                            oclManager.CQ[opencl_deviceIndex].EnqueueReadBuffer(costs, true, 0, costArray.Length * 4, new IntPtr((void*)costa), 0, null, out e);
+                            opencl_cq.EnqueueReadBuffer(costs, true, 0, costArray.Length * 4, new IntPtr((void*)costa), 0, null, out e);
 
                         e.Wait();                        
                         bestkeys.AddRange(checkOpenCLResults(keyTranslator, costArray, jobData.CryptoAlgorithm, i * subbatchSize));
@@ -243,7 +252,7 @@ namespace KeySearcher
             {
                 float cost = costArray[i];
                 if (((relationOperator == RelationOperator.LargerThen) && (cost > valueThreshold))
-                    || (relationOperator == RelationOperator.LargerThen) && (cost < valueThreshold))
+                    || (relationOperator == RelationOperator.LessThen) && (cost < valueThreshold))
                 {
                     var key = keyTranslator.GetKeyFromRepresentation(keyTranslator.GetKeyRepresentation(i + add));
                     var entry = new KeyResultEntry { Costs = cost,

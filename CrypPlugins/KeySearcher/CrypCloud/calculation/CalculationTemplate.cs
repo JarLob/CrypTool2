@@ -10,12 +10,12 @@ namespace KeySearcher
     {
         private readonly bool sortAscending;
 
-        public CalculationTemplate(JobDataContainer jobData, KeyPattern.KeyPattern pattern, bool sortAscending, KeySearcher keysearcher, bool enableOpenCL)
+        public CalculationTemplate(JobDataContainer jobData, KeyPattern.KeyPattern pattern, bool sortAscending, KeySearcher keysearcher, bool enableOpenCL, int openCLDevice)
         {
             this.sortAscending = sortAscending;
             var keysPerChunk = pattern.size() / jobData.NumberOfBlocks;
             var keyPool = new KeyPatternPool(pattern, keysPerChunk);
-            WorkerLogic = new Worker(jobData, keyPool, keysearcher, enableOpenCL);
+            WorkerLogic = new Worker(jobData, keyPool, keysearcher, enableOpenCL, openCLDevice);
         }
 
 

@@ -329,7 +329,6 @@ namespace KeySearcher
                         BinaryPath = Path.Combine(directoryName, "openclbin"),
                         BuildOptions = "-cl-opt-disable"
                     };
-                    oclManager.CreateDefaultContext(0, DeviceType.ALL);
                 }
             }
             catch (Exception ex)
@@ -513,17 +512,21 @@ namespace KeySearcher
             KeySearcherOpenCLSubbatchOptimizer keySearcherOpenCLSubbatchOptimizer = null;
             if (openCLDeviceSettings != null && oclManager != null)
             {
-                keySearcherOpenCLCode = new KeySearcherOpenCLCode(this, this.encryptedDataOptimized, this.initVectorOptimized, sender, CostMaster, 256 * 256 * 256 * 16);
-                keySearcherOpenCLSubbatchOptimizer = new KeySearcherOpenCLSubbatchOptimizer(openCLDeviceSettings.mode, 
-                        oclManager.CQ[openCLDeviceSettings.index].Device.MaxWorkItemSizes.Aggregate(1, (x, y) => (x * (int)y)) / 8);
-
-                ((QuickWatch)Presentation).Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                var cq = Worker.GetDeviceCQAndSwitchContext(oclManager, openCLDeviceSettings.index);
+                if (cq != null)
                 {
-                    openClPresentationMutex.WaitOne();
-                    ((QuickWatch)Presentation).LocalQuickWatchPresentation.AmountOfDevices++;
-                    openClPresentationMutex.ReleaseMutex();
-                }, null);
-                Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
+                    keySearcherOpenCLCode = new KeySearcherOpenCLCode(this, this.encryptedDataOptimized, this.initVectorOptimized, sender, CostMaster, 256 * 256 * 256 * 16);
+                    keySearcherOpenCLSubbatchOptimizer = new KeySearcherOpenCLSubbatchOptimizer(openCLDeviceSettings.mode,
+                            cq.Device.MaxWorkItemSizes.Aggregate(1, (x, y) => (x * (int)y)) / 8);
+
+                    ((QuickWatch)Presentation).Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        openClPresentationMutex.WaitOne();
+                        ((QuickWatch)Presentation).LocalQuickWatchPresentation.AmountOfDevices++;
+                        openClPresentationMutex.ReleaseMutex();
+                    }, null);
+                    Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
+                }
             }
 
             //Bruteforce until stop:
@@ -612,9 +615,8 @@ namespace KeySearcher
             var openCLDeviceSettings = (KeySearcherSettings.OpenCLDeviceSettings)parameters[9];
             try
             {
+                var cq = Worker.GetDeviceCQAndSwitchContext(oclManager, openCLDeviceSettings.index);
                 Kernel bruteforceKernel = keySearcherOpenCLCode.GetBruteforceKernel(oclManager, keyTranslator);
-
-                int deviceIndex = openCLDeviceSettings.index;
                 
                 Mem userKey;
                 var key = keyTranslator.GetKey();
@@ -643,12 +645,12 @@ namespace KeySearcher
                         bruteforceKernel.SetArg(0, userKey);
                         bruteforceKernel.SetArg(1, costs);
                         bruteforceKernel.SetArg(2, i * subbatchSize);
-                        oclManager.CQ[deviceIndex].EnqueueNDRangeKernel(bruteforceKernel, 3, null, globalWorkSize, null);
-                        oclManager.CQ[deviceIndex].EnqueueBarrier();
+                        cq.EnqueueNDRangeKernel(bruteforceKernel, 3, null, globalWorkSize, null);
+                        cq.EnqueueBarrier();
 
                         Event e;
                         fixed (float* costa = costArray)
-                            oclManager.CQ[deviceIndex].EnqueueReadBuffer(costs, true, 0, costArray.Length * 4, new IntPtr((void*)costa), 0, null, out e);
+                            cq.EnqueueReadBuffer(costs, true, 0, costArray.Length * 4, new IntPtr((void*)costa), 0, null, out e);
 
                         e.Wait();
 

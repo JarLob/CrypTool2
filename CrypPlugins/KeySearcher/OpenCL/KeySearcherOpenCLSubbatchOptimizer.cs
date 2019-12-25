@@ -139,7 +139,7 @@ namespace KeySearcher
                 amountOfSubbatchesFactors.Remove(maxElement);
 
                 amountOfSubbatches = amountOfSubbatchesFactors.Aggregate(1, (current, i) => current * i);
-            } while (keyTranslator.GetOpenCLBatchSize() / amountOfSubbatches < (256 * 256));        //each batch should have at least size 256*256
+            } while (amountOfSubbatchesFactors.Any() && keyTranslator.GetOpenCLBatchSize() / amountOfSubbatches < (256 * 256));        //each batch should have at least size 256*256
         }
 
         private void IncreaseAmountOfSubbatches()
