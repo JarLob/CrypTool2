@@ -850,7 +850,7 @@ namespace VoluntLib2.ManagementLayer
         {
             get 
             {                
-                if (JobEpochState == null)
+                if (JobEpochState == null || JobEpochState.Bitmask.MaskSize == 0)
                 {
                     return BigInteger.Zero;
                 }
