@@ -19,16 +19,13 @@ using System.ComponentModel;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
 using System.Threading;
-using System.IO.Pipes;
-using System.Diagnostics;
-using System.Collections.Concurrent;
 using Cryptool.Plugins.Ipc.Messages;
-using Google.Protobuf;
 using System.Windows.Threading;
-using Cryptool.PluginBase.IO;
 using System.IO;
 using System.Text;
 using Cryptool.CrypAnalysisViewControl;
+using PlayfairAnalysis.Common;
+using PlayfairAnalysis;
 
 namespace Cryptool.PlayfairAnalyzer
 {
@@ -48,37 +45,33 @@ namespace Cryptool.PlayfairAnalyzer
         public event PropertyChangedEventHandler PropertyChanged;
         
         private bool _Running = false;
-        //CT2 IPC uses 2 pipes: one for sending and one for receiving messages
-        private NamedPipeServerStream _PipeServer = null;
-        private NamedPipeServerStream _PipeClient = null;
 
-        private Process _Process = null;      
-
+        private string _Ciphertext = null;
+        private string _Crib = null;
         private string _Plaintext = null;
         private string _Key = null;
         private string _Score = null;
 
         private const string PLAYFAIR_ALPHABET = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
 
-        private ConcurrentQueue<OutgoingData> _SendingQueue;
-        private AutoResetEvent _SendingQueueEvent;
         private PlayfairAnalyzerSettings _settings = new PlayfairAnalyzerSettings();
         private AssignmentPresentation _presentation = new AssignmentPresentation();
         private DateTime _startTime;
         private bool _alreadyExecuted = false;
+        private CancellationTokenSource _cancellationTokenSource;
 
         [PropertyInfo(Direction.InputData, "CiphertextCaption", "CiphertextTooltip", true)]
-       
         public string Ciphertext
         {
+            get => _Ciphertext;
             set
             {
-                if (!String.IsNullOrEmpty(value))
+                if (_Ciphertext != value)
                 {
-                    value = RemoveInvalidSymbols(value);
-                    if (value.Length > 1)
+                    _Ciphertext = value;
+                    if (!String.IsNullOrEmpty(_Ciphertext))
                     {
-                        SendToQueue(new OutgoingData() { outputId = 1, value = value });
+                        _Ciphertext = RemoveInvalidSymbols(_Ciphertext);
                     }
                 }
             }
@@ -105,12 +98,13 @@ namespace Cryptool.PlayfairAnalyzer
 
         [PropertyInfo(Direction.InputData, "CribCaption", "CribTooltip", false)]
         public string Crib
-        {           
+        {
+            get => _Crib;
             set
             {
-                if (!String.IsNullOrEmpty(value))
+                if (_Crib != value)
                 {
-                    SendToQueue(new OutgoingData() { outputId = 2, value = value });
+                    _Crib = value;
                 }
             }
         }        
@@ -124,6 +118,7 @@ namespace Cryptool.PlayfairAnalyzer
                 if (!String.IsNullOrEmpty(value))
                 {
                     _Plaintext = value;
+                    OnPropertyChanged("Plaintext");
                 }
             }
         }
@@ -137,6 +132,7 @@ namespace Cryptool.PlayfairAnalyzer
                 if (!String.IsNullOrEmpty(value))
                 {
                     _Key = value;
+                    OnPropertyChanged("Key");
                 }
             }
         }
@@ -150,6 +146,7 @@ namespace Cryptool.PlayfairAnalyzer
                 if (!String.IsNullOrEmpty(value))
                 {
                     _Score = value;
+                    OnPropertyChanged("Score");
                 }
             }
         }
@@ -157,8 +154,6 @@ namespace Cryptool.PlayfairAnalyzer
         public void PreExecution()
         {
             //reset inputs, outputs, and sending queue
-            _SendingQueue = new ConcurrentQueue<OutgoingData>();
-            _SendingQueueEvent = new AutoResetEvent(true);
             _Plaintext = String.Empty;
             _alreadyExecuted = false;
         }
@@ -207,7 +202,6 @@ namespace Cryptool.PlayfairAnalyzer
                         break;
                     default:
                         throw new NotImplementedException(String.Format("Language {0} has not been implemented", _settings.Language.ToString()));
-                        break;
                 }
             }
             catch (Exception ex)
@@ -247,6 +241,7 @@ namespace Cryptool.PlayfairAnalyzer
                         _presentation.StartTime.Value = _startTime.ToString();
                         _presentation.EndTime.Value = string.Empty;
                         _presentation.ElapsedTime.Value = string.Empty;
+                        _presentation.BestList.Clear();
                     }
                     catch (Exception)
                     {
@@ -254,81 +249,40 @@ namespace Cryptool.PlayfairAnalyzer
                     }
                 }, null);
 
-                //Step 1: Create process                
-                string jarfilename = DirectoryHelper.BaseDirectory + @"\Jars\playfair.jar";                                
-                _Process = new Process();
-                _Process.StartInfo.WorkingDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CrypTool2");
-                _Process.StartInfo.FileName = "java.exe";
-                _Process.StartInfo.Arguments = String.Format("-Xmx1024M -Xms1024M -jar \"{0}\" -h \"{1}\"", jarfilename, hexfilename);
-                _Process.StartInfo.CreateNoWindow = true;
-                if (_settings.ShowWindow)
+                //Step 1: Start analysis
+
+                CtBestList.clear();
+                CtBestList.setScoreThreshold(0);
+                CtBestList.setDiscardSamePlaintexts(true);
+                CtBestList.setSize(10);
+                CtBestList.setThrottle(false);
+                Utils.resetTimer();
+
+                _cancellationTokenSource = new CancellationTokenSource();
+                var ct = _cancellationTokenSource.Token;
+
+                if (!Stats.readHexagramStatsFile(hexfilename, ct))
                 {
-                    _Process.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
-                }
-                else
-                {
-                    _Process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                }
-
-                GuiLogMessage(String.Format("Starting now {0} {1}", _Process.StartInfo.FileName, _Process.StartInfo.Arguments), NotificationLevel.Debug);
-
-                if (!_Process.Start())
-                {
-                    GuiLogMessage("Could not start process. It returned false.", NotificationLevel.Error);
-                    return;
-                }                
-
-                //Step 2: Create named pipes with processID of process
-                string serverPipeName = "clientToServer" + _Process.Id;
-                string clientPipeName = "serverToClient" + _Process.Id;
-                _PipeServer = new NamedPipeServerStream(serverPipeName, PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
-                _PipeClient = new NamedPipeServerStream(clientPipeName, PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
-
-                //Step 3: Busy wait for external process to connect         
-                _PipeServer.BeginWaitForConnection(connectionServerCallback, _PipeServer);
-                _PipeClient.BeginWaitForConnection(connectionClientCallback, _PipeClient);
-
-                int time = 0;
-                while (!_Process.HasExited && (!_PipeServer.IsConnected || !_PipeClient.IsConnected))
-                {
-                    Thread.Sleep(100);
-                    time++;
-                    if (time == 50)
-                    {
-                        GuiLogMessage("Process did not connect to both pipes. Stop now.", NotificationLevel.Error);                    
-                        return;
-                    }                    
-                    if (!_Running)
+                    if (ct.IsCancellationRequested)
                     {
                         return;
                     }
+                    throw new Exception($"Error trying to read hexagram stats file: {hexfilename}");
                 }
 
-                if (_Process.HasExited)
+                var cipherText = Utils.getText(Ciphertext);
+                if (cipherText.Length % 2 != 0)
                 {
-                    return;
+                    throw new Exception($"Ciphertext length must be even - found {cipherText.Length} characters.");
                 }
 
-                //Step 5:
-                //Send settings and
-                //create and start sending and receiving thread                
-                SendToQueue(new OutgoingData() { outputId = 100, value = "" + (_settings.Threads + 1)}); //index starts at 0; thus +1
-                SendToQueue(new OutgoingData() { outputId = 200, value = "" + _settings.Cycles });
-                //_SendingQueue.Enqueue(new OutgoingData() { outputId = 300, value = "" + _settings.ResourceDirectory });
-                
-                Thread receivingThread = new Thread(ReceivingMethod);
-                receivingThread.IsBackground = true;
-                receivingThread.Start();
-
-                Thread sendingThread = new Thread(SendingMethod);
-                sendingThread.IsBackground = true;
-                sendingThread.Start();
-
-                SendCt2HelloMessage();
+                var threads = (_settings.Threads + 1);  //index starts at 0; thus +1
+                SolvePlayfair.solveMultithreaded(cipherText, Crib ?? "", threads, _settings.Cycles, null, ct);
+                GuiLogMessage("Starting analysis now.", NotificationLevel.Debug);
 
                 DateTime lastUpdateTime = DateTime.Now;
                 //Step 6: while both pipes are connected, we busy wait
-                while (_PipeServer.IsConnected && _PipeClient.IsConnected)
+                while (!ct.IsCancellationRequested)
                 {
                     Thread.Sleep(100);
                     if (!_Running)
@@ -356,60 +310,8 @@ namespace Cryptool.PlayfairAnalyzer
             }
             finally
             {
-                SendCt2ShutdownMessage();
+                _cancellationTokenSource?.Cancel();
                 _Running = false;
-                //Step 7: Close pipe and input/output streams
-                if (_PipeServer != null && _PipeServer.IsConnected)
-                {
-                    try
-                    {
-                        _PipeServer.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        GuiLogMessage("Could not close named pipe for server: " + ex.Message, NotificationLevel.Error);
-                    }
-                }
-                if (_PipeClient != null && _PipeClient.IsConnected)
-                {
-                    try
-                    {
-                        _PipeClient.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        GuiLogMessage("Could not close named pipe for client: " + ex.Message, NotificationLevel.Error);
-                    }
-                }
-
-                _SendingQueueEvent.Set();   //set to enable sending thread to shut down
-
-                //Step 8: wait for process to terminate
-                //        If process does not terminate in time, we kill it                
-                int time = 0;
-                while (!_Process.HasExited)
-                {
-                    Thread.Sleep(10);
-                    time++;
-                    if (time == 200)
-                    {
-                        try
-                        {
-                            GuiLogMessage("Process did not terminate in time. Kill it now.", NotificationLevel.Warning);
-                            _Process.Kill();
-                            break;
-                        }
-                        catch (Exception ex)
-                        {
-                            GuiLogMessage("Could not kill process: " + ex.Message, NotificationLevel.Error);
-                        }
-                    }                    
-                }
-
-                if (_Process.HasExited)
-                {
-                    GuiLogMessage(String.Format("Process exited with exit code: {0}", _Process.ExitCode), _Process.ExitCode != 0 ? NotificationLevel.Error : NotificationLevel.Info);
-                }
 
                 //set end time in presentation
                 _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -427,190 +329,6 @@ namespace Cryptool.PlayfairAnalyzer
                 }, null);
 
             }            
-        }
-
-        /// <summary>
-        /// Sends a Ct2HelloMessage
-        /// </summary>
-        private void SendCt2HelloMessage()
-        {
-            if (_PipeClient.IsConnected)
-            {
-                try
-                {
-                    Ct2Hello ct2Hello = new Ct2Hello();
-                    ct2Hello.ProgramName = "CrypTool 2";
-                    ct2Hello.ProgramVersion = "2.1.";
-                    Ct2IpcMessage message = new Ct2IpcMessage();
-                    message.Body = ct2Hello.ToByteString();
-                    message.MessageType = 1;
-                    message.WriteDelimitedTo(_PipeClient);
-                }
-                catch (Exception ex)
-                {
-                    GuiLogMessage(String.Format("Can not send Ct2Hello message: {0}", ex.Message), NotificationLevel.Error);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Sends a Ct2ShutdownMessage
-        /// </summary>
-        private void SendCt2ShutdownMessage()
-        {
-            if (_PipeClient != null && _PipeClient.IsConnected)
-            {
-                try
-                {
-                    Ct2Shutdown ct2Shutdown = new Ct2Shutdown();
-                    ct2Shutdown.Reason = "Execute method of PlayfairAnalyzer is terminating";                    
-                    Ct2IpcMessage message = new Ct2IpcMessage();
-                    message.Body = ct2Shutdown.ToByteString();
-                    message.MessageType = 2;
-                    message.WriteDelimitedTo(_PipeClient);
-                }
-                catch (Exception ex)
-                {
-                    GuiLogMessage(String.Format("Can not send Ct2Shutdown message: {0}", ex.Message), NotificationLevel.Error);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Method that sends input data from the queue to the application
-        /// </summary>
-        private void SendingMethod()
-        {
-            while (_PipeClient.IsConnected && _Running)
-            {
-                if (_SendingQueue.Count > 0)
-                {
-                    try
-                    {
-                        OutgoingData outgoingData = null;
-                        _SendingQueue.TryDequeue(out outgoingData);
-                        if (outgoingData != null)
-                        {
-                            Ct2Values ct2Values = new Ct2Values();
-                            ct2Values.PinId.Add(outgoingData.outputId);
-                            ct2Values.Value.Add(outgoingData.value);
-                            Ct2IpcMessage message = new Ct2IpcMessage();
-                            message.Body = ct2Values.ToByteString();
-                            message.MessageType = 3;
-                            message.WriteDelimitedTo(_PipeClient);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        GuiLogMessage(String.Format("Exception while sending data: {0}", ex.Message), NotificationLevel.Error);
-                    }
-                }
-                else
-                {
-                    _SendingQueueEvent.WaitOne();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Method for receiving messages from server pipe
-        /// </summary>
-        /// <param name="obj"></param>
-        private void ReceivingMethod(object obj)
-        {
-            while (_PipeServer.IsConnected && _Running)
-            {
-                try
-                {
-                    Ct2IpcMessage message = Ct2IpcMessage.Parser.ParseDelimitedFrom(_PipeServer);
-                    switch (message.MessageType)
-                    {
-                        case 1: // Ct2Hello
-                            var ct2Hello = Ct2Hello.Parser.ParseFrom(message.Body.ToByteArray());
-                            //HandleCt2HelloMessage(ct2Hello);
-                            break;
-
-                        case 2: //Ct2Shutdown
-                            var ct2Shutdown = Ct2Shutdown.Parser.ParseFrom(message.Body.ToByteArray());
-                            //HandleCt2ShutdownMessage(ct2Shutdown);
-                            break;
-
-                        case 3: //Ct2Values
-                            var ct2Values = Ct2Values.Parser.ParseFrom(message.Body.ToByteArray());
-                            HandleCt2ValuesMessage(ct2Values);
-                            break;
-
-                        case 4: //Ct2LogEntry
-                            var ct2LogEntry = Ct2LogEntry.Parser.ParseFrom(message.Body.ToByteArray());
-                            HandleCt2LogEntryMessage(ct2LogEntry);
-                            break;
-
-                        case 5: //Ct2Progress
-                            var ct2Progress = Ct2Progress.Parser.ParseFrom(message.Body.ToByteArray());
-                            HandleCt2ProgressMessage(ct2Progress);
-                            break;
-
-                        case 6: //Ct2Goodbye
-                            var ct2Goodbye = Ct2Goodbye.Parser.ParseFrom(message.Body.ToByteArray());
-                            HandleCt2GoodbyeMessage(ct2Goodbye);
-                            break;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    if (_Running)
-                    {
-                        GuiLogMessage(String.Format("Exception occured during receving and handling of message: {0}", ex.Message), NotificationLevel.Error);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Handles an incoming Ct2Goodbye message
-        /// </summary>
-        /// <param name="ct2Goodbye"></param>
-        private void HandleCt2GoodbyeMessage(Ct2Goodbye ct2Goodbye)
-        {
-            if (ct2Goodbye.ExitCode != 0)
-            {
-                GuiLogMessage(string.Format("Process terminates now with return code {0}. Reason: {1}", ct2Goodbye.ExitCode, ct2Goodbye.ExitMessage), NotificationLevel.Error);
-            }                        
-            _Running = false;
-        }       
-
-        /// <summary>
-        /// Handles an incoming Ct2Values message
-        /// </summary>
-        /// <param name="ct2Values"></param>
-        private void HandleCt2ValuesMessage(Ct2Values ct2Values)
-        {
-            for (int i = 0; i < ct2Values.PinId.Count; i++)
-            {
-                int id = ct2Values.PinId[i];
-                string value = ct2Values.Value[i];
-                switch (id)
-                {
-                    case 1:
-                        Plaintext = value;
-                        OnPropertyChanged("Plaintext");
-                        break;
-                    case 2:
-                        Key = value;
-                        OnPropertyChanged("Key");
-                        break;
-                    case 3:
-                        Score = value;
-                        OnPropertyChanged("Score");
-                        break;
-                    case 1000:
-                        HandleIncomingBestList(value);
-                        break;
-                    default:
-                        GuiLogMessage(String.Format("Received a value for an output that does not exist: {0}", id), NotificationLevel.Warning);
-                        break;
-                }
-            }
         }
 
         /// <summary>
@@ -673,92 +391,27 @@ namespace Cryptool.PlayfairAnalyzer
             }
         }
 
-        /// <summary>
-        /// Handles a Ct2LogEntry message by showing the appropriate log entry
-        /// </summary>
-        /// <param name="ct2LogEntry"></param>
-        private void HandleCt2LogEntryMessage(Ct2LogEntry ct2LogEntry)
-        {
-            switch (ct2LogEntry.LogLevel)
-            {
-                case Ct2LogEntry.Types.LogLevel.Ct2Debug:
-                    GuiLogMessage(ct2LogEntry.Entry, NotificationLevel.Debug);
-                    break;
-                case Ct2LogEntry.Types.LogLevel.Ct2Info:
-                    GuiLogMessage(ct2LogEntry.Entry, NotificationLevel.Info);
-                    break;
-                case Ct2LogEntry.Types.LogLevel.Ct2Warning:
-                    GuiLogMessage(ct2LogEntry.Entry, NotificationLevel.Warning);
-                    break;
-                case Ct2LogEntry.Types.LogLevel.Ct2Error:
-                    GuiLogMessage(ct2LogEntry.Entry, NotificationLevel.Error);
-                    break;
-                case Ct2LogEntry.Types.LogLevel.Ct2Balloon:
-                    GuiLogMessage(ct2LogEntry.Entry, NotificationLevel.Balloon);
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Handles a Ct2Progress by showing its progress to the user
-        /// </summary>
-        /// <param name="ct2Progress"></param>
-        private void HandleCt2ProgressMessage(Ct2Progress ct2Progress)
-        {
-            OnProgressChanged(ct2Progress.CurrentValue, ct2Progress.MaxValue);
-        }        
-
-        /// <summary>
-        /// Called when client connects to server pipe
-        /// </summary>
-        /// <param name="asyncResult"></param>
-        private void connectionServerCallback(IAsyncResult asyncResult)
-        {
-            try
-            {
-                NamedPipeServerStream pipeServer = (NamedPipeServerStream)asyncResult.AsyncState;
-                pipeServer.EndWaitForConnection(asyncResult);        
-            }
-            catch (Exception ex)
-            {
-                GuiLogMessage("Exception during establishing of connection to server pipe: " + ex.Message,NotificationLevel.Error);
-                _Running = false;
-            }
-        }
-
-        /// <summary>
-        /// Called when client connects to client pipe
-        /// </summary>
-        /// <param name="asyncResult"></param>
-        private void connectionClientCallback(IAsyncResult asyncResult)
-        {
-            try
-            {
-                NamedPipeServerStream pipeClient = (NamedPipeServerStream)asyncResult.AsyncState;
-                pipeClient.EndWaitForConnection(asyncResult);
-            }
-            catch (Exception ex)
-            {
-                GuiLogMessage("Exception during establishing of connection to client Pipe: " + ex.Message, NotificationLevel.Error);
-                _Running = false;
-            }
-        }
-
-        private void SendToQueue(OutgoingData data)
-        {
-            _SendingQueue.Enqueue(data);
-            _SendingQueueEvent.Set();
-        }
-
         public void Stop()
         {
             _Running = false;
+            _cancellationTokenSource?.Cancel();
         }
 
         public void Initialize()
         {
-            
-        }        
+            CtAPI.BestListChangedEvent += HandleIncomingBestList;
+            CtAPI.BestResultChangedHandlerEvent += bestResult =>
+            {
+                Score = string.Format("{0,12:N0}", bestResult.score);
+                Plaintext = bestResult.plaintextString;
+                Key = bestResult.keyString;
+            };
+            CtAPI.ProgressChangedEvent += (currentValue, maxValue) => OnProgressChanged(currentValue, maxValue);
+            CtAPI.GoodbyeEvent += () =>
+            {
+                _cancellationTokenSource?.Cancel();
+            };
+        }
 
         public void Dispose()
         {
@@ -779,15 +432,6 @@ namespace Cryptool.PlayfairAnalyzer
         {
             EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
         }        
-    }
-
-    /// <summary>
-    /// Wrapper class for wrapping output data and output connector id
-    /// </summary>
-    class OutgoingData
-    {
-        public int outputId;
-        public string value;
     }
 
     public class ResultEntry : ICrypAnalysisResultListEntry, INotifyPropertyChanged

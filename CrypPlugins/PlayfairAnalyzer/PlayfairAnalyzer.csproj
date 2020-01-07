@@ -114,6 +114,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analysis\Arrays.cs" />
+    <Compile Include="Analysis\Churn\ChurnSimulatedAnnealing.cs" />
+    <Compile Include="Analysis\Churn\FixedTemperatureSimulatedAnnealing.cs" />
+    <Compile Include="Analysis\Churn\ImprovedFixedTemperatureSimulatedAnnealing.cs" />
+    <Compile Include="Analysis\Common\CtAPI.cs" />
+    <Compile Include="Analysis\Common\CtBestList.cs" />
+    <Compile Include="Analysis\Common\NGrams.cs" />
+    <Compile Include="Analysis\Common\Permutations.cs" />
+    <Compile Include="Analysis\Common\SimulatedAnnealing.cs" />
+    <Compile Include="Analysis\Common\Stats.cs" />
+    <Compile Include="Analysis\Common\Utils.cs" />
+    <Compile Include="Analysis\Key.cs" />
+    <Compile Include="Analysis\Playfair.cs" />
+    <Compile Include="Analysis\SolvePlayfair.cs" />
+    <Compile Include="Analysis\Transformations.cs" />
     <Compile Include="AssignmentPresentation.xaml.cs">
       <DependentUpon>AssignmentPresentation.xaml</DependentUpon>
     </Compile>
@@ -202,6 +217,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
