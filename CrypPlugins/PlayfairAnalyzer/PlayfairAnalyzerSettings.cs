@@ -29,10 +29,6 @@ namespace Cryptool.PlayfairAnalyzer
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private string _filename;
-        private string _arguments;
-        private string _resourceDirectory;
-        private bool _showWindow;
         private Language _language;
 
         private int _threads;
@@ -77,19 +73,6 @@ namespace Cryptool.PlayfairAnalyzer
                 {
                     _cycles = value;
                     OnPropertyChanged("Cycles");
-                }
-            }
-        }
-
-        [TaskPane("ShowWindowCaption", "ShowWindowTooltip", null, 3, false, ControlType.CheckBox)]
-        public bool ShowWindow
-        {
-            get { return _showWindow; }
-            set
-            {
-                if (value != _showWindow)
-                {
-                    _showWindow = value;
                 }
             }
         }
