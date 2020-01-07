@@ -16,6 +16,17 @@ namespace PlayfairAnalysis.Common
         public delegate void ProgressChangedHandler(double currentValue, double maxValue);
         public static event ProgressChangedHandler ProgressChangedEvent;
 
+        internal static void reset()
+        {
+            Stats.evaluations = 0;
+            Utils.resetTimer();
+            CtBestList.clear();
+            CtBestList.setScoreThreshold(0);
+            CtBestList.setDiscardSamePlaintexts(true);
+            CtBestList.setSize(10);
+            CtBestList.setThrottle(false);
+        }
+
         internal static void goodbye()
         {
             GoodbyeEvent?.Invoke();

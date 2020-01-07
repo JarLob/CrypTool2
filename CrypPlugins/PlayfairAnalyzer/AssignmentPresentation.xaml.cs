@@ -81,7 +81,7 @@ namespace Cryptool.PlayfairAnalyzer
         {
             if (item is ResultEntry resultItem)
             {
-                _updateOutputFromUserChoice(resultItem.Key, resultItem.Text);
+                _updateOutputFromUserChoice(resultItem.Key, resultItem.Text, resultItem.Value);
             }
         }
 

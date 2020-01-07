@@ -30,7 +30,7 @@ using PlayfairAnalysis;
 namespace Cryptool.PlayfairAnalyzer
 {
     public delegate void PluginProgress(double current, double maximum);
-    public delegate void UpdateOutput(String keyString, String plaintextString);
+    public delegate void UpdateOutput(String keyString, String plaintextString, string score);
 
     [Author("George Lasry, Nils Kopal", "George.Lasry@cryptool.org", "Uni Kassel", "https://www.cryptool.org")]
     [PluginInfo("Cryptool.PlayfairAnalyzer.Properties.Resources", "PluginCaption", "PluginTooltip", "PlayfairAnalyzer/DetailedDescription/doc.xml", "PlayfairAnalyzer/icon.png")]
@@ -250,13 +250,7 @@ namespace Cryptool.PlayfairAnalyzer
                 }, null);
 
                 //Step 1: Start analysis
-
-                CtBestList.clear();
-                CtBestList.setScoreThreshold(0);
-                CtBestList.setDiscardSamePlaintexts(true);
-                CtBestList.setSize(10);
-                CtBestList.setThrottle(false);
-                Utils.resetTimer();
+                CtAPI.reset();
 
                 _cancellationTokenSource = new CancellationTokenSource();
                 var ct = _cancellationTokenSource.Token;
@@ -399,12 +393,12 @@ namespace Cryptool.PlayfairAnalyzer
 
         public void Initialize()
         {
+            _presentation.UpdateOutputFromUserChoice += UpdateOutput;
+
             CtAPI.BestListChangedEvent += HandleIncomingBestList;
             CtAPI.BestResultChangedHandlerEvent += bestResult =>
             {
-                Score = string.Format("{0,12:N0}", bestResult.score);
-                Plaintext = bestResult.plaintextString;
-                Key = bestResult.keyString;
+                UpdateOutput(bestResult.keyString, bestResult.plaintextString, string.Format("{0,12:N0}", bestResult.score));
             };
             CtAPI.ProgressChangedEvent += (currentValue, maxValue) => OnProgressChanged(currentValue, maxValue);
             CtAPI.GoodbyeEvent += () =>
@@ -431,7 +425,14 @@ namespace Cryptool.PlayfairAnalyzer
         private void OnProgressChanged(double value, double max)
         {
             EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
-        }        
+        }
+
+        private void UpdateOutput(string keyString, string plaintextString, string score)
+        {
+            Score = score;
+            Plaintext = plaintextString;
+            Key = keyString;
+        }
     }
 
     public class ResultEntry : ICrypAnalysisResultListEntry, INotifyPropertyChanged
