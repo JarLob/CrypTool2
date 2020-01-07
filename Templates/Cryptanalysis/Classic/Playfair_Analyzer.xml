@@ -23,7 +23,7 @@
     <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext" />
     <replacement key="$Revealed Key$" value="Gefundener Schlüssel" />
     <replacement key="$PlayfairAnalyzer$" value="Playfair-Analyse" />
-    <replacement key="$memo$" value="Diese Vorlage demonstriert einen Ciphertext-only-Angriff auf die Playfair-Chiffre. Der oben angegebene Klartext wird mit der Playfair-Komponente verschlüsselt und der resultierende Geheimtext wird an die Playfair-Analyse-Komponente geschickt.\line\line Bitte beachten Sie, dass bei Playfair für jeden Schlüssel mehrere äquivalente Schlüssel existieren, die denselben Geheimtext erzeugen." />
+    <replacement key="$memo$" value="Diese Vorlage demonstriert einen Ciphertext-only-Angriff auf die Playfair-Chiffre. Der oben angegebene Geheimtext wird an die Playfair-Analyse-Komponente geschickt.\line Der zugehörige Klartext ist in englischer Sprache.\line\line Bitte beachten Sie, dass bei Playfair für jeden Schlüssel mehrere äquivalente Schlüssel existieren, die denselben Geheimtext erzeugen." />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Ciphertext$" value="шифротекста" />
@@ -39,6 +39,6 @@
     <replacement key="$Revealed Plaintext$" value="Decrypted plaintext" />
     <replacement key="$Revealed Key$" value="Found key" />
     <replacement key="$PlayfairAnalyzer$" value="Playfair Analyzer" />
-    <replacement key="$memo$" value="This template demonstrates a ciphertext-only attack on the Playfair cipher. The plaintext above is encrypted with the Playfair component and the resulting ciphertext is sent to the Playfair Analyzer.\line\line Please note that in Playfair for every key there exist several equivalent keys that generate the same ciphertext." />
+    <replacement key="$memo$" value="This template demonstrates a ciphertext-only attack on the Playfair cipher. The ciphertext above is sent to the Playfair Analyzer component.\line The corresponding plaintext is in english language.\line\line Please note that in Playfair for every key there exist several equivalent keys that generate the same ciphertext." />
   </replacements>
 </sample>
