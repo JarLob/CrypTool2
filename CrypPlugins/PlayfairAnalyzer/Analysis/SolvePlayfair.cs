@@ -1,6 +1,9 @@
 ﻿using PlayfairAnalysis.Common;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlayfairAnalysis
 {
@@ -99,6 +102,7 @@ namespace PlayfairAnalysis
 
         public static void solveMultithreaded(int[] cipherText, String cribString, int threads, int cycles, Key simulationKey, CancellationToken ct)
         {
+            var threadCompletions = new List<TaskCompletionSource<bool>>();
             Key simulationKey_ = simulationKey;
             for (int t_ = 0; t_ < threads; t_++)
             {
@@ -106,10 +110,31 @@ namespace PlayfairAnalysis
                 double factor = (cribString.Length > cipherText.Length / 2) ? 0.1 : 1.0;
                 int multiplier = (int)(factor * 150_000) / cipherText.Length;
 
+                var threadCompletion = new TaskCompletionSource<bool>();
+                threadCompletions.Add(threadCompletion);
                 new Thread(
-                        ()=>solve(t, cycles, 200_000, multiplier, cipherText, cribString, simulationKey_, ct)
+                        delegate()
+                        {
+                            try
+                            {
+                                solve(t, cycles, 200_000, multiplier, cipherText, cribString, simulationKey_, ct);
+                            }
+                            finally
+                            {
+                                threadCompletion.SetResult(true);
+                            }
+                        }
                 ).Start();
             }
+
+            WatchThreadCompletions(threadCompletions);
+        }
+
+        private static async void WatchThreadCompletions(List<TaskCompletionSource<bool>> threadCompletions)
+        {
+            await Task.WhenAny(threadCompletions.Select(t => t.Task));
+            //call "goodbye" after all threads completed to let CT2 know about it:
+            CtAPI.goodbye();
         }
     }
 }
