@@ -164,25 +164,41 @@ namespace Cryptool.CrypWin
             return new string[0];
         }
 
-        private FileOperationResult CloseProject()
+        private bool CloseProject()
         {
-            FileOperationResult result = SaveChangesIfNecessary();
-
-            if (result == FileOperationResult.Continue && !restart) // in case restart was clicked there is no project to close (updater tab is open)
-                CloseIfOpen();
-
-            return result;
+            return CloseProject(ActiveEditor);
         }
 
-        private void CloseIfOpen()
+        private bool CloseProject(IEditor editor)
         {
-            this.ProjectFileName = null;
-
-            if (ActiveEditor != null)
+            FileOperationResult result = SaveChangesIfNecessary(editor);
+            if (result == FileOperationResult.Continue && !restart) // in case restart was clicked there is no project to close (updater tab is open)
             {
-                if (ActiveEditor.CanStop)
+                CloseIfOpen(editor);
+            }
+            return result != FileOperationResult.Abort;
+        }
+
+        private bool CloseProjects()
+        {
+            foreach (var editor in tabToContentMap.Values.OfType<IEditor>())
+            {
+                if (!CloseProject(editor))
                 {
-                    StopProjectExecution();
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void CloseIfOpen(IEditor editor)
+        {
+            if (editor != null)
+            {
+                editorToFileMap[editor] = null;
+                if (editor.CanStop)
+                {
+                    StopProjectExecution(editor);
                 }
             }
         }

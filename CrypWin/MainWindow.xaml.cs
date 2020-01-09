@@ -2596,8 +2596,7 @@ namespace Cryptool.CrypWin
                     _singletonMutex.ReleaseMutex();
                 }
 
-                FileOperationResult result = CloseProject(); // Editor Dispose will be called here.
-                if (result == FileOperationResult.Abort)
+                if (!CloseProjects())  // Editor Dispose will be called here.
                 {
                     e.Cancel = true;
                     WindowState = oldWindowState;
