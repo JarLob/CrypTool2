@@ -1681,7 +1681,21 @@ namespace Cryptool.CrypWin
             ListBoxItem navItem = new ListBoxItem();
             navItem.Content = stackPanel;
             navItem.Tag = contElements.Plugin;
-            navItem.ToolTip = contElements.PluginInfo.ToolTip;
+            navItem.ToolTip = new ToolTip()
+            {
+                Content = new TextBlock
+                {
+                    Inlines =
+                    {
+                        new Run(contElements.PluginInfo.ToolTip),
+                        new LineBreak(),
+                        new LineBreak(),
+                        new Bold(new Run($"{Properties.Resources.Category}: ")),
+                        new Run(contElements.GroupName)
+                    }
+                }
+            };
+
             // dragDrop handler
             navItem.PreviewMouseDown += navItem_PreviewMouseDown;
             navItem.PreviewMouseMove += navItem_PreviewMouseMove;
