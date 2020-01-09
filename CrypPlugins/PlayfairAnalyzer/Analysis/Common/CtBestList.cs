@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PlayfairAnalysis.Common
 {
-    public static class CtBestList
+    public class CtBestList
     {
         /**
          * Class encapulating a result in best list.
@@ -35,26 +35,33 @@ namespace PlayfairAnalysis.Common
 
         }
 
-        private static object mutex = new object();
-        private static List<Result> bestResults = new List<Result>();
-        private static Result originalResult = null;
-        private static long lastBestListUpdateMillis = 0;
-        private static bool shouldUpdateBestList = false;
+        private object mutex = new object();
+        private List<Result> bestResults = new List<Result>();
+        private Result originalResult = null;
+        private long lastBestListUpdateMillis = 0;
+        private bool shouldUpdateBestList = false;
 
-        private static int maxNumberOfResults = 10;
-        private static long scoreThreshold = 0;
-        private static bool discardSamePlaintexts = false;
-        private static bool throttle = false;
+        private int maxNumberOfResults = 10;
+        private long scoreThreshold = 0;
+        private bool discardSamePlaintexts = false;
+        private bool throttle = false;
+
+        public CtAPI CtAPI { get; }
+
+        public CtBestList(AnalysisInstance instance)
+        {
+            CtAPI = instance.CtAPI;
+        }
 
         /**
          * Set best list size.
          * @param size - max number of elements in best list.
          */
-        public static void setSize(int size)
+        public void setSize(int size)
         {
             lock (mutex)
             {
-                CtBestList.maxNumberOfResults = size;
+                maxNumberOfResults = size;
                 clean();
             }
         }
@@ -63,11 +70,11 @@ namespace PlayfairAnalysis.Common
          * Set a score threshold, below which result will not be included in best list.
          * @param scoreThreshold - threshold value
          */
-        public static void setScoreThreshold(long scoreThreshold)
+        public void setScoreThreshold(long scoreThreshold)
         {
             lock (mutex)
             {
-                CtBestList.scoreThreshold = scoreThreshold;
+                this.scoreThreshold = scoreThreshold;
                 clean();
             }
         }
@@ -76,11 +83,11 @@ namespace PlayfairAnalysis.Common
          * If set to yes, ignore results with plaintext already seen (possibly with a different key).
          * @param discardSamePlaintexts
          */
-        public static void setDiscardSamePlaintexts(bool discardSamePlaintexts)
+        public void setDiscardSamePlaintexts(bool discardSamePlaintexts)
         {
             lock (mutex)
             {
-                CtBestList.discardSamePlaintexts = discardSamePlaintexts;
+                this.discardSamePlaintexts = discardSamePlaintexts;
                 clean();
             }
         }
@@ -91,11 +98,11 @@ namespace PlayfairAnalysis.Common
          * This can happen very often in hillclimbing processes which slowly progress.
          * @param throttle - if yes, throttle updates to Cryptool.
          */
-        public static void setThrottle(bool throttle)
+        public void setThrottle(bool throttle)
         {
             lock (mutex)
             {
-                CtBestList.throttle = throttle;
+                this.throttle = throttle;
                 clean();
             }
         }
@@ -109,7 +116,7 @@ namespace PlayfairAnalysis.Common
          * @param plaintextString - the expected/original plaintext.
          * @param commentString - a comment
          */
-        public static void setOriginal(long score, String keyString, String keyStringShort, String plaintextString, String commentString)
+        public void setOriginal(long score, String keyString, String keyStringShort, String plaintextString, String commentString)
         {
             lock (mutex)
             {
@@ -120,7 +127,7 @@ namespace PlayfairAnalysis.Common
         /**
          * Resets the best list.
          */
-        public static void clear()
+        public void clear()
         {
             lock (mutex)
             {
@@ -136,7 +143,7 @@ namespace PlayfairAnalysis.Common
          * @param score - score of a new result.
          * @return - score is higher than the lower score in the best list.
          */
-        public static bool shouldPushResult(long score)
+        public bool shouldPushResult(long score)
         {
             lock (mutex)
             {
@@ -169,7 +176,7 @@ namespace PlayfairAnalysis.Common
          * @param commentString
          * @return
          */
-        public static bool pushResult(long score, String keyString, String keyStringShort, String plaintextString, String commentString)
+        public bool pushResult(long score, String keyString, String keyStringShort, String plaintextString, String commentString)
         {
             lock (mutex)
             {
@@ -234,7 +241,7 @@ namespace PlayfairAnalysis.Common
         }
 
         // Package private.
-        static void display()
+        private void display()
         {
             lock (mutex)
             {
@@ -249,7 +256,7 @@ namespace PlayfairAnalysis.Common
         }
 
         // Private.
-        private static void clean()
+        private void clean()
         {
             lock (mutex)
             {
@@ -271,7 +278,7 @@ namespace PlayfairAnalysis.Common
                 => (int)(o2.score - o1.score);
         }
 
-        private static void sort()
+        private void sort()
         {
             lock (mutex)
             {

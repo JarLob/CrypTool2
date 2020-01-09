@@ -1,12 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PlayfairAnalysis.Common
 {
     public class SimulatedAnnealing
     {
-        public static bool acceptHexaScore(long newScore, long currLocalScore, int multiplier)
+        private readonly Utils utils;
+
+        public SimulatedAnnealing(Utils utils)
+        {
+            this.utils = utils;
+        }
+
+        public bool acceptHexaScore(long newScore, long currLocalScore, int multiplier)
         {
 
             //return accept(newScore, currLocalScore, 275.0 * multiplier / 20.0);
@@ -14,8 +19,9 @@ namespace PlayfairAnalysis.Common
 
         }
 
-        private static double minRatio = Math.Log(0.0085);
-        public static bool accept(long newScore, long currLocalScore, double temperature)
+        private double minRatio = Math.Log(0.0085);
+
+        public bool accept(long newScore, long currLocalScore, double temperature)
         {
 
             long diffScore = newScore - currLocalScore;
@@ -28,7 +34,7 @@ namespace PlayfairAnalysis.Common
                 return false;
             }
             double ratio = diffScore / temperature;
-            return ratio > minRatio && Math.Pow(Math.E, ratio) > Utils.random.NextDouble();
+            return ratio > minRatio && Math.Pow(Math.E, ratio) > utils.randomNextDouble();
 
         }
     }

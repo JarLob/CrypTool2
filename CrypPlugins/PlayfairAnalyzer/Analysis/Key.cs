@@ -1,6 +1,5 @@
 ﻿using PlayfairAnalysis.Common;
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace PlayfairAnalysis
@@ -8,6 +7,9 @@ namespace PlayfairAnalysis
 
     public class Key
     {
+        private readonly AnalysisInstance instance;
+        private readonly Utils utils;
+        private readonly NGrams nGrams;
 
         internal int[] key;
         internal int[] inverseKey;
@@ -20,7 +22,7 @@ namespace PlayfairAnalysis
         private String keyword;
 
 
-        public Key()
+        public Key(AnalysisInstance instance, Utils utils)
         {
             key = new int[Playfair.SQUARE];
             inverseKey = new int[Playfair.SQUARE + ((Playfair.DIM == 5) ? 1 : 0)];
@@ -30,6 +32,9 @@ namespace PlayfairAnalysis
             decryptionRemoveNulls = null;
             score = 0;
             keyword = "";
+            this.instance = instance;
+            this.utils = utils;
+            nGrams = new NGrams(instance);
         }
 
 
@@ -43,7 +48,7 @@ namespace PlayfairAnalysis
             decrypt();
 
             //long ngrams = Stats.evalPlaintextHexagram(decryptionRemoveNulls, decryptionRemoveNullsLength);
-            long ngrams = NGrams.eval8(decryptionRemoveNulls, decryptionRemoveNullsLength);
+            long ngrams = nGrams.eval8(decryptionRemoveNulls, decryptionRemoveNullsLength);
             if (crib == null)
             {
                 score = ngrams;
@@ -70,7 +75,7 @@ namespace PlayfairAnalysis
         {
             decrypt();
 
-            long ngrams = Stats.evalPlaintextHexagram(decryptionRemoveNulls, decryptionRemoveNullsLength);
+            long ngrams = instance.Stats.evalPlaintextHexagram(decryptionRemoveNulls, decryptionRemoveNullsLength);
             //long ngrams = NGrams.eval7(decryptionRemoveNulls, decryptionRemoveNullsLength);
             if (crib == null)
             {
@@ -147,7 +152,7 @@ namespace PlayfairAnalysis
             }
             if (!good)
             {
-                CtAPI.goodbyeFatalError("Invalid key " + ToString());
+                instance.CtAPI.goodbyeFatalError("Invalid key " + ToString());
             }
         }
 
@@ -173,7 +178,7 @@ namespace PlayfairAnalysis
             }
             for (int i = 0; i < Playfair.SQUARE - 1; i++)
             {
-                int j = i + Utils.randomNextInt(Playfair.SQUARE - i);
+                int j = i + utils.randomNextInt(Playfair.SQUARE - i);
                 swap(i, j);
             }
             computeInverse();
@@ -305,7 +310,7 @@ namespace PlayfairAnalysis
             }
         }
 
-        private int[] buffer = new int[Playfair.SQUARE];
+        private int[] buffer = new int[Playfair.SQUARE];        
 
         private (int bestR, int bestC) getBestRC()
         {
@@ -391,18 +396,6 @@ namespace PlayfairAnalysis
             computeInverse();
             keyword = Utils.getString(phrase);
             return length == 25;
-        }
-
-
-        public static void main(String[] args)
-        {
-            //VWXQZLMOPYBRUTSANDCEFGHIK
-            Key key = new Key();
-            key.key = Utils.getText("VWXYZLMOPQBRUTSANDCEFGHIK");
-            //key.keyFromSentence(Utils.getText("BRUTUSANDCAESAR"));
-            Console.Out.WriteLine("{0}\n", key);
-            key.alignAlphabet();
-            Console.Out.WriteLine("{0}\n", key);
         }
     }
 }

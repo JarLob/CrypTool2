@@ -9,14 +9,19 @@ namespace PlayfairAnalysis
 {
     public class SolvePlayfair
     {
-        static void solve(int taskNumber, int saCycles, int innerRounds /* 200000 */, int multiplier/*1500*/, int[] cipherText, String crib, Key simulationKey, CancellationToken ct)
+        static void solve(int taskNumber, int saCycles, int innerRounds /* 200000 */, int multiplier/*1500*/, int[] cipherText, String crib, Key simulationKey, AnalysisInstance instance)
         {
             try
             {
+                var ct = instance.CancellationToken;
+                var utils = new Utils((int)DateTime.Now.Ticks + taskNumber * 100);  //Different seed for every thread
+                var transformations = new Transformations(instance, utils);
+                var simulatedAnnealing = new SimulatedAnnealing(utils);
+
                 long simulationOriginalScore = (simulationKey == null) ? long.MinValue : simulationKey.score;
-                Key currentKey = new Key();
-                Key newKey = new Key();
-                Key bestKey = new Key();
+                Key currentKey = new Key(instance, utils);
+                Key newKey = new Key(instance, utils);
+                Key bestKey = new Key(instance, utils);
                 currentKey.setCipher(cipherText);
                 newKey.setCipher(cipherText);
                 bestKey.setCipher(cipherText);
@@ -31,10 +36,10 @@ namespace PlayfairAnalysis
                     ct.ThrowIfCancellationRequested();
                     if (taskNumber == 0)
                     {
-                        CtAPI.updateProgress(cycle, saCycles);
+                        instance.CtAPI.updateProgress(cycle, saCycles);
                     }
 
-                    Transformations.randomize();
+                    transformations.randomize();
                     currentKey.random();
 
                     long currentScore = currentKey.eval();
@@ -44,11 +49,11 @@ namespace PlayfairAnalysis
                     for (int innerRound = 0; innerRound < innerRounds; innerRound++)
                     {
                         ct.ThrowIfCancellationRequested();
-                        Transformations.apply(currentKey, newKey, serialCounter++);
+                        transformations.apply(currentKey, newKey, serialCounter++);
 
                         long newScore = newKey.eval();
 
-                        if (SimulatedAnnealing.acceptHexaScore(newScore, currentScore, multiplier))
+                        if (simulatedAnnealing.acceptHexaScore(newScore, currentScore, multiplier))
                         {
                             currentKey.copy(newKey);
                             currentScore = newScore;
@@ -77,19 +82,19 @@ namespace PlayfairAnalysis
                         }
                     }
 
-                    if (CtBestList.shouldPushResult(bestScore))
+                    if (instance.CtBestList.shouldPushResult(bestScore))
                     {
                         bestKey.alignAlphabet();
-                        CtBestList.pushResult(bestScore,
+                        instance.CtBestList.pushResult(bestScore,
                                 bestKey.ToString(),
                                 bestKey.ToString(),
                                 Utils.getString(bestKey.fullDecryption),
-                                Stats.evaluationsSummary() +
+                                instance.Stats.evaluationsSummary() +
                                         $"[{bestKey.decryptionRemoveNullsLength}/{cipherText.Length}][Task: {taskNumber,2}][Mult.: {multiplier:N0}]");
                         if (currentScore == simulationOriginalScore || newKey.matchesFullCrib())
                         {
-                            CtAPI.printf("Key found");
-                            CtAPI.goodbye();
+                            instance.CtAPI.printf("Key found");
+                            instance.CtAPI.goodbye();
                         }
                     }
                 }
@@ -100,7 +105,7 @@ namespace PlayfairAnalysis
             }
         }
 
-        public static void solveMultithreaded(int[] cipherText, String cribString, int threads, int cycles, Key simulationKey, CancellationToken ct)
+        public static void solveMultithreaded(int[] cipherText, String cribString, int threads, int cycles, Key simulationKey, AnalysisInstance instance)
         {
             var threadCompletions = new List<TaskCompletionSource<bool>>();
             Key simulationKey_ = simulationKey;
@@ -117,7 +122,7 @@ namespace PlayfairAnalysis
                         {
                             try
                             {
-                                solve(t, cycles, 200_000, multiplier, cipherText, cribString, simulationKey_, ct);
+                                solve(t, cycles, 200_000, multiplier, cipherText, cribString, simulationKey_, instance);
                             }
                             finally
                             {
@@ -127,14 +132,14 @@ namespace PlayfairAnalysis
                 ).Start();
             }
 
-            WatchThreadCompletions(threadCompletions);
+            WatchThreadCompletions(threadCompletions, instance);
         }
 
-        private static async void WatchThreadCompletions(List<TaskCompletionSource<bool>> threadCompletions)
+        private static async void WatchThreadCompletions(List<TaskCompletionSource<bool>> threadCompletions, AnalysisInstance instance)
         {
             await Task.WhenAny(threadCompletions.Select(t => t.Task));
             //call "goodbye" after all threads completed to let CT2 know about it:
-            CtAPI.goodbye();
+            instance.CtAPI.goodbye();
         }
     }
 }

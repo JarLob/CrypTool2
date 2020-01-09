@@ -1,50 +1,56 @@
 ﻿using PlayfairAnalysis.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PlayfairAnalysis
 {
     public class Transformations
     {
+        private readonly AnalysisInstance instance;
+        private readonly Utils utils;
 
-        private static bool T_SWAP_2_POSITIONS = true;
-        private static bool T_SWAP_3_POSITIONS = false; // Not effective, and too many!.
-        private static bool T_SWAP_2_ROWS_OR_2_COLS = true;
-        private static bool T_PERM_ALL_ROWS_OR_ALL_COLS = true;
-        private static bool T_PERM_1_ROW_OR_1_COL = true; // Not sure it really helps.
+        private static readonly bool T_SWAP_2_POSITIONS = true;
+        private static readonly bool T_SWAP_3_POSITIONS = false; // Not effective, and too many!.
+        private static readonly bool T_SWAP_2_ROWS_OR_2_COLS = true;
+        private static readonly bool T_PERM_ALL_ROWS_OR_ALL_COLS = true;
+        private static readonly bool T_PERM_1_ROW_OR_1_COL = true; // Not sure it really helps.
 
 
-        private static int T_SWAP_2_POSITIONS_START = 0;
-        private static int T_SWAP_2_POSITIONS_END = T_SWAP_2_POSITIONS_START + (T_SWAP_2_POSITIONS ? Playfair.SQUARE * Playfair.SQUARE : 0);
+        private static readonly int T_SWAP_2_POSITIONS_START = 0;
+        private static readonly int T_SWAP_2_POSITIONS_END = T_SWAP_2_POSITIONS_START + (T_SWAP_2_POSITIONS ? Playfair.SQUARE * Playfair.SQUARE : 0);
 
-        private static int T_SWAP_2_ROWS_START = T_SWAP_2_POSITIONS_END;
-        private static int T_SWAP_2_ROWS_END = T_SWAP_2_ROWS_START + (T_SWAP_2_ROWS_OR_2_COLS ? Playfair.SQUARE : 0);
+        private static readonly int T_SWAP_2_ROWS_START = T_SWAP_2_POSITIONS_END;
+        private static readonly int T_SWAP_2_ROWS_END = T_SWAP_2_ROWS_START + (T_SWAP_2_ROWS_OR_2_COLS ? Playfair.SQUARE : 0);
 
-        private static int T_SWAP_2_COLS_START = T_SWAP_2_ROWS_END;
-        private static int T_SWAP_2_COLS_END = T_SWAP_2_COLS_START + (T_SWAP_2_ROWS_OR_2_COLS ? Playfair.SQUARE : 0);
+        private static readonly int T_SWAP_2_COLS_START = T_SWAP_2_ROWS_END;
+        private static readonly int T_SWAP_2_COLS_END = T_SWAP_2_COLS_START + (T_SWAP_2_ROWS_OR_2_COLS ? Playfair.SQUARE : 0);
 
-        private static int T_PERM_ROWS_START = T_SWAP_2_COLS_END;
-        private static int T_PERM_ROWS_END = T_PERM_ROWS_START + (T_PERM_ALL_ROWS_OR_ALL_COLS ? Playfair.PERMUTATIONS.GetLength(0) : 0);
+        private static readonly int T_PERM_ROWS_START = T_SWAP_2_COLS_END;
+        private static readonly int T_PERM_ROWS_END = T_PERM_ROWS_START + (T_PERM_ALL_ROWS_OR_ALL_COLS ? Playfair.PERMUTATIONS.GetLength(0) : 0);
 
-        private static int T_PERM_COLS_START = T_PERM_ROWS_END;
-        private static int T_PERM_COLS_END = T_PERM_COLS_START + (T_PERM_ALL_ROWS_OR_ALL_COLS ? Playfair.PERMUTATIONS.GetLength(0) : 0);
+        private static readonly int T_PERM_COLS_START = T_PERM_ROWS_END;
+        private static readonly int T_PERM_COLS_END = T_PERM_COLS_START + (T_PERM_ALL_ROWS_OR_ALL_COLS ? Playfair.PERMUTATIONS.GetLength(0) : 0);
 
-        private static int T_SWAP_3_POSITIONS_START = T_PERM_COLS_END;
-        private static int T_SWAP_3_POSITIONS_END = T_SWAP_3_POSITIONS_START + (T_SWAP_3_POSITIONS ? Playfair.SQUARE * Playfair.SQUARE * Playfair.SQUARE : 0);
+        private static readonly int T_SWAP_3_POSITIONS_START = T_PERM_COLS_END;
+        private static readonly int T_SWAP_3_POSITIONS_END = T_SWAP_3_POSITIONS_START + (T_SWAP_3_POSITIONS ? Playfair.SQUARE * Playfair.SQUARE * Playfair.SQUARE : 0);
 
-        private static int T_PERM_ROWS_OF_1_COL_START = T_SWAP_3_POSITIONS_END;
-        private static int T_PERM_ROWS_OF_1_COL_END = T_PERM_ROWS_OF_1_COL_START + (T_PERM_1_ROW_OR_1_COL ? Playfair.PERMUTATIONS.GetLength(0) * Playfair.DIM : 0);
+        private static readonly int T_PERM_ROWS_OF_1_COL_START = T_SWAP_3_POSITIONS_END;
+        private static readonly int T_PERM_ROWS_OF_1_COL_END = T_PERM_ROWS_OF_1_COL_START + (T_PERM_1_ROW_OR_1_COL ? Playfair.PERMUTATIONS.GetLength(0) * Playfair.DIM : 0);
 
-        private static int T_PERM_COLS_OF_1_ROW_START = T_PERM_ROWS_OF_1_COL_END;
-        private static int T_PERM_COLS_OF_1_ROW_END = T_PERM_COLS_OF_1_ROW_START + (T_PERM_1_ROW_OR_1_COL ? Playfair.PERMUTATIONS.GetLength(0) * Playfair.DIM : 0);
+        private static readonly int T_PERM_COLS_OF_1_ROW_START = T_PERM_ROWS_OF_1_COL_END;
+        private static readonly int T_PERM_COLS_OF_1_ROW_END = T_PERM_COLS_OF_1_ROW_START + (T_PERM_1_ROW_OR_1_COL ? Playfair.PERMUTATIONS.GetLength(0) * Playfair.DIM : 0);
 
-        private static int TOTAL_NUMBER_OF_TRANSFORMATIONS = T_PERM_COLS_OF_1_ROW_END;
+        private static readonly int TOTAL_NUMBER_OF_TRANSFORMATIONS = T_PERM_COLS_OF_1_ROW_END;
 
-        private static int[] TRANSFORMATIONS = allocate();
+        private readonly int[] TRANSFORMATIONS = allocate();
 
-        public static void printTransformationsCounts()
+        public Transformations(AnalysisInstance instance, Utils utils)
         {
+            this.instance = instance;
+            this.utils = utils;
+        }
+
+        public void printTransformationsCounts()
+        {
+            var CtAPI = instance.CtAPI;
             CtAPI.print("_______________\n");
             CtAPI.print("Transformations\n");
             CtAPI.printf("Swap 2 positions:         {0,5}\n", T_SWAP_2_POSITIONS_END - T_SWAP_2_POSITIONS_START);
@@ -70,23 +76,18 @@ namespace PlayfairAnalysis
             return map;
         }
 
-        private static object randomizeMutex = new object();
-
-        public static void randomize()
+        public void randomize()
         {
-            lock (randomizeMutex)
+            for (int i = 0; i < TOTAL_NUMBER_OF_TRANSFORMATIONS - 1; i++)
             {
-                for (int i = 0; i < TOTAL_NUMBER_OF_TRANSFORMATIONS - 1; i++)
-                {
-                    int j = i + Utils.randomNextInt(TOTAL_NUMBER_OF_TRANSFORMATIONS - i);
-                    int keep = TRANSFORMATIONS[i];
-                    TRANSFORMATIONS[i] = TRANSFORMATIONS[j];
-                    TRANSFORMATIONS[j] = keep;
-                }
+                int j = i + utils.randomNextInt(TOTAL_NUMBER_OF_TRANSFORMATIONS - i);
+                int keep = TRANSFORMATIONS[i];
+                TRANSFORMATIONS[i] = TRANSFORMATIONS[j];
+                TRANSFORMATIONS[j] = keep;
             }
         }
 
-        public static void apply(Key parent, Key child, long serialFull)
+        public void apply(Key parent, Key child, long serialFull)
         {
 
             int serial = (int)(serialFull % TOTAL_NUMBER_OF_TRANSFORMATIONS);

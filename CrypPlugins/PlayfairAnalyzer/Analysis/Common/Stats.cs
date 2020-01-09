@@ -6,17 +6,25 @@ namespace PlayfairAnalysis.Common
 {
     public class Stats
     {
+        private readonly AnalysisInstance instance;
+        private readonly Utils utils;
 
-        public static long[] monogramStats = new long[Utils.TEXT_ALPHABET_SIZE];
-        public static long[] bigramStats = new long[Utils.TEXT_ALPHABET_SIZE * 32];
-        private static short[] hexagramStats = null;
-        public static long evaluations = 0;
+        public long[] monogramStats = new long[Utils.TEXT_ALPHABET_SIZE];
+        public long[] bigramStats = new long[Utils.TEXT_ALPHABET_SIZE * 32];
+        private short[] hexagramStats = null;
+        public long evaluations = 0;
 
-        public static bool readHexagramStatsFile(String filename, CancellationToken ct)
+        public Stats(AnalysisInstance instance)
+        {
+            this.instance = instance;
+            utils = new Utils(0);
+        }
+
+        public bool readHexagramStatsFile(String filename, CancellationToken ct)
         {
             long start = DateTime.Now.Ticks;
 
-            CtAPI.printf("Loading hexagram stats file {0}\n",
+            instance.CtAPI.printf("Loading hexagram stats file {0}\n",
                     filename);
 
             int totalShortRead = 0;
@@ -59,22 +67,22 @@ namespace PlayfairAnalysis.Common
             }
             catch (IOException ex)
             {
-                CtAPI.goodbyeFatalError("Unable to read hexa file {0} - {1}", filename, ex.ToString());
+                instance.CtAPI.goodbyeFatalError("Unable to read hexa file {0} - {1}", filename, ex.ToString());
             }
-            CtAPI.printf("Hexagram stats file {0} loaded successfully ({1} seconds), size = {2} bytes\n",
+            instance.CtAPI.printf("Hexagram stats file {0} loaded successfully ({1} seconds), size = {2} bytes\n",
                     filename, TimeSpan.FromTicks(DateTime.Now.Ticks - start).TotalSeconds, totalShortRead * 2);
-            CtAPI.println("");
-            CtAPI.println("");
+            instance.CtAPI.println("");
+            instance.CtAPI.println("");
             return true;
         }
 
-        private static int POWER_26_5 = 26 * 26 * 26 * 26 * 26;
+        private const int POWER_26_5 = 26 * 26 * 26 * 26 * 26;
 
-        public static long evalPlaintextHexagram(int[] plaintext, int plaintextLength)
+        public long evalPlaintextHexagram(int[] plaintext, int plaintextLength)
         {
 
-            CtAPI.shutdownIfNeeded();
-            Stats.evaluations++;
+            instance.CtAPI.shutdownIfNeeded();
+            evaluations++;
 
             int index = (((((((plaintext[0] * 26) + plaintext[1]) * 26) + plaintext[2]) * 26) + plaintext[3]) * 26 + plaintext[4]);
             long val = 0;
@@ -87,18 +95,18 @@ namespace PlayfairAnalysis.Common
 
         }
 
-        public static long evalPlaintextHexagram(int[] plaintext)
+        public long evalPlaintextHexagram(int[] plaintext)
         {
             return evalPlaintextHexagram(plaintext, plaintext.Length);
         }
 
-        public static String evaluationsSummary()
+        public String evaluationsSummary()
         {
-            var elapsed = Utils.getElapsed();
-            return $"[{elapsed.TotalSeconds:N0} sec.][{Stats.evaluations / 1000:N0}K decryptions ({Stats.evaluations / elapsed.TotalMilliseconds:N0}K/sec.)]";
+            var elapsed = utils.getElapsed();
+            return $"[{elapsed.TotalSeconds:N0} sec.][{evaluations / 1000:N0}K decryptions ({evaluations / elapsed.TotalMilliseconds:N0}K/sec.)]";
         }
 
-        static int readBigramFile(String fileName)
+        private int readBigramFile(String fileName)
         {
 
             String line = "";
@@ -130,10 +138,10 @@ namespace PlayfairAnalysis.Common
             }
             catch (IOException ex)
             {
-                CtAPI.goodbyeFatalError("Unable to read bigram file {0} - {1}", fileName, ex.ToString());
+                instance.CtAPI.goodbyeFatalError("Unable to read bigram file {0} - {1}", fileName, ex.ToString());
             }
 
-            CtAPI.printf("Bigram file read: {0}, items  = {1}  \n", fileName, items);
+            instance.CtAPI.printf("Bigram file read: {0}, items  = {1}  \n", fileName, items);
 
             convertToLog(bigramStats);
 
@@ -141,7 +149,7 @@ namespace PlayfairAnalysis.Common
 
         }
 
-        static int readMonogramFile(String fileName, bool m209)
+        private int readMonogramFile(String fileName, bool m209)
         {
 
             String line;
@@ -172,10 +180,10 @@ namespace PlayfairAnalysis.Common
             }
             catch (IOException ex)
             {
-                CtAPI.goodbyeFatalError("Unable to read mono file {0} - {1}", fileName, ex.ToString());
+                instance.CtAPI.goodbyeFatalError("Unable to read mono file {0} - {1}", fileName, ex.ToString());
             }
 
-            CtAPI.printf("mono file read: {0}, items  = {1}  \n", fileName, items);
+            instance.CtAPI.printf("mono file read: {0}, items  = {1}  \n", fileName, items);
 
             convertToLog(monogramStats);
 
@@ -183,7 +191,7 @@ namespace PlayfairAnalysis.Common
 
         }
 
-        static int readFileForStats(String fileName, bool m209)
+        private int readFileForStats(String fileName, bool m209)
         {
 
 
@@ -234,13 +242,13 @@ namespace PlayfairAnalysis.Common
             }
             catch (IOException ex)
             {
-                CtAPI.goodbyeFatalError("Unable to read text file for stats  {0} - {1}", fileName, ex.ToString());
+                instance.CtAPI.goodbyeFatalError("Unable to read text file for stats  {0} - {1}", fileName, ex.ToString());
             }
 
             convertToLog(bigramStats);
             convertToLog(monogramStats);
 
-            CtAPI.printf("Text file read for stats {0}, length = {1} \n", fileName, length);
+            instance.CtAPI.printf("Text file read for stats {0}, length = {1} \n", fileName, length);
 
             return length;
         }
@@ -266,7 +274,7 @@ namespace PlayfairAnalysis.Common
 
         }
 
-        public static bool load(String dirname, Language language, bool m209)
+        public bool load(String dirname, Language language, bool m209)
         {
             int n = 1;
             switch (language)
@@ -297,7 +305,7 @@ namespace PlayfairAnalysis.Common
 
             if (n == 0)
             {
-                CtAPI.goodbyeFatalError("Cannot load stats - language: " + language);
+                instance.CtAPI.goodbyeFatalError("Cannot load stats - language: " + language);
             }
             return true;
         }

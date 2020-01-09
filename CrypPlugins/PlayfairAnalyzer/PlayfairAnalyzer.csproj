@@ -115,11 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analysis\Arrays.cs" />
-    <Compile Include="Analysis\Churn\ChurnSimulatedAnnealing.cs" />
-    <Compile Include="Analysis\Churn\FixedTemperatureSimulatedAnnealing.cs" />
-    <Compile Include="Analysis\Churn\ImprovedFixedTemperatureSimulatedAnnealing.cs" />
     <Compile Include="Analysis\Common\CtAPI.cs" />
     <Compile Include="Analysis\Common\CtBestList.cs" />
+    <Compile Include="Analysis\Common\AnalysisInstance.cs" />
     <Compile Include="Analysis\Common\NGrams.cs" />
     <Compile Include="Analysis\Common\Permutations.cs" />
     <Compile Include="Analysis\Common\SimulatedAnnealing.cs" />

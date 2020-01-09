@@ -19,7 +19,6 @@ using System.ComponentModel;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
 using System.Threading;
-using Cryptool.Plugins.Ipc.Messages;
 using System.Windows.Threading;
 using System.IO;
 using System.Text;
@@ -58,7 +57,7 @@ namespace Cryptool.PlayfairAnalyzer
         private AssignmentPresentation _presentation = new AssignmentPresentation();
         private DateTime _startTime;
         private bool _alreadyExecuted = false;
-        private CancellationTokenSource _cancellationTokenSource;
+        private AnalysisInstance _analysisInstance;
 
         [PropertyInfo(Direction.InputData, "CiphertextCaption", "CiphertextTooltip", true)]
         public string Ciphertext
@@ -249,62 +248,13 @@ namespace Cryptool.PlayfairAnalyzer
                     }
                 }, null);
 
-                //Step 1: Start analysis
-                CtAPI.reset();
+                _analysisInstance?.Cancel();
 
-                _cancellationTokenSource = new CancellationTokenSource();
-                var ct = _cancellationTokenSource.Token;
-
-                if (!Stats.readHexagramStatsFile(hexfilename, ct))
-                {
-                    if (ct.IsCancellationRequested)
-                    {
-                        return;
-                    }
-                    throw new Exception($"Error trying to read hexagram stats file: {hexfilename}");
-                }
-
-                var cipherText = Utils.getText(Ciphertext);
-                if (cipherText.Length % 2 != 0)
-                {
-                    throw new Exception($"Ciphertext length must be even - found {cipherText.Length} characters.");
-                }
-
-                var threads = (_settings.Threads + 1);  //index starts at 0; thus +1
-                SolvePlayfair.solveMultithreaded(cipherText, Crib ?? "", threads, _settings.Cycles, null, ct);
-                GuiLogMessage("Starting analysis now.", NotificationLevel.Debug);
-
-                DateTime lastUpdateTime = DateTime.Now;
-                //Step 6: while both pipes are connected, we busy wait
-                while (!ct.IsCancellationRequested)
-                {
-                    Thread.Sleep(100);
-                    if (!_Running)
-                    {
-                        return;
-                    }
-                    if (DateTime.Now >= lastUpdateTime.AddSeconds(1))
-                    {
-                        lastUpdateTime = DateTime.Now;
-                        //set elapsed time in presentation
-                        _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                        {
-                            try
-                            {              
-                                var elapsedTime =  (DateTime.Now - _startTime);
-                                _presentation.ElapsedTime.Value = new TimeSpan(elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds).ToString();
-                            }
-                            catch (Exception)
-                            {
-                                //wtf?
-                            }
-                        }, null);
-                    }
-                }
+                //Step 1: Start analysis                
+                RunAnalysis(hexfilename);
             }
             finally
             {
-                _cancellationTokenSource?.Cancel();
                 _Running = false;
 
                 //set end time in presentation
@@ -323,6 +273,82 @@ namespace Cryptool.PlayfairAnalyzer
                 }, null);
 
             }            
+        }
+
+        private void RunAnalysis(string hexfilename)
+        {
+            var analysisInstance = new AnalysisInstance();
+            _analysisInstance = analysisInstance;
+            analysisInstance.CtAPI.BestListChangedEvent += HandleIncomingBestList;
+            analysisInstance.CtAPI.BestResultChangedEvent += HandleBestResultChangedEvent;
+            analysisInstance.CtAPI.ProgressChangedEvent += OnProgressChanged;
+
+            try
+            {
+                var ct = analysisInstance.CancellationToken;
+                if (!analysisInstance.Stats.readHexagramStatsFile(hexfilename, ct))
+                {
+                    if (ct.IsCancellationRequested)
+                    {
+                        return;
+                    }
+                    throw new Exception($"Error trying to read hexagram stats file: {hexfilename}");
+                }
+
+                var cipherText = Utils.getText(Ciphertext);
+                if (cipherText.Length % 2 != 0)
+                {
+                    throw new Exception($"Ciphertext length must be even - found {cipherText.Length} characters.");
+                }
+
+                var threads = (_settings.Threads + 1);  //index starts at 0; thus +1
+                SolvePlayfair.solveMultithreaded(cipherText, Crib ?? "", threads, _settings.Cycles, null, analysisInstance);
+                GuiLogMessage("Starting analysis now.", NotificationLevel.Debug);
+
+                DateTime lastUpdateTime = DateTime.Now;
+                
+                //Wait for completion/cancellation and update display:
+                while (!ct.IsCancellationRequested)
+                {
+                    Thread.Sleep(100);
+                    if (!_Running)
+                    {
+                        return;
+                    }
+                    if (DateTime.Now >= lastUpdateTime.AddSeconds(1))
+                    {
+                        lastUpdateTime = DateTime.Now;
+                        //set elapsed time in presentation
+                        _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            try
+                            {
+                                var elapsedTime = (DateTime.Now - _startTime);
+                                _presentation.ElapsedTime.Value = new TimeSpan(elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds).ToString();
+                            }
+                            catch (Exception)
+                            {
+                            //wtf?
+                        }
+                        }, null);
+                    }
+                }
+            }
+            finally
+            {
+                analysisInstance.Cancel();
+                analysisInstance.CtAPI.BestListChangedEvent -= HandleIncomingBestList;
+                analysisInstance.CtAPI.BestResultChangedEvent -= HandleBestResultChangedEvent;
+                analysisInstance.CtAPI.ProgressChangedEvent -= OnProgressChanged;
+            }
+        }
+
+        /// <summary>
+        /// Handles change event for a new best result.
+        /// </summary>
+        private void HandleBestResultChangedEvent(CtBestList.Result bestResult)
+        {
+            UpdateOutput(bestResult.keyString, bestResult.plaintextString, string.Format("{0,12:N0}", bestResult.score));
         }
 
         /// <summary>
@@ -388,23 +414,12 @@ namespace Cryptool.PlayfairAnalyzer
         public void Stop()
         {
             _Running = false;
-            _cancellationTokenSource?.Cancel();
+            _analysisInstance?.Cancel();
         }
 
         public void Initialize()
         {
             _presentation.UpdateOutputFromUserChoice += UpdateOutput;
-
-            CtAPI.BestListChangedEvent += HandleIncomingBestList;
-            CtAPI.BestResultChangedHandlerEvent += bestResult =>
-            {
-                UpdateOutput(bestResult.keyString, bestResult.plaintextString, string.Format("{0,12:N0}", bestResult.score));
-            };
-            CtAPI.ProgressChangedEvent += (currentValue, maxValue) => OnProgressChanged(currentValue, maxValue);
-            CtAPI.GoodbyeEvent += () =>
-            {
-                _cancellationTokenSource?.Cancel();
-            };
         }
 
         public void Dispose()

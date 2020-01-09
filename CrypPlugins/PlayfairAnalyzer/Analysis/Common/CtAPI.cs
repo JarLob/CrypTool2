@@ -2,62 +2,60 @@
 
 namespace PlayfairAnalysis.Common
 {
-    public static class CtAPI
+    public class CtAPI
     {
+        public Stats Stats { get; }
+        public CtBestList CtBestList { get; }
+
         public delegate void BestResultChangedHandler(CtBestList.Result bestResult);
-        public static event BestResultChangedHandler BestResultChangedHandlerEvent;
+        public event BestResultChangedHandler BestResultChangedEvent;
 
         public delegate void BestListChangedHandler(string bestList);
-        public static event BestListChangedHandler BestListChangedEvent;
+        public event BestListChangedHandler BestListChangedEvent;
 
         public delegate void GoodbyeHandler();
-        public static event GoodbyeHandler GoodbyeEvent;
+        public event GoodbyeHandler GoodbyeEvent;
 
         public delegate void ProgressChangedHandler(double currentValue, double maxValue);
-        public static event ProgressChangedHandler ProgressChangedEvent;
+        public event ProgressChangedHandler ProgressChangedEvent;
 
-        internal static void reset()
+        public CtAPI(AnalysisInstance instance)
         {
-            Stats.evaluations = 0;
-            Utils.resetTimer();
-            CtBestList.clear();
-            CtBestList.setScoreThreshold(0);
-            CtBestList.setDiscardSamePlaintexts(true);
-            CtBestList.setSize(10);
-            CtBestList.setThrottle(false);
+            Stats = instance.Stats;
+            CtBestList = instance.CtBestList;
         }
 
-        internal static void goodbye()
+        internal void goodbye()
         {
             GoodbyeEvent?.Invoke();
         }
 
-        internal static void goodbyeFatalError(string format, params object[] objects)
+        internal void goodbyeFatalError(string format, params object[] objects)
         {
             GoodbyeEvent?.Invoke();
             throw new Exception(string.Format(format, objects));
         }
 
-        internal static void printf(string format, params object[] objects)
+        internal void printf(string format, params object[] objects)
         {
             Console.Out.WriteLine(format, objects);
         }
 
-        internal static void println(string s)
+        internal void println(string s)
         {
             Console.Out.WriteLine(s);
         }
 
-        internal static void print(string s)
+        internal void print(string s)
         {
             Console.Out.Write(s);
         }
 
-        internal static void shutdownIfNeeded()
+        internal void shutdownIfNeeded()
         {
         }
 
-        internal static void updateProgress(long value, int maxValue)
+        internal void updateProgress(long value, int maxValue)
         {
             if (maxValue <= 0)
             {
@@ -69,30 +67,30 @@ namespace PlayfairAnalysis.Common
             }
         }
 
-        internal static void openAndReadInputValues(string attackName, string attackVersion)
+        internal void openAndReadInputValues(string attackName, string attackVersion)
         {
         }
 
-        internal static void displayBestList(string keyString)
+        internal void displayBestList(string keyString)
         {
             Console.Out.WriteLine("Best List:\n"+keyString);
             BestListChangedEvent?.Invoke(keyString);
         }
 
-        internal static void displayBestResult(CtBestList.Result bestResult)
+        internal void displayBestResult(CtBestList.Result bestResult)
         {
-            BestResultChangedHandlerEvent?.Invoke(bestResult);
+            BestResultChangedEvent?.Invoke(bestResult);
             Console.Out.WriteLine($"Score: {bestResult.score}");
             Console.Out.WriteLine($"Key: {bestResult.keyString}");
             Console.Out.WriteLine($"Plaintext: {plaintextCapped(bestResult.plaintextString)}");
         }
 
-        internal static void displayBestResult(CtBestList.Result bestResult, CtBestList.Result originalResult)
+        internal void displayBestResult(CtBestList.Result bestResult, CtBestList.Result originalResult)
         {
             displayBestResult(bestResult);
         }
 
-        private static string plaintextCapped(string plaintext)
+        private string plaintextCapped(string plaintext)
         {
             if (plaintext.Length <= 1000)
             {
