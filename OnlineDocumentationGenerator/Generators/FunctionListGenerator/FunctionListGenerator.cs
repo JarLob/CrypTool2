@@ -320,7 +320,8 @@ namespace OnlineDocumentationGenerator.Generators.FunctionListGenerator
                 if (!Directory.Exists(OutputDir))
                     Directory.CreateDirectory(OutputDir);
 
-                var streamWriter = new StreamWriter(filePath, false, Encoding.GetEncoding("iso-8859-15"));
+//                 var streamWriter = new StreamWriter(filePath, false, Encoding.GetEncoding("iso-8859-15"));
+                var streamWriter = new StreamWriter(filePath, false, Encoding.GetEncoding("utf-8"));
                 streamWriter.Write(content);
                 streamWriter.Close();
             }
