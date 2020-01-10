@@ -586,6 +586,12 @@
   <data name="Startcenter" xml:space="preserve">
     <value>Startcenter</value>
   </data>
+  <data name="Startcenter_Tooltip" xml:space="preserve">
+    <value>Öffnet das Startcenter.</value>
+  </data>
+  <data name="CrypToolStore_Tooltip" xml:space="preserve">
+    <value>Öffnet den CrypTool-Store.</value>
+  </data>
   <data name="Steganography" xml:space="preserve">
     <value>Steganographie</value>
   </data>

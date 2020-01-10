@@ -572,6 +572,15 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Opens the CrypTool store. ähnelt.
+        /// </summary>
+        internal static string CrypToolStore_Tooltip {
+            get {
+                return ResourceManager.GetString("CrypToolStore_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Crypto Tutorials ähnelt.
         /// </summary>
         internal static string CrypTutorial {
@@ -2274,7 +2283,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Startcenter ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Opens the startcenter. ähnelt.
         /// </summary>
         internal static string Startcenter_Tooltip {
             get {

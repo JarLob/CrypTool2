@@ -593,7 +593,10 @@
     <value>Startcenter</value>
   </data>
   <data name="Startcenter_Tooltip" xml:space="preserve">
-    <value>Startcenter</value>
+    <value>Opens the startcenter.</value>
+  </data>
+  <data name="CrypToolStore_Tooltip" xml:space="preserve">
+    <value>Opens the CrypTool store.</value>
   </data>
   <data name="Online_Help" xml:space="preserve">
     <value>Online Help</value>

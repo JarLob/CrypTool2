@@ -751,7 +751,7 @@
                                         </dc:ButtonDropDown.ImageSmall>
                                     </dc:ButtonDropDown>
 
-                                    <dc:ButtonDropDown ImagePosition="Top" Height="70" Style="{DynamicResource AppMenuCommandButton}" dc:Ribbon.KeyTip="HO" Command="cw:CrypWinCommands.CrypToolStore" ToolTip="{Loc Startcenter_Tooltip}">
+                                    <dc:ButtonDropDown ImagePosition="Top" Height="70" Style="{DynamicResource AppMenuCommandButton}" dc:Ribbon.KeyTip="HO" Command="cw:CrypWinCommands.CrypToolStore" ToolTip="{Loc CrypToolStore_Tooltip}">
                                         <dc:ButtonDropDown.Image>
                                             <Image Source="/CrypToolStore;component/icon.png" Height="40" Width="40" />
                                         </dc:ButtonDropDown.Image>
