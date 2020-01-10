@@ -19,7 +19,7 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -169,6 +169,24 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Discard same plaintexts ähnelt.
+        /// </summary>
+        public static string DiscardSamePlaintextsCaption {
+            get {
+                return ResourceManager.GetString("DiscardSamePlaintextsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Determines whether different keys with same plaintext should be included in best list. ähnelt.
+        /// </summary>
+        public static string DiscardSamePlaintextsTooltip {
+            get {
+                return ResourceManager.GetString("DiscardSamePlaintextsTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Elapsed Time: ähnelt.
         /// </summary>
         public static string ElapsedLabel {
@@ -219,6 +237,24 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         public static string KeyTooltip {
             get {
                 return ResourceManager.GetString("KeyTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Language ähnelt.
+        /// </summary>
+        public static string LanguageCaption {
+            get {
+                return ResourceManager.GetString("LanguageCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Language of the plaintext. This information is required for the statistical analysis. ähnelt.
+        /// </summary>
+        public static string LanguageTooltip {
+            get {
+                return ResourceManager.GetString("LanguageTooltip", resourceCulture);
             }
         }
         

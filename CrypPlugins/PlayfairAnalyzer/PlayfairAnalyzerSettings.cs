@@ -33,6 +33,7 @@ namespace Cryptool.PlayfairAnalyzer
 
         private int _threads;
         private int _cycles;
+        private bool _discardSamePlaintexts = true;
 
         public PlayfairAnalyzerSettings()
         {
@@ -86,6 +87,20 @@ namespace Cryptool.PlayfairAnalyzer
                 if (value != _language)
                 {
                     _language = value;
+                }
+            }
+        }
+
+        [TaskPane("DiscardSamePlaintextsCaption", "DiscardSamePlaintextsTooltip", null, 5, false, ControlType.CheckBox)]
+        public bool DiscardSamePlaintexts
+        {
+            get { return _discardSamePlaintexts; }
+            set
+            {
+                if (value != _discardSamePlaintexts)
+                {
+                    _discardSamePlaintexts = value;
+                    OnPropertyChanged("DiscardSamePlaintexts");
                 }
             }
         }

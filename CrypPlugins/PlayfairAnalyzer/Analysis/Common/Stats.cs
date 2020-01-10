@@ -103,7 +103,7 @@ namespace PlayfairAnalysis.Common
         public String evaluationsSummary()
         {
             var elapsed = utils.getElapsed();
-            return $"[{elapsed.TotalSeconds:N0} sec.][{evaluations / 1000:N0}K decryptions ({evaluations / elapsed.TotalMilliseconds:N0}K/sec.)]";
+            return $"[{elapsed.TotalSeconds:N0} sec][{evaluations / 1000:N0} K decryptions ({evaluations / elapsed.TotalMilliseconds:N0} K/sec)]";
         }
 
         private int readBigramFile(String fileName)

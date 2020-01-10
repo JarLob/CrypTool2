@@ -29,7 +29,7 @@ using PlayfairAnalysis;
 namespace Cryptool.PlayfairAnalyzer
 {
     public delegate void PluginProgress(double current, double maximum);
-    public delegate void UpdateOutput(String keyString, String plaintextString, string score);
+    public delegate void UpdateOutput(String keyString, String plaintextString);
 
     [Author("George Lasry, Nils Kopal", "George.Lasry@cryptool.org", "Uni Kassel", "https://www.cryptool.org")]
     [PluginInfo("Cryptool.PlayfairAnalyzer.Properties.Resources", "PluginCaption", "PluginTooltip", "PlayfairAnalyzer/DetailedDescription/doc.xml", "PlayfairAnalyzer/icon.png")]
@@ -49,7 +49,6 @@ namespace Cryptool.PlayfairAnalyzer
         private string _Crib = null;
         private string _Plaintext = null;
         private string _Key = null;
-        private string _Score = null;
 
         private const string PLAYFAIR_ALPHABET = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
 
@@ -132,20 +131,6 @@ namespace Cryptool.PlayfairAnalyzer
                 {
                     _Key = value;
                     OnPropertyChanged("Key");
-                }
-            }
-        }
-
-        [PropertyInfo(Direction.OutputData, "ScoreCaption", "ScoreTooltip", false)]
-        public string Score
-        {
-            get { return _Score; }
-            set
-            {
-                if (!String.IsNullOrEmpty(value))
-                {
-                    _Score = value;
-                    OnPropertyChanged("Score");
                 }
             }
         }
@@ -277,7 +262,7 @@ namespace Cryptool.PlayfairAnalyzer
 
         private void RunAnalysis(string hexfilename)
         {
-            var analysisInstance = new AnalysisInstance();
+            var analysisInstance = new AnalysisInstance(_settings.DiscardSamePlaintexts);
             _analysisInstance = analysisInstance;
             analysisInstance.CtAPI.BestListChangedEvent += HandleIncomingBestList;
             analysisInstance.CtAPI.BestResultChangedEvent += HandleBestResultChangedEvent;
@@ -348,7 +333,7 @@ namespace Cryptool.PlayfairAnalyzer
         /// </summary>
         private void HandleBestResultChangedEvent(CtBestList.Result bestResult)
         {
-            UpdateOutput(bestResult.keyString, bestResult.plaintextString, string.Format("{0,12:N0}", bestResult.score));
+            UpdateOutput(bestResult.keyString, bestResult.plaintextString);
         }
 
         /// <summary>
@@ -442,9 +427,8 @@ namespace Cryptool.PlayfairAnalyzer
             EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
         }
 
-        private void UpdateOutput(string keyString, string plaintextString, string score)
+        private void UpdateOutput(string keyString, string plaintextString)
         {
-            Score = score;
             Plaintext = plaintextString;
             Key = keyString;
         }

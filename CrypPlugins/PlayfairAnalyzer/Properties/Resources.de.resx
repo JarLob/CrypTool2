@@ -153,6 +153,18 @@
   <data name="CyclesTooltip" xml:space="preserve">
     <value>Stellt die Anzahl ein, wie viele Zyklen während der Kryptoanalyse ausgeführt werden.</value>
   </data>
+  <data name="LanguageCaption" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="LanguageTooltip" xml:space="preserve">
+    <value>Die Sprache des Klartextes. Diese Information wird für die statistische Analyse benötigt.</value>
+  </data>
+  <data name="DiscardSamePlaintextsCaption" xml:space="preserve">
+    <value>Verwerfe gleiche Klartexte</value>
+  </data>
+  <data name="DiscardSamePlaintextsTooltip" xml:space="preserve">
+    <value>Bestimmt ob unterschiedliche Schlüssel mit gleichem Klartext in der Bestenliste aufgeführt werden sollen.</value>
+  </data>
   <data name="ElapsedLabel" xml:space="preserve">
     <value>Vergangene Zeit:</value>
   </data>

@@ -13,7 +13,7 @@ namespace PlayfairAnalysis.Common
 
         public CancellationToken CancellationToken => cts.Token;
 
-        public AnalysisInstance()
+        public AnalysisInstance(bool discardSamePlaintexts)
         {
             CtAPI = new CtAPI(this);
             CtBestList = new CtBestList(this);
@@ -26,7 +26,7 @@ namespace PlayfairAnalysis.Common
 
             CtBestList.clear();
             CtBestList.setScoreThreshold(0);
-            CtBestList.setDiscardSamePlaintexts(true);
+            CtBestList.setDiscardSamePlaintexts(discardSamePlaintexts);
             CtBestList.setSize(10);
             CtBestList.setThrottle(false);
         }
