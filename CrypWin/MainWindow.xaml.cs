@@ -1681,6 +1681,22 @@ namespace Cryptool.CrypWin
             ListBoxItem navItem = new ListBoxItem();
             navItem.Content = stackPanel;
             navItem.Tag = contElements.Plugin;
+
+            var category = contElements.PaneItem.Header as string;
+            var subcategory = contElements.GroupName;
+            var categorySpan = new Span()
+            {
+                Inlines =
+                {
+                    new Bold(new Run($"{Properties.Resources.Category}: ")),
+                    new Run(category)
+                }
+            };
+            if (category != subcategory)
+            {
+                categorySpan.Inlines.Add(new Run(" / "));
+                categorySpan.Inlines.Add(contElements.GroupName);
+            }
             navItem.ToolTip = new ToolTip()
             {
                 Content = new TextBlock
@@ -1690,8 +1706,7 @@ namespace Cryptool.CrypWin
                         new Run(contElements.PluginInfo.ToolTip),
                         new LineBreak(),
                         new LineBreak(),
-                        new Bold(new Run($"{Properties.Resources.Category}: ")),
-                        new Run(contElements.GroupName)
+                        categorySpan
                     }
                 }
             };
