@@ -35,8 +35,7 @@ namespace PlayfairAnalysis.Common
                 {
                     continue;
                 }
-                long v = map7[idx];
-                if (v == null)
+                if (!map7.TryGetValue(idx, out var v))
                 {
                     continue;
                 }
@@ -62,8 +61,7 @@ namespace PlayfairAnalysis.Common
                 {
                     continue;
                 }
-                long v = map8[idx];
-                if (v == null)
+                if (!map8.TryGetValue(idx, out var v))
                 {
                     continue;
                 }

@@ -232,6 +232,15 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Evaluated Keys: ähnelt.
+        /// </summary>
+        public static string EvaluatedKeysLabel {
+            get {
+                return ResourceManager.GetString("EvaluatedKeysLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Evaluations ähnelt.
         /// </summary>
         public static string EvaluationsHeader {
@@ -291,6 +300,15 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         public static string LocalLabel {
             get {
                 return ResourceManager.GetString("LocalLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Max. Keys: ähnelt.
+        /// </summary>
+        public static string MaxKeysLabel {
+            get {
+                return ResourceManager.GetString("MaxKeysLabel", resourceCulture);
             }
         }
         

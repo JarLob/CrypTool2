@@ -9,7 +9,7 @@ namespace PlayfairAnalysis
 {
     public class SolvePlayfair
     {
-        static void solve(int taskNumber, int saCycles, int innerRounds /* 200000 */, int multiplier/*1500*/, int[] cipherText, String crib, Key simulationKey, AnalysisInstance instance)
+        static void solve(int taskNumber, int saCycles, int innerRounds /* 200000 */, int multiplier/*1500*/, int[] cipherText, String crib, Key simulationKey, AnalysisInstance instance, long[] evaluationsPerThread)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace PlayfairAnalysis
                     ct.ThrowIfCancellationRequested();
                     if (taskNumber == 0)
                     {
-                        instance.CtAPI.updateProgress(cycle, saCycles);
+                        instance.CtAPI.updateProgress(cycle, saCycles, evaluationsPerThread.Sum());
                     }
 
                     transformations.randomize();
@@ -52,6 +52,7 @@ namespace PlayfairAnalysis
                         transformations.apply(currentKey, newKey, serialCounter++);
 
                         long newScore = newKey.eval();
+                        evaluationsPerThread[taskNumber]++;
 
                         if (simulatedAnnealing.acceptHexaScore(newScore, currentScore, multiplier))
                         {
@@ -86,6 +87,7 @@ namespace PlayfairAnalysis
                     {
                         bestKey.alignAlphabet();
                         var (elapsed, evaluations) = instance.Stats.evaluationsSummary();
+                        evaluations = evaluationsPerThread.Sum();
                         instance.CtBestList.pushResult(bestScore,
                                 bestKey.ToString(),
                                 bestKey.ToString(),
@@ -108,10 +110,12 @@ namespace PlayfairAnalysis
             }
         }
 
-        public static void solveMultithreaded(int[] cipherText, String cribString, int threads, int cycles, Key simulationKey, AnalysisInstance instance)
+        public static long solveMultithreaded(int[] cipherText, String cribString, int threads, int cycles, Key simulationKey, AnalysisInstance instance)
         {
+            const int innerRounds = 200_000;
             var threadCompletions = new List<TaskCompletionSource<bool>>();
             Key simulationKey_ = simulationKey;
+            var evaluationsPerThread = new long[threads];
             for (int t_ = 0; t_ < threads; t_++)
             {
                 int t = t_;
@@ -125,7 +129,7 @@ namespace PlayfairAnalysis
                         {
                             try
                             {
-                                solve(t, cycles, 200_000, multiplier, cipherText, cribString, simulationKey_, instance);
+                                solve(t, cycles, innerRounds, multiplier, cipherText, cribString, simulationKey_, instance, evaluationsPerThread);
                             }
                             finally
                             {
@@ -135,12 +139,16 @@ namespace PlayfairAnalysis
                 ).Start();
             }
 
-            WatchThreadCompletions(threadCompletions, instance);
+            WatchThreadCompletions(threadCompletions, instance, evaluationsPerThread);
+
+            return innerRounds * cycles * threads;
         }
 
-        private static async void WatchThreadCompletions(List<TaskCompletionSource<bool>> threadCompletions, AnalysisInstance instance)
+        private static async void WatchThreadCompletions(List<TaskCompletionSource<bool>> threadCompletions, AnalysisInstance instance, long[] evaluationsPerThread)
         {
-            await Task.WhenAny(threadCompletions.Select(t => t.Task));
+            await Task.WhenAll(threadCompletions.Select(t => t.Task));
+
+            instance.CtAPI.updateProgress(100, 100, evaluationsPerThread.Sum());
             //call "goodbye" after all threads completed to let CT2 know about it:
             instance.CtAPI.goodbye();
         }

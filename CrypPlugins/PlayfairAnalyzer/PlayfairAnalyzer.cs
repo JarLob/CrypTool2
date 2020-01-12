@@ -231,6 +231,8 @@ namespace Cryptool.PlayfairAnalyzer
                         _presentation.StartTime.Value = _startTime.ToString();
                         _presentation.EndTime.Value = string.Empty;
                         _presentation.ElapsedTime.Value = string.Empty;
+                        _presentation.EvaluatedKeys.Value = string.Empty;
+                        _presentation.MaxKeys.Value = string.Empty;
                         _presentation.BestList.Clear();
                     }
                     catch (Exception)
@@ -293,8 +295,13 @@ namespace Cryptool.PlayfairAnalyzer
                 }
 
                 var threads = (_settings.Threads + 1);  //index starts at 0; thus +1
-                SolvePlayfair.solveMultithreaded(cipherText, Crib ?? "", threads, _settings.Cycles, null, analysisInstance);
+                var maxKeys = SolvePlayfair.solveMultithreaded(cipherText, Crib ?? "", threads, _settings.Cycles, null, analysisInstance);
                 GuiLogMessage("Starting analysis now.", NotificationLevel.Debug);
+
+                _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    _presentation.MaxKeys.Value = $"{maxKeys:N0}";
+                }, null);
 
                 DateTime lastUpdateTime = DateTime.Now;
                 
@@ -416,9 +423,13 @@ namespace Cryptool.PlayfairAnalyzer
             EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
         }
 
-        private void OnProgressChanged(double value, double max)
+        private void OnProgressChanged(double value, double max, long evaluations)
         {
             EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
+            _presentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                _presentation.EvaluatedKeys.Value = $"{evaluations:N0}";
+            }, null);
         }
 
         private void UpdateOutput(string keyString, string plaintextString)

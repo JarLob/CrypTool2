@@ -17,7 +17,7 @@ namespace PlayfairAnalysis.Common
         public delegate void GoodbyeHandler();
         public event GoodbyeHandler GoodbyeEvent;
 
-        public delegate void ProgressChangedHandler(double currentValue, double maxValue);
+        public delegate void ProgressChangedHandler(double currentValue, double maxValue, long evaluations);
         public event ProgressChangedHandler ProgressChangedEvent;
 
         public CtAPI(AnalysisInstance instance)
@@ -56,15 +56,15 @@ namespace PlayfairAnalysis.Common
         {
         }
 
-        internal void updateProgress(long value, int maxValue)
+        internal void updateProgress(long value, int maxValue, long evaluations)
         {
             if (maxValue <= 0)
             {
-                ProgressChangedEvent?.Invoke(value % 100, 100);
+                ProgressChangedEvent?.Invoke(value % 100, 100, evaluations);
             }
             else
             {
-                ProgressChangedEvent?.Invoke(value, maxValue);
+                ProgressChangedEvent?.Invoke(value, maxValue, evaluations);
             }
         }
 
