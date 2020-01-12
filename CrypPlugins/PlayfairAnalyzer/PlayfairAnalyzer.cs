@@ -25,6 +25,7 @@ using System.Text;
 using Cryptool.CrypAnalysisViewControl;
 using PlayfairAnalysis.Common;
 using PlayfairAnalysis;
+using System.Collections.Generic;
 
 namespace Cryptool.PlayfairAnalyzer
 {
@@ -53,7 +54,7 @@ namespace Cryptool.PlayfairAnalyzer
         private const string PLAYFAIR_ALPHABET = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
 
         private PlayfairAnalyzerSettings _settings = new PlayfairAnalyzerSettings();
-        private AssignmentPresentation _presentation = new AssignmentPresentation();
+        private AssignmentPresentation _presentation;
         private DateTime _startTime;
         private bool _alreadyExecuted = false;
         private AnalysisInstance _analysisInstance;
@@ -133,6 +134,11 @@ namespace Cryptool.PlayfairAnalyzer
                     OnPropertyChanged("Key");
                 }
             }
+        }
+
+        public PlayfairAnalyzer()
+        {
+            _presentation = new AssignmentPresentation(_settings);
         }
 
         public void PreExecution()
@@ -340,15 +346,8 @@ namespace Cryptool.PlayfairAnalyzer
         /// Handles incoming best list entries
         /// </summary>
         /// <param name="value"></param>
-        private void HandleIncomingBestList(string value)
+        private void HandleIncomingBestList(IList<CtBestList.Result> bestList)
         {
-            // it is allowed to send an empty string as well as a -
-            // if we receive that, we just ignore it
-            if (String.IsNullOrEmpty(value) || value.Equals("-"))
-            {
-                return;
-            }
-
             try
             {                
                 _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -361,24 +360,19 @@ namespace Cryptool.PlayfairAnalyzer
                     {
                         GuiLogMessage(String.Format("Error occured while clearing best list: {0}", ex.Message), NotificationLevel.Error);
                     }
-                }, null);
-                string[] lines = value.Trim().Split('\n', '\r');
-                foreach (string line in lines)
-                {
-                    string[] values = line.Trim().Split(';');
-                    if (values.Length != 5)
+
+                    var ranking = 1;
+                    foreach (var result in bestList)
                     {
-                        GuiLogMessage(String.Format("Received invalid best list entry: {0}", line), NotificationLevel.Warning);
-                        continue;
-                    }
-                    ResultEntry resultEntry = new ResultEntry();
-                    resultEntry.Ranking = int.Parse(values[0]);
-                    resultEntry.Value = values[1];
-                    resultEntry.Key = values[2];
-                    resultEntry.Text = values[3];
-                    resultEntry.Info = values[4];
-                    _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
+                        ResultEntry resultEntry = new ResultEntry();
+                        resultEntry.Ranking = ranking++;
+                        resultEntry.Value = $"{result.score:N0}";
+                        resultEntry.Key = result.keyString;
+                        resultEntry.Text = result.plaintextString;
+                        resultEntry.Elapsed = result.elapsed;
+                        resultEntry.Evaluations = result.evaluations;
+                        resultEntry.Info = result.commentString;
+
                         try
                         {
                             _presentation.BestList.Add(resultEntry);
@@ -387,8 +381,8 @@ namespace Cryptool.PlayfairAnalyzer
                         {
                             GuiLogMessage(String.Format("Error occured while adding new entry to best list: {0}", ex.Message), NotificationLevel.Error);
                         }
-                    }, null);
-                }
+                    }
+                }, null);
             }
             catch (Exception ex)
             {
@@ -453,6 +447,10 @@ namespace Cryptool.PlayfairAnalyzer
         public string Key { get; set; }
         public string Text { get; set; }
         public string Info { get; set; }
+        public TimeSpan Elapsed { get; set; }
+        public long Evaluations { get; set; }
+        public long EvaluationsDiv1000 => Evaluations / 1000;
+        public double Performance => Evaluations / Elapsed.TotalMilliseconds;
 
         public string ClipboardValue => Value.ToString();
         public string ClipboardKey => Key;
@@ -462,7 +460,8 @@ namespace Cryptool.PlayfairAnalyzer
             "Value: " + Value + Environment.NewLine +
             "Key: " + Key + Environment.NewLine +
             "Text: " + Text + Environment.NewLine +
-            "Info: " + Info;
-
+            $"Elapsed: {Elapsed.TotalSeconds:N0} sec" + Environment.NewLine +
+            $"Evaluations: {EvaluationsDiv1000:N0} K decryptions" + Environment.NewLine +
+            $"Performance: {Performance:N0} K/sec";
     }
 }

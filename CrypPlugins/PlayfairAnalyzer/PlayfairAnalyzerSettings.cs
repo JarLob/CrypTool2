@@ -34,6 +34,7 @@ namespace Cryptool.PlayfairAnalyzer
         private int _threads;
         private int _cycles;
         private bool _discardSamePlaintexts = true;
+        private bool _advancedBestListView = false;
 
         public PlayfairAnalyzerSettings()
         {
@@ -100,7 +101,21 @@ namespace Cryptool.PlayfairAnalyzer
                 if (value != _discardSamePlaintexts)
                 {
                     _discardSamePlaintexts = value;
-                    OnPropertyChanged("DiscardSamePlaintexts");
+                    OnPropertyChanged(nameof(DiscardSamePlaintexts));
+                }
+            }
+        }
+
+        [TaskPane("AdvancedBestListViewCaption", "AdvancedBestListViewTooltip", null, 6, true, ControlType.CheckBox)]
+        public bool AdvancedBestListView
+        {
+            get { return _advancedBestListView; }
+            set
+            {
+                if (value != _advancedBestListView)
+                {
+                    _advancedBestListView = value;
+                    OnPropertyChanged(nameof(AdvancedBestListView));
                 }
             }
         }

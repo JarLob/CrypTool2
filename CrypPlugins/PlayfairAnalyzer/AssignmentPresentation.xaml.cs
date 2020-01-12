@@ -43,12 +43,15 @@ namespace Cryptool.PlayfairAnalyzer
             set { _updateOutputFromUserChoice = value; }
         }
 
+        public PlayfairAnalyzerSettings Settings { get; }
+
         #endregion
 
         #region constructor
 
-        public AssignmentPresentation()
+        public AssignmentPresentation(PlayfairAnalyzerSettings settings)
         {
+            Settings = settings;
             InitializeComponent();
             DataContext = BestList;
         }

@@ -16,16 +16,22 @@ namespace PlayfairAnalysis.Common
             public String keyStringShort;   // short version of the key
             public String plaintextString;
             public String commentString;
-            public Result(long score, String keyString, String keyStringShort, String plaintextString, String commentString)
+            public TimeSpan elapsed;
+            public long evaluations;
+
+            public Result(long score, String keyString, String keyStringShort, String plaintextString, TimeSpan elapsed, long evaluations, String commentString)
             {
-                set(score, keyString, keyStringShort, plaintextString, commentString);
+                set(score, keyString, keyStringShort, plaintextString, elapsed, evaluations, commentString);
             }
-            public void set(long score, String keyString, String keyStringShort, String plaintextString, String commentString)
+
+            public void set(long score, String keyString, String keyStringShort, String plaintextString, TimeSpan elapsed, long evaluations, String commentString)
             {
                 this.score = score;
                 this.keyString = keyString;
                 this.keyStringShort = keyStringShort;
                 this.plaintextString = plaintextString;
+                this.elapsed = elapsed;
+                this.evaluations = evaluations;
                 this.commentString = commentString;
             }
             public string ToString(int rank)
@@ -108,23 +114,6 @@ namespace PlayfairAnalysis.Common
         }
 
         /**
-         * If known, keep the original key and/or plaintext, as well as the score value expected when decrypting with the
-         * correct (original) key. If a new result has exactly this score value, the attack with stop.
-         * @param score - expected score with the correct key.
-         * @param keyString - the correct key.
-         * @param keyStringShort - the correct key, short format.
-         * @param plaintextString - the expected/original plaintext.
-         * @param commentString - a comment
-         */
-        public void setOriginal(long score, String keyString, String keyStringShort, String plaintextString, String commentString)
-        {
-            lock (mutex)
-            {
-                originalResult = new Result(score, keyString, keyStringShort, plaintextString, commentString);
-            }
-        }
-
-        /**
          * Resets the best list.
          */
         public void clear()
@@ -132,7 +121,7 @@ namespace PlayfairAnalysis.Common
             lock (mutex)
             {
                 bestResults.Clear();
-                CtAPI.displayBestList("-");
+                CtAPI.displayBestList(new Result[0]);
             }
         }
 
@@ -176,7 +165,7 @@ namespace PlayfairAnalysis.Common
          * @param commentString
          * @return
          */
-        public bool pushResult(long score, String keyString, String keyStringShort, String plaintextString, String commentString)
+        public bool pushResult(long score, String keyString, String keyStringShort, String plaintextString, TimeSpan elapsed, long evaluations, String commentString)
         {
             lock (mutex)
             {
@@ -205,11 +194,11 @@ namespace PlayfairAnalysis.Common
                 }
                 if (size < maxNumberOfResults)
                 {
-                    bestResults.Add(new Result(score, keyString, keyStringShort, plaintextString, commentString));
+                    bestResults.Add(new Result(score, keyString, keyStringShort, plaintextString, elapsed, evaluations, commentString));
                 }
                 else if (score > bestResults[size - 1].score)
                 {
-                    bestResults[size - 1].set(score, keyString, keyStringShort, plaintextString, commentString);
+                    bestResults[size - 1].set(score, keyString, keyStringShort, plaintextString, elapsed, evaluations, commentString);
                 }
                 else
                 {
@@ -247,11 +236,7 @@ namespace PlayfairAnalysis.Common
             {
                 StringBuilder s = new StringBuilder();
                 sort();
-                for (int i = 0; i < bestResults.Count; i++)
-                {
-                    s.Append(bestResults[i].ToString(i + 1));
-                }
-                CtAPI.displayBestList(s.ToString());
+                CtAPI.displayBestList(bestResults);
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PlayfairAnalysis.Common
 {
@@ -10,7 +11,7 @@ namespace PlayfairAnalysis.Common
         public delegate void BestResultChangedHandler(CtBestList.Result bestResult);
         public event BestResultChangedHandler BestResultChangedEvent;
 
-        public delegate void BestListChangedHandler(string bestList);
+        public delegate void BestListChangedHandler(IList<CtBestList.Result> bestList);
         public event BestListChangedHandler BestListChangedEvent;
 
         public delegate void GoodbyeHandler();
@@ -71,10 +72,9 @@ namespace PlayfairAnalysis.Common
         {
         }
 
-        internal void displayBestList(string keyString)
+        internal void displayBestList(IList<CtBestList.Result> bestList)
         {
-            Console.Out.WriteLine("Best List:\n"+keyString);
-            BestListChangedEvent?.Invoke(keyString);
+            BestListChangedEvent?.Invoke(bestList);
         }
 
         internal void displayBestResult(CtBestList.Result bestResult)

@@ -61,6 +61,24 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Advanced best list view ähnelt.
+        /// </summary>
+        public static string AdvancedBestListViewCaption {
+            get {
+                return ResourceManager.GetString("AdvancedBestListViewCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Makes additional columns in best list view visible ähnelt.
+        /// </summary>
+        public static string AdvancedBestListViewTooltip {
+            get {
+                return ResourceManager.GetString("AdvancedBestListViewTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die The &quot;Playfair Analyzer&quot; already started with data given in this run of the workspace. In order to change input data and to restart the component &quot;Playfair Analyzer&quot;, please stop and start the workspace. ähnelt.
         /// </summary>
         public static string AlreadyExecuted {
@@ -79,7 +97,7 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The ciphertext that should be analyzed. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The ciphertext that should be analyzed ähnelt.
         /// </summary>
         public static string CiphertextTooltip {
             get {
@@ -142,7 +160,7 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die A crib that is used during the analysis. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die A crib that is used during the analysis ähnelt.
         /// </summary>
         public static string CribTooltip {
             get {
@@ -178,11 +196,20 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Determines whether different keys with same plaintext should be included in best list. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Determines whether different keys with same plaintext should be included in best list ähnelt.
         /// </summary>
         public static string DiscardSamePlaintextsTooltip {
             get {
                 return ResourceManager.GetString("DiscardSamePlaintextsTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Elapsed ähnelt.
+        /// </summary>
+        public static string ElapsedHeader {
+            get {
+                return ResourceManager.GetString("ElapsedHeader", resourceCulture);
             }
         }
         
@@ -205,11 +232,11 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Info ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Evaluations ähnelt.
         /// </summary>
-        public static string InfoHeader {
+        public static string EvaluationsHeader {
             get {
-                return ResourceManager.GetString("InfoHeader", resourceCulture);
+                return ResourceManager.GetString("EvaluationsHeader", resourceCulture);
             }
         }
         
@@ -232,7 +259,7 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The best key which was found during the analysis. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The best key which was found during the analysis ähnelt.
         /// </summary>
         public static string KeyTooltip {
             get {
@@ -268,6 +295,15 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Performance ähnelt.
+        /// </summary>
+        public static string PerformanceHeader {
+            get {
+                return ResourceManager.GetString("PerformanceHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Best Plaintext ähnelt.
         /// </summary>
         public static string PlaintextCaption {
@@ -277,7 +313,7 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The best plaintext which was found during the analysis. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The best plaintext which was found during the analysis ähnelt.
         /// </summary>
         public static string PlaintextTooltip {
             get {
@@ -295,47 +331,11 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Java-based analysis tool to break short Playfair ciphers. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis tool to break short Playfair ciphers ähnelt.
         /// </summary>
         public static string PluginTooltip {
             get {
                 return ResourceManager.GetString("PluginTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Score ähnelt.
-        /// </summary>
-        public static string ScoreCaption {
-            get {
-                return ResourceManager.GetString("ScoreCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The highest score value which was found during the analysis. ähnelt.
-        /// </summary>
-        public static string ScoreTooltip {
-            get {
-                return ResourceManager.GetString("ScoreTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show window ähnelt.
-        /// </summary>
-        public static string ShowWindowCaption {
-            get {
-                return ResourceManager.GetString("ShowWindowCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Should the Java program&apos;s window be shown or not? ähnelt.
-        /// </summary>
-        public static string ShowWindowTooltip {
-            get {
-                return ResourceManager.GetString("ShowWindowTooltip", resourceCulture);
             }
         }
         

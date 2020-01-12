@@ -85,10 +85,13 @@ namespace PlayfairAnalysis
                     if (instance.CtBestList.shouldPushResult(bestScore))
                     {
                         bestKey.alignAlphabet();
+                        var (elapsed, evaluations) = instance.Stats.evaluationsSummary();
                         instance.CtBestList.pushResult(bestScore,
                                 bestKey.ToString(),
                                 bestKey.ToString(),
                                 Utils.getString(bestKey.fullDecryption),
+                                elapsed,
+                                evaluations,
                                 instance.Stats.evaluationsSummary() +
                                         $"[{bestKey.decryptionRemoveNullsLength}/{cipherText.Length}][Task: {taskNumber,2}][Mult.: {multiplier:N0}]");
                         if (currentScore == simulationOriginalScore || newKey.matchesFullCrib())

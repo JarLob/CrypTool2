@@ -100,10 +100,11 @@ namespace PlayfairAnalysis.Common
             return evalPlaintextHexagram(plaintext, plaintext.Length);
         }
 
-        public String evaluationsSummary()
+        public (TimeSpan elapsed, long evaluations) evaluationsSummary()
         {
             var elapsed = utils.getElapsed();
-            return $"[{elapsed.TotalSeconds:N0} sec][{evaluations / 1000:N0} K decryptions ({evaluations / elapsed.TotalMilliseconds:N0} K/sec)]";
+            return (elapsed, evaluations);
+            //return $"[{elapsed.TotalSeconds:N0} sec][{evaluations / 1000:N0} K decryptions ({evaluations / elapsed.TotalMilliseconds:N0} K/sec)]";
         }
 
         private int readBigramFile(String fileName)

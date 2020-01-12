@@ -124,7 +124,7 @@
     <value>Geheimtext</value>
   </data>
   <data name="CiphertextTooltip" xml:space="preserve">
-    <value>Der zu analysierende Geheimtext.</value>
+    <value>Der zu analysierende Geheimtext</value>
   </data>
   <data name="Copy_all" xml:space="preserve">
     <value>Kopiere alle Einträge</value>
@@ -145,13 +145,13 @@
     <value>Crib</value>
   </data>
   <data name="CribTooltip" xml:space="preserve">
-    <value>Ein Crib, der bei der Kryptoanalyse genutzt wird.</value>
+    <value>Ein Crib, der bei der Kryptoanalyse genutzt wird</value>
   </data>
   <data name="CyclesCaption" xml:space="preserve">
     <value>Zyklen</value>
   </data>
   <data name="CyclesTooltip" xml:space="preserve">
-    <value>Stellt die Anzahl ein, wie viele Zyklen während der Kryptoanalyse ausgeführt werden.</value>
+    <value>Stellt die Anzahl ein, wie viele Zyklen während der Kryptoanalyse ausgeführt werden</value>
   </data>
   <data name="LanguageCaption" xml:space="preserve">
     <value>Sprache</value>
@@ -163,7 +163,13 @@
     <value>Verwerfe gleiche Klartexte</value>
   </data>
   <data name="DiscardSamePlaintextsTooltip" xml:space="preserve">
-    <value>Bestimmt ob unterschiedliche Schlüssel mit gleichem Klartext in der Bestenliste aufgeführt werden sollen.</value>
+    <value>Bestimmt, ob unterschiedliche Schlüssel mit gleichem Klartext in der Bestenliste aufgeführt werden sollen</value>
+  </data>
+  <data name="AdvancedBestListViewCaption" xml:space="preserve">
+    <value>Erweiterte Bestenlistenansicht</value>
+  </data>
+  <data name="AdvancedBestListViewTooltip" xml:space="preserve">
+    <value>Macht zusätzliche Spalten in der Bestenlistenansicht sichtbar</value>
   </data>
   <data name="ElapsedLabel" xml:space="preserve">
     <value>Vergangene Zeit:</value>
@@ -171,8 +177,14 @@
   <data name="EndLabel" xml:space="preserve">
     <value>Endzeit:</value>
   </data>
-  <data name="InfoHeader" xml:space="preserve">
-    <value>Info</value>
+  <data name="ElapsedHeader" xml:space="preserve">
+    <value>Vergangen</value>
+  </data>
+  <data name="EvaluationsHeader" xml:space="preserve">
+    <value>Evaluierungen</value>
+  </data>
+  <data name="PerformanceHeader" xml:space="preserve">
+    <value>Performanz</value>
   </data>
   <data name="KeyCaption" xml:space="preserve">
     <value>Bester Schlüssel</value>
@@ -181,7 +193,7 @@
     <value>Schlüssel</value>
   </data>
   <data name="KeyTooltip" xml:space="preserve">
-    <value>Der beste Schlüssel, der während der Analyse gefunden wurde.</value>
+    <value>Der beste Schlüssel, der während der Analyse gefunden wurde</value>
   </data>
   <data name="LocalLabel" xml:space="preserve">
     <value>Analyse</value>
@@ -190,25 +202,13 @@
     <value>Bester Klartext</value>
   </data>
   <data name="PlaintextTooltip" xml:space="preserve">
-    <value>Der beste Klartext, der während der Analyse gefunden wurde.</value>
+    <value>Der beste Klartext, der während der Analyse gefunden wurde</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Playfair-Analyse</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Java-basierte Kryptoanalyse der Playfair-Chiffre.</value>
-  </data>
-  <data name="ScoreCaption" xml:space="preserve">
-    <value>Kostenwert</value>
-  </data>
-  <data name="ScoreTooltip" xml:space="preserve">
-    <value>Der höchste Kostenwert, der während der Analyse gefunden wurde.</value>
-  </data>
-  <data name="ShowWindowCaption" xml:space="preserve">
-    <value>Zeige Fenster</value>
-  </data>
-  <data name="ShowWindowTooltip" xml:space="preserve">
-    <value>Soll das Fenster des Java-Programms während der Analyse angezeigt werden oder nicht?</value>
+    <value>Kryptoanalyse der Playfair-Chiffre</value>
   </data>
   <data name="SpeedLabel" xml:space="preserve">
     <value>Schlüssel/Sekunde:</value>

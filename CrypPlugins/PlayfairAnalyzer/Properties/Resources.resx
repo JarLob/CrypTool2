@@ -124,7 +124,7 @@
     <value>Ciphertext</value>
   </data>
   <data name="CiphertextTooltip" xml:space="preserve">
-    <value>The ciphertext that should be analyzed.</value>
+    <value>The ciphertext that should be analyzed</value>
   </data>
   <data name="Copy_all" xml:space="preserve">
     <value>Copy all lines</value>
@@ -145,7 +145,7 @@
     <value>Crib</value>
   </data>
   <data name="CribTooltip" xml:space="preserve">
-    <value>A crib that is used during the analysis.</value>
+    <value>A crib that is used during the analysis</value>
   </data>
   <data name="CyclesCaption" xml:space="preserve">
     <value>Cycles</value>
@@ -163,7 +163,13 @@
     <value>Discard same plaintexts</value>
   </data>
   <data name="DiscardSamePlaintextsTooltip" xml:space="preserve">
-    <value>Determines whether different keys with same plaintext should be included in best list.</value>
+    <value>Determines whether different keys with same plaintext should be included in best list</value>
+  </data>
+  <data name="AdvancedBestListViewCaption" xml:space="preserve">
+    <value>Advanced best list view</value>
+  </data>
+  <data name="AdvancedBestListViewTooltip" xml:space="preserve">
+    <value>Makes additional columns in best list view visible</value>
   </data>
   <data name="ElapsedLabel" xml:space="preserve">
     <value>Elapsed Time:</value>
@@ -171,8 +177,14 @@
   <data name="EndLabel" xml:space="preserve">
     <value>End Time:</value>
   </data>
-  <data name="InfoHeader" xml:space="preserve">
-    <value>Info</value>
+  <data name="ElapsedHeader" xml:space="preserve">
+    <value>Elapsed</value>
+  </data>
+  <data name="EvaluationsHeader" xml:space="preserve">
+    <value>Evaluations</value>
+  </data>
+  <data name="PerformanceHeader" xml:space="preserve">
+    <value>Performance</value>
   </data>
   <data name="KeyCaption" xml:space="preserve">
     <value>Best Key</value>
@@ -181,7 +193,7 @@
     <value>Key</value>
   </data>
   <data name="KeyTooltip" xml:space="preserve">
-    <value>The best key which was found during the analysis.</value>
+    <value>The best key which was found during the analysis</value>
   </data>
   <data name="LocalLabel" xml:space="preserve">
     <value>Analysis</value>
@@ -190,25 +202,13 @@
     <value>Best Plaintext</value>
   </data>
   <data name="PlaintextTooltip" xml:space="preserve">
-    <value>The best plaintext which was found during the analysis.</value>
+    <value>The best plaintext which was found during the analysis</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Playfair Analyzer</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Java-based analysis tool to break short Playfair ciphers.</value>
-  </data>
-  <data name="ScoreCaption" xml:space="preserve">
-    <value>Score</value>
-  </data>
-  <data name="ScoreTooltip" xml:space="preserve">
-    <value>The highest score value which was found during the analysis.</value>
-  </data>
-  <data name="ShowWindowCaption" xml:space="preserve">
-    <value>Show window</value>
-  </data>
-  <data name="ShowWindowTooltip" xml:space="preserve">
-    <value>Should the Java program's window be shown or not?</value>
+    <value>Analysis tool to break short Playfair ciphers</value>
   </data>
   <data name="SpeedLabel" xml:space="preserve">
     <value>Keys/second:</value>

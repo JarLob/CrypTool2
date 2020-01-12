@@ -4,9 +4,13 @@
     mc:Ignorable="d" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:properties="clr-namespace:Cryptool.PlayfairAnalyzer.Properties"
     xmlns:crypanalysisviewcontrol="clr-namespace:Cryptool.CrypAnalysisViewControl;assembly=CrypAnalysisViewControl"
+    xmlns:converters="clr-namespace:Cryptool.PlayfairAnalyzer.Converters"
+    x:Name="presentation"
     d:DesignHeight="263">
+    <UserControl.Resources>
+        <converters:GridViewColumnVisibilityConverter x:Key="GridViewColumnVisibilityConverter" />
+    </UserControl.Resources>
 
     <crypanalysisviewcontrol:CrypAnalysisViewControl ResultHeaderCaption="{Loc LocalLabel}" ResultListCaption="{Loc TopTenLabel}">
         <crypanalysisviewcontrol:CrypAnalysisViewControl.ResultHeaderLabels>
@@ -16,40 +20,50 @@
         </crypanalysisviewcontrol:CrypAnalysisViewControl.ResultHeaderLabels>
 
         <crypanalysisviewcontrol:CrypAnalysisResultListView ItemsSource="{Binding}" ResultItemAction="HandleResultItemAction">
+            <crypanalysisviewcontrol:CrypAnalysisResultListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </crypanalysisviewcontrol:CrypAnalysisResultListView.ItemContainerStyle>
             <crypanalysisviewcontrol:CrypAnalysisResultListView.View>
                 <GridView>
-                    <GridViewColumn Header="#" DisplayMemberBinding="{Binding Path=Ranking}" Width="20">
+                    <GridViewColumn Header="#" Width="20">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Label/>
+                                <TextBlock Text="{Binding Path=Ranking}" HorizontalAlignment="Right" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{Loc ValueHeader}" DisplayMemberBinding="{Binding Path=Value}" Width="100">
+                    <GridViewColumn Header="{Loc ValueHeader}" Width="70">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Label/>
+                                <TextBlock Text="{Binding Path=Value}" HorizontalAlignment="Right" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{Loc KeyHeader}" DisplayMemberBinding="{Binding Path=Key}" Width="150">
+                    <GridViewColumn Header="{Loc KeyHeader}" DisplayMemberBinding="{Binding Path=Key}" Width="180" />
+                    <GridViewColumn Header="{Loc TextHeader}" DisplayMemberBinding="{Binding Path=Text}" Width="170" />
+                    <GridViewColumn x:Name="Test" Header="{Loc ElapsedHeader}" 
+                                    Width="{Binding Settings.AdvancedBestListView, ElementName=presentation, Converter={StaticResource GridViewColumnVisibilityConverter}, ConverterParameter=Auto}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Label/>
+                                <TextBlock Text="{Binding Path=Elapsed.TotalSeconds, StringFormat={}{0:N0} sec}" TextAlignment="Right" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{Loc TextHeader}" DisplayMemberBinding="{Binding Path=Text}" Width="170">
+                    <GridViewColumn Header="{Loc EvaluationsHeader}" 
+                                    Width="{Binding Settings.AdvancedBestListView, ElementName=presentation, Converter={StaticResource GridViewColumnVisibilityConverter}, ConverterParameter=Auto}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Label/>
+                                <TextBlock Text="{Binding Path=EvaluationsDiv1000, StringFormat={}{0:N0} K decryptions}" HorizontalAlignment="Right" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{Loc InfoHeader}" DisplayMemberBinding="{Binding Path=Info}" Width="170">
+                    <GridViewColumn Header="{Loc PerformanceHeader}" 
+                                    Width="{Binding Settings.AdvancedBestListView, ElementName=presentation, Converter={StaticResource GridViewColumnVisibilityConverter}, ConverterParameter=Auto}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Label/>
+                                <TextBlock Text="{Binding Path=Performance, StringFormat={}{0:N0} K/sec}" HorizontalAlignment="Right" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
