@@ -186,11 +186,20 @@
   <data name="ElapsedHeader" xml:space="preserve">
     <value>Elapsed</value>
   </data>
+  <data name="ElapsedColumnFormat" xml:space="preserve">
+    <value>{0:N0} sec</value>
+  </data>
   <data name="EvaluationsHeader" xml:space="preserve">
     <value>Evaluations</value>
   </data>
+  <data name="EvaluationsColumnFormat" xml:space="preserve">
+    <value>{0:N0} K decryptions</value>
+  </data>
   <data name="PerformanceHeader" xml:space="preserve">
     <value>Performance</value>
+  </data>
+  <data name="PerformanceColumnFormat" xml:space="preserve">
+    <value>{0:N0} K/sec</value>
   </data>
   <data name="KeyCaption" xml:space="preserve">
     <value>Best Key</value>

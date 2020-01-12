@@ -205,6 +205,15 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0:N0} sec ähnelt.
+        /// </summary>
+        public static string ElapsedColumnFormat {
+            get {
+                return ResourceManager.GetString("ElapsedColumnFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Elapsed ähnelt.
         /// </summary>
         public static string ElapsedHeader {
@@ -237,6 +246,15 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         public static string EvaluatedKeysLabel {
             get {
                 return ResourceManager.GetString("EvaluatedKeysLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0:N0} K decryptions ähnelt.
+        /// </summary>
+        public static string EvaluationsColumnFormat {
+            get {
+                return ResourceManager.GetString("EvaluationsColumnFormat", resourceCulture);
             }
         }
         
@@ -309,6 +327,15 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         public static string MaxKeysLabel {
             get {
                 return ResourceManager.GetString("MaxKeysLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0:N0} K/sec ähnelt.
+        /// </summary>
+        public static string PerformanceColumnFormat {
+            get {
+                return ResourceManager.GetString("PerformanceColumnFormat", resourceCulture);
             }
         }
         

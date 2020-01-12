@@ -50,7 +50,7 @@
                                     Width="{Binding Settings.AdvancedBestListView, ElementName=presentation, Converter={StaticResource GridViewColumnVisibilityConverter}, ConverterParameter=Auto}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Path=Elapsed.TotalSeconds, StringFormat={}{0:N0} sec}" TextAlignment="Right" />
+                                <TextBlock Text="{Binding Path=Elapsed.TotalSeconds, StringFormat={Loc ElapsedColumnFormat}}" TextAlignment="Right" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -58,7 +58,7 @@
                                     Width="{Binding Settings.AdvancedBestListView, ElementName=presentation, Converter={StaticResource GridViewColumnVisibilityConverter}, ConverterParameter=Auto}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Path=EvaluationsDiv1000, StringFormat={}{0:N0} K decryptions}" HorizontalAlignment="Right" />
+                                <TextBlock Text="{Binding Path=EvaluationsDiv1000, StringFormat={Loc EvaluationsColumnFormat}}" HorizontalAlignment="Right" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -66,7 +66,7 @@
                                     Width="{Binding Settings.AdvancedBestListView, ElementName=presentation, Converter={StaticResource GridViewColumnVisibilityConverter}, ConverterParameter=Auto}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Path=Performance, StringFormat={}{0:N0} K/sec}" HorizontalAlignment="Right" />
+                                <TextBlock Text="{Binding Path=Performance, StringFormat={Loc PerformanceColumnFormat}}" HorizontalAlignment="Right" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
