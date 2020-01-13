@@ -61,6 +61,114 @@ namespace Speck.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Block chaining mode: ähnelt.
+        /// </summary>
+        internal static string ChoiceOfModeOfOperation {
+            get {
+                return ResourceManager.GetString("ChoiceOfModeOfOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Mode of operation ähnelt.
+        /// </summary>
+        internal static string ChoiceOfModeOfOperationGroup {
+            get {
+                return ResourceManager.GetString("ChoiceOfModeOfOperationGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the mode of operation of the cipher ähnelt.
+        /// </summary>
+        internal static string ChoiceOfModeOfOperationToolTip {
+            get {
+                return ResourceManager.GetString("ChoiceOfModeOfOperationToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Action: ähnelt.
+        /// </summary>
+        internal static string ChoiceOfOperatingMode {
+            get {
+                return ResourceManager.GetString("ChoiceOfOperatingMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Encrypt / Decrypt ähnelt.
+        /// </summary>
+        internal static string ChoiceOfOperatingModeGroup {
+            get {
+                return ResourceManager.GetString("ChoiceOfOperatingModeGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Determines whether the component encrypts or decrypts the input ähnelt.
+        /// </summary>
+        internal static string ChoiceOfOperatingModeToolTip {
+            get {
+                return ResourceManager.GetString("ChoiceOfOperatingModeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Parameterization: ähnelt.
+        /// </summary>
+        internal static string ChoiceOfVariant {
+            get {
+                return ResourceManager.GetString("ChoiceOfVariant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Block size/key length ähnelt.
+        /// </summary>
+        internal static string ChoiceOfVariantGroup {
+            get {
+                return ResourceManager.GetString("ChoiceOfVariantGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The block size and key length of Speck can be selected here ähnelt.
+        /// </summary>
+        internal static string ChoiceOfVariantToolTip {
+            get {
+                return ResourceManager.GetString("ChoiceOfVariantToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Decrypt ähnelt.
+        /// </summary>
+        internal static string Decrypt {
+            get {
+                return ResourceManager.GetString("Decrypt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Electronic Code Book (ECB) ähnelt.
+        /// </summary>
+        internal static string ElectronicCodeBook {
+            get {
+                return ResourceManager.GetString("ElectronicCodeBook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Encrypt ähnelt.
+        /// </summary>
+        internal static string Encrypt {
+            get {
+                return ResourceManager.GetString("Encrypt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Speck ähnelt.
         /// </summary>
         internal static string PluginCaption {
@@ -75,6 +183,96 @@ namespace Speck.Properties {
         internal static string PluginTooltip {
             get {
                 return ResourceManager.GetString("PluginTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Speck128/128 ähnelt.
+        /// </summary>
+        internal static string Speck128_128 {
+            get {
+                return ResourceManager.GetString("Speck128_128", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Speck128/192 ähnelt.
+        /// </summary>
+        internal static string Speck128_192 {
+            get {
+                return ResourceManager.GetString("Speck128_192", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Speck128/256 ähnelt.
+        /// </summary>
+        internal static string Speck128_256 {
+            get {
+                return ResourceManager.GetString("Speck128_256", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Speck32/64 ähnelt.
+        /// </summary>
+        internal static string Speck32_64 {
+            get {
+                return ResourceManager.GetString("Speck32_64", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Speck48/72 ähnelt.
+        /// </summary>
+        internal static string Speck48_72 {
+            get {
+                return ResourceManager.GetString("Speck48_72", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Speck48/96 ähnelt.
+        /// </summary>
+        internal static string Speck48_96 {
+            get {
+                return ResourceManager.GetString("Speck48_96", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Speck64/128 ähnelt.
+        /// </summary>
+        internal static string Speck64_128 {
+            get {
+                return ResourceManager.GetString("Speck64_128", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Speck64/96 ähnelt.
+        /// </summary>
+        internal static string Speck64_96 {
+            get {
+                return ResourceManager.GetString("Speck64_96", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Speck96/144 ähnelt.
+        /// </summary>
+        internal static string Speck96_144 {
+            get {
+                return ResourceManager.GetString("Speck96_144", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Speck96/96 ähnelt.
+        /// </summary>
+        internal static string Speck96_96 {
+            get {
+                return ResourceManager.GetString("Speck96_96", resourceCulture);
             }
         }
     }

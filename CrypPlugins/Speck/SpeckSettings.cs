@@ -21,35 +21,237 @@ using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.Plugins.Speck
 {
-    // HOWTO: rename class (click name, press F2)
+    /// <summary>
+    /// Enumeration for all Speck variants
+    /// </summary>
+    public enum SpeckParameters
+    {
+        Speck32_64,
+        Speck48_72,
+        Speck48_96,
+        Speck64_96,
+        Speck64_128,
+        Speck96_96,
+        Speck96_144,
+        Speck128_128,
+        Speck128_192,
+        Speck128_256
+    }
+
+    /// <summary>
+    /// Enumeration for all implemented modes of operation
+    /// </summary>
+    public enum ModeOfOperation
+    {
+        ElectronicCodeBook
+    }
+
+    /// <summary>
+    /// Enumeration for operating mode
+    /// </summary>
+    public enum OperatingMode
+    {
+        Encrypt,
+        Decrypt
+    }
+
+    /// <summary>
+    /// Settings class for Speck
+    /// </summary>
     public class SpeckSettings : ISettings
     {
         #region Private Variables
 
-        private int someParameter = 0;
+        private int _blockSize_2n = 0;
+        private int _keySize_mn = 0;
+        private int _wordSize_n = 0;
+        private int _keyWords_m = 0;
+        private int _leftShift_alpha = 0;
+        private int _rightShift_beta = 0;
+        private int _rounds_T = 0;
+        private SpeckParameters _currentSpeckParameters = SpeckParameters.Speck32_64;
+        private ModeOfOperation _modeOfOperation = ModeOfOperation.ElectronicCodeBook;
+        private OperatingMode _operatingMode = OperatingMode.Encrypt;
 
         #endregion
 
         #region TaskPane Settings
 
         /// <summary>
-        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
-        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
+        /// Property for block and key size
         /// </summary>
-        [TaskPane("SomeParameter", "This is a parameter tooltip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
-        public int SomeParameter
+        [TaskPane("ChoiceOfVariant", "ChoiceOfVariantToolTip", "ChoiceOfVariantGroup", 1, false, ControlType.ComboBox, new string[] { "Speck32_64", "Speck48_72", "Speck48_96", "Speck64_96", "Speck64_128", "Speck96_96", "Speck96_144", "Speck128_128", "Speck128_192", "Speck128_256" })]
+        public SpeckParameters ChoiceOfVariant
         {
             get
             {
-                return someParameter;
+                return _currentSpeckParameters;
             }
             set
             {
-                if (someParameter != value)
+                if (_currentSpeckParameters != value)
                 {
-                    someParameter = value;
-                    // HOWTO: MUST be called every time a property value changes with correct parameter name
-                    OnPropertyChanged("SomeParameter");
+                    switch (value)
+                    {
+                        case SpeckParameters.Speck32_64:
+
+                            _blockSize_2n = 32;
+                            _keySize_mn = 64;
+                            _wordSize_n = 16;
+                            _keyWords_m = 4;
+                            _leftShift_alpha = 7;
+                            _rightShift_beta = 2;
+                            _rounds_T = 22;
+
+                            break;
+
+                        case SpeckParameters.Speck48_72:
+
+                            _blockSize_2n = 48;
+                            _keySize_mn = 72;
+                            _wordSize_n = 24;
+                            _keyWords_m = 3;
+                            _leftShift_alpha = 8;
+                            _rightShift_beta = 3;
+                            _rounds_T = 22;
+
+                            break;
+
+                        case SpeckParameters.Speck48_96:
+
+                            _blockSize_2n = 48;
+                            _keySize_mn = 96;
+                            _wordSize_n = 24;
+                            _keyWords_m = 4;
+                            _leftShift_alpha = 8;
+                            _rightShift_beta = 3;
+                            _rounds_T = 23;
+
+                            break;
+
+                        case SpeckParameters.Speck64_96:
+
+                            _blockSize_2n = 64;
+                            _keySize_mn = 96;
+                            _wordSize_n = 32;
+                            _keyWords_m = 3;
+                            _leftShift_alpha = 8;
+                            _rightShift_beta = 3;
+                            _rounds_T = 26;
+
+                            break;
+
+                        case SpeckParameters.Speck64_128:
+
+                            _blockSize_2n = 64;
+                            _keySize_mn = 128;
+                            _wordSize_n = 32;
+                            _keyWords_m = 4;
+                            _leftShift_alpha = 8;
+                            _rightShift_beta = 3;
+                            _rounds_T = 27;
+
+                            break;
+
+                        case SpeckParameters.Speck96_96:
+
+                            _blockSize_2n = 96;
+                            _keySize_mn = 96;
+                            _wordSize_n = 48;
+                            _keyWords_m = 2;
+                            _leftShift_alpha = 8;
+                            _rightShift_beta = 3;
+                            _rounds_T = 28;
+
+                            break;
+
+                        case SpeckParameters.Speck96_144:
+
+                            _blockSize_2n = 96;
+                            _keySize_mn = 144;
+                            _wordSize_n = 48;
+                            _keyWords_m = 3;
+                            _leftShift_alpha = 8;
+                            _rightShift_beta = 3;
+                            _rounds_T = 29;
+
+                            break;
+
+                        case SpeckParameters.Speck128_128:
+
+                            _blockSize_2n = 128;
+                            _keySize_mn = 128;
+                            _wordSize_n = 64;
+                            _keyWords_m = 2;
+                            _leftShift_alpha = 8;
+                            _rightShift_beta = 3;
+                            _rounds_T = 32;
+
+                            break;
+
+                        case SpeckParameters.Speck128_192:
+
+                            _blockSize_2n = 128;
+                            _keySize_mn = 192;
+                            _wordSize_n = 64;
+                            _keyWords_m = 3;
+                            _leftShift_alpha = 8;
+                            _rightShift_beta = 3;
+                            _rounds_T = 33;
+
+                            break;
+
+                        case SpeckParameters.Speck128_256:
+
+                            _blockSize_2n = 128;
+                            _keySize_mn = 256;
+                            _wordSize_n = 64;
+                            _keyWords_m = 4;
+                            _leftShift_alpha = 8;
+                            _rightShift_beta = 3;
+                            _rounds_T = 34;
+
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    OnPropertyChanged("ChoiceOfVariant");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Property for mode of operation
+        /// </summary>
+        [TaskPane("ChoiceOfModeOfOperation", "ChoiceOfModeOfOperationToolTip", "ChoiceOfModeOfOperationGroup", 1, false, ControlType.ComboBox, new string[] { "ElectronicCodeBook" })]
+        public ModeOfOperation OperationMode
+        {
+            get { return _modeOfOperation; }
+            set
+            {
+                if (_modeOfOperation != value)
+                {
+                    _modeOfOperation = value;
+                    OnPropertyChanged("OperationMode");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Property to set if the component encrypts or decrypts the input
+        /// </summary>
+        [TaskPane("ChoiceOfOperatingMode", "ChoiceOfOperatingModeToolTip", "ChoiceOfOperatingModeGroup", 1, false, ControlType.ComboBox, new string[] { "Encrypt", "Decrypt" })]
+        public OperatingMode OpMode
+        {
+            get { return _operatingMode; }
+            set
+            {
+                if (_operatingMode != value)
+                {
+                    _operatingMode = value;
+                    OnPropertyChanged("OpMode");
                 }
             }
         }

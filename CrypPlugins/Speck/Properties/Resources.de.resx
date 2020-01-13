@@ -117,10 +117,76 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ChoiceOfModeOfOperation" xml:space="preserve">
+    <value>Blockverkettungsmodus:</value>
+  </data>
+  <data name="ChoiceOfModeOfOperationGroup" xml:space="preserve">
+    <value>Betriebsmodus</value>
+  </data>
+  <data name="ChoiceOfModeOfOperationToolTip" xml:space="preserve">
+    <value>Legt den Betriebsmodus der Chiffre fest</value>
+  </data>
+  <data name="ChoiceOfOperatingMode" xml:space="preserve">
+    <value>Aktion:</value>
+  </data>
+  <data name="ChoiceOfOperatingModeGroup" xml:space="preserve">
+    <value>Ver- / Entschlüsseln</value>
+  </data>
+  <data name="ChoiceOfOperatingModeToolTip" xml:space="preserve">
+    <value>Legt fest, ob die Komponente die Eingabe ver- oder entschlüsselt</value>
+  </data>
+  <data name="ChoiceOfVariant" xml:space="preserve">
+    <value>Parametrisierung:</value>
+  </data>
+  <data name="ChoiceOfVariantGroup" xml:space="preserve">
+    <value>Blockgröße/Schlüssellänge</value>
+  </data>
+  <data name="ChoiceOfVariantToolTip" xml:space="preserve">
+    <value>Hier kann die Blockgröße und Schlüssellänge von Speck ausgewählt werden</value>
+  </data>
+  <data name="Decrypt" xml:space="preserve">
+    <value>Entschlüsseln</value>
+  </data>
+  <data name="ElectronicCodeBook" xml:space="preserve">
+    <value>Electronic Code Book (ECB)</value>
+  </data>
+  <data name="Encrypt" xml:space="preserve">
+    <value>Verschlüsseln</value>
+  </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Speck</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Speck cipher</value>
+  </data>
+  <data name="Speck128_128" xml:space="preserve">
+    <value>Speck128/128</value>
+  </data>
+  <data name="Speck128_192" xml:space="preserve">
+    <value>Speck128/192</value>
+  </data>
+  <data name="Speck128_256" xml:space="preserve">
+    <value>Speck128/256</value>
+  </data>
+  <data name="Speck32_64" xml:space="preserve">
+    <value>Speck32/64</value>
+  </data>
+  <data name="Speck48_72" xml:space="preserve">
+    <value>Speck48/72</value>
+  </data>
+  <data name="Speck48_96" xml:space="preserve">
+    <value>Speck48/96</value>
+  </data>
+  <data name="Speck64_128" xml:space="preserve">
+    <value>Speck64/128</value>
+  </data>
+  <data name="Speck64_96" xml:space="preserve">
+    <value>Speck64/96</value>
+  </data>
+  <data name="Speck96_144" xml:space="preserve">
+    <value>Speck96/144</value>
+  </data>
+  <data name="Speck96_96" xml:space="preserve">
+    <value>Speck96/96</value>
   </data>
 </root>
