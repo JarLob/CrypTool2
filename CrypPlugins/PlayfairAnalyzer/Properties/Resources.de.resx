@@ -181,13 +181,13 @@
     <value>Ausgewertete Schlüssel:</value>
   </data>
   <data name="MaxKeysLabel" xml:space="preserve">
-    <value>Max. Schlüssel:</value>
+    <value>Max. Anzahl aller Schlüssel:</value>
   </data>
   <data name="ElapsedHeader" xml:space="preserve">
     <value>Vergangen</value>
   </data>
   <data name="ElapsedColumnFormat" xml:space="preserve">
-    <value>{0:N0} Sek</value>
+    <value>{0:N0} sec</value>
   </data>
   <data name="EvaluationsHeader" xml:space="preserve">
     <value>Evaluierungen</value>
@@ -199,7 +199,7 @@
     <value>Performanz</value>
   </data>
   <data name="PerformanceColumnFormat" xml:space="preserve">
-    <value>{0:N0} K/Sek</value>
+    <value>{0:N0} K/sec</value>
   </data>
   <data name="KeyCaption" xml:space="preserve">
     <value>Bester Schlüssel</value>

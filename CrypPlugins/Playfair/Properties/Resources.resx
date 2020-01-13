@@ -172,7 +172,7 @@
     <value>Select whether the Playfair should be run with a 5x5 or 6x6 matrix</value>
   </data>
   <data name="PreFormatTextCaption" xml:space="preserve">
-    <value>Pre-Format-Text</value>
+    <value>Pre-format text</value>
   </data>
   <data name="PreFormatTextTooltip" xml:space="preserve">
     <value>This is used to determine whether the text should be confinded to the alphabet used.</value>

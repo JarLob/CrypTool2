@@ -268,7 +268,7 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Best Key ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Best key ähnelt.
         /// </summary>
         public static string KeyCaption {
             get {
@@ -322,7 +322,7 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Max. Keys: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Max. number of keys: ähnelt.
         /// </summary>
         public static string MaxKeysLabel {
             get {

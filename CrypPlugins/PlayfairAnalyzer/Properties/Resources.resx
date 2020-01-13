@@ -181,7 +181,7 @@
     <value>Evaluated Keys:</value>
   </data>
   <data name="MaxKeysLabel" xml:space="preserve">
-    <value>Max. Keys:</value>
+    <value>Max. number of keys:</value>
   </data>
   <data name="ElapsedHeader" xml:space="preserve">
     <value>Elapsed</value>
@@ -202,7 +202,7 @@
     <value>{0:N0} K/sec</value>
   </data>
   <data name="KeyCaption" xml:space="preserve">
-    <value>Best Key</value>
+    <value>Best key</value>
   </data>
   <data name="KeyHeader" xml:space="preserve">
     <value>Key</value>
