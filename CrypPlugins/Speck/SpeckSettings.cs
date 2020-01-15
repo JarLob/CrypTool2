@@ -56,22 +56,70 @@ namespace Cryptool.Plugins.Speck
     }
 
     /// <summary>
+    /// Enumeration for the padding mode
+    /// </summary>
+    public enum PaddingMode
+    {
+        Zeros
+    }
+
+    /// <summary>
     /// Settings class for Speck
     /// </summary>
     public class SpeckSettings : ISettings
     {
         #region Private Variables
 
-        private int _blockSize_2n = 0;
-        private int _keySize_mn = 0;
-        private int _wordSize_n = 0;
-        private int _keyWords_m = 0;
-        private int _leftShift_alpha = 0;
-        private int _rightShift_beta = 0;
-        private int _rounds_T = 0;
+        private int _blockSize_2n = 32;
+        private int _keySize_mn = 64;
+        private int _wordSize_n = 16;
+        private int _keyWords_m = 4;
+        private int _leftShift_alpha = 7;
+        private int _rightShift_beta = 2;
+        private int _rounds_T = 22;
         private SpeckParameters _currentSpeckParameters = SpeckParameters.Speck32_64;
         private ModeOfOperation _modeOfOperation = ModeOfOperation.ElectronicCodeBook;
         private OperatingMode _operatingMode = OperatingMode.Encrypt;
+        private PaddingMode _paddingmode = PaddingMode.Zeros;
+
+        #endregion
+
+        #region Properties
+
+        public int BlockSize_2n
+        {
+            get { return _blockSize_2n; }
+        }
+
+        public int KeySize_mn
+        {
+            get { return _keySize_mn; }
+        }
+
+        public int WordSize_n
+        {
+            get { return _wordSize_n; }
+        }
+
+        public int KeyWords_m
+        {
+            get { return _keyWords_m; }
+        }
+
+        public int LeftShift_alpha
+        {
+            get { return _leftShift_alpha; }
+        }
+
+        public int RightShift_beta
+        {
+            get { return _rightShift_beta; }
+        }
+
+        public int Rounds_T
+        {
+            get { return _rounds_T; }
+        }
 
         #endregion
 
@@ -252,6 +300,23 @@ namespace Cryptool.Plugins.Speck
                 {
                     _operatingMode = value;
                     OnPropertyChanged("OpMode");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Property to set the padding mode of the cipher
+        /// </summary>
+        [TaskPane("ChoiceOfPaddingMode", "ChoiceOfPaddingModeToolTip", "ChoiceOfPaddingModeGroup", 1, false, ControlType.ComboBox, new string[] { "PaddingList1" })]
+        public PaddingMode PadMode
+        {
+            get { return _paddingmode; }
+            set
+            {
+                if (_paddingmode != value)
+                {
+                    _paddingmode = value;
+                    OnPropertyChanged("PadMode");
                 }
             }
         }

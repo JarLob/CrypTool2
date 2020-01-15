@@ -135,6 +135,15 @@
   <data name="ChoiceOfOperatingModeToolTip" xml:space="preserve">
     <value>Determines whether the component encrypts or decrypts the input</value>
   </data>
+  <data name="ChoiceOfPaddingMode" xml:space="preserve">
+    <value>Padding mode:</value>
+  </data>
+  <data name="ChoiceOfPaddingModeGroup" xml:space="preserve">
+    <value>Padding</value>
+  </data>
+  <data name="ChoiceOfPaddingModeToolTip" xml:space="preserve">
+    <value>Sets the mode for padding partial data blocks.</value>
+  </data>
   <data name="ChoiceOfVariant" xml:space="preserve">
     <value>Parameterization:</value>
   </data>
@@ -142,7 +151,7 @@
     <value>Block size/key length</value>
   </data>
   <data name="ChoiceOfVariantToolTip" xml:space="preserve">
-    <value>The block size and key length of Speck can be selected here</value>
+    <value>Block size and key length of Speck can be selected here</value>
   </data>
   <data name="Decrypt" xml:space="preserve">
     <value>Decrypt</value>
@@ -152,6 +161,27 @@
   </data>
   <data name="Encrypt" xml:space="preserve">
     <value>Encrypt</value>
+  </data>
+  <data name="InputKeyCaption" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="InputKeyTooltip" xml:space="preserve">
+    <value>The key provided must have the necessary length required by the selected parameterization of Speck. If the key is too short, processing is terminated. If the key is too long, the key is shortened.</value>
+  </data>
+  <data name="InputStreamCaption" xml:space="preserve">
+    <value>Input stream</value>
+  </data>
+  <data name="InputStreamTooltip" xml:space="preserve">
+    <value>Data to be encrypted or decrypted.</value>
+  </data>
+  <data name="OutputStreamCaption" xml:space="preserve">
+    <value>Output stream</value>
+  </data>
+  <data name="OutputStreamTooltip" xml:space="preserve">
+    <value>This connector outputs encrypted or decrypted data.</value>
+  </data>
+  <data name="PaddingList1" xml:space="preserve">
+    <value>Zeros</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Speck</value>
@@ -188,5 +218,14 @@
   </data>
   <data name="Speck96_96" xml:space="preserve">
     <value>Speck96/96</value>
+  </data>
+  <data name="Speck_blockmode_not_implemented" xml:space="preserve">
+    <value>The mode {0} has not been implemented.</value>
+  </data>
+  <data name="Speck_Execute_Key_too_long" xml:space="preserve">
+    <value>The key length = {0} is too long. Cutting the key to length {1}.</value>
+  </data>
+  <data name="Speck_no_cryptofunction" xml:space="preserve">
+    <value>No crypto function could be selected based on the settings.</value>
   </data>
 </root>

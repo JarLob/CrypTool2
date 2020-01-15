@@ -115,6 +115,33 @@ namespace Speck.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Padding mode: ähnelt.
+        /// </summary>
+        internal static string ChoiceOfPaddingMode {
+            get {
+                return ResourceManager.GetString("ChoiceOfPaddingMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Padding ähnelt.
+        /// </summary>
+        internal static string ChoiceOfPaddingModeGroup {
+            get {
+                return ResourceManager.GetString("ChoiceOfPaddingModeGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sets the mode for padding partial data blocks. ähnelt.
+        /// </summary>
+        internal static string ChoiceOfPaddingModeToolTip {
+            get {
+                return ResourceManager.GetString("ChoiceOfPaddingModeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Parameterization: ähnelt.
         /// </summary>
         internal static string ChoiceOfVariant {
@@ -133,7 +160,7 @@ namespace Speck.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The block size and key length of Speck can be selected here ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Block size and key length of Speck can be selected here ähnelt.
         /// </summary>
         internal static string ChoiceOfVariantToolTip {
             get {
@@ -169,6 +196,69 @@ namespace Speck.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key ähnelt.
+        /// </summary>
+        internal static string InputKeyCaption {
+            get {
+                return ResourceManager.GetString("InputKeyCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The key provided must have the necessary length required by the selected parameterization of Speck. If the key is too short, processing is terminated. If the key is too long, the key is shortened. ähnelt.
+        /// </summary>
+        internal static string InputKeyTooltip {
+            get {
+                return ResourceManager.GetString("InputKeyTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input stream ähnelt.
+        /// </summary>
+        internal static string InputStreamCaption {
+            get {
+                return ResourceManager.GetString("InputStreamCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Data to be encrypted or decrypted. ähnelt.
+        /// </summary>
+        internal static string InputStreamTooltip {
+            get {
+                return ResourceManager.GetString("InputStreamTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output stream ähnelt.
+        /// </summary>
+        internal static string OutputStreamCaption {
+            get {
+                return ResourceManager.GetString("OutputStreamCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die This connector outputs encrypted or decrypted data. ähnelt.
+        /// </summary>
+        internal static string OutputStreamTooltip {
+            get {
+                return ResourceManager.GetString("OutputStreamTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Zeros ähnelt.
+        /// </summary>
+        internal static string PaddingList1 {
+            get {
+                return ResourceManager.GetString("PaddingList1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Speck ähnelt.
         /// </summary>
         internal static string PluginCaption {
@@ -183,6 +273,33 @@ namespace Speck.Properties {
         internal static string PluginTooltip {
             get {
                 return ResourceManager.GetString("PluginTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The mode {0} has not been implemented. ähnelt.
+        /// </summary>
+        internal static string Speck_blockmode_not_implemented {
+            get {
+                return ResourceManager.GetString("Speck_blockmode_not_implemented", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The key length = {0} is too long. Cutting the key to length {1}. ähnelt.
+        /// </summary>
+        internal static string Speck_Execute_Key_too_long {
+            get {
+                return ResourceManager.GetString("Speck_Execute_Key_too_long", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No crypto function could be selected based on the settings. ähnelt.
+        /// </summary>
+        internal static string Speck_no_cryptofunction {
+            get {
+                return ResourceManager.GetString("Speck_no_cryptofunction", resourceCulture);
             }
         }
         

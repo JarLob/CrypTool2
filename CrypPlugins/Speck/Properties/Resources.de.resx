@@ -135,6 +135,15 @@
   <data name="ChoiceOfOperatingModeToolTip" xml:space="preserve">
     <value>Legt fest, ob die Komponente die Eingabe ver- oder entschlüsselt</value>
   </data>
+  <data name="ChoiceOfPaddingMode" xml:space="preserve">
+    <value>Padding-Modus:</value>
+  </data>
+  <data name="ChoiceOfPaddingModeGroup" xml:space="preserve">
+    <value>Padding</value>
+  </data>
+  <data name="ChoiceOfPaddingModeToolTip" xml:space="preserve">
+    <value>Stellt den Modus zum Füllen von Teildatenblöcken ein.</value>
+  </data>
   <data name="ChoiceOfVariant" xml:space="preserve">
     <value>Parametrisierung:</value>
   </data>
@@ -142,7 +151,7 @@
     <value>Blockgröße/Schlüssellänge</value>
   </data>
   <data name="ChoiceOfVariantToolTip" xml:space="preserve">
-    <value>Hier kann die Blockgröße und Schlüssellänge von Speck ausgewählt werden</value>
+    <value>Hier können Blockgröße und Schlüssellänge von Speck ausgewählt werden</value>
   </data>
   <data name="Decrypt" xml:space="preserve">
     <value>Entschlüsseln</value>
@@ -152,6 +161,27 @@
   </data>
   <data name="Encrypt" xml:space="preserve">
     <value>Verschlüsseln</value>
+  </data>
+  <data name="InputKeyCaption" xml:space="preserve">
+    <value>Schlüssel</value>
+  </data>
+  <data name="InputKeyTooltip" xml:space="preserve">
+    <value>Der bereitgestellte Schlüssel muss die notwendige Länge haben, die die gewählte Parametrisierung von Speck benötigt. Falls der Schlüssel zu kurz ist, bricht die Verarbeitung ab. Bei zu langen Schlüsseln wird der Schlüssel gekürzt.</value>
+  </data>
+  <data name="InputStreamCaption" xml:space="preserve">
+    <value>Eingabestrom</value>
+  </data>
+  <data name="InputStreamTooltip" xml:space="preserve">
+    <value>Daten die ver- oder entschlüsselt werden sollen.</value>
+  </data>
+  <data name="OutputStreamCaption" xml:space="preserve">
+    <value>Ausgabestrom</value>
+  </data>
+  <data name="OutputStreamTooltip" xml:space="preserve">
+    <value>Ver- oder entschlüsselte Ausgabedaten.</value>
+  </data>
+  <data name="PaddingList1" xml:space="preserve">
+    <value>Nullen</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Speck</value>
@@ -188,5 +218,14 @@
   </data>
   <data name="Speck96_96" xml:space="preserve">
     <value>Speck96/96</value>
+  </data>
+  <data name="Speck_blockmode_not_implemented" xml:space="preserve">
+    <value>Der Betriebsmodus {0} ist nicht implementiert.</value>
+  </data>
+  <data name="Speck_Execute_Key_too_long" xml:space="preserve">
+    <value>Die Schlüssellänge = {0} ist zu lang. Dieser wird auf Länge {1} gekürzt.</value>
+  </data>
+  <data name="Speck_no_cryptofunction" xml:space="preserve">
+    <value>Aufgrund der Einstellungen konnte keine Kryptofunktion ausgewählt werden.</value>
   </data>
 </root>
