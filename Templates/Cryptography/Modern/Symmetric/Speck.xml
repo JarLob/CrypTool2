@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+  <title lang="en">Speck Cipher</title>
+  <summary lang="en">Usage of the <i>Speck</i> cipher</summary>
+  <description lang="en">This template shows the usage of the <i>Speck</i> cipher.</description>
+  <keywords>block cipher, symmetric, speck</keywords>
+  
+  <title lang="de">Speck-Chiffre</title>
+  <summary lang="de">Benutzung der <i>Speck</i>-Chiffre</summary>
+  <description lang="de">Diese Vorlage zeigt die Benutzung der <i>Speck</i>-Chiffre.</description>
+  <keywords lang="de">blockchiffre, symmetrisch, speck</keywords>
+  
+  <icon file="Speck.png" />
+  <relevantPlugins>
+    <plugin name="Speck" />
+  </relevantPlugins>
+  
+    <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext" />
+    <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$Key$" value="Key" />
+    <replacement key="$StringDecoder$" value="String decoder" />
+  </replacements>
+  
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext" />
+    <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$Key$" value="Schlüssel" />
+    <replacement key="$StringDecoder$" value="String-Decodierer" />
+  </replacements>
+
+</sample>
