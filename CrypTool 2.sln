@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.779
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrypWin", "CrypWin\CrypWin.csproj", "{5D7200CF-515F-4660-A13F-16918EF348A1}"
 EndProject
@@ -3469,6 +3469,7 @@ Global
 		{4AB9BE96-3E34-40CB-9270-A64480C851EE}.Test|x86.ActiveCfg = Release|x86
 		{4AB9BE96-3E34-40CB-9270-A64480C851EE}.Test|x86.Build.0 = Release|x86
 		{F9D9DB59-177C-43B5-891A-55EDE1C4403C}.Debug|x64.ActiveCfg = Debug|x64
+		{F9D9DB59-177C-43B5-891A-55EDE1C4403C}.Debug|x64.Build.0 = Debug|x64
 		{F9D9DB59-177C-43B5-891A-55EDE1C4403C}.Debug|x86.ActiveCfg = Debug|x64
 		{F9D9DB59-177C-43B5-891A-55EDE1C4403C}.Release|x64.ActiveCfg = Release|x64
 		{F9D9DB59-177C-43B5-891A-55EDE1C4403C}.Release|x64.Build.0 = Release|x64
