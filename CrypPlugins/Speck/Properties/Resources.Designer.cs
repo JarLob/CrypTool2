@@ -61,6 +61,24 @@ namespace Speck.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Electronic Code Book (ECB) ähnelt.
+        /// </summary>
+        internal static string BlockModeList1 {
+            get {
+                return ResourceManager.GetString("BlockModeList1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher Block Chaining (CBC) ähnelt.
+        /// </summary>
+        internal static string BlockModeList2 {
+            get {
+                return ResourceManager.GetString("BlockModeList2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Block chaining mode: ähnelt.
         /// </summary>
         internal static string ChoiceOfModeOfOperation {
@@ -178,20 +196,29 @@ namespace Speck.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Electronic Code Book (ECB) ähnelt.
-        /// </summary>
-        internal static string ElectronicCodeBook {
-            get {
-                return ResourceManager.GetString("ElectronicCodeBook", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Encrypt ähnelt.
         /// </summary>
         internal static string Encrypt {
             get {
                 return ResourceManager.GetString("Encrypt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Initialization vector ähnelt.
+        /// </summary>
+        internal static string InputIVCaption {
+            get {
+                return ResourceManager.GetString("InputIVCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The initialization vector (IV) which is used in chaining modes. It must be the same as the blocksize. ähnelt.
+        /// </summary>
+        internal static string InputIVTooltip {
+            get {
+                return ResourceManager.GetString("InputIVTooltip", resourceCulture);
             }
         }
         
@@ -250,11 +277,56 @@ namespace Speck.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Zeros ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die None ähnelt.
         /// </summary>
         internal static string PaddingList1 {
             get {
                 return ResourceManager.GetString("PaddingList1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Zeros ähnelt.
+        /// </summary>
+        internal static string PaddingList2 {
+            get {
+                return ResourceManager.GetString("PaddingList2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die PKCS7 ähnelt.
+        /// </summary>
+        internal static string PaddingList3 {
+            get {
+                return ResourceManager.GetString("PaddingList3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ANSIX923 ähnelt.
+        /// </summary>
+        internal static string PaddingList4 {
+            get {
+                return ResourceManager.GetString("PaddingList4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ISO10126 ähnelt.
+        /// </summary>
+        internal static string PaddingList5 {
+            get {
+                return ResourceManager.GetString("PaddingList5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1-0 Padding ähnelt.
+        /// </summary>
+        internal static string PaddingList6 {
+            get {
+                return ResourceManager.GetString("PaddingList6", resourceCulture);
             }
         }
         
@@ -300,6 +372,24 @@ namespace Speck.Properties {
         internal static string Speck_Execute_Key_too_short {
             get {
                 return ResourceManager.GetString("Speck_Execute_Key_too_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The input stream was padded with {0} ähnelt.
+        /// </summary>
+        internal static string Speck_Input_padded {
+            get {
+                return ResourceManager.GetString("Speck_Input_padded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The input stream is too short. {0} byte is/are missing or a padding mode must be selected. ähnelt.
+        /// </summary>
+        internal static string Speck_Input_too_short {
+            get {
+                return ResourceManager.GetString("Speck_Input_too_short", resourceCulture);
             }
         }
         

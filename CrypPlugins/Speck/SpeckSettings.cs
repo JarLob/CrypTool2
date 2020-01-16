@@ -14,7 +14,6 @@
    limitations under the License.
 */
 
-using System;
 using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
@@ -56,14 +55,6 @@ namespace Cryptool.Plugins.Speck
     }
 
     /// <summary>
-    /// Enumeration for the padding mode
-    /// </summary>
-    public enum PaddingMode
-    {
-        Zeros
-    }
-
-    /// <summary>
     /// Settings class for Speck
     /// </summary>
     public class SpeckSettings : ISettings
@@ -80,7 +71,7 @@ namespace Cryptool.Plugins.Speck
         private SpeckParameters _currentSpeckParameters = SpeckParameters.Speck32_64;
         private ModeOfOperation _modeOfOperation = ModeOfOperation.ElectronicCodeBook;
         private OperatingMode _operatingMode = OperatingMode.Encrypt;
-        private PaddingMode _paddingmode = PaddingMode.Zeros;
+        private BlockCipherHelper.PaddingType _paddingmode = BlockCipherHelper.PaddingType.Zeros;
 
         #endregion
 
@@ -128,7 +119,7 @@ namespace Cryptool.Plugins.Speck
         /// <summary>
         /// Property for block and key size
         /// </summary>
-        [TaskPane("ChoiceOfVariant", "ChoiceOfVariantToolTip", "ChoiceOfVariantGroup", 1, false, ControlType.ComboBox, new string[] { "Speck32_64", "Speck48_72", "Speck48_96", "Speck64_96", "Speck64_128", "Speck96_96", "Speck96_144", "Speck128_128", "Speck128_192", "Speck128_256" })]
+        [TaskPane("ChoiceOfVariant", "ChoiceOfVariantToolTip", "ChoiceOfVariantGroup", 1, false, ControlType.ComboBox, "Speck32_64", "Speck48_72", "Speck48_96", "Speck64_96", "Speck64_128", "Speck96_96", "Speck96_144", "Speck128_128", "Speck128_192", "Speck128_256")]
         public SpeckParameters ChoiceOfVariant
         {
             get
@@ -151,6 +142,8 @@ namespace Cryptool.Plugins.Speck
                             _rightShift_beta = 2;
                             _rounds_T = 22;
 
+                            _currentSpeckParameters = value;
+
                             break;
 
                         case SpeckParameters.Speck48_72:
@@ -162,6 +155,8 @@ namespace Cryptool.Plugins.Speck
                             _leftShift_alpha = 8;
                             _rightShift_beta = 3;
                             _rounds_T = 22;
+
+                            _currentSpeckParameters = value;
 
                             break;
 
@@ -175,6 +170,8 @@ namespace Cryptool.Plugins.Speck
                             _rightShift_beta = 3;
                             _rounds_T = 23;
 
+                            _currentSpeckParameters = value;
+
                             break;
 
                         case SpeckParameters.Speck64_96:
@@ -186,6 +183,8 @@ namespace Cryptool.Plugins.Speck
                             _leftShift_alpha = 8;
                             _rightShift_beta = 3;
                             _rounds_T = 26;
+
+                            _currentSpeckParameters = value;
 
                             break;
 
@@ -199,6 +198,8 @@ namespace Cryptool.Plugins.Speck
                             _rightShift_beta = 3;
                             _rounds_T = 27;
 
+                            _currentSpeckParameters = value;
+
                             break;
 
                         case SpeckParameters.Speck96_96:
@@ -210,6 +211,8 @@ namespace Cryptool.Plugins.Speck
                             _leftShift_alpha = 8;
                             _rightShift_beta = 3;
                             _rounds_T = 28;
+
+                            _currentSpeckParameters = value;
 
                             break;
 
@@ -223,6 +226,8 @@ namespace Cryptool.Plugins.Speck
                             _rightShift_beta = 3;
                             _rounds_T = 29;
 
+                            _currentSpeckParameters = value;
+
                             break;
 
                         case SpeckParameters.Speck128_128:
@@ -234,6 +239,8 @@ namespace Cryptool.Plugins.Speck
                             _leftShift_alpha = 8;
                             _rightShift_beta = 3;
                             _rounds_T = 32;
+
+                            _currentSpeckParameters = value;
 
                             break;
 
@@ -247,6 +254,8 @@ namespace Cryptool.Plugins.Speck
                             _rightShift_beta = 3;
                             _rounds_T = 33;
 
+                            _currentSpeckParameters = value;
+
                             break;
 
                         case SpeckParameters.Speck128_256:
@@ -259,9 +268,8 @@ namespace Cryptool.Plugins.Speck
                             _rightShift_beta = 3;
                             _rounds_T = 34;
 
-                            break;
+                            _currentSpeckParameters = value;
 
-                        default:
                             break;
                     }
 
@@ -273,7 +281,7 @@ namespace Cryptool.Plugins.Speck
         /// <summary>
         /// Property for mode of operation
         /// </summary>
-        [TaskPane("ChoiceOfModeOfOperation", "ChoiceOfModeOfOperationToolTip", "ChoiceOfModeOfOperationGroup", 1, false, ControlType.ComboBox, new string[] { "ElectronicCodeBook" })]
+        [TaskPane("ChoiceOfModeOfOperation", "ChoiceOfModeOfOperationToolTip", "ChoiceOfModeOfOperationGroup", 1, false, ControlType.ComboBox, new string[] { "BlockModeList1", "BlockModeList2" })]
         public ModeOfOperation OperationMode
         {
             get { return _modeOfOperation; }
@@ -290,7 +298,7 @@ namespace Cryptool.Plugins.Speck
         /// <summary>
         /// Property to set if the component encrypts or decrypts the input
         /// </summary>
-        [TaskPane("ChoiceOfOperatingMode", "ChoiceOfOperatingModeToolTip", "ChoiceOfOperatingModeGroup", 1, false, ControlType.ComboBox, new string[] { "Encrypt", "Decrypt" })]
+        [TaskPane("ChoiceOfOperatingMode", "ChoiceOfOperatingModeToolTip", "ChoiceOfOperatingModeGroup", 1, false, ControlType.ComboBox, new string[] { "Encrypt", "Decrypt"})]
         public OperatingMode OpMode
         {
             get { return _operatingMode; }
@@ -307,8 +315,8 @@ namespace Cryptool.Plugins.Speck
         /// <summary>
         /// Property to set the padding mode of the cipher
         /// </summary>
-        [TaskPane("ChoiceOfPaddingMode", "ChoiceOfPaddingModeToolTip", "ChoiceOfPaddingModeGroup", 1, false, ControlType.ComboBox, new string[] { "PaddingList1" })]
-        public PaddingMode PadMode
+        [TaskPane("ChoiceOfPaddingMode", "ChoiceOfPaddingModeToolTip", "ChoiceOfPaddingModeGroup", 1, false, ControlType.ComboBox, new string[] { "PaddingList1", "PaddingList2", "PaddingList3", "PaddingList4", "PaddingList5", "PaddingList6" })]
+        public BlockCipherHelper.PaddingType PadMode
         {
             get { return _paddingmode; }
             set

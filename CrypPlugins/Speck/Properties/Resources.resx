@@ -156,7 +156,7 @@
   <data name="Decrypt" xml:space="preserve">
     <value>Decrypt</value>
   </data>
-  <data name="ElectronicCodeBook" xml:space="preserve">
+  <data name="BlockModeList1" xml:space="preserve">
     <value>Electronic Code Book (ECB)</value>
   </data>
   <data name="Encrypt" xml:space="preserve">
@@ -180,7 +180,7 @@
   <data name="OutputStreamTooltip" xml:space="preserve">
     <value>This connector outputs encrypted or decrypted data.</value>
   </data>
-  <data name="PaddingList1" xml:space="preserve">
+  <data name="PaddingList2" xml:space="preserve">
     <value>Zeros</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
@@ -230,5 +230,35 @@
   </data>
   <data name="Speck_no_cryptofunction" xml:space="preserve">
     <value>No crypto function could be selected based on the settings.</value>
+  </data>
+  <data name="BlockModeList2" xml:space="preserve">
+    <value>Cipher Block Chaining (CBC)</value>
+  </data>
+  <data name="InputIVCaption" xml:space="preserve">
+    <value>Initialization vector</value>
+  </data>
+  <data name="InputIVTooltip" xml:space="preserve">
+    <value>The initialization vector (IV) which is used in chaining modes. It must be the same as the blocksize.</value>
+  </data>
+  <data name="PaddingList1" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="PaddingList3" xml:space="preserve">
+    <value>PKCS7</value>
+  </data>
+  <data name="PaddingList4" xml:space="preserve">
+    <value>ANSIX923</value>
+  </data>
+  <data name="PaddingList5" xml:space="preserve">
+    <value>ISO10126</value>
+  </data>
+  <data name="PaddingList6" xml:space="preserve">
+    <value>1-0 Padding</value>
+  </data>
+  <data name="Speck_Input_padded" xml:space="preserve">
+    <value>The input stream was padded with {0}</value>
+  </data>
+  <data name="Speck_Input_too_short" xml:space="preserve">
+    <value>The input stream is too short. {0} byte is/are missing or a padding mode must be selected.</value>
   </data>
 </root>

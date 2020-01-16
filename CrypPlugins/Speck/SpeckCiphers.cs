@@ -45,10 +45,10 @@ namespace Speck
             UInt16[] ptWords = BytesToWords16(text, 2);
 
             //convert key bytes to key words
-            UInt16[] K = BytesToWords16(key, 4);
+            UInt16[] k = BytesToWords16(key, 4);
 
             //calculate round keys
-            UInt16[] rk = (UInt16[])KeySchedule(K);
+            UInt16[] rk = KeySchedule(k);
 
             //encrypt
             UInt16[] ctWords = Speck32Encrypt(ptWords, rk);
@@ -67,14 +67,19 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck32_64_Decryption(byte[] text, byte[] key)
         {
+            _wordSize = 16;
+            _blockLength = 32;
+            _keyLength = 64;
+            _rounds = 22;
+
             //convert ciphertext bytes to ciphertext words
             UInt16[] ctWords = BytesToWords16(text, 2);
 
             //convert key bytes to key words
-            UInt16[] K = BytesToWords16(key, 4);
+            UInt16[] k = BytesToWords16(key, 4);
 
             //calculate round keys
-            UInt16[] rk = KeySchedule(K);
+            UInt16[] rk = KeySchedule(k);
 
             //decrypt
             UInt16[] ptWords = Speck32Decrypt(ctWords, rk);
@@ -97,7 +102,27 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck48_72_Encryption(byte[] text, byte[] key)
         {
-            throw new NotImplementedException();
+            _wordSize = 24;
+            _blockLength = 48;
+            _keyLength = 72;
+            _rounds = 22;
+
+            //convert plaintext bytes to plaintext words
+            UInt32[] ptWords = BytesToWords24(text, 2);
+
+            //convert key bytes to key words
+            UInt32[] k = BytesToWords24(key, 3);
+
+            //calculate round keys
+            UInt32[] rk = KeySchedule(k);
+
+            //encrypt
+            UInt32[] ctWords = Speck48Encrypt(ptWords, rk);
+
+            //convert ciphertext to bytes
+            byte[] ctBytes = Words24ToBytes(ctWords, 2);
+
+            return ctBytes;
         }
 
         /// <summary>
@@ -108,7 +133,27 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck48_72_Decryption(byte[] text, byte[] key)
         {
-            throw new NotImplementedException();
+            _wordSize = 24;
+            _blockLength = 48;
+            _keyLength = 72;
+            _rounds = 22;
+
+            //convert ciphertext bytes to ciphertext words
+            UInt32[] ctWords = BytesToWords24(text, 2);
+
+            //convert key bytes to key words
+            UInt32[] k = BytesToWords24(key, 3);
+
+            //calculate round keys
+            UInt32[] rk = KeySchedule(k);
+
+            //decrypt
+            UInt32[] ptWords = Speck48Decrypt(ctWords, rk);
+
+            //convert plaintext to bytes
+            byte[] ptBytes = Words24ToBytes(ptWords, 2);
+
+            return ptBytes;
         }
 
         /// <summary>
@@ -119,7 +164,27 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck48_96_Encryption(byte[] text, byte[] key)
         {
-            throw new NotImplementedException();
+            _wordSize = 24;
+            _blockLength = 48;
+            _keyLength = 96;
+            _rounds = 23;
+
+            //convert plaintext bytes to plaintext words
+            UInt32[] ptWords = BytesToWords24(text, 2);
+
+            //convert key bytes to key words
+            UInt32[] k = BytesToWords24(key, 4);
+
+            //calculate round keys
+            UInt32[] rk = KeySchedule(k);
+
+            //encrypt
+            UInt32[] ctWords = Speck48Encrypt(ptWords, rk);
+
+            //convert ciphertext to bytes
+            byte[] ctBytes = Words24ToBytes(ctWords, 2);
+
+            return ctBytes;
         }
 
         /// <summary>
@@ -130,7 +195,27 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck48_96_Decryption(byte[] text, byte[] key)
         {
-            throw new NotImplementedException();
+            _wordSize = 24;
+            _blockLength = 48;
+            _keyLength = 96;
+            _rounds = 23;
+
+            //convert ciphertext bytes to ciphertext words
+            UInt32[] ctWords = BytesToWords24(text, 2);
+
+            //convert key bytes to key words
+            UInt32[] k = BytesToWords24(key, 4);
+
+            //calculate round keys
+            UInt32[] rk = KeySchedule(k);
+
+            //decrypt
+            UInt32[] ptWords = Speck48Decrypt(ctWords, rk);
+
+            //convert plaintext to bytes
+            byte[] ptBytes = Words24ToBytes(ptWords, 2);
+
+            return ptBytes;
         }
 
         #endregion
@@ -145,7 +230,27 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck64_96_Encryption(byte[] text, byte[] key)
         {
-            throw new NotImplementedException();
+            _wordSize = 32;
+            _blockLength = 64;
+            _keyLength = 96;
+            _rounds = 26;
+
+            //convert plaintext bytes to plaintext words
+            UInt32[] ptWords = BytesToWords32(text, 2);
+
+            //convert key bytes to key words
+            UInt32[] k = BytesToWords32(key, 3);
+
+            //calculate round keys
+            UInt32[] rk = KeySchedule(k);
+
+            //encrypt
+            UInt32[] ctWords = Speck64Encrypt(ptWords, rk);
+
+            //convert ciphertext to bytes
+            byte[] ctBytes = Words32ToBytes(ctWords, 2);
+
+            return ctBytes;
         }
 
         /// <summary>
@@ -156,7 +261,27 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck64_96_Decryption(byte[] text, byte[] key)
         {
-            throw new NotImplementedException();
+            _wordSize = 32;
+            _blockLength = 64;
+            _keyLength = 96;
+            _rounds = 26;
+
+            //convert ciphertext bytes to ciphertext words
+            UInt32[] ctWords = BytesToWords32(text, 2);
+
+            //convert key bytes to key words
+            UInt32[] k = BytesToWords32(key, 3);
+
+            //calculate round keys
+            UInt32[] rk = KeySchedule(k);
+
+            //decrypt
+            UInt32[] ptWords = Speck64Decrypt(ctWords, rk);
+
+            //convert plaintext to bytes
+            byte[] ptBytes = Words32ToBytes(ptWords, 2);
+
+            return ptBytes;
         }
 
         /// <summary>
@@ -167,7 +292,27 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck64_128_Encryption(byte[] text, byte[] key)
         {
-            throw new NotImplementedException();
+            _wordSize = 32;
+            _blockLength = 64;
+            _keyLength = 128;
+            _rounds = 27;
+
+            //convert plaintext bytes to plaintext words
+            UInt32[] ptWords = BytesToWords32(text, 2);
+
+            //convert key bytes to key words
+            UInt32[] k = BytesToWords32(key, 4);
+
+            //calculate round keys
+            UInt32[] rk = KeySchedule(k);
+
+            //encrypt
+            UInt32[] ctWords = Speck64Encrypt(ptWords, rk);
+
+            //convert ciphertext to bytes
+            byte[] ctBytes = Words32ToBytes(ctWords, 2);
+
+            return ctBytes;
         }
 
         /// <summary>
@@ -178,7 +323,27 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck64_128_Decryption(byte[] text, byte[] key)
         {
-            throw new NotImplementedException();
+            _wordSize = 32;
+            _blockLength = 64;
+            _keyLength = 128;
+            _rounds = 27;
+
+            //convert ciphertext bytes to ciphertext words
+            UInt32[] ctWords = BytesToWords32(text, 2);
+
+            //convert key bytes to key words
+            UInt32[] k = BytesToWords32(key, 4);
+
+            //calculate round keys
+            UInt32[] rk = KeySchedule(k);
+
+            //decrypt
+            UInt32[] ptWords = Speck64Decrypt(ctWords, rk);
+
+            //convert plaintext to bytes
+            byte[] ptBytes = Words32ToBytes(ptWords, 2);
+
+            return ptBytes;
         }
 
         #endregion
@@ -193,7 +358,27 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck96_96_Encryption(byte[] text, byte[] key)
         {
-            throw new NotImplementedException();
+            _wordSize = 48;
+            _blockLength = 96;
+            _keyLength = 96;
+            _rounds = 28;
+
+            //convert plaintext bytes to plaintext words
+            UInt64[] ptWords = BytesToWords48(text, 2);
+
+            //convert key bytes to key words
+            UInt64[] k = BytesToWords48(key, 2);
+
+            //calculate round keys
+            UInt64[] rk = KeySchedule(k);
+
+            //encrypt
+            UInt64[] ctWords = Speck96Encrypt(ptWords, rk);
+
+            //convert ciphertext to bytes
+            byte[] ctBytes = Words48ToBytes(ctWords, 2);
+
+            return ctBytes;
         }
 
         /// <summary>
@@ -204,7 +389,27 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck96_96_Decryption(byte[] text, byte[] key)
         {
-            throw new NotImplementedException();
+            _wordSize = 48;
+            _blockLength = 96;
+            _keyLength = 96;
+            _rounds = 28;
+
+            //convert ciphertext bytes to ciphertext words
+            UInt64[] ctWords = BytesToWords48(text, 2);
+
+            //convert key bytes to key words
+            UInt64[] k = BytesToWords48(key, 2);
+
+            //calculate round keys
+            UInt64[] rk = KeySchedule(k);
+
+            //decrypt
+            UInt64[] ptWords = Speck96Decrypt(ctWords, rk);
+
+            //convert plaintext to bytes
+            byte[] ptBytes = Words48ToBytes(ptWords, 2);
+
+            return ptBytes;
         }
 
         /// <summary>
@@ -215,7 +420,27 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck96_144_Encryption(byte[] text, byte[] key)
         {
-            throw new NotImplementedException();
+            _wordSize = 48;
+            _blockLength = 96;
+            _keyLength = 144;
+            _rounds = 29;
+
+            //convert plaintext bytes to plaintext words
+            UInt64[] ptWords = BytesToWords48(text, 2);
+
+            //convert key bytes to key words
+            UInt64[] k = BytesToWords48(key, 3);
+
+            //calculate round keys
+            UInt64[] rk = KeySchedule(k);
+
+            //encrypt
+            UInt64[] ctWords = Speck96Encrypt(ptWords, rk);
+
+            //convert ciphertext to bytes
+            byte[] ctBytes = Words48ToBytes(ctWords, 2);
+
+            return ctBytes;
         }
 
         /// <summary>
@@ -226,7 +451,27 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck96_144_Decryption(byte[] text, byte[] key)
         {
-            throw new NotImplementedException();
+            _wordSize = 48;
+            _blockLength = 96;
+            _keyLength = 144;
+            _rounds = 29;
+
+            //convert ciphertext bytes to ciphertext words
+            UInt64[] ctWords = BytesToWords48(text, 2);
+
+            //convert key bytes to key words
+            UInt64[] k = BytesToWords48(key, 3);
+
+            //calculate round keys
+            UInt64[] rk = KeySchedule(k);
+
+            //decrypt
+            UInt64[] ptWords = Speck96Decrypt(ctWords, rk);
+
+            //convert plaintext to bytes
+            byte[] ptBytes = Words48ToBytes(ptWords, 2);
+
+            return ptBytes;
         }
 
         #endregion
@@ -241,7 +486,27 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck128_128_Encryption(byte[] text, byte[] key)
         {
-            throw new NotImplementedException();
+            _wordSize = 64;
+            _blockLength = 128;
+            _keyLength = 128;
+            _rounds = 32;
+
+            //convert plaintext bytes to plaintext words
+            UInt64[] ptWords = BytesToWords64(text, 2);
+
+            //convert key bytes to key words
+            UInt64[] k = BytesToWords64(key, 2);
+
+            //calculate round keys
+            UInt64[] rk = KeySchedule(k);
+
+            //encrypt
+            UInt64[] ctWords = Speck128Encrypt(ptWords, rk);
+
+            //convert ciphertext to bytes
+            byte[] ctBytes = Words64ToBytes(ctWords, 2);
+
+            return ctBytes;
         }
 
         /// <summary>
@@ -252,7 +517,27 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck128_128_Decryption(byte[] text, byte[] key)
         {
-            throw new NotImplementedException();
+            _wordSize = 64;
+            _blockLength = 128;
+            _keyLength = 128;
+            _rounds = 32;
+
+            //convert ciphertext bytes to ciphertext words
+            UInt64[] ctWords = BytesToWords64(text, 2);
+
+            //convert key bytes to key words
+            UInt64[] k = BytesToWords64(key, 2);
+
+            //calculate round keys
+            UInt64[] rk = KeySchedule(k);
+
+            //decrypt
+            UInt64[] ptWords = Speck128Decrypt(ctWords, rk);
+
+            //convert plaintext to bytes
+            byte[] ptBytes = Words64ToBytes(ptWords, 2);
+
+            return ptBytes;
         }
 
         /// <summary>
@@ -263,7 +548,27 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck128_192_Encryption(byte[] text, byte[] key)
         {
-            throw new NotImplementedException();
+            _wordSize = 64;
+            _blockLength = 128;
+            _keyLength = 192;
+            _rounds = 33;
+
+            //convert plaintext bytes to plaintext words
+            UInt64[] ptWords = BytesToWords64(text, 2);
+
+            //convert key bytes to key words
+            UInt64[] k = BytesToWords64(key, 3);
+
+            //calculate round keys
+            UInt64[] rk = KeySchedule(k);
+
+            //encrypt
+            UInt64[] ctWords = Speck128Encrypt(ptWords, rk);
+
+            //convert ciphertext to bytes
+            byte[] ctBytes = Words64ToBytes(ctWords, 2);
+
+            return ctBytes;
         }
 
         /// <summary>
@@ -274,7 +579,27 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck128_192_Decryption(byte[] text, byte[] key)
         {
-            throw new NotImplementedException();
+            _wordSize = 64;
+            _blockLength = 128;
+            _keyLength = 192;
+            _rounds = 33;
+
+            //convert ciphertext bytes to ciphertext words
+            UInt64[] ctWords = BytesToWords64(text, 2);
+
+            //convert key bytes to key words
+            UInt64[] k = BytesToWords64(key, 3);
+
+            //calculate round keys
+            UInt64[] rk = KeySchedule(k);
+
+            //decrypt
+            UInt64[] ptWords = Speck128Decrypt(ctWords, rk);
+
+            //convert plaintext to bytes
+            byte[] ptBytes = Words64ToBytes(ptWords, 2);
+
+            return ptBytes;
         }
 
         /// <summary>
@@ -285,7 +610,27 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck128_256_Encryption(byte[] text, byte[] key)
         {
-            throw new NotImplementedException();
+            _wordSize = 64;
+            _blockLength = 128;
+            _keyLength = 256;
+            _rounds = 34;
+
+            //convert plaintext bytes to plaintext words
+            UInt64[] ptWords = BytesToWords64(text, 2);
+
+            //convert key bytes to key words
+            UInt64[] k = BytesToWords64(key, 4);
+
+            //calculate round keys
+            UInt64[] rk = KeySchedule(k);
+
+            //encrypt
+            UInt64[] ctWords = Speck128Encrypt(ptWords, rk);
+
+            //convert ciphertext to bytes
+            byte[] ctBytes = Words64ToBytes(ctWords, 2);
+
+            return ctBytes;
         }
 
         /// <summary>
@@ -296,7 +641,27 @@ namespace Speck
         /// <returns></returns>
         public static byte[] Speck128_256_Decryption(byte[] text, byte[] key)
         {
-            throw new NotImplementedException();
+            _wordSize = 64;
+            _blockLength = 128;
+            _keyLength = 256;
+            _rounds = 34;
+
+            //convert ciphertext bytes to ciphertext words
+            UInt64[] ctWords = BytesToWords64(text, 2);
+
+            //convert key bytes to key words
+            UInt64[] k = BytesToWords64(key, 4);
+
+            //calculate round keys
+            UInt64[] rk = KeySchedule(k);
+
+            //decrypt
+            UInt64[] ptWords = Speck128Decrypt(ctWords, rk);
+
+            //convert plaintext to bytes
+            byte[] ptBytes = Words64ToBytes(ptWords, 2);
+
+            return ptBytes;
         }
 
         #endregion
@@ -686,7 +1051,7 @@ namespace Speck
         /// <returns></returns>
         private static UInt64[] DecryptionRoundFunction(UInt64 x, UInt64 y, UInt64 z)
         {
-            y = (UInt64)(y ^ x);
+            y = y ^ x;
 
             byte[] yBytes = BitConverter.GetBytes(y);
             byte[] yBytesTrimmed = new byte[_wordSize / 8];
@@ -704,8 +1069,8 @@ namespace Speck
             arrayRotated.CopyTo(yBytesTrimmed, 0);
             UInt64 yIntVal = BitConverter.ToUInt64(yBytesTrimmed, 0);
 
-            x = (UInt64)(x ^ z);
-            x = (UInt64)(x - yIntVal);
+            x = x ^ z;
+            x = x - yIntVal;
 
             byte[] xBytes = BitConverter.GetBytes(x);
             byte[] xBytesTrimmed = new byte[_wordSize / 8];
@@ -735,7 +1100,7 @@ namespace Speck
         /// <returns></returns>
         private static UInt32[] DecryptionRoundFunction(UInt32 x, UInt32 y, UInt32 z)
         {
-            y = (UInt32)(y ^ x);
+            y = y ^ x;
 
             byte[] yBytes = BitConverter.GetBytes(y);
             byte[] yBytesTrimmed = new byte[_wordSize / 8];
@@ -753,8 +1118,8 @@ namespace Speck
             arrayRotated.CopyTo(yBytesTrimmed, 0);
             UInt32 yIntVal = BitConverter.ToUInt32(yBytesTrimmed, 0);
 
-            x = (UInt32)(x ^ z);
-            x = (UInt32)(x - yIntVal);
+            x = x ^ z;
+            x = x - yIntVal;
 
             byte[] xBytes = BitConverter.GetBytes(x);
             byte[] xBytesTrimmed = new byte[_wordSize / 8];
@@ -821,42 +1186,42 @@ namespace Speck
         /// <summary>
         /// Key Schedule with 16 bit data types
         /// </summary>
-        /// <param name="K"></param>
+        /// <param name="k"></param>
         /// <returns></returns>
-        private static UInt16[] KeySchedule(UInt16[] K)
+        private static UInt16[] KeySchedule(UInt16[] k)
         {
             UInt16 rounds = (UInt16)_rounds;
-            UInt16 i, D = K[3], C = K[2], B = K[1], A = K[0];
+            UInt16 i, d = k[3], c = k[2], b = k[1], a = k[0];
             UInt16[] rk = new UInt16[rounds];
 
             for (i = 0; i < rounds - 1; i += 3)
             {
-                rk[i] = A;
-                UInt16[] res = EncryptionRoundFunction(B, A, i);
-                A = res[1];
-                B = res[0];
+                rk[i] = a;
+                UInt16[] res = EncryptionRoundFunction(b, a, i);
+                a = res[1];
+                b = res[0];
 
-                rk[i + 1] = A;
-                res = EncryptionRoundFunction(C, A, (UInt16)(i + 1));
-                A = res[1];
-                C = res[0];
+                rk[i + 1] = a;
+                res = EncryptionRoundFunction(c, a, (UInt16)(i + 1));
+                a = res[1];
+                c = res[0];
 
-                rk[i + 2] = A;
-                res = EncryptionRoundFunction(D, A, (UInt16)(i + 2));
-                A = res[1];
-                D = res[0];
+                rk[i + 2] = a;
+                res = EncryptionRoundFunction(d, a, (UInt16)(i + 2));
+                a = res[1];
+                d = res[0];
             }
 
-            rk[rounds - 1] = A;
+            rk[rounds - 1] = a;
             return rk;
         }
 
         /// <summary>
         /// Key Schedule with 32 bit data types
         /// </summary>
-        /// <param name="K"></param>
+        /// <param name="k"></param>
         /// <returns></returns>
-        private static UInt32[] KeySchedule(UInt32[] K)
+        private static UInt32[] KeySchedule(UInt32[] k)
         {
             switch (_blockLength)
             {
@@ -865,20 +1230,20 @@ namespace Speck
                     if (_keyLength == 72)
                     {
                         UInt32 rounds = (UInt32) _rounds;
-                        UInt32 i, C = K[2], B = K[1], A = K[0];
+                        UInt32 i, c = k[2], b = k[1], a = k[0];
                         UInt32[] rk = new UInt32[rounds];
 
                         for (i = 0; i < rounds - 1;)
                         {
-                            rk[i] = A;
-                            UInt32[] res = EncryptionRoundFunction(B, A, i++);
-                            A = res[1];
-                            B = res[0];
+                            rk[i] = a;
+                            UInt32[] res = EncryptionRoundFunction(b, a, i++);
+                            a = res[1];
+                            b = res[0];
 
-                            rk[i] = A;
-                            res = EncryptionRoundFunction(C, A, i++);
-                            A = res[1];
-                            C = res[0];
+                            rk[i] = a;
+                            res = EncryptionRoundFunction(c, a, i++);
+                            a = res[1];
+                            c = res[0];
                         }
 
                         return rk;
@@ -886,28 +1251,28 @@ namespace Speck
                     else if (_keyLength == 96)
                     {
                         UInt32 rounds = (UInt32)_rounds;
-                        UInt32 i, D = K[3], C = K[2], B = K[1], A = K[0];
+                        UInt32 i, d = k[3], c = k[2], b = k[1], a = k[0];
                         UInt32[] rk = new UInt32[rounds];
 
                         for (i = 0; i < rounds - 1;)
                         {
-                            rk[i] = A;
-                            UInt32[] res = EncryptionRoundFunction(B, A, i++);
-                            A = (UInt32)res[1];
-                            B = (UInt32)res[0];
+                            rk[i] = a;
+                            UInt32[] res = EncryptionRoundFunction(b, a, i++);
+                            a = res[1];
+                            b = res[0];
 
-                            rk[i] = A;
-                            res = EncryptionRoundFunction(C, A, i++);
-                            A = (UInt32)res[1];
-                            C = (UInt32)res[0];
+                            rk[i] = a;
+                            res = EncryptionRoundFunction(c, a, i++);
+                            a = res[1];
+                            c = res[0];
 
                             if (i == rounds)
                                 break;
 
-                            rk[i] = A;
-                            res = EncryptionRoundFunction(D, A, i++);
-                            A = (UInt32)res[1];
-                            D = (UInt32)res[0];
+                            rk[i] = a;
+                            res = EncryptionRoundFunction(d, a, i++);
+                            a = res[1];
+                            d = res[0];
                         }
 
                         return rk;
@@ -920,20 +1285,20 @@ namespace Speck
                     if (_keyLength == 96)
                     {
                         UInt32 rounds = (UInt32)_rounds;
-                        UInt32 i, C = K[2], B = K[1], A = K[0];
+                        UInt32 i, c = k[2], b = k[1], a = k[0];
                         UInt32[] rk = new UInt32[rounds];
 
                         for (i = 0; i < rounds - 1;)
                         {
-                            rk[i] = A;
-                            UInt32[] res = EncryptionRoundFunction(B, A, i++);
-                            A = res[1];
-                            B = res[0];
+                            rk[i] = a;
+                            UInt32[] res = EncryptionRoundFunction(b, a, i++);
+                            a = res[1];
+                            b = res[0];
 
-                            rk[i] = A;
-                            res = EncryptionRoundFunction(C, A, i++);
-                            A = res[1];
-                            C = res[0];
+                            rk[i] = a;
+                            res = EncryptionRoundFunction(c, a, i++);
+                            a = res[1];
+                            c = res[0];
                         }
 
                         return rk;
@@ -941,33 +1306,30 @@ namespace Speck
                     else if (_keyLength == 128)
                     {
                         UInt32 rounds = (UInt32)_rounds;
-                        UInt32 i, D = (UInt32)K[3], C = (UInt32)K[2], B = (UInt32)K[1], A = (UInt32)K[0];
+                        UInt32 i, d = k[3], c = k[2], b = k[1], a = k[0];
                         UInt32[] rk = new UInt32[rounds];
 
                         for (i = 0; i < rounds - 1;)
                         {
-                            rk[i] = A;
-                            UInt32[] res = EncryptionRoundFunction(B, A, i++);
-                            A = (UInt32)res[1];
-                            B = (UInt32)res[0];
+                            rk[i] = a;
+                            UInt32[] res = EncryptionRoundFunction(b, a, i++);
+                            a = res[1];
+                            b = res[0];
 
-                            rk[i] = A;
-                            res = EncryptionRoundFunction(C, A, i++);
-                            A = (UInt32)res[1];
-                            C = (UInt32)res[0];
+                            rk[i] = a;
+                            res = EncryptionRoundFunction(c, a, i++);
+                            a = res[1];
+                            c = res[0];
 
-                            rk[i] = A;
-                            res = EncryptionRoundFunction(D, A, i++);
-                            A = (UInt32)res[1];
-                            D = (UInt32)res[0];
+                            rk[i] = a;
+                            res = EncryptionRoundFunction(d, a, i++);
+                            a = res[1];
+                            d = res[0];
                         }
 
                         return rk;
                     }
 
-                    break;
-
-                default:
                     break;
             }
 
@@ -977,9 +1339,9 @@ namespace Speck
         /// <summary>
         /// Key Schedule with 64 bit data types
         /// </summary>
-        /// <param name="K"></param>
+        /// <param name="k"></param>
         /// <returns></returns>
-        private static UInt64[] KeySchedule(UInt64[] K)
+        private static UInt64[] KeySchedule(UInt64[] k)
         {
             switch (_blockLength)
             {
@@ -988,40 +1350,40 @@ namespace Speck
                     if (_keyLength == 96)
                     {
                         UInt64 rounds = (UInt64)_rounds;
-                        UInt64 i, B = K[1], A = K[0];
+                        UInt64 i, b = k[1], a = k[0];
                         UInt64[] rk = new UInt64[rounds];
 
                         for (i = 0; i < rounds - 1;)
                         {
-                            rk[i] = A;
-                            UInt64[] res = EncryptionRoundFunction(B, A, i++);
-                            A = (UInt64)res[1];
-                            B = (UInt64)res[0];
+                            rk[i] = a;
+                            UInt64[] res = EncryptionRoundFunction(b, a, i++);
+                            a = res[1];
+                            b = res[0];
                         }
 
-                        rk[rounds - 1] = A;
+                        rk[rounds - 1] = a;
                         return rk;
                     }
                     else if (_keyLength == 144)
                     {
                         UInt64 rounds = (UInt64)_rounds;
-                        UInt64 i, C = K[2], B = K[1], A = K[0];
+                        UInt64 i, c = k[2], b = k[1], a = k[0];
                         UInt64[] rk = new UInt64[rounds];
 
                         for (i = 0; i < rounds - 2;)
                         {
-                            rk[i] = A;
-                            UInt64[] res = EncryptionRoundFunction(B, A, i++);
-                            A = res[1];
-                            B = res[0];
+                            rk[i] = a;
+                            UInt64[] res = EncryptionRoundFunction(b, a, i++);
+                            a = res[1];
+                            b = res[0];
 
-                            rk[i] = A;
-                            res = EncryptionRoundFunction(C, A, i++);
-                            A = res[1];
-                            C = res[0];
+                            rk[i] = a;
+                            res = EncryptionRoundFunction(c, a, i++);
+                            a = res[1];
+                            c = res[0];
                         }
 
-                        rk[i] = A;
+                        rk[i] = a;
                         return rk;
                     }
 
@@ -1032,73 +1394,70 @@ namespace Speck
                     if (_keyLength == 128)
                     {
                         UInt64 rounds = (UInt64)_rounds;
-                        UInt64 i, B = K[1], A = K[0];
+                        UInt64 i, b = k[1], a = k[0];
                         UInt64[] rk = new UInt64[rounds];
 
                         for (i = 0; i < rounds - 1;)
                         {
-                            rk[i] = A;
-                            UInt64[] res = EncryptionRoundFunction(B, A, i++);
-                            A = (UInt64)res[1];
-                            B = (UInt64)res[0];
+                            rk[i] = a;
+                            UInt64[] res = EncryptionRoundFunction(b, a, i++);
+                            a = res[1];
+                            b = res[0];
                         }
 
-                        rk[rounds - 1] = A;
+                        rk[rounds - 1] = a;
                         return rk;
                     }
                     else if (_keyLength == 192)
                     {
                         UInt64 rounds = (UInt64)_rounds;
-                        UInt64 i, C = K[2], B = K[1], A = K[0];
+                        UInt64 i, c = k[2], b = k[1], a = k[0];
                         UInt64[] rk = new UInt64[rounds];
 
                         for (i = 0; i < rounds - 2;)
                         {
-                            rk[i] = A;
-                            UInt64[] res = EncryptionRoundFunction(B, A, i++);
-                            A = res[1];
-                            B = res[0];
+                            rk[i] = a;
+                            UInt64[] res = EncryptionRoundFunction(b, a, i++);
+                            a = res[1];
+                            b = res[0];
 
-                            rk[i] = A;
-                            res = EncryptionRoundFunction(C, A, i++);
-                            A = res[1];
-                            C = res[0];
+                            rk[i] = a;
+                            res = EncryptionRoundFunction(c, a, i++);
+                            a = res[1];
+                            c = res[0];
                         }
 
-                        rk[i] = A;
+                        rk[i] = a;
                         return rk;
                     }
                     else if (_keyLength == 256)
                     {
                         UInt64 rounds = (UInt64)_rounds;
-                        UInt64 i, D = K[3], C = K[2], B = K[1], A = K[0];
+                        UInt64 i, d = k[3], c = k[2], b = k[1], a = k[0];
                         UInt64[] rk = new UInt64[rounds];
 
                         for (i = 0; i < rounds - 1; i += 3)
                         {
-                            rk[i] = A;
-                            UInt64[] res = EncryptionRoundFunction(B, A, i);
-                            A = res[1];
-                            B = res[0];
+                            rk[i] = a;
+                            UInt64[] res = EncryptionRoundFunction(b, a, i);
+                            a = res[1];
+                            b = res[0];
 
-                            rk[i + 1] = A;
-                            res = EncryptionRoundFunction(C, A, i + 1);
-                            A = res[1];
-                            C = res[0];
+                            rk[i + 1] = a;
+                            res = EncryptionRoundFunction(c, a, i + 1);
+                            a = res[1];
+                            c = res[0];
 
-                            rk[i + 2] = A;
-                            res = EncryptionRoundFunction(D, A, i + 2);
-                            A = res[1];
-                            D = res[0];
+                            rk[i + 2] = a;
+                            res = EncryptionRoundFunction(d, a, i + 2);
+                            a = res[1];
+                            d = res[0];
                         }
 
-                        rk[rounds - 1] = A;
+                        rk[rounds - 1] = a;
                         return rk;
                     }
 
-                    break;
-
-                default:
                     break;
             }
 
@@ -1134,6 +1493,106 @@ namespace Speck
             return ct;
         }
 
+        /// <summary>
+        /// Encryption with 24 bit word length
+        /// </summary>
+        /// <param name="pt"></param>
+        /// <param name="rk"></param>
+        /// <returns></returns>
+        private static UInt32[] Speck48Encrypt(UInt32[] pt, UInt32[] rk)
+        {
+            int i;
+            int rounds = _rounds;
+            UInt32[] ct = new UInt32[2];
+            ct[0] = pt[0]; ct[1] = pt[1];
+
+            for (i = 0; i < rounds; i++)
+            {
+                uint[] res = EncryptionRoundFunction(ct[1], ct[0], rk[i]);
+                ct[1] = res[0];
+                ct[0] = res[1];
+            }
+
+            return ct;
+        }
+
+        /// <summary>
+        /// Encryption with 32 bit word length
+        /// </summary>
+        /// <param name="pt"></param>
+        /// <param name="rk"></param>
+        /// <returns></returns>
+        private static UInt32[] Speck64Encrypt(UInt32[] pt, UInt32[] rk)
+        {
+            UInt32 i;
+            int rounds = _rounds;
+            UInt32[] ct = new UInt32[2];
+
+            ct[0] = pt[0];
+            ct[1] = pt[1];
+
+            for (i = 0; i < rounds; i++)
+            {
+                UInt32[] res = EncryptionRoundFunction(ct[1], ct[0], rk[i]);
+                ct[1] = res[0];
+                ct[0] = res[1];
+            }
+
+            return ct;
+        }
+
+        /// <summary>
+        /// Encryption with 48 bit word length
+        /// </summary>
+        /// <param name="pt"></param>
+        /// <param name="rk"></param>
+        /// <returns></returns>
+        private static UInt64[] Speck96Encrypt(UInt64[] pt, UInt64[] rk)
+        {
+            int i;
+            int rounds = _rounds;
+            UInt64[] ct = new UInt64[2];
+
+            ct[0] = pt[0];
+            ct[1] = pt[1];
+
+            for (i = 0; i < rounds; i++)
+            {
+
+                UInt64[] res = EncryptionRoundFunction(ct[1], ct[0], rk[i]);
+                ct[1] = res[0];
+                ct[0] = res[1];
+            }
+
+            return ct;
+        }
+
+        /// <summary>
+        /// Encryption with 64 bit word length
+        /// </summary>
+        /// <param name="pt"></param>
+        /// <param name="rk"></param>
+        /// <returns></returns>
+        private static UInt64[] Speck128Encrypt(UInt64[] pt, UInt64[] rk)
+        {
+            int i;
+            int rounds = _rounds;
+            UInt64[] ct = new UInt64[2];
+
+            ct[0] = pt[0];
+            ct[1] = pt[1];
+
+            for (i = 0; i < rounds; i++)
+            {
+
+                UInt64[] res = EncryptionRoundFunction(ct[1], ct[0], rk[i]);
+                ct[1] = res[0];
+                ct[0] = res[1];
+            }
+
+            return ct;
+        }
+
         #endregion
 
         #region Decryption
@@ -1155,6 +1614,102 @@ namespace Speck
             for (; i >= 0; i--)
             {
                 UInt16[] res = DecryptionRoundFunction(pt[1], pt[0], rk[i]);
+                pt[1] = res[0];
+                pt[0] = res[1];
+            }
+
+            return pt;
+        }
+
+        /// <summary>
+        /// Decryption with 24 bit word length
+        /// </summary>
+        /// <param name="ctWords"></param>
+        /// <param name="rk"></param>
+        /// <returns></returns>
+        private static UInt32[] Speck48Decrypt(UInt32[] ctWords, UInt32[] rk)
+        {
+            int i = _rounds - 1;
+
+            UInt32[] pt = new UInt32[2];
+            pt[0] = ctWords[0];
+            pt[1] = ctWords[1];
+
+            for (; i >= 0;)
+            {
+                UInt32[] res = DecryptionRoundFunction(pt[1], pt[0], rk[i--]);
+                pt[1] = res[0];
+                pt[0] = res[1];
+            }
+
+            return pt;
+        }
+
+        /// <summary>
+        /// Decryption with 32 bit word length
+        /// </summary>
+        /// <param name="ctWords"></param>
+        /// <param name="rk"></param>
+        /// <returns></returns>
+        private static UInt32[] Speck64Decrypt(UInt32[] ctWords, UInt32[] rk)
+        {
+            int i = _rounds - 1;
+
+            UInt32[] pt = new UInt32[2];
+            pt[0] = ctWords[0];
+            pt[1] = ctWords[1];
+
+            for (; i >= 0;)
+            {
+                UInt32[] res = DecryptionRoundFunction(pt[1], pt[0], rk[i--]);
+                pt[1] = res[0];
+                pt[0] = res[1];
+            }
+
+            return pt;
+        }
+
+        /// <summary>
+        /// Decryption with 48 bit word length
+        /// </summary>
+        /// <param name="ctWords"></param>
+        /// <param name="rk"></param>
+        /// <returns></returns>
+        private static UInt64[] Speck96Decrypt(UInt64[] ctWords, UInt64[] rk)
+        {
+            int i = _rounds - 1;
+
+            UInt64[] pt = new UInt64[2];
+            pt[0] = ctWords[0];
+            pt[1] = ctWords[1];
+
+            for (; i >= 0;)
+            {
+                UInt64[] res = DecryptionRoundFunction(pt[1], pt[0], rk[i--]);
+                pt[1] = res[0];
+                pt[0] = res[1];
+            }
+
+            return pt;
+        }
+
+        /// <summary>
+        /// Decryption with 64 bit word length
+        /// </summary>
+        /// <param name="ctWords"></param>
+        /// <param name="rk"></param>
+        /// <returns></returns>
+        private static UInt64[] Speck128Decrypt(UInt64[] ctWords, UInt64[] rk)
+        {
+            int i = _rounds - 1;
+
+            UInt64[] pt = new UInt64[2];
+            pt[0] = ctWords[0];
+            pt[1] = ctWords[1];
+
+            for (; i >= 0;)
+            {
+                UInt64[] res = DecryptionRoundFunction(pt[1], pt[0], rk[i--]);
                 pt[1] = res[0];
                 pt[0] = res[1];
             }

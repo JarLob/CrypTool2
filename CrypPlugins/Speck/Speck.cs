@@ -26,16 +26,17 @@ using Speck.Properties;
 namespace Cryptool.Plugins.Speck
 {
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
-    [PluginInfo("Speck.Properties.Resources", "PluginCaption", "PluginTooltip", "Speck/userdoc.xml", new[] { "Speck/Images/IC_Speck.png" })]
+    [PluginInfo("Speck.Properties.Resources", "PluginCaption", "PluginTooltip", "Speck/userdoc.xml", "Speck/Images/IC_Speck.png")]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class Speck : ICrypComponent
     {
         #region Private Variables
 
         private readonly SpeckSettings settings = new SpeckSettings();
-        private ICryptoolStream _inputStream = null;
+        private ICryptoolStream _inputStream;
         private ICryptoolStream _outputStream;
-        private byte[] _inputKey = null;
+        private byte[] _inputKey;
+        private byte[] _inputIV;
 
         private bool _stop = false;
 
@@ -81,6 +82,19 @@ namespace Cryptool.Plugins.Speck
             {
                 _outputStream = value;
                 OnPropertyChanged("OutputStream");
+            }
+        }
+
+        [PropertyInfo(Direction.InputData, "InputIVCaption", "InputIVTooltip", false)]
+        public byte[] InputIV
+        {
+            get
+            {
+                return _inputIV;
+            }
+            set
+            {
+                _inputIV = value;
             }
         }
 
@@ -133,19 +147,63 @@ namespace Cryptool.Plugins.Speck
                 return;
            }
 
-           //Select crypto function based on algorithm and action
-           CryptoFunction cryptoFunction = null;
+            //Check for padding
+            if (settings.OpMode == OperatingMode.Encrypt && (_inputStream.Length % (settings.BlockSize_2n / 8)) != 0)
+            {
+                if (settings.PadMode != BlockCipherHelper.PaddingType.None)
+                {
+                    //in case of encryption, we have to add padding
+                    _inputStream = BlockCipherHelper.AppendPadding(_inputStream, settings.PadMode, (settings.BlockSize_2n / 8));
+                    GuiLogMessage(String.Format(Resources.Speck_Input_padded, settings.PadMode), NotificationLevel.Error);
+                }
+                else
+                {
+                    GuiLogMessage(String.Format(Resources.Speck_Input_too_short, ((settings.BlockSize_2n / 8) - (_inputStream.Length % (settings.BlockSize_2n / 8)))), NotificationLevel.Error);
+                    return;
+                }
+            }
 
-           if (settings.ChoiceOfVariant == SpeckParameters.Speck32_64 &&
-               settings.OpMode == OperatingMode.Encrypt)
+            //Select crypto function based on algorithm and action
+            CryptoFunction cryptoFunction = null;
+           if (settings.ChoiceOfVariant == SpeckParameters.Speck32_64)
            {
-                cryptoFunction = new CryptoFunction(SpeckCiphers.Speck32_64_Encryption);
-
-           }else if (settings.ChoiceOfVariant == SpeckParameters.Speck32_64 &&
-                     settings.OpMode == OperatingMode.Decrypt)
+               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck32_64_Encryption : new CryptoFunction(SpeckCiphers.Speck32_64_Decryption);
+           }
+           else if (settings.ChoiceOfVariant == SpeckParameters.Speck48_72)
            {
-               cryptoFunction = new CryptoFunction(SpeckCiphers.Speck32_64_Decryption);
-
+               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck48_72_Encryption : new CryptoFunction(SpeckCiphers.Speck48_72_Decryption);
+           }
+           else if (settings.ChoiceOfVariant == SpeckParameters.Speck48_96)
+           {
+               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck48_96_Encryption : new CryptoFunction(SpeckCiphers.Speck48_96_Decryption);
+           }
+           else if (settings.ChoiceOfVariant == SpeckParameters.Speck64_96)
+           {
+               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck64_96_Encryption : new CryptoFunction(SpeckCiphers.Speck64_96_Decryption);
+           } 
+           else if (settings.ChoiceOfVariant == SpeckParameters.Speck64_128)
+           {
+               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck64_128_Encryption : new CryptoFunction(SpeckCiphers.Speck64_128_Decryption);
+           }
+           else if (settings.ChoiceOfVariant == SpeckParameters.Speck96_96)
+           {
+               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck96_96_Encryption : new CryptoFunction(SpeckCiphers.Speck96_96_Decryption);
+           }
+           else if (settings.ChoiceOfVariant == SpeckParameters.Speck96_144)
+           {
+               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck96_144_Encryption : new CryptoFunction(SpeckCiphers.Speck96_144_Decryption);
+           } 
+           else if (settings.ChoiceOfVariant == SpeckParameters.Speck128_128)
+           {
+               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck128_128_Encryption : new CryptoFunction(SpeckCiphers.Speck128_128_Decryption);
+           }
+           else if (settings.ChoiceOfVariant == SpeckParameters.Speck128_192)
+           {
+               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck128_192_Encryption : new CryptoFunction(SpeckCiphers.Speck128_192_Decryption);
+           }
+           else if (settings.ChoiceOfVariant == SpeckParameters.Speck128_256)
+           {
+               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck128_256_Encryption : new CryptoFunction(SpeckCiphers.Speck128_256_Decryption);
            }
 
            //Check, if we found a crypto function that we can use
@@ -214,7 +272,6 @@ namespace Cryptool.Plugins.Speck
             {
                 using (CStreamWriter writer = new CStreamWriter())
                 {
-
                     byte[] inputBlock = new byte[settings.BlockSize_2n / 8];
                     int readcount = 0;
 
@@ -222,20 +279,25 @@ namespace Cryptool.Plugins.Speck
                     {
                         readcount = 0;
                         while ((readcount += reader.Read(inputBlock, readcount, inputBlock.Length - readcount)) < inputBlock.Length &&
-                               reader.Position < reader.Length && !_stop) ;
+                               reader.Position < reader.Length && !_stop)
+                        {
+                        }
 
                         if (_stop)
                         {
                             return;
                         }
 
-                        byte[] outputblock = null;
-                        outputblock = cryptoFunction(inputBlock, _inputKey);
+                        //Show progress in UI
+                        ProgressChanged(reader.Position, reader.Length);
 
-                        //if we crypted something, we output it
-                        if (outputblock != null)
+                        byte[] outputBlock = null;
+                        outputBlock = cryptoFunction(inputBlock, _inputKey);
+
+                        //if we (de)crypted something, we output it
+                        if (outputBlock != null)
                         {
-                            writer.Write(outputblock, 0, outputblock.Length);
+                            writer.Write(outputBlock, 0, outputBlock.Length);
                         }
 
                     }
