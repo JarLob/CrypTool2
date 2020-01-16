@@ -18,15 +18,19 @@
     <replacements lang="en">
     <replacement key="$Plaintext$" value="Plaintext" />
     <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$IV$" value="Initialization vector" />
     <replacement key="$Key$" value="Key" />
-    <replacement key="$StringDecoder$" value="String decoder" />
+    <replacement key="$StringDecoder$" value="Text to hex" />
+	<replacement key="$Stringcoder$" value="Hex to text" />
   </replacements>
   
   <replacements lang="de">
     <replacement key="$Plaintext$" value="Klartext" />
     <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$IV$" value="Initialisierungsvektor" />
     <replacement key="$Key$" value="Schlüssel" />
-    <replacement key="$StringDecoder$" value="String-Decodierer" />
+    <replacement key="$StringDecoder$" value="Text zu hex" />
+    <replacement key="$Stringcoder$" value="Hex zu text" />
   </replacements>
 
 </sample>
