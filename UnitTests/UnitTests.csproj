@@ -145,6 +145,7 @@
   <ItemGroup>
     <Compile Include="AchterbahnTest.cs" />
     <Compile Include="ADFGVXTest.cs" />
+    <Compile Include="SpeckTest.cs" />
     <Compile Include="AESTest.cs" />
     <Compile Include="BLAKETest.cs" />
     <Compile Include="RandomNumberGenerator.cs" />
@@ -256,6 +257,10 @@
       <Project>{179e9abf-34fa-4dc5-b8ce-72b9bd090deb}</Project>
       <Name>RandomNumberGenerator</Name>
       <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\CrypPlugins\Speck\Speck.csproj">
+      <Project>{f9d9db59-177c-43b5-891a-55ede1c4403c}</Project>
+      <Name>Speck</Name>
     </ProjectReference>
     <ProjectReference Include="..\CrypPlugins\Wizard\Wizard.csproj">
       <Project>{FF247A82-21AD-4010-B2FB-D93EE2B02677}</Project>
