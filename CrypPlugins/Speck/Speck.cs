@@ -127,7 +127,11 @@ namespace Cryptool.Plugins.Speck
                 Array.Copy(_inputKey, 0, key, 0, key.Length);
                 GuiLogMessage(String.Format(Resources.Speck_Execute_Key_too_long, _inputKey.Length, key.Length), NotificationLevel.Warning);
                 _inputKey = key;
-            }
+            }else if (_inputKey.Length < (settings.KeySize_mn / 8))
+           {
+                GuiLogMessage(String.Format(Resources.Speck_Execute_Key_too_short, _inputKey.Length, (settings.KeySize_mn / 8)), NotificationLevel.Error);
+                return;
+           }
 
            //Select crypto function based on algorithm and action
            CryptoFunction cryptoFunction = null;
@@ -225,18 +229,19 @@ namespace Cryptool.Plugins.Speck
                             return;
                         }
 
-                        Console.Write("Block: ");
-                        foreach (var b in inputBlock)
+                        byte[] outputblock = null;
+                        outputblock = cryptoFunction(inputBlock, _inputKey);
+
+                        //if we crypted something, we output it
+                        if (outputblock != null)
                         {
-                            Console.Write(b.ToString("X2"));
-                            Console.Write(@" ");
+                            writer.Write(outputblock, 0, outputblock.Length);
                         }
-                        
-                        Console.Write(Environment.NewLine);
+
                     }
 
                     writer.Flush();
-                    _outputStream = writer;
+                    OutputStream = writer;
                 }
             }
         }

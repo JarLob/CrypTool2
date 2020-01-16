@@ -142,7 +142,7 @@
     <value>Padding</value>
   </data>
   <data name="ChoiceOfPaddingModeToolTip" xml:space="preserve">
-    <value>Sets the mode for padding partial data blocks.</value>
+    <value>Sets the mode for padding data blocks.</value>
   </data>
   <data name="ChoiceOfVariant" xml:space="preserve">
     <value>Parameterization:</value>
@@ -224,6 +224,9 @@
   </data>
   <data name="Speck_Execute_Key_too_long" xml:space="preserve">
     <value>The key length = {0} is too long. Cutting the key to length {1}.</value>
+  </data>
+  <data name="Speck_Execute_Key_too_short" xml:space="preserve">
+    <value>The key length = {0} is too short. Necessary key length is {1} byte.</value>
   </data>
   <data name="Speck_no_cryptofunction" xml:space="preserve">
     <value>No crypto function could be selected based on the settings.</value>

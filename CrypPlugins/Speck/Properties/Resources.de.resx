@@ -142,7 +142,7 @@
     <value>Padding</value>
   </data>
   <data name="ChoiceOfPaddingModeToolTip" xml:space="preserve">
-    <value>Stellt den Modus zum Füllen von Teildatenblöcken ein.</value>
+    <value>Stellt den Modus zum Füllen von Datenblöcken ein.</value>
   </data>
   <data name="ChoiceOfVariant" xml:space="preserve">
     <value>Parametrisierung:</value>
@@ -172,13 +172,13 @@
     <value>Eingabestrom</value>
   </data>
   <data name="InputStreamTooltip" xml:space="preserve">
-    <value>Daten die ver- oder entschlüsselt werden sollen.</value>
+    <value>Daten die ver- oder entschlüsselt werden sollen</value>
   </data>
   <data name="OutputStreamCaption" xml:space="preserve">
     <value>Ausgabestrom</value>
   </data>
   <data name="OutputStreamTooltip" xml:space="preserve">
-    <value>Ver- oder entschlüsselte Ausgabedaten.</value>
+    <value>Ver- oder entschlüsselte Ausgabedaten</value>
   </data>
   <data name="PaddingList1" xml:space="preserve">
     <value>Nullen</value>
@@ -223,7 +223,10 @@
     <value>Der Betriebsmodus {0} ist nicht implementiert.</value>
   </data>
   <data name="Speck_Execute_Key_too_long" xml:space="preserve">
-    <value>Die Schlüssellänge = {0} ist zu lang. Dieser wird auf Länge {1} gekürzt.</value>
+    <value>Die Schlüssellänge = {0} ist zu lang. Der Schlüssel wird auf die Länge {1} gekürzt.</value>
+  </data>
+  <data name="Speck_Execute_Key_too_short" xml:space="preserve">
+    <value>Die Schlüssellänge = {0} ist zu kurz. Notwendige Schlüssellänge beträgt {1} byte.</value>
   </data>
   <data name="Speck_no_cryptofunction" xml:space="preserve">
     <value>Aufgrund der Einstellungen konnte keine Kryptofunktion ausgewählt werden.</value>

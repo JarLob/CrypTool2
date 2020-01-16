@@ -133,7 +133,7 @@ namespace Speck.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sets the mode for padding partial data blocks. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sets the mode for padding data blocks. ähnelt.
         /// </summary>
         internal static string ChoiceOfPaddingModeToolTip {
             get {
@@ -291,6 +291,15 @@ namespace Speck.Properties {
         internal static string Speck_Execute_Key_too_long {
             get {
                 return ResourceManager.GetString("Speck_Execute_Key_too_long", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The key length = {0} is too short. Necessary key length is {1} byte. ähnelt.
+        /// </summary>
+        internal static string Speck_Execute_Key_too_short {
+            get {
+                return ResourceManager.GetString("Speck_Execute_Key_too_short", resourceCulture);
             }
         }
         
