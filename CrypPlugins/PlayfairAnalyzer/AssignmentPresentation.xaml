@@ -17,7 +17,7 @@
             <crypanalysisviewcontrol:ViewLabel Caption="{Loc StartLabel}" x:Name="StartTime" />
             <crypanalysisviewcontrol:ViewLabel Caption="{Loc EndLabel}" x:Name="EndTime" />
             <crypanalysisviewcontrol:ViewLabel Caption="{Loc ElapsedLabel}" x:Name="ElapsedTime" />
-            <crypanalysisviewcontrol:ViewLabel />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc KeySpaceSizeLabel}" x:Name="KeySpaceSize" />
             <crypanalysisviewcontrol:ViewLabel Caption="{Loc EvaluatedKeysLabel}" x:Name="EvaluatedKeys" />
             <crypanalysisviewcontrol:ViewLabel Caption="{Loc MaxKeysLabel}" x:Name="MaxKeys" />
         </crypanalysisviewcontrol:CrypAnalysisViewControl.ResultHeaderLabels>

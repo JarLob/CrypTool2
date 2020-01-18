@@ -172,16 +172,19 @@
     <value>Makes additional columns in best list view visible</value>
   </data>
   <data name="ElapsedLabel" xml:space="preserve">
-    <value>Elapsed Time:</value>
+    <value>Elapsed time:</value>
   </data>
   <data name="EndLabel" xml:space="preserve">
-    <value>End Time:</value>
+    <value>End time:</value>
   </data>
   <data name="EvaluatedKeysLabel" xml:space="preserve">
-    <value>Evaluated Keys:</value>
+    <value># evaluated keys:</value>
   </data>
   <data name="MaxKeysLabel" xml:space="preserve">
-    <value>Max. number of keys:</value>
+    <value>Max. # keys to evaluate:</value>
+  </data>
+  <data name="KeySpaceSizeLabel" xml:space="preserve">
+    <value>Size of key space:</value>
   </data>
   <data name="ElapsedHeader" xml:space="preserve">
     <value>Elapsed</value>
@@ -229,7 +232,7 @@
     <value>Keys/second:</value>
   </data>
   <data name="StartLabel" xml:space="preserve">
-    <value>Start Time:</value>
+    <value>Start time:</value>
   </data>
   <data name="TextHeader" xml:space="preserve">
     <value>Text</value>

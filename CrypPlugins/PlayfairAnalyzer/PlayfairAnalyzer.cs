@@ -26,6 +26,7 @@ using Cryptool.CrypAnalysisViewControl;
 using PlayfairAnalysis.Common;
 using PlayfairAnalysis;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace Cryptool.PlayfairAnalyzer
 {
@@ -233,6 +234,7 @@ namespace Cryptool.PlayfairAnalyzer
                         _presentation.ElapsedTime.Value = string.Empty;
                         _presentation.EvaluatedKeys.Value = string.Empty;
                         _presentation.MaxKeys.Value = string.Empty;
+                        _presentation.KeySpaceSize.Value = string.Empty;
                         _presentation.BestList.Clear();
                     }
                     catch (Exception)
@@ -297,10 +299,15 @@ namespace Cryptool.PlayfairAnalyzer
                 var threads = (_settings.Threads + 1);  //index starts at 0; thus +1
                 var maxKeys = SolvePlayfair.solveMultithreaded(cipherText, Crib ?? "", threads, _settings.Cycles, null, analysisInstance);
                 GuiLogMessage("Starting analysis now.", NotificationLevel.Debug);
+                var keySpace = GetKeyspaceSize();
+                GuiLogMessage($"Size of key space is {keySpace:N0}.", NotificationLevel.Debug);
 
                 _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     _presentation.MaxKeys.Value = $"{maxKeys:N0}";
+                    //Show key space with exponential formatting:
+                    var scientificKeySpace = $"{GetKeyspaceSize():0.##E-0}";
+                    _presentation.KeySpaceSize.Value = string.Join("*10^", scientificKeySpace.Split('E'));
                 }, null);
 
                 DateTime lastUpdateTime = DateTime.Now;
@@ -339,6 +346,16 @@ namespace Cryptool.PlayfairAnalyzer
                 analysisInstance.CtAPI.BestResultChangedEvent -= HandleBestResultChangedEvent;
                 analysisInstance.CtAPI.ProgressChangedEvent -= OnProgressChanged;
             }
+        }
+
+        /// <summary>
+        /// Calculates the key space of playfair cipher.
+        /// </summary>
+        private BigInteger GetKeyspaceSize()
+        {
+            var dim = Playfair.DIM; //Note: Playfair analysis component only has fixed dimension right now.
+            var squareSize = new BigInteger(dim * dim);
+            return squareSize.Factorial();
         }
 
         /// <summary>

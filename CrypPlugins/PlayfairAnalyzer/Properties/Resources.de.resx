@@ -178,10 +178,13 @@
     <value>Endzeit:</value>
   </data>
   <data name="EvaluatedKeysLabel" xml:space="preserve">
-    <value>Ausgewertete Schlüssel:</value>
+    <value># ausgewertete Schlüssel:</value>
   </data>
   <data name="MaxKeysLabel" xml:space="preserve">
-    <value>Max. Anzahl aller Schlüssel:</value>
+    <value>Max. # auszuwertende Schlüssel:</value>
+  </data>
+  <data name="KeySpaceSizeLabel" xml:space="preserve">
+    <value>Größe des Schlüsselraums:</value>
   </data>
   <data name="ElapsedHeader" xml:space="preserve">
     <value>Vergangen</value>

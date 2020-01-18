@@ -223,7 +223,7 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Elapsed Time: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Elapsed time: ähnelt.
         /// </summary>
         public static string ElapsedLabel {
             get {
@@ -232,7 +232,7 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die End Time: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die End time: ähnelt.
         /// </summary>
         public static string EndLabel {
             get {
@@ -241,7 +241,7 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Evaluated Keys: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die # evaluated keys: ähnelt.
         /// </summary>
         public static string EvaluatedKeysLabel {
             get {
@@ -286,6 +286,15 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Size of key space: ähnelt.
+        /// </summary>
+        public static string KeySpaceSizeLabel {
+            get {
+                return ResourceManager.GetString("KeySpaceSizeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die The best key which was found during the analysis ähnelt.
         /// </summary>
         public static string KeyTooltip {
@@ -322,7 +331,7 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Max. number of keys: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Max. # keys to evaluate: ähnelt.
         /// </summary>
         public static string MaxKeysLabel {
             get {
@@ -394,7 +403,7 @@ namespace Cryptool.PlayfairAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Start Time: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start time: ähnelt.
         /// </summary>
         public static string StartLabel {
             get {
