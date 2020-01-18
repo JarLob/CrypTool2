@@ -133,7 +133,7 @@
     <value>Vorformatierter Eingabetext</value>
   </data>
   <data name="PreFormatedInputStringTooltip" xml:space="preserve">
-    <value>Hier wird der durch die Vorformatierung behandelte Eingabetext ausgegeben.</value>
+    <value>Wenn die Vorformatierung des Eingabetextes aktiviert ist, dann wird der Eingabetext auf die Zeichen, die im benutzten Schlüssel enthalten sind, begrenzt.</value>
   </data>
   <data name="OutputStringCaption" xml:space="preserve">
     <value>Ausgabetext</value>
@@ -148,10 +148,10 @@
     <value>Wählen Sie die Betriebsart des Plugins.</value>
   </data>
   <data name="AlphabetMatrixCaption" xml:space="preserve">
-    <value>Alphabet</value>
+    <value>Schlüssel</value>
   </data>
   <data name="AlphabetMatrixTooltip" xml:space="preserve">
-    <value>Das für die Ver-/Entschlüsselung verwendete Alphabet.</value>
+    <value>Der für die Ver-/Entschlüsselung verwendete Schlüssel</value>
   </data>
   <data name="IgnoreDuplicatesCaption" xml:space="preserve">
     <value>Duplikate ignorieren</value>
@@ -163,7 +163,7 @@
     <value>Schlüsselwort</value>
   </data>
   <data name="KeyTooltip" xml:space="preserve">
-    <value>Geben Sie ein oder mehrere Schlüsselworte an</value>
+    <value>Das Schlüsselwort aus dem der Schlüssel abgeleitet wird</value>
   </data>
   <data name="MatrixSizeCaption" xml:space="preserve">
     <value>Matrixgröße</value>
@@ -175,7 +175,7 @@
     <value>Eingabetext vorformatieren</value>
   </data>
   <data name="PreFormatTextTooltip" xml:space="preserve">
-    <value>Soll der Eingabetext auf Zeichen des angegebenen Alphabetes beschränkt werden?</value>
+    <value>Soll der Eingabetext auf die Zeichen des benutzten Schlüssels beschränkt werden?</value>
   </data>
   <data name="SeparatorCaption" xml:space="preserve">
     <value>Trennzeichen</value>

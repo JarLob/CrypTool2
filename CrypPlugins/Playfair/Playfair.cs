@@ -33,7 +33,9 @@ namespace Cryptool.Playfair
 
         private PlayfairSettings settings;
         private string inputString;
+        private string keyPhraseString;
         private string outputString;
+        private string keyString;
         private string preFormatedInputString;
         private int matrixSize;
 
@@ -71,6 +73,20 @@ namespace Cryptool.Playfair
             }
         }
 
+        [PropertyInfo(Direction.InputData, "KeyCaption", "KeyTooltip", false)]
+        public string KeyPhraseString
+        {
+            get { return this.keyPhraseString; }
+            set
+            {
+                if (value != keyPhraseString)
+                {
+                    this.keyPhraseString = value;
+                    OnPropertyChanged("KeyPhraseString");
+                }
+            }
+        }
+
         [PropertyInfo(Direction.OutputData, "PreFormatedInputStringCaption", "PreFormatedInputStringTooltip", false)]
         public string PreFormatedInputString
         {
@@ -93,6 +109,16 @@ namespace Cryptool.Playfair
             }
         }
 
+        [PropertyInfo(Direction.OutputData, "AlphabetMatrixCaption", "AlphabetMatrixTooltip", false)]
+        public string KeyString
+        {
+            get { return this.keyString; }
+            set
+            {
+                keyString = value;
+                OnPropertyChanged("KeyString");
+            }
+        }
 
         /// <summary>
         /// Playfair encryption
@@ -116,9 +142,9 @@ namespace Cryptool.Playfair
                 //begin the encryption
                 for (int i = 0; i < preFormatedInputString.Length - 1; i++)
                 {
-                    int indexCh1 = settings.AlphabetMatrix.IndexOf(preFormatedInputString[i]);
+                    int indexCh1 = KeyString.IndexOf(preFormatedInputString[i]);
                     i++;
-                    int indexCh2 = settings.AlphabetMatrix.IndexOf(preFormatedInputString[i]);
+                    int indexCh2 = KeyString.IndexOf(preFormatedInputString[i]);
 
                     //first, get new char index from cipher alphabet
                     int newIndexCh1;
@@ -144,8 +170,8 @@ namespace Cryptool.Playfair
                         newIndexCh1 = getSubstitute(rowCh1, colCh2);
                         newIndexCh2 = getSubstitute(rowCh2, colCh1);
                     }
-                    output.Append(settings.AlphabetMatrix[newIndexCh1]);
-                    output.Append(settings.AlphabetMatrix[newIndexCh2]);
+                    output.Append(KeyString[newIndexCh1]);
+                    output.Append(KeyString[newIndexCh2]);
                 }
                 outputString = output.ToString();
                 OnPropertyChanged("OutputString");
@@ -177,9 +203,9 @@ namespace Cryptool.Playfair
                 //begin the encryption
                 for (int i = 0; i < preFormatedInputString.Length - 1; i++)
                 {
-                    int indexCh1 = settings.AlphabetMatrix.IndexOf(preFormatedInputString[i]);
+                    int indexCh1 = KeyString.IndexOf(preFormatedInputString[i]);
                     i++;
-                    int indexCh2 = settings.AlphabetMatrix.IndexOf(preFormatedInputString[i]);
+                    int indexCh2 = KeyString.IndexOf(preFormatedInputString[i]);
 
                     //first, get new char index from cipher alphabet
                     int newIndexCh1;
@@ -205,8 +231,8 @@ namespace Cryptool.Playfair
                         newIndexCh1 = getSubstitute(rowCh1, colCh2);
                         newIndexCh2 = getSubstitute(rowCh2, colCh1);
                     }
-                    output.Append(settings.AlphabetMatrix[newIndexCh1]);
-                    output.Append(settings.AlphabetMatrix[newIndexCh2]);
+                    output.Append(KeyString[newIndexCh1]);
+                    output.Append(KeyString[newIndexCh2]);
                 }
                 outputString = output.ToString();
                 OnPropertyChanged("OutputString");
@@ -285,15 +311,15 @@ namespace Cryptool.Playfair
 
         private int getLowerNeighbour(int index)
         {
-            if (index + matrixSize < settings.AlphabetMatrix.Length) index = index + matrixSize;
-            else index = (index + matrixSize) % settings.AlphabetMatrix.Length;
+            if (index + matrixSize < KeyString.Length) index = index + matrixSize;
+            else index = (index + matrixSize) % KeyString.Length;
 
             return index;
         }
 
         private int getUpperNeighbour(int index)
         {
-            if (index < matrixSize) index = settings.AlphabetMatrix.Length - (matrixSize - index);
+            if (index < matrixSize) index = KeyString.Length - (matrixSize - index);
             else index = index - matrixSize;
 
             return index;
@@ -321,7 +347,7 @@ namespace Cryptool.Playfair
             {
                 char c = char.ToUpper(inputString[i]);
 
-                if (settings.AlphabetMatrix.Contains(c))
+                if (KeyString.Contains(c))
                 {
                     sb.Append(c);
                 }
@@ -381,6 +407,15 @@ namespace Cryptool.Playfair
         public void Execute()
         {
             ProgressChanged(0, 1);
+
+            if (!string.IsNullOrWhiteSpace(KeyPhraseString))
+            {
+                KeyString = PlayfairKey.CreateKey(KeyPhraseString, settings.MatrixSize, settings.IgnoreDuplicates);
+            }
+            else
+            {
+                KeyString = settings.AlphabetMatrix;
+            }
 
             switch (settings.Action)
             {

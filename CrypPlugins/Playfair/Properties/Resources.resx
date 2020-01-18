@@ -133,7 +133,7 @@
     <value>Pre-formated input string</value>
   </data>
   <data name="PreFormatedInputStringTooltip" xml:space="preserve">
-    <value>If Pre-format text option is enabled the input string is confined to the alphabet used.</value>
+    <value>If the pre-format text option is enabled, the input string is confined to the characters contained in the used key cipher.</value>
   </data>
   <data name="OutputStringCaption" xml:space="preserve">
     <value>Text output</value>
@@ -148,10 +148,10 @@
     <value>Select the Algorithm action</value>
   </data>
   <data name="AlphabetMatrixCaption" xml:space="preserve">
-    <value>Alphabet</value>
+    <value>Key</value>
   </data>
   <data name="AlphabetMatrixTooltip" xml:space="preserve">
-    <value>This is the used alphabet cipher to encrypt/decrypt.</value>
+    <value>This is the key to be used to encrypt/decrypt.</value>
   </data>
   <data name="IgnoreDuplicatesCaption" xml:space="preserve">
     <value>Ignore duplicates</value>
@@ -160,10 +160,10 @@
     <value>Ignore duplicates within the key phrase</value>
   </data>
   <data name="KeyCaption" xml:space="preserve">
-    <value>Key value (multiple letters)</value>
+    <value>Key phrase</value>
   </data>
   <data name="KeyTooltip" xml:space="preserve">
-    <value>Enter one or multiple key values</value>
+    <value>This is the key phrase from which the key is derived.</value>
   </data>
   <data name="MatrixSizeCaption" xml:space="preserve">
     <value>Matrix size</value>
@@ -175,7 +175,7 @@
     <value>Pre-format text</value>
   </data>
   <data name="PreFormatTextTooltip" xml:space="preserve">
-    <value>This is used to determine whether the text should be confinded to the alphabet used.</value>
+    <value>This is used to determine whether the text should be confined to the characters contained in the used key cipher.</value>
   </data>
   <data name="SeparatorCaption" xml:space="preserve">
     <value>Separator</value>

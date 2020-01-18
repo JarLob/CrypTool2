@@ -16,7 +16,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Cryptool.PluginBase;
 using System.ComponentModel;
@@ -42,11 +41,8 @@ namespace Cryptool.Playfair
         private int selectedAction = 0;
         private bool preFormatText = true;
         private bool ignoreDuplicates = true;
-        private int matrixSize = 0; //0=5x5, 1=6x6
-        private string smallAlphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
-        private string largeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        private string alphabetMatrix = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
-        private string alphPool;
+        private PlayfairKey.MatrixSize matrixSize = PlayfairKey.MatrixSize.Five_Five;
+        private string alphabetMatrix = PlayfairKey.SmallAlphabet;
         private string key;
         private char separator = 'X';
         private char separatorReplacement = 'Y';
@@ -161,7 +157,7 @@ namespace Cryptool.Playfair
         [PropertySaveOrder(7)]
         [ContextMenu( "MatrixSizeCaption", "MatrixSizeTooltip",6,ContextMenuControlType.ComboBox,null,new string[]{"MatrixSizeList1", "MatrixSizeList2"})]
         [TaskPane( "MatrixSizeCaption", "MatrixSizeTooltip", null, 6,false, ControlType.ComboBox, "MatrixSizeList1", "MatrixSizeList2")]
-        public int MatrixSize
+        public PlayfairKey.MatrixSize MatrixSize
         {
             get { return this.matrixSize; }
             set 
@@ -229,80 +225,9 @@ namespace Cryptool.Playfair
 
         #region Private Members
 
-        private string removeEqualChars(string value)
-        {
-            int length = value.Length;
-
-            for (int i = 0; i < length; i++)
-            {
-                for (int j = i + 1; j < length; j++)
-                {
-                    if (value[i] == value[j])
-                    {
-                        value = value.Remove(j, 1);
-                        j--;
-                        length--;
-                    }
-                }
-            }
-            return value;
-        }
-
-        private string getKey()
-        {
-            string tempKey = string.Empty;
-
-            for (int i = 0; i < key.Length; i++)
-            {
-                char cPos = key[i];
-                if (tempKey.Contains(cPos))
-                {
-                    cPos = getNextChar(cPos);
-                }
-                tempKey += cPos.ToString();
-            }
-            return tempKey;
-        }
-
-        private char getNextChar(char value)
-        {
-            for (int i = 0; i < alphPool.Length; i++)
-            {
-                if (alphPool.IndexOf(alphPool[i]) > alphPool.IndexOf(value) && !key.Contains(alphPool[i]))
-                {
-                    value = alphPool[i];
-                    alphPool = alphPool.Remove(i, 1);
-                    break;
-                }
-            }
-            return value;
-        }
-
         private void setKeyMatrix()
         {
-            string tempKey = key;
-
-            string tempAlph = string.Empty;
-
-            switch (matrixSize)
-            {
-                case 0:
-                    tempAlph = smallAlphabet;
-                    break;
-                case 1:
-                    tempAlph = largeAlphabet;
-                    break;
-                default:
-                    break;
-            }
-
-            if (!ignoreDuplicates)
-            {
-                alphPool = tempAlph;
-                tempKey = getKey();
-            }
-
-            AlphabetMatrix = removeEqualChars(tempKey + tempAlph);
+            AlphabetMatrix = PlayfairKey.CreateKey(Key, MatrixSize, IgnoreDuplicates);
         }
 
         private void setSeparator()

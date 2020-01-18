@@ -97,7 +97,7 @@ namespace Playfair.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Alphabet ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key ähnelt.
         /// </summary>
         internal static string AlphabetMatrixCaption {
             get {
@@ -106,7 +106,7 @@ namespace Playfair.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This is the used alphabet cipher to encrypt/decrypt. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This is the key to be used as the playfair square. ähnelt.
         /// </summary>
         internal static string AlphabetMatrixTooltip {
             get {
@@ -160,7 +160,7 @@ namespace Playfair.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Key value (multiple letters) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key phrase ähnelt.
         /// </summary>
         internal static string KeyCaption {
             get {
@@ -169,7 +169,7 @@ namespace Playfair.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter one or multiple key values ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This is the key phrase from which the key is derived.. ähnelt.
         /// </summary>
         internal static string KeyTooltip {
             get {
@@ -259,7 +259,7 @@ namespace Playfair.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die If Pre-format text option is enabled the input string is confined to the alphabet used. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die If the pre-format text option is enabled, the input string is confined to the characters contained in the used key cipher. ähnelt.
         /// </summary>
         internal static string PreFormatedInputStringTooltip {
             get {
@@ -286,7 +286,7 @@ namespace Playfair.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This is used to determine whether the text should be confinded to the alphabet used. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This is used to determine whether the text should be confined to the characters contained in the used key cipher. ähnelt.
         /// </summary>
         internal static string PreFormatTextTooltip {
             get {
