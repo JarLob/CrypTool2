@@ -163,7 +163,7 @@
     <value>Schlüsselwort</value>
   </data>
   <data name="KeyTooltip" xml:space="preserve">
-    <value>Das Schlüsselwort aus dem der Schlüssel abgeleitet wird</value>
+    <value>Das Schlüsselwort, aus dem der Schlüssel abgeleitet wird</value>
   </data>
   <data name="MatrixSizeCaption" xml:space="preserve">
     <value>Matrixgröße</value>
