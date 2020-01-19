@@ -21,7 +21,10 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Playfair" /></description>
   <replacements lang="de">
     <replacement key="$Plaintext$" value="Klartext" />
     <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$KeyPhrase$" value="Schlüsselwort" />
+    <replacement key="$Cipherkey$" value="Codeschlüssel" />
     <replacement key="$Pre-formatted Text$" value="Vorformatierter Text" />
+	<replacement key="$memo$" value="Diese Vorlage demonstriert eine Verschlüsselung mit der Playfair-Chiffre. Der oben angegebene Klartext und das Schlüsselwort werden an die Playfair-Komponente geschickt, welche aus dem Schlüsselwert den Codeschlüssel ableitet.\line\line Dieser Schlüssel (Ausgabe unten rechts) wird daraufhin benutzt um den vorformatierten Eingabetext (Ausgabe oben rechts) zu verschlüsseln." />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Plaintext$" value="обычный текст" />
@@ -31,6 +34,9 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Playfair" /></description>
   <replacements lang="en">
     <replacement key="$Plaintext$" value="Plaintext" />
     <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$KeyPhrase$" value="Key phrase" />
+    <replacement key="$Cipherkey$" value="Cipher key" />
     <replacement key="$Pre-formatted Text$" value="Pre-formatted Text" />
+	<replacement key="$memo$" value="This template demonstrates an encryption using the Playfair cipher. The ciphertext and key phrase stated above are sent to the Playfair component which derives the cipher key from the key phrase.\line\line This key (output at bottom right) is consequently used to encrypt the pre-formated input text (output at top right)." />
   </replacements>
 </sample>
