@@ -20,6 +20,7 @@ using Cryptool.PluginBase;
 using System.Windows.Controls;
 using System.ComponentModel;
 using Cryptool.PluginBase.Miscellaneous;
+using System;
 
 namespace Cryptool.Playfair
 {
@@ -388,12 +389,9 @@ namespace Cryptool.Playfair
             return sb.ToString();
         }
 
-        private void Playfair_LogMessage(string msg, NotificationLevel logLevel)
+        private void GuiLogMessage(string message, NotificationLevel logLevel)
         {
-            if (OnGuiLogNotificationOccured != null)
-            {
-                OnGuiLogNotificationOccured(this, new GuiLogEventArgs(msg, this, logLevel));
-            }
+            EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
         }
 
         #endregion
@@ -417,6 +415,12 @@ namespace Cryptool.Playfair
                 KeyString = settings.AlphabetMatrix;
             }
 
+            if (!IsKeyValid(KeyString))
+            {
+                GuiLogMessage("Invalid playfair key.", NotificationLevel.Error);
+                return;
+            }
+
             switch (settings.Action)
             {
                 case 0:
@@ -430,6 +434,39 @@ namespace Cryptool.Playfair
             }
 
             ProgressChanged(1, 1);
+        }
+
+        /// <summary>
+        /// Checks if the passed key parameter is a valid playfair cipher key (square).
+        /// </summary>
+        private bool IsKeyValid(string key)
+        {
+            if (key == null)
+            {
+                return false;
+            }
+
+            //Check if key contains unique characters.
+            if (key.GroupBy(c => c).Any(g => g.Count() > 1))
+            {
+                return false;
+            }
+
+            //Check size:
+            int expectedSize;
+            switch (settings.MatrixSize)
+            {
+                case PlayfairKey.MatrixSize.Five_Five:
+                    expectedSize = 5 * 5;
+                    break;
+                case PlayfairKey.MatrixSize.Six_Six:
+                    expectedSize = 6 * 6;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return key.Length == expectedSize;
         }
 
         #endregion

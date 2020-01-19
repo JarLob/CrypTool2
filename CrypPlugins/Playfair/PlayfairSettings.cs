@@ -82,7 +82,7 @@ namespace Cryptool.Playfair
             {
                 if (value != null && value.ToUpper() != key)
                 {
-                    this.key = Distinct(value.ToUpper());
+                    this.key = value.ToUpper();
                     setKeyMatrix();
                     OnPropertyChanged("Key");
                     OnPropertyChanged("AlphabetMatrix");
@@ -90,24 +90,8 @@ namespace Cryptool.Playfair
             }
         }
 
-        private String Distinct(string str)
-        {
-            StringBuilder builder = new StringBuilder();
-            HashSet<char> chars = new HashSet<char>();
-
-            foreach (char c in str)
-            {
-                if (!chars.Contains(c))
-                {
-                    chars.Add(c);
-                    builder.Append(c);
-                }
-            }
-            return builder.ToString();
-        }
-
         [PropertySaveOrder(4)]
-        [TaskPane( "AlphabetMatrixCaption", "AlphabetMatrixTooltip", null, 3, false, ControlType.TextBox, "")]
+        [TaskPane( "AlphabetMatrixCaption", "AlphabetMatrixTooltip", null, 4, false, ControlType.TextBox, "")]
         public string AlphabetMatrix
         {
             get { return this.alphabetMatrix; }
@@ -122,8 +106,8 @@ namespace Cryptool.Playfair
         }
 
         [PropertySaveOrder(5)]
-        [ContextMenu("PreFormatTextCaption", "PreFormatTextTooltip", 4, ContextMenuControlType.CheckBox, null, "PreFormatTextList1")]
-        [TaskPane( "PreFormatTextCaption", "PreFormatTextTooltip",null,4,false,ControlType.CheckBox,"")]
+        [ContextMenu("PreFormatTextCaption", "PreFormatTextTooltip", 5, ContextMenuControlType.CheckBox, null, "PreFormatTextList1")]
+        [TaskPane( "PreFormatTextCaption", "PreFormatTextTooltip",null,5,false,ControlType.CheckBox,"")]
         public bool PreFormatText
         {
             get { return this.preFormatText; }
@@ -138,8 +122,8 @@ namespace Cryptool.Playfair
         }
 
         [PropertySaveOrder(6)]
-        [ContextMenu("IgnoreDuplicatesCaption", "IgnoreDuplicatesTooltip", 5, ContextMenuControlType.CheckBox, null, "IgnoreDuplicatesList1")]
-        [TaskPane( "IgnoreDuplicatesCaption", "IgnoreDuplicatesTooltip",null,5,false,ControlType.CheckBox,"")]
+        [ContextMenu("IgnoreDuplicatesCaption", "IgnoreDuplicatesTooltip", 3, ContextMenuControlType.CheckBox, null, "IgnoreDuplicatesList1")]
+        [TaskPane( "IgnoreDuplicatesCaption", "IgnoreDuplicatesTooltip",null,3,false,ControlType.CheckBox,"")]
         public bool IgnoreDuplicates
         {
             get { return this.ignoreDuplicates; }
