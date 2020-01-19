@@ -31,7 +31,8 @@ namespace WorkspaceManager.Model
     [Serializable]
     public class ConnectorModel : VisualElementModel
     {
-        internal ConnectorModel(){
+        internal ConnectorModel()
+        {
             this.InputConnections = new List<ConnectionModel>();
             this.OutputConnections = new List<ConnectionModel>();   
         }
@@ -172,7 +173,14 @@ namespace WorkspaceManager.Model
             get;
             internal set;
         }
-       
+
+        /// <summary>
+        /// This is the value, each property of a component is set to, before the workspace is being executed
+        /// The value is read after execution of the initialize method of the component
+        /// </summary>
+        [NonSerialized]
+        public object DefaultValue;
+
         /// <summary>
         /// Data of this Connector
         /// </summary>

@@ -47,9 +47,8 @@ namespace WorkspaceManager.Model
             ViewState = PluginViewState.Default;
             this.InputConnectors = new List<ConnectorModel>();
             this.OutputConnectors = new List<ConnectorModel>();
-
         }
-
+        
         #region private members
 
         [NonSerialized]
@@ -63,7 +62,6 @@ namespace WorkspaceManager.Model
         internal bool SettingesHaveChanges = false;
         [NonSerialized]
         internal Type _pluginType = null;
-
 
         internal void OnConnectorPlugstateChanged(ConnectorModel connector, PlugState state)
         {
@@ -716,8 +714,6 @@ namespace WorkspaceManager.Model
             }
         }
 
-        //public int ZIndex { get; set; }
-
         public bool HasOnlyOptionalUnconnectedInputs()
         {
             foreach (ConnectorModel cm in GetInputConnectors())
@@ -729,6 +725,29 @@ namespace WorkspaceManager.Model
             }
             return true;
         }    
+
+        /// <summary>
+        /// Stores all default values of all connectors of this component
+        /// </summary>
+        internal void StoreAllDefaultConnectorValues()
+        {
+            foreach(ConnectorModel connectorModel in GetInputConnectors())
+            {
+                if (connectorModel.property == null)
+                {
+                    connectorModel.property = Plugin.GetType().GetProperty(connectorModel.PropertyName);
+                }
+                connectorModel.DefaultValue = connectorModel.property.GetValue(Plugin);
+            }
+            foreach (ConnectorModel connectorModel in GetOutputConnectors())
+            {
+                if (connectorModel.property == null)
+                {
+                    connectorModel.property = Plugin.GetType().GetProperty(connectorModel.PropertyName);
+                }
+                connectorModel.DefaultValue = connectorModel.property.GetValue(Plugin);
+            }
+        }
     }    
 
     /// <summary>

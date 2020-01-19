@@ -198,12 +198,13 @@ namespace WorkspaceManager.Model
             pluginModel.Plugin.OnGuiLogNotificationOccured += this.GuiLogMessage;
             pluginModel.Plugin.OnPluginProgressChanged += pluginModel.PluginProgressChanged;
             pluginModel.Plugin.OnPluginStatusChanged += pluginModel.PluginStatusChanged;
-            pluginModel.Plugin.Initialize();
+            pluginModel.Plugin.Initialize();            
             if (pluginModel.Plugin.Settings != null)
             {
                 pluginModel.Plugin.Settings.PropertyChanged += pluginModel.SettingsPropertyChanged;
             }
             AllPluginModels.Add(pluginModel);
+            pluginModel.StoreAllDefaultConnectorValues();
             return pluginModel;
         }
 
@@ -247,6 +248,7 @@ namespace WorkspaceManager.Model
                 this.AllConnectorModels.Add(connectorModel);
             }
             pluginModel.Plugin.Initialize();
+            pluginModel.StoreAllDefaultConnectorValues();
         }
        
         /// <summary>

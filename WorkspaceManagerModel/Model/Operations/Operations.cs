@@ -761,7 +761,7 @@ namespace WorkspaceManagerModel.Model.Operations
                     //initialize plugin and register event handlers
                     try
                     {
-                        pluginModel.Plugin.Initialize();
+                        pluginModel.Plugin.Initialize();                        
                         pluginModel.PercentageFinished = 0;
                         if (pluginModel.Plugin.Settings != null)
                         {
@@ -812,6 +812,7 @@ namespace WorkspaceManagerModel.Model.Operations
                         connectorModel.PluginModel.Plugin.PropertyChanged += connectorModel.PropertyChangedOnPlugin;
                         connectorModel.WorkspaceModel = workspaceModel;
                     }
+                    pluginModel.StoreAllDefaultConnectorValues();
                 }
                 
                 if(connectionModel != null)
