@@ -437,7 +437,7 @@ namespace Cryptool.Playfair
         }
 
         /// <summary>
-        /// Checks if the passed key parameter is a valid playfair cipher key (square).
+        /// Checks if the passed key parameter is a valid playfair key (square).
         /// </summary>
         private bool IsKeyValid(string key)
         {

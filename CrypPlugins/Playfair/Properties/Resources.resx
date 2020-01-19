@@ -133,7 +133,7 @@
     <value>Pre-formated input string</value>
   </data>
   <data name="PreFormatedInputStringTooltip" xml:space="preserve">
-    <value>If the pre-format text option is enabled, the input string is limited to the characters contained in the used cipher key.</value>
+    <value>If the pre-format text option is enabled, the input string is limited to the characters contained in the used key.</value>
   </data>
   <data name="OutputStringCaption" xml:space="preserve">
     <value>Text output</value>
@@ -175,7 +175,7 @@
     <value>Pre-format text</value>
   </data>
   <data name="PreFormatTextTooltip" xml:space="preserve">
-    <value>This option is used to determine whether the text should be limited to the characters contained in the used cipher key.</value>
+    <value>This option is used to determine whether the text should be limited to the characters contained in the used key.</value>
   </data>
   <data name="SeparatorCaption" xml:space="preserve">
     <value>Separator</value>
