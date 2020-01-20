@@ -238,7 +238,7 @@
     <value>Initialisierungsvektor</value>
   </data>
   <data name="InputIVTooltip" xml:space="preserve">
-    <value>Der Initialisierungsvektor (IV) der in den Blockmodi verwendet wird. Er muss die selbe größe wie die Blockgröße haben.</value>
+    <value>Der Initialisierungsvektor (IV), der in den Blockmodi verwendet wird. Er muss genauso groß sein wie die Blöcke.</value>
   </data>
   <data name="PaddingList1" xml:space="preserve">
     <value>Kein</value>
@@ -258,7 +258,22 @@
   <data name="Speck_Input_padded" xml:space="preserve">
     <value>Der Eingabestrom wurde mittels {0} gepadded</value>
   </data>
-  <data name="Speck_Input_too_short" xml:space="preserve">
-    <value>Der Eingabestrom ist zu kurz. Es fehlt/fehlen {0} byte oder es muss ein Padding-Modus ausgewählt werden.</value>
+  <data name="Speck_Input_too_short_singleByte" xml:space="preserve">
+    <value>Der Eingabestrom ist zu kurz. Es fehlt {0} byte oder es muss ein Padding-Modus ausgewählt werden.</value>
+  </data>
+  <data name="Speck_Input_too_short_multipleByte" xml:space="preserve">
+    <value>Der Eingabestrom ist zu kurz. Es fehlen {0} Bytes oder es muss ein Padding-Modus ausgewählt werden.</value>
+  </data>
+  <data name="Speck_IV_too_long" xml:space="preserve">
+    <value>Der gegebene Initialisierungsvektor ist zu lang. Dieser wird abgeschnitten.</value>
+  </data>
+  <data name="Speck_IV_too_short" xml:space="preserve">
+    <value>Der gegebene Initialisierungsvektor ist zu kurz. Dieser wird mit Nullen aufgefüllt.</value>
+  </data>
+  <data name="Speck_No_IV_was_given" xml:space="preserve">
+    <value>Es wurde kein Initialisierungsvektor spezifiziert. Dieser wird mit dem Wert 0 initialisiert.</value>
+  </data>
+  <data name="BlockModeList3" xml:space="preserve">
+    <value>Cipher Feedback (CFB)</value>
   </data>
 </root>

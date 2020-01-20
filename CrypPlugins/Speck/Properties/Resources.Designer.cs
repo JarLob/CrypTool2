@@ -79,6 +79,15 @@ namespace Speck.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cipher Feedback (CFB) ähnelt.
+        /// </summary>
+        internal static string BlockModeList3 {
+            get {
+                return ResourceManager.GetString("BlockModeList3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Block chaining mode: ähnelt.
         /// </summary>
         internal static string ChoiceOfModeOfOperation {
@@ -214,7 +223,7 @@ namespace Speck.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The initialization vector (IV) which is used in chaining modes. It must be the same as the blocksize. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The initialization vector (IV) which is used in chaining modes. It must have the same size as the blocks. ähnelt.
         /// </summary>
         internal static string InputIVTooltip {
             get {
@@ -385,11 +394,38 @@ namespace Speck.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The input stream is too short. {0} byte is/are missing or a padding mode must be selected. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The input stream is too short. {0} bytes are missing or a padding mode must be selected. ähnelt.
         /// </summary>
-        internal static string Speck_Input_too_short {
+        internal static string Speck_Input_too_short_multipleByte {
             get {
-                return ResourceManager.GetString("Speck_Input_too_short", resourceCulture);
+                return ResourceManager.GetString("Speck_Input_too_short_multipleByte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The input stream is too short. {0} byte is missing or a padding mode must be selected. ähnelt.
+        /// </summary>
+        internal static string Speck_Input_too_short_singleByte {
+            get {
+                return ResourceManager.GetString("Speck_Input_too_short_singleByte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The given initialization vector is too long. It will be truncated. ähnelt.
+        /// </summary>
+        internal static string Speck_IV_too_long {
+            get {
+                return ResourceManager.GetString("Speck_IV_too_long", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The given initialization vector is too short. It will be padded with zeros. ähnelt.
+        /// </summary>
+        internal static string Speck_IV_too_short {
+            get {
+                return ResourceManager.GetString("Speck_IV_too_short", resourceCulture);
             }
         }
         
@@ -399,6 +435,15 @@ namespace Speck.Properties {
         internal static string Speck_no_cryptofunction {
             get {
                 return ResourceManager.GetString("Speck_no_cryptofunction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No initialization vector was specified. This is initialized with the value 0. ähnelt.
+        /// </summary>
+        internal static string Speck_No_IV_was_given {
+            get {
+                return ResourceManager.GetString("Speck_No_IV_was_given", resourceCulture);
             }
         }
         

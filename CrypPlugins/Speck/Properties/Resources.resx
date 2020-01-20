@@ -238,7 +238,7 @@
     <value>Initialization vector</value>
   </data>
   <data name="InputIVTooltip" xml:space="preserve">
-    <value>The initialization vector (IV) which is used in chaining modes. It must be the same as the blocksize.</value>
+    <value>The initialization vector (IV) which is used in chaining modes. It must have the same size as the blocks.</value>
   </data>
   <data name="PaddingList1" xml:space="preserve">
     <value>None</value>
@@ -258,7 +258,22 @@
   <data name="Speck_Input_padded" xml:space="preserve">
     <value>The input stream was padded with {0}</value>
   </data>
-  <data name="Speck_Input_too_short" xml:space="preserve">
-    <value>The input stream is too short. {0} byte is/are missing or a padding mode must be selected.</value>
+  <data name="Speck_Input_too_short_singleByte" xml:space="preserve">
+    <value>The input stream is too short. {0} byte is missing or a padding mode must be selected.</value>
+  </data>
+  <data name="Speck_Input_too_short_multipleByte" xml:space="preserve">
+    <value>The input stream is too short. {0} bytes are missing or a padding mode must be selected.</value>
+  </data>
+  <data name="Speck_IV_too_long" xml:space="preserve">
+    <value>The given initialization vector is too long. It will be truncated.</value>
+  </data>
+  <data name="Speck_IV_too_short" xml:space="preserve">
+    <value>The given initialization vector is too short. It will be padded with zeros.</value>
+  </data>
+  <data name="Speck_No_IV_was_given" xml:space="preserve">
+    <value>No initialization vector was specified. This is initialized with the value 0.</value>
+  </data>
+  <data name="BlockModeList3" xml:space="preserve">
+    <value>Cipher Feedback (CFB)</value>
   </data>
 </root>

@@ -42,7 +42,9 @@ namespace Cryptool.Plugins.Speck
     /// </summary>
     public enum ModeOfOperation
     {
-        ElectronicCodeBook
+        ElectronicCodeBook,
+        CipherBlockChaining,
+        CipherFeedback
     }
 
     /// <summary>
@@ -80,36 +82,43 @@ namespace Cryptool.Plugins.Speck
         public int BlockSize_2n
         {
             get { return _blockSize_2n; }
+            set { _blockSize_2n = value; }
         }
 
         public int KeySize_mn
         {
             get { return _keySize_mn; }
+            set { _keySize_mn = value; }
         }
 
         public int WordSize_n
         {
             get { return _wordSize_n; }
+            set { _wordSize_n = value; }
         }
 
         public int KeyWords_m
         {
             get { return _keyWords_m; }
+            set { _keyWords_m = value; }
         }
 
         public int LeftShift_alpha
         {
             get { return _leftShift_alpha; }
+            set { _leftShift_alpha = value; }
         }
 
         public int RightShift_beta
         {
             get { return _rightShift_beta; }
+            set { _rightShift_beta = value; }
         }
 
         public int Rounds_T
         {
             get { return _rounds_T; }
+            set { _rounds_T = value; }
         }
 
         #endregion
@@ -281,7 +290,7 @@ namespace Cryptool.Plugins.Speck
         /// <summary>
         /// Property for mode of operation
         /// </summary>
-        [TaskPane("ChoiceOfModeOfOperation", "ChoiceOfModeOfOperationToolTip", "ChoiceOfModeOfOperationGroup", 1, false, ControlType.ComboBox, new string[] { "BlockModeList1", "BlockModeList2" })]
+        [TaskPane("ChoiceOfModeOfOperation", "ChoiceOfModeOfOperationToolTip", "ChoiceOfModeOfOperationGroup", 1, false, ControlType.ComboBox, new string[] { "BlockModeList1", "BlockModeList2", "BlockModeList3" })]
         public ModeOfOperation OperationMode
         {
             get { return _modeOfOperation; }

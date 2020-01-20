@@ -1765,6 +1765,22 @@ namespace Speck
             return RotateLeftBitArray(arr, arr.Length - shiftToRight);
         }
 
+        /// <summary>
+        /// Calculates a XOR b
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        public static byte[] XOR(byte[] a, byte[] b)
+        {
+            byte[] c = new byte[a.Length];
+            for (int i = 0; i < c.Length; i++)
+            {
+                c[i] = (byte)(a[i] ^ b[i]);
+            }
+
+            return c;
+        }
+
         #endregion
     }
 }
