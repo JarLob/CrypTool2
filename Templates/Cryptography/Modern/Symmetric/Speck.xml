@@ -29,8 +29,8 @@
     <replacement key="$Ciphertext$" value="Geheimtext" />
     <replacement key="$IV$" value="Initialisierungsvektor" />
     <replacement key="$Key$" value="Schlüssel" />
-    <replacement key="$StringDecoder$" value="Text zu hex" />
-    <replacement key="$Stringcoder$" value="Hex zu text" />
+    <replacement key="$StringDecoder$" value="Text zu Hex" />
+    <replacement key="$Stringcoder$" value="Hex zu Text" />
   </replacements>
 
 </sample>
