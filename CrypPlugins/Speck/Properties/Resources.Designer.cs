@@ -88,6 +88,15 @@ namespace Speck.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output Feedback (OFB) ähnelt.
+        /// </summary>
+        internal static string BlockModeList4 {
+            get {
+                return ResourceManager.GetString("BlockModeList4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Block chaining mode: ähnelt.
         /// </summary>
         internal static string ChoiceOfModeOfOperation {

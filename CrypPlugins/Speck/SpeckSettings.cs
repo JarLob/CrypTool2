@@ -44,7 +44,8 @@ namespace Cryptool.Plugins.Speck
     {
         ElectronicCodeBook,
         CipherBlockChaining,
-        CipherFeedback
+        CipherFeedback,
+        OutputFeedback
     }
 
     /// <summary>
@@ -290,7 +291,7 @@ namespace Cryptool.Plugins.Speck
         /// <summary>
         /// Property for mode of operation
         /// </summary>
-        [TaskPane("ChoiceOfModeOfOperation", "ChoiceOfModeOfOperationToolTip", "ChoiceOfModeOfOperationGroup", 1, false, ControlType.ComboBox, new string[] { "BlockModeList1", "BlockModeList2", "BlockModeList3" })]
+        [TaskPane("ChoiceOfModeOfOperation", "ChoiceOfModeOfOperationToolTip", "ChoiceOfModeOfOperationGroup", 1, false, ControlType.ComboBox, new string[] { "BlockModeList1", "BlockModeList2", "BlockModeList3", "BlockModeList4" })]
         public ModeOfOperation OperationMode
         {
             get { return _modeOfOperation; }

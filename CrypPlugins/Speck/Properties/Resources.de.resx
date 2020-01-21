@@ -276,4 +276,7 @@
   <data name="BlockModeList3" xml:space="preserve">
     <value>Cipher Feedback (CFB)</value>
   </data>
+  <data name="BlockModeList4" xml:space="preserve">
+    <value>Output Feedback (OFB)</value>
+  </data>
 </root>

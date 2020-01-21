@@ -175,45 +175,76 @@ namespace Cryptool.Plugins.Speck
 
             //Select crypto function based on algorithm and action
             CryptoFunction cryptoFunction = null;
+
            if (settings.ChoiceOfVariant == SpeckParameters.Speck32_64)
            {
-               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck32_64_Encryption : new CryptoFunction(SpeckCiphers.Speck32_64_Decryption);
+               if (settings.OpMode == OperatingMode.Encrypt || settings.OperationMode == ModeOfOperation.CipherFeedback || settings.OperationMode == ModeOfOperation.OutputFeedback)
+                   cryptoFunction = SpeckCiphers.Speck32_64_Encryption;
+               else
+                   cryptoFunction = new CryptoFunction(SpeckCiphers.Speck32_64_Decryption);
            }
            else if (settings.ChoiceOfVariant == SpeckParameters.Speck48_72)
            {
-               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck48_72_Encryption : new CryptoFunction(SpeckCiphers.Speck48_72_Decryption);
+               if (settings.OpMode == OperatingMode.Encrypt || settings.OperationMode == ModeOfOperation.CipherFeedback || settings.OperationMode == ModeOfOperation.OutputFeedback)
+                   cryptoFunction = SpeckCiphers.Speck48_72_Encryption;
+               else
+                   cryptoFunction = new CryptoFunction(SpeckCiphers.Speck48_72_Decryption);
            }
            else if (settings.ChoiceOfVariant == SpeckParameters.Speck48_96)
            {
-               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck48_96_Encryption : new CryptoFunction(SpeckCiphers.Speck48_96_Decryption);
+               if (settings.OpMode == OperatingMode.Encrypt || settings.OperationMode == ModeOfOperation.CipherFeedback || settings.OperationMode == ModeOfOperation.OutputFeedback)
+                   cryptoFunction = SpeckCiphers.Speck48_96_Encryption;
+               else
+                   cryptoFunction = new CryptoFunction(SpeckCiphers.Speck48_96_Decryption);
            }
            else if (settings.ChoiceOfVariant == SpeckParameters.Speck64_96)
            {
-               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck64_96_Encryption : new CryptoFunction(SpeckCiphers.Speck64_96_Decryption);
+               if (settings.OpMode == OperatingMode.Encrypt || settings.OperationMode == ModeOfOperation.CipherFeedback || settings.OperationMode == ModeOfOperation.OutputFeedback)
+                   cryptoFunction = SpeckCiphers.Speck64_96_Encryption;
+               else
+                   cryptoFunction = new CryptoFunction(SpeckCiphers.Speck64_96_Decryption);
            } 
            else if (settings.ChoiceOfVariant == SpeckParameters.Speck64_128)
            {
-               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck64_128_Encryption : new CryptoFunction(SpeckCiphers.Speck64_128_Decryption);
+               if (settings.OpMode == OperatingMode.Encrypt || settings.OperationMode == ModeOfOperation.CipherFeedback || settings.OperationMode == ModeOfOperation.OutputFeedback)
+                   cryptoFunction = SpeckCiphers.Speck64_128_Encryption;
+               else
+                   cryptoFunction = new CryptoFunction(SpeckCiphers.Speck64_128_Decryption);
            }
            else if (settings.ChoiceOfVariant == SpeckParameters.Speck96_96)
            {
-               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck96_96_Encryption : new CryptoFunction(SpeckCiphers.Speck96_96_Decryption);
+               if (settings.OpMode == OperatingMode.Encrypt || settings.OperationMode == ModeOfOperation.CipherFeedback || settings.OperationMode == ModeOfOperation.OutputFeedback)
+                   cryptoFunction = SpeckCiphers.Speck96_96_Encryption;
+               else
+                   cryptoFunction = new CryptoFunction(SpeckCiphers.Speck96_96_Decryption);
            }
            else if (settings.ChoiceOfVariant == SpeckParameters.Speck96_144)
            {
-               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck96_144_Encryption : new CryptoFunction(SpeckCiphers.Speck96_144_Decryption);
+               if (settings.OpMode == OperatingMode.Encrypt || settings.OperationMode == ModeOfOperation.CipherFeedback || settings.OperationMode == ModeOfOperation.OutputFeedback)
+                   cryptoFunction = SpeckCiphers.Speck96_144_Encryption;
+               else
+                   cryptoFunction = new CryptoFunction(SpeckCiphers.Speck96_144_Decryption);
            } 
            else if (settings.ChoiceOfVariant == SpeckParameters.Speck128_128)
            {
-               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck128_128_Encryption : new CryptoFunction(SpeckCiphers.Speck128_128_Decryption);
+               if (settings.OpMode == OperatingMode.Encrypt || settings.OperationMode == ModeOfOperation.CipherFeedback || settings.OperationMode == ModeOfOperation.OutputFeedback)
+                   cryptoFunction = SpeckCiphers.Speck128_128_Encryption;
+               else
+                   cryptoFunction = new CryptoFunction(SpeckCiphers.Speck128_128_Decryption);
            }
            else if (settings.ChoiceOfVariant == SpeckParameters.Speck128_192)
            {
-               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck128_192_Encryption : new CryptoFunction(SpeckCiphers.Speck128_192_Decryption);
+               if (settings.OpMode == OperatingMode.Encrypt || settings.OperationMode == ModeOfOperation.CipherFeedback || settings.OperationMode == ModeOfOperation.OutputFeedback)
+                   cryptoFunction = SpeckCiphers.Speck128_192_Encryption;
+               else
+                   cryptoFunction = new CryptoFunction(SpeckCiphers.Speck128_192_Decryption);
            }
            else if (settings.ChoiceOfVariant == SpeckParameters.Speck128_256)
            {
-               cryptoFunction = settings.OpMode == OperatingMode.Encrypt ? SpeckCiphers.Speck128_256_Encryption : new CryptoFunction(SpeckCiphers.Speck128_256_Decryption);
+               if (settings.OpMode == OperatingMode.Encrypt || settings.OperationMode == ModeOfOperation.CipherFeedback || settings.OperationMode == ModeOfOperation.OutputFeedback)
+                   cryptoFunction = SpeckCiphers.Speck128_256_Encryption;
+               else
+                   cryptoFunction = new CryptoFunction(SpeckCiphers.Speck128_256_Decryption);
            }
 
            //Check, if we found a crypto function that we can use
@@ -545,7 +576,7 @@ namespace Cryptool.Plugins.Speck
                     OutputStream = writer;
                 }
             }
-        }
+        }     
 
         #endregion
 
