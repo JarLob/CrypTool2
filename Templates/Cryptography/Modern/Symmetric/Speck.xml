@@ -22,6 +22,7 @@
     <replacement key="$Key$" value="Key" />
     <replacement key="$StringDecoder$" value="Text to hex" />
 	<replacement key="$Stringcoder$" value="Hex to text" />
+	<replacement key="$memo$" value="In this template, any input (in the text input component with the signature {\b plaintext / ciphertext} in the upper left corner) is encrypted using the Speck component. For this purpose, a key (in the text input component with the signature {\b Key}) and (depending on the selected block concatenation mode) an initialization vector (in the text input component with the signature {\b Initialization vector}) must be specified. The key text is displayed in the text output component with the signature {\b plaintext / ciphertext} in the upper right corner. Speck works on blocks of bytes. Input and output are in hexadecimal form. To convert the textual representation, the input and output of the Speck component are converted by appropriate decoders and encoders.\line\line The template is preconfigured to encode inputs in ECB mode. By adjusting the settings, the template can also be used for decoding inputs." />
   </replacements>
   
   <replacements lang="de">
@@ -31,6 +32,7 @@
     <replacement key="$Key$" value="Schlüssel" />
     <replacement key="$StringDecoder$" value="Text zu Hex" />
     <replacement key="$Stringcoder$" value="Hex zu Text" />
+    <replacement key="$memo$" value="In dieser Vorlage wird eine beliebige Eingabe (in der Texteingabe-Komponente mit der Unterschrift {\b Klartext / Geheimtext} links oben) mittels der Speck-Komponente verschlüsselt. Dazu muss ein Schlüssel (in der Texteingabe-Komponente mit der Unterschrift {\b Schlüssel}) und (je nach gewähltem Blockverkettungs-Modus) ein Initialisierungsvektor (in der Texteingabe-Komponente mit der Unterschrift {\b Initialisierungsvektor}) spezifiziert werden. Der Schlüsseltext wird in der Textausgabe-Komponente mit der Unterschrift {\b Klartext / Geheimtext} rechts oben angezeigt. Speck arbeitet auf Blöcken von Bytes. Die Ein- und Ausgabe erfolgt in hexadezimaler Form. Zur Konvertierung der textuellen Repräsentation werden die Ein- und Ausgaben der Speck-Komponente durch entsprechende Decodierer und Codierer konvertiert.\line\line Das Template ist zur Verschlüsselung von Eingaben im ECB-Mode vorkonfiguriert. Durch Anpassung der Einstellungen kann das Template auch zur Entschlüsselung von Eingaben verwendet werden." />
   </replacements>
 
 </sample>
