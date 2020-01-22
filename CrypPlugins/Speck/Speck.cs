@@ -269,6 +269,10 @@ namespace Cryptool.Plugins.Speck
                     CheckIV();
                     Execute_CFB(cryptoFunction);
                     break;
+                case ModeOfOperation.OutputFeedback:
+                    CheckIV();
+                    Execute_OFB(cryptoFunction);
+                    break;
 
                 default:
                     throw new NotImplementedException(String.Format(Resources.Speck_blockmode_not_implemented, settings.OperationMode));
@@ -576,7 +580,102 @@ namespace Cryptool.Plugins.Speck
                     OutputStream = writer;
                 }
             }
-        }     
+        }
+
+        /// <summary>
+        /// Encrypts/Decrypts using OFB
+        /// </summary>
+        /// <param name="cryptoFunction"></param>
+        private void Execute_OFB(CryptoFunction cryptoFunction)
+        {
+            using (CStreamReader reader = _inputStream.CreateReader())
+            {
+                using (CStreamWriter writer = new CStreamWriter())
+                {
+                    byte[] lastBlock = InputIV;
+                    int readcount = 0;
+
+                    while (reader.Position < reader.Length && !_stop)
+                    {
+                        //we always try to read a complete block (=(settings.BlockSize_2n / 8) bytes)
+                        byte[] inputBlock = new byte[(settings.BlockSize_2n / 8)];
+                        readcount = 0;
+                        while ((readcount += reader.Read(inputBlock, readcount, (settings.BlockSize_2n / 8) - readcount)) < (settings.BlockSize_2n / 8) &&
+                               reader.Position < reader.Length && !_stop) ;
+                        if (_stop)
+                        {
+                            return;
+                        }
+
+                        //Show progress in UI
+                        ProgressChanged(reader.Position, reader.Length);
+
+                        byte[] outputblock = null;
+                        //we read a complete block
+                        if (readcount == (settings.BlockSize_2n / 8))
+                        {
+                            //Compute XOR with lastblock for OFB mode
+                            if (settings.OpMode == OperatingMode.Encrypt)
+                            {
+                                outputblock = cryptoFunction(lastBlock, _inputKey);
+                                lastBlock = outputblock;
+                                outputblock = SpeckCiphers.XOR(outputblock, inputBlock);
+                            }
+                            else
+                            {
+                                outputblock = cryptoFunction(lastBlock, _inputKey);
+                                lastBlock = outputblock;
+                                outputblock = SpeckCiphers.XOR(outputblock, inputBlock);
+                            }
+                        }
+                        //we read an incomplete block, thus, we are at the end of the stream
+                        else if (readcount > 0)
+                        {
+                            //Compute XOR with lastblock for CFB mode
+                            if (settings.OpMode == OperatingMode.Encrypt)
+                            {
+                                byte[] block = new byte[(settings.BlockSize_2n / 8)];
+                                Array.Copy(inputBlock, 0, block, 0, readcount);
+                                outputblock = cryptoFunction(lastBlock, _inputKey);
+                                outputblock = SpeckCiphers.XOR(outputblock, block);
+                            }
+                            else
+                            {
+                                byte[] block = new byte[(settings.BlockSize_2n / 8)];
+                                Array.Copy(inputBlock, 0, block, 0, readcount);
+                                outputblock = cryptoFunction(inputBlock, _inputKey);
+                                outputblock = SpeckCiphers.XOR(outputblock, lastBlock);
+                            }
+                        }
+
+                        //check if it is the last block and we decrypt, thus, we have to remove the padding
+                        if (reader.Position == reader.Length && settings.OpMode == OperatingMode.Decrypt && settings.PadMode != BlockCipherHelper.PaddingType.None)
+                        {
+                            int valid = BlockCipherHelper.StripPadding(outputblock, (settings.BlockSize_2n / 8), settings.PadMode, (settings.BlockSize_2n / 8));
+                            if (valid != (settings.BlockSize_2n / 8))
+                            {
+                                byte[] newoutputblock = new byte[valid];
+                                Array.Copy(outputblock, 0, newoutputblock, 0, valid);
+                                outputblock = newoutputblock;
+                            }
+                            else if (valid == 0)
+                            {
+                                outputblock = null;
+                            }
+                        }
+
+                        //if we crypted something, we output it
+                        if (outputblock != null)
+                        {
+                            writer.Write(outputblock, 0, outputblock.Length);
+                        }
+                    }
+
+                    writer.Flush();
+                    OutputStream = writer;
+                }
+            }
+        }
 
         #endregion
 

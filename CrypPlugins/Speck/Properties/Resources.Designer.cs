@@ -358,7 +358,7 @@ namespace Speck.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Speck cipher ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Speck ähnelt.
         /// </summary>
         internal static string PluginTooltip {
             get {
