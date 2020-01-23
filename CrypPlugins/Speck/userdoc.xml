@@ -4,11 +4,29 @@
 <documentation>
 	<language culture="en"/>
 	<language culture="de-DE"/>
-
-	<introduction lang="en">    
+	<introduction lang="en">
+		Speck is a so-called "Lightweight Block Cipher", which was developed by the american National Security Agency (NSA) and published in 2013 <ref id="SpeckPaper" />. Lightweight Ciphers require less computing capacity compared to ordinary block ciphers. 
+		Besides Speck, the cipher Simon belongs to the same family of ciphers. Speck is optimized for software implementations and Simon for hardware implementations. Speck is an ARX (add-rotate-xor) cipher. <newline /><newline />
+		Speck consists of a large number of different varieties. These differ in block and key length. Thus Speck can be used on a large number of different devices (in different performance categories).
+		The different variants offer different security levels. Speck can also be used on devices and environments where an AES would be unsuitable (e.g. an insulin pump). <newline /><newline />
+		The block length can be 32, 48, 64, 96 and 128 bits, whereby the 64 and 128 bit variants are the most common block lengths <ref id="SpeckImplGuide" />. Depending on the block length different key lengths are possible. For example, the 32 bit variant works with 64 bit key length,
+		for the variant with 128 bit block length, 128, 192 and 256 bit long keys can be selected <newline /><newline />
+		Within Speck, an input block is divided into words that are always half as long as a block. The key is also divided into words. Depending on the selected parameterization of Speck, it is divided into 2-4 keywords. The basic operations are addition, (bit) rotation (= cyclic bit shift) and XOR.
 	</introduction>
 
 	<usage lang="en">
+		<section headline="Speck parameterization">
+		The different variants of Speck can be configured in the component settings. These are specified in the form "Speck x/y", where x is the block length and y the key length in bits.
+		</section>
+		<section headline="Encryption / Decryption">
+		In the component you can configure whether the input should be encrypted or decrypted. 
+		</section>
+		<section headline="Operating mode">
+		The Speck component offers four different operating modes for linking blocks. These are ECB (Electronic Code Book), CBC (Cipher Block Chaining), CFB (Cipher Feedback) and OFB (Output Feedback). These can be selected in the component settings.
+		</section>
+		<section headline="Padding">
+		If the input does not contain a complete block, it can be extended to the required block length. The Speck component offers five different padding methods for this purpose. These are Zeros, PKCS7, ANSIX923, ISO10126 and 1-0 padding.
+		</section>
 	</usage>
 
 	<introduction lang="de-DE">
