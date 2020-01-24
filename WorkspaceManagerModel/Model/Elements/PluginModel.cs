@@ -729,7 +729,7 @@ namespace WorkspaceManager.Model
         /// <summary>
         /// Stores all default values of all connectors of this component
         /// </summary>
-        internal void StoreAllDefaultConnectorValues()
+        internal void StoreAllDefaultInputConnectorValues()
         {
             foreach(ConnectorModel connectorModel in GetInputConnectors())
             {
@@ -738,15 +738,7 @@ namespace WorkspaceManager.Model
                     connectorModel.property = Plugin.GetType().GetProperty(connectorModel.PropertyName);
                 }
                 connectorModel.DefaultValue = connectorModel.property.GetValue(Plugin);
-            }
-            foreach (ConnectorModel connectorModel in GetOutputConnectors())
-            {
-                if (connectorModel.property == null)
-                {
-                    connectorModel.property = Plugin.GetType().GetProperty(connectorModel.PropertyName);
-                }
-                connectorModel.DefaultValue = connectorModel.property.GetValue(Plugin);
-            }
+            }            
         }
     }    
 

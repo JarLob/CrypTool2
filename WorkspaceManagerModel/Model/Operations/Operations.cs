@@ -812,7 +812,7 @@ namespace WorkspaceManagerModel.Model.Operations
                         connectorModel.PluginModel.Plugin.PropertyChanged += connectorModel.PropertyChangedOnPlugin;
                         connectorModel.WorkspaceModel = workspaceModel;
                     }
-                    pluginModel.StoreAllDefaultConnectorValues();
+                    pluginModel.StoreAllDefaultInputConnectorValues();
                 }
                 
                 if(connectionModel != null)

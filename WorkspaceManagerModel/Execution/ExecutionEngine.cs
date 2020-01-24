@@ -83,18 +83,14 @@ namespace WorkspaceManager.Execution
         {
             try
             {
-                //0. Set all input and output connections to default values
+                //0. Set all input connections to default values
                 // default values were stored after execution of initialize-method of each component
                 foreach (var pluginModel in workspaceModel.AllPluginModels)
                 {
                     foreach (ConnectorModel connectorModel in pluginModel.GetInputConnectors())
                     {
                         connectorModel.property.SetValue(pluginModel.Plugin, connectorModel.DefaultValue);
-                    }
-                    foreach (ConnectorModel connectorModel in pluginModel.GetOutputConnectors())
-                    {
-                        connectorModel.property.SetValue(pluginModel.Plugin, connectorModel.DefaultValue);
-                    }
+                    }                    
                 }
 
                 Stopped = false;

@@ -204,7 +204,7 @@ namespace WorkspaceManager.Model
                 pluginModel.Plugin.Settings.PropertyChanged += pluginModel.SettingsPropertyChanged;
             }
             AllPluginModels.Add(pluginModel);
-            pluginModel.StoreAllDefaultConnectorValues();
+            pluginModel.StoreAllDefaultInputConnectorValues();
             return pluginModel;
         }
 
@@ -248,7 +248,7 @@ namespace WorkspaceManager.Model
                 this.AllConnectorModels.Add(connectorModel);
             }
             pluginModel.Plugin.Initialize();
-            pluginModel.StoreAllDefaultConnectorValues();
+            pluginModel.StoreAllDefaultInputConnectorValues();
         }
        
         /// <summary>

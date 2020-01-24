@@ -338,7 +338,7 @@ namespace WorkspaceManager.Model
                 {
                     pluginModel.Plugin.Settings.PropertyChanged += pluginModel.SettingsPropertyChanged;
                 }
-                pluginModel.StoreAllDefaultConnectorValues();
+                pluginModel.StoreAllDefaultInputConnectorValues();
             }
 
             foreach (ConnectorModel connectorModel in workspacemodel.AllConnectorModels)
