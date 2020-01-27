@@ -737,8 +737,22 @@ namespace WorkspaceManager.Model
                 {
                     connectorModel.property = Plugin.GetType().GetProperty(connectorModel.PropertyName);
                 }
-                connectorModel.DefaultValue = connectorModel.property.GetValue(Plugin);
+                connectorModel.DefaultValue = GetDefault(connectorModel.property.PropertyType);
             }            
+        }
+
+        /// <summary>
+        /// Crate a default value for the given type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        internal object GetDefault(Type type)
+        {
+            if (type.IsValueType)
+            {
+                return Activator.CreateInstance(type);
+            }
+            return null;
         }
     }    
 
