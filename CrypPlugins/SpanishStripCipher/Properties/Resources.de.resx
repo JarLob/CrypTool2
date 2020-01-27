@@ -154,10 +154,10 @@
     <value>Verschlüsselte oder entschlüsselte Ausgabedaten</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Spanische Strip-Chiffre</value>
+    <value>Spanische Streifenchiffre</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Spanische Strip-Chiffre</value>
+    <value>Spanische Streifenchiffre</value>
   </data>
   <data name="Position1Caption" xml:space="preserve">
     <value>Verschieben</value>
