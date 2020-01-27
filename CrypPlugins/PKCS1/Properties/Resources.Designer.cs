@@ -19,7 +19,7 @@ namespace PKCS1.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -61,7 +61,7 @@ namespace PKCS1.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Attack on PKCS#1 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Attacks on PKCS#1 ähnelt.
         /// </summary>
         internal static string FL_F_pkcs1 {
             get {
@@ -70,7 +70,7 @@ namespace PKCS1.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Attack on PKCS#1\ Bleichenbacher attack ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Attacks on PKCS#1\ Bleichenbacher attack ähnelt.
         /// </summary>
         internal static string FL_P_bleichenbacher {
             get {
@@ -79,7 +79,7 @@ namespace PKCS1.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Attack on PKCS#1\ Attack with shorter keys (Kuehn) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Attacks on PKCS#1\ Attack with shorter keys (Kuehn) ähnelt.
         /// </summary>
         internal static string FL_P_kuehn {
             get {
@@ -88,7 +88,7 @@ namespace PKCS1.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Attack on PKCS#1 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Attacks on PKCS#1 ähnelt.
         /// </summary>
         internal static string PluginCaption {
             get {
@@ -116,6 +116,7 @@ namespace PKCS1.Properties {
         ///		  {
         ///		  	font-family:Arial,Verdana,Georgia;
         ///		  	font-size:smaller;
+        ///            background-color: #EBEFF6;
         ///		  }
         ///		&lt;/style&gt;
         ///	&lt;/head&gt;
