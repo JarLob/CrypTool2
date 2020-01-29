@@ -1770,7 +1770,7 @@ namespace Speck
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>
-        public static byte[] XOR(byte[] a, byte[] b)
+        public static byte[] Xor(byte[] a, byte[] b)
         {
             byte[] c = new byte[a.Length];
             for (int i = 0; i < c.Length; i++)

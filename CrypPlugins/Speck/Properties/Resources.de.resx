@@ -226,7 +226,7 @@
     <value>Die Schlüssellänge = {0} ist zu lang. Der Schlüssel wird auf die Länge {1} gekürzt.</value>
   </data>
   <data name="Speck_Execute_Key_too_short" xml:space="preserve">
-    <value>Die Schlüssellänge = {0} ist zu kurz. Notwendige Schlüssellänge beträgt {1} byte.</value>
+    <value>Die Schlüssellänge = {0} ist zu kurz. Notwendige Schlüssellänge beträgt {1} Byte.</value>
   </data>
   <data name="Speck_no_cryptofunction" xml:space="preserve">
     <value>Aufgrund der Einstellungen konnte keine Kryptofunktion ausgewählt werden.</value>
@@ -259,7 +259,7 @@
     <value>Der Eingabestrom wurde mittels {0} gepadded</value>
   </data>
   <data name="Speck_Input_too_short_singleByte" xml:space="preserve">
-    <value>Der Eingabestrom ist zu kurz. Es fehlt {0} byte oder es muss ein Padding-Modus ausgewählt werden.</value>
+    <value>Der Eingabestrom ist zu kurz. Es fehlt {0} Byte oder es muss ein Padding-Modus ausgewählt werden.</value>
   </data>
   <data name="Speck_Input_too_short_multipleByte" xml:space="preserve">
     <value>Der Eingabestrom ist zu kurz. Es fehlen {0} Bytes oder es muss ein Padding-Modus ausgewählt werden.</value>

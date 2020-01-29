@@ -5,62 +5,62 @@
 	<language culture="en"/>
 	<language culture="de-DE"/>
 	<introduction lang="en">
-		Speck is a so-called "Lightweight Block Cipher", which was developed by the american National Security Agency (NSA) and published in 2013 <ref id="SpeckPaper" />. Lightweight Ciphers require less computing capacity compared to ordinary block ciphers. 
+		Speck is a so-called "Lightweight Block Cipher", which was developed by the American National Security Agency (NSA) and published in 2013 <ref id="SpeckPaper" />. Lightweight Ciphers require less computing capacity compared to ordinary block ciphers. 
 		Besides Speck, the cipher Simon belongs to the same family of ciphers. Speck is optimized for software implementations and Simon for hardware implementations. Speck is an ARX (add-rotate-xor) cipher. <newline /><newline />
-		Speck consists of a large number of different varieties. These differ in block and key length. Thus Speck can be used on a large number of different devices (in different performance categories).
+		Speck consists of a big number of different varieties. These differ in block and key length. Thus Speck can be used on a large number of different devices (in different performance categories).
 		The different variants offer different security levels. Speck can also be used on devices and environments where an AES would be unsuitable (e.g. an insulin pump). <newline /><newline />
-		The block length can be 32, 48, 64, 96 and 128 bits, whereby the 64 and 128 bit variants are the most common block lengths <ref id="SpeckImplGuide" />. Depending on the block length different key lengths are possible. For example, the 32 bit variant works with 64 bit key length,
-		for the variant with 128 bit block length, 128, 192 and 256 bit long keys can be selected <newline /><newline />
-		Within Speck, an input block is divided into words that are always half as long as a block. The key is also divided into words. Depending on the selected parameterization of Speck, it is divided into 2-4 keywords. The basic operations are addition, (bit) rotation (= cyclic bit shift) and XOR.
+		The block length can be 32, 48, 64, 96, and 128 bits, whereby the 64 and 128 bit variants are the most common block lengths <ref id="SpeckImplGuide" />. Depending on the block length different key lengths are possible. For example, the 32 bit variant works with 64 bit key length;
+		for the variant with 128 bit block length, 128, 192 and 256 bit keys can be selected <newline /><newline />
+		Within Speck, an input block is divided into words that are always half as long as a block. The key is also divided into words. The key is also divided into words. Depending on the selected parameterization, a key is divided into 2-4 keywords. The basic operations are addition, (bit) rotation (= cyclic bit shift), and XOR.
 	</introduction>
 
 	<usage lang="en">
 		<section headline="Speck parameterization">
-		The different variants of Speck can be configured in the component settings. These are specified in the form "Speck x/y", where x is the block length and y the key length in bits.
+		The different variants of Speck can be configured in the component settings. These are specified in the form "Speck x/y", where x is the block length and y is the key length in bits.
 		</section>
 		<section headline="Encryption / Decryption">
 		In the component you can configure whether the input should be encrypted or decrypted. 
 		</section>
 		<section headline="Operating mode">
-		The Speck component offers four different operating modes for linking blocks. These are ECB (Electronic Code Book), CBC (Cipher Block Chaining), CFB (Cipher Feedback) and OFB (Output Feedback). These can be selected in the component settings.
+		The Speck component offers four different operating modes for linking blocks: ECB (Electronic Code Book), CBC (Cipher Block Chaining), CFB (Cipher Feedback), and OFB (Output Feedback). These can be selected in the component settings.
 		</section>
 		<section headline="Padding">
-		If the input does not contain a complete block, it can be extended to the required block length. The Speck component offers five different padding methods for this purpose. These are Zeros, PKCS7, ANSIX923, ISO10126 and 1-0 padding.
+		If the input does not contain a complete block, it is extended to the required block length. The Speck component offers five different padding methods for this purpose: Zeros, PKCS7, ANSIX923, ISO10126, and 1-0 padding.
 		</section>
 	</usage>
 
 	<introduction lang="de-DE">
-		Speck ist eine so genannte leichtgewichte symmetrische Blockchiffre ("Lightweight Block Cipher"), die von vom amerikanischen Geheimdienst National Security Agency (NSA) entwickelt und 2013 veröffentlicht <ref id="SpeckPaper" /> wurde. Leichtgewichtige Chiffren
-		benötigen im Vergleich zu gewöhnlichen Blochchiffren weniger Rechenkapazität. Neben Speck gehört die Chiffre Simon zur selben Familie von Chiffren. Speck ist optimiert für Software-Implementierungen und Simon für Hardware-Implementierungen. Speck ist eine ARX (add–rotate–xor) Chiffre. <newline /><newline />
+		Speck ist eine sogenannte leichtgewichte symmetrische Blockchiffre ("Lightweight Block Cipher"), die von vom amerikanischen Geheimdienst National Security Agency (NSA) entwickelt und 2013 veröffentlicht <ref id="SpeckPaper" /> wurde. Leichtgewichtige Chiffren
+		benötigen im Vergleich zu gewöhnlichen Blockchiffren weniger Rechenkapazität. Neben Speck gehört die Chiffre Simon zur selben Familie von Chiffren. Speck ist optimiert für Software-Implementierungen und Simon für Hardware-Implementierungen. Speck ist eine ARX-Chiffre (add-rotate-xor). <newline /><newline />
 		Speck besteht aus einer großen Anzahl von verschiedenen Varianten. Diese unterscheiden sich in der Block- und Schlüssellänge. So kann Speck auf einer Vielzahl von verschiedenen Geräten (in verschiedenen Leistungskategorien) eingesetzt werden.
-		Die verschiedenen Varianten bieten unterschiedliche Sicherheitslevel. Speck kann auch auf Geräten und Umgebungen eingesetzt werden, wo ein AES beispielsweise ungeeignet wäre (z.B. eine Insulinpumpe). <newline /><newline />
-		Als Blocklänge sind 32, 48, 64, 96 und 128 Bit möglich, wobei die Varianten mit 64 und 128 Bit die gängisten Blocklängen sind <ref id="SpeckImplGuide" />. Je nach Blocklänge sind verschiedene Schlüssellängen möglich. So arbeitet die 32 Bit Variante mit 64 Bit Schlüssellänge,
+		Die verschiedenen Varianten bieten unterschiedliche Sicherheitslevel. Speck kann auch auf Geräten und Umgebungen eingesetzt werden, wo beispielsweise ein AES ungeeignet wäre (z.B. eine Insulinpumpe). <newline /><newline />
+		Als Blocklänge sind 32, 48, 64, 96 und 128 Bit möglich, wobei die Varianten mit 64 und 128 Bit die gängigsten Blocklängen sind <ref id="SpeckImplGuide" />. Je nach Blocklänge sind verschiedene Schlüssellängen möglich. So arbeitet die 32 Bit Variante mit 64 Bit Schlüssellänge;
 		bei der Variante mit 128 Bit Blocklänge sind 128, 192 und 256 Bit lange Schlüssel wählbar. <newline /><newline />
-		Innerhalb von Speck wird ein Eingabeblock in Worte aufgeteilt, die immer halb so lang wie ein Block sind. Der Schlüssel wird ebenfalls in Worte aufgeteilt. Je nach gewählter Parametrisierung von Speck wird dieser in 2-4 Schlüsselworte geteilt. Die Basisoperationen sind Addition, (Bit-) Rotation (= zyklischer Bitshift) und XOR.
+		Innerhalb von Speck wird ein Eingabeblock in Worte aufgeteilt, die immer halb so lang wie ein Block sind. Der Schlüssel wird ebenfalls in Worte aufgeteilt. Je nach gewählter Parametrisierung von Speck wird dieser in 2-4 Schlüsselworte geteilt. Die Basisoperationen sind Addition, (Bit-)Rotation (= zyklischer Bitshift) und XOR.
 	</introduction>
 
 
 	<usage lang="de-DE">
 		<section headline="Speck-Parametrisierung">
-		Die verschiedenen Varianten von Speck können in den Einstellungen der Komponente konfiguriert werden. Diese werden in der Form "Speck x/y" angegeben, wobei x die Blocklänge und y die Schlüssellänge in Bits angbit.
+		Die verschiedenen Varianten von Speck können in den Einstellungen der Komponente konfiguriert werden. Diese werden in der Form "Speck x/y" angegeben, wobei x die Blocklänge und y die Schlüssellänge in Bits angibt.
 		</section>
 		<section headline="Verschlüsselung / Entschlüsselung">
 		In der Komponente kann konfiguriert werden, ob die Eingabe verschlüsselt oder entschlüsselt werden soll. 
 		</section>
 		<section headline="Betriebsmodus">
-		Die Speck-Komponente bietet zur Verkettung von Blöcken vier verschiedene Betriebsmodi an. Diese sind ECB (Electronic Code Book), CBC (Cipher Block Chaining), CFB (Cipher Feedback) und OFB (Output Feedback). Diese können in den Einstellungen der Komponente ausgewählt werden.
+		Die Speck-Komponente bietet zur Verkettung von Blöcken vier verschiedene Betriebsmodi an: ECB (Electronic Code Book), CBC (Cipher Block Chaining), CFB (Cipher Feedback) und OFB (Output Feedback). Diese können in den Einstellungen der Komponente ausgewählt werden.
 		</section>
 		<section headline="Padding">
-		Enthält die Eingabe keinen vollständigen Block, so kann dieser auf die notwendige Blocklänge verlängert werden. Die Speck-Komponente bietet dazu fünf verschiedene Padding-Verfahren an. Diese sind Zeros, PKCS7, ANSIX923, ISO10126 und 1-0 Padding.
+		Enthält die Eingabe keinen vollständigen Block, so wird dieser auf die notwendige Blocklänge verlängert. Die Speck-Komponente bietet dazu fünf verschiedene Padding-Verfahren an: Zeros, PKCS7, ANSIX923, ISO10126 und 1-0 Padding.
 		</section>
 	</usage>
 
 	<references>
 		<linkReference id="SpeckPaper">
 			<link url="https://eprint.iacr.org/2013/404.pdf" lang="en" />
-			<caption lang="en">The Simon And Speck Families Of Lightweight Block Ciphers</caption>
+			<caption lang="en">The Simon and Speck Families of Lightweight Block Ciphers</caption>
 			<link url="https://eprint.iacr.org/2013/404.pdf" lang="de-DE" />
-			<caption lang="de-DE">The Simon And Speck Families Of Lightweight Block Ciphers</caption>
+			<caption lang="de-DE">The Simon and Speck Families of Lightweight Block Ciphers</caption>
 		</linkReference>
 		<linkReference id="SpeckIOT">
 			<link url="https://csrc.nist.gov/csrc/media/events/lightweight-cryptography-workshop-2015/documents/papers/session1-shors-paper.pdf" lang="en" />

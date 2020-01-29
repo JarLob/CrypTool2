@@ -26,7 +26,7 @@ using Speck.Properties;
 namespace Cryptool.Plugins.Speck
 {
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
-    [PluginInfo("Speck.Properties.Resources", "PluginCaption", "PluginTooltip", "Speck/userdoc.xml", "Speck/Images/IC_Speck.png")]
+    [PluginInfo("Speck.Properties.Resources", "PluginCaption", "PluginTooltip", "Speck/userdoc.xml", "Speck/Images/IC_Speck2.png")]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class Speck : ICrypComponent
     {
@@ -426,14 +426,14 @@ namespace Cryptool.Plugins.Speck
                             //Compute XOR with lastblock for CBC mode
                             if (settings.OpMode == OperatingMode.Encrypt)
                             {
-                                inputBlock = SpeckCiphers.XOR(inputBlock, lastBlock);
+                                inputBlock = SpeckCiphers.Xor(inputBlock, lastBlock);
                                 outputBlock = cryptoFunction(inputBlock, _inputKey);
                                 lastBlock = outputBlock;
                             }
                             else
                             {
                                 outputBlock = cryptoFunction(inputBlock, _inputKey);
-                                outputBlock = SpeckCiphers.XOR(outputBlock, lastBlock);
+                                outputBlock = SpeckCiphers.Xor(outputBlock, lastBlock);
                                 lastBlock = inputBlock;
                             }
                         }
@@ -445,13 +445,13 @@ namespace Cryptool.Plugins.Speck
                             {
                                 byte[] block = new byte[settings.BlockSize_2n / 8];
                                 Array.Copy(inputBlock, 0, block, 0, readcount);
-                                inputBlock = SpeckCiphers.XOR(block, lastBlock);
+                                inputBlock = SpeckCiphers.Xor(block, lastBlock);
                                 outputBlock = cryptoFunction(inputBlock, _inputKey);
                             }
                             else
                             {
                                 outputBlock = cryptoFunction(inputBlock, _inputKey);
-                                outputBlock = SpeckCiphers.XOR(outputBlock, lastBlock);
+                                outputBlock = SpeckCiphers.Xor(outputBlock, lastBlock);
                             }
                         }
 
@@ -522,13 +522,13 @@ namespace Cryptool.Plugins.Speck
                             if (settings.OpMode == OperatingMode.Encrypt)
                             {
                                 outputblock = cryptoFunction(lastBlock, _inputKey);
-                                outputblock = SpeckCiphers.XOR(outputblock, inputBlock);
+                                outputblock = SpeckCiphers.Xor(outputblock, inputBlock);
                                 lastBlock = outputblock;
                             }
                             else
                             {
                                 outputblock = cryptoFunction(lastBlock, _inputKey);
-                                outputblock = SpeckCiphers.XOR(outputblock, inputBlock);
+                                outputblock = SpeckCiphers.Xor(outputblock, inputBlock);
                                 lastBlock = inputBlock;
                             }
                         }
@@ -541,14 +541,14 @@ namespace Cryptool.Plugins.Speck
                                 byte[] block = new byte[(settings.BlockSize_2n / 8)];
                                 Array.Copy(inputBlock, 0, block, 0, readcount);
                                 outputblock = cryptoFunction(lastBlock, _inputKey);
-                                outputblock = SpeckCiphers.XOR(outputblock, block);
+                                outputblock = SpeckCiphers.Xor(outputblock, block);
                             }
                             else
                             {
                                 byte[] block = new byte[(settings.BlockSize_2n / 8)];
                                 Array.Copy(inputBlock, 0, block, 0, readcount);
                                 outputblock = cryptoFunction(inputBlock, _inputKey);
-                                outputblock = SpeckCiphers.XOR(outputblock, lastBlock);
+                                outputblock = SpeckCiphers.Xor(outputblock, lastBlock);
                             }
                         }
 
@@ -619,13 +619,13 @@ namespace Cryptool.Plugins.Speck
                             {
                                 outputblock = cryptoFunction(lastBlock, _inputKey);
                                 lastBlock = outputblock;
-                                outputblock = SpeckCiphers.XOR(outputblock, inputBlock);
+                                outputblock = SpeckCiphers.Xor(outputblock, inputBlock);
                             }
                             else
                             {
                                 outputblock = cryptoFunction(lastBlock, _inputKey);
                                 lastBlock = outputblock;
-                                outputblock = SpeckCiphers.XOR(outputblock, inputBlock);
+                                outputblock = SpeckCiphers.Xor(outputblock, inputBlock);
                             }
                         }
                         //we read an incomplete block, thus, we are at the end of the stream
@@ -637,14 +637,14 @@ namespace Cryptool.Plugins.Speck
                                 byte[] block = new byte[(settings.BlockSize_2n / 8)];
                                 Array.Copy(inputBlock, 0, block, 0, readcount);
                                 outputblock = cryptoFunction(lastBlock, _inputKey);
-                                outputblock = SpeckCiphers.XOR(outputblock, block);
+                                outputblock = SpeckCiphers.Xor(outputblock, block);
                             }
                             else
                             {
                                 byte[] block = new byte[(settings.BlockSize_2n / 8)];
                                 Array.Copy(inputBlock, 0, block, 0, readcount);
                                 outputblock = cryptoFunction(inputBlock, _inputKey);
-                                outputblock = SpeckCiphers.XOR(outputblock, lastBlock);
+                                outputblock = SpeckCiphers.Xor(outputblock, lastBlock);
                             }
                         }
 
