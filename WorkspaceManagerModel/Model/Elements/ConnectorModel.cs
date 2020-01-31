@@ -122,7 +122,7 @@ namespace WorkspaceManager.Model
         public bool Outgoing { get; internal set; }
 
         /// <summary>
-        /// Is this Connector Outgoing?
+        /// Is this Connector an IControl Connector
         /// </summary>
         public bool IControl { get; internal set; }
 

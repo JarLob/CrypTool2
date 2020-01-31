@@ -32,10 +32,11 @@ namespace Cryptool.Caesar
         #region Private elements
 
         private readonly CaesarSettings settings;
-        private bool isPlayMode = false;
+        private string _inputString;
+        private bool isRunning;
 
         #endregion
-        
+
         #region Public interface
 
         /// <summary>
@@ -53,9 +54,7 @@ namespace Cryptool.Caesar
         public ISettings Settings
         {
             get { return this.settings; }
-        }
-
-        private string _inputString;
+        }        
 
         [PropertyInfo(Direction.InputData, "InputStringCaption", "InputStringTooltip", true)]
         public string InputString
@@ -91,7 +90,10 @@ namespace Cryptool.Caesar
           get { return settings.ShiftKey; }
           set 
           {
-              settings.SetKeyByValue(value,true);
+            if (isRunning)
+            {
+                settings.SetKeyByValue(value, true);
+            }
           }
         }
        
@@ -134,15 +136,17 @@ namespace Cryptool.Caesar
 
         public void Stop()
         {
+            isRunning = false;
         }
 
         public void PostExecution()
         {
-            isPlayMode = false;
+            isRunning = false;
         }
 
         public void PreExecution()
-        {            
+        {
+            isRunning = true;
         }
 
         #endregion
@@ -158,20 +162,6 @@ namespace Cryptool.Caesar
 
         #endregion
 
-        #region Private methods
-
-        /// <summary>
-        /// Handles re-execution events from settings class
-        /// </summary>
-        private void Caesar_ReExecute()
-        {
-            if (isPlayMode)
-            {
-                Execute();   
-            }
-        }
-
-        #endregion
 
         #region IPlugin Members
 
@@ -181,8 +171,6 @@ namespace Cryptool.Caesar
 
 		public void Execute()
         {
-            isPlayMode = true;
-
 		    StringBuilder output = new StringBuilder();
 
 		    // If we are working in case-insensitive mode, we will use only

@@ -89,7 +89,10 @@ namespace WorkspaceManager.Execution
                 {
                     foreach (ConnectorModel connectorModel in pluginModel.GetInputConnectors())
                     {
-                        connectorModel.property.SetValue(pluginModel.Plugin, connectorModel.DefaultValue);
+                        if (!connectorModel.IControl)
+                        {
+                            connectorModel.property.SetValue(pluginModel.Plugin, connectorModel.DefaultValue);
+                        }
                     }                    
                 }
 

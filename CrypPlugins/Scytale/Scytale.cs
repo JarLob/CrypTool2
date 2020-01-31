@@ -27,7 +27,7 @@ namespace Cryptool.Scytale
     public class Scytale : ICrypComponent
     {
         private readonly ScytaleSettings settings;
-
+        private bool isRunning = false;
         public event PropertyChangedEventHandler PropertyChanged;
         public event PluginProgressChangedEventHandler OnPluginProgressChanged;
         public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured; 
@@ -80,6 +80,10 @@ namespace Cryptool.Scytale
             get { return settings.StickSize; }
             set
             {
+                if (!isRunning)
+                {
+                    return;
+                }
                 if (value != settings.StickSize)
                 {
                     settings.StickSize = value;
@@ -88,10 +92,9 @@ namespace Cryptool.Scytale
             }
         }
 
-
-
         public void PreExecution()
         {
+            isRunning = true;
         }
 
         public void Execute()
@@ -152,10 +155,12 @@ namespace Cryptool.Scytale
 
         public void PostExecution()
         {
+            isRunning = false;
         }
 
         public void Stop()
         {
+            isRunning = false;
         }
 
         public void Initialize()

@@ -305,6 +305,10 @@ namespace Cryptool.Enigma
             get { return this._textInput; }
             set
             {
+                if (!_isrunning)
+                {
+                    return;
+                }
                 if (value != _textInput)
                 {
                     this._textInput = value;
@@ -320,14 +324,16 @@ namespace Cryptool.Enigma
             get { return this._keyInput; }
             set
             {
+                if (!_isrunning)
+                {
+                    return;
+                }
                 this._keyInputConnected = true;
                 if (!String.IsNullOrEmpty(value) && value != this._keyInput)
                 {
                     this._keyInput = value;
                     this._newKey = true;
                     OnPropertyChanged("KeyInput");
-                    // TODO: uncomment
-                    //settings.HideAllBasicKeySettings();
                     _settings.SetKeySettings(value);
                 }
             }
@@ -416,18 +422,10 @@ namespace Cryptool.Enigma
 
         public void PostExecution()
         {
-            //LogMessage("Enigma shutting down. Reverting rotor positions to inial value!", NotificationLevel.Info);
-            /*if (_savedInitialRotorPos != null && _savedInitialRotorPos.Length > 0)
-            {
-                _settings.InitialRotorPos = _savedInitialRotorPos;
-            }*/
-
-
-            this._keyInput = String.Empty;
-            this._textInput = String.Empty;
-            this._newKey = false;
-            this._newText = false;
-
+            _keyInput = String.Empty;
+            _textInput = String.Empty;
+            _newKey = false;
+            _newText = false;
             _running = false;
             _isrunning = false;
             _enigmaPresentationFrame.ChangeStatus(_isrunning, _enigmaPresentationFrame.EnigmaPresentation.IsVisible);
@@ -442,12 +440,10 @@ namespace Cryptool.Enigma
 
         public void Initialize()
         {
-            //LogMessage("Initializing..", NotificationLevel.Debug);
         }
 
         public void Dispose()
         {
-            //LogMessage("Dispose", NotificationLevel.Debug);
         }
         
         /// <summary>
