@@ -77,7 +77,7 @@
                 <Image Stretch="Fill" Source="/Startcenter;component/browser.png" />
             </Button.Content>
         </Button>
-        <TextBlock Grid.Column="1" Grid.Row="6" Text="{Loc Visit_official_YouTube_channel}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        <TextBlock Grid.Column="1" Grid.Row="6" Text="{Loc Visit_the_official_CrypTool_2_0_website_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
         <Button Grid.Column="0" Grid.Row="7" Click="YouTubeButton_Click">
             <Button.Content>
                 <Image Stretch="Fill" Source="/Startcenter;component/youtube.png" />
