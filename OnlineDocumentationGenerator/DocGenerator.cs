@@ -12,6 +12,8 @@ using Cryptool.PluginBase.Miscellaneous;
 using OnlineDocumentationGenerator.DocInformations;
 using OnlineDocumentationGenerator.Generators;
 using Cryptool.PluginBase.Attributes;
+using OnlineDocumentationGenerator.Generators.HtmlGenerator;
+using OnlineDocumentationGenerator.Utils;
 
 namespace OnlineDocumentationGenerator
 {
@@ -104,11 +106,13 @@ namespace OnlineDocumentationGenerator
             }
             templateDir.SubDirectories.Sort(CompareTemplateDirectories);
 
+            var templatePath = new DirectoryInfo(Path.Combine(generator.OutputDir, OnlineHelp.HelpDirectory, OnlineHelp.RelativeTemplateDocDirectory));
             foreach (var file in directory.GetFiles().Where(x => (x.Extension.ToLower() == ".cwm")))
             {
                 try
                 {
-                    var templatePage = new TemplateDocumentationPage(file.FullName, subdir, templateDir);
+                    var relTemplateFilePath = RelativePaths.GetRelativePath(file, templatePath);
+                    var templatePage = new TemplateDocumentationPage(file.FullName, relTemplateFilePath, subdir, templateDir);
                     if (templatePage.RelevantPlugins != null)
                     {
                         foreach (var relevantPlugin in templatePage.RelevantPlugins)

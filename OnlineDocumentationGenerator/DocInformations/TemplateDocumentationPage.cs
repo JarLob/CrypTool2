@@ -44,25 +44,29 @@ namespace OnlineDocumentationGenerator.DocInformations
             get { return (LocalizedTemplateDocumentationPage) base.CurrentLocalization; }
         }
 
-        public TemplateDocumentationPage(string templateFile, string relativeTemplateDirectory, TemplateDirectory templateDir)
+        public TemplateDocumentationPage(
+            string templateFilePath, 
+            string relativeTemplateFilePath, 
+            string relativeTemplateDirectory, 
+            TemplateDirectory templateDir)
         {
             _relativeTemplateDirectory = relativeTemplateDirectory;
-            TemplateFile = templateFile;
+            TemplateFile = relativeTemplateFilePath;
             TemplateDir = templateDir;
             
-            string templateXMLFile = Path.Combine(Path.GetDirectoryName(templateFile), Path.GetFileNameWithoutExtension(templateFile) + ".xml");
+            string templateXMLFile = Path.Combine(Path.GetDirectoryName(templateFilePath), Path.GetFileNameWithoutExtension(templateFilePath) + ".xml");
             if (!File.Exists(templateXMLFile))
-                throw new Exception(string.Format("Missing meta infos for template {0}!", templateFile));
+                throw new Exception(string.Format("Missing meta infos for template {0}!", templateFilePath));
 
             TemplateXML = XElement.Load(templateXMLFile);
 
             BitmapFrame icon = null;
             if (TemplateXML.Element("icon") != null && TemplateXML.Element("icon").Attribute("file") != null)
             {
-                var iconFile = Path.Combine(Path.GetDirectoryName(templateFile), TemplateXML.Element("icon").Attribute("file").Value);
+                var iconFile = Path.Combine(Path.GetDirectoryName(templateFilePath), TemplateXML.Element("icon").Attribute("file").Value);
                 if (iconFile == null || !File.Exists(iconFile))
                 {
-                    iconFile = Path.Combine(Path.GetDirectoryName(templateFile), Path.GetFileNameWithoutExtension(templateFile) + ".png");
+                    iconFile = Path.Combine(Path.GetDirectoryName(templateFilePath), Path.GetFileNameWithoutExtension(templateFilePath) + ".png");
                 }
                 if (File.Exists(iconFile))
                 {
