@@ -1,5 +1,5 @@
 ﻿/*                              
-   Copyright 2009 Team CrypTool (Sven Rech,Dennis Nolte,Raoul Falk,Nils Kopal), Uni Duisburg-Essen
+   Copyright Armin Krauss, Martin Franz
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-
 using System;
 using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.PluginBase;
