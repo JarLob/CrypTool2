@@ -36,7 +36,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private const int MaxBestListEntries = 100;
         private int _keylength = 0;
         private string PlainAlphabetText = null; //obtained by language statistics
-        private string CipherAlphabetText = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖabcdefghijklmnopqrstuvwxyzäüöß1234567890ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩАБВГДЂЕЄЖЗЅИІЈКЛЉМНЊОПРСТЋУФХЦЧЏШЪЫЬЭЮЯ!§$%&=?#ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㄲㄸㅃㅆㅉㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣㅐㅒㅔㅖㅚㅟㅢㅘㅝㅙㅞ";
+        private string CipherAlphabetText;// = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖabcdefghijklmnopqrstuvwxyzäüöß1234567890ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩАБВГДЂЕЄЖЗЅИІЈКЛЉМНЊОПРСТЋУФХЦЧЏШЪЫЬЭЮЯ!§$%&=?#ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㄲㄸㅃㅆㅉㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣㅐㅒㅔㅖㅚㅟㅢㅘㅝㅙㅞ";
         private HillClimber _hillClimber;
         private WordFinder _wordFinder;
         private SymbolLabel[,] _ciphertextLabels = new SymbolLabel[0,0];
@@ -65,7 +65,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public HomophoneSubstitutionAnalyzerPresentation()
         {
             InitializeComponent();
-            DisableUIAndStop();            
+            DisableUIAndStop();
+
+            //create ciphertext alphabet symbols
+            StringBuilder builder = new StringBuilder();            
+            for (int i = 41; i < 1041; i++)
+            {
+                builder.Append((char)i);
+            }
+            CipherAlphabetText = builder.ToString();
         }
 
         /// <summary>
@@ -207,7 +215,14 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     label.X = x;
                     label.Y = y;
                     label.SymbolOffset = offset;
-                    label.Symbol = text.Substring(offset, 1);
+                    if (offset < text.Length)
+                    {
+                        label.Symbol = text.Substring(offset, 1);
+                    }
+                    else
+                    {
+                        label.Symbol = "?";
+                    }
                     _ciphertextLabels[x, y] = label;
                     label.Width = 30  + (_originalCiphertextSymbols[offset].Length  - 1) * 5;
                     label.Height = 30;
