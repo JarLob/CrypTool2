@@ -23,11 +23,6 @@
         </crypanalysisviewcontrol:CrypAnalysisViewControl.ResultHeaderLabels>
 
         <crypanalysisviewcontrol:CrypAnalysisResultListView ItemsSource="{Binding}" ResultItemAction="HandleResultItemAction">
-            <crypanalysisviewcontrol:CrypAnalysisResultListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                </Style>
-            </crypanalysisviewcontrol:CrypAnalysisResultListView.ItemContainerStyle>
             <crypanalysisviewcontrol:CrypAnalysisResultListView.View>
                 <GridView>
                     <GridViewColumn Header="#" Width="20">
@@ -46,7 +41,7 @@
                     </GridViewColumn>
                     <GridViewColumn Header="{Loc KeyHeader}" DisplayMemberBinding="{Binding Path=Key}" Width="180" />
                     <GridViewColumn Header="{Loc TextHeader}" DisplayMemberBinding="{Binding Path=Text}" Width="170" />
-                    <GridViewColumn x:Name="Test" Header="{Loc ElapsedHeader}" 
+                    <GridViewColumn Header="{Loc ElapsedHeader}" 
                                     Width="{Binding Settings.AdvancedBestListView, ElementName=presentation, Converter={StaticResource GridViewColumnVisibilityConverter}, ConverterParameter=Auto}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>

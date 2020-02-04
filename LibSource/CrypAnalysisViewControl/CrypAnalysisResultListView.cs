@@ -33,6 +33,7 @@ namespace Cryptool.CrypAnalysisViewControl
             //Add mouse double click event handler to item style:
             var itemContainerStyle = new Style(typeof(ListViewItem), ItemContainerStyle);
             itemContainerStyle.Setters.Add(new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler(ItemDoubleClickHandler)));
+            itemContainerStyle.Setters.Add(new Setter(HorizontalContentAlignmentProperty, HorizontalAlignment.Stretch));
             ItemContainerStyle = itemContainerStyle;
         }
 
