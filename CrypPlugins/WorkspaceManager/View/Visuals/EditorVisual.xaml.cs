@@ -1904,52 +1904,59 @@ namespace WorkspaceManager.View.Visuals
 
         void WindowPreviewMouseMove(object sender, MouseEventArgs e)
         {
-            if (!_usagePopup.IsOpen)
+            try
             {
-                if (startDragPoint != null && e.LeftButton == MouseButtonState.Pressed)
+                if (!_usagePopup.IsOpen)
                 {
-                    startedSelection = true;
-                    Point currentPoint = Util.MouseUtilities.CorrectGetPosition(panel);
-                    Vector delta = Point.Subtract((Point)startDragPoint, currentPoint);
-                    delta.Negate();
-                    selectRectGeometry.Rect = new Rect((Point)startDragPoint, delta);
-                    selectionPath.Data = selectRectGeometry;
-
-                    List<UIElement> items = new List<UIElement>();
-
-                    foreach (var element in ComponentCollection)
+                    if (startDragPoint != null && e.LeftButton == MouseButtonState.Pressed)
                     {
-                        Rect elementRect = new Rect(element.Position, new Size(element.ActualWidth, element.ActualHeight));
-                        if (selectRectGeometry.Rect.IntersectsWith(elementRect))
-                            items.Add(element);
-                        else
-                            items.Remove(element);
-                    }
+                        startedSelection = true;
+                        Point currentPoint = Util.MouseUtilities.CorrectGetPosition(panel);
+                        Vector delta = Point.Subtract((Point)startDragPoint, currentPoint);
+                        delta.Negate();
+                        selectRectGeometry.Rect = new Rect((Point)startDragPoint, delta);
+                        selectionPath.Data = selectRectGeometry;
 
-                    foreach (var line in PathCollection)
-                    {
-                        foreach (var ft in line.Line.PointList)
+                        List<UIElement> items = new List<UIElement>();
+
+                        foreach (var element in ComponentCollection)
                         {
-                            Rect elementRect = new Rect(ft.From, ft.To);
+                            Rect elementRect = new Rect(element.Position, new Size(element.ActualWidth, element.ActualHeight));
                             if (selectRectGeometry.Rect.IntersectsWith(elementRect))
-                            {
-                                items.Add(line);
-                                break;
-                            }
+                                items.Add(element);
                             else
-                                items.Remove(line);
+                                items.Remove(element);
                         }
+
+                        foreach (var line in PathCollection)
+                        {
+                            foreach (var ft in line.Line.PointList)
+                            {
+                                Rect elementRect = new Rect(ft.From, ft.To);
+                                if (selectRectGeometry.Rect.IntersectsWith(elementRect))
+                                {
+                                    items.Add(line);
+                                    break;
+                                }
+                                else
+                                    items.Remove(line);
+                            }
+                        }
+
+                        // if Control is pressed, add new items to selection, otherwise replace selection with new items
+                        if ((Keyboard.Modifiers & ModifierKeys.Control) != ModifierKeys.None)
+                            foreach (var x in SelectedItems)
+                                if (!items.Contains(x)) items.Add(x);
+
+                        SelectedItems = items.ToArray();
+
+                        return;
                     }
-
-                    // if Control is pressed, add new items to selection, otherwise replace selection with new items
-                    if ((Keyboard.Modifiers & ModifierKeys.Control) != ModifierKeys.None)
-                        foreach (var x in SelectedItems)
-                            if (!items.Contains(x)) items.Add(x);
-
-                    SelectedItems = items.ToArray();
-
-                    return;
                 }
+            }
+            catch (Exception)
+            {
+                //do nothing, in case there is nothing selected
             }
         }
 
