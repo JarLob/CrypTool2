@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Data;
@@ -12,8 +13,22 @@ namespace KeySearcher.Converter
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var bytes = (byte[])value;
-            return Regex.Replace(Encoding.UTF8.GetString(bytes), @"\r\n?|\n", ""); 
+            string input;
+            if (value is byte[])
+            {
+                input = Encoding.UTF8.GetString((byte[])value);
+            }
+            else if (value is string)
+            {
+                input = (string)value;
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+
+            input = new string(input.Where(c => !char.IsControl(c)).ToArray());
+            return Regex.Replace(input, @"\r\n?|\n", ""); 
         }
          
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

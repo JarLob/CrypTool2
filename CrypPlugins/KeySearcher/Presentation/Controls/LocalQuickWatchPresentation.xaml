@@ -2,9 +2,14 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:properties="clr-namespace:KeySearcher.Properties"
+    xmlns:con="clr-namespace:KeySearcher.Converter"
     xmlns:crypanalysisviewcontrol="clr-namespace:Cryptool.CrypAnalysisViewControl;assembly=CrypAnalysisViewControl"
     x:Name="LocalQuickWatch">
-    
+
+    <UserControl.Resources>
+        <con:ByteArrayToUtf8StringConverter x:Key="ByteArrayToUtf8StringConverter" />
+    </UserControl.Resources>
+
     <crypanalysisviewcontrol:CrypAnalysisViewControl ResultHeaderCaption="{x:Static properties:Resources.Local_}" ResultListCaption="{x:Static properties:Resources.Top_Ten_}">
         <crypanalysisviewcontrol:CrypAnalysisViewControl.ResultHeaderLabels>
             <crypanalysisviewcontrol:ViewLabel Caption="{x:Static properties:Resources.Start_}" x:Name="StartTime" />
@@ -52,7 +57,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{x:Static properties:Resources.Text}" DisplayMemberBinding="{Binding Path=Text}">
+                    <GridViewColumn Header="{x:Static properties:Resources.Text}" DisplayMemberBinding="{Binding Path=Text, Converter={StaticResource ByteArrayToUtf8StringConverter}}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
