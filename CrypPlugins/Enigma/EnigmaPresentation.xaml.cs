@@ -2151,19 +2151,26 @@ namespace Cryptool.Enigma
         {
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                storyboard1.Stop();
-                storyboard.Stop();
-                
-                resetkey();
-                stop = true;
-                inputPanel.Children.Clear();
-                outputPanel.Children.Clear();
-                inputcounter = 0;
-                everythingblack();
-                access = true;
-                input = "";
-                playbool = false;
-                newInput(this, EventArgs.Empty);
+                try
+                {
+                    storyboard1.Stop();
+                    storyboard.Stop();
+
+                    resetkey();
+                    stop = true;
+                    inputPanel.Children.Clear();
+                    outputPanel.Children.Clear();
+                    inputcounter = 0;
+                    everythingblack();
+                    access = true;
+                    input = "";
+                    playbool = false;
+                    newInput(this, EventArgs.Empty);
+                }
+                catch (Exception ex)
+                {
+                    Enigma.LogMessage(string.Format("Exception occured during stopclick-method: {0}", ex.Message), NotificationLevel.Warning);
+                }
             }, null);
         }
 
