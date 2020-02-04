@@ -149,9 +149,10 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                 {
                     var locTemplate = templateDocumentationPage.CurrentLocalization;
                     var description = _objectConverter.Convert(locTemplate.SummaryOrDescription, templateDocumentationPage);
-                    description = description.Replace("../", ""); //correct relative paths in images                
-                    stringBuilder.AppendLine(string.Format("<tr class=\"filterable\"><td>&nbsp;</td><td><div class=\"boximage\"><img src=\"{0}\"></div></td><td><a href=\"{1}\">{2}</a></td><td>{3}</td></tr>", 
-                        templateDocumentationPage.Icon, locTemplate.FilePath, locTemplate.Name, description));
+                    description = description.Replace("../", ""); //correct relative paths in images
+                    var iconPath = Path.Combine(templateDocumentationPage.DocDirPath, $"{templateDocumentationPage.Name}.png");
+                    stringBuilder.AppendLine(string.Format("<tr class=\"filterable\"><td>&nbsp;</td><td><div class=\"boximage\"><img src=\"{0}\"></div></td><td><a href=\"{1}\">{2}</a></td><td>{3}</td></tr>",
+                        iconPath, locTemplate.FilePath, locTemplate.Name, description));
                 }
             }
 
@@ -208,8 +209,11 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                     var locTemplate = templateDocumentationPage.CurrentLocalization;
                     var description = _objectConverter.Convert(locTemplate.SummaryOrDescription, templateDocumentationPage);
                     var spaces = String.Join("", Enumerable.Range(0, categories.Count - 1).Select(x => "&nbsp;&nbsp;"));
-                    description = description.Replace("../", ""); //correct relative paths in images                
-                    stringBuilder.AppendLine(string.Format("<tr><td>{0}</td><td><div class=\"boximage\"><img src=\"{1}\"></div></td><td><a href=\"{2}\">{3}</a></td><td>{4}</td></tr>", spaces, templateDocumentationPage.Icon, locTemplate.FilePath, locTemplate.Name, description));
+                    description = description.Replace("../", ""); //correct relative paths in images
+                    var iconPath = Path.Combine(templateDocumentationPage.DocDirPath, $"{templateDocumentationPage.Name}.png");
+                    stringBuilder.AppendLine(
+                        string.Format("<tr><td>{0}</td><td><div class=\"boximage\"><img src=\"{1}\"></div></td><td><a href=\"{2}\">{3}</a></td><td>{4}</td></tr>",
+                        spaces, iconPath, locTemplate.FilePath, locTemplate.Name, description));
                 }
 
                 stringBuilder.AppendLine("</table><p>");
