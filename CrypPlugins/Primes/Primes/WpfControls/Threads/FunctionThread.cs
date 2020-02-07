@@ -70,7 +70,7 @@ namespace Primes.WpfControls.Threads
                     }
 
                     PrimesBigInteger i = m_From;
-                    while (i.CompareTo(fe.Range.To) <= 0 && !HasTerminateRequest())
+                    while (i.CompareTo(fe.Range.To + inci - 1) <= 0 && !HasTerminateRequest())
                     //for (long i = m_From; i <= fe.Range.To * factor || !HasTerminateRequest(); i += inci)
                     {
                         Boolean awokenByTerminate = SuspendIfNeeded();

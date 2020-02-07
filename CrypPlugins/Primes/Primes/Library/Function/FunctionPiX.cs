@@ -57,6 +57,8 @@ namespace Primes.Library.Function
 
         private long m_Counter = 0;
 
+        private (long input, long output) lastCalc;
+
         public double Execute(double input)
         {
             long value = (long)input;
@@ -88,6 +90,14 @@ namespace Primes.Library.Function
             }
 
             if (PrimesBigInteger.ValueOf(m_LastNumber).IsPrime(10)) m_LastNumber++;
+
+            if (m_LastNumber < lastCalc.input && value > lastCalc.input)
+            {
+                //Reuse result of last calculation:
+                m_LastNumber = lastCalc.input + 1;
+                m_Counter = lastCalc.output;
+            }
+
             while (m_LastNumber < value)
             {
                 if (PrimesBigInteger.ValueOf(m_LastNumber).IsPrime(10))
@@ -105,6 +115,7 @@ namespace Primes.Library.Function
             m_LastNumber = value;
             if (Executed != null) Executed(m_Counter);
 
+            lastCalc = (value, m_Counter);
             return m_Counter;
         }
 
