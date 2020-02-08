@@ -20,6 +20,8 @@ using System.Windows.Threading;
 using System.Windows.Media;
 using Primes.WpfControls.PrimesDistribution.Graph;
 using Primes.Bignum;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Primes.WpfControls.Threads
 {
@@ -127,11 +129,14 @@ namespace Primes.WpfControls.Threads
             PrimesBigInteger incX = PrimesBigInteger.One;
             PrimesBigInteger inci = PrimesBigInteger.One;
             PrimesBigInteger div = (fe.Range.RangeAmount.CompareTo(PrimesBigInteger.ValueOf(10000)) > 0) ? PrimesBigInteger.Ten : PrimesBigInteger.OneHundred;
+            bool approximate = (fe.Range.RangeAmount.CompareTo(PrimesBigInteger.ValueOf(10000)) > 0);
             if (fe.Range.RangeAmount.CompareTo(PrimesBigInteger.ValueOf(1000)) > 0 && fe.Function.CanEstimate)
             {
                 inci = fe.Range.RangeAmount.Divide(div);
                 incX = inci;
             }
+
+            var lineSegments = new List<LineParameters>();
 
             PrimesBigInteger i = m_From;
             while (inci > 0 && i.CompareTo(fe.Range.To) <= 0 && !HasTerminateRequest())
@@ -167,11 +172,13 @@ namespace Primes.WpfControls.Threads
                         {
                             x2 -= double.Parse(incX.ToString());
                         }
-                        if (!DrawLine(x1, x2, formerY, y, fe.Color, fe.Function)) break;
+                        lineSegments.Add(new LineParameters(x1, x2, formerY, y, fe.Color, fe.Function));
+                        //if (!DrawLine(x1, x2, formerY, y, fe.Color, fe.Function)) break;
                         if (drawstair)
                         {
                             x2 += double.Parse(incX.ToString());
-                            if (!DrawLine(x1, x2, y, y, fe.Color, fe.Function)) break;
+                            lineSegments.Add(new LineParameters(x1, x2, y, y, fe.Color, fe.Function));
+                            //if (!DrawLine(x1, x2, y, y, fe.Color, fe.Function)) break;
                         }
                     }
 
@@ -184,13 +191,50 @@ namespace Primes.WpfControls.Threads
                     incX = inci;
                 }
                 i = i.Add(inci);
+
+                if (lineSegments.Count > 10 * div)
+                {
+                    DrawLines(lineSegments, approximate);
+                    lineSegments.Clear();
+                }
+            }
+
+            DrawLines(lineSegments, approximate);
+        }
+
+        private bool DrawLines_Internal(IEnumerable<LineParameters> lineParameters)
+        {
+            foreach (var lineParameter in lineParameters)
+            {
+                if (!m_DrawLine(lineParameter).BoolValue)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private bool DrawLines(IEnumerable<LineParameters> lineParameters, bool approximate)
+        {
+            if (approximate)
+            {
+                var first = lineParameters.First();
+                var last = lineParameters.Last();
+                return DrawLine(first.X1, last.X2, first.Y1, last.Y2, first.Color, first.Function);
+            }
+            else
+            {
+                return (bool)this.m_Dispatcher.Invoke(
+                    DispatcherPriority.Send,
+                    new Func<IEnumerable<LineParameters>, bool>(DrawLines_Internal),
+                    lineParameters);
             }
         }
 
         private bool DrawLine(double x1, double x2, double formerY, double y, Brush color, IFunction function)
         {
             LineParameters lineparams = new LineParameters(x1, x2, formerY, y, color, function);
-            BoolWrapper result = this.m_Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Send, m_DrawLine, lineparams) as BoolWrapper;
+            BoolWrapper result = this.m_Dispatcher.Invoke(DispatcherPriority.Send, m_DrawLine, lineparams) as BoolWrapper;
             return (result != null) ? result.BoolValue : false;
         }
     }

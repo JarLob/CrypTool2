@@ -27,6 +27,7 @@ using Primes.WpfControls.Validation;
 using Primes.Bignum;
 using Primes.WpfControls.Components;
 using Primes.WpfControls.Threads;
+using System.Threading.Tasks;
 
 namespace Primes.WpfControls.PrimesDistribution.Graph
 {
@@ -132,8 +133,22 @@ namespace Primes.WpfControls.PrimesDistribution.Graph
             SetInfo(tbInfoLin, obj);
         }
 
-        void m_FunctionPix_Executed(object obj)
+        private int functionPixExecutedSeqNo;
+
+        async void m_FunctionPix_Executed(object obj)
         {
+            var thisSeqNo = ++functionPixExecutedSeqNo;
+            if (thisSeqNo % 1000 > 0)
+            {
+                //Optimization: Wait a little bit and only proceed if this method has not been called again in the meantime:
+                await Task.Delay(TimeSpan.FromSeconds(0.2));
+                if (thisSeqNo != functionPixExecutedSeqNo)
+                {
+                    //Method has been called in the meantime (with more recent infos), so we don't do anything:
+                    return;
+                }
+            }
+
             if (PrimesCountList.Initialzed && m_To.LongValue <= PrimesCountList.MaxNumber)
             {
                 ControlHandler.SetPropertyValue(lblCalcInfoPiX, "Text", Primes.Resources.lang.WpfControls.Distribution.Distribution.graph_pincountinfo);
@@ -143,6 +158,7 @@ namespace Primes.WpfControls.PrimesDistribution.Graph
             {
                 SetInfo(tbInfoPiX, obj);
             }
+
         }
 
         void SetInfo(TextBlock tb, object value)
