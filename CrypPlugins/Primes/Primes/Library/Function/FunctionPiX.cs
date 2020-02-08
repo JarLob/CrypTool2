@@ -172,7 +172,7 @@ namespace Primes.Library.Function
 
         public double DrawTo
         {
-            get { return 10000; }
+            get { return double.PositiveInfinity; }
         }
 
         #endregion

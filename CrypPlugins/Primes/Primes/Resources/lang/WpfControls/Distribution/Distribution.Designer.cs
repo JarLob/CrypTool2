@@ -19,7 +19,7 @@ namespace Primes.Resources.lang.WpfControls.Distribution {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Distribution {
@@ -165,15 +165,6 @@ namespace Primes.Resources.lang.WpfControls.Distribution {
         public static string graph_pincountinfoCalculating {
             get {
                 return ResourceManager.GetString("graph_pincountinfoCalculating", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The exact step function is only displayed for values smaller than 10.000. All bigger values are merely calculated and printed here. ähnelt.
-        /// </summary>
-        public static string graph_pinlimitinfo {
-            get {
-                return ResourceManager.GetString("graph_pinlimitinfo", resourceCulture);
             }
         }
         

@@ -110,16 +110,6 @@ namespace Primes.WpfControls.PrimesDistribution.Graph
 
         void ircCountPrimes_KeyDown(PrimesBigInteger from, PrimesBigInteger to, PrimesBigInteger second)
         {
-            if (to.CompareTo(PrimesBigInteger.ValueOf(10000)) > 0)
-            {
-                lblInfoPixDontCalc.Visibility = Visibility.Visible;
-                cbPiX.IsEnabled = false;
-            }
-            else
-            {
-                lblInfoPixDontCalc.Visibility = Visibility.Collapsed;
-                cbPiX.IsEnabled = true;
-            }
         }
 
         void ircCountPrimes_Cancel()
@@ -207,7 +197,6 @@ namespace Primes.WpfControls.PrimesDistribution.Graph
             ControlHandler.SetPropertyValue(tbInfoLin, "Visibility", Visibility.Collapsed);
             ControlHandler.SetPropertyValue(tbInfoPiX, "Visibility", Visibility.Collapsed);
             ControlHandler.SetPropertyValue(tbInfoGaußPrimeTheorem, "Visibility", Visibility.Collapsed);
-            ControlHandler.SetPropertyValue(lblInfoPixDontCalc, "Visibility", Visibility.Collapsed);
 
             //EnabledButton(btnExec);
             //DisabledButton(btnCancel);
@@ -219,7 +208,6 @@ namespace Primes.WpfControls.PrimesDistribution.Graph
         private void ResetControls()
         {
             cbPiX.IsEnabled = true;
-            lblInfoPixDontCalc.Visibility = Visibility.Collapsed;
             ircCountPrimes.LockControls();
 
             //Info("", lblInfoFunction, tbCalculateFromBase);
@@ -295,8 +283,6 @@ namespace Primes.WpfControls.PrimesDistribution.Graph
 
             if (to.CompareTo(PrimesBigInteger.ValueOf(10000)) > 0)
             {
-                lblInfoPixDontCalc.Visibility = Visibility.Visible;
-
                 //cbPiX.IsEnabled = false;
                 //m_CountPixThread = new CountPiXThread(m_FunctionPix as FunctionPiX, this.Dispatcher, m_FunctionPix_Executed, m_To);
                 //m_CountPixThread.OnFunctionStart += new FunctionEvent(FunctionStart);
