@@ -70,8 +70,7 @@ namespace Primes.WpfControls.Threads
                     }
 
                     PrimesBigInteger i = m_From;
-                    while (i.CompareTo(fe.Range.To + inci - 1) <= 0 && !HasTerminateRequest())
-                    //for (long i = m_From; i <= fe.Range.To * factor || !HasTerminateRequest(); i += inci)
+                    while (inci > 0 && i.CompareTo(fe.Range.To) <= 0 && !HasTerminateRequest())
                     {
                         Boolean awokenByTerminate = SuspendIfNeeded();
 
@@ -96,29 +95,21 @@ namespace Primes.WpfControls.Threads
                             double y = fe.Function.Execute(param);
 
                             double x2 = x1 + double.Parse(incX.ToString());
+
                             if (fe.Function.DrawTo.Equals(double.PositiveInfinity) || x2 <= fe.Function.DrawTo)
                             {
-                                if (fe.FunctionType == FunctionType.STAIR)
-                                {
-                                    if (!formerY.Equals(y))
-                                    {
-                                        x2 -= double.Parse(incX.ToString());
-                                    }
-                                }
                                 if (!DrawLine(x1, x2, formerY, y, fe.Color, fe.Function)) break;
-
-                                if (fe.FunctionType == FunctionType.STAIR)
-                                {
-                                    if (!formerY.Equals(y))
-                                    {
-                                        x2 += double.Parse(incX.ToString());
-                                        if (!DrawLine(x1, x2, y, y, fe.Color, fe.Function)) break;
-                                    }
-                                }
                             }
 
                             x1 = x2;
                         }
+
+                        if (i.Add(inci).CompareTo(fe.Range.To) > 0)
+                        {
+                            inci = fe.Range.To.Subtract(i);
+                            incX = inci;
+                        }
+
                         i = i.Add(inci);
                     }
                 }
@@ -143,7 +134,7 @@ namespace Primes.WpfControls.Threads
             }
 
             PrimesBigInteger i = m_From;
-            while (i.CompareTo(fe.Range.To) <= 0 && !HasTerminateRequest())
+            while (inci > 0 && i.CompareTo(fe.Range.To) <= 0 && !HasTerminateRequest())
             {
                 Boolean awokenByTerminate = SuspendIfNeeded();
 
@@ -154,28 +145,44 @@ namespace Primes.WpfControls.Threads
                 }
 
                 double param = i.DoubleValue;
-
-                double formerY = fe.Function.FormerValue;
-                double y = fe.Function.Execute(param);
-
-                bool drawstair = !formerY.Equals(y) || formerY.Equals(double.NaN);
-                if (formerY.Equals(double.NaN)) formerY = y;
-                double x2 = x1 + double.Parse(incX.ToString());
-                if (fe.Function.DrawTo.Equals(double.PositiveInfinity) || (x2 <= fe.Function.DrawTo && x2 <= fe.Range.To.DoubleValue))
+                if (fe.Function.FormerValue.Equals(double.NaN))
                 {
-                    if (drawstair)
+                    try
                     {
-                        x2 -= double.Parse(incX.ToString());
+                        fe.Function.Execute(param);
                     }
-                    if (!DrawLine(x1, x2, formerY, y, fe.Color, fe.Function)) break;
-                    if (drawstair)
+                    catch (ResultNotDefinedException) { x1 += double.Parse(incX.ToString()); continue; }
+                }
+                else
+                {
+                    double formerY = fe.Function.FormerValue;
+                    double y = fe.Function.Execute(param);
+
+                    bool drawstair = !formerY.Equals(y) || formerY.Equals(double.NaN);
+                    if (formerY.Equals(double.NaN)) formerY = y;
+                    double x2 = x1 + double.Parse(incX.ToString());
+                    if (fe.Function.DrawTo.Equals(double.PositiveInfinity) || (x2 <= fe.Function.DrawTo && x2 <= fe.Range.To.DoubleValue))
                     {
-                        x2 += double.Parse(incX.ToString());
-                        if (!DrawLine(x1, x2, y, y, fe.Color, fe.Function)) break;
+                        if (drawstair)
+                        {
+                            x2 -= double.Parse(incX.ToString());
+                        }
+                        if (!DrawLine(x1, x2, formerY, y, fe.Color, fe.Function)) break;
+                        if (drawstair)
+                        {
+                            x2 += double.Parse(incX.ToString());
+                            if (!DrawLine(x1, x2, y, y, fe.Color, fe.Function)) break;
+                        }
                     }
+
+                    x1 = x2;
                 }
 
-                x1 = x2;
+                if (i.Add(inci).CompareTo(fe.Range.To) > 0)
+                {
+                    inci = fe.Range.To.Subtract(i);
+                    incX = inci;
+                }
                 i = i.Add(inci);
             }
         }
