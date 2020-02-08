@@ -104,7 +104,7 @@
                             <ScaleTransform ScaleX="{Binding ElementName=sliderTest, Path=Value}" ScaleY="{Binding ElementName=sliderTest, Path=Value}" />
                         </TransformGroup>
                     </Viewbox.LayoutTransform>
-                    <Canvas Margin="30,10,10,10" Name="PaintArea">
+                    <Canvas Margin="30,10,10,20" Name="PaintArea">
                         <graph:CartesianPlane x:Name="cgraph" />
                     </Canvas>
                 </Viewbox>
