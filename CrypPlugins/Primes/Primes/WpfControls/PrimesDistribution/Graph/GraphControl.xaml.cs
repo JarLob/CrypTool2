@@ -140,8 +140,9 @@ namespace Primes.WpfControls.PrimesDistribution.Graph
             var thisSeqNo = ++functionPixExecutedSeqNo;
             if (thisSeqNo % 1000 > 0)
             {
-                //Optimization: Wait a little bit and only proceed if this method has not been called again in the meantime:
-                await Task.Delay(TimeSpan.FromSeconds(0.2));
+                //Optimization: Immediately return process control back to caller and only proceed with rest of method
+                //later if this method has not been called again in the meantime:
+                await Task.Yield();
                 if (thisSeqNo != functionPixExecutedSeqNo)
                 {
                     //Method has been called in the meantime (with more recent infos), so we don't do anything:
