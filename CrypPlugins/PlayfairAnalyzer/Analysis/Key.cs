@@ -199,10 +199,13 @@ namespace PlayfairAnalysis
             StringBuilder ps = new StringBuilder();
             for (int i = 0; i < Playfair.SQUARE; i += Playfair.DIM)
             {
+                //Do not append | character here, because CT2 uses "flat" notation for keys
+                /*
                 if (i != 0)
                 {
                     ps.Append("|");
                 }
+                */
                 ps.Append(s.Substring(i, Playfair.DIM));
             }
             if (keyword.Length == 0)
