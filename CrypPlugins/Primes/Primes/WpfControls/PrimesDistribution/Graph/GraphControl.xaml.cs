@@ -275,6 +275,7 @@ namespace Primes.WpfControls.PrimesDistribution.Graph
                 m_FunctionLiN.Reset();
             }
 
+            m_FunctionLiN.MaxValue = to.DoubleValue;
             if (m_To != to)
             {
                 m_To = to;
@@ -283,7 +284,6 @@ namespace Primes.WpfControls.PrimesDistribution.Graph
                 tbInfoLin.Text = "";
             }
 
-            m_FunctionLiN.MaxValue = to.DoubleValue;
             cgraph.RangeX = new RangeX(from, to);
 
             string strFrom = Convert.ToInt32(Math.Floor(m_RangeYFrom)).ToString();
