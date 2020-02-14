@@ -9,7 +9,7 @@
   <keywords>FF1, FF2, FF3, DFF, FPE</keywords>
   <icon file="Format Preserving Encryption.png" />
   <relevantPlugins>
-    <plugin name="Format Preserving Encryption" />
+    <plugin name="FormatPreservingEncryption" />
   </relevantPlugins>
   <replacements lang="en">
     <replacement key="$Alphabet$" value="Alphabet" />
