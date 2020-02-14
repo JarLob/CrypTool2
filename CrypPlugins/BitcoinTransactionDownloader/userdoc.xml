@@ -169,7 +169,7 @@
     <linkReference>
       <link url="https://en.bitcoin.it/wiki/Running_Bitcoin" lang="de-DE" />
       <caption lang="de-DE">Detaillierte Erklärung der konfigurationsdatei</caption>
-      <link url="https://en.bitcoin.it/wiki/Running_Bitcoin" lang="eb" />
+      <link url="https://en.bitcoin.it/wiki/Running_Bitcoin" lang="en" />
       <caption lang="en">Detailed explanation of the configuration file</caption>
     </linkReference>
   </references>
