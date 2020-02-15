@@ -259,8 +259,8 @@
   <data name="FL_P_numbertheoryfunctions" xml:space="preserve">
     <value>Number theory\ Number-theoretic functions</value>
   </data>
-  <data name="FL_P_powering" xml:space="preserve">
-    <value>Number theory\ Powering</value>
+  <data name="FL_P_powering_iteratingexponent" xml:space="preserve">
+    <value>Number theory\ Powering (iterating exponent)</value>
   </data>
   <data name="FL_P_primegeneration" xml:space="preserve">
     <value>Generation of primes\ Generation of primes</value>
@@ -273,5 +273,8 @@
   </data>
   <data name="FL_P_ulam" xml:space="preserve">
     <value>Distribution of primes\ Ulam's spiral</value>
+  </data>
+  <data name="FL_P_powering_iteratingbase" xml:space="preserve">
+    <value>Number theory\ Powering (iterating base)</value>
   </data>
 </root>

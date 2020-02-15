@@ -19,7 +19,7 @@ namespace Primes.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -265,11 +265,20 @@ namespace Primes.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Number theory\ Powering ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number theory\ Powering (iterating base) ähnelt.
         /// </summary>
-        internal static string FL_P_powering {
+        internal static string FL_P_powering_iteratingbase {
             get {
-                return ResourceManager.GetString("FL_P_powering", resourceCulture);
+                return ResourceManager.GetString("FL_P_powering_iteratingbase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number theory\ Powering (iterating exponent) ähnelt.
+        /// </summary>
+        internal static string FL_P_powering_iteratingexponent {
+            get {
+                return ResourceManager.GetString("FL_P_powering_iteratingexponent", resourceCulture);
             }
         }
         
@@ -423,6 +432,7 @@ namespace Primes.Properties {
         ///		  {
         ///		  	font-family:Arial,Verdana,Georgia;
         ///		  	font-size:smaller;
+        ///            background-color: #EBEFF6;
         ///		  }
         ///		&lt;/style&gt;
         ///	&lt;/head&gt;
@@ -432,8 +442,7 @@ namespace Primes.Properties {
         ///  &lt;p align=&quot;justify&quot;&gt;
         ///
         ///  This component gives an overview over the properties and applications of prime numbers.&lt;br /&gt;
-        ///  A prime number is a natural number &gt;= 2, which is divisible only by 1 and itself.
-        ///  So prime nu [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///  A prime number is a natural number &gt;= 2, which is divisi [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string Start {
             get {
@@ -462,6 +471,7 @@ namespace Primes.Properties {
         ///		  {
         ///		  	font-family:Arial,Verdana,Georgia;
         ///		  	font-size:smaller;
+        ///            background-color: #EBEFF6;
         ///		  }
         ///		&lt;/style&gt;
         ///	&lt;/head&gt;

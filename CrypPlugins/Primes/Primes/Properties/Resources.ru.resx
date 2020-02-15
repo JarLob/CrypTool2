@@ -274,4 +274,10 @@
   <data name="FL_P_ulam" xml:space="preserve">
     <value>Распространение простых чисел \ Улама</value>
   </data>
+  <data name="FL_P_powering_iteratingbase" xml:space="preserve">
+    <value>Number theory\ Powering (iterating base)</value>
+  </data>
+  <data name="FL_P_powering_iteratingexponent" xml:space="preserve">
+    <value>Number theory\ Powering (iterating exponent)</value>
+  </data>
 </root>

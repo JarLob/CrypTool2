@@ -256,9 +256,6 @@
   <data name="FL_P_numbertheoryfunctions" xml:space="preserve">
     <value>Zahlentheorie\ Zahlentheoretische Funktionen</value>
   </data>
-  <data name="FL_P_powering" xml:space="preserve">
-    <value>Zahlentheorie\ Potenzieren</value>
-  </data>
   <data name="FL_P_primegeneration" xml:space="preserve">
     <value>Erzeugung von Primzahlen\ Erzeugung von Primzahlen</value>
   </data>
@@ -273,5 +270,11 @@
   </data>
   <data name="template" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\onlinehelp\helpfiles\template.de.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="FL_P_powering_iteratingbase" xml:space="preserve">
+    <value>Number theory\ Potenzieren (laufende Basis)</value>
+  </data>
+  <data name="FL_P_powering_iteratingexponent" xml:space="preserve">
+    <value>Number theory\ Potenzieren (laufender Exponent)</value>
   </data>
 </root>
