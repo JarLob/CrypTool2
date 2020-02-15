@@ -5,10 +5,12 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Xml.Linq;
+using System.Text.RegularExpressions;
 using Cryptool.Core;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Editor;
 using Cryptool.PluginBase.Miscellaneous;
+using Cryptool.Core;
 using OnlineDocumentationGenerator.DocInformations;
 using OnlineDocumentationGenerator.Generators;
 using Cryptool.PluginBase.Attributes;
@@ -22,6 +24,7 @@ namespace OnlineDocumentationGenerator
         public static string TemplateDirectory = "Templates";
         public static string CommonDirectory = "Common";
         public static Dictionary<string, List<TemplateDocumentationPage>> RelevantComponentToTemplatesMap = new Dictionary<string, List<TemplateDocumentationPage>>();
+        public static Dictionary<string, Type> PluginInformations;
 
         public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
 
@@ -36,9 +39,38 @@ namespace OnlineDocumentationGenerator
             {
                 generator.OutputDir = baseDir;
 
+                PluginInformations = ReadPluginInformations();
+
                 var templatesDir = ReadTemplates(baseDir, "", null, generator);
                 ReadPlugins(generator);
                 ReadCommonDocPages(generator);
+
+                // check if the plugins listed in the relevantPlugins tag actually exist
+                foreach (var rc in RelevantComponentToTemplatesMap)
+                {
+                    if (!PluginInformations.Any(x => x.Value.Name == rc.Key))
+                    {
+                        // if plugin doesn't exist, try to find similar plugin names for correction suggestions
+                        string k = rc.Key.ToLower();
+                        
+                        var alternatives = PluginInformations
+                            .Select(x => x.Value.Name)
+                            .Where(x => (x = Regex.Replace(x, @"\s", "").ToLower()) == k ||
+                                        (x.Length >= 4 && k.StartsWith(x.Substring(0, 4))) ||
+                                        (k.Length >= 4 && x.StartsWith(k.Substring(0, 4))) ||
+                                        (x.Length >= 3 && k.Contains(x)) ||
+                                        (k.Length >= 3 && x.Contains(k))
+                                        )
+                            .Union(FuzzySearch.Search(rc.Key, PluginInformations.Select(x => x.Value.Name).ToList(), 0.7));
+                        string msg = $"Relevant plugin \"{rc.Key}\" not found. Referenced in: " + String.Join(", ", rc.Value.Select(e => $"\"{e.Name}\"")) + ".";
+                        
+                        if (alternatives.Any())
+                            msg += "\nDid you mean: " + String.Join(", ", alternatives.Select(x => $"\"{x}\"")) + " ?";
+
+                        GuiLogMessage(msg, NotificationLevel.Error);
+                        Console.WriteLine(msg);
+                    }
+                }
 
                 try
                 {
@@ -138,11 +170,11 @@ namespace OnlineDocumentationGenerator
             }
             return templateDir;
         }
-
-        private void ReadPlugins(Generator generator)
+        public static Dictionary<string, Type> ReadPluginInformations()
         {
-            //Translate the Ct2BuildType to a folder name for CrypToolStore plugins                
+            //Translate the Ct2BuildType to a folder name for CrypToolStore plugins
             string crypToolStoreSubFolder = "";
+
             switch (AssemblyHelper.BuildType)
             {
                 case Ct2BuildType.Developer:
@@ -161,8 +193,13 @@ namespace OnlineDocumentationGenerator
                     crypToolStoreSubFolder = "Developer";
                     break;
             }
+
             var pluginManager = new PluginManager(null, crypToolStoreSubFolder);
-            foreach (Type type in pluginManager.LoadTypes(AssemblySigningRequirement.LoadAllAssemblies).Values)
+            return pluginManager.LoadTypes(AssemblySigningRequirement.LoadAllAssemblies);
+        }
+        private void ReadPlugins(Generator generator)
+        {
+            foreach (Type type in PluginInformations.Values)
             {
                 if (type.GetPluginInfoAttribute() != null)
                 {
