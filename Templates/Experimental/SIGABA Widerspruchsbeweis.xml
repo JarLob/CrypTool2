@@ -16,8 +16,8 @@
   <relevantPlugins>
     <plugin name="TextInput" />
     <plugin name="TextOutput" />
-    <plugin name="Keysearcher" />
+    <plugin name="KeySearcher" />
     <plugin name="Sigaba" />
-    <plugin name="SIgabaKnownPlaintext" />
+    <plugin name="SigabaKnownPlaintext" />
   </relevantPlugins>
 </sample>

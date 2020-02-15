@@ -16,7 +16,7 @@
   <relevantPlugins>
     <plugin name="ADFGVX" />
     <plugin name="Dictionary" />
-    <plugin name="Costfunction" />
+    <plugin name="CostFunction" />
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$Plaintext$" value="Klartext" />

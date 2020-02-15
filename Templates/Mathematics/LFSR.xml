@@ -14,7 +14,7 @@
   <keywords lang="de">rückkopplung</keywords>
   <icon file="LFSR.png" />
   <relevantPlugins>
-    <plugin name="LFSR" />
+    <plugin name="LFSRComponent" />
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$states$" value="Interne Zustände" />

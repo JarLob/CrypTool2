@@ -16,7 +16,7 @@
   <relevantPlugins>
     <plugin name="AES" />
     <plugin name="SHA" />
-    <plugin name="Comparator" />
+    <plugin name="Comparators" />
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$Plaintext$" value="Klartext" />

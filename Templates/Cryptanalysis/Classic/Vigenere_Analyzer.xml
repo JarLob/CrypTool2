@@ -15,7 +15,7 @@
   <icon file="Vigenere_Analyzer.png" />
   <relevantPlugins>
     <plugin name="Vigenere" />
-    <plugin name="VigenereAutokeyAnalyser" />
+    <plugin name="VigenereAnalyzer" />
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$Ciphertext$" value="Geheimtext" />

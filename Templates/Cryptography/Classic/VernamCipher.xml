@@ -24,7 +24,7 @@ Wenn z.B. der Klartext "a" und der Schlüsseltext "c" lautet und das Alphabet au
   <keywords lang="de">Vernam</keywords>
   <icon file="VernamCipher.png" />
   <relevantPlugins>
-    <plugin name="VernamCipher" />
+    <plugin name="Vernam" />
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$Plaintext$" value="Klartext" />

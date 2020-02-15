@@ -18,8 +18,8 @@
   
   <icon file="RSA.png" />
   <relevantPlugins>
-    <plugin name="Number Operation" />
-	<plugin name="Prime Generator" />
+    <plugin name="NumberOperations" />
+	<plugin name="PrimesGenerator" />
   </relevantPlugins>
   
     <replacements lang="en">

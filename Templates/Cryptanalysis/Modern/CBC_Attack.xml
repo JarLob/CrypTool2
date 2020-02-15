@@ -15,7 +15,7 @@
   <icon file="CBC_Attack.png" />
   <relevantPlugins>
     <plugin name="AES" />
-    <plugin name="XOR" />
+    <plugin name="Xor" />
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$Ciphertext$" value="Geheimtext" />
