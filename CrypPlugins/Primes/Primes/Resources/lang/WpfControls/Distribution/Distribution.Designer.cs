@@ -835,7 +835,7 @@ namespace Primes.Resources.lang.WpfControls.Distribution {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Rotation:  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Rotate the spiral ähnelt.
         /// </summary>
         public static string ulam_rotate {
             get {

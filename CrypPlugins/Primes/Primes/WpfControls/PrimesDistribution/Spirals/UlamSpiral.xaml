@@ -32,15 +32,24 @@
             </Viewbox>
         </ScrollViewer>
 
-        <StackPanel Grid.Row="1" Name="pnlSliders">
-            <TextBlock HorizontalAlignment="Left" Text="{x:Static lang:Distribution.ulam_zoom}"></TextBlock>
-            <Slider Name="silderScale" Minimum="0.5" Maximum="2" Value="1" />
-            <DockPanel>
-                <TextBlock HorizontalAlignment="Left" Text="{x:Static lang:Distribution.ulam_rotate}"></TextBlock>
-                <TextBlock HorizontalAlignment="Left" Name="lblRotation">0°</TextBlock>
-            </DockPanel>
-            <Slider Name="silderRotate" Minimum="0" Maximum="360" Value="0" ValueChanged="silderRotate_ValueChanged" />
-        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" MinWidth="50" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static lang:Distribution.ulam_zoom}" Margin="0,0,10,0" />
+            <Slider Grid.Column="1" Grid.Row="0" Name="silderScale" Minimum="0.5" Maximum="2" Value="1" />
+
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static lang:Distribution.ulam_rotate}" Margin="0,0,10,0" />
+            <Slider Grid.Column="1" Grid.Row="1" Name="silderRotate" Minimum="0" Maximum="360" Value="0" ValueChanged="silderRotate_ValueChanged" />
+            <TextBlock Grid.Column="2" Grid.Row="1" Text="0.00°" Name="lblRotation" TextAlignment="Right" />
+        </Grid>
 
     </Grid>
 

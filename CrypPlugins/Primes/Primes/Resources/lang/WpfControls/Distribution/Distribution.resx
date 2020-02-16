@@ -376,7 +376,7 @@
     <value>Beginning and end of the spiral</value>
   </data>
   <data name="ulam_rotate" xml:space="preserve">
-    <value>Rotation: </value>
+    <value>Rotate the spiral</value>
   </data>
   <data name="ulam_validatorrangemessage" xml:space="preserve">
     <value>The difference between "from" and "to" must be at least {0} and at most {1}.</value>

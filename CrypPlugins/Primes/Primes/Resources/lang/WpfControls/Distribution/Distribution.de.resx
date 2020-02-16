@@ -341,7 +341,7 @@ Auf der Zahlengeraden kann ein Intervall der Breite zwischen 10 und 90 Zahlen an
     <value>Start- und Endwert der Spirale</value>
   </data>
   <data name="ulam_rotate" xml:space="preserve">
-    <value>Drehnung: </value>
+    <value>Die Spirale drehen</value>
   </data>
   <data name="ulam_zoom" xml:space="preserve">
     <value>Die Spirale zoomen</value>

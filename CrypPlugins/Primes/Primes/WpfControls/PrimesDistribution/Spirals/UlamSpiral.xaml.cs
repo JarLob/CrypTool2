@@ -235,7 +235,7 @@ namespace Primes.WpfControls.PrimesDistribution.Spirals
 
         private void silderRotate_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            lblRotation.Text = e.NewValue.ToString("N") + "°";
+            lblRotation.Text = $"{e.NewValue:N2}°";
         }
     }
 }
