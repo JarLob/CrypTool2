@@ -412,7 +412,7 @@ namespace Cryptool.Playfair
             }
             else
             {
-                KeyString = settings.AlphabetMatrix;
+                KeyString = settings.KeyString;
             }
 
             if (!IsKeyValid(KeyString))

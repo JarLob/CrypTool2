@@ -42,8 +42,8 @@ namespace Cryptool.Playfair
         private bool preFormatText = true;
         private bool ignoreDuplicates = true;
         private PlayfairKey.MatrixSize matrixSize = PlayfairKey.MatrixSize.Five_Five;
-        private string alphabetMatrix = PlayfairKey.SmallAlphabet;
-        private string key;
+        private string keyString = PlayfairKey.SmallAlphabet;
+        private string keyPhraseString;
         private char separator = 'X';
         private char separatorReplacement = 'Y';
 
@@ -69,38 +69,38 @@ namespace Cryptool.Playfair
 
         [PropertySaveOrder(3)]
         [TaskPane( "KeyCaption", "KeyTooltip",null,2,false,ControlType.TextBox,null)]
-        public string Key
+        public string KeyPhraseString
         {
             get 
             {
-              if (key != null)
-                return key.ToUpper();
+              if (keyPhraseString != null)
+                return keyPhraseString.ToUpper();
               else
                 return null;
             }
             set
             {
-                if (value != null && value.ToUpper() != key)
+                if (value != null && value.ToUpper() != keyPhraseString)
                 {
-                    this.key = value.ToUpper();
+                    this.keyPhraseString = value.ToUpper();
                     setKeyMatrix();
-                    OnPropertyChanged("Key");
-                    OnPropertyChanged("AlphabetMatrix");
+                    OnPropertyChanged("KeyPhraseString");
+                    OnPropertyChanged("KeyString");
                 }
             }
         }
 
         [PropertySaveOrder(4)]
         [TaskPane( "AlphabetMatrixCaption", "AlphabetMatrixTooltip", null, 4, false, ControlType.TextBox, "")]
-        public string AlphabetMatrix
+        public string KeyString
         {
-            get { return this.alphabetMatrix; }
+            get { return this.keyString; }
             set
             {
-                if (value != this.alphabetMatrix)
+                if (value != this.keyString)
                 {
-                    this.alphabetMatrix = value;
-                    OnPropertyChanged("AlphabetMatrix");                    
+                    this.keyString = value;
+                    OnPropertyChanged("KeyString");                    
                 }
             }
         }
@@ -211,16 +211,16 @@ namespace Cryptool.Playfair
 
         private void setKeyMatrix()
         {
-            AlphabetMatrix = PlayfairKey.CreateKey(Key, MatrixSize, IgnoreDuplicates);
+            KeyString = PlayfairKey.CreateKey(KeyPhraseString, MatrixSize, IgnoreDuplicates);
         }
 
         private void setSeparator()
         {
             if (this.separator == this.separatorReplacement)
             {
-                int separatorReplacementPos = AlphabetMatrix.IndexOf(this.separatorReplacement);
-                int separatorPos = (separatorReplacementPos - 1 + AlphabetMatrix.Length) % AlphabetMatrix.Length;
-                this.separator = AlphabetMatrix[separatorPos];
+                int separatorReplacementPos = KeyString.IndexOf(this.separatorReplacement);
+                int separatorPos = (separatorReplacementPos - 1 + KeyString.Length) % KeyString.Length;
+                this.separator = KeyString[separatorPos];
             }
         }
 
@@ -228,9 +228,9 @@ namespace Cryptool.Playfair
         {
             if (this.separator == this.separatorReplacement)
             {
-                int separatorPos = AlphabetMatrix.IndexOf(this.separator);
-                int separatorReplacementPos = (separatorPos + 1) % AlphabetMatrix.Length;
-                this.separatorReplacement = AlphabetMatrix[separatorReplacementPos];
+                int separatorPos = KeyString.IndexOf(this.separator);
+                int separatorReplacementPos = (separatorPos + 1) % KeyString.Length;
+                this.separatorReplacement = KeyString[separatorReplacementPos];
             }
         }
 
