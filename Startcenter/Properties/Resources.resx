@@ -237,4 +237,7 @@
   <data name="YoutubeVideos" xml:space="preserve">
     <value>YouTube Videos (double click to open)</value>
   </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category: </value>
+  </data>
 </root>

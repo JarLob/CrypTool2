@@ -206,13 +206,22 @@ namespace Startcenter
                             summary1.Inlines.Add(new LineBreak());
                             summary1.Inlines.Add(new LineBreak());
                             summary1.Inlines.Add(XMLHelper.ConvertFormattedXElement(descriptionElement));
+                            summary1.Inlines.Add(new LineBreak());
+                            summary1.Inlines.Add(new LineBreak());
+                            summary1.Inlines.Add(Properties.Resources.Category + StripTemplatesPath(file.Directory.FullName));
+
                             summary2.Inlines.Add(new LineBreak());
                             summary2.Inlines.Add(new LineBreak());
                             summary2.Inlines.Add(XMLHelper.ConvertFormattedXElement(descriptionElement));
+                            summary2.Inlines.Add(new LineBreak());
+                            summary2.Inlines.Add(new LineBreak());
+                            summary2.Inlines.Add(Properties.Resources.Category + StripTemplatesPath(file.Directory.FullName));
 
                             //add description to text for copy context menu
                             copyTextBuilder.AppendLine();
-                            copyTextBuilder.AppendLine(XMLHelper.ConvertFormattedXElementToString(descriptionElement));  
+                            copyTextBuilder.AppendLine(XMLHelper.ConvertFormattedXElementToString(descriptionElement));
+                            copyTextBuilder.AppendLine();
+                            copyTextBuilder.AppendLine(Properties.Resources.Category + StripTemplatesPath(file.Directory.FullName));
                         }
 
                         if (xml.Element("icon") != null && xml.Element("icon").Attribute("file") != null)
@@ -326,6 +335,22 @@ namespace Startcenter
                 parent.Items.Add(item);
                 TemplateCount++;
             }
+        }
+
+        /// <summary>
+        /// Removes the preceding part of the templates path
+        /// i.e. "C:\program files\CrypTool 2\templates\etc" becomes "etc"
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private string StripTemplatesPath(string path)
+        {
+            int position = path.ToLower().IndexOf("templates");
+            if (position > 0) 
+            {
+                return path.Substring(position + 10, path.Length - (position + 10));
+            }
+            return string.Empty;
         }
 
         /// <summary>

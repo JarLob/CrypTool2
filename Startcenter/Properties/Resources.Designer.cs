@@ -70,6 +70,15 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Category:  ähnelt.
+        /// </summary>
+        internal static string Category {
+            get {
+                return ResourceManager.GetString("Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Clear recently opened templates list ähnelt.
         /// </summary>
         internal static string ClearList {

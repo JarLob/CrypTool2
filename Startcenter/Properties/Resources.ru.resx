@@ -237,4 +237,7 @@
   <data name="YoutubeVideos" xml:space="preserve">
     <value>YouTube видео (двойной щелчок, чтобы открыть)</value>
   </data>
+  <data name="Category" xml:space="preserve">
+    <value>категория: </value>
+  </data>
 </root>
