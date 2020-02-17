@@ -263,7 +263,7 @@ namespace Cryptool.Substitution
                         {
                             //If we have more elements than MAX_MAPPING_ELEMENTS we generate
                             //[...] ----> [...]
-                            // to indicate we have more elements. Thus, the user can not generate infinity
+                            // to indicate we have more elements. Thus, the user cannot generate infinity
                             // ui elements and crash CT2
                             grid = new Grid();
                             Rectangle fromRectangle = new Rectangle();

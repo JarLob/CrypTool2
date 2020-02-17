@@ -193,13 +193,13 @@
     <value>Error while restoring IControl Connection between '{0}' to '{1}'. Workspace surely will not work well.</value>
   </data>
   <data name="ModelPersistance_restoreSettings_" xml:space="preserve">
-    <value>An ImageModel without data (byte array == null || byte array is empty) can not be restored. Delete it now.</value>
+    <value>An ImageModel without data (byte array == null || byte array is empty) cannot be restored. Delete it now.</value>
   </data>
   <data name="ModelPersistance_restoreSettings_TextModel" xml:space="preserve">
-    <value>A TextModel without data (byte array == null || byte array is empty) can not be restored. Delete it now.</value>
+    <value>A TextModel without data (byte array == null || byte array is empty) cannot be restored. Delete it now.</value>
   </data>
   <data name="ModelPersistance_restoreSettings_ImageModel" xml:space="preserve">
-    <value>An ImageModel without data (byte array == null || byte array is empty) can not be restored. Delete it now.</value>
+    <value>An ImageModel without data (byte array == null || byte array is empty) cannot be restored. Delete it now.</value>
   </data>
   <data name="XMLSerialization_Deserialize_Could_not_create_instance_of___0_" xml:space="preserve">
     <value>Could not create instance of: {0}</value>

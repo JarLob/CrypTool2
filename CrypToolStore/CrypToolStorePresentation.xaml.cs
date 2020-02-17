@@ -507,7 +507,7 @@ namespace Cryptool.CrypToolStore
                 return;
             }
 
-            //Step 1: Lock everything in the UI, thus, the user can not do anything while downloading
+            //Step 1: Lock everything in the UI, thus, the user cannot do anything while downloading
             _context.Send(callback =>
             {
                 try
@@ -684,7 +684,7 @@ namespace Cryptool.CrypToolStore
             }
             Directory.CreateDirectory(GetResourceFolder((ResourceWrapper)SelectedPlugin));
 
-            //Step 1: Lock everything in the UI, thus, the user can not do anything while downloading
+            //Step 1: Lock everything in the UI, thus, the user cannot do anything while downloading
             _context.Send(callback =>
             {
                 try

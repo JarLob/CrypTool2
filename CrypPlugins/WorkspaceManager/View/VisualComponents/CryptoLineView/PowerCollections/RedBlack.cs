@@ -27,7 +27,7 @@ namespace Wintellect.PowerCollections
 
 	/// <summary>
 	/// The base implementation for various collections classes that use Red-Black trees
-	/// as part of their implementation. This class should not (and can not) be 
+	/// as part of their implementation. This class should not (and cannot) be 
 	/// used directly by end users; it's only for internal use by the collections package.
 	/// </summary>
 	/// <remarks>

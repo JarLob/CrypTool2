@@ -131,7 +131,7 @@ namespace Cryptool.KasiskiTest
                         }
                     }
 
-                    workstring2 = workstring1.ToString(); // Now copy workstring1 to workstring2. Needed because workstring1 can not be altered once its built
+                    workstring2 = workstring1.ToString(); // Now copy workstring1 to workstring2. Needed because workstring1 cannot be altered once its built
                 }
                 else 
                 {

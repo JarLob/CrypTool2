@@ -106,11 +106,11 @@ namespace CrypTool.CertificateLibrary.Certificates
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream can not be null!");
+                throw new ArgumentNullException("stream cannot be null!");
             }
             if (password == null)
             {
-                throw new ArgumentNullException("password can not be null!");
+                throw new ArgumentNullException("password cannot be null!");
             }
 
             // Load peer certificate from pfx into temp store. Throws IOException if PKCS #12 could not be opened
@@ -282,7 +282,7 @@ namespace CrypTool.CertificateLibrary.Certificates
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream", "stream can not be null");
+                throw new ArgumentNullException("stream", "stream cannot be null");
             }
             if (!this.IsLoaded)
             {
@@ -321,7 +321,7 @@ namespace CrypTool.CertificateLibrary.Certificates
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream", "stream can not be null");
+                throw new ArgumentNullException("stream", "stream cannot be null");
             }
             if (!this.IsLoaded)
             {

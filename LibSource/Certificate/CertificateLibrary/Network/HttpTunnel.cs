@@ -42,7 +42,7 @@ namespace CrypTool.CertificateLibrary.Network
         {
             if (destinationAddress == null)
             {
-                throw new ArgumentNullException("destinationAddress", "The destination address can not be null");
+                throw new ArgumentNullException("destinationAddress", "The destination address cannot be null");
             }
             if (destinationPort < 1 || destinationPort > 65535)
             {
@@ -212,11 +212,11 @@ namespace CrypTool.CertificateLibrary.Network
         {
             if (proxyUser == null)
             {
-                throw new ArgumentNullException("proxyUser", "The proxy username can not be null");
+                throw new ArgumentNullException("proxyUser", "The proxy username cannot be null");
             }
             if (proxyPwd == null)
             {
-                throw new ArgumentNullException("proxyPwd", "The proxy password can not be null");
+                throw new ArgumentNullException("proxyPwd", "The proxy password cannot be null");
             }
 
             string credential = proxyUser + ":" + proxyPwd;

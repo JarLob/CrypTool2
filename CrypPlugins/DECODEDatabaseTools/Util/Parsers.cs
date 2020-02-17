@@ -1060,7 +1060,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Util
 
                         if (tokenBuilder.Length > 3)
                         {
-                            //if we are longer than 3 digits, we know we can not be in a nomenclature, 
+                            //if we are longer than 3 digits, we know we cannot be in a nomenclature, 
                             //thus, we add a regular element
                             Token regularElementToken = tokenBuilder.GetToken(0, 2, line);
                             regularElementToken.TokenType = TokenType.RegularElement;

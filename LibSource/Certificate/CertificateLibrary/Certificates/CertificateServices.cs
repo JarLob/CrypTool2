@@ -155,7 +155,7 @@ namespace CrypTool.CertificateLibrary.Certificates
         {
             if (avatar == null)
             {
-                throw new ArgumentNullException("avatar", "Avatar can not be null");
+                throw new ArgumentNullException("avatar", "Avatar cannot be null");
             }
 
             foreach (Org.BouncyCastle.X509.X509Certificate cert in GetX509Certificates(filepath))
@@ -187,7 +187,7 @@ namespace CrypTool.CertificateLibrary.Certificates
         {
             if (email == null)
             {
-                throw new ArgumentNullException("email", "Email can not be null");
+                throw new ArgumentNullException("email", "Email cannot be null");
             }
 
             foreach (Org.BouncyCastle.X509.X509Certificate cert in GetX509Certificates(filepath))
@@ -325,7 +325,7 @@ namespace CrypTool.CertificateLibrary.Certificates
         {
             if (avatar == null)
             {
-                throw new ArgumentNullException("email", "Email can not be null");
+                throw new ArgumentNullException("email", "Email cannot be null");
             }
 
             Org.BouncyCastle.X509.X509Certificate cert = GetX509CertificateByAvatar(filepath, avatar);
@@ -383,7 +383,7 @@ namespace CrypTool.CertificateLibrary.Certificates
         {
             if (email == null)
             {
-                throw new ArgumentNullException("email", "Email can not be null");
+                throw new ArgumentNullException("email", "Email cannot be null");
             }
 
             Org.BouncyCastle.X509.X509Certificate cert = GetX509CertificateByEmail(filepath, email);
@@ -648,11 +648,11 @@ namespace CrypTool.CertificateLibrary.Certificates
         {
             if (peerCertificate == null)
             {
-                throw new ArgumentNullException("certificate", "Certificate can not be null");
+                throw new ArgumentNullException("certificate", "Certificate cannot be null");
             }
             if (caCertificate == null)
             {
-                throw new ArgumentNullException("caPublicKey", "CA Public key can not be null");
+                throw new ArgumentNullException("caPublicKey", "CA Public key cannot be null");
             }
 
             try
@@ -715,7 +715,7 @@ namespace CrypTool.CertificateLibrary.Certificates
         {
             if (peerCertificate == null)
             {
-                throw new ArgumentNullException("certificate", "Certificate can not be null");
+                throw new ArgumentNullException("certificate", "Certificate cannot be null");
             }
 
             try
@@ -809,7 +809,7 @@ namespace CrypTool.CertificateLibrary.Certificates
         {
             if (tlsCertificate == null)
             {
-                throw new ArgumentNullException("tlsCertificate", "TLS certificate can not be null");
+                throw new ArgumentNullException("tlsCertificate", "TLS certificate cannot be null");
             }
 
             try
@@ -856,7 +856,7 @@ namespace CrypTool.CertificateLibrary.Certificates
         {
             if (tlsCertificate == null)
             {
-                throw new ArgumentNullException("tlsCertificate", "Certificate can not be null");
+                throw new ArgumentNullException("tlsCertificate", "Certificate cannot be null");
             }
 
             try
@@ -914,7 +914,7 @@ namespace CrypTool.CertificateLibrary.Certificates
         {
             if (caCertificate == null)
             {
-                throw new ArgumentNullException("caCertificate", "CA certificate can not be null");
+                throw new ArgumentNullException("caCertificate", "CA certificate cannot be null");
             }
 
             try
@@ -960,7 +960,7 @@ namespace CrypTool.CertificateLibrary.Certificates
         {
             if (caCertificate == null)
             {
-                throw new ArgumentNullException("certificate", "Certificate can not be null");
+                throw new ArgumentNullException("certificate", "Certificate cannot be null");
             }
 
             try

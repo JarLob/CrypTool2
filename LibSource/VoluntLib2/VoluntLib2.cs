@@ -169,7 +169,7 @@ namespace VoluntLib2
                 return;
             }
             //we have to first stop the connection manager; otherwise the JobManager remains 
-            //blocked in its receiving thread and can not be stopped
+            //blocked in its receiving thread and cannot be stopped
             ConnectionManager.Stop();
             JobManager.Stop();
             ComputationManager.Stop();

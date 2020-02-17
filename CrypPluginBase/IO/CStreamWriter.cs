@@ -211,7 +211,7 @@ namespace Cryptool.PluginBase.IO
                 }
             }
 
-            // writer can not seek
+            // writer cannot seek
             set { throw new NotSupportedException(); }
         }
 
@@ -272,7 +272,7 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Writer can not seek.
+        /// Writer cannot seek.
         /// </summary>
         /// <param name="offset"></param>
         /// <param name="origin"></param>
@@ -283,7 +283,7 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Writer can not seek.
+        /// Writer cannot seek.
         /// </summary>
         /// <param name="value"></param>
         public override void SetLength(long value)

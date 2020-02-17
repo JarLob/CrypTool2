@@ -446,7 +446,7 @@ namespace Twofish
             }
             catch (CryptographicException cryptographicException)
             {
-                // TODO: For an unknown reason p_crypto_stream can not be closed after exception.
+                // TODO: For an unknown reason p_crypto_stream cannot be closed after exception.
                 // Trying so makes p_crypto_stream throw the same exception again. So in Dispose 
                 // the error messages will be doubled. 
                 // As a workaround we set p_crypto_stream to null here.

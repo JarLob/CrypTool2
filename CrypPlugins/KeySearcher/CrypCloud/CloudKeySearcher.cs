@@ -202,7 +202,7 @@ namespace KeySearcher
         {
             if (keySearcher.WorkspaceHasBeenModified())
             {
-                keySearcher.GuiLogMessage("Calculation can not be started since the workspace was changed.", NotificationLevel.Error);
+                keySearcher.GuiLogMessage("Calculation cannot be started since the workspace was changed.", NotificationLevel.Error);
                 return;
             }
 

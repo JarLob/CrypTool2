@@ -7,7 +7,7 @@
     This component searches for words which share the same character pattern. A pattern
     is a sequence of numbers; each character of the word maps to a consecutive number, while same characters map to the same number.
     The resulting number sequence represents the character repetitions and equalities of a word, preserving the positions of the repetitions.
-    The pattern does not represent the word content. The character values are lost and thus the word can not be retrieved solely by its pattern.
+    The pattern does not represent the word content. The character values are lost and thus the word cannot be retrieved solely by its pattern.
     
     <section headline="Example">
       The word ANNA has a length of four characters and consists of two different characters (A and N).

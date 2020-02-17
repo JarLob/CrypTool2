@@ -363,7 +363,7 @@ namespace Transcriptor
                     indexCount++;
 
                     /*If MatchTemplateOn is set to true the AddSymbolToList Method is not necasary here.
-                     * MatchTemplate mode can not check if a symbol is already in the List*/
+                     * MatchTemplate mode cannot check if a symbol is already in the List*/
                     if (MatchTemplateOn)
                     {
                         MatchSymbol(newSymbol, currentRectangeleWidth, currentRectangleHeight,

@@ -443,7 +443,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
                 {
                     if (IpTools.IsPrivateIP(contact.IPAddress))
                     {
-                        //Someone sent us a private IP; we can not do anything with that address; so dont save it
+                        //Someone sent us a private IP; we cannot do anything with that address; so dont save it
                         continue;
                     }
 

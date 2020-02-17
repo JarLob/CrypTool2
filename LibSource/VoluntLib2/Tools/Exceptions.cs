@@ -18,7 +18,7 @@ using System;
 namespace VoluntLib2.Tools
 {
     /// <summary>
-    /// Thrown, when a message can not be serialized due to wrong message format, magic number, etc
+    /// Thrown, when a message cannot be serialized due to wrong message format, magic number, etc
     /// </summary>
     internal class VoluntLibSerializationException : Exception
     {

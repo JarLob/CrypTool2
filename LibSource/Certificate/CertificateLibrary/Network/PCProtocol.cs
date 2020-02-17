@@ -33,7 +33,7 @@ namespace CrypTool.CertificateLibrary.Network
         {
             if (cert == null)
             {
-                throw new ArgumentNullException("cert", "X509Certificate can not be null");
+                throw new ArgumentNullException("cert", "X509Certificate cannot be null");
             }
             this.Certificate = cert;
             this.Version = PROTOCOL_VERSION;
@@ -104,7 +104,7 @@ namespace CrypTool.CertificateLibrary.Network
         {
             if(socket == null)
             {
-                throw new ArgumentNullException("socket", "The network socket can not be null");
+                throw new ArgumentNullException("socket", "The network socket cannot be null");
             }
             try
             {
@@ -130,7 +130,7 @@ namespace CrypTool.CertificateLibrary.Network
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream", "The stream can not be null");
+                throw new ArgumentNullException("stream", "The stream cannot be null");
             }
             try
             {
@@ -155,7 +155,7 @@ namespace CrypTool.CertificateLibrary.Network
         {
             if (backlog < 1)
             {
-                throw new ArgumentOutOfRangeException("backlog can not be smaller then one!");
+                throw new ArgumentOutOfRangeException("backlog cannot be smaller then one!");
             }
 
             if (listenAddress.ToLower().Equals("all"))
@@ -184,7 +184,7 @@ namespace CrypTool.CertificateLibrary.Network
         {
             if (backlog < 1)
             {
-                throw new ArgumentOutOfRangeException("backlog can not be smaller then one!");
+                throw new ArgumentOutOfRangeException("backlog cannot be smaller then one!");
             }
 
             this.NetSocket = new Socket(localEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
@@ -300,7 +300,7 @@ namespace CrypTool.CertificateLibrary.Network
         {
             if (packet == null)
             {
-                throw new ArgumentNullException("packet", "The packet can not be null.");
+                throw new ArgumentNullException("packet", "The packet cannot be null.");
             }
             if (packet.Type == PacketType.Invalid)
             {

@@ -269,7 +269,7 @@ namespace Cryptool.VigenereAnalyzer
             if (_settings.ToKeyLength > ciphertext.Length)
             {
                 _settings.ToKeyLength = ciphertext.Length;
-                GuiLogMessage("Max tested keylength can not be longer than the plaintext. Set max tested keylength to plaintext length.",NotificationLevel.Warning);
+                GuiLogMessage("Max tested keylength cannot be longer than the plaintext. Set max tested keylength to plaintext length.",NotificationLevel.Warning);
             }
             if (_settings.ToKeyLength < _settings.FromKeylength)
             {

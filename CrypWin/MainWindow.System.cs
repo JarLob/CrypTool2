@@ -440,7 +440,7 @@ namespace Cryptool.CrypWin
             catch (Exception ex)
             {
                 //we had an exception IN the Close() operation of the window
-                //since we can not fix the code of the Close() method we catch
+                //since we cannot fix the code of the Close() method we catch
                 //the exception and write it to the log:
                 GuiLogMessage(String.Format("Exception in RestartCryptool method: {0}",ex.Message),NotificationLevel.Error);
             }

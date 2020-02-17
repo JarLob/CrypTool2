@@ -601,7 +601,7 @@ namespace Cryptool.Plugins.DGK
 
             if (n < 2 * 3)
             {
-                GuiLogMessage("Illegal Input N - DGK can not work", NotificationLevel.Error);
+                GuiLogMessage("Illegal Input N - DGK cannot work", NotificationLevel.Error);
                 return;
             }
 

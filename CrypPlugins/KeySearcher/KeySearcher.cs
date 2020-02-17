@@ -1170,7 +1170,7 @@ namespace KeySearcher
             }
             catch (Exception)
             {
-                //can not calculate testedBits
+                //cannot calculate testedBits
             }
 
             localQuickWatchPresentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate

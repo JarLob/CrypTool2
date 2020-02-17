@@ -1168,7 +1168,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Toggle settings panel ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open/close the bar with the settings of the selected components of this workspace ähnelt.
         /// </summary>
         public static string Toggle_Plugin_Parameters {
             get {
@@ -1268,7 +1268,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die GuiUpdateInterval can not be &lt;=0; Use GuiUpdateInterval = 1 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die GuiUpdateInterval cannot be &lt;=0; Use GuiUpdateInterval = 1 ähnelt.
         /// </summary>
         public static string WorkspaceManagerClass_Execute_ {
             get {
@@ -1313,7 +1313,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die SleepTime can not be &lt;0; Use SleepTime = 0 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die SleepTime cannot be &lt;0; Use SleepTime = 0 ähnelt.
         /// </summary>
         public static string WorkspaceManagerClass_Execute_SleepTime {
             get {

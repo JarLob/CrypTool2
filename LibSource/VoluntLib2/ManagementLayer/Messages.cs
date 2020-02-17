@@ -50,7 +50,7 @@ namespace VoluntLib2.ManagementLayer.Messages
             switch (message.MessageHeader.MessageType)
             {
                 case MessageType.Undefined:
-                    throw new VoluntLibSerializationException(string.Format("Received a message of MessageType {0} - can not do anything with that!", message.MessageHeader.MessageType));               
+                    throw new VoluntLibSerializationException(string.Format("Received a message of MessageType {0} - cannot do anything with that!", message.MessageHeader.MessageType));               
                 case MessageType.RequestJobListMessage:
                     message = new RequestJobListMessage();
                     message.Deserialize(data);

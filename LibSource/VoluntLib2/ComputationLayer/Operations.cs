@@ -242,7 +242,7 @@ namespace VoluntLib2.ComputationLayer
                     }
                    
                 }
-                //case B: we have no job assignment; thus, we can not merge and keep the one with more computed jobs
+                //case B: we have no job assignment; thus, we cannot merge and keep the one with more computed jobs
                 else
                 {
                     uint finishedLocalJobs = LocalJob.JobEpochState.Bitmask.GetSetBitsCount();

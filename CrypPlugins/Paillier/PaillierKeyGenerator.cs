@@ -167,7 +167,7 @@ namespace Cryptool.Plugins.Paillier
                         }
                         if (p == q)
                         {
-                            GuiLogMessage("The primes P and Q can not be equal!", NotificationLevel.Error);
+                            GuiLogMessage("The primes P and Q cannot be equal!", NotificationLevel.Error);
                             return;
                         }
                     }

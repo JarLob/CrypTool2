@@ -79,7 +79,7 @@ namespace Cryptool.PluginBase.Utils
 
                 if (value == null)
                 {
-                    throw new Exception("Option can not be Some(null)");
+                    throw new Exception("Option cannot be Some(null)");
                 }
                 return value;
             }

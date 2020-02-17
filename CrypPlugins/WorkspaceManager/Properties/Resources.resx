@@ -409,7 +409,7 @@
     <value>Some editing functions are disabled during execution.</value>
   </data>
   <data name="Toggle_Plugin_Parameters" xml:space="preserve">
-    <value>Toggle settings panel</value>
+    <value>Open/close the bar with the settings of the selected components of this workspace</value>
   </data>
   <data name="Save_File" xml:space="preserve">
     <value>Save File</value>
@@ -481,13 +481,13 @@
     <value>Execute model now!</value>
   </data>
   <data name="WorkspaceManagerClass_Execute_" xml:space="preserve">
-    <value>GuiUpdateInterval can not be &lt;=0; Use GuiUpdateInterval = 1</value>
+    <value>GuiUpdateInterval cannot be &lt;=0; Use GuiUpdateInterval = 1</value>
   </data>
   <data name="WorkspaceManagerClass_Execute_Could_not_set_GuiUpdateInterval___0_" xml:space="preserve">
     <value>Could not set GuiUpdateInterval: {0}</value>
   </data>
   <data name="WorkspaceManagerClass_Execute_SleepTime" xml:space="preserve">
-    <value>SleepTime can not be &lt;0; Use SleepTime = 0</value>
+    <value>SleepTime cannot be &lt;0; Use SleepTime = 0</value>
   </data>
   <data name="WorkspaceManagerClass_Execute_Could_not_set_SleepTime___0_" xml:space="preserve">
     <value>Could not set SleepTime: {0}</value>

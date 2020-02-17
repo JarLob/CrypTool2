@@ -62,7 +62,7 @@ namespace VoluntLib2.ConnectionLayer.Messages
             switch (message.MessageHeader.MessageType)
             {
                 case MessageType.Undefined:
-                    throw new VoluntLibSerializationException(string.Format("Received a message of MessageType {0} - can not do anything with that!", message.MessageHeader.MessageType));
+                    throw new VoluntLibSerializationException(string.Format("Received a message of MessageType {0} - cannot do anything with that!", message.MessageHeader.MessageType));
                 case MessageType.HelloMessage:
                     message = new HelloMessage();
                     message.Deserialize(data);

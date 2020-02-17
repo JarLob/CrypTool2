@@ -14,7 +14,7 @@
     with prefixes '#', 'h', 'H', 'x' or 'X' if the input is in hexadecimal form, as <b>o</b>777 with prefixes 'o' or 'O' if the input is in octal form, and as <b>b</b>1100101 with prefixes 'b' or 'B' if the input is in binary form.
     Other number systems can be used by appending the base in brackets to the input number, for example 1002(3) will be interpreted as a ternary number and the component will output the number 29 (27+2).
     Depending on the chosen base, the component uses as digits the characters from 0 to 9 and A to Z. Thus these 36 digits allow as input all numbers in all number systems on bases from 2 to 36.
-    If the chosen base is greater than 36, only those numbers, that consist of the 36 digits, can be entered. The input Z(40) in the number system on base 40 corresponds to the decimal number 35. However, the decimal number 36 can not be entered
+    If the chosen base is greater than 36, only those numbers, that consist of the 36 digits, can be entered. The input Z(40) in the number system on base 40 corresponds to the decimal number 35. However, the decimal number 36 cannot be entered
     in the number system on base 40, as there is no digit for it.
     <newline /><newline />
     

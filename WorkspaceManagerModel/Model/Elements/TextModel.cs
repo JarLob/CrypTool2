@@ -85,7 +85,7 @@ namespace WorkspaceManager.Model
             catch (Exception ex)
             {
                 //wtf?
-                //not a hard failure if a rtb of a template can not be loaded... we can not do anything here... so
+                //not a hard failure if a rtb of a template cannot be loaded... we cannot do anything here... so
             }
         }
 
@@ -111,7 +111,7 @@ namespace WorkspaceManager.Model
             catch (Exception)
             {
                 //wtf?
-                //not a hard failure if a rtb of a template can not be saved... we can not do anything here... so
+                //not a hard failure if a rtb of a template cannot be saved... we cannot do anything here... so
             }
         }
 

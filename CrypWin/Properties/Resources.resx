@@ -191,7 +191,7 @@
     <value>Error Message</value>
   </data>
   <data name="_Messages___0__filtered_" xml:space="preserve">
-    <value> Messages ({0} filtered)</value>
+    <value> messages ({0} filtered)</value>
   </data>
   <data name="_Messages" xml:space="preserve">
     <value> Messages</value>

@@ -111,7 +111,7 @@
     <img src="WorkspaceManager/DetailedDescription/Images/zoom.png" caption="Figure 12" />    
     <newline/> <newline/>
     Textareas and Picture Box:<newline/> <newline/>
-    Texts and pictures can be added to a workspace without the usage of additional components. The "textarea box" button and the "picture box" button in figure 13 offer tools to create textareas and load pictures directly into the workspace. The boxes can be dragged and positioned like components. Editing tools for the textarea appear on top of the workspace as a new toolbar, if the textarea is focused. The size of the areas can be customized by the user thriugh pressing and holding the downer right edge of the box. Note that the textarea and picture boxes can not interact with other components on the workspace and are always in the background of the workspace. 
+    Texts and pictures can be added to a workspace without the usage of additional components. The "textarea box" button and the "picture box" button in figure 13 offer tools to create textareas and load pictures directly into the workspace. The boxes can be dragged and positioned like components. Editing tools for the textarea appear on top of the workspace as a new toolbar, if the textarea is focused. The size of the areas can be customized by the user thriugh pressing and holding the downer right edge of the box. Note that the textarea and picture boxes cannot interact with other components on the workspace and are always in the background of the workspace. 
     <newline/> <newline/>
     <newline/>
 

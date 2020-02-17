@@ -236,7 +236,7 @@ namespace WorkspaceManagerModel.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die An ImageModel without data (byte array == null || byte array is empty) can not be restored. Delete it now. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die An ImageModel without data (byte array == null || byte array is empty) cannot be restored. Delete it now. ähnelt.
         /// </summary>
         internal static string ModelPersistance_restoreSettings_ {
             get {
@@ -296,7 +296,7 @@ namespace WorkspaceManagerModel.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die An ImageModel without data (byte array == null || byte array is empty) can not be restored. Delete it now. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die An ImageModel without data (byte array == null || byte array is empty) cannot be restored. Delete it now. ähnelt.
         /// </summary>
         internal static string ModelPersistance_restoreSettings_ImageModel {
             get {
@@ -305,7 +305,7 @@ namespace WorkspaceManagerModel.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die A TextModel without data (byte array == null || byte array is empty) can not be restored. Delete it now. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die A TextModel without data (byte array == null || byte array is empty) cannot be restored. Delete it now. ähnelt.
         /// </summary>
         internal static string ModelPersistance_restoreSettings_TextModel {
             get {

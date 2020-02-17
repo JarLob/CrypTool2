@@ -72,7 +72,7 @@ namespace CrypTool.CertificateLibrary.Util
         {
             if (dn == null)
             {
-                throw new ArgumentNullException("dn", "Distinguished name can not be null");
+                throw new ArgumentNullException("dn", "Distinguished name cannot be null");
             }
 
             // Read the CN, O, OU, C, EmailAddress values from Destinguished Name

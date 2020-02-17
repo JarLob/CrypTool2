@@ -442,7 +442,7 @@ namespace Cryptool.Plugins.Paillier
 
             if (n < 2 * 3)
             {
-                GuiLogMessage("Illegal Input N - Paillier can not work", NotificationLevel.Error);
+                GuiLogMessage("Illegal Input N - Paillier cannot work", NotificationLevel.Error);
                 return;
             }
 
@@ -455,7 +455,7 @@ namespace Cryptool.Plugins.Paillier
             {
                 if (InputLambda < 1)
                 {
-                    GuiLogMessage("Illegal private key Lambda - Paillier can not decrypt", NotificationLevel.Error);
+                    GuiLogMessage("Illegal private key Lambda - Paillier cannot decrypt", NotificationLevel.Error);
                     return;
                 }
 

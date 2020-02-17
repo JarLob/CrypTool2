@@ -383,7 +383,7 @@ namespace Cryptool.Plugins.BlindSignatureGenerator
             securitylevel = BigInteger.Parse(this.settings.BlindSigningSecurity);
             if (PublicMessage == null)
             {
-                GuiLogMessage("No public message given, can not check for cheating attempt!", NotificationLevel.Warning);
+                GuiLogMessage("No public message given, cannot check for cheating attempt!", NotificationLevel.Warning);
                 blindingfactor = Randomnumber();
                 blindedmessage = BlindingRSA(new BigInteger(hash));
             }
@@ -474,7 +474,7 @@ namespace Cryptool.Plugins.BlindSignatureGenerator
 
             if (PublicMessage == null)
             {
-                GuiLogMessage("No public message given, can not check for cheating attempt!", NotificationLevel.Warning);
+                GuiLogMessage("No public message given, cannot check for cheating attempt!", NotificationLevel.Warning);
                 blindingfactor = Randomnumber();
                 blindedmessage = BlindingPaillier(new BigInteger(hash));
             }

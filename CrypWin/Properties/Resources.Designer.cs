@@ -124,7 +124,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  Messages ({0} filtered) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  messages ({0} filtered) ähnelt.
         /// </summary>
         internal static string _Messages___0__filtered_ {
             get {
