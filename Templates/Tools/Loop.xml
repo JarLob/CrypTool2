@@ -12,7 +12,7 @@
   <summary lang="de">Wie baut man Schleifen in CrypTool 2</summary>
   <description lang="de">Diese Vorlage zeigt, wie man Schleifen in CrypTool 2 baut.</description>
   <keywords lang="de">Schleife</keywords>
-  <icon file="math.png" />
+  <icon file="loop.png" />
   <relevantPlugins>
     <plugin name="Gate" />
     <plugin name="IncDec" />
