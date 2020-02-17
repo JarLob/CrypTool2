@@ -385,7 +385,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Visit the official YouTube channel of CrypTool 2 to learn more about the usage of CrypTool 2 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Visit the official YouTube channel (English): You will learn how to use CrypTool 2 and add your own functions ähnelt.
         /// </summary>
         internal static string Visit_official_YouTube_channel {
             get {

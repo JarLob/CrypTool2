@@ -127,13 +127,13 @@
     <value>Asymmetrisch:</value>
   </data>
   <data name="BBox_Add_Image_to_Workspace_Tooltip" xml:space="preserve">
-    <value>Bild dem Arbeitsbereich hinzufügen</value>
+    <value>Dem Arbeitsbereich ein Bild hinzufügen</value>
   </data>
   <data name="BBox_Add_Text_to_Workspace_Tooltip" xml:space="preserve">
     <value>Dem Arbeitsbereich ein Memofeld (für Beschreibungen) hinzufügen</value>
   </data>
   <data name="BBox_Fit_to_Screen_Tooltip" xml:space="preserve">
-    <value>An Arbeitsbereichgröße anpassen (Strg+F)</value>
+    <value>Adjust the zoom of the workspace automatically so that all components are visible (Ctrl+F)</value>
   </data>
   <data name="BBox_Sort_Caption" xml:space="preserve">
     <value>Sortieren</value>

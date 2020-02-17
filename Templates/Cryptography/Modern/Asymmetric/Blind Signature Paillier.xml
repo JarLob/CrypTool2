@@ -8,7 +8,7 @@
   <description lang="ru">В этом шаблоне демонстрируется трехсторонний сценарий слепой подписи. Чарли подписывает сообщение от Алисы, чтобы Боб мог проверить сообщение, полученное от Алисы. Здесь Paillier используется для подписи.</description>
  <keywords>pailler, blind, signature, hash</keywords>
   <keywords lang="ru"></keywords>
-  <title lang="de">Blinde Signature Paillier</title>
+  <title lang="de">Blinde Signatur Paillier</title>
   <summary lang="de">Benutzung der <i>Blinden Signatur</i> mit Paillier</summary>
   <description lang="de">In dieser Vorlage wird ein Drei-Parteien-Szenario einer blinden Signatur gezeigt. Charlie signiert eine Nachricht von Alice, damit Bob die von Alice empfangene Nachricht überprüfen kann. Hier wird Paillier für die Signatur verwendet.</description>
   <keywords lang="de">Paillier, blinde, Signatur, Hash</keywords>

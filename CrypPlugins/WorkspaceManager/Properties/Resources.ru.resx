@@ -133,7 +133,7 @@
     <value>Добавить заметку (для описания) в рабочую область</value>
   </data>
   <data name="BBox_Fit_to_Screen_Tooltip" xml:space="preserve">
-    <value>Подгонка к размеру рабочей области (Ctrl + F)</value>
+    <value>Настройте масштаб рабочей области автоматически, чтобы все компоненты были видны (Ctrl+F)</value>
   </data>
   <data name="BBox_Sort_Caption" xml:space="preserve">
     <value>Сортировать</value>

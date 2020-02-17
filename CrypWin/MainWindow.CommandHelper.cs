@@ -26,6 +26,7 @@ using Cryptool.PluginBase.Editor;
 using StartCenter;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using Cryptool.CrypWin.Helper;
+using DevComponents.WpfRibbon;
 
 namespace Cryptool.CrypWin
 {
@@ -478,6 +479,18 @@ namespace Cryptool.CrypWin
                 return;
             demoController.Stop();
         }
+
+        private void ShowHideLog_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void ShowHideLog_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            LogBTN.IsChecked = !LogBTN.IsChecked;
+            LogBTN_Checked(LogBTN, null);
+        }
+
         # endregion Play, Stop, Pause, Undo, Redo, Maximize, Fullscreen, Demo
 
         # region P2P

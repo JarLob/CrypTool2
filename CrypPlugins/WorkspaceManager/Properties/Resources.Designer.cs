@@ -160,7 +160,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Fit to workspace size (Ctrl+F) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Adjust the zoom of the workspace automatically so that all components can be seen to the maximum (Ctrl+F) ähnelt.
         /// </summary>
         public static string BBox_Fit_to_Screen_Tooltip {
             get {

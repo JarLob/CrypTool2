@@ -504,6 +504,7 @@
         <CommandBinding Command="cw:CrypWinCommands.Remove" Executed="Remove_Executed" CanExecute="Remove_CanExecute" />
         <CommandBinding Command="cw:CrypWinCommands.AddImage" Executed="addimg_Click" CanExecute="AddImage_CanExecute" />
         <CommandBinding Command="cw:CrypWinCommands.AddText" Executed="addtxt_Click" CanExecute="AddText_CanExecute" />
+        <CommandBinding Command="cw:CrypWinCommands.ShowHideLog" Executed="ShowHideLog_Executed" CanExecute="ShowHideLog_CanExecute" />
 
         <CommandBinding Command="cw:CrypWinCommands.PlayDemo" Executed="PlayDemo_Executed" CanExecute="PlayDemo_CanExecute" />
         <CommandBinding Command="cw:CrypWinCommands.StopDemo" Executed="StopDemo_Executed" CanExecute="StopDemo_CanExecute" />
@@ -528,6 +529,7 @@
         <KeyBinding Command="cw:CrypWinCommands.Copy" Gesture="Ctrl + C"/>
         <KeyBinding Command="cw:CrypWinCommands.Cut" Gesture="Ctrl + X"/>
         <KeyBinding Command="cw:CrypWinCommands.Paste" Gesture="Ctrl + V"/>
+        <KeyBinding Command="cw:CrypWinCommands.ShowHideLog" Gesture="Ctrl + L"/>
     </dc:RibbonWindow.InputBindings>
     <DockPanel LastChildFill="True">
         <StatusBar Name="statusBar" DockPanel.Dock="Bottom" Height="22" MouseDoubleClick="statusBar_MouseDoubleClick">
