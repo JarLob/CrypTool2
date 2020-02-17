@@ -358,9 +358,6 @@
   <data name="FL_Letter_Wizard" xml:space="preserve">
     <value />
   </data>
-  <data name="FL_Tutorial" xml:space="preserve">
-    <value>Crypto tutorials</value>
-  </data>
   <data name="FunctionListTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\generators\functionlistgenerator\functionlisttemplate-en.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>

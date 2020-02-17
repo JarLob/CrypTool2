@@ -156,11 +156,11 @@ namespace OnlineDocumentationGenerator.Generators.FunctionListGenerator
                     switch (page.Category)
                     {
                         case ComponentCategory.Undefined:
-                            itemlist.Add(pp.Name, ItemType.Tutorial, Properties.Resources.FL_Tutorial + "\\ " + pp.Name);
+                            itemlist.Add(pp.Name, ItemType.Tutorial, pp.Name);
                             foreach (var fla in flas)
                             {
                                 fla.PluginType = pinfo.PluginType;
-                                itemlist.Add(fla.Function, ItemType.Tutorial, Properties.Resources.FL_Tutorial + "\\ " + pp.Name + "\\ " + fla.Path);
+                                itemlist.Add(fla.Function, ItemType.Tutorial, pp.Name + "\\ " + fla.Path);
                             }
                             break;
                         default:

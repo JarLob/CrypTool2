@@ -265,7 +265,7 @@ namespace Primes.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Number theory\ Powering (iterating base) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number theory\ Powering (iterating base)(RSA) ähnelt.
         /// </summary>
         internal static string FL_P_powering_iteratingbase {
             get {

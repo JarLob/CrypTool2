@@ -272,9 +272,9 @@
     <value>..\onlinehelp\helpfiles\template.de.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="FL_P_powering_iteratingbase" xml:space="preserve">
-    <value>Number theory\ Potenzieren (laufende Basis)</value>
+    <value>Zahlentheorie\ Potenzieren (laufende Basis)(RSA)</value>
   </data>
   <data name="FL_P_powering_iteratingexponent" xml:space="preserve">
-    <value>Number theory\ Potenzieren (laufender Exponent)</value>
+    <value>Zahlentheorie\ Potenzieren (laufender Exponent)</value>
   </data>
 </root>
