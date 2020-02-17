@@ -2199,8 +2199,10 @@ namespace Cryptool.CrypWin
             editor.OnOpenTab += OpenTab;
             editor.OnOpenEditor += OpenEditor; 
             editor.OnProjectTitleChanged += EditorProjectTitleChanged;
-            
-            OpenTab(editor, new TabInfo(){Title = editor.GetType().Name, Icon = editor.GetImage(0).Source}, null);
+
+            Span tooltip = new Span();
+            tooltip.Inlines.Add(editor.GetPluginInfoAttribute().ToolTip);
+            OpenTab(editor, new TabInfo() { Title = editor.GetPluginInfoAttribute().Caption, Icon = editor.GetImage(0).Source, Tooltip = tooltip }, null);
 
             editor.Initialize();
 
@@ -2253,7 +2255,6 @@ namespace Cryptool.CrypWin
             {
                 var tab = contentToTabMap[content];
                 tab.SetTabInfo(info);
-                //tab.Header = title.Replace("_", "__");
                 tab.IsSelected = true;
                 SaveSession();
                 return tab;

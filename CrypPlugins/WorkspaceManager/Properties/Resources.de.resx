@@ -223,7 +223,7 @@
     <value>Arbeitsbereich</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Graphischer Plugin-Editor für die CrypTool-Arbeitsfläche</value>
+    <value>Graphischer Editor für die CrypTool-Arbeitsfläche</value>
   </data>
   <data name="PresentationTooltip" xml:space="preserve">
     <value>Präsentation</value>

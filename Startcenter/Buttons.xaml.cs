@@ -6,6 +6,7 @@ using Cryptool.PluginBase.IO;
 using OnlineDocumentationGenerator.Generators.HtmlGenerator;
 using System.Windows.Documents;
 using System;
+using Cryptool.PluginBase.Editor;
 
 namespace Startcenter
 {
@@ -22,11 +23,23 @@ namespace Startcenter
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Helper method to open a new editor tab with appropriate title, tooltip, and icon
+        /// </summary>
+        /// <param name="editorType"></param>
+        private void DoOpenEditor(Type editorType)
+        {
+            Span tooltip = new Span();
+            tooltip.Inlines.Add(editorType.GetPluginInfoAttribute().ToolTip);
+            TabInfo tab = new TabInfo() { Title = editorType.GetPluginInfoAttribute().Caption, Icon = editorType.GetImage(0).Source, Tooltip = tooltip };
+            OnOpenEditor(editorType, null);
+        }
+
         private void WizardButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                OnOpenEditor(typeof(Wizard.Wizard), null);
+                DoOpenEditor(typeof(Wizard.Wizard));
             }
             catch (Exception)
             {
@@ -50,7 +63,7 @@ namespace Startcenter
         {
             try
             {
-                OnOpenEditor(typeof(WorkspaceManager.WorkspaceManagerClass), null);
+                DoOpenEditor(typeof(WorkspaceManager.WorkspaceManagerClass));
             }
             catch (Exception)
             {
@@ -110,11 +123,7 @@ namespace Startcenter
         {
             try
             {
-                OnOpenEditor(typeof(Cryptool.CrypToolStore.CrypToolStoreEditor), new TabInfo()
-                {
-                    Title = Properties.Resources.CrypToolStore,
-                    Tooltip = new Span(new Run(Properties.Resources.CrypToolStore))
-                });
+                DoOpenEditor(typeof(Cryptool.CrypToolStore.CrypToolStoreEditor));                
             }
             catch (Exception)
             {

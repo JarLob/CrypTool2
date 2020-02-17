@@ -223,7 +223,7 @@
     <value>Workspace</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Graphical plugin editor for the CrypTool workspace</value>
+    <value>Graphical editor for the CrypTool workspace</value>
   </data>
   <data name="PresentationTooltip" xml:space="preserve">
     <value>Presentation</value>
