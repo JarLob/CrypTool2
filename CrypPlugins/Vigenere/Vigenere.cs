@@ -22,7 +22,7 @@ using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.Vigenere
 {
-    [Author("Sebastian Przybylski", "sebastian@przybylski.org", "Uni-Siegen", "http://www.uni-siegen.de")]
+    [Author("Sebastian Przybylski", "sebastian@przybylski.org", "Uni Siegen", "http://www.uni-siegen.de")]
     [PluginInfo("Cryptool.Vigenere.Properties.Resources", "PluginCaption", "PluginTooltip", "Vigenere/DetailedDescription/doc.xml",
       "Vigenere/Images/icon.png", "Vigenere/Images/encrypt.png", "Vigenere/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.CiphersClassic)]

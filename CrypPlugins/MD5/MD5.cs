@@ -25,7 +25,7 @@ using Cryptool.MD5.Algorithm;
 
 namespace Cryptool.MD5
 {
-    [Author("Sebastian Przybylski", "sebastian@przybylski.org", "Uni-Siegen", "http://www.uni-siegen.de")]
+    [Author("Sebastian Przybylski", "sebastian@przybylski.org", "Uni Siegen", "http://www.uni-siegen.de")]
     [PluginInfo("Cryptool.Plugins.MD5.Properties.Resources", "PluginCaption", "PluginTooltip", "MD5/DetailedDescription/doc.xml", "MD5/MD5.png")]
     [ComponentCategory(ComponentCategory.HashFunctions)]
     public class MD5 : ICrypComponent

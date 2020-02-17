@@ -23,7 +23,7 @@ using Cryptool.PluginBase.Miscellaneous;
 
 namespace RIPEMD160
 {
-    [Author("Sebastian Przybylski", "sebastian@przybylski.org", "Uni-Siegen", "http://www.uni-siegen.de")]
+    [Author("Sebastian Przybylski", "sebastian@przybylski.org", "Uni Siegen", "http://www.uni-siegen.de")]
     [PluginInfo("RIPEMD160.Properties.Resources", "PluginCaption", "PluginTooltip", "RIPEMD160/DetailedDescription/doc.xml", "RIPEMD160/RMD160.png")]
     [ComponentCategory(ComponentCategory.HashFunctions)]
     public class RIPEMD160 : ICrypComponent

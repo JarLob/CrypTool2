@@ -27,7 +27,7 @@ using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.Plugins.Cryptography.Encryption
 {
-    [Author("Sebastian Przybylski", "sebastian@przybylski.org", "Uni-Siegen", "http://www.uni-siegen.de")]
+    [Author("Sebastian Przybylski", "sebastian@przybylski.org", "Uni Siegen", "http://www.uni-siegen.de")]
     [PluginInfo("Cryptool.Plugins.Cryptography.Encryption.Properties.Resources", "PluginCaption", "PluginTooltip", "RC2/DetailedDescription/doc.xml", "RC2/icon.png", "RC2/Images/encrypt.png", "RC2/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class RC2 : ICrypComponent

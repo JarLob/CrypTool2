@@ -23,7 +23,7 @@ using Cryptool.PluginBase.Miscellaneous;
 
 namespace SHA
 {
-    [Author("Sebastian Przybylski", "sebastian@przybylski.org", "Uni-Siegen", "http://www.uni-siegen.de")]
+    [Author("Sebastian Przybylski", "sebastian@przybylski.org", "Uni Siegen", "http://www.uni-siegen.de")]
     [PluginInfo("SHA.Properties.Resources", "PluginCaption", "PluginTooltip", "SHA/DetailedDescription/doc.xml", "SHA/SHA.png")]
     [FunctionList("SHA-1")]
     [FunctionList("SHA-256")]
