@@ -511,6 +511,15 @@ namespace OnlineDocumentationGenerator.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Crypto tutorials ähnelt.
+        /// </summary>
+        public static string FL_Tutorial {
+            get {
+                return ResourceManager.GetString("FL_Tutorial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die List of CrypTool 2 Functions
         ///Version: $VERSION$
         ///Generation Date: $DATE$
@@ -792,7 +801,7 @@ namespace OnlineDocumentationGenerator.Properties {
         ///  &lt;language culture=&quot;de-DE&quot; /&gt;
         ///
         ///  &lt;name lang=&quot;de-DE&quot;&gt;Schlüsselgenerierungs-Funktionen auf Basis von Pseudozufallsfunktionen&lt;/name&gt;
-        ///  &lt;name lang=&quot;en&quot;&gt;Key Derivation Functions Based on Pseudorandom Functions&lt;/name&gt;
+        ///  &lt;name lang=&quot;en&quot;&gt;Key derivation functions based on pseudorandom functions&lt;/name&gt;
         ///
         ///  &lt;description lang=&quot;en&quot;&gt;
         ///    &lt;section headline=&quot;Basics and background&quot;&gt;
