@@ -117,7 +117,7 @@
 
             <Separator/>
 
-            <MenuItem Command="{x:Static local:EditorVisual.RearrangeAllLines}" Header="Rearrange all lines">
+            <MenuItem Command="{x:Static local:EditorVisual.RearrangeAllLines}" Header="{Loc Rearrange_all_lines}">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/presIcon.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>

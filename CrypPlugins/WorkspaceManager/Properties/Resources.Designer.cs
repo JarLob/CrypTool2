@@ -61,7 +61,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Align Center ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Align center ähnelt.
         /// </summary>
         public static string Align_Center {
             get {
@@ -70,7 +70,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Align Justify ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Align justify ähnelt.
         /// </summary>
         public static string Align_Justify {
             get {
@@ -79,7 +79,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Align Left ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Align left ähnelt.
         /// </summary>
         public static string Align_Left {
             get {
@@ -88,7 +88,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Align Right ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Align right ähnelt.
         /// </summary>
         public static string Align_Right {
             get {
@@ -223,7 +223,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Bring to Front ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bring to front ähnelt.
         /// </summary>
         public static string Bring_to_FrontTooltip {
             get {
@@ -259,7 +259,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Close Component ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Close component ähnelt.
         /// </summary>
         public static string CloseComponentTooltip {
             get {
@@ -277,7 +277,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Align Bottom ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Align bottom ähnelt.
         /// </summary>
         public static string CompLayout_AlignBottom {
             get {
@@ -286,7 +286,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Align Left ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Align left ähnelt.
         /// </summary>
         public static string CompLayout_AlignLeft {
             get {
@@ -295,7 +295,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Align Right ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Align right ähnelt.
         /// </summary>
         public static string CompLayout_AlignRight {
             get {
@@ -304,7 +304,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Align Top ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Align top ähnelt.
         /// </summary>
         public static string CompLayout_AlignTop {
             get {
@@ -313,7 +313,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Biggest Height ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Biggest height ähnelt.
         /// </summary>
         public static string CompLayout_BiggestHeight {
             get {
@@ -322,7 +322,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Biggest Width ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Biggest width ähnelt.
         /// </summary>
         public static string CompLayout_BiggestWidth {
             get {
@@ -331,7 +331,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Move Down ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Move down ähnelt.
         /// </summary>
         public static string CompLayout_MoveDown {
             get {
@@ -340,7 +340,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Move Left ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Move left ähnelt.
         /// </summary>
         public static string CompLayout_MoveLeft {
             get {
@@ -349,7 +349,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Move Right ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Move right ähnelt.
         /// </summary>
         public static string CompLayout_MoveRight {
             get {
@@ -358,7 +358,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Move Up ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Move up ähnelt.
         /// </summary>
         public static string CompLayout_MoveUp {
             get {
@@ -367,7 +367,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Smallest Height ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Smallest height ähnelt.
         /// </summary>
         public static string CompLayout_SmallestHeight {
             get {
@@ -376,7 +376,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Smallest Width ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Smallest width ähnelt.
         /// </summary>
         public static string CompLayout_SmallestWidth {
             get {
@@ -385,7 +385,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Spread Horizontal ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Spread horizontal ähnelt.
         /// </summary>
         public static string CompLayout_SpreadHorizontal {
             get {
@@ -394,7 +394,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Spread Vertical ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Spread vertical ähnelt.
         /// </summary>
         public static string CompLayout_SpreadVertical {
             get {
@@ -403,7 +403,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Component Overview ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Component overview ähnelt.
         /// </summary>
         public static string Component_Overview {
             get {
@@ -565,7 +565,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show Debugs ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show debugs ähnelt.
         /// </summary>
         public static string DebugCheckedFalseTooltip {
             get {
@@ -574,7 +574,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hide Debugs ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hide debugs ähnelt.
         /// </summary>
         public static string DebugCheckedTrueTooltip {
             get {
@@ -583,7 +583,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Decrease Indent ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Decrease indent ähnelt.
         /// </summary>
         public static string Decrease_Indent {
             get {
@@ -646,7 +646,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter Name ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter name ähnelt.
         /// </summary>
         public static string Enter_Name {
             get {
@@ -664,7 +664,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show Error ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show error ähnelt.
         /// </summary>
         public static string ErrorCheckedFalseTooltip {
             get {
@@ -673,7 +673,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hide Error ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hide error ähnelt.
         /// </summary>
         public static string ErrorCheckedTrueTooltip {
             get {
@@ -709,7 +709,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Global Progressbar ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Global progressbar ähnelt.
         /// </summary>
         public static string Global_Progressbar {
             get {
@@ -727,7 +727,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Grow Font ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Grow font ähnelt.
         /// </summary>
         public static string Grow_Font {
             get {
@@ -736,7 +736,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die GUI-Updateinterval: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die GUI update interval: ähnelt.
         /// </summary>
         public static string GUIUpdateinterval_Label {
             get {
@@ -781,7 +781,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Increase Indent ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Increase indent ähnelt.
         /// </summary>
         public static string Increase_Indent {
             get {
@@ -799,7 +799,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show Information ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show information ähnelt.
         /// </summary>
         public static string InfoCheckedFalseTooltip {
             get {
@@ -808,7 +808,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hide Information ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hide information ähnelt.
         /// </summary>
         public static string InfoCheckedTrueTooltip {
             get {
@@ -889,7 +889,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Move to Back ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Move to back ähnelt.
         /// </summary>
         public static string Move_to_BackTooltip {
             get {
@@ -979,6 +979,15 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Rearrange all lines ähnelt.
+        /// </summary>
+        public static string Rearrange_all_lines {
+            get {
+                return ResourceManager.GetString("Rearrange_all_lines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Redo ähnelt.
         /// </summary>
         public static string Redo {
@@ -1006,7 +1015,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Reset Component Connection Statistics ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reset component connection statistics ähnelt.
         /// </summary>
         public static string ResetCCS {
             get {
@@ -1015,7 +1024,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Reset Colors ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reset colors ähnelt.
         /// </summary>
         public static string ResetColors_Label {
             get {
@@ -1105,7 +1114,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Shrink Font ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Shrink font ähnelt.
         /// </summary>
         public static string Shrink_Font {
             get {
@@ -1114,7 +1123,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sleep-Time: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sleep time: ähnelt.
         /// </summary>
         public static string SleepTime_Label {
             get {
@@ -1150,7 +1159,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Synchronous Events ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Synchronous events ähnelt.
         /// </summary>
         public static string SynchronousEvents_Label {
             get {
@@ -1213,7 +1222,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die New Project ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die New project ähnelt.
         /// </summary>
         public static string unnamed_project {
             get {
@@ -1231,7 +1240,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show Warning ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show warning ähnelt.
         /// </summary>
         public static string WarningCheckedFalseTooltip {
             get {
@@ -1240,7 +1249,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hide Warning ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hide warning ähnelt.
         /// </summary>
         public static string WarningCheckedTrueTooltip {
             get {
@@ -1313,7 +1322,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die SleepTime cannot be &lt;0; Use SleepTime = 0 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sleep time cannot be &lt;0; Use sleep time = 0 ähnelt.
         /// </summary>
         public static string WorkspaceManagerClass_Execute_SleepTime {
             get {

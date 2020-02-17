@@ -1671,7 +1671,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Main control for CrypTool2 workspaces ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Main control for CrypTool 2 workspaces ähnelt.
         /// </summary>
         internal static string RBTooltip_File {
             get {

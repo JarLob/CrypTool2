@@ -70,7 +70,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Clear recently opened templates list. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Clear recently opened templates list ähnelt.
         /// </summary>
         internal static string ClearList {
             get {
@@ -88,7 +88,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Connect to the distributed computing platform. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Connect to the distributed computing platform ähnelt.
         /// </summary>
         internal static string Connect_to_the_distributed_computing_platform_ {
             get {
@@ -106,7 +106,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Create a new workspace with the graphical editor. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Create a new workspace with the graphical editor ähnelt.
         /// </summary>
         internal static string Create_a_new_workspace_with_the_graphical_editor_ {
             get {
@@ -124,7 +124,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Watch videos about CrypTool 2. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Watch videos about CrypTool 2 ähnelt.
         /// </summary>
         internal static string CrypTutorials {
             get {
@@ -178,7 +178,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Visit us on Facebook. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Visit us on Facebook ähnelt.
         /// </summary>
         internal static string Follow_us_on_Facebook_ {
             get {
@@ -214,7 +214,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Open the CrypTool Book. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open the CrypTool Book ähnelt.
         /// </summary>
         internal static string Open_the_ct_book_ {
             get {
@@ -268,7 +268,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Read the online documentation. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Read the online documentation ähnelt.
         /// </summary>
         internal static string Read_the_online_documentation_ {
             get {
@@ -277,7 +277,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Recently Opened Templates ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Recently Opened Templates (double click to open) ähnelt.
         /// </summary>
         internal static string RecentFiles {
             get {
@@ -295,7 +295,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter one or more search terms. Press (Ctrl + R) to update the template list. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter one or more search terms. Press (Ctrl + R) to update the template list ähnelt.
         /// </summary>
         internal static string Search {
             get {
@@ -304,7 +304,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show this welcome screen at startup. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show this welcome screen at startup ähnelt.
         /// </summary>
         internal static string Show_this_welcome_screen_at_CrypTool_2_0_startup_ {
             get {
@@ -322,7 +322,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Templates ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Templates (double click to open) ähnelt.
         /// </summary>
         internal static string Templates {
             get {
@@ -331,7 +331,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This is a standalone component. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This is a standalone component ähnelt.
         /// </summary>
         internal static string This_is_a_standalone_component_ {
             get {
@@ -340,7 +340,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This is a project template. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This is a project template ähnelt.
         /// </summary>
         internal static string This_is_a_template {
             get {
@@ -349,7 +349,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This is a workspace editor file. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This is a workspace editor file ähnelt.
         /// </summary>
         internal static string This_is_a_WorkspaceManager_file_ {
             get {
@@ -358,7 +358,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This is a project file of the deprecated AnotherEditor. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This is a project file of the deprecated AnotherEditor ähnelt.
         /// </summary>
         internal static string This_is_an_AnotherEditor_file_ {
             get {
@@ -376,7 +376,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Use the wizard to easily try some CrypTool 2 features. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Use the wizard to easily try some CrypTool 2 features ähnelt.
         /// </summary>
         internal static string Use_the_wizard_to_easily_try_some_CrypTool_2_0_features_ {
             get {
@@ -394,7 +394,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Visit the official CrypTool 2 website. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Visit the official CrypTool 2 website ähnelt.
         /// </summary>
         internal static string Visit_the_official_CrypTool_2_0_website_ {
             get {
@@ -412,7 +412,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die YouTube Videos ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die YouTube Videos (double click to open) ähnelt.
         /// </summary>
         internal static string YoutubeVideos {
             get {

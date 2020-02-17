@@ -163,10 +163,10 @@
     <value>Debug</value>
   </data>
   <data name="DebugCheckedFalseTooltip" xml:space="preserve">
-    <value>Show Debugs</value>
+    <value>Show debugs</value>
   </data>
   <data name="DebugCheckedTrueTooltip" xml:space="preserve">
-    <value>Hide Debugs</value>
+    <value>Hide debugs</value>
   </data>
   <data name="Delete_all_messages" xml:space="preserve">
     <value>Delete all messages</value>
@@ -178,16 +178,16 @@
     <value>Error</value>
   </data>
   <data name="ErrorCheckedFalseTooltip" xml:space="preserve">
-    <value>Show Error</value>
+    <value>Show error</value>
   </data>
   <data name="ErrorCheckedTrueTooltip" xml:space="preserve">
-    <value>Hide Error</value>
+    <value>Hide error</value>
   </data>
   <data name="Functioncolors_Label" xml:space="preserve">
     <value>Function colors:</value>
   </data>
   <data name="GUIUpdateinterval_Label" xml:space="preserve">
-    <value>GUI-Updateinterval:</value>
+    <value>GUI update interval:</value>
   </data>
   <data name="GUIUpdateinterval_Tooltip" xml:space="preserve">
     <value>Set the update interval for updating GUI-Elements during execution</value>
@@ -199,10 +199,10 @@
     <value>Info</value>
   </data>
   <data name="InfoCheckedFalseTooltip" xml:space="preserve">
-    <value>Show Information</value>
+    <value>Show information</value>
   </data>
   <data name="InfoCheckedTrueTooltip" xml:space="preserve">
-    <value>Hide Information</value>
+    <value>Hide information</value>
   </data>
   <data name="LogTooltip" xml:space="preserve">
     <value>Log</value>
@@ -235,7 +235,7 @@
     <value>Repeat</value>
   </data>
   <data name="ResetColors_Label" xml:space="preserve">
-    <value>Reset Colors</value>
+    <value>Reset colors</value>
   </data>
   <data name="ResetColors_Tooltip" xml:space="preserve">
     <value>Reset all colors to their default values.</value>
@@ -247,7 +247,7 @@
     <value>Show Embedded Components</value>
   </data>
   <data name="SleepTime_Label" xml:space="preserve">
-    <value>Sleep-Time:</value>
+    <value>Sleep time:</value>
   </data>
   <data name="SleepTime_Tooltip" xml:space="preserve">
     <value>Set the sleeping-time between execution of functions (in miliseconds)</value>
@@ -259,7 +259,7 @@
     <value>Symmetric block:</value>
   </data>
   <data name="SynchronousEvents_Label" xml:space="preserve">
-    <value>Synchronous Events</value>
+    <value>Synchronous events</value>
   </data>
   <data name="SynchronousEvents_Tooltip" xml:space="preserve">
     <value>Set the behaviour of event handling of the execution engine</value>
@@ -268,16 +268,16 @@
     <value>Tools:</value>
   </data>
   <data name="unnamed_project" xml:space="preserve">
-    <value>New Project</value>
+    <value>New project</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>Warning</value>
   </data>
   <data name="WarningCheckedFalseTooltip" xml:space="preserve">
-    <value>Show Warning</value>
+    <value>Show warning</value>
   </data>
   <data name="WarningCheckedTrueTooltip" xml:space="preserve">
-    <value>Hide Warning</value>
+    <value>Hide warning</value>
   </data>
   <data name="WorkspaceManagerSettings" xml:space="preserve">
     <value>Workspace</value>
@@ -286,16 +286,16 @@
     <value>Help</value>
   </data>
   <data name="Align_Center" xml:space="preserve">
-    <value>Align Center</value>
+    <value>Align center</value>
   </data>
   <data name="Align_Justify" xml:space="preserve">
-    <value>Align Justify</value>
+    <value>Align justify</value>
   </data>
   <data name="Align_Left" xml:space="preserve">
-    <value>Align Left</value>
+    <value>Align left</value>
   </data>
   <data name="Align_Right" xml:space="preserve">
-    <value>Align Right</value>
+    <value>Align right</value>
   </data>
   <data name="Bold" xml:space="preserve">
     <value>Bold</value>
@@ -310,16 +310,16 @@
     <value>Cut</value>
   </data>
   <data name="Decrease_Indent" xml:space="preserve">
-    <value>Decrease Indent</value>
+    <value>Decrease indent</value>
   </data>
   <data name="Enter_Name" xml:space="preserve">
-    <value>Enter Name</value>
+    <value>Enter name</value>
   </data>
   <data name="Grow_Font" xml:space="preserve">
-    <value>Grow Font</value>
+    <value>Grow font</value>
   </data>
   <data name="Increase_Indent" xml:space="preserve">
-    <value>Increase Indent</value>
+    <value>Increase indent</value>
   </data>
   <data name="Italic" xml:space="preserve">
     <value>Italic</value>
@@ -337,7 +337,7 @@
     <value>Redo</value>
   </data>
   <data name="Shrink_Font" xml:space="preserve">
-    <value>Shrink Font</value>
+    <value>Shrink font</value>
   </data>
   <data name="Underline" xml:space="preserve">
     <value>Underline</value>
@@ -352,7 +352,7 @@
     <value>Colors</value>
   </data>
   <data name="Component_Overview" xml:space="preserve">
-    <value>Component Overview</value>
+    <value>Component overview</value>
   </data>
   <data name="Drag" xml:space="preserve">
     <value>Drag</value>
@@ -385,7 +385,7 @@
     <value>Can't connect to itself.</value>
   </data>
   <data name="CloseComponentTooltip" xml:space="preserve">
-    <value>Close Component</value>
+    <value>Close component</value>
   </data>
   <data name="Executing___" xml:space="preserve">
     <value>Executing...</value>
@@ -400,10 +400,10 @@
     <value>Reduce</value>
   </data>
   <data name="Bring_to_FrontTooltip" xml:space="preserve">
-    <value>Bring to Front</value>
+    <value>Bring to front</value>
   </data>
   <data name="Move_to_BackTooltip" xml:space="preserve">
-    <value>Move to Back</value>
+    <value>Move to back</value>
   </data>
   <data name="EditingDisabled" xml:space="preserve">
     <value>Some editing functions are disabled during execution.</value>
@@ -442,7 +442,7 @@
     <value>Select All</value>
   </data>
   <data name="ResetCCS" xml:space="preserve">
-    <value>Reset Component Connection Statistics</value>
+    <value>Reset component connection statistics</value>
   </data>
   <data name="ComponentConnection_Delay" xml:space="preserve">
     <value>Component connection suggestion delay</value>
@@ -487,7 +487,7 @@
     <value>Could not set GuiUpdateInterval: {0}</value>
   </data>
   <data name="WorkspaceManagerClass_Execute_SleepTime" xml:space="preserve">
-    <value>SleepTime cannot be &lt;0; Use SleepTime = 0</value>
+    <value>Sleep time cannot be &lt;0; Use sleep time = 0</value>
   </data>
   <data name="WorkspaceManagerClass_Execute_Could_not_set_SleepTime___0_" xml:space="preserve">
     <value>Could not set SleepTime: {0}</value>
@@ -514,49 +514,49 @@
     <value>Fonts</value>
   </data>
   <data name="Global_Progressbar" xml:space="preserve">
-    <value>Global Progressbar</value>
+    <value>Global progressbar</value>
   </data>
   <data name="CompLayout_AlignBottom" xml:space="preserve">
-    <value>Align Bottom</value>
+    <value>Align bottom</value>
   </data>
   <data name="CompLayout_AlignLeft" xml:space="preserve">
-    <value>Align Left</value>
+    <value>Align left</value>
   </data>
   <data name="CompLayout_AlignRight" xml:space="preserve">
-    <value>Align Right</value>
+    <value>Align right</value>
   </data>
   <data name="CompLayout_AlignTop" xml:space="preserve">
-    <value>Align Top</value>
+    <value>Align top</value>
   </data>
   <data name="CompLayout_BiggestHeight" xml:space="preserve">
-    <value>Biggest Height</value>
+    <value>Biggest height</value>
   </data>
   <data name="CompLayout_BiggestWidth" xml:space="preserve">
-    <value>Biggest Width</value>
+    <value>Biggest width</value>
   </data>
   <data name="CompLayout_MoveDown" xml:space="preserve">
-    <value>Move Down</value>
+    <value>Move down</value>
   </data>
   <data name="CompLayout_MoveLeft" xml:space="preserve">
-    <value>Move Left</value>
+    <value>Move left</value>
   </data>
   <data name="CompLayout_MoveRight" xml:space="preserve">
-    <value>Move Right</value>
+    <value>Move right</value>
   </data>
   <data name="CompLayout_MoveUp" xml:space="preserve">
-    <value>Move Up</value>
+    <value>Move up</value>
   </data>
   <data name="CompLayout_SmallestHeight" xml:space="preserve">
-    <value>Smallest Height</value>
+    <value>Smallest height</value>
   </data>
   <data name="CompLayout_SmallestWidth" xml:space="preserve">
-    <value>Smallest Width</value>
+    <value>Smallest width</value>
   </data>
   <data name="CompLayout_SpreadHorizontal" xml:space="preserve">
-    <value>Spread Horizontal</value>
+    <value>Spread horizontal</value>
   </data>
   <data name="CompLayout_SpreadVertical" xml:space="preserve">
-    <value>Spread Vertical</value>
+    <value>Spread vertical</value>
   </data>
   <data name="Days" xml:space="preserve">
     <value>days</value>
@@ -572,5 +572,8 @@
   </data>
   <data name="Second" xml:space="preserve">
     <value>second</value>
+  </data>
+  <data name="Rearrange_all_lines" xml:space="preserve">
+    <value>Rearrange all lines</value>
   </data>
 </root>

@@ -19,7 +19,7 @@ namespace Wizard.Resources {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class settingsRes {
@@ -70,7 +70,7 @@ namespace Wizard.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Check to run an opened template automatically. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check to run an opened template automatically ähnelt.
         /// </summary>
         public static string RunToolTip {
             get {
@@ -88,7 +88,7 @@ namespace Wizard.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Check to show animations. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check to show animations ähnelt.
         /// </summary>
         public static string ShowAnimationsTooltip {
             get {

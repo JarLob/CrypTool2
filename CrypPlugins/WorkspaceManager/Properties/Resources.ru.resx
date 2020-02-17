@@ -573,4 +573,7 @@
   <data name="Second" xml:space="preserve">
     <value>второй</value>
   </data>
+  <data name="Rearrange_all_lines" xml:space="preserve">
+    <value>Переставить все линии</value>
+  </data>
 </root>

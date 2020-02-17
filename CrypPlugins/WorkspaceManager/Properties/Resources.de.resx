@@ -573,4 +573,7 @@
   <data name="Second" xml:space="preserve">
     <value>Sekunde</value>
   </data>
+  <data name="Rearrange_all_lines" xml:space="preserve">
+    <value>Alle Linien neu anordnen</value>
+  </data>
 </root>

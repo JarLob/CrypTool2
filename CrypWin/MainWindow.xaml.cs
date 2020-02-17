@@ -2466,7 +2466,7 @@ namespace Cryptool.CrypWin
             {
                 string windowTitle = AssemblyHelper.ProductName;
                 if (!string.IsNullOrEmpty(newProjectTitle))
-                    windowTitle += " - " + newProjectTitle; // append project name if not null or empty
+                    windowTitle += " – " + newProjectTitle; // append project name if not null or empty
 
                 this.Title = windowTitle;
             }, null);

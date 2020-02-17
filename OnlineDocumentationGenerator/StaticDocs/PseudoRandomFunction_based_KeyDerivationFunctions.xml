@@ -4,7 +4,7 @@
   <language culture="de-DE" />
 
   <name lang="de-DE">Schlüsselgenerierungs-Funktionen auf Basis von Pseudozufallsfunktionen</name>
-  <name lang="en">Key derivation functions based on pseudorandom functions</name>
+  <name lang="en">Key Derivation Functions Based on Pseudorandom Functions</name>
 
   <description lang="en">
     <section headline="Basics and background">

@@ -399,13 +399,13 @@ namespace Cryptool.CrypWin
                 }
                 else
                 {
-                    GuiLogMessage("AutoUpdate: No updates found - you are on the most current version.", NotificationLevel.Info);
+                    GuiLogMessage("AutoUpdate: No updates found – you are on the most current version.", NotificationLevel.Info);
                     CurrentState = State.Idle;
                 }
             }
             catch (Exception ex)
             {
-                GuiLogMessage("AutoUpdate: Error occured while checking for updates: "+ex.Message, NotificationLevel.Error);
+                GuiLogMessage("AutoUpdate: Error occured while checking for updates: " + ex.Message, NotificationLevel.Error);
             }
         }
 

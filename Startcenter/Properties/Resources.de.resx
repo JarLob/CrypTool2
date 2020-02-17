@@ -133,10 +133,10 @@
     <value>Neues</value>
   </data>
   <data name="RecentFiles" xml:space="preserve">
-    <value>Zuletzt geöffnete Vorlagen</value>
+    <value>Zuletzt geöffnete Vorlagen (Doppelklicken zum Öffnen)</value>
   </data>
   <data name="Templates" xml:space="preserve">
-    <value>Vorlagen</value>
+    <value>Vorlagen (Doppelklick zum Öffnen)</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Titel:</value>
@@ -148,37 +148,37 @@
     <value>Bitte warten...</value>
   </data>
   <data name="This_is_an_AnotherEditor_file_" xml:space="preserve">
-    <value>Dies ist eine Datei des veralteten AnotherEditor.</value>
+    <value>Dies ist eine Datei des veralteten AnotherEditor</value>
   </data>
   <data name="This_is_a_WorkspaceManager_file_" xml:space="preserve">
-    <value>Dies ist eine Datei des Workspace-Editors.</value>
+    <value>Dies ist eine Datei des Workspace-Editors</value>
   </data>
   <data name="This_is_a_standalone_component_" xml:space="preserve">
-    <value>Dies ist eine alleinstehende Komponente.</value>
+    <value>Dies ist eine alleinstehende Komponente</value>
   </data>
   <data name="This_is_a_template" xml:space="preserve">
-    <value>Dies ist eine Projektvorlage.</value>
+    <value>Dies ist eine Projektvorlage</value>
   </data>
   <data name="Connect_to_the_distributed_computing_platform_" xml:space="preserve">
-    <value>Verbinden Sie sich mit der verteilten Berechnungsplattform.</value>
+    <value>Verbinden Sie sich mit der verteilten Berechnungsplattform</value>
   </data>
   <data name="Create_a_new_workspace_with_the_graphical_editor_" xml:space="preserve">
-    <value>Erstellen Sie einen neuen Workspace mit dem grafischen Editor.</value>
+    <value>Erstellen Sie einen neuen Workspace mit dem grafischen Editor</value>
   </data>
   <data name="Read_the_online_documentation_" xml:space="preserve">
-    <value>Lesen Sie die Online-Dokumentation.</value>
+    <value>Lesen Sie die Online-Dokumentation</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Geben Sie einen oder mehrere Suchbegriffe ein. Drücken Sie (Strg + R), um die Vorlagenliste zu aktualisieren.</value>
+    <value>Geben Sie einen oder mehrere Suchbegriffe ein. Drücken Sie (Strg + R), um die Vorlagenliste zu aktualisieren</value>
   </data>
   <data name="Show_this_welcome_screen_at_CrypTool_2_0_startup_" xml:space="preserve">
-    <value>Diese Begrüßungsseite beim Start von CrypTool 2 anzeigen.</value>
+    <value>Diese Begrüßungsseite beim Start von CrypTool 2 anzeigen</value>
   </data>
   <data name="Use_the_wizard_to_easily_try_some_CrypTool_2_0_features_" xml:space="preserve">
-    <value>Erkunden Sie CrypTool 2 mit dem Wizard.</value>
+    <value>Erkunden Sie CrypTool 2 mit dem Wizard</value>
   </data>
   <data name="Visit_the_official_CrypTool_2_0_website_" xml:space="preserve">
-    <value>Besuchen Sie die offizielle Website von CrypTool 2.</value>
+    <value>Besuchen Sie die offizielle Website von CrypTool 2</value>
   </data>
   <data name="Welcome_to_CrypTool_2_0" xml:space="preserve">
     <value>Willkommen bei CrypTool 2:  Eine geführte Tour erhalten Sie durch einen Klick auf die Wizard-Schaltfläche (in der Sektion "Hauptfunktionen").  Fertige kryptographische Szenarien können Sie in der Sektion "Vorlagen" aufrufen und anpassen.</value>
@@ -187,7 +187,7 @@
     <value>      Suche</value>
   </data>
   <data name="ClearList" xml:space="preserve">
-    <value>Liste der zuletzt geöffneten Vorlagen löschen.</value>
+    <value>Liste der zuletzt geöffneten Vorlagen löschen</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Diesen Eintrag löschen</value>
@@ -196,16 +196,16 @@
     <value>Diesen Eintrag starten</value>
   </data>
   <data name="Follow_us_on_Facebook_" xml:space="preserve">
-    <value>Besuchen Sie uns auf Facebook.</value>
+    <value>Besuchen Sie uns auf Facebook</value>
   </data>
   <data name="CrypTutorials" xml:space="preserve">
-    <value>Schauen Sie sich Videos über CrypTool 2 an.</value>
+    <value>Schauen Sie sich Videos über CrypTool 2 an</value>
   </data>
   <data name="CTBookFilename" xml:space="preserve">
     <value>CT-Book-de.pdf</value>
   </data>
   <data name="Open_the_ct_book_" xml:space="preserve">
-    <value>Öffnen Sie das CrypTool-Buch.</value>
+    <value>Öffnen Sie das CrypTool-Buch</value>
   </data>
   <data name="CollapseAll" xml:space="preserve">
     <value>Alle zuklappen</value>
@@ -229,6 +229,6 @@
     <value>Besuchen Sie den offiziellen YouTube-Kanal (Englisch) von CrypTool 2, um mehr über die Handhabung von CrypTool 2 zu erfahren</value>
   </data>
   <data name="YoutubeVideos" xml:space="preserve">
-    <value>YouTube Videos</value>
+    <value>YouTube Videos (Doppelklick zum Öffnen)</value>
   </data>
 </root>
