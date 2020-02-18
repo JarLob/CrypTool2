@@ -1177,7 +1177,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Open/close the bar with the settings of the selected components of this workspace ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open/close the bar with the settings of the selected components of this workspace (CTRL+I) ähnelt.
         /// </summary>
         public static string Toggle_Plugin_Parameters {
             get {

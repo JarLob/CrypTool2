@@ -409,7 +409,7 @@
     <value>Некоторые функции редактирования отключены во время выполнения.</value>
   </data>
   <data name="Toggle_Plugin_Parameters" xml:space="preserve">
-    <value>Открыть/закрыть панель с настройками выбранных компонентов этого рабочего пространства</value>
+    <value>Открыть/закрыть панель с настройками выбранных компонентов этого рабочего пространства (CTRL+I)</value>
   </data>
   <data name="Save_File" xml:space="preserve">
     <value>Сохранить файл</value>

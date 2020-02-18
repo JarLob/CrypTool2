@@ -409,7 +409,7 @@
     <value>Einige Bearbeitungsfunktionen sind während der Ausführung deaktiviert.</value>
   </data>
   <data name="Toggle_Plugin_Parameters" xml:space="preserve">
-    <value>Öffne/schließe Leiste mit den Einstellungen der ausgewählten Komponenten dieser Arbeitsfläche</value>
+    <value>Öffne/schließe Leiste mit den Einstellungen der ausgewählten Komponenten dieser Arbeitsfläche (CTRL+I)</value>
   </data>
   <data name="Save_File" xml:space="preserve">
     <value>Datei speichern</value>

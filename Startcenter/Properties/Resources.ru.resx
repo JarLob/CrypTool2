@@ -169,7 +169,7 @@
     <value>Прочтите онлайн-документацию</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Введите один или несколько условий поиска. Нажмите (Ctrl + R), чтобы обновить список шаблонов</value>
+    <value>Введите один или несколько условий поиска. Нажмите (CTRL+R), чтобы обновить список шаблонов</value>
   </data>
   <data name="Show_this_welcome_screen_at_CrypTool_2_0_startup_" xml:space="preserve">
     <value>Покажите этот экран приветствия при запуске.</value>

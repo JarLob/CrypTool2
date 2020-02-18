@@ -815,7 +815,7 @@
     <value>Arbeitsbereich laden (Strg + O)</value>
   </data>
   <data name="RBTooltip_Log" xml:space="preserve">
-    <value>Log-Fenster ein-/ausblenden</value>
+    <value>Log-Fenster ein-/ausblenden (CTRL+L)</value>
   </data>
   <data name="RBTooltip_New" xml:space="preserve">
     <value>Neuen Arbeitsbereich oder Wizard öffnen (Strg + N)</value>

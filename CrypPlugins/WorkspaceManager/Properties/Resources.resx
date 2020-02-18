@@ -409,7 +409,7 @@
     <value>Some editing functions are disabled during execution.</value>
   </data>
   <data name="Toggle_Plugin_Parameters" xml:space="preserve">
-    <value>Open/close the bar with the settings of the selected components of this workspace</value>
+    <value>Open/close the bar with the settings of the selected components of this workspace (CTRL+I)</value>
   </data>
   <data name="Save_File" xml:space="preserve">
     <value>Save File</value>

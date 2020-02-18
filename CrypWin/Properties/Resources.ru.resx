@@ -839,19 +839,19 @@
     <value>Доступные Crypto Tutorials</value>
   </data>
   <data name="RBTooltip_Load" xml:space="preserve">
-    <value>Загрузите рабочую область (Ctrl + O)</value>
+    <value>Загрузите рабочую область (CTRL+O)</value>
   </data>
   <data name="RBTooltip_Log" xml:space="preserve">
-    <value>Переключить видимость окна журнала</value>
+    <value>Переключить видимость окна журнала  (CTRL+L)</value>
   </data>
   <data name="RBTooltip_New" xml:space="preserve">
-    <value>Создайте новое рабочее пространство или откройте мастер (Ctrl + N)</value>
+    <value>Создайте новое рабочее пространство или откройте мастер (CTRL+N)</value>
   </data>
   <data name="RBTooltip_Print" xml:space="preserve">
-    <value>Печать текущей рабочей области (Ctrl + P)</value>
+    <value>Печать текущей рабочей области (CTRL+P)</value>
   </data>
   <data name="RBTooltip_Save" xml:space="preserve">
-    <value>Сохранить текущую рабочую область (Ctrl + S)</value>
+    <value>Сохранить текущую рабочую область (CTRL+S)</value>
   </data>
   <data name="RBTooltip_View" xml:space="preserve">
     <value>Переключение видимости окон</value>

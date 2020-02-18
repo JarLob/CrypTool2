@@ -364,7 +364,7 @@ namespace KeyTextBox
             var count = 0;
 
             //added all the null checks due to a bug that occurs when the user copy and pastes using
-            //ctrl + a, ctrl + c and then ctrl + v
+            //CTRL+a, CTRL+c and then CTRL+v
             var caretPos = KeyBox.CaretPosition;
             if (caretPos == null)
             {

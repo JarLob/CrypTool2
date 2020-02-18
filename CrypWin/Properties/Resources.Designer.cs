@@ -1671,7 +1671,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Main control for CrypTool 2 workspaces ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Main control for CrypTool2 workspaces ähnelt.
         /// </summary>
         internal static string RBTooltip_File {
             get {
@@ -1689,7 +1689,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Load a workspace (Ctrl + O) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Load a workspace (CTRL+O) ähnelt.
         /// </summary>
         internal static string RBTooltip_Load {
             get {
@@ -1698,7 +1698,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Toggle visibility of the log window ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Toggle visibility of the log window  (CTRL+L) ähnelt.
         /// </summary>
         internal static string RBTooltip_Log {
             get {
@@ -1707,7 +1707,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Create a new workspace or open Wizard (Ctrl + N) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Create a new workspace or open Wizard (CTRL+N) ähnelt.
         /// </summary>
         internal static string RBTooltip_New {
             get {
@@ -1716,7 +1716,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Print the current workspace (Ctrl + P) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Print the current workspace (CTRL+P) ähnelt.
         /// </summary>
         internal static string RBTooltip_Print {
             get {
@@ -1725,7 +1725,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Save the current workspace (Ctrl + S) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Save the current workspace (CTRL+S) ähnelt.
         /// </summary>
         internal static string RBTooltip_Save {
             get {

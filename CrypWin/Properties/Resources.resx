@@ -842,19 +842,19 @@
     <value>Available Crypto Tutorials</value>
   </data>
   <data name="RBTooltip_Load" xml:space="preserve">
-    <value>Load a workspace (Ctrl + O)</value>
+    <value>Load a workspace (CTRL+O)</value>
   </data>
   <data name="RBTooltip_Log" xml:space="preserve">
-    <value>Toggle visibility of the log window</value>
+    <value>Toggle visibility of the log window  (CTRL+L)</value>
   </data>
   <data name="RBTooltip_New" xml:space="preserve">
-    <value>Create a new workspace or open Wizard (Ctrl + N)</value>
+    <value>Create a new workspace or open Wizard (CTRL+N)</value>
   </data>
   <data name="RBTooltip_Print" xml:space="preserve">
-    <value>Print the current workspace (Ctrl + P)</value>
+    <value>Print the current workspace (CTRL+P)</value>
   </data>
   <data name="RBTooltip_Save" xml:space="preserve">
-    <value>Save the current workspace (Ctrl + S)</value>
+    <value>Save the current workspace (CTRL+S)</value>
   </data>
   <data name="RBTooltip_View" xml:space="preserve">
     <value>Toggle visibility of windows</value>
