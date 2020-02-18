@@ -135,7 +135,7 @@ namespace Cryptool.LFSR
 
     [Author("Simon Leischnig", "leischnig@cryptool.org", "At Home", "https://github.io/hi")]
     [PluginInfo("Cryptool.LFSR.Properties.Resources", "PluginCaption", "PluginTooltip", "LFSR/DetailedDescription/doc.xml", "LFSR/Images/LFSR.png", "LFSR/Images/encrypt.png", "LFSR/Images/decrypt.png")]
-    [ComponentCategory(ComponentCategory.ToolsMisc)]
+    [ComponentCategory(ComponentCategory.ToolsRandomNumbers)]
     public class LFSRComponent : AbstractStandaloneComponentCompat<LFSRAPI, LFSRParameters>
     {
         private readonly Dictionary<object, string> outputIds;

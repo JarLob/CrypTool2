@@ -30,7 +30,7 @@ namespace Cryptool.Plugins.VisualDecoder
 {
     [Author("Christopher Konze", "Christopher.Konze@cryptool.org", "University of Kassel", "http://www.uni-kassel.de/eecs/")]
     [PluginInfo("VisualDecoder.Properties.Resources", "PluginCaption", "PluginTooltip", "VisualDecoder/userdoc.xml", new[] { "VisualDecoder/Images/icon.png" })]
-    [ComponentCategory(ComponentCategory.ToolsMisc)]
+    [ComponentCategory(ComponentCategory.ToolsCodes)]
     public class VisualDecoder : ICrypComponent
     {
 

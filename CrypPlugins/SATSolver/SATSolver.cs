@@ -28,7 +28,7 @@ namespace Cryptool.Plugins.SATSolver
 {
     [Author("Max Brandi", "max.brandi@rub.de", null, null)]
     [PluginInfo("SATSolver.Properties.Resources", "PluginCaption", "PluginDescription", "SATSolver/Documentation/doc.xml", new[] { "SATSolver/Images/sat-race-logo.gif" })]
-    [ComponentCategory(ComponentCategory.ToolsMisc)]
+    [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class SATSolver : ICrypComponent
     {
             

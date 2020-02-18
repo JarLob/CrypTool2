@@ -157,7 +157,7 @@ namespace KeyTextBox
                                     end = GetKeyOffset(KeyBox.Selection.End);
                                     if (end == 0)
                                     {
-                                        //end == 0 means, the user pressed CTRL+A to select everything
+                                        //end == 0 means, the user pressed Ctrl + A to select everything
                                         end = key.Length;
                                     }                                    
                                 }
@@ -195,7 +195,7 @@ namespace KeyTextBox
 
                         if (end == 0)
                         {
-                            //end == 0 means, the user pressed CTRL+A to select everything
+                            //end == 0 means, the user pressed Ctrl + A to select everything
                             end = key.Length;
                         }
                         for (int i = start; i < end; i++)
@@ -364,7 +364,7 @@ namespace KeyTextBox
             var count = 0;
 
             //added all the null checks due to a bug that occurs when the user copy and pastes using
-            //CTRL+a, CTRL+c and then CTRL+v
+            //Ctrl + a, Ctrl + c and then Ctrl + v
             var caretPos = KeyBox.CaretPosition;
             if (caretPos == null)
             {

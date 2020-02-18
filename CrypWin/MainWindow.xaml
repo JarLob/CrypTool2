@@ -524,12 +524,12 @@
         <KeyBinding Command="cw:CrypWinCommands.Maximize" Gesture="F11"/>
         <KeyBinding Command="cw:CrypWinCommands.Fullscreen" Gesture="F12"/>
         <KeyBinding Command="cw:CrypWinCommands.Remove" Gesture="Del"/>
-        <KeyBinding Command="cw:CrypWinCommands.Redo" Gesture="CTRL+Y"/>
-        <KeyBinding Command="cw:CrypWinCommands.Undo" Gesture="CTRL+Z"/>
-        <KeyBinding Command="cw:CrypWinCommands.Copy" Gesture="CTRL+C"/>
-        <KeyBinding Command="cw:CrypWinCommands.Cut" Gesture="CTRL+X"/>
-        <KeyBinding Command="cw:CrypWinCommands.Paste" Gesture="CTRL+V"/>
-        <KeyBinding Command="cw:CrypWinCommands.ShowHideLog" Gesture="CTRL+L"/>
+        <KeyBinding Command="cw:CrypWinCommands.Redo" Gesture="Ctrl + Y"/>
+        <KeyBinding Command="cw:CrypWinCommands.Undo" Gesture="Ctrl + Z"/>
+        <KeyBinding Command="cw:CrypWinCommands.Copy" Gesture="Ctrl + C"/>
+        <KeyBinding Command="cw:CrypWinCommands.Cut" Gesture="Ctrl + X"/>
+        <KeyBinding Command="cw:CrypWinCommands.Paste" Gesture="Ctrl + V"/>
+        <KeyBinding Command="cw:CrypWinCommands.ShowHideLog" Gesture="Ctrl + L"/>
     </dc:RibbonWindow.InputBindings>
     <DockPanel LastChildFill="True">
         <StatusBar Name="statusBar" DockPanel.Dock="Bottom" Height="22" MouseDoubleClick="statusBar_MouseDoubleClick">
@@ -1129,12 +1129,16 @@
                                                         <ListBox Name="navListBoxToolsData" BorderThickness="0" Margin="0"/>
                                                     </Expander>
                                                     <Expander Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly=dc:NavigationPane, ResourceId=Expander}}" 
-                        IsExpanded="True" Header="{Loc Misc}" Name="expanderToolsMisc">
-                                                        <ListBox Name="navListBoxToolsMisc" BorderThickness="0" Margin="0"/>
+                        IsExpanded="True" Header="{Loc RandomNumbers}" Name="expanderToolsRandomNumbers">
+                                                        <ListBox Name="navListBoxToolsRandomNumbers" BorderThickness="0" Margin="0"/>
                                                     </Expander>
                                                     <Expander Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly=dc:NavigationPane, ResourceId=Expander}}" 
-                        IsExpanded="True" Header="{Loc PeerToPeer}" Name="expanderToolsP2P">
-                                                        <ListBox Name="navListBoxToolsP2P" BorderThickness="0" Margin="0"/>
+                        IsExpanded="True" Header="{Loc Codes}" Name="expanderToolsCodes">
+                                                        <ListBox Name="navListBoxToolsCodes" BorderThickness="0" Margin="0"/>
+                                                    </Expander>
+                                                    <Expander Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly=dc:NavigationPane, ResourceId=Expander}}" 
+                        IsExpanded="True" Header="{Loc Misc}" Name="expanderToolsMisc">
+                                                        <ListBox Name="navListBoxToolsMisc" BorderThickness="0" Margin="0"/>
                                                     </Expander>
                                                 </StackPanel>
                                             </ScrollViewer>
@@ -1295,7 +1299,7 @@
                           Style="{StaticResource ListViewStyle}">
                                         <ListView.ContextMenu>
                                             <ContextMenu>
-                                                <MenuItem IsEnabled="True" Header="{Loc Copy}" InputGestureText="Ctrl+C" Click="MenuItem_Click" />
+                                                <MenuItem IsEnabled="True" Header="{Loc Copy}" InputGestureText="Ctrl + C" Click="MenuItem_Click" />
                                             </ContextMenu>
                                         </ListView.ContextMenu>
                                         <ListView.View>

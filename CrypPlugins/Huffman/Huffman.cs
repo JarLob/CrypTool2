@@ -30,7 +30,7 @@ namespace Cryptool.Plugins.Huffman
     [Author("Marko Lazić", "marko.lazic.14@singimail.rs", "Singidunum University", "http://eng.singidunum.ac.rs/")]
     [PluginInfo("Huffman.Properties.Resources", "PluginCaption", "PluginTooltip",
         "Huffman/DetailedDescription/doc.xml", "Huffman/h.png")]
-    [ComponentCategory(ComponentCategory.ToolsMisc)]
+    [ComponentCategory(ComponentCategory.ToolsCodes)]
     public class Huffman : ICrypComponent
     {
         #region Private Variables

@@ -133,7 +133,7 @@
     <value>Add memo (for descriptions) to the workspace</value>
   </data>
   <data name="BBox_Fit_to_Screen_Tooltip" xml:space="preserve">
-    <value>Adjust the zoom of the workspace automatically so that all components can be seen to the maximum (Ctrl+F)</value>
+    <value>Adjust the zoom of the workspace automatically so that all components can be seen to the maximum (Ctrl + F)</value>
   </data>
   <data name="BBox_Sort_Caption" xml:space="preserve">
     <value>Sort</value>
@@ -409,7 +409,7 @@
     <value>Some editing functions are disabled during execution.</value>
   </data>
   <data name="Toggle_Plugin_Parameters" xml:space="preserve">
-    <value>Open/close the bar with the settings of the selected components of this workspace (CTRL+I)</value>
+    <value>Open/close the bar with the settings of the selected components of this workspace (Ctrl + I)</value>
   </data>
   <data name="Save_File" xml:space="preserve">
     <value>Save File</value>

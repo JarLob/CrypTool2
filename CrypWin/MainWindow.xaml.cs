@@ -1441,11 +1441,14 @@ namespace Cryptool.CrypWin
                         case ComponentCategory.ToolsDataInputOutput:
                             cont = new GUIContainerElementsForPlugins(type, pia, navPaneItemTools, navListBoxToolsData, Properties.Resources.DataInputOutput);
                             break;
+                        case ComponentCategory.ToolsRandomNumbers:
+                            cont = new GUIContainerElementsForPlugins(type, pia, navPaneItemTools, navListBoxToolsRandomNumbers, Properties.Resources.RandomNumbers);
+                            break;
+                        case ComponentCategory.ToolsCodes:
+                            cont = new GUIContainerElementsForPlugins(type, pia, navPaneItemTools, navListBoxToolsCodes, Properties.Resources.Codes);
+                            break;
                         case ComponentCategory.ToolsMisc:
                             cont = new GUIContainerElementsForPlugins(type, pia, navPaneItemTools, navListBoxToolsMisc, Properties.Resources.Misc);
-                            break;
-                        case ComponentCategory.ToolsP2P:
-                            cont = new GUIContainerElementsForPlugins(type, pia, navPaneItemTools, navListBoxToolsP2P, Properties.Resources.PeerToPeer);
                             break;
                         case ComponentCategory.DECRYPTProjectComponent:
                             cont = new GUIContainerElementsForPlugins(type, pia, navPaneItemDECRYPTProject, navListBoxDECRYPTProject, Properties.Resources.DECRYPTProject);

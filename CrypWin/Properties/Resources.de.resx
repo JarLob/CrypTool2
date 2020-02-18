@@ -815,7 +815,7 @@
     <value>Arbeitsbereich laden (Strg + O)</value>
   </data>
   <data name="RBTooltip_Log" xml:space="preserve">
-    <value>Log-Fenster ein-/ausblenden (CTRL+L)</value>
+    <value>Log-Fenster ein-/ausblenden (Strg + L)</value>
   </data>
   <data name="RBTooltip_New" xml:space="preserve">
     <value>Neuen Arbeitsbereich oder Wizard öffnen (Strg + N)</value>
@@ -975,5 +975,11 @@
   </data>
   <data name="Category" xml:space="preserve">
     <value>Kategorie</value>
+  </data>
+  <data name="Codes" xml:space="preserve">
+    <value>Kodierungen</value>
+  </data>
+  <data name="RandomNumbers" xml:space="preserve">
+    <value>Zufallszahlen</value>
   </data>
 </root>

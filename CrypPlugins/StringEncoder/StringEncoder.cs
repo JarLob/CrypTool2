@@ -27,7 +27,7 @@ namespace Cryptool.Plugins.Convertor
 {
     [Author("Arno Wacker", "arno.wacker@cryptool.org", "Universität Kassel", "http://www.uc.uni-kassel.de")]
     [PluginInfo("Cryptool.Plugins.Convertor.Properties.Resources", "PluginCaption", "PluginTooltip", "StringEncoder/DetailedDescription/doc.xml", "StringEncoder/s2t-icon.png")]
-    [ComponentCategory(ComponentCategory.ToolsMisc)]
+    [ComponentCategory(ComponentCategory.ToolsCodes)]
     public class StringEncoder : ICrypComponent
     {
         #region Public interface

@@ -30,7 +30,7 @@ namespace ADFGVXAnalyzer
 {
     [Author("Dominik Vogt", "dvogt@posteo.de", null, null)]
     [PluginInfo("ADFGVXAnalyzer.Properties.Resources", "ADFGVXAnalyzerCaption", "ADFGVXAnalyzerToolTip", "ADFGVXAnalyzer/userdoc.xml", new[] { "ADFGVXAnalyzer/icon.png" })]
-    [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
+    [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class ADFGVXAnalyzer : ICrypComponent
     {
         #region Private Variables

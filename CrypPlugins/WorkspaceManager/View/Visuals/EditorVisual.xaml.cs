@@ -2169,7 +2169,7 @@ namespace WorkspaceManager.View.Visuals
             {
                 if (e.Key == Key.I)
                 {
-                    //with CTRL+I, the user can toggle the settings bar
+                    //with Ctrl + I, the user can toggle the settings bar
                     IsSettingsOpen = !IsSettingsOpen;
                 }
 

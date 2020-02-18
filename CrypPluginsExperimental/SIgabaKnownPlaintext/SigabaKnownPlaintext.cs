@@ -41,7 +41,7 @@ namespace SigabaKnownPlaintext
         "Enigma/DetailedDescription/doc.xml",
         "Sigaba/Images/Icon.png", "Enigma/Images/encrypt.png", "Enigma/Images/decrypt.png")]
 
-    [ComponentCategory(ComponentCategory.ToolsMisc)]
+    [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class SigabaKnownPlaintext : ICrypComponent
     {
         #region Private Variables

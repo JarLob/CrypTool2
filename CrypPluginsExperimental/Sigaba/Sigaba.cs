@@ -28,7 +28,7 @@ namespace Sigaba
 {
     [Author("Julian Weyers", "weyers@cryptool.org", "CrypTool 2 Team", "http://cryptool2.vs.uni-due.de")]
     [PluginInfo("Sigaba.Properties.Resources", "PluginCaption", "PluginToolTip", "Enigma/DetailedDescription/doc.xml", "Sigaba/Images/Icon.png", "Enigma/Images/encrypt.png", "Enigma/Images/decrypt.png")]
-    [ComponentCategory(ComponentCategory.ToolsMisc)]
+    [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class Sigaba : ICrypComponent
     {
         public readonly SigabaSettings _settings = new SigabaSettings();

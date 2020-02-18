@@ -376,4 +376,10 @@
   <data name="Category_FL_DECRYPT" xml:space="preserve">
     <value>Проект DECRYPT</value>
   </data>
+  <data name="Category_ToolsCodes" xml:space="preserve">
+    <value>Инструменты\ кодирование</value>
+  </data>
+  <data name="Category_ToolsRandomNumbers" xml:space="preserve">
+    <value>Инструменты\ случайные числа</value>
+  </data>
 </root>

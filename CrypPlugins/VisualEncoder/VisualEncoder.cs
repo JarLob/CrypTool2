@@ -28,7 +28,7 @@ namespace Cryptool.Plugins.VisualEncoder
 {
     [Author("Christopher Konze", "Christopher.Konze@cryptool.org", "University of Kassel", "http://www.uni-kassel.de/eecs/")]
     [PluginInfo("VisualEncoder.Properties.Resources", "PluginCaption", "PluginTooltip", "VisualEncoder/userdoc.xml", new[] { "VisualEncoder/Images/icon.png" })]
-    [ComponentCategory(ComponentCategory.ToolsMisc)]
+    [ComponentCategory(ComponentCategory.ToolsCodes)]
     public class VisualEncoder : ICrypComponent
     {
         #region Const / Variables

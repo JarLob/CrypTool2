@@ -303,6 +303,15 @@ namespace OnlineDocumentationGenerator.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tools\ Codes ähnelt.
+        /// </summary>
+        public static string Category_ToolsCodes {
+            get {
+                return ResourceManager.GetString("Category_ToolsCodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Tools - Dataflow ähnelt.
         /// </summary>
         public static string Category_ToolsDataflow {
@@ -335,6 +344,15 @@ namespace OnlineDocumentationGenerator.Properties {
         public static string Category_ToolsP2P {
             get {
                 return ResourceManager.GetString("Category_ToolsP2P", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tools\ Random Number ähnelt.
+        /// </summary>
+        public static string Category_ToolsRandomNumbers {
+            get {
+                return ResourceManager.GetString("Category_ToolsRandomNumbers", resourceCulture);
             }
         }
         
@@ -801,7 +819,7 @@ namespace OnlineDocumentationGenerator.Properties {
         ///  &lt;language culture=&quot;de-DE&quot; /&gt;
         ///
         ///  &lt;name lang=&quot;de-DE&quot;&gt;Schlüsselgenerierungs-Funktionen auf Basis von Pseudozufallsfunktionen&lt;/name&gt;
-        ///  &lt;name lang=&quot;en&quot;&gt;Key derivation functions based on pseudorandom functions&lt;/name&gt;
+        ///  &lt;name lang=&quot;en&quot;&gt;Key Derivation Functions Based on Pseudorandom Functions&lt;/name&gt;
         ///
         ///  &lt;description lang=&quot;en&quot;&gt;
         ///    &lt;section headline=&quot;Basics and background&quot;&gt;

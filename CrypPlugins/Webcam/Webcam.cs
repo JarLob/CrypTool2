@@ -26,7 +26,7 @@ namespace Cryptool.Plugins.Webcam
 {
     [Author("Mirko Sartorius", "mirkosartorius@web.de", "CrypTool 2 Team", "university of kassel")]
     [PluginInfo("WebCam.Properties.Resources", "PluginCaption", "PluginTooltip", "WebCam/userdoc.xml", new[] { "Webcam/images/webcam.png" })]
-    [ComponentCategory(ComponentCategory.ToolsMisc)]
+    [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
     public class Webcam : ICrypComponent
     {
         #region Private Variables

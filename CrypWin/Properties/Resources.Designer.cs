@@ -426,6 +426,15 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Codes ähnelt.
+        /// </summary>
+        internal static string Codes {
+            get {
+                return ResourceManager.GetString("Codes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Components ähnelt.
         /// </summary>
         internal static string Components {
@@ -1536,6 +1545,15 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Random numbers ähnelt.
+        /// </summary>
+        internal static string RandomNumbers {
+            get {
+                return ResourceManager.GetString("RandomNumbers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Add ähnelt.
         /// </summary>
         internal static string RBHeader_Add {
@@ -1689,7 +1707,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Load a workspace (CTRL+O) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Load a workspace (Ctrl + O) ähnelt.
         /// </summary>
         internal static string RBTooltip_Load {
             get {
@@ -1698,7 +1716,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Toggle visibility of the log window  (CTRL+L) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Toggle visibility of the log window  (Ctrl + L) ähnelt.
         /// </summary>
         internal static string RBTooltip_Log {
             get {
@@ -1707,7 +1725,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Create a new workspace or open Wizard (CTRL+N) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Create a new workspace or open Wizard (Ctrl + N) ähnelt.
         /// </summary>
         internal static string RBTooltip_New {
             get {
@@ -1716,7 +1734,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Print the current workspace (CTRL+P) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Print the current workspace (Ctrl + P) ähnelt.
         /// </summary>
         internal static string RBTooltip_Print {
             get {
@@ -1725,7 +1743,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Save the current workspace (CTRL+S) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Save the current workspace (Ctrl + S) ähnelt.
         /// </summary>
         internal static string RBTooltip_Save {
             get {

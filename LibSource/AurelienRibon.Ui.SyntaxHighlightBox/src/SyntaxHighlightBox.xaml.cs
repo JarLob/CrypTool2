@@ -233,7 +233,7 @@ namespace AurelienRibon.Ui.SyntaxHighlightBox {
 						// Reproduce steps:
 						// - Sets a valid syntax highlighter on the box.
 						// - Copy a large chunk of code in the clipboard.
-						// - Paste it using ctrl+v and keep these buttons pressed.
+						// - Paste it using Ctrl + v and keep these buttons pressed.
 					}
 				}
 			}

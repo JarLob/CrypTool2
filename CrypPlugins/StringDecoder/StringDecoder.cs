@@ -29,7 +29,7 @@ namespace Cryptool.Plugins.Convertor
     // Converts a given string into a stream by using different encodings.
     [Author("Arno Wacker", "arno.wacker@cryptool.org", "Universität Kassel", "http://www.uc.uni-kassel.de")]
     [PluginInfo("Cryptool.Plugins.Convertor.Properties.Resources", "PluginCaption", "PluginTooltip", "StringDecoder/DetailedDescription/doc.xml", "StringDecoder/t2s-icon.png")]
-    [ComponentCategory(ComponentCategory.ToolsMisc)]
+    [ComponentCategory(ComponentCategory.ToolsCodes)]
     public class StringDecoder : ICrypComponent
     {
         #region Public interface

@@ -300,10 +300,12 @@ namespace OnlineDocumentationGenerator.Generators.FunctionListGenerator
                     return Properties.Resources.Category_FL_ToolsDataflow;
                 case ComponentCategory.ToolsDataInputOutput:
                     return Properties.Resources.Category_FL_ToolsDataInputOutput;
+                case ComponentCategory.ToolsRandomNumbers:
+                    return Properties.Resources.Category_ToolsRandomNumbers;
+                case ComponentCategory.ToolsCodes:
+                    return Properties.Resources.Category_ToolsCodes;
                 case ComponentCategory.ToolsMisc:
                     return Properties.Resources.Category_FL_ToolsMisc;
-                case ComponentCategory.ToolsP2P:
-                    return Properties.Resources.Category_FL_ToolsP2P;
                 case ComponentCategory.DECRYPTProjectComponent:
                     return Properties.Resources.Category_FL_DECRYPT;
                 default:

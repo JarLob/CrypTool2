@@ -340,4 +340,10 @@
   <data name="Category_FL_DECRYPT" xml:space="preserve">
     <value>DECRYPT Projekt</value>
   </data>
+  <data name="Category_ToolsCodes" xml:space="preserve">
+    <value>Werkzeuge\ Kodierungen</value>
+  </data>
+  <data name="Category_ToolsRandomNumbers" xml:space="preserve">
+    <value>Werkzeuge\ Zufallszahlen</value>
+  </data>
 </root>

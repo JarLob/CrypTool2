@@ -31,7 +31,7 @@ namespace Cryptool.Plugins.MorseCode
 {
     [Author("Nils Kopal", "Nils.Kopal@Uni-Kassel.de", "Universität Kassel", "http://www.uc.uni-kassel.de/")]
     [PluginInfo("MorseCode.Properties.Resources", "PluginCaption", "PluginTooltip", "MorseCode/userdoc.xml", new[] { "MorseCode/icon.png" })]
-    [ComponentCategory(ComponentCategory.ToolsMisc)]
+    [ComponentCategory(ComponentCategory.ToolsCodes)]
     public class MorseCode : ICrypComponent
     {
         const int DIT_TIME = 100 / 2;

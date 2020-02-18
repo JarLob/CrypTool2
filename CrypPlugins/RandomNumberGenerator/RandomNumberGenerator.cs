@@ -31,7 +31,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
 {
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
     [PluginInfo("RandomNumberGenerator.Properties.Resources", "PluginCaption", "PluginTooltip", "RandomNumberGenerator/userdoc.xml", new[] { "RandomNumberGenerator/images/icon.png" })]
-    [ComponentCategory(ComponentCategory.ToolsMisc)]
+    [ComponentCategory(ComponentCategory.ToolsRandomNumbers)]
     public class RandomNumberGenerator : ICrypComponent
     {
         #region Private Variables

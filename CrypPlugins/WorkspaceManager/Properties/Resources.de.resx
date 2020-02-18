@@ -133,7 +133,7 @@
     <value>Dem Arbeitsbereich ein Memofeld (für Beschreibungen) hinzufügen</value>
   </data>
   <data name="BBox_Fit_to_Screen_Tooltip" xml:space="preserve">
-    <value>Adjust the zoom of the workspace automatically so that all components are visible (Ctrl+F)</value>
+    <value>Adjust the zoom of the workspace automatically so that all components are visible (Strg + F)</value>
   </data>
   <data name="BBox_Sort_Caption" xml:space="preserve">
     <value>Sortieren</value>
@@ -409,7 +409,7 @@
     <value>Einige Bearbeitungsfunktionen sind während der Ausführung deaktiviert.</value>
   </data>
   <data name="Toggle_Plugin_Parameters" xml:space="preserve">
-    <value>Öffne/schließe Leiste mit den Einstellungen der ausgewählten Komponenten dieser Arbeitsfläche (CTRL+I)</value>
+    <value>Öffne/schließe Leiste mit den Einstellungen der ausgewählten Komponenten dieser Arbeitsfläche (Strg + I)</value>
   </data>
   <data name="Save_File" xml:space="preserve">
     <value>Datei speichern</value>

@@ -160,7 +160,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Adjust the zoom of the workspace automatically so that all components can be seen to the maximum (Ctrl+F) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Adjust the zoom of the workspace automatically so that all components can be seen to the maximum (Ctrl + F) ähnelt.
         /// </summary>
         public static string BBox_Fit_to_Screen_Tooltip {
             get {
@@ -1177,7 +1177,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Open/close the bar with the settings of the selected components of this workspace (CTRL+I) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open/close the bar with the settings of the selected components of this workspace (Ctrl + I) ähnelt.
         /// </summary>
         public static string Toggle_Plugin_Parameters {
             get {

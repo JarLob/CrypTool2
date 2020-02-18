@@ -333,10 +333,12 @@ namespace OnlineDocumentationGenerator.Generators.LaTeXGenerator
                     return Properties.Resources.Category_ToolsDataflow;
                 case ComponentCategory.ToolsDataInputOutput:
                     return Properties.Resources.Category_ToolsDataInputOutput;
+                case ComponentCategory.ToolsRandomNumbers:
+                    return Properties.Resources.Category_ToolsRandomNumbers;
+                case ComponentCategory.ToolsCodes:
+                    return Properties.Resources.Category_ToolsCodes;
                 case ComponentCategory.ToolsMisc:
                     return Properties.Resources.Category_ToolsMisc;
-                case ComponentCategory.ToolsP2P:
-                    return Properties.Resources.Category_ToolsP2P;
                 default:
                     return Properties.Resources.Category_Unknown;
             }

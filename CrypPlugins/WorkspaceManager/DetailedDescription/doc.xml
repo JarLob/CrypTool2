@@ -234,27 +234,27 @@
         <th>Action</th>
       </tr>
       <tr>
-        <td><b>CTRL+C:</b></td>
+        <td><b>Ctrl + C:</b></td>
         <td>Copies selected components into the clipboard</td>
       </tr>
       <tr>
-        <td><b>CTRL+V:</b></td>
+        <td><b>Ctrl + V:</b></td>
         <td>Inserts components from the clipboard onto the workspace</td>
       </tr>
       <tr>
-      <td><b>CTRL+X:</b></td>
+      <td><b>Ctrl + X:</b></td>
         <td>Cuts selected components from the workspace into the clipboard</td>
       </tr>
       <tr>
-        <td><b>CTRL+Z:</b></td>
+        <td><b>Ctrl + Z:</b></td>
         <td>Un-does last action</td>
       </tr>
       <tr>
-        <td><b>CTRL+Y:</b></td>
+        <td><b>Ctrl + Y:</b></td>
         <td>Re-does last undone action</td>
       </tr>
       <tr>
-      <td><b>CTRL+Mouse wheel:</b></td>
+      <td><b>Ctrl + Mouse wheel:</b></td>
         <td>Changes scrolling</td>
       </tr>
       <tr>
@@ -267,91 +267,91 @@
       </tr>
     <tr>
       <td>
-        <b>CTRL+A:</b>
+        <b>Ctrl + A:</b>
       </td>
       <td>Select all components</td>
     </tr>
     <tr>
       <td>
-        <b>CTRL+Right:</b>
+        <b>Ctrl + Right:</b>
       </td>
       <td>Right-align selected components</td>
     </tr>
     <tr>
       <td>
-        <b>CTRL+Left:</b>
+        <b>Ctrl + Left:</b>
       </td>
       <td>Left-align selected components</td>
     </tr>
     <tr>
       <td>
-        <b>CTRL+Up:</b>
+        <b>Ctrl + Up:</b>
       </td>
       <td>Top-align selected components</td>
     </tr>
     <tr>
       <td>
-        <b>CTRL+Down:</b>
+        <b>Ctrl + Down:</b>
       </td>
       <td>Bottom-align selected components</td>
     </tr>
     <tr>
       <td>
-        <b>CTRL+Shift + Right:</b>
+        <b>Ctrl + Shift + Right:</b>
       </td>
       <td>Move selected components right</td>
     </tr>
     <tr>
       <td>
-        <b>CTRL+Shift + Left:</b>
+        <b>Ctrl + Shift + Left:</b>
       </td>
       <td>Move selected components left</td>
     </tr>
     <tr>
       <td>
-        <b>CTRL+Shift + Up:</b>
+        <b>Ctrl + Shift + Up:</b>
       </td>
       <td>Move selected components up</td>
     </tr>
     <tr>
       <td>
-        <b>CTRL+Shift + Down:</b>
+        <b>Ctrl + Shift + Down:</b>
       </td>
       <td>Move selected components down</td>
     </tr>
     <tr>
       <td>
-        <b>CTRL+Shift + X:</b>
+        <b>Ctrl + Shift + X:</b>
       </td>
       <td>Spread selected components horizontally</td>
     </tr>
     <tr>
       <td>
-        <b>CTRL+Shift + Y:</b>
+        <b>Ctrl + Shift + Y:</b>
       </td>
       <td>Spread selected components vertically</td>
     </tr>
     <tr>
       <td>
-        <b>CTRL+Shift + W:</b>
+        <b>Ctrl + Shift + W:</b>
       </td>
       <td>Increase the width of the selected components to the biggest width of the selected components</td>
     </tr>
     <tr>
       <td>
-        <b>CTRL+W:</b>
+        <b>Ctrl + W:</b>
       </td>
       <td>Decrease the width of the selected components to the smallest width of the selected components</td>
     </tr>
     <tr>
       <td>
-        <b>CTRL+Shift + H:</b>
+        <b>Ctrl + Shift + H:</b>
       </td>
       <td>Increase the height of the selected components to the biggest height of the selected components</td>
     </tr>
     <tr>
       <td>
-        <b>CTRL+H:</b>
+        <b>Ctrl + H:</b>
       </td>
       <td>Decrease the height of the selected components to the smallest height of the selected components</td>
     </tr>

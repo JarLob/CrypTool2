@@ -343,7 +343,6 @@ namespace WorkspaceManager.Model
                     case ComponentCategory.ToolsDataflow:
                     case ComponentCategory.ToolsDataInputOutput:
                     case ComponentCategory.ToolsMisc:
-                    case ComponentCategory.ToolsP2P:
                         return ToolsColor;
                     default:
                         return DefaultColor;
