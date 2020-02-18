@@ -181,9 +181,12 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
 
             foreach (Word w in this.words)
             {
-                for (int i = 0; i < w.ByteValue.Length;i++ )
+                for (int i = 0; i < w.ByteValue.Length; i++)
                 {
-                    letter_frequencies[w.ByteValue[i]]++;
+                    if (w.ByteValue[i] < letter_frequencies.Length)
+                    {
+                        letter_frequencies[w.ByteValue[i]]++;
+                    }
                 }
             }
             this.histogram = letter_frequencies;

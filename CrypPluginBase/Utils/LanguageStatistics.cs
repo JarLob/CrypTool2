@@ -265,7 +265,9 @@ namespace Cryptool.PluginBase.Utils
             double value = 0;
 
             for (int i = 0; i < end; i++)
+            {
                 value += ngrams[plaintext[i]];
+            }
 
             return value / end;
         }
@@ -433,8 +435,15 @@ namespace Cryptool.PluginBase.Utils
             double value = 0;
 
             for (int i = 0; i < end; i++)
+            {
+                if (plaintext[i] >= Alphabet.Length ||
+                    plaintext[i] < 0)
+                {
+                    continue;
+                }
                 value += Frequencies[plaintext[i]];
 
+            }
             return value / end;
         }
 
@@ -469,8 +478,17 @@ namespace Cryptool.PluginBase.Utils
             double value = 0;
 
             for (int i = 0; i < end; i++)
-                value += Frequencies[plaintext[i], plaintext[i + 1]];
+            {
 
+                if (plaintext[i] >= Alphabet.Length ||
+                    plaintext[i+1] >= Alphabet.Length ||
+                    plaintext[i] < 0 ||
+                    plaintext[i+1] < 0)
+                {
+                    continue;
+                }
+                value += Frequencies[plaintext[i], plaintext[i + 1]];
+            }
             return value / end;
         }
 
@@ -505,8 +523,18 @@ namespace Cryptool.PluginBase.Utils
             double value = 0;
 
             for (int i = 0; i < end; i++)
-                value += Frequencies[plaintext[i], plaintext[i + 1], plaintext[i + 2]];
-
+            {
+                if (plaintext[i] >= Alphabet.Length ||
+                    plaintext[i + 1] >= Alphabet.Length ||
+                    plaintext[i + 2] >= Alphabet.Length ||
+                    plaintext[i] < 0 ||
+                    plaintext[i + 1] < 0 ||
+                    plaintext[i + 2] < 0)
+                {
+                    continue;
+                }
+                value += Frequencies[plaintext[i], plaintext[i + 1], plaintext[i + 2]];               
+            }
             return value / end;
         }
 
@@ -541,8 +569,20 @@ namespace Cryptool.PluginBase.Utils
             double value = 0;
 
             for (int i = 0; i < end; i++)
-                value += Frequencies[plaintext[i], plaintext[i + 1], plaintext[i + 2], plaintext[i + 3]];
-
+            {
+                if (plaintext[i] >= Alphabet.Length ||
+                    plaintext[i + 1] >= Alphabet.Length ||
+                    plaintext[i + 2] >= Alphabet.Length ||
+                    plaintext[i + 3] >= Alphabet.Length ||
+                    plaintext[i] < 0 ||
+                    plaintext[i + 1] < 0 ||
+                    plaintext[i + 2] < 0 ||
+                    plaintext[i + 3] < 0)
+                {
+                    continue;
+                }
+                value += Frequencies[plaintext[i], plaintext[i + 1], plaintext[i + 2], plaintext[i + 3]];               
+            }
             return value / end;
         }
 
@@ -577,8 +617,22 @@ namespace Cryptool.PluginBase.Utils
             double value = 0;
 
             for (int i = 0; i < end; i++)
-                value += Frequencies[plaintext[i], plaintext[i + 1], plaintext[i + 2], plaintext[i + 3], plaintext[i + 4]];
-
+            {
+                if (plaintext[i] >= Alphabet.Length ||
+                   plaintext[i + 1] >= Alphabet.Length ||
+                   plaintext[i + 2] >= Alphabet.Length ||
+                   plaintext[i + 3] >= Alphabet.Length ||
+                   plaintext[i + 4] >= Alphabet.Length ||
+                   plaintext[i] < 0 ||
+                   plaintext[i + 1] < 0 ||
+                   plaintext[i + 2] < 0 ||
+                   plaintext[i + 3] < 0 ||
+                   plaintext[i + 4] < 0)
+                {
+                    continue;
+                }
+                value += Frequencies[plaintext[i], plaintext[i + 1], plaintext[i + 2], plaintext[i + 3], plaintext[i + 4]];             
+            }
             return value / end;
         }
 

@@ -242,8 +242,9 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             // Check length of ciphertext and plaintext alphabet
             if (this.ctAlphabet.Length > this.ptAlphabet.Length)
             {
-                GuiLogMessage(String.Format(Resources.error_alphabet_length, ciphertextalphabet, ciphertextalphabet.Length, plaintextalphabet, plaintextalphabet.Length), NotificationLevel.Error);
-                inputOK = false;
+                //if ciphertext alphabet is too long, we fallback to the plaintext alphabet
+                GuiLogMessage(String.Format(Resources.error_alphabet_length, ciphertextalphabet, ciphertextalphabet.Length, plaintextalphabet, plaintextalphabet.Length), NotificationLevel.Warning);
+                ctAlphabet = ptAlphabet;
             }
             
             // If input incorrect return otherwise execute analysis

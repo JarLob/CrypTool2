@@ -232,7 +232,16 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             int[] plaintext = new int[ciphertext.Length];
 
             for (int i = 0; i < ciphertext.Length; i++)
-                plaintext[i] = key[ciphertext[i]];
+            {
+                if (ciphertext[i] < key.Length)
+                {
+                    plaintext[i] = key[ciphertext[i]];
+                }
+                else
+                {
+                    plaintext[i] = key[key.Length - 1];
+                }
+            }
 
             return plaintext;
         }

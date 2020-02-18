@@ -285,7 +285,8 @@
   <data name="error_alphabet_length" xml:space="preserve">
     <value>Das Geheimtext-Alphabet enthält mehr Buchstaben als das Klartext-Alphabet.
 Geheimtext-Alphabet: "{0}" ({1} Buchstaben)
-Klartext-Alphabet: "{2}" ({3} Buchstaben)</value>
+Klartext-Alphabet: "{2}" ({3} Buchstaben)
+Benutze Klartext-Alphabet nun auch als Geheimtext-Alphabet.</value>
   </data>
   <data name="error_ciphertext" xml:space="preserve">
     <value>Es ist ein Fehler beim Abruf des Geheimtextes aufgetreten.</value>

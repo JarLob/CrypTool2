@@ -287,8 +287,9 @@
   </data>
   <data name="error_alphabet_length" xml:space="preserve">
     <value>The ciphertext alphabet contains more letters than the plaintext alphabet.
-Ciphertext alphabet: "{0}" ({1} letters)
-Plaintext alphabet: "{2}" ({3} letters)</value>
+ciphertext alphabet: "{0}" ({1} letters)
+plaintext alphabet: "{2}" ({3} letters)
+Using plaintext alphabet now also as ciphertex alphabet.</value>
   </data>
   <data name="error_ciphertext" xml:space="preserve">
     <value>Error while obtaining ciphertext.</value>
