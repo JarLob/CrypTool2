@@ -53,8 +53,16 @@ namespace Tests
         {
             var modelLoader = new ModelPersistance();
             modelLoader.OnGuiLogNotificationOccured += (sender, args) => LogHandler(args.NotificationLevel, file);
+            WorkspaceModel model = null;
 
-            var model = modelLoader.loadModel(Path.Combine(_templateDirectory.FullName, file), false);
+            try
+            {
+                model = modelLoader.loadModel(Path.Combine(_templateDirectory.FullName, file), false);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(string.Format("Exception during loading of model {0}: {1}", file, ex.Message));
+            }
             model.OnGuiLogNotificationOccured += (sender, args) => LogHandler(args.NotificationLevel, file);
 
             /*

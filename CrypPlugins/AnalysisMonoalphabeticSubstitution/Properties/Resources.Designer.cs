@@ -388,7 +388,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution.Properties {
         ///   Sucht eine lokalisierte Zeichenfolge, die The ciphertext alphabet contains more letters than the plaintext alphabet.
         ///ciphertext alphabet: &quot;{0}&quot; ({1} letters)
         ///plaintext alphabet: &quot;{2}&quot; ({3} letters)
-        ///Using plaintext alphabet now also as ciphertex alphabet. ähnelt.
+        ///Using plaintext alphabet now also as ciphertext alphabet. ähnelt.
         /// </summary>
         public static string error_alphabet_length {
             get {

@@ -90,10 +90,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ExtendedNTL">
-      <HintPath>..\..\..\trunk\Lib\ExtendedNTL.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="ISAPCommitmentScheme">
       <HintPath>..\Lib\ISAPCommitmentScheme.dll</HintPath>
     </Reference>

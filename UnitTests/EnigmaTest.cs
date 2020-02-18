@@ -18,8 +18,10 @@ namespace Tests.TemplateAndPluginTests
             
             foreach (TestVector vector in testvectors)
             {
+                pluginInstance.PreExecution();
                 output = scenario.GetOutputs(new object[] { vector.input, vector.model, vector.key, vector.rot1, vector.rot2, vector.rot3, vector.rot4, vector.ukw, vector.ring1, vector.ring2, vector.ring3, vector.ring4, vector.plugBoard }, false);
                 Assert.AreEqual(vector.output.ToUpper(), (string)output[0], "Unexpected value in test #" + vector.n + ".");
+                pluginInstance.PostExecution();
             }
         }
 

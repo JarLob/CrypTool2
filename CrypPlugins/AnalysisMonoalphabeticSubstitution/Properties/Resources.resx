@@ -289,7 +289,7 @@
     <value>The ciphertext alphabet contains more letters than the plaintext alphabet.
 ciphertext alphabet: "{0}" ({1} letters)
 plaintext alphabet: "{2}" ({3} letters)
-Using plaintext alphabet now also as ciphertex alphabet.</value>
+Using plaintext alphabet now also as ciphertext alphabet.</value>
   </data>
   <data name="error_ciphertext" xml:space="preserve">
     <value>Error while obtaining ciphertext.</value>

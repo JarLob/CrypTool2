@@ -13,7 +13,7 @@ namespace Tests.TemplateAndPluginTests
         public void PlayfairTestMethod()
         {
             var pluginInstance = TestHelpers.GetPluginInstance("Playfair");
-            var scenario = new PluginTestScenario(pluginInstance, new[] { "InputString", ".Key", ".MatrixSize" }, new[] { "OutputString" });
+            var scenario = new PluginTestScenario(pluginInstance, new[] { "InputString", ".KeyPhraseString", ".MatrixSize" }, new[] { "OutputString" });
             object[] output;
 
             foreach (TestVector vector in testvectors)

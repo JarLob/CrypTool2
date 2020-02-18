@@ -385,7 +385,7 @@
       <defaultvalue lang="ru">Мы были обнаружены, немедленно отступили!</defaultvalue>
       <defaultvalue lang="de">Wir wurden entdeckt, sofortiger Rückzug!</defaultvalue>
     </inputBox>
-    <inputBox plugin="Playfair" property="Key" alignment="Left" width="30%" visibleLines="1" group="InputGroup">
+    <inputBox plugin="Playfair" property="KeyPhraseString" alignment="Left" width="30%" visibleLines="1" group="InputGroup">
       <description lang="en">Key:</description>
       <description lang="ru">Ключ:</description>
       <description lang="de">Schlüssel:</description>
