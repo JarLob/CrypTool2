@@ -53,7 +53,7 @@
     <OutputPath>bin\x86\Test\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|x64'">
-    <OutputPath>bin\x64\Test\</OutputPath>
+    <OutputPath>..\..\CrypBuild\Test\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

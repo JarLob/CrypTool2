@@ -30,7 +30,14 @@ namespace KeySearcherPresentation.Controls
         {
             InitializeComponent();
             ViewModel = DataContext as P2PPresentationVM;
-            UiContext = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            try
+            {
+                UiContext = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            }
+            catch (Exception)
+            {
+                //do nothing
+            }
             ViewModel.UiContext = UiContext;
         }
 

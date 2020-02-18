@@ -194,8 +194,15 @@ namespace KeySearcher
         }
 
         protected void RunInUiContext(Action action)
-        { 
-            uiContext.StartNew(action);
+        {
+            if (uiContext != null)
+            {
+                uiContext.StartNew(action);
+            }
+            else
+            {
+                action.Invoke();
+            }
         }
 
         public void Start()
