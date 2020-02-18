@@ -133,7 +133,7 @@
     <value>Case sensitive</value>
   </data>
   <data name="CaseSensitiveTooltip" xml:space="preserve">
-    <value>Distinguish between small and captial letters.</value>
+    <value>Distinguish between small and capital letters.</value>
   </data>
   <data name="ChooseAlphabetCaption" xml:space="preserve">
     <value>Language</value>
@@ -187,13 +187,13 @@
     <value>Case sensitive</value>
   </data>
   <data name="CTCaseSensitiveTooltip" xml:space="preserve">
-    <value>Distinguish between small and captial letters.</value>
+    <value>Distinguish between small and capital letters.</value>
   </data>
   <data name="PTCaseSensitiveCaption" xml:space="preserve">
     <value>Case sensitive</value>
   </data>
   <data name="PTCaseSensitiveTooltip" xml:space="preserve">
-    <value>Distinguish between small and captial letters.</value>
+    <value>Distinguish between small and capital letters.</value>
   </data>
   <data name="CiphertextAlphabetCaption" xml:space="preserve">
     <value>Ciphertext alphabet</value>

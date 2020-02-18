@@ -115,7 +115,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Distinguish between small and captial letters. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Distinguish between small and capital letters. ähnelt.
         /// </summary>
         public static string CaseSensitiveTooltip {
             get {
@@ -322,7 +322,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Distinguish between small and captial letters. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Distinguish between small and capital letters. ähnelt.
         /// </summary>
         public static string CTCaseSensitiveTooltip {
             get {
@@ -720,7 +720,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Distinguish between small and captial letters. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Distinguish between small and capital letters. ähnelt.
         /// </summary>
         public static string PTCaseSensitiveTooltip {
             get {
