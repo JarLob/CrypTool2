@@ -33,7 +33,7 @@ Instead of ADFGVX you can decide to use the predecessor variant ADFGX which is t
   <usage lang="de-DE">
     Ziehen Sie die ADFGVX-Komponente auf den Arbeitsbereich und geben Sie eine Datenquelle an, die die zu verschlüsselnden oder entschlüsselnden Daten repräsentiert. Die Angabe dieser Datenquelle ist erforderlich.
     <newline />
-    In den Einstellungen für die Komponente stellen Sie ein, ob verschlüsselt oder entschlüsselt werden soll, und Sie können das Substitutions- sowie Transpositions-Passwort angeben. Anstatt ADFGVX kann auch die Vorgängervariante ADFGX eingestellt werden, die denselben Algorithmus verwendet, allerdings basierend auf einem Klartextalphabet aus 25 Buchstaben (statt 36) und einem Geheimtextalphabet aus 5 Buchstaben (statt 6).
+    In den Einstellungen für die Komponente stellen Sie ein, ob verschlüsselt oder entschlüsselt werden soll, und Sie können das Substitutions- sowie Transpositions-Passwort angeben. Anstatt ADFGVX kann auch die Vorgängervariante ADFGX eingestellt werden, die denselben Algorithmus verwendet, allerdings basierend auf einem Klartext-Alphabet aus 25 Buchstaben (statt 36) und einem Geheimtext-Alphabet aus 5 Buchstaben (statt 6).
   </usage>
   <presentation lang="en"></presentation>
   <presentation lang="de-DE"></presentation>

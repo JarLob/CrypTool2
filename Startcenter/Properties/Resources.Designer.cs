@@ -79,7 +79,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Clear recently opened templates list ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Clear list of recently opened templates ähnelt.
         /// </summary>
         internal static string ClearList {
             get {

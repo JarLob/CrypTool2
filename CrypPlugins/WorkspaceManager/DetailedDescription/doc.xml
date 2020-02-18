@@ -176,7 +176,7 @@
     In the "Main Settings Menu" of CrypTool 2 in the "Workspace" section can be set global settings for all workspaces.
     <newline/> <newline/>
     
-        <b>Global progressbar, Checkbox:</b>
+        <b>Global progress bar, Checkbox:</b>
     <newline/>
         The selection of this checkbox affects the appearance of a progress bar after the start of a workspace, which represents the progression of all components within the worksapace as a bar in the upper area of the workspace tabulator.
     <newline/>

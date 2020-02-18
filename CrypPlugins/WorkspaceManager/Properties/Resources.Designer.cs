@@ -709,7 +709,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Global progressbar ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Global progress bar ähnelt.
         /// </summary>
         public static string Global_Progressbar {
             get {

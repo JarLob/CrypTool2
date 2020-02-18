@@ -37,7 +37,7 @@
 
   <usage lang="de-DE">
     Die Komponente hat einen Eingang, über diesen werden die verschlüsselten Nachrichten eingegeben. In den Einstellungen lässt sich einstellen, 
-    aus welchen Buchstaben die verschlüsselten Nachrichten bestehen. Dabei muss darauf geachtet werden, dass die Anzahl Zeichen im Klartextalphabet 
+    aus welchen Buchstaben die verschlüsselten Nachrichten bestehen. Dabei muss darauf geachtet werden, dass die Anzahl Zeichen im Klartext-Alphabet 
     das Quadrat der Anzahl Zeichen in der Geheimschrift bilden. Sonst startet der Algorithmus nicht. Um die Nachrichten erfolgreich zu entschlüsseln, 
     muss man die Länge des Transpositionsschlüssels kennen. Der Algorithmus wird mehrmals neu gestartet, wie oft dies geschehen soll, wird über die 
     Anzahl der Neustarts angegeben. Darüber hinaus kann man den Algorithmus mehrfach parallel starten. Dabei ist zu beachten, das jeder eingestellte 

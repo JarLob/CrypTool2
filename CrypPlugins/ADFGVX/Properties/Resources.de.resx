@@ -196,6 +196,6 @@
     <value>Transpositions-Kennwort</value>
   </data>
   <data name="TranspositionPassTooltip" xml:space="preserve">
-    <value>Kennwort, das für die Spaltenreihenfolge in der Transposition verwendet wird. Verwendet dasselbe Alphabet wie die Substitutions-Matrix, d.h. das Klartextalphabet.</value>
+    <value>Kennwort, das für die Spaltenreihenfolge in der Transposition verwendet wird. Verwendet dasselbe Alphabet wie die Substitutions-Matrix, d.h. das Klartext-Alphabet.</value>
   </data>
 </root>

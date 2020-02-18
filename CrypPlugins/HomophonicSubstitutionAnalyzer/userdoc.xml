@@ -20,7 +20,7 @@
 
   <introduction lang="de-DE">
     Die homophone Substitutionschiffre ersetzt jeden Klartextbuchstaben unter Verwendung verschiedener Geheimtextsymbole. Hier besteht beispielsweise ein Geheimtextbuchstabe aus zweistelligen Zahlen von 01 bis 99. <newline/>
-    Klartextalphabet: ABCDEFGHIJKLMNOPQRSTUVWXYZ <newline/>
+    Klartext-Alphabet: ABCDEFGHIJKLMNOPQRSTUVWXYZ <newline/>
     Schlüssel: A = {01 oder 02 oder 06}, B = {03 oder 04}, C = {05}, ... <newline/>
     Klartext: HELLOWORLDHOWAREYOU <newline/>
     Geheimtext: 15,09,23,24,29,45,30,35,23,07,16,29,46,01,36,10,49,30,41 <newline/>

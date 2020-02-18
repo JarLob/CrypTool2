@@ -187,7 +187,7 @@
     <value>      Search</value>
   </data>
   <data name="ClearList" xml:space="preserve">
-    <value>Clear recently opened templates list</value>
+    <value>Clear list of recently opened templates</value>
   </data>
   <data name="RSS_error_Message" xml:space="preserve">
     <value>RSS error</value>

@@ -121,7 +121,7 @@
     <value>ADFGVX-Analyse-Komponente</value>
   </data>
   <data name="AlphabetCaption" xml:space="preserve">
-    <value>Klartextalphabet</value>
+    <value>Klartext-Alphabet</value>
   </data>
   <data name="AlphabetGroup" xml:space="preserve">
     <value>Sprache</value>

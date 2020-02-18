@@ -44,7 +44,7 @@
   <introduction lang="de-DE">
     Die Komponente &quot;Monoalphabetische Substitutionsanalyse&quot; entschlüsselt Geheimtexte, die durch die Anwendung der monoalphabetischen Substitution entstanden sind.
     Die Analyse verwendet zwei Angriffe, um sowohl den Klartext als auch den dazugehörigen Schlüssel zu finden. Als erstes wird ein sogenannter Wörterbuchangriff
-    ausgeführt, der Wörter im Geheimtext zu Wörtern der angenommenen Klartextsprache zuordnet und aus dieser Zuordnung einen Schlüssel erstellt.
+    ausgeführt, der Wörter im Geheimtext zu Wörtern der angenommenen Klartext-Sprache zuordnet und aus dieser Zuordnung einen Schlüssel erstellt.
     Neben dem Wörterbuchangriff wird eine heuristische Suche, die auf einem genetischen Algorithmus und Häufigkeiten von Buchstabengruppen basiert, ausgeführt.
     Dieser Angriff erstellt rundenweise neue Schlüsselkandidaten und bewertet sie anhand einer Kostenfunktion.<newline />
     Weitere Informationen zu den implementierten Algorithmen und der Benutzung der Komponente werden in den nachfolgenden Abschnitten dargestellt.
