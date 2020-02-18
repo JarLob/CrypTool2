@@ -133,7 +133,7 @@
     <value>Dem Arbeitsbereich ein Memofeld (für Beschreibungen) hinzufügen</value>
   </data>
   <data name="BBox_Fit_to_Screen_Tooltip" xml:space="preserve">
-    <value>Passet den Zoom des Arbeitsbereichs automatisch so an, dass alle Komponenten sichtbar sind (Strg + F)</value>
+    <value>Passt den Zoom des Arbeitsbereichs automatisch so an, dass alle Komponenten sichtbar sind (Strg + F)</value>
   </data>
   <data name="BBox_Sort_Caption" xml:space="preserve">
     <value>Sortieren</value>
