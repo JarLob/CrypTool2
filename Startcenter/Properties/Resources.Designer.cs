@@ -304,7 +304,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter one or more search terms. Press (Ctrl + R) to update the template list ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter one or more search terms. Press Ctrl +R to update the template list ähnelt.
         /// </summary>
         internal static string Search {
             get {
