@@ -21,30 +21,18 @@ namespace ISAPBitCommitmentScheme
         public event StatusChangedEventHandler OnPluginStatusChanged;
         public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
         public event PluginProgressChangedEventHandler OnPluginProgressChanged;
-        
+
+        private bool _inputBit;
         [PropertyInfo(Direction.InputData, "InputBitCaption", "InputBitTooltip")]
         public bool InputBit
         {
+            get
+            {
+                return _inputBit;
+            }
             set
             {
-                ProgressChanged(0.0, 100.0);
-                try
-                {
-                    var result = _ISAPalgorithmWrapper.Run(value, _dimension, _s);
-                    LogMessage = result.log;
-                    P = result.p;
-                    Q = result.q;
-                    Alpha = result.alpha;
-                    A = result.a;
-                    B = result.b;
-                    Eta = result.eta;
-
-                    ProgressChanged(100.0, 100.0);
-                }
-                catch (Exception ex)
-                {
-                    GuiLogMessage(string.Format("ISAP algorithm failed: {0}", ex.Message), NotificationLevel.Error);
-                }
+                _inputBit = value;
                 OnPropertyChanged("InputBit");
             }
         }
@@ -199,6 +187,24 @@ namespace ISAPBitCommitmentScheme
 
         public void Execute()
         {
+            ProgressChanged(0.0, 100.0);
+            try
+            {
+                var result = _ISAPalgorithmWrapper.Run(_inputBit, _dimension, _s);
+                LogMessage = result.log;
+                P = result.p;
+                Q = result.q;
+                Alpha = result.alpha;
+                A = result.a;
+                B = result.b;
+                Eta = result.eta;
+                ProgressChanged(100.0, 100.0);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(string.Format("ISAP algorithm failed: {0}", ex.Message), NotificationLevel.Error);
+            }
+            OnPropertyChanged("InputBit");
         }
 
         public void PostExecution()
