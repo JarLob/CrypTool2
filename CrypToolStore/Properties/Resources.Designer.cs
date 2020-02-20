@@ -489,7 +489,7 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Welcome to the CrypTool Store! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Welcome to the CrypTool Store ähnelt.
         /// </summary>
         internal static string Welcome_To_CrypToolStore {
             get {

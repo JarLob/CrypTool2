@@ -229,7 +229,7 @@
     <value>Decimalization</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Converts Binary Numbers to Decimals</value>
+    <value>Converts binary numbers to decimals</value>
   </data>
   <data name="QuantCaption" xml:space="preserve">
     <value>Output Quantity</value>

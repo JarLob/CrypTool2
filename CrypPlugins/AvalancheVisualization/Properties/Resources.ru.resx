@@ -127,7 +127,7 @@
     <value>Эффект лавины</value>
   </data>
   <data name="AvalancheTooltip" xml:space="preserve">
-    <value>Визуализация эффекта лавины в криптографических шифрах и хэш-функциях.</value>
+    <value>Визуализация эффекта лавины в криптографических шифрах и хэш-функциях</value>
   </data>
   <data name="Category" xml:space="preserve">
     <value>категория</value>

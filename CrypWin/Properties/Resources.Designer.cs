@@ -408,7 +408,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Close All ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Close all ähnelt.
         /// </summary>
         internal static string Close_All {
             get {
@@ -417,7 +417,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Close All, except this ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Close all, except this ähnelt.
         /// </summary>
         internal static string Close_All_except_this {
             get {
@@ -498,7 +498,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Copy Title ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy title ähnelt.
         /// </summary>
         internal static string Copy_Title {
             get {
@@ -680,7 +680,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Distraction Free (on/off) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Distraction free (on/off) ähnelt.
         /// </summary>
         internal static string DistractionFree {
             get {
@@ -1067,7 +1067,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hide Menu (on/off) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hide menu (on/off) ähnelt.
         /// </summary>
         internal static string HideMenu {
             get {
@@ -2500,7 +2500,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Copy Tooltip ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy tooltip ähnelt.
         /// </summary>
         internal static string ToolTip_Copy {
             get {

@@ -348,7 +348,7 @@ namespace Startcenter
             int position = path.ToLower().IndexOf("templates");
             if (position > 0) 
             {
-                return path.Substring(position + 10, path.Length - (position + 10));
+                return path.Substring(position + 10, path.Length - (position + 10)).Replace("\\"," / ");
             }
             return string.Empty;
         }

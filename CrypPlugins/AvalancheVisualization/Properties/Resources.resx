@@ -127,7 +127,7 @@
     <value>Avalanche Effect</value>
   </data>
   <data name="AvalancheTooltip" xml:space="preserve">
-    <value>Visualization of the avalanche effect in cryptographic ciphers and hash functions.</value>
+    <value>Visualization of the avalanche effect in cryptographic ciphers and hash functions</value>
   </data>
   <data name="Category" xml:space="preserve">
     <value>Category</value>

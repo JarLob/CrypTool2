@@ -952,7 +952,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Graphical editor for the CrypTool workspace ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Graphical editor for a CT2 workspace ähnelt.
         /// </summary>
         public static string PluginTooltip {
             get {

@@ -782,10 +782,10 @@
     <value>Close</value>
   </data>
   <data name="Close_All" xml:space="preserve">
-    <value>Close All</value>
+    <value>Close all</value>
   </data>
   <data name="Close_All_except_this" xml:space="preserve">
-    <value>Close All, except this</value>
+    <value>Close all, except this</value>
   </data>
   <data name="This_is_a_template" xml:space="preserve">
     <value>This is a template</value>
@@ -899,13 +899,13 @@
     <value>Please wait... Generating Component Connection Statistics!</value>
   </data>
   <data name="Copy_Title" xml:space="preserve">
-    <value>Copy Title</value>
+    <value>Copy title</value>
   </data>
   <data name="DistractionFree" xml:space="preserve">
-    <value>Distraction Free (on/off)</value>
+    <value>Distraction free (on/off)</value>
   </data>
   <data name="HideMenu" xml:space="preserve">
-    <value>Hide Menu (on/off)</value>
+    <value>Hide menu (on/off)</value>
   </data>
   <data name="There_is_still_one_running_task" xml:space="preserve">
     <value>There is still one running task (workspace in Play mode). Do you really want to exit CrypTool 2 ?</value>
@@ -941,7 +941,7 @@
     <value>Valid certificate</value>
   </data>
   <data name="ToolTip_Copy" xml:space="preserve">
-    <value>Copy Tooltip</value>
+    <value>Copy tooltip</value>
   </data>
   <data name="Homepage" xml:space="preserve">
     <value>https://www.cryptool.org/cryptool2</value>
