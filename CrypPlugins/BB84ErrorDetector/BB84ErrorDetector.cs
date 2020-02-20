@@ -53,6 +53,10 @@ namespace Cryptool.Plugins.BB84ErrorDetector
             }
             set
             {
+                if (string.IsNullOrEmpty(value))
+                {
+                    return;
+                }
                 if (!value.Equals(firstKey))
                 { this.firstKey = value; }
             }
@@ -68,6 +72,10 @@ namespace Cryptool.Plugins.BB84ErrorDetector
             }
             set
             {
+                if (string.IsNullOrEmpty(value))
+                {
+                    return;
+                }
                 if (!value.Equals(secondKey))
                 { this.secondKey = value; }
             }
@@ -82,6 +90,10 @@ namespace Cryptool.Plugins.BB84ErrorDetector
             }
             set
             {
+                if (string.IsNullOrEmpty(value))
+                {
+                    return;
+                }
                 if (!value.Equals(detectionMessage))
                 {
                     this.detectionMessage = value;

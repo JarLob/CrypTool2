@@ -67,6 +67,10 @@ namespace Cryptool.Plugins.BB84KeyGenerator
 
             set
             {
+                if (string.IsNullOrEmpty(value))
+                {
+                    return;
+                }
                 string newInput = filterValidInput(value);
                 this.inputKey = newInput;
             }

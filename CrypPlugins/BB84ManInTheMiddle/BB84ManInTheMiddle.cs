@@ -72,6 +72,10 @@ namespace Cryptool.Plugins.BB84ManInTheMiddle
             }
             set
             {
+                if(string.IsNullOrEmpty(value))
+                {
+                    return;
+                }
                 if (!value.Equals(inputPhotons)){
                     inputPhotons = value;
                 }
@@ -88,6 +92,10 @@ namespace Cryptool.Plugins.BB84ManInTheMiddle
 
             set
             {
+                if (string.IsNullOrEmpty(value))
+                {
+                    return;
+                }
                 if (!value.Equals(inputBases))
                 {
                     inputBases = value;
@@ -104,6 +112,10 @@ namespace Cryptool.Plugins.BB84ManInTheMiddle
             }
             set
             {
+                if (string.IsNullOrEmpty(value))
+                {
+                    return;
+                }
                 if (!value.Equals(outputKey))
                 {
                     outputKey = value;
@@ -120,6 +132,10 @@ namespace Cryptool.Plugins.BB84ManInTheMiddle
             }
             set
             {
+                if (string.IsNullOrEmpty(value))
+                {
+                    return;
+                }
                 if (!value.Equals(outputPhotons))
                 {
                     outputPhotons = value;
