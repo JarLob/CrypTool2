@@ -446,35 +446,37 @@
                                         <comps:SelectableTextBlock FontWeight="Bold" TextWrapping="Wrap" MinWidth="100" x:Name="lblInfoCountPrimesInterval" Text="{x:Static lang:Distribution.numberline_headercoutprimes}"></comps:SelectableTextBlock>
                                         <Image Cursor="Hand" Source="../../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpCountPrimes" HorizontalAlignment="Left" MouseLeftButtonDown="btnHelp_MouseLeftButtonDown" Margin="0,0,4,0" MinWidth="100" />
                                     </DockPanel>
-                                    <DockPanel Margin="10,0,0,7">
-                                        <comps:SelectableTextBlock HorizontalAlignment="Left" x:Name="lblCountPrimesPi" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_countprimespin}"></comps:SelectableTextBlock>
-                                    </DockPanel>
-                                    <DockPanel Margin="10,0,0,0">
-                                        <comps:SelectableTextBlock HorizontalAlignment="Left" x:Name="lblCountPrimesGauss" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_countprimesgauss}"></comps:SelectableTextBlock>
-                                    </DockPanel>
+                                    <comps:SelectableTextBlock Margin="10,0,0,7">
+                                        <Run x:Name="lblCountPrimesPi" Text="{x:Static lang:Distribution.numberline_countprimespin}" />
+                                        <LineBreak />
+                                        <Run x:Name="lblCountPrimesGauss" Text="{x:Static lang:Distribution.numberline_countprimesgauss}" />
+                                    </comps:SelectableTextBlock>
                                 </StackPanel>
 
-                                <Grid Grid.Row="1" Margin="0,0,0,7">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <comps:SelectableTextBlock FontWeight="Bold" Text="{x:Static lang:Distribution.numberline_actualnumber}" Grid.Column="0" VerticalAlignment="Center" />
-                                    <comps:SelectableTextBlock x:Name="lblActualNumber" Grid.Column="1" TextWrapping="Wrap" FontWeight="Bold" FontSize="15" MaxWidth="100" VerticalAlignment="Center" />
-                                    <comps:SelectableTextBlock x:Name="lblActualNumberInfo" Grid.Column="2" MaxWidth="100" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                                </Grid>
+                                <comps:SelectableTextBlock Grid.Row="1" Margin="0,0,0,7">
+                                    <Run FontWeight="Bold" Text="{x:Static lang:Distribution.numberline_actualnumber}" />
+                                    <Run x:Name="lblActualNumber" FontWeight="Bold" FontSize="15" />
+                                    <Run x:Name="lblActualNumberInfo" />
+                                </comps:SelectableTextBlock>
 
                                 <DockPanel Grid.Row="2" Name="pnlNextPrimes" Grid.ColumnSpan="3" Margin="0,0,0,7">
-                                    <comps:SelectableTextBlock Text="{x:Static lang:Distribution.numberline_priorprime}" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="10,0,10,0" MaxWidth="170" VerticalAlignment="Center" Width="Auto" />
-                                    <comps:SelectableTextBlock x:Name="lblPriorPrime" TextWrapping="Wrap" FontWeight="Bold" FontSize="15" HorizontalAlignment="Left" MaxWidth="150" />
-                                    <comps:SelectableTextBlock Text="{x:Static lang:Distribution.numberline_nextprime}" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="10,0,10,0" MaxWidth="170" VerticalAlignment="Center" Width="Auto" />
-                                    <comps:SelectableTextBlock x:Name="lblNextPrime" TextWrapping="Wrap" FontWeight="Bold" FontSize="15" HorizontalAlignment="Left" MaxWidth="150" />
+                                    <comps:SelectableTextBlock Margin="10,0,10,0">
+                                        <Run Text="{x:Static lang:Distribution.numberline_priorprime}" />
+                                        <Run Text="  " />
+                                        <Run x:Name="lblPriorPrime" FontWeight="Bold" FontSize="15" />
+                                        <Run Text="   " />
+                                        <Run Text="{x:Static lang:Distribution.numberline_nextprime}" />
+                                        <Run Text="  " />
+                                        <Run x:Name="lblNextPrime" FontWeight="Bold" FontSize="15" />
+                                    </comps:SelectableTextBlock>
                                 </DockPanel>
 
                                 <DockPanel Grid.Row="3" Margin="0,0,0,7">
-                                    <comps:SelectableTextBlock FontWeight="Bold" Margin="0,0,10,0" Text="{x:Static lang:Distribution.numberline_numberofprimes}" VerticalAlignment="Center" />
-                                    <comps:SelectableTextBlock FontWeight="Bold" FontSize="15" x:Name="lblInfoCountPrimes" VerticalAlignment="Center" />
+                                    <comps:SelectableTextBlock FontWeight="Bold" Margin="0,0,10,0">
+                                        <Run Text="{x:Static lang:Distribution.numberline_numberofprimes}" />
+                                        <Run Text="  " />
+                                        <Run FontSize="15" x:Name="lblInfoCountPrimes" />
+                                    </comps:SelectableTextBlock>
                                 </DockPanel>
 
                                 <StackPanel Grid.Row="4" Grid.ColumnSpan="3" Margin="0,0,0,7">
