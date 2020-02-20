@@ -36,7 +36,7 @@
                 <comps:InputSingleControl x:Name="iscA" Grid.Column="1" Grid.Row="0" ShowButtons="False" InputRangeControlType="Horizontal" ShowCalcInput="False" Margin="0,4,0,0" />
             </Grid>
             <DockPanel Name="pnlSystematic" Visibility="Collapsed">
-                <TextBlock Margin="0,5,0,0">Wahl der Basis</TextBlock>
+                <comps:SelectableTextBlock Margin="0,5,0,0">Wahl der Basis</comps:SelectableTextBlock>
                 <comps:InputRangeControl x:Name="ircSystematic" ShowButtons="False" InputRangeControlType="Horizontal" ShowCalcInput="False" Title="" />
             </DockPanel>
         </StackPanel>
@@ -57,14 +57,14 @@
                 </Grid.RowDefinitions>
                 <Label Name="lblA" Grid.Column="0" Grid.RowSpan="2">a
                 </Label>
-                <TextBlock Grid.Column="1" Grid.Row="0" Name="lblExp">p-1</TextBlock>
+                <comps:SelectableTextBlock Grid.Column="1" Grid.Row="0" x:Name="lblExp">p-1</comps:SelectableTextBlock>
                 <Label Name="lblMod" Grid.Column="2" Grid.RowSpan="2">mod
                 </Label>
                 <Label Name="lblP" Grid.Column="3" Grid.RowSpan="2">p
                 </Label>
                 <Label Name="lblEquals" Grid.Column="4" Grid.RowSpan="2">=
                 </Label>
-                <TextBlock Grid.Column="5" Grid.RowSpan="2" VerticalAlignment="Center" Name="lblCalc"></TextBlock>
+                <comps:SelectableTextBlock Grid.Column="5" Grid.RowSpan="2" VerticalAlignment="Center" x:Name="lblCalc"></comps:SelectableTextBlock>
             </Grid>
         </ScrollViewer>
 

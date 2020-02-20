@@ -33,13 +33,13 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="0,6,0,0" Text="{x:Static lang:Primetest.mr_countrounds}"></TextBlock>
+                    <comps:SelectableTextBlock Grid.Row="0" Grid.Column="0" Margin="0,6,0,0" Text="{x:Static lang:Primetest.mr_countrounds}"></comps:SelectableTextBlock>
                     <comps:InputSingleControl Grid.Row="0" Grid.Column="1" x:Name="iscRounds" InputRangeControlType="Horizontal" ShowButtons="False" ShowCalcInput="False" Margin="0,4,0,0" FreeText="10" />
-                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="0,6,0,0" Text="{x:Static lang:Primetest.mr_choosearnd}"></TextBlock>
+                    <comps:SelectableTextBlock Grid.Row="1" Grid.Column="0" Margin="0,6,0,0" Text="{x:Static lang:Primetest.mr_choosearnd}"></comps:SelectableTextBlock>
                     <comps:InputSingleControl Grid.Row="1" Grid.Column="1" x:Name="iscBaseRandom" InputRangeControlType="Horizontal" ShowButtons="False" ShowCalcInput="False" Margin="0,4,0,0" FreeText="1000" />
                 </Grid>
                 <DockPanel Name="pnlSystematic" Visibility="Collapsed">
-                    <TextBlock Margin="0,5,0,0" Text="{x:Static lang:Primetest.mr_chooseasys}"></TextBlock>
+                    <comps:SelectableTextBlock Margin="0,5,0,0" Text="{x:Static lang:Primetest.mr_chooseasys}"></comps:SelectableTextBlock>
                     <comps:InputRangeControl x:Name="ircSystematic" ShowButtons="False" InputRangeControlType="Horizontal" ShowCalcInput="False" SecondParameterPresent="False" Title="" />
                 </DockPanel>
             </StackPanel>

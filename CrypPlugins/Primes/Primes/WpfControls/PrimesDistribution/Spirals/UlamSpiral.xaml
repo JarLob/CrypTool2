@@ -43,12 +43,12 @@
                 <ColumnDefinition Width="Auto" MinWidth="50" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static lang:Distribution.ulam_zoom}" Margin="0,0,10,0" />
+            <comps:SelectableTextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static lang:Distribution.ulam_zoom}" Margin="0,0,10,0" />
             <Slider Grid.Column="1" Grid.Row="0" Name="silderScale" Minimum="0.5" Maximum="2" Value="1" />
 
-            <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static lang:Distribution.ulam_rotate}" Margin="0,0,10,0" />
+            <comps:SelectableTextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static lang:Distribution.ulam_rotate}" Margin="0,0,10,0" />
             <Slider Grid.Column="1" Grid.Row="1" Name="silderRotate" Minimum="0" Maximum="360" Value="0" ValueChanged="silderRotate_ValueChanged" />
-            <TextBlock Grid.Column="2" Grid.Row="1" Text="0.00°" Name="lblRotation" TextAlignment="Right" />
+            <comps:SelectableTextBlock Grid.Column="2" Grid.Row="1" Text="0.00°" x:Name="lblRotation" TextAlignment="Right" />
         </Grid>
 
     </Grid>

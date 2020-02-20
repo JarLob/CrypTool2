@@ -11,7 +11,7 @@
                 <ResourceDictionary Source="../../Resources/menu.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <Style TargetType="{x:Type TextBlock}">
+            <Style TargetType="{x:Type comps:SelectableTextBlock}">
                 <Setter Property="Margin" Value="0,0,7,0" />
                 <Setter Property="FontSize" Value="13" />
             </Style>
@@ -210,7 +210,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" TextWrapping="Wrap" Margin="0,5,0,5" Text="{x:Static lang:Distribution.numberline_header}" />
+            <comps:SelectableTextBlock Grid.Row="0" TextWrapping="Wrap" Margin="0,5,0,5" Text="{x:Static lang:Distribution.numberline_header}" />
 
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -279,7 +279,7 @@
                 </Button>
             </Grid>
 
-            <TextBlock Grid.Row="2" TextWrapping="Wrap" Margin="0,10,0,10" Text="{x:Static lang:Distribution.numberline_maxinterval}" />
+            <comps:SelectableTextBlock Grid.Row="2" TextWrapping="Wrap" Margin="0,10,0,10" Text="{x:Static lang:Distribution.numberline_maxinterval}" />
 
             <Grid Grid.Row="3" Margin="0,0,0,15">
                 <Grid.RowDefinitions>
@@ -287,7 +287,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Name="tbInfoError" Foreground="Blue" Height="Auto"></TextBlock>
+                <comps:SelectableTextBlock Grid.Row="0" x:Name="tbInfoError" Foreground="Blue" Height="Auto"></comps:SelectableTextBlock>
 
                 <Grid Margin="0" Grid.Row="1">
                     <Grid.ColumnDefinitions>
@@ -341,8 +341,8 @@
                         </Button>
 
                         <StackPanel Grid.Column="2">
-                            <TextBlock HorizontalAlignment="Center" Text="{x:Static lang:Distribution.numberline_pointsdisplayed}"></TextBlock>
-                            <TextBlock HorizontalAlignment="Center" Name="lblCountPoints" VerticalAlignment="Center">44</TextBlock>
+                            <comps:SelectableTextBlock HorizontalAlignment="Center" Text="{x:Static lang:Distribution.numberline_pointsdisplayed}"></comps:SelectableTextBlock>
+                            <comps:SelectableTextBlock HorizontalAlignment="Center" x:Name="lblCountPoints" VerticalAlignment="Center">44</comps:SelectableTextBlock>
                         </StackPanel>
 
                         <Button Cursor="Hand" Template="{StaticResource rightscrollfastbutton}" Height="30" Width="30" Grid.Column="3" Name="btnScrollRight_Fast" Click="btnScroll_MouseClick" ToolTip="{x:Static lang:Distribution.numberline_tooltipscrollrightfast}">
@@ -405,7 +405,7 @@
 
                     <DockPanel Canvas.Top="0" Canvas.Left="0" Name="pActualNumber">
                         <Polygon Canvas.Top="0" Canvas.Left="0" Points="0,0, 15,0, 7.5,10" Fill="Yellow" Stroke="Black" StrokeThickness="0.5" />
-                        <TextBlock Canvas.Top="0" Canvas.Left="0" Name="textActualNumber" Text="2" FontSize="10" VerticalAlignment="Top" Margin="0" />
+                        <comps:SelectableTextBlock Canvas.Top="0" Canvas.Left="0" x:Name="textActualNumber" Text="2" FontSize="10" VerticalAlignment="Top" Margin="0" />
                     </DockPanel>
 
                 </Canvas>
@@ -443,14 +443,14 @@
 
                                 <StackPanel Grid.Row="0" Name="pnlCountPrimes" Grid.ColumnSpan="3" Margin="0,0,0,7">
                                     <DockPanel Margin="0,0,0,5">
-                                        <TextBlock FontWeight="Bold" TextWrapping="Wrap" MinWidth="100" Name="lblInfoCountPrimesInterval" Text="{x:Static lang:Distribution.numberline_headercoutprimes}"></TextBlock>
+                                        <comps:SelectableTextBlock FontWeight="Bold" TextWrapping="Wrap" MinWidth="100" x:Name="lblInfoCountPrimesInterval" Text="{x:Static lang:Distribution.numberline_headercoutprimes}"></comps:SelectableTextBlock>
                                         <Image Cursor="Hand" Source="../../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpCountPrimes" HorizontalAlignment="Left" MouseLeftButtonDown="btnHelp_MouseLeftButtonDown" Margin="0,0,4,0" MinWidth="100" />
                                     </DockPanel>
                                     <DockPanel Margin="10,0,0,7">
-                                        <TextBlock HorizontalAlignment="Left" Name="lblCountPrimesPi" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_countprimespin}"></TextBlock>
+                                        <comps:SelectableTextBlock HorizontalAlignment="Left" x:Name="lblCountPrimesPi" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_countprimespin}"></comps:SelectableTextBlock>
                                     </DockPanel>
                                     <DockPanel Margin="10,0,0,0">
-                                        <TextBlock HorizontalAlignment="Left" Name="lblCountPrimesGauss" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_countprimesgauss}"></TextBlock>
+                                        <comps:SelectableTextBlock HorizontalAlignment="Left" x:Name="lblCountPrimesGauss" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_countprimesgauss}"></comps:SelectableTextBlock>
                                     </DockPanel>
                                 </StackPanel>
 
@@ -460,36 +460,36 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock FontWeight="Bold" Text="{x:Static lang:Distribution.numberline_actualnumber}" Grid.Column="0" VerticalAlignment="Center" />
-                                    <TextBlock Name="lblActualNumber" Grid.Column="1" TextWrapping="Wrap" FontWeight="Bold" FontSize="15" MaxWidth="100" VerticalAlignment="Center" />
-                                    <TextBlock Name="lblActualNumberInfo" Grid.Column="2" MaxWidth="100" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                    <comps:SelectableTextBlock FontWeight="Bold" Text="{x:Static lang:Distribution.numberline_actualnumber}" Grid.Column="0" VerticalAlignment="Center" />
+                                    <comps:SelectableTextBlock x:Name="lblActualNumber" Grid.Column="1" TextWrapping="Wrap" FontWeight="Bold" FontSize="15" MaxWidth="100" VerticalAlignment="Center" />
+                                    <comps:SelectableTextBlock x:Name="lblActualNumberInfo" Grid.Column="2" MaxWidth="100" HorizontalAlignment="Left" VerticalAlignment="Center" />
                                 </Grid>
 
                                 <DockPanel Grid.Row="2" Name="pnlNextPrimes" Grid.ColumnSpan="3" Margin="0,0,0,7">
-                                    <TextBlock Text="{x:Static lang:Distribution.numberline_priorprime}" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="10,0,10,0" MaxWidth="170" VerticalAlignment="Center" Width="Auto" />
-                                    <TextBlock Name="lblPriorPrime" TextWrapping="Wrap" FontWeight="Bold" FontSize="15" HorizontalAlignment="Left" MaxWidth="150" />
-                                    <TextBlock Text="{x:Static lang:Distribution.numberline_nextprime}" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="10,0,10,0" MaxWidth="170" VerticalAlignment="Center" Width="Auto" />
-                                    <TextBlock Name="lblNextPrime" TextWrapping="Wrap" FontWeight="Bold" FontSize="15" HorizontalAlignment="Left" MaxWidth="150" />
+                                    <comps:SelectableTextBlock Text="{x:Static lang:Distribution.numberline_priorprime}" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="10,0,10,0" MaxWidth="170" VerticalAlignment="Center" Width="Auto" />
+                                    <comps:SelectableTextBlock x:Name="lblPriorPrime" TextWrapping="Wrap" FontWeight="Bold" FontSize="15" HorizontalAlignment="Left" MaxWidth="150" />
+                                    <comps:SelectableTextBlock Text="{x:Static lang:Distribution.numberline_nextprime}" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="10,0,10,0" MaxWidth="170" VerticalAlignment="Center" Width="Auto" />
+                                    <comps:SelectableTextBlock x:Name="lblNextPrime" TextWrapping="Wrap" FontWeight="Bold" FontSize="15" HorizontalAlignment="Left" MaxWidth="150" />
                                 </DockPanel>
 
                                 <DockPanel Grid.Row="3" Margin="0,0,0,7">
-                                    <TextBlock FontWeight="Bold" Margin="0,0,10,0" Text="{x:Static lang:Distribution.numberline_numberofprimes}" VerticalAlignment="Center" />
-                                    <TextBlock FontWeight="Bold" FontSize="15" Name="lblInfoCountPrimes" VerticalAlignment="Center" />
+                                    <comps:SelectableTextBlock FontWeight="Bold" Margin="0,0,10,0" Text="{x:Static lang:Distribution.numberline_numberofprimes}" VerticalAlignment="Center" />
+                                    <comps:SelectableTextBlock FontWeight="Bold" FontSize="15" x:Name="lblInfoCountPrimes" VerticalAlignment="Center" />
                                 </DockPanel>
 
                                 <StackPanel Grid.Row="4" Grid.ColumnSpan="3" Margin="0,0,0,7">
                                     <DockPanel>
-                                        <TextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_factorization}" />
+                                        <comps:SelectableTextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_factorization}" />
                                         <Image Cursor="Hand" Source="../../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpFactorize" HorizontalAlignment="Left" MouseLeftButtonDown="btnHelp_MouseLeftButtonDown" Margin="0,0,4,0" />
-                                        <TextBlock Name="lblCalcFactorizationInfo" Margin="0,0,0,0" Visibility="Hidden" TextWrapping="Wrap" Width="150" />
-                                        <TextBlock Name="lblCalcFactorization" Margin="0,0,0,0" TextWrapping="Wrap" />
+                                        <comps:SelectableTextBlock x:Name="lblCalcFactorizationInfo" Margin="0,0,0,0" Visibility="Hidden" TextWrapping="Wrap" Width="150" />
+                                        <comps:SelectableTextBlock x:Name="lblCalcFactorization" Margin="0,0,0,0" TextWrapping="Wrap" />
                                     </DockPanel>
-                                    <TextBlock HorizontalAlignment="Left" Name="lblFactors" TextWrapping="Wrap" Margin="10,0,0,0" />
+                                    <comps:SelectableTextBlock HorizontalAlignment="Left" x:Name="lblFactors" TextWrapping="Wrap" Margin="10,0,0,0" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="5" Grid.ColumnSpan="3" Margin="0,0,0,7">
                                     <DockPanel>
-                                        <TextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_goldbach}" />
+                                        <comps:SelectableTextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_goldbach}" />
                                         <Image Cursor="Hand" Source="../../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpGoldbach" HorizontalAlignment="Left" MouseLeftButtonDown="btnHelp_MouseLeftButtonDown" Margin="0,0,4,0" />
                                         <TextBlock TextWrapping="Wrap" MouseLeftButtonDown="lblCalcInfo_MouseLeftButtonDown" Name="lblGoldbachInfoCalc" Cursor="Hand" Foreground="Blue" />
                                     </DockPanel>
@@ -505,7 +505,7 @@
 
                                 <StackPanel Grid.Row="6" Grid.ColumnSpan="3" Margin="0,0,0,7">
                                     <DockPanel>
-                                        <TextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_eulerphi}" />
+                                        <comps:SelectableTextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_eulerphi}" />
                                         <Image Cursor="Hand" Source="../../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpEulerPhi" HorizontalAlignment="Left" MouseLeftButtonDown="btnHelp_MouseLeftButtonDown" Margin="0,0,4,0" />
                                         <TextBlock Name="lblCalcEulerPhiInfo" Margin="0,0,0,0" Visibility="Hidden" TextWrapping="Wrap" MouseLeftButtonDown="lblCalcInfo_MouseLeftButtonDown" Cursor="Hand" Foreground="Blue"></TextBlock>
                                     </DockPanel>
@@ -521,7 +521,7 @@
 
                                 <StackPanel Grid.Row="7" Grid.ColumnSpan="3" Margin="0,0,0,7">
                                     <DockPanel>
-                                        <TextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_divcount}"></TextBlock>
+                                        <comps:SelectableTextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_divcount}"></comps:SelectableTextBlock>
                                         <Image Cursor="Hand" Source="../../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpTau" HorizontalAlignment="Left" MouseLeftButtonDown="btnHelp_MouseLeftButtonDown" Margin="0,0,4,0" />
                                         <TextBlock Name="lblCalcTauInfo" Margin="0,0,0,0" TextWrapping="Wrap" MouseLeftButtonDown="lblCalcInfo_MouseLeftButtonDown" Cursor="Hand" Foreground="Blue"></TextBlock>
                                     </DockPanel>
@@ -537,7 +537,7 @@
 
                                 <StackPanel Grid.Row="8" Grid.ColumnSpan="3" Margin="0,0,0,7">
                                     <DockPanel>
-                                        <TextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_divsum}"></TextBlock>
+                                        <comps:SelectableTextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_divsum}"></comps:SelectableTextBlock>
                                         <Image Cursor="Hand" Source="../../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpRho" HorizontalAlignment="Left" MouseLeftButtonDown="btnHelp_MouseLeftButtonDown" Margin="0,0,4,0" />
                                         <TextBlock Name="lblCalcRhoInfo" Margin="0,0,0,0" TextWrapping="Wrap" MouseLeftButtonDown="lblCalcInfo_MouseLeftButtonDown" Cursor="Hand" Foreground="Blue"></TextBlock>
                                     </DockPanel>
@@ -553,7 +553,7 @@
 
                                 <StackPanel Grid.Row="9" Grid.ColumnSpan="3" Margin="0,0,0,7">
                                     <DockPanel>
-                                        <TextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_eulerphisum}"></TextBlock>
+                                        <comps:SelectableTextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_eulerphisum}"></comps:SelectableTextBlock>
                                         <Image Cursor="Hand" Source="../../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpDivSum" HorizontalAlignment="Left" MouseLeftButtonDown="btnHelp_MouseLeftButtonDown" Margin="0,0,4,0" />
                                         <TextBlock Name="lblCalcDividerSum" Margin="0,0,0,0" TextWrapping="Wrap" MouseLeftButtonDown="lblCalcInfo_MouseLeftButtonDown" Cursor="Hand" Foreground="Blue"></TextBlock>
                                     </DockPanel>
@@ -569,28 +569,28 @@
 
                                 <StackPanel Name="pnlTwinPrimes" Grid.ColumnSpan="3" Grid.Row="10" Margin="0,0,0,7">
                                     <DockPanel>
-                                        <TextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_twinprime}"></TextBlock>
+                                        <comps:SelectableTextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_twinprime}"></comps:SelectableTextBlock>
                                         <Image Cursor="Hand" Source="../../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpTwinPrimes" HorizontalAlignment="Left" MouseLeftButtonDown="btnHelp_MouseLeftButtonDown" Margin="0,0,4,0" />
                                     </DockPanel>
 
-                                    <TextBlock Name="lblTwinPrimes" Visibility="Collapsed" TextWrapping="Wrap" Margin="10,0,0,0" />
-                                    <TextBlock Name="lblTwinPrimes2" TextWrapping="Wrap" Margin="10,0,0,0" />
+                                    <comps:SelectableTextBlock x:Name="lblTwinPrimes" Visibility="Collapsed" TextWrapping="Wrap" Margin="10,0,0,0" />
+                                    <comps:SelectableTextBlock x:Name="lblTwinPrimes2" TextWrapping="Wrap" Margin="10,0,0,0" />
                                 </StackPanel>
 
                                 <StackPanel Name="pnlQuadrupletPrimes" Grid.ColumnSpan="3" Visibility="Collapsed" Grid.Row="11" Margin="0,0,0,10">
                                     <DockPanel>
-                                        <TextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_quadtuplet}"></TextBlock>
+                                        <comps:SelectableTextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_quadtuplet}"></comps:SelectableTextBlock>
                                         <Image Cursor="Hand" Source="../../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpQuadrupletPrimes" HorizontalAlignment="Left" MouseLeftButtonDown="btnHelp_MouseLeftButtonDown" Margin="0,0,4,0" />
                                     </DockPanel>
-                                    <TextBlock Name="lblQuadrupletPrimes" TextWrapping="Wrap" Margin="10,0,0,0" />
+                                    <comps:SelectableTextBlock x:Name="lblQuadrupletPrimes" TextWrapping="Wrap" Margin="10,0,0,0" />
                                 </StackPanel>
 
                                 <StackPanel Name="pnlSixTupletPrimes" Grid.ColumnSpan="3" Visibility="Collapsed" Grid.Row="12">
                                     <DockPanel>
-                                        <TextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_sixtuplet}"></TextBlock>
+                                        <comps:SelectableTextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static lang:Distribution.numberline_sixtuplet}"></comps:SelectableTextBlock>
                                         <Image Cursor="Hand" Source="../../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpSixTupletPrimes" HorizontalAlignment="Left" MouseLeftButtonDown="btnHelp_MouseLeftButtonDown" Margin="0,0,4,0" />
                                     </DockPanel>
-                                    <TextBlock Name="lblSixTupletPrimes" TextWrapping="Wrap" Margin="10,0,0,0" />
+                                    <comps:SelectableTextBlock x:Name="lblSixTupletPrimes" TextWrapping="Wrap" Margin="10,0,0,0" />
                                 </StackPanel>
 
                             </Grid>

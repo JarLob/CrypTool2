@@ -57,8 +57,8 @@
                                         <MenuItem Header="{x:Static lang:Distribution.graph_contextmenucopy}" Name="miCopyGauss" Click="miCopy_Click" />
                                     </ContextMenu>
                                 </DockPanel.ContextMenu>
-                                <TextBlock Name="lblCalcInfoPiGauss" Visibility="Collapsed" MouseEnter="lblInfo_MouseEnter" MouseLeave="lblInfo_MouseLeave" Text="{x:Static lang:Distribution.graph_gausscountinfo}"></TextBlock>
-                                <TextBlock Name="tbInfoGaußPrimeTheorem" Margin="3,0,0,0" MouseEnter="lblInfo_MouseEnter" MouseLeave="lblInfo_MouseLeave" />
+                                <comps:SelectableTextBlock x:Name="lblCalcInfoPiGauss" Visibility="Collapsed" MouseEnter="lblInfo_MouseEnter" MouseLeave="lblInfo_MouseLeave" Text="{x:Static lang:Distribution.graph_gausscountinfo}"></comps:SelectableTextBlock>
+                                <comps:SelectableTextBlock x:Name="tbInfoGaußPrimeTheorem" Margin="3,0,0,0" MouseEnter="lblInfo_MouseEnter" MouseLeave="lblInfo_MouseLeave" />
                             </DockPanel>
                             <Line X1="0" X2="10" Y1="0" Y2="0" Stroke="Green" StrokeThickness="3" Grid.Row="1" VerticalAlignment="Center" />
                             <CheckBox Name="cbLin" IsChecked="True" Margin="3,3,3,3" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Content="{x:Static lang:Distribution.graph_linname}"></CheckBox>
@@ -71,10 +71,10 @@
                                         <MenuItem Header="{x:Static lang:Distribution.graph_contextmenucopy}" Name="miCopyLin" Click="miCopy_Click" />
                                     </ContextMenu>
                                 </DockPanel.ContextMenu>
-                                <TextBlock Name="lblCalcInfoLiN" Visibility="Collapsed" Text="{x:Static lang:Distribution.graph_lincountinfo}" MouseEnter="lblInfo_MouseEnter" MouseLeave="lblInfo_MouseLeave">
+                                <comps:SelectableTextBlock x:Name="lblCalcInfoLiN" Visibility="Collapsed" Text="{x:Static lang:Distribution.graph_lincountinfo}" MouseEnter="lblInfo_MouseEnter" MouseLeave="lblInfo_MouseLeave">
 
-                                </TextBlock>
-                                <TextBlock Name="tbInfoLin" Margin="3,0,0,0" MouseEnter="lblInfo_MouseEnter" MouseLeave="lblInfo_MouseLeave" />
+                                </comps:SelectableTextBlock>
+                                <comps:SelectableTextBlock x:Name="tbInfoLin" Margin="3,0,0,0" MouseEnter="lblInfo_MouseEnter" MouseLeave="lblInfo_MouseLeave" />
                             </DockPanel>
                             <Line X1="0" X2="10" Y1="0" Y2="0" Stroke="Red" StrokeThickness="3" Grid.Row="2" VerticalAlignment="Center" />
                             <CheckBox Name="cbPiX" IsChecked="True" Margin="3,3,3,3" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Content="{x:Static lang:Distribution.graph_pinname}"></CheckBox>
@@ -87,8 +87,8 @@
                                         <MenuItem Header="{x:Static lang:Distribution.graph_contextmenucopy}" Name="miCopyPix" Click="miCopy_Click" />
                                     </ContextMenu>
                                 </DockPanel.ContextMenu>
-                                <TextBlock Name="lblCalcInfoPiX" Visibility="Collapsed" Margin="0,0,0,0" MouseEnter="lblInfo_MouseEnter" MouseLeave="lblInfo_MouseLeave" Text="{x:Static lang:Distribution.graph_pincountinfo}"></TextBlock>
-                                <TextBlock Name="tbInfoPiX" Margin="3,0,0,0" MouseEnter="lblInfo_MouseEnter" MouseLeave="lblInfo_MouseLeave" />
+                                <comps:SelectableTextBlock x:Name="lblCalcInfoPiX" Visibility="Collapsed" Margin="0,0,0,0" MouseEnter="lblInfo_MouseEnter" MouseLeave="lblInfo_MouseLeave" Text="{x:Static lang:Distribution.graph_pincountinfo}"></comps:SelectableTextBlock>
+                                <comps:SelectableTextBlock x:Name="tbInfoPiX" Margin="3,0,0,0" MouseEnter="lblInfo_MouseEnter" MouseLeave="lblInfo_MouseLeave" />
                             </DockPanel>
                         </Grid>
                     </ScrollViewer>
