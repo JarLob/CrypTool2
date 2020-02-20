@@ -46,22 +46,14 @@ namespace Cryptool.Plugins.SpanishStripCipher
         }
 
         #region Data Properties
-
-        /// <summary>
-        /// HOWTO: Input interface to read the input data. 
-        /// You can add more input properties of other type if needed.
-        /// </summary>
+      
         [PropertyInfo(Direction.InputData, "InputCaption", "InputTooltip", true)]
         public string Input
         {
             get;
             set;
         }
-
-        /// <summary>
-        /// HOWTO: Output interface to write the output data.
-        /// You can add more output properties ot other type if needed.
-        /// </summary>
+     
         [PropertyInfo(Direction.OutputData, "OutputCaption", "OutputTooltip")]
         public string Output
         {
@@ -75,7 +67,7 @@ namespace Cryptool.Plugins.SpanishStripCipher
             get { return settings.Keyword; }
             set
             {
-                if (settings.Keyword != value.ToUpper())
+                if (!string.IsNullOrEmpty(value) && settings.Keyword != value.ToUpper())
                 {
                     settings.Keyword = value.ToUpper();
                     OnPropertyChanged("Keyword");
