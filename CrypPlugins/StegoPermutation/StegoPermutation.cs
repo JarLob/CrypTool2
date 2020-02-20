@@ -65,6 +65,10 @@ namespace Cryptool.Plugins.StegoPermutation
             }
             set
             {
+                if (value == null)
+                {
+                    return;
+                }
                 string[] valueParts = value;
                 this.inputList = new Collection<string>();
                 HashSet<string> isPresent = new HashSet<string>();  // use HashSet for faster lookup

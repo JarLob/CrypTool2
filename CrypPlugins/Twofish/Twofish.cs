@@ -216,6 +216,10 @@ namespace Twofish
 
             set
             {
+                if(value == null)
+                {
+                    return;
+                }
                 //key = (byte[])value.Clone();
                 long len = value.Length;
                 key = new byte[len];
@@ -239,9 +243,15 @@ namespace Twofish
             }
             set
             {
-                Array.Clear(iv, 0, iv.Length);
+                if (iv != null)
+                {
+                    Array.Clear(iv, 0, iv.Length);
+                }
 
-                if (value == null) return;
+                if (value == null)
+                {
+                    return;
+                }
 
                 Array.Copy(value, iv, Math.Min(iv.Length, value.Length));
 

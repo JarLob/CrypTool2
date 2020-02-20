@@ -62,6 +62,10 @@ namespace SmartInterpreter
         }
         set
         {
+            if(value == null)
+            {
+                return;
+            }
             // reset sequence counter after getting new data
             CommandCounter = 0;
 
