@@ -121,10 +121,10 @@
     <value>Date:</value>
   </data>
   <data name="LoadingRSSFeed" xml:space="preserve">
-    <value>Loading RSS Feed</value>
+    <value>Loading RSS feed</value>
   </data>
   <data name="MainFunctions" xml:space="preserve">
-    <value>Main Functions</value>
+    <value>Main functions</value>
   </data>
   <data name="News" xml:space="preserve">
     <value>News</value>
@@ -139,7 +139,7 @@
     <value>Easy access to the CT2 functions in the Startcenter</value>
   </data>
   <data name="RecentFiles" xml:space="preserve">
-    <value>Recently Opened Templates (double click to open)</value>
+    <value>Recently opened workspaces (double click to open)</value>
   </data>
   <data name="Templates" xml:space="preserve">
     <value>Templates (double click to open)</value>

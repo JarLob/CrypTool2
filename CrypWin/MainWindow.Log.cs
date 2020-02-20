@@ -268,7 +268,14 @@ namespace Cryptool.CrypWin
         {
             this.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                deleteAllMessages();
+                try
+                {
+                    deleteAllMessages();
+                }
+                catch(Exception ex)
+                {
+                    GuiLogMessage(string.Format("Exception during DeleteAllMessagesInGuiThread: {0}", ex.Message), NotificationLevel.Error);
+                }
             }, null);
         }
 
@@ -278,12 +285,19 @@ namespace Cryptool.CrypWin
 
             this.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                foreach (LogMessage msg in collectionLogMessages)
+                try
                 {
-                    if (levels.Contains(msg.LogLevel))
+                    foreach (LogMessage msg in collectionLogMessages)
                     {
-                        logList.Add(msg.ToString());
+                        if (levels.Contains(msg.LogLevel))
+                        {
+                            logList.Add(msg.ToString());
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(string.Format("Exception during GetAllMessagesFromGuiThread: {0}", ex.Message), NotificationLevel.Error);
                 }
             }, null);
 

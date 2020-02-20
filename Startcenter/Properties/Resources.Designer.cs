@@ -196,7 +196,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Loading RSS Feed ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Loading RSS feed ähnelt.
         /// </summary>
         internal static string LoadingRSSFeed {
             get {
@@ -205,7 +205,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Main Functions ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Main functions ähnelt.
         /// </summary>
         internal static string MainFunctions {
             get {
@@ -286,7 +286,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Recently Opened Templates (double click to open) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Recently opened workspaces (double click to open) ähnelt.
         /// </summary>
         internal static string RecentFiles {
             get {

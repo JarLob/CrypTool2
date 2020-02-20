@@ -224,13 +224,27 @@ namespace Cryptool.CrypWin
         {
             if (this.Dispatcher.CheckAccess())
             {
-                PlayProject();
+                try
+                {
+                    PlayProject();
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(string.Format("Exception during playing of project in gui thread: {0}", ex.Message), NotificationLevel.Error);
+                }
             }
             else
             {
                 this.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    PlayProject();
+                    try
+                    {
+                        PlayProject();
+                    }
+                    catch (Exception ex)
+                    {
+                        GuiLogMessage(string.Format("Exception during playing of project in gui thread: {0}", ex.Message), NotificationLevel.Error);
+                    }
                 }, null);
             }
         }
@@ -298,18 +312,32 @@ namespace Cryptool.CrypWin
 
         public void CloseProjectInGuiThread()
         {
-            if (this.Dispatcher.CheckAccess())
+            try
             {
-                CloseProject();
-                tabToContentMap.Last().Key.Close();
-            }
-            else
-            {
-                this.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                if (this.Dispatcher.CheckAccess())
                 {
                     CloseProject();
                     tabToContentMap.Last().Key.Close();
-                }, null);
+                }
+                else
+                {
+                    this.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        try
+                        {
+                            CloseProject();
+                            tabToContentMap.Last().Key.Close();
+                        }
+                        catch (Exception ex)
+                        {
+                            GuiLogMessage(string.Format("Exception during CloseProjectInGuiThread: {0}", ex.Message), NotificationLevel.Error);
+                        }
+                    }, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(string.Format("Exception during CloseProjectInGuiThread: {0}", ex.Message), NotificationLevel.Error);
             }
         }
 

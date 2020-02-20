@@ -68,57 +68,61 @@ namespace Cryptool.CrypWin
             while (!shallStop)
             {
                 string file = filelist[currentFile];
-                window.OpenProjectInGuiThread(file);
-                lock (thread)
+                try
                 {
-                    Monitor.Wait(thread, 5000);
-                }
-
-                // re-evaluate run condition
-                if (shallStop)
-                    continue;
-
-                window.PlayProjectInGuiThread();                
-                lock (thread)
-                {
-                    Monitor.Wait(thread, Properties.Settings.Default.DemoInterval*1000);
-                }
-
-                //Force garbage collection.
-                GC.Collect();
-
-                // Wait for all finalizers to complete before continuing.
-                GC.WaitForPendingFinalizers();
-
-                if (logWriter != null)
-                {
-                    logWriter.WriteLine("*** Testing " + filelist[currentFile]);
-                    IList<string> log = window.GetAllMessagesFromGuiThread(NotificationLevel.Error,
-                                                                            NotificationLevel.Warning);
-                    foreach(string msg in log)
+                    window.OpenProjectInGuiThread(file);
+                    lock (thread)
                     {
-                        logWriter.WriteLine(msg);
+                        Monitor.Wait(thread, 5000);
                     }
 
-                    logWriter.Flush();
+                    // re-evaluate run condition
+                    if (shallStop)
+                        continue;
+
+                    window.PlayProjectInGuiThread();
+                    lock (thread)
+                    {
+                        Monitor.Wait(thread, Properties.Settings.Default.DemoInterval * 1000);
+                    }
+
+                    //Force garbage collection.
+                    GC.Collect();
+                    GC.WaitForFullGCComplete();
+
+                    if (logWriter != null)
+                    {
+                        logWriter.WriteLine("*** Testing " + filelist[currentFile]);
+                        logWriter.Flush();
+                        IList<string> log = window.GetAllMessagesFromGuiThread(NotificationLevel.Error,
+                                                                                NotificationLevel.Warning);
+                        foreach (string msg in log)
+                        {
+                            logWriter.WriteLine(msg);
+                            logWriter.Flush();
+                        }                        
+                    }
+
+                    window.DeleteAllMessagesInGuiThread();
+                    window.StopProjectInGuiThread();
+                    window.CloseProjectInGuiThread();
+
+                    if (++currentFile >= filelist.Length)
+                    {
+                        if (logWriter != null) // autotest running?
+                        {
+                            shallStop = true; // stop in test mode
+                        }
+                        else
+                        {
+                            currentFile = 0; // loop in demo mode
+                        }
+                    }
                 }
-
-                window.DeleteAllMessagesInGuiThread();
-                window.StopProjectInGuiThread();
-                window.CloseProjectInGuiThread();
-
-                if (++currentFile >= filelist.Length)
+                catch(Exception ex)
                 {
-                    if (logWriter != null) // autotest running?
-                    {
-                        shallStop = true; // stop in test mode
-                    }
-                    else
-                    {
-                        currentFile = 0; // loop in demo mode
-                    }
+                    logWriter.WriteLine("Exception occured during execution of {0}: {1}", file, ex.Message);
                 }
-                    
             }
 
             if (logWriter != null)

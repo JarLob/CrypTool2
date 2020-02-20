@@ -60,8 +60,15 @@ namespace Cryptool.CrypWin
         {
             this.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                OpenProject(fileName, null);                
-            }, null);
+                try
+                {
+                    OpenProject(fileName, null);
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(string.Format("Exception during opening of project in gui thread: {0}", ex.Message), NotificationLevel.Error);
+                }
+        }, null);
         }
 
         /// <summary>
