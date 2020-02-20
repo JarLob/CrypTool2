@@ -117,6 +117,7 @@ namespace Primes.WpfControls.PrimesDistribution.Numberline
         void iscFrom_OnInfoError(string message)
         {
             tbInfoError.Text = message;
+            tbInfoError.Visibility = string.IsNullOrWhiteSpace(message) ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private void SetInputValidator()
@@ -356,7 +357,7 @@ namespace Primes.WpfControls.PrimesDistribution.Numberline
             pnlContent.Opacity = 1.0;
             pnlScrollButtons.IsEnabled = true;
             pnlScrollButtons.Opacity = 1.0;
-            tbInfoError.Text = "";
+            iscFrom_OnInfoError("");
         }
 
         #endregion

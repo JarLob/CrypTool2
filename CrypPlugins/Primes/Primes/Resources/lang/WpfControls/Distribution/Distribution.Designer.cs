@@ -493,7 +493,7 @@ namespace Primes.Resources.lang.WpfControls.Distribution {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Here you get some number-theoretic statements for the numbers on the number line. The number line can display 10 to 90 numbers. You can adjust the range with the slider, which determines the upper limit of the range. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Move with the mouse along the number line to get number-theoretic statements of the selected number. The number line is like a sliding window over the integers with a range between 10 to 90 numbers. You can adjust the range with the slider, which determines the upper limit of the range. ähnelt.
         /// </summary>
         public static string numberline_header {
             get {
