@@ -55,7 +55,11 @@ namespace Cryptool.Plugins.BB84PhotonbaseGenerator
             }
             set
             {
-                this.inputKey = value;
+                if (value == null)
+                {
+                    return;
+                }
+                inputKey = value;
                 if (inputKey is BigInteger)
                 {
                     BigInteger temp = (BigInteger)inputKey;
