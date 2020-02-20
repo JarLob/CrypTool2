@@ -66,8 +66,11 @@ namespace Cryptool.Plugins.BB84PhotonEncoder
             }
             set
             {
-                string newInput = filterValidInput(value);
-                this.inputKey = newInput;
+                if (!string.IsNullOrEmpty(value))
+                {
+                    string newInput = filterValidInput(value);
+                    this.inputKey = newInput;
+                }
             }
         }
 
