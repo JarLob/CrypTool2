@@ -44,31 +44,11 @@
 
                 <GroupBox Grid.Row="1" Header="{x:Static lang:Factorization.fac_result}" Name="gbFactorizationInfo" Margin="0,0,0,20">
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                        <StackPanel Name="pnInfo" Orientation="Horizontal" MouseLeave="pnInfo_MouseLeave" Height="30">
-                            <DockPanel MouseEnter="DockPanelFactors_MouseEnter" Name="dpInfo">
-                                <Label Name="lblInput" Foreground="Blue">
-                                    <Label.ContextMenu>
-                                        <ContextMenu BorderBrush="LightGray" Background="WhiteSmoke">
-                                            <MenuItem Header="{x:Static lang:Factorization.fac_copytoclipboard}" Click="MenuItemCopyInputClick">
-                                                <MenuItem.Icon>
-                                                    <Image Source="../../Resources/icons/page_copy.png" />
-                                                </MenuItem.Icon>
-                                            </MenuItem>
-                                        </ContextMenu>
-                                    </Label.ContextMenu>
-                                </Label>
-                                <Label Name="lblFactors">
-                                    <Label.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem Header="{x:Static lang:Factorization.fac_copytoclipboard}" Click="MenuItem_Click">
-                                                <MenuItem.Icon>
-                                                    <Image Source="../../Resources/icons/page_copy.png" />
-                                                </MenuItem.Icon>
-                                            </MenuItem>
-                                        </ContextMenu>
-                                    </Label.ContextMenu>
-                                </Label>
-                            </DockPanel>
+                        <StackPanel Name="pnInfo" Orientation="Horizontal" Height="30">
+                            <comps:SelectableTextBlock VerticalAlignment="Center" Margin="5,0,5,0">
+                                <Run Foreground="Blue" x:Name="lblInput" />
+                                <Run x:Name="lblFactors" />
+                            </comps:SelectableTextBlock>
                         </StackPanel>
                     </ScrollViewer>
                 </GroupBox>

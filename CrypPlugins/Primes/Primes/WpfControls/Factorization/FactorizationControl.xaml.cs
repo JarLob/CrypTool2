@@ -41,7 +41,6 @@ namespace Primes.WpfControls.Factorization
         private IFactorizer _rho;
         private IFactorizer _bruteforce;
         private IFactorizer _qs;
-        private TextBox m_TbFactorizationCopy;
 
         struct InputValues
         {
@@ -118,16 +117,6 @@ namespace Primes.WpfControls.Factorization
             inputnumbermanager.KeyDown += new ExecuteSingleDelegate(inputnumbermanager_ValueChanged);
 
             SetInputValidators();
-            m_TbFactorizationCopy = new TextBox();
-            m_TbFactorizationCopy.IsReadOnly = true;
-            m_TbFactorizationCopy.MouseLeave += new MouseEventHandler(m_TbFactorizationCopy_MouseLeave);
-            m_TbFactorizationCopy.MouseMove += new MouseEventHandler(m_TbFactorizationCopy_MouseMove);
-            ContextMenu tbFactorizationCopyContextMenu = new ContextMenu();
-            MenuItem tbFactorizationCopyContextMenuCopy = new MenuItem();
-            tbFactorizationCopyContextMenuCopy.Click += new RoutedEventHandler(tbFactorizationCopyContextMenuCopy_Click);
-            tbFactorizationCopyContextMenuCopy.Header = Primes.Resources.lang.WpfControls.Factorization.Factorization.qs_copytoclipboard;
-            tbFactorizationCopyContextMenu.Items.Add(tbFactorizationCopyContextMenuCopy);
-            m_TbFactorizationCopy.ContextMenu = tbFactorizationCopyContextMenu;
 
             UpdateMessages();
         }
@@ -467,8 +456,8 @@ namespace Primes.WpfControls.Factorization
             {
                 case KOF.BruteForce:
                     ControlHandler.SetPropertyValue(gbFactorizationInfo, "Header", BF.FactorizationInfo);
-                    ControlHandler.SetElementContent(lblFactors, BF.factors);
-                    ControlHandler.SetElementContent(lblInput, BF.lblInput);
+                    ControlHandler.SetPropertyValue(lblFactors, "Text", BF.factors);
+                    ControlHandler.SetPropertyValue(lblInput, "Text", BF.lblInput);
                     ControlHandler.SetPropertyValue(inputnumbermanager.tbVertFree, "Text", BF.FreeText);
                     ControlHandler.SetPropertyValue(inputnumbermanager.tbVertCalcFactor, "Text", BF.CalcFactorText);
                     ControlHandler.SetPropertyValue(inputnumbermanager.tbVertCalcBase, "Text", BF.CalcBaseText);
@@ -478,8 +467,8 @@ namespace Primes.WpfControls.Factorization
 
                 case KOF.QS:
                     ControlHandler.SetPropertyValue(gbFactorizationInfo, "Header", QS.FactorizationInfo);
-                    ControlHandler.SetElementContent(lblFactors, QS.factors);
-                    ControlHandler.SetElementContent(lblInput, QS.lblInput);
+                    ControlHandler.SetPropertyValue(lblFactors, "Text", QS.factors);
+                    ControlHandler.SetPropertyValue(lblInput, "Text", QS.lblInput);
                     ControlHandler.SetPropertyValue(inputnumbermanager.tbVertFree, "Text", QS.FreeText);
                     ControlHandler.SetPropertyValue(inputnumbermanager.tbVertCalcFactor, "Text", QS.CalcFactorText);
                     ControlHandler.SetPropertyValue(inputnumbermanager.tbVertCalcBase, "Text", QS.CalcBaseText);
@@ -562,64 +551,10 @@ namespace Primes.WpfControls.Factorization
         {
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Clipboard.SetText(lblFactors.Content.ToString());
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-
-        void tbFactorizationCopyContextMenuCopy_Click(object sender, RoutedEventArgs e)
-        {
-            if (!string.IsNullOrEmpty(m_TbFactorizationCopy.Text))
-            {
-                Clipboard.SetText(m_TbFactorizationCopy.Text);
-            }
-        }
-
-        private void DockPanelFactors_MouseEnter(object sender, MouseEventArgs e)
-        {
-            if (lblFactors.Content != null && lblInput.Content != null)
-            {
-                m_TbFactorizationCopy.Text = lblInput.Content.ToString() + lblFactors.Content.ToString();
-                pnInfo.Children.Clear();
-                pnInfo.Children.Add(m_TbFactorizationCopy);
-            }
-        }
-
-        void m_TbFactorizationCopy_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ResetInfoPanel();
-        }
-
-        void m_TbFactorizationCopy_MouseMove(object sender, MouseEventArgs e)
-        {
-            m_TbFactorizationCopy.SelectAll();
-        }
-
-        private void pnInfo_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ResetInfoPanel();
-        }
-
-        private void ResetInfoPanel()
-        {
-            if (!m_TbFactorizationCopy.ContextMenu.IsOpen)
-            {
-                pnInfo.Children.Clear();
-                pnInfo.Children.Add(dpInfo);
-            }
-        }
-
         private void ClearInfoPanel()
         {
-            ResetInfoPanel();
-            lblInput.Content = "";
-            lblFactors.Content = "";
+            lblInput.Text = "";
+            lblFactors.Text = "";
         }
 
         #region IPrimeUserControl Members

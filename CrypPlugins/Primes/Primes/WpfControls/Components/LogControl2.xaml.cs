@@ -42,13 +42,13 @@ namespace Primes.WpfControls.Components
         #region Properties
 
         private TextBox m_Edit;
-        private TextBlock m_TextBlock;
+        private SelectableTextBlock m_SelectableTextBlock;
         TextStyle m_TextStyle;
         private int m_CurrentRow;
         private int m_FormerRow;
 
         private Style m_InfoStyle;
-        private IList<TextBlock> m_Selected;
+        private IList<SelectableTextBlock> m_Selected;
 
         public Style InfoStyle
         {
@@ -148,8 +148,8 @@ namespace Primes.WpfControls.Components
                 gridMessages.Width = value;
                 foreach (UIElement e in this.gridMessages.Children)
                 {
-                    if (e.GetType() == typeof(TextBlock))
-                        (e as TextBlock).Width = value - 50;
+                    if (e.GetType() == typeof(SelectableTextBlock))
+                        (e as SelectableTextBlock).Width = value - 50;
                     else if (e.GetType() == typeof(Rectangle))
                         (e as Rectangle).Width = value - 50;
                 }
@@ -170,7 +170,7 @@ namespace Primes.WpfControls.Components
             InitializeComponent();
             m_CurrentRow = -1;
             m_FormerRow = -1;
-            m_Selected = new List<TextBlock>();
+            m_Selected = new List<SelectableTextBlock>();
             counter = 1;
             m_Initialized = false;
             logobjext = new object();
@@ -220,7 +220,7 @@ namespace Primes.WpfControls.Components
             AddMessage(message, TextStyle.ErrorStyle.Foreground, column, row);
         }
 
-        private TextBlock Get(int colum, int row)
+        private SelectableTextBlock Get(int colum, int row)
         {
             UIElementCollection childs = ControlHandler.GetPropertyValue(gridMessages, "Children") as UIElementCollection;
 
@@ -231,13 +231,13 @@ namespace Primes.WpfControls.Components
                 {
 
                     UIElement element = ControlHandler.GetPropertyValue(_enum, "Current") as UIElement;
-                    if (element.GetType() == typeof(TextBlock))
+                    if (element.GetType() == typeof(SelectableTextBlock))
                     {
                         int _row = (int)ControlHandler.ExecuteMethod(gridMessages, "GetRow", new object[] { element });
                         int _col = (int)ControlHandler.ExecuteMethod(gridMessages, "GetColumn", new object[] { element });
                         if (_row == row && _col == colum)
                         {
-                            return element as TextBlock;
+                            return element as SelectableTextBlock;
                         }
                     }
                 }
@@ -254,10 +254,10 @@ namespace Primes.WpfControls.Components
                 {
                     UIElementCollection childs = ControlHandler.GetPropertyValue(gridMessages, "Children") as UIElementCollection;
                     column++;
-                    TextBlock tb = null;
+                    SelectableTextBlock tb = null;
                     if (m_OverrideText)
                     {
-                        TextBlock _tb = this.Get(column, row);
+                        SelectableTextBlock _tb = this.Get(column, row);
                         if (_tb != null)
                         {
                             tb = _tb;
@@ -265,12 +265,12 @@ namespace Primes.WpfControls.Components
                         }
                         else
                         {
-                            tb = ControlHandler.CreateObject(typeof(TextBlock)) as TextBlock;
+                            tb = ControlHandler.CreateObject(typeof(SelectableTextBlock)) as SelectableTextBlock;
                         }
                     }
                     else
                     {
-                        tb = ControlHandler.CreateObject(typeof(TextBlock)) as TextBlock;
+                        tb = ControlHandler.CreateObject(typeof(SelectableTextBlock)) as SelectableTextBlock;
                     }
                     ControlHandler.SetPropertyValue(tb, "TextWrapping", TextWrapping.Wrap);
                     ControlHandler.SetPropertyValue(tb, "Text", message);
@@ -282,7 +282,7 @@ namespace Primes.WpfControls.Components
 
                     if (!string.IsNullOrEmpty(message.Trim()))
                     {
-                        tb.MouseLeftButtonDown += new MouseButtonEventHandler(tb_MouseLeftButtonDown);
+                        //tb.MouseLeftButtonDown += new MouseButtonEventHandler(tb_MouseLeftButtonDown);
                         tb.MouseMove += new MouseEventHandler(tb_MouseMove);
                         tb.MouseLeave += new MouseEventHandler(tb_MouseLeave);
                     }
@@ -298,7 +298,7 @@ namespace Primes.WpfControls.Components
                         NewLine();
                         if (m_ShowCounter)
                         {
-                            TextBlock tb1 = ControlHandler.CreateObject(typeof(TextBlock)) as TextBlock;
+                            SelectableTextBlock tb1 = ControlHandler.CreateObject(typeof(SelectableTextBlock)) as SelectableTextBlock;
                             ControlHandler.SetPropertyValue(tb1, "TextWrapping", TextWrapping.Wrap);
                             ControlHandler.SetPropertyValue(tb1, "Text", counter.ToString() + ". ");
                             ControlHandler.SetPropertyValue(tb1, "Foreground", color);
@@ -346,19 +346,19 @@ namespace Primes.WpfControls.Components
         {
             //  if (m_TextStyle != null)
             //  {
-            //    MarkRow(sender as TextBlock, m_TextStyle.Background, m_TextStyle.Foreground);
+            //    MarkRow(sender as SelectableTextBlock, m_TextStyle.Background, m_TextStyle.Foreground);
             //  }
             //  else
             //  {
-            //    MarkRow(sender as TextBlock, Brushes.White, Brushes.Black);
+            //    MarkRow(sender as SelectableTextBlock, Brushes.White, Brushes.Black);
             //  }
         }
 
-        private void MarkRow(TextBlock sender, Brush background, Brush foreground)
+        private void MarkRow(SelectableTextBlock sender, Brush background, Brush foreground)
         {
             if (!gridMessages.ContextMenu.IsOpen)
             {
-                foreach (TextBlock tb in m_Selected)
+                foreach (SelectableTextBlock tb in m_Selected)
                 {
                     if (m_TextStyle != null)
                     {
@@ -374,9 +374,9 @@ namespace Primes.WpfControls.Components
             }
         }
 
-        private IList<TextBlock> DoMarkRow(TextBlock sender, Brush background, Brush foreground)
+        private IList<SelectableTextBlock> DoMarkRow(SelectableTextBlock sender, Brush background, Brush foreground)
         {
-            IList<TextBlock> result = new List<TextBlock>();
+            IList<SelectableTextBlock> result = new List<SelectableTextBlock>();
 
             if (!gridMessages.ContextMenu.IsOpen)
             {
@@ -388,9 +388,9 @@ namespace Primes.WpfControls.Components
                     int end = Math.Min(index + m_Columns, gridMessages.Children.Count - 1);
                     for (int i = start; i <= end; i++)
                     {
-                        if (gridMessages.Children[i].GetType() == typeof(TextBlock))
+                        if (gridMessages.Children[i].GetType() == typeof(SelectableTextBlock))
                         {
-                            TextBlock tb = gridMessages.Children[i] as TextBlock;
+                            SelectableTextBlock tb = gridMessages.Children[i] as SelectableTextBlock;
                             if (Grid.GetRow(tb) == row)
                             {
                                 tb.Background = background;
@@ -407,10 +407,10 @@ namespace Primes.WpfControls.Components
 
         void tb_MouseMove(object sender, MouseEventArgs e)
         {
-            TextStyle textstyle = new TextStyle((sender as TextBlock).Foreground, (sender as TextBlock).Background);
+            TextStyle textstyle = new TextStyle((sender as SelectableTextBlock).Foreground, (sender as SelectableTextBlock).Background);
             if (textstyle.Equals(TextStyle.InfoStyle) || textstyle.Equals(TextStyle.ErrorStyle))
                 m_TextStyle = textstyle;
-            MarkRow(sender as TextBlock, Brushes.Blue, Brushes.WhiteSmoke);
+            MarkRow(sender as SelectableTextBlock, Brushes.Blue, Brushes.WhiteSmoke);
             if (sender != null)
             {
                 int row = Grid.GetRow(sender as UIElement);
@@ -427,29 +427,29 @@ namespace Primes.WpfControls.Components
                 int row = Grid.GetRow(m_Edit);
                 int col = Grid.GetColumn(m_Edit);
                 gridMessages.Children.Remove(m_Edit);
-                Grid.SetRow(m_TextBlock, row);
-                Grid.SetColumn(m_TextBlock, col);
-                gridMessages.Children.Insert((int)m_TextBlock.Tag, m_TextBlock);
+                Grid.SetRow(m_SelectableTextBlock, row);
+                Grid.SetColumn(m_SelectableTextBlock, col);
+                gridMessages.Children.Insert((int)m_SelectableTextBlock.Tag, m_SelectableTextBlock);
                 m_Edit = null;
             }
         }
 
         void tb_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender != null && sender.GetType() == typeof(TextBlock))
+            if (sender != null && sender.GetType() == typeof(SelectableTextBlock))
             {
                 RemoveEdit();
-                m_TextBlock = sender as TextBlock;
-                int row = Grid.GetRow(m_TextBlock);
-                int col = Grid.GetColumn(m_TextBlock);
+                m_SelectableTextBlock = sender as SelectableTextBlock;
+                int row = Grid.GetRow(m_SelectableTextBlock);
+                int col = Grid.GetColumn(m_SelectableTextBlock);
                 m_Edit = new TextBox();
                 m_Edit.MouseLeave += new MouseEventHandler(m_Edit_MouseLeave);
                 m_Edit.KeyDown += new KeyEventHandler(m_Edit_KeyDown);
                 m_Edit.KeyUp += new KeyEventHandler(m_Edit_KeyDown);
 
-                m_Edit.Text = m_TextBlock.Text;
-                m_TextBlock.Tag = gridMessages.Children.IndexOf(m_TextBlock);
-                gridMessages.Children.Remove(m_TextBlock);
+                m_Edit.Text = m_SelectableTextBlock.Text;
+                m_SelectableTextBlock.Tag = gridMessages.Children.IndexOf(m_SelectableTextBlock);
+                gridMessages.Children.Remove(m_SelectableTextBlock);
                 Grid.SetColumn(m_Edit, col);
                 Grid.SetRow(m_Edit, row);
                 gridMessages.Children.Add(m_Edit);
@@ -462,7 +462,7 @@ namespace Primes.WpfControls.Components
             e.Handled = true;
             if (e.Key == Key.Escape)
             {
-                MarkRow(m_TextBlock, m_TextStyle.Background, m_TextStyle.Foreground);
+                MarkRow(m_SelectableTextBlock, m_TextStyle.Background, m_TextStyle.Foreground);
                 RemoveEdit();
             }
         }
@@ -470,7 +470,7 @@ namespace Primes.WpfControls.Components
         void m_Edit_MouseLeave(object sender, MouseEventArgs e)
         {
             RemoveEdit();
-            MarkRow(m_TextBlock, m_TextStyle.Background, m_TextStyle.Foreground);
+            MarkRow(m_SelectableTextBlock, m_TextStyle.Background, m_TextStyle.Foreground);
         }
 
         #endregion
@@ -521,7 +521,7 @@ namespace Primes.WpfControls.Components
                     {
                         StringBuilder result = new StringBuilder();
                         string[] msg = new string[m_Columns];
-                        foreach (TextBlock tb in this.m_Selected)
+                        foreach (SelectableTextBlock tb in this.m_Selected)
                         {
                             int column = Grid.GetColumn(tb);
                             if (column > -1) msg[column] = tb.Text;
@@ -545,7 +545,7 @@ namespace Primes.WpfControls.Components
                         string[] msg = new string[m_Columns];
                         foreach (UIElement element in gridMessages.Children)
                         {
-                            if (element.GetType() == typeof(TextBlock))
+                            if (element.GetType() == typeof(SelectableTextBlock))
                             {
                                 if (row != Grid.GetRow(element))
                                 {
@@ -566,7 +566,7 @@ namespace Primes.WpfControls.Components
                                 }
                                 int column = Grid.GetColumn(element);
                                 if (column > -1 && column < msg.Length)
-                                    msg[column] = (element as TextBlock).Text;
+                                    msg[column] = (element as SelectableTextBlock).Text;
                             }
                         }
                         Clipboard.SetText(result.ToString(), TextDataFormat.Text);
