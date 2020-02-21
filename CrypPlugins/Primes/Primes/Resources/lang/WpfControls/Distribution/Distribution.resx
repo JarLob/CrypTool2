@@ -262,7 +262,7 @@
     <value>Only the first {0} sums are displayed.</value>
   </data>
   <data name="numberline_header" xml:space="preserve">
-    <value>Move with the mouse along the number line to get number-theoretic statements of the selected number. The number line is like a sliding window over the integers with a range between 10 to 90 numbers. You can adjust the range with the slider, which determines the upper limit of the range.</value>
+    <value>Move with the mouse along the number line to get number-theoretic statements of the selected number. The number line acts as a sliding window over the integers with a display range between 10 to 90 numbers. You can adjust the range with the slider, which determines the upper limit of the range.</value>
   </data>
   <data name="numberline_headercoutprimes" xml:space="preserve">
     <value>Number of primes in the selected range</value>
