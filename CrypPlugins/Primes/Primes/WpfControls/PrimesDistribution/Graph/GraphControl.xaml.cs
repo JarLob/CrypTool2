@@ -28,6 +28,7 @@ using Primes.Bignum;
 using Primes.WpfControls.Components;
 using Primes.WpfControls.Threads;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace Primes.WpfControls.PrimesDistribution.Graph
 {
@@ -162,7 +163,7 @@ namespace Primes.WpfControls.PrimesDistribution.Graph
 
         }
 
-        void SetInfo(TextBlock tb, object value)
+        void SetInfo(Run tb, object value)
         {
             if (value != null)
             {
@@ -208,12 +209,9 @@ namespace Primes.WpfControls.PrimesDistribution.Graph
             cgraph.CancelFunction(m_FunctionPiGauss);
             cgraph.CancelFunction(m_FunctionPix);
             ircCountPrimes.UnLockControls();
-            ControlHandler.SetPropertyValue(lblCalcInfoPiX, "Visibility", Visibility.Collapsed);
-            ControlHandler.SetPropertyValue(lblCalcInfoPiGauss, "Visibility", Visibility.Collapsed);
-            ControlHandler.SetPropertyValue(lblCalcInfoLiN, "Visibility", Visibility.Collapsed);
-            ControlHandler.SetPropertyValue(tbInfoLin, "Visibility", Visibility.Collapsed);
-            ControlHandler.SetPropertyValue(tbInfoPiX, "Visibility", Visibility.Collapsed);
-            ControlHandler.SetPropertyValue(tbInfoGaußPrimeTheorem, "Visibility", Visibility.Collapsed);
+            ControlHandler.SetPropertyValue(lblCalcInfoPiXTextBlock, "Visibility", Visibility.Collapsed);
+            ControlHandler.SetPropertyValue(lblCalcInfoPiGaussTextBlock, "Visibility", Visibility.Collapsed);
+            ControlHandler.SetPropertyValue(lblCalcInfoLiNTextBlock, "Visibility", Visibility.Collapsed);
 
             //EnabledButton(btnExec);
             //DisabledButton(btnCancel);
@@ -310,15 +308,15 @@ namespace Primes.WpfControls.PrimesDistribution.Graph
                 //m_ThreadPix.Start();
             }
 
-            ControlHandler.SetPropertyValue(lblCalcInfoPiX, "Visibility", Visibility.Visible);
-            ControlHandler.SetPropertyValue(lblCalcInfoPiGauss, "Visibility", Visibility.Visible);
-            ControlHandler.SetPropertyValue(lblCalcInfoLiN, "Visibility", Visibility.Visible);
-            ControlHandler.SetPropertyValue(tbInfoLin, "Visibility", Visibility.Visible);
-            ControlHandler.SetPropertyValue(tbInfoPiX, "Visibility", Visibility.Visible);
-            ControlHandler.SetPropertyValue(tbInfoGaußPrimeTheorem, "Visibility", Visibility.Visible);
+            ControlHandler.SetPropertyValue(lblCalcInfoPiXTextBlock, "Visibility", Visibility.Visible);
+            ControlHandler.SetPropertyValue(lblCalcInfoPiGaussTextBlock, "Visibility", Visibility.Visible);
+            ControlHandler.SetPropertyValue(lblCalcInfoLiNTextBlock, "Visibility", Visibility.Visible);
             lblCalcInfoLiN.Text = Primes.Resources.lang.WpfControls.Distribution.Distribution.graph_lincountinfoCalculating;
             lblCalcInfoPiGauss.Text = Primes.Resources.lang.WpfControls.Distribution.Distribution.graph_gausscountinfoCalculating;
             lblCalcInfoPiX.Text = Primes.Resources.lang.WpfControls.Distribution.Distribution.graph_pincountinfoCalculating;
+            tbInfoLin.Text = "";
+            tbInfoGaußPrimeTheorem.Text = "";
+            tbInfoPiX.Text = "";
             //}
         }
 
@@ -859,81 +857,6 @@ namespace Primes.WpfControls.PrimesDistribution.Graph
 
         #endregion
 
-        private void MarkTextblock(TextBlock tb1, TextBlock tb2, DockPanel dp)
-        {
-            if (tb1.Visibility == Visibility.Visible && tb2.Visibility == Visibility.Visible)
-            {
-                dp.Background = Brushes.Blue;
-                tb1.Foreground = tb2.Foreground = Brushes.White;
-            }
-        }
-
-        private void UnMarkTextblock(TextBlock tb1, TextBlock tb2, DockPanel dp)
-        {
-            dp.Background = Brushes.Transparent;
-            tb1.Foreground = tb2.Foreground = Brushes.Black;
-        }
-
-        private void CopyInfo(TextBlock tb1, TextBlock tb2)
-        {
-            Clipboard.SetText(tb1.Text + " " + tb2.Text);
-        }
-
-        private void lblInfo_MouseEnter(object sender, MouseEventArgs e)
-        {
-            if (sender == lblCalcInfoLiN || sender == tbInfoLin)
-                MarkTextblock(lblCalcInfoLiN, tbInfoLin, dpLin);
-            else if (sender == lblCalcInfoPiGauss || sender == tbInfoGaußPrimeTheorem)
-                MarkTextblock(lblCalcInfoPiGauss, tbInfoGaußPrimeTheorem, dpGauss);
-            else if (sender == lblCalcInfoPiX || sender == tbInfoPiX)
-                MarkTextblock(lblCalcInfoPiX, tbInfoPiX, dpPiX);
-        }
-
-        private void lblInfo_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (sender == lblCalcInfoLiN || sender == tbInfoLin)
-                UnMarkTextblock(lblCalcInfoLiN, tbInfoLin, dpLin);
-            else if (sender == lblCalcInfoPiGauss || sender == tbInfoGaußPrimeTheorem)
-                UnMarkTextblock(lblCalcInfoPiGauss, tbInfoGaußPrimeTheorem, dpGauss);
-            else if (sender == lblCalcInfoPiX || sender == tbInfoPiX)
-                UnMarkTextblock(lblCalcInfoPiX, tbInfoPiX, dpPiX);
-        }
-
-        private void ctxMenu_Opened(object sender, RoutedEventArgs e)
-        {
-            if (sender == ctxMenuDpLin)
-                MarkTextblock(lblCalcInfoLiN, tbInfoLin, dpLin);
-            else if (sender == ctxMenuDpGauss)
-                MarkTextblock(lblCalcInfoPiGauss, tbInfoGaußPrimeTheorem, dpGauss);
-            else if (sender == ctxMenuDpPiX)
-                MarkTextblock(lblCalcInfoPiX, tbInfoPiX, dpPiX);
-        }
-
-        private void ctxMenu_Closed(object sender, RoutedEventArgs e)
-        {
-            if (sender == ctxMenuDpLin)
-                UnMarkTextblock(lblCalcInfoLiN, tbInfoLin, dpLin);
-            else if (sender == ctxMenuDpGauss)
-                UnMarkTextblock(lblCalcInfoPiGauss, tbInfoGaußPrimeTheorem, dpGauss);
-            else if (sender == ctxMenuDpPiX)
-                UnMarkTextblock(lblCalcInfoPiX, tbInfoPiX, dpPiX);
-        }
-
-        private void miCopy_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender == miCopyLin)
-            {
-                CopyInfo(lblCalcInfoLiN, tbInfoLin);
-            }
-            else if (sender == miCopyPix)
-            {
-                CopyInfo(lblCalcInfoPiX, tbInfoPiX);
-            }
-            else if (sender == miCopyGauss)
-            {
-                CopyInfo(lblCalcInfoPiGauss, tbInfoGaußPrimeTheorem);
-            }
-        }
 
         #region IPrimeUserControl Members
 

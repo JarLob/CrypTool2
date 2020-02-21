@@ -52,13 +52,10 @@
                             <Button Name="btnResumePiGauss" IsEnabled="False" Click="ResumeFunctionClick" Margin="3,3,3,3" Grid.Row="0" Grid.Column="3" Content="{x:Static lang:Distribution.graph_btnResume}"></Button>
                             <Image Cursor="Hand" Source="../../../Resources/icons/help.png" Width="16" Height="16" Grid.Row="0" Grid.Column="4" Name="btnHelpPiGauss" HorizontalAlignment="Left" MouseLeftButtonDown="btnHelpFunctionTypeClick" />
                             <DockPanel Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10,0,0,0" Name="dpGauss">
-                                <DockPanel.ContextMenu>
-                                    <ContextMenu Opened="ctxMenu_Opened" Closed="ctxMenu_Closed" Name="ctxMenuDpGauss">
-                                        <MenuItem Header="{x:Static lang:Distribution.graph_contextmenucopy}" Name="miCopyGauss" Click="miCopy_Click" />
-                                    </ContextMenu>
-                                </DockPanel.ContextMenu>
-                                <comps:SelectableTextBlock x:Name="lblCalcInfoPiGauss" Visibility="Collapsed" MouseEnter="lblInfo_MouseEnter" MouseLeave="lblInfo_MouseLeave" Text="{x:Static lang:Distribution.graph_gausscountinfo}"></comps:SelectableTextBlock>
-                                <comps:SelectableTextBlock x:Name="tbInfoGaußPrimeTheorem" Margin="3,0,0,0" MouseEnter="lblInfo_MouseEnter" MouseLeave="lblInfo_MouseLeave" />
+                                <comps:SelectableTextBlock x:Name="lblCalcInfoPiGaussTextBlock" Visibility="Collapsed">
+                                    <Run x:Name="lblCalcInfoPiGauss" Text="{x:Static lang:Distribution.graph_gausscountinfo}" />
+                                    <Run x:Name="tbInfoGaußPrimeTheorem" />
+                                </comps:SelectableTextBlock>
                             </DockPanel>
                             <Line X1="0" X2="10" Y1="0" Y2="0" Stroke="Green" StrokeThickness="3" Grid.Row="1" VerticalAlignment="Center" />
                             <CheckBox Name="cbLin" IsChecked="True" Margin="3,3,3,3" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Content="{x:Static lang:Distribution.graph_linname}"></CheckBox>
@@ -66,15 +63,10 @@
                             <Button Name="btnResumeLin" IsEnabled="False" Click="ResumeFunctionClick" Margin="3,3,3,3" Grid.Row="1" Grid.Column="3" Content="{x:Static lang:Distribution.graph_btnResume}"></Button>
                             <Image Cursor="Hand" Source="../../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpLiN" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Left" MouseLeftButtonDown="btnHelpFunctionTypeClick" />
                             <DockPanel Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10,0,0,0" Name="dpLin">
-                                <DockPanel.ContextMenu>
-                                    <ContextMenu Opened="ctxMenu_Opened" Closed="ctxMenu_Closed" Name="ctxMenuDpLin">
-                                        <MenuItem Header="{x:Static lang:Distribution.graph_contextmenucopy}" Name="miCopyLin" Click="miCopy_Click" />
-                                    </ContextMenu>
-                                </DockPanel.ContextMenu>
-                                <comps:SelectableTextBlock x:Name="lblCalcInfoLiN" Visibility="Collapsed" Text="{x:Static lang:Distribution.graph_lincountinfo}" MouseEnter="lblInfo_MouseEnter" MouseLeave="lblInfo_MouseLeave">
-
+                                <comps:SelectableTextBlock x:Name="lblCalcInfoLiNTextBlock" Visibility="Collapsed">
+                                    <Run x:Name="lblCalcInfoLiN" Text="{x:Static lang:Distribution.graph_lincountinfo}" />
+                                    <Run x:Name="tbInfoLin" />
                                 </comps:SelectableTextBlock>
-                                <comps:SelectableTextBlock x:Name="tbInfoLin" Margin="3,0,0,0" MouseEnter="lblInfo_MouseEnter" MouseLeave="lblInfo_MouseLeave" />
                             </DockPanel>
                             <Line X1="0" X2="10" Y1="0" Y2="0" Stroke="Red" StrokeThickness="3" Grid.Row="2" VerticalAlignment="Center" />
                             <CheckBox Name="cbPiX" IsChecked="True" Margin="3,3,3,3" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Content="{x:Static lang:Distribution.graph_pinname}"></CheckBox>
@@ -82,13 +74,10 @@
                             <Button Name="btnResumePix" IsEnabled="False" Click="ResumeFunctionClick" Margin="3,3,3,3" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Content="{x:Static lang:Distribution.graph_btnResume}"></Button>
                             <Image Cursor="Hand" Source="../../../Resources/icons/help.png" Width="16" Height="16" Grid.Row="2" Grid.Column="4" Name="btnHelpPiX" HorizontalAlignment="Left" VerticalAlignment="Center" MouseLeftButtonDown="btnHelpFunctionTypeClick" />
                             <DockPanel Grid.Row="2" Grid.Column="5" VerticalAlignment="Center" Margin="10,0,0,0" Name="dpPiX">
-                                <DockPanel.ContextMenu>
-                                    <ContextMenu Opened="ctxMenu_Opened" Closed="ctxMenu_Closed" Name="ctxMenuDpPiX">
-                                        <MenuItem Header="{x:Static lang:Distribution.graph_contextmenucopy}" Name="miCopyPix" Click="miCopy_Click" />
-                                    </ContextMenu>
-                                </DockPanel.ContextMenu>
-                                <comps:SelectableTextBlock x:Name="lblCalcInfoPiX" Visibility="Collapsed" Margin="0,0,0,0" MouseEnter="lblInfo_MouseEnter" MouseLeave="lblInfo_MouseLeave" Text="{x:Static lang:Distribution.graph_pincountinfo}"></comps:SelectableTextBlock>
-                                <comps:SelectableTextBlock x:Name="tbInfoPiX" Margin="3,0,0,0" MouseEnter="lblInfo_MouseEnter" MouseLeave="lblInfo_MouseLeave" />
+                                <comps:SelectableTextBlock x:Name="lblCalcInfoPiXTextBlock" Visibility="Collapsed" Margin="0,0,0,0">
+                                    <Run x:Name="lblCalcInfoPiX" Text="{x:Static lang:Distribution.graph_pincountinfo}" />
+                                    <Run x:Name="tbInfoPiX" />
+                                </comps:SelectableTextBlock>
                             </DockPanel>
                         </Grid>
                     </ScrollViewer>
