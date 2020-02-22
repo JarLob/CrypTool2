@@ -34,9 +34,9 @@
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
-                            <Label Grid.Row="0" >
+                            <SelectableTextBlock Padding="5" Grid.Row="0" >
                                 <x:Static Member="lang:SigValCtrl.sigToTest"></x:Static>
-                            </Label>
+                            </SelectableTextBlock>
                             <RadioButton Grid.Row="1" Name="rbSigPkcs" Margin="5,5,5,5" Checked="rbSigPkcs_Checked">
                                 <x:Static Member="lang:SigValCtrl.rsaSig"></x:Static></RadioButton>
                             <RadioButton Grid.Row="2" Name="rbSigBlei" Margin="5,5,5,5" Checked="rbSigBlei_Checked">
@@ -51,8 +51,8 @@
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
-                            <Label Grid.Row="0" >
-                                <x:Static Member="lang:SigValCtrl.impl"></x:Static></Label>
+                            <SelectableTextBlock Padding="5" Grid.Row="0" >
+                                <x:Static Member="lang:SigValCtrl.impl"></x:Static></SelectableTextBlock>
                             <RadioButton Grid.Row="1" Name="rbVal" Margin="5,5,5,5" Checked="rbVal_Checked">
                                 <x:Static Member="lang:SigValCtrl.implCorrect"></x:Static></RadioButton>
                             <RadioButton Grid.Row="2" Name="rbValWithFlaw" Margin="5,5,5,5" Checked="rbValWithFlaw_Checked">
@@ -63,11 +63,11 @@
                     </Grid>
                 </GroupBox>
                 <DockPanel Grid.Row="1">
-                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,5,5">
-                        <x:Static Member="lang:SigValCtrl.result"></x:Static></Label>
+                    <SelectableTextBlock Padding="5" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,5,5">
+                        <x:Static Member="lang:SigValCtrl.result"></x:Static></SelectableTextBlock>
                     <Image Name="imgResult" Height="26" Width="24" Source="../../Resources/icons/equal.png" Visibility="Hidden" />
-                    <Label Name="lblResult" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,5,5"> </Label>
-                    <Label Name="lblHashAlgo" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,5,5,5"></Label>
+                    <SelectableTextBlock Padding="5" Name="lblResult" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,5,5"> </SelectableTextBlock>
+                    <SelectableTextBlock Padding="5" Name="lblHashAlgo" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,5,5,5"></SelectableTextBlock>
                 </DockPanel>
             </Grid>
             <!-- Display Signatures -->
@@ -82,11 +82,11 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
-                    <Label Grid.Row="0">
-                        <x:Static Member="lang:SigValCtrl.encSig"></x:Static></Label>
+                    <SelectableTextBlock Padding="5" Grid.Row="0">
+                        <x:Static Member="lang:SigValCtrl.encSig"></x:Static></SelectableTextBlock>
                 <TextBox Grid.Row="1" Name="tbSignatureEnc" TextWrapping="Wrap" MaxWidth="450" MinHeight="80"  IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5" />
-                    <Label Grid.Row="2">
-                        <x:Static Member="lang:SigValCtrl.decSig"></x:Static></Label>
+                    <SelectableTextBlock Padding="5" Grid.Row="2">
+                        <x:Static Member="lang:SigValCtrl.decSig"></x:Static></SelectableTextBlock>
                 <TextBox Grid.Row="3" Name="tbSignatureDec" TextWrapping="Wrap" MaxWidth="450" MinHeight="80" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5" />
             </Grid>
             </GroupBox>            

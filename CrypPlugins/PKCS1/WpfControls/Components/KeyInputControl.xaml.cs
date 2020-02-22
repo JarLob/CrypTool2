@@ -53,7 +53,7 @@ namespace PKCS1.WpfControls.Components
             this.testAndEnableButton();            
         }
 
-        private bool checkInputTextBox(string inputText, int radix, Label outputLabel, ParameterName paramName)
+        private bool checkInputTextBox(string inputText, int radix, TextBlock outputLabel, ParameterName paramName)
         {
             if (inputText != string.Empty)
             {
@@ -63,26 +63,26 @@ namespace PKCS1.WpfControls.Components
 
                     if (tmp.BitLength > Convert.ToInt32(tbKeyLength.Text))
                     {
-                        outputLabel.Content = RsaKeyInputCtrl.errorBitLengthShorter;
+                        outputLabel.Text = RsaKeyInputCtrl.errorBitLengthShorter;
                         return false;
                     }
                     else
                     {
                         if (paramName == ParameterName.PrivKey) { RsaKey.Instance.setPrivKey(inputText, radix); }
                         if (paramName == ParameterName.Modulus) { RsaKey.Instance.setModulus(inputText, radix); }
-                        outputLabel.Content = string.Empty;
+                        outputLabel.Text = string.Empty;
                         return true;
                     }
                 }
                 else
                 {
-                    outputLabel.Content = RsaKeyInputCtrl.errorValidSignsOnly;
+                    outputLabel.Text = RsaKeyInputCtrl.errorValidSignsOnly;
                     return false;
                 }
             }
             else
             {
-                outputLabel.Content = RsaKeyInputCtrl.errorInsertNumber;
+                outputLabel.Text = RsaKeyInputCtrl.errorInsertNumber;
                 return false;
             }
             return false;
@@ -134,7 +134,7 @@ namespace PKCS1.WpfControls.Components
                 tbPubKey.Text != string.Empty)
             {
                 this.btnValInput.IsEnabled = true;
-                this.lblResult.Content = string.Empty;
+                this.lblResult.Text = string.Empty;
             }
             else
             {

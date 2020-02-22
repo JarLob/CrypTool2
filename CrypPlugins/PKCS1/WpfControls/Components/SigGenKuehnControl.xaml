@@ -32,12 +32,12 @@
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Name="lblRsaKeySize" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <x:Static Member="lang:SigGenKuehnCtrl.rsaKeySize"></x:Static></Label>
-                    <Label Grid.Row="1" Name="lblPublicKey" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <x:Static Member="lang:SigGenKuehnCtrl.pubKey"></x:Static></Label>
-                    <Label Grid.Row="2" Name="lblIterations" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <x:Static Member="lang:SigGenKuehnCtrl.maxIterations"></x:Static></Label>
+                    <SelectableTextBlock Padding="5" Grid.Row="0" Name="lblRsaKeySize" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <x:Static Member="lang:SigGenKuehnCtrl.rsaKeySize"></x:Static></SelectableTextBlock>
+                    <SelectableTextBlock Padding="5" Grid.Row="1" Name="lblPublicKey" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <x:Static Member="lang:SigGenKuehnCtrl.pubKey"></x:Static></SelectableTextBlock>
+                    <SelectableTextBlock Padding="5" Grid.Row="2" Name="lblIterations" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <x:Static Member="lang:SigGenKuehnCtrl.maxIterations"></x:Static></SelectableTextBlock>
                 </Grid>
                 <!-- middle -->
                 <Grid Grid.Column="1">
@@ -47,8 +47,8 @@
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Name="lblRsaKeySizeRes" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="50" MaxWidth="150"></Label>
-                    <Label Grid.Row="1" Name="lblPublicKeyRes" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="50" MaxWidth="150"></Label>
+                    <SelectableTextBlock Padding="5" Grid.Row="0" Name="lblRsaKeySizeRes" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="50" MaxWidth="150"></SelectableTextBlock>
+                    <SelectableTextBlock Padding="5" Grid.Row="1" Name="lblPublicKeyRes" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="50" MaxWidth="150"></SelectableTextBlock>
                     <DockPanel Grid.Row="2">
                     <TextBox Grid.Row="2" Name="tbIterations" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="50">                        
                         <Binding ElementName="This" Path="Signature.Iterations" UpdateSourceTrigger="PropertyChanged">
@@ -59,7 +59,7 @@
                     </TextBox>
                     <Image Name="btnHelpIterations" Cursor="Hand" Source="../../Resources/icons/help.png" Width="16" Height="16" HorizontalAlignment="Right" MouseLeftButtonDown="btn_Help_MouseLeftButtonDown" />
                     </DockPanel>
-                    <TextBlock Grid.Row="3"  Foreground="Red" FontWeight="Bold" FontSize="10"
+                    <SelectableTextBlock Grid.Row="3"  Foreground="Red" FontWeight="Bold" FontSize="10"
                                 Text="{Binding ElementName=tbIterations,
                                 Path=(Validation.Errors),
                                 Converter={StaticResource eToMConverter}}" />
@@ -84,13 +84,13 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0">'00'</Label>
-                            <Label Grid.Column="1">'01'</Label>
-                            <Label Grid.Column="2" Foreground="Green">PS</Label>
-                            <Label Grid.Column="3">'00'</Label>
-                            <Label Grid.Column="4" Foreground="Blue">HI</Label>
-                            <Label Grid.Column="5" Foreground="Red">HD</Label>
-                            <Label Grid.Column="6">GG</Label>
+                            <SelectableTextBlock Padding="5" Grid.Column="0">'00'</SelectableTextBlock>
+                            <SelectableTextBlock Padding="5" Grid.Column="1">'01'</SelectableTextBlock>
+                            <SelectableTextBlock Padding="5" Grid.Column="2" Foreground="Green">PS</SelectableTextBlock>
+                            <SelectableTextBlock Padding="5" Grid.Column="3">'00'</SelectableTextBlock>
+                            <SelectableTextBlock Padding="5" Grid.Column="4" Foreground="Blue">HI</SelectableTextBlock>
+                            <SelectableTextBlock Padding="5" Grid.Column="5" Foreground="Red">HD</SelectableTextBlock>
+                            <SelectableTextBlock Padding="5" Grid.Column="6">GG</SelectableTextBlock>
                         </Grid>
                     </GroupBox>
                     <Button Grid.Row="1" Name="bExecute" Margin="5,5,5,5" Click="bExecute_Click" Height="25" HorizontalAlignment="Right" VerticalAlignment="Bottom" MinWidth="100">
@@ -100,7 +100,7 @@
         </GroupBox>
 
         <!-- Error -->
-        <TextBlock Grid.Row="1" Foreground="Red" FontWeight="Bold" FontSize="10" Name="tbError"></TextBlock>
+        <SelectableTextBlock Grid.Row="1" Foreground="Red" FontWeight="Bold" FontSize="10" Name="tbError"></SelectableTextBlock>
         
         <!-- Result -->
         <GroupBox Header="Erzeugte Signatur" Name="gbSigRes" Grid.Row="2" Margin="0,15,0,0">
@@ -111,13 +111,13 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" Margin="0,0,0,0" Name="lblClearText">
-                    <x:Static Member="lang:SigGenKuehnCtrl.decrypted"></x:Static></Label>
-                <Label Grid.Row="0" Margin="150,0,0,0" Name="lblSignatureLength"></Label>
+                <SelectableTextBlock Padding="5" Grid.Row="0" Margin="0,0,0,0" Name="lblClearText">
+                    <x:Static Member="lang:SigGenKuehnCtrl.decrypted"></x:Static></SelectableTextBlock>
+                <SelectableTextBlock Padding="5" Grid.Row="0" Margin="150,0,0,0" Name="lblSignatureLength"></SelectableTextBlock>
                 <RichTextBox Grid.Row="1" Name="rtbResult" MinHeight="80" IsReadOnly="True" Margin="5,5,5,5" MaxWidth="450" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" TextChanged="rtbResult_TextChanged"></RichTextBox>
-                <Label Grid.Row="2" Margin="0,0,0,0" Name="lblCipherText">
-                    <x:Static Member="lang:SigGenKuehnCtrl.encrypted"></x:Static></Label>
-                <Label Grid.Row="2" Margin="150,0,0,0" Name="lblEncryptedSignatureLength"></Label>
+                <SelectableTextBlock Padding="5" Grid.Row="2" Margin="0,0,0,0" Name="lblCipherText">
+                    <x:Static Member="lang:SigGenKuehnCtrl.encrypted"></x:Static></SelectableTextBlock>
+                <SelectableTextBlock Padding="5" Grid.Row="2" Margin="150,0,0,0" Name="lblEncryptedSignatureLength"></SelectableTextBlock>
                 <TextBox Grid.Row="3" Name="tbResultEncrypted" TextWrapping="Wrap" MinHeight="80" IsReadOnly="True" Margin="5,5,5,5" MaxWidth="450" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" TextChanged="tbResultEncrypted_TextChanged"></TextBox>
             </Grid>
         </GroupBox>

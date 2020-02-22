@@ -88,22 +88,22 @@ namespace PKCS1.WpfVisualization
             switch (type)
             {
                 case NavigationCommandType.RsaKeyGen:
-                    lblTitel.Content = RsaKeyGenCtrl.title;                     
+                    lblTitel.Text = RsaKeyGenCtrl.title;                     
                     break;
                 case NavigationCommandType.Start:
-                    lblTitel.Content = Common.startTitle;
+                    lblTitel.Text = Common.startTitle;
                     break;
                 case NavigationCommandType.SigGen:
-                    lblTitel.Content = SigGenRsaCtrl.title;
+                    lblTitel.Text = SigGenRsaCtrl.title;
                     break;
                 case NavigationCommandType.SigGenFakeBleichenb:
-                    lblTitel.Content = SigGenBleichenbCtrl.title;
+                    lblTitel.Text = SigGenBleichenbCtrl.title;
                     break;
                 case NavigationCommandType.SigGenFakeShort:
-                    lblTitel.Content = SigGenKuehnCtrl.title;
+                    lblTitel.Text = SigGenKuehnCtrl.title;
                     break;
                 case NavigationCommandType.SigVal:
-                    lblTitel.Content = SigValCtrl.title;
+                    lblTitel.Text = SigValCtrl.title;
                     break;
             }
         }

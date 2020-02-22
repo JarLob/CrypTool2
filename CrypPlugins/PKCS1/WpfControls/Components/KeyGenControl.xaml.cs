@@ -48,12 +48,12 @@ namespace PKCS1.WpfControls.Components
 
         private void tbResultPrivKey_TextChanged(object sender, TextChangedEventArgs e)
         {
-            this.lblPrivKeyLength.Content = String.Format(Common.length, this.tbResultPrivKey.Text.Length * 4);
+            this.lblPrivKeyLength.Text = String.Format(Common.length, this.tbResultPrivKey.Text.Length * 4);
         }
 
         private void tbResultModulus_TextChanged(object sender, TextChangedEventArgs e)
         {
-            this.lblModulusLength.Content = String.Format(Common.length, this.tbResultModulus.Text.Length * 4);
+            this.lblModulusLength.Text = String.Format(Common.length, this.tbResultModulus.Text.Length * 4);
         }
 
         private void btn_Help_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

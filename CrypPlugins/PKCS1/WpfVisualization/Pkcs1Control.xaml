@@ -38,7 +38,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="0">
-                <Label Name="lblTitel" Margin="10,0,0,0" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center">Label</Label>
+                <SelectableTextBlock Padding="5" Name="lblTitel" Margin="10,0,0,0" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center">Label</SelectableTextBlock>
                 <Image Cursor="Hand" Source="../Resources/icons/help32.gif" Width="24" Height="24" MouseLeftButtonDown="Image_MouseLeftButtonDown" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             </DockPanel>
             <ContentControl  Grid.Row="1" Name="ContentArea" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,10,10">

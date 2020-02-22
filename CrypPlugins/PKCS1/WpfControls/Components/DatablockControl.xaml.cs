@@ -74,7 +74,7 @@ namespace PKCS1.WpfControls.Components
 
             // HashDigest Textboxen leeren; werden bei Execute befüllt
             this.tbHashDigest.Text = String.Empty;
-            this.lblHashDigestLength.Content = String.Empty;
+            this.lblHashDigestLength.Text = String.Empty;
         }
 
         private void bGenerate_Click(object sender, RoutedEventArgs e)
@@ -106,7 +106,7 @@ namespace PKCS1.WpfControls.Components
         {
             if(this.tbHashIdent.Text != String.Empty )
             {
-                this.lblHashIdentLength.Content = String.Format(Common.length, this.tbHashIdent.Text.Length * 4);
+                this.lblHashIdentLength.Text = String.Format(Common.length, this.tbHashIdent.Text.Length * 4);
             }
         }
 
@@ -114,7 +114,7 @@ namespace PKCS1.WpfControls.Components
         {
             if (this.tbHashDigest.Text != String.Empty)
             {
-                this.lblHashDigestLength.Content = String.Format(Common.length, this.tbHashDigest.Text.Length * 4);
+                this.lblHashDigestLength.Text = String.Format(Common.length, this.tbHashDigest.Text.Length * 4);
             }
         }
 

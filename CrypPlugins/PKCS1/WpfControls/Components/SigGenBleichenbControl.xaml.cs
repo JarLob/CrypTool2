@@ -25,8 +25,8 @@ namespace PKCS1.WpfControls.Components
 
         private void handleCustomEvent(ParameterChangeType type)
         {            
-            this.lblPublicKeyRes.Content = RsaKey.Instance.PubExponent.ToString();
-            this.lblRsaKeySizeRes.Content = RsaKey.Instance.RsaKeySize.ToString();            
+            this.lblPublicKeyRes.Text = RsaKey.Instance.PubExponent.ToString();
+            this.lblRsaKeySizeRes.Text = RsaKey.Instance.RsaKeySize.ToString();            
             this.loadComboDataBlocPos(24);
         }
 
@@ -63,12 +63,12 @@ namespace PKCS1.WpfControls.Components
 
         private void rtbResult_TextChanged(object sender, TextChangedEventArgs e)
         {
-            this.lblSignatureLength.Content = String.Format( Common.length, UserControlHelper.GetRtbTextLength(this.rtbResult) * 4 );
+            this.lblSignatureLength.Text = String.Format( Common.length, UserControlHelper.GetRtbTextLength(this.rtbResult) * 4 );
         }
 
         private void tbResultEncrypted_TextChanged(object sender, TextChangedEventArgs e)
         {
-            this.lblEncryptedSignatureLength.Content = String.Format(Common.length, this.tbResultEncrypted.Text.Length * 4);
+            this.lblEncryptedSignatureLength.Text = String.Format(Common.length, this.tbResultEncrypted.Text.Length * 4);
         }
 
         private void btn_Help_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

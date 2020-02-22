@@ -26,10 +26,10 @@
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Name="lblRsaKeySize" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <x:Static Member="lang:SigGenKuehnCtrl.rsaKeySize"></x:Static></Label>
-                    <Label Grid.Row="1" Name="lblPublicKey" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <x:Static Member="lang:SigGenKuehnCtrl.pubKey"></x:Static></Label>
+                    <SelectableTextBlock Padding="5" Grid.Row="0" Name="lblRsaKeySize" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <x:Static Member="lang:SigGenKuehnCtrl.rsaKeySize"></x:Static></SelectableTextBlock>
+                    <SelectableTextBlock Padding="5" Grid.Row="1" Name="lblPublicKey" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <x:Static Member="lang:SigGenKuehnCtrl.pubKey"></x:Static></SelectableTextBlock>
                     
                 </Grid>
                 <!-- middle -->
@@ -38,9 +38,9 @@
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>                    
-                    <Label Grid.Row="0" Name="lblRsaKeySizeRes" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="50" MaxWidth="150"></Label>
-                    <Label Grid.Row="1" Name="lblPublicKeyRes" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="50" MaxWidth="150"></Label>
+                    </Grid.RowDefinitions>
+                    <SelectableTextBlock Padding="5" Grid.Row="0" Name="lblRsaKeySizeRes" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="50" MaxWidth="150"></SelectableTextBlock>
+                    <SelectableTextBlock Padding="5" Grid.Row="1" Name="lblPublicKeyRes" Margin="5,0,5,5" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="50" MaxWidth="150"></SelectableTextBlock>
                 </Grid> 
                 <!-- right -->
                 <Grid Grid.Column="2">
@@ -62,12 +62,12 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0">'00'</Label>
-                            <Label Grid.Column="1">'01'</Label>
-                            <Label Grid.Column="2" Foreground="Green">PS</Label>
-                            <Label Grid.Column="3">'00'</Label>
-                            <Label Grid.Column="4" Foreground="Blue">HI</Label>
-                            <Label Grid.Column="5" Foreground="Red">HD</Label>
+                            <SelectableTextBlock Padding="5" Grid.Column="0">'00'</SelectableTextBlock>
+                            <SelectableTextBlock Padding="5" Grid.Column="1">'01'</SelectableTextBlock>
+                            <SelectableTextBlock Padding="5" Grid.Column="2" Foreground="Green">PS</SelectableTextBlock>
+                            <SelectableTextBlock Padding="5" Grid.Column="3">'00'</SelectableTextBlock>
+                            <SelectableTextBlock Padding="5" Grid.Column="4" Foreground="Blue">HI</SelectableTextBlock>
+                            <SelectableTextBlock Padding="5" Grid.Column="5" Foreground="Red">HD</SelectableTextBlock>
                         </Grid>
                     </GroupBox>
                     <Button Grid.Row="1" Name="bExecute" Margin="5,5,5,5" Click="bExecute_Click" Height="25" HorizontalAlignment="Right" VerticalAlignment="Bottom" MinWidth="100">
@@ -89,13 +89,13 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" Margin="0,0,0,0" Name="lblClearText">
-                    <x:Static Member="lang:SigGenKuehnCtrl.decrypted"></x:Static></Label>
-                <Label Grid.Row="0" Margin="150,0,0,0" Name="lblSignatureLength"></Label>
+                <SelectableTextBlock Padding="5" Grid.Row="0" Margin="0,0,0,0" Name="lblClearText">
+                    <x:Static Member="lang:SigGenKuehnCtrl.decrypted"></x:Static></SelectableTextBlock>
+                <SelectableTextBlock Padding="5" Grid.Row="0" Margin="150,0,0,0" Name="lblSignatureLength"></SelectableTextBlock>
                 <RichTextBox Grid.Row="1" Name="rtbResult" MaxWidth="450" MinHeight="80" IsReadOnly="True" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextChanged="rtbResult_TextChanged"></RichTextBox>
-                <Label Grid.Row="2" Margin="0,0,0,0" Name="lblCipherText">
-                    <x:Static Member="lang:SigGenKuehnCtrl.encrypted"></x:Static></Label>
-                <Label Grid.Row="2" Margin="150,0,0,0" Name="lblEncryptedSignatureLength"></Label>
+                <SelectableTextBlock Padding="5" Grid.Row="2" Margin="0,0,0,0" Name="lblCipherText">
+                    <x:Static Member="lang:SigGenKuehnCtrl.encrypted"></x:Static></SelectableTextBlock>
+                <SelectableTextBlock Padding="5" Grid.Row="2" Margin="150,0,0,0" Name="lblEncryptedSignatureLength"></SelectableTextBlock>
                 <TextBox Grid.Row="3" Name="tbResultEncrypted" TextWrapping="Wrap" MaxWidth="450" MinHeight="80" IsReadOnly="True" Margin="5,5,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextChanged="tbResultEncrypted_TextChanged"></TextBox>
             </Grid>
         </GroupBox>            

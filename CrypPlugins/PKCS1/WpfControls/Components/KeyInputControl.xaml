@@ -34,9 +34,9 @@
                 </Grid.RowDefinitions>
                 
                 <DockPanel Grid.Row="0">
-                    <Label Margin="0,5,5,0" Width="125" >
+                    <SelectableTextBlock Padding="5" Margin="0,5,5,0" Width="125" >
                         <x:Static Member="lang:RsaKeyInputCtrl.pubKey"></x:Static>
-                    </Label>
+                    </SelectableTextBlock>
                     <Image Name="btnHelpPubKey" Cursor="Hand" Source="../../Resources/icons/help.png" Width="16" Height="16" HorizontalAlignment="Left" MouseLeftButtonDown="btn_Help_MouseLeftButtonDown" />
                 </DockPanel>
                 <TextBox Grid.Row="1" Name="tbPubKey" TextWrapping="Wrap" MaxWidth="450" MinHeight="20" Margin="5,0,5,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextChanged="tbPubKey_TextChanged">
@@ -48,16 +48,16 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBlock Grid.Row="2"  Foreground="Red" FontWeight="Bold" FontSize="10" Margin="5,0,5,5"
+                <SelectableTextBlock Grid.Row="2"  Foreground="Red" FontWeight="Bold" FontSize="10" Margin="5,0,5,5"
                                 Text="{Binding ElementName=tbPubKey,
                                 Path=(Validation.Errors),
                                 Converter={StaticResource eToMConverter}}" />
 
 
                 <DockPanel Grid.Row="3">
-                    <Label Margin="0,5,5,0" Width="125">
+                    <SelectableTextBlock Padding="5" Margin="0,5,5,0" Width="125">
                         <x:Static Member="lang:RsaKeyInputCtrl.keyLength"></x:Static>
-                    </Label>
+                    </SelectableTextBlock>
                     <Image Name="btnHelpBitSizeModulus" Cursor="Hand" Source="../../Resources/icons/help.png" Width="16" Height="16" HorizontalAlignment="left" MouseLeftButtonDown="btn_Help_MouseLeftButtonDown" />
                 </DockPanel>
                 <TextBox Grid.Row="4" Name="tbKeyLength" TextWrapping="Wrap" MaxWidth="450" MinHeight="20" Margin="5,0,5,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -69,16 +69,16 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBlock Grid.Row="5"  Foreground="Red" FontWeight="Bold" FontSize="10" Margin="5,0,5,5"
+                <SelectableTextBlock Grid.Row="5"  Foreground="Red" FontWeight="Bold" FontSize="10" Margin="5,0,5,5"
                                 Text="{Binding ElementName=tbKeyLength,
                                 Path=(Validation.Errors),
                                 Converter={StaticResource eToMConverter}}" />
 
 
                 <DockPanel Grid.Row="6">
-                    <Label HorizontalAlignment="left" Width="102" Margin="0,5,5,0">
+                    <SelectableTextBlock Padding="5" HorizontalAlignment="left" Width="102" Margin="0,5,5,0">
                         <x:Static Member="lang:RsaKeyInputCtrl.privKey"></x:Static>
-                    </Label>
+                    </SelectableTextBlock>
                     <DockPanel HorizontalAlignment="Right">
                         <RadioButton Name="btnPrivKeyDecimal" GroupName="hexDezPriv" VerticalAlignment="Center" Margin="5,5,5,0" Checked="btnDecimal_Click">
                             <x:Static Member="lang:RsaKeyInputCtrl.dec"></x:Static>
@@ -90,7 +90,7 @@
                 </DockPanel>
                 <TextBox Grid.Row="7" Name="tbPrivKey" TextWrapping="Wrap" MaxWidth="450" MinHeight="80" Margin="5,0,5,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextChanged="tbPrivKey_TextChanged">                    
                 </TextBox>
-                <Label  Grid.Row="8" Name="lblErrorPrivKey" Margin="5,0,5,5" Foreground="Red" FontWeight="Bold" FontSize="10"></Label>
+                <SelectableTextBlock Padding="5" Grid.Row="8" Name="lblErrorPrivKey" Margin="5,0,5,5" Foreground="Red" FontWeight="Bold" FontSize="10"></SelectableTextBlock>
 
                 <DockPanel  Grid.Row="9">
                     <Label HorizontalAlignment="Left" Width="102"  Margin="0,5,5,0">
@@ -107,10 +107,10 @@
                 </DockPanel>
                 <TextBox Grid.Row="10" Name="tbModulus" TextWrapping="Wrap" MaxWidth="450" MinHeight="80" Margin="5,0,5,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextChanged="tbModulus_TextChanged">
                 </TextBox>
-                <Label  Grid.Row="11" Name="lblErrorModulus" Foreground="Red" FontWeight="Bold" FontSize="10" Margin="5,0,5,5"></Label>
+                <SelectableTextBlock Padding="5" Grid.Row="11" Name="lblErrorModulus" Foreground="Red" FontWeight="Bold" FontSize="10" Margin="5,0,5,5"></SelectableTextBlock>
 
                 <DockPanel Grid.Row="12">
-                    <Label Name="lblResult" HorizontalAlignment="Left" Foreground="Red" FontWeight="Bold" FontSize="10"></Label>
+                    <SelectableTextBlock Padding="5" Name="lblResult" HorizontalAlignment="Left" Foreground="Red" FontWeight="Bold" FontSize="10"></SelectableTextBlock>
                     <Button Name="btnValInput" HorizontalAlignment="Right" Click="btnValInput_Click" Height="25" Width="130" VerticalAlignment="Bottom">
                         <x:Static Member="lang:RsaKeyInputCtrl.takeInput"></x:Static>
                     </Button>

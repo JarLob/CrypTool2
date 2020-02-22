@@ -175,32 +175,32 @@ namespace PKCS1.WpfControls.SigVal
 
         private void ResultValid()
         {
-            this.lblResult.Content = SigValCtrl.resSigValid; 
+            this.lblResult.Text = SigValCtrl.resSigValid; 
             this.imgResult.Source = new BitmapImage(new Uri("../../Resources/icons/equal.png", UriKind.Relative));
             this.imgResult.Visibility = Visibility.Visible;
-            this.lblHashAlgo.Content = SigValCtrl.resIdentifiedHash + " " + this.validator.getHashFunctionName();
+            this.lblHashAlgo.Text = SigValCtrl.resIdentifiedHash + " " + this.validator.getHashFunctionName();
         }
 
         private void ResultNotValid()
         {
-            this.lblResult.Content = SigValCtrl.resSigNotValid;
+            this.lblResult.Text = SigValCtrl.resSigNotValid;
             this.imgResult.Source = new BitmapImage(new Uri("../../Resources/icons/unequal.png", UriKind.Relative));
             this.imgResult.Visibility = Visibility.Visible;
             if (this.validator.getHashFunctionName() != String.Empty)
             {
-                this.lblHashAlgo.Content = SigValCtrl.resIdentifiedHash + " " + this.validator.getHashFunctionName();
+                this.lblHashAlgo.Text = SigValCtrl.resIdentifiedHash + " " + this.validator.getHashFunctionName();
             }
             else
             {
-                this.lblHashAlgo.Content = " " + SigValCtrl.resHashNotReadable;
+                this.lblHashAlgo.Text = " " + SigValCtrl.resHashNotReadable;
             }
         }
 
         private void ResultEmpty()
         {
-            this.lblResult.Content = String.Empty;
+            this.lblResult.Text = String.Empty;
             this.imgResult.Visibility = Visibility.Hidden;
-            this.lblHashAlgo.Content = String.Empty;
+            this.lblHashAlgo.Text = String.Empty;
         }
 
         private void rbSigPkcs_Checked(object sender, RoutedEventArgs e)

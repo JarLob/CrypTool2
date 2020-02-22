@@ -59,9 +59,9 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                         <!-- Choose Hashfunction -->
-                    <Label Grid.Row="0" HorizontalAlignment="Right" Margin="5,0,5,0" Name="lblChooseHash" VerticalAlignment="Top" Width="125">
+                    <SelectableTextBlock Padding="5" Grid.Row="0" HorizontalAlignment="Right" Margin="5,0,5,0" Name="lblChooseHash" VerticalAlignment="Top" Width="125">
                         <x:Static Member="lang:DatablockCtrl.chooseHashfunction"></x:Static>
-                    </Label>
+                    </SelectableTextBlock>
                         <ComboBox Grid.Row="1" Height="20" HorizontalAlignment="Right" Margin="5,0,5,5" Name="cbHashFunc" VerticalAlignment="Top" Width="125" IsEditable="False" SelectionChanged="cbHashFunc_SelectionChanged"/>
                     <Button Grid.Row="2" Height="25" HorizontalAlignment="Right" Margin="5,5,5,5" Name="bGenerate" VerticalAlignment="Bottom" MinWidth="110" Click="bGenerate_Click">
                         <x:Static Member="lang:DatablockCtrl.genDatablock"></x:Static>
@@ -83,15 +83,15 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" Margin="0,5,0,0" Name="lblHashIdent">
-                    <x:Static Member="lang:DatablockCtrl.hi"></x:Static>
-                </Label>
-                    <Label Grid.Row="0" Margin="150,5,0,0" Name="lblHashIdentLength"></Label>
+                    <SelectableTextBlock Padding="5" Grid.Row="0" Margin="0,5,0,0" Name="lblHashIdent">
+                        <x:Static Member="lang:DatablockCtrl.hi"></x:Static>
+                    </SelectableTextBlock>
+                    <SelectableTextBlock Padding="5" Grid.Row="0" Margin="150,5,0,0" Name="lblHashIdentLength"></SelectableTextBlock>
                     <TextBox Grid.Row="1" Height="35" Margin="5,0,5,0" Name="tbHashIdent" IsReadOnly="True" TextWrapping="Wrap" MaxWidth="450" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" TextChanged="tbHashIdent_TextChanged"/>
-                <Label Grid.Row="2" Margin="0,5,0,0" Name="lblHashDigest">
-                    <x:Static Member="lang:DatablockCtrl.hd"></x:Static>
-                </Label>
-                    <Label Grid.Row="2" Margin="150,5,0,0" Name="lblHashDigestLength"></Label>
+                    <SelectableTextBlock Padding="5" Grid.Row="2" Margin="0,5,0,0" Name="lblHashDigest">
+                        <x:Static Member="lang:DatablockCtrl.hd"></x:Static>
+                    </SelectableTextBlock>
+                    <SelectableTextBlock Padding="5" Grid.Row="2" Margin="150,5,0,0" Name="lblHashDigestLength"></SelectableTextBlock>
                     <TextBox Grid.Row="3" Height="35" Margin="5,0,5,0" Name="tbHashDigest" IsReadOnly="True" TextWrapping="Wrap" MaxWidth="450" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" TextChanged="tbHashDigest_TextChanged"/>                
             </Grid>
         </GroupBox>
