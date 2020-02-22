@@ -33,7 +33,6 @@ namespace Tests.TemplateAndPluginTests
         // Source of the test vectors: https://eprint.iacr.org/2013/404.pdf
         //
         TestVector[] testvectors = new TestVector[] {
-
             new TestVector () { n=1, alg=0, operationMode = 0, opMode=0, padMode = 0, key="0001080910111819", input="4c697465", output="f24268a8", iv="" }, //Speck32/64 Encryption ECB 
             new TestVector () { n=2, alg=1, operationMode = 0, opMode=0, padMode = 0, key="00010208090a101112", input="72616c6c7920", output="dc5a38a549c0", iv="" }, //Speck48/72 Encryption ECB
             new TestVector () { n=3, alg=2, operationMode = 0, opMode=0, padMode = 0, key="00010208090a10111218191a", input="74686973206d", output="5d44b6105e73", iv="" }, //Speck48/96 Encryption ECB
