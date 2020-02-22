@@ -24,6 +24,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using Primes.Library;
 using System.Collections;
+using System.Linq;
 using Primes.Bignum;
 
 namespace Primes.WpfControls.Components
@@ -530,6 +531,13 @@ namespace Primes.WpfControls.Components
                         int row = -1;
                         StringBuilder result = new StringBuilder();
                         string[] msg = new string[m_Columns];
+
+                        void AppendRow()
+                        {
+                            var rowString = string.Join("\t", msg.Where(s => !string.IsNullOrEmpty(s)));
+                            result.AppendLine(rowString);
+                        }
+
                         foreach (UIElement element in gridMessages.Children)
                         {
                             if (element.GetType() == typeof(TextBlock))
@@ -538,24 +546,17 @@ namespace Primes.WpfControls.Components
                                 {
                                     if (row > -1)
                                     {
-                                        foreach (string s in msg)
-                                        {
-                                            if (!string.IsNullOrEmpty(s))
-                                            {
-                                                result.Append(s);
-                                                result.Append("\t");
-                                            }
-                                        }
-                                        result.Remove(result.Length - 1, 1);
-                                        result.Append("\r\n");
+                                        AppendRow();
                                     }
                                     row = Grid.GetRow(element);
                                 }
                                 int column = Grid.GetColumn(element);
                                 if (column > -1 && column < msg.Length)
-                                    msg[column] = (element as TextBlock).Text;
+                                    msg[column] = (element as TextBlock)?.Text;
                             }
                         }
+                        AppendRow();
+
                         Clipboard.SetText(result.ToString(), TextDataFormat.Text);
                     }
                 }
