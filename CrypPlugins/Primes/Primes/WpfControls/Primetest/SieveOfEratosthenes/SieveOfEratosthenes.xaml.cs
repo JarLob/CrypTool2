@@ -214,6 +214,7 @@ namespace Primes.WpfControls.Primetest.SieveOfEratosthenes
             if (m_ThreadAutomatic != null) { m_ThreadAutomatic.Abort(); m_ThreadAutomatic = null; }
             FireOnCancel();
             log.Clear();
+            log.Columns = 1;
             btnForceAutomatic.Visibility = Visibility.Hidden;
             btnForceAutomatic.IsEnabled = true;
             if (s != null)

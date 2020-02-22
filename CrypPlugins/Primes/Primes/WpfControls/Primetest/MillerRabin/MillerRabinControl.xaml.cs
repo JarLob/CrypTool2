@@ -187,6 +187,7 @@ namespace Primes.WpfControls.Primetest.MillerRabin
         {
             CancelTestThread();
             log.Clear();
+            log.Columns = 1;
 
             m_Value = value;
 
