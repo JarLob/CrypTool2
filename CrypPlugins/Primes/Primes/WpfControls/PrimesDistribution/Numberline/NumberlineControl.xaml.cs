@@ -66,6 +66,7 @@ namespace Primes.WpfControls.PrimesDistribution.Numberline
         private PrimesBigInteger m_ActualNumber;
         private bool m_Initialized;
         private bool goldbachIsOpen = true;
+        private bool infoGroupBoxInitialized = false;
 
         public NumberlineControl()
         {
@@ -458,6 +459,11 @@ namespace Primes.WpfControls.PrimesDistribution.Numberline
                 ControlHandler.SetPropertyValue((sender as NumberButton), "Background", Brushes.Yellow);
             m_ActualNumber = value;
             HideInfoPanels();
+            if (!infoGroupBoxInitialized)
+            {
+                HideInfoGroupBoxes();
+                infoGroupBoxInitialized = true;
+            }
             SetPointerActualNumber(value);
             SetInfoActualNumber(value);
             SetNeighborPrimes(value);
@@ -1038,6 +1044,15 @@ namespace Primes.WpfControls.PrimesDistribution.Numberline
         }
 
         #endregion
+
+        private void HideInfoGroupBoxes()
+        {
+            gbEulerPhi.Visibility = Visibility.Collapsed;
+            gbTau.Visibility = Visibility.Collapsed;
+            gbRho.Visibility = Visibility.Collapsed;
+            gbDivSum.Visibility = Visibility.Collapsed;
+            gbGoldbach.Visibility = Visibility.Collapsed;
+        }
 
         private void lblCalcInfo_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

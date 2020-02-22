@@ -516,7 +516,7 @@
                                         <Image Cursor="Hand" Source="../../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpEulerPhi" HorizontalAlignment="Left" MouseLeftButtonDown="btnHelp_MouseLeftButtonDown" Margin="0,0,4,0" />
                                         <TextBlock Name="lblCalcEulerPhiInfo" Margin="0,0,0,0" Visibility="Hidden" TextWrapping="Wrap" MouseLeftButtonDown="lblCalcInfo_MouseLeftButtonDown" Cursor="Hand" Foreground="Blue"></TextBlock>
                                     </DockPanel>
-                                    <GroupBox Header="{x:Static lang:Distribution.numberline_progress}" Visibility="Collapsed" Name="gbEulerPhi">
+                                    <GroupBox Header="{x:Static lang:Distribution.numberline_progress}" Visibility="Visible" Name="gbEulerPhi">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="50" />
@@ -532,7 +532,7 @@
                                         <Image Cursor="Hand" Source="../../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpTau" HorizontalAlignment="Left" MouseLeftButtonDown="btnHelp_MouseLeftButtonDown" Margin="0,0,4,0" />
                                         <TextBlock Name="lblCalcTauInfo" Margin="0,0,0,0" TextWrapping="Wrap" MouseLeftButtonDown="lblCalcInfo_MouseLeftButtonDown" Cursor="Hand" Foreground="Blue"></TextBlock>
                                     </DockPanel>
-                                    <GroupBox Header="{x:Static lang:Distribution.numberline_progress}" Visibility="Collapsed" Name="gbTau">
+                                    <GroupBox Header="{x:Static lang:Distribution.numberline_progress}" Visibility="Visible" Name="gbTau">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="50" />
@@ -548,7 +548,7 @@
                                         <Image Cursor="Hand" Source="../../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpRho" HorizontalAlignment="Left" MouseLeftButtonDown="btnHelp_MouseLeftButtonDown" Margin="0,0,4,0" />
                                         <TextBlock Name="lblCalcRhoInfo" Margin="0,0,0,0" TextWrapping="Wrap" MouseLeftButtonDown="lblCalcInfo_MouseLeftButtonDown" Cursor="Hand" Foreground="Blue"></TextBlock>
                                     </DockPanel>
-                                    <GroupBox Header="{x:Static lang:Distribution.numberline_progress}" Visibility="Collapsed" Name="gbRho">
+                                    <GroupBox Header="{x:Static lang:Distribution.numberline_progress}" Visibility="Visible" Name="gbRho">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="25" />
@@ -564,7 +564,7 @@
                                         <Image Cursor="Hand" Source="../../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpDivSum" HorizontalAlignment="Left" MouseLeftButtonDown="btnHelp_MouseLeftButtonDown" Margin="0,0,4,0" />
                                         <TextBlock Name="lblCalcDividerSum" Margin="0,0,0,0" TextWrapping="Wrap" MouseLeftButtonDown="lblCalcInfo_MouseLeftButtonDown" Cursor="Hand" Foreground="Blue"></TextBlock>
                                     </DockPanel>
-                                    <GroupBox Header="{x:Static lang:Distribution.numberline_progress}" Visibility="Collapsed" Name="gbDivSum">
+                                    <GroupBox Header="{x:Static lang:Distribution.numberline_progress}" Visibility="Visible" Name="gbDivSum">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="50" />
