@@ -16,7 +16,6 @@
         <Grid Name="gridMessages" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Grid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="{x:Static lang:Components.logcontextmenucopyselection}" Click="MenuItem_Click" Name="miCopySelection" />
                     <MenuItem Header="{x:Static lang:Components.logcontextmenucopyall}" Click="MenuItem_Click" Name="miCopyAll" />
                 </ContextMenu>
             </Grid.ContextMenu>
