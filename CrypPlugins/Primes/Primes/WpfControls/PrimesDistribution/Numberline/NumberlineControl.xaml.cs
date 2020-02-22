@@ -21,7 +21,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Linq;
+using System.Text;
 using System.Threading;
+using System.Windows.Documents;
 using Cryptool.PluginBase.Miscellaneous;
 using Primes.WpfControls.Components;
 using Primes.Bignum;
@@ -1102,6 +1104,40 @@ namespace Primes.WpfControls.PrimesDistribution.Numberline
               m_EulerPhi.IsRunning ||
               m_DivSum.IsRunning;
             ControlHandler.SetButtonEnabled(btnCancelAll, enabled);
+        }
+
+        private void CopyMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var sb = new StringBuilder();
+            foreach (var child in GetVisibleChildren(pnlContent).OfType<TextBlock>())
+            {
+                if (child.Inlines.Any())
+                {
+                    var range = new TextRange(child.Inlines.FirstInline.ContentStart, child.Inlines.LastInline.ContentEnd);
+                    sb.AppendLine(range.Text);
+                }
+                else
+                {
+                    sb.AppendLine(child.Text);
+                }
+            }
+            Clipboard.SetText(sb.ToString());
+        }
+
+        private IEnumerable<DependencyObject> GetVisibleChildren(DependencyObject parent)
+        {
+            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if ((child as UIElement)?.IsVisible ?? true)
+                {
+                    yield return child;
+                    foreach (var subChild in GetVisibleChildren(child))
+                    {
+                        yield return subChild;
+                    }
+                }
+            }
         }
     }
 }
