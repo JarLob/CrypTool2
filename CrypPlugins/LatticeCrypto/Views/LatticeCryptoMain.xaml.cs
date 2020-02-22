@@ -97,28 +97,28 @@ namespace LatticeCrypto.Views
             switch (type)
             {
                 case NavigationCommandType.Start:
-                    lblTitel.Content = Languages.LatticeSettings;
+                    lblTitel.Text = Languages.LatticeSettings;
                     break;
                 case NavigationCommandType.Gauss:
-                    lblTitel.Content = Languages.tabGaussAlgorithm;
+                    lblTitel.Text = Languages.tabGaussAlgorithm;
                     break;
                 case NavigationCommandType.LLL:
-                    lblTitel.Content = Languages.tabLLLAlgorithm;
+                    lblTitel.Text = Languages.tabLLLAlgorithm;
                     break;
                 case NavigationCommandType.CVP:
-                    lblTitel.Content = Languages.tabFindCVP;
+                    lblTitel.Text = Languages.tabFindCVP;
                     break;
                 case NavigationCommandType.MerkleHellman:
-                    lblTitel.Content = Languages.tabAttackMerkleHellman;
+                    lblTitel.Text = Languages.tabAttackMerkleHellman;
                     break;
                 case NavigationCommandType.RSA:
-                    lblTitel.Content = Languages.tabAttackRSA;
+                    lblTitel.Text = Languages.tabAttackRSA;
                     break;
                 case NavigationCommandType.GGH:
-                    lblTitel.Content = Languages.tabGGH;
+                    lblTitel.Text = Languages.tabGGH;
                     break;
                 case NavigationCommandType.LWE:
-                    lblTitel.Content = Languages.tabLWE;
+                    lblTitel.Text = Languages.tabLWE;
                     break;
             }
         }

@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using Cryptool.PluginBase.Miscellaneous;
 using LatticeCrypto.Models;
 using LatticeCrypto.Properties;
 using LatticeCrypto.Utilities;
@@ -252,7 +253,7 @@ namespace LatticeCrypto.ViewModels
                 {
                     for (int j = 0; j < Lattice.M; j++)
                     {
-                        TextBlock leftTextBlock = new TextBlock
+                        TextBlock leftTextBlock = new SelectableTextBlock
                         {
                             Text = Util.FormatBigInt(Lattice.Vectors[i].values[j]),
                             Margin = new Thickness(10, 0, 10, 0),
@@ -262,7 +263,7 @@ namespace LatticeCrypto.ViewModels
                         Grid.SetRow(leftTextBlock, j);
                         LeftGrid.Children.Add(leftTextBlock);
 
-                        TextBlock rightTextBlock = new TextBlock
+                        TextBlock rightTextBlock = new SelectableTextBlock
                         {
                             Text = Util.FormatBigInt(Lattice.ReducedVectors[i].values[j]),
                             Margin = new Thickness(10, 0, 10, 0),

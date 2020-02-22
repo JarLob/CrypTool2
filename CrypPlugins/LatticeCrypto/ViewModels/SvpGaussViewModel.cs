@@ -14,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using LatticeCrypto.Views;
 using Microsoft.Win32;
+using Cryptool.PluginBase.Miscellaneous;
 
 namespace LatticeCrypto.ViewModels
 {
@@ -764,7 +765,7 @@ namespace LatticeCrypto.ViewModels
                 {
                     currentStep -= intervalX;
                     String text = Util.FormatBigInt(currentStep);
-                    TextBlock textBlock = new TextBlock {Text = text.PadLeft(4)};
+                    TextBlock textBlock = new SelectableTextBlock { Text = text.PadLeft(4)};
                     Canvas.SetLeft(textBlock, x + PixelsPerPoint/3.0 - 20);
                     Canvas.SetBottom(textBlock, zeroPoint.Y - 15);
                     listAxesTextBlocks.Add(textBlock);
@@ -774,7 +775,7 @@ namespace LatticeCrypto.ViewModels
                 {
                     currentStep += intervalX;
                     String text = Util.FormatBigInt(currentStep);
-                    TextBlock textBlock = new TextBlock {Text = text.PadLeft(4)};
+                    TextBlock textBlock = new SelectableTextBlock { Text = text.PadLeft(4)};
                     Canvas.SetLeft(textBlock, x + PixelsPerPoint/3.0 - 20);
                     Canvas.SetBottom(textBlock, zeroPoint.Y - 15);
                     listAxesTextBlocks.Add(textBlock);
@@ -789,7 +790,7 @@ namespace LatticeCrypto.ViewModels
                 {
                     currentStep -= intervalY;
                     String text = Util.FormatBigInt(currentStep);
-                    TextBlock textBlock = new TextBlock {Text = text.PadLeft(4)};
+                    TextBlock textBlock = new SelectableTextBlock { Text = text.PadLeft(4)};
                     Canvas.SetBottom(textBlock, y - PixelsPerPoint/3.0);
                     Canvas.SetLeft(textBlock, zeroPoint.X - 25);
                     listAxesTextBlocks.Add(textBlock);
@@ -799,7 +800,7 @@ namespace LatticeCrypto.ViewModels
                 {
                     currentStep += intervalY;
                     String text = Util.FormatBigInt(currentStep);
-                    TextBlock textBlock = new TextBlock {Text = text.PadLeft(4)};
+                    TextBlock textBlock = new SelectableTextBlock { Text = text.PadLeft(4)};
                     Canvas.SetBottom(textBlock, y - PixelsPerPoint/3.0);
                     Canvas.SetLeft(textBlock, zeroPoint.X - 25);
                     listAxesTextBlocks.Add(textBlock);

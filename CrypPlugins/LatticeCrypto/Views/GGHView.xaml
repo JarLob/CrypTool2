@@ -35,7 +35,7 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Orientation="Horizontal" >
-                        <Label Content="{x:Static Properties:Languages.labelKeyLength}"/>
+                        <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelKeyLength}"/>
                         <TextBox Text="{Binding ElementName=scrollBar, Path=Value, Mode=TwoWay}" Width="25" VerticalAlignment="Center" Margin= "5,0,0,0"/>
                         <ScrollBar Name="scrollBar" Maximum="10" Minimum="2" Value="{Binding Dim, Mode=TwoWay}" SmallChange="1" LargeChange="2" RenderTransformOrigin="0.5,0.5" Margin= "5,0,0,0">
                             <ScrollBar.RenderTransform>
@@ -52,7 +52,7 @@
                     <Button Content="{x:Static Properties:Languages.buttonGenerateNewCryptosystem}" Margin="0,10,0,0" Width="auto" Grid.Row="1" Grid.Column="0" Click="Button_Click"/>
 
                     <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
-                        <Label Content="{x:Static Properties:Languages.labelParameterL}"/>
+                        <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelParameterL}"/>
                         <TextBox Text="{Binding ElementName=scrollBar2, Path=Value, Mode=TwoWay}" Width="25" VerticalAlignment="Center" Margin= "5,0,0,0"/>
                         <ScrollBar Name="scrollBar2" Maximum="20" Minimum="1" Value="4" SmallChange="1" LargeChange="2" RenderTransformOrigin="0.5,0.5" Margin= "5,0,0,0">
                             <ScrollBar.RenderTransform>
@@ -76,7 +76,7 @@
 
                     <GroupBox HorizontalAlignment="Center" VerticalAlignment="Center">
                         <GroupBox.Header>
-                            <Label Content="{x:Static Properties:Languages.labelPrivateKeyR}" Background="#CC008000" />
+                            <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelPrivateKeyR}" Background="#CC008000" />
                         </GroupBox.Header>
                         <GroupBox.Content>
                             <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
@@ -92,7 +92,7 @@
 
                     <GroupBox Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <GroupBox.Header>
-                            <Label Content="{x:Static Properties:Languages.labelPublicKeyB}" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#CCDC143C"/>
+                            <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelPublicKeyB}" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#CCDC143C"/>
                         </GroupBox.Header>
                         <GroupBox.Content>
                             <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
@@ -114,8 +114,8 @@
                         <ColumnDefinition Width="auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    
-                    <Label Content="{x:Static Properties:Languages.labelErrorVector}" Grid.Row="0" Grid.Column="0"/>
+
+                    <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelErrorVector}" Grid.Row="0" Grid.Column="0"/>
                     <TextBox Text="{Binding ErrorVector, Mode=OneWay}" IsReadOnly="True" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" />
                     <Button Content="{x:Static Properties:Languages.buttonGenerateNewErrorVector}" Grid.Row="1" Grid.Column="0" Margin="0,10,0,0" Command="{Binding GenerateErrorVectorCommand}"/>
                     <Button Content="{x:Static Properties:Languages.buttonEnterLatticeManually}" Grid.Row="1" Margin="10,10,0,0" Grid.Column="1"  Click="Button_Click_3" HorizontalAlignment="Left"></Button>
@@ -133,7 +133,7 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                        <Label Content="{x:Static Properties:Languages.labelMode}"/>
+                        <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelMode}"/>
                         <ComboBox Name="cbModus" Margin="10,0,20,0">
                             <ComboBoxItem Content="{x:Static Properties:Languages.buttonEncrypt}" IsSelected="True"/>
                             <ComboBoxItem Content="{x:Static Properties:Languages.buttonDecrypt}"/>
@@ -141,10 +141,10 @@
                         <Button Name="btnStart" Content="{x:Static Properties:Languages.buttonStart}" Click="btnStart_Click" />
                     </StackPanel>
 
-                    <Label Content="{x:Static Properties:Languages.labelPlainText}" Grid.Row="1" Grid.Column="0" />
+                    <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelPlainText}" Grid.Row="1" Grid.Column="0" />
                     <TextBox Name="message" Text="{Binding Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"   Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" VerticalScrollBarVisibility="Auto"/>
 
-                    <Label Content="{x:Static Properties:Languages.labelCiphertext}" Grid.Row="1" Grid.Column="1"/>
+                    <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelCiphertext}" Grid.Row="1" Grid.Column="1"/>
                     <TextBox Text="{Binding Cipher, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
                 </Grid>
             </Grid>

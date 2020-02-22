@@ -16,14 +16,14 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Label Content="{x:Static Properties:Languages.labelPrivateKey}" Grid.Row="0" Grid.Column="0"/>
+            <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelPrivateKey}" Grid.Row="0" Grid.Column="0"/>
             <TextBox Name="privateKey" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" />
-            <Label Content="{x:Static Properties:Languages.labelModulus}" Grid.Row="1" Grid.Column="0"/>
+            <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelModulus}" Grid.Row="1" Grid.Column="0"/>
             <TextBox Name="mod" Grid.Row="1" Grid.Column="1" />
-            <Label Content="{x:Static Properties:Languages.labelMultiplier}" Grid.Row="2" Grid.Column="0"/>
+            <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelMultiplier}" Grid.Row="2" Grid.Column="0"/>
             <TextBox Name="r" Grid.Row="2" Grid.Column="1" />
         </Grid>
-        <TextBlock Name="errorText" Text="{x:Static Properties:Languages.errorSameCryptosystem}" Width="250" Height="50" TextWrapping="Wrap" Margin="10,10"/>
+        <SelectableTextBlock Name="errorText" Text="{x:Static Properties:Languages.errorSameCryptosystem}" Width="250" Height="50" TextWrapping="Wrap" Margin="10,10"/>
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="15,10,15,15">
             <Button Content="OK" Name="buttonOK" Click="ButtonOK_Click" Width="80" HorizontalAlignment="Right" Margin="0,0,20,0"/>

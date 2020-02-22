@@ -33,7 +33,7 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="{x:Static Properties:Languages.labelKeyLength}"/>
+                        <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelKeyLength}"/>
                         <TextBox Text="{Binding ElementName=scrollBar, Path=Value, Mode=TwoWay}" Width="36" VerticalAlignment="Center" Margin= "5,0,0,0"/>
                         <ScrollBar Name="scrollBar" Maximum="2048" Minimum="11" Value="512" SmallChange="1" LargeChange="2" RenderTransformOrigin="0.5,0.5" Margin= "5,0,0,0">
                             <ScrollBar.RenderTransform>
@@ -63,15 +63,15 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Label Content="{x:Static Properties:Languages.labelPrimeP}" Grid.Row="0" Grid.Column="0"/>
+                    <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelPrimeP}" Grid.Row="0" Grid.Column="0"/>
                     <TextBox Text="{Binding PrimP, Mode=OneWay}" IsReadOnly="True" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" />
-                    <Label Content="{x:Static Properties:Languages.labelPrimeQ}" Grid.Row="1" Grid.Column="0"/>
+                    <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelPrimeQ}" Grid.Row="1" Grid.Column="0"/>
                     <TextBox Text="{Binding PrimQ, Mode=OneWay}" IsReadOnly="True" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" />
-                    <Label Content="{x:Static Properties:Languages.labelModulusN}" Grid.Row="2" Grid.Column="0"/>
+                    <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelModulusN}" Grid.Row="2" Grid.Column="0"/>
                     <TextBox Text="{Binding ModulusN, Mode=OneWay}" IsReadOnly="True" Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" />
-                    <Label Content="{x:Static Properties:Languages.labelPrivateExponentD}" Grid.Row="3" Grid.Column="0"/>
+                    <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelPrivateExponentD}" Grid.Row="3" Grid.Column="0"/>
                     <TextBox Text="{Binding ExpD, Mode=OneWay}" IsReadOnly="True" Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" />
-                    <Label Content="{x:Static Properties:Languages.labelPublicExponentE}" Grid.Row="4" Grid.Column="0"/>
+                    <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelPublicExponentE}" Grid.Row="4" Grid.Column="0"/>
                     <TextBox Text="{Binding ExpE, Mode=OneWay}" IsReadOnly="True" Grid.Row="4" Grid.Column="1"/>
                 </Grid>
 
@@ -90,7 +90,7 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
-                        <Label Content="{x:Static Properties:Languages.labelMode}"/>
+                        <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelMode}"/>
                         <ComboBox Name="cbModus" Margin="10,0,20,0">
                             <ComboBoxItem Content="{x:Static Properties:Languages.buttonEncrypt}" IsSelected="True"/>
                             <ComboBoxItem Content="{x:Static Properties:Languages.buttonDecrypt}"/>
@@ -99,16 +99,16 @@
                         <Button Name="btnStart" Content="{x:Static Properties:Languages.buttonStart}" Click="btnStart_Click" />
                     </StackPanel>
 
-                    <Label Content="{x:Static Properties:Languages.labelPlainText}" Grid.Row="1" Grid.Column="0" />
+                    <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelPlainText}" Grid.Row="1" Grid.Column="0" />
                     <TextBox Name="message" Text="{Binding Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" IsUndoEnabled="True" VerticalScrollBarVisibility="Auto" SelectionChanged="message_SelectionChanged" TextChanged="message_TextChanged" KeyDown="message_KeyDown" />
                     
                     <Button Name="buttonMarkAsUnknown" Content="{x:Static Properties:Languages.buttonMarkAsUnknown}" Grid.Row="3" Grid.Column="0" Click="ButtonMarkAsUnknown" HorizontalAlignment="Center" IsEnabled="False"/>
-                   
-                    <Label Content="{x:Static Properties:Languages.labelKnownPlainText}" Grid.Row="1" Grid.Column="1"/>
+
+                    <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelKnownPlainText}" Grid.Row="1" Grid.Column="1"/>
                     <TextBox Text="{Binding KnownMessage, Mode=OneWay}" Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" IsReadOnly="True" VerticalScrollBarVisibility="Auto" Margin="0,0,10,0"/>
-                    <Label Content="{x:Static Properties:Languages.labelResultUnknownPlainText}" Grid.Row="4" Grid.Column="1"/>
+                    <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelResultUnknownPlainText}" Grid.Row="4" Grid.Column="1"/>
                     <TextBox Text="{Binding UnknownMessageResult, Mode=OneWay}" Grid.Row="5" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" IsReadOnly="True" VerticalScrollBarVisibility="Auto" Margin="0,0,10,0"/>
-                    <Label Content="{x:Static Properties:Languages.labelCiphertext}" Grid.Row="4" Grid.Column="0"/>
+                    <SelectableTextBlock Padding="5" Text="{x:Static Properties:Languages.labelCiphertext}" Grid.Row="4" Grid.Column="0"/>
                     <TextBox Text="{Binding Cipher, Mode=TwoWay}" Grid.Row="5" Grid.Column="0" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Margin="0,0,10,0"/>
                 </Grid>
             </Grid>

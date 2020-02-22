@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using Cryptool.PluginBase.Miscellaneous;
 using LatticeCrypto.Models;
 using LatticeCrypto.Properties;
 using LatticeCrypto.Utilities;
@@ -165,7 +166,7 @@ namespace LatticeCrypto.ViewModels
             {
                 for (int j = 0; j < LWE.l; j++)
                 {
-                    TextBlock textBlock = new TextBlock
+                    TextBlock textBlock = new SelectableTextBlock
                     {
                         Text = LWE.S[i, j].ToString(),
                         Margin = new Thickness(10, 0, 10, 0),
@@ -190,8 +191,8 @@ namespace LatticeCrypto.ViewModels
             {
                 for (int j = 0; j < LWE.n; j++)
                 {
-                    TextBlock textBlock = new TextBlock
-                                              {
+                    TextBlock textBlock = new SelectableTextBlock
+                    {
                                                   Text = LWE.A[i, j].ToString(),
                                                   Margin = new Thickness(10, 0, 10, 0),
                                                   TextAlignment = TextAlignment.Right
@@ -215,7 +216,7 @@ namespace LatticeCrypto.ViewModels
             {
                 for (int j = 0; j < LWE.l; j++)
                 {
-                    TextBlock textBlock = new TextBlock
+                    TextBlock textBlock = new SelectableTextBlock
                     {
                         Text = LWE.B[i, j].ToString(),
                         Margin = new Thickness(10, 0, 10, 0),
