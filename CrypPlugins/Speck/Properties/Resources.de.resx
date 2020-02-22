@@ -258,11 +258,8 @@
   <data name="Speck_Input_padded" xml:space="preserve">
     <value>Der Eingabestrom wurde mittels {0} gepadded</value>
   </data>
-  <data name="Speck_Input_too_short_singleByte" xml:space="preserve">
-    <value>Der Eingabestrom ist zu kurz. Es fehlt {0} Byte oder es muss ein Padding-Modus ausgewählt werden.</value>
-  </data>
-  <data name="Speck_Input_too_short_multipleByte" xml:space="preserve">
-    <value>Der Eingabestrom ist zu kurz. Es fehlen {0} Bytes oder es muss ein Padding-Modus ausgewählt werden.</value>
+  <data name="Speck_Input_too_short" xml:space="preserve">
+    <value>Der Klartext/Geheimtext-Eingangsstrom ist zu kurz. Prüfen Sie die Blocklänge Ihrer Eingabe (siehe Blocklänge der gewählten Speck-Variante) oder es  oder es muss ein Padding-Modus ausgewählt werden.</value>
   </data>
   <data name="Speck_IV_too_long" xml:space="preserve">
     <value>Der gegebene Initialisierungsvektor ist zu lang. Dieser wird abgeschnitten.</value>

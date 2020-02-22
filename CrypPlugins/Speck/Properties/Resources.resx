@@ -258,11 +258,8 @@
   <data name="Speck_Input_padded" xml:space="preserve">
     <value>The input stream was padded with {0}</value>
   </data>
-  <data name="Speck_Input_too_short_singleByte" xml:space="preserve">
-    <value>The input stream is too short. {0} byte is missing or a padding mode must be selected.</value>
-  </data>
-  <data name="Speck_Input_too_short_multipleByte" xml:space="preserve">
-    <value>The input stream is too short. {0} bytes are missing or a padding mode must be selected.</value>
+  <data name="Speck_Input_too_short" xml:space="preserve">
+    <value>The plaintext/ciphertext input stream is too short. Check blocklength of your input (see blocklength of selected Speck variant) or a padding mode must be selected.</value>
   </data>
   <data name="Speck_IV_too_long" xml:space="preserve">
     <value>The given initialization vector is too long. It will be truncated.</value>

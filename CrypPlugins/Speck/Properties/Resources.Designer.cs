@@ -403,20 +403,11 @@ namespace Speck.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The input stream is too short. {0} bytes are missing or a padding mode must be selected. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The plaintext/ciphertext input stream is too short. Check blocklength of your input (see blocklength of selected Speck variant) or a padding mode must be selected. ähnelt.
         /// </summary>
-        internal static string Speck_Input_too_short_multipleByte {
+        internal static string Speck_Input_too_short {
             get {
-                return ResourceManager.GetString("Speck_Input_too_short_multipleByte", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The input stream is too short. {0} byte is missing or a padding mode must be selected. ähnelt.
-        /// </summary>
-        internal static string Speck_Input_too_short_singleByte {
-            get {
-                return ResourceManager.GetString("Speck_Input_too_short_singleByte", resourceCulture);
+                return ResourceManager.GetString("Speck_Input_too_short", resourceCulture);
             }
         }
         
