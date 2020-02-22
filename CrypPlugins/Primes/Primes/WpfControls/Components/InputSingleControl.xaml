@@ -31,7 +31,7 @@
                         </Grid.ColumnDefinitions>
                         <Label Name="lblHorFree" Grid.Column="0" Visibility="Collapsed"></Label>
                         <TextBox Name="tbHorFree" Grid.Column="1" Width="100" HorizontalAlignment="Left" Tag="Free" KeyUp="tb_KeyDown" GotFocus="tb_GotFocus"/>
-                        <comps:SelectableTextBlock x:Name="lblInfoHorFree" Grid.Column="2" TextWrapping="Wrap" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                        <SelectableTextBlock x:Name="lblInfoHorFree" Grid.Column="2" TextWrapping="Wrap" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"/>
                         <Image VerticalAlignment="Top" HorizontalAlignment="Left" Margin="7,0,0,0" Grid.Column="3" Cursor="Hand" Source="../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpHorFree" MouseLeftButtonDown="Help_Click" Visibility="Collapsed"/>
                     </Grid>
                 </DockPanel>
@@ -47,7 +47,7 @@
                         <TextBox Name="tbHorCalcExp" Width="30" HorizontalAlignment="Left" Tag="CalcExp" KeyUp="tb_KeyDown" GotFocus="tb_GotFocus"/>
                         <Label >+</Label>
                         <TextBox Name="tbHorCalcSum" Width="30" HorizontalAlignment="Left" Tag="CalcSum" KeyUp="tb_KeyDown" GotFocus="tb_GotFocus"/>
-                        <comps:SelectableTextBlock x:Name="lblInfoHorCalc" TextWrapping="Wrap" Margin="5,0,0,0"/>
+                        <SelectableTextBlock x:Name="lblInfoHorCalc" TextWrapping="Wrap" Margin="5,0,0,0"/>
                         <Image VerticalAlignment="Top" Cursor="Hand" Source="../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpHorCalc" MouseLeftButtonDown="Help_Click" Visibility="Hidden"/>
                     </DockPanel>
                 </DockPanel>
@@ -71,7 +71,7 @@
                             <TextBox Name="tbVertFree" Width="100" HorizontalAlignment="Left" Tag="Free" KeyUp="tb_KeyDown" GotFocus="tb_GotFocus"/>
                             <comps:GenerateRandomControl x:Name="generateNumberControlVertFree" Title="{x:Static lang:Components.generaternd1_Header}"  Margin="7,0,0,0" Visibility="Collapsed" HorizontalAlignment="Left"/>
                         </DockPanel>
-                        <comps:SelectableTextBlock x:Name="lblInfoVertFree" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Visibility="Hidden" HorizontalAlignment="Stretch" Margin="0,3,0,0">sdf</comps:SelectableTextBlock>
+                        <SelectableTextBlock x:Name="lblInfoVertFree" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Visibility="Hidden" HorizontalAlignment="Stretch" Margin="0,3,0,0">sdf</SelectableTextBlock>
                         <Image VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="1" Cursor="Hand" Source="../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpVertFree" MouseLeftButtonDown="Help_Click" Visibility="Collapsed"/>
                     </Grid>
                 </DockPanel>
@@ -99,7 +99,7 @@
                             <TextBox Name="tbVertCalcSum" Width="30" HorizontalAlignment="Left" Tag="CalcSum" KeyUp="tb_KeyDown" GotFocus="tb_GotFocus"/>
                         </DockPanel>
                         <Image  VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" Cursor="Hand"  HorizontalAlignment="Right" Source="../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpVertCalc" MouseLeftButtonDown="Help_Click" Visibility="Collapsed"/>
-                        <comps:SelectableTextBlock x:Name="lblInfoVertCalc" TextWrapping="Wrap" Visibility="Hidden" Grid.Column="1" Grid.Row="1" Margin="0,3,0,0" />
+                        <SelectableTextBlock x:Name="lblInfoVertCalc" TextWrapping="Wrap" Visibility="Hidden" Grid.Column="1" Grid.Row="1" Margin="0,3,0,0" />
                     </Grid>
                 </DockPanel>
                 <Grid >

@@ -15,8 +15,8 @@
 
     <DockPanel>
         <StackPanel HorizontalAlignment="Stretch" DockPanel.Dock="Top">
-            <comps:SelectableTextBlock HorizontalAlignment="Left" x:Name="lblActualDivisor" Margin="5"></comps:SelectableTextBlock>
-            <comps:SelectableTextBlock HorizontalAlignment="Left" Margin="5,0,0,0" Text="{x:Static lang:Factorization.bf_scale}"></comps:SelectableTextBlock>
+            <SelectableTextBlock HorizontalAlignment="Left" x:Name="lblActualDivisor" Margin="5"></SelectableTextBlock>
+            <SelectableTextBlock HorizontalAlignment="Left" Margin="5,0,0,0" Text="{x:Static lang:Factorization.bf_scale}"></SelectableTextBlock>
             <Slider Name="slider" Maximum="3" Minimum="0.1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Value="1" />
         </StackPanel>
 

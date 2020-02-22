@@ -36,13 +36,13 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <comps:SelectableTextBlock Grid.Row="0" Grid.Column="0" Padding="5" VerticalAlignment="Center" Text="{x:Static lang:Numbertheory.proot_input}"></comps:SelectableTextBlock>
+            <SelectableTextBlock Grid.Row="0" Grid.Column="0" Padding="5" VerticalAlignment="Center" Text="{x:Static lang:Numbertheory.proot_input}"></SelectableTextBlock>
             <Image Cursor="Hand" Grid.Row="0" Grid.Column="1" Source="../../../Resources/icons/help.png" Width="16" Height="16" Name="btnPrimitivRootInput" HorizontalAlignment="Left" MouseLeftButtonDown="btnPrimitivRootInput_MouseLeftButtonDown" Margin="5" />
             <TextBox Width="200" Name="tbInput" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" KeyUp="tbInput_KeyUp" Text="13" />
             <Menu DockPanel.Dock="Top" Background="Transparent" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Margin="10,0,0,0">
                 <MenuItem Header="{x:Static lang:Numbertheory.proot_genprimes}" Name="miHeader" IsTextSearchEnabled="False" Click="miHeader_Click" />
             </Menu>
-            <comps:SelectableTextBlock Grid.Row="0" Grid.Column="4" Padding="5" x:Name="lblInfo" TextWrapping="Wrap" MaxWidth="100"></comps:SelectableTextBlock>
+            <SelectableTextBlock Grid.Row="0" Grid.Column="4" Padding="5" x:Name="lblInfo" TextWrapping="Wrap" MaxWidth="100"></SelectableTextBlock>
             <DockPanel Grid.Row="1" Grid.ColumnSpan="4">
                 <Button Name="btnExecute" Margin="5" HorizontalAlignment="Left" Click="btnExecute_Click" Width="100" Content="{x:Static lang:Numbertheory.proot_btnExecute}"></Button>
                 <Button Name="btnCancel" Margin="5" HorizontalAlignment="Left" IsEnabled="False" Click="btnCancel_Click" Width="100" Content="{x:Static lang:Numbertheory.proot_btnCancel}"></Button>

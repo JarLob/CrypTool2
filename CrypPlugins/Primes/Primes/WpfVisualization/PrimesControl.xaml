@@ -98,7 +98,7 @@
                     <MenuItem Header="{x:Static lang:PrimesControl.miclose}" Name="miClose" Click="miClose_Click" Visibility="Hidden" >
                     </MenuItem>
                 </Menu>
-                <Label Name="lblTitel" Margin="10,0,0,0" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center" Content="{x:Static lang:PrimesControl.title_start}" />
+                <SelectableTextBlock Name="lblTitel" Margin="10,0,0,0" Padding="5,0,5,0" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{x:Static lang:PrimesControl.title_start}" />
                 <Image Name="imghelp" Cursor="Hand" Source="../Resources/icons/help32.gif" Width="24" Height="24" HorizontalAlignment="Left" MouseLeftButtonDown="ImageHelpClick" VerticalAlignment="Center" />
             </DockPanel>
             <ContentControl Grid.Row="1" Name="ContentArea" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0">

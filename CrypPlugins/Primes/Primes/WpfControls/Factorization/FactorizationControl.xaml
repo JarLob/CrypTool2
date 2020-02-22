@@ -45,10 +45,10 @@
                 <GroupBox Grid.Row="1" Header="{x:Static lang:Factorization.fac_result}" Name="gbFactorizationInfo" Margin="0,0,0,20">
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <StackPanel Name="pnInfo" Orientation="Horizontal" Height="30">
-                            <comps:SelectableTextBlock VerticalAlignment="Center" Margin="5,0,5,0">
+                            <SelectableTextBlock VerticalAlignment="Center" Margin="5,0,5,0">
                                 <Run Foreground="Blue" x:Name="lblInput" />
                                 <Run x:Name="lblFactors" />
-                            </comps:SelectableTextBlock>
+                            </SelectableTextBlock>
                         </StackPanel>
                     </ScrollViewer>
                 </GroupBox>

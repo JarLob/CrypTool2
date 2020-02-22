@@ -44,7 +44,7 @@
 
         <GroupBox Grid.Row="0" Grid.ColumnSpan="2" Header="{x:Static lang:Distribution.numbergrid_input}" Margin="2">
             <StackPanel>
-                <comps:SelectableTextBlock Margin="5" x:Name="lblInfoError" Foreground="Blue"></comps:SelectableTextBlock>
+                <SelectableTextBlock Margin="5" x:Name="lblInfoError" Foreground="Blue"></SelectableTextBlock>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -57,7 +57,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <comps:SelectableTextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center" Text="{x:Static lang:Distribution.numbergrid_width}"></comps:SelectableTextBlock>
+                    <SelectableTextBlock Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center" Text="{x:Static lang:Distribution.numbergrid_width}"></SelectableTextBlock>
 
                     <comps:InputSingleControl
                         x:Name="iscWidth"
@@ -70,7 +70,7 @@
                         FreeText="10"
                         ShowInfoErrorText="False"
                         />
-                    <comps:SelectableTextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Margin="5" Text="{x:Static lang:Distribution.numbergrid_height}"></comps:SelectableTextBlock>
+                    <SelectableTextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Margin="5" Text="{x:Static lang:Distribution.numbergrid_height}"></SelectableTextBlock>
                     <comps:InputSingleControl
                         x:Name="iscHeight"
                         InputRangeControlType="Horizontal"
@@ -82,7 +82,7 @@
                         FreeText="10"
                         ShowInfoErrorText="False"
                         />
-                    <comps:SelectableTextBlock Margin="5" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Distribution.numbergrid_start}"></comps:SelectableTextBlock>
+                    <SelectableTextBlock Margin="5" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Distribution.numbergrid_start}"></SelectableTextBlock>
                     <comps:InputSingleControl
                         x:Name="iscStart"
                         InputRangeControlType="Horizontal"
@@ -114,7 +114,7 @@
                 <RowDefinition Height="2" />
                 <RowDefinition Height="32" />
             </Grid.RowDefinitions>
-            <comps:SelectableTextBlock Grid.Row="0" TextWrapping="Wrap" MinWidth="100" Text="{x:Static lang:Distribution.numbergrid_scroll}" Visibility="Collapsed"></comps:SelectableTextBlock>
+            <SelectableTextBlock Grid.Row="0" TextWrapping="Wrap" MinWidth="100" Text="{x:Static lang:Distribution.numbergrid_scroll}" Visibility="Collapsed"></SelectableTextBlock>
             <Button Template="{StaticResource doublearrowbtntmpl}" Grid.Row="1" Width="36" HorizontalAlignment="Right" Name="btnFastUp" Click="btnScroll_Click" ToolTip="{x:Static lang:Distribution.numbergrid_tooltipscrollupfast}" />
             <Button Template="{StaticResource simplearrowbtntmpl}" Grid.Row="3" Width="36" HorizontalAlignment="Right" Name="btnUp" Click="btnScroll_Click" ToolTip="{x:Static lang:Distribution.numbergrid_tooltipscrollup}" />
             <Button Template="{StaticResource simplearrowbtntmpl}" Grid.Row="5" Width="36" HorizontalAlignment="Right" Name="btnDown" Click="btnScroll_Click" ToolTip="{x:Static lang:Distribution.numbergrid_tooltipscrolldown}">
@@ -129,10 +129,10 @@
             </Button>
         </Grid>
 
-        <comps:SelectableTextBlock x:Name="lblActualNumberInfo" Grid.Row="1" Grid.Column="1" Margin="5" HorizontalAlignment="Center" Visibility="Hidden">
+        <SelectableTextBlock x:Name="lblActualNumberInfo" Grid.Row="1" Grid.Column="1" Margin="5" HorizontalAlignment="Center" Visibility="Hidden">
             <Run Text="{x:Static lang:Distribution.numbergrid_actualnumber}"/>
             <Run x:Name="lblActualNumber" />
-        </comps:SelectableTextBlock>
+        </SelectableTextBlock>
 
         <Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="1">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Name="sv" Margin="5">

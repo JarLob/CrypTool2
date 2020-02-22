@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <comps:InputRangeControl Grid.Row="0" x:Name="ircGoldbach" InputRangeControlType="Horizontal" ShowButtons="True" ShowCalcInput="False" SecondParameterPresent="false" />
-        <comps:SelectableTextBlock Grid.Row="1" x:Name="Description" Margin="10,0,10,10" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{x:Static lang:Numbertheory.goldbach_desc}" TextWrapping="Wrap" />
+        <SelectableTextBlock Grid.Row="1" x:Name="Description" Margin="10,0,10,10" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{x:Static lang:Numbertheory.goldbach_desc}" TextWrapping="Wrap" />
 
         <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
             <Viewbox Stretch="Uniform">

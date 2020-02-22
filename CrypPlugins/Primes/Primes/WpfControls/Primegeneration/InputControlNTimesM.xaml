@@ -21,7 +21,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="16" />
                 </Grid.ColumnDefinitions>
-                <comps:SelectableTextBlock x:Name="tbInfo" TextWrapping="Wrap" Grid.Column="0" />
+                <SelectableTextBlock x:Name="tbInfo" TextWrapping="Wrap" Grid.Column="0" />
                 <Image Grid.Column="1" Cursor="Hand" Source="../../Resources/icons/help.png" Width="16" Height="16" Name="btnHelpCalculate" HorizontalAlignment="Left" Visibility="Hidden" />
             </Grid>
         </StackPanel>

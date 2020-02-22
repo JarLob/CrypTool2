@@ -45,7 +45,7 @@
                                 <ContentPresenter ContentSource="Header" RecognizesAccessKey="true" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                                     <ContentPresenter.ContentTemplate>
                                         <DataTemplate DataType="{x:Type System:String}">
-                                            <comps:SelectableTextBlock Text="{Binding}" />
+                                            <SelectableTextBlock Text="{Binding}" />
                                         </DataTemplate>
                                     </ContentPresenter.ContentTemplate>
                                 </ContentPresenter>
@@ -509,7 +509,7 @@
                                     OverridesDefaultStyle="True"
                                     Template="{StaticResource ExpanderToggleButton}"
                                     Background="{StaticResource NormalBrush}" />
-                                <comps:SelectableTextBlock
+                                <SelectableTextBlock
                                     Name="cnt"
                                     Grid.Column="1"
                                     Margin="4"

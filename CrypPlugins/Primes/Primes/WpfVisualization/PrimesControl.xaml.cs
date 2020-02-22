@@ -196,35 +196,35 @@ namespace Primes.WpfVisualization
             {
                 case NavigationCommandType.Factor_QS:
                 case NavigationCommandType.Factor_Bf:
-                    lblTitel.Content = Primes.Resources.lang.PrimesControl.PrimesControl.title_factorize;
+                    lblTitel.Text = Primes.Resources.lang.PrimesControl.PrimesControl.title_factorize;
                     break;
                 case NavigationCommandType.Start:
-                    lblTitel.Content = Primes.Resources.lang.PrimesControl.PrimesControl.title_start;
+                    lblTitel.Text = Primes.Resources.lang.PrimesControl.PrimesControl.title_start;
                     //imghelp.Visibility = Visibility.Hidden;
                     break;
                 case NavigationCommandType.Primetest_Miller:
                 case NavigationCommandType.Primetest_Sieve:
                 case NavigationCommandType.SieveOfAtkin:
-                    lblTitel.Content = Primes.Resources.lang.PrimesControl.PrimesControl.title_primetest;
+                    lblTitel.Text = Primes.Resources.lang.PrimesControl.PrimesControl.title_primetest;
                     break;
                 case NavigationCommandType.Primespirals:
-                    lblTitel.Content = Primes.Resources.lang.PrimesControl.PrimesControl.title_primespiral;
+                    lblTitel.Text = Primes.Resources.lang.PrimesControl.PrimesControl.title_primespiral;
                     break;
                 case NavigationCommandType.Primesgeneration:
-                    lblTitel.Content = Primes.Resources.lang.PrimesControl.PrimesControl.title_primesgeneration;
+                    lblTitel.Text = Primes.Resources.lang.PrimesControl.PrimesControl.title_primesgeneration;
                     break;
                 case NavigationCommandType.PrimeDistrib_Numberline:
                 case NavigationCommandType.PrimeDistrib_Numberrec:
                 case NavigationCommandType.PrimeDistrib_Ulam:
                 case NavigationCommandType.Graph:
-                    lblTitel.Content = Primes.Resources.lang.PrimesControl.PrimesControl.title_distribution;
+                    lblTitel.Text = Primes.Resources.lang.PrimesControl.PrimesControl.title_distribution;
                     break;
                 case NavigationCommandType.NumberTheoryFunctions:
                 case NavigationCommandType.PrimitivRoot:
                 case NavigationCommandType.PowerMod:
                 case NavigationCommandType.PowerBaseMod:
                 case NavigationCommandType.PrimeDistrib_Goldbach:
-                    lblTitel.Content = Primes.Resources.lang.PrimesControl.PrimesControl.title_Numbertheory;
+                    lblTitel.Text = Primes.Resources.lang.PrimesControl.PrimesControl.title_Numbertheory;
                     break;
             }
         }

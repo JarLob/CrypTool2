@@ -37,7 +37,7 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="100" />
                                 </Grid.RowDefinitions>
-                                <comps:SelectableTextBlock x:Name="lblInfoStep1" Grid.Row="0" />
+                                <SelectableTextBlock x:Name="lblInfoStep1" Grid.Row="0" />
                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                                     <Grid Name="gridFirstStep" Margin="5">
                                         <Grid.RowDefinitions>
@@ -61,7 +61,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="100" />
                             </Grid.RowDefinitions>
-                            <comps:SelectableTextBlock x:Name="lblInfoStep2" Grid.Row="0" />
+                            <SelectableTextBlock x:Name="lblInfoStep2" Grid.Row="0" />
                             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                                 <Grid Name="gridSecondStep" Margin="5">
                                     <Grid.ColumnDefinitions>
@@ -85,7 +85,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="100" />
                             </Grid.RowDefinitions>
-                            <comps:SelectableTextBlock x:Name="lblInfoStep3" Grid.Row="0" />
+                            <SelectableTextBlock x:Name="lblInfoStep3" Grid.Row="0" />
                             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                                 <Grid Name="gridThirdStep" Margin="5" ShowGridLines="False">
                                     <Grid.ColumnDefinitions>
@@ -106,7 +106,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="100" />
                             </Grid.RowDefinitions>
-                            <comps:SelectableTextBlock x:Name="lblInfoStep4" Grid.Row="0" />
+                            <SelectableTextBlock x:Name="lblInfoStep4" Grid.Row="0" />
                             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                                 <StackPanel>
                                     <Grid Name="gridFourthStep" Margin="5" ShowGridLines="False">

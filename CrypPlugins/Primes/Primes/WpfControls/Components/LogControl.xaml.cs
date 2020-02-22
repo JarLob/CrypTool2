@@ -26,6 +26,7 @@ using Primes.Library;
 using System.Collections;
 using System.Linq;
 using Primes.Bignum;
+using Cryptool.PluginBase.Miscellaneous;
 
 namespace Primes.WpfControls.Components
 {
