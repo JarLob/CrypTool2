@@ -582,13 +582,11 @@ namespace Primes.WpfControls.PrimesDistribution.NumberRectangle
             int col = (int)Math.Floor(p.X / SIZE);
             lblActualNumber.Text = m_start.Add(PrimesBigInteger.ValueOf(this.Columns * row)).Add(PrimesBigInteger.ValueOf(col)).ToString("D");
             lblActualNumberInfo.Visibility = Visibility.Visible;
-            lblActualNumber.Visibility = Visibility.Visible;
         }
 
         private void NumberRectangle_MouseLeave(object sender, MouseEventArgs e)
         {
             lblActualNumberInfo.Visibility = Visibility.Hidden;
-            lblActualNumber.Visibility = Visibility.Hidden;
         }
 
         private void NumberRectangle_SizeChanged(object sender, SizeChangedEventArgs e)
