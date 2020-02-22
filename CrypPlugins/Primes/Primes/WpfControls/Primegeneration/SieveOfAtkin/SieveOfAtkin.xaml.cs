@@ -97,6 +97,9 @@ namespace Primes.WpfControls.Primegeneration.SieveOfAtkin
         {
             if (IsRunning()) return;
 
+            log.Clear();
+            log.Columns = 1;
+
             m_Value = value;
             numbergrid.Limit = m_Value;
             startThread();
