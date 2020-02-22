@@ -280,7 +280,7 @@
     <value>Anzahl der Primzahlen &lt;= n</value>
   </data>
   <data name="numberline_pointsdisplayed" xml:space="preserve">
-    <value>Intervallbreite</value>
+    <value>Anzeige-Intervallbreite:</value>
   </data>
   <data name="numberline_priorprime" xml:space="preserve">
     <value>Nächstkleinere Primzahl</value>

@@ -341,10 +341,10 @@
                             </Button.Resources>
                         </Button>
 
-                        <StackPanel Grid.Column="2">
-                            <comps:SelectableTextBlock HorizontalAlignment="Center" Text="{x:Static lang:Distribution.numberline_pointsdisplayed}"></comps:SelectableTextBlock>
-                            <comps:SelectableTextBlock HorizontalAlignment="Center" x:Name="lblCountPoints" VerticalAlignment="Center">44</comps:SelectableTextBlock>
-                        </StackPanel>
+                        <comps:SelectableTextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2">
+                            <Run Text="{x:Static lang:Distribution.numberline_pointsdisplayed}" />
+                            <Run x:Name="lblCountPoints">44"</Run>
+                        </comps:SelectableTextBlock>
 
                         <Button Cursor="Hand" Template="{StaticResource rightscrollfastbutton}" Height="30" Width="30" Grid.Column="3" Name="btnScrollRight_Fast" Click="btnScroll_MouseClick" ToolTip="{x:Static lang:Distribution.numberline_tooltipscrollrightfast}">
                             <Button.Resources>

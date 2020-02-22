@@ -304,7 +304,7 @@
     <value>Number of primes &lt;= n</value>
   </data>
   <data name="numberline_pointsdisplayed" xml:space="preserve">
-    <value>number of points displayed</value>
+    <value>Number of points displayed:</value>
   </data>
   <data name="numberline_priorprime" xml:space="preserve">
     <value>Next smaller prime number</value>
