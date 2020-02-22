@@ -160,7 +160,7 @@
     <value>Der Abstand zwischen "von" und "bis" muss mindestens {0} betragen.</value>
   </data>
   <data name="numbergrid_actualnumber" xml:space="preserve">
-    <value>aktuelle Zahl</value>
+    <value>Aktuelle Zahl:</value>
   </data>
   <data name="numbergrid_btnExecute" xml:space="preserve">
     <value>Ausführen</value>
@@ -280,7 +280,7 @@
     <value>Anzahl der Primzahlen &lt;= n</value>
   </data>
   <data name="numberline_pointsdisplayed" xml:space="preserve">
-    <value>Anzeige-Intervallbreite:</value>
+    <value>Schiebefenster Anzeige-Intervallbreite:</value>
   </data>
   <data name="numberline_priorprime" xml:space="preserve">
     <value>Nächstkleinere Primzahl</value>

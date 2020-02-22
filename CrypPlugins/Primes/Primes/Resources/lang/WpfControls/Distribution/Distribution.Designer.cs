@@ -187,7 +187,7 @@ namespace Primes.Resources.lang.WpfControls.Distribution {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die current number ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Current number: ähnelt.
         /// </summary>
         public static string numbergrid_actualnumber {
             get {
@@ -619,7 +619,7 @@ namespace Primes.Resources.lang.WpfControls.Distribution {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Number of points displayed: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sliding window display range: ähnelt.
         /// </summary>
         public static string numberline_pointsdisplayed {
             get {
