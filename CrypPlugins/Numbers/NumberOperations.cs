@@ -23,7 +23,25 @@ using Cryptool.PluginBase.Miscellaneous;
 namespace Cryptool.Plugins.Numbers
 {
     [Author("Sven Rech, Nils Kopal", "sven.rech@cryptool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
-    [PluginInfo("Cryptool.Plugins.Numbers.Properties.Resources", "PluginOperationCaption", "PluginOperationTooltip", "Numbers/DetailedDescription/doc.xml", "Numbers/icons/plusIcon.png", "Numbers/icons/minusIcon.png", "Numbers/icons/timesIcon.png", "Numbers/icons/divIcon.png", "Numbers/icons/powIcon.png", "Numbers/icons/gcdicon.png", "Numbers/icons/lcmIcon.png", "Numbers/icons/rootIcon.png", "Numbers/icons/inverseIcon.png", "Numbers/icons/phiIcon.png")]
+    [PluginInfo("Cryptool.Plugins.Numbers.Properties.Resources", "PluginOperationCaption", "PluginOperationTooltip", 
+        "Numbers/DetailedDescription/doc.xml", 
+        "Numbers/icons/plusIcon.png", 
+        "Numbers/icons/minusIcon.png", 
+        "Numbers/icons/timesIcon.png", 
+        "Numbers/icons/divIcon.png", 
+        "Numbers/icons/powIcon.png", 
+        "Numbers/icons/gcdicon.png", 
+        "Numbers/icons/lcmIcon.png", 
+        "Numbers/icons/rootIcon.png", 
+        "Numbers/icons/inverseIcon.png", 
+        "Numbers/icons/phiIcon.png",
+        "Numbers/icons/divsumIcon.png",
+        "Numbers/icons/divnumIcon.png",
+        "Numbers/icons/PiIcon.png",
+        "Numbers/icons/PrimeNIcon.png",
+        "Numbers/icons/NextPrimeIcon.png",
+        "Numbers/icons/PrevOrimeIcon.png",
+        "Numbers/icons/IsPrime.png")]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     class NumberOperations : ICrypComponent
     {
@@ -35,6 +53,7 @@ namespace Cryptool.Plugins.Numbers
         private BigInteger mod = 0;
         private BigInteger output = 0;
         private NumberSettings settings = new NumberSettings();
+        private bool _running = false;
 
         #endregion
 
@@ -159,9 +178,10 @@ namespace Cryptool.Plugins.Numbers
         public void Execute()
         {
             BigInteger result = 0;
+            _running = true;
 
             //First checks if both inputs are set
-            if (input1 != null && input2 != null)
+            if (input1 != null)
             {
                 ProgressChanged(0.5, 1.0);
 
@@ -170,24 +190,19 @@ namespace Cryptool.Plugins.Numbers
                     //As the user changes the operation different outputs are calculated.
                     switch (settings.Operat)
                     {
-                        // x + y
-                        case 0:
+                        case NumberOperation.Addition:
                             result = Input1 + Input2;
                             break;
-                        // x - y
-                        case 1:
+                        case NumberOperation.Subtraction:
                             result = Input1 - Input2;
                             break;
-                        //x * y
-                        case 2:
+                        case NumberOperation.Multiplication:
                             result = Input1 * Input2;
                             break;
-                        // x / y
-                        case 3:
+                        case NumberOperation.Division:
                             result = Input1 / Input2;
                             break;
-                        // x ^ y
-                        case 4:
+                        case NumberOperation.Power:
                             if (Mod != 0)
                             {
                                 if (Input2 >= 0)
@@ -200,20 +215,16 @@ namespace Cryptool.Plugins.Numbers
                                 result = BigIntegerHelper.Pow(Input1, Input2);
                             }
                             break;
-                        // gcd(x,y)
-                        case 5:
+                        case NumberOperation.GCD:
                             result = Input1.GCD(Input2);
                             break;
-                        // lcm(x,y)
-                        case 6:
+                        case NumberOperation.LCM:
                             result = Input1.LCM(Input2);
                             break;
-                        // sqrt(x,y)
-                        case 7:
+                        case NumberOperation.SQRT:
                             result = Input1.Sqrt();
                             break;
-                        // modinv(x,y)
-                        case 8:
+                        case NumberOperation.MODINV:
                             if (Input2 != 0)
                             {
                                 result = BigIntegerHelper.ModInverse(Input1, Input2);
@@ -223,18 +234,72 @@ namespace Cryptool.Plugins.Numbers
                                 result = 1 / Input1;
                             }
                             break;
-                        // phi(x)
-                        case 9:
+                        case NumberOperation.Phi:
                             result = Input1.Phi();
                             break;
+                        case NumberOperation.Divsum:
+                            BigInteger r = 0;
+                            foreach(var n in Input1.Divisors())
+                            {
+                                r += n;
+                            }
+                            result = r;
+                            break;
+                        case NumberOperation.Divnum:
+                            result = Input1.Divisors().Count;
+                            break;
+                        case NumberOperation.Pi:
+                            BigInteger pi = 0;
+                            for(BigInteger b = 2; b <= Input1; b++)
+                            {
+                                if (b.IsProbablePrime())
+                                {
+                                    pi++;
+                                }
+                                if (!_running)
+                                {
+                                    return;
+                                }
+                            }
+                            result = pi;
+                            break;
+                        case NumberOperation.PrimeN:
+                            BigInteger p = 0;
+                            BigInteger i = 2;
+                            while (Input1 <= 0 && _running)
+                            {
+                                if (i.IsProbablePrime())
+                                {
+                                    p++;
+                                    if (p == Input1)
+                                    {
+                                        result = i;
+                                        break;
+                                    }
+                                }
+                                i++;
+                            }
+                            break;
+                        case NumberOperation.Nextprime:
+                            result = Input1.NextProbablePrime();
+                            break;
+                        case NumberOperation.Prevprime:
+                            result = Input1.PreviousProbablePrime();
+                            break;
+                        case NumberOperation.Isprime:
+                            result = (Input1.IsProbablePrime() ? 1 : 0);
+                            break;
                     }
-
-                    Output = (Mod == 0) ? result : (((result % Mod) + Mod) % Mod); 
+                    Output = (Mod == 0) ? result : (((result % Mod) + Mod) % Mod);
                 }
                 catch (Exception e)
                 {
                     GuiLogMessage("Big Number fail: " + e.Message, NotificationLevel.Error);
                     return;
+                }
+                finally
+                {
+                    _running = false;
                 }
 
                 ProgressChanged(1.0, 1.0);
@@ -247,6 +312,7 @@ namespace Cryptool.Plugins.Numbers
 
         public void Stop()
         {
+            _running = false;
         }
 
         public void Initialize()

@@ -19,30 +19,62 @@ using System.ComponentModel;
 
 namespace Cryptool.Plugins.Numbers
 {
+    public enum NumberOperation
+    {
+        Addition,
+        Subtraction,
+        Multiplication,
+        Division,
+        Power,
+        GCD,
+        LCM,
+        SQRT,
+        MODINV,
+        Phi,
+        Divsum,
+        Divnum,
+        Pi,
+        PrimeN,
+        Nextprime,
+        Prevprime,
+        Isprime
+    }
     class NumberSettings : ISettings
     {
         #region private variables
 
-        private int operat;
+        private NumberOperation operat;
 
         #endregion
 
         #region taskpane
-
-        /// <summary>
-        /// The checkbox with its options.
-        /// 
-        /// Based on the option chosen, the icon for this plug-in will also change.
-        /// </summary>
-        [TaskPane("OperatCaption", "OperatTooltip", null, 1, false, ControlType.ComboBox, new string[] { "OperatList1", "OperatList2", "OperatList3", "OperatList4", "OperatList5", "OperatList6", "OperatList7", "OperatList8", "OperatList9", "OperatList10" })]
-        public int Operat
+      
+        [TaskPane("OperatCaption", "OperatTooltip", null, 1, false, ControlType.ComboBox, new string[] { 
+            "OperatList1", 
+            "OperatList2", 
+            "OperatList3", 
+            "OperatList4", 
+            "OperatList5", 
+            "OperatList6", 
+            "OperatList7", 
+            "OperatList8",
+            "OperatList9",
+            "OperatList10",
+            "Divsum",
+            "Divnum",
+            "Pi",
+            "Prime",
+            "Nextprime",
+            "Prevprime",
+            "Isprime"})]
+        public NumberOperation Operat
         {
             get { return this.operat; }
             set
             {
-                if ((int)value != this.operat)
+                if (value != this.operat)
                 {
-                    this.operat = (int)value;
+                    operat = value;
                     OnPropertyChanged("Operat");
 
                     changeToCorrectIcon(operat);
@@ -54,49 +86,61 @@ namespace Cryptool.Plugins.Numbers
         /// Changes the plugins icon to the icon fitting to actual selected arithmetic function
         /// </summary>
         /// <param name="operat"></param>
-        public void changeToCorrectIcon(int operat)
+        public void changeToCorrectIcon(NumberOperation operat)
         {
             switch (operat)
             {
-                // x+y
-                case 0:
+                case NumberOperation.Addition:
                     ChangePluginIcon(0);
                     break;
-                // x-y
-                case 1:
+                case NumberOperation.Subtraction:
                     ChangePluginIcon(1);
                     break;
-                // x*y
-                case 2:
+                case NumberOperation.Multiplication:
                     ChangePluginIcon(2);
                     break;
-                // x/y
-                case 3:
+                case NumberOperation.Division:
                     ChangePluginIcon(3);
                     break;
-                // x^y
-                case 4:
+                case NumberOperation.Power:
                     ChangePluginIcon(4);
                     break;
-                // gcd(x,y)
-                case 5:
+                case NumberOperation.GCD:
                     ChangePluginIcon(5);
                     break;
                 // lcm(x,y)
-                case 6:
+                case NumberOperation.LCM:
                     ChangePluginIcon(6);
                     break;
-                // sqrt(x)
-                case 7:
+                case NumberOperation.SQRT:
                     ChangePluginIcon(7);
                     break;
-                // modinv(x,y)
-                case 8:
+                case NumberOperation.MODINV:
                     ChangePluginIcon(8);
                     break;
-                // phi(x)
-                case 9:
+                case NumberOperation.Phi:
                     ChangePluginIcon(9);
+                    break;
+                case NumberOperation.Divsum:
+                    ChangePluginIcon(10);
+                    break;
+                case NumberOperation.Divnum:
+                    ChangePluginIcon(11);
+                    break;
+                case NumberOperation.Pi:
+                    ChangePluginIcon(12);
+                    break;
+                case NumberOperation.PrimeN:
+                    ChangePluginIcon(13);
+                    break;
+                case NumberOperation.Nextprime:
+                    ChangePluginIcon(14);
+                    break;
+                case NumberOperation.Prevprime:
+                    ChangePluginIcon(15);
+                    break;
+                case NumberOperation.Isprime:
+                    ChangePluginIcon(16);
                     break;
             }
         }

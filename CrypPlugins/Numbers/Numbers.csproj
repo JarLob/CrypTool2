@@ -205,6 +205,15 @@
     <Resource Include="icons\phiIcon.png" />
     <Resource Include="icons\rootIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\divnumIcon.png" />
+    <Resource Include="icons\divsumIcon.png" />
+    <Resource Include="icons\IsPrimeIcon.png" />
+    <Resource Include="icons\NextPrimeIcon.png" />
+    <Resource Include="icons\PiIcon.png" />
+    <Resource Include="icons\PrevPrimeIcon.png" />
+    <Resource Include="icons\PrimeNIcon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
