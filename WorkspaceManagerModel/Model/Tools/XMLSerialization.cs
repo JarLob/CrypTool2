@@ -512,7 +512,19 @@ namespace XMLSerialization
                                 Double result = 0;
                                 System.Double.TryParse(RevertXMLSymbols(value.InnerText.Replace(',', '.')),
                                                                         NumberStyles.Number,
-                                                                        CultureInfo.CreateSpecificCulture("en-GB"),
+                                                                        CultureInfo.CreateSpecificCulture("en-Us"),
+                                                                        out result);                               
+                                newObject.GetType().GetField(RevertXMLSymbols(membername.InnerText),
+                                                             BindingFlags.NonPublic |
+                                                             BindingFlags.Public |
+                                                             BindingFlags.Instance).SetValue(newObject, result);
+                            }
+                            else if (RevertXMLSymbols(membertype.InnerText).Equals("System.Single"))
+                            {
+                                Single result = 0;
+                                System.Single.TryParse(RevertXMLSymbols(value.InnerText.Replace(',', '.')),
+                                                                        NumberStyles.Number,
+                                                                        CultureInfo.CreateSpecificCulture("en-Us"),
                                                                         out result);
                                 newObject.GetType().GetField(RevertXMLSymbols(membername.InnerText),
                                                              BindingFlags.NonPublic |
@@ -550,11 +562,11 @@ namespace XMLSerialization
                                 double y = 0;
                                 System.Double.TryParse(RevertXMLSymbols(values[0].Replace(',', '.')),
                                                                         NumberStyles.Number,
-                                                                        CultureInfo.CreateSpecificCulture("en-GB"),
+                                                                        CultureInfo.CreateSpecificCulture("en-Us"),
                                                                         out x);
                                 System.Double.TryParse(RevertXMLSymbols(values[1].Replace(',', '.')),
                                                                         NumberStyles.Number,
-                                                                        CultureInfo.CreateSpecificCulture("en-GB"),
+                                                                        CultureInfo.CreateSpecificCulture("en-Us"),
                                                                         out y);
 
                                 System.Windows.Point result = new System.Windows.Point(x, y);

@@ -28,6 +28,7 @@ using System.Windows.Documents;
 using System.Windows;
 using System.Text;
 using Cryptool.PluginBase.Attributes;
+using System.Globalization;
 
 namespace WorkspaceManager.Model
 {
@@ -197,7 +198,9 @@ namespace WorkspaceManager.Model
             foreach (PersistantPlugin persistantPlugin in persistantModel.PersistantPluginList)
             {
                 if (persistantPlugin.PluginModel.Plugin.Settings == null)
+                {
                     continue; // do not attempt deserialization if plugin type has no settings
+                }
 
                 foreach (PersistantSetting persistantSetting in persistantPlugin.PersistantSettingsList)
                 {
@@ -233,10 +236,23 @@ namespace WorkspaceManager.Model
                                         pInfo.SetValue(persistantPlugin.PluginModel.Plugin.Settings,
                                                        System.Int64.Parse((String)persistantSetting.Value), null);
                                     }
+                                    else if (persistantSetting.Type.Equals("System.Single"))
+                                    {
+                                        Single result = 0;
+                                        System.Single.TryParse(persistantSetting.Value.Replace(',', '.'),
+                                                                                NumberStyles.Number,
+                                                                                CultureInfo.CreateSpecificCulture("en-Us"),
+                                                                                out result);                                        
+                                        pInfo.SetValue(persistantPlugin.PluginModel.Plugin.Settings, result, null);
+                                    }
                                     else if (persistantSetting.Type.Equals("System.Double"))
                                     {
-                                        pInfo.SetValue(persistantPlugin.PluginModel.Plugin.Settings,
-                                                       System.Double.Parse((String)persistantSetting.Value), null);
+                                        Double result = 0;
+                                        System.Double.TryParse(persistantSetting.Value.Replace(',', '.'),
+                                                                                NumberStyles.Number,
+                                                                                CultureInfo.CreateSpecificCulture("en-Us"),
+                                                                                out result);
+                                        pInfo.SetValue(persistantPlugin.PluginModel.Plugin.Settings, result, null);
                                     }
                                     else if (persistantSetting.Type.Equals("System.Boolean"))
                                     {
@@ -422,7 +438,6 @@ namespace WorkspaceManager.Model
             //Save all Settings of each Plugin
             foreach (PluginModel pluginModel in workspaceModel.AllPluginModels)
             {
-
                 if (pluginModel.Plugin.Settings != null)
                 {
                     pluginModel.SettingesHaveChanges = false;
@@ -449,7 +464,6 @@ namespace WorkspaceManager.Model
                             persistantSetting.Type = pInfo.PropertyType.FullName;
                             persistantPlugin.PersistantSettingsList.Add(persistantSetting);
                         }
-
                     }
                     persistantModel.PersistantPluginList.Add(persistantPlugin);
                 }

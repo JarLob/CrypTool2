@@ -7,7 +7,6 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using Cryptool.PluginBase;
-
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System;
@@ -103,19 +102,12 @@ namespace WorkspaceManager.View.Visuals
                     }
                 }
 
-                else
-                {
-                    //MyScrollViewer.Margin = new Thickness(-5, -5, -5, -5);
-
-                }
-
                 drawList(this.entgrou);
 
                 pluginSettingsContainer.TaskPaneAttributeChanged += HandleTaskPaneAttributeChanges;
                 //"Replay" all current task pane attributes:
                 DispatchTaskPaneAttributeChanges(pluginSettingsContainer.CurrentTaskPaneAttributes);
             }
-
             else
             {
                 InitializeComponent();
@@ -124,7 +116,6 @@ namespace WorkspaceManager.View.Visuals
                 MyScrollViewer.Content = tb;
                 noSettings = true;
             }
-
         }
 
         void BinSettingsVisual_Loaded(object sender, RoutedEventArgs e)
@@ -181,7 +172,9 @@ namespace WorkspaceManager.View.Visuals
                     }
                 }
                 if (tbI != null)
+                {
                     tbC.Items.Remove(tbI);
+                }
             }
         }
 
@@ -242,8 +235,6 @@ namespace WorkspaceManager.View.Visuals
         {
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-
-
                 foreach (List<ControlEntry> cel in entgrou.entryList)
                 {
                     foreach (ControlEntry ce in cel)
@@ -288,15 +279,10 @@ namespace WorkspaceManager.View.Visuals
                         }
                     }
                 }
-
             }, null);
-
         }
 
-
         List<String> groups = new List<String>();
-
-
 
         public static double getComboBoxMaxSize(ComboBox child)
         {
@@ -316,8 +302,6 @@ namespace WorkspaceManager.View.Visuals
             return cb.Width = x + 28 ; // 28 pixel are an approximation of the rendersize of the dropdown button
         }
 
-
-        
         private void drawList(EntryGroup entgrou)
         {
             bool isFirst = true;
@@ -527,7 +511,7 @@ namespace WorkspaceManager.View.Visuals
 
         private EntryGroup createContentSettings(IPlugin plugin)
         {
-            EntryGroup entgrou = new EntryGroup();          
+            EntryGroup entgrou = new EntryGroup();
             foreach (TaskPaneAttribute tpa in plugin.Settings.GetSettingsProperties(plugin))
             {
                 //if it is a method and has a CryptoBenchmarkPropertyAttribute we do not create a settings entry               
@@ -550,353 +534,352 @@ namespace WorkspaceManager.View.Visuals
                 }
 
                 SettingsFormatAttribute sfa = plugin.Settings.GetSettingsFormat(tpa.PropertyName);
-                if(sfa!=null)
-                if (!groups.Contains(sfa.VerticalGroup))
-                {
-                    groups.Add(sfa.VerticalGroup);
-                }
+                if (sfa != null)
+                    if (!groups.Contains(sfa.VerticalGroup))
+                    {
+                        groups.Add(sfa.VerticalGroup);
+                    }
 
                 Binding dataBinding = new Binding(tpa.PropertyName);
                 dataBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                 dataBinding.Mode = BindingMode.TwoWay;
                 dataBinding.Source = plugin.Settings;
-                
+
                 bool b = (bcv.Model.GetOutputConnectors().Union(bcv.Model.GetInputConnectors())).Any(x => tpa.PropertyName == x.GetName());
-                    switch (tpa.ControlType)
-                    {
-                        #region TextBox
-                        case ControlType.TextBox:
+                switch (tpa.ControlType)
+                {
+                    #region TextBox
+                    case ControlType.TextBox:
 
-                            TextBox textbox = new TextBox();
-                            textbox.Tag = tpa.ToolTip;
-                            textbox.ToolTip = tpa.ToolTip;
-                            textbox.MouseEnter += Control_MouseEnter;                                                       
-                            if (tpa.RegularExpression != null && tpa.RegularExpression != string.Empty)
-                            {
-                                ControlTemplate validationTemplate = Application.Current.Resources["validationTemplate"] as ControlTemplate;
-                                RegExRule regExRule = new RegExRule();
-                                regExRule.RegExValue = tpa.RegularExpression;
-                                Validation.SetErrorTemplate(textbox, validationTemplate);
-                                dataBinding.ValidationRules.Add(regExRule);
-                                dataBinding.NotifyOnValidationError = true;
-                            }
-                            textbox.SetBinding(TextBox.TextProperty, dataBinding);
-                            textbox.TextWrapping = TextWrapping.Wrap;
-                            entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(textbox, tpa, sfa, b, bcv.Model));
-                            break;
+                        TextBox textbox = new TextBox();
+                        textbox.Tag = tpa.ToolTip;
+                        textbox.ToolTip = tpa.ToolTip;
+                        textbox.MouseEnter += Control_MouseEnter;
+                        if (tpa.RegularExpression != null && tpa.RegularExpression != string.Empty)
+                        {
+                            ControlTemplate validationTemplate = Application.Current.Resources["validationTemplate"] as ControlTemplate;
+                            RegExRule regExRule = new RegExRule();
+                            regExRule.RegExValue = tpa.RegularExpression;
+                            Validation.SetErrorTemplate(textbox, validationTemplate);
+                            dataBinding.ValidationRules.Add(regExRule);
+                            dataBinding.NotifyOnValidationError = true;
+                        }
+                        textbox.SetBinding(TextBox.TextProperty, dataBinding);
+                        textbox.TextWrapping = TextWrapping.Wrap;
+                        entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(textbox, tpa, sfa, b, bcv.Model));
+                        break;
 
-                        #endregion TextBox
+                    #endregion TextBox
 
-                        # region NumericUpDown
-                        case ControlType.NumericUpDown:
-                            if (tpa.ValidationType == ValidationType.RangeInteger)
-                            {
-                                IntegerUpDown intInput = new IntegerUpDown();                                
-                                intInput.SelectAllOnGotFocus = true;
-                                intInput.Tag = tpa.ToolTip;
-                                intInput.ToolTip = tpa.ToolTip;
-                                intInput.MouseEnter += Control_MouseEnter;
-                                intInput.Maximum = tpa.IntegerMaxValue;
-                                intInput.Minimum = tpa.IntegerMinValue;
-                                string s = tpa.IntegerMaxValue + "";
-                                FormattedText ft = new FormattedText(s, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, new Typeface(intInput.FontFamily, intInput.FontStyle, intInput.FontWeight, intInput.FontStretch), intInput.FontSize, Brushes.Black);
-                                intInput.MaxWidth = ft.WidthIncludingTrailingWhitespace + 30;
-                                intInput.Width = ft.WidthIncludingTrailingWhitespace + 30;
-                                intInput.SetBinding(IntegerUpDown.ValueProperty, dataBinding);
-                                entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(intInput, tpa, sfa, b, bcv.Model));
-                                intInput.IsEnabled = true;                                                              
-                            }
-                            else if (tpa.ValidationType == ValidationType.RangeDouble)
-                            {
-                                DoubleUpDown doubleInput = new DoubleUpDown();
-                                doubleInput.SelectAllOnGotFocus = true;
-                                doubleInput.Tag = tpa.ToolTip;
-                                doubleInput.ToolTip = tpa.ToolTip;
-                                doubleInput.MouseEnter += Control_MouseEnter;
-                                doubleInput.Maximum = tpa.DoubleMaxValue;
-                                doubleInput.Minimum = tpa.DoubleMinValue;
-                                doubleInput.Increment = tpa.DoubleIncrement;
-                                string s = double.MaxValue + "";
-                                FormattedText ft = new FormattedText(s, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, new Typeface(doubleInput.FontFamily, doubleInput.FontStyle, doubleInput.FontWeight, doubleInput.FontStretch), doubleInput.FontSize, Brushes.Black);
-                                doubleInput.MaxWidth = ft.WidthIncludingTrailingWhitespace + 30;
-                                doubleInput.Width = ft.WidthIncludingTrailingWhitespace + 30;
-                                doubleInput.SetBinding(DoubleUpDown.ValueProperty, dataBinding);
-                                entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(doubleInput, tpa, sfa, b, bcv.Model));
-                                doubleInput.IsEnabled = true;
-                            }
-                            break;
-                        # endregion NumericUpDown
+                    #region NumericUpDown
+                    case ControlType.NumericUpDown:
+                        if (tpa.ValidationType == ValidationType.RangeInteger)
+                        {
+                            IntegerUpDown intInput = new IntegerUpDown();
+                            intInput.SelectAllOnGotFocus = true;
+                            intInput.Tag = tpa.ToolTip;
+                            intInput.ToolTip = tpa.ToolTip;
+                            intInput.MouseEnter += Control_MouseEnter;
+                            intInput.Maximum = tpa.IntegerMaxValue;
+                            intInput.Minimum = tpa.IntegerMinValue;
+                            string s = tpa.IntegerMaxValue + "";
+                            FormattedText ft = new FormattedText(s, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, new Typeface(intInput.FontFamily, intInput.FontStyle, intInput.FontWeight, intInput.FontStretch), intInput.FontSize, Brushes.Black);
+                            intInput.MaxWidth = ft.WidthIncludingTrailingWhitespace + 30;
+                            intInput.Width = ft.WidthIncludingTrailingWhitespace + 30;
+                            intInput.SetBinding(IntegerUpDown.ValueProperty, dataBinding);
+                            entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(intInput, tpa, sfa, b, bcv.Model));
+                            intInput.IsEnabled = true;
+                        }
+                        else if (tpa.ValidationType == ValidationType.RangeDouble)
+                        {
+                            DoubleUpDown doubleInput = new DoubleUpDown();
+                            doubleInput.SelectAllOnGotFocus = true;
+                            doubleInput.Tag = tpa.ToolTip;
+                            doubleInput.ToolTip = tpa.ToolTip;
+                            doubleInput.MouseEnter += Control_MouseEnter;
+                            doubleInput.Maximum = tpa.DoubleMaxValue;
+                            doubleInput.Minimum = tpa.DoubleMinValue;
+                            doubleInput.Increment = tpa.DoubleIncrement;
+                            string s = double.MaxValue + "";
+                            FormattedText ft = new FormattedText(s, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, new Typeface(doubleInput.FontFamily, doubleInput.FontStyle, doubleInput.FontWeight, doubleInput.FontStretch), doubleInput.FontSize, Brushes.Black);
+                            doubleInput.MaxWidth = ft.WidthIncludingTrailingWhitespace + 30;
+                            doubleInput.Width = ft.WidthIncludingTrailingWhitespace + 30;
+                            doubleInput.SetBinding(DoubleUpDown.ValueProperty, dataBinding);
+                            entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(doubleInput, tpa, sfa, b, bcv.Model));
+                            doubleInput.IsEnabled = true;
+                        }
+                        break;
+                    #endregion NumericUpDown
 
-                        # region ComboBox
-                        case ControlType.ComboBox:
-                            ComboBox comboBox = new ComboBox();
-   
-                            comboBox.Tag = tpa.ToolTip;
-                            comboBox.MouseEnter += Control_MouseEnter;
+                    #region ComboBox
+                    case ControlType.ComboBox:
+                        ComboBox comboBox = new ComboBox();
 
-                            object value = plugin.Settings.GetType().GetProperty(tpa.PropertyName).GetValue(plugin.Settings, null);
-                            bool isEnum = value is Enum;
+                        comboBox.Tag = tpa.ToolTip;
+                        comboBox.MouseEnter += Control_MouseEnter;
 
-                            if (isEnum) // use generic enum<->int converter
-                                dataBinding.Converter = EnumToIntConverter.GetInstance();
-                            
-                            
+                        object value = plugin.Settings.GetType().GetProperty(tpa.PropertyName).GetValue(plugin.Settings, null);
+                        bool isEnum = value is Enum;
 
-                            if (tpa.ControlValues != null) // show manually passed entries in ComboBox
-                                comboBox.ItemsSource = tpa.ControlValues;
-                             else if (isEnum) // show automatically derived enum entries in ComboBox
-                               comboBox.ItemsSource = Enum.GetValues(value.GetType());
-                            else // nothing to show
-                                GuiLogMessage("No ComboBox entries given", NotificationLevel.Error);
-                            comboBox.ToolTip = tpa.ToolTip;
-                            comboBox.SetBinding(ComboBox.SelectedIndexProperty, dataBinding);
-                            //controlList.Add(new ControlEntry(comboBox, tpa, sfa));
-                            entgrou.AddNewEntry(tpa.GroupName,new ControlEntry(comboBox, tpa, sfa, b, bcv.Model));
-                            break;
+                        if (isEnum) // use generic enum<->int converter
+                            dataBinding.Converter = EnumToIntConverter.GetInstance();
+
+
+
+                        if (tpa.ControlValues != null) // show manually passed entries in ComboBox
+                        {
+                            comboBox.ItemsSource = tpa.ControlValues;
+                        }
+                        else if (isEnum) // show automatically derived enum entries in ComboBox
+                        {
+                            comboBox.ItemsSource = Enum.GetValues(value.GetType());
+                        }
+                        else // nothing to show
+                        {
+                            GuiLogMessage("No ComboBox entries given", NotificationLevel.Error);
+                        }
+                        comboBox.ToolTip = tpa.ToolTip;
+                        comboBox.SetBinding(ComboBox.SelectedIndexProperty, dataBinding);
+                        //controlList.Add(new ControlEntry(comboBox, tpa, sfa));
+                        entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(comboBox, tpa, sfa, b, bcv.Model));
+                        break;
 
                     #endregion ComboBox
 
                     #region LanguageSelector
-                    case ControlType.LanguageSelector:
-                        {
-                            ComboBox comboBox1 = new ComboBox();
-
-                            comboBox1.Tag = tpa.ToolTip;
-                            comboBox1.MouseEnter += Control_MouseEnter;
-                            comboBox1.ItemsSource = Cryptool.PluginBase.Utils.LanguageStatistics.SupportedLanguages;
-                            comboBox1.ToolTip = tpa.ToolTip;
-                            comboBox1.SetBinding(ComboBox.SelectedIndexProperty, dataBinding);
-                            entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(comboBox1, tpa, sfa, b, bcv.Model));
-                            break;
-                        }
-
+                    case ControlType.LanguageSelector:                        
+                        ComboBox comboBox1 = new ComboBox();
+                        comboBox1.Tag = tpa.ToolTip;
+                        comboBox1.MouseEnter += Control_MouseEnter;
+                        comboBox1.ItemsSource = Cryptool.PluginBase.Utils.LanguageStatistics.SupportedLanguages;
+                        comboBox1.ToolTip = tpa.ToolTip;
+                        comboBox1.SetBinding(ComboBox.SelectedIndexProperty, dataBinding);
+                        entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(comboBox1, tpa, sfa, b, bcv.Model));
+                        break;                        
                     #endregion LanguageSelector
 
                     #region RadioButton
                     case ControlType.RadioButton:
-                            if (!dicRadioButtons.ContainsKey(plugin.Settings))
-                            {
-                                dicRadioButtons.Add(plugin.Settings, new Dictionary<string, List<RadioButton>>());
-                            }
-                            List<RadioButton> list = new List<RadioButton>();
-                            StackPanel panelRadioButtons = new StackPanel();
+                        if (!dicRadioButtons.ContainsKey(plugin.Settings))
+                        {
+                            dicRadioButtons.Add(plugin.Settings, new Dictionary<string, List<RadioButton>>());
+                        }
+                        List<RadioButton> list = new List<RadioButton>();
+                        StackPanel panelRadioButtons = new StackPanel();
 
-                            panelRadioButtons.ToolTip = tpa.ToolTip;
-                            panelRadioButtons.MouseEnter += Control_MouseEnter;
-                            panelRadioButtons.Margin = CONTROL_DEFAULT_MARGIN;
+                        panelRadioButtons.ToolTip = tpa.ToolTip;
+                        panelRadioButtons.MouseEnter += Control_MouseEnter;
+                        panelRadioButtons.Margin = CONTROL_DEFAULT_MARGIN;
 
-                            string groupNameExtension = Guid.NewGuid().ToString();
-                            
-                            for (int i = 0; i < tpa.ControlValues.Length; i++)
-                                {
-                                    RadioButton radio = new RadioButton();
-                                    radio.IsChecked = false;
-                                    
-                                    string stringValue = tpa.ControlValues[i];
+                        string groupNameExtension = Guid.NewGuid().ToString();
 
-                                    Binding dataBinding1 = new Binding(plugin.Settings.GetType().GetProperty(tpa.PropertyName).Name);
-                                    dataBinding1.Converter = new RadioBoolToIntConverter();
-                                    dataBinding1.Mode = BindingMode.TwoWay;
-                                    dataBinding1.Source = plugin.Settings;
-                                    dataBinding1.ConverterParameter = (int)i;
+                        for (int i = 0; i < tpa.ControlValues.Length; i++)
+                        {
+                            RadioButton radio = new RadioButton();
+                            radio.IsChecked = false;
 
-                                    radio.GroupName = tpa.PropertyName + groupNameExtension;
-                                    radio.Content = stringValue;
-                                    
-                                    radio.Tag = new RadioButtonListAndBindingInfo(list, plugin, tpa);
-                                    radio.ToolTip = tpa.ToolTip;
-                                    radio.SetBinding(RadioButton.IsCheckedProperty, dataBinding1);
-                                    panelRadioButtons.Children.Add(radio);
-                                    list.Add(radio);
-                                }
-                                dicRadioButtons[plugin.Settings].Add(tpa.PropertyName, list);
-                                entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(panelRadioButtons, tpa, sfa, b, bcv.Model));
-                           
-                            break;
-                            
-                        #endregion RadioButton
+                            string stringValue = tpa.ControlValues[i];
 
-                        # region CheckBox
-                        case ControlType.CheckBox:
-                            CheckBox checkBox = new CheckBox();
-                            
-                            checkBox.Margin = CONTROL_DEFAULT_MARGIN;
-                            TextBlock wrapBlock = new TextBlock();
-                            wrapBlock.Text = tpa.Caption;
-                            wrapBlock.TextWrapping = TextWrapping.Wrap;
-                            checkBox.Content = wrapBlock;
-                            checkBox.Tag = tpa.ToolTip;
-                            checkBox.ToolTip = tpa.ToolTip;
-                            checkBox.MouseEnter += Control_MouseEnter;
-                            checkBox.SetBinding(CheckBox.IsCheckedProperty, dataBinding);
-                            entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(checkBox, tpa, sfa, b, bcv.Model));
-                            
-                            break;
-                        # endregion CheckBox
-                            
-                        # region DynamicComboBox
-                        case ControlType.DynamicComboBox:
-                            PropertyInfo pInfo = plugin.Settings.GetType().GetProperty(tpa.ControlValuesNotInterpolated[0]);
-                                                    
-                            ObservableCollection<string> coll = pInfo.GetValue(plugin.Settings, null) as ObservableCollection<string>;
-                                
-                            if (coll != null)
-                            {
-                                ComboBox comboBoxDyn = new ComboBox();
-                             
-                                comboBoxDyn.Tag = tpa.ToolTip;
-                                comboBoxDyn.ToolTip = tpa.ToolTip;
-                                comboBoxDyn.MouseEnter += Control_MouseEnter;
-                                comboBoxDyn.ItemsSource = coll;
-                                comboBoxDyn.SetBinding(ComboBox.SelectedIndexProperty, dataBinding);
-                                //inputControl = comboBoxDyn;
-                                //bInfo.CaptionGUIElement = comboBoxDyn;
+                            Binding dataBinding1 = new Binding(plugin.Settings.GetType().GetProperty(tpa.PropertyName).Name);
+                            dataBinding1.Converter = new RadioBoolToIntConverter();
+                            dataBinding1.Mode = BindingMode.TwoWay;
+                            dataBinding1.Source = plugin.Settings;
+                            dataBinding1.ConverterParameter = (int)i;
 
-                                //controlList.Add(new ControlEntry(comboBoxDyn, tpa, sfa));
-                                entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(comboBoxDyn, tpa, sfa, b, bcv.Model));
-                            }
-                            break;
-                            # endregion DynamicComboBox
+                            radio.GroupName = tpa.PropertyName + groupNameExtension;
+                            radio.Content = stringValue;
 
-                        # region FileDialog
-                        case ControlType.SaveFileDialog:
-                        case ControlType.OpenFileDialog:
-                            StackPanel sp = new StackPanel();
-                           
-                            sp.Uid = "FileDialog";
-                            sp.Orientation = Orientation.Vertical;
+                            radio.Tag = new RadioButtonListAndBindingInfo(list, plugin, tpa);
+                            radio.ToolTip = tpa.ToolTip;
+                            radio.SetBinding(RadioButton.IsCheckedProperty, dataBinding1);
+                            panelRadioButtons.Children.Add(radio);
+                            list.Add(radio);
+                        }
+                        dicRadioButtons[plugin.Settings].Add(tpa.PropertyName, list);
+                        entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(panelRadioButtons, tpa, sfa, b, bcv.Model));
 
-                            TextBox fileTextBox = new TextBox();
-                            fileTextBox.TextWrapping = TextWrapping.Wrap;
-                            fileTextBox.Background = Brushes.LightGray;
-                            fileTextBox.IsReadOnly = true;
-                            fileTextBox.Margin = new Thickness(0, 0, 0, 5);
-                            fileTextBox.TextChanged += fileDialogTextBox_TextChanged;
-                            fileTextBox.SetBinding(TextBox.TextProperty, dataBinding);
-                            //fileTextBox.SetBinding(TextBox.ToolTipProperty, dataBinding);
-                            
-                            fileTextBox.Tag = tpa;
-                            if (fileTextBox.ToolTip == null || fileTextBox.ToolTip == string.Empty)
-                            {
-                                fileTextBox.ToolTip = tpa.ToolTip;
-                            }
-                            fileTextBox.MouseEnter += fileTextBox_MouseEnter;
-                            sp.Children.Add(fileTextBox);
-
-                            Button btn = new Button();
-                            
-                            btn.Tag = fileTextBox;
-                            if (tpa.ControlType == ControlType.SaveFileDialog)
-                                btn.Content = Properties.Resources.Save_File;
-                            else
-                                btn.Content = Properties.Resources.Open_File;
-                            btn.Click += FileDialogClick;
-                            sp.Children.Add(btn);
-                            entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(sp, tpa, sfa, b, bcv.Model));
-                           
-                            break;
-                        # endregion FileDialog
-
-                        # region Button
-                        case ControlType.Button:
-                            Button taskPaneButton = new Button();
-                           
-                            taskPaneButton.Margin = new Thickness(0);
-                            taskPaneButton.Tag = tpa;
-                            taskPaneButton.ToolTip = tpa.ToolTip;
-                            taskPaneButton.MouseEnter += TaskPaneButton_MouseEnter;
-                            TextBlock contentBlock = new TextBlock();
-                            contentBlock.Text = tpa.Caption;
-                            contentBlock.TextWrapping = TextWrapping.Wrap;
-                            contentBlock.TextAlignment = TextAlignment.Center;
-                            taskPaneButton.Content = contentBlock;
-                            taskPaneButton.Click += TaskPaneButton_Click;
-                            
-                            entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(taskPaneButton, tpa, sfa, b, bcv.Model));
-                            break;
-                        # endregion Button
-                          
-                        # region Slider
-                        case ControlType.Slider:
-                            Slider slider = new Slider();
-                         
-                            slider.Margin = CONTROL_DEFAULT_MARGIN;
-                            slider.Orientation = Orientation.Horizontal;
-                            slider.Minimum = tpa.DoubleMinValue;
-                            slider.Maximum = tpa.DoubleMaxValue;
-                            slider.Tag = tpa.ToolTip;
-                            slider.ToolTip = tpa.ToolTip;
-                            slider.MouseEnter += Control_MouseEnter;
-                            
-
-                            slider.SetBinding(Slider.ValueProperty, dataBinding);
-                            
-                            slider.MinWidth = 0;
-
-                            entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(slider, tpa, sfa, b, bcv.Model));
-                            break;
-                        # endregion Slider
-
-                        # region TextBoxReadOnly
-                        case ControlType.TextBoxReadOnly:
-                            TextBox textBoxReadOnly = new TextBox();
-                           
-                            textBoxReadOnly.MinWidth = 0;
-                            textBoxReadOnly.TextWrapping = TextWrapping.Wrap;
-                            textBoxReadOnly.IsReadOnly = true;
-                            textBoxReadOnly.BorderThickness = new Thickness(0);
-                            textBoxReadOnly.Background = Brushes.Transparent;
-                            textBoxReadOnly.Tag = tpa.ToolTip;
-                            textBoxReadOnly.ToolTip = tpa.ToolTip;
-                            textBoxReadOnly.MouseEnter += Control_MouseEnter;
-                            dataBinding.Mode = BindingMode.OneWay; // read-only strings do not need a setter
-                            textBoxReadOnly.SetBinding(TextBox.TextProperty, dataBinding);
-                            entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(textBoxReadOnly, tpa, sfa, b, bcv.Model));
-                            break;
-                        # endregion TextBoxReadOnly
-                
-                        #region TextBoxHidden
-                            case ControlType.TextBoxHidden:
-                            PasswordBox passwordBox = new PasswordBox();
-                            
-                            passwordBox.MinWidth = 0; 
-                            
-                            passwordBox.Tag = tpa;
-                            passwordBox.ToolTip = tpa.ToolTip;
-                            passwordBox.MouseEnter += Control_MouseEnter;
-                            passwordBox.Password = plugin.Settings.GetType().GetProperty(tpa.PropertyName).GetValue(plugin.Settings, null) as string;
-                            //textBoxReadOnly.SetBinding(PasswordBox.property , dataBinding);
-                            passwordBox.PasswordChanged += TextBoxHidden_Changed;
-                            entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(passwordBox, tpa, sfa, b, bcv.Model));
                         break;
-                        #endregion TextBoxHidden
+                    #endregion RadioButton
 
-                        #region KeyTextBox
-                            case ControlType.KeyTextBox:
-                            var keyTextBox = new KeyTextBox.KeyTextBox();
-                            
-                            var keyManager = plugin.Settings.GetType().GetProperty(tpa.AdditionalPropertyName).GetValue(plugin.Settings, null) as KeyTextBox.IKeyManager;
-                            keyTextBox.KeyManager = keyManager;
-                            keyTextBox.Tag = tpa;
-                            keyTextBox.ToolTip = tpa.ToolTip;
-                            keyTextBox.MouseEnter += Control_MouseEnter;
-                            keyTextBox.SetBinding(KeyTextBox.KeyTextBox.CurrentKeyProperty, dataBinding);
-                            entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(keyTextBox, tpa, sfa, b, bcv.Model));
+                    #region CheckBox
+                    case ControlType.CheckBox:
+                        CheckBox checkBox = new CheckBox();
+
+                        checkBox.Margin = CONTROL_DEFAULT_MARGIN;
+                        TextBlock wrapBlock = new TextBlock();
+                        wrapBlock.Text = tpa.Caption;
+                        wrapBlock.TextWrapping = TextWrapping.Wrap;
+                        checkBox.Content = wrapBlock;
+                        checkBox.Tag = tpa.ToolTip;
+                        checkBox.ToolTip = tpa.ToolTip;
+                        checkBox.MouseEnter += Control_MouseEnter;
+                        checkBox.SetBinding(CheckBox.IsCheckedProperty, dataBinding);
+                        entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(checkBox, tpa, sfa, b, bcv.Model));
+
+                        break;
+                    #endregion CheckBox
+
+                    #region DynamicComboBox
+                    case ControlType.DynamicComboBox:
+                        PropertyInfo pInfo = plugin.Settings.GetType().GetProperty(tpa.ControlValuesNotInterpolated[0]);
+
+                        ObservableCollection<string> coll = pInfo.GetValue(plugin.Settings, null) as ObservableCollection<string>;
+
+                        if (coll != null)
+                        {
+                            ComboBox comboBoxDyn = new ComboBox();
+
+                            comboBoxDyn.Tag = tpa.ToolTip;
+                            comboBoxDyn.ToolTip = tpa.ToolTip;
+                            comboBoxDyn.MouseEnter += Control_MouseEnter;
+                            comboBoxDyn.ItemsSource = coll;
+                            comboBoxDyn.SetBinding(ComboBox.SelectedIndexProperty, dataBinding);
+                            //inputControl = comboBoxDyn;
+                            //bInfo.CaptionGUIElement = comboBoxDyn;
+
+                            //controlList.Add(new ControlEntry(comboBoxDyn, tpa, sfa));
+                            entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(comboBoxDyn, tpa, sfa, b, bcv.Model));
+                        }
+                        break;
+                    #endregion DynamicComboBox
+
+                    #region FileDialog
+                    case ControlType.SaveFileDialog:
+                    case ControlType.OpenFileDialog:
+                        StackPanel sp = new StackPanel();
+
+                        sp.Uid = "FileDialog";
+                        sp.Orientation = Orientation.Vertical;
+
+                        TextBox fileTextBox = new TextBox();
+                        fileTextBox.TextWrapping = TextWrapping.Wrap;
+                        fileTextBox.Background = Brushes.LightGray;
+                        fileTextBox.IsReadOnly = true;
+                        fileTextBox.Margin = new Thickness(0, 0, 0, 5);
+                        fileTextBox.TextChanged += fileDialogTextBox_TextChanged;
+                        fileTextBox.SetBinding(TextBox.TextProperty, dataBinding);
+                        //fileTextBox.SetBinding(TextBox.ToolTipProperty, dataBinding);
+
+                        fileTextBox.Tag = tpa;
+                        if (fileTextBox.ToolTip == null || fileTextBox.ToolTip == string.Empty)
+                        {
+                            fileTextBox.ToolTip = tpa.ToolTip;
+                        }
+                        fileTextBox.MouseEnter += fileTextBox_MouseEnter;
+                        sp.Children.Add(fileTextBox);
+
+                        Button btn = new Button();
+
+                        btn.Tag = fileTextBox;
+                        if (tpa.ControlType == ControlType.SaveFileDialog)
+                            btn.Content = Properties.Resources.Save_File;
+                        else
+                            btn.Content = Properties.Resources.Open_File;
+                        btn.Click += FileDialogClick;
+                        sp.Children.Add(btn);
+                        entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(sp, tpa, sfa, b, bcv.Model));
+
+                        break;
+                    #endregion FileDialog
+
+                    #region Button
+                    case ControlType.Button:
+                        Button taskPaneButton = new Button();
+
+                        taskPaneButton.Margin = new Thickness(0);
+                        taskPaneButton.Tag = tpa;
+                        taskPaneButton.ToolTip = tpa.ToolTip;
+                        taskPaneButton.MouseEnter += TaskPaneButton_MouseEnter;
+                        TextBlock contentBlock = new TextBlock();
+                        contentBlock.Text = tpa.Caption;
+                        contentBlock.TextWrapping = TextWrapping.Wrap;
+                        contentBlock.TextAlignment = TextAlignment.Center;
+                        taskPaneButton.Content = contentBlock;
+                        taskPaneButton.Click += TaskPaneButton_Click;
+
+                        entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(taskPaneButton, tpa, sfa, b, bcv.Model));
+                        break;
+                    #endregion Button
+
+                    #region Slider
+                    case ControlType.Slider:
+                        Slider slider = new Slider();
+
+                        slider.Margin = CONTROL_DEFAULT_MARGIN;
+                        slider.Orientation = Orientation.Horizontal;
+                        slider.Minimum = tpa.DoubleMinValue;
+                        slider.Maximum = tpa.DoubleMaxValue;
+                        slider.Tag = tpa.ToolTip;
+                        slider.ToolTip = tpa.ToolTip;
+                        slider.MouseEnter += Control_MouseEnter;
+
+
+                        slider.SetBinding(Slider.ValueProperty, dataBinding);
+
+                        slider.MinWidth = 0;
+
+                        entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(slider, tpa, sfa, b, bcv.Model));
+                        break;
+                    #endregion Slider
+
+                    #region TextBoxReadOnly
+                    case ControlType.TextBoxReadOnly:
+                        TextBox textBoxReadOnly = new TextBox();
+
+                        textBoxReadOnly.MinWidth = 0;
+                        textBoxReadOnly.TextWrapping = TextWrapping.Wrap;
+                        textBoxReadOnly.IsReadOnly = true;
+                        textBoxReadOnly.BorderThickness = new Thickness(0);
+                        textBoxReadOnly.Background = Brushes.Transparent;
+                        textBoxReadOnly.Tag = tpa.ToolTip;
+                        textBoxReadOnly.ToolTip = tpa.ToolTip;
+                        textBoxReadOnly.MouseEnter += Control_MouseEnter;
+                        dataBinding.Mode = BindingMode.OneWay; // read-only strings do not need a setter
+                        textBoxReadOnly.SetBinding(TextBox.TextProperty, dataBinding);
+                        entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(textBoxReadOnly, tpa, sfa, b, bcv.Model));
+                        break;
+                    #endregion TextBoxReadOnly
+
+                    #region TextBoxHidden
+                    case ControlType.TextBoxHidden:
+                        PasswordBox passwordBox = new PasswordBox();
+
+                        passwordBox.MinWidth = 0;
+
+                        passwordBox.Tag = tpa;
+                        passwordBox.ToolTip = tpa.ToolTip;
+                        passwordBox.MouseEnter += Control_MouseEnter;
+                        passwordBox.Password = plugin.Settings.GetType().GetProperty(tpa.PropertyName).GetValue(plugin.Settings, null) as string;
+                        //textBoxReadOnly.SetBinding(PasswordBox.property , dataBinding);
+                        passwordBox.PasswordChanged += TextBoxHidden_Changed;
+                        entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(passwordBox, tpa, sfa, b, bcv.Model));
+                        break;
+                    #endregion TextBoxHidden
+
+                    #region KeyTextBox
+                    case ControlType.KeyTextBox:
+                        var keyTextBox = new KeyTextBox.KeyTextBox();
+
+                        var keyManager = plugin.Settings.GetType().GetProperty(tpa.AdditionalPropertyName).GetValue(plugin.Settings, null) as KeyTextBox.IKeyManager;
+                        keyTextBox.KeyManager = keyManager;
+                        keyTextBox.Tag = tpa;
+                        keyTextBox.ToolTip = tpa.ToolTip;
+                        keyTextBox.MouseEnter += Control_MouseEnter;
+                        keyTextBox.SetBinding(KeyTextBox.KeyTextBox.CurrentKeyProperty, dataBinding);
+                        entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(keyTextBox, tpa, sfa, b, bcv.Model));
                         break;
                         #endregion KeyTextBox
 
-                    }
-    
+                }
+
             }
             entgrou.sort();
-
             return entgrou;
-
         }
 
         void checkIfPlugged(Model.PlugState state, Model.ConnectorModel model)
         {
-            ControlEntry ele = null;
+            ControlEntry ele;
             connectorSettingElements.TryGetValue(model.GetName(), out ele);
             if (state == Model.PlugState.Plugged)
             {
@@ -1113,12 +1096,6 @@ namespace WorkspaceManager.View.Visuals
             foreach (List<ControlEntry> dummyList in entryList)
                 dummyList.Sort(new BindingInfoComparer());
         }
-
-
-
-
-
-
     }
 
     public class RadioButtonListAndBindingInfo
@@ -1328,14 +1305,11 @@ namespace WorkspaceManager.View.Visuals
                     }
                 }                
             }
-
             
             if (maxSizeContent < 20)
             {
                 maxSizeContent = 100;
-            }
-
-            
+            }            
 
             maxSize = maxSizeCaption + maxSizeContent;
 
@@ -1354,7 +1328,6 @@ namespace WorkspaceManager.View.Visuals
             {
                 this.MaxWidth = maxSize + 10;
             }
-
 
             foreach (UIElement child in Children)
             {
@@ -1446,15 +1419,7 @@ namespace WorkspaceManager.View.Visuals
                     dummyTextBox.MaxWidth = maxSizeContent;
 
                 }
-
-                if (child is Expander)
-                {
-                    
-                }
             }
-
-
-
         }
 
         private void TestPanel_SizeChanged(Object sender, SizeChangedEventArgs args)
@@ -1482,50 +1447,29 @@ namespace WorkspaceManager.View.Visuals
                 if(element != null)
                 {
                     element.MinWidth = 0;
-                   // if (this.ActualWidth < maxSizeCaption + maxSizeContent)
-                        element.MaxWidth = Double.MaxValue;
-                    //else
-                    //   element.MaxWidth = maxSizeContent;
-
+                    element.MaxWidth = Double.MaxValue;
                     element.Width = this.ActualWidth;
                 }
             }
         }
 
-
-        private TimeSpan _AnimationLength = TimeSpan.FromMilliseconds(200);
-
         protected override Size MeasureOverride(Size availableSize)
         {
             Size infiniteSize = new Size(double.PositiveInfinity, double.PositiveInfinity);
             double curX = 0, curY = 0, curLineHeight = 0;
-
-
-            bool b = !(availableSize.Width > maxSize);
-
             foreach (UIElement child in Children)
             {
 
-                child.Measure(infiniteSize);
-                if (child is CheckBox)
-                {
-                    //  b = true;
-                }
-
-                //if (Children.IndexOf(child) % 2 == 0 || curX + child.DesiredSize.Width > availableSize.Width /*|| curX + child.DesiredSize.Width > maxSize*/ || b)
-                //{ //Wrap to next line
-
-                    curY += curLineHeight + 2;
-                    curX = 0;
-                    curLineHeight = 0;
-                //}
-
+                child.Measure(infiniteSize);               
+                curY += curLineHeight + 2;
+                curX = 0;
+                curLineHeight = 0; 
                 curX += maxSize;
                 if (child.DesiredSize.Height > curLineHeight)
+                {
                     curLineHeight = child.DesiredSize.Height;
+                }
             }
-
-
 
             curY += curLineHeight;
             curY += 0;
@@ -1535,19 +1479,18 @@ namespace WorkspaceManager.View.Visuals
             resultSize.Height = double.IsPositiveInfinity(availableSize.Height) ? curY : availableSize.Height;
             this.Height = resultSize.Height;
 
-
             return resultSize;
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
             if (this.Children == null || this.Children.Count == 0)
+            {
                 return finalSize;
+            }
 
             TranslateTransform trans = null;
             double curX = 0, curY = 0, curLineHeight = 0;
-
-            //bool b = !(finalSize.Width > maxSize);
 
             foreach (UIElement child in Children)
             {
@@ -1558,20 +1501,11 @@ namespace WorkspaceManager.View.Visuals
                     trans = new TranslateTransform();
                     child.RenderTransform = trans;
                 }
-
-                if (child is CheckBox)
-                {
-                    // b = true;
-                }
-
-                //if (Children.IndexOf(child) % 2 == 0 || curX + child.DesiredSize.Width > finalSize.Width /*|| curX + child.DesiredSize.Width > maxSize*/ || b || Children.IndexOf(child) % 2 == 0)
-                //{ //Wrap to next line
-
-                    curY += curLineHeight + 2;
-                    curX = 0;
-                    curLineHeight = 0;
-                //}
-
+              
+                curY += curLineHeight + 2;
+                curX = 0;
+                curLineHeight = 0;
+               
                 child.Arrange(new Rect(0, 0, child.DesiredSize.Width, child.DesiredSize.Height));
 
                 trans.X = curX;
@@ -1591,16 +1525,18 @@ namespace WorkspaceManager.View.Visuals
         }
     }
 
-
-
     public class BindingInfoComparer : IComparer<ControlEntry>
     {
         public int Compare(ControlEntry x, ControlEntry y)
         {
             if (x.tpa.Order != y.tpa.Order)
+            {
                 return x.tpa.Order.CompareTo(y.tpa.Order);
+            }
             else
+            {
                 return x.tpa.Caption.CompareTo(y.tpa.Caption);
+            }
         }
     }
 
@@ -1612,11 +1548,13 @@ namespace WorkspaceManager.View.Visuals
 
             int integer = (int)value;
             if (integer == int.Parse(parameter.ToString()))
+            {
                 return true;
+            }
             else
+            {
                 return false;
-
-
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -1678,10 +1616,14 @@ namespace WorkspaceManager.View.Visuals
         {
             string parameterString = parameter as string;
             if (parameterString == null)
+            {
                 return DependencyProperty.UnsetValue;
+            }
 
             if (Enum.IsDefined(value.GetType(), value) == false)
+            {
                 return DependencyProperty.UnsetValue;
+            }
 
             object parameterValue = Enum.Parse(value.GetType(), parameterString);
 
@@ -1692,7 +1634,9 @@ namespace WorkspaceManager.View.Visuals
         {
             string parameterString = parameter as string;
             if (parameterString == null)
+            {
                 return DependencyProperty.UnsetValue;
+            }
 
             return Enum.Parse(targetType, parameterString);
         }
