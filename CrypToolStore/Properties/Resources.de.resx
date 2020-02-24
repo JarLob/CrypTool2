@@ -133,13 +133,13 @@
     <value>Suche:</value>
   </data>
   <data name="Authors" xml:space="preserve">
-    <value>Autoren:</value>
+    <value>Autor(en):</value>
   </data>
   <data name="AuthorsEmails" xml:space="preserve">
-    <value>Autoren-Email(s)</value>
+    <value>Autor(en)-Email(s)</value>
   </data>
   <data name="AuthorsInstitutes" xml:space="preserve">
-    <value>Autoren-Institut(e):</value>
+    <value>Autor(en)-Institut(e):</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="download" type="System.Resources.ResXFileRef, System.Windows.Forms">

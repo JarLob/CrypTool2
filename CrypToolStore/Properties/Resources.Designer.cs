@@ -71,7 +71,7 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Authors: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Author(s): ähnelt.
         /// </summary>
         internal static string Authors {
             get {
@@ -80,7 +80,7 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Authors&apos; Email(s): ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Author(s)&apos; email(s): ähnelt.
         /// </summary>
         internal static string AuthorsEmails {
             get {
@@ -89,7 +89,7 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Author&apos;s Institute(s): ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Author(s)&apos; institute(s): ähnelt.
         /// </summary>
         internal static string AuthorsInstitutes {
             get {
