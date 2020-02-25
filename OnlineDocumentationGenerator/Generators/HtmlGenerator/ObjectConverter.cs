@@ -237,6 +237,10 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
         private string ConvertXElement(XElement xelement, EntityDocumentationPage entityDocumentationPage)
         {
             var result = new StringBuilder();
+            int sectionCounter = 0;
+            int subsectionCounter = 0;
+            int subsubsectionCounter = 0;
+
             foreach (var node in xelement.Nodes())
             {
                 if (node is XText)
@@ -295,15 +299,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                             break;
                         case "newline":
                             result.Append("<br/>");
-                            break;
-                        case "section":
-                            var headline = ((XElement) node).Attribute("headline");
-                            if (headline != null)
-                            {
-                                result.AppendLine(string.Format("<h2>{0}</h2>", headline.Value));
-                                result.AppendLine(ConvertXElement((XElement) node, entityDocumentationPage));
-                            }
-                            break;
+                            break;                        
                         case "enum":
                         case "list":
                             var t = (nodeName == "enum") ? "ol" : "ul";
@@ -385,7 +381,48 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                                     result.Append(string.Format("<i>{0}</i>", linkText));
                                 }
                             }
-                            break;                        
+                            break;
+
+                        case "section":
+                            {
+                                var headline = ((XElement)node).Attribute("headline");
+                                if (headline != null)
+                                {
+                                    sectionCounter++;
+                                    subsectionCounter = 0;
+                                    subsubsectionCounter = 0;
+                                    result.AppendLine(string.Format("<h2>{0}. {1}</h2>", sectionCounter, headline.Value));
+                                    result.AppendLine(ConvertXElement((XElement)node, entityDocumentationPage));
+                                }
+                            }
+                            break;
+
+                        case "subsection":
+                            {
+                                var headline = ((XElement)node).Attribute("headline");
+                                if (headline != null)
+                                {
+                                    subsectionCounter++;
+                                    subsubsectionCounter = 0;
+                                    result.AppendLine(string.Format("<h2>{0}.{1}. {2}</h2>", sectionCounter, subsectionCounter, headline.Value));
+                                    result.AppendLine(ConvertXElement((XElement)node, entityDocumentationPage));
+                                }
+                            }
+                            break;
+
+                        case "subsubsection":
+                            {
+                                var headline = ((XElement)node).Attribute("headline");
+                                if (headline != null)
+                                {
+                                    subsubsectionCounter++;
+                                    subsubsectionCounter = 0;
+                                    result.AppendLine(string.Format("<h2>{0}.{1}.{2}. {3}</h2>", sectionCounter, subsectionCounter, headline.Value));
+                                    result.AppendLine(ConvertXElement((XElement)node, entityDocumentationPage));
+                                }
+                            }
+                            break;
+
                         default:
                             continue;
                     }

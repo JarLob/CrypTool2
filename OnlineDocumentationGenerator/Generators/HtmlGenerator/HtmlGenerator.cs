@@ -394,7 +394,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
             foreach (var documentationPage in DocPages)
             {
                 foreach (var lang in documentationPage.AvailableLanguages)
-                {
+                {                  
                     try {
                         var localizedEntityDocumentationPage = documentationPage.Localizations[lang];
 
