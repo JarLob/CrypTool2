@@ -41,7 +41,14 @@ namespace Cryptool.Plugins.Numbers
         "Numbers/icons/PrimeNIcon.png",
         "Numbers/icons/NextPrimeIcon.png",
         "Numbers/icons/PrevOrimeIcon.png",
-        "Numbers/icons/IsPrime.png")]
+        "Numbers/icons/IsPrime.png",
+        "Numbers/icons/abs.png",
+        "Numbers/icons/factorial.png",
+        "Numbers/icons/crosssum.png",
+        "Numbers/icons/dlog.png",
+        "Numbers/icons/nPr.png",
+        "Numbers/icons/nCr.png"
+        )]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     class NumberOperations : ICrypComponent
     {
@@ -288,6 +295,24 @@ namespace Cryptool.Plugins.Numbers
                             break;
                         case NumberOperation.Isprime:
                             result = (Input1.IsProbablePrime() ? 1 : 0);
+                            break;
+                        case NumberOperation.ABS:
+                            result = (Input1 > 0 ? Input1 : Input1 * -1);
+                            break;
+                        case NumberOperation.Factorial:
+                            result = Input1.Factorial();
+                            break;
+                        case NumberOperation.Crosssum:
+                            result = Input1.CrossSum(Input2);
+                            break;
+                        case NumberOperation.Dlog:
+                            result = Input1.DiscreteLogarithm(Input2, Mod);
+                            break;
+                        case NumberOperation.NPR:
+                            result = Input1.nPr(Input2);
+                            break;
+                        case NumberOperation.NCR:
+                            result = Input1.nCr(Input2);
                             break;
                     }
                     Output = (Mod == 0) ? result : (((result % Mod) + Mod) % Mod);

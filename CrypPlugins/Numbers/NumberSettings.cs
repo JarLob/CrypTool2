@@ -37,7 +37,13 @@ namespace Cryptool.Plugins.Numbers
         PrimeN,
         Nextprime,
         Prevprime,
-        Isprime
+        Isprime,
+        ABS,
+        Factorial,
+        Crosssum,
+        Dlog,
+        NPR,
+        NCR
     }
     class NumberSettings : ISettings
     {
@@ -66,7 +72,13 @@ namespace Cryptool.Plugins.Numbers
             "Prime",
             "Nextprime",
             "Prevprime",
-            "Isprime"})]
+            "Isprime",
+            "ABS",
+            "Factorial",
+            "Crosssum",
+            "Dlog",
+            "nPr",
+            "nCr"})]
         public NumberOperation Operat
         {
             get { return this.operat; }
@@ -141,6 +153,24 @@ namespace Cryptool.Plugins.Numbers
                     break;
                 case NumberOperation.Isprime:
                     ChangePluginIcon(16);
+                    break;
+                case NumberOperation.ABS:
+                    ChangePluginIcon(17);
+                    break;
+                case NumberOperation.Factorial:
+                    ChangePluginIcon(18);
+                    break;
+                case NumberOperation.Crosssum:
+                    ChangePluginIcon(19);
+                    break;
+                case NumberOperation.Dlog:
+                    ChangePluginIcon(20);
+                    break;
+                case NumberOperation.NPR:
+                    ChangePluginIcon(21);
+                    break;
+                case NumberOperation.NCR:
+                    ChangePluginIcon(22);
                     break;
             }
         }

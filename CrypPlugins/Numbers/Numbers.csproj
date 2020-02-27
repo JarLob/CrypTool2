@@ -214,6 +214,16 @@
     <Resource Include="icons\PrevPrimeIcon.png" />
     <Resource Include="icons\PrimeNIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\abs.png" />
+    <Resource Include="icons\dlog.png" />
+    <Resource Include="icons\factorial.png" />
+    <Resource Include="icons\nCr.png" />
+    <Resource Include="icons\nPr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\crosssum.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
