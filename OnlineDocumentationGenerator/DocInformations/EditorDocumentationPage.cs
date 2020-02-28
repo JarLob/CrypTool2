@@ -7,7 +7,7 @@ namespace OnlineDocumentationGenerator.DocInformations
 {
     public class EditorDocumentationPage : PluginDocumentationPage
     {
-        public EditorDocumentationPage(Type pluginType) : base(pluginType)
+        public EditorDocumentationPage(Type pluginType, XElement xml) : base(pluginType, xml)
         {
         }
 

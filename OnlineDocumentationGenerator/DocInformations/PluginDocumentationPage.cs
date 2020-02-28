@@ -32,11 +32,18 @@ namespace OnlineDocumentationGenerator.DocInformations
             get { return Path.GetDirectoryName(OnlineHelp.GetPluginDocFilename(PluginType, "en")); }
         }
 
-        public PluginDocumentationPage(Type pluginType)
+        public PluginDocumentationPage(Type pluginType, XElement xml)
         {
             PluginType = pluginType;
             var image = pluginType.GetImage(0).Source;
-            _xml = GetXML(pluginType);
+            if (xml == null)
+            {
+                _xml = GetXML(pluginType);
+            }
+            else
+            {
+                _xml = xml;
+            }
 
             var authorAttribut = pluginType.GetPluginAuthorAttribute();
             if (authorAttribut != null)

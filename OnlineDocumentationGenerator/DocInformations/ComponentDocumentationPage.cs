@@ -13,7 +13,7 @@ namespace OnlineDocumentationGenerator.DocInformations
 
         public ComponentTemplateList RelevantTemplates { get; private set; }
 
-        public ComponentDocumentationPage(Type componentType) : base(componentType)
+        public ComponentDocumentationPage(Type componentType, XElement xml) : base(componentType, xml)
         {
             Connectors = PluginExtension.GetProperties(componentType);
             

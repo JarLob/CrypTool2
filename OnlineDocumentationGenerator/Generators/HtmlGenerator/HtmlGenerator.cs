@@ -18,6 +18,8 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
 {
     public class HtmlGenerator : Generator
     {
+        private Type _typeToGenerate = null;
+
         private static readonly Dictionary<string, string> _languagePresentationString = new Dictionary<string, string>() { { "en", "English" }, { "de", "Deutsch" }, { "ru", "Русский" } };
         private static readonly Dictionary<string, string> _languagePresentationIcon = new Dictionary<string, string>() { { "en", "en.png" }, { "de", "de.png" }, { "ru", "ru.png" } };
 
@@ -30,15 +32,28 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
         private ObjectConverter _objectConverter;
         private TemplateDirectory _templatesDir;
 
+        public HtmlGenerator()
+        {
+
+        }
+
+        public HtmlGenerator(Type typeToGenerate)
+        {
+            _typeToGenerate = typeToGenerate;
+        }
+
         public override void Generate(TemplateDirectory templatesDir)
         {
             _templatesDir = templatesDir;
             _objectConverter = new ObjectConverter(DocPages, OutputDir);
             GenerateDocPages();
-            GenerateComponentIndexPages();
-            GenerateTemplateIndexPages();
-            GenerateEditorIndexPages();
-            GenerateCommonIndexPages();
+            if (_typeToGenerate == null)
+            {
+                GenerateComponentIndexPages();
+                GenerateTemplateIndexPages();
+                GenerateEditorIndexPages();
+                GenerateCommonIndexPages();
+            }
             CopyAdditionalResources();
         }
        
@@ -393,6 +408,26 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
         {
             foreach (var documentationPage in DocPages)
             {
+                //this here allows the generation of a single documentation page
+                //to do so, the type of the component has to be given in constructor of the
+                //HtmlGenerator
+                if(_typeToGenerate != null)
+                {
+                    if(documentationPage is PluginDocumentationPage)
+                    {
+                        PluginDocumentationPage pluginDocumentationPage = (PluginDocumentationPage)documentationPage;
+                        if (!pluginDocumentationPage.PluginType.Equals(_typeToGenerate))
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+                }
+
                 foreach (var lang in documentationPage.AvailableLanguages)
                 {                  
                     try {

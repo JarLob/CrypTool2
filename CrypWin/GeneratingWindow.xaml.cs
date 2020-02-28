@@ -39,5 +39,14 @@ namespace Cryptool.CrypWin
             var style = GetWindowLong(wih.Handle, GwlStyle);
             SetWindowLong(wih.Handle, GwlStyle, style & ~WsSysmenu);
         }
+
+        /// <summary>
+        /// Sets the message of this window
+        /// </summary>
+        /// <param name="msg"></param>
+        public void SetMessage(string msg)
+        {
+            Message.Content = msg;
+        }
     }
 }

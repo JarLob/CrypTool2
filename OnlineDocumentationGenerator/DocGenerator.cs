@@ -28,6 +28,12 @@ namespace OnlineDocumentationGenerator
 
         public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
 
+        public static XMLReplacement XMLReplacement
+        {
+            get; 
+            set;
+        }
+
         public void Generate(string baseDir, Generator generator)
         {
             var currentCulture = Thread.CurrentThread.CurrentCulture;
@@ -96,14 +102,18 @@ namespace OnlineDocumentationGenerator
 
             try
             {
-
-                if (type.GetInterfaces().Contains(typeof(IEditor)))
+                XElement xml = null;
+                if(XMLReplacement != null && XMLReplacement.Type.Equals(type))
                 {
-                    return new EditorDocumentationPage(type);
+                    xml = XMLReplacement.XElement;
+                }
+                if (type.GetInterfaces().Contains(typeof(IEditor)))
+                {                    
+                    return new EditorDocumentationPage(type, xml);
                 }
                 else
                 {
-                    return new ComponentDocumentationPage(type);
+                    return new ComponentDocumentationPage(type, xml);
                 }
             }
             finally
@@ -237,6 +247,19 @@ namespace OnlineDocumentationGenerator
         private void GuiLogMessage(string message, NotificationLevel logLevel)
         {
             EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, null, message, logLevel);
+        }
+    }
+
+    public class XMLReplacement
+    {
+        public Type Type
+        {
+            get; set;
+
+        }
+        public XElement XElement
+        {
+            get; set;
         }
     }
 }
