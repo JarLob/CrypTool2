@@ -33,7 +33,7 @@ namespace CrypCloud.Manager
     public enum ScreenPaths { Login, JobList, JobCreation, ResetPassword, CreateAccount, ConfirmAccount };
 
     [TabColor("white")]
-    [EditorInfo("CrypCloud", true, true, false, true, false, false)]
+    [EditorInfo("CrypCloud", false, true, false, true, false, false)]
     [Author("Christopher Konze", "c.konze@uni.de", "Universität Kassel", "")]
     [PluginInfo("CrypCloud.Manager.Properties.Resources", "PluginCaption", "PluginTooltip", "CrypCloudManager/doc.xml", "CrypCloudManager/images/icon.png")]
     public class CrypCloudManager : IEditor
