@@ -272,9 +272,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="DetailedDescription\doc.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="news.png" />
   </ItemGroup>
   <ItemGroup>
