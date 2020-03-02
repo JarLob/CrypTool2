@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 using System.Windows.Media;
 
 namespace Cryptool.Plugins.DECRYPTTools.Util
@@ -912,5 +913,24 @@ namespace Cryptool.Plugins.DECRYPTTools.Util
             }            
             return -1;            
         }      
+
+        /// <summary>
+        /// We make nomenclature elements bold to make it easier when printed out for papers in greyscale
+        /// </summary>
+        /// <returns></returns>
+        public FontWeight TextFontWeight
+        {
+            get
+            {
+                if (ParentToken.TokenType == TokenType.NomenclatureElement)
+                {
+                    return FontWeights.Bold;
+                }
+                else
+                {
+                    return FontWeights.Normal;
+                }
+            }
+        }
     } 
 }

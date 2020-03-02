@@ -204,7 +204,8 @@
                                                                                BorderThickness="0" 
                                                                                VerticalAlignment="Center" 
                                                                                Padding="0"
-                                                                               Foreground="{Binding Path=TextColor}"  FontSize="14" FontFamily="Courier new"/>
+                                                                               Foreground="{Binding Path=TextColor}"  FontSize="14" FontFamily="Courier new"
+                                                                               FontWeight="{Binding Path=TextFontWeight}"/>
                                                                 <Label Content="{Binding Path=Top}"
                                                                                Margin="0,-13,0,0" 
                                                                                BorderThickness="0" 
