@@ -691,6 +691,7 @@ namespace Cryptool.Plugins.DECRYPTTools.Util
             TopChangesSymbol = true;
         }
 
+        private string _top;
         /// <summary>
         /// Top text of symbol
         /// </summary>
@@ -721,7 +722,7 @@ namespace Cryptool.Plugins.DECRYPTTools.Util
         /// <summary>
         /// Adds Top or Bottom diacritical marks
         /// </summary>
-        public string VisualizeText
+        /*public string VisualizeText
         {
             get
             {
@@ -744,15 +745,27 @@ namespace Cryptool.Plugins.DECRYPTTools.Util
                 }
                 return ret;
             }
-        }
+        }*/
 
+
+        private string _bottom;
         /// <summary>
         /// Bottom text of the symbol
         /// </summary>
         public string Bottom
         {
-            get;
-            set;
+            get 
+            {
+                if(_bottom != null && _bottom.Equals("_"))
+                {
+                    return "-";
+                }
+                return _bottom;
+            }
+            set
+            {
+                _bottom = value;
+            }
         }
 
         /// <summary>

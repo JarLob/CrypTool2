@@ -198,12 +198,30 @@
                                                     </ItemsControl.ItemsPanel>
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate>
-                                                            <Label Content="{Binding Path=VisualizeText}"
+                                                            <Grid>
+                                                                <Label Content="{Binding Path=Text}"
                                                                                Margin="0,0,0,0" 
                                                                                BorderThickness="0" 
                                                                                VerticalAlignment="Center" 
                                                                                Padding="0"
                                                                                Foreground="{Binding Path=TextColor}"  FontSize="14" FontFamily="Courier new"/>
+                                                                <Label Content="{Binding Path=Top}"
+                                                                               Margin="0,-13,0,0" 
+                                                                               BorderThickness="0" 
+                                                                               VerticalAlignment="Top" 
+                                                                               HorizontalAlignment="Center"
+                                                                               HorizontalContentAlignment="Center"
+                                                                               Padding="0"
+                                                                               Foreground="{Binding Path=TextColor}"  FontSize="14" FontFamily="Courier new"/>
+                                                                <Label Content="{Binding Path=Bottom}"
+                                                                               Margin="0,7,0,0" 
+                                                                               BorderThickness="0" 
+                                                                               VerticalAlignment="Bottom" 
+                                                                               HorizontalAlignment="Center"
+                                                                               HorizontalContentAlignment="Center"
+                                                                               Padding="0"
+                                                                               Foreground="{Binding Path=TextColor}"  FontSize="14" FontFamily="Courier new"/>
+                                                            </Grid>
                                                         </DataTemplate>
                                                     </ItemsControl.ItemTemplate>
                                                 </ItemsControl>
@@ -243,7 +261,6 @@
                         </DataTemplate>
                     </HierarchicalDataTemplate.ItemTemplate>
                 </HierarchicalDataTemplate>
-
             </TreeView.ItemTemplate>
         </TreeView>
     </Grid>
