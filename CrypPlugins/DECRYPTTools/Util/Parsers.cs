@@ -2738,8 +2738,13 @@ namespace Cryptool.Plugins.DECRYPTTools.Util
                                 }
                                 else if (keyTokens.Contains(token))
                                 {
-                                    token.TokenType = TokenType.RegularElement;
+                                    token.TokenType = TokenType.RegularElement;                                   
                                     line.Tokens.Add(token);
+                                    //we assume, that tokens with length >=3 are nomenclature elements and <= 2 regular codes
+                                    if (token.Symbols.Count >= 3)
+                                    {
+                                        token.TokenType = TokenType.NomenclatureElement;
+                                    }
                                     tokenBuilder.Remove(0, length);
                                     removedOne = true;
                                     break;
@@ -2786,6 +2791,12 @@ namespace Cryptool.Plugins.DECRYPTTools.Util
                         {
                             token.TokenType = TokenType.RegularElement;
                             lastLine.Tokens.Add(token);
+                            //we assume, that tokens with length >=3 are nomenclature elements and <= 2 regular codes
+                            if (token.Symbols.Count >= 3)
+                            {
+                                token.TokenType = TokenType.NomenclatureElement;
+                            }
+
                             tokenBuilder.Remove(0, length);
                             removedOne = true;
                             break;
