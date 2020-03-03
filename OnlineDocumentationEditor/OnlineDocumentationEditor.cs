@@ -252,18 +252,20 @@ namespace Cryptool.OnlineDocumentationEditor
                 string fileName = OnlineHelp.GetPluginDocFilename(type, "en");
                 string baseDir = DirectoryHelper.BaseDirectory;
                 string helpDir = OnlineHelp.HelpDirectory;
-                Uri uri = new Uri(Uri.UriSchemeFile + "://" + baseDir + helpDir + "\\" + fileName);
+                string fileUrl = baseDir + helpDir + "\\" + fileName;
 
-                if (!File.Exists(uri.AbsolutePath) || xElement != null)
+                if (!File.Exists(fileUrl) || xElement != null)
                 {
                     var generatingDocWindow = new GeneratingWindow();
-                    generatingDocWindow.SetMessage(string.Format("Generating documentation for {0}", type.Name));
+                    string message = string.Format("{0} does not exist. Generating documentation for {1}", fileUrl, type.Name);
+                    generatingDocWindow.SetMessage(message);
+                    GuiLogMessage(message, NotificationLevel.Info);
                     generatingDocWindow.Title = "Generating Online Documentation";
                     generatingDocWindow.Show();
                     GenerateDoc(type, xElement);
                     generatingDocWindow.Close();
                 }
-                _presentation.WebBrowser.Source = uri;
+                _presentation.WebBrowser.Source = new Uri(fileUrl);
                 var xml = GetOnlineDocumentationXML(type);
                 if (xml != null && xElement == null)
                 {

@@ -586,7 +586,7 @@ namespace CrypToolStoreBuildSystem
         /// </summary>
         /// <returns></returns>
         private bool ModifyCSProjFile()
-        {
+        {            
             //Step 0: load csproj xml file
             XDocument csprojXDocument = XDocument.Load(CSProjFileName);
 
@@ -606,14 +606,18 @@ namespace CrypToolStoreBuildSystem
                 }
             }
             
-            //Step 2: change project reference to correct path of CrypPluginBase
+            //Step 2: change project reference to correct path of needed dlls
             IEnumerable<XElement> projectReferences = csprojXDocument.Descendants();
             
             bool changedCrypPluginBaseReference = false;
             foreach (XElement projectReference in projectReferences)
             {
                 XAttribute includeAttribute = projectReference.Attribute("Include");
-                if (projectReference.Name.LocalName.ToLower().Equals("projectreference") && includeAttribute != null && !string.IsNullOrEmpty(includeAttribute.Value) && includeAttribute.Value.ToLower().Contains("cryppluginbase"))
+                
+                //change CrypPluginBase
+                if (projectReference.Name.LocalName.ToLower().Equals("projectreference") && 
+                    includeAttribute != null && !string.IsNullOrEmpty(includeAttribute.Value) && 
+                    includeAttribute.Value.ToLower().Contains("cryppluginbase"))
                 {
                     //change include attribute value
                     includeAttribute.Value = @"CrypPluginBase";                    
@@ -641,6 +645,105 @@ namespace CrypToolStoreBuildSystem
 
                     changedCrypPluginBaseReference = true;
                     Logger.LogText("(Buildstep 6) Changed reference to CrypPluginBase", this, Logtype.Info);
+                }
+
+                //change CrypCore
+                if (projectReference.Name.LocalName.ToLower().Equals("projectreference") &&
+                    includeAttribute != null && !string.IsNullOrEmpty(includeAttribute.Value) &&
+                    includeAttribute.Value.ToLower().Contains("crypcore"))
+                {
+                    //change include attribute value
+                    includeAttribute.Value = @"CrypCore";
+
+                    //change/add private element
+                    XElement privateElement = projectReference.Element("Private");
+                    if (privateElement != null)
+                    {
+                        privateElement.Value = "false";
+                    }
+                    else
+                    {
+                        privateElement = new XElement(defaultNamespace + "Private");
+                        privateElement.Value = "false";
+                        projectReference.Add(privateElement);
+                    }
+
+                    //Change type of reference
+                    projectReference.Name = defaultNamespace + "Reference";
+
+                    //Add hint path to CrypPluginBase                    
+                    XElement hintPathElement = new XElement(defaultNamespace + "HintPath");
+                    hintPathElement.Value = @"..\..\..\CT2_Libraries\CrypCore.dll";
+                    projectReference.Add(hintPathElement);
+
+                    changedCrypPluginBaseReference = true;
+                    Logger.LogText("(Buildstep 6) Changed reference to CrypCore", this, Logtype.Info);
+                }
+
+                //change CrypWin
+                if (projectReference.Name.LocalName.ToLower().Equals("projectreference") &&
+                    includeAttribute != null && !string.IsNullOrEmpty(includeAttribute.Value) &&
+                    includeAttribute.Value.ToLower().Contains("crypwin"))
+                {
+                    //change include attribute value
+                    includeAttribute.Value = @"CrypWin";
+
+                    //change/add private element
+                    XElement privateElement = projectReference.Element("Private");
+                    if (privateElement != null)
+                    {
+                        privateElement.Value = "false";
+                    }
+                    else
+                    {
+                        privateElement = new XElement(defaultNamespace + "Private");
+                        privateElement.Value = "false";
+                        projectReference.Add(privateElement);
+                    }
+
+                    //Change type of reference
+                    projectReference.Name = defaultNamespace + "Reference";
+
+                    //Add hint path to CrypWin                    
+                    XElement hintPathElement = new XElement(defaultNamespace + "HintPath");
+                    hintPathElement.Value = @"..\..\..\CT2_Libraries\CrypWin.exe";
+                    projectReference.Add(hintPathElement);
+
+                    changedCrypPluginBaseReference = true;
+                    Logger.LogText("(Buildstep 6) Changed reference to CrypWin.exe", this, Logtype.Info);
+                }
+
+                //change OnlineDocumentationGenerator
+                if (projectReference.Name.LocalName.ToLower().Equals("projectreference") &&
+                    includeAttribute != null && !string.IsNullOrEmpty(includeAttribute.Value) &&
+                    includeAttribute.Value.ToLower().Contains("onlinedocumentationgenerator"))
+                {
+                    //change include attribute value
+                    includeAttribute.Value = @"OnlineDocumentationGenerator";
+
+                    //change/add private element
+                    XElement privateElement = projectReference.Element("Private");
+                    if (privateElement != null)
+                    {
+                        privateElement.Value = "false";
+                    }
+                    else
+                    {
+                        privateElement = new XElement(defaultNamespace + "Private");
+                        privateElement.Value = "false";
+                        projectReference.Add(privateElement);
+                    }
+
+                    //Change type of reference
+                    projectReference.Name = defaultNamespace + "Reference";
+
+                    //Add hint path to OnlineDocumentationGenerator                    
+                    XElement hintPathElement = new XElement(defaultNamespace + "HintPath");
+                    hintPathElement.Value = @"..\..\..\CT2_Libraries\OnlineDocumentationGenerator.dll";
+                    projectReference.Add(hintPathElement);
+
+                    changedCrypPluginBaseReference = true;
+                    Logger.LogText("(Buildstep 6) Changed reference to OnlineDocumentationGenerator", this, Logtype.Info);
                 }
             }
 
