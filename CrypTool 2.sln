@@ -504,8 +504,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speck", "CrypPlugins\Speck\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DECRYPTTools", "CrypPlugins\DECRYPTTools\DECRYPTTools.csproj", "{455621FB-76FD-47C4-9C8C-4EED1E712B93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineDocumentationEditor", "OnlineDocumentationEditor\OnlineDocumentationEditor.csproj", "{69F25E48-E535-435B-B684-EB2867B7790E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -4176,20 +4174,6 @@ Global
 		{455621FB-76FD-47C4-9C8C-4EED1E712B93}.Test|x64.ActiveCfg = Test|x64
 		{455621FB-76FD-47C4-9C8C-4EED1E712B93}.Test|x64.Build.0 = Test|x64
 		{455621FB-76FD-47C4-9C8C-4EED1E712B93}.Test|x86.ActiveCfg = Test|x64
-		{69F25E48-E535-435B-B684-EB2867B7790E}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{69F25E48-E535-435B-B684-EB2867B7790E}.Debug|x64.ActiveCfg = Debug|x64
-		{69F25E48-E535-435B-B684-EB2867B7790E}.Debug|x64.Build.0 = Debug|x64
-		{69F25E48-E535-435B-B684-EB2867B7790E}.Debug|x86.ActiveCfg = Debug|x64
-		{69F25E48-E535-435B-B684-EB2867B7790E}.Release|Any CPU.ActiveCfg = Release|x64
-		{69F25E48-E535-435B-B684-EB2867B7790E}.Release|x64.ActiveCfg = Release|x64
-		{69F25E48-E535-435B-B684-EB2867B7790E}.Release|x64.Build.0 = Release|x64
-		{69F25E48-E535-435B-B684-EB2867B7790E}.Release|x86.ActiveCfg = Release|x64
-		{69F25E48-E535-435B-B684-EB2867B7790E}.Test|Any CPU.ActiveCfg = Release|x64
-		{69F25E48-E535-435B-B684-EB2867B7790E}.Test|Any CPU.Build.0 = Release|x64
-		{69F25E48-E535-435B-B684-EB2867B7790E}.Test|x64.ActiveCfg = Release|x64
-		{69F25E48-E535-435B-B684-EB2867B7790E}.Test|x64.Build.0 = Release|x64
-		{69F25E48-E535-435B-B684-EB2867B7790E}.Test|x86.ActiveCfg = Release|x64
-		{69F25E48-E535-435B-B684-EB2867B7790E}.Test|x86.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
