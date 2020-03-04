@@ -17,7 +17,7 @@
     <plugin name="AES" />
     <plugin name="PKCS5" />
     <plugin name="PrimesGenerator" />
-    <plugin name="RandomInput" />
+    <plugin name="RandomNumberGenerator" />
     <plugin name="VariableLoad" />
     <plugin name="VariableStore" />
     <plugin name="VisualDecoder" />
