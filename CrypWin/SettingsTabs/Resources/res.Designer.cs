@@ -565,6 +565,24 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start CrypTool 2 as singleton application (Global setting. A change of the setting here has no effect. It has to be manually edited in CrypWin.exe.config file in the CrypTool 2 installation directory) ähnelt.
+        /// </summary>
+        public static string SingletonApplication {
+            get {
+                return ResourceManager.GetString("SingletonApplication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die When checked only one CrypTool 2 application instance is started. Disable in CrypWin.exe.config file in the CrypTool 2 installation directory for allowing CrypTool 2 being started multiple times. ähnelt.
+        /// </summary>
+        public static string SingletonApplicationTooltip {
+            get {
+                return ResourceManager.GetString("SingletonApplicationTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Startup behaviour: ähnelt.
         /// </summary>
         public static string Startup_Behaviour {

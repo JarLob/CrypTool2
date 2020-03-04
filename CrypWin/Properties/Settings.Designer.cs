@@ -442,5 +442,14 @@ namespace Cryptool.CrypWin.Properties {
                 this["SamplesDir"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SingletonApplication {
+            get {
+                return ((bool)(this["SingletonApplication"]));
+            }
+        }
     }
 }

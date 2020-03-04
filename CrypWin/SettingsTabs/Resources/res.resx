@@ -303,4 +303,10 @@
   <data name="Copy_line" xml:space="preserve">
     <value>Copy line</value>
   </data>
+  <data name="SingletonApplication" xml:space="preserve">
+    <value>Start CrypTool 2 as singleton application (Global setting. A change of the setting here has no effect. It has to be manually edited in CrypWin.exe.config file in the CrypTool 2 installation directory)</value>
+  </data>
+  <data name="SingletonApplicationTooltip" xml:space="preserve">
+    <value>When checked only one CrypTool 2 application instance is started. Disable in CrypWin.exe.config file in the CrypTool 2 installation directory for allowing CrypTool 2 being started multiple times.</value>
+  </data>
 </root>

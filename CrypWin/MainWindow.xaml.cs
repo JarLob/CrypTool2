@@ -323,7 +323,7 @@ namespace Cryptool.CrypWin
                 Cryptool.Core.Globals.cryptoBenchmark = true;
             }
 
-            if (!EstablishSingleInstance())
+            if (Settings.Default.SingletonApplication && !EstablishSingleInstance())
             {
                 Environment.Exit(0);
             }
@@ -997,9 +997,7 @@ namespace Cryptool.CrypWin
             {
                 bool createdNew;
                 MD5 md5 = new MD5CryptoServiceProvider();
-                var id =
-                    BitConverter.ToInt32(md5.ComputeHash(Encoding.ASCII.GetBytes(Environment.GetCommandLineArgs()[0])),
-                                         0);
+                var id = BitConverter.ToInt32(md5.ComputeHash(Encoding.ASCII.GetBytes(Environment.GetCommandLineArgs()[0])),0);
                 var identifyingString = string.Format("Local\\CrypTool 2 ID {0}", id);
                 _singletonMutex = new Mutex(true, identifyingString, out createdNew);
 
@@ -1042,8 +1040,8 @@ namespace Cryptool.CrypWin
                 {
                     using (var pipeServer = new NamedPipeServerStream((string)identifyingString, PipeDirection.In))
                     {
-                    
-                      pipeServer.WaitForConnection();
+
+                        pipeServer.WaitForConnection();
                         BringToFront();
                         using (var sr = new StreamReader(pipeServer))
                         {
@@ -1066,7 +1064,7 @@ namespace Cryptool.CrypWin
                 }
                 catch (Exception ex)
                 {
-                    GuiLogMessage(string.Format("Error while maintaning single instance: {0}", ex.Message), NotificationLevel.Error);
+                    GuiLogMessage(string.Format("Error while maintaining single instance: {0}", ex.Message), NotificationLevel.Error);
                 }
             }
         }

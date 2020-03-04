@@ -107,5 +107,8 @@
     <Setting Name="SamplesDir" Type="System.String" Scope="User">
       <Value Profile="(Default)">Templates</Value>
     </Setting>
+    <Setting Name="SingletonApplication" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
