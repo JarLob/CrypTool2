@@ -44,7 +44,7 @@ Quellen:<newline />
     <plugin name="BooleanInput" />
     <plugin name="Gate" />
     <plugin name="PKCS5" />
-    <plugin name="RandomInput" />
+    <plugin name="RandomNumberGenerator" />
     <plugin name="VisualDecoder" />
     <plugin name="VisualEncoder" />
     <plugin name="Webcam" />

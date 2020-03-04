@@ -308,6 +308,7 @@ namespace Cryptool.OnlineDocumentationEditor
             {
                 string baseDir = DirectoryHelper.BaseDirectory;
                 var docGenerator = new DocGenerator();
+                docGenerator.OnGuiLogNotificationOccured += DocGenerator_OnGuiLogNotificationOccured;
                 DocGenerator.XMLReplacement = new XMLReplacement() { XElement = xElement, Type = wrapper.PluginType };
                 var htmlGenerator = new HtmlGenerator(wrapper.PluginType);
                 docGenerator.Generate(baseDir, htmlGenerator);
@@ -316,10 +317,21 @@ namespace Cryptool.OnlineDocumentationEditor
             {
                 string baseDir = DirectoryHelper.BaseDirectory;
                 var docGenerator = new DocGenerator();
+                docGenerator.OnGuiLogNotificationOccured += DocGenerator_OnGuiLogNotificationOccured;
                 DocGenerator.XMLReplacement = new XMLReplacement() { XElement = xElement, CommonDocId = wrapper.CommonDocId};
                 var htmlGenerator = new HtmlGenerator(wrapper.CommonDocId);
                 docGenerator.Generate(baseDir, htmlGenerator);
             }
+        }
+
+        /// <summary>
+        /// Forwards the logs of the doc gengerator
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void DocGenerator_OnGuiLogNotificationOccured(IPlugin sender, GuiLogEventArgs args)
+        {
+            GuiLogMessage(args.Message, args.NotificationLevel);
         }
 
         /// <summary>

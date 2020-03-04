@@ -14,9 +14,9 @@
   <keywords lang="de">hkdf, kkpf, KKDF, kdf, hash, schlüsselgenerierungs-funktion, key derivation function, zufall</keywords>
   <icon file="KDF_Performance_Comparison_withPres.png" />
   <relevantPlugins>
-    <plugin name="KPFSHA256" />
     <plugin name="HKDFSHA256" />
-    <plugin name="KPFSHAKE256" />
+    <plugin name="KKDFSHA256" />
+    <plugin name="KKDFSHAKE256" />
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$KKPFSHA256Caption$" value="KKDF SHA-256" />

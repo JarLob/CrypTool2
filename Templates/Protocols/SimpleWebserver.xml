@@ -14,7 +14,7 @@
   <keywords lang="de">smartcard</keywords>
   <icon file="SimpleWebserver.png" />
   <relevantPlugins>
-    <plugin name="NetworkSender" />
+    <plugin name="NetworkInput" />
     <plugin name="NetworkReceiver" />
   </relevantPlugins>
   <replacements lang="de">

@@ -14,7 +14,7 @@
   <keywords lang="de">diskret, Basis, Logarithmus, Exponent</keywords>
   <icon file="DiscreteLogarithm.png" />
   <relevantPlugins>
-    <plugin name="DiscreteLogarithm" />
+    <plugin name="NumberOperations" />
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$Value$" value="Wert" />

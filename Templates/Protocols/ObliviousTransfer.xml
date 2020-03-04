@@ -17,7 +17,7 @@
     <plugin name="ObliviousTransfer1" />
     <plugin name="ObliviousTransfer2" />
     <plugin name="RSAKeyGenerator" />
-    <plugin name="RandomMessageGenerator" />
+    <plugin name="RandomNumberGenerator" />
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$RSA Key$" value="RSA-Schlüssel" />

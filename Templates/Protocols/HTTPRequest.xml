@@ -14,7 +14,7 @@
   <keywords lang="de">HTTP, Anfrage, Webserver, Protokoll, Netz, Browser,Internet</keywords>
   <icon file="HTTPRequest.png" />
   <relevantPlugins>
-    <plugin name="NetworkSender" />
+    <plugin name="NetworkInput" />
     <plugin name="NetworkReceiver" />
   </relevantPlugins>
   <replacements lang="de">

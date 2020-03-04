@@ -14,7 +14,7 @@
   <keywords lang="de">Transkriptor, Monoalphabetisch, Substitution, Bild, Semi-Automatisch, Symbol</keywords>
   <icon file="transcriptor.png" />
   <relevantPlugins>
-    <plugin name="FileInput" />
+    <plugin name="FileInputClass" />
     <plugin name="TextOutput" />
     <plugin name="Transcriptor" />
   </relevantPlugins>

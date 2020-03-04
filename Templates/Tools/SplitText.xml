@@ -15,7 +15,7 @@
   <icon file="SplitText.png" />
   <relevantPlugins>
     <plugin name="Substitution" />
-    <plugin name="Dictionary" />
+    <plugin name="CryptoolDictionary" />
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$Uppercase$" value="Großbuchstaben" />

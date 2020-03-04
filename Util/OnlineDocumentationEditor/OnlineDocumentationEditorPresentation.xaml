@@ -18,7 +18,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <ComboBox Name="ComboBox" Grid.Row="0" SelectionChanged="ComboBox_SelectionChanged"/>
-            <TextBox Name="XMLTextBox" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="1" AcceptsReturn="True" KeyDown="XMLTextBox_KeyDown"/>
+            <TextBox Name="XMLTextBox" TextWrapping="WrapWithOverflow" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="1" AcceptsReturn="True" KeyDown="XMLTextBox_KeyDown"/>
         </Grid>
         <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
         <WebBrowser Name="WebBrowser" Grid.Column="2" />

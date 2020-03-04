@@ -14,6 +14,6 @@
   <keywords lang="de">satsolver, sat, solver, erfüllbarkeit, hash, hashfunktion, analyse, attack, angriff, urbild, preimage, second preimage</keywords>
   <icon file="SATAttack.png" />
   <relevantPlugins>
-    <plugin name="SATAttack" />
+    <!--<plugin name="SATAttack" />-->
   </relevantPlugins>
 </sample>

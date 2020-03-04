@@ -25,10 +25,10 @@
   </description>
   <keywords lang="de">he, homomorphe verschlüsselung, fv, fan-vercauteren, seal, simple encrypted arithmetic library, verschlüsselung, vertrauliche programmausführung, assembler, programm, ausführung, geheim, vertraulich</keywords>
   <relevantPlugins>
-    <plugin name="EncryptedVMKeyGen" />
+<!--<plugin name="EncryptedVMKeyGen" />
     <plugin name="EncryptedVMAssembler" />
     <plugin name="EncryptedVMMachine" />
-    <plugin name="EncryptedVMMemoryDisplay" />
+    <plugin name="EncryptedVMMemoryDisplay" />-->
     <plugin name="TextInput" />
     <plugin name="TextOutput" />
   </relevantPlugins>
