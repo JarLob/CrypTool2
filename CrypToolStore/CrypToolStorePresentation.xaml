@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:a="clr-namespace:Cryptool.CrypToolStore"
              mc:Ignorable="d" 
-             d:DesignHeight="700" d:DesignWidth="1500" Background="#FFEBEFF6" Loaded="UserControl_Loaded">
+             d:DesignHeight="700" d:DesignWidth="1600" Background="#FFEBEFF6" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
         <a:InverseBooleanToVisibility x:Key="InverseBooleanToVisibility"/>
@@ -44,14 +44,15 @@
         <Grid Grid.Row="2" Height="Auto">
             <Grid>                
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="700"/>
+                    <ColumnDefinition Width="20"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,0,5,0" Content="{Loc Search}"/>
                 <TextBox Grid.Row="0" Height="25" Width="Auto" VerticalAlignment="Top" Margin="100,0,5,0" Name="Filter" TextChanged="Filter_TextChanged" VerticalContentAlignment="Center"/>
                 <CheckBox Name="ShowResources" Grid.Row="0" VerticalAlignment="Top" Margin="100,30,0,0" Checked="ShowResources_Checked" Unchecked="ShowResources_Unchecked" VerticalContentAlignment="Center"><Label Content="{Loc ShowResources}" VerticalAlignment="Center"/></CheckBox>
-                <Border Grid.Row="0" Background="#FFEBEFF6" Margin="3,60,0,5">
-                    <ListView Name="PluginListView" Height="Auto" Width="Auto" MinWidth="700" BorderBrush="#FFEBEFF6" Background="#FFEBEFF6"  Margin="8,5,5,5"
+                <Border Grid.Row="0" Background="#FFEBEFF6" Margin="0,60,0,0">
+                    <ListView Name="PluginListView" Height="Auto" Width="Auto" MinWidth="700" BorderBrush="#FFEBEFF6" Background="#FFEBEFF6"  Margin="0,0,0,0"
                               ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
                               ScrollViewer.VerticalScrollBarVisibility="Auto"
                               DataContext="{Binding}"
@@ -88,8 +89,9 @@
                         </ListView.ItemTemplate>                      
                     </ListView>
                 </Border>
-                <Border Grid.Column="1">
-                    <ScrollViewer Height="Auto" Margin="3,3,3,3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
+                <Border Grid.Column="2">
+                    <ScrollViewer Height="Auto" Margin="0,0,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                         <Grid Height="Auto">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30"/>
