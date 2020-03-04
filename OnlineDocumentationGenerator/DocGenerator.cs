@@ -10,7 +10,6 @@ using Cryptool.Core;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Editor;
 using Cryptool.PluginBase.Miscellaneous;
-using Cryptool.Core;
 using OnlineDocumentationGenerator.DocInformations;
 using OnlineDocumentationGenerator.Generators;
 using Cryptool.PluginBase.Attributes;
@@ -234,9 +233,27 @@ namespace OnlineDocumentationGenerator
         {
             try
             {
-                generator.AddDocumentationPage(new CommonDocumentationPage(XElement.Parse(Properties.Resources.HomomorphicChiffres)));
-                generator.AddDocumentationPage(new CommonDocumentationPage(XElement.Parse(Properties.Resources.CrypToolBook)));
-                generator.AddDocumentationPage(new CommonDocumentationPage(XElement.Parse(Properties.Resources.PseudoRandomFunction_based_KeyDerivationFunctions)));
+                XElement xml0 = XElement.Parse(Properties.Resources.HomomorphicChiffres);
+                XElement xml1 = XElement.Parse(Properties.Resources.CrypToolBook);
+                XElement xml2 = XElement.Parse(Properties.Resources.PseudoRandomFunction_based_KeyDerivationFunctions);
+
+                if(XMLReplacement != null && XMLReplacement.CommonDocId == 0)
+                {
+                    xml0 = XMLReplacement.XElement;
+                }
+                if (XMLReplacement != null && XMLReplacement.CommonDocId == 1)
+                {
+                    xml1 = XMLReplacement.XElement;
+                }
+                if (XMLReplacement != null && XMLReplacement.CommonDocId == 2)
+                {
+                    xml2 = XMLReplacement.XElement;
+                }
+
+                generator.AddDocumentationPage(new CommonDocumentationPage(0, xml0));
+                generator.AddDocumentationPage(new CommonDocumentationPage(1, xml1));
+                generator.AddDocumentationPage(new CommonDocumentationPage(2, xml2));
+
             }
             catch (Exception ex)
             {
@@ -252,11 +269,23 @@ namespace OnlineDocumentationGenerator
 
     public class XMLReplacement
     {
+        public XMLReplacement()
+        {
+            CommonDocId = -1;
+        }
+
         public Type Type
         {
             get; set;
 
         }
+
+        public int CommonDocId
+        {
+            get;
+            set;
+        }
+
         public XElement XElement
         {
             get; set;

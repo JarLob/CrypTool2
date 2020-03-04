@@ -43,7 +43,7 @@ namespace Cryptool.OnlineDocumentationEditor
 
         #region members
         private OnlineDocumentationEditorPresentation _presentation = null;
-        private List<DocumentationWrapper> _types = null;
+        private List<DocumentationWrapper> _documentations = null;
 
         public event SelectedPluginChangedHandler OnSelectedPluginChanged;      
         public event ProjectTitleChangedHandler OnProjectTitleChanged;
@@ -150,22 +150,12 @@ namespace Cryptool.OnlineDocumentationEditor
             {
                 return false;
             }
-        }
-
-        public bool CanSav
-        {
-            get
-            {
-                return false;
-            }
-        }
+        }  
 
         public string CurrentFile
         {
-            get
-            {
-                return null;
-            }
+            get;
+            set;
         }
 
         public string SamplesDir
@@ -245,34 +235,62 @@ namespace Cryptool.OnlineDocumentationEditor
         /// </summary>
         /// <param name="type"></param>
         /// <param name="xElement"></param>
-        private void ChangeXMLAndHTML(Type type, XElement xElement = null)
+        private void ChangeXMLAndHTML(DocumentationWrapper wrapper, XElement xElement = null)
         {
             try
             {
-                string fileName = OnlineHelp.GetPluginDocFilename(type, "en");
-                string baseDir = DirectoryHelper.BaseDirectory;
-                string helpDir = OnlineHelp.HelpDirectory;
-                string fileUrl = baseDir + helpDir + "\\" + fileName;
+                if (wrapper.PluginType != null)
+                {
 
-                if (!File.Exists(fileUrl) || xElement != null)
-                {
-                    var generatingDocWindow = new GeneratingWindow();
-                    string message = string.Format("{0} does not exist. Generating documentation for {1}", fileUrl, type.Name);
-                    generatingDocWindow.SetMessage(message);
-                    GuiLogMessage(message, NotificationLevel.Info);
-                    generatingDocWindow.Title = "Generating Online Documentation";
-                    generatingDocWindow.Show();
-                    GenerateDoc(type, xElement);
-                    generatingDocWindow.Close();
+                    string fileName = OnlineHelp.GetPluginDocFilename(wrapper.PluginType, "en");
+                    string baseDir = DirectoryHelper.BaseDirectory;
+                    string helpDir = OnlineHelp.HelpDirectory;
+                    string fileUrl = baseDir + helpDir + "\\" + fileName;
+
+                    if (!File.Exists(fileUrl) || xElement != null)
+                    {
+                        var generatingDocWindow = new GeneratingWindow();
+                        string message = string.Format("Generating documentation for {0}", wrapper.PluginType.Name);
+                        generatingDocWindow.SetMessage(message);
+                        GuiLogMessage(message, NotificationLevel.Info);
+                        generatingDocWindow.Title = "Generating Online Documentation";
+                        generatingDocWindow.Show();
+                        GenerateDoc(wrapper, xElement);
+                        generatingDocWindow.Close();
+                    }
+                    _presentation.WebBrowser.Source = new Uri(fileUrl);
+                    var xml = GetOnlineDocumentationXML(wrapper.PluginType);
+                    if (xml != null && xElement == null)
+                    {
+                        _presentation.XMLTextBox.Text = xml.ToString();
+                    }
                 }
-                _presentation.WebBrowser.Source = new Uri(fileUrl);
-                var xml = GetOnlineDocumentationXML(type);
-                if (xml != null && xElement == null)
+                else
                 {
-                    _presentation.XMLTextBox.Text = xml.ToString();
+
+                    string fileName = wrapper.CommonDocFilename;
+                    string baseDir = DirectoryHelper.BaseDirectory;
+                    string helpDir = OnlineHelp.HelpDirectory;
+                    string fileUrl = baseDir + helpDir + @"\Common\" + fileName;
+                    if (!File.Exists(fileUrl) || xElement != null)
+                    {
+                        var generatingDocWindow = new GeneratingWindow();
+                        string message = string.Format("Generating documentation for common doc with id={0}", wrapper.CommonDocId);
+                        generatingDocWindow.SetMessage(message);
+                        GuiLogMessage(message, NotificationLevel.Info);
+                        generatingDocWindow.Title = "Generating Online Documentation";
+                        generatingDocWindow.Show();
+                        GenerateDoc(wrapper, xElement);
+                        generatingDocWindow.Close();
+                    }
+                    _presentation.WebBrowser.Source = new Uri(fileUrl);
+                    if (xElement == null)
+                    {
+                        _presentation.XMLTextBox.Text = wrapper.XMLDocumentation;
+                    }                    
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 GuiLogMessage(string.Format("Could not change xml and html. Error occured: {0}", ex.Message), NotificationLevel.Error);
             }
@@ -282,15 +300,26 @@ namespace Cryptool.OnlineDocumentationEditor
         /// Starts the (re-)generation of the online help of the component identified by its type
         /// If an xml is given, the original is overwritten before generation
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="DocumentationWrapper"></param>
         /// <param name="xElement"></param>
-        private void GenerateDoc(Type type, XElement xElement = null)
+        private void GenerateDoc(DocumentationWrapper wrapper, XElement xElement = null)
         {
-            string baseDir = DirectoryHelper.BaseDirectory;
-            var docGenerator = new DocGenerator();
-            DocGenerator.XMLReplacement = new XMLReplacement() { XElement = xElement, Type = type };
-            var htmlGenerator = new HtmlGenerator(type);            
-            docGenerator.Generate(baseDir, htmlGenerator);               
+            if (wrapper.PluginType != null)
+            {
+                string baseDir = DirectoryHelper.BaseDirectory;
+                var docGenerator = new DocGenerator();
+                DocGenerator.XMLReplacement = new XMLReplacement() { XElement = xElement, Type = wrapper.PluginType };
+                var htmlGenerator = new HtmlGenerator(wrapper.PluginType);
+                docGenerator.Generate(baseDir, htmlGenerator);
+            }
+            else
+            {
+                string baseDir = DirectoryHelper.BaseDirectory;
+                var docGenerator = new DocGenerator();
+                DocGenerator.XMLReplacement = new XMLReplacement() { XElement = xElement, CommonDocId = wrapper.CommonDocId};
+                var htmlGenerator = new HtmlGenerator(wrapper.CommonDocId);
+                docGenerator.Generate(baseDir, htmlGenerator);
+            }
         }
 
         /// <summary>
@@ -339,6 +368,12 @@ namespace Cryptool.OnlineDocumentationEditor
             {
                 list.Add(new DocumentationWrapper() { PluginType = type, Name = type.Name });
             }
+
+            //here, common docs have to be added manually
+            list.Add(new DocumentationWrapper() { CommonDocId = 0, Name = "Common: CrypTool book", XMLDocumentation = OnlineDocumentationGenerator.Properties.Resources.CrypToolBook, CommonDocFilename = "CrypTool Book_en.html" });
+            list.Add(new DocumentationWrapper() { CommonDocId = 1, Name = "Common: Homomorphic ciphers", XMLDocumentation = OnlineDocumentationGenerator.Properties.Resources.HomomorphicChiffres, CommonDocFilename = "Homomorphic Ciphers and their Importance in Cryptography_en.html" });
+            list.Add(new DocumentationWrapper() { CommonDocId = 2, Name = "Common: Pseudo random function based key derivation functions", XMLDocumentation = OnlineDocumentationGenerator.Properties.Resources.PseudoRandomFunction_based_KeyDerivationFunctions, CommonDocFilename = "Key Derivation Functions Based on Pseudorandom Functions_en.html" });
+
             return list;
         }
 
@@ -349,8 +384,8 @@ namespace Cryptool.OnlineDocumentationEditor
         {            
             try
             {
-                _types = GetAllDocumentations();
-                _presentation.ComboBox.ItemsSource = _types;
+                _documentations = GetAllDocumentations();
+                _presentation.ComboBox.ItemsSource = _documentations;
                 _presentation.ComboBox.SelectedIndex = 0;
             }
             catch (Exception ex)
@@ -358,11 +393,10 @@ namespace Cryptool.OnlineDocumentationEditor
                 GuiLogMessage(string.Format("Exception during creation of documentations list: {0}", ex.Message), NotificationLevel.Error);
             }                   
 
-            if (_types != null && _types.Count > 0)
+            if (_documentations != null && _documentations.Count > 0)
             {
-                ChangeXMLAndHTML(_types[0].PluginType);
-            }
-            
+                ChangeXMLAndHTML(_documentations[0]);
+            }            
         }
 
         /// <summary>
@@ -375,12 +409,7 @@ namespace Cryptool.OnlineDocumentationEditor
             {
                 return;
             }
-            Type type = ((DocumentationWrapper)_presentation.ComboBox.SelectedItem).PluginType;
-            if (type == null)
-            {
-                return;
-            }
-            ChangeXMLAndHTML(type);
+            ChangeXMLAndHTML((DocumentationWrapper)_presentation.ComboBox.SelectedItem);
         }
 
         /// <summary>
@@ -394,7 +423,8 @@ namespace Cryptool.OnlineDocumentationEditor
                 try
                 {
                     XElement xElement = XElement.Parse(_presentation.XMLTextBox.Text);
-                    ChangeXMLAndHTML(_types[_presentation.ComboBox.SelectedIndex].PluginType, xElement);
+                    ChangeXMLAndHTML(_documentations[_presentation.ComboBox.SelectedIndex], xElement);
+                    e.Handled = true;
                 }
                 catch(Exception ex)
                 {
@@ -489,7 +519,20 @@ namespace Cryptool.OnlineDocumentationEditor
     {
         public Type PluginType
         {
-            get; set;
+            get; 
+            set;
+        }
+
+        public int CommonDocId        
+        {
+            get; 
+            set;
+        }
+
+        public string CommonDocFilename
+        {
+            get;
+            set;
         }
 
         public string XMLDocumentation

@@ -19,6 +19,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
     public class HtmlGenerator : Generator
     {
         private Type _typeToGenerate = null;
+        private int _commonDocId = -1;
 
         private static readonly Dictionary<string, string> _languagePresentationString = new Dictionary<string, string>() { { "en", "English" }, { "de", "Deutsch" }, { "ru", "Русский" } };
         private static readonly Dictionary<string, string> _languagePresentationIcon = new Dictionary<string, string>() { { "en", "en.png" }, { "de", "de.png" }, { "ru", "ru.png" } };
@@ -37,23 +38,39 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
 
         }
 
+        /// <summary>
+        /// When constructed with this constructor, only the help of the component with the defined type is generated
+        /// </summary>
+        /// <param name="typeToGenerate"></param>
         public HtmlGenerator(Type typeToGenerate)
         {
             _typeToGenerate = typeToGenerate;
+        }
+
+        /// <summary>
+        /// When constructed with this constructor, only the common page with the defined id is generated
+        /// </summary>
+        /// <param name="commonDocId"></param>
+        public HtmlGenerator(int commonDocId)
+        {
+            _commonDocId = commonDocId;
         }
 
         public override void Generate(TemplateDirectory templatesDir)
         {
             _templatesDir = templatesDir;
             _objectConverter = new ObjectConverter(DocPages, OutputDir);
+
             GenerateDocPages();
-            if (_typeToGenerate == null)
+
+            if (_typeToGenerate == null && _commonDocId == -1)
             {
                 GenerateComponentIndexPages();
                 GenerateTemplateIndexPages();
                 GenerateEditorIndexPages();
                 GenerateCommonIndexPages();
             }
+
             CopyAdditionalResources();
         }
        
@@ -411,7 +428,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                 //this here allows the generation of a single documentation page
                 //to do so, the type of the component has to be given in constructor of the
                 //HtmlGenerator
-                if(_typeToGenerate != null)
+                if(_typeToGenerate != null || _commonDocId > 0)
                 {
                     if(documentationPage is PluginDocumentationPage)
                     {
@@ -420,6 +437,15 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                         {
                             continue;
                         }
+                    }
+                    else if (documentationPage is CommonDocumentationPage)
+                    {
+                        CommonDocumentationPage commonDocumentationPage = (CommonDocumentationPage)documentationPage;
+                        if(commonDocumentationPage.Id != _commonDocId)
+                        {
+                            continue;
+                        }
+                        
                     }
                     else
                     {
@@ -430,7 +456,8 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
 
                 foreach (var lang in documentationPage.AvailableLanguages)
                 {                  
-                    try {
+                    try 
+                    {
                         var localizedEntityDocumentationPage = documentationPage.Localizations[lang];
 
                         var cultureInfo = new CultureInfo(lang);

@@ -18,7 +18,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\CrypBuild\Debug\CrypPlugins\</OutputPath>
+    <OutputPath>..\..\CrypBuild\Debug\CrypPlugins\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -26,7 +26,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>..\CrypBuild\Release\CrypPlugins\</OutputPath>
+    <OutputPath>..\..\CrypBuild\Release\CrypPlugins\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -58,20 +58,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CrypCore\CrypCore.csproj">
+    <ProjectReference Include="..\..\CrypCore\CrypCore.csproj">
       <Project>{ff5d473c-0716-4d3e-9078-2ebd979f94c6}</Project>
       <Name>CrypCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CrypPluginBase\CrypPluginBase.csproj">
+    <ProjectReference Include="..\..\CrypPluginBase\CrypPluginBase.csproj">
       <Project>{25db2b47-a457-4ec2-960b-395ce07ae093}</Project>
       <Name>CrypPluginBase</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CrypWin\CrypWin.csproj">
+    <ProjectReference Include="..\..\CrypWin\CrypWin.csproj">
       <Project>{5d7200cf-515f-4660-a13f-16918ef348a1}</Project>
       <Name>CrypWin</Name>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
-    <ProjectReference Include="..\OnlineDocumentationGenerator\OnlineDocumentationGenerator.csproj">
+    <ProjectReference Include="..\..\OnlineDocumentationGenerator\OnlineDocumentationGenerator.csproj">
       <Project>{0698cd9d-dad6-41ae-9e0a-fb00959fe8b1}</Project>
       <Name>OnlineDocumentationGenerator</Name>
     </ProjectReference>
