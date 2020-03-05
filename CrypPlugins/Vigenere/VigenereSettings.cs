@@ -108,6 +108,10 @@ namespace Cryptool.Vigenere
         /// <param name="offsetString"></param>
         private void setKeyByValue(string offsetString)
         {
+            if (string.IsNullOrEmpty(offsetString))
+            {
+                return;
+            }
             try
             {
                 int[] offset = offsetString.Split(',').Select(s => int.Parse(s)).ToArray();
@@ -126,6 +130,10 @@ namespace Cryptool.Vigenere
         /// <param name="offset"></param>
         public void setKeyByValue(int[] offset)
         {
+            if(offset == null)
+            {
+                return;
+            }
             try
             {
                 //set the new shiftValue and shiftChar
@@ -149,6 +157,10 @@ namespace Cryptool.Vigenere
 
         private void setKeyByCharacter(string value)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                return;
+            }
             try
             {
                 int[] offset = new int[value.Length];
