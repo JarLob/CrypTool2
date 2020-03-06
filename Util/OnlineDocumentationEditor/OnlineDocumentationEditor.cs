@@ -44,6 +44,8 @@ namespace Cryptool.OnlineDocumentationEditor
         #region members
         private OnlineDocumentationEditorPresentation _presentation = null;
         private List<DocumentationWrapper> _documentations = null;
+        private bool _unsavedChanges = false;
+        private int _currentSelectedDocumentationIndex = 0;
 
         public event SelectedPluginChangedHandler OnSelectedPluginChanged;      
         public event ProjectTitleChangedHandler OnProjectTitleChanged;
@@ -289,6 +291,7 @@ namespace Cryptool.OnlineDocumentationEditor
                         _presentation.XMLTextBox.Text = wrapper.XMLDocumentation;
                     }                    
                 }
+                _unsavedChanges = false;
             }
             catch (Exception ex)
             {
@@ -417,10 +420,27 @@ namespace Cryptool.OnlineDocumentationEditor
         /// <param name="e"></param>
         internal void ComboBoxSelectionChanged(SelectionChangedEventArgs e)
         {
+            if(_presentation.ComboBox.SelectedIndex == _currentSelectedDocumentationIndex)
+            {
+                return;
+            }
+            
+            if (_unsavedChanges)
+            {
+                var result = MessageBox.Show("You have unsaved changes. Do you really want to change the document? Your changes will be lost then.", "Unsaved changes", MessageBoxButton.YesNo);
+                if(result == MessageBoxResult.No)
+                {
+                    _presentation.ComboBox.SelectedIndex = _currentSelectedDocumentationIndex;
+                    return;
+                }
+            }
+
             if (_presentation.ComboBox.SelectedItem == null)
             {
                 return;
             }
+
+            _currentSelectedDocumentationIndex = _presentation.ComboBox.SelectedIndex;
             ChangeXMLAndHTML((DocumentationWrapper)_presentation.ComboBox.SelectedItem);
         }
 
@@ -442,6 +462,10 @@ namespace Cryptool.OnlineDocumentationEditor
                 {
                     GuiLogMessage(String.Format("Error occured during generation of html: {0}", ex.Message), NotificationLevel.Error);
                 }
+            }
+            else
+            {
+                _unsavedChanges = true;
             }
         }
 
@@ -494,6 +518,7 @@ namespace Cryptool.OnlineDocumentationEditor
                         writer.Write(_presentation.XMLTextBox.Text);
                     }
                 }
+                _unsavedChanges = false;
             }
             catch(Exception ex)
             {

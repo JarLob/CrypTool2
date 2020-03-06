@@ -102,7 +102,7 @@ namespace OnlineDocumentationGenerator
             try
             {
                 XElement xml = null;
-                if(XMLReplacement != null && XMLReplacement.Type.Equals(type))
+                if(XMLReplacement != null && XMLReplacement.Type != null && XMLReplacement.Type.Equals(type))
                 {
                     xml = XMLReplacement.XElement;
                 }
