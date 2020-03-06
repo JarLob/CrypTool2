@@ -7,14 +7,17 @@
   <name lang="en">Homomorphic Ciphers and their Importance in Cryptography</name>
 
   <description lang="en">
-    Homomorphic ciphers are public-key cryptosystems with special properties. They allow performing certain arithmetic operations on encrypted ciphertexts, without knowing the corresponding plaintexts and without having to decrypt the ciphertexts first. These special properties have led to a huge amount of applications for homomorphic ciphers, e.g. in the domain of cloud computing. A very famous and relatively new cryptosystem with homomorphic properties is the Paillier cryptosystem. But also some of the older and well established cryptosystems, such as ElGamal or RSA, have homomorphic properties.
+    Homomorphic ciphers are public-key cryptosystems with special properties. They allow performing certain arithmetic operations on encrypted ciphertexts, without knowing the corresponding plaintexts and without having to decrypt the ciphertexts first. These special properties have led to a huge amount of applications for homomorphic ciphers, e.g. in the domain of cloud computing or multi-party communication. A very famous and relatively new cryptosystem with homomorphic properties is the Paillier cryptosystem. But also some of the older and well established cryptosystems, such as ElGamal or RSA, have homomorphic properties.
+
+    <newline/><newline/>
     <section headline="Origin of the term 'homomorphic'">
-      We first clarify the meaning and the origin of the term „homomorphic“. This term in cryptography is derived from its counterpart in mathematics: in mathematics, a homomorphism is a structure-preserving map between two algebraic structures. In the common sense this means, that a homomorphism $f: X \to Y$ maps the structure of $X$ to the structure of $Y$. Using an example, this can be easily illustrated: Let $(X,+)$ and $(Y,*)$ two algebraic groups with group operations $+$ and $*$, respectively. A homomorphism $f: X \to Y$ maps any given $x \in X$ to a value $y \in Y$, in a way that it holds:
+      We first clarify the meaning and the origin of the term „homomorphic“. This term is derived from its counterpart in mathematics: There, a homomorphism is a structure-preserving map between two algebraic structures. In the common sense this means, that a homomorphism $f: X \to Y$ maps the structure of $X$ to the structure of $Y$. Using an example, this can be easily illustrated: Let $(X,+)$ and $(Y,*)$ two algebraic groups with group operations $+$ and $*$, respectively. A homomorphism $f: X \to Y$ maps any given $x \in X$ to a value $y \in Y$, in a way that it holds:
       <newline/><newline/>
       $$f(x_1 + x_2) = f(x_1) * f(x_2)$$
       for any two $x_1, x_2$ in $X$. This means, that for any two values $x_1, x_2$ it does not matter whether we first compute their sum (group operation of $X$) and then apply $f$ (this is the left side of the above given equation); or, whether we first apply $f$ to the values $x_1, x_2$, and then compute their product in $Y$, thus apply the group operation of $Y$. Please note that the operations $+$ and $*$ were chosen here only as an example, they always depend on the algebraic group they belong to. Naturally, the same relation holds for homomorphisms between groups with the same group operation.
       <newline/><newline/>
-      <b>Example:</b> Let $X = \mathbb{Z}$ be the set of integer values. The set $\mathbb{Z}$ together with the addition operation forms an algebraic group $G_1 = (\mathbb{Z}, +)$. Similarly, the real values $\mathbb{R}$ without the value zero together with the multiplication operation form a group $G_2 = (\mathbb{R}\backslash\{0\}, *)$. The function $f:\mathbb{Z}→\mathbb{R}\backslash\{0\},z →e^z$ is a homomorphism, since for all $z_1,z_2 \in \mathbb{Z}$ it holds: $f(z_1+ z_2) = e^{(z_1+ z_2 )} = f(z_1 )* f(z_2)$. On the contrary, $f:\mathbb{Z} \to \mathbb{R}\backslash\{0\}, z \to z^2$ is an example for a function which is not a homomorphism.
+      <b>Example:</b> Let $X = \mathbb{Z}$ be the set of integer values. The set $\mathbb{Z}$ together with the addition operation forms an algebraic group $G_1 = (\mathbb{Z}, +)$. Similarly, the real values $\mathbb{R}$ without the value zero together with the multiplication operation form a group $G_2 = (\mathbb{R}\backslash\{0\}, *)$. The function $f:\mathbb{Z}→\mathbb{R}\backslash\{0\},z →e^z$ is a homomorphism, since for all $z_1,z_2 \in \mathbb{Z}$ it holds: $f(z_1+ z_2) = e^{(z_1+ z_2 )} = f(z_1 )* f(z_2)$
+      On the contrary, $f:\mathbb{Z} \to \mathbb{R}\backslash\{0\}, z \to z^2$ is an example for a function which is not a homomorphism.
     </section>
     <section headline="Decryption function is a homomorphism">
       In the remainder of this tutorial we will consider public-key cryptosystems with a special property, namely that its decryption function is a homomorphism. A public-key cryptosystem with this property will be called homomorphic.
@@ -25,6 +28,7 @@
       For two plaintexts $x_1, x_2$ with corresponding ciphertexts $y_1, y_2$ it holds:
       <newline/><newline/>
       $$f(y_1  * y_2) = f(y_1) + f(y_2) = x_1  + x_2$$
+
       This equation can be interpreted as follows: If we multiply two ciphertexts $y_1, y_2$ with each other and subsequently decrypt their product, then we will obtain the sum of the originally encrypted values $x_1$ and $x_2$. Everybody can – without knowledge of the plaintexts, without having to decrypt and even without knowing the private decryption key – compute a product of the two ciphertexts and knows, that upon decryption the owner of the private key will obtain the sum of the two originally encrypted plaintexts.
     </section>
 
@@ -35,7 +39,7 @@
       <newline/><newline/>
       The most famous cryptosystem with homomorphic properties is the one by Paillier <ref id="Paillier"/>. First we will see how the Paillier key generation process works. After that, we will show that the Paillier cryptosystem indeed has homomorphic properties.
       <newline/>
-      In CrypTool 2 you will find an implementation of the <docRef item="Cryptool.Plugins.Paillier.Paillier">Paillier</docRef> cryptosystem. Among the available components, there are components for key generation (“<docRef item="Cryptool.Plugins.Paillier.PaillierKeyGenerator">Paillier Key Generator</docRef>”), an example for encryption and decryption with Paillier (called “Paillier Text”), as well as examples which illustrate the homomorphic properties of the cryptosystem (“Paillier Addition”, “Paillier Blinding” and “Paillier Voting”).
+      CrypTool 2 (CT2) contains an implementation of the <docRef item="Cryptool.Plugins.Paillier.Paillier">Paillier</docRef> cryptosystem. Among the available components, there are components for key generation (“<docRef item="Cryptool.Plugins.Paillier.PaillierKeyGenerator">Paillier Key Generator</docRef>”), an example for encryption and decryption with Paillier (called “Paillier Text”), as well as examples which illustrate the homomorphic properties of the cryptosystem (“Paillier Addition”, “Paillier Blinding” and “Paillier Voting”).
       <newline/>
       <img src="OnlineDocumentationGenerator/StaticDocs/Images/CT2-Paillier.png"/>
       <newline/><newline/><b>Key Generation</b><newline/><newline/>
@@ -48,7 +52,7 @@
       Given the private key $\lambda$ and a ciphertext $c \in \mathbb{Z}_{n^2}^*$, we first compute $S = c^\lambda \bmod n^2$ and subsequently $T = \phi(n)^{(-1)} \bmod n^2$,
       where $\phi$ denotes the Euler function.
       <newline/><newline/>
-      Finally, we compute the plaintext $m = D(c) = (S-1)/n * T \bmod n$.
+      Finally, we compute the plaintext m as: $m = D(c) = (S-1)/n * T \bmod n$
       <newline/><newline/>
       <b>Homomorphic property</b>
       <newline/><newline/>
@@ -96,7 +100,7 @@
           <newline/>
         </item>
         <item>
-          A second application of homomorphic ciphers is „Secure Multiparty Computation“. Here, two or more parties can compute any commonly known function. Each of the parties provides one or more of the inputs for the function to be computed. The goal of the secure computations is to keep all private inputs secret, while only the result of the function is revealt. The use of homomorphic encryption helps to perform these computations on encrypted data. However, since the Paillier encryption only allows to compute additions of encrypted values (and, e.g. no multiplications can be performed), a number of additional methods and techniques have to be applied. The Wikipedia page <ref id="SMC"/> offers a great start for reading more about this topic and more advanced techniques for Secure Multiparty Computation.
+          A second application of homomorphic ciphers is „Secure Multi-Party Computation“ (Secure MPC). Here, two or more parties can compute any commonly known function. Each of the parties provides one or more of the inputs for the function to be computed. The goal of the secure computations is to keep all private inputs secret, while only the result of the function is revealed. The use of homomorphic encryption helps to perform these computations on encrypted data. However, since the Paillier encryption only allows to compute additions of encrypted values (and, e.g. no multiplications can be performed), a number of additional methods and techniques have to be applied. The Wikipedia page <ref id="SMC"/> offers a great start for reading more about this topic and more advanced techniques for secure multi-party computation.
           <newline/>
           <newline/>
         </item>
@@ -106,11 +110,29 @@
       </enum>
     </section>
   </description>
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <description lang="de-DE">
-    Homomorphe Chiffren sind Public-Key-Verfahren mit besonderen Eigenschaften. Sie erlauben es, bestimmte Berechnungen auf verschlüsselten Daten durchzuführen, ohne die Daten selbst zu kennen oder entschlüsseln zu müssen. Dies findet in der Praxis relevante Anwendungen, z.B. im Bereich Cloud-Computing. Ein sehr bekanntes homomorphes Kryptosystem ist das von Paillier. Aber auch ältere Kryptosysteme wie das von ElGamal oder RSA besitzen homomorphe Eigenschaften.
+    Homomorphe Chiffren sind Public-Key-Verfahren mit besonderen Eigenschaften. Sie erlauben es, bestimmte Berechnungen auf verschlüsselten Daten durchzuführen, ohne die Daten selbst zu kennen oder entschlüsseln zu müssen. Dies findet in der Praxis relevante Anwendungen, z.B. im Bereich des Cloud-Computing oder der Multi-Party Communication. Ein sehr bekanntes homomorphes Kryptosystem ist das von Paillier. Aber auch ältere Kryptosysteme wie das von ElGamal oder RSA besitzen homomorphe Eigenschaften.
     <section headline="Ursprung und Begriff 'homomorph'">
-      Zunächst klären wir den Ursprung des Begriffs „homomorph“. Dieser stammt aus der Mathematik: Hier bezeichnet ein Homomorphismus eine strukturerhaltende Abbildung zwischen zwei algebraischen Strukturen. Umgangssprachlich gesagt bildet ein Homomorphismus $f: X \to Y$ dabei die Struktur von $X$ auf die von $Y$ ab. An einem Beispiel lässt sich dies sehr gut verdeutlichen. Seien $(X,+)$ und $(Y,*)$ zwei Gruppen mit den Operationen $+$ bzw. $*$. Ein Homomorphismus $f: X \to Y$ bildet nun jedes $x \in X$ so auf ein $y \in Y$ ab, dass gilt:
+      Zunächst klären wir den Ursprung des Begriffs „homomorph“. Der Begriff stammt aus der Mathematik: Hier bezeichnet ein Homomorphismus eine strukturerhaltende Abbildung zwischen zwei algebraischen Strukturen. Umgangssprachlich gesagt bildet ein Homomorphismus $f: X \to Y$ dabei die Struktur von $X$ auf die von $Y$ ab. An einem Beispiel lässt sich dies sehr gut verdeutlichen. Seien $(X,+)$ und $(Y,*)$ zwei Gruppen mit den Operationen $+$ bzw. $*$. Ein Homomorphismus $f: X \to Y$ bildet nun jedes $x \in X$ so auf ein $y \in Y$ ab, dass gilt:
       $$f(x_1 + x_2) = f(x_1) * f(x_2)$$
       für beliebige $x_1, x_2$ aus $X$. Es spielt also für die beiden Werte $x_1, x_2$ keine Rolle, ob man sie zunächst addiert (Gruppenoperation von $X$) und dann $f$ anwendet (linke Seite der Gleichung); oder ob man zuerst  $f$ auf die beiden Werte $x_1, x_2$ anwendet, und dann die Gruppenoperation von $Y$, die Multiplikation, anwendet. Die Operationen $+$ bzw. $*$ wurden hier nur beispielhaft verwendet, sie hängen immer von der jeweiligen Gruppe ab. Beispielsweise gibt es auch Homomorphismen zwischen Gruppen mit derselben Gruppenoperation.
       <newline/><newline/>
@@ -122,33 +144,33 @@
       Sei nun angenommen, der obige Homomorphismus $f$ sei die Entschlüsselungsfunktion eines Kryptosystems. Das bedeutet, dass wir in der Algebra der Geheimtexte Operationen durchführen können und dabei wissen, welche Auswirkungen dies auf die Klartexte hat. Am obigen Beispiel:
       <newline/><newline/>
       $Y$ ist die Menge der Geheimtexte, $X$ die Menge der Klartexte.
-    Für zwei Klartexte $x_1, x_2$ mit zugehörigen Geheimtexten $y_1, y_2$ gilt:
-    $$f(y_1  * y_2) = f(y_1) + f(y_2) = x_1  + x_2$$
-    Übersetzt bedeutet diese Gleichung: Multipliziere ich zwei Geheimtexte $y_1, y_2$ miteinander und entschlüssele dann deren Produkt, so erhalte ich die Summe der ursprünglich verschlüsselten Werte $x_1$ und $x_2$. Jedermann kann – ohne Kenntnis der Klartexte und ohne Kenntnis der Entschlüsselungsfunktion – ein Produkt zweier Geheimtexte berechnen und weiß, dass der autorisierte Entschlüsseler aus dem berechneten Produkt  die Summe der beiden ursprünglichen Klartexte erhalten wird.
-  </section>
+      Für zwei Klartexte $x_1, x_2$ mit zugehörigen Geheimtexten $y_1, y_2$ gilt:
+      $$f(y_1  * y_2) = f(y_1) + f(y_2) = x_1  + x_2$$
+      Übersetzt bedeutet diese Gleichung: Multipliziere ich zwei Geheimtexte $y_1, y_2$ miteinander und entschlüssele dann deren Produkt, so erhalte ich die Summe der ursprünglich verschlüsselten Werte $x_1$ und $x_2$. Jedermann kann – ohne Kenntnis der Klartexte und ohne Kenntnis der Entschlüsselungsfunktion – ein Produkt zweier Geheimtexte berechnen und weiß, dass der autorisierte Entschlüsseler aus dem berechneten Produkt  die Summe der beiden ursprünglichen Klartexte erhalten wird.
+    </section>
 
     <section headline="Beispiele für homomorphe Chiffren">
       <u>
         <b>Paillier-Kryptosystem</b>
       </u>
       <newline/><newline/>
-    Das wohl bekannteste Kryptosystem mit homomorphen Eigenschaften ist das von Paillier <ref id="Paillier"/>. Wir sehen zunächst, wie die Schlüsselerzeugung, die Verschlüsselung und die Entschlüsselung funktionieren, und zeigen dann, dass das Paillier-Kryptosystem homomorphe Eigenschaften besitzt.
-      In CrypTool 2 findet man bereits eine Implementierung des <docRef item="Cryptool.Plugins.Paillier.Paillier">Paillier</docRef>-Kryptosystems. Unter den fertigen Vorlagen finden sich Methoden zur Erzeugung der kryptographischen Schlüssel (<docRef item="Cryptool.Plugins.Paillier.PaillierKeyGenerator">Paillier Key Generator</docRef>), ein Beispiel für eine Ver- und Entschlüsselung mittels Paillier (Paillier Text), sowie Beispiele, die die homomorphen Eigenschaften von Paillier aufzeigen (Paillier Addition, Paillier Blinding und Paillier Voting).
-    <newline/>
-    <img src="OnlineDocumentationGenerator/StaticDocs/Images/CT2-Paillier.png"/>
+      Das wohl bekannteste Kryptosystem mit homomorphen Eigenschaften ist das von Paillier <ref id="Paillier"/>. Wir sehen zunächst, wie die Schlüsselerzeugung, die Verschlüsselung und die Entschlüsselung funktionieren, und zeigen dann, dass das Paillier-Kryptosystem homomorphe Eigenschaften besitzt.
+      In CrypTool 2 (CT2) ist das <docRef item="Cryptool.Plugins.Paillier.Paillier">Paillier</docRef>-Kryptosystem implementiert. Unter den fertigen Vorlagen finden sich Methoden zur Erzeugung der kryptographischen Schlüssel (<docRef item="Cryptool.Plugins.Paillier.PaillierKeyGenerator">Paillier Key Generator</docRef>), ein Beispiel für eine Ver- und Entschlüsselung mittels Paillier (Paillier Text), sowie Beispiele, die die homomorphen Eigenschaften von Paillier aufzeigen (Paillier Addition, Paillier Blinding und Paillier Voting).
+      <newline/>
+      <img src="OnlineDocumentationGenerator/StaticDocs/Images/CT2-Paillier.png"/>
       <newline/><newline/><b>Schlüsselerzeugung</b><newline/><newline/>
-    Zuerst werden zwei zufällige Primzahlen $p,q$ erzeugt, so dass das Produkt $n=pq$ einen gültigen RSA-Modulus formt. Hierbei sollte $n$ eine Bitlänge von mindestens 1024 Bit haben.
-    Damit kann der private Schlüssel $\lambda = \textit{kgV}(p-1,q-1)$ berechnet werden. $\textit{kgV}$ bezeichnet hierbei das kleinste gemeinsame Vielfache. In der ursprünglichen Version des Paillier Kryptosystems (siehe <ref id="Paillier"/>), wird weiter ein Element $g$ gewählt, so, dass <![CDATA[ $1 < g < n^2$ ]]> gilt und dass die Ordnung von $g$ ein Vielfaches von $n$ ist. Das Element $g$ kann beliebig mit diesen Eigenschaften gewählt werden. Allerdings kann man zeigen, dass der Wert $g = n+1$ für alle $n$ diese Eigenschaften erfüllt. Da sich der Wert $g$ damit automatisch aus dem Wert $n$ ergibt, werden wir im Folgenden immer annehmen, dass $g = n+1$ gilt. Der öffentliche Schlüssel besteht damit nur aus dem RSA-Modulus $n$.
-    <newline/><newline/><b>Verschlüsselung</b><newline/><newline/>
-    Sei $m$ die zu verschlüsselnde Nachricht aus dem Klartextraum $\mathbb{Z}_n$. Für jeden Verschlüsselungsvorgang wählen wir zunächst ein zufälliges Element $r$ aus $\mathbb{Z}_n$ und berechnen dann mit Hilfe des öffentlichen Schlüssels $n$ den Geheimtext.
-    $$c = E(m,r) = (n+1)^m  * r^n  \bmod n^2$$
-  <b>Entschlüsselung</b><newline/><newline/>
+      Zuerst werden zwei zufällige Primzahlen $p,q$ erzeugt, so dass das Produkt $n=pq$ einen gültigen RSA-Modulus formt. Hierbei sollte $n$ eine Bitlänge von mindestens 1024 Bit haben.
+      Damit kann der private Schlüssel $\lambda = \textit{kgV}(p-1,q-1)$ berechnet werden. $\textit{kgV}$ bezeichnet hierbei das kleinste gemeinsame Vielfache. In der ursprünglichen Version des Paillier Kryptosystems (siehe <ref id="Paillier"/>), wird weiter ein Element $g$ gewählt, so, dass <![CDATA[ $1 < g < n^2$ ]]> gilt und dass die Ordnung von $g$ ein Vielfaches von $n$ ist. Das Element $g$ kann beliebig mit diesen Eigenschaften gewählt werden. Allerdings kann man zeigen, dass der Wert $g = n+1$ für alle $n$ diese Eigenschaften erfüllt. Da sich der Wert $g$ damit automatisch aus dem Wert $n$ ergibt, werden wir im Folgenden immer annehmen, dass $g = n+1$ gilt. Der öffentliche Schlüssel besteht damit nur aus dem RSA-Modulus $n$.
+      <newline/><newline/><b>Verschlüsselung</b><newline/><newline/>
+      Sei $m$ die zu verschlüsselnde Nachricht aus dem Klartextraum $\mathbb{Z}_n$. Für jeden Verschlüsselungsvorgang wählen wir zunächst ein zufälliges Element $r$ aus $\mathbb{Z}_n$ und berechnen dann mit Hilfe des öffentlichen Schlüssels $n$ den Geheimtext.
+      $$c = E(m,r) = (n+1)^m  * r^n  \bmod n^2$$
+      <b>Entschlüsselung</b><newline/><newline/>
       Sind der private Schlüssel $\lambda$ und ein Geheimtext $c \in \mathbb{Z}_{n^2}^*$ gegeben, berechnen wir zunächst
-      $$S = c^\lambda \bmod n^2 \mbox{ und } T = \phi(n)^{(-1)} \bmod n^2,$$     
+      $$S = c^\lambda \bmod n^2 \mbox{ und } T = \phi(n)^{(-1)} \bmod n^2,$$
       wobei $\phi$ die Eulersche Funktion ist.
-      Und dann $m = D(c) = ((S-1)/n) * T \bmod n$.
+      Und dann den Klartext: $m = D(c) = ((S-1)/n) * T \bmod n$
       <newline/><newline/>
-    <b>Homomorphe Eigenschaft</b>
+      <b>Homomorphe Eigenschaft</b>
       <newline/><newline/>
       Um die homomorphe Eigenschaft nachzuweisen, betrachten wir die Verschlüsselungsfunktion $E$ und die Entschlüsselungsfunktion $D$ des Paillier-Kryptosystems. Zur Vereinfachung setzen wir im Folgenden $g:= n+1$.  Aus zwei Klartexten $m_1,m_2$ ergeben sich die dazugehörigen Geheimtexte $c_1, c_2$ als
       $$c_1 = g^{m_1} *  {r_1}^n \bmod n^2 \mbox{ bzw. } c_2 = g^{m_2} * {r_2}^n \bmod n^2$$
@@ -159,19 +181,19 @@
       $$D( E(m_1,r_1) * E(m_2,r_2)) = D( E(m_1+m_2, r_1 r_2)) = m_1  + m_2 = D(E(m_1,r_1)) + D(E(m_2,r_2))$$
       Die Multiplikation der beiden Chiffrate entspricht daher einer Addition der beiden Klartexte.
       <newline/><newline/>
-    <u>
-      <b>Weitere Kryptosysteme</b>
-    </u>
+      <u>
+        <b>Weitere Kryptosysteme</b>
+      </u>
       <newline/><newline/>
       Auch ältere Public-Key-Kryptosysteme können homomorphe Eigenschaften haben. Das ElGamal-Kryptosystem und das Standard RSA-Kryptosystem sind bekannte Beispiele dafür. Wir zeigen diese homomorphen Eigenschaften anhand einfacher Beispiele auf.
       <newline/><newline/><b>RSA</b><newline/><newline/>
       Sei $(e,n)$ der öffentliche RSA-Schlüssel ($e$ der Verschlüsselungskoeffizient, $n$ der RSA-Modulus). Für zwei Nachrichten $m_1, m_2$ erhält man die Verschlüsselungen $c_1 = {m_1}^e \bmod n$ und $c_2 = {m_2}^e \bmod n$. Nun gilt für das Produkt dieser beiden Verschlüsselungen: $c_1*c_2={m_1}^e * {m_2}^e \bmod n=(m_1*m_2)^e \bmod n$. Man erhält also eine Verschlüsselung des Produkts der ursprünglichen Nachrichten. Wie man leicht nachprüfen kann gilt diese Eigenschaft für beliebige Nachrichten $m_1, m_2$, somit ist die Entschlüsselungsfunktion ein Homomorphismus. RSA ist dabei ein Beispiel für einen Homomorphismus, bei dem in beiden Gruppen die gleiche Gruppenoperation verwendet wird.
       <newline/>
-    Die Multiplikation der beiden Chiffrate entspricht daher bei RSA einer Multiplikation der beiden Klartexte.
-    <newline/><newline/><b>ElGamal</b><newline/><newline/>
-    Ähnlich wie bei RSA verhält es sich auch im ElGamal-Kryptosystem. Sei $(p,g,K)$ der öffentliche Schlüssel, der private Schlüssel sei $k$ (es gilt also $g^k \bmod p = K$). Für Nachrichten $m_1, m_2$ erhält man nun Verschlüsselungen $(R, c_1) = (K^r \bmod p, m_1*g^r \bmod p)$ und $(S,c_2) = (K^s \bmod p, m_2 * g^s \bmod p)$. Auch hier ist das Produkt $(R*S, c_1*c_2)$ eine Verschlüsselung von $m_1*m_2$ und man kann leicht überprüfen, dass die Entschlüsselungsfunktion ein Homomorphismus ist.
+      Die Multiplikation der beiden Chiffrate entspricht daher bei RSA einer Multiplikation der beiden Klartexte.
+      <newline/><newline/><b>ElGamal</b><newline/><newline/>
+      Ähnlich wie bei RSA verhält es sich auch im ElGamal-Kryptosystem. Sei $(p,g,K)$ der öffentliche Schlüssel, der private Schlüssel sei $k$ (es gilt also $g^k \bmod p = K$). Für Nachrichten $m_1, m_2$ erhält man nun Verschlüsselungen $(R, c_1) = (K^r \bmod p, m_1*g^r \bmod p)$ und $(S,c_2) = (K^s \bmod p, m_2 * g^s \bmod p)$. Auch hier ist das Produkt $(R*S, c_1*c_2)$ eine Verschlüsselung von $m_1*m_2$ und man kann leicht überprüfen, dass die Entschlüsselungsfunktion ein Homomorphismus ist.
     </section>
-    <section headline="Anwendungen">      
+    <section headline="Anwendungen">
       Die homomorphe Eigenschaft von Paillier lässt sich dazu verwenden, um verschlüsselte Werte zu addieren oder verschlüsselte Werte mit unverschlüsselten Werten zu multiplizieren (dies entspricht einer wiederholten Anwendung der Addition). Damit werden homomorphe Chiffren zu einer wichtigen Funktion in vielen kryptographischen Anwendungen.
       <newline/><newline/>
       <enum>
@@ -179,26 +201,26 @@
           Eine dieser Anwendungen ist das sogenannte „Electronic Voting“. Hierbei wird es mehreren Wahlberechtigten ermöglicht, ihre Stimme verschlüsselt abzugeben. Dies ist wichtig in Situationen, in denen die Wahlberechtigten nicht direkt zusammen kommen können. Zum Beispiel könnte es sein, dass die Wahlberechtigten nur per Email über das Internet kommunizieren können. Wenn die Abstimmung geheim bleiben soll, und es niemanden gibt, dem alle Wahlberechtigten uneingeschränkt vertrauen, bieten homomorphe Chiffren eine gute Lösung für dieses Problem. Im Wesentlichen funktioniert Electronic Voting mittels homomorpher Chiffren so:
           <enum>
             <item>Alle Wahlberechtigen (links im Screenshot) verschlüsseln ihre Stimme. Sie verschlüsseln den Wert 1, wenn sie für die Entscheidung sind, und den Wert 0, wenn sie dagegen sind.</item>
-          <item>Über die homomorphe Eigenschaft wird die Summe der abgegebenen Stimmen berechnet. Da dies auf den verschlüsselten Werten passiert, bleiben die Stimmen der einzelnen Wahlberechtigten geheim.</item>
-          <item>Am Ende werden die Stimmen ausgezählt, indem nur die Summe der Stimmen entschlüsselt wird.</item>
-        </enum>
+            <item>Über die homomorphe Eigenschaft wird die Summe der abgegebenen Stimmen berechnet. Da dies auf den verschlüsselten Werten passiert, bleiben die Stimmen der einzelnen Wahlberechtigten geheim.</item>
+            <item>Am Ende werden die Stimmen ausgezählt, indem nur die Summe der Stimmen entschlüsselt wird.</item>
+          </enum>
           <newline/>
           <img src="OnlineDocumentationGenerator/StaticDocs/Images/Voting-Example.jpeg"/>
           <newline/>
           <newline/>
         </item>
         <item>
-          Ein weiteres Anwendungsgebiet für homomorphe Chiffren ist „Secure Multiparty Computation“. Hierbei berechnen mehrere Parteien gemeinsam eine vorgegebene Funktion. Jede der Parteien steuert einen Input für die zu berechnende Funktion bei. Das Ziel der Berechnung ist es, alle Inputs und auch die Zwischenergebnisse geheim zu halten und nur das Ergebnis der zu berechnenden Funktion allen bekannt zu machen. Die Verwendung homomorpher Chiffren hilft dabei, diese Berechnungen auf verschlüsselten Daten durchzuführen. Da sich allerdings unter der homomorphen Chiffre von Paillier nur Additionen (und z.B. keine Multiplikationen durchführen lassen), müssen noch weitere geeignete Methoden verwendet werden. Einen guten Einstieg in dieses Thema bietet Wikipedia <ref id="SMC"/>.
+          Ein weiteres Anwendungsgebiet für homomorphe Chiffren ist „Secure Multi-Party Computation“ (Secure MPC). Hierbei berechnen mehrere Parteien gemeinsam eine vorgegebene Funktion. Jede der Parteien steuert einen Input für die zu berechnende Funktion bei. Das Ziel der Berechnung ist es, alle Inputs und auch die Zwischenergebnisse geheim zu halten und nur das Ergebnis der zu berechnenden Funktion allen bekannt zu machen. Die Verwendung homomorpher Chiffren hilft dabei, diese Berechnungen auf verschlüsselten Daten durchzuführen. Da sich allerdings unter der homomorphen Chiffre von Paillier nur Additionen (und z.B. keine Multiplikationen durchführen lassen), müssen noch weitere geeignete Methoden verwendet werden. Einen guten Einstieg in dieses Thema bietet Wikipedia <ref id="SMC"/>.
           <newline/>
           <newline/>
-          </item>
+        </item>
         <item>
           Weiterhin wird erwartet, dass homomorphe Chiffren im Bereich Cloud Computing enorme Vorteile bringen können. Mittels sogenannter voll-homomorpher Kryptosysteme <ref id="HomEnc"/> wird es möglich sein, komplette Anwendungen auf verschlüsselten Daten durchzuführen. Hierzu ist es notwendig, dass unter der homomorphen Verschlüsselung die beiden Operationen Addition und Multiplikation durchgeführt werden können (im Gegensatz zum Paillier-Kryptosystem, welches nur die Addition unterstützt). Ein solches Kryptosystem wurde erstmals 2009 von Craig Gentry vorgestellt <ref id="FHE"/>.
         </item>
       </enum>
     </section>
   </description>
-  
+
   <references>
     <bookReference id="Paillier">
       <author>Pascal Paillier</author>
@@ -209,9 +231,9 @@
     </bookReference>
     <linkReference id="SMC">
       <link url="http://en.wikipedia.org/wiki/Secure_multi-party_computation" lang="en" />
-      <caption lang="en">Secure Multiparty Computation</caption>
+      <caption lang="en">Secure Multi-Party Computation</caption>
       <link url="http://en.wikipedia.org/wiki/Secure_multi-party_computation" lang="de-DE" />
-      <caption lang="de-DE">Secure Multiparty Computation</caption>
+      <caption lang="de-DE">Secure Multi-Party Computation</caption>
     </linkReference>
     <linkReference id="HomEnc">
       <link url="https://en.wikipedia.org/wiki/Homomorphic_encryption" lang="en" />
@@ -225,6 +247,6 @@
       <publisher lang="de-DE">In the 41st ACM Symposium on Theory of Computing (STOC), 2009</publisher>
       <name lang="en">Fully Homomorphic Encryption Using Ideal Lattices</name>
       <name lang="de-DE">Fully Homomorphic Encryption Using Ideal Lattices</name>
-    </bookReference>  
+    </bookReference>
   </references>
 </documentation>
