@@ -55,7 +55,7 @@
                     <Label Content="{Loc RecentFileListLength}" />
                     <TextBox Name="RecentFileListLengthBox" Width="40" VerticalContentAlignment="Center" TextChanged="RecentFileListLengthBox_TextChanged" />
                 </StackPanel>
-                <CheckBox IsEnabled="True" Content="{Loc SingletonApplication}" ToolTip="{Loc SingletonApplicationTooltip}" Margin="0,10,0,0" Style="{StaticResource ResourceKey=settingsStyle}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=SingletonApplication, Mode=OneWay}" />
+                <CheckBox IsEnabled="False" Content="{Loc SingletonApplication}" ToolTip="{Loc SingletonApplicationTooltip}" Margin="0,10,0,0" Style="{StaticResource ResourceKey=settingsStyle}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=SingletonApplication, Mode=OneWay}" />
             </StackPanel>
         </ScrollViewer>
     </Grid>
