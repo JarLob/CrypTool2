@@ -17,7 +17,15 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Expander IsExpanded="True" Header="{Loc Templates}" Grid.Column="0" Grid.Row="0">
+        <Expander IsExpanded="True" Grid.Column="0" Grid.Row="0">
+            <Expander.HeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Label FontSize="14" FontWeight="Bold" Content="{Loc Templates}"/>
+                        <Label FontSize="14" Margin="-5,0,0,0" Content="{Loc DoubleClickToOpen}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </Expander.HeaderTemplate>
             <Expander.Tag>
                 <BitmapImage UriSource="/Startcenter;component/template.png" />
             </Expander.Tag>
@@ -29,7 +37,15 @@
 
         <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFAEBBD4" HorizontalContentAlignment="Center" />
 
-        <Expander IsExpanded="True" Header="{Loc YoutubeVideos}" Grid.Column="2" Grid.Row="0">
+        <Expander IsExpanded="True" Grid.Column="2" Grid.Row="0">
+            <Expander.HeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Label FontSize="14" FontWeight="Bold" Content="{Loc YoutubeVideos}"/>
+                        <Label FontSize="14" Margin="-5,0,0,0" Content="{Loc DoubleClickToOpen}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </Expander.HeaderTemplate>
             <Expander.Tag>
                 <BitmapImage UriSource="/Startcenter;component/youtube.png" DecodePixelWidth="25" DecodePixelHeight="25"/>
             </Expander.Tag>
@@ -41,6 +57,14 @@
         <GridSplitter Grid.Row="1" Grid.ColumnSpan="3" Height="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFAEBBD4" VerticalContentAlignment="Center" />
 
         <Expander IsExpanded="True" Header="{Loc RecentFiles}" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Margin="0,5,0,0">
+            <Expander.HeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Label FontSize="14" FontWeight="Bold" Content="{Loc RecentFiles}"/>
+                        <Label FontSize="14" Margin="-5,0,0,0" Content="{Loc DoubleClickToOpen}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </Expander.HeaderTemplate>
             <Expander.Tag>
                 <BitmapImage UriSource="/Startcenter;component/lastFiles.png"/>
             </Expander.Tag>

@@ -169,6 +169,15 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die (double click to open) ähnelt.
+        /// </summary>
+        internal static string DoubleClickToOpen {
+            get {
+                return ResourceManager.GetString("DoubleClickToOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Exception ähnelt.
         /// </summary>
         internal static string Exception {
@@ -286,7 +295,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Recently opened workspaces (double click to open) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Recently opened workspaces ähnelt.
         /// </summary>
         internal static string RecentFiles {
             get {
@@ -331,7 +340,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Templates (double click to open) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Templates ähnelt.
         /// </summary>
         internal static string Templates {
             get {
@@ -421,7 +430,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die YouTube Videos (double click to open) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die YouTube videos ähnelt.
         /// </summary>
         internal static string YoutubeVideos {
             get {

@@ -133,10 +133,10 @@
     <value>Neues</value>
   </data>
   <data name="RecentFiles" xml:space="preserve">
-    <value>Zuletzt geöffnete Arbeitsflächen (Doppelklick zum Öffnen)</value>
+    <value>Zuletzt geöffnete Arbeitsflächen</value>
   </data>
   <data name="Templates" xml:space="preserve">
-    <value>Vorlagen (Doppelklick zum Öffnen)</value>
+    <value>Vorlagen</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Titel:</value>
@@ -229,9 +229,12 @@
     <value>Besuchen Sie den offiziellen YouTube-Kanal (Englisch): Sie erfahren, wie man CrypTool 2 benutzt und um eigene Funktionen erweitert</value>
   </data>
   <data name="YoutubeVideos" xml:space="preserve">
-    <value>YouTube Videos (Doppelklick zum Öffnen)</value>
+    <value>YouTube Videos</value>
   </data>
   <data name="Category" xml:space="preserve">
     <value>Kategorie: </value>
+  </data>
+  <data name="DoubleClickToOpen" xml:space="preserve">
+    <value>(Doppelklick zum Öffnen)</value>
   </data>
 </root>
