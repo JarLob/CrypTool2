@@ -15,7 +15,7 @@
   <icon file="PRESENT.png" />
   <relevantPlugins>
     <plugin name="PRESENT" />
-    <plugin name="RandomInput" />
+    <plugin name="RandomNumberGenerator" />
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$Plaintext$" value="Klartext" />

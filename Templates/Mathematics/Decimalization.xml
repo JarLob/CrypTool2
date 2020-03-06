@@ -19,7 +19,7 @@ Diese Vorlage enthält zwei Dezimalisierungsszenarien: Im ersten Szenario werden
   <icon file="Decimalization.png" />
   <relevantPlugins>
     <plugin name="Decimalization" />
-    <plugin name="RandomInput" />
+    <plugin name="RandomNumberGenerator" />
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$TextInput$" value="Texteingabe" />

@@ -15,7 +15,7 @@
   <icon file="RandomDecimalNumber.png" />
   <relevantPlugins>
     <plugin name="Decimalization" />
-    <plugin name="RandomInput" />
+    <plugin name="RandomNumberGenerator" />
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$Random input$" value="Zufallseingabe" />

@@ -28,7 +28,7 @@ Quellen:<newline />
     <plugin name="BooleanInput" />
     <plugin name="Gate" />
     <plugin name="PKCS5" />
-    <plugin name="RandomInput" />
+    <plugin name="RandomNumberGenerator" />
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$Input$" value="Eingabe" />
