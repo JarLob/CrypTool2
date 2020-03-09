@@ -272,11 +272,13 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                             var idAtt = ((XElement)node).Attribute("id");
                             if (idAtt != null)
                             {
-                                if (entityDocumentationPage is PluginDocumentationPage)
+                                if (entityDocumentationPage is PluginDocumentationPage || entityDocumentationPage is CommonDocumentationPage)
                                 {
                                     var htmlLinkToRef = entityDocumentationPage.References.GetHTMLinkToRef(idAtt.Value);
                                     if (htmlLinkToRef != null)
+                                    {
                                         result.Append(htmlLinkToRef);
+                                    }
                                 }
                             }
                             break;

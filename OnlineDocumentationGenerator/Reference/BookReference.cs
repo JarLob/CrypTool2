@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Text;
 using System.Threading;
 using System.Web;
 using System.Xml.Linq;
@@ -31,6 +32,14 @@ namespace OnlineDocumentationGenerator.Reference
             }
         }
 
+        public string Year
+        {
+            get
+            {
+                return GetLocalizedProperty("Year", Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName);
+            }
+        }
+
         public BookReference(XElement linkReferenceElement) : base(linkReferenceElement)
         {
             foreach (var e in linkReferenceElement.Elements())
@@ -54,14 +63,23 @@ namespace OnlineDocumentationGenerator.Reference
                 {
                     SetLocalizedProperty("Name", lang, e.Value);
                 }
+                else if (e.Name == "year")
+                {
+                    SetLocalizedProperty("Year", lang, e.Value);
+                }
             }
         }
 
         public override string ToHTML(string lang)
         {
-            if (!string.IsNullOrEmpty(Publisher))
-                string.Format("(<i>{0}</i>)", HttpUtility.HtmlEncode(Publisher));
-            return string.Format("<b>{0}</b> - {1}", HttpUtility.HtmlEncode(Name), HttpUtility.HtmlEncode(Author));
+            StringBuilder builder = new StringBuilder();
+            builder.Append(HttpUtility.HtmlEncode(Author));
+            builder.Append(". ");
+            builder.Append(HttpUtility.HtmlEncode(Name));
+            builder.Append(". ");
+            builder.Append("<i>" + HttpUtility.HtmlEncode(Publisher) + "</i>");
+            builder.Append(" (" + HttpUtility.HtmlEncode(Year) + ")");            
+            return builder.ToString();
         }
     }
 }
