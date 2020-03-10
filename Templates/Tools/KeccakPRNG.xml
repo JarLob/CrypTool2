@@ -15,7 +15,6 @@
   <icon file="Keccak.png" />
   <relevantPlugins>
     <plugin name="Keccak" />
-    <plugin name="PRESENT" />
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$Plaintext$" value="Klartext" />
