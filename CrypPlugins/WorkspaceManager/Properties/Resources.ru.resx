@@ -576,4 +576,10 @@
   <data name="Rearrange_all_lines" xml:space="preserve">
     <value>Переставить все линии</value>
   </data>
+  <data name="TemplateReplacement" xml:space="preserve">
+    <value>Замена шаблона</value>
+  </data>
+  <data name="TemplateReplacementTooltip" xml:space="preserve">
+    <value>Этот параметр включает / отключает замену шаблонных заполнителей, например, $something$, с текстом языка, выбранного в данный момент в CrypTool 2</value>
+  </data>
 </root>

@@ -576,4 +576,10 @@
   <data name="Rearrange_all_lines" xml:space="preserve">
     <value>Alle Linien neu anordnen</value>
   </data>
+  <data name="TemplateReplacement" xml:space="preserve">
+    <value>Vorlagen-Ersetzung</value>
+  </data>
+  <data name="TemplateReplacementTooltip" xml:space="preserve">
+    <value>Diese Einstellung aktiviert / deaktiviert das Ersetzen von Vorlagenplatzhaltern, z.b. $something$, durch Text der aktuell in CrypTool 2 ausgewählten Sprache</value>
+  </data>
 </root>

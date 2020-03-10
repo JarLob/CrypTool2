@@ -1177,6 +1177,24 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Template replacement ähnelt.
+        /// </summary>
+        public static string TemplateReplacement {
+            get {
+                return ResourceManager.GetString("TemplateReplacement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die This setting enables/disables the replacement of template placeholders, e.g. $something$, with text of the language currently selected in CrypTool 2 ähnelt.
+        /// </summary>
+        public static string TemplateReplacementTooltip {
+            get {
+                return ResourceManager.GetString("TemplateReplacementTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Open/close the bar with the settings of the selected components of this workspace (Ctrl + I) ähnelt.
         /// </summary>
         public static string Toggle_Plugin_Parameters {

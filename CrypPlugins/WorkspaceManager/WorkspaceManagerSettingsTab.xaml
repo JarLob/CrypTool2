@@ -23,6 +23,7 @@
                 <StackPanel>
                     <CheckBox Content="{Loc Global_Progressbar}" Style="{StaticResource ResourceKey=settingsStyle}" Height="21" IsChecked="{Binding Source={x:Static Properties:Settings.Default}, Path=WorkspaceManager_UseGlobalProgressbar, Mode=TwoWay}"/>
                     <CheckBox Content="{Loc Show_ComponentConnection_Proposition}" Style="{StaticResource ResourceKey=settingsStyle}" Height="21" ToolTip="{Loc Show_ComponentConnection_Proposition_Tooltip}" IsChecked="{Binding Source={x:Static Properties:Settings.Default}, Path=WorkspaceManager_ShowComponentConnectionProposition, Mode=TwoWay}"/>
+                    <CheckBox Content="{Loc TemplateReplacement}"  Style="{StaticResource ResourceKey=settingsStyle}" Height="21" ToolTip="{Loc TemplateReplacementTooltip}" IsChecked="{Binding Source={x:Static Properties:Settings.Default}, Path=WorkspaceManager_TemplateReplacement, Mode=TwoWay}"/>
                     <Grid ToolTip="{Loc ComponentConnection_Delay_Tooltip}" Style="{StaticResource ResourceKey=settingsStyle}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />

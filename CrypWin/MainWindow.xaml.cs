@@ -310,12 +310,6 @@ namespace Cryptool.CrypWin
                 GenerateComponentConnectionStatistics(IsCommandParameterGiven("-storeInBaseDir"));
             }
 
-            // Do not replace the place holders in templates.
-            if (IsCommandParameterGiven("-NoTemplateReplacement"))
-            {
-                Cryptool.Core.Globals.templateReplacement = false;
-            }
-
             // enable CryptoBenchmark; thus, input and output connectors and settings of plugins belonging
             // to "CryptoBenchmark" are visible now
             if (IsCommandParameterGiven("-CryptoBenchmark"))

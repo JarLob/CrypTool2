@@ -576,4 +576,10 @@
   <data name="Rearrange_all_lines" xml:space="preserve">
     <value>Rearrange all lines</value>
   </data>
+  <data name="TemplateReplacement" xml:space="preserve">
+    <value>Template replacement</value>
+  </data>
+  <data name="TemplateReplacementTooltip" xml:space="preserve">
+    <value>This setting enables/disables the replacement of template placeholders, e.g. $something$, with text of the language currently selected in CrypTool 2</value>
+  </data>
 </root>
