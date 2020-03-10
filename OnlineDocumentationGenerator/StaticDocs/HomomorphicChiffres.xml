@@ -71,7 +71,7 @@
         <b>Paillier Cryptosystem</b>
       </u>
 	-->
-    The most famous cryptosystem with homomorphic properties is the one by Paillier<ref id="Paillier"/>. First we will see how the Paillier key generation process works. After that, we will show that the Paillier cryptosystem indeed has homomorphic properties.
+    The most famous cryptosystem with homomorphic properties is the one by Paillier <ref id="Paillier"/>. First we will see how the Paillier key generation process works. After that, we will show that the Paillier cryptosystem indeed has homomorphic properties.
     <newline/>
     CrypTool 2 (CT2) contains an implementation of the <docRef item="Cryptool.Plugins.Paillier.Paillier">Paillier</docRef> cryptosystem. Among the available components, there are components for key generation (<docRef item="Cryptool.Plugins.Paillier.PaillierKeyGenerator">Paillier Key Generator</docRef>), an example for encryption and decryption with Paillier (called “Paillier Text”), as well as examples which apply the homomorphic properties of the cryptosystem (“Paillier Addition”, “Paillier Blinding” and “Paillier Voting”).
     <newline/>
@@ -121,7 +121,7 @@
     <subsection headline="DGK">
     </subsection>
     <newline/><newline/>
-    The DGK<ref id="DGK"/> cryptosystem has the same homomorphic properties as Paillier.
+    The DGK cryptosystem <ref id="DGK"/> has the same homomorphic properties as Paillier.
     <newline/>
     CT2 contains an implementation of the <docRef item="Cryptool.Plugins.DGK.DGK">DGK</docRef> cryptosystem. There is a component for key generation (<docRef item="Cryptool.Plugins.DGK.DGKKeyGenerator">DGK Key Generator</docRef>) and an example for encryption and decryption with DGK.
 
@@ -180,8 +180,8 @@
         </item>
 
         <item>
-          Furthermore it is expected, that homomorphic encryption will provide great advantages in the areas of <b>Cloud Computing</b>. Using so called <b>fully-homomorphic encryption</b> <ref id="HomEnc"/>, it will be possible to run large applications on external servers only on encrypted data. For this necessarily one needs to be able to perform both arithmetic operations, the addition and multiplication, on encrypted data (in contrast to Paillier encryption, which only allows performing additions). Such a crypto system was first presented in 2009<ref id="FHE"/>.<newline/>
-          In <b>JavaCrypTool (JCT)</b> <ref id="JCT_HE"/> the fully homomorphic scheme from Gentry and Halevi is visualized in detail (see there menu path Visuals --> Homomorphic Encryption (HE)).
+          Furthermore it is expected, that homomorphic encryption will provide great advantages in the areas of <b>Cloud Computing</b>. Using so called <b>fully-homomorphic</b> encryption <ref id="HomEnc"/>, it will be possible to run large applications on external servers only on encrypted data. For this necessarily one needs to be able to perform both arithmetic operations, the addition and multiplication, on encrypted data (in contrast to Paillier encryption, which only allows performing additions). Such a crypto system was first presented in 2009. <ref id="FHE"/><newline/><newline/>
+          In <b>JavaCrypTool</b> (JCT) <ref id="JCT_HE"/> the fully homomorphic scheme from Gentry and Halevi is visualized in detail [see there menu path Visuals --> Homomorphic Encryption (HE)].
         </item>
       </enum>
     </section>
@@ -212,7 +212,7 @@
     <newline/><newline/><newline/><newline/>
     <section headline="Ursprung und Begriff 'homomorph'">
       <newline/><newline/>
-      Zunächst klären wir den Ursprung des Begriffs „homomorph“. Der Begriff stammt aus der Mathematik: Hier bezeichnet ein Homomorphismus eine strukturerhaltende Abbildung zwischen zwei algebraischen Strukturen. Umgangssprachlich gesagt bildet ein Homomorphismus $f: X \to Y$ dabei die Struktur von $X$ auf die von $Y$ ab. An einem Beispiel lässt sich dies sehr gut verdeutlichen. Seien $(X,+)$ und $(Y,*)$ zwei Gruppen mit den Operationen $+$ bzw. $*$. Ein Homomorphismus $f: X \to Y$ bildet nun jedes $x \in X$ so auf ein $y \in Y$ ab, dass gilt:
+      Zunächst klären wir den Ursprung des Begriffs „homomorph“. Der Begriff stammt aus der Mathematik: Hier bezeichnet ein Homomorphismus eine Struktur-erhaltende Abbildung zwischen zwei algebraischen Strukturen. Umgangssprachlich gesagt bildet ein Homomorphismus $f: X \to Y$ dabei die Struktur von $X$ auf die von $Y$ ab. An einem Beispiel lässt sich dies sehr gut verdeutlichen. Seien $(X,+)$ und $(Y,*)$ zwei Gruppen mit den Operationen $+$ bzw. $*$. Ein Homomorphismus $f: X \to Y$ bildet nun jedes $x \in X$ so auf ein $y \in Y$ ab, dass gilt:
       $$f(x_1 + x_2) = f(x_1) * f(x_2)$$
       für beliebige $x_1, x_2$ aus $X$. Es spielt also für die beiden Werte $x_1, x_2$ keine Rolle, ob man sie zunächst addiert (Gruppenoperation von $X$) und dann $f$ anwendet (linke Seite der Gleichung); oder ob man zuerst  $f$ auf die beiden Werte $x_1, x_2$ anwendet, und dann die Gruppenoperation von $Y$, die Multiplikation, anwendet. Die Operationen $+$ bzw. $*$ wurden hier nur beispielhaft verwendet, sie hängen immer von der jeweiligen Gruppe ab. Beispielsweise gibt es auch Homomorphismen zwischen Gruppen mit derselben Gruppenoperation.
       <newline/><newline/>
@@ -256,7 +256,7 @@
 
     <newline/><newline/><b>Schlüsselerzeugung</b><newline/><newline/>
     Zuerst werden zwei zufällige Primzahlen $p,q$ erzeugt, so dass das Produkt $n=pq$ einen gültigen RSA-Modulus formt. Hierbei sollte $n$ eine Bitlänge von mindestens 1024 Bit haben.
-    Damit kann der private Schlüssel $\lambda = \textit{kgV}(p-1,q-1)$ berechnet werden. $\textit{kgV}$ bezeichnet hierbei das kleinste gemeinsame Vielfache. In der ursprünglichen Version des Paillier Kryptosystems (siehe <ref id="Paillier"/>), wird weiter ein Element $g$ gewählt, so, dass <![CDATA[ $1 < g < n^2$ ]]> gilt und dass die Ordnung von $g$ ein Vielfaches von $n$ ist. Das Element $g$ kann beliebig mit diesen Eigenschaften gewählt werden. Allerdings kann man zeigen, dass der Wert $g = n+1$ für alle $n$ diese Eigenschaften erfüllt. Da sich der Wert $g$ damit automatisch aus dem Wert $n$ ergibt, werden wir im Folgenden immer annehmen, dass $g = n+1$ gilt. Der öffentliche Schlüssel besteht damit nur aus dem RSA-Modulus $n$.
+    Damit kann der private Schlüssel $\lambda = \textit{kgV}(p-1,q-1)$ berechnet werden. $\textit{kgV}$ bezeichnet hierbei das kleinste gemeinsame Vielfache. In der ursprünglichen Version des Paillier-Kryptosystems (siehe <ref id="Paillier"/>), wird weiter ein Element $g$ gewählt, so, dass <![CDATA[ $1 < g < n^2$ ]]> gilt und dass die Ordnung von $g$ ein Vielfaches von $n$ ist. Das Element $g$ kann beliebig mit diesen Eigenschaften gewählt werden. Allerdings kann man zeigen, dass der Wert $g = n+1$ für alle $n$ diese Eigenschaften erfüllt. Da sich der Wert $g$ damit automatisch aus dem Wert $n$ ergibt, werden wir im Folgenden immer annehmen, dass $g = n+1$ gilt. Der öffentliche Schlüssel besteht damit nur aus dem RSA-Modulus $n$.
 
     <newline/><newline/><b>Verschlüsselung</b><newline/><newline/>
     Sei $m$ die zu verschlüsselnde Nachricht aus dem Klartextraum $\mathbb{Z}_n$. Für jeden Verschlüsselungsvorgang wählen wir zunächst ein zufälliges Element $r$ aus $\mathbb{Z}_n$ und berechnen dann mit Hilfe des öffentlichen Schlüssels $n$ den Geheimtext.
@@ -296,7 +296,7 @@
     <subsection headline="DGK">
     </subsection>
     <newline/><newline/>
-    Das DGK<ref id="DGK"/>-Kryptosystem hat die gleichen homomorphen Eigenschaften wie Paillier.
+    Das DGK-Kryptosystem <ref id="DGK"/> hat die gleichen homomorphen Eigenschaften wie Paillier.
     <newline/>
     In CT2 ist das <docRef item="Cryptool.Plugins.DGK.DGK">DGK</docRef>-Kryptosystem implementiert. Es gibt eine Komponente zur Schlüsselerzeugung (<docRef item="Cryptool.Plugins.DGK.DGKKeyGenerator">DGK-Schlüsselgenerator</docRef>) und ein Beispiel zum Ver- und Entschlüsseln mit DGK.
 
@@ -351,8 +351,8 @@
         <newline/>
         <newline/>
         <item>
-          Weiterhin wird erwartet, dass homomorphe Chiffren im Bereich <b>Cloud Computing</b> enorme Vorteile bringen können. Mittels sogenannter <b>voll-homomorpher Kryptosysteme</b> <ref id="HomEnc"/> wird es möglich sein, komplette Anwendungen auf verschlüsselten Daten durchzuführen. Hierzu ist es notwendig, dass unter der homomorphen Verschlüsselung die beiden Operationen Addition und Multiplikation durchgeführt werden können (im Gegensatz zum Paillier-Kryptosystem, welches nur die Addition unterstützt). Ein solches Kryptosystem wurde erstmals 2009 von Craig Gentry vorgestellt<ref id="FHE"/>.<newline/>
-          In <b>JavaCrypTool (JCT)</b> <ref id="JCT_HE"/> ist das voll-homomorphe Verfahren von Gentry und Halevi ausführlich visualisiert (siehe dort den Menüpfad Visualisierungen --> Homomorphe Verschlüsselung (HE)).
+          Weiterhin wird erwartet, dass homomorphe Chiffren im Bereich <b>Cloud Computing</b> enorme Vorteile bringen können. Mittels sogenannter <b>voll-homomorpher</b> Kryptosysteme <ref id="HomEnc"/> wird es möglich sein, komplette Anwendungen auf verschlüsselten Daten durchzuführen. Hierzu ist es notwendig, dass unter der homomorphen Verschlüsselung die beiden Operationen Addition und Multiplikation durchgeführt werden können (im Gegensatz zum Paillier-Kryptosystem, welches nur die Addition unterstützt). Ein solches Kryptosystem wurde erstmals 2009 von Craig Gentry vorgestellt. <ref id="FHE"/><newline/><newline/>
+          In <b>JavaCrypTool</b> (JCT) <ref id="JCT_HE"/> ist das voll-homomorphe Verfahren von Gentry und Halevi ausführlich visualisiert [siehe dort den Menüpfad Visualisierungen --> Homomorphe Verschlüsselung (HE)].
         </item>
       </enum>
     </section>
@@ -366,11 +366,9 @@
     <!-- There is no need to distinguish the language using <publisher lang="en"> or <name lang="en">. -->
     <bookReference id="Paillier">
       <author>Pascal Paillier</author>
-      <publisher>EUROCRYPT ’99. In Advances in Cryptology — EUROCRYPT ’99</publisher>
       <name>Public-Key Cryptosystems Based on Composite Degree Residuosity Classes</name>
+      <publisher>EUROCRYPT ’99. In Advances in Cryptology — EUROCRYPT ’99</publisher>
       <year>1999</year>
-      <!-- Sadly, the following tags are just ignored within bookReference: <caption>xxxx</caption> <year>2555</year>
-	-->
     </bookReference>
 
     <!-- There is no according Wikipedia link in German. -->
@@ -388,9 +386,9 @@
 
     <bookReference id="FHE">
       <author>Craig Gentry</author>
+      <name>Fully Homomorphic Encryption Using Ideal Lattices</name>
       <publisher>In the 41st ACM Symposium on Theory of Computing (STOC)</publisher>
       <year>2009</year>
-      <name>Fully Homomorphic Encryption Using Ideal Lattices</name>
     </bookReference>
 
     <linkReference id="JCT_HE">

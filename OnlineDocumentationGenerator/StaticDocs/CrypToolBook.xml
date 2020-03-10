@@ -25,15 +25,15 @@
     <newline/>
     Additionally the <b>appendix</b> contains a list of movies and novels where cryptography plays a role. The appendix also offers a quick overview about the cryptographic functions delivered by the different CrypTool variants.<newline/>
     <newline/>
-    For many algorithms there are small and run capable code samples in Python and SageMath, or they are further explained with one of the CrypTool variants.
+    For many algorithms there are small and executable code samples in Python and SageMath, or they are further explained with one of the CrypTool variants.
   </description>
-  
+
   <description lang="de-DE">
     In diesem kostenlosen, über 500 Seiten umfassenden Buch <ref id="BOOK"/>, das mit den CT-Programmen ausgeliefert wird, finden Sie eher mathematisch orientierte Informationen über das Lernen, Experimentieren und Nutzen von kryptographischen Verfahren. Die 12. Auflage ist ein umfangreiches Update des Buches.<newline/>
-  <newline/>
+    <newline/>
     Die Hauptkapitel wurden von verschiedenen Autoren verfasst und sind in sich abgeschlossen.<newline/>
     <newline/>
-    <b>Das erste Kapitel</b> beschreibt die Prinzipien der symmetrischen und asymmetrischen Verschlüsselung und erläutert kurz die aktuellen Entschlüsselungsrekorde bei modernen symmetrischen Verfahren. Es stellt Definitionen für die Widerstandsfäahigkeit von Verfahren vor und erklärt kurz die Bedeutung der Kryptologie.<newline/>
+    <b>Das erste Kapitel</b> beschreibt die Prinzipien der symmetrischen und asymmetrischen Verschlüsselung und erläutert kurz die aktuellen Entschlüsselungsrekorde bei modernen symmetrischen Verfahren. Es stellt Definitionen für die Widerstandsfähigkeit von Verfahren vor und erklärt kurz die Bedeutung der Kryptologie.<newline/>
     <b>Im zweiten Kapitel wird</b> – aus didaktischen Gründen – eine ausführliche Übersicht über Papier- und Bleistiftverfahren gegeben.<newline/>
     <b>Kapitel 3</b> widmet sich ausführlich dem faszinierenden Thema der Primzahlen.<newline/>
     <b>In Kapitel 4</b> wird anhand vieler Beispiele bis hin zum RSA-Verfahren in die modulare Arithmetik und die elementare Zahlentheorie eingeführt.<newline/>
@@ -49,13 +49,13 @@
     <newline/>
     Viele Algorithmen sind anhand kleiner lauffähiger Codebeispiele in Python und SageMath oder anhand einer der CrypTool-Versionen erläutert.
   </description>
-  
+
   <references>
-    <linkReference id="BOOK">      
+    <linkReference id="BOOK">
       <link url="https://www.cryptool.org/en/ctp-documentation/ctbook" lang="en"/>
       <caption lang="en">The CrypTool book on the CrypTool webpage</caption>
       <link url="https://www.cryptool.org/de/ctp-dokumentation/ctbuch" lang="de-DE" />
       <caption lang="de-DE">Das CrypTool-Buch auf der CrypTool-Webseite</caption>
-    </linkReference>  
+    </linkReference>
   </references>
 </documentation>
