@@ -580,6 +580,6 @@
     <value>Vorlagen-Ersetzung</value>
   </data>
   <data name="TemplateReplacementTooltip" xml:space="preserve">
-    <value>Diese Einstellung aktiviert / deaktiviert das Ersetzen von Vorlagenplatzhaltern, z.b. $something$, durch Text der aktuell in CrypTool 2 ausgewählten Sprache</value>
+    <value>Diese Einstellung aktiviert/deaktiviert das Ersetzen von Vorlagen-Platzhaltern ($something$) durch den Text der aktuell in CrypTool 2 ausgewählten Sprache.</value>
   </data>
 </root>
