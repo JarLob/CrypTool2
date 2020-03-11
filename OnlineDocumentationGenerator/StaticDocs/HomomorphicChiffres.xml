@@ -143,7 +143,7 @@
     <newline/><newline/><newline/><newline/>
     <section headline="Applications">
       <newline/><newline/>
-      The homomorphic property of the Paillier cryptosystem can be used to add two encrypted values or to multiply any value under encryption with a known constant (note that the multiplication corresponds to the repeated application of the addition operation). This makes homomorphic ciphers so important and easy to use as base primitives in cryptographic applications.
+      The homomorphic property of the Paillier cryptosystem can be used to add two encrypted values or to multiply any value under encryption with a known constant (note that the multiplication corresponds to the repeated application of the addition operation). This makes homomorphic ciphers so important and easy to use as base primitives in cryptographic applications. A current overview (2020) about such applications can be found in <ref id="YLindell"/>.
       <newline/><newline/>
 
       <enum>
@@ -319,7 +319,7 @@
     <newline/><newline/><newline/><newline/>
     <section headline="Anwendungen">
       <newline/><newline/>
-      Die homomorphe Eigenschaft von Paillier lässt sich dazu verwenden, um verschlüsselte Werte zu addieren oder verschlüsselte Werte mit unverschlüsselten Werten zu multiplizieren (dies entspricht einer wiederholten Anwendung der Addition). Damit werden homomorphe Chiffren zu einer wichtigen Funktion in vielen kryptographischen Anwendungen.
+      Die homomorphe Eigenschaft von Paillier lässt sich dazu verwenden, um verschlüsselte Werte zu addieren oder verschlüsselte Werte mit unverschlüsselten Werten zu multiplizieren (dies entspricht einer wiederholten Anwendung der Addition). Damit werden homomorphe Chiffren zu einer wichtigen Funktion in vielen kryptographischen Anwendungen. Ein aktueller Überblick (2020) über solche Anwendungen findet sich in <ref id="YLindell"/>.
       <newline/><newline/>
 
       <enum>
@@ -390,6 +390,11 @@
       <publisher>In the 41st ACM Symposium on Theory of Computing (STOC)</publisher>
       <year>2009</year>
     </bookReference>
+
+    <linkReference id="YLindell">
+      <link url="https://eprint.iacr.org/2020/300.pdf"/>
+      <caption>Yehuda Lindell: Secure Multiparty Computation (MPC)</caption>
+    </linkReference>
 
     <linkReference id="JCT_HE">
       <link lang="en" url="https://www.cryptool.org/en/jcryptool"/>

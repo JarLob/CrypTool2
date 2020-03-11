@@ -24,7 +24,7 @@
     <newline /><newline />
     Das sind dieselben homomorphen Eigenschaften wie beim <docRef item="Cryptool.Plugins.Paillier.Paillier">Paillier-Kryptosystem</docRef>.
     <newline /><newline />
-    Im Tutorial "Homomorphe Chiffren und ihre Bedeutung in der Kryptographie" (in der Online-Hilfe unter "Allgemein") erhalten Sie einen generellen Überblick über homomorphe Chiffren.
+    Die homomorphen Eigenschaften von DGK und weitere <b>Referenzen</b> werden im <internal ref="../Common/Homomorphic Ciphers and their Importance in Cryptography_de.html">Tutorial</internal> "Homomorphe Chiffren und ihre Bedeutung in der Kryptographie" (in der Online-Hilfe unter "Allgemein") genauer erläutert. Dort finden Sie auch einen generellen Überblick über homomorphe Chiffren.
   </introduction>
 
   <usage lang="en">
@@ -48,7 +48,7 @@
     <newline /><newline />
     These are the same homomorphic properties as for the <docRef item="Cryptool.Plugins.Paillier.Paillier">Paillier</docRef> cryptosystem.
     <newline /><newline />
-    In the tutorial "Homomorphic Ciphers and their Importance in Cryptography" (in the online help below "Common") you can get a general overview about homomorphic ciphers.
+    The homomorphic properties of this cryptosystem and further <b>references</b> are described in the <internal ref="../Common/Homomorphic Ciphers and their Importance in Cryptography_en.html">tutorial</internal> "Homomorphic Ciphers and their Importance in Cryptography" (in the online help below "Common"). There you can get a general overview about homomorphic ciphers.
   </usage>
 
   <usage lang="ru">Криптосистема DGK является гомоморфной криптосистемой, которая была представлена ​​И. Даггардом, М. Гейслером и М. Крёгиардом в 2007 году. Криптосистема имеет следующие гомоморфные свойства: если вы умножаете два зашифрованных сообщения, то это шифрование суммы m1 + m2 двух сообщений открытого текста: Dec (Enc (m1) * Enc (m2)) = m1 + m2 Если вы повышаете зашифрованное сообщение до m2-й мощности, результатом является шифрование продукта m1 * m2 два сообщения открытого текста. Dec (Enc (m1) ^ m2) = m1 * m2 Это означает, что, даже не зная частного ключа, можно выполнить добавление и умножение математических операций с константой на зашифрованных числах, не зная их значений и не узнавая ничего о результаты.</usage>
