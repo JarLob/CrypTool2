@@ -22,7 +22,6 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Transposition_(Kryptographie
     <replacement key="$Plaintext$" value="Klartext" />
     <replacement key="$Ciphertext$" value="Geheimtext" />
     <replacement key="$Key$" value="Schlüssel" />
-    <replacement key="$Converter$" value="Konvertierer" />
     <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext" />
     <replacement key="$Transposition (Encryption)$" value="Transposition (Verschlüsselung)" />
     <replacement key="$Transposition (Decryption)$" value="Transposition (Entschlüsselung)" />
@@ -32,7 +31,6 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Transposition_(Kryptographie
     <replacement key="$Plaintext$" value="обычный текст" />
     <replacement key="$Ciphertext$" value="шифротекста" />
     <replacement key="$Key$" value="ключ" />
-    <replacement key="$Converter$" value="преобразование" />
     <replacement key="$Decrypted Ciphertext$" value="Расшифрованный зашифрованный текст" />
     <replacement key="$Transposition (Encryption)$" value="Транспонирование (шифрование)" />
     <replacement key="$Transposition (Decryption)$" value="Транспонирование (дешифрование)" />
@@ -42,7 +40,6 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Transposition_(Kryptographie
     <replacement key="$Plaintext$" value="Plaintext" />
     <replacement key="$Ciphertext$" value="Ciphertext" />
     <replacement key="$Key$" value="Key" />
-    <replacement key="$Converter$" value="Converter" />
     <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext" />
     <replacement key="$Transposition (Encryption)$" value="Transposition (Encryption)" />
     <replacement key="$Transposition (Decryption)$" value="Transposition (Decryption)" />

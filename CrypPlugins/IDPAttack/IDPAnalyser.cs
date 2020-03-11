@@ -15,48 +15,46 @@ namespace IDPAnalyser
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class IDPAnalyser : ICrypComponent
     {
-        private byte[] input;
-        private string[] keywords;
-
-        private HighscoreList TOPLIST;
-        ValueKeyComparer comparer;
-
-        private Random rd = new Random(System.DateTime.Now.Millisecond);
-        private AutoResetEvent ars;
-
-        private IDPAnalyserSettings settings;
-        private IDPAnalyserQuickWatchPresentation myPresentation;
+        private string _input;
+        private string _output;
+        private string[] _keywords;
+        private HighscoreList _highscoreList;
+        private ValueKeyComparer _valueKeyComparer;
+        private Random _random = new Random(DateTime.Now.Millisecond);
+        private AutoResetEvent _autoResetEvent;
+        private IDPAnalyserSettings _settings;
+        private IDPAnalyserQuickWatchPresentation _presentation;
 
         int[] Key1MinColEnd, Key1MaxColEnd;
 
         #region Properties
 
         [PropertyInfo(Direction.InputData, "InputCaption", "InputTooltip", true)]
-        public Byte[] Input
+        public string Input
         {
             get
             {
-                return this.input;
+                return _input;
             }
 
             set
             {
-                this.input = value;
+                _input = value;
                 OnPropertyChange("Input");
             }
         }
 
         [PropertyInfo(Direction.InputData, "KeywordsCaption", "KeywordsTooltip", false)]
-        public String[] Keywords
+        public string[] Keywords
         {
             get
             {
-                return this.keywords;
+                return _keywords;
             }
 
             set
             {
-                this.keywords = value;
+                _keywords = value;
                 OnPropertyChange("Keywords");
             }
         }
@@ -68,69 +66,44 @@ namespace IDPAnalyser
         /// </summary>
         public IDPAnalyser()
         {
-            settings = new IDPAnalyserSettings();
-            myPresentation = new IDPAnalyserQuickWatchPresentation();
-            Presentation = myPresentation;
-            myPresentation.SelectedResultEntry += this.SelectedResultEntry;
-            ars = new AutoResetEvent(false);
+            _settings = new IDPAnalyserSettings();
+            _presentation = new IDPAnalyserQuickWatchPresentation();
+            Presentation = _presentation;
+            _presentation.SelectedResultEntry += this.SelectedResultEntry;
+            _autoResetEvent = new AutoResetEvent(false);
         }
 
         private void SelectedResultEntry(ResultEntry resultEntry)
         {
             try
             {
-                Output = Encoding.GetEncoding(1252).GetBytes(resultEntry.Text);
+                Output = resultEntry.Text;
             }
             catch (Exception ex)
             {
             }
         }
-
-        //private IControlCost costMaster;
-        //[PropertyInfo(Direction.ControlMaster, "CostMasterCaption", "CostMasterTooltip", false)]
-        //public IControlCost CostMaster
-        //{
-        //    get { return costMaster; }
-        //    set
-        //    {
-        //        costMaster = value;
-        //    }
-        //}
-
-        private byte[] output;
+        
         [PropertyInfo(Direction.OutputData, "OutputCaption", "OutputTooltip")]
-        public byte[] Output
+        public string Output
         {
             get
             {
-                return this.output;
+                return _output;
             }
             set
             {
-                this.output = value;
+                _output = value;
                 OnPropertyChanged("Output");
             }
         }
 
-        //bool finished = false;
-        //[PropertyInfo(Direction.OutputData, "FinishedCaption", "FinishedTooltip")]
-        //public bool Finished
-        //{
-        //    get
-        //    {
-        //        return this.finished;
-        //    }
-        //    set
-        //    {
-        //        this.finished = value;
-        //        OnPropertyChanged("Finished");
-        //    }
-        //}
-
         public void GuiLogMessage(string message, NotificationLevel loglevel)
         {
             if (OnGuiLogNotificationOccured != null)
+            {
                 OnGuiLogNotificationOccured(this, new GuiLogEventArgs(message, this, loglevel));
+            }
         }
 
         #region IPlugin Member
@@ -143,7 +116,7 @@ namespace IDPAnalyser
 
         public ISettings Settings
         {
-            get { return settings; }
+            get { return _settings; }
         }
 
         public UserControl Presentation
@@ -158,29 +131,33 @@ namespace IDPAnalyser
 
         public void Execute()
         {
-            Bigrams.InitLanguage(settings.Language);
+            Bigrams.InitLanguage(_settings.Language);
 
-            if (this.input == null)
+            if (this._input == null)
             {
                 GuiLogMessage("No input!", NotificationLevel.Error);
                 return;
             }
 
-            comparer = new ValueKeyComparer(false);
-            TOPLIST = new HighscoreList(comparer, 10);
+            _valueKeyComparer = new ValueKeyComparer(false);
+            _highscoreList = new HighscoreList(_valueKeyComparer, 10);
 
-            myPresentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate { myPresentation.Entries.Clear(); }, null);
+            _presentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate { _presentation.Entries.Clear(); }, null);
 
-            switch (this.settings.Analysis_method)
+            switch (this._settings.Analysis_method)
             {
                 case 0: GuiLogMessage("Starting Dictionary Attack", NotificationLevel.Info); DictionaryAttack(); break;
                 case 1: GuiLogMessage("Starting Hill Climbing Analysis", NotificationLevel.Info); HillClimbingAnalysis(); break;
             }
 
-            if (TOPLIST.Count > 0)
-                Output = TOPLIST[0].plaintext;
+            if (_highscoreList.Count > 0)
+            {
+                Output = UTF8Encoding.UTF8.GetString(_highscoreList[0].plaintext);
+            }
             else
+            {
                 GuiLogMessage("No candidates found", NotificationLevel.Warning);
+            }
 
             ProgressChanged(1, 1);
         }
@@ -189,16 +166,16 @@ namespace IDPAnalyser
         {
         }
 
-        private Boolean stop;
+        private bool stop;
         public void Stop()
         {
-            ars.Set();
+            _autoResetEvent.Set();
             stop = true;
         }
 
         public void Initialize()
         {
-            this.settings.UpdateTaskPaneVisibility();
+            this._settings.UpdateTaskPaneVisibility();
         }
 
         public void Dispose()
@@ -255,26 +232,26 @@ namespace IDPAnalyser
             {
                 var culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 
-                myPresentation.StartTime.Value = "" + startTime;
-                myPresentation.KeysPerSecond.Value = String.Format(culture, "{0:##,#}", (ulong)keysPerSec);
+                _presentation.StartTime.Value = "" + startTime;
+                _presentation.KeysPerSecond.Value = String.Format(culture, "{0:##,#}", (ulong)keysPerSec);
 
                 if (keysPerSec > 0)
                 {
-                    myPresentation.TimeLeft.Value = "" + timeleft;
-                    myPresentation.ElapsedTime.Value = "" + elapsedtime;
-                    myPresentation.EndTime.Value = "" + endTime;
+                    _presentation.TimeLeft.Value = "" + timeleft;
+                    _presentation.ElapsedTime.Value = "" + elapsedtime;
+                    _presentation.EndTime.Value = "" + endTime;
                 }
                 else
                 {
-                    myPresentation.TimeLeft.Value = "incalculable";
-                    myPresentation.EndTime.Value = "in a galaxy far, far away...";
+                    _presentation.TimeLeft.Value = "incalculable";
+                    _presentation.EndTime.Value = "in a galaxy far, far away...";
                 }
 
-                myPresentation.Entries.Clear();
+                _presentation.Entries.Clear();
 
-                for (int i = 0; i < TOPLIST.Count; i++)
+                for (int i = 0; i < _highscoreList.Count; i++)
                 {
-                    ValueKey v = TOPLIST[i];
+                    ValueKey v = _highscoreList[i];
                     ResultEntry entry = new ResultEntry();
 
                     entry.Ranking = i + 1;
@@ -284,7 +261,7 @@ namespace IDPAnalyser
                     entry.Key = "[" + String.Join(",", v.key) + "]";
                     entry.Text = Encoding.GetEncoding(1252).GetString(v.plaintext);
 
-                    myPresentation.Entries.Add(entry);
+                    _presentation.Entries.Add(entry);
                 }
             }
             , null);
@@ -345,53 +322,53 @@ namespace IDPAnalyser
                 return;
             }
 
-            if (settings.Key1Min < 2)
+            if (_settings.Key1Min < 2)
             {
                 GuiLogMessage("The minimum size for key 1 is 2.", NotificationLevel.Error);
                 return;
             }
 
-            if (settings.Key1Max < settings.Key1Min)
+            if (_settings.Key1Max < _settings.Key1Min)
             {
                 GuiLogMessage("The maximum size for key 1 must be bigger than the minimum size.", NotificationLevel.Error);
                 return;
             }
 
-            if (settings.Key2Min < 2)
+            if (_settings.Key2Min < 2)
             {
                 GuiLogMessage("The minimum size for key 2 is 2.", NotificationLevel.Error);
                 return;
             }
 
-            if (settings.Key2Max < settings.Key2Min)
+            if (_settings.Key2Max < _settings.Key2Min)
             {
                 GuiLogMessage("The maximum size for key 2 must be bigger than the minimum size.", NotificationLevel.Error);
                 return;
             }
 
             DateTime startTime = DateTime.Now;
-            DateTime nextUpdate = DateTime.Now.AddMilliseconds(100);
-
-            HighscoreList ROUNDLIST = new HighscoreList(comparer, 10);
+            DateTime nextUpdate = DateTime.Now.AddMilliseconds(100);            
 
             ValueKey vk = new ValueKey();
 
             ulong totalKeys = 0;
             foreach (var keyword in this.Keywords)
-                if (keyword.Length >= settings.Key2Min && keyword.Length <= settings.Key2Max)
+                if (keyword.Length >= _settings.Key2Min && keyword.Length <= _settings.Key2Max)
                     totalKeys++;
-            totalKeys *= (ulong)(settings.Key1Max - settings.Key1Min + 1);
+            totalKeys *= (ulong)(_settings.Key1Max - _settings.Key1Min + 1);
             ulong doneKeys = 0;
 
             stop = false;
 
-            byte[] mybuffer = new byte[this.input.Length];
+            byte[] mybuffer = new byte[this._input.Length];
 
-            for (int key1size = settings.Key1Min; key1size <= settings.Key1Max; key1size++)
+            byte[] ciphertext = UTF8Encoding.UTF8.GetBytes(_input);
+
+            for (int key1size = _settings.Key1Min; key1size <= _settings.Key1Max; key1size++)
             {
-                computeKey1MinMaxColEnding(this.input.Length, key1size);
+                computeKey1MinMaxColEnding(this._input.Length, key1size);
 
-                for (int key2size = settings.Key2Min; key2size <= settings.Key2Max; key2size++)
+                for (int key2size = _settings.Key2Min; key2size <= _settings.Key2Max; key2size++)
                 {
                     byte[] key2 = new byte[key2size];
 
@@ -405,18 +382,11 @@ namespace IDPAnalyser
                         //decrypt(vk, key);
                         vk.key = key2;
                         vk.keyphrase = keyword;
-                        decrypt2(vk.key, vk.key.Length, this.input, this.input.Length, mybuffer);
+                        decrypt2(vk.key, vk.key.Length, ciphertext, this._input.Length, mybuffer);
                         vk.plaintext = mybuffer;
-                        vk.score = evalIDPKey2(vk.plaintext, key1size);
+                        vk.score = evalIDPKey2(vk.plaintext, key1size);                    
 
-                        //if (TOPLIST.isBetter(vk))
-                        //{
-                        //    byte[] tmp = new byte[vk.plaintext.Length];
-                        //    Array.Copy(vk.plaintext, tmp, vk.plaintext.Length);
-                        //    Output = tmp;
-                        //}
-
-                        TOPLIST.Add(vk);
+                        _highscoreList.Add(vk);
 
                         doneKeys++;
 
@@ -438,93 +408,95 @@ namespace IDPAnalyser
 
         private void HillClimbingAnalysis()
         {
-            if (settings.Iterations < 2)
+            if (_settings.Iterations < 2)
             {
                 GuiLogMessage("Check iterations.", NotificationLevel.Error);
                 return;
             }
 
-            if (settings.Key1Size < 2)
+            if (_settings.Key1Size < 2)
             {
                 GuiLogMessage("The minimum size for key 1 is 2.", NotificationLevel.Error);
                 return;
             }
 
-            if (settings.Key2Size < 2)
+            if (_settings.Key2Size < 2)
             {
                 GuiLogMessage("The minimum size for key 2 is 2.", NotificationLevel.Error);
                 return;
             }
 
-            computeKey1MinMaxColEnding(this.input.Length, settings.Key1Size);
-            byte[] mybuffer = new byte[this.input.Length];
+            computeKey1MinMaxColEnding(this._input.Length, _settings.Key1Size);
+            byte[] mybuffer = new byte[this._input.Length];
 
             DateTime startTime = DateTime.Now;
             DateTime nextUpdate = DateTime.Now.AddMilliseconds(100);
 
-            HighscoreList ROUNDLIST = new HighscoreList(comparer, 10);
+            HighscoreList ROUNDLIST = new HighscoreList(_valueKeyComparer, 10);
 
             ValueKey vk = new ValueKey();
 
-            ulong totalKeys = (ulong)settings.Repeatings * (ulong)settings.Iterations;
+            ulong totalKeys = (ulong)_settings.Repeatings * (ulong)_settings.Iterations;
             ulong doneKeys = 0;
 
             stop = false;
 
-            for (int repeating = 0; repeating < settings.Repeatings; repeating++)
+            byte[] ciphertext = UTF8Encoding.UTF8.GetBytes(_input);
+
+            for (int repeating = 0; repeating < _settings.Repeatings; repeating++)
             {
                 if (stop) break;
 
                 ROUNDLIST.Clear();
 
-                byte[] key = randomArray(settings.Key2Size);
-                byte[] oldkey = new byte[settings.Key2Size];
+                byte[] key = randomArray(_settings.Key2Size);
+                byte[] oldkey = new byte[_settings.Key2Size];
 
-                for (int iteration = 0; iteration < settings.Iterations; iteration++)
+                for (int iteration = 0; iteration < _settings.Iterations; iteration++)
                 {
                     if (stop) break;
 
                     Array.Copy(key, oldkey, key.Length);
 
-                    int r = rd.Next(100);
+                    int r = _random.Next(100);
                     if (r < 50)
                     {
-                        for (int i = 0; i < rd.Next(10); i++)
-                            swap(key, rd.Next(key.Length), rd.Next(key.Length));
+                        for (int i = 0; i < _random.Next(10); i++)
+                            swap(key, _random.Next(key.Length), _random.Next(key.Length));
                     }
                     else if (r < 70)
                     {
-                        for (int i = 0; i < rd.Next(3); i++)
+                        for (int i = 0; i < _random.Next(3); i++)
                         {
-                            int l = rd.Next(key.Length - 1) + 1;
-                            int f = rd.Next(key.Length);
-                            int t = (f + l + rd.Next(key.Length - l)) % key.Length;
+                            int l = _random.Next(key.Length - 1) + 1;
+                            int f = _random.Next(key.Length);
+                            int t = (f + l + _random.Next(key.Length - l)) % key.Length;
                             blockswap(key, f, t, l);
                         }
                     }
                     else if (r < 90)
                     {
-                        int l = 1 + rd.Next(key.Length - 1);
-                        int f = rd.Next(key.Length);
-                        int t = (f + 1 + rd.Next(key.Length - 1)) % key.Length;
+                        int l = 1 + _random.Next(key.Length - 1);
+                        int f = _random.Next(key.Length);
+                        int t = (f + 1 + _random.Next(key.Length - 1)) % key.Length;
                         blockshift(key, f, t, l);
                     }
                     else
                     {
-                        pivot(key, rd.Next(key.Length - 1) + 1);
+                        pivot(key, _random.Next(key.Length - 1) + 1);
                     }
 
                     vk.key = key;
-                    decrypt2(vk.key, vk.key.Length, this.input, this.input.Length, mybuffer);
+                    decrypt2(vk.key, vk.key.Length, ciphertext, this._input.Length, mybuffer);
                     vk.plaintext = mybuffer;
-                    vk.score = evalIDPKey2(vk.plaintext, settings.Key1Size);
+                    vk.score = evalIDPKey2(vk.plaintext, _settings.Key1Size);
                     vk.keyphrase = getKeywordFromKey(vk.key);
 
                     if (ROUNDLIST.Add(vk))
                     {
-                        if (TOPLIST.isBetter(vk))
+                        if (_highscoreList.isBetter(vk))
                         {
-                            TOPLIST.Add(vk);
+                            _highscoreList.Add(vk);
                             //Output = vk.plaintext;
                         }
                     }
@@ -535,14 +507,14 @@ namespace IDPAnalyser
 
                     if (DateTime.Now >= nextUpdate)
                     {
-                        TOPLIST.Merge(ROUNDLIST);
+                        _highscoreList.Merge(ROUNDLIST);
                         UpdatePresentationList(totalKeys, doneKeys, startTime);
                         nextUpdate = DateTime.Now.AddMilliseconds(1000);
                     }
                 }
             }
 
-            TOPLIST.Merge(ROUNDLIST);
+            _highscoreList.Merge(ROUNDLIST);
             UpdatePresentationList(totalKeys, doneKeys, startTime);
         }
 
@@ -743,7 +715,9 @@ namespace IDPAnalyser
 
                 sum += best;
                 if (bestP1 == -1)
+                {
                     Console.Write("-1\n");
+                }
                 else
                 {
                     left[bestP2] = bestP1;
@@ -809,39 +783,9 @@ namespace IDPAnalyser
         {
             byte[] result = new byte[length];
             for (int i = 0; i < length; i++) result[i] = (byte)i;
-            for (int i = 0; i < length; i++) swap(result, rd.Next(length), rd.Next(length));
+            for (int i = 0; i < length; i++) swap(result, _random.Next(length), _random.Next(length));
             return result;
         }
-
-        private Boolean arrayEquals(byte[] a, byte[] b)
-        {
-            if (a.Length != b.Length)
-                return false;
-            for (int i = 0; i < a.Length; i++)
-            {
-                if (a[i] != b[i]) return false;
-            }
-            return true;
-        }
-
-        //private void decrypt(ValueKey vk, byte[] key)
-        //{
-        //    vk.key = key;
-        //    vk.plaintext = this.controlMaster.Decrypt(this.input, vk.key);
-        //    vk.score = this.costMaster.CalculateCost(vk.plaintext);
-
-        //    vk.key = key;
-        //    decrypt2(vk.key, vk.key.Length, ciphertext, ciphertext.Length, mybuffer);
-        //    vk.plaintext = mybuffer;
-        //    vk.score = evalIDPKey2(vk.plaintext, keylen1);
-        //}
-
-        //private ValueKey createKey(byte[] key)
-        //{
-        //    ValueKey result = new ValueKey();
-        //    decrypt(result, (byte[])key.Clone());
-        //    return result;
-        //}
     }
 
     public class ResultEntry : ICrypAnalysisResultListEntry, INotifyPropertyChanged

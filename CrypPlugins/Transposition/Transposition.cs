@@ -1,4 +1,19 @@
-﻿using System;
+﻿/*
+   Copyright 2008-2020 CrypTool 2 Team <ct2contact@cryptool.org>
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +24,7 @@ using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.PluginBase.Control;
+using System.Windows.Controls;
 
 namespace Transposition
 {
@@ -19,18 +35,14 @@ namespace Transposition
     {
         # region Private variables
 
-        private String keyword = "";
-        private ICryptoolStream input;
-        private ICryptoolStream outputvalue;
-        private char[] output;
-        private TranspositionSettings settings;
-        private TranspositionPresentation myPresentation;
-        private char[,] read_in_matrix;
-        private char[,] permuted_matrix;
-        private int[] key;
-        
-        private bool running = false;
-        private bool stopped = false;
+        private string _keyword = string.Empty;
+        private string _input;
+        private string _outputvalue;
+        private char[] _output;
+        private TranspositionSettings _settings;
+        private TranspositionPresentation _presentation;
+        private bool _running = false;
+        private bool _stopped = false;
 
         # endregion
 
@@ -39,156 +51,75 @@ namespace Transposition
         /// </summary>
         public Transposition()
         {
-            this.settings = new TranspositionSettings();
-            myPresentation = new TranspositionPresentation();
-            Presentation = myPresentation;
-            myPresentation.Transposition = this;
-            myPresentation.feuerEnde += new EventHandler(presentation_finished);
-            myPresentation.updateProgress += new EventHandler(update_progress);
-            this.settings.PropertyChanged += settings_OnPropertyChange;
+            _settings = new TranspositionSettings();
+            _presentation = new TranspositionPresentation();
+            Presentation = _presentation;
+            _presentation.Transposition = this;
+            _presentation.feuerEnde += new EventHandler(presentation_finished);
+            _presentation.updateProgress += new EventHandler(update_progress);
+            _settings.PropertyChanged += settings_OnPropertyChange;
         }
 
         private void update_progress(object sender, EventArgs e) 
         {
-            //TranspositionPresentation myhelp = new TranspositionPresentation();
-            //myhelp = (TranspositionPresentation)sender;
-            ProgressChanged(myPresentation.progress, 3000);
+            ProgressChanged(_presentation.progress, 3000);
         }
 
         private void presentation_finished(object sender, EventArgs e)
         {
-            if(!myPresentation.Stop)
-            Output = CharacterArrayToCStream(this.output);
+            if(!_presentation.Stop)
+            Output = new string(_output);
             ProgressChanged(1, 1);
             
-            running = false;
+            _running = false;
         }
 
         private void settings_OnPropertyChange(object sender, PropertyChangedEventArgs e)
         {
-            myPresentation.UpdateSpeed(this.settings.PresentationSpeed);
+            _presentation.UpdateSpeed(_settings.PresentationSpeed);
         }
         /// <summary>
         /// Get or set all settings for this algorithm.
         /// </summary>
         public ISettings Settings
         {
-            get { return this.settings; }
-            set { this.settings = (TranspositionSettings)value; }
+            get { return _settings; }
+            set { _settings = (TranspositionSettings)value; }
         }
 
         # region getter methods
 
         /// <summary>
-        /// Get read in matrix.
+        /// Get read in matrix
         /// </summary>
-        public char[,] Read_in_matrix
-        {
-            get
-            {
-                return read_in_matrix;
-            }
-        }
+        public char[,] Read_in_matrix { get; private set; }
 
         /// <summary>
-        /// Get permuted matrix.
+        /// Get permuted matrix
         /// </summary>
-        public char[,] Permuted_matrix
-        {
-            get
-            {
-                return permuted_matrix;
-            }
-        }
+        public char[,] Permuted_matrix { get; private set; }
 
         /// <summary>
-        /// Get numerical key order.
+        /// Get numerical key order
         /// </summary>
-        public int[] Key
-        {
-            get
-            {
-                return key;
-            }
-        }
+        public int[] Key { get; private set; }
         # endregion
 
         # region Properties
 
         [PropertyInfo(Direction.InputData, "InputCaption", "InputTooltip", false)]
-        public ICryptoolStream Input 
+        public string Input 
         {
             get
             {
-                return this.input;
+                return _input;
             }
 
             set
             {
-                this.input = value;
+                _input = value;
                 OnPropertyChange("Input");
             }
-        }
-
-        public Char[] InputToCharacterArray
-        {
-            get
-            {
-                byte[] streamData = ICryptoolStreamToByteArray(Input);
-                switch (settings.InternalNumber)
-                {
-                    case 0:
-                        var sUtf = Encoding.UTF8.GetString(streamData);
-                        return sUtf.ToCharArray();
-                    case 1:
-                        var chary = new char[streamData.Length];
-                        for (int i = 0; i < streamData.Length; i++)
-                        {
-                            chary[i] = (char)(streamData[i]);
-                        }
-                        return chary;
-                    default:
-                        return null;
-                }
-            }
-        }
-
-        private byte[] CStreamReaderToByteArray(CStreamReader stream)
-        {
-            stream.WaitEof();
-            byte[] buffer = new byte[stream.Length];
-            stream.Seek(0, System.IO.SeekOrigin.Begin);
-            stream.ReadFully(buffer);
-            return buffer;
-        }
-
-        private ICryptoolStream CharacterArrayToCStream(char[] b)
-        {
-            var csw = new CStreamWriter();
-            switch (settings.InternalNumber)
-                {
-                    case 0: 
-                        var bUtf = UnicodeEncoding.UTF8.GetBytes(b); 
-                        csw.Write(bUtf);            
-                        break;
-                    case 1:
-                        var chary = new byte[b.Length];
-                        for(int i=0;i< b.Length;i++) 
-                        {
-                            chary[i] = (byte)(b[i]);
-                        }
-                        csw.Write(chary);   
-                        break;
-                    default:
-                        return null;
-                }            
-            csw.Close();
-            return csw;
-        }
-
-        private byte[] ICryptoolStreamToByteArray(ICryptoolStream stream)
-        {
-            return  CStreamReaderToByteArray(stream.CreateReader());
         }
 
         [PropertyInfo(Direction.InputData, "KeywordCaption", "KeywordTooltip", false)]
@@ -196,32 +127,32 @@ namespace Transposition
         {
             get
             {
-                return this.keyword;
+                return _keyword;
             }
 
             set
             {
-                this.keyword = value;
+                _keyword = value;
                 OnPropertyChange("Keyword");
             }
         }
 
         [PropertyInfo(Direction.OutputData, "OutputCaption", "OutputTooltip")]
-        public ICryptoolStream Output
+        public string Output
         {
             get
             {
-                return outputvalue;
+                return _outputvalue;
             }
             
             set
             {
-                this.outputvalue = value;
+                _outputvalue = value;
                 OnPropertyChange("Output");
             }
         }
 
-        private void OnPropertyChange(String propertyname)
+        private void OnPropertyChange(string propertyname)
         {
             EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(propertyname));
         }
@@ -242,15 +173,15 @@ namespace Transposition
 
         public void Execute()
         {
-            
-            while(running)
+
+            while (_running)
             {
-                myPresentation.my_Stop(this, EventArgs.Empty);
-                if (stopped)
+                _presentation.my_Stop(this, EventArgs.Empty);
+                if (_stopped)
                     return;
             }
 
-            running = true;
+            _running = true;
 
             try
             {
@@ -268,30 +199,27 @@ namespace Transposition
                 ((TranspositionControl)controlSlave).onStatusChanged();
             }
 
-            if (Presentation.IsVisible && key.Count() != 0)
+            if (Presentation.IsVisible && Key.Count() != 0)
             {
-                    Transposition_LogMessage(Read_in_matrix.GetLength(0) +" " + Read_in_matrix.GetLength(1) +" " + Input.Length  , NotificationLevel.Debug);        
-                    Presentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                Transposition_LogMessage(Read_in_matrix.GetLength(0) + " " + Read_in_matrix.GetLength(1) + " " + Input.Length, NotificationLevel.Debug);
+                Presentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    try
                     {
-                       try
-                       {
-                           myPresentation.main(Read_in_matrix, Permuted_matrix, key, Keyword, InputToCharacterArray, this.output, this.settings.Permutation, this.settings.ReadIn, this.settings.ReadOut, this.settings.Action, this.settings.Number, this.settings.PresentationSpeed);
-                       }
-                       catch (Exception ex)
-                       {
-                           Transposition_LogMessage(string.Format("Exception during run of Transposition Presentation: {0}", ex.Message), NotificationLevel.Error);
-                       }
+                        _presentation.main(Read_in_matrix, Permuted_matrix, Key, Keyword, Input.ToCharArray(), _output, _settings.Permutation, _settings.ReadIn, _settings.ReadOut, _settings.Action, _settings.Number, _settings.PresentationSpeed);
                     }
-                    , null);
-
-                //ars.WaitOne();
+                    catch (Exception ex)
+                    {
+                        Transposition_LogMessage(string.Format("Exception during run of Transposition Presentation: {0}", ex.Message), NotificationLevel.Error);
+                    }
+                }
+                , null);
             }
             else
             {
-                Output = CharacterArrayToCStream(this.output);
+                Output = new string(_output);
                 ProgressChanged(1, 1);
             }
-            
         }
 
         public void Initialize()
@@ -311,12 +239,12 @@ namespace Transposition
 
         public void PreExecution()
         {
-            running = false;
-            stopped = false;
+            _running = false;
+            _stopped = false;
             
         }
 
-        public System.Windows.Controls.UserControl Presentation
+        public UserControl Presentation
         {
             get;
             private set;
@@ -325,9 +253,9 @@ namespace Transposition
         public void Stop()
         {
             
-            stopped = true;
+            _stopped = true;
 
-            myPresentation.my_Stop(this, EventArgs.Empty);
+            _presentation.my_Stop(this, EventArgs.Empty);
         }
 
         #endregion
@@ -342,22 +270,22 @@ namespace Transposition
 
         private void ProcessTransposition()
         {
-            if (keyword.Contains(','))
+            if (_keyword.Contains(','))
             {
-                key = get_Keyword_Array(keyword);
+                Key = get_Keyword_Array(_keyword);
             }
             else
             {
-                key = sortKey(keyword);
+                Key = sortKey(_keyword);
             }
 
-            switch (settings.Action)
+            switch (_settings.Action)
             {
                 case 0:
-                    this.output = encrypt(InputToCharacterArray, key);
+                    _output = encrypt(Input.ToCharArray(), Key);
                     break;
                 case 1:
-                    this.output = decrypt(InputToCharacterArray, key);
+                    _output = decrypt(Input.ToCharArray(), Key);
                     break;
                 default:
                     break;
@@ -372,26 +300,26 @@ namespace Transposition
                 {
                     char[] encrypted = null;
 
-                    if (((TranspositionSettings.PermutationMode)settings.Permutation).Equals(TranspositionSettings.PermutationMode.byRow))
+                    if (((TranspositionSettings.PermutationMode)_settings.Permutation).Equals(TranspositionSettings.PermutationMode.byRow))
                     {
-                        switch ((TranspositionSettings.ReadInMode)settings.ReadIn)
+                        switch ((TranspositionSettings.ReadInMode)_settings.ReadIn)
                         {
                             case TranspositionSettings.ReadInMode.byRow:
-                                read_in_matrix = enc_read_in_by_row_if_row_perm(input, key.Length); break;
+                                Read_in_matrix = enc_read_in_by_row_if_row_perm(input, key.Length); break;
                             case TranspositionSettings.ReadInMode.byColumn:
-                                read_in_matrix = enc_read_in_by_column_if_row_perm(input, key.Length); break;
+                                Read_in_matrix = enc_read_in_by_column_if_row_perm(input, key.Length); break;
                             default:
                                 break;
                         }
 
-                        permuted_matrix = enc_permute_by_row(read_in_matrix, key);
+                        Permuted_matrix = enc_permute_by_row(Read_in_matrix, key);
 
-                        switch ((TranspositionSettings.ReadOutMode)settings.ReadOut)
+                        switch ((TranspositionSettings.ReadOutMode)_settings.ReadOut)
                         {
                             case TranspositionSettings.ReadOutMode.byRow:
-                                encrypted = read_out_by_row_if_row_perm(permuted_matrix, key.Length); break;
+                                encrypted = read_out_by_row_if_row_perm(Permuted_matrix, key.Length); break;
                             case TranspositionSettings.ReadOutMode.byColumn:
-                                encrypted = read_out_by_column_if_row_perm(permuted_matrix, key.Length); break;
+                                encrypted = read_out_by_column_if_row_perm(Permuted_matrix, key.Length); break;
                             default:
                                 break;
                         }
@@ -400,24 +328,24 @@ namespace Transposition
                     // permute by column:
                     else
                     {
-                        switch ((TranspositionSettings.ReadInMode)settings.ReadIn)
+                        switch ((TranspositionSettings.ReadInMode)_settings.ReadIn)
                         {
                             case TranspositionSettings.ReadInMode.byRow:
-                                read_in_matrix = enc_read_in_by_row(input, key.Length); break;
+                                Read_in_matrix = enc_read_in_by_row(input, key.Length); break;
                             case TranspositionSettings.ReadInMode.byColumn:
-                                read_in_matrix = enc_read_in_by_column(input, key.Length); break;
+                                Read_in_matrix = enc_read_in_by_column(input, key.Length); break;
                             default:
                                 break;
                         }
 
-                        permuted_matrix = enc_permut_by_column(read_in_matrix, key);
+                        Permuted_matrix = enc_permut_by_column(Read_in_matrix, key);
 
-                        switch ((TranspositionSettings.ReadOutMode)settings.ReadOut)
+                        switch ((TranspositionSettings.ReadOutMode)_settings.ReadOut)
                         {
                             case TranspositionSettings.ReadOutMode.byRow:
-                                encrypted = read_out_by_row(permuted_matrix, key.Length); break;
+                                encrypted = read_out_by_row(Permuted_matrix, key.Length); break;
                             case TranspositionSettings.ReadOutMode.byColumn:
-                                encrypted = read_out_by_column(permuted_matrix, key.Length); break;
+                                encrypted = read_out_by_column(Permuted_matrix, key.Length); break;
                             default:
                                 break;
                         }
@@ -439,8 +367,6 @@ namespace Transposition
 
         public char[] decrypt(char[] input, int[] new_key)
         {
-            //Transposition_LogMessage("hier normales decrypt: " + new_key[0] + " / " +input[0], NotificationLevel.Debug);
-
             if (new_key == null || input == null || new_key.Length <= 0)
             {
                 // 2do: Anzeige "Kein gültiges Keyword
@@ -455,26 +381,26 @@ namespace Transposition
 
             char[] decrypted = null;
 
-            if (((TranspositionSettings.PermutationMode)settings.Permutation).Equals(TranspositionSettings.PermutationMode.byRow))
+            if (((TranspositionSettings.PermutationMode)_settings.Permutation).Equals(TranspositionSettings.PermutationMode.byRow))
             {
-                switch ((TranspositionSettings.ReadOutMode)settings.ReadOut)
+                switch ((TranspositionSettings.ReadOutMode)_settings.ReadOut)
                 {
                     case TranspositionSettings.ReadOutMode.byRow:
-                        read_in_matrix = dec_read_in_by_row_if_row_perm(input, new_key); break;
+                        Read_in_matrix = dec_read_in_by_row_if_row_perm(input, new_key); break;
                     case TranspositionSettings.ReadOutMode.byColumn:
-                        read_in_matrix = dec_read_in_by_column_if_row_perm(input, new_key); break;
+                        Read_in_matrix = dec_read_in_by_column_if_row_perm(input, new_key); break;
                     default:
                         break;
                 }
 
-                permuted_matrix = dec_permut_by_row(read_in_matrix, new_key);
+                Permuted_matrix = dec_permut_by_row(Read_in_matrix, new_key);
 
-                switch ((TranspositionSettings.ReadInMode)settings.ReadIn)
+                switch ((TranspositionSettings.ReadInMode)_settings.ReadIn)
                 {
                     case TranspositionSettings.ReadInMode.byRow:
-                        decrypted = read_out_by_row_if_row_perm(permuted_matrix, new_key.Length); break;
+                        decrypted = read_out_by_row_if_row_perm(Permuted_matrix, new_key.Length); break;
                     case TranspositionSettings.ReadInMode.byColumn:
-                        decrypted = read_out_by_column_if_row_perm(permuted_matrix, new_key.Length); break;
+                        decrypted = read_out_by_column_if_row_perm(Permuted_matrix, new_key.Length); break;
                     default:
                         break;
                 }
@@ -483,38 +409,30 @@ namespace Transposition
             // permute by column:
             else
             {
-                switch ((TranspositionSettings.ReadOutMode)settings.ReadOut)
+                switch ((TranspositionSettings.ReadOutMode)_settings.ReadOut)
                 {
                     case TranspositionSettings.ReadOutMode.byRow:
-                        read_in_matrix = dec_read_in_by_row(input, new_key); break;
+                        Read_in_matrix = dec_read_in_by_row(input, new_key); break;
                     case TranspositionSettings.ReadOutMode.byColumn:
-                        read_in_matrix = dec_read_in_by_column(input, new_key); break;
+                        Read_in_matrix = dec_read_in_by_column(input, new_key); break;
                     default:
                         break;
                 }
 
-                permuted_matrix = dec_permut_by_column(read_in_matrix, new_key);
+                Permuted_matrix = dec_permut_by_column(Read_in_matrix, new_key);
 
-                switch ((TranspositionSettings.ReadInMode)settings.ReadIn)
+                switch ((TranspositionSettings.ReadInMode)_settings.ReadIn)
                 {
                     case TranspositionSettings.ReadInMode.byRow:
-                        decrypted = read_out_by_row(permuted_matrix, new_key.Length); break;
+                        decrypted = read_out_by_row(Permuted_matrix, new_key.Length); break;
                     case TranspositionSettings.ReadInMode.byColumn:
-                        decrypted = read_out_by_column(permuted_matrix, new_key.Length); break;
+                        decrypted = read_out_by_column(Permuted_matrix, new_key.Length); break;
                     default:
                         break;
                 }
             }
 
             return decrypted;
-        }
-
-        public byte[] byteDecrypt(byte[] input, int[] new_key)
-        {
-            //Transposition_LogMessage("hier normales decrypt: " + new_key[0] + " / " +input[0], NotificationLevel.Debug);
-
-            char[] c = decrypt(Encoding.GetEncoding("iso-8859-15").GetString(input).ToCharArray(), new_key);
-            return Encoding.GetEncoding("iso-8859-15").GetBytes(c);
         }
 
         private char[,] enc_read_in_by_row(char[] input, int keyword_length)
@@ -600,7 +518,6 @@ namespace Transposition
                                 pos++;
                             }
                         }
-
                         else
                         {
                             matrix[j, i] = input[pos];
@@ -660,7 +577,6 @@ namespace Transposition
                         if ((!offs.Equals(0)) && j.Equals(size - 1))
                         {
                             bool ok = false;
-
                             for (int k = 0; k < offs; k++)
                             {
                                 if ((keyword[k] - 1).Equals(i))
@@ -668,13 +584,11 @@ namespace Transposition
                                     ok = true;
                                 }
                             }
-
                             if (ok)
                             {
                                 matrix[i, j] = input[pos];
                                 pos++;
                             }
-
                         }
                         else
                         {
@@ -708,7 +622,6 @@ namespace Transposition
                         if ((!offs.Equals(0)) && i.Equals(size - 1))
                         {
                             bool ok = false;
-
                             for (int k = 0; k < offs; k++)
                             {
                                 if ((keyword[k] - 1).Equals(j))
@@ -716,13 +629,11 @@ namespace Transposition
                                     ok = true;
                                 }
                             }
-
                             if (ok)
                             {
                                 matrix[i, j] = input[pos];
                                 pos++;
                             }
-
                         }
                         else
                         {
@@ -764,13 +675,11 @@ namespace Transposition
                                     ok = true;
                                 }
                             }
-
                             if (ok)
                             {
                                 matrix[j, i] = input[pos];
                                 pos++;
                             }
-
                         }
                         else
                         {
@@ -804,7 +713,6 @@ namespace Transposition
                         if ((!offs.Equals(0)) && j.Equals(size - 1))
                         {
                             bool ok = false;
-
                             for (int k = 0; k < offs; k++)
                             {
                                 if ((keyword[k] - 1).Equals(i))
@@ -812,13 +720,11 @@ namespace Transposition
                                     ok = true;
                                 }
                             }
-
                             if (ok)
                             {
                                 matrix[j, i] = input[pos];
                                 pos++;
                             }
-
                         }
                         else
                         {
@@ -847,7 +753,6 @@ namespace Transposition
                         pos = j;
                     }
                 }
-
                 for (int j = 0; j < y; j++)
                 {
                     matrix[i - 1, j] = readin_matrix[pos, j];
@@ -1059,7 +964,7 @@ namespace Transposition
             return enc;
         }
 
-        private int[] get_Keyword_Array(String keyword)
+        private int[] get_Keyword_Array(string keyword)
         {
             try
             {
@@ -1075,7 +980,7 @@ namespace Transposition
                 }
 
                 int[] keys = new int[length];
-                String tmp = "";
+                string tmp = "";
                 int pos = 0;
                 for (int i = 0; i < keyword.Length; i++)
                 {
@@ -1112,11 +1017,11 @@ namespace Transposition
             return (new HashSet<int>(keyword)).Count == keyword.Length;
         }
 
-        public int[] sortKey(String input)
+        public int[] sortKey(string input)
         {
             if (input != null && !input.Equals(""))
             {
-                String key = input;
+                string key = input;
                 Char[] keyChars = key.ToCharArray();
                 Char[] orgChars = key.ToCharArray();
                 int[] rank = new int[keyChars.Length];
@@ -1139,16 +1044,16 @@ namespace Transposition
 
         public void changeSettings(string setting, object value)
         {
-            if (setting.Equals("ReadIn")) settings.ReadIn = (int)value;
-            else if (setting.Equals("Permute")) settings.Permutation = (int)value;
-            else if (setting.Equals("ReadOut")) settings.ReadOut = (int)value;
+            if (setting.Equals("ReadIn")) _settings.ReadIn = (int)value;
+            else if (setting.Equals("Permute")) _settings.Permutation = (int)value;
+            else if (setting.Equals("ReadOut")) _settings.ReadOut = (int)value;
         }
 
         public object getSettings(string setting)
         {
-            if (setting.Equals("ReadIn")) return settings.ReadIn;
-            else if (setting.Equals("Permute")) return settings.Permutation;
-            else if (setting.Equals("ReadOut")) return settings.ReadOut;
+            if (setting.Equals("ReadIn")) return _settings.ReadIn;
+            else if (setting.Equals("Permute")) return _settings.Permutation;
+            else if (setting.Equals("ReadOut")) return _settings.ReadOut;
             return null;
         }
 
@@ -1176,27 +1081,22 @@ namespace Transposition
             this.plugin = plugin;
         }
 
-        public byte[] Decrypt(byte[] ciphertext, byte[] key)
+        public string Decrypt(string ciphertext, string key)
         {
-            //if (plugin.InputToCharacterArray != ciphertext)
-            //{
-            //    plugin.InputToCharacterArray = ciphertext;
-            //}
-
-            int[] k = new int[key.Length];
+            int[] intKey = new int[key.Length];
             for(int i=0; i<key.Length; i++)
             {
-                k[i] = key[i];
+                intKey[i] = key[i];
             }
-
-            //plugin.Transposition_LogMessage("hier decrypt von control: " + k[0] + " / " +plugin.Input[0], NotificationLevel.Debug);
-            return plugin.byteDecrypt(ciphertext, k);
+            return new string(plugin.decrypt(ciphertext.ToCharArray(), intKey));
         }
 
         public void onStatusChanged()
         {
             if (OnStatusChanged != null)
+            {
                 OnStatusChanged(this, true);
+            }
         }
 
         public void changeSettings(string setting, object value)

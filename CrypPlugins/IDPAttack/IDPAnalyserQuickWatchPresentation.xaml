@@ -6,13 +6,13 @@
 
     <crypanalysisviewcontrol:CrypAnalysisViewControl ResultHeaderCaption="{Loc LocalLabel}" ResultListCaption="{Loc TopTenLabel}">
         <crypanalysisviewcontrol:CrypAnalysisViewControl.ResultHeaderLabels>
-            <crypanalysisviewcontrol:ViewLabel Caption="{Loc StartLabel}" x:Name="StartTime" />
-            <crypanalysisviewcontrol:ViewLabel Caption="{Loc EndLabel}" x:Name="EndTime" />
-            <crypanalysisviewcontrol:ViewLabel Caption="{Loc ElapsedLabel}" x:Name="ElapsedTime" />
-            <crypanalysisviewcontrol:ViewLabel Caption="{Loc RemainingLabel}" x:Name="TimeLeft" />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc StartLabel}" Name="StartTime" />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc EndLabel}" Name="EndTime" />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc ElapsedLabel}" Name="ElapsedTime" />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc RemainingLabel}" Name="TimeLeft" />
             <!--Empty for layouting purposes:-->
             <crypanalysisviewcontrol:ViewLabel />
-            <crypanalysisviewcontrol:ViewLabel Caption="{Loc Keys_secLabel}" x:Name="KeysPerSecond" />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc Keys_secLabel}" Name="KeysPerSecond" />
         </crypanalysisviewcontrol:CrypAnalysisViewControl.ResultHeaderLabels>
 
         <crypanalysisviewcontrol:CrypAnalysisResultListView ItemsSource="{Binding}" ResultItemAction="HandleResultItemAction">

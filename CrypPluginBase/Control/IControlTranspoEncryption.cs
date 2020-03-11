@@ -20,7 +20,7 @@ namespace Cryptool.PluginBase.Control
 {
     public interface IControlTranspoEncryption : IControl, IDisposable
     {
-        byte[] Decrypt(byte[] ciphertext, byte[] key);
+        string Decrypt(string ciphertext, string key);
         void changeSettings(string setting, object value);
         object getSettings(string setting);
     }
