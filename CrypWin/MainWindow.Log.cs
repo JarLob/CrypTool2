@@ -37,6 +37,9 @@ namespace Cryptool.CrypWin
 {
     public partial class MainWindow
     {
+        private FileStream _logFileStream;
+        private StreamWriter _logFileWriter;
+
         #region PluginManager events
         void pluginManager_OnExceptionOccured(object sender, PluginManagerEventArgs args)
         {
@@ -83,12 +86,24 @@ namespace Cryptool.CrypWin
         /// log messages from other threads use GuiLogMessage()
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="arg">Information about the log message</param>
-        public void OnGuiLogNotificationOccuredTS(object sender, GuiLogEventArgs arg)
-        {           
-           try
+        /// <param name="args">Information about the log message</param>
+        public void OnGuiLogNotificationOccuredTS(object sender, GuiLogEventArgs args)
+        {
+            try
             {
-                if(textBlockDebugsCount == null ||
+                if (Settings.Default.WriteLogFile)
+                {
+                    WriteLogToFile(args);
+                }
+            }
+            catch (Exception)
+            {
+                //do nothing
+            }
+
+            try
+            {
+                if (textBlockDebugsCount == null ||
                     textBlockInfosCount == null ||
                     textBlockWarningsCount == null ||
                     textBlockErrosCount == null ||
@@ -100,13 +115,13 @@ namespace Cryptool.CrypWin
                 LogMessage logMessage = new LogMessage();
 
                 // Attention: The string value of enum will be used to find appropritate imgage. 
-                logMessage.LogLevel = arg.NotificationLevel;
+                logMessage.LogLevel = args.NotificationLevel;
                 logMessage.Nr = statusBarTextCounter;
 
-                if (arg.Plugin != null)
+                if (args.Plugin != null)
                 {
-                    logMessage.Plugin = arg.Plugin.GetPluginInfoAttribute().Caption;
-                    logMessage.Title = arg.Title;
+                    logMessage.Plugin = args.Plugin.GetPluginInfoAttribute().Caption;
+                    logMessage.Title = args.Title;
                 }
                 else if (sender is string)
                 {
@@ -120,20 +135,20 @@ namespace Cryptool.CrypWin
                 }
 
                 logMessage.Time =
-                  arg.DateTime.Hour.ToString("00") + ":" + arg.DateTime.Minute.ToString("00") + ":" +
-                  arg.DateTime.Second.ToString("00") + ":" + arg.DateTime.Millisecond.ToString("000");
+                  args.DateTime.Hour.ToString("00") + ":" + args.DateTime.Minute.ToString("00") + ":" +
+                  args.DateTime.Second.ToString("00") + ":" + args.DateTime.Millisecond.ToString("000");
 
-                logMessage.Message = arg.Message;
+                logMessage.Message = args.Message;
 
-                if (listFilter.Contains(arg.NotificationLevel))
+                if (listFilter.Contains(args.NotificationLevel))
                 {
                     TextBlock textBlock = new TextBlock();
-                    textBlock.Text = logMessage.LogLevel + ": " + logMessage.Time + ": " + arg.Message;
+                    textBlock.Text = logMessage.LogLevel + ": " + logMessage.Time + ": " + args.Message;
                     statusBarItem.Content = textBlock;
-                    if (arg.Message.Length >= 64)
-                        notifyIcon.Text = arg.Message.Substring(0, 63);
+                    if (args.Message.Length >= 64)
+                        notifyIcon.Text = args.Message.Substring(0, 63);
                     else
-                        notifyIcon.Text = arg.Message;
+                        notifyIcon.Text = args.Message;
                 }
 
                 collectionLogMessages.Add(logMessage);
@@ -170,7 +185,7 @@ namespace Cryptool.CrypWin
 
                 SetMessageCount();
 
-                switch (arg.NotificationLevel)
+                switch (args.NotificationLevel)
                 {
                     case NotificationLevel.Debug:
                         debugCounter++;
@@ -200,31 +215,115 @@ namespace Cryptool.CrypWin
                 if (WindowState == WindowState.Minimized)
                 {
                     int ms = Settings.Default.BallonVisibility_ms;
-                    if (arg.NotificationLevel == NotificationLevel.Balloon && Settings.Default.ShowBalloonLogMessagesInBalloon)
+                    if (args.NotificationLevel == NotificationLevel.Balloon && Settings.Default.ShowBalloonLogMessagesInBalloon)
                     {
-                        notifyIcon.ShowBalloonTip(ms, Properties.Resources.Balloon_Message, arg.Message, ToolTipIcon.Info);
+                        notifyIcon.ShowBalloonTip(ms, Properties.Resources.Balloon_Message, args.Message, ToolTipIcon.Info);
                     }
-                    else if (arg.NotificationLevel == NotificationLevel.Error && Settings.Default.ShowErrorLogMessagesInBalloon)
+                    else if (args.NotificationLevel == NotificationLevel.Error && Settings.Default.ShowErrorLogMessagesInBalloon)
                     {
-                        notifyIcon.ShowBalloonTip(ms, Properties.Resources.Error_Message, arg.Message, ToolTipIcon.Error);
+                        notifyIcon.ShowBalloonTip(ms, Properties.Resources.Error_Message, args.Message, ToolTipIcon.Error);
                     }
-                    else if (arg.NotificationLevel == NotificationLevel.Info && Settings.Default.ShowInfoLogMessagesInBalloon)
+                    else if (args.NotificationLevel == NotificationLevel.Info && Settings.Default.ShowInfoLogMessagesInBalloon)
                     {
-                        notifyIcon.ShowBalloonTip(ms, Properties.Resources.Information_Message, arg.Message, ToolTipIcon.Info);
+                        notifyIcon.ShowBalloonTip(ms, Properties.Resources.Information_Message, args.Message, ToolTipIcon.Info);
                     }
-                    else if (arg.NotificationLevel == NotificationLevel.Warning && Settings.Default.ShowWarningLogMessagesInBalloon)
+                    else if (args.NotificationLevel == NotificationLevel.Warning && Settings.Default.ShowWarningLogMessagesInBalloon)
                     {
-                        notifyIcon.ShowBalloonTip(ms, Properties.Resources.Warning_Message, arg.Message, ToolTipIcon.Warning);
+                        notifyIcon.ShowBalloonTip(ms, Properties.Resources.Warning_Message, args.Message, ToolTipIcon.Warning);
                     }
-                    else if (arg.NotificationLevel == NotificationLevel.Debug && Settings.Default.ShowDebugLogMessagesInBalloon)
+                    else if (args.NotificationLevel == NotificationLevel.Debug && Settings.Default.ShowDebugLogMessagesInBalloon)
                     {
-                        notifyIcon.ShowBalloonTip(ms, Properties.Resources.Debug_Message, arg.Message, ToolTipIcon.Info);
+                        notifyIcon.ShowBalloonTip(ms, Properties.Resources.Debug_Message, args.Message, ToolTipIcon.Info);
                     }
                 }
             }
             catch (Exception)
             {
                 //OnGuiLogNotificationOccuredTS(this, new GuiLogEventArgs(exception.Message, null, NotificationLevel.Error)); <--- causes recursion (StackOverflowException)
+            }
+        }
+
+        /// <summary>
+        /// Writes a log entry to the logfile 
+        /// </summary>
+        /// <param name="args"></param>
+        private void WriteLogToFile(GuiLogEventArgs args)
+        {
+            if (_logFileStream == null)
+            {
+                string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
+                //1. check, if CrypTool 2 folder exists, if not, create it
+                if (!Directory.Exists(appDataPath + @"\CrypTool2"))
+                {
+                    Directory.CreateDirectory(appDataPath + @"\CrypTool2");
+                }
+                //2. check, if CrypTool 2 logs folder exists; if not, create it
+                if (!Directory.Exists(appDataPath + @"\CrypTool2\Logs"))
+                {
+                    Directory.CreateDirectory(appDataPath + @"\CrypTool2\Logs");
+                }
+                //3. create logfile path
+                string logfileName = appDataPath + @"\CrypTool2\Logs\CrypTool_2_log_" + DateTime.Now.Ticks + ".csv";
+                _logFileStream = new FileStream(logfileName, FileMode.Create);
+            }
+
+            if (_logFileWriter == null)
+            {
+                _logFileWriter = new StreamWriter(_logFileStream);
+                _logFileWriter.WriteLine("date time;log level;plugin name;title;message");
+                _logFileWriter.Flush();
+            }
+
+            string level = "no_log_level_defined";
+            switch (args.NotificationLevel)
+            {
+                case NotificationLevel.Debug:
+                    level = "debug";
+                    break;
+                case NotificationLevel.Info:
+                    level = "info";
+                    break;
+                case NotificationLevel.Warning:
+                    level = "warning";
+                    break;
+                case NotificationLevel.Error:
+                    level = "error";
+                    break;
+                case NotificationLevel.Balloon:
+                    level = "baloon";
+                    break;
+            }
+            string pluginname = "no_plugin_defined";
+            var plugin = args.Plugin;
+            if (plugin != null)
+            {
+                var attribute = plugin.GetPluginInfoAttribute();
+                if (attribute != null)
+                {
+                    pluginname = attribute.Caption;
+                }
+            }
+            _logFileWriter.WriteLine(DateTime.Now + ";\"" + level + "\";\"" + pluginname + "\";\"" + args.Title + "\";\"" + args.Message + "\"");
+            _logFileWriter.Flush();
+        }
+
+        /// <summary>
+        /// Closes the logFile
+        /// </summary>
+        private void CloseLogFile()
+        {
+            try
+            {
+                if (_logFileWriter != null)
+                {
+                    _logFileWriter.Close();
+                    //writer also closes stream
+                }
+            }
+            catch (Exception)
+            {
+                //do nothing
             }
         }
 

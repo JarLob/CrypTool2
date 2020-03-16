@@ -451,5 +451,17 @@ namespace Cryptool.CrypWin.Properties {
                 return ((bool)(this["SingletonApplication"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool WriteLogFile {
+            get {
+                return ((bool)(this["WriteLogFile"]));
+            }
+            set {
+                this["WriteLogFile"] = value;
+            }
+        }
     }
 }

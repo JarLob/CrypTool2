@@ -2664,6 +2664,8 @@ namespace Cryptool.CrypWin
                         //do nothing
                     }
 
+                    CloseLogFile();
+
                     Application.Current.Shutdown();
                 }
             }

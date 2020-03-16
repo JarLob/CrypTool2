@@ -635,5 +635,23 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
                 return ResourceManager.GetString("UseLastPathTooltip", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Write log file ähnelt.
+        /// </summary>
+        public static string WriteLogFile {
+            get {
+                return ResourceManager.GetString("WriteLogFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die If this setting is enabled, CrypTool 2 automatically writes all of its log to a logfile ähnelt.
+        /// </summary>
+        public static string WriteLogFileTooltip {
+            get {
+                return ResourceManager.GetString("WriteLogFileTooltip", resourceCulture);
+            }
+        }
     }
 }
