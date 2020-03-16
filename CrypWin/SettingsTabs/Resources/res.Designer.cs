@@ -349,7 +349,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Settings to single components ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Settings of single components ähnelt.
         /// </summary>
         public static string PluginSettings {
             get {

@@ -238,7 +238,7 @@
     <value>Farben rücksetzen</value>
   </data>
   <data name="ResetColors_Tooltip" xml:space="preserve">
-    <value>Setze alle Farben auf die Voreinstellungen zurück.</value>
+    <value>Setze alle Farben auf die Voreinstellungen zurück</value>
   </data>
   <data name="SettingsTooltip" xml:space="preserve">
     <value>Einstellungen</value>
@@ -391,7 +391,7 @@
     <value>Wird ausgeführt...</value>
   </data>
   <data name="BinSettingsVisual_BinSettingsVisual_No_Settings_available_" xml:space="preserve">
-    <value>Diese Komponente hat keine Parameter.</value>
+    <value>Diese Komponente hat keine Parameter</value>
   </data>
   <data name="Bring_to_FrontTooltip" xml:space="preserve">
     <value>In den Vordergrund</value>
@@ -406,7 +406,7 @@
     <value>Absenken</value>
   </data>
   <data name="EditingDisabled" xml:space="preserve">
-    <value>Einige Bearbeitungsfunktionen sind während der Ausführung deaktiviert.</value>
+    <value>Einige Bearbeitungsfunktionen sind während der Ausführung deaktiviert</value>
   </data>
   <data name="Toggle_Plugin_Parameters" xml:space="preserve">
     <value>Öffne/schließe Leiste mit den Einstellungen der ausgewählten Komponenten dieser Arbeitsfläche (Strg + I)</value>
@@ -427,7 +427,7 @@
     <value>Standardmäßige Darstellung von Komponenten</value>
   </data>
   <data name="ComponentAppearanceBehaviourGroupTooltip" xml:space="preserve">
-    <value>Auswählen wie eine neuplatzierte Komponentenvisualisierung erscheinen soll.</value>
+    <value>Auswählen wie eine neuplatzierte Komponentenvisualisierung erscheinen soll</value>
   </data>
   <data name="DefaultComponentAppearance" xml:space="preserve">
     <value>Erscheinung von der Komponente vorgegeben</value>
@@ -510,9 +510,6 @@
   <data name="GlobalProgressBar_Description" xml:space="preserve">
     <value>Berechnung beendet nach {0} (Zum Anhalten des Workspaces bitte Stop drücken, oder neue Daten eingeben, um eine Neuberechnung durchzuführen)</value>
   </data>
-  <data name="Fonts_" xml:space="preserve">
-    <value>Schriftarten</value>
-  </data>
   <data name="Global_Progressbar" xml:space="preserve">
     <value>Globaler Fortschrittsbalken</value>
   </data>
@@ -580,6 +577,21 @@
     <value>Vorlagen-Ersetzung</value>
   </data>
   <data name="TemplateReplacementTooltip" xml:space="preserve">
-    <value>Diese Einstellung aktiviert/deaktiviert das Ersetzen von Vorlagen-Platzhaltern ($something$) durch den Text der aktuell in CrypTool 2 ausgewählten Sprache.</value>
+    <value>Aktiviert/deaktiviert das Ersetzen von Vorlagen-Platzhaltern ($something$) durch den Text der aktuell in CrypTool 2 ausgewählten Sprache</value>
+  </data>
+  <data name="Font" xml:space="preserve">
+    <value>Standardschriftart für den Arbeitsbereich, die von Texteingabe- und Textausgabe-Komponenten verwendet wird</value>
+  </data>
+  <data name="FontTooltip" xml:space="preserve">
+    <value>Ändert die Standardschriftart (Typ, Größe), die für Texteingabe- und Textausgabe-Komponenten verwendet wird</value>
+  </data>
+  <data name="GlobalProgressBarTooltip" xml:space="preserve">
+    <value>Aktiviert/deaktiviert den globalen Fortschrittsbalken, der oben im WorkspaceManager angezeigt wird</value>
+  </data>
+  <data name="GeneralWorkspaceSettings" xml:space="preserve">
+    <value>Allgemeine Arbeitsplatzeinstellungen</value>
+  </data>
+  <data name="UserInterfaceSettings" xml:space="preserve">
+    <value>Benutzerschnittstelleneinstellung</value>
   </data>
 </root>

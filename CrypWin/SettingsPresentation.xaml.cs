@@ -4,9 +4,7 @@ using System.Resources;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Attributes;
@@ -30,13 +28,13 @@ namespace Cryptool.CrypWin
         {
             InitializeComponent();
             CreateSettingsStyle();
-            
+
             var allSettingsTabs =
                 from a in AppDomain.CurrentDomain.GetAssemblies()
                 let types = GetTypesSafely(a)
                 where types != null
                 from t in types
-                let attributes = t.GetCustomAttributes(typeof (SettingsTabAttribute), true)
+                let attributes = t.GetCustomAttributes(typeof(SettingsTabAttribute), true)
                 where attributes != null && attributes.Length > 0
                 select new { Type = t, Attributes = attributes.Cast<SettingsTabAttribute>() };
 
@@ -56,7 +54,7 @@ namespace Cryptool.CrypWin
             {
                 return a.GetTypes();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 GuiLogMessage(e.Message, NotificationLevel.Error);
                 return null;
@@ -67,14 +65,16 @@ namespace Cryptool.CrypWin
         {
             var types = GetTypesSafely(args.LoadedAssembly);
             if (types == null)
+            {
                 return;
+            }
 
             var allSettingsTabsInNewAssembly =
                 from t in types
                 let attributes = t.GetCustomAttributes(typeof(SettingsTabAttribute), true)
                 where attributes != null && attributes.Length > 0
                 select new { Type = t, Attributes = attributes.Cast<SettingsTabAttribute>() };
-            
+
             foreach (var tab in allSettingsTabsInNewAssembly)
             {
                 RegisterType(tab.Type);
@@ -108,8 +108,9 @@ namespace Cryptool.CrypWin
             {
                 Visual childVisual = (Visual)VisualTreeHelper.GetChild(control, i);
                 if (childVisual is FrameworkElement)
+                {
                     (childVisual as FrameworkElement).Style = settingsStyle;
-
+                }
                 SetStyleToControl(childVisual);
             }
         }
@@ -117,26 +118,6 @@ namespace Cryptool.CrypWin
         private void CreateSettingsStyle()
         {
             settingsStyle = new Style();
-            Storyboard anim = (Storyboard) FindResource("captionLabelAnimation");
-            EventSetter mouseEnterEventSetter = new EventSetter(UIElement.MouseEnterEvent, new MouseEventHandler(delegate(object sender, MouseEventArgs e)
-                                                            {
-                                                                if ((sender != null) && (sender is FrameworkElement))
-                                                                {
-                                                                    captionTextBlock.Text = (string)((FrameworkElement)sender).ToolTip;
-                                                                    anim.Begin();
-                                                                }
-                                                            }));
-            EventSetter mouseLeaveEventSetter = new EventSetter(UIElement.MouseLeaveEvent, new MouseEventHandler(delegate(object sender, MouseEventArgs e)
-                                                            {
-                                                                captionTextBlock.Text = "";
-                                                            }));
-
-            settingsStyle.Setters.Add(mouseEnterEventSetter);
-            settingsStyle.Setters.Add(mouseLeaveEventSetter);
-
-            Setter tooltipDisableSetter = new Setter(ToolTipService.IsEnabledProperty, false);
-            settingsStyle.Setters.Add(tooltipDisableSetter);
-
             Thickness margin = new Thickness(30, 5, 0, 10);
             Setter marginSetter = new Setter(FrameworkElement.MarginProperty, margin);
             settingsStyle.Setters.Add(marginSetter);
@@ -145,7 +126,9 @@ namespace Cryptool.CrypWin
         public static SettingsPresentation GetSingleton()
         {
             if (singleton == null)
+            {
                 singleton = new SettingsPresentation();
+            }
             return singleton;
         }
 
@@ -160,16 +143,20 @@ namespace Cryptool.CrypWin
             i.Selected += new RoutedEventHandler(delegate
                                                      {
                                                          if (settingsTree.SelectedItem == i)
-                                                            settingsTab.Content = tab;
+                                                         {
+                                                             settingsTab.Content = tab;
+                                                         }
                                                      });
 
             if (settingsTree.Items.IndexOf(i) == 0)
+            {
                 i.IsSelected = true;
+            }
         }
 
         private TreeViewItem GetTreeViewItemFromAddress(ItemCollection items, string address, double priority)
         {
-            var split = address.Split(new char[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
+            var split = address.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
             var name = split[0];
             string remainingAddress = address.Substring(address.IndexOf('/', 1));
             foreach (var item in items)
@@ -179,43 +166,54 @@ namespace Cryptool.CrypWin
                     if (((TreeViewItem)item).Name == name)
                     {
                         if (split.Count() > 1)
+                        {
                             return GetTreeViewItemFromAddress(((TreeViewItem)item).Items, remainingAddress, priority);
+                        }
                         else
                         {
                             //adjust this entry to its right position (because it didn't happen already):
-                            ((TreeViewItem) item).Tag = priority;
+                            ((TreeViewItem)item).Tag = priority;
                             items.Remove(item);
                             int i = 0;
                             while (i < items.Count && (double)((TreeViewItem)items[i]).Tag > priority)
                                 i++;
                             items.Insert(i, item);
 
-                            return (TreeViewItem) item;
+                            return (TreeViewItem)item;
                         }
                     }
                 }
             }
+
             TreeViewItem newItem = new TreeViewItem();
             newItem.Name = name;
             newItem.Header = name;  //temporary header
             newItem.Tag = priority;
-            
+
             //search the right position (based on the priorities):
             int pos = 0;
             while (pos < items.Count && (double)((TreeViewItem)items[pos]).Tag > priority)
+            {
                 pos++;
+            }
             items.Insert(pos, newItem);
 
             if (split.Count() > 1)
+            {
                 return GetTreeViewItemFromAddress(newItem.Items, remainingAddress, priority);
+            }
             else
+            {
                 return newItem;
+            }
         }
 
         public void GuiLogMessage(string message, NotificationLevel loglevel)
         {
             if (OnGuiLogNotificationOccured != null)
+            {
                 OnGuiLogNotificationOccured(null, new GuiLogEventArgs(message, null, loglevel));
+            }
         }
     }
 }

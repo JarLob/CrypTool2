@@ -205,7 +205,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This component has no parameters. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die This component has no parameters ähnelt.
         /// </summary>
         public static string BinSettingsVisual_BinSettingsVisual_No_Settings_available_ {
             get {
@@ -421,7 +421,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Choose how a newly placed component visualization should appear. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Choose how a newly placed component visualization should appear ähnelt.
         /// </summary>
         public static string ComponentAppearanceBehaviourGroupTooltip {
             get {
@@ -448,7 +448,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Conversion to different data type, ambiguity may occur. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Conversion to different data type, ambiguity may occur ähnelt.
         /// </summary>
         public static string ConversionAmbig {
             get {
@@ -628,7 +628,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Some editing functions are disabled during execution. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Some editing functions are disabled during execution ähnelt.
         /// </summary>
         public static string EditingDisabled {
             get {
@@ -691,11 +691,20 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Fonts ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Default workspace font used by TextInput and TextOutput components ähnelt.
         /// </summary>
-        public static string Fonts_ {
+        public static string Font {
             get {
-                return ResourceManager.GetString("Fonts_", resourceCulture);
+                return ResourceManager.GetString("Font", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Changes the standard font (type, size) that is used for TextInput and TextOutput components ähnelt.
+        /// </summary>
+        public static string FontTooltip {
+            get {
+                return ResourceManager.GetString("FontTooltip", resourceCulture);
             }
         }
         
@@ -705,6 +714,15 @@ namespace WorkspaceManager.Properties {
         public static string Functioncolors_Label {
             get {
                 return ResourceManager.GetString("Functioncolors_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die General workspace settings ähnelt.
+        /// </summary>
+        public static string GeneralWorkspaceSettings {
+            get {
+                return ResourceManager.GetString("GeneralWorkspaceSettings", resourceCulture);
             }
         }
         
@@ -727,6 +745,15 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enables/disables the global progress bar shown on top of the WorkspaceManager ähnelt.
+        /// </summary>
+        public static string GlobalProgressBarTooltip {
+            get {
+                return ResourceManager.GetString("GlobalProgressBarTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Grow font ähnelt.
         /// </summary>
         public static string Grow_Font {
@@ -745,7 +772,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Set the update interval for updating GUI-Elements during execution ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sets the interval for updating GUI elements during execution ähnelt.
         /// </summary>
         public static string GUIUpdateinterval_Tooltip {
             get {
@@ -1096,7 +1123,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Shows the most frequently used components when holding a connection line. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Shows the most frequently used components when holding a connection line ähnelt.
         /// </summary>
         public static string Show_ComponentConnection_Proposition_Tooltip {
             get {
@@ -1186,7 +1213,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This setting enables/disables the replacement of template placeholders, e.g. $something$, with text of the language currently selected in CrypTool 2 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enables/disables the replacement of template placeholders, e.g. $something$, with text of the language currently selected in CrypTool 2 ähnelt.
         /// </summary>
         public static string TemplateReplacementTooltip {
             get {
@@ -1245,6 +1272,15 @@ namespace WorkspaceManager.Properties {
         public static string unnamed_project {
             get {
                 return ResourceManager.GetString("unnamed_project", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die User interface settings ähnelt.
+        /// </summary>
+        public static string UserInterfaceSettings {
+            get {
+                return ResourceManager.GetString("UserInterfaceSettings", resourceCulture);
             }
         }
         

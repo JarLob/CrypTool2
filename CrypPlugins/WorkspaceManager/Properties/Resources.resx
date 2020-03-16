@@ -190,7 +190,7 @@
     <value>GUI update interval:</value>
   </data>
   <data name="GUIUpdateinterval_Tooltip" xml:space="preserve">
-    <value>Set the update interval for updating GUI-Elements during execution</value>
+    <value>Sets the interval for updating GUI elements during execution</value>
   </data>
   <data name="Hash_Label" xml:space="preserve">
     <value>Hash:</value>
@@ -364,7 +364,7 @@
     <value>This is a new workspace.</value>
   </data>
   <data name="ConversionAmbig" xml:space="preserve">
-    <value>Conversion to different data type, ambiguity may occur.</value>
+    <value>Conversion to different data type, ambiguity may occur</value>
   </data>
   <data name="ConversionNone" xml:space="preserve">
     <value>Invalid connection.</value>
@@ -391,7 +391,7 @@
     <value>Executing...</value>
   </data>
   <data name="BinSettingsVisual_BinSettingsVisual_No_Settings_available_" xml:space="preserve">
-    <value>This component has no parameters.</value>
+    <value>This component has no parameters</value>
   </data>
   <data name="ElevateTooltip" xml:space="preserve">
     <value>Elevate</value>
@@ -406,7 +406,7 @@
     <value>Move to back</value>
   </data>
   <data name="EditingDisabled" xml:space="preserve">
-    <value>Some editing functions are disabled during execution.</value>
+    <value>Some editing functions are disabled during execution</value>
   </data>
   <data name="Toggle_Plugin_Parameters" xml:space="preserve">
     <value>Open/close the bar with the settings of the selected components of this workspace (Ctrl + I)</value>
@@ -421,13 +421,13 @@
     <value>Show component connection propositions</value>
   </data>
   <data name="Show_ComponentConnection_Proposition_Tooltip" xml:space="preserve">
-    <value>Shows the most frequently used components when holding a connection line.</value>
+    <value>Shows the most frequently used components when holding a connection line</value>
   </data>
   <data name="ComponentAppearanceBehaviourGroupHeader" xml:space="preserve">
     <value>Standard appearance of components</value>
   </data>
   <data name="ComponentAppearanceBehaviourGroupTooltip" xml:space="preserve">
-    <value>Choose how a newly placed component visualization should appear.</value>
+    <value>Choose how a newly placed component visualization should appear</value>
   </data>
   <data name="DefaultComponentAppearance" xml:space="preserve">
     <value>Appearance predetermined by the component</value>
@@ -510,8 +510,8 @@
   <data name="GlobalProgressBar_Description" xml:space="preserve">
     <value>Calculation finished after {0} (To stop the workspace please push the stop button or enter new data to start a new calculation)</value>
   </data>
-  <data name="Fonts_" xml:space="preserve">
-    <value>Fonts</value>
+  <data name="Font" xml:space="preserve">
+    <value>Default workspace font used by TextInput and TextOutput components</value>
   </data>
   <data name="Global_Progressbar" xml:space="preserve">
     <value>Global progress bar</value>
@@ -580,6 +580,18 @@
     <value>Template replacement</value>
   </data>
   <data name="TemplateReplacementTooltip" xml:space="preserve">
-    <value>This setting enables/disables the replacement of template placeholders, e.g. $something$, with text of the language currently selected in CrypTool 2</value>
+    <value>Enables/disables the replacement of template placeholders, e.g. $something$, with text of the language currently selected in CrypTool 2</value>
+  </data>
+  <data name="FontTooltip" xml:space="preserve">
+    <value>Changes the standard font (type, size) that is used for TextInput and TextOutput components</value>
+  </data>
+  <data name="GlobalProgressBarTooltip" xml:space="preserve">
+    <value>Enables/disables the global progress bar shown on top of the WorkspaceManager</value>
+  </data>
+  <data name="GeneralWorkspaceSettings" xml:space="preserve">
+    <value>General workspace settings</value>
+  </data>
+  <data name="UserInterfaceSettings" xml:space="preserve">
+    <value>User interface settings</value>
   </data>
 </root>

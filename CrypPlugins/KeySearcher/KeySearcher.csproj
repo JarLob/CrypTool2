@@ -144,9 +144,6 @@
     <Compile Include="KeyPattern\LinearKeyMovement.cs" />
     <Compile Include="KeyPattern\KeyMovement.cs" />
     <Compile Include="KeySearcher.cs" />
-    <Compile Include="KeysearcherSettingsTab.xaml.cs">
-      <DependentUpon>KeysearcherSettingsTab.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MachInfo.cs" />
     <Compile Include="OpenCL\KeySearcherOpenCLSubbatchOptimizer.cs" />
     <Compile Include="KeyTranslators\ByteArrayKeyTranslator.cs" />
@@ -216,10 +213,6 @@
     <Resource Include="Images\icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="KeysearcherSettingsTab.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Presentation\Controls\OrgChartTreeViewItemStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

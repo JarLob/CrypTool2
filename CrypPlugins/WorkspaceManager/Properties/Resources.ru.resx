@@ -238,7 +238,7 @@
     <value>Сбросить цвета</value>
   </data>
   <data name="ResetColors_Tooltip" xml:space="preserve">
-    <value>Сбросьте все цвета до значений по умолчанию.</value>
+    <value>Сбросьте все цвета до значений по умолчанию</value>
   </data>
   <data name="SettingsTooltip" xml:space="preserve">
     <value>настройки</value>
@@ -406,7 +406,7 @@
     <value>Переместить назад</value>
   </data>
   <data name="EditingDisabled" xml:space="preserve">
-    <value>Некоторые функции редактирования отключены во время выполнения.</value>
+    <value>Некоторые функции редактирования отключены во время выполнения</value>
   </data>
   <data name="Toggle_Plugin_Parameters" xml:space="preserve">
     <value>Открыть/закрыть панель с настройками выбранных компонентов этого рабочего пространства (Ctrl + I)</value>
@@ -421,13 +421,13 @@
     <value>Показать предложения о соединении компонентов</value>
   </data>
   <data name="Show_ComponentConnection_Proposition_Tooltip" xml:space="preserve">
-    <value>Показывает наиболее часто используемые компоненты, удерживая линию подключения.</value>
+    <value>Показывает наиболее часто используемые компоненты, удерживая линию подключения</value>
   </data>
   <data name="ComponentAppearanceBehaviourGroupHeader" xml:space="preserve">
     <value>Стандартный внешний вид компонентов</value>
   </data>
   <data name="ComponentAppearanceBehaviourGroupTooltip" xml:space="preserve">
-    <value>Выберите способ отображения новой размещенной компоненты.</value>
+    <value>Выберите способ отображения новой размещенной компоненты</value>
   </data>
   <data name="DefaultComponentAppearance" xml:space="preserve">
     <value>Внешний вид, предопределенный компонентом</value>
@@ -510,9 +510,6 @@
   <data name="GlobalProgressBar_Description" xml:space="preserve">
     <value>Расчет завершен после {0} (Чтобы остановить рабочее пространство, нажмите кнопку остановки или введите новые данные, чтобы начать новый расчет)</value>
   </data>
-  <data name="Fonts_" xml:space="preserve">
-    <value>шрифты</value>
-  </data>
   <data name="Global_Progressbar" xml:space="preserve">
     <value>Глобальный прогресс</value>
   </data>
@@ -580,6 +577,21 @@
     <value>Замена шаблона</value>
   </data>
   <data name="TemplateReplacementTooltip" xml:space="preserve">
-    <value>Этот параметр включает / отключает замену шаблонных заполнителей, например, $something$, с текстом языка, выбранного в данный момент в CrypTool 2</value>
+    <value>Активирует / деактивирует замену шаблонных заполнителей ($something$) текстом языка, выбранного в данный момент в CrypTool 2</value>
+  </data>
+  <data name="Font" xml:space="preserve">
+    <value>Стандартный шрифт рабочей области, используемый компонентами TextInput и TextOutput</value>
+  </data>
+  <data name="FontTooltip" xml:space="preserve">
+    <value>Изменяет стандартный шрифт (тип, размер), используемый для компонентов TextInput и TextOutput</value>
+  </data>
+  <data name="GlobalProgressBarTooltip" xml:space="preserve">
+    <value>Включает/отключает глобальный индикатор выполнения, отображаемый в верхней части WorkspaceManager</value>
+  </data>
+  <data name="GeneralWorkspaceSettings" xml:space="preserve">
+    <value>общие настройки рабочего пространства</value>
+  </data>
+  <data name="UserInterfaceSettings" xml:space="preserve">
+    <value>Настройки интерфейса пользователя</value>
   </data>
 </root>
