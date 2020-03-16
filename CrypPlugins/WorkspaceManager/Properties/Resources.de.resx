@@ -382,7 +382,7 @@
     <value>Verbindung mit sich selbst nicht möglich.</value>
   </data>
   <data name="NewWorkspaceTooltip" xml:space="preserve">
-    <value>Dies ist ein neuer Arbeitsbereich.</value>
+    <value>Dies ist ein neuer Arbeitsbereich</value>
   </data>
   <data name="CloseComponentTooltip" xml:space="preserve">
     <value>Komponente schließen</value>
@@ -589,9 +589,9 @@
     <value>Aktiviert/deaktiviert den globalen Fortschrittsbalken, der oben im WorkspaceManager angezeigt wird</value>
   </data>
   <data name="GeneralWorkspaceSettings" xml:space="preserve">
-    <value>Allgemeine Arbeitsplatzeinstellungen</value>
+    <value>Allgemeine Arbeitsplatz-Einstellungen</value>
   </data>
   <data name="UserInterfaceSettings" xml:space="preserve">
-    <value>Benutzerschnittstelleneinstellung</value>
+    <value>Benutzerschnittstellen-Einstellung</value>
   </data>
 </root>
