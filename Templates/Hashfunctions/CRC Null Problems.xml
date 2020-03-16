@@ -2,7 +2,7 @@
 <sample>
   <title lang="en">CRC Null problems</title>
   <title lang="ru">CRC Нулевые проблемы</title>
-  <summary lang="en">Problems with null values in the <i>CRC</i> hash function</summary>
+  <summary lang="en">Problems with null values in the <i>CRC</i> checksum function</summary>
   <summary lang="ru">Проблемы с нулевыми значениями в хэш-функции CRC</summary>
   <description lang="en">In some configurations of the <i>CRC</i> algorithm prepending or appending zero bytes to the input data will cause no change in the CRC value.</description>
   <description lang="ru">В некоторых конфигурациях алгоритма CRC, добавляя или добавляя нулевые байты к входным данным, не будет изменяться значение CRC.</description>
