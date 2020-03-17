@@ -127,7 +127,7 @@
     <value>Notification icon</value>
   </data>
   <data name="checkLabelContent" xml:space="preserve">
-    <value>Updat-check preferences (take effect after restart of CT2)</value>
+    <value>Update-check preferences (take effect after restart of CT2)</value>
   </data>
   <data name="UpdaterSettings" xml:space="preserve">
     <value>Updater</value>

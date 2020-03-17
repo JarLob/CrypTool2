@@ -151,7 +151,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Updat-check preferences (take effect after restart of CT2) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Update-check preferences (take effect after restart of CT2) ähnelt.
         /// </summary>
         public static string checkLabelContent {
             get {
