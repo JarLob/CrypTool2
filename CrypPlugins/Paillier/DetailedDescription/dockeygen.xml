@@ -17,7 +17,6 @@
     <newline /><newline />
     Diese Komponente generiert den öffentlichen und den privaten Schlüssel des Paillier-Kryptosystems, die als Eingaben für die <docRef item="Cryptool.Plugins.Paillier.Paillier">Paillier</docRef>-Komponente verwendet werden können.
   </introduction>
-
   <usage lang="en">
     For the generation of the key, the component needs only two prime numbers.
     In the settings of the component you can choose whether you want to enter the primes manually, or whether the component should
@@ -29,14 +28,4 @@
     Sie können in den Einstellungen angeben, ob Sie die Primzahlen eingeben oder von der Komponente automatisch generieren lassen wollen.
     Wird die automatische Erzeugung gewählt, so können Sie noch die Bitlänge der zu erzeugenden Primzahlen einstellen.
   </usage>
-  <presentation lang="en"></presentation>
-  <presentation lang="de-DE"></presentation>
-  <references>
-    <linkReference id="autokey">
-      <link lang="en" url="http://en.wikipedia.org/wiki/Paillier_cryptosystem" />
-      <caption lang="en">Paillier cryptosystem</caption>
-      <link lang="de-DE" url="http://de.wikipedia.org/wiki/Paillier-Kryptosystem" />
-      <caption lang="de-DE">Paillier-Kryptosystem</caption>
-    </linkReference>
-  </references>
 </documentation>
