@@ -326,13 +326,13 @@
     <value>OpenCL device:</value>
   </data>
   <data name="WritePerformanceLog" xml:space="preserve">
-    <value>Write Performance Log</value>
+    <value>Write performance log:</value>
   </data>
   <data name="_JobList_col_JobSize" xml:space="preserve">
     <value>Size</value>
   </data>
   <data name="LogLevel" xml:space="preserve">
-    <value>LogLevel</value>
+    <value>Log level</value>
   </data>
   <data name="_Remember_me_tooltip" xml:space="preserve">
     <value>Username and password will be saved encrypted and restored at the next startup of CrypCloud.</value>
@@ -386,5 +386,11 @@ The list below contains all peers (IP-address and port), which this computer is 
   </data>
   <data name="_JobList_col_Action" xml:space="preserve">
     <value>Action</value>
+  </data>
+  <data name="CrypCloudSettingsTitle" xml:space="preserve">
+    <value>CrypCloud settings</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>General</value>
   </data>
 </root>

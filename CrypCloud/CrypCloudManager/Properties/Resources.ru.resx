@@ -384,4 +384,10 @@ e) Нажмите «Play» (F5), чтобы запустить загружен�
   <data name="_JobList_col_Action" xml:space="preserve">
     <value>действие</value>
   </data>
+  <data name="CrypCloudSettingsTitle" xml:space="preserve">
+    <value>CrypCloud настройки</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>в целом</value>
+  </data>
 </root>

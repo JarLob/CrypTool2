@@ -7,25 +7,12 @@
              d:DesignHeight="300" d:DesignWidth="600">
     <Grid>
         <Image Source="/CrypWin;component/images/updaterBackground.png" Opacity="0.2" RenderTransformOrigin="0.5,0.5"/>
-
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Name="grid1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="{Binding ElementName=inputGrid, Path=ActualHeight}" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="{Binding ElementName=inputGrid, Path=ActualHeight}" />
-                    <RowDefinition Height="{Binding ElementName=inputGrid, Path=ActualHeight}" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
+            <StackPanel>
+                <Label Content="{Loc UpdaterSettingsTitle}" FontWeight="Bold" FontSize="14"/>
                 <Label Content="{Loc checkLabelContent}" Name="checkLabel" VerticalAlignment="Center" FontWeight="Bold"/>
-                
-                <CheckBox Grid.Row="1" Content="{Loc checkPeriodicallyContent}" ToolTip="{Loc checkPeriodicallyToolTip}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=CheckPeriodically, Mode=TwoWay}" HorizontalAlignment="Left" Name="checkPeriodically" VerticalAlignment="Center" Checked="checkPeriodically_Changed" Unchecked="checkPeriodically_Changed" Style="{StaticResource ResourceKey=settingsStyle}" />
-                <Grid Grid.Row="2" Style="{StaticResource ResourceKey=settingsStyle}" ToolTip="{Loc minutesInputToolTip}" IsEnabled="{Binding ElementName=checkPeriodically, Path=IsChecked}">
+                <CheckBox Content="{Loc checkPeriodicallyContent}" ToolTip="{Loc checkPeriodicallyToolTip}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=CheckPeriodically, Mode=TwoWay}" HorizontalAlignment="Left" Name="checkPeriodically" VerticalAlignment="Center" Checked="checkPeriodically_Changed" Unchecked="checkPeriodically_Changed" Style="{StaticResource ResourceKey=settingsStyle}" />
+                <Grid Style="{StaticResource ResourceKey=settingsStyle}" ToolTip="{Loc minutesInputToolTip}" IsEnabled="{Binding ElementName=checkPeriodically, Path=IsChecked}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="15" />
                         <ColumnDefinition Width="Auto" />
@@ -33,18 +20,17 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    
+
                     <Label Grid.Column="1" Content="{Loc checkPeriodicallyText1Content}" HorizontalAlignment="Left" Name="checkPeriodicallyText1" VerticalAlignment="Center" />
                     <TextBox Grid.Column="2" HorizontalAlignment="Left" Name="minutesInput" VerticalAlignment="Center" Width="50" TextChanged="minutesInput_TextChanged" />
                     <Label Grid.Column="3" Content="{Loc checkPeriodicallyText2Content}" HorizontalAlignment="Left" Name="checkPeriodicallyText2" VerticalAlignment="Center" />
                     <Label Grid.Column="4" Content="{Loc checkPeriodicallyWarningContent}" HorizontalAlignment="Left" Name="checkPeriodicallyWarning" VerticalAlignment="Center" Foreground="Red"/>
                 </Grid>
-                
-                <CheckBox Grid.Row="3" Content="{Loc checkStartupContent}" ToolTip="{Loc checkStartupToolTip}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=CheckOnStartup, Mode=TwoWay}" HorizontalAlignment="Left" Name="checkStartup" VerticalAlignment="Center" Style="{StaticResource ResourceKey=settingsStyle}" />
-                <Label Grid.Row="4" Content="{Loc autoLabelContent}" HorizontalAlignment="Stretch" Name="autoLabel" VerticalAlignment="Center" FontWeight="Bold"  />
-                <CheckBox Grid.Row="5" Content="{Loc autoDownloadContent}" ToolTip="{Loc autoDownloadToolTip}"  IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=AutoDownload, Mode=TwoWay}" HorizontalAlignment="Left" Name="autoDownload" VerticalAlignment="Center" Style="{StaticResource ResourceKey=settingsStyle}" />
-                <CheckBox Grid.Row="6" Content="{Loc autoInstallContent}" ToolTip="{Loc autoInstallToolTip}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=AutoInstall, Mode=TwoWay}" HorizontalAlignment="Left" Name="autoInstall" VerticalAlignment="Center" Style="{StaticResource ResourceKey=settingsStyle}" />
-            </Grid>
+                <CheckBox Content="{Loc checkStartupContent}" ToolTip="{Loc checkStartupToolTip}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=CheckOnStartup, Mode=TwoWay}" HorizontalAlignment="Left" Name="checkStartup" VerticalAlignment="Center" Style="{StaticResource ResourceKey=settingsStyle}" />
+                <Label Content="{Loc autoLabelContent}" HorizontalAlignment="Stretch" Name="autoLabel" VerticalAlignment="Center" FontWeight="Bold"  />
+                <CheckBox Content="{Loc autoDownloadContent}" ToolTip="{Loc autoDownloadToolTip}"  IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=AutoDownload, Mode=TwoWay}" HorizontalAlignment="Left" Name="autoDownload" VerticalAlignment="Center" Style="{StaticResource ResourceKey=settingsStyle}" />
+                <CheckBox Content="{Loc autoInstallContent}" ToolTip="{Loc autoInstallToolTip}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=AutoInstall, Mode=TwoWay}" HorizontalAlignment="Left" Name="autoInstall" VerticalAlignment="Center" Style="{StaticResource ResourceKey=settingsStyle}" />
+            </StackPanel>
         </ScrollViewer>
     </Grid>
 </UserControl>

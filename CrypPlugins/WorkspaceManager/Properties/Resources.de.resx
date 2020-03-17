@@ -280,7 +280,7 @@
     <value>Warnungen ausblenden</value>
   </data>
   <data name="WorkspaceManagerSettings" xml:space="preserve">
-    <value>Arbeitsbereich</value>
+    <value>Arbeitsplatz</value>
   </data>
   <data name="HelpTooltip" xml:space="preserve">
     <value>Hilfe</value>
@@ -593,5 +593,8 @@
   </data>
   <data name="UserInterfaceSettings" xml:space="preserve">
     <value>Benutzerschnittstellen-Einstellung</value>
+  </data>
+  <data name="WorkspaceManagerSettingsTitle" xml:space="preserve">
+    <value>Arbeitsplatz-Einstellungen</value>
   </data>
 </root>

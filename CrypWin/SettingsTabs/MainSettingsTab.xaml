@@ -14,6 +14,7 @@
 
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel Name="stackPanel">
+                <Label Content="{Loc GeneralSettings}" FontWeight="Bold" FontSize="14"/>
                 <Label Content="{Loc Preferred_language}" FontWeight="Bold" />
                 <ComboBox Name="Culture" SelectionChanged="Culture_SelectionChanged" HorizontalAlignment="Left" ToolTip="{Loc cultureBox_tooltip}" Style="{StaticResource ResourceKey=settingsStyle}">
                     <ComboBox.ItemTemplate>

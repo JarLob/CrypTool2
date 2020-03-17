@@ -104,5 +104,23 @@ namespace Wizard.Resources {
                 return ResourceManager.GetString("WizardSettings", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Wizard settings ähnelt.
+        /// </summary>
+        public static string WizardSettingsTitle {
+            get {
+                return ResourceManager.GetString("WizardSettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Wizard data storage ähnelt.
+        /// </summary>
+        public static string WizardStorage {
+            get {
+                return ResourceManager.GetString("WizardStorage", resourceCulture);
+            }
+        }
     }
 }

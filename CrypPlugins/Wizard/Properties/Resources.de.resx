@@ -216,4 +216,7 @@
   <data name="ValueHeader" xml:space="preserve">
     <value>Wert</value>
   </data>
+  <data name="General" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
 </root>

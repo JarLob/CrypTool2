@@ -132,4 +132,10 @@
   <data name="WizardSettings" xml:space="preserve">
     <value>Wizard</value>
   </data>
+  <data name="WizardSettingsTitle" xml:space="preserve">
+    <value>Wizard settings</value>
+  </data>
+  <data name="WizardStorage" xml:space="preserve">
+    <value>Wizard data storage</value>
+  </data>
 </root>

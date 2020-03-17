@@ -216,4 +216,7 @@
   <data name="StorageTooltip" xml:space="preserve">
     <value>Покажите хранилище параметров.</value>
   </data>
+  <data name="General" xml:space="preserve">
+    <value>в целом</value>
+  </data>
 </root>

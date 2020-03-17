@@ -268,6 +268,15 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die General settings ähnelt.
+        /// </summary>
+        public static string GeneralSettings {
+            get {
+                return ResourceManager.GetString("GeneralSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Assembly ähnelt.
         /// </summary>
         public static string HeaderAssembly {
@@ -322,6 +331,15 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Message settings ähnelt.
+        /// </summary>
+        public static string MessageSettings {
+            get {
+                return ResourceManager.GetString("MessageSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die The checking time interval (in minutes) ähnelt.
         /// </summary>
         public static string minutesInputToolTip {
@@ -336,6 +354,15 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         public static string NotificationIconSettings {
             get {
                 return ResourceManager.GetString("NotificationIconSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Notification icon settings ähnelt.
+        /// </summary>
+        public static string NotificationIconSettingsTitle {
+            get {
+                return ResourceManager.GetString("NotificationIconSettingsTitle", resourceCulture);
             }
         }
         
@@ -597,6 +624,15 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         public static string UpdaterSettings {
             get {
                 return ResourceManager.GetString("UpdaterSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Updater settings ähnelt.
+        /// </summary>
+        public static string UpdaterSettingsTitle {
+            get {
+                return ResourceManager.GetString("UpdaterSettingsTitle", resourceCulture);
             }
         }
         

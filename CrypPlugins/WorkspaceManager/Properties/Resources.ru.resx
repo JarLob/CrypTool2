@@ -594,4 +594,7 @@
   <data name="UserInterfaceSettings" xml:space="preserve">
     <value>Настройки интерфейса пользователя</value>
   </data>
+  <data name="WorkspaceManagerSettingsTitle" xml:space="preserve">
+    <value>Рабочее пространство настройки</value>
+  </data>
 </root>

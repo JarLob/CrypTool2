@@ -1492,5 +1492,14 @@ namespace WorkspaceManager.Properties {
                 return ResourceManager.GetString("WorkspaceManagerSettings", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Workspace settings ähnelt.
+        /// </summary>
+        public static string WorkspaceManagerSettingsTitle {
+            get {
+                return ResourceManager.GetString("WorkspaceManagerSettingsTitle", resourceCulture);
+            }
+        }
     }
 }

@@ -7,7 +7,9 @@
     <Grid>        
         <Image Source="/CrypWin;component/images/bigBalloons.png" Style="{StaticResource ResourceKey=settingsStyle}" Opacity="0.2" />
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel Name="stackPanel">            
+            <StackPanel Name="stackPanel">
+                <Label Content="{Loc NotificationIconSettingsTitle}" FontWeight="Bold" FontSize="14"/>
+                <Label Content="{Loc MessageSettings}" FontWeight="Bold" />
                 <CheckBox Content="{Loc Show_balloon_log_messages_in_balloon}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=ShowBalloonLogMessagesInBalloon, Mode=TwoWay}" Height="16" Name="showBalloonMessagesCheckBox" ToolTip="{Loc Show_balloon_log_messages_in_balloon_tooltip}" Style="{StaticResource ResourceKey=settingsStyle}" />
                 <CheckBox Content="{Loc Show_error_log_messages_in_balloon}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=ShowErrorLogMessagesInBalloon, Mode=TwoWay}" Height="16" Name="showErrorMessagesCheckBox" ToolTip="{Loc Show_error_log_messages_in_balloon_tooltip}" Style="{StaticResource ResourceKey=settingsStyle}" />
                 <CheckBox Content="{Loc Show_info_log_messages_in_balloon}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=ShowInfoLogMessagesInBalloon, Mode=TwoWay}" Height="16" Name="showInfoMessagesCheckBox" ToolTip="{Loc Show_info_log_messages_in_balloon_tooltip}" Style="{StaticResource ResourceKey=settingsStyle}" />

@@ -377,4 +377,10 @@ Die folgende Liste enthält alle Peers (IP-Adresse und Port), mit denen dieser C
   <data name="_JobList_col_Action" xml:space="preserve">
     <value>Aktion</value>
   </data>
+  <data name="CrypCloudSettingsTitle" xml:space="preserve">
+    <value>CrypCloud-Einstellungen</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
 </root>

@@ -315,4 +315,16 @@
   <data name="WriteLogFileTooltip" xml:space="preserve">
     <value>If this setting is enabled, CrypTool 2 automatically writes all of its log to a logfile</value>
   </data>
+  <data name="GeneralSettings" xml:space="preserve">
+    <value>General settings</value>
+  </data>
+  <data name="UpdaterSettingsTitle" xml:space="preserve">
+    <value>Updater settings</value>
+  </data>
+  <data name="MessageSettings" xml:space="preserve">
+    <value>Message settings</value>
+  </data>
+  <data name="NotificationIconSettingsTitle" xml:space="preserve">
+    <value>Notification icon settings</value>
+  </data>
 </root>

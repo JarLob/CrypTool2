@@ -723,6 +723,15 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die CrypCloud settings ähnelt.
+        /// </summary>
+        public static string CrypCloudSettingsTitle {
+            get {
+                return ResourceManager.GetString("CrypCloudSettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap disconnected {
@@ -748,6 +757,15 @@ namespace CrypCloud.Manager.Properties {
             get {
                 object obj = ResourceManager.GetObject("error", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die General ähnelt.
+        /// </summary>
+        public static string General {
+            get {
+                return ResourceManager.GetString("General", resourceCulture);
             }
         }
         
@@ -798,7 +816,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die LogLevel ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Log level ähnelt.
         /// </summary>
         public static string LogLevel {
             get {
@@ -852,7 +870,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Write Performance Log ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Write performance log: ähnelt.
         /// </summary>
         public static string WritePerformanceLog {
             get {

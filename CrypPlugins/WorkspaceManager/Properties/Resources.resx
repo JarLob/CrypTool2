@@ -594,4 +594,7 @@
   <data name="UserInterfaceSettings" xml:space="preserve">
     <value>User interface settings</value>
   </data>
+  <data name="WorkspaceManagerSettingsTitle" xml:space="preserve">
+    <value>Workspace settings</value>
+  </data>
 </root>

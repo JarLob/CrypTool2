@@ -216,4 +216,7 @@
   <data name="StorageTooltip" xml:space="preserve">
     <value>Show the parameter storage.</value>
   </data>
+  <data name="General" xml:space="preserve">
+    <value>General</value>
+  </data>
 </root>
