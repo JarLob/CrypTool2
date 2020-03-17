@@ -127,7 +127,7 @@
     <value>Benachrichtigungssymbol</value>
   </data>
   <data name="checkLabelContent" xml:space="preserve">
-    <value>Checking-Präferenzen (wirksam nach Neustart)</value>
+    <value>Update-Check-Präferenzen (wirksam nach Neustart von CrypTool 2)</value>
   </data>
   <data name="UpdaterSettings" xml:space="preserve">
     <value>Updater</value>
