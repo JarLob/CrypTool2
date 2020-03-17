@@ -121,10 +121,10 @@
     <value>This is a balloon</value>
   </data>
   <data name="MainSettings" xml:space="preserve">
-    <value>General Settings</value>
+    <value>General settings</value>
   </data>
   <data name="NotificationIconSettings" xml:space="preserve">
-    <value>Notification Icon</value>
+    <value>Notification icon</value>
   </data>
   <data name="checkLabelContent" xml:space="preserve">
     <value>Checking Preferences (take effect after restart)</value>
@@ -133,55 +133,55 @@
     <value>Updater</value>
   </data>
   <data name="checkPeriodicallyContent" xml:space="preserve">
-    <value>Check Periodically</value>
+    <value>Check periodically</value>
   </data>
   <data name="checkPeriodicallyText1Content" xml:space="preserve">
     <value>Check for updates every </value>
   </data>
   <data name="checkPeriodicallyText2Content" xml:space="preserve">
-    <value>minutes.</value>
+    <value>minutes</value>
   </data>
   <data name="checkPeriodicallyToolTip" xml:space="preserve">
-    <value>Check to check for updates periodically.</value>
+    <value>Check to check for updates periodically</value>
   </data>
   <data name="checkPeriodicallyWarningContent" xml:space="preserve">
-    <value>Please enter a valid integer.</value>
+    <value>Please enter a valid integer</value>
   </data>
   <data name="minutesInputToolTip" xml:space="preserve">
-    <value>The checking time interval (in minutes).</value>
+    <value>The checking time interval (in minutes)</value>
   </data>
   <data name="autoDownloadContent" xml:space="preserve">
     <value>Download automatically</value>
   </data>
   <data name="autoDownloadToolTip" xml:space="preserve">
-    <value>Check to download updates automatically (if available).</value>
+    <value>Check to download updates automatically (if available)</value>
   </data>
   <data name="autoInstallContent" xml:space="preserve">
     <value>Install automatically</value>
   </data>
   <data name="autoInstallToolTip" xml:space="preserve">
-    <value>Check to install updates automatically.</value>
+    <value>Check to install updates automatically</value>
   </data>
   <data name="autoLabelContent" xml:space="preserve">
-    <value>Auto Download/Install Options</value>
+    <value>Auto download/install options</value>
   </data>
   <data name="checkStartupContent" xml:space="preserve">
-    <value>Check on Startup</value>
+    <value>Check on startup</value>
   </data>
   <data name="checkStartupToolTip" xml:space="preserve">
-    <value>Check to check for updates on startup.</value>
+    <value>Check to check for updates on startup</value>
   </data>
   <data name="Show_balloon_log_messages_in_balloon" xml:space="preserve">
-    <value>Show balloon log messages in balloon?</value>
+    <value>Show balloon log messages in balloon</value>
   </data>
   <data name="Show_error_log_messages_in_balloon" xml:space="preserve">
-    <value>Show error log messages in balloon?</value>
+    <value>Show error log messages in balloon</value>
   </data>
   <data name="Preferred_language" xml:space="preserve">
-    <value>Preferred language:</value>
+    <value>Preferred language</value>
   </data>
   <data name="Please_restart_CrypTool" xml:space="preserve">
-    <value>Please restart CrypTool 2 for the change to take effect!</value>
+    <value>Please restart CrypTool 2 for the change to take effect</value>
   </data>
   <data name="Show_balloon_log_messages_in_balloon_tooltip" xml:space="preserve">
     <value>Check this to show the balloon log messages in the tray icon balloon!</value>
@@ -202,46 +202,46 @@
     <value>Hide in background when CrypTool 2 is closing and projects are still running</value>
   </data>
   <data name="BackgroundingLabelContent" xml:space="preserve">
-    <value>Backgrounding options:</value>
+    <value>Backgrounding options</value>
   </data>
   <data name="BackgroundingToolTip" xml:space="preserve">
-    <value>Check to background CT2 when clicking close if there are running tasks.</value>
+    <value>Check to background CT2 when clicking close if there are running tasks</value>
   </data>
   <data name="PowerModeLabelContent" xml:space="preserve">
-    <value>Power saving options:</value>
+    <value>Power saving options</value>
   </data>
   <data name="SavePowerContent" xml:space="preserve">
     <value>Stop workspaces if power mode is offline</value>
   </data>
   <data name="SavePowerToolTip" xml:space="preserve">
-    <value>Check to save power.</value>
+    <value>Check to save power</value>
   </data>
   <data name="Show_debug_log_messages_in_balloon" xml:space="preserve">
-    <value>Show debug log messages in balloon?</value>
+    <value>Show debug log messages in balloon</value>
   </data>
   <data name="Show_debug_log_messages_in_balloon_tooltip" xml:space="preserve">
     <value>Check this to show the debug log messages in the tray icon balloon!</value>
   </data>
   <data name="Show_info_log_messages_in_balloon" xml:space="preserve">
-    <value>Show info log messages in balloon?</value>
+    <value>Show info log messages in balloon</value>
   </data>
   <data name="Show_info_log_messages_in_balloon_tooltip" xml:space="preserve">
     <value>Check this to show the info log messages in the tray icon balloon!</value>
   </data>
   <data name="Show_warning_log_messages_in_balloon" xml:space="preserve">
-    <value>Show warning log messages in balloon?</value>
+    <value>Show warning log messages in balloon</value>
   </data>
   <data name="Show_warning_log_messages_in_balloon_tooltip" xml:space="preserve">
-    <value>Check this to show the warning log messages in the tray icon balloon!</value>
+    <value>Check this to show the warning log messages in the tray icon balloon</value>
   </data>
   <data name="cultureBox_tooltip" xml:space="preserve">
-    <value>Set your preferred language for CrypTool 2 here!</value>
+    <value>Set your preferred language for CrypTool 2 here</value>
   </data>
   <data name="Startup_Behaviour" xml:space="preserve">
-    <value>Startup behaviour:</value>
+    <value>Startup behaviour</value>
   </data>
   <data name="EditorOpeningContent" xml:space="preserve">
-    <value>New editor opening behaviour:</value>
+    <value>New editor opening behaviour</value>
   </data>
   <data name="SelectEditorLabel" xml:space="preserve">
     <value>Select preferred editor</value>
@@ -262,10 +262,10 @@
     <value>Check this to ensure that the file dialog always shows the last path</value>
   </data>
   <data name="Restart_Button_Content" xml:space="preserve">
-    <value>Restart Now</value>
+    <value>Restart now</value>
   </data>
   <data name="BalloonDuration_Tooltip" xml:space="preserve">
-    <value>Set the duration of the balloon visibility in seconds here!</value>
+    <value>Set the duration of the balloon visibility in seconds</value>
   </data>
   <data name="Deselect_all" xml:space="preserve">
     <value>Deselect all</value>
@@ -280,7 +280,7 @@
     <value>Disabled</value>
   </data>
   <data name="HeaderPluginName" xml:space="preserve">
-    <value>Component Name</value>
+    <value>Component name</value>
   </data>
   <data name="Invert_selection" xml:space="preserve">
     <value>Invert selection</value>
@@ -289,7 +289,7 @@
     <value>Length of the list of recently opened cwm files</value>
   </data>
   <data name="seconds_" xml:space="preserve">
-    <value>seconds!</value>
+    <value>seconds</value>
   </data>
   <data name="Select_all" xml:space="preserve">
     <value>Select all</value>
@@ -307,7 +307,7 @@
     <value>Start CrypTool 2 as singleton application (Global setting. A change of the setting here has no effect. It has to be manually edited in CrypWin.exe.config file in the CrypTool 2 installation directory)</value>
   </data>
   <data name="SingletonApplicationTooltip" xml:space="preserve">
-    <value>When checked only one CrypTool 2 application instance is started. Disable in CrypWin.exe.config file in the CrypTool 2 installation directory for allowing CrypTool 2 being started multiple times.</value>
+    <value>When checked only one CrypTool 2 application instance is started. Disable in CrypWin.exe.config file in the CrypTool 2 installation directory for allowing CrypTool 2 being started multiple times</value>
   </data>
   <data name="WriteLogFile" xml:space="preserve">
     <value>Write log file</value>

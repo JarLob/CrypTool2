@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="balloonTooltip" xml:space="preserve">
-    <value>Das ist eine Sprechblase!</value>
+    <value>Das ist eine Sprechblase</value>
   </data>
   <data name="MainSettings" xml:space="preserve">
     <value>Generelle Einstellungen</value>
@@ -139,28 +139,28 @@
     <value>Alle </value>
   </data>
   <data name="checkPeriodicallyText2Content" xml:space="preserve">
-    <value>Minuten nach Updates suchen.</value>
+    <value>Minuten nach Updates suchen</value>
   </data>
   <data name="checkPeriodicallyToolTip" xml:space="preserve">
-    <value>Markieren, um periodisch nach Updates zu suchen. </value>
+    <value>Markieren, um periodisch nach Updates zu suchen</value>
   </data>
   <data name="checkPeriodicallyWarningContent" xml:space="preserve">
-    <value>Bitte eine gültige Ganzzahl eintragen.</value>
+    <value>Bitte eine gültige Ganzzahl eintragen</value>
   </data>
   <data name="minutesInputToolTip" xml:space="preserve">
-    <value>Zeitintervall (in Minuten), in dem nach Updates gesucht wird. </value>
+    <value>Zeitintervall (in Minuten), in dem nach Updates gesucht wird</value>
   </data>
   <data name="autoDownloadContent" xml:space="preserve">
     <value>Automatisch herunterladen</value>
   </data>
   <data name="autoDownloadToolTip" xml:space="preserve">
-    <value>Markieren, um Updates automatisch herunterzuladen (falls verfügbar).</value>
+    <value>Markieren, um Updates automatisch herunterzuladen (falls verfügbar)</value>
   </data>
   <data name="autoInstallContent" xml:space="preserve">
     <value>Automatisch installieren</value>
   </data>
   <data name="autoInstallToolTip" xml:space="preserve">
-    <value>Markieren, um Updates automatisch zu installieren.</value>
+    <value>Markieren, um Updates automatisch zu installieren</value>
   </data>
   <data name="autoLabelContent" xml:space="preserve">
     <value>Auto Download-/Installationsoptionen</value>
@@ -169,19 +169,19 @@
     <value>Bei Start prüfen</value>
   </data>
   <data name="checkStartupToolTip" xml:space="preserve">
-    <value>Markieren, um bei Start nach Updates zu suchen.</value>
+    <value>Markieren, um bei Start nach Updates zu suchen</value>
   </data>
   <data name="Show_balloon_log_messages_in_balloon" xml:space="preserve">
-    <value>Zeige Sprechblasennachrichten in Sprechblase?</value>
+    <value>Zeige Sprechblasennachrichten in Sprechblase</value>
   </data>
   <data name="Show_error_log_messages_in_balloon" xml:space="preserve">
-    <value>Zeige Fehlernachrichten in Sprechblase?</value>
+    <value>Zeige Fehlernachrichten in Sprechblase</value>
   </data>
   <data name="Preferred_language" xml:space="preserve">
     <value>Bevorzugte Sprache:</value>
   </data>
   <data name="Please_restart_CrypTool" xml:space="preserve">
-    <value>Bitte starten Sie CrypTool 2 neu, damit die Änderungen sichtbar werden!</value>
+    <value>Bitte starten Sie CrypTool 2 neu, damit die Änderungen sichtbar werden</value>
   </data>
   <data name="Show_balloon_log_messages_in_balloon_tooltip" xml:space="preserve">
     <value>Markieren Sie dies, um Sprechblasennachrichten in der Trayicon-Sprechblase anzuzeigen!</value>
@@ -193,7 +193,7 @@
     <value>Öffne die letzten offenen Projekte (Vorlagen, CWM-Dateien) beim Start von CrypTool 2</value>
   </data>
   <data name="Reopen_last_opened_file_tooltip" xml:space="preserve">
-    <value>Markieren Sie dies, um die letzten offenen Projekte beim nächsten Start von CrypTool 2 wieder zu öffnen.</value>
+    <value>Markieren Sie dies, um die letzten offenen Projekte beim nächsten Start von CrypTool 2 wieder zu öffnen</value>
   </data>
   <data name="PluginSettings" xml:space="preserve">
     <value>Einstellungen zu Einzel-Komponenten</value>
@@ -202,13 +202,13 @@
     <value>CrypTool 2 im Hintergrund verstecken, wenn beim Schließen Projekte ausgeführt werden</value>
   </data>
   <data name="BackgroundingLabelContent" xml:space="preserve">
-    <value>Hintergrund-Ausführung:</value>
+    <value>Hintergrund-Ausführung</value>
   </data>
   <data name="BackgroundingToolTip" xml:space="preserve">
-    <value>Markieren, um auch nach dem Schließen laufende Projekte im Hintergrund weiter auszuführen.</value>
+    <value>Markieren, um auch nach dem Schließen laufende Projekte im Hintergrund weiter auszuführen</value>
   </data>
   <data name="PowerModeLabelContent" xml:space="preserve">
-    <value>Energiespar-Optionen:</value>
+    <value>Energiespar-Optionen</value>
   </data>
   <data name="SavePowerContent" xml:space="preserve">
     <value>Workspaces anhalten bei Batteriebetrieb</value>
@@ -217,40 +217,40 @@
     <value>Markieren, um bei Batteriebetrieb Energie zu sparen.</value>
   </data>
   <data name="Show_debug_log_messages_in_balloon" xml:space="preserve">
-    <value>Zeige Debugnachrichten in Sprechblase?</value>
+    <value>Zeige Debugnachrichten in Sprechblase</value>
   </data>
   <data name="Show_debug_log_messages_in_balloon_tooltip" xml:space="preserve">
     <value>Markieren Sie dies, um Debugnachrichten in der Trayicon-Sprechblase anzuzeigen!</value>
   </data>
   <data name="Show_info_log_messages_in_balloon" xml:space="preserve">
-    <value>Zeige Informationsnachrichten in Sprechblase?</value>
+    <value>Zeige Informationsnachrichten in Sprechblase</value>
   </data>
   <data name="Show_info_log_messages_in_balloon_tooltip" xml:space="preserve">
-    <value>Markieren Sie dies, um Informationsnachrichten in der Trayicon-Sprechblase anzuzeigen!</value>
+    <value>Markieren Sie dies, um Informationsnachrichten in der Trayicon-Sprechblaseanzuzeigen!</value>
   </data>
   <data name="Show_warning_log_messages_in_balloon" xml:space="preserve">
-    <value>Zeige Warnungsnachrichten in Sprechblase?</value>
+    <value>Zeige Warnungsnachrichten in Sprechblase</value>
   </data>
   <data name="Show_warning_log_messages_in_balloon_tooltip" xml:space="preserve">
-    <value>Markieren Sie dies, um Warnungsnachrichten in der Trayicon-Sprechblase anzuzeigen!</value>
+    <value>Markieren Sie dies, um Warnungsnachrichten in der Trayicon-Sprechblase anzuzeigen</value>
   </data>
   <data name="cultureBox_tooltip" xml:space="preserve">
-    <value>Wählen Sie Ihre bevorzugte Sprache für CrypTool 2 hier aus!</value>
+    <value>Wählen Sie Ihre bevorzugte Sprache für CrypTool 2 hier aus</value>
   </data>
   <data name="Startup_Behaviour" xml:space="preserve">
-    <value>Startverhalten:</value>
+    <value>Startverhalten</value>
   </data>
   <data name="Restart_Button_Content" xml:space="preserve">
     <value>Jetzt neu starten</value>
   </data>
   <data name="BalloonDuration_Tooltip" xml:space="preserve">
-    <value>Geben Sie hier die Dauer der Sichtbarkeit für Sprechblasen an!</value>
+    <value>Geben Sie hier die Dauer der Sichtbarkeit für Sprechblasen an</value>
   </data>
   <data name="Deselect_all" xml:space="preserve">
     <value>alle abwählen</value>
   </data>
   <data name="EditorOpeningContent" xml:space="preserve">
-    <value>Verhalten bei Öffnen eines neuen Editors:</value>
+    <value>Verhalten bei Öffnen eines neuen Editors</value>
   </data>
   <data name="HeaderAssembly" xml:space="preserve">
     <value>Assembly</value>
@@ -271,7 +271,7 @@
     <value>Anzahl der Einträge in der Liste zuletzt geöffneter cwm-Dateien</value>
   </data>
   <data name="seconds_" xml:space="preserve">
-    <value>Sekunden lang!</value>
+    <value>Sekunden lang</value>
   </data>
   <data name="SelectEditorLabel" xml:space="preserve">
     <value>Wähle bevorzugten Editor</value>
@@ -289,7 +289,7 @@
     <value>Verwende letzten Editor</value>
   </data>
   <data name="UseLastEditorTooltip" xml:space="preserve">
-    <value>Markieren, um immer den zuletzt verwendeten Editor zu öffnen, wenn der "Neu"-Button gedrückt wird.</value>
+    <value>Markieren, um immer den zuletzt verwendeten Editor zu öffnen, wenn der "Neu"-Button gedrückt wird</value>
   </data>
   <data name="UseLastPathContent" xml:space="preserve">
     <value>Verwende letzten Pfad im Datei-Dialog</value>
@@ -307,7 +307,7 @@
     <value>Starte CrypTool 2 als Singleton-Anwendung (Globale Einstellungen. Eine Änderung der Einstellung hier hat keine Auswirkung. Sie muss manuell in der Datei CrypWin.exe.config im Installationsverzeichnis von CrypTool 2 bearbeitet werden)</value>
   </data>
   <data name="SingletonApplicationTooltip" xml:space="preserve">
-    <value>Wenn diese Option aktiviert ist, wird nur eine CrypTool 2-Anwendungsinstanz gestartet. Deaktivieren Sie diese Einstellung in der Datei CrypWin.exe.config im Installationsverzeichnis von CrypTool 2, damit CrypTool 2 mehrmals gestartet werden kann.</value>
+    <value>Wenn diese Option aktiviert ist, wird nur eine CrypTool 2-Anwendungsinstanz gestartet. Deaktivieren Sie diese Einstellung in der Datei CrypWin.exe.config im Installationsverzeichnis von CrypTool 2, damit CrypTool 2 mehrmals gestartet werden kann</value>
   </data>
   <data name="WriteLogFile" xml:space="preserve">
     <value>Logdatei schreiben</value>

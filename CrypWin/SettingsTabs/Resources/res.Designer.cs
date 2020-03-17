@@ -70,7 +70,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Check to download updates automatically (if available). ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check to download updates automatically (if available) ähnelt.
         /// </summary>
         public static string autoDownloadToolTip {
             get {
@@ -88,7 +88,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Check to install updates automatically. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check to install updates automatically ähnelt.
         /// </summary>
         public static string autoInstallToolTip {
             get {
@@ -97,7 +97,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Auto Download/Install Options ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Auto download/install options ähnelt.
         /// </summary>
         public static string autoLabelContent {
             get {
@@ -115,7 +115,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Backgrounding options: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Backgrounding options ähnelt.
         /// </summary>
         public static string BackgroundingLabelContent {
             get {
@@ -124,7 +124,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Check to background CT2 when clicking close if there are running tasks. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check to background CT2 when clicking close if there are running tasks ähnelt.
         /// </summary>
         public static string BackgroundingToolTip {
             get {
@@ -133,7 +133,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Set the duration of the balloon visibility in seconds here! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Set the duration of the balloon visibility in seconds ähnelt.
         /// </summary>
         public static string BalloonDuration_Tooltip {
             get {
@@ -160,7 +160,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Check Periodically ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check periodically ähnelt.
         /// </summary>
         public static string checkPeriodicallyContent {
             get {
@@ -178,7 +178,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die minutes. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die minutes ähnelt.
         /// </summary>
         public static string checkPeriodicallyText2Content {
             get {
@@ -187,7 +187,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Check to check for updates periodically. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check to check for updates periodically ähnelt.
         /// </summary>
         public static string checkPeriodicallyToolTip {
             get {
@@ -196,7 +196,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Please enter a valid integer. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please enter a valid integer ähnelt.
         /// </summary>
         public static string checkPeriodicallyWarningContent {
             get {
@@ -205,7 +205,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Check on Startup ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check on startup ähnelt.
         /// </summary>
         public static string checkStartupContent {
             get {
@@ -214,7 +214,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Check to check for updates on startup. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check to check for updates on startup ähnelt.
         /// </summary>
         public static string checkStartupToolTip {
             get {
@@ -241,7 +241,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Set your preferred language for CrypTool 2 here! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Set your preferred language for CrypTool 2 here ähnelt.
         /// </summary>
         public static string cultureBox_tooltip {
             get {
@@ -259,7 +259,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die New editor opening behaviour: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die New editor opening behaviour ähnelt.
         /// </summary>
         public static string EditorOpeningContent {
             get {
@@ -295,7 +295,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Component Name ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Component name ähnelt.
         /// </summary>
         public static string HeaderPluginName {
             get {
@@ -313,7 +313,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die General Settings ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die General settings ähnelt.
         /// </summary>
         public static string MainSettings {
             get {
@@ -322,7 +322,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The checking time interval (in minutes). ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The checking time interval (in minutes) ähnelt.
         /// </summary>
         public static string minutesInputToolTip {
             get {
@@ -331,7 +331,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Notification Icon ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Notification icon ähnelt.
         /// </summary>
         public static string NotificationIconSettings {
             get {
@@ -340,7 +340,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Please restart CrypTool 2 for the change to take effect! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please restart CrypTool 2 for the change to take effect ähnelt.
         /// </summary>
         public static string Please_restart_CrypTool {
             get {
@@ -358,7 +358,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Power saving options: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Power saving options ähnelt.
         /// </summary>
         public static string PowerModeLabelContent {
             get {
@@ -367,7 +367,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Preferred language: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Preferred language ähnelt.
         /// </summary>
         public static string Preferred_language {
             get {
@@ -403,7 +403,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Restart Now ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restart now ähnelt.
         /// </summary>
         public static string Restart_Button_Content {
             get {
@@ -421,7 +421,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Check to save power. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check to save power ähnelt.
         /// </summary>
         public static string SavePowerToolTip {
             get {
@@ -430,7 +430,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die seconds! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die seconds ähnelt.
         /// </summary>
         public static string seconds_ {
             get {
@@ -475,7 +475,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show balloon log messages in balloon? ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show balloon log messages in balloon ähnelt.
         /// </summary>
         public static string Show_balloon_log_messages_in_balloon {
             get {
@@ -493,7 +493,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show debug log messages in balloon? ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show debug log messages in balloon ähnelt.
         /// </summary>
         public static string Show_debug_log_messages_in_balloon {
             get {
@@ -511,7 +511,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show error log messages in balloon? ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show error log messages in balloon ähnelt.
         /// </summary>
         public static string Show_error_log_messages_in_balloon {
             get {
@@ -529,7 +529,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show info log messages in balloon? ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show info log messages in balloon ähnelt.
         /// </summary>
         public static string Show_info_log_messages_in_balloon {
             get {
@@ -547,7 +547,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show warning log messages in balloon? ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show warning log messages in balloon ähnelt.
         /// </summary>
         public static string Show_warning_log_messages_in_balloon {
             get {
@@ -556,7 +556,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Check this to show the warning log messages in the tray icon balloon! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check this to show the warning log messages in the tray icon balloon ähnelt.
         /// </summary>
         public static string Show_warning_log_messages_in_balloon_tooltip {
             get {
@@ -574,7 +574,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die When checked only one CrypTool 2 application instance is started. Disable in CrypWin.exe.config file in the CrypTool 2 installation directory for allowing CrypTool 2 being started multiple times. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die When checked only one CrypTool 2 application instance is started. Disable in CrypWin.exe.config file in the CrypTool 2 installation directory for allowing CrypTool 2 being started multiple times ähnelt.
         /// </summary>
         public static string SingletonApplicationTooltip {
             get {
@@ -583,7 +583,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Startup behaviour: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Startup behaviour ähnelt.
         /// </summary>
         public static string Startup_Behaviour {
             get {
