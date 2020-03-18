@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="labelMaxCountLatticePoints" xml:space="preserve">
-    <value>Maximum number of lattice points:</value>
+    <value>Maximum number of lattice points</value>
   </data>
   <data name="labelMaxCountPolygons" xml:space="preserve">
-    <value>Maximum number of parallelograms:</value>
+    <value>Maximum number of parallelograms</value>
   </data>
   <data name="labelUseSameScaleForBothAxes" xml:space="preserve">
-    <value>Same scale for both axes:</value>
+    <value>Same scale for both axes</value>
   </data>
   <data name="comma" xml:space="preserve">
     <value>Comma</value>
@@ -136,19 +136,19 @@
     <value>Coordinates separator:</value>
   </data>
   <data name="labelFormatting" xml:space="preserve">
-    <value>Formatting:</value>
+    <value>Formatting</value>
   </data>
   <data name="labelLatticeTags" xml:space="preserve">
-    <value>Lattice tags:</value>
+    <value>Lattice tags</value>
   </data>
   <data name="labelPresentation" xml:space="preserve">
-    <value>Presentation:</value>
+    <value>Presentation</value>
   </data>
   <data name="labelVectorSeparator" xml:space="preserve">
-    <value>Vector separator:</value>
+    <value>Vector separator</value>
   </data>
   <data name="labelVectorTags" xml:space="preserve">
-    <value>Vector tags:</value>
+    <value>Vector tags</value>
   </data>
   <data name="noBrackets" xml:space="preserve">
     <value>No brackets</value>
@@ -172,7 +172,7 @@
     <value>Show Hermite circle</value>
   </data>
   <data name="labelSpherePacking" xml:space="preserve">
-    <value>Show sphere packing:</value>
+    <value>Show sphere packing</value>
   </data>
   <data name="labelForceAcuteAngle" xml:space="preserve">
     <value>Force acute angle for Gauss</value>

@@ -19,7 +19,7 @@ namespace LatticeCrypto.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class SettingsLanguages {
@@ -106,7 +106,7 @@ namespace LatticeCrypto.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Formatting: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Formatting ähnelt.
         /// </summary>
         public static string labelFormatting {
             get {
@@ -115,7 +115,7 @@ namespace LatticeCrypto.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Lattice tags: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Lattice tags ähnelt.
         /// </summary>
         public static string labelLatticeTags {
             get {
@@ -124,7 +124,7 @@ namespace LatticeCrypto.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Maximum number of lattice points: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Maximum number of lattice points ähnelt.
         /// </summary>
         public static string labelMaxCountLatticePoints {
             get {
@@ -133,7 +133,7 @@ namespace LatticeCrypto.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Maximum number of parallelograms: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Maximum number of parallelograms ähnelt.
         /// </summary>
         public static string labelMaxCountPolygons {
             get {
@@ -151,7 +151,7 @@ namespace LatticeCrypto.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Presentation: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Presentation ähnelt.
         /// </summary>
         public static string labelPresentation {
             get {
@@ -169,7 +169,7 @@ namespace LatticeCrypto.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show sphere packing: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show sphere packing ähnelt.
         /// </summary>
         public static string labelSpherePacking {
             get {
@@ -178,7 +178,7 @@ namespace LatticeCrypto.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Same scale for both axes: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Same scale for both axes ähnelt.
         /// </summary>
         public static string labelUseSameScaleForBothAxes {
             get {
@@ -187,7 +187,7 @@ namespace LatticeCrypto.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Vector separator: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Vector separator ähnelt.
         /// </summary>
         public static string labelVectorSeparator {
             get {
@@ -196,7 +196,7 @@ namespace LatticeCrypto.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Vector tags: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Vector tags ähnelt.
         /// </summary>
         public static string labelVectorTags {
             get {

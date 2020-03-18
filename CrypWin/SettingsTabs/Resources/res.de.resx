@@ -127,7 +127,7 @@
     <value>Benachrichtigungssymbol</value>
   </data>
   <data name="checkLabelContent" xml:space="preserve">
-    <value>Update-Check-Präferenzen (wirksam nach Neustart von CrypTool 2)</value>
+    <value>Update-Check-Präferenzen (Geänderte Einstellungen erst nach Neustart von CrypTool 2 wirksam)</value>
   </data>
   <data name="UpdaterSettings" xml:space="preserve">
     <value>Updater</value>
@@ -304,7 +304,7 @@
     <value>Kopiere Zeile</value>
   </data>
   <data name="SingletonApplication" xml:space="preserve">
-    <value>Starte CrypTool 2 als Singleton-Anwendung (Globale Einstellungen. Eine Änderung der Einstellung hier hat keine Auswirkung. Sie muss manuell in der Datei CrypWin.exe.config im Installationsverzeichnis von CrypTool 2 bearbeitet werden)</value>
+    <value>Starte CrypTool 2 als Singleton-Anwendung (Globale Einstellungen: Eine Änderung der Einstellung hier hat keine Auswirkung. Sie muss manuell in der Datei CrypWin.exe.config im Installationsverzeichnis von CrypTool 2 bearbeitet werden)</value>
   </data>
   <data name="SingletonApplicationTooltip" xml:space="preserve">
     <value>Wenn diese Option aktiviert ist, wird nur eine CrypTool 2-Anwendungsinstanz gestartet. Deaktivieren Sie diese Einstellung in der Datei "CrypWin.exe.config" im Installationsverzeichnis von CrypTool 2, damit CrypTool 2 mehrmals gestartet werden kann. Hier wird nur der Status angezeigt.</value>
