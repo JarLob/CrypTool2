@@ -427,7 +427,7 @@ namespace Cryptool.OnlineDocumentationEditor
             
             if (_unsavedChanges)
             {
-                var result = MessageBox.Show("You have unsaved changes. Do you really want to change the document? Your changes will be lost then.", "Unsaved changes", MessageBoxButton.YesNo);
+                var result = MessageBox.Show("You have unsaved changes. If you leave the document without saving, your changes will be lost. Do you really want to leave the current document?", "Unsaved changes", MessageBoxButton.YesNo);
                 if(result == MessageBoxResult.No)
                 {
                     _presentation.ComboBox.SelectedIndex = _currentSelectedDocumentationIndex;
