@@ -127,7 +127,7 @@
     <value>Benachrichtigungssymbol</value>
   </data>
   <data name="checkLabelContent" xml:space="preserve">
-    <value>Update-Check-Präferenzen (Geänderte Einstellungen erst nach Neustart von CrypTool 2 wirksam)</value>
+    <value>Update-Check-Präferenzen (Geänderte Einstellungen erst nach Neustart von CT2 wirksam)</value>
   </data>
   <data name="UpdaterSettings" xml:space="preserve">
     <value>Updater</value>
@@ -181,7 +181,7 @@
     <value>Bevorzugte Sprache:</value>
   </data>
   <data name="Please_restart_CrypTool" xml:space="preserve">
-    <value>Bitte starten Sie CrypTool 2 neu, damit die Änderungen sichtbar werden</value>
+    <value>Bitte starten Sie CT2 neu, damit die Änderungen sichtbar werden</value>
   </data>
   <data name="Show_balloon_log_messages_in_balloon_tooltip" xml:space="preserve">
     <value>Markieren Sie dies, um Sprechblasennachrichten in der Trayicon-Sprechblase anzuzeigen!</value>
@@ -190,16 +190,16 @@
     <value>Markieren Sie dies, um Fehlernachrichten in der Trayicon-Sprechblase anzuzeigen!</value>
   </data>
   <data name="Reopen_last_opened_file" xml:space="preserve">
-    <value>Öffne die letzten offenen Projekte (Vorlagen, CWM-Dateien) beim Start von CrypTool 2</value>
+    <value>Öffne die letzten offenen Projekte (Vorlagen, CWM-Dateien) beim Start von CT2</value>
   </data>
   <data name="Reopen_last_opened_file_tooltip" xml:space="preserve">
-    <value>Markieren Sie dies, um die letzten offenen Projekte beim nächsten Start von CrypTool 2 wieder zu öffnen</value>
+    <value>Markieren Sie dies, um die letzten offenen Projekte beim nächsten Start von CT2 wieder zu öffnen</value>
   </data>
   <data name="PluginSettings" xml:space="preserve">
     <value>Einstellungen zu Einzel-Komponenten</value>
   </data>
   <data name="BackgroundingContent" xml:space="preserve">
-    <value>CrypTool 2 im Hintergrund verstecken, wenn beim Schließen Projekte ausgeführt werden</value>
+    <value>CT2 im Hintergrund verstecken, wenn beim Schließen Projekte ausgeführt werden</value>
   </data>
   <data name="BackgroundingLabelContent" xml:space="preserve">
     <value>Hintergrund-Ausführung</value>
@@ -235,7 +235,7 @@
     <value>Markieren Sie dies, um Warnungsnachrichten in der Trayicon-Sprechblase anzuzeigen</value>
   </data>
   <data name="cultureBox_tooltip" xml:space="preserve">
-    <value>Wählen Sie Ihre bevorzugte Sprache für CrypTool 2 hier aus</value>
+    <value>Wählen Sie Ihre bevorzugte Sprache für CT2 hier aus</value>
   </data>
   <data name="Startup_Behaviour" xml:space="preserve">
     <value>Startverhalten</value>
@@ -268,13 +268,13 @@
     <value>Auswahl invertieren</value>
   </data>
   <data name="RecentFileListLength" xml:space="preserve">
-    <value>Anzahl der Einträge in der Liste zuletzt geöffneter cwm-Dateien</value>
+    <value>Anzahl der Einträge in der Liste zuletzt geöffneter cwm-Dateien:</value>
   </data>
   <data name="seconds_" xml:space="preserve">
     <value>Sekunden lang</value>
   </data>
   <data name="SelectEditorLabel" xml:space="preserve">
-    <value>Wähle bevorzugten Editor</value>
+    <value>Wähle bevorzugten Editor:</value>
   </data>
   <data name="SelectEditorTooltip" xml:space="preserve">
     <value>Wählen Sie den Editor, der geöffnet werden soll, wenn der "Neu"-Button geklickt wird</value>
@@ -304,10 +304,11 @@
     <value>Kopiere Zeile</value>
   </data>
   <data name="SingletonApplication" xml:space="preserve">
-    <value>Starte CrypTool 2 als Singleton-Anwendung (Globale Einstellungen: Eine Änderung der Einstellung hier hat keine Auswirkung. Sie muss manuell in der Datei CrypWin.exe.config im Installationsverzeichnis von CrypTool 2 bearbeitet werden).</value>
+    <value>Starte CT2 als Singleton-Anwendung (Globale Einstellungen: Eine Änderung der Einstellung hier hat keine Auswirkung. 
+Sie muss manuell in der Datei CrypWin.exe.config im Installationsverzeichnis von CT2 bearbeitet werden).</value>
   </data>
   <data name="SingletonApplicationTooltip" xml:space="preserve">
-    <value>Wenn diese Option aktiviert ist, wird nur eine CrypTool 2-Anwendungsinstanz gestartet. Deaktivieren Sie diese Einstellung in der Datei "CrypWin.exe.config" im Installationsverzeichnis von CrypTool 2, damit CrypTool 2 mehrmals gestartet werden kann. Hier wird nur der Status angezeigt.</value>
+    <value>Wenn diese Option aktiviert ist, wird nur eine CT2-Anwendungsinstanz gestartet. Deaktivieren Sie diese Einstellung in der Datei "CrypWin.exe.config" im Installationsverzeichnis von CrypTool 2, damit CT2 mehrmals gestartet werden kann. Hier wird nur der Status angezeigt.</value>
   </data>
   <data name="WriteLogFile" xml:space="preserve">
     <value>Logdatei schreiben</value>

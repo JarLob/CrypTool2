@@ -214,6 +214,60 @@ namespace Cryptool.Plugins.DECRYPTTools.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die DECRYPT Downloader ähnelt.
+        /// </summary>
+        internal static string DecodeDownloaderPluginCaption {
+            get {
+                return ResourceManager.GetString("DecodeDownloaderPluginCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Component to download data from the DECODE database ähnelt.
+        /// </summary>
+        internal static string DecodeDownloaderPluginTooltip {
+            get {
+                return ResourceManager.GetString("DecodeDownloaderPluginTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Record ähnelt.
+        /// </summary>
+        internal static string DecodeRecordCaption {
+            get {
+                return ResourceManager.GetString("DecodeRecordCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die DECRYPT record (data set) in json format ähnelt.
+        /// </summary>
+        internal static string DecodeRecordTooltip {
+            get {
+                return ResourceManager.GetString("DecodeRecordTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die DECRYPT Viewer ähnelt.
+        /// </summary>
+        internal static string DecodeViewerPluginCaption {
+            get {
+                return ResourceManager.GetString("DecodeViewerPluginCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Component to view data from the DECODE database ähnelt.
+        /// </summary>
+        internal static string DecodeViewerPluginTooltip {
+            get {
+                return ResourceManager.GetString("DecodeViewerPluginTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap DECRYPT_message {
@@ -242,65 +296,11 @@ namespace Cryptool.Plugins.DECRYPTTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die DECRYPT Downloader ähnelt.
-        /// </summary>
-        internal static string DecodeDownloaderPluginCaption {
-            get {
-                return ResourceManager.GetString("DecodeDownloaderPluginCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Component to download data from the DECRYPT database ähnelt.
-        /// </summary>
-        internal static string DecodeDownloaderPluginTooltip {
-            get {
-                return ResourceManager.GetString("DecodeDownloaderPluginTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Record ähnelt.
-        /// </summary>
-        internal static string DecodeRecordCaption {
-            get {
-                return ResourceManager.GetString("DecodeRecordCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die DECRYPT record (data set) in json format ähnelt.
-        /// </summary>
-        internal static string DecodeRecordTooltip {
-            get {
-                return ResourceManager.GetString("DecodeRecordTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die DECRYPT ähnelt.
         /// </summary>
         internal static string DECRYPTSettingsTab {
             get {
                 return ResourceManager.GetString("DECRYPTSettingsTab", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die DECRYPT Viewer ähnelt.
-        /// </summary>
-        internal static string DecodeViewerPluginCaption {
-            get {
-                return ResourceManager.GetString("DecodeViewerPluginCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Component to view data from the DECRYPT database ähnelt.
-        /// </summary>
-        internal static string DecodeViewerPluginTooltip {
-            get {
-                return ResourceManager.GetString("DecodeViewerPluginTooltip", resourceCulture);
             }
         }
         
@@ -404,7 +404,7 @@ namespace Cryptool.Plugins.DECRYPTTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Could not login to the DECRYPT database. Please check your login credentials if you have some. You are currently only able to view publicly available records. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not login to the DECODE database. Please check your login credentials if you have some. You are currently only able to view publicly available records. ähnelt.
         /// </summary>
         internal static string LoginFailed {
             get {
@@ -467,7 +467,7 @@ namespace Cryptool.Plugins.DECRYPTTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Downloaded document from DECRYPT database ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Downloaded document from DECODE database ähnelt.
         /// </summary>
         internal static string OutputDocumentTooltip {
             get {
@@ -485,7 +485,7 @@ namespace Cryptool.Plugins.DECRYPTTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Downloaded image from DECRYPT database ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Downloaded image from DECODE database ähnelt.
         /// </summary>
         internal static string OutputImageTooltip {
             get {
@@ -548,7 +548,7 @@ namespace Cryptool.Plugins.DECRYPTTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die If you want to access the DECRYPT database in CrypTool 2, you have to go to https://cl.lingfil.uu.se/decode/database and create a user account. Then, enter your credentials here: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die If you want to access the DECODE database in CrypTool 2, you have to go to https://cl.lingfil.uu.se/decode/database and create a user account. Then, enter your credentials here: ähnelt.
         /// </summary>
         internal static string SettingsInfoText {
             get {

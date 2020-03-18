@@ -8,7 +8,7 @@
              d:DesignHeight="400" d:DesignWidth="500">
     <Grid>
         <StackPanel VerticalAlignment="Top" Margin="20">
-            <Image Source="logo.png" Width="250" HorizontalAlignment="Left"/>
+            <Image Source="logo.png" Width="250" HorizontalAlignment="Left" Margin="0,0,0,10"/>
             <Grid Width="500" HorizontalAlignment="Left">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200" />
@@ -28,8 +28,7 @@
                 <Label Grid.Column="0" Grid.Row="2" Content="{Loc Password}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" Height="30"  />
                 <PasswordBox Name="PasswordTextbox"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" PasswordChanged="PasswordTextbox_OnPasswordChanged" Margin="10,10,10,10"/>
 
-                <Label Grid.Column="0" Grid.Row="3" Content="{Loc TestLoginData}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" Height="30"  />
-                <Button Name="TestLoginDataButton" Grid.Column="1" Grid.Row="3" Content="{Loc TestLoginData}" Click="TestLoginDataButton_OnClick" />
+                <Button Name="TestLoginDataButton" Grid.Column="0" Grid.Row="3" Margin="5,5,5,5" Content="{Loc TestLoginData}" Click="TestLoginDataButton_OnClick" />
             </Grid>
             
             <Label Content="Text Element Colors:"/>

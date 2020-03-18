@@ -445,7 +445,7 @@
     <value>Сбросить статистику подключения компонентов</value>
   </data>
   <data name="ComponentConnection_Delay" xml:space="preserve">
-    <value>Задержка предложения соединения компонента</value>
+    <value>Задержка предложения соединения компонента:</value>
   </data>
   <data name="ComponentConnection_Delay_Tooltip" xml:space="preserve">
     <value>Время держать указатель мыши в одной позиции до появления всплывающего окна с предложением компонента</value>

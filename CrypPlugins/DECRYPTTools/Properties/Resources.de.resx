@@ -160,7 +160,7 @@
     <value>DECRYPT-Downloader</value>
   </data>
   <data name="DecodeDownloaderPluginTooltip" xml:space="preserve">
-    <value>Komponente zum Herunterladen von Daten aus der DECRYPT-Datenbank</value>
+    <value>Komponente zum Herunterladen von Daten aus der DECODE-Datenbank</value>
   </data>
   <data name="DecodeRecordCaption" xml:space="preserve">
     <value>Datensatz</value>
@@ -223,13 +223,13 @@
     <value>Dokument</value>
   </data>
   <data name="OutputDocumentTooltip" xml:space="preserve">
-    <value>Heruntergeladenes Dokument aus der DECRYPT-Datenbank</value>
+    <value>Heruntergeladenes Dokument aus der DECODE-Datenbank</value>
   </data>
   <data name="OutputImageCaption" xml:space="preserve">
     <value>Bild</value>
   </data>
   <data name="OutputImageTooltip" xml:space="preserve">
-    <value>Heruntergeladenes Bild aus der DECRYPT-Datenbank </value>
+    <value>Heruntergeladenes Bild aus der DECODE-Datenbank </value>
   </data>
   <data name="Paper" xml:space="preserve">
     <value>Papier:</value>
@@ -286,10 +286,10 @@
     <value>Anmeldedaten verwenden:</value>
   </data>
   <data name="SettingsInfoText" xml:space="preserve">
-    <value>Wenn Sie in CrypTool 2 auf die DECRYPT-Datenbank zugreifen möchten, müssen Sie unter https://cl.lingfil.uu.se/decode/database ein Benutzerkonto erstellen. Geben Sie anschließend Ihre Anmeldedaten hier ein:</value>
+    <value>Wenn Sie in CrypTool 2 auf die DECODE-Datenbank zugreifen möchten, müssen Sie unter https://cl.lingfil.uu.se/decode/database ein Benutzerkonto erstellen. Geben Sie anschließend Ihre Anmeldedaten hier ein:</value>
   </data>
   <data name="LoginFailed" xml:space="preserve">
-    <value>Anmeldung bei der DECRYPT-Datenbank nicht möglich. Bitte überprüfen Sie Ihre Zugangsdaten, wenn Sie welche haben. Sie können derzeit nur öffentlich verfügbare Datensätze anzeigen.</value>
+    <value>Anmeldung bei der DECODE-Datenbank nicht möglich. Bitte überprüfen Sie Ihre Zugangsdaten, wenn Sie welche haben. Sie können derzeit nur öffentlich verfügbare Datensätze anzeigen.</value>
   </data>
   <data name="CredentialsOK" xml:space="preserve">
     <value>Anmeldedaten sind korrekt.</value>

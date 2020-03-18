@@ -430,7 +430,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Component connection suggestion delay ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Component connection suggestion delay: ähnelt.
         /// </summary>
         public static string ComponentConnection_Delay {
             get {

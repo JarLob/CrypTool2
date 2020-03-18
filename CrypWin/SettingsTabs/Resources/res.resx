@@ -181,7 +181,7 @@
     <value>Preferred language</value>
   </data>
   <data name="Please_restart_CrypTool" xml:space="preserve">
-    <value>Please restart CrypTool 2 for the change to take effect</value>
+    <value>Please restart CT2 for the change to take effect</value>
   </data>
   <data name="Show_balloon_log_messages_in_balloon_tooltip" xml:space="preserve">
     <value>Check this to show the balloon log messages in the tray icon balloon!</value>
@@ -193,13 +193,13 @@
     <value>Reopen last opened projects on startup</value>
   </data>
   <data name="Reopen_last_opened_file_tooltip" xml:space="preserve">
-    <value>Check this to reopen the last opened file on CrypTool 2 startup</value>
+    <value>Check this to reopen the last opened file on CT2 startup</value>
   </data>
   <data name="PluginSettings" xml:space="preserve">
     <value>Settings of single components</value>
   </data>
   <data name="BackgroundingContent" xml:space="preserve">
-    <value>Hide in background when CrypTool 2 is closing and projects are still running</value>
+    <value>Hide in background when CT2 is closing and projects are still running</value>
   </data>
   <data name="BackgroundingLabelContent" xml:space="preserve">
     <value>Backgrounding options</value>
@@ -235,7 +235,7 @@
     <value>Check this to show the warning log messages in the tray icon balloon</value>
   </data>
   <data name="cultureBox_tooltip" xml:space="preserve">
-    <value>Set your preferred language for CrypTool 2 here</value>
+    <value>Set your preferred language for CT2 here</value>
   </data>
   <data name="Startup_Behaviour" xml:space="preserve">
     <value>Startup behaviour</value>
@@ -244,7 +244,7 @@
     <value>New editor opening behaviour</value>
   </data>
   <data name="SelectEditorLabel" xml:space="preserve">
-    <value>Select preferred editor</value>
+    <value>Select preferred editor:</value>
   </data>
   <data name="SelectEditorTooltip" xml:space="preserve">
     <value>Choose the editor you want to open when clicking the "New" button here</value>
@@ -286,7 +286,7 @@
     <value>Invert selection</value>
   </data>
   <data name="RecentFileListLength" xml:space="preserve">
-    <value>Length of the list of recently opened cwm files</value>
+    <value>Length of the list of recently opened cwm files:</value>
   </data>
   <data name="seconds_" xml:space="preserve">
     <value>seconds</value>
@@ -304,16 +304,17 @@
     <value>Copy line</value>
   </data>
   <data name="SingletonApplication" xml:space="preserve">
-    <value>Start CrypTool 2 as singleton application (Global setting: a change of the setting here has no effect. It has to be manually edited in CrypWin.exe.config file in the CrypTool 2 installation directory).</value>
+    <value>Start CT2 as singleton application (Global setting: a change of the setting here has no effect. 
+It has to be manually edited in CrypWin.exe.config file in the CT2 installation directory).</value>
   </data>
   <data name="SingletonApplicationTooltip" xml:space="preserve">
-    <value>When checked only one CrypTool 2 application instance is started. Disable in CrypWin.exe.config file in the CrypTool 2 installation directory for allowing CrypTool 2 being started multiple times</value>
+    <value>When checked only one CT2 application instance is started. Disable in CrypWin.exe.config file in the CT2 installation directory for allowing CT2 being started multiple times</value>
   </data>
   <data name="WriteLogFile" xml:space="preserve">
     <value>Write log file</value>
   </data>
   <data name="WriteLogFileTooltip" xml:space="preserve">
-    <value>If this setting is enabled, CrypTool 2 automatically writes all of its log to a logfile</value>
+    <value>If this setting is enabled, CT2 automatically writes all of its log to a logfile</value>
   </data>
   <data name="GeneralSettings" xml:space="preserve">
     <value>General settings</value>

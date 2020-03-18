@@ -445,7 +445,7 @@
     <value>Reset component connection statistics</value>
   </data>
   <data name="ComponentConnection_Delay" xml:space="preserve">
-    <value>Component connection suggestion delay</value>
+    <value>Component connection suggestion delay:</value>
   </data>
   <data name="ComponentConnection_Delay_Tooltip" xml:space="preserve">
     <value>Time to keep the mouse pointer in the same position before a popup with a component suggestion appears</value>

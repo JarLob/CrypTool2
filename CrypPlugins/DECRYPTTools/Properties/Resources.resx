@@ -160,7 +160,7 @@
     <value>DECRYPT Downloader</value>
   </data>
   <data name="DecodeDownloaderPluginTooltip" xml:space="preserve">
-    <value>Component to download data from the DECRYPT database</value>
+    <value>Component to download data from the DECODE database</value>
   </data>
   <data name="DecodeRecordCaption" xml:space="preserve">
     <value>Record</value>
@@ -175,7 +175,7 @@
     <value>DECRYPT Viewer</value>
   </data>
   <data name="DecodeViewerPluginTooltip" xml:space="preserve">
-    <value>Component to view data from the DECRYPT database</value>
+    <value>Component to view data from the DECODE database</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="DECRYPT_message" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -230,13 +230,13 @@
     <value>Document</value>
   </data>
   <data name="OutputDocumentTooltip" xml:space="preserve">
-    <value>Downloaded document from DECRYPT database</value>
+    <value>Downloaded document from DECODE database</value>
   </data>
   <data name="OutputImageCaption" xml:space="preserve">
     <value>Image</value>
   </data>
   <data name="OutputImageTooltip" xml:space="preserve">
-    <value>Downloaded image from DECRYPT database</value>
+    <value>Downloaded image from DECODE database</value>
   </data>
   <data name="Paper" xml:space="preserve">
     <value>Paper:</value>
@@ -290,10 +290,10 @@
     <value>Use login data:</value>
   </data>
   <data name="SettingsInfoText" xml:space="preserve">
-    <value>If you want to access the DECRYPT database in CrypTool 2, you have to go to https://cl.lingfil.uu.se/decode/database and create a user account. Then, enter your credentials here:</value>
+    <value>If you want to access the DECODE database in CrypTool 2, you have to go to https://cl.lingfil.uu.se/decode/database and create a user account. Then, enter your credentials here:</value>
   </data>
   <data name="LoginFailed" xml:space="preserve">
-    <value>Could not login to the DECRYPT database. Please check your login credentials if you have some. You are currently only able to view publicly available records.</value>
+    <value>Could not login to the DECODE database. Please check your login credentials if you have some. You are currently only able to view publicly available records.</value>
   </data>
   <data name="CredentialsOK" xml:space="preserve">
     <value>Login credentials are correct.</value>

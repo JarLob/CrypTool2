@@ -106,7 +106,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hide in background when CrypTool 2 is closing and projects are still running ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hide in background when CT2 is closing and projects are still running ähnelt.
         /// </summary>
         public static string BackgroundingContent {
             get {
@@ -241,7 +241,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Set your preferred language for CrypTool 2 here ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Set your preferred language for CT2 here ähnelt.
         /// </summary>
         public static string cultureBox_tooltip {
             get {
@@ -367,7 +367,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Please restart CrypTool 2 for the change to take effect ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please restart CT2 for the change to take effect ähnelt.
         /// </summary>
         public static string Please_restart_CrypTool {
             get {
@@ -403,7 +403,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Length of the list of recently opened cwm files ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Length of the list of recently opened cwm files: ähnelt.
         /// </summary>
         public static string RecentFileListLength {
             get {
@@ -421,7 +421,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Check this to reopen the last opened file on CrypTool 2 startup ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check this to reopen the last opened file on CT2 startup ähnelt.
         /// </summary>
         public static string Reopen_last_opened_file_tooltip {
             get {
@@ -475,7 +475,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select preferred editor ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select preferred editor: ähnelt.
         /// </summary>
         public static string SelectEditorLabel {
             get {
@@ -592,7 +592,8 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Start CrypTool 2 as singleton application (Global setting: a change of the setting here has no effect. It has to be manually edited in CrypWin.exe.config file in the CrypTool 2 installation directory). ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start CT2 as singleton application (Global setting: a change of the setting here has no effect. 
+        ///It has to be manually edited in CrypWin.exe.config file in the CT2 installation directory). ähnelt.
         /// </summary>
         public static string SingletonApplication {
             get {
@@ -601,7 +602,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die When checked only one CrypTool 2 application instance is started. Disable in CrypWin.exe.config file in the CrypTool 2 installation directory for allowing CrypTool 2 being started multiple times ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die When checked only one CT2 application instance is started. Disable in CrypWin.exe.config file in the CT2 installation directory for allowing CT2 being started multiple times ähnelt.
         /// </summary>
         public static string SingletonApplicationTooltip {
             get {
@@ -682,7 +683,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die If this setting is enabled, CrypTool 2 automatically writes all of its log to a logfile ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die If this setting is enabled, CT2 automatically writes all of its log to a logfile ähnelt.
         /// </summary>
         public static string WriteLogFileTooltip {
             get {

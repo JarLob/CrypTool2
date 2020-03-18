@@ -152,7 +152,7 @@
 
                     <Button Click="ResetColorButton_Click" Width="133" Height="25" Margin="-100,5,5,5" Grid.Row="14" Style="{StaticResource ResourceKey=settingsStyle}" Content="{Loc ResetColors_Label}" ToolTip="{Loc ResetColors_Tooltip}" Grid.ColumnSpan="2" />
                 </Grid>
-                <Label Content="{Loc Font}" FontWeight="Bold" />
+                <Label Content="{Loc Font}" FontWeight="Bold" Margin="0,5,0,0" />
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="256" />
