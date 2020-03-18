@@ -5,90 +5,129 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="500">
-    <Grid>
-        <Grid.Resources>
+    <StackPanel>
+        <StackPanel.Resources>
             <Style TargetType="Button">
                 <Setter Property="Margin" Value="15,7,10,10"/>
                 <Setter Property="Width" Value="50"/>
                 <Setter Property="Height" Value="50"/>
                 <Setter Property="Cursor" Value="Hand"/>
             </Style>
-        </Grid.Resources>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+        </StackPanel.Resources>
 
-        <Button Grid.Column="0" Grid.Row="0" Click="WorkspaceButton_Click">
-            <Button.Content>
-                <Image Source="/Startcenter;component/WorkspaceManagerIcon.ico" Stretch="Uniform" />
-            </Button.Content>
-        </Button>
-        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Loc Create_a_new_workspace_with_the_graphical_editor_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Click="CrypTool2Tutorial_Click">
+                <Button.Content>
+                    <Image Source="/Startcenter;component/lamp.png" />
+                </Button.Content>
+            </Button>
+            <TextBlock Grid.Column="1" Text="{Loc View_CT2_Tutorial}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        </Grid>
 
-        <Button Grid.Column="0" Grid.Row="1" Click="WizardButton_Click">
-            <Button.Content>
-                <Image Source="/Startcenter;component/wizard.png" />
-            </Button.Content>
-        </Button>
-        <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="{Loc Use_the_wizard_to_easily_try_some_CrypTool_2_0_features_}" TextWrapping="Wrap" />
-        
-        <Button Grid.Column="0" Grid.Row="2" Click="CrypToolStoreButton_Click">
-            <Button.Content>
-                <Image Source="/Startcenter;component/cryptoolstore.png" />
-            </Button.Content>
-        </Button>
-        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Loc OpenCrypToolStore}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"  Click="WorkspaceButton_Click">
+                <Button.Content>
+                    <Image Source="/Startcenter;component/WorkspaceManagerIcon.ico" Stretch="Uniform" />
+                </Button.Content>
+            </Button>
+            <TextBlock Grid.Column="1" Text="{Loc Create_a_new_workspace_with_the_graphical_editor_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Click="WizardButton_Click">
+                <Button.Content>
+                    <Image Source="/Startcenter;component/wizard.png" />
+                </Button.Content>
+            </Button>
+            <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Loc Use_the_wizard_to_easily_try_some_CrypTool_2_0_features_}" TextWrapping="Wrap" />
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"  Click="CrypToolStoreButton_Click">
+                <Button.Content>
+                    <Image Source="/Startcenter;component/cryptoolstore.png" />
+                </Button.Content>
+            </Button>
+            <TextBlock Grid.Column="1" Text="{Loc OpenCrypToolStore}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        </Grid>
+        <!--
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Click="HelpButton_Click">
+                <Button.Content>
+                    <Image Source="/Startcenter;component/help32.png" />
+                </Button.Content>
+            </Button>
+            <TextBlock Grid.Column="1" Text="{Loc Read_the_online_documentation_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        </Grid>-->
 
-        <Button Grid.Column="0" Grid.Row="3" Click="HelpButton_Click">
-            <Button.Content>
-                <Image Source="/Startcenter;component/help32.png" />
-            </Button.Content>
-        </Button>
-        <TextBlock Grid.Column="1" Grid.Row="3" Text="{Loc Read_the_online_documentation_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Click="BookButton_Click">
+                <Button.Content>
+                    <Image Source="/Startcenter;component/book.png" />
+                </Button.Content>
+            </Button>
+            <TextBlock Grid.Column="1" Text="{Loc Open_the_ct_book_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        </Grid>
 
-        <Button Grid.Column="0" Grid.Row="4" Click="BookButton_Click">
-            <Button.Content>
-                <Image Source="/Startcenter;component/book.png" />
-            </Button.Content>
-        </Button>
-        <TextBlock Grid.Column="1" Grid.Row="4" Text="{Loc Open_the_ct_book_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Click="WebpageButton_Click">
+                <Button.Content>
+                    <Image Stretch="Fill" Source="/Startcenter;component/browser.png" />
+                </Button.Content>
+            </Button>
+            <TextBlock Grid.Column="1" Text="{Loc Visit_the_official_CrypTool_2_0_website_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        </Grid>
 
-        <!--<Button Grid.Column="0" Grid.Row="5" Click="ConnectButton_Click" Name="DistCompButton">
-            <Button.Content>
-                <Image Stretch="Fill" Source="/Startcenter;component/peer2peer-disconnect.png" />
-            </Button.Content>
-        </Button>
-        <TextBlock Grid.Column="1" Grid.Row="5" Text="{Loc Connect_to_the_distributed_computing_platform_}" VerticalAlignment="Center" Name="DistCompLabel" TextWrapping="Wrap"/>-->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Click="YouTubeButton_Click">
+                <Button.Content>
+                    <Image Stretch="Fill" Source="/Startcenter;component/youtube.png" />
+                </Button.Content>
+            </Button>
+            <TextBlock Grid.Column="1" Text="{Loc Visit_official_YouTube_channel}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        </Grid>
 
-        <Button Grid.Column="0" Grid.Row="6" Click="WebpageButton_Click">
-            <Button.Content>
-                <Image Stretch="Fill" Source="/Startcenter;component/browser.png" />
-            </Button.Content>
-        </Button>
-        <TextBlock Grid.Column="1" Grid.Row="6" Text="{Loc Visit_the_official_CrypTool_2_0_website_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
-        <Button Grid.Column="0" Grid.Row="7" Click="YouTubeButton_Click">
-            <Button.Content>
-                <Image Stretch="Fill" Source="/Startcenter;component/youtube.png" />
-            </Button.Content>
-        </Button>
-        <TextBlock Grid.Column="1" Grid.Row="7" Text="{Loc Visit_official_YouTube_channel}" VerticalAlignment="Center" TextWrapping="Wrap"/>
-        <Button Grid.Column="0" Grid.Row="8" Click="FacebookButton_Click">
-            <Button.Content>
-                <Image Stretch="Fill" Source="/Startcenter;component/facebook.png" />
-            </Button.Content>
-        </Button>
-        <TextBlock Grid.Column="1" Grid.Row="8" Text="{Loc Follow_us_on_Facebook_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
-    </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Click="FacebookButton_Click">
+                <Button.Content>
+                    <Image Stretch="Fill" Source="/Startcenter;component/facebook.png" />
+                </Button.Content>
+            </Button>
+            <TextBlock Grid.Column="1" Text="{Loc Follow_us_on_Facebook_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        </Grid>
+    </StackPanel>
 </UserControl>

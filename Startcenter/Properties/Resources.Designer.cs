@@ -403,6 +403,15 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die View a tutorial video about CrypTool 2 on YouTube ähnelt.
+        /// </summary>
+        internal static string View_CT2_Tutorial {
+            get {
+                return ResourceManager.GetString("View_CT2_Tutorial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Visit the official YouTube channel: You will learn how to use CrypTool 2 and add your own functions ähnelt.
         /// </summary>
         internal static string Visit_official_YouTube_channel {

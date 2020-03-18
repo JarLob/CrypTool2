@@ -237,4 +237,7 @@
   <data name="DoubleClickToOpen" xml:space="preserve">
     <value>(Doppelklick zum Öffnen)</value>
   </data>
+  <data name="View_CT2_Tutorial" xml:space="preserve">
+    <value>Sehen Sie sich ein (englisches) Tutorial-Video zu CrypTool 2 auf YouTube an</value>
+  </data>
 </root>

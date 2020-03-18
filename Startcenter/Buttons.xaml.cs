@@ -130,5 +130,17 @@ namespace Startcenter
                 //do nothing
             }
         }
+
+        private void CrypTool2Tutorial_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=dELT2-Vgsr8&t=919s");
+            }
+            catch (Exception)
+            {
+                //do nothing
+            }
+        }
     }
 }
