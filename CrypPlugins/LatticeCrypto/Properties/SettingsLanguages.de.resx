@@ -124,7 +124,7 @@
     <value>Maximale Anzahl an Parallelogrammen</value>
   </data>
   <data name="labelUseSameScaleForBothAxes" xml:space="preserve">
-    <value>Gleiche Skalierung für beide Axen</value>
+    <value>Gleiche Skalierung für beide Achsen</value>
   </data>
   <data name="comma" xml:space="preserve">
     <value>Komma</value>
@@ -133,22 +133,22 @@
     <value>Geschweifte Klammern</value>
   </data>
   <data name="labelCoordinatesSeparator" xml:space="preserve">
-    <value>Koordinaten Trennzeichen</value>
+    <value>Koordinaten-Trennzeichen</value>
   </data>
   <data name="labelFormatting" xml:space="preserve">
     <value>Formatierung</value>
   </data>
   <data name="labelLatticeTags" xml:space="preserve">
-    <value>Gitter Tags</value>
+    <value>Gitter-Tags</value>
   </data>
   <data name="labelPresentation" xml:space="preserve">
     <value>Darstellung</value>
   </data>
   <data name="labelVectorSeparator" xml:space="preserve">
-    <value>Vektor Trennzeichen</value>
+    <value>Vektor-Trennzeichen</value>
   </data>
   <data name="labelVectorTags" xml:space="preserve">
-    <value>Vektor Tags</value>
+    <value>Vektor-Tags</value>
   </data>
   <data name="noBrackets" xml:space="preserve">
     <value>Keine Klammern</value>

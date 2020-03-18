@@ -592,7 +592,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Start CrypTool 2 as singleton application (Global setting: a change of the setting here has no effect. It has to be manually edited in CrypWin.exe.config file in the CrypTool 2 installation directory) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start CrypTool 2 as singleton application (Global setting: a change of the setting here has no effect. It has to be manually edited in CrypWin.exe.config file in the CrypTool 2 installation directory). ähnelt.
         /// </summary>
         public static string SingletonApplication {
             get {
