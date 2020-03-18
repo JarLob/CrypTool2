@@ -117,8 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ErrorEmptyConversion" xml:space="preserve">
-    <value>After converting the message into CCITT-2 character encoding, no characters of the messages were left. (The message consists completely of invalid characters)</value>
+  <data name="DecryptButton" xml:space="preserve">
+    <value>Decrypt</value>
+  </data>
+  <data name="EncryptButton" xml:space="preserve">
+    <value>Encrypt</value>
   </data>
   <data name="ErrorInputBlockLength" xml:space="preserve">
     <value>Could not start decrypting; the ciphertext input ({0} bytes) is not a multiple of the LAMBDA1 block length {1}. Check if you copied all bytes from the encryption process.</value>
@@ -128,6 +131,9 @@
   </data>
   <data name="ErrorInputDataNull" xml:space="preserve">
     <value>No input data connected.</value>
+  </data>
+  <data name="ErrorIVLength" xml:space="preserve">
+    <value>The given initialization vector has an invalid length ({0} byte). The length must match with the block size of {1} bytes.</value>
   </data>
   <data name="ErrorKeyLengthEmpty" xml:space="preserve">
     <value>The given key is empty ({0} bytes). The required key length is {1} bytes.</value>
@@ -141,29 +147,32 @@
   <data name="ErrorKeyOverlength" xml:space="preserve">
     <value>The given key is too long ({0} bytes). The required key length is {1}. Exceeding bytes will be truncated.</value>
   </data>
-  <data name="ErrorUnconvertableBeginningPlural" xml:space="preserve">
-    <value>There were {0} unconvertable characters in the given message</value>
-  </data>
-  <data name="ErrorUnconvertableBeginningSingular" xml:space="preserve">
-    <value>There was {0} unconvertable character in the given message</value>
-  </data>
-  <data name="ErrorUnconvertableEndPlural" xml:space="preserve">
-    <value>; they were truncated before encrypting.</value>
-  </data>
-  <data name="ErrorUnconvertableEndSingular" xml:space="preserve">
-    <value>; it was truncated before encrypting.</value>
+  <data name="InfoIVMissing" xml:space="preserve">
+    <value>No initialization vector provided, will use 0x00...0x00</value>
   </data>
   <data name="InputData" xml:space="preserve">
     <value>Input data</value>
   </data>
   <data name="InputDataTooltip" xml:space="preserve">
-    <value>Enter a plaintext ASCII text message (for encryption) or a ciphertext (for decryption)</value>
+    <value>Enter a plaintext message (for encryption) or a ciphertext (for decryption)</value>
+  </data>
+  <data name="InputIV" xml:space="preserve">
+    <value>Initialization Vector</value>
+  </data>
+  <data name="InputIVTooltip" xml:space="preserve">
+    <value>Specify Initialization Vector</value>
   </data>
   <data name="InputKey" xml:space="preserve">
     <value>Key</value>
   </data>
   <data name="InputKeyTooltip" xml:space="preserve">
     <value>Provide a 32 byte key (256 bit) for the algorithm </value>
+  </data>
+  <data name="Mode" xml:space="preserve">
+    <value>Mode</value>
+  </data>
+  <data name="ModeDescription" xml:space="preserve">
+    <value>Choose if you want to encrypt or decrypt data</value>
   </data>
   <data name="OutputData" xml:space="preserve">
     <value>Output Data</value>
@@ -172,12 +181,9 @@
     <value>Outputs a ciphertext in hexadecimal or a decrypted plaintext in ASCII </value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>T-316</value>
+    <value>LAMBDA1</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>The T-316 is a historic cipher machine which uses the algorithm LAMBDA1 - a development based on DES.</value>
-  </data>
-  <data name="WarningMaximumLength" xml:space="preserve">
-    <value>The original machine could only encrypt messages with a maximum length of 1000 characters. This restriction is not enforced here, but it is not compatible with the original machine.</value>
+    <value>LAMBDA1 is a historic block cipher based on DES. It was developed in the 1980s in Eastern Germany</value>
   </data>
 </root>

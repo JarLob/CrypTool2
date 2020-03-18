@@ -117,8 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ErrorEmptyConversion" xml:space="preserve">
-    <value>Nachdem die Nachricht nach CCITT-2 konvertiert wurde, sind keine Zeichen für die Aktion übrig geblieben. (Die Nachricht besteht nur aus ungültigen Zeichen)</value>
+  <data name="DecryptButton" xml:space="preserve">
+    <value>Entschlüsseln</value>
+  </data>
+  <data name="EncryptButton" xml:space="preserve">
+    <value>Verschlüsseln</value>
   </data>
   <data name="ErrorInputBlockLength" xml:space="preserve">
     <value>Entschlüsselungsvorgang kann nicht gestartet werden; das eingegebene Chiffrat ({0} Byte) ist kein Vielfaches der LAMBDA1-Blocklänge {1}. Möglicherweise wurde das Eingabe-Chiffrat unabsichtlich abgeschnitten.</value>
@@ -128,6 +131,9 @@
   </data>
   <data name="ErrorInputDataNull" xml:space="preserve">
     <value>Es sind keine Eingabedaten vorhanden.</value>
+  </data>
+  <data name="ErrorIVLength" xml:space="preserve">
+    <value>Der angegebene Initialisierungsvektor hat eine ungültige Länge ({0} Byte). Die Länge muss mit der Blocklänge von {1} Byte übereinstimmen.</value>
   </data>
   <data name="ErrorKeyLengthEmpty" xml:space="preserve">
     <value>Der eingegebene Schlüssel ist leer ({0} Byte). Es wird ein Schlüssel der Länge  {1} Byte benötigt.</value>
@@ -141,29 +147,26 @@
   <data name="ErrorKeyOverlength" xml:space="preserve">
     <value>Der eingegebene Schlüssel ist zu kurz ({0} Byte). Es wird ein Schlüssel der Länge  {1} Bytes benötigt. Die überzähligen Bytes werden abgeschnitten.</value>
   </data>
-  <data name="ErrorUnconvertableBeginningPlural" xml:space="preserve">
-    <value>Es waren {0} nicht konvertierbare Zeichen in den Eingabedaten</value>
-  </data>
-  <data name="ErrorUnconvertableBeginningSingular" xml:space="preserve">
-    <value>Es war {0} nicht konvertierbares Zeichen in den Eingabedaten</value>
-  </data>
-  <data name="ErrorUnconvertableEndPlural" xml:space="preserve">
-    <value>; sie wurden vor dem Verschlüsseln entfernt.</value>
-  </data>
-  <data name="ErrorUnconvertableEndSingular" xml:space="preserve">
-    <value>; es wurde vor dem Verschlüsseln entfernt.</value>
+  <data name="InfoIVMissing" xml:space="preserve">
+    <value>Kein Initialisierungsvektor angegeben, falle zurück auf 0x00...0x00</value>
   </data>
   <data name="InputData" xml:space="preserve">
     <value>Eingabedaten</value>
   </data>
   <data name="InputDataTooltip" xml:space="preserve">
-    <value>Geben Sie einen ASCII-Klartext (zum Verschlüsseln) oder ein Chiffrat (zum Entschlüsseln) ein.</value>
+    <value>Geben Sie einen beliebigen Klartext (zum Verschlüsseln) oder ein Chiffrat (zum Entschlüsseln) ein.</value>
   </data>
   <data name="InputKey" xml:space="preserve">
     <value>Schlüssel</value>
   </data>
   <data name="InputKeyTooltip" xml:space="preserve">
     <value>Geben Sie einen 32-Byte-Schlüssel (256 Bits) für den Algorithmus ein.</value>
+  </data>
+  <data name="Mode" xml:space="preserve">
+    <value>Modus</value>
+  </data>
+  <data name="ModeDescription" xml:space="preserve">
+    <value>Bestimmt ob die Eingangsdaten ver- oder entschlüsselt werden.</value>
   </data>
   <data name="OutputData" xml:space="preserve">
     <value>Ausgabedaten</value>
@@ -172,12 +175,9 @@
     <value>Gibt ein Chiffrat in hexadezimaler Form oder einen entschlüsselten Klartext als ASCII aus. </value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>T-316</value>
+    <value>LAMBDA1</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>The T-316 is a historic cipher machine which uses the algorithm LAMBDA1 - a development based on DES.</value>
-  </data>
-  <data name="WarningMaximumLength" xml:space="preserve">
-    <value>Die originale T-316 konnte nur Nachrichten mit einer maximalen Länge von 1000 Zeichen verschlüsseln. Diese Beschränkung wird hier nicht durchgesetzt, macht den Spruch aber nicht mehr kompatibel zur originalen Maschine.</value>
+    <value>LAMBDA1 ist eine historische Blockchiffre, die auf DES basiert. Sie wurde in den 1980er Jahren in der Deutschen Demokratischen Republik (DDR) entwickelt.</value>
   </data>
 </root>

@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace Cryptool.Plugins.T316
+namespace Cryptool.Plugins.LAMBDA1
 {
     /// <summary>
     /// The block cipher LAMBDA1 from East Germany
     /// </summary>
     /// Provides functions to encrypt and decrypt with the LAMBDA1 algorithm. A modified version of DES.
-    class Lambda1
+    class LAMBDA1Algorithm
     {
         public const int BlockSize = 8;
         public const int KeySize = 32;
@@ -14,10 +14,9 @@ namespace Cryptool.Plugins.T316
         public const int BitsPerByte = 8;
 
         private UInt64[] roundKeys;
-        private OperationMode mode;
-
+        private readonly OperationMode mode;
+        
         private const UInt64 mask = 0xFFFFFFFF;
-        private const UInt64 one = 1;
 
         #region LAMBDA1 Tables
 
@@ -96,7 +95,7 @@ namespace Cryptool.Plugins.T316
         /// </summary>
         /// <param name="key">a 32 byte array with the key</param>
         /// <param name="mode">an enum wether you want to encrypt or decrypt</param>
-        public Lambda1(byte[] key, OperationMode mode)
+        public LAMBDA1Algorithm(byte[] key, OperationMode mode)
         {
             CheckKeys(key);
 
@@ -138,11 +137,11 @@ namespace Cryptool.Plugins.T316
 
             // Keys 5 to 12
             for (; keyCounter < 12; ++keyCounter)
-                rotateKey(roundKeys[keyCounter - 1], ref roundKeys[keyCounter], 11);
+                rotateKey(roundKeys[keyCounter - 4], ref roundKeys[keyCounter], 11);
 
             // Keys 13 to 16
             for (; keyCounter < 16; ++keyCounter)
-                rotateKey(roundKeys[24 - keyCounter], ref roundKeys[keyCounter], 11);
+                rotateKey(roundKeys[(24 - keyCounter) - 1], ref roundKeys[keyCounter], 11);
 
             // Bonus keys 17 and 18
             ByteToInt(key, 24, 4, out tmp);
@@ -183,15 +182,19 @@ namespace Cryptool.Plugins.T316
         {
             processedBlock = new byte[8];
 
-            UInt64 complBlock, tmpBlock, tmpBit, rBlock, lBlock, rOld;
+            UInt64 complBlock = 0, tmpBlock, tmpBit, rBlock, lBlock, rOld;
             int tableValue;
 
-            ByteToInt(block, 0, 8, out complBlock);
+            // Convert byte[] to int
+            // First byte (block[0]) should be most significant block in the int
+            for (int i = 0, shiftFactor = 7; i < LAMBDA1Algorithm.BlockSize; ++i, --shiftFactor)
+            {
+                complBlock |= ((UInt64)block[i]) << (8 * shiftFactor);
+            }
 
-            rBlock = (complBlock >> 32) & 0xFFFFFFFF;
-            lBlock = complBlock & 0xFFFFFFFF;
-
-
+            rBlock = complBlock & 0xFFFFFFFF;
+            lBlock = (complBlock >> 32) & 0xFFFFFFFF;
+            
             for (int round = 0; round < 16; ++round)
             {
 
@@ -251,7 +254,6 @@ namespace Cryptool.Plugins.T316
 
                 rBlock = tmpBlock ^ lBlock;
                 lBlock = rOld;
-                tmpBlock = 0;
 
                 // In the 8th round (half of the rounds) we additionally add the bonus round keys
                 // operation is a modular addition
@@ -264,13 +266,13 @@ namespace Cryptool.Plugins.T316
             }
 
             // Stitch together the block
-            complBlock = lBlock << 32;
-            complBlock |= rBlock;
+            complBlock = rBlock << 32;
+            complBlock |= lBlock;
 
             // Convert it to a byte[]
-            for (int i = 0; i < Lambda1.BlockSize; ++i)
+            for (int i = 0; i < LAMBDA1Algorithm.BlockSize; ++i)
             {
-                processedBlock[i] = (byte)((complBlock >> (i * 8)) & 0xFF);
+                processedBlock[i] = (byte)((complBlock >> ((7 - i) * 8)) & 0xFF);
             }
         }
 
@@ -287,9 +289,9 @@ namespace Cryptool.Plugins.T316
             UInt64 tmp;
             for (int i = 0; i < rounds; ++i)
             {
-                tmp = (key >> 47) & 1;
-                key = (key << 1) & 0xFFFFFFFFFFFF;
-                key |= tmp;
+                tmp = key & 1;
+                key = (key >> 1) & 0xFFFFFFFFFFFF;
+                key |= (tmp << 47);
             }
             outputKey = key;
         }
@@ -302,20 +304,20 @@ namespace Cryptool.Plugins.T316
         /// <param name="length">How many bytes should be converted from buffer</param>
         /// <param name="result">the result integer</param>
         /// <returns>true on success, false otherwise</returns>
-        private bool ByteToInt(byte[] buffer, int offset, int length, out UInt64 result)
+        private void ByteToInt(byte[] buffer, int offset, int length, out UInt64 result)
         {
             result = 0;
-            UInt64 tmp;
 
             if (offset + length > buffer.Length)
-                return false;
+                throw new ArgumentException("Offset + Length is greater than the actual buffer");
 
-            for (int i = 0; i < length; ++i)
+            if (length == 0)
+                throw new ArgumentException("Length can't be 0");
+
+            for (int i = offset, shiftFactor = 7 - (8 - length); i < offset + length; ++i, --shiftFactor)
             {
-                tmp = (UInt64)(buffer[i + offset]) << (i * 8);
-                result |= tmp;
+                result |= ((UInt64)buffer[i]) << (8 * shiftFactor);
             }
-            return true;
         }
 
         /// <summary>
@@ -326,7 +328,7 @@ namespace Cryptool.Plugins.T316
         /// <returns>a and b added up together mod 2^32</returns>
         private UInt64 ModularAddition(UInt64 a, UInt64 b)
         {
-            return (a + b) % 0xFFFFFFFF;
+            return (a + b) % 0x100000000;
         }
     }
 }

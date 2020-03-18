@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
+<documentation>
+  <language culture="en"/>
+  <language culture="de-DE"/>
+  <!--<language culture="ru"/>-->
+  <introduction lang="en">
+    LAMBDA1 is a historic block cipher that has been developed in East Germany (GDR) in the late 80s.
+    Probably for reasons of time pressure the algorithm was based on the Data Encryption Standard (DES).
+    The aim was to develop a secure cipher and improve DES.
+    Known issues of DES, especially the short keys were changed. The key length is 256 bits instead of
+    56. The expendable input and output permutations of DES were omitted. The round function of the
+    cipher itself was slightly changed, by moving the round permutation after the S-Boxes.
+    The block size (8 byte) as well as the other functions, permutations and S-Boxes are the same as in DES.
+    Cipher Feedback Mode (CFB) is the mode of operation. Blocks are padded with zeroes, which are stripped
+    after decryption.
+    <newline />
+    The algorithm was intendet to be used in the T-316 GO cipher machine, but the algorithm then used was slightly different.
+    It then found application in the cipher machine T-325. Due to the dissolution of the GDR in 1990 it did not see widespread use.
+  </introduction>
+
+  <introduction lang="de-DE">
+  LAMBDA1 ist eine historische Blockhiffre, die in der Deutschen Demokratischen Republik (DDR)
+  Ende der 1980er Jahre entwickelt wurde. Wohl aus Gründen von Zeitdruck wurde als Grundlage für den Algorithmus
+  der Data Encryption Standard (DES) verwendet und weiterentwickelt. Dadurch sollten die bekannten Schwächen, insbesondere
+  der kurze Schlüssel ausgebessert werden. Die Schlüssellänge wurde von 56 auf 256 Bits erhöht.
+  Die nicht sicherheitsrelevanten Eingangs- und Ausgangs-Permutationen wurden entfernt.
+  Die Rundenfunktion wurde leicht verändert - die Rundenpermutation befindet sich nach den S-Boxen. 
+  Die Blockgröße (8 Byte) und die anderen Funktionen, Permutationen und S-Boxen wurden ohne Änderungen von DES übernommen.
+  Der verwendete Mode-of-Operation ist der Cipher-Feedback-Mode.
+  Nicht vollständige Blöcke werden mit Nullen aufgefüllt und beim entschlüsseln wieder entfernt.
+  <newline />
+  LAMBDA1 sollte in der Chiffriermaschine T-316 GO zum Einsatz kommen. Der tatsächlich verwendete Code unterscheidet sich jedoch
+  von den Spezifikationen. In einer anderen Chiffriermaschine T-325 wurde der Algorithmus dann verwendet.
+  Durch die Auflösung der DDR im Jahr 1990 fand LAMBDA1 keine umfassende Anwendung.
+  </introduction>
+
+
+  <usage lang="en">
+    Connect a data and key input to the machine. The key must be 32 bytes (256 bit) long. You can choose wether to encrypt or decrypt data.
+    The initialization vector must be 8 bytes (32 bit). If none is provided zeros will be used.
+    <newline />
+    The algorithm accepts any data. The blocks are padded with 0s, as this was the historic
+    padding mode as well.
+    <newline />
+    If you choose to decrypt a ciphertext, the plaintext data will stripped of any trailing zeros.
+  </usage>
+
+  <usage lang="de-DE">
+    Schließen Sie die Konnektoren für die Eingabedaten, den Schlüssel und die Ausgabedaten an. Der Schlüssel muss 32 Bytes (256 Bits) lang sein.
+    Der Initialisierungsvektor muss 8 Bytes (32 Bit) lang sein. Falls optional keiner angegeben wird,
+    werden Nullen verwendet.
+    Es kann zwischen den Modi Ver- und Entschlüsselung gewählt werden.
+    <newline />
+    The Algorithmus akzeptiert beliebige Daten. Als Padding werden Nullen verwendet, da dies die
+    historisch vorgesehene Padding-Methode war.
+    <newline />
+    Beim entschlüsseln werden aufgrund des Paddings alle letzten Null-Bytes entfernt.
+  </usage>
+
+  <presentation lang="en">
+  </presentation>
+
+  <presentation lang="de-DE">
+  </presentation>
+
+  <references>
+    <linkReference id="lambda1">
+      <link url="https://github.com/tassadarius/LAMBDA1" lang="en" />
+      <caption lang="en">Details, explanation and code of LAMBDA1 (GitHub)</caption>
+      <link url="https://github.com/tassadarius/LAMBDA1" lang="de-DE" />
+      <caption lang="de-DE">Details, Erklärungen und Code zu LAMBDA1 (GitHub - Englisch)</caption>
+    </linkReference>
+    <linkReference id="scz">
+      <link url="http://scz.bplaced.net/des.html#lambdaB" lang="en" />
+      <caption lang="en">Additional information to LAMBDA1 by Jörg Drobick (German)</caption>
+      <link url="http://scz.bplaced.net/des.html#lambdaB" lang="de-DE" />
+      <caption lang="de-DE">Zusätzliche Informationen zu LAMBDA1 von Jörg Drobick</caption>
+    </linkReference>
+    <linkReference id="wikipedia">
+      <link url="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Feedback_(CFB)" lang="en" />
+      <caption lang="en">Cipher Feedback Mode (Wikipedia)</caption>
+      <link url="https://de.wikipedia.org/wiki/Cipher_Feedback_Mode" lang="de-DE" />
+      <caption lang="de-DE">Cipher Feedback Mode (Wikipedia)</caption>
+    </linkReference>
+  </references>
+</documentation>

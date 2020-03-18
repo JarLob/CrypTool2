@@ -18,7 +18,7 @@ using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.T316
+namespace Cryptool.Plugins.LAMBDA1
 {
 
     public enum OperationMode
@@ -27,8 +27,7 @@ namespace Cryptool.Plugins.T316
         Decrypt
     }
 
-    // HOWTO: rename class (click name, press F2)
-    public class T316Settings : ISettings
+    public class LAMBDA1Settings : ISettings
     {
         #region Private Variables
 
@@ -38,11 +37,16 @@ namespace Cryptool.Plugins.T316
 
         #region TaskPane Settings
 
-        /// <summary>
-        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
-        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
-        /// </summary>
-        [TaskPane("Mode", "Choose if you want to encrypt or decrypt data", null, 1, false, ControlType.ComboBox, new string[] { "Encrypt", "Decrypt" })]
+
+        [TaskPane(
+            "Mode",
+            "ModeDescription",
+            null,
+            1,
+            false,
+            ControlType.ComboBox,
+            new string[] { "EncryptButton", "DecryptButton" })
+        ]
         public OperationMode Mode
         {
             get
@@ -54,7 +58,6 @@ namespace Cryptool.Plugins.T316
                 if (mode != value)
                 {
                     mode = value;
-                    // HOWTO: MUST be called every time a property value changes with correct parameter name
                     OnPropertyChanged("Mode");
                 }
             }

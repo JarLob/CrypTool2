@@ -142,6 +142,7 @@
     <Compile Include="AchterbahnTest.cs" />
     <Compile Include="ADFGVXTest.cs" />
     <Compile Include="SpeckTest.cs" />
+    <Compile Include="LAMBDA1Test.cs" />
     <Compile Include="AESTest.cs" />
     <Compile Include="BLAKETest.cs" />
     <Compile Include="RandomNumberGenerator.cs" />

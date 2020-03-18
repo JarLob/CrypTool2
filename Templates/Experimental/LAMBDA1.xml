@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+  <title lang="en">LAMBDA1 block cipher</title>
+  <summary lang="en"> Example usage of the <i>LAMBDA1</i> plugin</summary>
+  <description lang="en">This template shows the usage of the <i>LAMBDA1</i> block cipher. An algorithm based on the Data Encryption Standard, which was developed in Eastern Germany in the 1980s.
+  The mode of operation is Cipher Feedback Mode (CFB).</description>
+  <keywords>Block Cipher, DDR, GDR</keywords>
+
+  <title lang="de">LAMBDA1 Blockchiffre</title>
+  <summary lang="de">Benutzung des Plugins <i>LAMBDA1</i></summary>
+  <description lang="de">Diese Vorlage zeigt die mögliche Benutzung der <i>LAMBDA1</i>-Blockchiffre. Der Algorithmus basiert auf dem Data Encryption Standard (DES) und wurde in den 1980ern in der DDR entwickelt.
+  Das Plugin nutzt den Cipher Feedback Mode (CFB).</description>
+  <keywords lang="de">Maschine, DDR</keywords>
+
+  <icon file="LAMBDA1.png" />
+  <relevantPlugins>
+    <plugin name="LAMBDA1" />
+  </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$InputData" value="Eingabedaten"/>
+	<replacement key="$Message" value="FRANZ JAGT IM KOMPLETT VERWAHRLOSTEN TAXI QUER DURCH BAYERN."/>
+    <replacement key="$InputKey" value="Schlüssel"/>
+	<replacement key="$Key" value="2206FCF3 405C6642
+26F39E76 7F8B4354
+63F2AA7D FD27F792
+DCE1EC22 181782DA"/>
+	<replacement key="$InputIV" value="Initialisierungsvektor "/>
+	<replacement key="$IV" value="B18748F0 339A30C6 "/>
+	<replacement key="$StringDecoder" value="Text-Dekodierer"/>
+	<replacement key="$HexDecoder" value="Hex-Dekodierer"/>
+	<replacement key="$Plugin" value="LAMBDA1 Blockchiffre"/>
+	<replacement key="$HexEncoder" value="Ausgabe-Enkodierer"/>
+	<replacement key="$OutputData" value="Ausgabe"/>
+	<replacement key="$Text" value="Diese Vorlage zeigt die Benutzung der Blockchiffre {\b LAMBDA1}. Beliebige Daten (in diesem Fall Text) können in das Textfeld {\b Eingabedaten} eingegeben werden. Diese werden dann mit dem Algorithmus {\b LAMBDA1} im Cipher Feedback Mode (CFB) verschlüsselt. Der {\b Initialisierungsvektor} kann angegeben werden. Der resultierende Geheimtext wird im Feld {\b Ausgabedaten} auf der rechten Seite in hexadezimaler Darstellung ausgegeben. Unvollständige Blöcke werden mit Nullen aufgefüllt. \line\line Diese Vorlage kann auch zur Entschlüsselung von Nachrichten verwendet werden. Dazu müssen zuerst die verschlüsselten hexadezimalen Werte in das Feld {\b Eingabedaten} kopiert werden. Dann müssen folgende Anpassungen vorgenommen werden: (1) Das Eingabeformat im Feld {\b Text-Dekodierer} muss auf &quot;Hexadezimal&quot; gesetzt werden; (2) In der {\b LAMBDA1}-Komponente muss die Aktion auf &quot;Entschlüsselung&quot; gesetzt werden; (3) Das Format im Feld {\b Ausgabe-Enkodierer} muss auf Text und die Kodierung auf den Wert des ursprünglichen Klartexts gesetzt werden."/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$InputData" value="Input data"/>
+	<replacement key="$Message" value="THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG."/>
+    <replacement key="$InputKey" value="Key"/>
+	<replacement key="$Key" value="2206FCF3 405C6642
+26F39E76 7F8B4354
+63F2AA7D FD27F792
+DCE1EC22 181782DA"/>
+	<replacement key="$InputIV" value="Initialization Vector "/>
+	<replacement key="$IV" value="B18748F0 339A30C6 "/>
+	<replacement key="$StringDecoder" value="Text decoder"/>
+	<replacement key="$HexDecoder" value="Hex decoder"/>
+	<replacement key="$Plugin" value="LAMBDA1 block cipher"/>
+	<replacement key="$HexEncoder" value="Output encoder"/>
+	<replacement key="$OutputData" value="Output"/>
+	<replacement key="$Text" value="This template shows an example usage of the block cipher {\b LAMBDA1}. Arbitrary data (in this case text) can be encrypted. Type the message in the text box {\b Input data} on the left side. It is then encrypted with the {\b LAMBDA1} algorithm in Cipher Feedback Mode (CFB). The {\b initialization vector} can be specified. The resulting encrypted text is displayed as hexadecimal string in the box {\b Output} on the right side. Incomplete blocks are padded with zeros.\line\line Note that you can also decrypt messages with this template. To do so, first copy the encrypted hexadecimal values to the box {\b Input data}. Then change the following: (1) Set Input format of the {\b Input decoder} to Hexadecimal; (2) Set Action of the {\b LAMBDA1} to Decrypt; (3) Set Format of the {\b Output encoder} to Text and the Encoding to the value of the original plaintext."/>
+ </replacements>
+</sample>

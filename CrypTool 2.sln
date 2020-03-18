@@ -470,7 +470,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADFGVXAnalyzer", "CrypPlugi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormatPreservingEncryptionWeydstone", "LibSource\FormatPreservingEncryptionWeydstone\FormatPreservingEncryptionWeydstone.csproj", "{E6D2899C-4A6F-44F9-8E1A-1004F52D86CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T316", "CrypPluginsExperimental\T316\T316.csproj", "{C47DD9AA-04C2-4407-9FA4-5BF9775F30F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LAMBDA1", "CrypPluginsExperimental\LAMBDA1\LAMBDA1.csproj", "{C47DD9AA-04C2-4407-9FA4-5BF9775F30F5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FEAL", "CrypPlugins\FEAL\FEAL.csproj", "{67F284AB-E392-4395-B2E7-14ED18E5825F}"
 EndProject
