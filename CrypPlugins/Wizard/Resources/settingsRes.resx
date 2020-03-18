@@ -124,7 +124,7 @@
     <value>Check to run an opened template automatically</value>
   </data>
   <data name="ShowAnimationsContent" xml:space="preserve">
-    <value>Show Animations</value>
+    <value>Show animations</value>
   </data>
   <data name="ShowAnimationsTooltip" xml:space="preserve">
     <value>Check to show animations</value>

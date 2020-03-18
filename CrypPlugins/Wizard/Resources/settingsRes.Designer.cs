@@ -79,7 +79,7 @@ namespace Wizard.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show Animations ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show animations ähnelt.
         /// </summary>
         public static string ShowAnimationsContent {
             get {
