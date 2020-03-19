@@ -320,19 +320,19 @@
     <value>Job ID:</value>
   </data>
   <data name="EnableOpenCL" xml:space="preserve">
-    <value>Enable OpenCL:</value>
+    <value>Enable OpenCL</value>
   </data>
   <data name="OpenCLDevice" xml:space="preserve">
     <value>OpenCL device:</value>
   </data>
   <data name="WritePerformanceLog" xml:space="preserve">
-    <value>Write performance log:</value>
+    <value>Write performance log</value>
   </data>
   <data name="_JobList_col_JobSize" xml:space="preserve">
     <value>Size</value>
   </data>
   <data name="LogLevel" xml:space="preserve">
-    <value>Log level</value>
+    <value>Log level:</value>
   </data>
   <data name="_Remember_me_tooltip" xml:space="preserve">
     <value>Username and password will be saved encrypted and restored at the next startup of CrypCloud.</value>

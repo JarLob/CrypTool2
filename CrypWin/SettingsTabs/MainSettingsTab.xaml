@@ -10,7 +10,7 @@
     </UserControl.Resources>
     
     <Grid>
-        <Image Source="/CrypWin;component/images/LogoBlau.png" Opacity="0.2" />
+        <Image Source="/CrypWin;component/images/LogoBlau.png" Opacity="0.1" />
 
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel Name="stackPanel">

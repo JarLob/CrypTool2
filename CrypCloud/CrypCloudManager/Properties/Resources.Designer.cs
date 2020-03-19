@@ -742,7 +742,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enable OpenCL: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enable OpenCL ähnelt.
         /// </summary>
         public static string EnableOpenCL {
             get {
@@ -816,7 +816,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Log level ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Log level: ähnelt.
         /// </summary>
         public static string LogLevel {
             get {
@@ -870,7 +870,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Write performance log: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Write performance log ähnelt.
         /// </summary>
         public static string WritePerformanceLog {
             get {

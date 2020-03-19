@@ -314,7 +314,7 @@
     <value>Job-ID:</value>
   </data>
   <data name="EnableOpenCL" xml:space="preserve">
-    <value>Aktiviere OpenCL:</value>
+    <value>Aktiviere OpenCL</value>
   </data>
   <data name="OpenCLDevice" xml:space="preserve">
     <value>OpenCL Gerät:</value>
@@ -326,7 +326,7 @@
     <value>Größe</value>
   </data>
   <data name="LogLevel" xml:space="preserve">
-    <value>Log-Level</value>
+    <value>Log-Level:</value>
   </data>
   <data name="_Remember_me_tooltip" xml:space="preserve">
     <value>Benutzername und Passwort werden verschlüsselt gespeichert und beim nächsten Starten von CrypCloud automatisch wiederhergestellt.</value>

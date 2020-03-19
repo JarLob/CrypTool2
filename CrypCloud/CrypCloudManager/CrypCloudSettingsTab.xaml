@@ -10,29 +10,49 @@
             <StackPanel Name="stackPanel1" VerticalAlignment="Top">
                 <Label Content="{Loc CrypCloudSettingsTitle}" FontWeight="Bold" FontSize="14"/>
                 <Label Content="{Loc General}" FontWeight="Bold" />
-                <Label Content="{Loc AmountOfWorker_Settings}"  Margin="30,5,0,2"/>
-                <Grid Width="500" Margin="30,0,0,10" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <Grid Margin="30,5,0,2" Width="Auto" HorizontalAlignment="Left">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="47"/>
-                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="13"/>
-                        <RowDefinition Height="13"/>
-                    </Grid.RowDefinitions>
-                    <TextBox Width="45" Grid.Row="0" Grid.RowSpan="2"  Name="NUDTextBox"  TextAlignment="Right" PreviewKeyDown="NUDTextBox_PreviewKeyDown" PreviewKeyUp="NUDTextBox_PreviewKeyUp" TextChanged="NUDTextBox_TextChanged" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
-                    <RepeatButton Grid.Row="0" Grid.Column="1"  Name="NUDButtonUP" FontSize="8" FontFamily="Marlett" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="NUDButtonUP_Click">5</RepeatButton>
-                    <RepeatButton Grid.Row="1" Grid.Column="1"  Name="NUDButtonDown" FontFamily="Marlett" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="NUDButtonDown_Click">6</RepeatButton>
+                    <Label Content="{Loc AmountOfWorker_Settings}" Grid.Column="0" Width="Auto"/>
+                    <Grid Width="50" VerticalAlignment="Center" HorizontalAlignment="Left"  Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="27"/>
+                            <ColumnDefinition Width="20"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="13"/>
+                            <RowDefinition Height="13"/>
+                        </Grid.RowDefinitions>
+                        <TextBox Width="25" Grid.Row="0" Grid.RowSpan="2"  Name="NUDTextBox"  TextAlignment="Right" PreviewKeyDown="NUDTextBox_PreviewKeyDown" PreviewKeyUp="NUDTextBox_PreviewKeyUp" TextChanged="NUDTextBox_TextChanged" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+                        <RepeatButton Grid.Row="0" Grid.Column="1"  Name="NUDButtonUP" FontSize="8" FontFamily="Marlett" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="NUDButtonUP_Click">5</RepeatButton>
+                        <RepeatButton Grid.Row="1" Grid.Column="1"  Name="NUDButtonDown" FontFamily="Marlett" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="NUDButtonDown_Click">6</RepeatButton>
+                    </Grid>
                 </Grid>
                 <CheckBox Name="EnableOpenCL" Content="{Loc EnableOpenCL}" Margin="30,5,0,10" VerticalAlignment="Center" HorizontalAlignment="Left" Click="EnableOpenCL_Click"/>
-                <ComboBox Name="OpenCLDevice" Text="{Loc OpenCLDevice}" Margin="30,5,0,10" SelectionChanged="OpenCLDevice_SelectionChanged"/>
-                <CheckBox Content="{Loc WritePerformanceLog}" Margin="30,5,0,10"  Name="WritePerformanceLog"  VerticalAlignment="Center" HorizontalAlignment="Left" Height="15" Width="15" Click="WritePerformanceLog_Click"/>
-                <ComboBox Text="{Loc LogLevel}" Margin="30,5,0,10" Name="LogLevelComboBox" SelectionChanged="LogLevelComboBox_SelectionChanged">
-                    <ComboBoxItem>Debug</ComboBoxItem>
-                    <ComboBoxItem>Info</ComboBoxItem>
-                    <ComboBoxItem>Warning</ComboBoxItem>
-                    <ComboBoxItem>Error</ComboBoxItem>
-                </ComboBox>
+                <Grid Margin="30,5,0,10" Width="Auto" HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="{Loc OpenCLDevice}" Grid.Column="0" Width="150"/>
+                    <ComboBox Width="200" Name="OpenCLDevice" Grid.Column="1" SelectionChanged="OpenCLDevice_SelectionChanged"/>
+                </Grid>
+                <CheckBox Content="{Loc WritePerformanceLog}" Margin="30,5,0,10" Name="WritePerformanceLog"  VerticalAlignment="Center" HorizontalAlignment="Left" Height="15" Width="15" Click="WritePerformanceLog_Click"/>
+                <Grid Margin="30,5,0,10" Width="Auto" HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="{Loc LogLevel}" Grid.Column="0" Width="150"/>
+                    <ComboBox Width="200" Text="{Loc LogLevel}" Grid.Column="1" Name="LogLevelComboBox" SelectionChanged="LogLevelComboBox_SelectionChanged">
+                        <ComboBoxItem>Debug</ComboBoxItem>
+                        <ComboBoxItem>Info</ComboBoxItem>
+                        <ComboBoxItem>Warning</ComboBoxItem>
+                        <ComboBoxItem>Error</ComboBoxItem>
+                    </ComboBox>
+                </Grid>
             </StackPanel>
         </Grid>
     </ScrollViewer>
