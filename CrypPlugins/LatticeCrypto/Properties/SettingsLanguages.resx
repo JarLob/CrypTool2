@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="labelMaxCountLatticePoints" xml:space="preserve">
-    <value>Maximum number of lattice points</value>
+    <value>Maximum number of lattice points:</value>
   </data>
   <data name="labelMaxCountPolygons" xml:space="preserve">
-    <value>Maximum number of parallelograms</value>
+    <value>Maximum number of parallelograms:</value>
   </data>
   <data name="labelUseSameScaleForBothAxes" xml:space="preserve">
-    <value>Same scale for both axes</value>
+    <value>Same scale for both axes:</value>
   </data>
   <data name="comma" xml:space="preserve">
     <value>Comma</value>
@@ -139,16 +139,16 @@
     <value>Formatting</value>
   </data>
   <data name="labelLatticeTags" xml:space="preserve">
-    <value>Lattice tags</value>
+    <value>Lattice tags:</value>
   </data>
   <data name="labelPresentation" xml:space="preserve">
     <value>Presentation</value>
   </data>
   <data name="labelVectorSeparator" xml:space="preserve">
-    <value>Vector separator</value>
+    <value>Vector separator:</value>
   </data>
   <data name="labelVectorTags" xml:space="preserve">
-    <value>Vector tags</value>
+    <value>Vector tags:</value>
   </data>
   <data name="noBrackets" xml:space="preserve">
     <value>No brackets</value>
@@ -169,18 +169,21 @@
     <value>Tab</value>
   </data>
   <data name="labelShowHermiteCircle" xml:space="preserve">
-    <value>Show Hermite circle</value>
+    <value>Show Hermite circle:</value>
   </data>
   <data name="labelSpherePacking" xml:space="preserve">
-    <value>Show sphere packing</value>
+    <value>Show sphere packing:</value>
   </data>
   <data name="labelForceAcuteAngle" xml:space="preserve">
-    <value>Force acute angle for Gauss</value>
+    <value>Force acute angle for Gauss:</value>
   </data>
   <data name="labelMaxDecimalPlaces" xml:space="preserve">
-    <value>Max. decimal places in log</value>
+    <value>Max. decimal places in log:</value>
   </data>
   <data name="errorInputPositiveInteger" xml:space="preserve">
-    <value>Please enter a positive integer.</value>
+    <value>Please enter a positive integer</value>
+  </data>
+  <data name="labelLatticeBasedCryptography" xml:space="preserve">
+    <value>Lattice-based cryptography</value>
   </data>
 </root>
