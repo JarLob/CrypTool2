@@ -187,7 +187,7 @@ namespace Cryptool.Plugins.LAMBDA1.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Specify Initialization Vector.
+        ///   Looks up a localized string similar to Specify initialization vector (IV).
         /// </summary>
         internal static string InputIVTooltip {
             get {
@@ -223,7 +223,7 @@ namespace Cryptool.Plugins.LAMBDA1.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose if you want to encrypt or decrypt data.
+        ///   Looks up a localized string similar to Choose wether you want to encrypt or decrypt data.
         /// </summary>
         internal static string ModeDescription {
             get {

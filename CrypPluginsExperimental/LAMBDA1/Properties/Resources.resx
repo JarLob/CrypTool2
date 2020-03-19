@@ -160,7 +160,7 @@
     <value>Initialization Vector</value>
   </data>
   <data name="InputIVTooltip" xml:space="preserve">
-    <value>Specify Initialization Vector</value>
+    <value>Specify initialization vector (IV)</value>
   </data>
   <data name="InputKey" xml:space="preserve">
     <value>Key</value>
@@ -172,7 +172,7 @@
     <value>Mode</value>
   </data>
   <data name="ModeDescription" xml:space="preserve">
-    <value>Choose if you want to encrypt or decrypt data</value>
+    <value>Choose wether you want to encrypt or decrypt data</value>
   </data>
   <data name="OutputData" xml:space="preserve">
     <value>Output Data</value>
