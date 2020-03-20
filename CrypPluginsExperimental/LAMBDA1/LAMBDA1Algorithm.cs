@@ -21,7 +21,7 @@ namespace Cryptool.Plugins.LAMBDA1
         #region LAMBDA1 Tables
 
         // Expansion Function (E)
-        private static byte[] byteE = {
+        private static readonly byte[] byteE = {
             32,  1,  2,  3,  4,  5,
             4,   5,  6,  7,  8,  9,
             8,   9, 10, 11, 12, 13,
@@ -33,7 +33,7 @@ namespace Cryptool.Plugins.LAMBDA1
         };
 
         // Permutation Function (P)
-        private static byte[] byteP = {
+        private static readonly byte[] byteP = {
             16,  7, 20, 21,
             29, 12, 28, 17,
             1,  15, 23, 26,
@@ -46,7 +46,7 @@ namespace Cryptool.Plugins.LAMBDA1
 
 
         // S-Boxes
-        private static byte[,] byteSBoxes = new byte[,] {
+        private static readonly byte[,] byteSBoxes = new byte[,] {
             {14,  4, 13,  1,     2, 15, 11,  8, 3, 10,  6, 12,   5,  9,  0,  7},
             { 0, 15,  7,  4,    14,  2, 13,  1, 10,  6, 12, 11,  9,  5,  3,  8},
             { 4,  1, 14,  8,    13,  6,  2, 11, 15, 12,  9,  7,  3, 10,  5,  0},
@@ -94,7 +94,7 @@ namespace Cryptool.Plugins.LAMBDA1
         /// Initialize LAMBDA1 by setting the keys and mode (encrypt or decrypt)
         /// </summary>
         /// <param name="key">a 32 byte array with the key</param>
-        /// <param name="mode">an enum wether you want to encrypt or decrypt</param>
+        /// <param name="mode">an enum whether you want to encrypt or decrypt</param>
         public LAMBDA1Algorithm(byte[] key, OperationMode mode)
         {
             CheckKeys(key);
@@ -137,11 +137,11 @@ namespace Cryptool.Plugins.LAMBDA1
 
             // Keys 5 to 12
             for (; keyCounter < 12; ++keyCounter)
-                rotateKey(roundKeys[keyCounter - 4], ref roundKeys[keyCounter], 11);
+                RotateKey(roundKeys[keyCounter - 4], ref roundKeys[keyCounter], 11);
 
             // Keys 13 to 16
             for (; keyCounter < 16; ++keyCounter)
-                rotateKey(roundKeys[(24 - keyCounter) - 1], ref roundKeys[keyCounter], 11);
+                RotateKey(roundKeys[(24 - keyCounter) - 1], ref roundKeys[keyCounter], 11);
 
             // Bonus keys 17 and 18
             ByteToInt(key, 24, 4, out tmp);
@@ -283,9 +283,8 @@ namespace Cryptool.Plugins.LAMBDA1
         /// <param name="key">a 48 bit round key</param>
         /// <param name="outputKey">the shifted 48 bit round key</param>
         /// <param name="rounds">number of rounds to shift</param>
-        private void rotateKey(UInt64 key, ref UInt64 outputKey, int rounds)
+        private void RotateKey(UInt64 key, ref UInt64 outputKey, int rounds)
         {
-            outputKey = 0;
             UInt64 tmp;
             for (int i = 0; i < rounds; ++i)
             {

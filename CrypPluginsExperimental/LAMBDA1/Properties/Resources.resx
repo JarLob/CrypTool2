@@ -172,7 +172,7 @@
     <value>Mode</value>
   </data>
   <data name="ModeDescription" xml:space="preserve">
-    <value>Choose wether you want to encrypt or decrypt data</value>
+    <value>Choose whether you want to encrypt or decrypt data</value>
   </data>
   <data name="OutputData" xml:space="preserve">
     <value>Output Data</value>

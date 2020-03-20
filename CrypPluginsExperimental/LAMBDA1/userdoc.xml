@@ -46,8 +46,8 @@
 
 
   <usage lang="en">
-    Connect a data and key input to the machine. The key must be 32 bytes (256 bit) long. You can choose wether to encrypt or decrypt data.
-    The additional input connector is for the initialization vector. It must have the same length as the block size, which is 8 bytes (32 bit).
+    Connect a data and key input to the machine. The key must be 32 bytes (256 bit) long. You can choose whether to encrypt or decrypt data.
+    The additional input connector is for the initialization vector. It must have the same length as the block size, which is 8 bytes (64 bit).
     If none is provided zeros will be used.
     <newline />
     The algorithm accepts any data. The blocks are padded with zeros, as this was the historic
@@ -59,7 +59,7 @@
   <usage lang="de-DE">
     Schließen Sie die Konnektoren für die Eingabedaten, den Schlüssel und die Ausgabedaten an. Der Schlüssel muss 32 Bytes (256 Bits) lang sein.
     An den weiteren Eingabe-Konnektor kann der Initialisierungsvektor angegeben werden.
-    Dieser muss der Blockgröße von 8 Bytes (32 Bit) entsprechen. Falls optional keiner angegeben wird,
+    Dieser muss der Blockgröße von 8 Bytes (64 Bit) entsprechen. Falls optional keiner angegeben wird,
     werden Nullen verwendet.
     Es kann zwischen den Modi Ver- und Entschlüsselung gewählt werden.
     <newline />

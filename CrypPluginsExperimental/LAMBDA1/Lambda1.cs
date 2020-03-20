@@ -141,10 +141,7 @@ namespace Cryptool.Plugins.LAMBDA1
         /// </summary>
         private void PrepareAndEncrypt()
         {
-            //InputData = RemoveUnicode(InputData);
             MemoryStream outputStream = new MemoryStream();
-            //byte[] invalidCharacters, paddedCharacters, chunks;
-            // byte[] convertedChars = AsciiToCcitt2(InputData, out invalidCharacters);
           
             if (InputIV != null)
             {
