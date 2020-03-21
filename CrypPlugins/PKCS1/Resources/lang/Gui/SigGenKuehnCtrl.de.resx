@@ -132,6 +132,9 @@
   <data name="genSig" xml:space="preserve">
     <value>Signatur erzeugen</value>
   </data>
+  <data name="genSigInfo" xml:space="preserve">
+    <value>Um den Angriff mit kürzeren Schlüsseln durchführen zu können, muss zuerst ein RSA-Schlüsselpaar in der entsprechenden Maske erzeugt werden.</value>
+  </data>
   <data name="genSigErrorMaxIter" xml:space="preserve">
     <value>Signatur konnte nicht erstellt werden. Es ist das Limit an Iterationen erreicht worden.</value>
   </data>
@@ -148,6 +151,6 @@
     <value>Struktur</value>
   </data>
   <data name="title" xml:space="preserve">
-    <value>Angriff mit kürzeren Schlüsseln (Kühn)</value>
+    <value>Angriff mit kürzeren Schlüsseln (Kühn 2003)</value>
   </data>
 </root>

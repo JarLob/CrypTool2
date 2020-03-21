@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:comp="clr-namespace:PKCS1.WpfControls.Components"
     xmlns:lang="clr-namespace:PKCS1.Resources.lang.Gui"
+    x:Name="SigGenFakeShort"
     VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -24,14 +25,41 @@
                         </ScrollViewer>
                     </DataTemplate>
                 </comp:HelpTabItem>
-                <comp:HelpTabItem HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="tabGenSignature" HelpButtonClick="TabItem_HelpButtonClick">
+                <comp:HelpTabItem HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="tabGenSignature" HelpButtonClick="TabItem_HelpButtonClick"
+                                  DataContext="{Binding ElementName=SigGenFakeShort}">
                     <comp:HelpTabItem.Header>
                         <x:Static Member="lang:SigGenKuehnCtrl.genSig"></x:Static>
                     </comp:HelpTabItem.Header>
                     <DataTemplate>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                            <comp:SigGenKuehnControl x:Name="sigGen3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-                        </ScrollViewer>
+                        <Grid>
+                            <Label>
+                                <Label.Style>
+                                    <Style TargetType="Label">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding GenSigAvailable}" Value="True">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Label.Style>
+                                <TextBlock Text="{x:Static lang:SigGenKuehnCtrl.genSigInfo}"
+                                           FontSize="16" Foreground="Red" TextWrapping="Wrap" />
+                            </Label>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+
+                                <comp:SigGenKuehnControl x:Name="sigGen3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <comp:SigGenKuehnControl.Style>
+                                        <Style TargetType="{x:Type comp:SigGenKuehnControl}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding GenSigAvailable}" Value="False">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </comp:SigGenKuehnControl.Style>
+                                </comp:SigGenKuehnControl>
+                            </ScrollViewer>
+                        </Grid>
                     </DataTemplate>
                 </comp:HelpTabItem>
             </TabControl>

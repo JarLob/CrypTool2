@@ -13,6 +13,15 @@ namespace PKCS1.WpfControls.SigGenFake
         private bool isKeyGen = false;
         private bool isDatablockGen = false;
 
+        public bool GenSigAvailable
+        {
+            get { return (bool)this.GetValue(GenSigAvailableProperty); }
+            set { this.SetValue(GenSigAvailableProperty, value); }
+        }
+
+        public static readonly DependencyProperty GenSigAvailableProperty = DependencyProperty.Register(
+          nameof(GenSigAvailable), typeof(bool), typeof(SigGenFakeBleichenbControl), new PropertyMetadata(false));
+
         public SigGenFakeBleichenbControl()
         {
             InitializeComponent();
@@ -22,15 +31,6 @@ namespace PKCS1.WpfControls.SigGenFake
                 var datablockcontrol2 = ((DatablockControl)((ScrollViewer)content).Content);
                 datablockcontrol2.RaiseDataBlockGenerated += handleKeyGenerated;
             };
-
-            if (RsaKey.Instance.isKeyGenerated())
-            {
-                this.tabGenSignature.IsEnabled = true;
-            }
-            else
-            {
-                this.tabGenSignature.IsEnabled = false;
-            }
         }
 
         private void handleKeyGenerated(ParameterChangeType type)
@@ -46,7 +46,7 @@ namespace PKCS1.WpfControls.SigGenFake
 
             if (this.isKeyGen == true && this.isDatablockGen == true)
             {
-                this.tabGenSignature.IsEnabled = true;
+                GenSigAvailable = true;
             }
         }
 

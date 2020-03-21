@@ -61,7 +61,7 @@ namespace PKCS1.Resources.lang.Navigation {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Bleichenbacher attack ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bleichenbacher attack (1998) ähnelt.
         /// </summary>
         public static string attackbleichenbacher {
             get {
@@ -70,7 +70,7 @@ namespace PKCS1.Resources.lang.Navigation {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Attack with shorter keys (Kuehn) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Attack with shorter keys (Kuehn 2003) ähnelt.
         /// </summary>
         public static string attackvariant {
             get {

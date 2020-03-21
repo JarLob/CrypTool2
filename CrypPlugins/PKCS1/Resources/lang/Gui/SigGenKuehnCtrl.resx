@@ -132,6 +132,9 @@
   <data name="genSig" xml:space="preserve">
     <value>Generate signature</value>
   </data>
+  <data name="genSigInfo" xml:space="preserve">
+    <value>Please notice that in order to carry out the attack you first have to create an RSA key pair and the data block in the corresponding mask.</value>
+  </data>
   <data name="genSigErrorMaxIter" xml:space="preserve">
     <value>Signature could not be generated. Maximum amount of iterations reached.</value>
   </data>
@@ -148,6 +151,6 @@
     <value>Structure</value>
   </data>
   <data name="title" xml:space="preserve">
-    <value>Attack with shorter keys (Kuehn)</value>
+    <value>Attack with shorter keys (Kuehn 2003)</value>
   </data>
 </root>

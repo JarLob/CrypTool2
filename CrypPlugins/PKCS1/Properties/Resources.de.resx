@@ -121,10 +121,10 @@
     <value>Angriffe auf PKCS#1</value>
   </data>
   <data name="FL_P_bleichenbacher" xml:space="preserve">
-    <value>Angriffe auf PKCS#1\ Bleichenbacher-Angriff</value>
+    <value>Angriffe auf PKCS#1\ Bleichenbacher-Angriff (1998)</value>
   </data>
   <data name="FL_P_kuehn" xml:space="preserve">
-    <value>Angriffe auf PKCS#1\ Angriff mit kürzeren Schlüsseln (Kühn)</value>
+    <value>Angriffe auf PKCS#1\ Angriff mit kürzeren Schlüsseln (Kühn 2003)</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Angriffe auf PKCS#1</value>

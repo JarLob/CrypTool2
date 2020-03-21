@@ -129,6 +129,9 @@
   <data name="genSig" xml:space="preserve">
     <value>Signatur erzeugen</value>
   </data>
+  <data name="genSigInfo" xml:space="preserve">
+    <value>Um den Bleichenbacher-Angriff durchführen zu können, muss zuerst ein RSA-Schlüsselpaar in der entsprechenden Maske erzeugt werden.</value>
+  </data>
   <data name="pubKey" xml:space="preserve">
     <value>Öffentlicher Schlüssel:</value>
   </data>
@@ -145,7 +148,7 @@
     <value>Gefälschte Signatur erzeugen</value>
   </data>
   <data name="title" xml:space="preserve">
-    <value>Bleichenbacher-Angriff</value>
+    <value>Bleichenbacher-Angriff (1998)</value>
   </data>
   <data name="changeSign" xml:space="preserve">
     <value>Zeichen zur Nachrichtenänderung:</value>

@@ -129,6 +129,9 @@
   <data name="genSig" xml:space="preserve">
     <value>Generate signature</value>
   </data>
+  <data name="genSigInfo" xml:space="preserve">
+    <value>Please notice that in order to carry out the Bleichenbacher attack you first have to create an RSA key pair and the data block in the corresponding mask.</value>
+  </data>
   <data name="pubKey" xml:space="preserve">
     <value>Public key:</value>
   </data>
@@ -145,7 +148,7 @@
     <value>Generate fake signature</value>
   </data>
   <data name="title" xml:space="preserve">
-    <value>Bleichenbacher attack</value>
+    <value>Bleichenbacher attack (1998)</value>
   </data>
   <data name="changeSign" xml:space="preserve">
     <value>Modify message with character:</value>
