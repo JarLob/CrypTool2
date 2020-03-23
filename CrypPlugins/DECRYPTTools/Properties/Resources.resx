@@ -316,4 +316,10 @@
   <data name="DECRYPTDeciphererTooltip" xml:space="preserve">
     <value>Performs tokenization and decryption of texts using DECRYPT parsers.</value>
   </data>
+  <data name="ResetColorButton" xml:space="preserve">
+    <value>Reset colors</value>
+  </data>
+  <data name="TextElementColors" xml:space="preserve">
+    <value>Text element colors</value>
+  </data>
 </root>

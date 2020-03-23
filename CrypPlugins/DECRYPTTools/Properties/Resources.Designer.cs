@@ -539,6 +539,15 @@ namespace Cryptool.Plugins.DECRYPTTools.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reset colors ähnelt.
+        /// </summary>
+        internal static string ResetColorButton {
+            get {
+                return ResourceManager.GetString("ResetColorButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Sender: ähnelt.
         /// </summary>
         internal static string Sender {
@@ -589,6 +598,15 @@ namespace Cryptool.Plugins.DECRYPTTools.Properties {
         internal static string TestLoginData {
             get {
                 return ResourceManager.GetString("TestLoginData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Text element colors ähnelt.
+        /// </summary>
+        internal static string TextElementColors {
+            get {
+                return ResourceManager.GetString("TextElementColors", resourceCulture);
             }
         }
         
