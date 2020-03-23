@@ -19,7 +19,7 @@
 
         <Grid Width="300" HorizontalAlignment="Left" Style="{StaticResource ResourceKey=settingsStyle}" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <SelectableTextBlock Grid.Column="0" Text="{x:Static Properties:SettingsLanguages.labelMaxCountLatticePoints}" />
@@ -36,7 +36,7 @@
 
         <Grid Width="300" HorizontalAlignment="Left" Style="{StaticResource ResourceKey=settingsStyle}" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <SelectableTextBlock Grid.Column="0" Text="{x:Static Properties:SettingsLanguages.labelMaxCountPolygons}" />
@@ -53,7 +53,7 @@
 
         <Grid Width="300" HorizontalAlignment="Left" Style="{StaticResource ResourceKey=settingsStyle}" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <SelectableTextBlock Grid.Column="0" Text="{x:Static Properties:SettingsLanguages.labelUseSameScaleForBothAxes}" />
@@ -62,7 +62,7 @@
 
         <Grid Width="300" HorizontalAlignment="Left" Style="{StaticResource ResourceKey=settingsStyle}" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <SelectableTextBlock Grid.Column="0" Text="{x:Static Properties:SettingsLanguages.labelShowHermiteCircle}" />
@@ -71,7 +71,7 @@
 
         <Grid Width="300" HorizontalAlignment="Left" Style="{StaticResource ResourceKey=settingsStyle}" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <SelectableTextBlock Grid.Column="0" Text="{x:Static Properties:SettingsLanguages.labelSpherePacking}" />
@@ -80,7 +80,7 @@
 
         <Grid Width="300" HorizontalAlignment="Left" Style="{StaticResource ResourceKey=settingsStyle}" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <SelectableTextBlock Grid.Column="0" Text="{x:Static Properties:SettingsLanguages.labelForceAcuteAngle}" />
@@ -89,7 +89,7 @@
 
         <Grid Width="300" HorizontalAlignment="Left" Style="{StaticResource ResourceKey=settingsStyle}" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <SelectableTextBlock Grid.Column="0" Text="{x:Static Properties:SettingsLanguages.labelMaxDecimalPlaces}" />
@@ -108,7 +108,7 @@
         
         <Grid Width="400" HorizontalAlignment="Left" Style="{StaticResource ResourceKey=settingsStyle}" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <SelectableTextBlock Grid.Column="0" Text="{x:Static Properties:SettingsLanguages.labelLatticeTags}" />
@@ -122,7 +122,7 @@
 
         <Grid Width="400" HorizontalAlignment="Left" Style="{StaticResource ResourceKey=settingsStyle}" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <SelectableTextBlock Grid.Column="0" Text="{x:Static Properties:SettingsLanguages.labelVectorTags}" />
@@ -136,7 +136,7 @@
 
         <Grid Width="400" HorizontalAlignment="Left" Style="{StaticResource ResourceKey=settingsStyle}" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <SelectableTextBlock Grid.Column="0" Text="{x:Static Properties:SettingsLanguages.labelVectorSeparator}" />
@@ -150,7 +150,7 @@
 
         <Grid Width="400" HorizontalAlignment="Left" Style="{StaticResource ResourceKey=settingsStyle}" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <SelectableTextBlock Grid.Column="0" Text="{x:Static Properties:SettingsLanguages.labelCoordinatesSeparator}" />

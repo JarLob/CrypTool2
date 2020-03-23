@@ -328,4 +328,10 @@ It has to be manually edited in CrypWin.exe.config file in the CT2 installation 
   <data name="NotificationIconSettingsTitle" xml:space="preserve">
     <value>Notification icon settings</value>
   </data>
+  <data name="ComponentSettings" xml:space="preserve">
+    <value>Component Settings</value>
+  </data>
+  <data name="EnableDisableComponents" xml:space="preserve">
+    <value>Enable/disable components</value>
+  </data>
 </root>

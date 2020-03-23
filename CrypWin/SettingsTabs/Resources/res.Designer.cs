@@ -223,6 +223,15 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Component Settings ähnelt.
+        /// </summary>
+        public static string ComponentSettings {
+            get {
+                return ResourceManager.GetString("ComponentSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Copy all lines ähnelt.
         /// </summary>
         public static string Copy_all {
@@ -264,6 +273,15 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         public static string EditorOpeningContent {
             get {
                 return ResourceManager.GetString("EditorOpeningContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enable/disable components ähnelt.
+        /// </summary>
+        public static string EnableDisableComponents {
+            get {
+                return ResourceManager.GetString("EnableDisableComponents", resourceCulture);
             }
         }
         

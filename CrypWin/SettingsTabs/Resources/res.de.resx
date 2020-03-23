@@ -328,4 +328,10 @@ Sie muss manuell in der Datei CrypWin.exe.config im Installationsverzeichnis von
   <data name="UpdaterSettingsTitle" xml:space="preserve">
     <value>Updater-Einstellungen</value>
   </data>
+  <data name="ComponentSettings" xml:space="preserve">
+    <value>Komponenten-Einstellungen</value>
+  </data>
+  <data name="EnableDisableComponents" xml:space="preserve">
+    <value>Komponenten ein-/ausschalten</value>
+  </data>
 </root>

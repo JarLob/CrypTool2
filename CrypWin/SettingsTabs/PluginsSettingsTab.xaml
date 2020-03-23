@@ -10,9 +10,14 @@
         <Grid Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=SettingsTabs:PluginsSettingsTab, AncestorLevel=1}, Path=IsVisible}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Grid.Row="0">
+                <Label Content="{Loc Component Settings}" FontWeight="Bold" FontSize="14"/>
+                <Label Content="{Loc EnableDisableComponents}" FontWeight="Bold" />
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <StackPanel.Resources>
                     <Style TargetType="Button">
                         <Setter Property="Margin" Value="10"/>
@@ -24,7 +29,7 @@
                 <Button Content="{Loc Invert_selection}" Click="Invert_Click" />
             </StackPanel>
 
-            <ListView Grid.Row="1" Name="PluginListBox" ItemsSource="{Binding}" Background="#00000000">
+            <ListView Grid.Row="2" Name="PluginListBox" ItemsSource="{Binding}" Background="#00000000">
                 
                 <ListView.Resources>
                     <ContextMenu x:Key="ItemContextMenu">

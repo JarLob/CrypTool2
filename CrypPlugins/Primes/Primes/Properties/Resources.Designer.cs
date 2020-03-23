@@ -414,7 +414,7 @@ namespace Primes.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die the Simpson-Formula ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The Simpson-Formula ähnelt.
         /// </summary>
         internal static string SimpsonFormula {
             get {

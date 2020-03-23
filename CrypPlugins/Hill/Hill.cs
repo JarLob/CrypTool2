@@ -139,7 +139,9 @@ namespace Cryptool.Plugins.Hill
                 try
                 {
                     for (i = 0; i < matelements.Length; i++)
+                    {
                         matelements[i] = BigInteger.Parse(s[i]);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -152,8 +154,12 @@ namespace Cryptool.Plugins.Hill
 
             int k = -1;
             for (int y = 0; y < mat.Dimension; y++)
+            {
                 for (int x = 0; x < mat.Dimension; x++)
+                {
                     mat[x, y] = matelements[++k];
+                }
+            }
 
             try
             {
@@ -185,10 +191,14 @@ namespace Cryptool.Plugins.Hill
             for (int j = 0; j < Input.Length; j += mat.Dimension)
             {
                 for (int k = 0; k < mat.Dimension; k++)
+                {
                     vector[k] = settings.Alphabet.IndexOf(Input[j + k]);
+                }
                 result = mat * vector;
                 for (int k = 0; k < mat.Dimension; k++)
+                {
                     Output += settings.Alphabet[(int)result[k]];
+                }
             }
 
             OnPropertyChanged("Output");

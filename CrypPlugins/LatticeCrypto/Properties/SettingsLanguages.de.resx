@@ -175,7 +175,7 @@
     <value>Zeige Kreispackungen:</value>
   </data>
   <data name="labelForceAcuteAngle" xml:space="preserve">
-    <value>Erzwinge spitzen Winkel für Gauß</value>
+    <value>Erzwinge spitzen Winkel für Gauß:</value>
   </data>
   <data name="labelMaxDecimalPlaces" xml:space="preserve">
     <value>Max. Dezimalstellen im Log:</value>
