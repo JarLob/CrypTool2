@@ -58,6 +58,9 @@
                     <Label Content="{Loc RecentFileListLength}" />
                     <TextBox Name="RecentFileListLengthBox" Width="40" VerticalContentAlignment="Center" TextChanged="RecentFileListLengthBox_TextChanged" />
                 </StackPanel>
+
+                <Label Content="{Loc ResetCrypTool2Label}" FontWeight="Bold" />
+                <Button Name="ResetCrypTool2Button" Content="{Loc ResetCrypTool2Button}" Click="ResetCrypTool2Button_Click" HorizontalAlignment="Left" Style="{StaticResource ResourceKey=settingsStyle}"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

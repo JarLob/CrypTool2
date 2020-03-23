@@ -268,6 +268,15 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Do you really want to reset CT2&apos;s settings to default values? A restart is performed then. ähnelt.
+        /// </summary>
+        public static string DoYouReallyWantReset {
+            get {
+                return ResourceManager.GetString("DoYouReallyWantReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die New editor opening behaviour ähnelt.
         /// </summary>
         public static string EditorOpeningContent {
@@ -444,6 +453,33 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         public static string Reopen_last_opened_file_tooltip {
             get {
                 return ResourceManager.GetString("Reopen_last_opened_file_tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reset CT2 to default setting values ähnelt.
+        /// </summary>
+        public static string ResetCrypTool2Button {
+            get {
+                return ResourceManager.GetString("ResetCrypTool2Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reset CrypTool 2 ähnelt.
+        /// </summary>
+        public static string ResetCrypTool2Label {
+            get {
+                return ResourceManager.GetString("ResetCrypTool2Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reset to default values ähnelt.
+        /// </summary>
+        public static string ResetToDefaultValues {
+            get {
+                return ResourceManager.GetString("ResetToDefaultValues", resourceCulture);
             }
         }
         

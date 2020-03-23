@@ -137,6 +137,43 @@ namespace Cryptool.CrypWin.SettingsTabs
             App.Current.Shutdown();
         }
 
+        private void ResetCrypTool2Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MessageBoxResult result = MessageBox.Show(SettingsTabs.Resources.res.DoYouReallyWantReset,
+                    SettingsTabs.Resources.res.ResetToDefaultValues, MessageBoxButton.YesNo);
+                
+                if (result == MessageBoxResult.No)
+                {
+                    return;
+                }
+
+                //Reset all plugins settings
+                PluginBase.Properties.Settings.Default.Reset();
+                //Reset WorkspaceManagerModel settings
+                WorkspaceManagerModel.Properties.Settings.Default.Reset();
+                //reset Crypwin settings
+                Settings.Default.Reset();
+                //reset Crypcore settings
+                Core.Properties.Settings.Default.Reset();
+                //reset MainWindow settings
+                Settings.Default.Reset();
+
+                //restart CT2
+                int processID = Process.GetCurrentProcess().Id;
+                string exePath = Process.GetCurrentProcess().MainModule.FileName;
+                string cryptoolFolderPath = Path.GetDirectoryName(exePath);
+                string updaterPath = Path.Combine(DirectoryHelper.BaseDirectory, "CrypUpdater.exe");
+                string parameters = "\"dummy\" " + "\"" + cryptoolFolderPath + "\" " + "\"" + exePath + "\" " + "\"" + processID + "\" -JustRestart";
+                Process.Start(updaterPath, parameters);
+                Application.Current.Shutdown();
+            }
+            catch (Exception)
+            {
+                //do nothing 
+            }
+        }
     }
 
     [ValueConversion(typeof(bool), typeof(bool))]

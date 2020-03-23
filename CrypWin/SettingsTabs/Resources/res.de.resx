@@ -334,4 +334,16 @@ Sie muss manuell in der Datei CrypWin.exe.config im Installationsverzeichnis von
   <data name="EnableDisableComponents" xml:space="preserve">
     <value>Komponenten ein-/ausschalten</value>
   </data>
+  <data name="DoYouReallyWantReset" xml:space="preserve">
+    <value>Möchten Sie die CT2-Einstellungen wirklich auf die Standardwerte zurücksetzen? Dann wird ein Neustart durchgeführt.</value>
+  </data>
+  <data name="ResetCrypTool2Button" xml:space="preserve">
+    <value>CrypTool 2 auf Standardeinstellungen zurücksetzen</value>
+  </data>
+  <data name="ResetCrypTool2Label" xml:space="preserve">
+    <value>CrypTool 2 zurücksetzen</value>
+  </data>
+  <data name="ResetToDefaultValues" xml:space="preserve">
+    <value>Zu Standardeinstellungen zurücksetzen</value>
+  </data>
 </root>
