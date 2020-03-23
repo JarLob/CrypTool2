@@ -178,7 +178,7 @@
     <value>Zeige Fehlernachrichten in Sprechblase</value>
   </data>
   <data name="Preferred_language" xml:space="preserve">
-    <value>Bevorzugte Sprache:</value>
+    <value>Bevorzugte Sprache</value>
   </data>
   <data name="Please_restart_CrypTool" xml:space="preserve">
     <value>Bitte starten Sie CT2 neu, damit die Änderungen sichtbar werden</value>
@@ -317,7 +317,7 @@ Sie muss manuell in der Datei CrypWin.exe.config im Installationsverzeichnis von
     <value>Wenn diese Einstellung aktiviert ist, schreibt CrypTool 2 automatisch das gesamte Log in eine Logdatei</value>
   </data>
   <data name="GeneralSettings" xml:space="preserve">
-    <value>Allgemeine Einstellungen</value>
+    <value>Generelle Einstellungen</value>
   </data>
   <data name="MessageSettings" xml:space="preserve">
     <value>Nachrichten-Einstellungen</value>

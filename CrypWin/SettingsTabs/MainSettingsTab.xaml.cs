@@ -50,12 +50,16 @@ namespace Cryptool.CrypWin.SettingsTabs
             {
                 Culture.Items.Add(cultureInfo);
                 if (cultureInfo.TextInfo.CultureName == CultureInfo.CurrentUICulture.TextInfo.CultureName)
+                {
                     Culture.SelectedItem = cultureInfo;
+                }
             }
 
             // Fallback if culture is not set
             if (Culture.SelectedItem == null && cultures.ContainsKey("en-US"))
+            {
                 Culture.SelectedItem = cultures["en-US"];
+            }
 
             RecentFileListLengthBox.Text = RecentFileList.GetSingleton().ListLength.ToString();
 

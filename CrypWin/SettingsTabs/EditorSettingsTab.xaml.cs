@@ -53,7 +53,9 @@ namespace Cryptool.CrypWin.SettingsTabs
             {
                 Culture.Items.Add(cultureInfo);
                 if (cultureInfo == CultureInfo.CurrentCulture)
+                {
                     Culture.SelectedItem = cultureInfo;
+                }
             }
         }
 

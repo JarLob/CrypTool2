@@ -136,13 +136,13 @@
     <value>Koordinaten-Trennzeichen:</value>
   </data>
   <data name="labelFormatting" xml:space="preserve">
-    <value>Formatierung:</value>
+    <value>Formatierung</value>
   </data>
   <data name="labelLatticeTags" xml:space="preserve">
     <value>Gitter-Tags:</value>
   </data>
   <data name="labelPresentation" xml:space="preserve">
-    <value>Darstellung:</value>
+    <value>Darstellung</value>
   </data>
   <data name="labelVectorSeparator" xml:space="preserve">
     <value>Vektor-Trennzeichen:</value>
