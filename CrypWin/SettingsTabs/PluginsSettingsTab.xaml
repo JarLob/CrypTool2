@@ -14,7 +14,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
-                <Label Content="{Loc Component Settings}" FontWeight="Bold" FontSize="14"/>
+                <Label Content="{Loc ComponentSettings}" FontWeight="Bold" FontSize="14"/>
                 <Label Content="{Loc EnableDisableComponents}" FontWeight="Bold" />
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
