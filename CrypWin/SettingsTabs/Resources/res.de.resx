@@ -190,28 +190,28 @@
     <value>Markieren Sie dies, um Fehlernachrichten in der Trayicon-Sprechblase anzuzeigen!</value>
   </data>
   <data name="Reopen_last_opened_file" xml:space="preserve">
-    <value>Öffne die letzten offenen Projekte beim Start von CT2</value>
+    <value>Öffne die letzten offenen Arbeitsflächen beim Start von CT2</value>
   </data>
   <data name="Reopen_last_opened_file_tooltip" xml:space="preserve">
-    <value>Markieren Sie dies, um die letzten offenen Projekte beim nächsten Start von CT2 wieder zu öffnen</value>
+    <value>Markieren Sie dies, um die letzten offenen Arbeitsflächen beim nächsten Start von CT2 wieder zu öffnen</value>
   </data>
   <data name="PluginSettings" xml:space="preserve">
     <value>Einstellungen zu Einzel-Komponenten</value>
   </data>
   <data name="BackgroundingContent" xml:space="preserve">
-    <value>CT2 im Hintergrund verstecken, wenn beim Schließen Projekte ausgeführt werden</value>
+    <value>CT2 im Hintergrund verstecken, wenn beim Schließen Arbeitsflächen ausgeführt werden</value>
   </data>
   <data name="BackgroundingLabelContent" xml:space="preserve">
     <value>Hintergrund-Ausführung</value>
   </data>
   <data name="BackgroundingToolTip" xml:space="preserve">
-    <value>Markieren, um auch nach dem Schließen laufende Projekte im Hintergrund weiter auszuführen</value>
+    <value>Markieren, um auch nach dem Schließen laufende Arbeitsflächen im Hintergrund weiter auszuführen</value>
   </data>
   <data name="PowerModeLabelContent" xml:space="preserve">
     <value>Energiespar-Optionen</value>
   </data>
   <data name="SavePowerContent" xml:space="preserve">
-    <value>Workspaces anhalten bei Batteriebetrieb</value>
+    <value>Arbeitsflächen anhalten bei Batteriebetrieb</value>
   </data>
   <data name="SavePowerToolTip" xml:space="preserve">
     <value>Markieren, um bei Batteriebetrieb Energie zu sparen.</value>

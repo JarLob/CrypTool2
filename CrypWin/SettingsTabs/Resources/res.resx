@@ -190,7 +190,7 @@
     <value>Check this to show the error log messages in the tray icon balloon!</value>
   </data>
   <data name="Reopen_last_opened_file" xml:space="preserve">
-    <value>Reopen last opened projects on startup</value>
+    <value>Reopen last opened workspaces on startup</value>
   </data>
   <data name="Reopen_last_opened_file_tooltip" xml:space="preserve">
     <value>Check this to reopen the last opened file on CT2 startup</value>
@@ -199,7 +199,7 @@
     <value>Settings of single components</value>
   </data>
   <data name="BackgroundingContent" xml:space="preserve">
-    <value>Hide in background when CT2 is closing and projects are still running</value>
+    <value>Hide in background when CT2 is closing and workspaces are still running</value>
   </data>
   <data name="BackgroundingLabelContent" xml:space="preserve">
     <value>Backgrounding options</value>

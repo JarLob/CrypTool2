@@ -106,7 +106,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hide in background when CT2 is closing and projects are still running ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hide in background when CT2 is closing and workspaces are still running ähnelt.
         /// </summary>
         public static string BackgroundingContent {
             get {
@@ -484,7 +484,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Reopen last opened projects on startup ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reopen last opened workspaces on startup ähnelt.
         /// </summary>
         public static string Reopen_last_opened_file {
             get {
