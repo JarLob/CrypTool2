@@ -332,7 +332,7 @@ It has to be manually edited in CrypWin.exe.config file in the CT2 installation 
     <value>Component Settings</value>
   </data>
   <data name="EnableDisableComponents" xml:space="preserve">
-    <value>Enable/disable components</value>
+    <value>Enable/disable components (for developers)</value>
   </data>
   <data name="DoYouReallyWantReset" xml:space="preserve">
     <value>Do you really want to reset CT2's settings to default values? A restart is performed then.</value>
@@ -341,7 +341,7 @@ It has to be manually edited in CrypWin.exe.config file in the CT2 installation 
     <value>Reset CT2 to default setting values</value>
   </data>
   <data name="ResetCrypTool2Label" xml:space="preserve">
-    <value>Reset CrypTool 2</value>
+    <value>Reset CrypTool 2 (General settings, workspace, and updates)</value>
   </data>
   <data name="ResetToDefaultValues" xml:space="preserve">
     <value>Reset to default values</value>

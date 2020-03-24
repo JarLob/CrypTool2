@@ -27,9 +27,9 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Loc ComponentConnection_Delay}" HorizontalAlignment="Left"/>
+                        <TextBlock VerticalAlignment="Center" Text="{Loc ComponentConnection_Delay}" HorizontalAlignment="Left"/>
                         <Slider Width="200" Value="{Binding Source={x:Static Properties:Settings.Default}, Path=WorkspaceManager_BlingDelay, Mode=TwoWay}" Minimum="0" Maximum="10" IsSnapToTickEnabled="True" Style="{StaticResource ResourceKey=settingsStyle}" Grid.Column="1" IsEnabled="{Binding Source={x:Static Properties:Settings.Default}, Path=WorkspaceManager_ShowComponentConnectionProposition}" VerticalAlignment="Center" VerticalContentAlignment="Center" />
-                        <TextBox Height="20" Width="50" HorizontalAlignment="Left" VerticalContentAlignment="Center" Text="{Binding Source={x:Static Properties:Settings.Default}, Path=WorkspaceManager_BlingDelay, Mode=TwoWay}" IsEnabled="False" Style="{StaticResource ResourceKey=settingsStyle}" Grid.Column="2" />
+                        <TextBox VerticalAlignment="Center" Height="20" Width="50" HorizontalAlignment="Left" VerticalContentAlignment="Center" Text="{Binding Source={x:Static Properties:Settings.Default}, Path=WorkspaceManager_BlingDelay, Mode=TwoWay}" IsEnabled="False" Style="{StaticResource ResourceKey=settingsStyle}" Grid.Column="2" />
                     </Grid>
                     <Button Content="{Loc ResetCCS}" HorizontalAlignment="Left" Style="{StaticResource ResourceKey=settingsStyle}" Click="ButtonResetCCS_Click" />
                     <Label Content="{Loc ComponentAppearanceBehaviourGroupHeader}" FontWeight="Bold" />

@@ -295,7 +295,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enable/disable components ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enable/disable components (for developers) ähnelt.
         /// </summary>
         public static string EnableDisableComponents {
             get {
@@ -511,7 +511,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Reset CrypTool 2 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reset CrypTool 2 (General settings, workspace, and updates) ähnelt.
         /// </summary>
         public static string ResetCrypTool2Label {
             get {

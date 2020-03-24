@@ -169,8 +169,6 @@ namespace Cryptool.CrypWin.SettingsTabs
                 Settings.Default.Reset();
                 //reset Crypcore settings
                 Core.Properties.Settings.Default.Reset();
-                //reset MainWindow settings
-                Settings.Default.Reset();
 
                 //restart CT2
                 int processID = Process.GetCurrentProcess().Id;

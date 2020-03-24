@@ -52,32 +52,7 @@
             </Button>
             <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Loc Use_the_wizard_to_easily_try_some_CrypTool_2_0_features_}" TextWrapping="Wrap" />
         </Grid>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0"  Click="CrypToolStoreButton_Click">
-                <Button.Content>
-                    <Image Source="/Startcenter;component/cryptoolstore.png" />
-                </Button.Content>
-            </Button>
-            <TextBlock Grid.Column="1" Text="{Loc OpenCrypToolStore}" VerticalAlignment="Center" TextWrapping="Wrap"/>
-        </Grid>
-        <!--
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Click="HelpButton_Click">
-                <Button.Content>
-                    <Image Source="/Startcenter;component/help32.png" />
-                </Button.Content>
-            </Button>
-            <TextBlock Grid.Column="1" Text="{Loc Read_the_online_documentation_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
-        </Grid>-->
-
+        
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80"/>

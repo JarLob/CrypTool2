@@ -190,7 +190,7 @@
     <value>Markieren Sie dies, um Fehlernachrichten in der Trayicon-Sprechblase anzuzeigen!</value>
   </data>
   <data name="Reopen_last_opened_file" xml:space="preserve">
-    <value>Öffne die letzten offenen Projekte (Vorlagen, CWM-Dateien) beim Start von CT2</value>
+    <value>Öffne die letzten offenen Projekte beim Start von CT2</value>
   </data>
   <data name="Reopen_last_opened_file_tooltip" xml:space="preserve">
     <value>Markieren Sie dies, um die letzten offenen Projekte beim nächsten Start von CT2 wieder zu öffnen</value>
@@ -332,7 +332,7 @@ Sie muss manuell in der Datei CrypWin.exe.config im Installationsverzeichnis von
     <value>Komponenten-Einstellungen</value>
   </data>
   <data name="EnableDisableComponents" xml:space="preserve">
-    <value>Komponenten ein-/ausschalten</value>
+    <value>Komponenten ein-/ausschalten (für Entwickler)</value>
   </data>
   <data name="DoYouReallyWantReset" xml:space="preserve">
     <value>Möchten Sie die CT2-Einstellungen wirklich auf die Standardwerte zurücksetzen? Dann wird ein Neustart durchgeführt.</value>
@@ -344,7 +344,7 @@ Sie muss manuell in der Datei CrypWin.exe.config im Installationsverzeichnis von
     <value>CrypTool 2 zurücksetzen</value>
   </data>
   <data name="ResetToDefaultValues" xml:space="preserve">
-    <value>Zu Standardeinstellungen zurücksetzen</value>
+    <value>Zu Standardeinstellungen zurücksetzen (Generelle Einstellungen, Arbeitsfläche und Updates)</value>
   </data>
   <data name="LogLevel" xml:space="preserve">
     <value>Log-Level:</value>
