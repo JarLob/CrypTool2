@@ -184,10 +184,10 @@
     <value>privater Schlüssel Q</value>
   </data>
   <data name="BitSizeKCaption" xml:space="preserve">
-    <value>Bitlänge k des Modulus N</value>
+    <value>Bitlänge k des Moduls N</value>
   </data>
   <data name="BitSizeKTooltip" xml:space="preserve">
-    <value>Bitlänge k des Modulus N</value>
+    <value>Bitlänge k des Moduls N</value>
   </data>
   <data name="BitSizeTCaption" xml:space="preserve">
     <value>Sicherheitsparameter t</value>

@@ -175,7 +175,7 @@
     <value>Modulus N</value>
   </data>
   <data name="ModuloNTooltip" xml:space="preserve">
-    <value>Eingabe des Modulus.</value>
+    <value>Eingabe des Moduls.</value>
   </data>
   <data name="PrivateKey" xml:space="preserve">
     <value>Privater Schlüssel D/Lambda</value>
