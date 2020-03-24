@@ -160,7 +160,7 @@ namespace Cryptool.Alphabets.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Do you really want to delete the alphabet \&quot;{0}\&quot;? ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Do you really want to delete the alphabet &quot;{0}&quot;? ähnelt.
         /// </summary>
         public static string DeleteAlphabetMessageBoxText {
             get {

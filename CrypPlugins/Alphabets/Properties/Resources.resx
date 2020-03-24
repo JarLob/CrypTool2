@@ -262,7 +262,7 @@
     <value>Upper-case characters</value>
   </data>
   <data name="DeleteAlphabetMessageBoxText" xml:space="preserve">
-    <value>Do you really want to delete the alphabet \"{0}\"?</value>
+    <value>Do you really want to delete the alphabet "{0}"?</value>
   </data>
   <data name="DeleteAlphabetMessageBoxTitle" xml:space="preserve">
     <value>Delete alphabet?</value>
