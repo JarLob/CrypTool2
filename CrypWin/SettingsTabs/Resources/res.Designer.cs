@@ -259,6 +259,15 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Debug ähnelt.
+        /// </summary>
+        public static string Debug {
+            get {
+                return ResourceManager.GetString("Debug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Deselect all ähnelt.
         /// </summary>
         public static string Deselect_all {
@@ -291,6 +300,15 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         public static string EnableDisableComponents {
             get {
                 return ResourceManager.GetString("EnableDisableComponents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error ähnelt.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
             }
         }
         
@@ -340,6 +358,15 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Info ähnelt.
+        /// </summary>
+        public static string Info {
+            get {
+                return ResourceManager.GetString("Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Invert selection ähnelt.
         /// </summary>
         public static string Invert_selection {
@@ -358,7 +385,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sets the default loglevel, which is used in the CT2 log window. For example: if the level is set to &apos;Info&apos;, only logs with level &apos;Info&apos; and above are shown ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sets the default loglevel, which is used in the CT2 log window. For example: If the level is set to &apos;Info&apos;, only logs with level &apos;Info&apos; and above are shown. ähnelt.
         /// </summary>
         public static string LogLevelTooltip {
             get {
@@ -742,6 +769,15 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         public static string UseLastPathTooltip {
             get {
                 return ResourceManager.GetString("UseLastPathTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Warning ähnelt.
+        /// </summary>
+        public static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
             }
         }
         

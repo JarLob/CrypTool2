@@ -37,10 +37,10 @@
 
                     <Label Content="{Loc LogLevel}"/>
                     <ComboBox Name="LogLevel" Grid.Column="1" SelectionChanged="LogLevel_SelectionChanged" TargetUpdated="LogLevel_TargetUpdated">
-                        <ComboBoxItem Content="Debug"/>
-                        <ComboBoxItem Content="Info"/>
-                        <ComboBoxItem Content="Warning"/>
-                        <ComboBoxItem Content="Error"/>
+                        <ComboBoxItem Content="{Loc Debug}"/>
+                        <ComboBoxItem Content="{Loc Info}"/>
+                        <ComboBoxItem Content="{Loc Warning}"/>
+                        <ComboBoxItem Content="{Loc Error}"/>
                     </ComboBox>
                 </Grid>
                 <CheckBox IsEnabled="True" Content="{Loc WriteLogFile}" ToolTip="{Loc WriteLogFileTooltip}" Style="{StaticResource ResourceKey=settingsStyle}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=WriteLogFile, Mode=TwoWay}" />
