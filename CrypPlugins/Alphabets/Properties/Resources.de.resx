@@ -261,4 +261,10 @@
   <data name="UpperCaseCharacters" xml:space="preserve">
     <value>Großbuchstaben</value>
   </data>
+  <data name="DeleteAlphabetMessageBoxText" xml:space="preserve">
+    <value>Möchten Sie das Alphabet "{0}" wirklich löschen?</value>
+  </data>
+  <data name="DeleteAlphabetMessageBoxTitle" xml:space="preserve">
+    <value>Alphabet löschen?</value>
+  </data>
 </root>

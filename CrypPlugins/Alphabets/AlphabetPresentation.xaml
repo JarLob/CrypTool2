@@ -457,7 +457,7 @@
 
         <Grid x:Key="selectAlphabet">
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="36"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -468,10 +468,10 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{x:Static properties:Resources.Alphabets}" Padding="5" FontWeight="Bold"
                                FontFamily="Verdana" FontSize="24"></TextBlock>
-                    <Border Background="#55ffffff" Margin="5">
+                    <Border Background="#55ffffff" Margin="5" VerticalAlignment="Center">
                         <Button Style="{StaticResource ResourceKey=ButtonStyle}" Height="25" Width="25" Click="AddItemClick"
                                 VerticalContentAlignment="Center" VerticalAlignment="Center">
-                            <Image Height="20" Source="add.png"></Image>
+                            <Image Height="20" Source="add.png" VerticalAlignment="Center"/>
                         </Button>
                     </Border>
                 </StackPanel>

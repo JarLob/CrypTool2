@@ -261,4 +261,10 @@
   <data name="UpperCaseCharacters" xml:space="preserve">
     <value>Символы верхнего регистра</value>
   </data>
+  <data name="DeleteAlphabetMessageBoxText" xml:space="preserve">
+    <value>Вы уверены, что хотите удалить алфавит «{0}»?</value>
+  </data>
+  <data name="DeleteAlphabetMessageBoxTitle" xml:space="preserve">
+    <value>Удалить алфавит?</value>
+  </data>
 </root>
