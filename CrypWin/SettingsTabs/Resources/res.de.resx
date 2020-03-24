@@ -341,10 +341,10 @@ Sie muss manuell in der Datei CrypWin.exe.config im Installationsverzeichnis von
     <value>CrypTool 2 auf Standardeinstellungen zurücksetzen</value>
   </data>
   <data name="ResetCrypTool2Label" xml:space="preserve">
-    <value>CrypTool 2 zurücksetzen</value>
+    <value>CrypTool 2 zurücksetzen (Generelle Einstellungen, Arbeitsfläche und Updates)</value>
   </data>
   <data name="ResetToDefaultValues" xml:space="preserve">
-    <value>Zu Standardeinstellungen zurücksetzen (Generelle Einstellungen, Arbeitsfläche und Updates)</value>
+    <value>Zu Standardeinstellungen zurücksetzen</value>
   </data>
   <data name="LogLevel" xml:space="preserve">
     <value>Log-Level:</value>
