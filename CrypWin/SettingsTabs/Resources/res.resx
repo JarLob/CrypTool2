@@ -346,4 +346,10 @@ It has to be manually edited in CrypWin.exe.config file in the CT2 installation 
   <data name="ResetToDefaultValues" xml:space="preserve">
     <value>Reset to default values</value>
   </data>
+  <data name="LogLevel" xml:space="preserve">
+    <value>Log level:</value>
+  </data>
+  <data name="LogLevelTooltip" xml:space="preserve">
+    <value>Sets the default loglevel, which is used in the CT2 log window. For example: if the level is set to 'Info', only logs with level 'Info' and above are shown</value>
+  </data>
 </root>

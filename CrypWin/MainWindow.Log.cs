@@ -30,6 +30,8 @@ using Cryptool.Core;
 using Cryptool.CrypWin.Properties;
 using Cryptool.CrypWin.Resources;
 using Cryptool.PluginBase;
+using Cryptool.PluginBase.Attributes;
+using Cryptool.PluginBase.Miscellaneous;
 using CrypWin.Helper;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
@@ -94,6 +96,21 @@ namespace Cryptool.CrypWin
                 if (Settings.Default.WriteLogFile)
                 {
                     WriteLogToFile(args);
+                }
+            }
+            catch (Exception)
+            {
+                //do nothing
+            }
+
+            try
+            {
+                //check log level setting
+                NotificationLevel level = (NotificationLevel)Settings.Default.LogLevel;
+                if (AssemblyHelper.BuildType != Ct2BuildType.Developer && //to CT2 developers we always show each log
+                    args.NotificationLevel < level)
+                {
+                    return;
                 }
             }
             catch (Exception)

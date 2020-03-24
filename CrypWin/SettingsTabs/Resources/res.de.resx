@@ -346,4 +346,10 @@ Sie muss manuell in der Datei CrypWin.exe.config im Installationsverzeichnis von
   <data name="ResetToDefaultValues" xml:space="preserve">
     <value>Zu Standardeinstellungen zurücksetzen</value>
   </data>
+  <data name="LogLevel" xml:space="preserve">
+    <value>Log-Level:</value>
+  </data>
+  <data name="LogLevelTooltip" xml:space="preserve">
+    <value>Legt die Standard-Logstufe fest, die im CT2-Log verwendet wird. Beispiel: Wenn das Level auf "Info" eingestellt ist, werden nur Logs mit dem Level "Info" und höher angezeigt</value>
+  </data>
 </root>

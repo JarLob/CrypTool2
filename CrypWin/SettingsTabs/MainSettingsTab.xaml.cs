@@ -64,6 +64,8 @@ namespace Cryptool.CrypWin.SettingsTabs
             RecentFileListLengthBox.Text = RecentFileList.GetSingleton().ListLength.ToString();
 
             initialized = true;
+
+            LogLevel.SelectedIndex = Settings.Default.LogLevel;
         }
 
         private void Culture_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -79,19 +81,15 @@ namespace Cryptool.CrypWin.SettingsTabs
             }
         }
 
-        /***
-         * Work around:
-         ***/
         private bool bindingInitialized = false;
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (!bindingInitialized && this.IsVisible)
+            if (!bindingInitialized && IsVisible)
             {
                 Binding binding = new Binding("AvailableEditors");
                 binding.RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(MainWindow), 1);
                 binding.NotifyOnTargetUpdated = true;
-                EditorSelection.SetBinding(ItemsControl.ItemsSourceProperty, binding);
-                
+                EditorSelection.SetBinding(ItemsControl.ItemsSourceProperty, binding);              
                 bindingInitialized = true;
             }
         }
@@ -114,6 +112,16 @@ namespace Cryptool.CrypWin.SettingsTabs
                     }
                 }
             }
+        }
+
+        private void LogLevel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Settings.Default.LogLevel = LogLevel.SelectedIndex;
+        }
+
+        private void LogLevel_TargetUpdated(object sender, DataTransferEventArgs e)
+        {
+            Settings.Default.LogLevel = LogLevel.SelectedIndex;
         }
 
         private void RecentFileListLengthBox_TextChanged(object sender, TextChangedEventArgs e)

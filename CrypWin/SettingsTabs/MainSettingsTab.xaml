@@ -29,6 +29,20 @@
                 <Label Content="{Loc Startup_Behaviour}" FontWeight="Bold" />
                 <CheckBox Content="{Loc Reopen_last_opened_file}" ToolTip="{Loc Reopen_last_opened_file_tooltip}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=ReopenLastTabs, Mode=TwoWay}" Style="{StaticResource ResourceKey=settingsStyle}" />
                 <CheckBox IsEnabled="False" Content="{Loc SingletonApplication}" ToolTip="{Loc SingletonApplicationTooltip}" Style="{StaticResource ResourceKey=settingsStyle}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=SingletonApplication, Mode=OneWay}" />
+                <Grid Style="{StaticResource ResourceKey=settingsStyle}" ToolTip="{Loc LogLevelTooltip}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="250" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="{Loc LogLevel}"/>
+                    <ComboBox Name="LogLevel" Grid.Column="1" SelectionChanged="LogLevel_SelectionChanged" TargetUpdated="LogLevel_TargetUpdated">
+                        <ComboBoxItem Content="Debug"/>
+                        <ComboBoxItem Content="Info"/>
+                        <ComboBoxItem Content="Warning"/>
+                        <ComboBoxItem Content="Error"/>
+                    </ComboBox>
+                </Grid>
                 <CheckBox IsEnabled="True" Content="{Loc WriteLogFile}" ToolTip="{Loc WriteLogFileTooltip}" Style="{StaticResource ResourceKey=settingsStyle}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=WriteLogFile, Mode=TwoWay}" />
                 <Label Content="{Loc PowerModeLabelContent}" FontWeight="Bold" Margin="0,10,0,0" />
                 <CheckBox Content="{Loc SavePowerContent}" ToolTip="{Loc SavePowerToolTip}" Style="{StaticResource ResourceKey=settingsStyle}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=StopWorkspaces, Mode=TwoWay}" />

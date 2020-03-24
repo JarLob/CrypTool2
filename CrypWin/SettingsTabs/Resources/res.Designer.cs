@@ -349,6 +349,24 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Log level: ähnelt.
+        /// </summary>
+        public static string LogLevel {
+            get {
+                return ResourceManager.GetString("LogLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sets the default loglevel, which is used in the CT2 log window. For example: if the level is set to &apos;Info&apos;, only logs with level &apos;Info&apos; and above are shown ähnelt.
+        /// </summary>
+        public static string LogLevelTooltip {
+            get {
+                return ResourceManager.GetString("LogLevelTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die General settings ähnelt.
         /// </summary>
         public static string MainSettings {
