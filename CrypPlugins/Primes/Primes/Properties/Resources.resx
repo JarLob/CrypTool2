@@ -200,13 +200,13 @@
     <value>Calculate Li(n) by using</value>
   </data>
   <data name="More" xml:space="preserve">
-    <value>More Information</value>
+    <value>more information</value>
   </data>
   <data name="PariGP" xml:space="preserve">
     <value>Pari-GP</value>
   </data>
   <data name="SimpsonFormula" xml:space="preserve">
-    <value>The Simpson-Formula</value>
+    <value>Simpson formula</value>
   </data>
   <data name="Algorithms" xml:space="preserve">
     <value>Algorithms</value>

@@ -197,7 +197,7 @@
     <value>Berechne Li(n) mittels</value>
   </data>
   <data name="More" xml:space="preserve">
-    <value>Weitere Informationen</value>
+    <value>weitere Informationen</value>
   </data>
   <data name="PariGP" xml:space="preserve">
     <value>Pari-GP</value>
@@ -206,7 +206,7 @@
     <value>Die Welt der Primzahlen</value>
   </data>
   <data name="SimpsonFormula" xml:space="preserve">
-    <value>die Simpson-Formel</value>
+    <value>Simpson-Formel</value>
   </data>
   <data name="Algorithms" xml:space="preserve">
     <value>Algorithmen</value>

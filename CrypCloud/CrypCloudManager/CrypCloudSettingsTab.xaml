@@ -39,7 +39,6 @@
                     <Label Content="{Loc OpenCLDevice}" Grid.Column="0" Width="150"/>
                     <ComboBox Width="200" Name="OpenCLDevice" Grid.Column="1" SelectionChanged="OpenCLDevice_SelectionChanged"/>
                 </Grid>
-                <CheckBox Content="{Loc WritePerformanceLog}" Margin="30,5,0,10" Name="WritePerformanceLog"  VerticalAlignment="Center" HorizontalAlignment="Left" Height="15" Width="15" Click="WritePerformanceLog_Click"/>
                 <Grid Margin="30,5,0,10" Width="Auto" HorizontalAlignment="Left">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>

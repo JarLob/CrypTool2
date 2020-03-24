@@ -329,7 +329,7 @@ namespace Primes.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die More Information ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die more information ähnelt.
         /// </summary>
         internal static string More {
             get {
@@ -414,7 +414,7 @@ namespace Primes.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The Simpson-Formula ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Simpson formula ähnelt.
         /// </summary>
         internal static string SimpsonFormula {
             get {

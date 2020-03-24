@@ -71,8 +71,7 @@ namespace CrypCloud.Manager
             {
                 NUDTextBox.Text = startvalue.ToString();
                 EnableOpenCL.IsChecked = Settings.Default.enableOpenCL;
-                CrypCloudCore.Instance.EnableOpenCL = Settings.Default.enableOpenCL;
-                WritePerformanceLog.IsChecked = Settings.Default.writePerformanceLog;
+                CrypCloudCore.Instance.EnableOpenCL = Settings.Default.enableOpenCL;                
                 CrypCloudCore.Instance.WritePerformanceLog = Settings.Default.writePerformanceLog;
                 OpenCLDevice.ItemsSource = DevicesAvailable;
                 RefreshDevicesList();
@@ -88,7 +87,6 @@ namespace CrypCloud.Manager
             }
             catch (Exception)
             {
-                WritePerformanceLog.IsChecked = false;
                 OpenCLDevice.IsEnabled = false;
                 CrypCloudCore.Instance.WritePerformanceLog = false;
             }
@@ -203,14 +201,7 @@ namespace CrypCloud.Manager
             Settings.Default.OpenCLDevice = OpenCLDevice.SelectedIndex;
             Settings.Default.Save();
             CrypCloudCore.Instance.OpenCLDevice = OpenCLDevice.SelectedIndex;
-        }
-
-        private void WritePerformanceLog_Click(object sender, RoutedEventArgs e)
-        {
-            Settings.Default.writePerformanceLog = WritePerformanceLog.IsChecked.Value;
-            Settings.Default.Save();
-            CrypCloudCore.Instance.WritePerformanceLog = WritePerformanceLog.IsChecked.Value;
-        }
+        }        
 
         private void LogLevelComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
