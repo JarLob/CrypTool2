@@ -1238,6 +1238,15 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Log window: ähnelt.
+        /// </summary>
+        internal static string LogWindow {
+            get {
+                return ResourceManager.GetString("LogWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die No special help file found for {0}! ähnelt.
         /// </summary>
         internal static string MainWindow_ShowHelpPage_No_special_help_file_found_for__0__ {

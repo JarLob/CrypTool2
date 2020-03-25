@@ -348,7 +348,7 @@ namespace Cryptool.CrypWin
         {
             if (listViewLogList != null || collectionLogMessages != null)
             {
-                dockWindowLogMessages.Header = string.Format("{0:0,0}", listViewLogList.Items.Count) + string.Format(Properties.Resources._Messages___0__filtered_, string.Format("{0:0,0}", collectionLogMessages.Count - listViewLogList.Items.Count));
+                dockWindowLogMessages.Header = Properties.Resources.LogWindow + " " + string.Format("{0:0,0}", listViewLogList.Items.Count) + string.Format(Properties.Resources._Messages___0__filtered_, string.Format("{0:0,0}", collectionLogMessages.Count - listViewLogList.Items.Count));
             }
         }
 
@@ -367,7 +367,7 @@ namespace Cryptool.CrypWin
         {
             collectionLogMessages.Clear();
             statusBarTextCounter = 0;
-            dockWindowLogMessages.Header = statusBarTextCounter + Properties.Resources._Messages;
+            dockWindowLogMessages.Header = Properties.Resources.LogWindow + " 00" + Properties.Resources._Messages;
             errorCounter = 0;
             textBlockErrosCount.Text = errorCounter.ToString();
             warningCounter = 0;

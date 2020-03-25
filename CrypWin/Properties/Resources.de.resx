@@ -982,4 +982,7 @@
   <data name="RandomNumbers" xml:space="preserve">
     <value>Zufallszahlen</value>
   </data>
+  <data name="LogWindow" xml:space="preserve">
+    <value>Protokoll-/Log-Fenster:</value>
+  </data>
 </root>

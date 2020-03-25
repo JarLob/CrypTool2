@@ -988,4 +988,7 @@
   <data name="RandomNumbers" xml:space="preserve">
     <value>случайные числа</value>
   </data>
+  <data name="LogWindow" xml:space="preserve">
+    <value>Журнал / окно журнала:</value>
+  </data>
 </root>

@@ -1000,4 +1000,7 @@
   <data name="RandomNumbers" xml:space="preserve">
     <value>Random numbers</value>
   </data>
+  <data name="LogWindow" xml:space="preserve">
+    <value>Log window:</value>
+  </data>
 </root>
