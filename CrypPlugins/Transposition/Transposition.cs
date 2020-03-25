@@ -107,7 +107,7 @@ namespace Transposition
 
         # region Properties
 
-        [PropertyInfo(Direction.InputData, "InputCaption", "InputTooltip", false)]
+        [PropertyInfo(Direction.InputData, "InputCaption", "InputTooltip", true)]
         public string Input 
         {
             get
@@ -122,7 +122,7 @@ namespace Transposition
             }
         }
 
-        [PropertyInfo(Direction.InputData, "KeywordCaption", "KeywordTooltip", false)]
+        [PropertyInfo(Direction.InputData, "KeywordCaption", "KeywordTooltip", true)]
         public string Keyword
         {
             get
@@ -178,7 +178,9 @@ namespace Transposition
             {
                 _presentation.my_Stop(this, EventArgs.Empty);
                 if (_stopped)
+                {
                     return;
+                }
             }
 
             _running = true;
