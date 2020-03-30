@@ -257,7 +257,7 @@ namespace Cryptool.CrypToolStore
                         SelectedPluginAuthorsName.Content = plugin.Authornames;
                         SelectedPluginAuthorsEmail.Content = plugin.Authoremails;
                         SelectedPluginAuthorsInstitutes.Content = plugin.Authorinstitutes;
-                        SelectedPluginVersion.Content = plugin.PluginVersion + "." + plugin.BuildVersion;
+                        SelectedPluginVersion.Content = plugin.PluginVersion + "." + plugin.BuildVersion + " (" + plugin.BuildDate + ")";
                         SelectedPluginFileSize.Content = plugin.FileSize;
                         if (SelectedPlugin.IsInstalled)
                         {

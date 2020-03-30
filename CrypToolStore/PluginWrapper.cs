@@ -14,6 +14,7 @@
    limitations under the License.
 */
 using CrypToolStoreLib.DataObjects;
+using System;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Media;
@@ -36,11 +37,12 @@ namespace Cryptool.CrypToolStore
         public string Authoremails { get; set; }
         public string Authorinstitutes { get; set; }
         public int BuildVersion { get; set; }
+        public DateTime BuildDate { get; set; }
         public bool IsInstalled { get; set; }
         public bool UpdateAvailable { get; set; }
         public string FileSize { get; set; }
         private byte[] IconData { get; set; }        
-        public Brush BackgroundColor { get; set; }
+        public Brush BackgroundColor { get; set; }        
 
         public PluginWrapper()
         {
@@ -64,7 +66,8 @@ namespace Cryptool.CrypToolStore
             Authornames = plugin.Authornames;
             Authoremails = plugin.Authoremails;
             Authorinstitutes = plugin.Authorinstitutes;
-            BuildVersion = pluginAndSource.Source.BuildVersion;            
+            BuildVersion = pluginAndSource.Source.BuildVersion;
+            BuildDate = pluginAndSource.Source.BuildDate;
             IconData = plugin.Icon;
             FileSize = CrypToolStoreLib.Tools.Tools.FormatFileSizeString(pluginAndSource.FileSize);
             
