@@ -38,7 +38,29 @@
   
   <presentation lang="de-DE">
   </presentation>
-  
+
   <references>
-  </references>
+  <linkReference>
+    <link lang="en" url="http://eprint.iacr.org/2009/251.pdf"/>
+    <caption lang="en">
+      Mihir Bellare, Thomas Ristenpart, Phillip Rogaway, and Till Stegers: "Format Preserving Encryption", 25 pages
+    </caption>
+  </linkReference>
+  <linkReference>
+    <link lang="en" url="https://web.cs.ucdavis.edu/~rogaway/papers/synopsis.pdf"/>
+    <caption lang="en">
+      Phillip Rogaway: A Synopsis ofFormat-Preserving Encryption, 2010
+    </caption>
+  </linkReference>
+  <linkReference>
+    <link lang="en" url="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-38G.pdf"/>
+    <caption lang="en">
+      NIST: Recommendation for Block Cipher Modes of Operation: Methods for Format-Preserving Encryption, 2016
+    </caption>
+  </linkReference>
+  <linkReference>
+    <link lang="en" url="https://www.cryptool.org/images/ctp/documents/BA_Hirsch.pdf"/>
+    <caption lang="en">Alexander Hirsch: Implementierung und Visualisierung von Format-erhaltenden Verschlüsselungsverfahren in CrypTool 2, Bachelor thesis, 2018</caption>
+  </linkReference>
+</references>
 </documentation>

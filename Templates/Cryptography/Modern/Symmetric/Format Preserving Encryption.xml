@@ -14,29 +14,31 @@
   <replacements lang="en">
     <replacement key="$Alphabet$" value="Alphabet" />
 	<replacement key="$Format Preserving Encryption$" value="Format Preserving Encryption" />
-	<replacement key="$credit card number$" value="Credit Card Number" />	
-	<replacement key="$Output$" value="Output" />
+	<replacement key="$credit card number$" value="Credit card number" />	
+	<replacement key="$Output$" value="Encrypted credit card number" />
 	<replacement key="$Log$" value="Log" />
 	<replacement key="$key$" value="Key" />
 	<replacement key="$tweak$" value="Tweak" />
 	<replacement key="$String Decoder$" value="String Decoder" />
 	<replacement key="$tweak radix$" value="Tweak Radix" />
 	<replacement key="$memo$" value="{\b Format preserving encryption (FPE) of a text}\line
-In this template, a 16-digit credit card number is encrypted with a randomly chosen key and tweak format-preserving. The result is again a 16-digit number. In addition, a log with intermediate values of the encryption is output. The four algorithms FF1, FF2, FF3 and DFF are available for selection, all of which can be executed with the predefined values.\line
-Decryption is also possible: The encrypted XML document must be copied into the text input component &quot;credit card number&quot; and the Decrypt operation must be selected in the component &quot;Format Preserving Encryption&quot;." />
+In this template, a 16-digit credit card number is encrypted with a randomly chosen key and tweak format-preserving. The result is again a 16-digit number. 
+In addition, a log with intermediate values of the encryption is shown. The four algorithms FF1, FF2, FF3, and DFF are available for selection, all of which can be executed with the input values, given in this template. These four algorithms have become part of the NIST standardization process.\line
+Decryption is also possible: The encrypted credit card number must be copied into the text input component &quot;Credit card number&quot; and the &quot;Decrypt&quot; operation operation must be selected in the component &quot;Format Preserving Encryption&quot;." />
   </replacements>
    <replacements lang="de">
     <replacement key="$Alphabet$" value="Alphabet" />
 	<replacement key="$Format Preserving Encryption$" value="Formaterhaltende Verschlüsselung" />
 	<replacement key="$credit card number$" value="Kreditkartennummer" />
-	<replacement key="$Output$" value="Ausgabe" />
+	<replacement key="$Output$" value="Verschlüsselte Kreditkartennummer" />
 	<replacement key="$Log$" value="Log" />
 	<replacement key="$key$" value="Schlüssel" />
 	<replacement key="$tweak$" value="Tweak" />
 	<replacement key="$String Decoder$" value="Zeichenketten-Decodierer" />
 	<replacement key="$tweak radix$" value="Tweak Radix" />
-	<replacement key="$memo$" value="{\b Formaterhaltende Verschlüsselung (FPE) eines Textes}\line
-In dieser Vorlage wird eine 16-stellige Kreditkartennummer mit einen zufällig gewählten Schlüssel und Tweak Format-erhaltend verschlüsselt. Das Ergebnis ist wiederum eine 16-stellige Nummer. Zusätzlich wird ein Log mit Zwischenwerten der Verschlüsselung ausgegeben. Zur Auswahl stehen die vier Algorithmen FF1, FF2, FF3 und DFF, die alle mit den vordefinierten Werten ausgeführt werden können.\line
-Eine Entschlüsselung ist auch möglich:  Der Geheimtext muss in die Texteingabe-Komponente &quot;Kreditkartennummer&quot; kopiert werden und in der Komponente &quot;Formaterhaltende Verschlüsselung&quot; die Operation &quot;Entschlüsseln&quot; ausgewählt werden." />
+	<replacement key="$memo$" value="{\ b Formaterhaltende Verschlüsselung (FPE) eines Textes} \ Zeile
+In dieser Vorlage wird eine 16-stellige Kreditkartennummer mit einem zufällig ausgewählten Schlüssel verschlüsselt und das Format beibehalten. Das Ergebnis ist wieder eine 16-stellige Zahl.
+Zusätzlich wird ein Protokoll mit Zwischenwerten der Verschlüsselung angezeigt. Zur Auswahl stehen die vier Algorithmen FF1, FF2, FF3 und DFF, die alle mit den in dieser Vorlage angegebenen Eingabewerten ausgeführt werden können. 
+Diese vier Algorithmen sind Teil des NIST-Standardisierungsprozesses geworden. Eine Entschlüsselung ist ebenfalls möglich: Die verschlüsselte Kreditkartennummer muss in die Texteingabekomponente &quot;Kreditkartennummer&quot; kopiert werden und in der Komponente &quot;Formaterhaltende Verschlüsselung&quot; die Operation &quot;Entschlüsseln&quot; ausgewählt werden." />
   </replacements>
 </sample>
