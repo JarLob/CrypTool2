@@ -139,16 +139,16 @@
     <value>The sorting order for the destination alphabet</value>
   </data>
   <data name="PasswordCaption" xml:space="preserve">
-    <value>Password</value>
+    <value>Keyword</value>
   </data>
   <data name="PasswordTooltip" xml:space="preserve">
-    <value>The password which should be used for the permutation</value>
+    <value>The keyword, which should be used for the permutation</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Alphabet Permutator</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Permutes an alphabet using a password</value>
+    <value>Permutes an alphabet using a keyword</value>
   </data>
   <data name="SourceAlphabetCaption" xml:space="preserve">
     <value>Source Alphabet</value>

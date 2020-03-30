@@ -139,16 +139,16 @@
     <value>Die Reihenfolge, in der das Zielalphabet sortiert werden soll</value>
   </data>
   <data name="PasswordCaption" xml:space="preserve">
-    <value>Passwort</value>
+    <value>Schlüsselwort</value>
   </data>
   <data name="PasswordTooltip" xml:space="preserve">
-    <value>Das Passwort, das für die Permutation genutzt werden soll</value>
+    <value>Das Schlüsselwort, das für die Permutation genutzt werden soll</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Alphabet-Permutierer</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Komponente, die ein Alphabet mittels eines Passwortes permutiert</value>
+    <value>Komponente, die ein Alphabet mittels eines Schlüsselworts permutiert</value>
   </data>
   <data name="SourceAlphabetCaption" xml:space="preserve">
     <value>Quellalphabet</value>

@@ -19,7 +19,7 @@ namespace AlphabetPermutator.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -124,7 +124,7 @@ namespace AlphabetPermutator.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Password ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Keyword ähnelt.
         /// </summary>
         internal static string PasswordCaption {
             get {
@@ -133,7 +133,7 @@ namespace AlphabetPermutator.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The password which should be used for the permutation ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The keyword, which should be used for the permutation ähnelt.
         /// </summary>
         internal static string PasswordTooltip {
             get {
@@ -151,7 +151,7 @@ namespace AlphabetPermutator.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Permutes an alphabet using a password ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Permutes an alphabet using a keyword ähnelt.
         /// </summary>
         internal static string PluginTooltip {
             get {
