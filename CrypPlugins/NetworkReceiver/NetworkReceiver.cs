@@ -43,6 +43,7 @@ namespace Cryptool.Plugins.NetworkReceiver
         #region Member
 
         private const int UpdateReceivingrate = 1;
+        private readonly object _lockObject = new object();
         private readonly NetworkConnectionStore availableConnections = NetworkConnectionStore.Instance;
         private readonly NetworkReceiverPresentation presentation;
         private readonly NetworkReceiverSettings settings;
@@ -329,15 +330,18 @@ namespace Cryptool.Plugins.NetworkReceiver
                 var state = (StateObject) ar.AsyncState;
                 var socket = state.Connection.TCPClient.Client;
 
-                var bytesRead = socket.EndReceive(ar); 
+                var bytesRead = socket.EndReceive(ar);
+                socket.BeginReceive(state.Buffer, 0, StateObject.BufferSize, 0, OnReceivingFromClient, state);
+
                 if (bytesRead > 0)
                 {
-                    var data = new byte[bytesRead];
-                    Array.Copy(state.Buffer, data, bytesRead);
-                    UpdatePresentation(data, state.Connection.RemoteEndPoint.Address.ToString());
-                    UpdateOutputs(data, state.Connection.ID);
-
-                    socket.BeginReceive(state.Buffer, 0, StateObject.BufferSize, 0, OnReceivingFromClient, state);
+                    lock (_lockObject)
+                    {
+                        var data = new byte[bytesRead];
+                        Array.Copy(state.Buffer, data, bytesRead);
+                        UpdatePresentation(data, state.Connection.RemoteEndPoint.Address.ToString());
+                        UpdateOutputs(data, state.Connection.ID);
+                    }
                 }
             } catch (Exception) {}
         }
@@ -354,8 +358,11 @@ namespace Cryptool.Plugins.NetworkReceiver
                 connection.RemoteEndPoint = remotEndPoint;
 
                 ProgressChanged(0.5, 1);
-                UpdatePresentation(data, remotEndPoint.Address.ToString());
-                UpdateOutputs(data, connection.ID);
+                lock (_lockObject)
+                {
+                    UpdatePresentation(data, remotEndPoint.Address.ToString());
+                    UpdateOutputs(data, connection.ID);
+                }
             }
         }
 
