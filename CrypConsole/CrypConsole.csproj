@@ -75,14 +75,17 @@
     <ProjectReference Include="..\CrypPluginBase\CrypPluginBase.csproj">
       <Project>{25db2b47-a457-4ec2-960b-395ce07ae093}</Project>
       <Name>CrypPluginBase</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\CrypPlugins\WorkspaceManager\WorkspaceManager.csproj">
       <Project>{949b4294-2894-43b4-bd73-e0b031f5434f}</Project>
       <Name>WorkspaceManager</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\CrypWin\CrypWin.csproj">
       <Project>{5d7200cf-515f-4660-a13f-16918ef348a1}</Project>
       <Name>CrypWin</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\WorkspaceManagerModel\WorkspaceManagerModel.csproj">
       <Project>{c35a6e71-d6fe-478b-a12d-fad54fc4edc9}</Project>

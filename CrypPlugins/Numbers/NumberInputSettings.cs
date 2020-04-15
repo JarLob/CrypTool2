@@ -22,7 +22,7 @@ using System.Collections.ObjectModel;
 
 namespace Cryptool.Plugins.Numbers
 {
-    class NumberInputSettings : ISettings
+    public class NumberInputSettings : ISettings
     {     
         public event TaskPaneAttributeChangedHandler TaskPaneAttributeChanged;
         private ObservableCollection<string> fonts = new ObservableCollection<string>();

@@ -22,6 +22,8 @@ using Path = System.IO.Path;
 using System.Windows;
 using System.Threading;
 using Cryptool.PluginBase;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace Cryptool.CrypConsole
 {  
@@ -46,8 +48,23 @@ namespace Cryptool.CrypConsole
             Start(CrypConsole.Args);
         }
 
+        /// <summary>
+        /// Starts the execution of the defined workspace
+        /// 1) Parses the commandline parameters
+        /// 2) Creates CT2 model and execution engine
+        /// 3) Starts execution
+        /// 4) Gives data as defined by user to the model
+        /// 5) Retries results for output and outputs these
+        /// 6) [terminates]
+        /// </summary>
+        /// <param name="args"></param>
         public void Start(string[] args)
         {
+            var cultureInfo = new CultureInfo("en-us", false);
+            CultureInfo.CurrentCulture = cultureInfo;
+            CultureInfo.CurrentUICulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+
             if (ArgsHelper.CheckShowHelp(args))
             {
                 Environment.Exit(0);
@@ -67,13 +84,22 @@ namespace Cryptool.CrypConsole
 
             _verbose = ArgsHelper.CheckVerbose(args);
 
+            List<Parameter> inputParameters = null;
             try
             {
-                var parameters = ArgsHelper.GetInputParameters(args);
-                foreach (var param in parameters)
+                inputParameters = ArgsHelper.GetInputParameters(args);
+                if (_verbose)
                 {
-                    Console.WriteLine("Input param: " + param);
+                    foreach (var param in inputParameters)
+                    {
+                        Console.WriteLine("Input parameter given: " + param);
+                    }
                 }
+            }
+            catch(InvalidParameterException ipex)
+            {
+                Console.WriteLine(ipex.Message);
+                Environment.Exit(-3);
             }
             catch(Exception ex)
             {
@@ -91,13 +117,13 @@ namespace Cryptool.CrypConsole
                 Environment.Exit(-4);
             }
 
-            WorkspaceModel model = null;
+            WorkspaceModel workspaceModel = null;
             try
             {
                 ModelPersistance modelPersistance = new ModelPersistance();
-                model = modelPersistance.loadModel(cwm_file, true);
+                workspaceModel = modelPersistance.loadModel(cwm_file, true);
 
-                foreach (var pluginModel in model.GetAllPluginModels())
+                foreach (var pluginModel in workspaceModel.GetAllPluginModels())
                 {
                     pluginModel.Plugin.OnGuiLogNotificationOccured += OnGuiLogNotificationOccured;
                 }
@@ -108,25 +134,91 @@ namespace Cryptool.CrypConsole
                 Environment.Exit(-5);
             }
 
+            foreach (var param in inputParameters)
+            {
+                string name = param.Name;
+                bool found = false;
+                foreach (var component in workspaceModel.GetAllPluginModels())
+                {
+                    if (component.GetName().ToLower().Equals(param.Name.ToLower()))
+                    {
+                        if (component.PluginType.FullName.Equals("Cryptool.TextInput.TextInput"))
+                        {
+                            var settings = component.Plugin.Settings;
+                            var textProperty = settings.GetType().GetProperty("Text");
+
+                            Console.WriteLine(param.ParameterType);
+
+                            if (param.ParameterType == ParameterType.Text || param.ParameterType == ParameterType.Number)
+                            {
+                                textProperty.SetValue(settings, param.Value);
+                            }
+                            else if(param.ParameterType == ParameterType.File)
+                            {
+                                try
+                                {
+                                    if (!File.Exists(param.Value))
+                                    {
+                                        Console.WriteLine("Input file does not exist: {0}", param.Value);
+                                        Environment.Exit(-7);
+                                    }
+                                    var value = File.ReadAllText(param.Value);
+                                    textProperty.SetValue(settings, value);
+                                }
+                                catch(Exception ex)
+                                {
+                                    Console.WriteLine("Exception occured while reading file {0}: {0}", param.Value, ex.Message);
+                                    Environment.Exit(-7);
+                                }
+                            }
+                            //we need to call initialize to get the new text to the ui of the TextInput component
+                            //otherwise, it will output the value retrieved by deserialization
+                            component.Plugin.Initialize();
+                            found = true;
+                        }
+                        /*else if (component.PluginType.Name.Equals("Cryptool.Plugins.Numbers.NumberInput"))
+                        {
+                            try
+                            {
+                                int.Parse(param.Value);
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("Invalid number in parameter for NumberInput: {0}", param);
+                                Environment.Exit(-7);
+                            }
+                            Plugins.Numbers.NumberInput textInput = (Plugins.Numbers.NumberInput)component.Plugin;
+                            Plugins.Numbers.NumberInputSettings settings = (Plugins.Numbers.NumberInputSettings)textInput.Settings;
+                            settings.Number = param.Value;
+                        }*/
+                    }
+                }
+                if (!found)
+                {
+                    Console.WriteLine("Component for setting input parameter not found: {0}", param);
+                    Environment.Exit(-7);
+                }
+            }
+
             ExecutionEngine engine = null;
             try
             {
-
                 engine = new ExecutionEngine(null);
                 engine.OnGuiLogNotificationOccured += OnGuiLogNotificationOccured;
-                engine.Execute(model, false);
+                engine.Execute(workspaceModel, false);
             }
             catch(Exception ex)
             {
                 Console.WriteLine("Exception occured while executing model: {0}", ex.Message);
-                Environment.Exit(-6);
-            }
+                Environment.Exit(-7);
+            }                       
 
             Thread t = new Thread(() =>
             {
+                CultureInfo.CurrentCulture = new CultureInfo("en-Us", false);
                 while (engine.IsRunning())
                 {
-                    foreach (var p in model.GetAllPluginModels())
+                    foreach (var p in workspaceModel.GetAllPluginModels())
                     {
                         if (p.GetName().Equals("Ciphertext"))
                         {
@@ -136,25 +228,25 @@ namespace Cryptool.CrypConsole
                                 {
                                     if (input.LastData != null)
                                     {
-                                        Console.WriteLine("Output data: " + input.LastData);
-                                        engine.Stop();                                        
+                                        Console.WriteLine("Output data:");
+                                        Console.WriteLine(input.LastData);
+                                        Thread.Sleep(1000);
                                     }
                                 }
                             }
                         }
                     }
                 }
-                Environment.Exit(0);
             });
             t.Start();
-        }        
+        }
 
         /// <summary>
         /// Logs guilog to console based on error level and verbosity
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void OnGuiLogNotificationOccured(PluginBase.IPlugin sender, PluginBase.GuiLogEventArgs args)
+        private void OnGuiLogNotificationOccured(IPlugin sender, GuiLogEventArgs args)
         {
             if (_verbose || args.NotificationLevel == NotificationLevel.Error)
             {
