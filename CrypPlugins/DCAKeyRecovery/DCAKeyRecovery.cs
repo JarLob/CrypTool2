@@ -2063,12 +2063,12 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                 for (int i = 0; i < inputBlocks.Length; i += 4)
                 {
                     byte[] leftMemberBytes = new byte[2];
-                    leftMemberBytes[0] = inputBlocks[i];
-                    leftMemberBytes[1] = inputBlocks[i + 1];
+                    leftMemberBytes[1] = inputBlocks[i];
+                    leftMemberBytes[0] = inputBlocks[i + 1];
 
                     byte[] rightMemberBytes = new byte[2];
-                    rightMemberBytes[0] = inputBlocks[i + 2];
-                    rightMemberBytes[1] = inputBlocks[i + 3];
+                    rightMemberBytes[1] = inputBlocks[i + 2];
+                    rightMemberBytes[0] = inputBlocks[i + 3];
 
                     UInt16 leftMemberInt = BitConverter.ToUInt16(leftMemberBytes, 0);
                     UInt16 rightMemberInt = BitConverter.ToUInt16(rightMemberBytes, 0);
@@ -2107,12 +2107,12 @@ namespace Cryptool.Plugins.DCAKeyRecovery
                 for (int i = 0; i < inputBlocks.Length; i += 4)
                 {
                     byte[] leftMemberBytes = new byte[2];
-                    leftMemberBytes[0] = inputBlocks[i];
-                    leftMemberBytes[1] = inputBlocks[i + 1];
+                    leftMemberBytes[1] = inputBlocks[i];
+                    leftMemberBytes[0] = inputBlocks[i + 1];
 
                     byte[] rightMemberBytes = new byte[2];
-                    rightMemberBytes[0] = inputBlocks[i + 2];
-                    rightMemberBytes[1] = inputBlocks[i + 3];
+                    rightMemberBytes[1] = inputBlocks[i + 2];
+                    rightMemberBytes[0] = inputBlocks[i + 3];
 
                     UInt16 leftMemberInt = BitConverter.ToUInt16(leftMemberBytes, 0);
                     UInt16 rightMemberInt = BitConverter.ToUInt16(rightMemberBytes, 0);

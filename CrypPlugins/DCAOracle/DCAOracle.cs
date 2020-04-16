@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
@@ -184,12 +185,12 @@ namespace Cryptool.Plugins.DCAOracle
             foreach (Pair curPair in pairList)
             {
                 byte[] leftMember = BitConverter.GetBytes(curPair.LeftMember);
-                outputTemp[i] = leftMember[0];
-                outputTemp[i + 1] = leftMember[1];
+                outputTemp[i] = leftMember[1];
+                outputTemp[i + 1] = leftMember[0];
 
                 byte[] rightMember = BitConverter.GetBytes(curPair.RightMember);
-                outputTemp[i + 2] = rightMember[0];
-                outputTemp[i + 3] = rightMember[1];
+                outputTemp[i + 2] = rightMember[1];
+                outputTemp[i + 3] = rightMember[0];
 
                 i += 4;
                 curProgress += stepCount;

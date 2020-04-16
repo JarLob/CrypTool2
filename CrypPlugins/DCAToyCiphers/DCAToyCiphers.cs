@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -309,13 +310,13 @@ namespace Cryptool.Plugins.DCAToyCiphers
                 for (int i = 0; i < inputBlocks.Length; i += 2)
                 {
                     byte[] inputBlock = new byte[2];
-                    inputBlock[0] = inputBlocks[i];
-                    inputBlock[1] = inputBlocks[i + 1];
+                    inputBlock[1] = inputBlocks[i];
+                    inputBlock[0] = inputBlocks[i + 1];
 
                     message = BitConverter.ToUInt16(inputBlock, 0);
                     messageList.Add(message);
                 }
-
+                
             }
 
             ProgressChanged(0.1, 1);
@@ -351,7 +352,7 @@ namespace Cryptool.Plugins.DCAToyCiphers
                 foreach (var encryptedMessage in encryptedMessageList)
                 {
                     byte[] outputBlock = BitConverter.GetBytes(encryptedMessage);
-                    writer.Write(outputBlock, 0, outputBlock.Length);
+                    writer.Write(outputBlock.Reverse().ToArray(), 0, outputBlock.Length);
                 }
 
                 writer.Flush();

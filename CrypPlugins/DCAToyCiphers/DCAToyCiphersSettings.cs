@@ -29,7 +29,7 @@ namespace Cryptool.Plugins.DCAToyCiphers
         private string _choiceOfAlgorithm = "0";
         private string _choiceOfMode ="0";
         private Algorithms _currentAlgorithm = Algorithms.Cipher1;
-        private Mode _currentMode = Mode.Decrypt;
+        private Mode _currentMode = Mode.Encrypt;
 
         #endregion
 
