@@ -69,12 +69,20 @@ namespace Cryptool.Plugins.VIC
         private string onceTransposedMessage;
         private string twiceTransposedMessage;
 
-        int firstTableWidth;
-        int secondTableWidth;
+        private int firstTableWidth;
+        private int secondTableWidth;
 
-        char[,] matrix;
+        private char[,] matrix;
 
-        string[,] substitutionTable;
+        private string[,] substitutionTable;
+
+        private string textStartSymbol;
+        private string digitLetterSymbol;
+        private string repeatSymbol;
+
+        string substitutionResult;
+        string onceDetransposedMessage;
+        string twiceDetransposedMessage;
 
 
 
@@ -136,21 +144,62 @@ namespace Cryptool.Plugins.VIC
             set;
         }
 
+        void ClearLocalVariables() {
+            groupNo = 0;
+            lineC = null;
+            lineD = null;
+            lineE = null;
+            lineF = null;
+            lineG = null;
+            lineH = null;
+            lineI = null;
+            lineJ = null;
+            lineK = null;
+            lineL = null;
+            lineM = null;
+            lineN = null;
+            lineP = null;
+            lineQ = null;
+            lineR = null;
+            lineS = null;
+            firstPermutation = null;
+            secondPermutation = null;
+            firstTransposition = null;
+            secondTransposition = null;
+            onceTransposedMessage = null;
+            twiceTransposedMessage = null;
+            firstTableWidth = 0;
+            secondTableWidth = 0;
+            matrix = null;
+            substitutionTable = null;
+            textStartSymbol = null;
+            digitLetterSymbol = null;
+            repeatSymbol = null;
+            substitutionResult=null;
+            onceDetransposedMessage=null;
+            twiceDetransposedMessage=null;
+
+        }
+
         /// <summary>
         /// This function takes global input variables and formats them to desired format
         /// </summary>
         void FormatInput()
         {
+            Input = (Regex.Replace(Input, @"\s+", ""));
+            GuiLogMessage("Input:" + Input,NotificationLevel.Info);
             Date = (Regex.Replace(Date, "[^0-9]", ""));
             Date = Date.ToUpper();
             if (Date.Length < 6)
             {
-
+                GuiLogMessage("Date input is too short.", NotificationLevel.Error);
             }
 
             Password = (Regex.Replace(Password, "[^.,a-zA-Z0-9A-Яa-я]", ""));
             Password = Password.ToUpper();
-            if (Password.Length < 6) {
+            if (Password.Length < 6)
+            {
+                GuiLogMessage("Password input is too short.", NotificationLevel.Error);
             }
 
 
@@ -159,11 +208,11 @@ namespace Cryptool.Plugins.VIC
 
             Number = (Regex.Replace(Number, "[^0-9]", ""));
 
-
-            InitializingString = (Regex.Replace(Date, "[^0-9]", ""));
+            InitializingString = InitializingString.ToUpper();
+            InitializingString = (Regex.Replace(InitializingString, "[^0-9]", ""));
             if (InitializingString.Length != 5)
             {
-
+                GuiLogMessage("Initializing string has to be exactly 5 characters long", NotificationLevel.Error);
             }
 
         }
@@ -250,7 +299,6 @@ namespace Cryptool.Plugins.VIC
         /// <param name="x"></param>
         /// <param name="m"></param>
         /// <returns></returns>
-
         private int Mod(int x, int m)
         {
             return (x % m + m) % m;
@@ -265,11 +313,8 @@ namespace Cryptool.Plugins.VIC
         /// <param name="startNumber"> Determines the number for the first char, e.g. A=1 </param>
         /// <param name="modulate"> If true, numbers greater than 10 will be modulated, e.g. 11 is 1.</param>
         /// <returns></returns>
-
         private int[] EnumerateString(string phrase, int startNumber, bool modulate)
         {
-            phrase = phrase.ToUpper();
-            phrase = (Regex.Replace(phrase, "[^.,a-zA-Z0-9A-Яa-я]", ""));
             char[] phraseAr = phrase.ToArray();
 
             char[] sorted = phrase.ToArray();
@@ -479,9 +524,7 @@ namespace Cryptool.Plugins.VIC
         /// Injects static cyrillic letters to fixed positions in substitution table.
         /// </summary>
         /// <param name="substitutionTable"></param>
-        /// <param name="alphabet"></param>
         /// <returns></returns>
-
         string[,] InjectCyrillicLetters(string[,] substitutionTable)
         {
 
@@ -499,7 +542,13 @@ namespace Cryptool.Plugins.VIC
             return substitutionTable;
         }
 
-        string[,] InjectLatinLetters(string[,] substitutitionTable) {
+        /// <summary>
+        /// Injects static latin letters to fixed positions in substitution table.
+        /// </summary>
+        /// <param name="substitutionTable"></param>
+        /// <returns></returns>
+        string[,] InjectLatinLetters(string[,] substitutionTable)
+        {
 
             substitutionTable[2, 3] = ".";
             substitutionTable[3, 3] = ",";
@@ -528,8 +577,6 @@ namespace Cryptool.Plugins.VIC
         /// <returns></returns>
         private string[,] ConstructSubstitutionTable(string permutation, string password, string alphabet)
         {
-            password = password.ToUpper();
-            alphabet = alphabet.ToUpper();
 
             string[,] substitutionTable = new string[5, 11];
             for (int i = 0; i < 5; ++i)
@@ -572,7 +619,7 @@ namespace Cryptool.Plugins.VIC
                     ++iterator;
                 }
                 injectedLetters[i - 1] = password.ElementAt(iterator);
-                substitutionTable[1, i] = password.ElementAt(iterator++).ToString();
+                substitutionTable[1, i] = password.ElementAt(iterator++).ToString().ToUpper();
             }
             substitutionTable[1, 10] = "*";
             substitutionTable[1, 9] = "*";
@@ -584,12 +631,19 @@ namespace Cryptool.Plugins.VIC
 
 
             //<Remove password letters from alphabet>
+            GuiLogMessage("Injected Letters:" +injectedLetters, NotificationLevel.Info);
+            GuiLogMessage("Alphabet:" + alphabet, NotificationLevel.Info);
             for (int i = 0; i < alphabet.Length; ++i)
             {
                 if (injectedLetters.Contains(alphabet.ElementAt(i)))
                 {
+                    GuiLogMessage("removed element:" + alphabet.ElementAt(i), NotificationLevel.Info);
+
                     alphabet = alphabet.Remove(i, 1);
                     if (i >= 1) --i;
+                }
+                else {
+                    GuiLogMessage("didn't remove any", NotificationLevel.Info);
                 }
             }
             //</Remove password letters from alphabet>
@@ -598,8 +652,6 @@ namespace Cryptool.Plugins.VIC
 
             char[] alphabetArray = alphabet.ToUpper().ToCharArray();
 
-            // Array.Sort(alphabetArray);
-            // alphabet = new String(alphabetArray);
 
 
             //<Inject the rest of alphabet into the table>
@@ -611,11 +663,20 @@ namespace Cryptool.Plugins.VIC
                     if (iterator >= alphabet.Length) break;
                     if (i != 3 && i != 5)
                     {
-                        substitutionTable[j, i] = alphabet.ElementAt(iterator++).ToString();
+                        substitutionTable[j, i] = alphabet.ElementAt(iterator++).ToString().ToUpper();
                     }
                 }
             }
-            substitutionTable = InjectCyrillicLetters(substitutionTable);
+            GuiLogMessage("got here", NotificationLevel.Info);
+            if (settings.Alphabet.Equals(AlphabetType.Cyrillic))
+            {
+                substitutionTable = InjectCyrillicLetters(substitutionTable);
+            }
+            else if (settings.Alphabet.Equals(AlphabetType.Latin)) {
+                substitutionTable = InjectLatinLetters(substitutionTable);
+            } 
+
+
 
             //</Inject the rest of alphabet into the table>
 
@@ -623,24 +684,15 @@ namespace Cryptool.Plugins.VIC
         }
 
 
+       
         /// <summary>
         /// Prepends text start symbol to the input text.
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        private string PrependCyrillicTextStartSymbol(string message)
+        private string PrependTextStartSymbol(string message)
         {
-            message = message.Insert(0, "НТ");
-            return message;
-        }
-        /// <summary>
-         /// Prepends text start symbol to the input text.
-         /// </summary>
-         /// <param name="message"></param>
-         /// <returns></returns>
-        private string PrependLatinTextStartSymbol(string message)
-        {
-            message = message.Insert(0, "TS");
+            message = message.Insert(0, textStartSymbol);
             return message;
         }
 
@@ -652,7 +704,7 @@ namespace Cryptool.Plugins.VIC
         /// <returns></returns>
         private string PerformSubstitution(string[,] substitutionTable, string message)
         {
-            message = settings.Alphabet == AlphabetType.Cyrillic ? PrependCyrillicTextStartSymbol(message) : PrependLatinTextStartSymbol(message);
+            message = PrependTextStartSymbol(message);
             int iterationsToSkip = 0;
             string resultMessage = "";
             for (int i = 0; i < message.Length; ++i)
@@ -684,8 +736,10 @@ namespace Cryptool.Plugins.VIC
         /// <param name="iterationsToSkip"></param>
         /// <param name="substitutionTable"></param>
         /// <returns></returns>
-        private bool PerformSpecialCharSubstitution(string message, int index, ref string outputMessage, ref int iterationsToSkip, string[,] substitutionTable) {
-            if (settings.Alphabet == AlphabetType.Cyrillic) {
+        private bool PerformSpecialCharSubstitution(string message, int index, ref string outputMessage, ref int iterationsToSkip, string[,] substitutionTable)
+        {
+            if (settings.Alphabet == AlphabetType.Cyrillic)
+            {
                 return PerformSpecialCyrillicCharSubstitution(message, index, ref outputMessage, ref iterationsToSkip, substitutionTable);
             }
             else
@@ -727,7 +781,7 @@ namespace Cryptool.Plugins.VIC
                 }
                 else if (nextCharacter.Equals('Т'))
                 {
-                    outputMessage += LocateStringInMatrix(substitutionTable,"НТ");
+                    outputMessage += LocateStringInMatrix(substitutionTable, "НТ");
                     iterationsToSkip = 1;
                     return true;
                 }
@@ -807,6 +861,7 @@ namespace Cryptool.Plugins.VIC
         /// <returns></returns>
         string SplitMessageRandomly(string input)
         {
+            GuiLogMessage("SubstitutionResult" + input, NotificationLevel.Info);
             Random random = new Random();
             int lowerBoundary = input.Length / 10;
             int upperBoundary = 9 * (input.Length / 10);
@@ -814,8 +869,9 @@ namespace Cryptool.Plugins.VIC
 
             string secondString = input.Substring(0, splittingPoint);
             string firstString = input.Substring(splittingPoint, input.Length - splittingPoint);
+            GuiLogMessage("string first part:" + firstString + "   string second part: " + secondString,NotificationLevel.Info);
 
-            return secondString + firstString;
+            return firstString + secondString;
 
         }
 
@@ -826,15 +882,7 @@ namespace Cryptool.Plugins.VIC
         /// <returns></returns>
         string PerformDigitSubstitution(char digit, string[,] substitutionTable)
         {
-            if (settings.Alphabet == AlphabetType.Cyrillic)
-            {
-                return (LocateStringInMatrix(substitutionTable, "Н/Ц") +digit.ToString() + digit.ToString() + digit.ToString() + LocateStringInMatrix(substitutionTable, "Н/Ц"));
-            }
-            else
-            {
-                return (LocateStringInMatrix(substitutionTable, "T/N") + digit.ToString() + digit.ToString() + digit.ToString() + LocateStringInMatrix(substitutionTable, "T/N"));
-            }
-            
+                return (LocateStringInMatrix(substitutionTable, digitLetterSymbol) + digit.ToString() + digit.ToString() + digit.ToString() + LocateStringInMatrix(substitutionTable, digitLetterSymbol));
         }
 
         /// <summary>
@@ -943,7 +991,7 @@ namespace Cryptool.Plugins.VIC
             int column = 0;
             for (int i = 0; i < transpositionMatrix.GetLength(1); ++i)
             {
-                column = permutation.ElementAt(i) - 1;
+                column = Array.IndexOf(permutation, i + 1);
                 for (int j = 0; j < transpositionMatrix.GetLength(0); ++j)
                 {
                     if (!transpositionMatrix.GetValue(j, column).Equals('*'))
@@ -952,6 +1000,7 @@ namespace Cryptool.Plugins.VIC
                     }
                 }
             }
+            output = output.Replace("\0", "");
             return output;
 
         }
@@ -1053,7 +1102,6 @@ namespace Cryptool.Plugins.VIC
         {
             int tableWidth = permutation.Length;
             int tableHeight = (int)(Math.Ceiling((double)messageLength / tableWidth));
-
             int greys = 0;
 
             AreaColor[,] secondTranspositionTableColors = new AreaColor[tableHeight, tableWidth];
@@ -1102,24 +1150,311 @@ namespace Cryptool.Plugins.VIC
                 }
 
             }
-            for (int i = 0; i < tableHeight; ++i)
+            return secondTranspositionTableColors;
+        }
+
+        /// <summary>
+        /// Performs the opposite operation to substitution with the matrix provided.
+        /// </summary>
+        /// <param name="message">Message to desubstitute</param>
+        /// <param name="matrix">Substitution Matrix</param>
+        /// <returns></returns>
+        private string Desubstitute(string message, string[,] matrix)
+        {
+            int iterationsToSkip = 0;
+            char currentChar;
+            char nextChar;
+            string desubResult = "";
+            string output = "";
+
+            for (int i = 0; i < message.Length; ++i)
             {
-                for (int j = 0; j < tableWidth; ++j)
+                if (iterationsToSkip == 0)
                 {
-                    if (secondTranspositionTableColors.GetValue(i, j).Equals(AreaColor.grey))
+                    currentChar = message.ElementAt(i);
+                    if (i < message.Length - 1)
                     {
-                        Console.Write(secondTranspositionTableColors.GetValue(i, j) + "   ");
+                        nextChar = message.ElementAt(i + 1);
+                        desubResult = DesubstituteMultipleChars(currentChar.ToString() + nextChar.ToString(), matrix);
+                        if (desubResult.Length == 0)
+                        {
+                            output += DesubstituteSingleChar(currentChar.ToString(), matrix);
+                        }
+                        else if (desubResult.Equals("Н/Ц"))
+                        {
+                            output += message.ElementAt(i + 2);
+                            iterationsToSkip = 6;
+                        }
+                        else
+                        {
+                            output += desubResult;
+                            iterationsToSkip = 1;
+                        }
+
                     }
                     else
                     {
-                        Console.Write(secondTranspositionTableColors.GetValue(i, j) + "  ");
+                        output += DesubstituteSingleChar(currentChar.ToString(), matrix);
                     }
-
                 }
-
+                else
+                {
+                    iterationsToSkip--;
+                }
             }
-            return secondTranspositionTableColors;
+            return output;
+        }
 
+        /// <summary>
+        /// Desubstitutes multiple characters, such as RPT, that are common in VIC Cipher
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="matrix"></param>
+        /// <returns></returns>
+        private string DesubstituteMultipleChars(string input, string[,] matrix)
+        {
+            int row = -1;
+            int col = -1;
+
+
+            for (int i = 0; i < matrix.GetLength(0); ++i)
+            {
+                if (matrix.GetValue(i, 0).ToString().Equals(input.ElementAt(0).ToString()))
+                {
+                    row = i;
+                }
+            }
+
+            for (int i = 0; i < matrix.GetLength(1); ++i)
+            {
+                if (matrix.GetValue(0, i).ToString().Equals(input.ElementAt(1).ToString()))
+                {
+                    col = i;
+                }
+            }
+
+            if (row.Equals(-1) || col.Equals(-1))
+            {
+                return "";
+            }
+            else
+            {
+                return matrix.GetValue(row, col).ToString();
+            }
+
+        }
+
+        /// <summary>
+        /// Desubstitutes just single characters
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="matrix"></param>
+        /// <returns></returns>
+        private string DesubstituteSingleChar(string input, string[,] matrix)
+        {
+            int row = -1;
+            int col = -1;
+            for (int i = 0; i < matrix.GetLength(1); ++i)
+            {
+                if (matrix.GetValue(0, i).ToString().Equals(input.ElementAt(0).ToString()))
+                {
+                    col = i;
+                }
+            }
+
+            if (row.Equals(-1) && !col.Equals(-1))
+            {
+                return matrix.GetValue(1, col).ToString();
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+
+        /// <summary>
+        /// Makes the opposite operation to first transpostition, so that it writes to the table by col and reads by row.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="transposition"></param>
+        /// <returns></returns>
+        private string DeTransposeFirstTransposition(string message, int[] transposition)
+        {
+            string output = "";
+            int transpositionMatrixHeight = (int)(Math.Ceiling((double)message.Length / transposition.Length));
+
+
+            char[,] transpositionMatrix = new char[transpositionMatrixHeight, transposition.Length];
+            
+
+            transpositionMatrix = FillFirstTranspositionTableByCol(transpositionMatrix, transposition, message);
+            string temp = "\n";
+            for (int i = 0; i < transpositionMatrix.GetLength(0); ++i)
+            {
+                for(int j = 0; j < transpositionMatrix.GetLength(1); ++j)
+                {
+                    temp += (transpositionMatrix.GetValue(i, j));
+                }
+                temp += "\n";
+            }
+            GuiLogMessage("transposition matrix for the first transposition:" + temp, NotificationLevel.Info);
+            //read the rest of the table by rows;
+            for (int i = 0; i < transpositionMatrix.GetLength(0); ++i)
+            {
+                for (int j = 0; j < transpositionMatrix.GetLength(1); ++j)
+                {
+                    output += transpositionMatrix.GetValue(i, j);
+                }
+            }
+
+            return output.Replace("*", " ");
+
+        }
+
+
+        /// <summary>
+        /// Fills transpostion table by column. This is a help operation for the function DeTransposeFirstTransposition
+        /// </summary>
+        /// <param name="transpositionMatrix"></param>
+        /// <param name="transposition"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        private char[,] FillFirstTranspositionTableByCol(char[,] transpositionMatrix, int[] transposition, string message)
+        {
+
+
+            int numberOfEmptyCells = (transpositionMatrix.GetLength(0) * transpositionMatrix.GetLength(1)) % message.Length;
+            //Tag the emptycells
+            for (int i = numberOfEmptyCells; i > 0; --i)
+            {
+                transpositionMatrix.SetValue('*', transpositionMatrix.GetLength(0) - 1, transpositionMatrix.GetLength(1) - i);
+            }
+
+            //fill the rest of the table by cols
+            int column = 0;
+            int iterator = 0;
+            for (int i = 0; i < transposition.Length; ++i)
+            {
+                column = Array.IndexOf(transposition, i + 1);
+                GuiLogMessage("column:" + column, NotificationLevel.Info);
+                for (int j = 0; j < transpositionMatrix.GetLength(0); ++j)
+                {
+                    if (iterator == message.Length)
+                    {
+                        break;
+                    }
+                    if (!transpositionMatrix.GetValue(j, column).Equals('*'))
+                    {
+                        transpositionMatrix.SetValue(message.ElementAt(iterator++), j, column);
+                    }
+                }
+            }
+            return transpositionMatrix;
+        }
+
+        /// <summary>
+        /// Detransposes the second transposition.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="transposition"></param>
+        /// <returns></returns>
+        private string DeTransposeSecondTransposition(string message, int[] transposition)
+        {
+            AreaColor[,] secondTranspositionTableColors = ConstructSecondTranspositionTableColors(transposition, message.Length);
+
+            char[,] secondTranspositionTable = new char[secondTranspositionTableColors.GetLength(0), secondTranspositionTableColors.GetLength(1)];
+            secondTranspositionTable = FillSecondTranspositionTableByCol(secondTranspositionTable, transposition, message, secondTranspositionTableColors);
+            string output = "";
+
+            //read by rows, white first
+            for (int i = 0; i < secondTranspositionTable.GetLength(0); ++i)
+            {
+                for (int j = 0; j < secondTranspositionTable.GetLength(1); ++j)
+                {
+                    if (secondTranspositionTableColors.GetValue(i, j).Equals(AreaColor.white))
+                    {
+                        output += secondTranspositionTable.GetValue(i, j);
+                    }
+                }
+            }
+
+            for (int i = 0; i < secondTranspositionTable.GetLength(0); ++i)
+            {
+                for (int j = 0; j < secondTranspositionTable.GetLength(1); ++j)
+                {
+                    if (secondTranspositionTableColors.GetValue(i, j).Equals(AreaColor.grey))
+                    {
+                        output += secondTranspositionTable.GetValue(i, j);
+                    }
+                }
+            }
+
+            // output = output.Substring(0, output.IndexOf('*'));
+            output = output.Replace("*", "");
+
+
+            return output;
+        }
+
+        static char[,] FillSecondTranspositionTableByCol(char[,] transpositionMatrix, int[] transposition, string message, AreaColor[,] secondTranspositionTableColors)
+        {
+            int numberOfEmptyCells = (transpositionMatrix.GetLength(0) * transpositionMatrix.GetLength(1)) % message.Length;
+            //Tag the emptycells
+            for (int i = transpositionMatrix.GetLength(0) - 1; i > 0; --i)
+            {
+                for (int j = transpositionMatrix.GetLength(1) - 1; j > 0; --j)
+                {
+                    if (numberOfEmptyCells == 0)
+                    {
+                        break;
+                    }
+                    if (secondTranspositionTableColors.GetValue(i, j).Equals(AreaColor.grey))
+                    {
+                        transpositionMatrix.SetValue('*', i, j);
+                        numberOfEmptyCells--;
+                    }
+                }
+            }
+            Console.Write("elements:");
+            foreach (var element in transposition)
+            {
+                Console.Write(element + ", ");
+            }
+            Console.WriteLine();
+
+            //fill the rest of the table by cols
+            int column = 0;
+            int iterator = 0;
+            for (int i = 0; i < transposition.Length; ++i)
+            {
+                column = Array.IndexOf(transposition, i + 1);
+                for (int j = 0; j < transpositionMatrix.GetLength(0); ++j)
+                {
+                    if (iterator == message.Length)
+                    {
+                        break;
+                    }
+                    if (!transpositionMatrix.GetValue(j, column).Equals('*'))
+                    {
+                        transpositionMatrix.SetValue(message.ElementAt(iterator++), j, column);
+                    }
+                }
+            }
+            return transpositionMatrix;
+        }
+
+        string DetermineTextStart(string input) {
+            string output;
+            if (input.Contains(textStartSymbol)) {
+                string[] stringSeparators = new string[] { textStartSymbol };
+                string[] splitStrings = input.Split(stringSeparators, StringSplitOptions.None);
+                output = splitStrings.ElementAt(1) + splitStrings.ElementAt(0);
+            }
+            else {
+                output = input;
+            }
+            return output;
         }
 
         [PropertyInfo(Direction.OutputData, "Output name", "Output tooltip description")]
@@ -1161,45 +1496,61 @@ namespace Cryptool.Plugins.VIC
         /// </summary>
         public void Execute()
         {
-            if (settings.Alphabet==AlphabetType.Cyrillic) {
-                ALPHABET = "абвгдежзиклмнопрстуфхцчшщыъэюя";
+            ClearLocalVariables();
+            FormatInput();
+            if (settings.Alphabet == AlphabetType.Cyrillic)
+            {
+                ALPHABET = "абвгдежзиклмнопрстуфхцчшщыъэюя".ToUpper();
+                textStartSymbol = "НТ";
+                digitLetterSymbol = "Н/Ц";
+                repeatSymbol = "Л/П";
             }
             else if (settings.Alphabet == AlphabetType.Latin)
             {
-                ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+                ALPHABET = "abcdefghijklmnopqrstuvwxyz".ToUpper();
+                textStartSymbol = "TS";
+                digitLetterSymbol = "T/N";
+                repeatSymbol = "RPT";
             }
             ProgressChanged(0, 1);
-
             try
             {
-                Console.OutputEncoding = System.Text.Encoding.UTF8;
-
                 //1. Take first five digits from date and substract them from the random number
                 lineC = SubstractModulo(InitializingString, Date);
+                GuiLogMessage("lineC: " + lineC, NotificationLevel.Info);
                 ProgressChanged(1, 16);
                 //2.Extend to ten digits by adding together pairs
                 lineC = ExtendToTenDigits(lineC);
+                GuiLogMessage("lineC after extension: " + lineC, NotificationLevel.Info);
                 ProgressChanged(2, 16);
 
 
                 //3.Append '1234567890'
                 lineF = lineC + "1234567890";
+
+                GuiLogMessage("lineF: " + lineF, NotificationLevel.Info);
                 ProgressChanged(3, 16);
 
 
                 //4.Take first 20 letters of passphrase
                 lineD = Phrase.Substring(0, Math.Min(Phrase.Length, 20));
+
+                GuiLogMessage("lineD: " + lineD, NotificationLevel.Info);
                 ProgressChanged(4, 16);
 
 
                 //5.Enumerate each 10 letters
                 lineE = string.Join("", EnumerateString(lineD.Substring(0, 10), 0, false));
-                lineE += string.Join("", EnumerateString(lineD.Substring(10, 10), 0, false));
+                lineE += string.Join("", EnumerateString(lineD.Substring(10, 10), 1, true));
+
+                GuiLogMessage("lineE: " + lineE, NotificationLevel.Info);
                 ProgressChanged(5, 16);
 
 
                 //6.Add first 10 letters together with line F
                 lineG = AddModulo(lineE.Substring(0, 10), lineF.Substring(0, 10));
+
+                GuiLogMessage("lineG: " + lineG, NotificationLevel.Info);
                 ProgressChanged(6, 16);
 
 
@@ -1210,10 +1561,12 @@ namespace Cryptool.Plugins.VIC
                 }
                 ProgressChanged(7, 16);
 
-                lineH = "5938991898";
+                GuiLogMessage("lineH: " + lineH, NotificationLevel.Info);
 
                 //8.Enumerate it and obtain line J. This needs to be enumerated starting from number 1, not 0.
                 lineJ = string.Join("", EnumerateString(lineH, 1, true));
+
+                GuiLogMessage("lineJ: " + lineJ, NotificationLevel.Info);
                 ProgressChanged(8, 16);
 
                 //9. chain addition to obtain lines K,L,M,N,P
@@ -1222,6 +1575,12 @@ namespace Cryptool.Plugins.VIC
                 lineM = ChainAddition(lineL);
                 lineN = ChainAddition(lineM);
                 lineP = ChainAddition(lineN);
+
+                GuiLogMessage("lineK: " + lineK, NotificationLevel.Info);
+                GuiLogMessage("lineL: " + lineL, NotificationLevel.Info);
+                GuiLogMessage("lineM: " + lineM, NotificationLevel.Info);
+                GuiLogMessage("lineN: " + lineN, NotificationLevel.Info);
+                GuiLogMessage("lineP: " + lineP, NotificationLevel.Info);
                 ProgressChanged(9, 16);
 
                 //10. Get the first and second transposition table width
@@ -1229,52 +1588,123 @@ namespace Cryptool.Plugins.VIC
 
                 secondTableWidth = FindLastTwoDissimilarDigits(lineP).Item1 + int.Parse(Number);
 
+                GuiLogMessage("First Table Width: " + firstTableWidth, NotificationLevel.Info);
+                GuiLogMessage("Second Table Width: " + secondTableWidth, NotificationLevel.Info);
+
                 ProgressChanged(10, 16);
 
                 //11.Form a matrix from the lines K-P
                 matrix = ConvertToCharMatrix(new string[] { lineK, lineL, lineM, lineN, lineP });
+                GuiLogMessage("Matrix " + matrix, NotificationLevel.Info);
                 ProgressChanged(11, 16);
 
                 //12. Get the first and second transposition.
                 firstPermutation = ReadColsFromCharMatrix(matrix, firstTableWidth, secondTableWidth, lineJ).Item1;
+
+                GuiLogMessage("First Permutation: " + firstPermutation, NotificationLevel.Info);
                 ProgressChanged(12, 16);
 
                 secondPermutation = ReadColsFromCharMatrix(matrix, firstTableWidth, secondTableWidth, lineJ).Item2;
+
+                GuiLogMessage("Second Permutation: " + secondPermutation, NotificationLevel.Info);
 
 
                 //13. Enumerate line P to obtain line s
                 lineS = string.Join("", EnumerateString(lineP, 0, false));
 
+                GuiLogMessage("LineS: " + lineS, NotificationLevel.Info);
+
                 ProgressChanged(13, 16);
 
-                //14. Perform the first substitution
-                substitutionTable = ConstructSubstitutionTable(lineS, Password, ALPHABET);
-                string substitutionResult = (PerformSubstitution(substitutionTable, Input));
-                ProgressChanged(14, 16);
-
+                
+                
 
                 firstTransposition = CreateTransposition(firstPermutation);
+                string temp = "";
+                foreach (var element in firstTransposition)
+                {
+                    temp += element;
+                }
+                GuiLogMessage("firstTransposition" + temp, NotificationLevel.Info);
 
 
                 secondTransposition = CreateTransposition(secondPermutation);
-
-
-
-
-                if(settings.Action == ActionType.Encrypt)
+                temp = "";
+                foreach (var element in secondTransposition)
                 {
-                // 15. Perform the first transposition
-                onceTransposedMessage = PerformFirstTransposition(substitutionResult, firstTransposition);
+                    temp += element;
+                }
+                GuiLogMessage("Second Transposition" + temp, NotificationLevel.Info);
 
-                ProgressChanged(15, 16);
 
-                // //16.
-                twiceTransposedMessage = PerformSecondTransposition(onceTransposedMessage, secondTransposition);
 
-               
 
-                Output = FormatOutput(twiceTransposedMessage);
-                OnPropertyChanged("Output");
+                if (settings.Action == ActionType.Encrypt)
+                {
+
+                    //14. Perform the first substitution
+                    substitutionTable = ConstructSubstitutionTable(lineS, Password, ALPHABET);
+                    string logMessage = "";
+                    for (int i = 0; i < substitutionTable.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < substitutionTable.GetLength(1); j++)
+                        {
+                            logMessage += substitutionTable.GetValue(i, j);
+                        }
+                        logMessage += "\n";
+                    }
+                    GuiLogMessage("table: " + logMessage, NotificationLevel.Info);
+                    substitutionResult = (PerformSubstitution(substitutionTable, Input));
+                    substitutionResult = SplitMessageRandomly(substitutionResult);
+
+                    ProgressChanged(14, 16);
+
+                    // 15. Perform the first transposition
+                    onceTransposedMessage = PerformFirstTransposition(substitutionResult, firstTransposition);
+
+                    GuiLogMessage("Once Transposed Message: " + onceTransposedMessage, NotificationLevel.Info);
+
+
+                    GuiLogMessage("15 steps successfully", NotificationLevel.Info);
+                    ProgressChanged(15, 16);
+
+                    //16.Perform the first transposition
+                    twiceTransposedMessage = PerformSecondTransposition(onceTransposedMessage, secondTransposition);
+                    GuiLogMessage("Twice Transposed Message: " + twiceTransposedMessage, NotificationLevel.Info);
+
+
+
+                    Output = FormatOutput(twiceTransposedMessage);
+                    GuiLogMessage(Output, NotificationLevel.Info);
+                    OnPropertyChanged("Output");
+                }
+                else if (settings.Action == ActionType.Decrypt)
+                {
+                    // 14. Detranspose second transposition
+                    onceDetransposedMessage = DeTransposeSecondTransposition(Input, secondTransposition);
+
+                    GuiLogMessage("Once Detransposed Message: " + onceDetransposedMessage, NotificationLevel.Info);
+
+                    ProgressChanged(15, 16);
+
+                    // 15. Detranspose first transposition
+                    temp = "";
+                    foreach (var element in firstTransposition) {
+                        temp += element+",";
+                    }
+                    GuiLogMessage("permutation:    " + temp, NotificationLevel.Info);
+                    twiceDetransposedMessage = DeTransposeFirstTransposition(onceDetransposedMessage, firstTransposition);
+
+                    GuiLogMessage("twiceDetransposedMessage: " + twiceDetransposedMessage, NotificationLevel.Info);
+
+
+                    // 16. Desubstitute substitution
+                    substitutionTable = ConstructSubstitutionTable(lineS, Password, ALPHABET);
+                    Output = Desubstitute(twiceDetransposedMessage, substitutionTable);
+                    Output = DetermineTextStart(Output);
+
+
+                    OnPropertyChanged("Output");
                 }
                 ProgressChanged(16, 16);
 
@@ -1282,7 +1712,9 @@ namespace Cryptool.Plugins.VIC
             }
             catch (Exception ex)
             {
-                //GuiLogMessage(string.Format(Properties.Resources.ExceptionMessage, ex.Message), NotificationLevel.Error);
+                GuiLogMessage(string.Format(ex.Message, ex.StackTrace, ex.Source), NotificationLevel.Error);
+                GuiLogMessage(string.Format(ex.StackTrace), NotificationLevel.Error);
+                GuiLogMessage(string.Format(ex.Source), NotificationLevel.Error);
             }
 
             ProgressChanged(1, 1);
