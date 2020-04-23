@@ -141,19 +141,12 @@ namespace Cryptool.CrypConsole
                 if (p.EndsWith("\""))
                 {
                     p = p.Substring(0, p.Length - 1);
-                }
-
-                //1) check, if parameter has two arguments
-                var split = p.Split(',');
-                if (split.Count() != 2)
-                {
-                    throw new InvalidParameterException(string.Format("Invalid (arguments != 2) output parameter found: {0}", p));
-                }
+                }                
 
                 Parameter parameter = new Parameter();
-                parameter.ParameterType = ParameterType.None;
-                parameter.Name = split[1];
-                parameter.Value = split[2];
+                parameter.ParameterType = ParameterType.Output;
+                parameter.Value = "none";
+                parameter.Name = p;
                 parameters.Add(parameter);
             }
             return parameters;
@@ -219,7 +212,7 @@ namespace Cryptool.CrypConsole
         Number,
         Text,
         File,
-        None
+        Output
     }
 
     public class Parameter

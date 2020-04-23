@@ -37,6 +37,7 @@ namespace Cryptool.CrypConsole
         };
 
         private bool _verbose = false;
+        private ExecutionEngine _engine = null;
 
         public Main()
         {
@@ -179,8 +180,6 @@ namespace Cryptool.CrypConsole
                             var settings = component.Plugin.Settings;
                             var textProperty = settings.GetType().GetProperty("Text");
 
-                            Console.WriteLine(param.ParameterType);
-
                             if (param.ParameterType == ParameterType.Text || param.ParameterType == ParameterType.Number)
                             {
                                 textProperty.SetValue(settings, param.Value);
@@ -218,15 +217,34 @@ namespace Cryptool.CrypConsole
             }
 
             //Step 9: Set output parameters
+            foreach (var param in outputParameters)
+            {
+                string name = param.Name;
+                bool found = false;
+                foreach (var component in workspaceModel.GetAllPluginModels())
+                {
+                    if (component.GetName().ToLower().Equals(param.Name.ToLower()))
+                    {
+                        if (component.PluginType.FullName.Equals("TextOutput.TextOutput"))
+                        {
+                            component.Plugin.PropertyChanged += Plugin_PropertyChanged;                            
+                            found = true;
+                        }
+                    }
+                }
+                if (!found)
+                {
+                    Console.WriteLine("TextOutput for setting output parameter not found: {0}", param);
+                    Environment.Exit(-7);
+                }
+            }
 
-
-            //Step 10: Create execution engine
-            ExecutionEngine engine = null;
+            //Step 10: Create execution engine            
             try
             {
-                engine = new ExecutionEngine(null);
-                engine.OnGuiLogNotificationOccured += OnGuiLogNotificationOccured;
-                engine.Execute(workspaceModel, false);
+                _engine = new ExecutionEngine(null);
+                _engine.OnGuiLogNotificationOccured += OnGuiLogNotificationOccured;
+                _engine.Execute(workspaceModel, false);
             }
             catch(Exception ex)
             {
@@ -238,29 +256,24 @@ namespace Cryptool.CrypConsole
             Thread t = new Thread(() =>
             {
                 CultureInfo.CurrentCulture = new CultureInfo("en-Us", false);
-                while (engine.IsRunning())
+                while (_engine.IsRunning())
                 {
-                    foreach (var p in workspaceModel.GetAllPluginModels())
-                    {
-                        if (p.GetName().Equals("Ciphertext"))
-                        {
-                            foreach (var input in p.GetInputConnectors())
-                            {
-                                if (input.PropertyName.Equals("Input"))
-                                {
-                                    if (input.LastData != null)
-                                    {
-                                        Console.WriteLine("Output data:");
-                                        Console.WriteLine(input.LastData);
-                                        Thread.Sleep(1000);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    Thread.Sleep(100);
                 }
+                Environment.Exit(0);
             });
             t.Start();
+        }
+
+        private void Plugin_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            var plugin = (IPlugin)sender;
+            var property = sender.GetType().GetProperty(e.PropertyName);
+            if (property.Name.ToLower().Equals("input"))
+            {
+                Console.WriteLine(property.GetValue(plugin).ToString());
+                _engine.Stop();
+            }
         }
 
         /// <summary>
