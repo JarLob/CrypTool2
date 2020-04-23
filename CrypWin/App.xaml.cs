@@ -47,6 +47,12 @@ namespace Cryptool.CrypWin
             {
                 e.Handled = true;
             }
+            else
+            {
+                //Prevent the application from crashing because of unhandled exceptions in GUI thread. Only show error dialog an continue instead:
+                UnhandledExceptionDialog.ShowModalDialog(e.Exception, AssemblyHelper.Version, AssemblyHelper.InstallationType.ToString(), AssemblyHelper.BuildType.ToString(), AssemblyHelper.ProductName);
+                e.Handled = true;
+            }
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Frequenzanalyse</value>
+    <value>Häufigkeitsanalyse</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Ermittelt die Häufigkeiten von Zeichen oder Zeichengruppen im Eingabetext</value>
@@ -217,6 +217,72 @@
     <value>Häufigkeiten sortieren</value>
   </data>
   <data name="SortFrequenciesTooltip" xml:space="preserve">
-    <value>Wenn aktiviert, werden die Balken des Diagramms anhand der Frequenzen sortiert.</value>
+    <value>Wenn aktiviert, werden die Balken des Diagramms anhand der Häufigkeiten sortiert.</value>
+  </data>
+  <data name="CountOverlappingCaption" xml:space="preserve">
+    <value>Überlappend zählen</value>
+  </data>
+  <data name="CountOverlappingTooltip" xml:space="preserve">
+    <value>Wenn dies aktiviert ist, werden auch überlappende n-Gramme gezählt. Andernfalls werden nur nicht-überlappende n-Gramme gezählt.</value>
+  </data>
+  <data name="AbsoluteValues" xml:space="preserve">
+    <value>(als Absolutwerte)</value>
+  </data>
+  <data name="BigramFrequencies" xml:space="preserve">
+    <value>Bigramm-Häufigkeiten</value>
+  </data>
+  <data name="EmptyAlphabetInvalidMessage" xml:space="preserve">
+    <value>Alphabet darf nicht leer sein. Breche Häufigkeitsanalyse ab</value>
+  </data>
+  <data name="HeptagramFrequencies" xml:space="preserve">
+    <value>Heptagramm-Häufigkeiten</value>
+  </data>
+  <data name="HexagramFrequencies" xml:space="preserve">
+    <value>Hexagramm-Häufigkeiten</value>
+  </data>
+  <data name="InPercent" xml:space="preserve">
+    <value>(in %)</value>
+  </data>
+  <data name="MaxNumberOfShownNGrammsCaption" xml:space="preserve">
+    <value>Maximale Anzahl angezeigter N-Gramme</value>
+  </data>
+  <data name="MaxNumberOfShownNGrammsTooltip" xml:space="preserve">
+    <value>Legt die Anzahl der maximal angezeigten n-Grammen im Diagramm fest.</value>
+  </data>
+  <data name="nGram" xml:space="preserve">
+    <value>-gramm-Häufigkeiten</value>
+  </data>
+  <data name="OctagramFrequencies" xml:space="preserve">
+    <value>Octogramm-Häufigkeiten</value>
+  </data>
+  <data name="PentagramFrequencies" xml:space="preserve">
+    <value>Pentagramm-Häufigkeiten</value>
+  </data>
+  <data name="ShowAbsoluteValuesCaption" xml:space="preserve">
+    <value>Zeige Absolutwerte</value>
+  </data>
+  <data name="ShowAbsoluteValuesTooltip" xml:space="preserve">
+    <value>Wenn diese Einstellung aktiviert ist, werden Häufigkeiten als Absolutwerte angezeigt.</value>
+  </data>
+  <data name="TetragramFrequencies" xml:space="preserve">
+    <value>Tetragramm-Häufigkeiten</value>
+  </data>
+  <data name="TrigramFrequencies" xml:space="preserve">
+    <value>Trigramm-Häufigkeiten</value>
+  </data>
+  <data name="UnigramFrequencies" xml:space="preserve">
+    <value>Unigramm-Häufigkeiten</value>
+  </data>
+  <data name="AlphabetCaption" xml:space="preserve">
+    <value>Alphabet</value>
+  </data>
+  <data name="AlphabetTooltip" xml:space="preserve">
+    <value>Das Alphabet definiert die Zeichen, die gezählt werden sollen</value>
+  </data>
+  <data name="ShowTotalCaption" xml:space="preserve">
+    <value>Zeige Gesamtzahl</value>
+  </data>
+  <data name="ShowTotalTooltip" xml:space="preserve">
+    <value>Wenn diese Einstellung aktiviert ist, wird die Gesamtzahl der n-Gramme als absoluter Wert angezeigt.</value>
   </data>
 </root>

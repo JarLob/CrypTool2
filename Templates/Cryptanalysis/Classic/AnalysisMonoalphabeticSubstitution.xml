@@ -6,12 +6,12 @@
   <summary lang="ru">Криптоанализ моноалфавитного замещающего шифра</summary>
   <description lang="en">This template shows the cryptanalysis of the monoalphabetic substitution cipher. A sample ciphertext is entered in the text input. After starting the workspace the Monoalphabetic Substitution Analyzer processes the ciphertext and shows the best found keys as well as the according plaintexts.</description>
   <description lang="ru">Этот шаблон показывает криптоанализ моноалфавитного шифрования замещения. В ввод текста вводится образец зашифрованного текста. После запуска рабочей области анализатор моноалфавитного замещения обрабатывает зашифрованный текст и показывает лучшие найденные ключи, а также соответствующие текстовые тексты.</description>
-  <keywords>Monoalphabetic Substitution Cipher, Frequencies, Dictionary Attack, Analysis</keywords>
-  <keywords lang="ru">Моноалфавитный шифр замещения, частоты, атака словаря, анализ</keywords>
+  <keywords>Monoalphabetic Substitution Cipher, Frequencies, Dictionary Attack, Analysis, MASC</keywords>
+  <keywords lang="ru">Моноалфавитный шифр замещения, частоты, атака словаря, анализ, MASC</keywords>
   <title lang="de">Angriff auf die monoalphabetische Substitution</title>
   <summary lang="de">Angriff auf die monoalphabetische Substitution</summary>
   <description lang="de">Dieses Template zeigt die Kryptoanalyse der monoalphabetischen Substitution basierend auf Buchstabenhäufigkeiten und einem Wörterbuchangriff. Ein Beispiel-Geheimtext ist bereits in die Texteingabebox eingetragen. Nachdem die Vorlage gestartet wurde, wird der Geheimtext von der Komponente analysiert. Die besten Kandidaten für den möglichen Schlüssel und die dazugehörigen Klartexte werden in der Komponente dargestellt.</description>
-  <keywords lang="de">monoalphabetische Substitution, Häufigkeiten, Wörterbuch, Analyse</keywords>
+  <keywords lang="de">monoalphabetische Substitution, Häufigkeiten, Wörterbuch, Analyse, MASC</keywords>
   <icon file="AnalysisMonoalphabeticSubstitution.png" />
   <relevantPlugins>
     <plugin name="AnalysisMonoalphabeticSubstitution" />

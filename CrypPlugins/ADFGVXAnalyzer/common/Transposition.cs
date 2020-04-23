@@ -35,7 +35,6 @@
         }
         public static void decodeWithInverseKey(Vector inverseKey, Vector cipher, Vector plain)
         {
-
             int keyLength = inverseKey.length;
             int fullRows = (cipher.length + keyLength - 1) / keyLength;
             int longColumns = cipher.length % keyLength;

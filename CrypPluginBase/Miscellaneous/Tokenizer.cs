@@ -263,26 +263,27 @@ namespace Cryptool.PluginBase.Miscellaneous
 
     public class GramTokenizer : IEnumerable<string>
     {
-        public static IEnumerable<string> tokenize(string word)
+        public static IEnumerable<string> tokenize(string word, int stepsize = 1)
         {
-            return new GramTokenizer(word, 1, false);
+            return new GramTokenizer(word, 1, false, stepsize);
         }
 
-        public static IEnumerable<string> tokenize(string word, int gramLength)
+        public static IEnumerable<string> tokenize(string word, int gramLength, int stepsize = 1)
         {
-            return new GramTokenizer(word, gramLength, false);
+            return new GramTokenizer(word, gramLength, false, stepsize);
         }
 
-        public static IEnumerable<string> tokenize(string word, int gramLength, bool includeFragments)
+        public static IEnumerable<string> tokenize(string word, int gramLength, bool includeFragments, int stepsize = 1)
         {
-            return new GramTokenizer(word, gramLength, includeFragments);
+            return new GramTokenizer(word, gramLength, includeFragments, stepsize);
         }
 
         private string word;
         private int gramLength;
         private bool includeFragments;
+        private int stepsize = 1;
 
-        private GramTokenizer(string word, int gramLength, bool includeFragments)
+        private GramTokenizer(string word, int gramLength, bool includeFragments, int stepsize = 1)
         {
             if (word == null || word.Length < 1)
             {
@@ -291,6 +292,10 @@ namespace Cryptool.PluginBase.Miscellaneous
             if (gramLength < 1)
             {
                 throw new ArgumentOutOfRangeException("gram length must be > 0");
+            }
+            if(stepsize < 1)
+            {
+                throw new ArgumentOutOfRangeException("stepsize must be > 0");
             }
 
             if (includeFragments)
@@ -305,6 +310,7 @@ namespace Cryptool.PluginBase.Miscellaneous
 
             this.gramLength = gramLength;
             this.includeFragments = includeFragments;
+            this.stepsize = stepsize;
         }
 
         /// <summary>
@@ -334,7 +340,7 @@ namespace Cryptool.PluginBase.Miscellaneous
 
         public IEnumerator<string> GetEnumerator()
         {
-            return new GramEnumerator(word, gramLength);
+            return new GramEnumerator(word, gramLength, stepsize);
         }
 
         #endregion
@@ -343,7 +349,7 @@ namespace Cryptool.PluginBase.Miscellaneous
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return new GramEnumerator(word, gramLength);
+            return new GramEnumerator(word, gramLength, stepsize);
         }
 
         #endregion
@@ -353,13 +359,15 @@ namespace Cryptool.PluginBase.Miscellaneous
     {
         private readonly string word;
         private readonly int gramLength;
+        private readonly int stepsize = 1;
 
         private int position = -1;
 
-        public GramEnumerator(string word, int gramLength)
+        public GramEnumerator(string word, int gramLength, int stepsize = 1)
         {
             this.word = word;
             this.gramLength = gramLength;
+            this.stepsize = stepsize;
         }
 
         #region IEnumerator<string> Members
@@ -395,7 +403,12 @@ namespace Cryptool.PluginBase.Miscellaneous
 
         public bool MoveNext()
         {
-            return ++position < (word.Length - gramLength + 1);
+            if(position == -1)
+            {
+                position = 0;
+                return position < (word.Length - gramLength + 1);
+            }
+            return (position = position + stepsize) < (word.Length - gramLength + 1);
         }
 
         public void Reset()

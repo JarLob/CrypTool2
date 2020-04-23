@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace Cryptool.FrequencyTest
 {
-    [Author("Georgi Angelov, Danail Vazov, Matthäus Wander", "angelov@cryptool.org", "Uni Duisburg", "http://www.uni-duisburg-essen.de")]
+    [Author("Georgi Angelov, Danail Vazov, Matthäus Wander, Nils Kopal", "angelov@cryptool.org", "Uni Duisburg", "http://www.uni-duisburg-essen.de")]
     [PluginInfo("Cryptool.FrequencyTest.Properties.Resources",  "PluginCaption", "PluginTooltip", "FrequencyTest/DetailedDescription/doc.xml", "FrequencyTest/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class FrequencyTest : ICrypComponent
@@ -29,13 +29,12 @@ namespace Cryptool.FrequencyTest
         private IDictionary<string, double[]> grams = new SortedDictionary<string, double[]>();
         private DataSource data = new DataSource();
         private double presentationScaler = 1.0; // the initial zoom value
-        private double presentationBarWidth = 25.0; // the width in pixel of a single chart bar
+        private double presentationBarWidth = 38.0; // the width in pixel of a single chart bar
         private double presentationBarHeightAdd = 8.0 + 2.0 * 26.0; // the additional heigth to a chart bar, comprised of two rectangles (3px, 5px) and two textblocks
 
-        // TODO: this shall be an algorithm setting or an optional word
-        private const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private const string defaultAlphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private string alphabet = defaultAlphabet;
 
-        
 
         #endregion
 
@@ -54,6 +53,21 @@ namespace Cryptool.FrequencyTest
                 OnPropertyChanged("StringInput");
             }
         }
+
+        [PropertyInfo(Direction.InputData, "AlphabetCaption", "AlphabetTooltip", false)]
+        public string Alphabet
+        {
+            get
+            {
+                return alphabet;
+            }
+            set
+            {
+                alphabet = value;
+                OnPropertyChanged("Alphabet");
+            }
+        }
+
 
         [PropertyInfo(Direction.OutputData, "StringOutputCaption", "StringOutputTooltip", false)]
         public string StringOutput
@@ -89,20 +103,19 @@ namespace Cryptool.FrequencyTest
             settings = new FrequencyTestSettings();
             presentation = new FrequencyTestPresentation();
             Presentation = presentation;
-
             presentation.SizeChanged += new System.Windows.SizeChangedEventHandler(presentation_SizeChanged);
-
             settings.PropertyChanged += new PropertyChangedEventHandler(settings_PropertyChanged);
         }
-
         
-
-        
-        public UserControl Presentation { get; private set; }
+        public UserControl Presentation
+        {
+            get;
+            private set;
+        }
 
         public void PreExecution()
         {
-            //throw new NotImplementedException();
+            alphabet = defaultAlphabet;
         }
 
         public void Execute()
@@ -111,6 +124,11 @@ namespace Cryptool.FrequencyTest
 
             if (stringInput == null)
             {
+                return;
+            }
+            if (string.IsNullOrEmpty(alphabet))
+            {
+                GuiLogMessage(Properties.Resources.EmptyAlphabetInvalidMessage, NotificationLevel.Warning);
                 return;
             }
 
@@ -195,7 +213,7 @@ namespace Cryptool.FrequencyTest
         {
             if (settings.ProcessUnknownSymbols == 0)
             {
-                workstring = StringUtil.StripUnknownSymbols(validChars, workstring);
+                workstring = StringUtil.StripUnknownSymbols(alphabet, workstring);
             }
 
             if (workstring.Length == 0)
@@ -208,7 +226,13 @@ namespace Cryptool.FrequencyTest
                 workstring = workstring.ToUpper();
             }
 
-            foreach (string g in GramTokenizer.tokenize(workstring, settings.GrammLength, settings.BoundaryFragments == 1))
+            int stepsize = 1;
+            if (!settings.CountOverlapping)
+            {
+                stepsize = settings.GrammLength;
+            }
+
+            foreach (string g in GramTokenizer.tokenize(workstring, settings.GrammLength, settings.BoundaryFragments == 1, stepsize))
             {
                 if (!grams.ContainsKey(g))
                 {
@@ -221,25 +245,68 @@ namespace Cryptool.FrequencyTest
             }
         }
 
-
         private void updatePresentation()
         {
+
+            // remove all entries
+            data.ValueCollection.Clear();
+
+            //create header text
+            string valueType = Properties.Resources.InPercent;
+            if (settings.ShowAbsoluteValues)
+            {
+                valueType = Properties.Resources.AbsoluteValues;
+            }
+           
+            switch (settings.GrammLength)
+            {
+                case 1:
+                    presentation.SetHeadline(Properties.Resources.UnigramFrequencies + " " + valueType);
+                    break;
+                case 2:
+                    presentation.SetHeadline(Properties.Resources.BigramFrequencies + " " + valueType);
+                    break;
+                case 3:
+                    presentation.SetHeadline(Properties.Resources.TrigramFrequencies + " " + valueType);
+                    break;
+                case 4:
+                    presentation.SetHeadline(Properties.Resources.TetragramFrequencies + " " + valueType);
+                    break;
+                case 5:
+                    presentation.SetHeadline(Properties.Resources.PentagramFrequencies + " " + valueType);
+                    break;
+                case 6:
+                    presentation.SetHeadline(Properties.Resources.HexagramFrequencies + " " + valueType);
+                    break;
+                case 7:
+                    presentation.SetHeadline(Properties.Resources.HeptagramFrequencies + " " + valueType);
+                    break;
+                case 8:
+                    presentation.SetHeadline(Properties.Resources.OctagramFrequencies + " " + valueType);
+                    break;
+                default:
+                    presentation.SetHeadline(settings.GrammLength + Properties.Resources.nGram + " " + valueType);
+                    break;
+            }
+
+            //update bars
             if (grams.Count > 0 && presentation.ActualWidth > 0)
             {
                 // retrieve the maximum value from all grams
                 double max = grams.Values.Max(item => item[PERCENTAGED]);
-                GuiLogMessage("Max n-gram percentage is: " + max, NotificationLevel.Debug);
-
+                
                 // calculate the needed width for the chart (unscaled) in pixel
-                double unscaledChartWidth = (double)grams.Count * presentationBarWidth;
+                double unscaledChartWidth = (grams.Count < 10 ? 10 : grams.Count + (settings.ShowTotal ? 1 : 0)) * presentationBarWidth + 3;
+                if (grams.Count > settings.MaxNumberOfShownNGramms + (settings.ShowTotal ? 1 : 0))
+                {
+                    unscaledChartWidth = (settings.MaxNumberOfShownNGramms + (settings.ShowTotal ? 1 : 0)) * presentationBarWidth + 3;
+                }
 
                 // retrieve the maximum bar height from settings in pixel
-                double maxBarHeight = (double) settings.ChartHeight;
-
-
+                double maxBarHeight = settings.ChartHeight;                
                 if (settings.Autozoom)
                 {
-                    // calculate the scaling-value depeding on the needed width ad the current presetnation width
+                    // calculate the scaling-value depeding on the needed width and the current presentation width
                     presentationScaler = presentation.ActualWidth / unscaledChartWidth;
                     settings.Scale = (int)(presentationScaler * 10000.0);
 
@@ -248,51 +315,38 @@ namespace Cryptool.FrequencyTest
                     maxBarHeight = (presentation.ActualHeight / presentationScaler) - (presentation.chartHeadline.ActualHeight + presentationBarHeightAdd);
                 }
 
-                // remove all entries
-                data.ValueCollection.Clear();
+                //count all grams and create a total bar
+                if (settings.ShowTotal)
+                {
+                    int sum = (int)grams.Values.Sum(item => item[ABSOLUTE]);
+                    var element = new CollectionElement(1.0001 * max * (maxBarHeight / max), sum, 100, "Σ", true);
+                    element.ColorA = Colors.LightGreen;
+                    element.ColorB = Colors.DarkGreen;
+                    data.ValueCollection.Add(element);
+                }
 
                 // calculate presentation bars height and add the to our local DataSource
                 foreach (KeyValuePair<string, double[]> item in grams)
                 {
                     double height = item.Value[PERCENTAGED] * (maxBarHeight / max);
-                    CollectionElement row = new CollectionElement(height, Math.Round(item.Value[PERCENTAGED] * 100, 2), item.Key);
+                    CollectionElement row = new CollectionElement(height, (int)item.Value[ABSOLUTE], Math.Round(item.Value[PERCENTAGED] * 100, 2), item.Key, settings.ShowAbsoluteValues);
                     data.ValueCollection.Add(row);
                 }
 
-                switch (settings.GrammLength)
+                //add dummy bars
+                while (data.ValueCollection.Count + (settings.ShowTotal ? 1 : 0) < 10)
                 {
-                    case 1:
-                        presentation.SetHeadline("Character (unigram) frequency (in %)");
-                        break;
-                    case 2:
-                        presentation.SetHeadline("Bigram frequency (in %)");
-                        break;
-                    case 3:
-                        presentation.SetHeadline("Trigram frequency (in %)");
-                        break;
-                    default:
-                        presentation.SetHeadline(settings.GrammLength + "-gram frequency (in %)");
-                        break;
+                    data.ValueCollection.Add(new CollectionElement(0, 0, 0, string.Empty, false, System.Windows.Visibility.Visible));
                 }
-
-
-                presentation.ShowData(data, settings.SortFrequencies);
             }
+
+            //finally, update ui
+            presentation.ShowData(data, settings.SortFrequencies, settings.MaxNumberOfShownNGramms + (settings.ShowTotal ? 1 : 0));
+            
         }
 
         private void presentation_SizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
-        {
-            // Just for debugging
-            //if (e.HeightChanged)
-            //{
-            //    GuiLogMessage("Height changed from " + e.PreviousSize.Height + " to " + e.NewSize.Height, NotificationLevel.Info);
-            //}
-
-            //if (e.WidthChanged)
-            //{
-            //    GuiLogMessage("Width changed from " + e.PreviousSize.Width + " to " + e.NewSize.Width, NotificationLevel.Info);
-            //}
-
+        {           
             updatePresentation();
         }
 
@@ -304,7 +358,6 @@ namespace Cryptool.FrequencyTest
                 case "ChartHeight":
                     updatePresentation();
                     break;
-
                 case "Scale":
                     presentation.SetScaler( (double)settings.Scale / 10000.0);
                     break;
@@ -320,7 +373,6 @@ namespace Cryptool.FrequencyTest
 
         public void PostExecution()
         {
-            //throw new NotImplementedException();
         }
 
         public void Stop()
@@ -330,14 +382,11 @@ namespace Cryptool.FrequencyTest
 
         public void Initialize()
         {
-            //throw new NotImplementedException();
         }
 
         public void Dispose()
         {
-            //throw new NotImplementedException();
         }
-
        
         #endregion
 

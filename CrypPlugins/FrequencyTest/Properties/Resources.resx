@@ -219,4 +219,70 @@
   <data name="SortFrequenciesTooltip" xml:space="preserve">
     <value>If enabled the bars of the graph are sorted based on the frequencies.</value>
   </data>
+  <data name="AbsoluteValues" xml:space="preserve">
+    <value>(as absolute values)</value>
+  </data>
+  <data name="AlphabetCaption" xml:space="preserve">
+    <value>Alphabet</value>
+  </data>
+  <data name="AlphabetTooltip" xml:space="preserve">
+    <value>The alphabet defines the characters that are counted</value>
+  </data>
+  <data name="BigramFrequencies" xml:space="preserve">
+    <value>Bigram frequencies</value>
+  </data>
+  <data name="CountOverlappingCaption" xml:space="preserve">
+    <value>Count overlapping</value>
+  </data>
+  <data name="CountOverlappingTooltip" xml:space="preserve">
+    <value>When this is enabled, overlapping n-grams are also counted. Otherwise, only non-overlapping n-grams are counted.</value>
+  </data>
+  <data name="EmptyAlphabetInvalidMessage" xml:space="preserve">
+    <value>Alphabet must not be empty. Abort frequency analysis</value>
+  </data>
+  <data name="HeptagramFrequencies" xml:space="preserve">
+    <value>Heptagram frequencies</value>
+  </data>
+  <data name="HexagramFrequencies" xml:space="preserve">
+    <value>Hexagram frequencies</value>
+  </data>
+  <data name="InPercent" xml:space="preserve">
+    <value>(in %)</value>
+  </data>
+  <data name="MaxNumberOfShownNGrammsCaption" xml:space="preserve">
+    <value>Maximum number of shown n-grams</value>
+  </data>
+  <data name="MaxNumberOfShownNGrammsTooltip" xml:space="preserve">
+    <value>Sets the number of maximum shown n-grams in the graph.</value>
+  </data>
+  <data name="nGram" xml:space="preserve">
+    <value>-gram frequencies</value>
+  </data>
+  <data name="OctagramFrequencies" xml:space="preserve">
+    <value>Octagram frequencies</value>
+  </data>
+  <data name="PentagramFrequencies" xml:space="preserve">
+    <value>Pentagram frequencies</value>
+  </data>
+  <data name="ShowAbsoluteValuesCaption" xml:space="preserve">
+    <value>Show absolute values</value>
+  </data>
+  <data name="ShowAbsoluteValuesTooltip" xml:space="preserve">
+    <value>If this setting is checked, frequencies are shown as absolute values.</value>
+  </data>
+  <data name="TetragramFrequencies" xml:space="preserve">
+    <value>Tetragram frequencies</value>
+  </data>
+  <data name="TrigramFrequencies" xml:space="preserve">
+    <value>Trigram frequencies</value>
+  </data>
+  <data name="UnigramFrequencies" xml:space="preserve">
+    <value>Unigram frequencies</value>
+  </data>
+  <data name="ShowTotalCaption" xml:space="preserve">
+    <value>Show total</value>
+  </data>
+  <data name="ShowTotalTooltip" xml:space="preserve">
+    <value>If this setting is checked, the total number of n-grams is shown as absolut value.</value>
+  </data>
 </root>

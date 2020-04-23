@@ -148,7 +148,8 @@ namespace ADFGVXAnalyzer
         {
             if (interim.length % 2 != 0)
             {
-                throw new Exception("adfgvx length is not even");
+                //hack, to allow uneven length adfgvx texts
+                interim.append("A");                
             }
             plain.length = 0;
             for (int i = 0; i < interim.length; i += 2)

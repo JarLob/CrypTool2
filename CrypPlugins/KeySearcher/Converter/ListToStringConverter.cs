@@ -20,6 +20,12 @@ namespace KeySearcher.Converter
             }
 
             var convert = String.Join(", ", list.ToArray()); 
+
+            //the list of currently computed blocks can get really long; thus, we cut the length to 32 characters here
+            if(convert.Length > 32)
+            {
+                convert = convert.Substring(0, 28) + "... ";
+            }
             return convert;
         }
 

@@ -171,9 +171,7 @@ namespace ADFGVXAnalyzer
             try
             {
                 if (!CheckAlphabetLength()) { return; }
-
                 separator = ChooseSeparator(settings.Separator);
-
                 messages = Messages.Split(new[] { separator }, StringSplitOptions.None);
 
                 if (!CheckMessages()) { return; }
@@ -212,17 +210,25 @@ namespace ADFGVXAnalyzer
 
         private void AlgorithmThread(object parametersObject)
         {
-
-            object[] parameters = (object[])parametersObject;
-            int i = (int)parameters[0];
-            String[] messages = (string[])parameters[1];
-            int j = (int)parameters[2];
-            ThreadingHelper threadingHelper = (ThreadingHelper)parameters[3];
-            ADFGVXANalyzerSettings settings = (ADFGVXANalyzerSettings)parameters[4];
-            Algorithm a = new Algorithm(i, messages, log, j, threadingHelper, settings, this);
-            a.SANgramsIC();
-
-
+            try
+            {
+                object[] parameters = (object[])parametersObject;
+                int i = (int)parameters[0];
+                String[] messages = (string[])parameters[1];
+                int j = (int)parameters[2];
+                ThreadingHelper threadingHelper = (ThreadingHelper)parameters[3];
+                ADFGVXANalyzerSettings settings = (ADFGVXANalyzerSettings)parameters[4];
+                Algorithm a = new Algorithm(i, messages, log, j, threadingHelper, settings, this);
+                a.SANgramsIC();
+            }
+            catch(ThreadAbortException)
+            {
+                //do nothing; analysis aborts threads to stop them :-/
+            }
+            catch(Exception ex)
+            {
+                GuiLogMessage(string.Format(Properties.Resources.ExceptionDuringThread, ex.Message), NotificationLevel.Error);
+            }
         }
 
         /// <summary>
@@ -280,9 +286,9 @@ namespace ADFGVXAnalyzer
                         }
                     }
                     // ReSharper disable once EmptyGeneralCatchClause
-                    catch (Exception e)
+                    catch (Exception)
                     {
-
+                        //do nothing
                     }
                 }, null);
             }
@@ -291,9 +297,6 @@ namespace ADFGVXAnalyzer
                 GuiLogMessage("AddNewBestListEntry: " + ex.Message, NotificationLevel.Error);
             }
         }
-
-
-
 
         /// <summary>
         /// Clear the UI
@@ -304,13 +307,20 @@ namespace ADFGVXAnalyzer
             {
                 Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    ((ADFGVXAnalyzerPresentation)Presentation).StartTime.Value = "";
-                    ((ADFGVXAnalyzerPresentation)Presentation).EndTime.Value = "";
-                    ((ADFGVXAnalyzerPresentation)Presentation).ElapsedTime.Value = "";
-                    ((ADFGVXAnalyzerPresentation)Presentation).CurrentAnalysedKeylength.Value = "";
-                    ((ADFGVXAnalyzerPresentation)Presentation).Keys.Value = "";
-                    ((ADFGVXAnalyzerPresentation)Presentation).MessageCount.Value = "";
-                    ((ADFGVXAnalyzerPresentation)Presentation).BestList.Clear();
+                    try
+                    {
+                        ((ADFGVXAnalyzerPresentation)Presentation).StartTime.Value = "";
+                        ((ADFGVXAnalyzerPresentation)Presentation).EndTime.Value = "";
+                        ((ADFGVXAnalyzerPresentation)Presentation).ElapsedTime.Value = "";
+                        ((ADFGVXAnalyzerPresentation)Presentation).CurrentAnalysedKeylength.Value = "";
+                        ((ADFGVXAnalyzerPresentation)Presentation).Keys.Value = "";
+                        ((ADFGVXAnalyzerPresentation)Presentation).MessageCount.Value = "";
+                        ((ADFGVXAnalyzerPresentation)Presentation).BestList.Clear();
+                    }
+                    catch (Exception)
+                    {
+                        //do nothing
+                    }
                 }, null);
             }
             catch (Exception ex)
@@ -326,13 +336,18 @@ namespace ADFGVXAnalyzer
         {
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                startTime = DateTime.Now;
-                ((ADFGVXAnalyzerPresentation)Presentation).StartTime.Value = "" + startTime;
-                ((ADFGVXAnalyzerPresentation)Presentation).EndTime.Value = "";
-                ((ADFGVXAnalyzerPresentation)Presentation).ElapsedTime.Value = "";
+                try
+                {
+                    startTime = DateTime.Now;
+                    ((ADFGVXAnalyzerPresentation)Presentation).StartTime.Value = "" + startTime;
+                    ((ADFGVXAnalyzerPresentation)Presentation).EndTime.Value = "";
+                    ((ADFGVXAnalyzerPresentation)Presentation).ElapsedTime.Value = "";
+                }
+                catch (Exception)
+                {
+                    //do nothing
+                }
             }, null);
-
-
         }
 
         /// <summary>
@@ -342,17 +357,23 @@ namespace ADFGVXAnalyzer
         {
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                endTime = DateTime.Now;
-                var elapsedtime = endTime.Subtract(startTime);
-                double totalSeconds = elapsedtime.TotalSeconds;
-                keysPerSecond = (int)(decryptions / totalSeconds);
-                var elapsedspan = new TimeSpan(elapsedtime.Days, elapsedtime.Hours, elapsedtime.Minutes, elapsedtime.Seconds, 0);
-                ((ADFGVXAnalyzerPresentation)Presentation).EndTime.Value = "" + endTime;
-                ((ADFGVXAnalyzerPresentation)Presentation).ElapsedTime.Value = "" + elapsedspan;
-                ((ADFGVXAnalyzerPresentation)Presentation).CurrentAnalysedKeylength.Value = "" + keylength;
-                ((ADFGVXAnalyzerPresentation)Presentation).Keys.Value = "" + keysPerSecond + " (" + decryptions + ")";
-                ((ADFGVXAnalyzerPresentation)Presentation).MessageCount.Value = "" + messages.Length;
-
+                try
+                {
+                    endTime = DateTime.Now;
+                    var elapsedtime = endTime.Subtract(startTime);
+                    double totalSeconds = elapsedtime.TotalSeconds;
+                    keysPerSecond = (int)(decryptions / totalSeconds);
+                    var elapsedspan = new TimeSpan(elapsedtime.Days, elapsedtime.Hours, elapsedtime.Minutes, elapsedtime.Seconds, 0);
+                    ((ADFGVXAnalyzerPresentation)Presentation).EndTime.Value = "" + endTime;
+                    ((ADFGVXAnalyzerPresentation)Presentation).ElapsedTime.Value = "" + elapsedspan;
+                    ((ADFGVXAnalyzerPresentation)Presentation).CurrentAnalysedKeylength.Value = "" + keylength;
+                    ((ADFGVXAnalyzerPresentation)Presentation).Keys.Value = "" + keysPerSecond + " (" + decryptions + ")";
+                    ((ADFGVXAnalyzerPresentation)Presentation).MessageCount.Value = "" + messages.Length;
+                }
+                catch (Exception)
+                {
+                    //do nothing
+                }
             }, null);
 
         }
@@ -449,47 +470,39 @@ namespace ADFGVXAnalyzer
                     {
                         if (settings.EncryptAlphabet.IndexOf(c) == -1) //if c not even present in the string, this will output value -1
                         {
-                            GuiLogMessage("One of the messages contains invalid character", NotificationLevel.Error);
+                            GuiLogMessage(string.Format(Properties.Resources.InvalidCharacters, message), NotificationLevel.Error);
                             return false;
                         }
+                    }
+                    if(message.Length % 2 != 0)
+                    {
+                        GuiLogMessage(string.Format(Properties.Resources.NotEvenLength, message), NotificationLevel.Error);
+                        return false;
                     }
                 }
                 return true;
             }
             catch (Exception ex)
             {
-                GuiLogMessage("CheckMessages: " + ex.Message, NotificationLevel.Error);
+                GuiLogMessage(string.Format(Properties.Resources.ExceptionDuringCheckOfMessages, ex.Message), NotificationLevel.Error);
                 return false;
             }
         }
 
         private string ChooseSeparator(int separator)
         {
-            try
+            switch (separator)
             {
-                switch (separator)
-                {
-                    case 0:
-                        return Environment.NewLine;
-                        break;
-                    case 1:
-                        return ",";
-                        break;
-                    case 2:
-                        return ";";
-                        break;
-                    case 3:
-                        return " ";
-                        break;
-                    default:
-                        return null;
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                GuiLogMessage("ChooseSeparator: " + ex.Message, NotificationLevel.Error);
-                return null;
+                case 0:
+                    return Environment.NewLine;
+                case 1:
+                    return ",";
+                case 2:
+                    return ";";
+                case 3:
+                    return " ";
+                default:
+                    return null;
             }
         }
 

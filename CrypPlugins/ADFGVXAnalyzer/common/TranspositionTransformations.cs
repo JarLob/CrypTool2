@@ -315,7 +315,8 @@ namespace common
         {
             if (!isKeyValid(tempk, keylen))
             {
-                throw new System.Exception("Invalid transformation");
+                Console.WriteLine("Invalid transformation");
+                return;
             }
 
             try

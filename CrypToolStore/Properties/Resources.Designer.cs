@@ -263,7 +263,7 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Exception occured during showing of selected plugin in the right box of the CrypToolStore UI: {0} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Exception occured during showing of selected plugin in the right box of the CrypTool Store UI: {0} ähnelt.
         /// </summary>
         internal static string CrypToolStorePresentation_PluginListView_SelectionChanged_Exception_occured_during_showing_of_selected_plugin_in_the_right_box_of_the_CrypToolStore_UI___0_ {
             get {

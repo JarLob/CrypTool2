@@ -93,10 +93,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -185,10 +181,6 @@
     <ProjectReference Include="..\..\LibSource\CrypAnalysisViewControl\CrypAnalysisViewControl.csproj">
       <Project>{4ab9be96-3e34-40cb-9270-a64480c851ee}</Project>
       <Name>CrypAnalysisViewControl</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\LibSource\CT2IPC\CT2IPC.csproj">
-      <Project>{539863ec-3333-489f-a315-c1ec8340dd40}</Project>
-      <Name>CT2IPC</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

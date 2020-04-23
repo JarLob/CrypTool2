@@ -297,4 +297,16 @@
   <data name="DeviationToolTip" xml:space="preserve">
     <value>Abweichung in Prozent zum idealen Kostenwert, ab wann die Substitutionsanalyse durchgeführt werden soll.</value>
   </data>
+  <data name="ExceptionDuringCheckOfMessages" xml:space="preserve">
+    <value>Es trat eine Ausnahme während des Checks der Nachrichten auf: {0}</value>
+  </data>
+  <data name="ExceptionDuringThread" xml:space="preserve">
+    <value>Es trat eine Ausnahme während der Ausführung eines ADFGAnalyse-Threads auf: {0}</value>
+  </data>
+  <data name="InvalidCharacters" xml:space="preserve">
+    <value>Eine der Nachrichten enthält ungültige Zeichen: {0}</value>
+  </data>
+  <data name="NotEvenLength" xml:space="preserve">
+    <value>Eine der Nachrichten hat keine gerade Länge: {0}</value>
+  </data>
 </root>

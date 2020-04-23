@@ -107,6 +107,7 @@ namespace WorkspaceManager.View.Visuals
                 pluginSettingsContainer.TaskPaneAttributeChanged += HandleTaskPaneAttributeChanges;
                 //"Replay" all current task pane attributes:
                 DispatchTaskPaneAttributeChanges(pluginSettingsContainer.CurrentTaskPaneAttributes);
+                SetExecutionMode();
             }
             else
             {
@@ -235,51 +236,56 @@ namespace WorkspaceManager.View.Visuals
         {
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                foreach (List<ControlEntry> cel in entgrou.entryList)
+                SetExecutionMode();
+            }, null);
+        }
+
+        private void SetExecutionMode()
+        {
+            foreach (List<ControlEntry> cel in entgrou.entryList)
+            {
+                foreach (ControlEntry ce in cel)
                 {
-                    foreach (ControlEntry ce in cel)
+                    if (((WorkspaceManagerClass)bcv.Model.WorkspaceModel.MyEditor).isExecuting())
                     {
-                        if (((WorkspaceManagerClass)bcv.Model.WorkspaceModel.MyEditor).isExecuting())
+                        if (!ce.tpa.ChangeableWhileExecuting)
                         {
-                            if (!ce.tpa.ChangeableWhileExecuting)
+                            ce.element.IsEnabled = false;
+                            if (ce.element is IntegerUpDown)
                             {
-                                ce.element.IsEnabled = false;
-                                if (ce.element is IntegerUpDown)
-                                {
-                                    IntegerUpDown nud = ce.element as IntegerUpDown;
-                                    nud.Opacity = 0.80;
-                                    nud.Foreground = Brushes.Gray;
-                                }
-                                if (ce.caption != null)
-                                {
-                                    TextBlock cap = ce.caption as TextBlock;
-                                    cap.Opacity = 0.80;
-                                    cap.Foreground = Brushes.Gray;
-                                }
+                                IntegerUpDown nud = ce.element as IntegerUpDown;
+                                nud.Opacity = 0.80;
+                                nud.Foreground = Brushes.Gray;
+                            }
+                            if (ce.caption != null)
+                            {
+                                TextBlock cap = ce.caption as TextBlock;
+                                cap.Opacity = 0.80;
+                                cap.Foreground = Brushes.Gray;
                             }
                         }
-                        else
+                    }
+                    else
+                    {
+                        if (!ce.tpa.ChangeableWhileExecuting)
                         {
-                            if (!ce.tpa.ChangeableWhileExecuting)
+                            ce.element.IsEnabled = true;
+                            if (ce.element is IntegerUpDown)
                             {
-                                ce.element.IsEnabled = true;
-                                if (ce.element is IntegerUpDown)
-                                {
-                                    IntegerUpDown nud = ce.element as IntegerUpDown;
-                                    nud.Opacity = 1;
-                                    nud.Foreground = Brushes.Black;
-                                }
-                                if (ce.caption != null)
-                                {
-                                    TextBlock cap = ce.caption as TextBlock;
-                                    cap.Opacity = 1;
-                                    cap.Foreground = Brushes.Black;
-                                }
+                                IntegerUpDown nud = ce.element as IntegerUpDown;
+                                nud.Opacity = 1;
+                                nud.Foreground = Brushes.Black;
+                            }
+                            if (ce.caption != null)
+                            {
+                                TextBlock cap = ce.caption as TextBlock;
+                                cap.Opacity = 1;
+                                cap.Foreground = Brushes.Black;
                             }
                         }
                     }
                 }
-            }, null);
+            }
         }
 
         List<String> groups = new List<String>();

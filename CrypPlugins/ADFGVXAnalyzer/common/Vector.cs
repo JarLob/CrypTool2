@@ -108,7 +108,11 @@ namespace common
 
             if (keyS.Length > TextInInt.Length)
             {
-                throw new System.Exception("Cannot create transposition key");
+                Console.WriteLine("Cannot create transposition key; adding now Z at the end");
+                while(keyS.Length > TextInInt.Length)
+                {
+                    keyS = keyS + "Z";
+                }
             }
 
             for (int i = 0; i < TextInInt.Length; i++)

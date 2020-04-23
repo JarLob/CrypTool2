@@ -4,6 +4,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Threading;
 using System.Windows.Threading;
+using System;
+
 namespace Cryptool.FrequencyTest
 {
     /// <summary>
@@ -19,23 +21,38 @@ namespace Cryptool.FrequencyTest
         }
 
 
-        public void ShowData(DataSource data, bool sort)
+        public void ShowData(DataSource data, bool sort, int maxNumberOfShownNGrams)
         {
             List<CollectionElement> list = data.ValueCollection.ToList();
             //here, we sort by frequency occurrence if the user wants so
             if (sort)
             {
-                list.Sort(delegate(CollectionElement a, CollectionElement b) { return (a.Amount > b.Amount ? -1 : 1); });
+                list.Sort(delegate(CollectionElement a, CollectionElement b) { return (a.Height > b.Height ? -1 : 1); });
             }
+
+            //here, we remove all low frequencies until we only have maxNumberOfShownNGrams left
+            List<CollectionElement> sorted_list = data.ValueCollection.ToList();
+            sorted_list.Sort(delegate (CollectionElement a, CollectionElement b) { return (a.Height > b.Height ? -1 : 1); });
+            for(int i = maxNumberOfShownNGrams; i < sorted_list.Count; i++)
+            {
+                list.Remove(sorted_list[i]);
+            }                                
 
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                DataSource source = (DataSource)this.Resources["source"];
-                source.ValueCollection.Clear();
-                for (int i = 0; i < list.Count; i++)
+                try
                 {
-                    source.ValueCollection.Add(list[i]);
-                }                
+                    DataSource source = (DataSource)this.Resources["source"];
+                    source.ValueCollection.Clear();
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        source.ValueCollection.Add(list[i]);
+                    }
+                }
+                catch (Exception)
+                {
+                    //do nothing
+                }
             }, null);
         }
 

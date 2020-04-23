@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+  <title lang="en">DGK Cipher (Text Input)</title>
+  <title lang="ru">DGK Cipher (ввод текста)</title>
+  <title lang="de">DGK-Chiffre (Texteingabe)</title>  
+  <summary lang="en">Usage of the <i>DGK</i> cipher with text input</summary>
+  <summary lang="ru">Использование шифра <i>DGK</i> с вводом текста</summary>
+  <summary lang="de">Benutzung der <i>DGK</i>-Chiffre mit Texteingabe</summary>  
+  <description lang="en">This template shows the usage of the <i>DGK</i> cipher with text.</description>
+  <description lang="ru">Этот шаблон показывает использование шифра <i> DGK </i> с текстом.</description>
+  <description lang="de">Diese Vorlage zeigt die Benutzung der <i>DGK</i>-Chiffre mit Text.</description>  
+  <keywords>homomorphic, Damgård,Geisler,  Krøigaard, asymmetric</keywords>
+  <keywords lang="ru">гомоморфный, Дамгард, Гейслер, Кройгаард, асимметричный</keywords>
+  <keywords lang="de">homomorph, Damgård, Geisler, Krøigaard, asymmetrisch</keywords>  
+  <icon file="DGK_Text.png" />
+  <relevantPlugins>
+    <plugin name="DGK" />
+    <plugin name="DGKKeyGenerator" />
+  </relevantPlugins>
+  <replacements lang="de">
+    <replacement key="$KeyGenerator$" value="Schlüsselgenerator" />
+    <replacement key="$Encrypt$" value="Verschlüsselung" />
+    <replacement key="$Decrypt$" value="Entschlüsselung" />
+    <replacement key="$StringEncoder$" value="String-Codierer" />
+    <replacement key="$Plaintext$" value="Klartext" />
+    <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$KeyGenerator$" value="генератор ключей" />
+    <replacement key="$Encrypt$" value="кодирование" />
+    <replacement key="$Decrypt$" value="дешифрование" />
+    <replacement key="$StringEncoder$" value="Строка кодировщик" />
+    <replacement key="$Plaintext$" value="обычный текст" />
+    <replacement key="$Ciphertext$" value="шифротекста" />
+    <replacement key="$Decrypted Ciphertext$" value="Расшифрованный зашифрованный текст" />
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$KeyGenerator$" value="KeyGenerator" />
+    <replacement key="$Encrypt$" value="Encrypt" />
+    <replacement key="$Decrypt$" value="Decrypt" />
+    <replacement key="$StringEncoder$" value="String Encoder" />
+    <replacement key="$Plaintext$" value="Plaintext" />
+    <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext" />
+  </replacements>
+</sample>

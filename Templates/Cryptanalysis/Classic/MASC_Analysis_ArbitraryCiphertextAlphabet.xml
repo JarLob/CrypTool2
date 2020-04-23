@@ -6,12 +6,12 @@
   <summary lang="ru">Криптоанализ моноалфавитного шифрования замещения с произвольным алфавитом шифрованного текста</summary>
   <description lang="en">This template shows the cryptanalysis of the monoalphabetic substitution cipher. A sample plaintext is entered in the text input. After starting the workspace, the Substitution component encrypts the plaintext using the given ciphertext alphabet. The resulting ciphertext is then fed into the Monoalphabetic Substitution Analyzer, that tries to recover the original plaintext.</description>
   <description lang="ru">Этот шаблон показывает криптоанализ моноалфавитного шифрования замещения. В текстовый ввод вводится образец открытого текста. После запуска рабочей области компонент Substitution шифрует открытый текст, используя данный алфавит зашифрованного текста. Полученный зашифрованный текст затем подается в анализатор моноалфавитного замещения, который пытается восстановить исходный текст.</description>
-  <keywords>Monoalphabetic Substitution Cipher, Frequencies, Dictionary Attack, Analysis, Alphabet</keywords>
-  <keywords lang="ru">Моноалфавитный шифр замещения, частоты, атака словаря, анализ, алфавит</keywords>
+  <keywords>Monoalphabetic Substitution Cipher, Frequencies, Dictionary Attack, Analysis, Alphabet, MASC</keywords>
+  <keywords lang="ru">Моноалфавитный шифр замещения, частоты, атака словаря, анализ, алфавит, MASC</keywords>
   <title lang="de">Angriff auf die monoalphabetische Substitution mit beliebigem Geheimtextalphabet</title>
   <summary lang="de">Angriff auf die monoalphabetische Substitution mit einem beliebigen Geheimtextalphabet</summary>
   <description lang="de">Dieses Template zeigt die Kryptoanalyse der monoalphabetischen Substitution. Ein Beispiel-Klartext ist bereits in die Texteingabebox eingetragen. Nachdem die Vorlage gestartet wurde, wird der Klartext mit der Substitutions-Komponente und dem angegebenen Geheimtextalphabet verschlüsselt. Der resultierende Geheimtext wird an die Analysekomponente weitergeleitet. Diese versucht dann, den Klartext wieder herzustellen.</description>
-  <keywords lang="de">monoalphabetische Substitution, Häufigkeiten, Wörterbuch, Analyse</keywords>
+  <keywords lang="de">monoalphabetische Substitution, Häufigkeiten, Wörterbuch, Analyse, MASC</keywords>
   <icon file="AnalysisMonoalphabeticSubstitution.png" />
   <relevantPlugins>
     <plugin name="AnalysisMonoalphabeticSubstitution" />

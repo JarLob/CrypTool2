@@ -297,4 +297,16 @@
   <data name="DeviationToolTip" xml:space="preserve">
     <value>Deviation in percent of the ideal cost value, from when the substitution analysis is to be carried out.</value>
   </data>
+  <data name="ExceptionDuringCheckOfMessages" xml:space="preserve">
+    <value>Exception occured during check of messages: {0}</value>
+  </data>
+  <data name="ExceptionDuringThread" xml:space="preserve">
+    <value>Exception occured during execution of ADFGAnalyzer thread: {0}</value>
+  </data>
+  <data name="InvalidCharacters" xml:space="preserve">
+    <value>One of the messages contains invalid characters: {0}</value>
+  </data>
+  <data name="NotEvenLength" xml:space="preserve">
+    <value>One of the messages is not of even length: {0}</value>
+  </data>
 </root>

@@ -124,10 +124,10 @@
     <value>Plugins-Übersicht</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>CrypTool Store ermöglicht das Herunterladen zusätzlicher CrypTool 2-Komponenten</value>
+    <value>CrypTool-Store ermöglicht das Herunterladen zusätzlicher CrypTool 2-Komponenten</value>
   </data>
   <data name="Welcome_To_CrypToolStore" xml:space="preserve">
-    <value>Willkommen im CrypTool Store</value>
+    <value>Willkommen im CrypTool-Store</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Suche:</value>
@@ -176,10 +176,10 @@
     <value>"{0}" wurde zur Deinstallation markiert. Sie müssen CrypTool 2 neu starten, um die Deinstallation abzuschließen.</value>
   </data>
   <data name="CrypToolStorePresentation_InstallButton_Click_Do_you_really_want_to_download_and_install___0___from_CrypTool_Store_" xml:space="preserve">
-    <value>Möchten Sie "{0}" wirklich vom CrypTool Store herunterladen und installieren?</value>
+    <value>Möchten Sie "{0}" wirklich vom CrypTool-Store herunterladen und installieren?</value>
   </data>
   <data name="CrypToolStorePresentation_InstallPlugin_Could_not_download_from_CrypToolStore_Server__Message_was___0_" xml:space="preserve">
-    <value>Herunterladen von CrypToolStore Server nicht möglich. Nachricht lautete: {0}</value>
+    <value>Herunterladen von CrypTool-Store Server nicht möglich. Nachricht lautete: {0}</value>
   </data>
   <data name="CrypToolStorePresentation_InstallPlugin_Error_during_download_" xml:space="preserve">
     <value>Fehler während des Downloads.</value>
@@ -203,7 +203,7 @@
     <value>"{0}" wurde erfolgreich heruntergeladen. Sie müssen CrypTool 2 neu starten, um die Installation abzuschließen.</value>
   </data>
   <data name="CrypToolStorePresentation_PluginListView_SelectionChanged_Exception_occured_during_showing_of_selected_plugin_in_the_right_box_of_the_CrypToolStore_UI___0_" xml:space="preserve">
-    <value>Ausnahme beim Anzeigen des ausgewählten Plugins im rechten Feld der CrypToolStore-Benutzeroberfläche aufgetreten: {0}</value>
+    <value>Ausnahme beim Anzeigen des ausgewählten Plugins im rechten Feld der CrypTool-Store-Benutzeroberfläche aufgetreten: {0}</value>
   </data>
   <data name="CrypToolStorePresentation_RestartButton_Click_Exception_during_restart_" xml:space="preserve">
     <value>Ausnahme beim Neustart aufgetreten.</value>
@@ -212,13 +212,13 @@
     <value>Beim Neustart von CrypTool 2 ist eine Ausnahme aufgetreten: {0}</value>
   </data>
   <data name="CrypToolStorePresentation_UpdateStorePluginList_Error_occured_during_retrieval_of_current_list_of_plugins_from_CrypToolStore___0_" xml:space="preserve">
-    <value>Fehler beim Abrufen der aktuellen Liste der Plugins aus CrypToolStore aufgetreten: {0}</value>
+    <value>Fehler beim Abrufen der aktuellen Liste der Plugins aus CrypTool-Store aufgetreten: {0}</value>
   </data>
   <data name="CrypToolStorePresentation_UpdateStorePluginList_Exception_occured_during_adding_of_current_list_of_plugins_to_the_user_interface___0_" xml:space="preserve">
     <value>Ausnahme beim Hinzufügen der aktuellen Liste der Plugins zur Benutzeroberfläche aufgetreten: {0}</value>
   </data>
   <data name="CrypToolStorePresentation_UpdateStorePluginList_Exception_occured_during_retrieval_of_current_list_of_plugins_from_CrypToolStore___0_" xml:space="preserve">
-    <value>Ausnahme beim Abrufen der aktuellen Liste der Plugins aus CrypToolStore aufgetreten: {0}</value>
+    <value>Ausnahme beim Abrufen der aktuellen Liste der Plugins aus CrypTool-Store aufgetreten: {0}</value>
   </data>
   <data name="CrypToolStorePresentation_DeleteButton_Click_Unistallation_" xml:space="preserve">
     <value>Deinstallation?</value>

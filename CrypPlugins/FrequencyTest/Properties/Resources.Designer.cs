@@ -19,7 +19,7 @@ namespace Cryptool.FrequencyTest.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -61,6 +61,33 @@ namespace Cryptool.FrequencyTest.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die (as absolute values) ähnelt.
+        /// </summary>
+        internal static string AbsoluteValues {
+            get {
+                return ResourceManager.GetString("AbsoluteValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Alphabet ähnelt.
+        /// </summary>
+        internal static string AlphabetCaption {
+            get {
+                return ResourceManager.GetString("AlphabetCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The alphabet defines the characters that are counted ähnelt.
+        /// </summary>
+        internal static string AlphabetTooltip {
+            get {
+                return ResourceManager.GetString("AlphabetTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die List output ähnelt.
         /// </summary>
         internal static string ArrayOutputCaption {
@@ -93,6 +120,15 @@ namespace Cryptool.FrequencyTest.Properties {
         internal static string AutozoomTooltip {
             get {
                 return ResourceManager.GetString("AutozoomTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bigram frequencies ähnelt.
+        /// </summary>
+        internal static string BigramFrequencies {
+            get {
+                return ResourceManager.GetString("BigramFrequencies", resourceCulture);
             }
         }
         
@@ -187,6 +223,24 @@ namespace Cryptool.FrequencyTest.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Count overlapping ähnelt.
+        /// </summary>
+        internal static string CountOverlappingCaption {
+            get {
+                return ResourceManager.GetString("CountOverlappingCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die When this is enabled, overlapping n-grams are also counted. Otherwise, only non-overlapping n-grams are counted. ähnelt.
+        /// </summary>
+        internal static string CountOverlappingTooltip {
+            get {
+                return ResourceManager.GetString("CountOverlappingTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Dictionary output ähnelt.
         /// </summary>
         internal static string DictionaryOutputCaption {
@@ -201,6 +255,15 @@ namespace Cryptool.FrequencyTest.Properties {
         internal static string DictionaryOutputTooltip {
             get {
                 return ResourceManager.GetString("DictionaryOutputTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Alphabet must not be empty. Abort frequency analysis ähnelt.
+        /// </summary>
+        internal static string EmptyAlphabetInvalidMessage {
+            get {
+                return ResourceManager.GetString("EmptyAlphabetInvalidMessage", resourceCulture);
             }
         }
         
@@ -223,11 +286,83 @@ namespace Cryptool.FrequencyTest.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Heptagram frequencies ähnelt.
+        /// </summary>
+        internal static string HeptagramFrequencies {
+            get {
+                return ResourceManager.GetString("HeptagramFrequencies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hexagram frequencies ähnelt.
+        /// </summary>
+        internal static string HexagramFrequencies {
+            get {
+                return ResourceManager.GetString("HexagramFrequencies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die (in %) ähnelt.
+        /// </summary>
+        internal static string InPercent {
+            get {
+                return ResourceManager.GetString("InPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Maximum number of shown n-grams ähnelt.
+        /// </summary>
+        internal static string MaxNumberOfShownNGrammsCaption {
+            get {
+                return ResourceManager.GetString("MaxNumberOfShownNGrammsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sets the number of maximum shown n-grams in the graph. ähnelt.
+        /// </summary>
+        internal static string MaxNumberOfShownNGrammsTooltip {
+            get {
+                return ResourceManager.GetString("MaxNumberOfShownNGrammsTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die -gram frequencies ähnelt.
+        /// </summary>
+        internal static string nGram {
+            get {
+                return ResourceManager.GetString("nGram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die No data available yet! ähnelt.
         /// </summary>
         internal static string No_data_available_yet {
             get {
                 return ResourceManager.GetString("No_data_available_yet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Octagram frequencies ähnelt.
+        /// </summary>
+        internal static string OctagramFrequencies {
+            get {
+                return ResourceManager.GetString("OctagramFrequencies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Pentagram frequencies ähnelt.
+        /// </summary>
+        internal static string PentagramFrequencies {
+            get {
+                return ResourceManager.GetString("PentagramFrequencies", resourceCulture);
             }
         }
         
@@ -313,6 +448,42 @@ namespace Cryptool.FrequencyTest.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show absolute values ähnelt.
+        /// </summary>
+        internal static string ShowAbsoluteValuesCaption {
+            get {
+                return ResourceManager.GetString("ShowAbsoluteValuesCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die If this setting is checked, frequencies are shown as absolute values. ähnelt.
+        /// </summary>
+        internal static string ShowAbsoluteValuesTooltip {
+            get {
+                return ResourceManager.GetString("ShowAbsoluteValuesTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show total ähnelt.
+        /// </summary>
+        internal static string ShowTotalCaption {
+            get {
+                return ResourceManager.GetString("ShowTotalCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die If this setting is checked, the total number of n-grams is shown as absolut value. ähnelt.
+        /// </summary>
+        internal static string ShowTotalTooltip {
+            get {
+                return ResourceManager.GetString("ShowTotalTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Sort frequencies ähnelt.
         /// </summary>
         internal static string SortFrequenciesCaption {
@@ -363,6 +534,33 @@ namespace Cryptool.FrequencyTest.Properties {
         internal static string StringOutputTooltip {
             get {
                 return ResourceManager.GetString("StringOutputTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tetragram frequencies ähnelt.
+        /// </summary>
+        internal static string TetragramFrequencies {
+            get {
+                return ResourceManager.GetString("TetragramFrequencies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Trigram frequencies ähnelt.
+        /// </summary>
+        internal static string TrigramFrequencies {
+            get {
+                return ResourceManager.GetString("TrigramFrequencies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Unigram frequencies ähnelt.
+        /// </summary>
+        internal static string UnigramFrequencies {
+            get {
+                return ResourceManager.GetString("UnigramFrequencies", resourceCulture);
             }
         }
     }

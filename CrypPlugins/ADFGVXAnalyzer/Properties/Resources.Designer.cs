@@ -19,7 +19,7 @@ namespace ADFGVXAnalyzer.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -358,6 +358,33 @@ namespace ADFGVXAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Exception occured during check of messages: {0} ähnelt.
+        /// </summary>
+        public static string ExceptionDuringCheckOfMessages {
+            get {
+                return ResourceManager.GetString("ExceptionDuringCheckOfMessages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Exception occured during execution of ADFGAnalyzer thread: {0} ähnelt.
+        /// </summary>
+        public static string ExceptionDuringThread {
+            get {
+                return ResourceManager.GetString("ExceptionDuringThread", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die One of the messages contains invalid characters: {0} ähnelt.
+        /// </summary>
+        public static string InvalidCharacters {
+            get {
+                return ResourceManager.GetString("InvalidCharacters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die IoC 1 ähnelt.
         /// </summary>
         public static string IoC1Header {
@@ -471,6 +498,15 @@ namespace ADFGVXAnalyzer.Properties {
         public static string MessagesToolTip {
             get {
                 return ResourceManager.GetString("MessagesToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die One of the messages is not of even length: {0} ähnelt.
+        /// </summary>
+        public static string NotEvenLength {
+            get {
+                return ResourceManager.GetString("NotEvenLength", resourceCulture);
             }
         }
         

@@ -30,7 +30,6 @@ namespace Cryptool.FrequencyTest
         #region Private variables
 
         private int unknownSymbolHandling = 0;
-        //private int trimInputString=0;
         private int caseSensitivity = 0;
         private int grammLength = 1;
         private int boundaryFragments = 0;
@@ -38,6 +37,10 @@ namespace Cryptool.FrequencyTest
         private int chartHeight = 160;
         private int scale = 10000; // = 1 , factor of 10000        
         private bool sortFrequencies = false;
+        private bool countOverlapping = true;
+        private int maxNumberOfShownNGramms = 30;
+        private bool showAbsoluteValues = false;
+        private bool showTotal = false;
 
         #endregion
 
@@ -121,8 +124,68 @@ namespace Cryptool.FrequencyTest
             }
         }
 
+        [PropertySaveOrder(9)]
+        [TaskPane("CountOverlappingCaption", "CountOverlappingTooltip", null, 9, false, ControlType.CheckBox)]
+        public bool CountOverlapping
+        {
+            get { return countOverlapping; }
+            set
+            {
+                if (countOverlapping != value)
+                {
+                    countOverlapping = value;
+                    OnPropertyChanged("CountOverlapping");
+                }
+            }
+        }
+
+        [PropertySaveOrder(9)]
+        [TaskPane("ShowAbsoluteValuesCaption", "ShowAbsoluteValuesTooltip", null, 10, false, ControlType.CheckBox)]
+        public bool ShowAbsoluteValues
+        {
+            get { return showAbsoluteValues; }
+            set
+            {
+                if (showAbsoluteValues != value)
+                {
+                    showAbsoluteValues = value;
+                    OnPropertyChanged("ShowAbsoluteValues");
+                }
+            }
+        }
+
+        [PropertySaveOrder(10)]
+        [TaskPane("ShowTotalCaption", "ShowTotalTooltip", null, 11, false, ControlType.CheckBox)]
+        public bool ShowTotal
+        {
+            get { return showTotal; }
+            set
+            {
+                if (showTotal != value)
+                {
+                    showTotal = value;
+                    OnPropertyChanged("ShowTotal");
+                }
+            }
+        }
+
+        [PropertySaveOrder(11)]
+        [TaskPane("MaxNumberOfShownNGrammsCaption", "MaxNumberOfShownNGrammsTooltip", null, 12, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, int.MaxValue)]
+        public int MaxNumberOfShownNGramms
+        {
+            get { return maxNumberOfShownNGramms; }
+            set
+            {
+                if (maxNumberOfShownNGramms != value)
+                {
+                    maxNumberOfShownNGramms = value;
+                    OnPropertyChanged("MaxNumberOfShownNGramms");
+                }
+            }
+        }
+        
         [PropertySaveOrder(3)]
-        [ContextMenu( "ProcessUnknownSymbolsCaption", "ProcessUnknownSymbolsTooltip", 4, ContextMenuControlType.ComboBox, null, new string[] { "ProcessUnknownSymbolsList1", "ProcessUnknownSymbolsList2" })]
+        [ContextMenu("ProcessUnknownSymbolsCaption", "ProcessUnknownSymbolsTooltip", 4, ContextMenuControlType.ComboBox, null, new string[] { "ProcessUnknownSymbolsList1", "ProcessUnknownSymbolsList2" })]
         [TaskPane( "ProcessUnknownSymbolsCaption", "ProcessUnknownSymbolsTooltip", null, 4, false, ControlType.ComboBox, new string[] { "ProcessUnknownSymbolsList1", "ProcessUnknownSymbolsList2" })]
         public int ProcessUnknownSymbols
         {
@@ -152,7 +215,7 @@ namespace Cryptool.FrequencyTest
         /// The underline char represents a whitespace.
         /// </summary>
         [PropertySaveOrder(4)]
-        [TaskPane("BoundaryFragmentsCaption", "BoundaryFragmentsTooltip", null, 10, false, ControlType.ComboBox, new string[] { "BoundaryFragmentsList1", "BoundaryFragmentsList2" })]
+        [TaskPane("BoundaryFragmentsCaption", "BoundaryFragmentsTooltip", null, 12, false, ControlType.ComboBox, new string[] { "BoundaryFragmentsList1", "BoundaryFragmentsList2" })]
         public int BoundaryFragments
         {
             get { return this.boundaryFragments; }
@@ -218,9 +281,9 @@ namespace Cryptool.FrequencyTest
                     OnPropertyChanged("Scale");   
                 }
             }
-        }       
+        }      
 
         #endregion
-        
+
     }
 }

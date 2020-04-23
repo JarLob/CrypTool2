@@ -173,7 +173,7 @@
     <value>Exception occured during retrieval of current list of plugins from CrypToolStore: {0}</value>
   </data>
   <data name="CrypToolStorePresentation_PluginListView_SelectionChanged_Exception_occured_during_showing_of_selected_plugin_in_the_right_box_of_the_CrypToolStore_UI___0_" xml:space="preserve">
-    <value>Exception occured during showing of selected plugin in the right box of the CrypToolStore UI: {0}</value>
+    <value>Exception occured during showing of selected plugin in the right box of the CrypTool Store UI: {0}</value>
   </data>
   <data name="CrypToolStorePresentation_InstallButton_Click_Do_you_really_want_to_download_and_install___0___from_CrypTool_Store_" xml:space="preserve">
     <value>Do you really want to download and install "{0}" from CrypTool Store?</value>

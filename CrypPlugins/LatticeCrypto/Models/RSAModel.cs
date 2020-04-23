@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using LatticeCrypto.Properties;
@@ -22,6 +23,13 @@ namespace LatticeCrypto.Models
         public RSAModel (int bitSize)
         {
             GenerateNewRSA(bitSize, "3");
+        }
+
+        static RSAModel()
+        {
+            //Workaround to disable "small modulus" verification in "RsaKeyParameters.Validate":
+            var smallPrimesProduct = typeof(RsaKeyParameters).GetField("SmallPrimesProduct", BindingFlags.Static | BindingFlags.NonPublic);
+            smallPrimesProduct.SetValue(null, Org.BouncyCastle.Math.BigInteger.One);
         }
 
         public void GenerateNewRSA(int bitSize)

@@ -237,14 +237,10 @@ namespace Cryptool.Plugins.AESVisualization
                     outputStreamWriter.Close();
                     ProgressChanged(1, 1);
                     outputDone = true;
-                }         
+                }
+                Thread.Sleep(100);
             }
-            presThread.Join();
-            //if (aborted)
-            //{
-            //    outputStreamWriter.Close();
-            //    return;
-            //}
+            presThread.Join();            
             if (!outputStreamWriter.IsClosed)
             {
                 outputStreamWriter.Write(states[39 + 8 * keysize]);

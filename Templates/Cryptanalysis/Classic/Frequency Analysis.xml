@@ -1,34 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">Frequency Analysis</title>
-  <title lang="ru">Частотный анализ</title>
+  <title lang="de">Häufigkeitsanalyse</title>
+  <title lang="ru">Частотный анализ</title>  
   <summary lang="en">Usage of the <i>Frequency Analysis</i></summary>
-  <summary lang="ru">Использование частотного анализа</summary>
+  <summary lang="de">Benutzung der <i>Häufigkeitsanalyse</i></summary>
+  <summary lang="ru">Использование частотного анализа</summary>  
   <description lang="en">This template shows the usage of the <i>Frequency Analysis</i> component.</description>
-  <description lang="ru">Этот шаблон показывает использование компонента частотного анализа.</description>
-  <keywords>frequency, letters, language, Attack, Analysis</keywords>
-  <keywords lang="ru">частота, буквы, язык, атака, анализ</keywords>
-  <title lang="de">Frequenzanalyse</title>
-  <summary lang="de">Benutzung der <i>Frequenzanalyse</i></summary>
-  <description lang="de">Diese Vorlage zeigt die Benutzung der Frequenzanalyse.</description>
-  <keywords lang="de">Frequenz, Buchstaben, Sprache, Angriff</keywords>
+  <description lang="de">Diese Vorlage zeigt die Benutzung der Häufigkeitsanalyse.</description>
+  <description lang="ru">Этот шаблон показывает использование компонента частотного анализа.</description>  
+  <keywords>frequency, letters, language, Attack, Analysis, grams</keywords>
+  <keywords lang="de">Häufigkeit, Frequenz, Buchstaben, Sprache, Angriff, Analyse, Gramme</keywords>
+  <keywords lang="ru">Частота, частота, буквы, язык, атака, анализ, граммы</keywords>      
   <icon file="Frequency Analysis.png" />
   <relevantPlugins>
     <plugin name="FrequencyTest" />
   </relevantPlugins>
+    <replacements lang="en">
+	<replacement key="$Text$" value="Text"/>
+	<replacement key="$Unigrams$" value="Unigrams"/>
+	<replacement key="$Bigrams$" value="Bigrams"/>
+	<replacement key="$memo$" value="Frequency analysis is a cryptanalytic method. Statistical properties of the encrypted text are used to draw conclusions about the unencrypted message.\line
+\line
+In this template, the distribution of the unigrams and the distribution of the bigrams of plaintext are shown using two frequency analysis components. Only the 30 most common bigrams are shown. This number can be changed in the component settings."/>
+  </replacements>
   <replacements lang="de">
-    <replacement key="$Plaintext$" value="Klartext" />
-    <replacement key="$Unigram frequency$" value="Unigramm-Frequenz" />
-    <replacement key="$message$" value="In cryptanalysis, frequency analysis is the study of the frequency of letters or groups of letters in a ciphertext. The method is used as an aid to breaking classical ciphers.\line\line Frequency analysis is based on the fact that, in any given stretch of written language, certain letters and combinations of letters occur with varying frequencies. Moreover, there is a characteristic distribution of letters that is roughly the same for almost all samples of that language. For instance, given a section of English language, E, T, A and O are the most common, while Z, Q and X are rare. Likewise, TH, ER, ON, and AN are the most common pairs of letters (termed bigrams or digraphs), and SS , EE , TT , and FF are the most common repeats.[1] The nonsense phrase &quot;ETAOIN SHRDLU&quot; represents the 12 most frequent letters in typical English language text.\line\line In some ciphers, such properties of the natural language plaintext are preserved in the ciphertext, and these patterns have the potential to be exploited in a ciphertext-only attack.\line [source http://en.wikipedia.org/wiki/Frequency_analysis]" />
+    <replacement key="$Text$" value="Text"/>
+	<replacement key="$Unigrams$" value="Unigramme"/>
+	<replacement key="$Bigrams$" value="Bigramme"/>
+	<replacement key="$memo$" value="Die Häufigkeitsanalyse ist eine Methode der Kryptoanalyse. Dabei werden statistische Eigenschaften des verschlüsselten Textes ausgenutzt, um Rückschlüsse auf die unverschlüsselte Nachricht zu ziehen. \line
+\line
+In dieser Vorlage werden mittels zweier Häufigkeitsanalyse-Komponenten die Verteilung der Unigramme sowie die Verteilung der Bigramme eines Klartextes gezeigt. Bei den Bigrammen werden nur die 30 häufigsten Bigramme angezeigt. Die Anzahl kann in den Einstellungen der Komponente geändert werden."/>
   </replacements>
   <replacements lang="ru">
-    <replacement key="$Plaintext$" value="обычный текст" />
-    <replacement key="$Unigram frequency$" value="частота Юниграмма" />
-    <replacement key="$message$" value="В криптоанализе частотный анализ представляет собой изучение частоты букв или групп букв в зашифрованном тексте. Метод используется в качестве помощи для разбивания классических шифров. \Line \line Частотный анализ основан на том, что на любом заданном участке письменного языка некоторые буквы и комбинации букв происходят с разными частотами. Более того, существует характерное распределение букв, которое примерно одинаково для почти всех образцов этого языка. Например, с учетом раздела английского языка наиболее распространены E, T, A и O, тогда как Z, Q и X являются редкими. Аналогично, TH, ER, ON и AN являются наиболее распространенными парами букв (называемыми битрамами или орграфами), а SS, EE, TT и FF являются наиболее распространенными повторами. [1] Глупостная фраза «ETAOIN SHRDLU» представляет 12 наиболее часто встречающихся букв в типичном тексте на английском языке. \Line \line В некоторых шифрах такие свойства открытого текста естественного языка сохраняются в зашифрованном тексте, и эти шаблоны могут быть использованы в атака только с зашифрованным текстом. \line [источник http://en.wikipedia.org/wiki/Frequency_analysis]" />
-  </replacements>
-  <replacements lang="en">
-    <replacement key="$Plaintext$" value="Plaintext" />
-    <replacement key="$Unigram frequency$" value="Unigram frequency" />
-    <replacement key="$message$" value="In cryptanalysis, frequency analysis is the study of the frequency of letters or groups of letters in a ciphertext. The method is used as an aid to breaking classical ciphers.\line\line Frequency analysis is based on the fact that, in any given stretch of written language, certain letters and combinations of letters occur with varying frequencies. Moreover, there is a characteristic distribution of letters that is roughly the same for almost all samples of that language. For instance, given a section of English language, E, T, A and O are the most common, while Z, Q and X are rare. Likewise, TH, ER, ON, and AN are the most common pairs of letters (termed bigrams or digraphs), and SS , EE , TT , and FF are the most common repeats.[1] The nonsense phrase &quot;ETAOIN SHRDLU&quot; represents the 12 most frequent letters in typical English language text.\line\line In some ciphers, such properties of the natural language plaintext are preserved in the ciphertext, and these patterns have the potential to be exploited in a ciphertext-only attack.\line [source http://en.wikipedia.org/wiki/Frequency_analysis]" />
+    <replacement key="$Text$" value="Текст"/>
+	<replacement key="$Unigrams$" value="юниграмм"/>
+	<replacement key="$Bigrams$" value="биграмм"/>
+	<replacement key="$memo$" value="Частотный анализ является криптоаналитическим методом. Статистические свойства зашифрованного текста используются для того, чтобы сделать выводы о незашифрованном сообщении.\line
+\line
+В этом шаблоне распределение униграмм и распределение биграмм открытого текста показано с использованием двух компонентов частотного анализа. Показаны только 30 самых распространенных биграмм. Этот номер можно изменить в настройках компонента."/>
   </replacements>
 </sample>

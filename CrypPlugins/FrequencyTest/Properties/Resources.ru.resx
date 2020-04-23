@@ -219,4 +219,70 @@
   <data name="SortFrequenciesTooltip" xml:space="preserve">
     <value>Если включено, столбцы графика сортируются по частотам.</value>
   </data>
+  <data name="CountOverlappingCaption" xml:space="preserve">
+    <value>Подсчет перекрытия</value>
+  </data>
+  <data name="CountOverlappingTooltip" xml:space="preserve">
+    <value>Когда это включено, перекрывающиеся n-граммы также учитываются. В противном случае учитываются только непересекающиеся n-граммы.</value>
+  </data>
+  <data name="AbsoluteValues" xml:space="preserve">
+    <value>(как абсолютные значения)</value>
+  </data>
+  <data name="BigramFrequencies" xml:space="preserve">
+    <value>Биграмные частоты</value>
+  </data>
+  <data name="EmptyAlphabetInvalidMessage" xml:space="preserve">
+    <value>Алфавит не может быть пустым. Отменить частотный анализ</value>
+  </data>
+  <data name="HeptagramFrequencies" xml:space="preserve">
+    <value>Гептаграмма частот</value>
+  </data>
+  <data name="HexagramFrequencies" xml:space="preserve">
+    <value>Частоты гексаграммы</value>
+  </data>
+  <data name="InPercent" xml:space="preserve">
+    <value>(в% к весу)</value>
+  </data>
+  <data name="MaxNumberOfShownNGrammsCaption" xml:space="preserve">
+    <value>Максимальное количество отображаемых грамм N</value>
+  </data>
+  <data name="MaxNumberOfShownNGrammsTooltip" xml:space="preserve">
+    <value>Определяет количество максимальных n-грамм, показанных на диаграмме.</value>
+  </data>
+  <data name="nGram" xml:space="preserve">
+    <value>-грамма частот</value>
+  </data>
+  <data name="OctagramFrequencies" xml:space="preserve">
+    <value>Частоты октограммы</value>
+  </data>
+  <data name="PentagramFrequencies" xml:space="preserve">
+    <value>Частоты пентаграммы</value>
+  </data>
+  <data name="ShowAbsoluteValuesCaption" xml:space="preserve">
+    <value>Показать абсолютные значения</value>
+  </data>
+  <data name="ShowAbsoluteValuesTooltip" xml:space="preserve">
+    <value>Если этот параметр активирован, частоты отображаются в виде абсолютных значений.</value>
+  </data>
+  <data name="TetragramFrequencies" xml:space="preserve">
+    <value>Частоты тетраграмм</value>
+  </data>
+  <data name="TrigramFrequencies" xml:space="preserve">
+    <value>Частоты триграмм</value>
+  </data>
+  <data name="UnigramFrequencies" xml:space="preserve">
+    <value>Униграмма частот</value>
+  </data>
+  <data name="AlphabetCaption" xml:space="preserve">
+    <value>Алфавит</value>
+  </data>
+  <data name="AlphabetTooltip" xml:space="preserve">
+    <value>Алфавит определяет символы для подсчета</value>
+  </data>
+  <data name="ShowTotalCaption" xml:space="preserve">
+    <value>Показать всего</value>
+  </data>
+  <data name="ShowTotalTooltip" xml:space="preserve">
+    <value>Если этот параметр установлен, общее количество n-грамм отображается как абсолютное значение.</value>
+  </data>
 </root>

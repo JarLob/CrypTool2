@@ -23,7 +23,14 @@ namespace LatticeCrypto.ViewModels
         public void GenerateNewRSA (int bitSize)
         {
             UiServices.SetBusyState();
-            RSAModel = new RSAModel(bitSize);
+            try
+            {
+                RSAModel = new RSAModel(bitSize);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, Languages.error, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
             Paragraph paragraph = new Paragraph();
             paragraph.Inlines.Add(new Bold(new Underline(new Run("** " + Languages.buttonGenerateNewCryptosystem + " **\r\n"))));

@@ -135,7 +135,7 @@ namespace Startcenter
         {
             try
             {
-                System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=dELT2-Vgsr8&t=919s");
+                System.Diagnostics.Process.Start("https://youtu.be/dYaUe4BKQhc");
             }
             catch (Exception)
             {

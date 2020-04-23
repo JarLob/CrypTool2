@@ -1525,7 +1525,7 @@ namespace WorkspaceManager.View.Visuals
             if (newItem)
                 Mouse.OverrideCursor = Cursors.Wait;
             else
-                Mouse.OverrideCursor = Cursors.Arrow;
+                Mouse.OverrideCursor = null;
         }
 
         private static void OnSelectedImageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
