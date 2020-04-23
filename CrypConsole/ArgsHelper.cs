@@ -90,7 +90,7 @@ namespace Cryptool.CrypConsole
                 var split = p.Split(',');
                 if(split.Count() != 3)
                 {
-                    throw new InvalidParameterException(string.Format("Invalid (argumens != 3) input parameter found: {0}", p));
+                    throw new InvalidParameterException(string.Format("Invalid (arguments != 3) input parameter found: {0}", p));
                 }
 
                 //2) check parameter type
@@ -122,6 +122,42 @@ namespace Cryptool.CrypConsole
             return parameters;
         }
 
+        public static List<Parameter> GetOutputParameters(string[] args)
+        {
+            var query = from str in args
+                        where (str.Length >= 8 && str.ToLower().Substring(0, 8).Equals("-output="))
+                            || (str.Length >= 9 && str.ToLower().Substring(0, 9).Equals("--output="))
+                        select str;
+
+            List<Parameter> parameters = new List<Parameter>();
+            foreach (var param in query)
+            {
+                //0) remove " from beginning and end
+                var p = param.Split('=')[1];
+                if (p.StartsWith("\""))
+                {
+                    p = p.Substring(1, p.Length - 1);
+                }
+                if (p.EndsWith("\""))
+                {
+                    p = p.Substring(0, p.Length - 1);
+                }
+
+                //1) check, if parameter has two arguments
+                var split = p.Split(',');
+                if (split.Count() != 2)
+                {
+                    throw new InvalidParameterException(string.Format("Invalid (arguments != 2) output parameter found: {0}", p));
+                }
+
+                Parameter parameter = new Parameter();
+                parameter.ParameterType = ParameterType.None;
+                parameter.Name = split[1];
+                parameter.Value = split[2];
+                parameters.Add(parameter);
+            }
+            return parameters;
+        }
 
         /// <summary>
         /// This method checks the args, if the user wants to see the help
@@ -182,7 +218,8 @@ namespace Cryptool.CrypConsole
     {
         Number,
         Text,
-        File
+        File,
+        None
     }
 
     public class Parameter

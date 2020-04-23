@@ -60,16 +60,19 @@ namespace Cryptool.CrypConsole
         /// <param name="args"></param>
         public void Start(string[] args)
         {
+            //Step 0: Set locale to English
             var cultureInfo = new CultureInfo("en-us", false);
             CultureInfo.CurrentCulture = cultureInfo;
             CultureInfo.CurrentUICulture = cultureInfo;
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
 
+            //Step 1: Check, if Help needed
             if (ArgsHelper.CheckShowHelp(args))
             {
                 Environment.Exit(0);
             }
 
+            //Step 2: Get cwm_file to open
             string cwm_file = ArgsHelper.GetCWMFileName(args);
             if (cwm_file == null)
             {
@@ -82,8 +85,10 @@ namespace Cryptool.CrypConsole
                 Environment.Exit(-2);
             }
 
+            //Step 3: Check if verbose mode should be active
             _verbose = ArgsHelper.CheckVerbose(args);
 
+            //Step 4: Get input parameters
             List<Parameter> inputParameters = null;
             try
             {
@@ -107,16 +112,42 @@ namespace Cryptool.CrypConsole
                 Environment.Exit(-3);
             }
 
+            //Step 5: Get output parameters
+            List<Parameter> outputParameters = null;
+            try
+            {
+                outputParameters = ArgsHelper.GetOutputParameters(args);
+                if (_verbose)
+                {
+                    foreach (var param in inputParameters)
+                    {
+                        Console.WriteLine("Output parameter given: " + param);
+                    }
+                }
+            }
+            catch (InvalidParameterException ipex)
+            {
+                Console.WriteLine(ipex.Message);
+                Environment.Exit(-3);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception occured while parsing parameters: {0}", ex.Message);
+                Environment.Exit(-3);
+            }
+
+            //Step 6: Update application domain. This allows loading additional .net assemblies
             try
             {
                 UpdateAppDomain();
             }
             catch(Exception ex)
             {
-                Console.WriteLine("Exception occured while parsing parameters: {0}", ex.Message);
+                Console.WriteLine("Exception occured while updating AppDomain: {0}", ex.Message);
                 Environment.Exit(-4);
             }
 
+            //Step 7: Load cwm file and create model
             WorkspaceModel workspaceModel = null;
             try
             {
@@ -134,6 +165,7 @@ namespace Cryptool.CrypConsole
                 Environment.Exit(-5);
             }
 
+            //Step 8: Set input parameters
             foreach (var param in inputParameters)
             {
                 string name = param.Name;
@@ -175,22 +207,7 @@ namespace Cryptool.CrypConsole
                             //otherwise, it will output the value retrieved by deserialization
                             component.Plugin.Initialize();
                             found = true;
-                        }
-                        /*else if (component.PluginType.Name.Equals("Cryptool.Plugins.Numbers.NumberInput"))
-                        {
-                            try
-                            {
-                                int.Parse(param.Value);
-                            }
-                            catch (Exception)
-                            {
-                                Console.WriteLine("Invalid number in parameter for NumberInput: {0}", param);
-                                Environment.Exit(-7);
-                            }
-                            Plugins.Numbers.NumberInput textInput = (Plugins.Numbers.NumberInput)component.Plugin;
-                            Plugins.Numbers.NumberInputSettings settings = (Plugins.Numbers.NumberInputSettings)textInput.Settings;
-                            settings.Number = param.Value;
-                        }*/
+                        }                       
                     }
                 }
                 if (!found)
@@ -200,6 +217,10 @@ namespace Cryptool.CrypConsole
                 }
             }
 
+            //Step 9: Set output parameters
+
+
+            //Step 10: Create execution engine
             ExecutionEngine engine = null;
             try
             {
@@ -213,6 +234,7 @@ namespace Cryptool.CrypConsole
                 Environment.Exit(-7);
             }                       
 
+            //Step 11: Start execution in a dedicated thread
             Thread t = new Thread(() =>
             {
                 CultureInfo.CurrentCulture = new CultureInfo("en-Us", false);
