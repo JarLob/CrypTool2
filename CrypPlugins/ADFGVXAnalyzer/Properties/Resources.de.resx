@@ -301,7 +301,7 @@
     <value>Es trat eine Ausnahme während des Checks der Nachrichten auf: {0}</value>
   </data>
   <data name="ExceptionDuringThread" xml:space="preserve">
-    <value>Es trat eine Ausnahme während der Ausführung eines ADFGAnalyse-Threads auf: {0}</value>
+    <value>Es trat eine Ausnahme während der Ausführung eines ADFGVX-Analyse-Threads auf: {0}</value>
   </data>
   <data name="InvalidCharacters" xml:space="preserve">
     <value>Eine der Nachrichten enthält ungültige Zeichen: {0}</value>

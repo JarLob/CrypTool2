@@ -367,7 +367,7 @@ namespace ADFGVXAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Exception occured during execution of ADFGAnalyzer thread: {0} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Exception occured during execution of ADFGVX Analyzer thread: {0} ähnelt.
         /// </summary>
         public static string ExceptionDuringThread {
             get {

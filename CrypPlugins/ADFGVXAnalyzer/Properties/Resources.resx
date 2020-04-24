@@ -301,7 +301,7 @@
     <value>Exception occured during check of messages: {0}</value>
   </data>
   <data name="ExceptionDuringThread" xml:space="preserve">
-    <value>Exception occured during execution of ADFGAnalyzer thread: {0}</value>
+    <value>Exception occured during execution of ADFGVX Analyzer thread: {0}</value>
   </data>
   <data name="InvalidCharacters" xml:space="preserve">
     <value>One of the messages contains invalid characters: {0}</value>
