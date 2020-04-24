@@ -621,6 +621,12 @@ namespace Cryptool.Plugins.VIC
                 injectedLetters[i - 1] = password.ElementAt(iterator);
                 substitutionTable[1, i] = password.ElementAt(iterator++).ToString().ToUpper();
             }
+            string temp = "";
+            foreach(var element in injectedLetters)
+            {
+                temp += element;
+            }
+            GuiLogMessage("injected letters: " + temp,NotificationLevel.Info);
             substitutionTable[1, 10] = "*";
             substitutionTable[1, 9] = "*";
             substitutionTable[1, 8] = "*";
@@ -631,8 +637,6 @@ namespace Cryptool.Plugins.VIC
 
 
             //<Remove password letters from alphabet>
-            GuiLogMessage("Injected Letters:" +injectedLetters, NotificationLevel.Info);
-            GuiLogMessage("Alphabet:" + alphabet, NotificationLevel.Info);
             for (int i = 0; i < alphabet.Length; ++i)
             {
                 if (injectedLetters.Contains(alphabet.ElementAt(i)))
@@ -640,12 +644,13 @@ namespace Cryptool.Plugins.VIC
                     GuiLogMessage("removed element:" + alphabet.ElementAt(i), NotificationLevel.Info);
 
                     alphabet = alphabet.Remove(i, 1);
-                    if (i >= 1) --i;
+                    --i;
                 }
                 else {
                     GuiLogMessage("didn't remove any", NotificationLevel.Info);
                 }
             }
+            GuiLogMessage("Alphabet:" + alphabet, NotificationLevel.Info);
             //</Remove password letters from alphabet>
 
 
@@ -706,7 +711,17 @@ namespace Cryptool.Plugins.VIC
         {
             message = PrependTextStartSymbol(message);
             int iterationsToSkip = 0;
-            string resultMessage = "";
+            string resultNumbers = "";
+            string firstOutput = "";
+            string secondOutput = "";
+
+
+            //Generate splitting point for the string to be split into two parts
+            Random random = new Random();
+            int lowerBoundary = message.Length / 10;
+            int upperBoundary = 9 * (message.Length / 10);
+            int splittingPoint = random.Next(lowerBoundary, upperBoundary);
+
             for (int i = 0; i < message.Length; ++i)
             {
                 if (iterationsToSkip > 0)
@@ -717,14 +732,25 @@ namespace Cryptool.Plugins.VIC
                 char character = message.ElementAt(i);
                 if (Char.IsDigit(character))
                 {
-                    resultMessage += (PerformDigitSubstitution(character, substitutionTable));
+                    resultNumbers = (PerformDigitSubstitution(character, substitutionTable));
                 }
-                else if (!PerformSpecialCharSubstitution(message, i, ref resultMessage, ref iterationsToSkip, substitutionTable))
+                else if (!PerformSpecialCharSubstitution(message, i, ref resultNumbers, ref iterationsToSkip, substitutionTable))
                 {
-                    resultMessage += LocateLetterInMatrix(substitutionTable, character);
+                    resultNumbers = LocateLetterInMatrix(substitutionTable, character);
+                }
+                if (i <= splittingPoint)
+                {
+                    firstOutput += resultNumbers;
+                }
+                else if(i>splittingPoint){
+                    secondOutput += resultNumbers;
                 }
             }
-            return resultMessage;
+            GuiLogMessage("original substitution result: " + firstOutput + secondOutput, NotificationLevel.Info);
+            GuiLogMessage("split substitution result: " + secondOutput + firstOutput, NotificationLevel.Info);
+            return secondOutput+firstOutput;
+
+            
         }
 
         /// <summary>
@@ -876,13 +902,40 @@ namespace Cryptool.Plugins.VIC
         }
 
         /// <summary>
+        /// Adds random single digit numbers at the end of a string until the length of string mod(5) is 0; 
+        /// </summary>
+        /// <param name="input"> input string to append the numbers to</param>
+        /// <returns></returns>
+        string AddZeros(string input) {
+            GuiLogMessage("Before zero addidtion: " + input, NotificationLevel.Info);
+            if (input.Length % 5 == 0)
+            {
+                return input;
+            }
+            int nOfZeros = 5-input.Length % 5;
+            Random random = new Random();
+            string output = input;
+            for(int i=0; i< nOfZeros; ++i)
+            {
+                char newNumber = random.Next(0, 9).ToString().ElementAt(0);
+                GuiLogMessage("adding: " + newNumber, NotificationLevel.Info);
+                output += newNumber;
+            }
+
+            GuiLogMessage("After zero addidtion: " + output, NotificationLevel.Info);
+            return output;
+        }
+
+        /// <summary>
         /// Performs digit substitution
         /// </summary>
         /// <param name="digit"></param>
         /// <returns></returns>
         string PerformDigitSubstitution(char digit, string[,] substitutionTable)
         {
-                return (LocateStringInMatrix(substitutionTable, digitLetterSymbol) + digit.ToString() + digit.ToString() + digit.ToString() + LocateStringInMatrix(substitutionTable, digitLetterSymbol));
+            GuiLogMessage("we even getting here?",NotificationLevel.Info);
+            GuiLogMessage((LocateStringInMatrix(substitutionTable, digitLetterSymbol) + digit.ToString() + digit.ToString() + digit.ToString() + LocateStringInMatrix(substitutionTable, digitLetterSymbol)),NotificationLevel.Info);
+            return (LocateStringInMatrix(substitutionTable, digitLetterSymbol) + digit.ToString() + digit.ToString() + digit.ToString() + LocateStringInMatrix(substitutionTable, digitLetterSymbol));
         }
 
         /// <summary>
@@ -1179,14 +1232,17 @@ namespace Cryptool.Plugins.VIC
                         if (desubResult.Length == 0)
                         {
                             output += DesubstituteSingleChar(currentChar.ToString(), matrix);
+                            GuiLogMessage(string.Format("desubstituted " + currentChar.ToString() + " with " + DesubstituteSingleChar(currentChar.ToString(), matrix)), NotificationLevel.Info);
                         }
-                        else if (desubResult.Equals("Н/Ц"))
+                        else if (desubResult.Equals(digitLetterSymbol))
                         {
+                            GuiLogMessage(string.Format("desubstituted " + currentChar.ToString() + nextChar.ToString() + " with number " + desubResult), NotificationLevel.Info);
                             output += message.ElementAt(i + 2);
                             iterationsToSkip = 6;
                         }
                         else
                         {
+                            GuiLogMessage(string.Format("desubstituted " + currentChar.ToString() + nextChar.ToString() + " with letter " + desubResult), NotificationLevel.Info);
                             output += desubResult;
                             iterationsToSkip = 1;
                         }
@@ -1195,6 +1251,7 @@ namespace Cryptool.Plugins.VIC
                     else
                     {
                         output += DesubstituteSingleChar(currentChar.ToString(), matrix);
+                        GuiLogMessage(string.Format("desubstituted " + currentChar.ToString() + " with " + DesubstituteSingleChar(currentChar.ToString(), matrix)), NotificationLevel.Info);
                     }
                 }
                 else
@@ -1500,7 +1557,7 @@ namespace Cryptool.Plugins.VIC
             FormatInput();
             if (settings.Alphabet == AlphabetType.Cyrillic)
             {
-                ALPHABET = "абвгдежзиклмнопрстуфхцчшщыъэюя".ToUpper();
+                ALPHABET = "абвгдежзиклмнопрстуфхцчшщыьэюя".ToUpper();
                 textStartSymbol = "НТ";
                 digitLetterSymbol = "Н/Ц";
                 repeatSymbol = "Л/П";
@@ -1509,7 +1566,7 @@ namespace Cryptool.Plugins.VIC
             {
                 ALPHABET = "abcdefghijklmnopqrstuvwxyz".ToUpper();
                 textStartSymbol = "TS";
-                digitLetterSymbol = "T/N";
+                digitLetterSymbol = "C/D";
                 repeatSymbol = "RPT";
             }
             ProgressChanged(0, 1);
@@ -1540,7 +1597,7 @@ namespace Cryptool.Plugins.VIC
 
 
                 //5.Enumerate each 10 letters
-                lineE = string.Join("", EnumerateString(lineD.Substring(0, 10), 0, false));
+                lineE = string.Join("", EnumerateString(lineD.Substring(0, 10), 1, true));
                 lineE += string.Join("", EnumerateString(lineD.Substring(10, 10), 1, true));
 
                 GuiLogMessage("lineE: " + lineE, NotificationLevel.Info);
@@ -1623,7 +1680,7 @@ namespace Cryptool.Plugins.VIC
                 string temp = "";
                 foreach (var element in firstTransposition)
                 {
-                    temp += element;
+                    temp += " & "+element;
                 }
                 GuiLogMessage("firstTransposition" + temp, NotificationLevel.Info);
 
@@ -1632,7 +1689,7 @@ namespace Cryptool.Plugins.VIC
                 temp = "";
                 foreach (var element in secondTransposition)
                 {
-                    temp += element;
+                    temp += " & " + element;
                 }
                 GuiLogMessage("Second Transposition" + temp, NotificationLevel.Info);
 
@@ -1655,7 +1712,7 @@ namespace Cryptool.Plugins.VIC
                     }
                     GuiLogMessage("table: " + logMessage, NotificationLevel.Info);
                     substitutionResult = (PerformSubstitution(substitutionTable, Input));
-                    substitutionResult = SplitMessageRandomly(substitutionResult);
+                    substitutionResult = AddZeros(substitutionResult);
 
                     ProgressChanged(14, 16);
 
@@ -1700,6 +1757,16 @@ namespace Cryptool.Plugins.VIC
 
                     // 16. Desubstitute substitution
                     substitutionTable = ConstructSubstitutionTable(lineS, Password, ALPHABET);
+                    string logMessage = "";
+                    for (int i = 0; i < substitutionTable.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < substitutionTable.GetLength(1); j++)
+                        {
+                            logMessage += substitutionTable.GetValue(i, j);
+                        }
+                        logMessage += "\n";
+                    }
+                    GuiLogMessage("table: " + logMessage, NotificationLevel.Info);
                     Output = Desubstitute(twiceDetransposedMessage, substitutionTable);
                     Output = DetermineTextStart(Output);
 
