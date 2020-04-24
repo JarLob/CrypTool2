@@ -142,6 +142,7 @@
     <ProjectReference Include="..\..\LibSource\CrypAnalysisViewControl\CrypAnalysisViewControl.csproj">
       <Project>{4ab9be96-3e34-40cb-9270-a64480c851ee}</Project>
       <Name>CrypAnalysisViewControl</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

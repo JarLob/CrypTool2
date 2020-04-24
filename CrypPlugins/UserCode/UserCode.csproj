@@ -143,6 +143,7 @@
     <ProjectReference Include="..\..\LibSource\AurelienRibon.Ui.SyntaxHighlightBox\AurelienRibon.Ui.SyntaxHighlightBox.csproj">
       <Project>{10a9ecd3-ae1e-494d-9a27-8a32dd581759}</Project>
       <Name>AurelienRibon.Ui.SyntaxHighlightBox</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

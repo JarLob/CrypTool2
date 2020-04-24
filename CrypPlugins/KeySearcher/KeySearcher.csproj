@@ -202,6 +202,7 @@
     <ProjectReference Include="..\..\LibSource\VoluntLib2\VoluntLib2.csproj">
       <Project>{1b68fdaa-c5a7-4f8a-bd5b-5876e8ac1879}</Project>
       <Name>VoluntLib2</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\LibSource\OpenCLNet\OpenCLNet.csproj">
       <Project>{0946E1A6-5488-4711-AD10-D54D6A5D2F32}</Project>

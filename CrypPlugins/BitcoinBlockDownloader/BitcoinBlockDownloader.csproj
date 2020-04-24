@@ -168,10 +168,12 @@
     <ProjectReference Include="..\..\CrypPluginBase\CrypPluginBase.csproj">
       <Project>{25db2b47-a457-4ec2-960b-395ce07ae093}</Project>
       <Name>CrypPluginBase</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\LibSource\BitcoinBlockChainAnalyser\BitcoinBlockChainAnalyser.csproj">
       <Project>{8f817267-0e1b-4336-91b7-fcb7ad85cb20}</Project>
       <Name>BitcoinBlockChainAnalyser</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

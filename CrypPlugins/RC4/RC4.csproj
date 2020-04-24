@@ -140,6 +140,7 @@
     <ProjectReference Include="..\KeySearcher\KeySearcher.csproj">
       <Project>{0579e099-66b2-43c3-b8a0-43cae4895e68}</Project>
       <Name>KeySearcher</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -206,6 +206,7 @@
     <ProjectReference Include="..\..\LibSource\VoluntLib2\VoluntLib2.csproj">
       <Project>{1b68fdaa-c5a7-4f8a-bd5b-5876e8ac1879}</Project>
       <Name>VoluntLib2</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\WorkspaceManagerModel\WorkspaceManagerModel.csproj">
       <Project>{C35A6E71-D6FE-478B-A12D-FAD54FC4EDC9}</Project>

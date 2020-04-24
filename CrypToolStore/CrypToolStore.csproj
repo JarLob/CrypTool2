@@ -109,10 +109,12 @@
     <ProjectReference Include="..\CrypCore\CrypCore.csproj">
       <Project>{ff5d473c-0716-4d3e-9078-2ebd979f94c6}</Project>
       <Name>CrypCore</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\CrypPluginBase\CrypPluginBase.csproj">
       <Project>{25db2b47-a457-4ec2-960b-395ce07ae093}</Project>
       <Name>CrypPluginBase</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\LibSource\CrypToolStoreLib\CrypToolStoreLib\CrypToolStoreLib.csproj">
       <Project>{ac89a28a-71ee-4bd1-84ab-9f8438dbd32e}</Project>

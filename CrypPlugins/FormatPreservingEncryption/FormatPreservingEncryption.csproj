@@ -115,6 +115,7 @@
     <ProjectReference Include="..\..\LibSource\FormatPreservingEncryptionWeydstone\FormatPreservingEncryptionWeydstone.csproj">
       <Project>{e6d2899c-4a6f-44f9-8e1a-1004f52d86cd}</Project>
       <Name>FormatPreservingEncryptionWeydstone</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

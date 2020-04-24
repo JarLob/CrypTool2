@@ -144,6 +144,7 @@
     <ProjectReference Include="..\CrypCore\CrypCore.csproj">
       <Project>{ff5d473c-0716-4d3e-9078-2ebd979f94c6}</Project>
       <Name>CrypCore</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\CrypPluginBase\CrypPluginBase.csproj">
       <Project>{25DB2B47-A457-4EC2-960B-395CE07AE093}</Project>
