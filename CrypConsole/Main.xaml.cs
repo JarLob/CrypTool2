@@ -37,13 +37,29 @@ namespace Cryptool.CrypConsole
         };
 
         private bool _verbose = false;
+        private int _timeout = int.MaxValue;
+        private TerminationType _terminationType = TerminationType.GlobalProgress;
+        private Dictionary<IPlugin, double> _pluginProgressValues = new Dictionary<IPlugin, double>();
+        private WorkspaceModel _workspaceModel = null;
         private ExecutionEngine _engine = null;
+        private int _globalProgress;
+        private DateTime _startTime;
+        private object _progressLockObject = new object();
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Main()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Called, after "ui" is initialized. From this point, we should have a running ui thread
+        /// Thus, we start the execution of the CrypConsole
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Main_Initialized(object sender, EventArgs e)
         {
             Start(CrypConsole.Args);
@@ -55,12 +71,14 @@ namespace Cryptool.CrypConsole
         /// 2) Creates CT2 model and execution engine
         /// 3) Starts execution
         /// 4) Gives data as defined by user to the model
-        /// 5) Retries results for output and outputs these
+        /// 5) Retrieves results for output and outputs these
         /// 6) [terminates]
         /// </summary>
         /// <param name="args"></param>
         public void Start(string[] args)
         {
+            _startTime = DateTime.Now;
+
             //Step 0: Set locale to English
             var cultureInfo = new CultureInfo("en-us", false);
             CultureInfo.CurrentCulture = cultureInfo;
@@ -68,10 +86,10 @@ namespace Cryptool.CrypConsole
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
 
             //Step 1: Check, if Help needed
-            if (ArgsHelper.CheckShowHelp(args))
+            if (ArgsHelper.GetShowHelp(args))
             {
                 Environment.Exit(0);
-            }
+            }            
 
             //Step 2: Get cwm_file to open
             string cwm_file = ArgsHelper.GetCWMFileName(args);
@@ -86,8 +104,26 @@ namespace Cryptool.CrypConsole
                 Environment.Exit(-2);
             }
 
-            //Step 3: Check if verbose mode should be active
-            _verbose = ArgsHelper.CheckVerbose(args);
+            //Step 3: Get additional parameters
+            _verbose = ArgsHelper.GetVerbose(args);
+            try
+            {
+                _timeout = ArgsHelper.GetTimeout(args);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Environment.Exit(-2);
+            }
+            try
+            {
+                _terminationType = ArgsHelper.GetTerminationType(args);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Environment.Exit(-2);
+            }
 
             //Step 4: Get input parameters
             List<Parameter> inputParameters = null;
@@ -148,14 +184,13 @@ namespace Cryptool.CrypConsole
                 Environment.Exit(-4);
             }
 
-            //Step 7: Load cwm file and create model
-            WorkspaceModel workspaceModel = null;
+            //Step 7: Load cwm file and create model            
             try
             {
                 ModelPersistance modelPersistance = new ModelPersistance();
-                workspaceModel = modelPersistance.loadModel(cwm_file, true);
+                _workspaceModel = modelPersistance.loadModel(cwm_file, true);
 
-                foreach (var pluginModel in workspaceModel.GetAllPluginModels())
+                foreach (var pluginModel in _workspaceModel.GetAllPluginModels())
                 {
                     pluginModel.Plugin.OnGuiLogNotificationOccured += OnGuiLogNotificationOccured;
                 }
@@ -171,7 +206,7 @@ namespace Cryptool.CrypConsole
             {
                 string name = param.Name;
                 bool found = false;
-                foreach (var component in workspaceModel.GetAllPluginModels())
+                foreach (var component in _workspaceModel.GetAllPluginModels())
                 {
                     if (component.GetName().ToLower().Equals(param.Name.ToLower()))
                     {
@@ -221,7 +256,7 @@ namespace Cryptool.CrypConsole
             {
                 string name = param.Name;
                 bool found = false;
-                foreach (var component in workspaceModel.GetAllPluginModels())
+                foreach (var component in _workspaceModel.GetAllPluginModels())
                 {
                     if (component.GetName().ToLower().Equals(param.Name.ToLower()))
                     {
@@ -239,32 +274,98 @@ namespace Cryptool.CrypConsole
                 }
             }
 
-            //Step 10: Create execution engine            
+            //Step 10: add OnPluginProgressChanged handlers
+            foreach(var plugin in _workspaceModel.GetAllPluginModels())
+            {
+                plugin.Plugin.OnPluginProgressChanged += OnPluginProgressChanged;
+            }
+
+            //Step 11: Create execution engine            
             try
             {
                 _engine = new ExecutionEngine(null);
                 _engine.OnGuiLogNotificationOccured += OnGuiLogNotificationOccured;
-                _engine.Execute(workspaceModel, false);
+                _engine.Execute(_workspaceModel, false);
             }
             catch(Exception ex)
             {
                 Console.WriteLine("Exception occured while executing model: {0}", ex.Message);
                 Environment.Exit(-7);
-            }                       
+            }
 
-            //Step 11: Start execution in a dedicated thread
+            //Step 12: Start execution in a dedicated thread
+            DateTime endTime = DateTime.Now.AddSeconds(_timeout);
             Thread t = new Thread(() =>
             {
                 CultureInfo.CurrentCulture = new CultureInfo("en-Us", false);
                 while (_engine.IsRunning())
                 {
                     Thread.Sleep(100);
+                    if(_engine.IsRunning() && _timeout < int.MaxValue && DateTime.Now >= endTime)
+                    {
+                        Console.WriteLine("Timeout ({0} seconds) reached. Kill process hard now", _timeout);
+                        Environment.Exit(-8);
+                    }
+                }
+                if (_verbose) 
+                {
+                    Console.WriteLine("Execution engine stopped. Terminate now");
+                    Console.WriteLine("Total execution took: {0}", DateTime.Now - _startTime);
                 }
                 Environment.Exit(0);
             });
             t.Start();
         }
 
+        /// <summary>
+        /// Called, when progress on a single plugin changed
+        /// Handles the global progress
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void OnPluginProgressChanged(IPlugin sender, PluginProgressEventArgs args)
+        {
+            if(_terminationType == TerminationType.GlobalProgress)
+            {
+                lock (_progressLockObject)
+                {
+                    if (!_pluginProgressValues.ContainsKey(sender))
+                    {
+                        _pluginProgressValues.Add(sender, args.Value / args.Max);
+                    }
+                    else
+                    {
+                        _pluginProgressValues[sender] = args.Value / args.Max;
+                    }
+                    double numberOfPlugins = _workspaceModel.GetAllPluginModels().Count;
+                    double totalProgress = 0;
+                    foreach (var value in _pluginProgressValues.Values)
+                    {
+                        totalProgress += value;
+                    }
+                    if (totalProgress == numberOfPlugins && _engine.IsRunning())
+                    {
+                        if (_verbose)
+                        {
+                            Console.WriteLine("Global progress reached 100%, stop execution engine now");
+                        }
+                        _engine.Stop();
+                    }
+                    int newProgress = (int)((totalProgress / numberOfPlugins) * 100);
+                    if (_verbose && _globalProgress != newProgress)
+                    {
+                        _globalProgress = newProgress;
+                        Console.WriteLine("Global progress change: {0}%", _globalProgress);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Property changed on plugin
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Plugin_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             var plugin = (IPlugin)sender;
@@ -272,7 +373,7 @@ namespace Cryptool.CrypConsole
             if (property.Name.ToLower().Equals("input"))
             {
                 Console.WriteLine(property.GetValue(plugin).ToString());
-                _engine.Stop();
+                //_engine.Stop();
             }
         }
 
@@ -290,7 +391,7 @@ namespace Cryptool.CrypConsole
         }
 
         /// <summary>
-        /// Updates app domain with user defined assembly resolber routine
+        /// Updates app domain with user defined assembly resolver routine
         /// </summary>
         private void UpdateAppDomain()
         {
@@ -310,7 +411,6 @@ namespace Cryptool.CrypConsole
             foreach (var subfolder in subfolders)
             {
                 string assemblyPath = Path.Combine(folderPath, (Path.Combine(subfolder, new AssemblyName(args.Name).Name + ".dll")));
-
                 if (File.Exists(assemblyPath))
                 {
                     Assembly assembly = Assembly.LoadFrom(assemblyPath);
@@ -321,7 +421,6 @@ namespace Cryptool.CrypConsole
                     return assembly;
                 }
                 assemblyPath = Path.Combine(folderPath, (Path.Combine(subfolder, new AssemblyName(args.Name).Name + ".exe")));
-
                 if (File.Exists(assemblyPath))
                 {
                     Assembly assembly = Assembly.LoadFrom(assemblyPath);

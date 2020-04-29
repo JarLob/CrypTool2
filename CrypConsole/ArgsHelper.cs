@@ -51,7 +51,12 @@ namespace Cryptool.CrypConsole
             return null;
         }
 
-        public static bool CheckVerbose(string[] args)
+        /// <summary>
+        /// Returns, if verbose mode should be executed
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static bool GetVerbose(string[] args)
         {
             var query = from str in args
                         where (str.Length >= 8 && str.ToLower().Substring(0, 8).Equals("-verbose"))
@@ -63,6 +68,81 @@ namespace Cryptool.CrypConsole
                 return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Returns the timeout; after this timeout, the program terminates
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static int GetTimeout(string[] args)
+        {
+            var query = from str in args
+                        where (str.Length >= 9 && str.ToLower().Substring(0, 9).Equals("-timeout="))
+                           || (str.Length >= 10 && str.ToLower().Substring(0, 10).Equals("--timeout="))
+                        select str;
+
+            if (query.Count() > 0)
+            {
+                var p = query.Last().Split('=')[1];
+                if (p.StartsWith("\""))
+                {
+                    p = p.Substring(1, p.Length - 1);
+                }
+                if (p.EndsWith("\""))
+                {
+                    p = p.Substring(0, p.Length - 1);
+                }
+
+                try
+                {
+                    return int.Parse(p);
+                }
+                catch (Exception)
+                {
+                    throw new InvalidParameterException(string.Format("Invalid timeout found: {0}", p));
+                }                
+            }
+            return int.MaxValue;
+        }
+
+        /// <summary>
+        /// Returns the termination type, if set
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static TerminationType GetTerminationType(string[] args)
+        {
+            var query = from str in args
+                        where (str.Length >= 13 && str.ToLower().Substring(0, 13).Equals("-termination="))
+                           || (str.Length >= 14 && str.ToLower().Substring(0, 14).Equals("--termination="))
+                        select str;
+
+            if (query.Count() > 0)
+            {
+                var p = query.Last().Split('=')[1];
+                if (p.StartsWith("\""))
+                {
+                    p = p.Substring(1, p.Length - 1);
+                }
+                if (p.EndsWith("\""))
+                {
+                    p = p.Substring(0, p.Length - 1);
+                }
+
+                switch (p.ToLower())
+                {
+                    case "progress":
+                        return TerminationType.GlobalProgress;
+                    case "single":
+                        return TerminationType.SingleOutput;
+                    case "all":
+                        return TerminationType.AllOutputs;
+                    default:
+                        throw new InvalidParameterException(string.Format("Invalid termination type given: {0}", p));
+                }
+            }
+            return TerminationType.GlobalProgress;
         }
 
         public static List<Parameter> GetInputParameters(string[] args)
@@ -153,11 +233,11 @@ namespace Cryptool.CrypConsole
         }
 
         /// <summary>
-        /// This method checks the args, if the user wants to see the help
+        /// This method returns if the user wants to see the help page
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static bool CheckShowHelp(string[] args)
+        public static bool GetShowHelp(string[] args)
         {
             var query = from str in args
                         where str.ToLower().Equals("--help") || str.ToLower().Equals("-help")
@@ -179,25 +259,21 @@ namespace Cryptool.CrypConsole
         {
             Console.WriteLine("");
             Console.WriteLine("-= CrypConsole -- a CrypTool 2 console for executing CrypTool 2 workspaces in the Windows console =- ");
-            Console.WriteLine("(C) 2020 by Nils Kopal, kopal@cryptool.org");
+            Console.WriteLine("(C) 2020 by Nils Kopal, kopal<at>cryptool.org");
             Console.WriteLine("Usage:");
             Console.WriteLine("CrypConsole.exe -cwm=path/to/cwm/file -input=<input param definition> -output=<output param definition>");
-            Console.WriteLine("Arguments:");
+            Console.WriteLine("All arguments:");
             Console.WriteLine(" -help                               -> shows this help page");
             Console.WriteLine(" -verbose                            -> writes logs etc to the console; for debugging");
             Console.WriteLine(" -cwm=path/to/cwm/file               -> specifies a path to a cwm file that should be executed");
             Console.WriteLine(" -input=type,name,data               -> specifies an input parameter");
             Console.WriteLine("                                        type can be number,text,file");
-            Console.WriteLine(" -output=type,name                   -> specifies an output parameter");
-            Console.WriteLine("                                        type can be number,text,file");
+            Console.WriteLine(" -output=name                        -> specifies an output parameter");
+            Console.WriteLine(" -timeout=duration                   -> specifies a timeout in seconds. If timeout is reached, the process is killed");
+            Console.WriteLine(" -termination=type                   -> specifies the termination type. Hint: timeout can be set in parallel");
+            Console.WriteLine("                                        type can be progress,single,all");
+            Console.WriteLine("                                        if the termination type is not set explicitly, \"progress\" is assumed");
         }
-    }
-
-    public enum ExecutionType
-    {
-        Endless,
-        TimeBound,
-        Triggered
     }
 
     public class InvalidParameterException : Exception
@@ -213,6 +289,13 @@ namespace Cryptool.CrypConsole
         Text,
         File,
         Output
+    }
+
+    public enum TerminationType
+    {
+        GlobalProgress,
+        SingleOutput,
+        AllOutputs
     }
 
     public class Parameter
