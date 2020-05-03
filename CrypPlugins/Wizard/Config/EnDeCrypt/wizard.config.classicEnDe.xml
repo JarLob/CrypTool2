@@ -62,11 +62,11 @@
       <defaultvalue lang="ru">Введите свое сообщение здесь.</defaultvalue>
       <defaultvalue lang="de">Geben Sie Ihre Nachricht hier ein.</defaultvalue>
     </inputBox>
-    <inputBox plugin="Caesar" property="ShiftKey" alignment="Left" width="5%" visibleLines="1" group="input1" regex="[0-9]+">
-      <description lang="en">Shift value (integer):</description>
-      <description lang="ru">Значение сдвига (целое число):</description>
-      <description lang="de">Verschiebewert (Zahl):</description>
-      <defaultvalue>3</defaultvalue>
+    <inputBox plugin="$Key$" property="Number" alignment="Left" width="5%" visibleLines="1" group="input1" regex="[0-9]+">
+      <description lang="en">Key:</description>
+      <description lang="ru">Ключ:</description>
+      <description lang="de">Schlüssel:</description>
+      <defaultvalue lang="en">3</defaultvalue>
     </inputBox>
     <sampleViewer image="Caesar" file="Cryptography\Classic\Caesar.cwm" showCreateButton="true">
       <name lang="en">Caesar Output</name>
