@@ -40,11 +40,13 @@ namespace Cryptool.CrypConsole
         private int _timeout = int.MaxValue;
         private TerminationType _terminationType = TerminationType.GlobalProgress;
         private Dictionary<IPlugin, double> _pluginProgressValues = new Dictionary<IPlugin, double>();
+        private Dictionary<IPlugin, string> _pluginNames = new Dictionary<IPlugin, string>();
         private WorkspaceModel _workspaceModel = null;
         private ExecutionEngine _engine = null;
         private int _globalProgress;
         private DateTime _startTime;
         private object _progressLockObject = new object();
+        private bool _jsonoutput = false;
 
         /// <summary>
         /// Constructor
@@ -118,6 +120,15 @@ namespace Cryptool.CrypConsole
             try
             {
                 _terminationType = ArgsHelper.GetTerminationType(args);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Environment.Exit(-2);
+            }
+            try
+            {
+                _jsonoutput = ArgsHelper.GetJsonOutput(args);
             }
             catch (Exception ex)
             {
@@ -208,6 +219,9 @@ namespace Cryptool.CrypConsole
                 bool found = false;
                 foreach (var component in _workspaceModel.GetAllPluginModels())
                 {
+                    //we also memorize here the name of each plugin
+                    _pluginNames.Add(component.Plugin, component.GetName());
+
                     if (component.GetName().ToLower().Equals(param.Name.ToLower()))
                     {
                         if (component.PluginType.FullName.Equals("Cryptool.TextInput.TextInput"))
@@ -318,8 +332,7 @@ namespace Cryptool.CrypConsole
         }
 
         /// <summary>
-        /// Called, when progress on a single plugin changed
-        /// Handles the global progress
+        /// Called, when progress on a single plugin changed        
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -327,35 +340,52 @@ namespace Cryptool.CrypConsole
         {
             if(_terminationType == TerminationType.GlobalProgress)
             {
-                lock (_progressLockObject)
+                HandleGlobalProgress(sender, args);
+            }
+        }
+
+        /// <summary>
+        /// Handles the global progress
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void HandleGlobalProgress(IPlugin sender, PluginProgressEventArgs args)
+        {
+            lock (_progressLockObject)
+            {
+                if (!_pluginProgressValues.ContainsKey(sender))
                 {
-                    if (!_pluginProgressValues.ContainsKey(sender))
+                    _pluginProgressValues.Add(sender, args.Value / args.Max);
+                }
+                else
+                {
+                    _pluginProgressValues[sender] = args.Value / args.Max;
+                }
+                double numberOfPlugins = _workspaceModel.GetAllPluginModels().Count;
+                double totalProgress = 0;
+                foreach (var value in _pluginProgressValues.Values)
+                {
+                    totalProgress += value;
+                }
+                if (totalProgress == numberOfPlugins && _engine.IsRunning())
+                {
+                    if (_verbose)
                     {
-                        _pluginProgressValues.Add(sender, args.Value / args.Max);
+                        Console.WriteLine("Global progress reached 100%, stop execution engine now");
                     }
-                    else
+                    _engine.Stop();
+                }
+                int newProgress = (int)((totalProgress / numberOfPlugins) * 100);
+                if (_globalProgress < newProgress)
+                {
+                    _globalProgress = newProgress;
+                    if (_verbose)
                     {
-                        _pluginProgressValues[sender] = args.Value / args.Max;
-                    }
-                    double numberOfPlugins = _workspaceModel.GetAllPluginModels().Count;
-                    double totalProgress = 0;
-                    foreach (var value in _pluginProgressValues.Values)
-                    {
-                        totalProgress += value;
-                    }
-                    if (totalProgress == numberOfPlugins && _engine.IsRunning())
-                    {
-                        if (_verbose)
-                        {
-                            Console.WriteLine("Global progress reached 100%, stop execution engine now");
-                        }
-                        _engine.Stop();
-                    }
-                    int newProgress = (int)((totalProgress / numberOfPlugins) * 100);
-                    if (_verbose && _globalProgress != newProgress)
-                    {
-                        _globalProgress = newProgress;
                         Console.WriteLine("Global progress change: {0}%", _globalProgress);
+                    }
+                    if (_jsonoutput)
+                    {
+                        Console.WriteLine(JsonHelper.GetProgressJson(_globalProgress));
                     }
                 }
             }
@@ -365,16 +395,23 @@ namespace Cryptool.CrypConsole
         /// Property changed on plugin
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Plugin_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
+        /// <param name="pceargs"></param>
+        private void Plugin_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs pceargs)
+        {            
             var plugin = (IPlugin)sender;
-            var property = sender.GetType().GetProperty(e.PropertyName);
-            if (property.Name.ToLower().Equals("input"))
+            var property = sender.GetType().GetProperty(pceargs.PropertyName);
+            if (!property.Name.ToLower().Equals("input"))
             {
-                Console.WriteLine(property.GetValue(plugin).ToString());
-                //_engine.Stop();
+                return;
             }
+            if (_verbose)
+            {
+                Console.WriteLine("Output:" + property.GetValue(plugin).ToString());
+            }
+            if (_jsonoutput)
+            {
+                Console.WriteLine(JsonHelper.GetOutputJsonString(property.GetValue(plugin).ToString(), _pluginNames[plugin]));
+            }         
         }
 
         /// <summary>
@@ -387,6 +424,10 @@ namespace Cryptool.CrypConsole
             if (_verbose || args.NotificationLevel == NotificationLevel.Error)
             {
                 Console.WriteLine("GuiLog:{0}:{1}:{2}:{3}", DateTime.Now, args.NotificationLevel, (sender != null ? sender.GetType().Name : "null"), args.Message);
+            }
+            if (_jsonoutput)
+            {
+                Console.WriteLine(JsonHelper.GetLogJsonString(sender, args));
             }
         }
 

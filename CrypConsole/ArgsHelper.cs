@@ -71,6 +71,25 @@ namespace Cryptool.CrypConsole
         }
 
         /// <summary>
+        /// Returns, if json output should be enabled
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static bool GetJsonOutput(string[] args)
+        {
+            var query = from str in args
+                        where (str.Length >= 11 && str.ToLower().Substring(0, 11).Equals("-jsonoutput"))
+                           || (str.Length >= 12 && str.ToLower().Substring(0, 12).Equals("--jsonoutput"))
+                        select str;
+
+            if (query.Count() > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Returns the timeout; after this timeout, the program terminates
         /// </summary>
         /// <param name="args"></param>
@@ -132,8 +151,10 @@ namespace Cryptool.CrypConsole
 
                 switch (p.ToLower())
                 {
-                    case "progress":
+                    case "global":
                         return TerminationType.GlobalProgress;
+                    case "plugin":
+                        return TerminationType.PluginProgress;
                     case "single":
                         return TerminationType.SingleOutput;
                     case "all":
@@ -271,8 +292,8 @@ namespace Cryptool.CrypConsole
             Console.WriteLine(" -output=name                        -> specifies an output parameter");
             Console.WriteLine(" -timeout=duration                   -> specifies a timeout in seconds. If timeout is reached, the process is killed");
             Console.WriteLine(" -termination=type                   -> specifies the termination type. Hint: timeout can be set in parallel");
-            Console.WriteLine("                                        type can be progress,single,all");
-            Console.WriteLine("                                        if the termination type is not set explicitly, \"progress\" is assumed");
+            Console.WriteLine("                                        type can be global,plugin,single,all");
+            Console.WriteLine("                                        if the termination type is not set explicitly, \"global\" is assumed");
         }
     }
 
@@ -294,6 +315,7 @@ namespace Cryptool.CrypConsole
     public enum TerminationType
     {
         GlobalProgress,
+        PluginProgress,
         SingleOutput,
         AllOutputs
     }
