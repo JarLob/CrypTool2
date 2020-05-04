@@ -13,11 +13,10 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using Cryptool.PluginBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cryptool.CrypConsole
 {
@@ -166,6 +165,47 @@ namespace Cryptool.CrypConsole
             return TerminationType.GlobalProgress;
         }
 
+        /// <summary>
+        /// Returns the log level
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static NotificationLevel GetLoglevel(string[] args)
+        {
+            var query = from str in args
+                        where (str.Length >= 10 && str.ToLower().Substring(0, 10).Equals("-loglevel="))
+                           || (str.Length >= 11 && str.ToLower().Substring(0, 11).Equals("--loglevel="))
+                        select str;
+
+            if (query.Count() > 0)
+            {
+                var p = query.Last().Split('=')[1];
+                if (p.StartsWith("\""))
+                {
+                    p = p.Substring(1, p.Length - 1);
+                }
+                if (p.EndsWith("\""))
+                {
+                    p = p.Substring(0, p.Length - 1);
+                }
+
+                switch (p.ToLower())
+                {
+                    case "debug":
+                        return NotificationLevel.Debug;
+                    case "info":
+                        return NotificationLevel.Info;
+                    case "warning":
+                        return NotificationLevel.Warning;
+                    case "error":
+                        return NotificationLevel.Error;
+                    default:
+                        throw new InvalidParameterException(string.Format("Invalid loglevel given: {0}", p));
+                }
+            }
+            return NotificationLevel.Warning;
+        }
+
         public static List<Parameter> GetInputParameters(string[] args)
         {
             var query = from str in args
@@ -285,7 +325,6 @@ namespace Cryptool.CrypConsole
             Console.WriteLine("CrypConsole.exe -cwm=path/to/cwm/file -input=<input param definition> -output=<output param definition>");
             Console.WriteLine("All arguments:");
             Console.WriteLine(" -help                               -> shows this help page");
-            Console.WriteLine(" -verbose                            -> writes logs etc to the console; for debugging");
             Console.WriteLine(" -cwm=path/to/cwm/file               -> specifies a path to a cwm file that should be executed");
             Console.WriteLine(" -input=type,name,data               -> specifies an input parameter");
             Console.WriteLine("                                        type can be number,text,file");
@@ -294,6 +333,10 @@ namespace Cryptool.CrypConsole
             Console.WriteLine(" -termination=type                   -> specifies the termination type. Hint: timeout can be set in parallel");
             Console.WriteLine("                                        type can be global,plugin,single,all");
             Console.WriteLine("                                        if the termination type is not set explicitly, \"global\" is assumed");
+            Console.WriteLine(" -jsonoutput                         -> enables the json output");
+            Console.WriteLine(" -verbose                            -> writes logs etc to the console; for debugging");
+            Console.WriteLine(" -loglevel=info/debug/warning/error  -> changes the log level; default is \"warning\"");
+
         }
     }
 

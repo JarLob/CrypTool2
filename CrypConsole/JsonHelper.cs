@@ -46,7 +46,7 @@ namespace Cryptool.CrypConsole
         }
 
         /// <summary>
-        /// returns the global progress as json string
+        /// Returns the global progress as json string
         /// </summary>
         /// <param name="globalProgress"></param>
         /// <returns></returns>

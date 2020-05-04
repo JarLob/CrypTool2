@@ -47,6 +47,7 @@ namespace Cryptool.CrypConsole
         private DateTime _startTime;
         private object _progressLockObject = new object();
         private bool _jsonoutput = false;
+        private NotificationLevel _loglevel = NotificationLevel.Warning;
 
         /// <summary>
         /// Constructor
@@ -113,6 +114,15 @@ namespace Cryptool.CrypConsole
                 _timeout = ArgsHelper.GetTimeout(args);
             }
             catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Environment.Exit(-2);
+            }
+            try
+            {
+                _loglevel = ArgsHelper.GetLoglevel(args);
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 Environment.Exit(-2);
@@ -421,7 +431,11 @@ namespace Cryptool.CrypConsole
         /// <param name="args"></param>
         private void OnGuiLogNotificationOccured(IPlugin sender, GuiLogEventArgs args)
         {
-            if (_verbose || args.NotificationLevel == NotificationLevel.Error)
+            if(args.NotificationLevel < _loglevel)
+            {
+                return;
+            }
+            if (_verbose)
             {
                 Console.WriteLine("GuiLog:{0}:{1}:{2}:{3}", DateTime.Now, args.NotificationLevel, (sender != null ? sender.GetType().Name : "null"), args.Message);
             }
