@@ -136,8 +136,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     separator = ' ';
                     break;
             }
-            _presentation.LoadLangStatistics(_settings.Language, _settings.UseSpaces);
-            _presentation.AddCiphertext(Ciphertext, _settings.CiphertextFormat, separator, _settings.CostFactorMultiplicator, _settings.FixedTemperature);
+            _presentation.LoadLangStatistics(_settings.Language, _settings.UseSpaces, _settings.UseNulls);
+            _presentation.AddCiphertext(Ciphertext, _settings.CiphertextFormat, separator, _settings.CostFactorMultiplicator, _settings.FixedTemperature, _settings.UseNulls);
             GenerateLetterLimits();
             _presentation.AnalyzerConfiguration.WordCountToFind = _settings.WordCountToFind;
             _presentation.AnalyzerConfiguration.MinWordLength = _settings.MinWordLength;
@@ -145,6 +145,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             _presentation.AnalyzerConfiguration.Cycles = _settings.Cycles;
             _presentation.AnalyzerConfiguration.AnalysisMode = _settings.AnalysisMode;
             _presentation.AnalyzerConfiguration.Restarts = _settings.Restarts;
+            _presentation.AnalyzerConfiguration.UseNulls = _settings.UseNulls;
             _presentation.AddDictionary(Dictionary);                        
 
             _presentation.EnableUI();
@@ -200,10 +201,14 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     maxvalue = minvalue * 2;
                 }
                 _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = i, MinValue = minvalue, MaxValue = maxvalue });
-            }            
+            }
             if (_settings.UseSpaces)
             {
-                _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = alphabet.Length, MinValue = 2, MaxValue = 3 });   //SPACE/NULLS
+                _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = Tools.MapIntoNumberSpace(" ", _presentation.AnalyzerConfiguration.PlaintextMapping)[0], MinValue = 2, MaxValue = 3 });   //SPACE
+            }
+            if (_settings.UseNulls)
+            {
+                _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = Tools.MapIntoNumberSpace("#", _presentation.AnalyzerConfiguration.PlaintextMapping)[0], MinValue = 1, MaxValue = 2 });   //NULLS
             }
             _presentation.GenerateKeyLetterLimitsListView();
         }

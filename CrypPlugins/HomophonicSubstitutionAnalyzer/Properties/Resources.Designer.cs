@@ -655,6 +655,24 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Use nulls ähnelt.
+        /// </summary>
+        internal static string UseNullsCaption {
+            get {
+                return ResourceManager.GetString("UseNullsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die If activated, the analyzer assumes nulls in the ciphertext ähnelt.
+        /// </summary>
+        internal static string UseNullsTooltip {
+            get {
+                return ResourceManager.GetString("UseNullsTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Use spaces ähnelt.
         /// </summary>
         internal static string UseSpacesCaption {

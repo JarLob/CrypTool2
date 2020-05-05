@@ -67,9 +67,10 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             var builder = new StringBuilder();
             foreach (var i in numbers)
             {
+                //null value                
                 try
-                {
-                    builder.Append(alphabet[i]);
+                {                    
+                    builder.Append(alphabet[i]);                   
                 }
                 catch (IndexOutOfRangeException)
                 {
@@ -91,7 +92,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             var position = 0;
             foreach (var c in text)
             {
-                numbers[position] = alphabet.IndexOf(c);
+                numbers[position] = alphabet.IndexOf(c);              
                 position++;
             }
             return numbers;

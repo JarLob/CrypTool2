@@ -178,15 +178,26 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <summary>
         /// Converts the text to an array of integers
         /// </summary>
+        /// <param name="useNulls"></param>
         /// <returns></returns>
-        public int[] ToIntegerArray()
+        public int[] ToIntegerArray(int nullsymbol = -1)
         {
             List<int> ints = new List<int>();
             foreach(var symbol in symbols)
             {
                 foreach(var i in symbol)
                 {
-                    ints.Add(i);
+                    if (nullsymbol == -1)
+                    {
+                        ints.Add(i);
+                    }
+                    else
+                    {
+                        if(i != nullsymbol)
+                        {
+                            ints.Add(i);
+                        }
+                    }
                 }
             }
             return ints.ToArray();

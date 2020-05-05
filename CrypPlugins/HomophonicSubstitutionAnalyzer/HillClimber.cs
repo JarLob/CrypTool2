@@ -68,6 +68,14 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {                
                 numbers.Add(keyLetterDistributor.GetNextLetter());             
             }
+            if (AnalyzerConfiguration.UseNulls)
+            {
+                for(var i = 0; i < 2; i++)
+                {
+                    numbers.Add(Tools.MapIntoNumberSpace("#", AnalyzerConfiguration.PlaintextMapping)[0]); //we use the #-symbol as null
+                }
+            }
+
             var runkey = new HomophoneMapping[AnalyzerConfiguration.Keylength];
             for (var i = 0; i < AnalyzerConfiguration.Keylength; i++)
             {
@@ -97,6 +105,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             }
 
             int noglobalbestcounter = 0;
+            int nullsymbol = AnalyzerConfiguration.UseNulls ? Tools.MapIntoNumberSpace("#", AnalyzerConfiguration.PlaintextMapping)[0] : -1;
 
             //3) do hillcimbing
             var plaintext = DecryptHomophonicSubstitution(AnalyzerConfiguration.Ciphertext, runkey);
@@ -124,7 +133,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                         DecryptHomophonicSubstitutionInPlace(plaintext, runkey, i, j);
 
                         // compute cost value to rate the key (fitness)
-                        var costvalue = Grams.CalculateCost(plaintext.ToIntegerArray()) * AnalyzerConfiguration.CostFunctionMultiplicator;
+                        var costvalue = Grams.CalculateCost(plaintext.ToIntegerArray(nullsymbol)) * AnalyzerConfiguration.CostFunctionMultiplicator;
                         
                         // use Cowans churn to accept or refuse the new key
                         if (simulatedAnnealing.AcceptWithConstantTemperature(costvalue, bestkeycost))
@@ -489,6 +498,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public double CostFunctionMultiplicator { get; set; }
         public double FixedTemperature { get; set; }
         public char Separator { get; set; }
+        public bool UseNulls { get; set; }
 
         /// <summary>
         /// Creates a new AnalyzerConfiugraion using the given keylength and ciphertext

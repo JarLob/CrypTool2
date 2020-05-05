@@ -333,4 +333,10 @@
   <data name="Stop" xml:space="preserve">
     <value>Stop</value>
   </data>
+  <data name="UseNullsCaption" xml:space="preserve">
+    <value>Use nulls</value>
+  </data>
+  <data name="UseNullsTooltip" xml:space="preserve">
+    <value>If activated, the analyzer assumes nulls in the ciphertext</value>
+  </data>
 </root>

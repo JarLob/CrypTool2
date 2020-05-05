@@ -352,6 +352,10 @@ namespace Cryptool.CrypConsole
             {
                 HandleGlobalProgress(sender, args);
             }
+            if(_terminationType == TerminationType.PluginProgress)
+            {
+
+            }
         }
 
         /// <summary>

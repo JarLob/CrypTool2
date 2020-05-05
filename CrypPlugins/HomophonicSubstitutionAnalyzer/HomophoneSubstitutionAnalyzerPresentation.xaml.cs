@@ -73,7 +73,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 builder.Append((char)i);
             }
-            CipherAlphabetText = builder.ToString();
+            CipherAlphabetText = builder.ToString();            
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <param name="separator"></param>
         /// <param name="costFactorMultiplicator"></param>
         /// <param name="fixedTemperature"></param>
-        public void AddCiphertext(string ciphertext, CiphertextFormat ciphertextFormat, char separator, int costFactorMultiplicator, int fixedTemperature)
+        public void AddCiphertext(string ciphertext, CiphertextFormat ciphertextFormat, char separator, int costFactorMultiplicator, int fixedTemperature, bool useNulls)
         {
             _ciphertext = ciphertext;
             _ciphertextFormat = ciphertextFormat;
@@ -104,6 +104,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             AnalyzerConfiguration.Separator = separator;
             AnalyzerConfiguration.CostFunctionMultiplicator = costFactorMultiplicator;
             AnalyzerConfiguration.FixedTemperature = fixedTemperature;
+            AnalyzerConfiguration.UseNulls = useNulls;
             _hillClimber = new HillClimber(AnalyzerConfiguration);
             _hillClimber.Grams = _grams;
             _hillClimber.NewBestValue += HillClimberNewBestValue;
@@ -352,8 +353,9 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 
                     Label label = new Label();
                     label.FontSize = 16;
-                    label.Width = 50;
-                    label.Content = String.Format("\"{0}\"", Tools.MapNumbersIntoTextSpace(new int[] {limits.Letter}, AnalyzerConfiguration.PlaintextMapping));
+                    label.Width = 50;                    
+                    label.Content = String.Format("\"{0}\"", Tools.MapNumbersIntoTextSpace(new int[] { limits.Letter }, AnalyzerConfiguration.PlaintextMapping));
+                    
                     Grid.SetRow(label, 0);
                     Grid.SetColumn(label, 0);
 
@@ -1158,7 +1160,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// </summary>
         /// <param name="language"></param>
         /// <param name="useSpaces"></param>
-        public void LoadLangStatistics(int language, bool useSpaces, int ngramsize = 5)
+        public void LoadLangStatistics(int language, bool useSpaces, bool useNulls, int ngramsize = 5)
         {
             lock (this)
             {
@@ -1204,6 +1206,10 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 }
                 _grams = NGramCache[key];
                 PlainAlphabetText = _grams.Alphabet;
+                if (useNulls)
+                {
+                    PlainAlphabetText = PlainAlphabetText + "#";
+                }
             }
         }
 
