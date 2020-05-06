@@ -23,6 +23,7 @@
     <replacement key="$Permutation Steganography$" value="Permutations-Steganographie" />
     <replacement key="$Hidden message$" value="Versteckte Nachricht" />
     <replacement key="$String Encoder$" value="String-Kodierer" />
+    <replacement key="$memo$" value="Diese Vorlage demonstriert, wie die Reihenfolge, in die die Elemente einer gegebenen Wortliste gebracht werden, eine Nachricht kodieren kann." />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Carrier List$" value="список транспортных средств" />
@@ -31,6 +32,7 @@
     <replacement key="$Permutation Steganography$" value="Перестановки-Steganographie" />
     <replacement key="$Hidden message$" value="Скрытое сообщение" />
     <replacement key="$String Encoder$" value="Строка кодировщик" />
+    <replacement key="$memo$" value="" />
   </replacements>
   <replacements lang="en">
     <replacement key="$Carrier List$" value="Carrier List" />
@@ -39,5 +41,6 @@
     <replacement key="$Permutation Steganography$" value="Permutation Steganography" />
     <replacement key="$Hidden message$" value="Hidden message" />
     <replacement key="$String Encoder$" value="String Encoder" />
+    <replacement key="$memo$" value="This template demonstrates how the order of the elements of a given list of words can encode a message." />
   </replacements>
 </sample>

@@ -27,6 +27,7 @@
     <replacement key="$String Encoder$" value="String-Kodierer" />
     <replacement key="$Image with hidden message$" value="Bild mit versteckter Nachricht" />
     <replacement key="$Extracted message$" value="Extrahierte Nachricht" />
+    <replacement key="$memo$" value="Diese Vorlage demonstriert, wie eine Nachricht in den niederwertigen Bits eines Bildes versteckt und anschließend wieder daraus extrahiert wird.\line\line Nach dem Start der Vorlage können Sie Regionen im Bild definieren, in denen die Nachricht versteckt werden soll.\line\line Um das Entdecken der versteckten Nachricht zu erschweren, ist diese zusätzlich mit einem Passwort gesichert. Wird der Dekodierversuch mit einem falschen Password versucht, kann nicht festgestellt werden, ob überhaupt eine Nachricht versteckt ist." />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Key$" value="ключ" />
@@ -38,6 +39,7 @@
     <replacement key="$String Encoder$" value="Строка кодировщик" />
     <replacement key="$Image with hidden message$" value="Изображение со скрытым сообщением" />
     <replacement key="$Extracted message$" value="Извлеченное сообщение" />
+    <replacement key="$memo$" value="" />
   </replacements>
   <replacements lang="en">
     <replacement key="$Key$" value="Key" />
@@ -49,5 +51,6 @@
     <replacement key="$String Encoder$" value="String Encoder" />
     <replacement key="$Image with hidden message$" value="Image with hidden message" />
     <replacement key="$Extracted message$" value="Extracted message" />
+    <replacement key="$memo$" value="This template demonstrates, how a message is hidden in the least significant bits of an image and subsequently extracted from it.\line\line After the template is started, you can define regions in the image where the message should be hidden.\line\line In order to complicate the discovery of the hidden message, the message is additionally secured with a password. If the decoding is tried with a wrong password, the algorithm can not even detect the presence of a hidden message." />
   </replacements>
 </sample>

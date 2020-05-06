@@ -24,6 +24,7 @@
     <replacement key="$Permutation Steganography$" value="Permutations-Steganographie" />
     <replacement key="$Text Output$" value="Textausgabe" />
     <replacement key="$Image Output$" value="Bildausgabe" />
+    <replacement key="$memo$" value="Diese Vorlage zeigt, wie auch größere Datenmengen, wie z.B. ein Bild, in der Reihenfolge einer sortierbaren Liste von Objekten versteckt werden kann. Die Trägerliste besteht in diesem Fall aus einem Wörterbuch mit mehreren tausend Einträgen. Die Umordnung der Wörter kodiert das angezeigte Bild." />
   </replacements>
   <replacements lang="ru">
     <replacement key="$File Input$" value="входной файл" />
@@ -32,6 +33,7 @@
     <replacement key="$Permutation Steganography$" value="Перестановки-Steganographie" />
     <replacement key="$Text Output$" value="вывод текста" />
     <replacement key="$Image Output$" value="вывода изображения" />
+    <replacement key="$memo$" value="" />
   </replacements>
   <replacements lang="en">
     <replacement key="$File Input$" value="File Input" />
@@ -40,5 +42,6 @@
     <replacement key="$Permutation Steganography$" value="Permutation Steganography" />
     <replacement key="$Text Output$" value="Text Output" />
     <replacement key="$Image Output$" value="Image Output" />
+    <replacement key="$memo$" value="This template demonstrates how a larger set of data (for example a picture) can be hidden in the order of a sortable set of objects. In this case, the carrier set is a dictionary consisting of several thousand words. The reordering of the words encodes the picture displayed in this template." />
   </replacements>
 </sample>

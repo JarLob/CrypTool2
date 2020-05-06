@@ -22,21 +22,27 @@
     <replacement key="$Message$" value="Nachricht" />
     <replacement key="$Carrier list$" value="Trägerliste" />
     <replacement key="$Split$" value="Trenne" />
+    <replacement key="$Split character$" value="Trennzeichen" />
     <replacement key="$Permutation Steganography$" value="Permutations-Steganographie" />
     <replacement key="$Carrier with hidden message$" value="Träger mit versteckter Nachricht" />
+    <replacement key="$memo$" value="Diese Vorlage demonstriert, wie die Reihenfolge, in die die Elemente einer gegebenen Wortliste gebracht werden, eine Nachricht kodieren kann.\line\line Im oberen Textfeld der Permutations-Komponente wird die sortierte Wortliste angezeigt. Im unteren Textfeld wird die Wortliste so umgeordnet, daß sie die Nachricht verschlüsselt." />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Message$" value="сообщение" />
     <replacement key="$Carrier list$" value="список транспортных средств" />
     <replacement key="$Split$" value="отдельный" />
+    <replacement key="$Split character$" value="сепаратор" />
     <replacement key="$Permutation Steganography$" value="Перестановки-Steganographie" />
     <replacement key="$Carrier with hidden message$" value="Перевозчик со скрытым сообщением" />
+    <replacement key="$memo$" value="" />
   </replacements>
   <replacements lang="en">
     <replacement key="$Message$" value="Message" />
     <replacement key="$Carrier list$" value="Carrier List" />
     <replacement key="$Split$" value="Split" />
+    <replacement key="$Split character$" value="Split character" />
     <replacement key="$Permutation Steganography$" value="Permutation Steganography" />
     <replacement key="$Carrier with hidden message$" value="Carrier with hidden message" />
+    <replacement key="$memo$" value="This template demonstrates how the order of the elements of a given list of words can encode a message.\line\line In the upper text field of the Permutation component, the sorted carrier list is displayed. The lower text field shows how the word list is reordered, so that it encodes the given message." />
   </replacements>
 </sample>

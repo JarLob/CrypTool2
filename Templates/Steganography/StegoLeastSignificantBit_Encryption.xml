@@ -23,17 +23,20 @@
     <replacement key="$Password$" value="Passwort" />
     <replacement key="$Message$" value="Nachricht" />
     <replacement key="$Image with hidden message$" value="Bild mit versteckter Nachricht" />
+    <replacement key="$memo$" value="In dieser Vorlage wird eine Nachricht in den niederwertigen Bits eines Bildes versteckt und als Bilddatei gespeichert.\line\line Um das Entdecken der versteckten Nachricht zu erschweren, ist diese zusätzlich mit einem Passwort gesichert. Wird der Dekodierversuch später mit einem falschen Password versucht, kann nicht festgestellt werden, ob überhaupt eine Nachricht versteckt ist." />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Carrier Picture$" value="изображение несущей" />
     <replacement key="$Password$" value="пароль" />
     <replacement key="$Message$" value="сообщение" />
     <replacement key="$Image with hidden message$" value="Изображение со скрытым сообщением" />
+    <replacement key="$memo$" value="" />
   </replacements>
   <replacements lang="en">
     <replacement key="$Carrier Picture$" value="Carrier Picture" />
     <replacement key="$Password$" value="Password" />
     <replacement key="$Message$" value="Message" />
     <replacement key="$Image with hidden message$" value="Image with hidden message" />
+	 <replacement key="$memo$" value="In this template, a message is hidden in the least significant bits of an image and saved as an image file.\line\line In order to complicate the discovery of the hidden message, the message is additionally secured with a password. If later the decoding is tried with a wrong password, the algorithm can not even detect the presence of a hidden message." />
   </replacements>
 </sample>
