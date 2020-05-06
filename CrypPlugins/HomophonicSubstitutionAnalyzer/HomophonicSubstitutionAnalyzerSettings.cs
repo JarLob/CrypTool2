@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2019 Nils Kopal <Nils.Kopal<at>CrypTool.org
+   Copyright 2020 Nils Kopal <Nils.Kopal<at>CrypTool.org
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -72,6 +72,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private int _costFunctionMultiplicator = 500000;
         private int _fixedTemperature = 15000;
         private bool _useNulls = false;
+        private bool _keepLinebreaks = false;
 
         #endregion
 
@@ -98,70 +99,77 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             set { _useNulls = value; }
         }
 
-        [TaskPane("CiphertextFormatCaption", "CiphertextFormatTooltip", "TextFormatGroup", 3, false, ControlType.ComboBox, new[] { "SingleLetters", "NumberGroups", "SymbolSeparated" })]
+        [TaskPane("KeepLinebreaksCaption", "KeepLinebreaksTooltip", "LanguageSettingsGroup", 3, false, ControlType.CheckBox)]
+        public bool KeepLinebreaks
+        {
+            get { return _keepLinebreaks; }
+            set { _keepLinebreaks = value; }
+        }
+
+        [TaskPane("CiphertextFormatCaption", "CiphertextFormatTooltip", "TextFormatGroup", 4, false, ControlType.ComboBox, new[] { "SingleLetters", "NumberGroups", "SymbolSeparated" })]
         public CiphertextFormat CiphertextFormat
         {
             get { return _ciphertextFormat; }
             set { _ciphertextFormat = value; }
         }
 
-        [TaskPane("SeparatorCaption", "SeparatorTooltip", "TextFormatGroup", 4, false, ControlType.ComboBox, new[] { "Comma", "FullStop", "Semicolon", "Space" })]
+        [TaskPane("SeparatorCaption", "SeparatorTooltip", "TextFormatGroup", 5, false, ControlType.ComboBox, new[] { "Comma", "FullStop", "Semicolon", "Space" })]
         public Separator Separator
         {
             get { return _separator; }
             set { _separator = value; }
         }
 
-        [TaskPane("WordCountToFindCaption", "WordCountToFindTooltip", "WordLockerGroup", 5, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 100)]
+        [TaskPane("WordCountToFindCaption", "WordCountToFindTooltip", "WordLockerGroup", 6, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 100)]
         public int WordCountToFind
         {
             get { return _wordCountToFind; }
             set { _wordCountToFind = value; }
         }
 
-        [TaskPane("MinWordLengthCaption", "MinWordLengthTooltip", "WordLockerGroup", 6, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 100)]
+        [TaskPane("MinWordLengthCaption", "MinWordLengthTooltip", "WordLockerGroup", 7, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 100)]
         public int MinWordLength
         {
             get { return _minWordLength; }
             set { _minWordLength = value; }
         }
 
-        [TaskPane("MaxWordLengthCaption", "MaxWordLengthTooltip", "WordLockerGroup", 7, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 100)]
+        [TaskPane("MaxWordLengthCaption", "MaxWordLengthTooltip", "WordLockerGroup", 8, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 100)]
         public int MaxWordLength
         {
             get { return _maxWordLength; }
             set { _maxWordLength = value; }
         }       
 
-        [TaskPane("AnalysisModeCaption", "AnalaysisModeTooltip", "AlgorithmSettingsGroup", 8, false, ControlType.ComboBox, new string[]{"SemiAutomatic", "FullAutomatic"})]
+        [TaskPane("AnalysisModeCaption", "AnalaysisModeTooltip", "AlgorithmSettingsGroup", 9, false, ControlType.ComboBox, new string[]{"SemiAutomatic", "FullAutomatic"})]
         public AnalysisMode AnalysisMode
         {
             get { return _analysisMode; }
             set { _analysisMode = value; }
         }
 
-        [TaskPane("CyclesCaption", "CyclesTooltip", "AlgorithmSettingsGroup", 9, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, int.MaxValue)]
+        [TaskPane("CyclesCaption", "CyclesTooltip", "AlgorithmSettingsGroup", 10, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, int.MaxValue)]
         public int Cycles
         {
             get { return _cycles; }
             set { _cycles = value; }
         }
 
-        [TaskPane("RestartsCaption", "RestartsTooltip", "AlgorithmSettingsGroup", 10, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, int.MaxValue)]
+        [TaskPane("RestartsCaption", "RestartsTooltip", "AlgorithmSettingsGroup", 11, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, int.MaxValue)]
         public int Restarts
         {
             get { return _restarts; }
             set { _restarts = value; }
         }
 
-        [TaskPane("CostFactorMultiplicatorCaption", "CostFactorMultiplicatorTooltip", "AlgorithmSettingsGroup", 11, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, int.MaxValue)]
+        [TaskPane("CostFactorMultiplicatorCaption", "CostFactorMultiplicatorTooltip", "AlgorithmSettingsGroup", 12, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, int.MaxValue)]
         public int CostFactorMultiplicator
         {
             get { return _costFunctionMultiplicator; }
             set { _costFunctionMultiplicator = value; }
         }
 
-        [TaskPane("FixedTemperatureCaption", "FixedTemperatureTooltip", "AlgorithmSettingsGroup", 12, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, int.MaxValue)]
+        [TaskPane("FixedTemperatureCaption", "FixedTemperatureTooltip", "AlgorithmSettingsGroup", 13, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, int.MaxValue)]
         public int FixedTemperature
         {
             get { return _fixedTemperature; }

@@ -339,4 +339,10 @@
   <data name="UseNullsTooltip" xml:space="preserve">
     <value>If activated, the analyzer assumes nulls in the ciphertext</value>
   </data>
+  <data name="KeepLinebreaksCaption" xml:space="preserve">
+    <value>Keep linebreaks</value>
+  </data>
+  <data name="KeepLinebreaksTooltip" xml:space="preserve">
+    <value>If activated, the analyzer keeps the original linebreaks of the given text</value>
+  </data>
 </root>

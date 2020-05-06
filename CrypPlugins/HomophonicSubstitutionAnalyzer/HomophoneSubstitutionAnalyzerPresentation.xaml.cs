@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2019 Nils Kopal <Nils.Kopal<at>CrypTool.org
+   Copyright 2020 Nils Kopal <Nils.Kopal<at>CrypTool.org
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private const int MaxBestListEntries = 100;
         private int _keylength = 0;
         private string PlainAlphabetText = null; //obtained by language statistics
-        private string CipherAlphabetText;// = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖabcdefghijklmnopqrstuvwxyzäüöß1234567890ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩАБВГДЂЕЄЖЗЅИІЈКЛЉМНЊОПРСТЋУФХЦЧЏШЪЫЬЭЮЯ!§$%&=?#ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㄲㄸㅃㅆㅉㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣㅐㅒㅔㅖㅚㅟㅢㅘㅝㅙㅞ";
+        private readonly string CipherAlphabetText;// = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖabcdefghijklmnopqrstuvwxyzäüöß1234567890ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩАБВГДЂЕЄЖЗЅИІЈКЛЉМНЊОПРСТЋУФХЦЧЏШЪЫЬЭЮЯ!§$%&=?#ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㄲㄸㅃㅆㅉㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣㅐㅒㅔㅖㅚㅟㅢㅘㅝㅙㅞ";
         private HillClimber _hillClimber;
         private WordFinder _wordFinder;
         private SymbolLabel[,] _ciphertextLabels = new SymbolLabel[0,0];
@@ -44,12 +44,13 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private TextBox[] _minTextBoxes = new TextBox[0];
         private TextBox[] _maxTextBoxes = new TextBox[0];
         public AnalyzerConfiguration AnalyzerConfiguration { get; private set; }
-        private Grams _grams;        
+        private Grams _grams;
 
-        //cache for loaded pentagrams
+        //cache for loaded n-grams
         private static Dictionary<string, Grams> NGramCache = new Dictionary<string, Grams>();
 
         private string _ciphertext = null;
+        private char _separator;
         private CiphertextFormat _ciphertextFormat;
         private bool _running = false;
 
@@ -87,9 +88,10 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public void AddCiphertext(string ciphertext, CiphertextFormat ciphertextFormat, char separator, int costFactorMultiplicator, int fixedTemperature, bool useNulls)
         {
             _ciphertext = ciphertext;
+            _separator = separator;
             _ciphertextFormat = ciphertextFormat;
-            int[] numbers = ConvertCiphertextToNumbers(ciphertext, separator);
-            _originalCiphertextSymbols = ConvertToList(ciphertext, separator);
+            int[] numbers = ConvertCiphertextToNumbers(_ciphertext, _separator);
+            _originalCiphertextSymbols = ConvertToList(_ciphertext, _separator);
             int homophoneNumber = Tools.Distinct(numbers).Length;
             _keylength = (int)(homophoneNumber * 1.3);
             AnalyzerConfiguration = new AnalyzerConfiguration(_keylength, new Text(Tools.ChangeToConsecutiveNumbers(numbers)));
@@ -108,18 +110,34 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             _hillClimber = new HillClimber(AnalyzerConfiguration);
             _hillClimber.Grams = _grams;
             _hillClimber.NewBestValue += HillClimberNewBestValue;
-            _hillClimber.Progress += HillClimberProgress;
+            _hillClimber.Progress += HillClimberProgress;                
+        }
 
+        /// <summary>
+        /// Generates the plaintext and the ciphertext grids
+        /// </summary>
+        public void GenerateGrids()
+        {
+            int[] numbers = ConvertCiphertextToNumbers(_ciphertext, _separator);
+            int homophoneNumber = Tools.Distinct(numbers).Length;
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                GenerateCiphertextGrid(AnalyzerConfiguration.Ciphertext, AnalyzerConfiguration.TextColumns);
-                GeneratePlaintextGrid(AnalyzerConfiguration.Ciphertext, AnalyzerConfiguration.TextColumns);                
+                if (AnalyzerConfiguration.KeepLinebreaks)
+                {
+                    GenerateCiphertextGridWithLinebreaks(AnalyzerConfiguration.Ciphertext);
+                    GeneratePlaintextGridWithLinebreaks(AnalyzerConfiguration.Ciphertext);
+                }
+                else
+                {
+                    GenerateCiphertextGrid(AnalyzerConfiguration.Ciphertext, AnalyzerConfiguration.TextColumns);
+                    GeneratePlaintextGrid(AnalyzerConfiguration.Ciphertext, AnalyzerConfiguration.TextColumns);
+                }
                 ProgressBar.Value = 0;
                 ProgressText.Content = String.Empty;
                 BestList.Clear();
                 BestListView.DataContext = BestList;
                 InfoTextLabel.Content = String.Format(Properties.Resources.DifferentHomophones, numbers.Length, homophoneNumber);
-            }, null);          
+            }, null);
         }
 
         /// <summary>
@@ -211,7 +229,6 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     {
                         break;
                     }
-
                     SymbolLabel label = new SymbolLabel();
                     label.X = x;
                     label.Y = y;
@@ -242,6 +259,90 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         }
 
         /// <summary>
+        /// Generates the Grid for the ciphertext and fills in the symbols (keeping the linebreaks)
+        /// </summary>
+        /// <param name="ciphertext"></param>
+        /// <param name="columns"></param>
+        private void GenerateCiphertextGridWithLinebreaks(Text ciphertext)
+        {
+            CiphertextGrid.Children.Clear();
+            int columns = 0;
+            int offset = 0;
+            int distance;
+            foreach (var number in AnalyzerConfiguration.LinebreakPositions)
+            {
+                distance = number - offset;
+                offset = offset + distance;
+                if(distance > columns)
+                {
+                    columns = distance;
+                }
+            }
+            distance = ciphertext.GetLettersCount() - offset;
+            if (distance > columns)
+            {
+                columns = distance;
+            }
+            int rows = AnalyzerConfiguration.LinebreakPositions.Count + 1;
+
+            _ciphertextLabels = new SymbolLabel[columns, rows];
+            string text = Tools.MapNumbersIntoTextSpace(ciphertext.ToIntegerArray(), CipherAlphabetText);
+
+            for (int column = 0; column < columns; column++)
+            {
+                CiphertextGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            }
+            CiphertextGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(int.MaxValue, GridUnitType.Star) });
+
+            for (int row = 0; row < rows; row++)
+            {
+                CiphertextGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength() });
+            }
+            CiphertextGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+
+            offset = 0;
+            for (int y = 0; y < rows; y++)
+            {
+                for (int x = 0; x < columns; x++)
+                {
+                    if (offset == ciphertext.GetSymbolsCount())
+                    {
+                        break;
+                    }                   
+                    SymbolLabel label = new SymbolLabel();
+                    label.X = x;
+                    label.Y = y;
+                    label.SymbolOffset = offset;
+                    if (offset < text.Length)
+                    {
+                        label.Symbol = text.Substring(offset, 1);
+                    }
+                    else
+                    {
+                        label.Symbol = "?";
+                    }
+                    _ciphertextLabels[x, y] = label;
+                    label.Width = 30 + (_originalCiphertextSymbols[offset].Length - 1) * 5;
+                    label.Height = 30;
+                    label.FontSize = 20;
+                    label.FontFamily = new FontFamily("Courier New");
+                    //label.Content = text.Substring(offset, 1);
+                    label.Content = _originalCiphertextSymbols[offset];
+                    label.HorizontalAlignment = HorizontalAlignment.Center;
+                    label.HorizontalContentAlignment = HorizontalAlignment.Center;
+                    offset++;
+                    Grid.SetRow(label, y);
+                    Grid.SetColumn(label, x);
+                    CiphertextGrid.Children.Add(label);
+                    if (AnalyzerConfiguration.LinebreakPositions.Contains(offset))
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Generates the Grid for the plaintext and fills in the symbols
         /// </summary>
         /// <param name="plaintext"></param>
@@ -258,7 +359,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 PlaintextGrid.ColumnDefinitions.Add(new ColumnDefinition());
             }
-            PlaintextGrid.ColumnDefinitions.Add(new ColumnDefinition() {Width = new GridLength(int.MaxValue, GridUnitType.Star)});
+            PlaintextGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(int.MaxValue, GridUnitType.Star) });
 
             for (int row = 0; row < rows; row++)
             {
@@ -297,7 +398,87 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 }
             }
         }
-       
+
+        /// <summary>
+        /// Generates the Grid for the ciphertext and fills in the symbols (keeping the linebreaks)
+        /// </summary>
+        /// <param name="ciphertext"></param>
+        /// <param name="columns"></param>
+        private void GeneratePlaintextGridWithLinebreaks(Text plaintext)
+        {
+            PlaintextGrid.Children.Clear();
+
+            int columns = 0;
+            int offset = 0;
+            int distance;
+            foreach (var number in AnalyzerConfiguration.LinebreakPositions)
+            {
+                distance = number - offset;
+                offset = offset + distance;
+                if (distance > columns)
+                {
+                    columns = distance;
+                }
+            }
+            distance = plaintext.GetLettersCount() - offset;
+            if (distance > columns)
+            {
+                columns = distance;
+            }
+            AnalyzerConfiguration.TextColumns = columns;
+            int rows = AnalyzerConfiguration.LinebreakPositions.Count + 1;
+
+            _plaintextLabels = new SymbolLabel[columns, rows];
+            string text = Tools.MapNumbersIntoTextSpace(plaintext.ToIntegerArray(), CipherAlphabetText);
+
+            for (int column = 0; column < columns; column++)
+            {
+                PlaintextGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            }
+            PlaintextGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(int.MaxValue, GridUnitType.Star) });
+
+            for (int row = 0; row < rows; row++)
+            {
+                PlaintextGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength() });
+            }
+            PlaintextGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+
+            offset = 0;
+            for (int y = 0; y < rows; y++)
+            {
+                for (int x = 0; x < columns; x++)
+                {
+                    if (offset == plaintext.GetSymbolsCount())
+                    {
+                        break;
+                    }                    
+                    SymbolLabel label = new SymbolLabel();
+                    label.MouseLeftButtonDown += LabelOnMouseLeftButtonDown;
+                    label.MouseRightButtonDown += LabelOnMouseRightButtonDown;
+                    _plaintextLabels[x, y] = label;
+                    label.X = x;
+                    label.Y = y;
+                    label.SymbolOffset = offset;
+                    label.Symbol = text.Substring(offset, 1);
+                    label.Width = 30 + (_originalCiphertextSymbols[offset].Length - 1) * 5;
+                    label.Height = 30;
+                    label.FontSize = 20;
+                    label.FontFamily = new FontFamily("Courier New");
+                    label.Content = text.Substring(offset, 1);
+                    label.HorizontalAlignment = HorizontalAlignment.Center;
+                    label.HorizontalContentAlignment = HorizontalAlignment.Center;
+                    offset++;
+                    Grid.SetRow(label, y);
+                    Grid.SetColumn(label, x);
+                    PlaintextGrid.Children.Add(label);
+                    if (AnalyzerConfiguration.LinebreakPositions.Contains(offset))
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Generates the tab for the selection of the key letter distribution
         /// </summary>
@@ -444,19 +625,22 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         {
             AutoResetEvent waitHandle = new AutoResetEvent(false);
             bool newTopEntry = false;
-            Dictionary<int, int> wordPositions = null;
+            Dictionary<int, int> wordPositions = null;            
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 try
                 {
                     int column = 0;
                     int row = 0;
+                    int offset = 0;
                     foreach (var letter in eventArgs.Plaintext)
                     {
                         _plaintextLabels[column, row].Content = letter;
                         _plaintextLabels[column, row].Symbol = "" + letter;
                         column++;
-                        if (column == AnalyzerConfiguration.TextColumns)
+                        offset++;
+                        if ((AnalyzerConfiguration.KeepLinebreaks && AnalyzerConfiguration.LinebreakPositions.Contains(offset)) ||
+                            (!AnalyzerConfiguration.KeepLinebreaks && column == AnalyzerConfiguration.TextColumns))
                         {
                             column = 0;
                             row++;
@@ -466,7 +650,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     PlainAlphabetTextBox.Text = eventArgs.PlaintextMapping;
                     CostTextBox.Text = String.Format(Properties.Resources.CostValue_0, Math.Round(eventArgs.CostValue, 2));
                     MarkLockedHomophones();
-                    wordPositions = AutoLockWords(AnalyzerConfiguration.WordCountToFind);
+                    wordPositions = AutoLockWords(AnalyzerConfiguration.WordCountToFind, eventArgs.PlaintextAsNumbers);
                     MarkFoundWords(wordPositions);
                     newTopEntry = AddNewBestListEntry(eventArgs.PlaintextMapping, eventArgs.CostValue, eventArgs.Plaintext);
                     if (newTopEntry)
@@ -756,12 +940,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 var plaintext = Tools.MapNumbersIntoTextSpace(HillClimber.DecryptHomophonicSubstitution(new Text(ciphertext), numkey).ToIntegerArray(), PlainAlphabetText);
                 int column = 0;
                 int row = 0;
+                int offset = 0;
                 foreach (var letter in plaintext)
                 {
                     _plaintextLabels[column, row].Content = letter;
                     _plaintextLabels[column, row].Symbol = "" + letter;
                     column++;
-                    if (column == AnalyzerConfiguration.TextColumns)
+                    offset++;
+                    if  ((AnalyzerConfiguration.KeepLinebreaks && AnalyzerConfiguration.LinebreakPositions.Contains(offset)) ||
+                        (!AnalyzerConfiguration.KeepLinebreaks && column == AnalyzerConfiguration.TextColumns))
                     {
                         column = 0;
                         row++;
@@ -978,7 +1165,21 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 return;
             }
-            var foundWords = AutoLockWords(1);
+            StringBuilder plaintextBuilder = new StringBuilder();
+            int rows = _plaintextLabels.Length / AnalyzerConfiguration.TextColumns + (_plaintextLabels.Length % AnalyzerConfiguration.TextColumns > 0 ? 1 : 0);
+            for (var y = 0; y < rows; y++)
+            {
+                for (var x = 0; x < AnalyzerConfiguration.TextColumns; x++)
+                {
+                    SymbolLabel label = _plaintextLabels[x, y];
+                    if (label == null)
+                    {
+                        continue;
+                    }
+                    plaintextBuilder.Append(label.Symbol);
+                }
+            }
+            var foundWords = AutoLockWords(1, Tools.MapIntoNumberSpace(plaintextBuilder.ToString(), PlainAlphabetText));
             MarkFoundWords(foundWords);
         }
 
@@ -986,33 +1187,12 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// Automatically locks words
         /// Only works, if a WordFinder has previously been created
         /// </summary>
-        private Dictionary<int, int> AutoLockWords(int minCount)
+        private Dictionary<int, int> AutoLockWords(int minCount, int[] plaintext)
         {
             if (_wordFinder == null)
             {
                 return null;
-            }
-
-            StringBuilder textBuilder = new StringBuilder();
-
-            int column = 0;
-            int row = 0;
-            while (true)
-            {
-                if (_plaintextLabels[column, row] == null)
-                {
-                    break;
-                }
-                textBuilder.Append(_plaintextLabels[column, row].Symbol);
-                column++;
-                if (column == AnalyzerConfiguration.TextColumns)
-                {
-                    column = 0;
-                    row++;
-                }
-            }
-
-            int[] plaintext = Tools.MapIntoNumberSpace(textBuilder.ToString(), PlainAlphabetText);
+            }           
 
             Dictionary<int, int> wordPositions = _wordFinder.FindWords(plaintext);
             if (wordPositions.Count < minCount)
@@ -1045,8 +1225,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// Enables the UI for the user to work with
         /// </summary>
         public void EnableUI()
-        {
-            
+        {            
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 if (AnalyzerConfiguration.AnalysisMode == AnalysisMode.SemiAutomatic)
@@ -1217,6 +1396,40 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         {
             if (item is ResultEntry resultItem)
             {
+            }
+        }
+
+        /// <summary>
+        /// When ciphertext scroll viewer is scrolled, plaintext scroll viewer is adapted accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CiphertextScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if(CiphertextScrollViewer.VerticalOffset != PlaintextScrollViewer.VerticalOffset)
+            {
+                PlaintextScrollViewer.ScrollToVerticalOffset(CiphertextScrollViewer.VerticalOffset);
+            }
+            if (CiphertextScrollViewer.HorizontalOffset != PlaintextScrollViewer.HorizontalOffset)
+            {
+                PlaintextScrollViewer.ScrollToHorizontalOffset(CiphertextScrollViewer.HorizontalOffset);
+            }
+        }
+
+        /// <summary>
+        /// When plaintext scroll viewer is scrolled, ciphertext scroll viewer is adapted accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PlaintextScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (CiphertextScrollViewer.VerticalOffset != PlaintextScrollViewer.VerticalOffset)
+            {
+                CiphertextScrollViewer.ScrollToVerticalOffset(PlaintextScrollViewer.VerticalOffset);
+            }
+            if (CiphertextScrollViewer.HorizontalOffset != PlaintextScrollViewer.HorizontalOffset)
+            {
+                CiphertextScrollViewer.ScrollToHorizontalOffset(PlaintextScrollViewer.HorizontalOffset);
             }
         }
     }

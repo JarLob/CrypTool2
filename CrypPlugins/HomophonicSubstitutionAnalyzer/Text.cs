@@ -20,7 +20,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 {
     /// <summary>
     /// This class represents a text which constists of symbols while each symbol
-    ///  consist of diffrent amounts of letters
+    /// consist of different amounts of letters
     /// </summary>
     public class Text : ICloneable
     {

@@ -339,4 +339,10 @@
   <data name="UseNullsTooltip" xml:space="preserve">
     <value>Если активирован, анализатор принимает нулевые значения в зашифрованном тексте</value>
   </data>
+  <data name="KeepLinebreaksCaption" xml:space="preserve">
+    <value>Держите разрывы строк</value>
+  </data>
+  <data name="KeepLinebreaksTooltip" xml:space="preserve">
+    <value>Если активирован, анализатор сохраняет исходные разрывы строк данного текста</value>
+  </data>
 </root>

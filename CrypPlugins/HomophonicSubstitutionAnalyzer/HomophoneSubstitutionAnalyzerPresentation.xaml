@@ -59,11 +59,11 @@
                     <Button Name="FindLockWordsButton" Grid.Column="4" Content="{Loc FindLockWords}" Click="FindLockWordsButton_OnClick" Width="200"/>
                 </Grid>
                 <Label Grid.Row="4" Grid.ColumnSpan="4" Content="{Loc Ciphertext}" Margin="0,0,0.334,0"/>
-                <ScrollViewer Grid.Row="5" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Width="Auto" Height="Auto" Grid.ColumnSpan="4" Margin="0,0,0.334,0">
+                <ScrollViewer Grid.Row="5" VerticalScrollBarVisibility="Auto" Name="CiphertextScrollViewer" ScrollChanged="CiphertextScrollViewer_ScrollChanged" HorizontalScrollBarVisibility="Auto" Width="Auto" Height="Auto" Grid.ColumnSpan="4" Margin="0,0,0.334,0">
                     <Grid Name="CiphertextGrid" />
                 </ScrollViewer>
                 <Label Grid.Row="6" Grid.ColumnSpan="4" Content="{Loc Plaintext}" Margin="0,0,0.334,0"></Label>
-                <ScrollViewer Grid.Row="7" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Width="Auto" Height="Auto" Grid.ColumnSpan="4" Margin="0,0,0.334,0">
+                <ScrollViewer Grid.Row="7" VerticalScrollBarVisibility="Auto" Name="PlaintextScrollViewer"  ScrollChanged="PlaintextScrollViewer_ScrollChanged" HorizontalScrollBarVisibility="Auto" Width="Auto" Height="Auto" Grid.ColumnSpan="4" Margin="0,0,0.334,0">
                     <Grid Name="PlaintextGrid" />
                 </ScrollViewer>
             </Grid>

@@ -339,4 +339,10 @@
   <data name="UseNullsTooltip" xml:space="preserve">
     <value>Wenn aktiviert, nimmt der Analysator Nulls (Blender) im Geheimtext an</value>
   </data>
+  <data name="KeepLinebreaksCaption" xml:space="preserve">
+    <value>Zeilenumbrüche erhalten</value>
+  </data>
+  <data name="KeepLinebreaksTooltip" xml:space="preserve">
+    <value>Wenn aktiviert, behält die Analyse die ursprünglichen Zeilenumbrüche des angegebenen Textes bei</value>
+  </data>
 </root>

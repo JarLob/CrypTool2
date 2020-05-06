@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2019 Nils Kopal <Nils.Kopal<at>CrypTool.org
+   Copyright 2020 Nils Kopal <Nils.Kopal<at>CrypTool.org
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -166,7 +166,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 
                     if (NewBestValue != null)
                     {
-                        string strplaintext = Tools.MapNumbersIntoTextSpace(globalbestplaintext.ToIntegerArray(), AnalyzerConfiguration.PlaintextMapping);
+                        int[] globalbestplaintextNumbers = globalbestplaintext.ToIntegerArray();
+                        string strplaintext = Tools.MapNumbersIntoTextSpace(globalbestplaintextNumbers, AnalyzerConfiguration.PlaintextMapping);
                         string strPlaintextMapping = CreateKeyString(globalbestkey, AnalyzerConfiguration.PlaintextMapping);
                         string strciphertextalphabet = AnalyzerConfiguration.CiphertextAlphabet.Substring(0, globalbestkey.Length);
                         double costvalue = globalbestkeycost;
@@ -175,6 +176,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                             new NewBestValueEventArgs()
                             {
                                 Plaintext = strplaintext,
+                                PlaintextAsNumbers = globalbestplaintextNumbers,
                                 PlaintextMapping = strPlaintextMapping,
                                 CiphertextAlphabet = strciphertextalphabet,
                                 CostValue = costvalue
@@ -329,7 +331,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
     public class NewBestValueEventArgs : EventArgs
     {
         public bool NewTopEntry { get; set; }
-        public string Plaintext{ get;set;}        
+        public string Plaintext{ get;set;}       
+        public int[] PlaintextAsNumbers { get; set; }
         public string PlaintextMapping{ get;set;}
         public string CiphertextAlphabet{ get;set;}
         public double CostValue{ get;set;}
@@ -499,6 +502,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public double FixedTemperature { get; set; }
         public char Separator { get; set; }
         public bool UseNulls { get; set; }
+        public List<int> LinebreakPositions { get; set; }
+        public bool KeepLinebreaks { get; set; }
 
         /// <summary>
         /// Creates a new AnalyzerConfiugraion using the given keylength and ciphertext

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2019 Nils Kopal <Nils.Kopal<at>CrypTool.org
+   Copyright 2020 Nils Kopal <Nils.Kopal<at>CrypTool.org
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ using Cryptool.PluginBase.Miscellaneous;
 using System.Threading;
 using Cryptool.PluginBase.Utils;
 using System;
+using System.Collections.Generic;
 
 namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 {
@@ -72,6 +73,13 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 
         [PropertyInfo(Direction.OutputData, "KeyCaption", "KeyTooltip")]
         public string Key
+        {
+            get;
+            set;
+        }
+
+        [PropertyInfo(Direction.InputData, "StartKeyCaption", "StartKeyTooltip", false)]
+        public string StartKey
         {
             get;
             set;
@@ -136,8 +144,9 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     separator = ' ';
                     break;
             }
+            string ciphertext = HandleLinebreaks(Ciphertext, out List<int> linebreakPositions);
             _presentation.LoadLangStatistics(_settings.Language, _settings.UseSpaces, _settings.UseNulls);
-            _presentation.AddCiphertext(Ciphertext, _settings.CiphertextFormat, separator, _settings.CostFactorMultiplicator, _settings.FixedTemperature, _settings.UseNulls);
+            _presentation.AddCiphertext(ciphertext, _settings.CiphertextFormat, separator, _settings.CostFactorMultiplicator, _settings.FixedTemperature, _settings.UseNulls);
             GenerateLetterLimits();
             _presentation.AnalyzerConfiguration.WordCountToFind = _settings.WordCountToFind;
             _presentation.AnalyzerConfiguration.MinWordLength = _settings.MinWordLength;
@@ -146,8 +155,10 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             _presentation.AnalyzerConfiguration.AnalysisMode = _settings.AnalysisMode;
             _presentation.AnalyzerConfiguration.Restarts = _settings.Restarts;
             _presentation.AnalyzerConfiguration.UseNulls = _settings.UseNulls;
-            _presentation.AddDictionary(Dictionary);                        
-
+            _presentation.AnalyzerConfiguration.LinebreakPositions = linebreakPositions;
+            _presentation.AnalyzerConfiguration.KeepLinebreaks = _settings.KeepLinebreaks;
+            _presentation.AddDictionary(Dictionary);
+            _presentation.GenerateGrids();
             _presentation.EnableUI();
             _running = true;
 
@@ -164,6 +175,31 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             _presentation.DisableUIAndStop();
             
             ProgressChanged(1, 1);
+        }
+
+        /// <summary>
+        /// Removes the line breaks from the ciphertext
+        /// Also, returns a list of all linebreak positions
+        /// </summary>
+        /// <param name="ciphertext"></param>
+        /// <returns></returns>
+        private string HandleLinebreaks(string ciphertext, out List<int> linebreakPositions)
+        {
+            //here, we memorize all linebreak positions
+            ciphertext = ciphertext.Replace(Environment.NewLine,"\n");
+            ciphertext = ciphertext.Replace("\r", "\0");
+            ciphertext = ciphertext.Replace("\n", "\0");
+            linebreakPositions = new List<int>();
+            for(var i = 0; i < ciphertext.Length; i++)
+            {
+                if(ciphertext[i] == '\0')
+                {
+                    linebreakPositions.Add(i - linebreakPositions.Count); //add the count since we remove the linebreaks
+                }
+            }
+            //here, we remove all linebreak placeholders from the string
+            ciphertext = ciphertext.Replace("\0","");
+            return ciphertext;
         }
 
         /// <summary>

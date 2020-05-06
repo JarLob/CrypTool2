@@ -340,6 +340,24 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Keep linebreaks ähnelt.
+        /// </summary>
+        internal static string KeepLinebreaksCaption {
+            get {
+                return ResourceManager.GetString("KeepLinebreaksCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die If activated, the analyzer keeps the original linebreaks of the given text ähnelt.
+        /// </summary>
+        internal static string KeepLinebreaksTooltip {
+            get {
+                return ResourceManager.GetString("KeepLinebreaksTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Revealed key ähnelt.
         /// </summary>
         internal static string KeyCaption {

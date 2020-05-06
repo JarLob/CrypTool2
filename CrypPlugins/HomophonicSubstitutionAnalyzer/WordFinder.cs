@@ -15,6 +15,7 @@
 */
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 {
@@ -23,7 +24,6 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private int _minLength;
         private int _maxLength;
         private LetterNode _rootLetterNode = new LetterNode();
-        private string _alphabet;
 
         /// <summary>
         /// Constructor
@@ -36,9 +36,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public WordFinder(string[] words, int minLength, int maxLength, string alphabet)
         {
             _minLength = minLength;
-            _maxLength = maxLength;
-            _alphabet = alphabet;
-                      
+            _maxLength = maxLength;                      
             foreach (string word in words)
             {
                 if (word.Length < _minLength || word.Length > _maxLength)
@@ -68,8 +66,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     }
                 }
             }
-        }      
-        
+        }
+
         /// <summary>
         /// Checks, if a given word is in the dictionary
         /// </summary>
@@ -119,11 +117,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     int[] word = GetWord(plaintext, i, length);
                     if (IsInDictionary(word))
                     {
-                        string strWord = Tools.MapNumbersIntoTextSpace(word, _alphabet);
-                        //Console.WriteLine(String.Format("Word found: {0}", strWord));
                         _wordPositions.Add(i, length);
-                        i += word.Length;
-                        
+                        i += word.Length;                        
                         break;
                     }                    
                 }
@@ -139,6 +134,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <param name="index"></param>
         /// <param name="length"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int[] GetWord(int[] text, int index, int length)
         {
             int[] result = new int[length];
