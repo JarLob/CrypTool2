@@ -104,6 +104,10 @@ namespace Cryptool.Plugins.StegoPermutation
                 }
 
                 this.sorter = new Sorter<string>(this.inputList);
+                if (settings.Action == 0)
+                {
+                    this.inputList = new Collection<string>(sorter.sortItems(settings.Alphabet));
+                }
                 GuiLogMessage(String.Format("The list has {0} elements, so the maximum length of the message text is {1} bytes.", this.inputList.Count, this.sorter.Capacity), NotificationLevel.Info);
             }
         }

@@ -63,16 +63,7 @@ namespace Cryptool.Plugins.StegoPermutation
             T[] sortedItems = new T[source.Count];
             source.CopyTo(sortedItems, 0);
 
-            if (alphabet == null || alphabet.Length == 0)
-            {
-                StringComparer comparer = new StringComparer("");
-                Array.Sort(sortedItems, comparer);
-            }
-            else
-            {
-                StringComparer comparer = new StringComparer(alphabet);
-                Array.Sort(sortedItems, comparer);
-            }
+            Array.Sort(sortedItems, new StringComparer(alphabet ?? ""));
 
             return sortedItems;
         }
@@ -158,7 +149,7 @@ namespace Cryptool.Plugins.StegoPermutation
 
             stego.ProgressChanged(20, 100);
 
-            BigInteger message = new BigInteger(0);
+            BigInteger message = 0;
             BigIntegerClass messageWrapper = new BigIntegerClass(message);
 
             // update presentation control
