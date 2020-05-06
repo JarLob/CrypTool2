@@ -16,6 +16,7 @@
 using System;
 using System.ComponentModel;
 using System.Text;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Cryptool.PluginBase;
 using StringOperations.Properties;
@@ -148,16 +149,11 @@ namespace StringOperations
                         OnPropertyChanged("OutputString");
                         break;
                     case StringOperationType.Split:
-                        if (_string2 != null && _string2.Length == 0)
-                        {
-                            var tmp = Regex.Split(_string1, string.Empty);
-                            _outputStringArray = new string[tmp.Length - 2];
-                            Array.Copy(tmp, 1, _outputStringArray, 0, _outputStringArray.Length);  // remove empty entries at beginning and end
-                        }
-                        else
-                            _outputStringArray = _string1.Split((_string2 == null) ? "\r\n".ToCharArray() : _string2.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        _outputStringArray = _string2 != null && _string2.Length == 0
+                            ? _string1.Select(c => c + "").ToArray()
+                            : _string1.Split((_string2 ?? "\r\n").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                         OnPropertyChanged("OutputStringArray");
-                        _outputValue = (_outputStringArray == null) ? 0 :_outputStringArray.Length;
+                        _outputValue = _outputStringArray?.Length ?? 0;
                         OnPropertyChanged("OutputValue");
                         break;
                     case StringOperationType.Block:
@@ -166,20 +162,8 @@ namespace StringOperations
                             GuiLogMessage("Blocksize is '0'. Set blocksize to '1'", NotificationLevel.Warning);
                             _settings.Blocksize = 1;                            
                         }
-                        var counter = 0;
-                        var str = Regex.Replace(_string1, @"\s*", "");
-                        var strbuilder = new StringBuilder();
-                        foreach (char c in str)
-                        {
-                            strbuilder.Append(c);
-                            counter++;
-                            if(counter == ((StringOperationsSettings)Settings).Blocksize)
-                            {
-                                counter = 0;
-                                strbuilder.Append(" ");
-                            }
-                        }
-                        _outputString = strbuilder.ToString().TrimEnd();
+                        var str = Regex.Replace(_string1, @"\s+", "");
+                        _outputString = Regex.Replace(str, $".{_settings.Blocksize}", "$0 ").TrimEnd();
                         OnPropertyChanged("OutputString");
                         break;
                     case StringOperationType.Reverse:
