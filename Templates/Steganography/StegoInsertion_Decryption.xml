@@ -20,7 +20,7 @@
   <replacements lang="de">
     <replacement key="$Hidden message$" value="Versteckte Nachricht" />
     <replacement key="$Carrier MIDI File$" value="MIDI-Trägerdatei" />
-    <replacement key="$memo$" value="Eine MIDI-Datei enthält Steuer- und Toninformationen zur Ansteuerung eines Synthesizers. Das Steuerungskommando &quot;Program Change&quot; hat dabei die Aufgabe, das zu verwendende Instrument zu wechseln. Wenn man nun &quot;Program Change&quot;-Befehle einfügt, ohne das neue Intrument Töne ausgeben zu lassen, so fällt dies beim Abspielen der Datei nicht auf. In jedem zusätzlichen &quot;Program Change&quot;-Befehl können 4 Bits versteckt werden. Dadurch lassen sich unauffällig kurze Nachrichten in MIDI-Dateien verstecken." />
+    <replacement key="$memo$" value="Eine MIDI-Datei enthält Steuer- und Toninformationen zur Ansteuerung eines Synthesizers. Das Steuerungskommando &quot;Program Change&quot; hat dabei die Aufgabe, das zu verwendende Instrument zu wechseln. Wenn man nun &quot;Program Change&quot;-Befehle einfügt, ohne das neue Instrument Töne ausgeben zu lassen, so fällt dies beim Abspielen der Datei nicht auf. In jedem zusätzlichen &quot;Program Change&quot;-Befehl können 4 Bits versteckt werden. Dadurch lassen sich unauffällig kurze Nachrichten in MIDI-Dateien verstecken." />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Hidden message$" value="Скрытое сообщение" />
