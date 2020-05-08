@@ -108,7 +108,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             int nullsymbol = AnalyzerConfiguration.UseNulls ? Tools.MapIntoNumberSpace("#", AnalyzerConfiguration.PlaintextMapping)[0] : -1;
 
             //3) do hillcimbing
-            var plaintext = DecryptHomophonicSubstitution(AnalyzerConfiguration.Ciphertext, runkey);
+            var plaintext = DecryptHomophonicSubstitution(runkey);
             do
             {
                 //3.1) permutate key                
@@ -116,7 +116,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 {
                     for (var j = i + 1; j < AnalyzerConfiguration.Keylength; j++)
                     {
-                        if (AnalyzerConfiguration.LockedHomophoneMappings[i] != -1 || AnalyzerConfiguration.LockedHomophoneMappings[j] != -1 ||
+                        if (AnalyzerConfiguration.LockedHomophoneMappings[i] != -1 || 
+                            AnalyzerConfiguration.LockedHomophoneMappings[j] != -1 ||
                             runkey[i].PlainLetter == runkey[j].PlainLetter)
                         {
                             //we don't change locked homophone mappings in the key
@@ -149,20 +150,19 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                             runkey[i].PlainLetter = swap;
                             DecryptHomophonicSubstitutionInPlace(plaintext, runkey, i, j);
                         }
-                    }                  
-                }
-             
-                if (_stop == true)
-                {
-                    return;
-                }
+                    }
 
+                    if (_stop)
+                    {
+                        return;
+                    }
+                }                            
                 //3.2) Check, if we have a new global best one
                 if (bestkeycost > globalbestkeycost)
                 {
                     globalbestkeycost = bestkeycost;
                     globalbestkey = CreateDeepKeyCopy(bestkey);
-                    globalbestplaintext = DecryptHomophonicSubstitution(AnalyzerConfiguration.Ciphertext, globalbestkey);
+                    globalbestplaintext = DecryptHomophonicSubstitution(globalbestkey);
 
                     if (NewBestValue != null)
                     {
@@ -224,7 +224,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <param name="key"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Text DecryptHomophonicSubstitution(Text ciphertext, HomophoneMapping[] key)
+        public static Text DecryptHomophonicSubstitution(HomophoneMapping[] key)
         {            
             var plaintext = new Text();
             foreach (HomophoneMapping mapping in key)

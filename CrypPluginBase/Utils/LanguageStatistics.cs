@@ -470,24 +470,26 @@ namespace Cryptool.PluginBase.Utils
             Alphabet = file.Alphabet;
         }
 
-        public override double CalculateCost(int[] plaintext)
+        public override double CalculateCost(int[] text)
         {
-            int end = plaintext.Length - 1;
+            int end = text.Length - 1;
             if (end <= 0) return 0;
 
             double value = 0;
+            var alphabetLength = Alphabet.Length;
 
             for (int i = 0; i < end; i++)
             {
-
-                if (plaintext[i] >= Alphabet.Length ||
-                    plaintext[i+1] >= Alphabet.Length ||
-                    plaintext[i] < 0 ||
-                    plaintext[i+1] < 0)
+                var a = text[i];
+                var b = text[i + 1];
+                if (a >= alphabetLength ||
+                    b >= alphabetLength ||
+                    a < 0 ||
+                    b < 0)
                 {
                     continue;
                 }
-                value += Frequencies[plaintext[i], plaintext[i + 1]];
+                value += Frequencies[a, b];
             }
             return value / end;
         }
@@ -515,25 +517,29 @@ namespace Cryptool.PluginBase.Utils
             Alphabet = file.Alphabet;
         }
 
-        public override double CalculateCost(int[] plaintext)
+        public override double CalculateCost(int[] text)
         {
-            int end = plaintext.Length - 2;
+            int end = text.Length - 2;
             if (end <= 0) return 0;
 
             double value = 0;
+            var alphabetLength = Alphabet.Length;
 
             for (int i = 0; i < end; i++)
             {
-                if (plaintext[i] >= Alphabet.Length ||
-                    plaintext[i + 1] >= Alphabet.Length ||
-                    plaintext[i + 2] >= Alphabet.Length ||
-                    plaintext[i] < 0 ||
-                    plaintext[i + 1] < 0 ||
-                    plaintext[i + 2] < 0)
+                var a = text[i];
+                var b = text[i + 1];
+                var c = text[i + 2];
+                if (a >= alphabetLength ||
+                    b >= alphabetLength ||
+                    c >= alphabetLength ||
+                    a < 0 ||
+                    b < 0 ||
+                    c < 0)
                 {
                     continue;
                 }
-                value += Frequencies[plaintext[i], plaintext[i + 1], plaintext[i + 2]];               
+                value += Frequencies[a, b, c];               
             }
             return value / end;
         }
@@ -561,27 +567,32 @@ namespace Cryptool.PluginBase.Utils
             Alphabet = file.Alphabet;
         }
 
-        public override double CalculateCost(int[] plaintext)
+        public override double CalculateCost(int[] text)
         {
-            int end = plaintext.Length - 3;
+            int end = text.Length - 3;
             if (end <= 0) return 0;
 
             double value = 0;
+            var alphabetLength = Alphabet.Length;
 
             for (int i = 0; i < end; i++)
             {
-                if (plaintext[i] >= Alphabet.Length ||
-                    plaintext[i + 1] >= Alphabet.Length ||
-                    plaintext[i + 2] >= Alphabet.Length ||
-                    plaintext[i + 3] >= Alphabet.Length ||
-                    plaintext[i] < 0 ||
-                    plaintext[i + 1] < 0 ||
-                    plaintext[i + 2] < 0 ||
-                    plaintext[i + 3] < 0)
+                var a = text[i];
+                var b = text[i + 1];
+                var c = text[i + 2];
+                var d = text[i + 3];
+                if (a >= alphabetLength ||
+                    b >= alphabetLength ||
+                    c >= alphabetLength ||
+                    d >= alphabetLength ||
+                    a < 0 ||
+                    b < 0 ||
+                    c < 0 ||
+                    d < 0)
                 {
                     continue;
                 }
-                value += Frequencies[plaintext[i], plaintext[i + 1], plaintext[i + 2], plaintext[i + 3]];               
+                value += Frequencies[a, b, c, d];               
             }
             return value / end;
         }
@@ -609,29 +620,35 @@ namespace Cryptool.PluginBase.Utils
             Alphabet = file.Alphabet;
         }
 
-        public override double CalculateCost(int[] plaintext)
+        public override double CalculateCost(int[] text)
         {
-            int end = plaintext.Length - 4;
+            int end = text.Length - 4;
             if (end <= 0) return 0;
 
             double value = 0;
+            var alphabetLength = Alphabet.Length;
 
             for (int i = 0; i < end; i++)
             {
-                if (plaintext[i] >= Alphabet.Length ||
-                   plaintext[i + 1] >= Alphabet.Length ||
-                   plaintext[i + 2] >= Alphabet.Length ||
-                   plaintext[i + 3] >= Alphabet.Length ||
-                   plaintext[i + 4] >= Alphabet.Length ||
-                   plaintext[i] < 0 ||
-                   plaintext[i + 1] < 0 ||
-                   plaintext[i + 2] < 0 ||
-                   plaintext[i + 3] < 0 ||
-                   plaintext[i + 4] < 0)
+                var a = text[i];
+                var b = text[i + 1];
+                var c = text[i + 2];
+                var d = text[i + 3];
+                var e = text[i + 4];
+                if (a >= alphabetLength ||
+                   b >= alphabetLength ||
+                   c >= alphabetLength ||
+                   d >= alphabetLength ||
+                   e >= alphabetLength ||
+                   a < 0 ||
+                   b < 0 ||
+                   c < 0 ||
+                   d < 0 ||
+                   e < 0)
                 {
                     continue;
                 }
-                value += Frequencies[plaintext[i], plaintext[i + 1], plaintext[i + 2], plaintext[i + 3], plaintext[i + 4]];             
+                value += Frequencies[a, b, c, d, e];
             }
             return value / end;
         }

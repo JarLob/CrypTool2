@@ -625,9 +625,10 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         {
             AutoResetEvent waitHandle = new AutoResetEvent(false);
             bool newTopEntry = false;
-            Dictionary<int, int> wordPositions = null;            
+            Dictionary<int, int> wordPositions = null;
+
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
+            {                
                 try
                 {
                     int column = 0;
@@ -648,16 +649,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     }
                     CipherAlphabetTextBox.Text = eventArgs.CiphertextAlphabet;
                     PlainAlphabetTextBox.Text = eventArgs.PlaintextMapping;
-                    CostTextBox.Text = String.Format(Properties.Resources.CostValue_0, Math.Round(eventArgs.CostValue, 2));
+                    CostTextBox.Text = string.Format(Properties.Resources.CostValue_0, Math.Round(eventArgs.CostValue, 2));
                     MarkLockedHomophones();
                     wordPositions = AutoLockWords(AnalyzerConfiguration.WordCountToFind, eventArgs.PlaintextAsNumbers);
                     MarkFoundWords(wordPositions);
-                    newTopEntry = AddNewBestListEntry(eventArgs.PlaintextMapping, eventArgs.CostValue, eventArgs.Plaintext);
-                    if (newTopEntry)
-                    {
-                        var substitutionKey = GenerateSubstitutionKey();
-                        eventArgs.SubstitutionKey = substitutionKey;
-                    }
+                    newTopEntry = AddNewBestListEntry(eventArgs.PlaintextMapping, eventArgs.CostValue, eventArgs.Plaintext);                    
                 }
                 catch (Exception)
                 {
@@ -676,6 +672,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 if (newTopEntry && wordPositions != null && wordPositions.Count > 0)
                 {
+                    var substitutionKey = GenerateSubstitutionKey();
+                    eventArgs.SubstitutionKey = substitutionKey;                    
                     eventArgs.FoundWords = new List<string>();
                     //if we have a new top entry, we also output the found words
                     foreach (KeyValuePair<int,int> positionLength in wordPositions)

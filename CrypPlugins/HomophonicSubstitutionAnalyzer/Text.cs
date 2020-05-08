@@ -178,28 +178,38 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <summary>
         /// Converts the text to an array of integers
         /// </summary>
-        /// <param name="useNulls"></param>
+        /// <param name="nullsymbol"></param>
         /// <returns></returns>
         public int[] ToIntegerArray(int nullsymbol = -1)
         {
             List<int> ints = new List<int>();
-            foreach(var symbol in symbols)
-            {
-                foreach(var i in symbol)
+
+            //I repeated the inner loop and put the if-statement outside for performance optimization
+            if (nullsymbol == -1) //we have no null symbol
+            {                
+                foreach (var symbol in symbols)
                 {
-                    if (nullsymbol == -1)
+                    foreach (var i in symbol)
                     {
-                        ints.Add(i);
+                        ints.Add(i);                       
                     }
-                    else
+                }
+            }
+            else //we have a null symbol, thus, we need to check for it
+            {
+                foreach (var symbol in symbols)
+                {
+                    foreach (var i in symbol)
                     {
-                        if(i != nullsymbol)
+                        //only add symbols to array, if it is not a null symbol
+                        if (i != nullsymbol)
                         {
-                            ints.Add(i);
+                            ints.Add(i);                            
                         }
                     }
                 }
             }
+            exit_loops:
             return ints.ToArray();
         }
     }
