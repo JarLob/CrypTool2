@@ -142,10 +142,10 @@
     <value>Сообщение, которое должно быть скрыто в файле несущей</value>
   </data>
   <data name="MaxMessageBytesPerCarrierUnitCaption" xml:space="preserve">
-    <value>MaxMessageBytesPerCarrierUnit</value>
+    <value>Полбайты за «изменение программы»</value>
   </data>
   <data name="MaxMessageBytesPerCarrierUnitTooltip" xml:space="preserve">
-    <value>Максимальное количество полубайт для скрытия одного несущего устройства</value>
+    <value>Максимальное количество полубайтов, скрываемых вокруг одной команды «Изменение программы»</value>
   </data>
   <data name="OutputCarrierCaption" xml:space="preserve">
     <value>Файл несущей</value>

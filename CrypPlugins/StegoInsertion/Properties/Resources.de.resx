@@ -142,10 +142,10 @@
     <value>Die in der Trägerdatei zu versteckenden Daten.</value>
   </data>
   <data name="MaxMessageBytesPerCarrierUnitCaption" xml:space="preserve">
-    <value>Halbbytes pro Komponente</value>
+    <value>Halbbytes pro "Program Change"</value>
   </data>
   <data name="MaxMessageBytesPerCarrierUnitTooltip" xml:space="preserve">
-    <value>Max. Anzahl von Halbbytes, die in einer Komponente der Trägerdatei versteckt werden.</value>
+    <value>Max. Anzahl von Halbbytes, die in einem "Program Change"-Befehl in der Trägerdatei versteckt werden.</value>
   </data>
   <data name="OutputCarrierCaption" xml:space="preserve">
     <value>Trägerdatei</value>

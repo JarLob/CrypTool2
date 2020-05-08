@@ -142,10 +142,10 @@
     <value>Message that is to be hidden in the carrier file</value>
   </data>
   <data name="MaxMessageBytesPerCarrierUnitCaption" xml:space="preserve">
-    <value>MaxMessageBytesPerCarrierUnit</value>
+    <value>Halfbytes per "Program Change"</value>
   </data>
   <data name="MaxMessageBytesPerCarrierUnitTooltip" xml:space="preserve">
-    <value>Maximum number of halfbytes to hide around one carrier unit</value>
+    <value>Maximum number of halfbytes to hide around one "Program Change" command</value>
   </data>
   <data name="OutputCarrierCaption" xml:space="preserve">
     <value>Carrier file</value>

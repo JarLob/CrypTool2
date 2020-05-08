@@ -20,13 +20,16 @@
   <replacements lang="de">
     <replacement key="$Hidden message$" value="Versteckte Nachricht" />
     <replacement key="$Carrier MIDI File$" value="MIDI-Trägerdatei" />
+    <replacement key="$memo$" value="Eine MIDI-Datei enthält Steuer- und Toninformationen zur Ansteuerung eines Synthesizers. Das Steuerungskommando &quot;Program Change&quot; hat dabei die Aufgabe, das zu verwendende Instrument zu wechseln. Wenn man nun &quot;Program Change&quot;-Befehle einfügt, ohne das neue Intrument Töne ausgeben zu lassen, so fällt dies beim Abspielen der Datei nicht auf. In jedem zusätzlichen &quot;Program Change&quot;-Befehl können 4 Bits versteckt werden. Dadurch lassen sich unauffällig kurze Nachrichten in MIDI-Dateien verstecken." />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Hidden message$" value="Скрытое сообщение" />
     <replacement key="$Carrier MIDI File$" value="поддержка файлов MIDI" />
+    <replacement key="$memo$" value="MIDI-файл содержит управляющую и звуковую информацию для синтезатора. Управляющая команда &quot;Program Change&quot; используется для изменения текущего инструмента. Если команды &quot;Program Change&quot; вставлены в MIDI-файл, где новый выбранный инструмент не воспроизводит ноты, это не будет обнаружено при воспроизведении MIDI-файла. Каждая дополнительная команда &quot;Program Change&quot; может скрывать 4 бита информации, поэтому можно незаметно скрывать короткие сообщения в файле MIDI." />
   </replacements>
   <replacements lang="en">
     <replacement key="$Hidden message$" value="Hidden message" />
     <replacement key="$Carrier MIDI File$" value="Carrier MIDI File" />
+    <replacement key="$memo$" value="A MIDI file contains control and sound information for a synthesizer. The control command &quot;Program Change&quot; is used to change the current instrument. If &quot;Program Change&quot; commands are inserted into the MIDI file, where the new selected instrument doesn't play any notes, this will not be detected when playing the MIDI file. Each additional &quot;Program Change&quot; command can hide 4 bits of information, so it is possible to inconspicuously hide short messages in a MIDI file." />
   </replacements>
 </sample>
