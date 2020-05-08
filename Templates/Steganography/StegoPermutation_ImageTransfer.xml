@@ -33,7 +33,7 @@
     <replacement key="$Permutation Steganography$" value="Перестановки-Steganographie" />
     <replacement key="$Text Output$" value="вывод текста" />
     <replacement key="$Image Output$" value="вывода изображения" />
-    <replacement key="$memo$" value="" />
+    <replacement key="$memo$" value="Этот шаблон демонстрирует, как можно скрыть больший набор данных (например, изображение) в порядке сортировки набора объектов. В этом случае набор носителей представляет собой словарь, состоящий из нескольких тысяч слов. Изменение порядка слов кодирует изображение, отображаемое в этом шаблоне." />
   </replacements>
   <replacements lang="en">
     <replacement key="$File Input$" value="File Input" />

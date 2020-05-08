@@ -32,7 +32,7 @@
     <replacement key="$Permutation Steganography$" value="Перестановки-Steganographie" />
     <replacement key="$Hidden message$" value="Скрытое сообщение" />
     <replacement key="$String Encoder$" value="Строка кодировщик" />
-    <replacement key="$memo$" value="" />
+    <replacement key="$memo$" value="Этот шаблон демонстрирует, как порядок элементов данного списка слов может кодировать сообщение." />
   </replacements>
   <replacements lang="en">
     <replacement key="$Carrier List$" value="Carrier List" />

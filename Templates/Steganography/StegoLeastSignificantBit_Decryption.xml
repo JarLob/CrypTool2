@@ -29,7 +29,7 @@
     <replacement key="$Password$" value="пароль" />
     <replacement key="$String Encoder$" value="Строка кодировщик" />
     <replacement key="$Message$" value="сообщение" />
-    <replacement key="$memo$" value="" />
+    <replacement key="$memo$" value="В этом шаблоне сообщение, скрытое в младших значащих битах изображения, извлекается и декодируется.\line\line Чтобы еще больше усложнить обнаружение скрытого сообщения, сообщение дополнительно защищается паролем. Если расшифровка выполняется с неверным паролем, алгоритм не может даже обнаружить наличие скрытого сообщения." />
   </replacements>
   <replacements lang="en">
     <replacement key="$Carrier Picture$" value="Carrier Picture" />

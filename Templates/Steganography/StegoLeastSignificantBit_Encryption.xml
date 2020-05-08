@@ -30,7 +30,7 @@
     <replacement key="$Password$" value="пароль" />
     <replacement key="$Message$" value="сообщение" />
     <replacement key="$Image with hidden message$" value="Изображение со скрытым сообщением" />
-    <replacement key="$memo$" value="" />
+    <replacement key="$memo$" value="В этом шаблоне сообщение скрывается в младших значащих битах изображения и сохраняется как файл изображения.\line\line Чтобы усложнить обнаружение скрытого сообщения, сообщение дополнительно защищается паролем. Если позднее попытка декодирования будет выполнена с неверным паролем, алгоритм не сможет даже обнаружить наличие скрытого сообщения." />
   </replacements>
   <replacements lang="en">
     <replacement key="$Carrier Picture$" value="Carrier Picture" />
