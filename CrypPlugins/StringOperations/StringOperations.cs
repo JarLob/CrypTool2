@@ -183,18 +183,7 @@ namespace StringOperations
                         OnPropertyChanged("OutputString");
                         break;
                     case StringOperationType.Distinct:
-                        StringBuilder builder = new StringBuilder();
-                        HashSet<char> chars = new HashSet<char>();
-
-                        foreach (char c in _string1)
-                        {
-                            if (!chars.Contains(c))
-                            {
-                                chars.Add(c);
-                                builder.Append(c);
-                            }
-                        }
-                        _outputString = builder.ToString();
+                        _outputString = String.Concat(_string1.Distinct());
                         OnPropertyChanged("OutputString");
                         break;
                     case StringOperationType.LevenshteinDistance:
