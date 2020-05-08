@@ -276,7 +276,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             }
             if (newBestValueEventArgs.NewTopEntry)
             {
-                Plaintext = newBestValueEventArgs.Plaintext;
+                Plaintext = AddLinebreaksToPlaintext(newBestValueEventArgs.Plaintext);
                 OnPropertyChanged("Plaintext");
                 if (newBestValueEventArgs.FoundWords != null && newBestValueEventArgs.FoundWords.Count > 0)
                 {
@@ -295,6 +295,27 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     OnPropertyChanged("Key");
                 }
             }
+        }
+
+        /// <summary>
+        /// Adds original line breaks to plaintext
+        /// </summary>
+        /// <param name="plaintext"></param>
+        /// <returns></returns>
+        private string AddLinebreaksToPlaintext(string text)
+        {
+            StringBuilder builder = new StringBuilder();
+            int lastposition = 0;
+            if (_presentation.AnalyzerConfiguration.LinebreakPositions != null)
+            {
+                foreach (var position in _presentation.AnalyzerConfiguration.LinebreakPositions)
+                {
+                    builder.AppendLine(text.Substring(lastposition, position - lastposition));
+                    lastposition = position;
+                }
+            }
+            builder.AppendLine(text.Substring(lastposition, text.Length - lastposition));
+            return builder.ToString();
         }
 
         /// <summary>

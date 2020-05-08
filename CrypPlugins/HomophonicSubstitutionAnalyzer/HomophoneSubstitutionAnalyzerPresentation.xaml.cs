@@ -684,7 +684,6 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                         eventArgs.FoundWords.Add(word);
                     }
                 }
-
                 eventArgs.NewTopEntry = newTopEntry;
                 NewBestValue.Invoke(sender, eventArgs);
             }
@@ -915,49 +914,49 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     _hillClimber.AnalyzerConfiguration.LockedHomophoneMappings[index] = PlainAlphabetText.Length - 1;
                 }
 
+                string newSymbol = Tools.MapNumbersIntoTextSpace(new int[] { _hillClimber.AnalyzerConfiguration.LockedHomophoneMappings[index] }, PlainAlphabetText);
+
                 //Update plainalphabet textbox
                 PlainAlphabetTextBox.Text = PlainAlphabetTextBox.Text.Remove(index, 1);
-                PlainAlphabetTextBox.Text = PlainAlphabetTextBox.Text.Insert(index, Tools.MapNumbersIntoTextSpace(new int[] { _hillClimber.AnalyzerConfiguration.LockedHomophoneMappings[index] }, PlainAlphabetText));
-
-                //decrypt text using the key
-                var ciphertext = Tools.ChangeToConsecutiveNumbers(ConvertCiphertextToNumbers(_ciphertext, AnalyzerConfiguration.Separator));
-
-                var len = Tools.Distinct(ciphertext).Length;
-                for (var i = 0; i < ciphertext.Length; i++)
+                PlainAlphabetTextBox.Text = PlainAlphabetTextBox.Text.Insert(index, newSymbol);
+                                
+                //Update all plaintext labels               
+                foreach (var label in _ciphertextLabels)
                 {
-                    ciphertext[i] = ciphertext[i] % len;
-                }
-                var numkey = new HomophoneMapping[PlainAlphabetTextBox.Text.Length];
-                var cipheralphabet = Tools.MapIntoNumberSpace(CipherAlphabetTextBox.Text, CipherAlphabetText);
-                var plainalphabet = Tools.MapIntoNumberSpace(PlainAlphabetTextBox.Text, PlainAlphabetText);
-
-                Text ciphertxt = new Text(ciphertext);
-                for (var i = 0; i < _keylength; i++)
-                {
-                    numkey[i] = new HomophoneMapping(ciphertxt, cipheralphabet[i], plainalphabet[i]);
-                }
-
-                var plaintext = Tools.MapNumbersIntoTextSpace(HillClimber.DecryptHomophonicSubstitution(new Text(ciphertext), numkey).ToIntegerArray(), PlainAlphabetText);
-                int column = 0;
-                int row = 0;
-                int offset = 0;
-                foreach (var letter in plaintext)
-                {
-                    _plaintextLabels[column, row].Content = letter;
-                    _plaintextLabels[column, row].Symbol = "" + letter;
-                    column++;
-                    offset++;
-                    if  ((AnalyzerConfiguration.KeepLinebreaks && AnalyzerConfiguration.LinebreakPositions.Contains(offset)) ||
-                        (!AnalyzerConfiguration.KeepLinebreaks && column == AnalyzerConfiguration.TextColumns))
+                    if (label == null)
                     {
-                        column = 0;
-                        row++;
+                        continue;
+                    }
+                    if (label.Symbol.Equals(symbol))
+                    {
+                        var plaintextLabel = _plaintextLabels[label.X, label.Y];
+                        plaintextLabel.Symbol = newSymbol;
+                        plaintextLabel.Content = newSymbol;
                     }
                 }
-                MarkLockedHomophones();
+
+                //Create new plaintext from labels
                 if (UserChangedText != null)
                 {
-                    UserChangedTextEventArgs args = new UserChangedTextEventArgs() { Plaintext = plaintext };
+                    StringBuilder plaintextBuilder = new StringBuilder();
+                    int column = 0;
+                    int row = 0;
+                    int offset = 0;
+                    foreach(var letter in _ciphertext)
+                    {                        
+                        plaintextBuilder.Append(_plaintextLabels[column, row].Symbol);                      
+                        column++;
+                        offset++;
+                        if ((AnalyzerConfiguration.KeepLinebreaks && AnalyzerConfiguration.LinebreakPositions.Contains(offset)) ||
+                            (!AnalyzerConfiguration.KeepLinebreaks && column == AnalyzerConfiguration.TextColumns))
+                        {
+                            column = 0;
+                            row++;
+                            plaintextBuilder.AppendLine();
+                        }                        
+                    }
+                    //Fire event that the user changed the plaintext
+                    UserChangedTextEventArgs args = new UserChangedTextEventArgs() { Plaintext = plaintextBuilder.ToString() };
                     args.SubstitutionKey = GenerateSubstitutionKey();
                     UserChangedText.Invoke(this, args);
                 }
@@ -1019,7 +1018,6 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     _plaintextLabels[label.X, label.Y].Background = Brushes.White;
                 }
             }
-
         }
 
         /// <summary>
