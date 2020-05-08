@@ -127,7 +127,7 @@
     <value>Offset</value>
   </data>
   <data name="OffsetTooltip" xml:space="preserve">
-    <value>Offset, an dem der Eingabe-Datenstrom geteilt werden soll. Ein negativer Wert gibt an, daß der Offset vom Ende des Datenstroms gezählt wird.</value>
+    <value>Offset, an dem der Eingabe-Datenstrom geteilt werden soll. Ein negativer Wert gibt an, dass der Offset vom Ende des Datenstroms gezählt wird.</value>
   </data>
   <data name="OutputStream1Caption" xml:space="preserve">
     <value>Ausgabe Teil 1</value>

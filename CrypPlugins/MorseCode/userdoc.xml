@@ -44,7 +44,7 @@
     Wortenden werden durch das Zeichen "/" markiert.
     Der resultierende Morsezeichen-Text wird am Ausgang der Komponente ausgegeben.
     <newline />
-    Der Eingabetext wird vor der Kodierung in Großbuchstaben konvertiert, so daß die Groß-/Kleinschreibung des Eingabetextes keine Rolle spielt.
+    Der Eingabetext wird vor der Kodierung in Großbuchstaben konvertiert, so dass die Groß-/Kleinschreibung des Eingabetextes keine Rolle spielt.
     Ein Zeichen des Eingabetextes, für das kein Morsezeichen existiert, wird als Fragezeichen ausgegeben.
     <newline /><newline />
     In der Betriebsart "Decodieren" erwartet die Komponente einen Morsezeichen-Text, der entsprechend den Angaben des "Encodieren"-Abschnittes formatiert ist.

@@ -21,7 +21,7 @@
     <replacement key="$Ciphertext$" value="Geheimtext (Hex)" />
     <replacement key="$Key$" value="Schlüssel (Hex)" />
     <replacement key="$StringDecoder$" value="String-Decodierer" />
-    <replacement key="$memo$" value="Grain v1 ist eine Stromchiffre. Die Grain v1-Komponente erzeugt einen Schlüsselstrom und verschlüsselt den Klartext, indem sie ihn mit dem Schlüsselstrom XOR-verknüpft. Um die Korrektheit der Komponente zu demonstrieren, wird in diesem Beispiel die Eingabe gerade so gewählt, daß sie dem Schlüsselstrom entspricht, den die Komponente mit dem angegebenen Schlüssel und IV erzeugen müsste. Da die XOR-Verknüpfung eines Bytes mit sich selbst Null ergibt, muss die Komponente eine Folge von Nullbytes ausgeben." />
+    <replacement key="$memo$" value="Grain v1 ist eine Stromchiffre. Die Grain v1-Komponente erzeugt einen Schlüsselstrom und verschlüsselt den Klartext, indem sie ihn mit dem Schlüsselstrom XOR-verknüpft. Um die Korrektheit der Komponente zu demonstrieren, wird in diesem Beispiel die Eingabe gerade so gewählt, dass sie dem Schlüsselstrom entspricht, den die Komponente mit dem angegebenen Schlüssel und IV erzeugen müsste. Da die XOR-Verknüpfung eines Bytes mit sich selbst Null ergibt, muss die Komponente eine Folge von Nullbytes ausgeben." />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Plaintext$" value="Обычный текст (шестнадцатеричный)" />
