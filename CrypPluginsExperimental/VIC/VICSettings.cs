@@ -41,7 +41,7 @@ namespace Cryptool.Plugins.VIC
 
         #region TaskPane Settings
 
-        [TaskPane("Action", "Changes Between Encryption and Decryption", null, 0, false, ControlType.ComboBox, new string[] { "Encrypt", "Decrypt" })]
+        [TaskPane("EncryptionTypeSwitch", "EncryptionTypeSwitchCaption", null, 0, false, ControlType.ComboBox, new string[] { "Encrypt", "Decrypt" })]
         public ActionType Action
         {
             get
@@ -59,7 +59,7 @@ namespace Cryptool.Plugins.VIC
             }
         }
 
-        [TaskPane("Alphabet", "Change Alphabet", null, 0, false, ControlType.ComboBox, new string[] { "Latin", "Cyrillic" })]
+        [TaskPane("AlphabetTypeSwitch", "AlphabetTypeSwitchCaption", null, 0, false, ControlType.ComboBox, new string[] { "Latin", "Cyrillic" })]
         public AlphabetType Alphabet
         {
             get

@@ -26,7 +26,7 @@ using Cryptool.PluginBase.Miscellaneous;
 namespace Cryptool.Plugins.VIC
 {
     [Author("Adam Petro", "adam.petro.655@gmail.com", "Institute of Computer Science and Mathematics, Faculty of Electrical Engineering and Information Technology, Slovak University of Technology", "https://uim.fei.stuba.sk")]
-    [PluginInfo("Cryptool.VIC.Properties.Resources", "VIC Cipher", "Soviet cipher used by agent Reino Häyhänen(Victor=VIC)", "VIC/userdoc.xml", new[] { "VIC/Images/VIC.png" })]
+    [PluginInfo("Cryptool.Plugins.VIC.Properties.Resources", "ComponentName", "ComponentDescription", "VIC/userdoc.xml", new[] { "VIC/Images/VIC.png" })]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
 
 
@@ -41,24 +41,23 @@ namespace Cryptool.Plugins.VIC
 
         private string ALPHABET;
 
+        private string cyrillicAlphabet= "абвгдежзиклмнопрстуфхцчшщыьэюя".ToUpper();
+        private string latinAlphabet = "abcdefghijklmnopqrstuvwxyz".ToUpper();
 
-        //Position from the end of the enciphered message, where the fifth (random) part of the key is inserted. 
-        private int groupNo;
+
+
         private string lineC;
         private string lineD;
         private string lineE;
         private string lineF;
         private string lineG;
         private string lineH;
-        private string lineI;
         private string lineJ;
         private string lineK;
         private string lineL;
         private string lineM;
         private string lineN;
         private string lineP;
-        private string lineQ;
-        private string lineR;
         private string lineS;
         private string firstPermutation;
         private string secondPermutation;
@@ -66,6 +65,8 @@ namespace Cryptool.Plugins.VIC
         private int[] firstTransposition;
         private int[] secondTransposition;
 
+
+        string substitutionResult;  
         private string onceTransposedMessage;
         private string twiceTransposedMessage;
 
@@ -80,7 +81,6 @@ namespace Cryptool.Plugins.VIC
         private string digitLetterSymbol;
         private string repeatSymbol;
 
-        string substitutionResult;
         string onceDetransposedMessage;
         string twiceDetransposedMessage;
 
@@ -97,41 +97,41 @@ namespace Cryptool.Plugins.VIC
         #region Data Properties
 
 
-        [PropertyInfo(Direction.InputData, "Date", "Date in a continental format, e.g. September 2, 1945 = 3.9.1945")]
+        [PropertyInfo(Direction.InputData, "DateCaption", "DateTooltip")]
         public string Date
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.InputData, "Password", "Single word password, at least 6 chars long")]
+        [PropertyInfo(Direction.InputData, "PasswordCaption", "PasswordTooltip")]
         public string Password
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.InputData, "Phrase", "Enter at least 20 letter phrase")]
+        [PropertyInfo(Direction.InputData, "PhraseCaption", "PhraseTooltip")]
         public string Phrase
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.InputData, "Number", "Enter a 1 or 2 digit number")]
+        [PropertyInfo(Direction.InputData, "NumberCaption", "NumberTooltip")]
         public string Number
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.InputData, "Initializing String", "Enter a string consisting only of digits with the length of 5")]
+        [PropertyInfo(Direction.InputData, "InitializingStringCaption", "InitializingStringTooltip")]
         public string InitializingString
         {
             get;
             set;
         }
-        [PropertyInfo(Direction.InputData, "Text Input", "Input a string to be processed by the VIC cipher")]
+        [PropertyInfo(Direction.InputData, "TextInputCaption", "TextInputTooltip")]
         public string Input
         {
             get;
@@ -145,22 +145,18 @@ namespace Cryptool.Plugins.VIC
         }
 
         void ClearLocalVariables() {
-            groupNo = 0;
             lineC = null;
             lineD = null;
             lineE = null;
             lineF = null;
             lineG = null;
             lineH = null;
-            lineI = null;
             lineJ = null;
             lineK = null;
             lineL = null;
             lineM = null;
             lineN = null;
             lineP = null;
-            lineQ = null;
-            lineR = null;
             lineS = null;
             firstPermutation = null;
             secondPermutation = null;
@@ -175,9 +171,9 @@ namespace Cryptool.Plugins.VIC
             textStartSymbol = null;
             digitLetterSymbol = null;
             repeatSymbol = null;
-            substitutionResult=null;
-            onceDetransposedMessage=null;
-            twiceDetransposedMessage=null;
+            substitutionResult = null;
+            onceDetransposedMessage = null;
+            twiceDetransposedMessage = null;
 
         }
 
@@ -186,34 +182,44 @@ namespace Cryptool.Plugins.VIC
         /// </summary>
         void FormatInput()
         {
+            Input = Input.ToUpper();
             Input = (Regex.Replace(Input, @"\s+", ""));
-            GuiLogMessage("Input:" + Input,NotificationLevel.Info);
-            Date = (Regex.Replace(Date, "[^0-9]", ""));
             Date = Date.ToUpper();
+            GuiLogMessage("Input:" + Input, NotificationLevel.Info);
+            Date = (Regex.Replace(Date, "[^0-9]", ""));
             if (Date.Length < 6)
             {
-                GuiLogMessage("Date input is too short.", NotificationLevel.Error);
+                throw new InvalidInputException("ShortDateError");
             }
 
-            Password = (Regex.Replace(Password, "[^.,a-zA-Z0-9A-Яa-я]", ""));
             Password = Password.ToUpper();
-            if (Password.Length < 6)
+            GuiLogMessage("Password:" + Password+"\nAlphabet:"+ALPHABET, NotificationLevel.Info);
+            Password = (Regex.Replace(Password, $"[^{ALPHABET}]", ""));
+            GuiLogMessage("Password:" + Password, NotificationLevel.Info);
+            if (Password.Length < 7)
             {
-                GuiLogMessage("Password input is too short.", NotificationLevel.Error);
+                throw new InvalidInputException("ShortPasswordError");
             }
 
 
-            Phrase = (Regex.Replace(Phrase, "[^.,a-zA-Z0-9A-Яa-я]", ""));
             Phrase = Phrase.ToUpper();
+            Phrase = (Regex.Replace(Phrase, "[^A-Z0-9A-Я]", ""));
+            if (Phrase.Length < 20) {
+                throw new InvalidInputException("ShortPhraseError");
+            }
 
             Number = (Regex.Replace(Number, "[^0-9]", ""));
+            if (int.Parse(Number) > 33 || int.Parse(Number) <= 0) {
+                throw new InvalidInputException("InvalidNumberError");
+            }
 
             InitializingString = InitializingString.ToUpper();
             InitializingString = (Regex.Replace(InitializingString, "[^0-9]", ""));
-            if (InitializingString.Length != 5)
+            if (InitializingString.Length < 5)
             {
-                GuiLogMessage("Initializing string has to be exactly 5 characters long", NotificationLevel.Error);
+                throw new InvalidInputException("ShortInitializingStringError");
             }
+            InitializingString = InitializingString.Substring(0, 5);
 
         }
 
@@ -226,11 +232,15 @@ namespace Cryptool.Plugins.VIC
         string FormatOutput(string input)
         {
             input = (Regex.Replace(input, "[^0-9]", ""));
-            for (int i = 0; i < input.Length; ++i)
+            int iterator = 0;
+            for (int i = 0; i < input.Length-5; ++i)
             {
-                if (i % 6 == 0 && i > 0)
+                if (i % 5 == 0 && i > 0)
                 {
-                    input = input.Insert(i, " ");
+                    if (!(i + iterator >= input.Length))
+                    {
+                        input = input.Insert(i + iterator++, " ");
+                    }
                 }
             }
             return input;
@@ -240,11 +250,11 @@ namespace Cryptool.Plugins.VIC
         /// <summary>
         /// This function takes permutation and creates transposition string from it(the string which determines the transposition table readout)
         /// </summary>
-        /// <param name="permutation"></param>
+        /// <param name="input"></param>
         /// <returns></returns>
-        private int[] CreateTransposition(string permutation)
+        private int[] CreateTransposition(string input)
         {
-            char[] permutationAr = permutation.ToCharArray();
+            char[] permutationAr = input.ToCharArray();
             int[] intPermutationAr = new int[permutationAr.Length];
             char charElement;
             int intElement;
@@ -261,7 +271,7 @@ namespace Cryptool.Plugins.VIC
                     intPermutationAr.SetValue(intElement, i);
                 }
             }
-            int[] result = EnumeratePermutation(intPermutationAr);
+            int[] result = EnumerateTransposition(intPermutationAr);
             return result;
 
         }
@@ -272,7 +282,7 @@ namespace Cryptool.Plugins.VIC
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        private int[] EnumeratePermutation(int[] input)
+        private int[] EnumerateTransposition(int[] input)
         {
 
             int[] sorted = new int[input.Length];
@@ -347,6 +357,7 @@ namespace Cryptool.Plugins.VIC
         /// <returns></returns>
         private string AddModulo(string a, string b)
         {
+            GuiLogMessage("string a: " + a + "\nstring b:" + b, NotificationLevel.Info);
             string output = "";
             int aa, bb, cc;
             for (int i = 0; i < a.Length; ++i)
@@ -369,6 +380,7 @@ namespace Cryptool.Plugins.VIC
         /// <returns></returns>
         private string SubstractModulo(string a, string b)
         {
+            GuiLogMessage("string a: " + a + "\nstring b: " + b, NotificationLevel.Info);
             string output = "";
             int aa, bb, cc;
             for (int i = 0; i < a.Length; ++i)
@@ -391,7 +403,7 @@ namespace Cryptool.Plugins.VIC
         {
             int firstAddend;
             int secondAddend;
-            int stopCondition = input.Length;
+            int stopCondition = 5;
             for (int i = 0; i < stopCondition; ++i)
             {
                 firstAddend = (int)input.ElementAt(i) - '0';
@@ -484,11 +496,11 @@ namespace Cryptool.Plugins.VIC
         /// Reads elements from matrix by column.
         /// </summary>
         /// <param name="matrix"> Matrix to read from. </param>
-        /// <param name="firstWidth"> Width of the first permutation. This determines number of elements read from the matrix and stored in the first item of returning Tuple.</param>
-        /// <param name="secondWidth">Width of the second permutation. This determines number of elements read from the matrix and stored in the second item of returning Tuple.</param>
+        /// <param name="firstLength"> Width of the first permutation. This determines number of elements read from the matrix and stored in the first item of returning Tuple.</param>
+        /// <param name="secondLength">Width of the second permutation. This determines number of elements read from the matrix and stored in the second item of returning Tuple.</param>
         /// <param name="indicationString">String indicating the order of columns reading from.</param>
         /// <returns></returns>
-        private Tuple<String, String> ReadColsFromCharMatrix(char[,] matrix, int firstWidth, int secondWidth, string indicationString)
+        private Tuple<String, String> ReadColsFromCharMatrix(char[,] matrix, int firstLength, int secondLength, string indicationString)
         {
 
             string firstPermutation = "";
@@ -498,7 +510,7 @@ namespace Cryptool.Plugins.VIC
             Array.Sort(sortedIndicationString);
             int iterator = 1;
             string output = "";
-            while (output.Length < firstWidth + secondWidth)
+            while (output.Length < firstLength + secondLength)
             {
                 row = 0;
                 while (row < matrix.GetLength(0))
@@ -508,14 +520,14 @@ namespace Cryptool.Plugins.VIC
                 }
                 iterator++;
             }
-            for (int i = 0; i < firstWidth; ++i)
+            for (int i = 0; i < firstLength; ++i)
             {
                 firstPermutation += (output.ElementAt(i));
             }
 
-            for (int i = 0; i < secondWidth; ++i)
+            for (int i = 0; i < secondLength; ++i)
             {
-                secondPermutation += (output.ElementAt(i + firstWidth));
+                secondPermutation += (output.ElementAt(i + firstLength));
             }
             return new Tuple<string, string>(firstPermutation, secondPermutation);
         }
@@ -527,7 +539,6 @@ namespace Cryptool.Plugins.VIC
         /// <returns></returns>
         string[,] InjectCyrillicLetters(string[,] substitutionTable)
         {
-
 
             substitutionTable[2, 3] = ".";
             substitutionTable[3, 3] = ",";
@@ -549,7 +560,6 @@ namespace Cryptool.Plugins.VIC
         /// <returns></returns>
         string[,] InjectLatinLetters(string[,] substitutionTable)
         {
-
             substitutionTable[2, 3] = ".";
             substitutionTable[3, 3] = ",";
             substitutionTable[4, 3] = "P/L";
@@ -571,11 +581,11 @@ namespace Cryptool.Plugins.VIC
         /// <summary>
         /// Constructs the substitution table.
         /// </summary>
-        /// <param name="permutation"> Permutation makes the x and y coordinates of the table.</param>
+        /// <param name="coordinates"> Permutation makes the x and y coordinates of the table.</param>
         /// <param name="password"> Password makes the first row of the table</param>
         /// <param name="alphabet"> What alphabet (Cyrillic, Latin) should the table be constructed of</param>
         /// <returns></returns>
-        private string[,] ConstructSubstitutionTable(string permutation, string password, string alphabet)
+        private string[,] ConstructSubstitutionTable(string coordinates, string password, string alphabet)
         {
 
             string[,] substitutionTable = new string[5, 11];
@@ -588,22 +598,20 @@ namespace Cryptool.Plugins.VIC
             }
 
             //<First Line of Table>
-            substitutionTable[0, 0] = "*";
-            for (int i = 0; i < permutation.Length; ++i)
+            for (int i = 0; i < coordinates.Length; ++i)
             {
-                substitutionTable[0, i + 1] = permutation.ElementAt(i).ToString();
+                substitutionTable[0, i + 1] = coordinates.ElementAt(i).ToString();
             }
 
             //</First Line of Table>
 
             //<First Col of Table>
-            substitutionTable[1, 0] = "*";
             substitutionTable[1, 0] = "-";
 
             int iterator = 2;
-            for (int i = permutation.Length - 3; i < permutation.Length; ++i)
+            for (int i = coordinates.Length - 3; i < coordinates.Length; ++i)
             {
-                substitutionTable[iterator++, 0] = permutation.ElementAt(i).ToString();
+                substitutionTable[iterator++, 0] = coordinates.ElementAt(i).ToString();
             }
             //</First Col of Table>
 
@@ -612,6 +620,7 @@ namespace Cryptool.Plugins.VIC
             //<Second Line of Table>            
             char[] injectedLetters = new char[7];
             iterator = 0;
+            GuiLogMessage("Password:" + password, NotificationLevel.Info);
             for (int i = 1; i <= 7; ++i)
             {
                 while (injectedLetters.Contains(password.ElementAt(iterator)))
@@ -627,9 +636,6 @@ namespace Cryptool.Plugins.VIC
                 temp += element;
             }
             GuiLogMessage("injected letters: " + temp,NotificationLevel.Info);
-            substitutionTable[1, 10] = "*";
-            substitutionTable[1, 9] = "*";
-            substitutionTable[1, 8] = "*";
             //</Second Line of Table>
 
 
@@ -655,7 +661,6 @@ namespace Cryptool.Plugins.VIC
 
 
 
-            char[] alphabetArray = alphabet.ToUpper().ToCharArray();
 
 
 
@@ -715,7 +720,6 @@ namespace Cryptool.Plugins.VIC
             string firstOutput = "";
             string secondOutput = "";
 
-
             //Generate splitting point for the string to be split into two parts
             Random random = new Random();
             int lowerBoundary = message.Length / 10;
@@ -756,21 +760,21 @@ namespace Cryptool.Plugins.VIC
         /// <summary>
         /// Decides what alphabet is used and performs substitution accordingly
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="input"></param>
         /// <param name="index"></param>
         /// <param name="outputMessage"></param>
         /// <param name="iterationsToSkip"></param>
         /// <param name="substitutionTable"></param>
         /// <returns></returns>
-        private bool PerformSpecialCharSubstitution(string message, int index, ref string outputMessage, ref int iterationsToSkip, string[,] substitutionTable)
+        private bool PerformSpecialCharSubstitution(string input, int index, ref string outputMessage, ref int iterationsToSkip, string[,] substitutionTable)
         {
             if (settings.Alphabet == AlphabetType.Cyrillic)
             {
-                return PerformSpecialCyrillicCharSubstitution(message, index, ref outputMessage, ref iterationsToSkip, substitutionTable);
+                return PerformSpecialCyrillicCharSubstitution(input, index, ref outputMessage, ref iterationsToSkip, substitutionTable);
             }
             else
             {
-                return PerformSpecialLatinCharSubstitution(message, index, ref outputMessage, ref iterationsToSkip, substitutionTable);
+                return PerformSpecialLatinCharSubstitution(input, index, ref outputMessage, ref iterationsToSkip, substitutionTable);
             }
         }
 
@@ -779,26 +783,26 @@ namespace Cryptool.Plugins.VIC
         /// <summary>
         /// Performs special char substitution and returns true if a char was substituted.
         /// </summary>
-        /// <param name="message"> Message being substituted </param>
+        /// <param name="input"> Message being substituted </param>
         /// <param name="index"> Index of character in message </param>
         /// <param name="outputMessage"> Reference to string where the output is to be stored. </param>
         /// <param name="iterationsToSkip"> Reference to an int where the number of substituted chars is to be stored </param>
         /// <returns></returns>
-        private bool PerformSpecialCyrillicCharSubstitution(string message, int index, ref string outputMessage, ref int iterationsToSkip, string[,] substitutionTable)
+        private bool PerformSpecialCyrillicCharSubstitution(string input, int index, ref string outputMessage, ref int iterationsToSkip, string[,] substitutionTable)
         {
-            char character = message.ElementAt(index);
+            char character = input.ElementAt(index);
 
-            if (index + 1 > message.Length - 1)
+            if (index + 1 > input.Length - 1)
             {
                 return false;
             }
-            char nextCharacter = message.ElementAt(index + 1);
+            char nextCharacter = input.ElementAt(index + 1);
 
             if (character.Equals('Н'))
             {
-                if (nextCharacter.Equals('/') && index + 2 < message.Length - 1)
+                if (nextCharacter.Equals('/') && index + 2 < input.Length - 1)
                 {
-                    if (message.ElementAt(index + 2).Equals('Ц'))
+                    if (input.ElementAt(index + 2).Equals('Ц'))
                     {
                         outputMessage += LocateStringInMatrix(substitutionTable, "Н/Ц");
                         iterationsToSkip = 2;
@@ -814,9 +818,9 @@ namespace Cryptool.Plugins.VIC
             }
             else if (character.Equals('Л'))
             {
-                if (nextCharacter.Equals('/') && index + 2 < message.Length - 1)
+                if (nextCharacter.Equals('/') && index + 2 < input.Length - 1)
                 {
-                    if (message.ElementAt(index + 2).Equals('П'))
+                    if (input.ElementAt(index + 2).Equals('П'))
                     {
                         outputMessage += LocateStringInMatrix(substitutionTable, "Л/П");
                         iterationsToSkip = 1;
@@ -1020,15 +1024,6 @@ namespace Cryptool.Plugins.VIC
                     }
                 }
             }
-
-            for (int i = 0; i < transpositionMatrix.GetLength(0); ++i)
-            {
-                for (int j = 0; j < transpositionMatrix.GetLength(1); ++j)
-                {
-                    Console.Write(transpositionMatrix.GetValue(i, j));
-                }
-
-            }
             return Transpose(permutation, transpositionMatrix);
         }
 
@@ -1131,18 +1126,18 @@ namespace Cryptool.Plugins.VIC
                 }
             }
 
-            for (int l = 0; l < secondTranspositionTable.GetLength(0); ++l)
+            string logMessage = "";
+            for (int i = 0; i < secondTranspositionTable.GetLength(0); i++)
             {
-                for (int k = 0; k < secondTranspositionTable.GetLength(1); ++k)
+                for (int j = 0; j < secondTranspositionTable.GetLength(1); j++)
                 {
-                    Console.Write(secondTranspositionTable.GetValue(l, k) + "   ");
+                    logMessage += secondTranspositionTable.GetValue(i, j)+" ";
                 }
-
+                logMessage += "\n";
             }
+            GuiLogMessage("Second transposition table:\n" + logMessage, NotificationLevel.Info);
+
             return secondTranspositionTable;
-
-
-
         }
 
         /// <summary>
@@ -1155,7 +1150,7 @@ namespace Cryptool.Plugins.VIC
         {
             int tableWidth = permutation.Length;
             int tableHeight = (int)(Math.Ceiling((double)messageLength / tableWidth));
-            int greys = 0;
+            
 
             AreaColor[,] secondTranspositionTableColors = new AreaColor[tableHeight, tableWidth];
 
@@ -1187,7 +1182,6 @@ namespace Cryptool.Plugins.VIC
                         if (greyFlag)
                         {
                             secondTranspositionTableColors.SetValue(AreaColor.grey, i, j);
-                            greys++;
                         }
                         else if (!greyFlag)
                         {
@@ -1203,6 +1197,25 @@ namespace Cryptool.Plugins.VIC
                 }
 
             }
+            string temp = "";
+            for (int l = 0; l < secondTranspositionTableColors.GetLength(0); ++l)
+            {
+                temp += "\n";
+                for (int k = 0; k < secondTranspositionTableColors.GetLength(1); ++k)
+                {
+                    if (secondTranspositionTableColors.GetValue(l, k).Equals(AreaColor.grey))
+                    {
+                        temp += "grey  ";
+                    }
+                    else if (secondTranspositionTableColors.GetValue(l, k).Equals(AreaColor.white))
+                    {
+                        temp += "white ";
+                    }
+
+                }
+
+            }
+            GuiLogMessage("second transposition table colors:\n" + temp, NotificationLevel.Info);
             return secondTranspositionTableColors;
         }
 
@@ -1514,13 +1527,6 @@ namespace Cryptool.Plugins.VIC
             return output;
         }
 
-        [PropertyInfo(Direction.OutputData, "Output name", "Output tooltip description")]
-        public int SomeOutput
-        {
-            get;
-            set;
-        }
-
         #endregion
 
         #region IPlugin Members
@@ -1546,6 +1552,7 @@ namespace Cryptool.Plugins.VIC
         /// </summary>
         public void PreExecution()
         {
+            ClearLocalVariables();
         }
 
         /// <summary>
@@ -1553,25 +1560,24 @@ namespace Cryptool.Plugins.VIC
         /// </summary>
         public void Execute()
         {
-            ClearLocalVariables();
-            FormatInput();
+            ProgressChanged(0, 1);
             if (settings.Alphabet == AlphabetType.Cyrillic)
             {
-                ALPHABET = "абвгдежзиклмнопрстуфхцчшщыьэюя".ToUpper();
+                ALPHABET = cyrillicAlphabet;
                 textStartSymbol = "НТ";
                 digitLetterSymbol = "Н/Ц";
                 repeatSymbol = "Л/П";
             }
             else if (settings.Alphabet == AlphabetType.Latin)
             {
-                ALPHABET = "abcdefghijklmnopqrstuvwxyz".ToUpper();
+                ALPHABET = latinAlphabet;
                 textStartSymbol = "TS";
                 digitLetterSymbol = "C/D";
                 repeatSymbol = "RPT";
             }
-            ProgressChanged(0, 1);
             try
             {
+                FormatInput();
                 //1. Take first five digits from date and substract them from the random number
                 lineC = SubstractModulo(InitializingString, Date);
                 GuiLogMessage("lineC: " + lineC, NotificationLevel.Info);
@@ -1590,7 +1596,7 @@ namespace Cryptool.Plugins.VIC
 
 
                 //4.Take first 20 letters of passphrase
-                lineD = Phrase.Substring(0, Math.Min(Phrase.Length, 20));
+                lineD = Phrase.Substring(0, 20);
 
                 GuiLogMessage("lineD: " + lineD, NotificationLevel.Info);
                 ProgressChanged(4, 16);
@@ -1620,7 +1626,7 @@ namespace Cryptool.Plugins.VIC
 
                 GuiLogMessage("lineH: " + lineH, NotificationLevel.Info);
 
-                //8.Enumerate it and obtain line J. This needs to be enumerated starting from number 1, not 0.
+                //8.Enumerate it and obtain line J.
                 lineJ = string.Join("", EnumerateString(lineH, 1, true));
 
                 GuiLogMessage("lineJ: " + lineJ, NotificationLevel.Info);
@@ -1671,7 +1677,6 @@ namespace Cryptool.Plugins.VIC
 
                 GuiLogMessage("LineS: " + lineS, NotificationLevel.Info);
 
-                ProgressChanged(13, 16);
 
                 
                 
@@ -1694,6 +1699,7 @@ namespace Cryptool.Plugins.VIC
                 GuiLogMessage("Second Transposition" + temp, NotificationLevel.Info);
 
 
+                ProgressChanged(13, 16);
 
 
                 if (settings.Action == ActionType.Encrypt)
@@ -1779,9 +1785,7 @@ namespace Cryptool.Plugins.VIC
             }
             catch (Exception ex)
             {
-                GuiLogMessage(string.Format(ex.Message, ex.StackTrace, ex.Source), NotificationLevel.Error);
-                GuiLogMessage(string.Format(ex.StackTrace), NotificationLevel.Error);
-                GuiLogMessage(string.Format(ex.Source), NotificationLevel.Error);
+                GuiLogMessage(string.Format(ex.Message+"\n"+ex.StackTrace), NotificationLevel.Error);
             }
 
             ProgressChanged(1, 1);
@@ -1844,5 +1848,18 @@ namespace Cryptool.Plugins.VIC
         }
 
         #endregion
+    }
+
+    class InvalidInputException : Exception
+    {
+        public InvalidInputException()
+        {
+        }
+        public InvalidInputException(string message):base(message)
+        {
+        }
+        public InvalidInputException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
     }
 }
