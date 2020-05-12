@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Cramer-Shoup With AES</title>
+  <title lang="en">Cramer-Shoup with AES</title>
   <title lang="ru">Cramer-Shoup с AES</title>
   <summary lang="en">Usage of the <i>Cramer-Shoup</i> cipher with AES</summary>
   <summary lang="ru">Использование шифра Cramer-Shoup с AES</summary>

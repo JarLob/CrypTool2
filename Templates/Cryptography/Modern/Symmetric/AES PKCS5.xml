@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">AES With PKCS#5</title>
+  <title lang="en">AES with PKCS#5</title>
   <title lang="ru">AES с PKCS # 5</title>
   <summary lang="en">Using <i>AES</i> with <i>PKCS#5</i>, where the session key is generated from a password using <i>PKCS#5</i> and the ciphertext is encoded in base64</summary>
   <summary lang="ru">Использование AES с PKCS # 5, где ключ сеанса генерируется из пароля с использованием PKCS # 5, а зашифрованный текст кодируется в base64</summary>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Factorization With General Number Field Sieve (GNFS)</title>
+  <title lang="en">Factorization with General Number Field Sieve (GNFS)</title>
   <title lang="ru">Факторизация с помощью общего ситового поля (GNFS)</title>
   <summary lang="en">Usage of the <i>General Number Field Sieve</i></summary>
   <summary lang="ru">Использование общего ситового поля</summary>

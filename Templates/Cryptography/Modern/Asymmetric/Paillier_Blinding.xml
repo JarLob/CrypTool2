@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Paillier Cipher With Blinding</title>
+  <title lang="en">Paillier Cipher with Blinding</title>
   <title lang="ru">Пайер-шифр с ослеплением</title>
   <summary lang="en">Usage of the <i>Pailler</i> cipher with blinding</summary>
   <summary lang="ru">Использование шифра Пайлера с ослепляющим</summary>

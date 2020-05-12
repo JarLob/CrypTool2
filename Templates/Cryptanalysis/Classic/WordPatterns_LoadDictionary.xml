@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Wordpattern Analysis With Self-defined Dictionary</title>
+  <title lang="en">Wordpattern Analysis with Self-Defined Dictionary</title>
   <title lang="ru">Анализ Wordpattern с самоопределяемым словарем</title>
   <summary lang="en">Usage of the <i>Wordpattern Analysis</i> with a self-defined dictionary</summary>
   <summary lang="ru">Использование анализа Wordpattern с помощью самоопределяемого словаря</summary>

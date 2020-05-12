@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">AES (CBC) With PKCS#5 and IV</title>
+  <title lang="en">AES (CBC) with PKCS#5 and IV</title>
   <title lang="ru">AES (CBC) с PKCS № 5 и IV</title>
   <summary lang="en">Usage of the <i>AES</i> cipher in CBC mode with an initialization vector, where the session key is generated from a password using <i>PKCS#5</i> and the ciphertext is encoded in base64</summary>
   <summary lang="ru">Использование шифрования AES в режиме CBC с вектором инициализации, где ключ сеанса генерируется из пароля с использованием PKCS # 5, а шифрованный текст кодируется в base64</summary>
