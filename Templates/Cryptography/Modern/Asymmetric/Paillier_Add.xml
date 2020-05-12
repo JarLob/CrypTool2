@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Paillier Cipher with Addition</title>
+  <title lang="en">Paillier Cipher With Addition</title>
   <title lang="ru">Шифр Пайлера с добавлением</title>
   <summary lang="en">Usage of the <i>Pailler</i> cipher with addition</summary>
   <summary lang="ru">Использование шифра Пайлера с добавлением</summary>

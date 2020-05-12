@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Caesar Analysis using character frequencies</title>
+  <title lang="en">Caesar Analysis Using Character Frequencies</title>
   <title lang="ru">Анализ Цезаря с использованием частот символов</title>
   <summary lang="en">Cryptanalysis of the <i>Caesar</i> cipher using character frequencies</summary>
   <summary lang="ru">Криптоанализ цезарного шифра с использованием частот символов</summary>

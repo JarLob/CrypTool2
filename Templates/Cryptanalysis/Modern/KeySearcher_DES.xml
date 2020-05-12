@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">DES Brute-force Analysis</title>
+  <title lang="en">DES Brute-Force Analysis</title>
   <title lang="ru">Анализ грубой силы</title>
   <summary lang="en">Cryptanalysis of the <i>DES</i> algorithm using the <i>KeySearcher</i> component</summary>
   <summary lang="ru">Криптоанализ алгоритма DES с использованием компонента KeySearcher</summary>

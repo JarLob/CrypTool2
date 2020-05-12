@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Factorization with Quadratic Sieve (QS)</title>
+  <title lang="en">Factorization With Quadratic Sieve (QS)</title>
   <title lang="ru">Факторизация с квадратичным ситом (QS)</title>
   <summary lang="en">Usage of the <i>Quadratic Sieve</i></summary>
   <summary lang="ru">Использование квадратного сита</summary>

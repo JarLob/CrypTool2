@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Differential Cryptanalysis Tutorial 3 (automatic mode)</title>
+  <title lang="en">Differential Cryptanalysis Tutorial 3 (Automatic Mode)</title>
   <title lang="de">Differenzielle Kryptoanalyse Tutorial 3 (automatischer Modus)</title>
   
   <summary lang="en">Differential cryptanalysis (dca) tutorial for different ciphers (automatic mode activated)</summary>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Transposition Brute-force Analysis</title>
+  <title lang="en">Transposition Brute-Force Analysis</title>
   <title lang="ru">Анализ переноса грубой силы</title>
   <summary lang="en">Cryptanalysis of the <i>Transposition</i> cipher using brute-force</summary>
   <summary lang="ru">Криптоанализ шифрования Transposition с использованием грубой силы</summary>

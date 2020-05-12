@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Text Encoding (e.g. Base64)</title>
+  <title lang="en">Text Encoding (E.g. Base64)</title>
   <title lang="ru">Текстовое кодирование (например, Base64)</title>
   <summary lang="en">
     <i>Encoding text</i> in different formats (base64, hexadecimal, ...)</summary>

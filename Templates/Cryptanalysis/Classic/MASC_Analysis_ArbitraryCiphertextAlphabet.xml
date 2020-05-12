@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Monoalphabetic Substitution Analyzer with arbitrary Ciphertext Alphabet</title>
+  <title lang="en">Monoalphabetic Substitution Analyzer With Arbitrary Ciphertext Alphabet</title>
   <title lang="ru">Моноалфавитный анализатор замещений с произвольным алфавитом Ciphertext</title>
   <summary lang="en">Cryptanalysis of the monoalphabetic substitution cipher with an arbitrary ciphertext alphabet</summary>
   <summary lang="ru">Криптоанализ моноалфавитного шифрования замещения с произвольным алфавитом шифрованного текста</summary>

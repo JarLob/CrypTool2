@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Split a text</title>
+  <title lang="en">Split a Text</title>
   <title lang="ru">Разделить текст</title>
   <summary lang="en">Splits a text using a dictionary</summary>
   <summary lang="ru">Разделяет текст с помощью словаря</summary>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Decode QR code file</title>
+  <title lang="en">Decode QR Code File</title>
   <title lang="ru">Декодировать файл QR-кода</title>
   <title lang="de">Decodiere QR-Code-Datei</title>
   <summary lang="en">Decodes a QR code file</summary>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Keccak pseudorandom number generator (PRNG)</title>
+  <title lang="en">Keccak Pseudorandom Number Generator (PRNG)</title>
   <title lang="ru">Случайность (PRNG)</title>
   <summary lang="en">Usage of <i>Keccak</i> as a pseudorandom number generator (PRNG)</summary>
   <summary lang="ru">Использование выстрела в качестве (PRNG)</summary>

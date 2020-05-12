@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Huffman's algorithm (BMG, JPG)</title>
+  <title lang="en">Huffman's Algorithm (BMG, JPG)</title>
   <title lang="de">Huffman-Algorithmus (BMG, JPG)</title>
   <title lang="ru">Алгоритм Хаффмана (BMG, JPG)</title>
   <summary lang="en">Usage of <i>Huffman</i> to compress a BMP and a JPG image</summary>

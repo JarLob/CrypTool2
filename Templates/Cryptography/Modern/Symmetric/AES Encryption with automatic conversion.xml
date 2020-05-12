@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">AES encryption with implicit conversion</title>
+  <title lang="en">AES Encryption With Implicit Conversion</title>
   <title lang="ru">Шифрование AES с неявным преобразованием</title>
   <summary lang="en">Encryption with the <i>AES</i> cipher using the implicit conversion of input and output data types</summary>
   <summary lang="ru">Шифрование с использованием AES-шифра с использованием неявного преобразования входных и выходных типов данных</summary>

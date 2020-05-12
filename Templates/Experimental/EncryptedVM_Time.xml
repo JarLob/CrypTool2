@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Encrypted VM (Very long Execution Time)</title>
+  <title lang="en">Encrypted VM (Very Long Execution Time)</title>
   <title lang="ru">Зашифрованная виртуальная машина (очень длительное время выполнения)</title>
   <summary lang="en">Usage of the <i>Encrypted VM</i> component demonstrating the possibly very long execution time of a program.</summary>
   <summary lang="ru">Использование зашифрованного компонента VM, демонстрирующего, возможно, очень длительное время выполнения программы.</summary>

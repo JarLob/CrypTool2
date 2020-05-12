@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">CRC Null problems</title>
+  <title lang="en">CRC Null Problems</title>
   <title lang="ru">CRC Нулевые проблемы</title>
   <summary lang="en">Problems with null values in the <i>CRC</i> checksum function</summary>
   <summary lang="ru">Проблемы с нулевыми значениями в хэш-функции CRC</summary>

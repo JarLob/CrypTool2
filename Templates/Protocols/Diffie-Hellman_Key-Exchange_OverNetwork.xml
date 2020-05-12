@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Diffie-Hellman Key-Exchange over network</title>
+  <title lang="en">Diffie-Hellman Key-Exchange Over Network</title>
   <title lang="ru">Diffie-Hellman Key-Exchange через сеть</title>
   <summary lang="en">Usage of the <i>Diffie–Hellman key exchange</i> using network components</summary>
   <summary lang="ru">Использование обмена ключами Диффи-Хеллмана с использованием сетевых компонентов</summary>

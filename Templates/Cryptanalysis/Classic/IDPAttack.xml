@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Dictionary attack on the Double Columnar Transposition Cipher</title>
+  <title lang="en">Dictionary Attack on the Double Columnar Transposition Cipher</title>
   <title lang="ru">Атака словаря на двойном столбце Transposition Cipher</title>
   <summary lang="en">Usage of the <i>IDP Analyzer</i></summary>
   <summary lang="ru">Использование анализатора IDP</summary>

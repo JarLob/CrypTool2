@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Random number generators</title>
+  <title lang="en">Random Number Generators</title>
   <title lang="ru">Генераторы случайных чисел</title>
   <summary lang="en">Shows different random number generators.</summary>
   <summary lang="ru">Показывает генератора случайных чисел.</summary>

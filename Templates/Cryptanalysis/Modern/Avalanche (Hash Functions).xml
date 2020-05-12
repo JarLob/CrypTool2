@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Avalanche (hash functions)</title>
+  <title lang="en">Avalanche (Hash Functions)</title>
   <title lang="ru">Лавина (хеш-функции)</title>
   <summary lang="en">This template demonstrates the avalanche effect in general hash functions.</summary>
   <summary lang="ru">Этот шаблон демонстрирует эффект лавины в общих хэш-функциях.</summary>

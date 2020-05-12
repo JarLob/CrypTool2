@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Webhits for a hash value</title>
+  <title lang="en">Webhits for a Hash Value</title>
   <title lang="ru">Webhits для хэш-значения</title>
   <summary lang="en">Search for a hash value on the web</summary>
   <summary lang="ru">Поиск значения хэша в Интернете</summary>

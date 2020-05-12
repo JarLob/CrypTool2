@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">LAMBDA1 block cipher</title>
+  <title lang="en">LAMBDA1 Block Cipher</title>
   <summary lang="en"> Example usage of the <i>LAMBDA1</i> plugin</summary>
   <description lang="en">This template shows the usage of the <i>LAMBDA1</i> block cipher. An algorithm based on the Data Encryption Standard, which was developed in Eastern Germany in the 1980s.
   The mode of operation is Cipher Feedback Mode (CFB).</description>

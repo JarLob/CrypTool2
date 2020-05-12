@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">AES Analysis using Entropy (1)</title>
+  <title lang="en">AES Analysis Using Entropy (1)</title>
   <title lang="ru">Анализ AES с использованием энтропии (1)</title>
   <summary lang="en">Cryptanalysis of <i>AES</i> using the <i>KeySearcher</i> component and an entropy function</summary>
   <summary lang="ru">Криптоанализ AES с использованием компонента KeySearcher и энтропийной функции</summary>

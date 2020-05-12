@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Avalanche (compare classic ciphers)</title>
+  <title lang="en">Avalanche (Compare Classic Ciphers)</title>
   <title lang="ru">Лавина (сравните классические шифры)</title>
   <summary lang="en">This template demonstrates the avalanche effect in two different classic ciphers at the same time.</summary>
   <summary lang="ru">Этот шаблон демонстрирует эффект лавины в двух разных классических шифрах одновременно.</summary>

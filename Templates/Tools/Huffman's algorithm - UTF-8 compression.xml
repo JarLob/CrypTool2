@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Huffman's algorithm (UTF-8)</title>
+  <title lang="en">Huffman's Algorithm (UTF-8)</title>
   <title lang="de">Huffman-Algorithmus (UTF-8)</title>
   <title lang="ru">Алгоритм Хаффмана (UTF-8)</title>
   <summary lang="en">Usage of <i>Huffman</i> to compress a UTF-8 encoded text</summary>

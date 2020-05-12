@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">M-138 Ciphertext only Attack</title>
+  <title lang="en">M-138 Ciphertext Only Attack</title>
   <title lang="ru">M-138 Только шифрованный текст</title>
   <summary lang="en">Cryptanalysis of the <i>M-138</i> using a Ciphertext only Attack</summary>
   <summary lang="ru">Криптоанализ M-138 с использованием только атаки Ciphertext</summary>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">RSA signed QR code</title>
+  <title lang="en">RSA Signed QR Code</title>
   <title lang="ru">RSA подписан QR-код</title>
   <summary lang="en">Authenticated QR code</summary>
   <summary lang="ru">Идентифицированный QR-код</summary>

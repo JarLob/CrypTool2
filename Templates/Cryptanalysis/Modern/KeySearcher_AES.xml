@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">AES Analysis using Entropy (2) – with changeable plaintext</title>
+  <title lang="en">AES Analysis Using Entropy (2) – With Changeable Plaintext</title>
   <title lang="ru">Анализ AES с использованием энтропии (2) – со сменным открытым текстом</title>
   <summary lang="en">Cryptanalysis of <i>AES</i> using the <i>KeySearcher</i> component and an entropy function.</summary>
   <summary lang="ru">Криптоанализ AES с использованием компонента KeySearcher и энтропийной функции.</summary>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Dictionary Attack on a password hash value</title>
+  <title lang="en">Dictionary Attack on a Password Hash Value</title>
   <title lang="ru">Словарь Атака на хеш-значение пароля</title>
   <summary lang="en">Implementation of a dictionary attack on a password hash value</summary>
   <summary lang="ru">Внедрение атаки на словарь</summary>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">BB84 Key Exchange with eavesdropping attack</title>
+  <title lang="en">BB84 Key Exchange With Eavesdropping Attack</title>
   <title lang="ru">BB84 Key Exchange с подслушивающей атакой</title>
   <summary lang="en">Usage of the <i>BB84 Key Exchange and its attack</i></summary>
   <summary lang="ru">Использование BB84 Key Exchange и его атаки</summary>

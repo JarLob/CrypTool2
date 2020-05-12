@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">DES Analysis using Entropy</title>
+  <title lang="en">DES Analysis Using Entropy</title>
   <title lang="ru">Анализ DES с использованием энтропии</title>
   <summary lang="en">Cryptanalysis of <i>DES</i> using the <i>KeySearcher</i> component and an entropy function</summary>
   <summary lang="ru">Криптоанализ DES с использованием компонента KeySearcher и энтропийной функции</summary>

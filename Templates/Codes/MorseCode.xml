@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Morse code</title>
+  <title lang="en">Morse Code</title>
   <title lang="ru">азбука Морзе</title>
   <summary lang="en">Shows how a morse code is encoded and decoded</summary>
   <summary lang="ru">Показывает, как кодируется и декодируется код Морзе</summary>

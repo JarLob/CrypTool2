@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">KDF Performance Comparison (with presentation)</title>
+  <title lang="en">KDF Performance Comparison (With Presentation)</title>
   <title lang="ru">Сравнение производительности KDF (с презентацией)</title>
   <summary lang="en">Shows the comparison of 3 different key derivation functions (KKDF SHA-256, KKDF SHAKE256, HKDF SHA-256). All KDFs will be explained step by step.</summary>
   <summary lang="ru">Показывает сравнение трех различных функций вывода ключей (KKDF SHA-256, KKDF SHAKE256, HKDF SHA-256). Все KDF будут объясняться шаг за шагом.</summary>
