@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">ImageHash - Smooth Comparison</title>
+  <title lang="en">ImageHash – Smooth Comparison</title>
   <title lang="ru">ImageHash - плавное сравнение</title>
   <summary lang="en">Compares an image with a smoothed version of the same image, including their hamming distance and equality percentage</summary>
   <summary lang="ru">Сравнивает изображение с сглаженной версией одного и того же изображения, в том числе их расстояние от хамминга и процент равенства</summary>
