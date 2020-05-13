@@ -873,15 +873,16 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             }
 
             //calculate sub key 2
+            byte[] vls1_old = vls1;
             vls1 = ls_1(vls1);
             if (this.mSdes.Presentation.IsVisible)
             {
                 ((SDESPresentation)mSdes.Presentation).Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    ((SDESPresentation)mSdes.Presentation).key_txt_p10_copy.Text =
-                    Tools.byteArrayToStringWithSpaces(vp10);
+                    ((SDESPresentation)mSdes.Presentation).key_txt_p8_copy.Text =
+                    Tools.byteArrayToStringWithSpaces(vls1_old);
                     ((SDESPresentation)mSdes.Presentation).key_txt_ls1_2.Text =
-                    Tools.byteArrayToStringWithSpaces(vp10);
+                    Tools.byteArrayToStringWithSpaces(vls1_old);
                     ((SDESPresentation)mSdes.Presentation).key_txt_ls1_3.Text =
                    Tools.byteArrayToStringWithSpaces(vls1);
                 }
@@ -1032,15 +1033,16 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             }
 
             //calculate sub key 2
+            byte[] vls1_old = vls1;
             vls1 = ls_1(vls1);
             if (this.mSdes.Presentation.IsVisible)
             {
                 ((SDESPresentation)mSdes.Presentation).Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    ((SDESPresentation)mSdes.Presentation).key_txt_p10_copy.Text =
-                    Tools.byteArrayToStringWithSpaces(vp10);
+                    ((SDESPresentation)mSdes.Presentation).key_txt_p8_copy.Text =
+                    Tools.byteArrayToStringWithSpaces(vls1_old);
                     ((SDESPresentation)mSdes.Presentation).key_txt_ls1_2.Text =
-                    Tools.byteArrayToStringWithSpaces(vp10);
+                    Tools.byteArrayToStringWithSpaces(vls1_old);
                     ((SDESPresentation)mSdes.Presentation).key_txt_ls1_3.Text =
                    Tools.byteArrayToStringWithSpaces(vls1);
                 }
