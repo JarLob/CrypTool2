@@ -72,7 +72,13 @@
     Symbolen an.
   </presentation>
   <references>
-    <linkReference>
+    <lineReference>
+      <link lang="en" url="https://www.iconfinder.com/Utha_design" />
+      <caption lang="en">The bulp icons (true/false) are based on Utha design's bulp and was downloaded from iconfinder</caption>
+      <link lang="de" url="https://www.iconfinder.com/Utha_design" />
+      <caption lang="de">Die Glühbirngen-Icons (wahr/falsch) basieren auf Utha designs Glühbirne und wurde von iconfinder heruntergeladen</caption>
+    </lineReference>
+    <linkReference>            
       <link lang="en" url="http://en.wikipedia.org/wiki/Boolean_algebra_%28structure%29" />
       <caption lang="en">Boolean Algebra</caption>
       <link lang="de-DE" url="http://de.wikipedia.org/wiki/Boolesche_Algebra" />

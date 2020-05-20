@@ -353,17 +353,14 @@ namespace WorkspaceManager.Model
         {
             if (args.StatusChangedMode == StatusChangedMode.ImageUpdate)
             {
-                imageIndex = args.ImageIndex;
-                if (WorkspaceModel.ExecutionEngine == null || !WorkspaceModel.ExecutionEngine.IsRunning())
+                imageIndex = args.ImageIndex;        
+                if (WorkspaceModel.MyEditor != null && WorkspaceModel.MyEditor.Presentation != null && UpdateableView != null)
                 {
-                    if (WorkspaceModel.MyEditor != null && WorkspaceModel.MyEditor.Presentation != null && UpdateableView != null)
+                    WorkspaceModel.MyEditor.Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
-                        WorkspaceModel.MyEditor.Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                        {
-                            UpdateableView.update();
-                        }, null);
-                    }
-                }
+                        UpdateableView.update();
+                    }, null);
+                }                
             }
         }        
 
