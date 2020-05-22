@@ -126,6 +126,15 @@ namespace Cryptool.Core
             sb.AppendLine("Exception:");
             sb.AppendLine(_e.ToString());
             sb.AppendLine("");
+            //here, we append possible inner exceptions
+            var e = _e.InnerException;
+            while(e != null)
+            {
+                sb.AppendLine("Inner Exception:");
+                sb.AppendLine(e.ToString());
+                e = e.InnerException;
+                sb.AppendLine("");
+            }
             sb.AppendLine("-");
             sb.AppendLine("System infos:");
             sb.AppendLine(_systemInfos);
