@@ -81,7 +81,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 runkey[i] = new HomophoneMapping(AnalyzerConfiguration.Ciphertext, i, -1);
             }
-            //2) apply locked homophones on generated key
+
+            //3) apply locked homophones on generated key
             for (int i = 0; i < AnalyzerConfiguration.LockedHomophoneMappings.Length; i++)
             {
                 if (AnalyzerConfiguration.LockedHomophoneMappings[i] != -1)

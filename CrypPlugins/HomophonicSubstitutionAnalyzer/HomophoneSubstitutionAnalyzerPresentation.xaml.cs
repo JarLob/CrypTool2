@@ -114,6 +114,121 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         }
 
         /// <summary>
+        /// If the user gives a start key, this is used to lock the homophones
+        /// </summary>
+        /// <param name="startKey"></param>
+        public void ApplyStartKey(string startKey)
+        {
+            if (string.IsNullOrEmpty(startKey))
+            {
+                return;
+            }
+
+            var startKeyDictionary = new Dictionary<string, string>();
+            var lines = startKey.Split(new char[] { '\r', '\n' });
+            
+            //our key is build of lines in the format [ab];[cd]
+            foreach (var line in lines)
+            {
+                if (string.IsNullOrWhiteSpace(line) || string.IsNullOrEmpty(line))
+                {
+                    //ignore empty lines in key
+                    continue;
+                }
+
+                var split = line.Split(';');
+                if (split.Count() != 2)
+                {
+                    throw new ArgumentException(string.Format("The line in the key is not valid: {0} ", line));
+                }
+
+                //remove [ and ]
+                if (split[0].StartsWith("["))
+                {
+                    split[0] = split[0].Substring(1, split[0].Length - 1);
+                }
+                if (split[0].EndsWith("]"))
+                {
+                    split[0] = split[0].Substring(0, split[0].Length - 1);
+                }
+
+                //we only use symbols, which are part of our plaintext alphabet
+                if (!PlainAlphabetText.Contains(split[0]))
+                {
+                    continue;
+                }
+
+                //remove [ and ]
+                if (split[1].StartsWith("["))
+                {
+                    split[1] = split[1].Substring(1, split[1].Length - 1);
+                }
+                if (split[1].EndsWith("]"))
+                {
+                    split[1] = split[1].Substring(0, split[1].Length - 1);
+                }                
+
+                if (split[1].Contains("|"))
+                {
+                    //case 1: we have a list of homophone separated by |
+                    var symbols = split[1].Split('|');
+                    foreach (var symbol in symbols)
+                    {
+                        if (!startKeyDictionary.ContainsKey(symbol))
+                        {
+                            startKeyDictionary.Add(symbol, split[0]);
+                        }
+                    }
+                }
+                else
+                {
+                    //case 2: we only have a single homophone
+                    if (!startKeyDictionary.ContainsKey(split[1]))
+                    {
+                        startKeyDictionary.Add(split[1], split[0]);
+                    }
+                }
+            }
+
+            var dummyAlphabetBuilder = new StringBuilder();
+            for(int i = 0; i < _keylength; i++)
+            {
+                dummyAlphabetBuilder.Append(PlainAlphabetText[PlainAlphabetText.Length - 1]);
+            }
+
+
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                CipherAlphabetTextBox.Text = CipherAlphabetText.Substring(0, _keylength);
+                PlainAlphabetTextBox.Text = dummyAlphabetBuilder.ToString();
+
+                foreach (var ciphertextLabel in _ciphertextLabels)
+                {
+                    if (ciphertextLabel == null)
+                    {
+                        continue;
+                    }
+                    if (startKeyDictionary.ContainsKey((string)ciphertextLabel.Content))
+                    {
+                        _plaintextLabels[ciphertextLabel.X, ciphertextLabel.Y].Symbol = startKeyDictionary[(string)ciphertextLabel.Content];
+                        _plaintextLabels[ciphertextLabel.X, ciphertextLabel.Y].Content = startKeyDictionary[(string)ciphertextLabel.Content];
+
+                        var key = CipherAlphabetTextBox.Text;
+                        var index = key.IndexOf(ciphertextLabel.Symbol);
+                        if (index > -1 && _hillClimber.AnalyzerConfiguration.LockedHomophoneMappings[index] == -1)
+                        {
+                            _hillClimber.AnalyzerConfiguration.LockedHomophoneMappings[index] = Tools.MapIntoNumberSpace(_plaintextLabels[ciphertextLabel.X, ciphertextLabel.Y].Symbol, PlainAlphabetText)[0];
+                            //Update plainalphabet textbox
+                            PlainAlphabetTextBox.Text = PlainAlphabetTextBox.Text.Remove(index, 1);
+                            PlainAlphabetTextBox.Text = PlainAlphabetTextBox.Text.Insert(index, (_plaintextLabels[ciphertextLabel.X, ciphertextLabel.Y].Symbol));
+                        }                            
+                    }
+                }
+                MarkLockedHomophones();
+            }, null);            
+        }
+
+        /// <summary>
         /// Generates the plaintext and the ciphertext grids
         /// </summary>
         public void GenerateGrids()
@@ -622,7 +737,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <param name="sender"></param>
         /// <param name="eventArgs"></param>
         private void HillClimberNewBestValue(object sender, NewBestValueEventArgs eventArgs)
-        {
+        {            
             AutoResetEvent waitHandle = new AutoResetEvent(false);
             bool newTopEntry = false;
             Dictionary<int, int> wordPositions = null;
@@ -666,7 +781,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             }, null);
 
             //wait here for auto-locker to finish
-            waitHandle.WaitOne();
+            waitHandle.WaitOne();          
 
             if (NewBestValue != null)
             {

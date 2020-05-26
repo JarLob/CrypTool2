@@ -118,6 +118,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         {
             Dictionary = null;
             Ciphertext = null;
+            StartKey = null;
         }
 
         /// <summary>
@@ -158,10 +159,20 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             _presentation.AnalyzerConfiguration.LinebreakPositions = linebreakPositions;
             _presentation.AnalyzerConfiguration.KeepLinebreaks = _settings.KeepLinebreaks;
             _presentation.AddDictionary(Dictionary);
-            _presentation.GenerateGrids();
+            _presentation.GenerateGrids();            
+            _running = true;            
+            try
+            {
+                if (!string.IsNullOrEmpty(StartKey))
+                {
+                    _presentation.ApplyStartKey(StartKey);
+                }
+            }
+            catch(Exception ex)
+            {
+                GuiLogMessage(string.Format("Could not apply key: {0}", ex.Message), NotificationLevel.Warning);
+            }
             _presentation.EnableUI();
-            _running = true;
-
             if (_settings.AnalysisMode == AnalysisMode.FullAutomatic)
             {
                 _presentation.StartAnalysis();
