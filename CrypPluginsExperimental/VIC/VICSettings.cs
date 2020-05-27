@@ -53,7 +53,6 @@ namespace Cryptool.Plugins.VIC
                 if (_action != value)
                 {
                     _action = value;
-                    // HOWTO: MUST be called every time a property value changes with correct parameter name
                     OnPropertyChanged("Action");
                 }
             }
@@ -71,7 +70,6 @@ namespace Cryptool.Plugins.VIC
                 if (_alphabet != value)
                 {
                     _alphabet = value;
-                    // HOWTO: MUST be called every time a property value changes with correct parameter name
                     OnPropertyChanged("Alphabet");
                 }
             }

@@ -7,7 +7,7 @@
   <introduction lang="en">
     This component is the implementation of the VIC Cipher.
     <newline/>
-    This component uses the original enciphering algorithm used by the agent Reino Häyhänen in the 1950s.
+    This component uses the original enciphering algorithm used by the Soviet agent Reino Häyhänen in the 1950s.
     It uses 1 substitution and 2 transpositions and the tables are composed using a 5-part key. 
     This component also brings the latin alphabet support to VIC cipher.
   </introduction>
@@ -32,5 +32,8 @@
   </presentation>
 
   <references>
+
+    <link url="https://en.wikipedia.org/wiki/VIC_cipher" lang="en" />
+    <caption lang="en">VIC Cipher Wiki</caption>
   </references>
 </documentation>

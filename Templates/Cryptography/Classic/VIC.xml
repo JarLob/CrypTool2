@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+  <title lang="en">VIC Cipher</title>
+  <summary lang="en">Usage of the <i>VIC</i> cipher</summary>
+  <description lang="en">
+  The VIC cipher was a pencil and paper cipher used by the Soviet spy Reino Häyhänen, codenamed "VICTOR". <newline />
+  If the cipher were to be given a modern technical name, it would be known as a "straddling bipartite monoalphabetic substitution superenciphered by modified double transposition."However, by general classification it is part of the Nihilist family of ciphers. 
+  Source: <external ref="https://en.wikipedia.org/wiki/VIC_cipher" /></description>
+  <keywords>VIC, VICTOR, Substitution, monoalphabetic substitution, straddling checkerboard, transposition, columnar transposition</keywords>
+    <icon file="VCI.png" />
+  <relevantPlugins>
+    <plugin name="VIC" />
+  </relevantPlugins>
+  <replacements lang="en">
+    <replacement key="$dateTextBox$" value="Date in a continental format with a mininum length of 5 digits." />
+    <replacement key="$date$" value="391945" />
+    <replacement key="$passwordTextBox$" value="Single word password of at least 7 characters long." />
+    <replacement key="$password$" value="подумать" />
+    <replacement key="$phraseTextBox$" value="Phrase of at least 20 characters long excluding spaces and interpunction." />
+    <replacement key="$phrase$" value="Расцветали яблони и груши Поплыли туманы над рекой Выходила на берег Катюша На высокий берег на крутой Выходила на берег Катюша                                       На высокий берег на крутой" />
+    <replacement key="$numberTextBox$" value="1 or 2 digit number, maximum value is 33." />
+    <replacement key="$number$" value="12" />
+    <replacement key="$initializingStringTextBox$" value="Initalizing string consisting only of digits with minimum length of 5." />
+    <replacement key="$initializingString$" value="53815" />
+    <replacement key="$inputTextBox$" value="Plaintext Input" />
+    <replacement key="$input$" value="Калинка, калинка, калинка моя! В саду ягода малинка, малинка моя! Ах, под сосною, под зеленою, Спать положите вы меня! Ай-люли, люли, ай-люли, люли, Спать положите вы меня." />
+    <replacement key="$componentTextBox$" value="VIC Cipher" />
+    <replacement key="$outputTextBox$" value="Output of the VIC cipher. Enciphered text" /> 
+    <replacement key="$memo$" value="This is a template showcasing the usage of the VIC cipher.
+    As you can see, VIC cipher needs to have 5 different 
+    inputs for the key and one for the plaintext. Please,
+    read all the captions for the keys to make sure you enter the key parts in correct format." />    
+  </replacements>
+</sample>
