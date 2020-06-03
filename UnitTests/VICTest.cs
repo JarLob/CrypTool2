@@ -13,25 +13,33 @@ namespace Tests.TemplateAndPluginTests
         public void VICTestMethod()
         {
             var pluginInstance = TestHelpers.GetPluginInstance("VIC");
-            var scenario = new PluginTestScenario(pluginInstance, new[] { "InputString", "PhraseString", "DateString", "InitializingString","AgentsNumberString","PasswordString",".action",".alphabet" }, new[] { "OutputString" });
+            var scenario = new PluginTestScenario(pluginInstance, new[] { "Input", "Phrase", "Date", "InitializingString", "Number", "Password" }, new[] { "Output" });
             object[] output;
 
             foreach (TestVector vector in testvectors)
             {
-                output = scenario.GetOutputs(new object[] { vector.input, vector.phrase, vector.date, vector.initializingString, vector.agentsNumber, vector.password },true);
-                
+                output = scenario.GetOutputs(new object[] { vector.input, vector.phrase, vector.date, vector.initializingString, vector.number, vector.password });
+                Assert.AreEqual(vector.output, (string)output[0], "Unexpected value in test #" + vector.n + ".");
             }
 
         }
 
         struct TestVector
         {
-            public string input, output, phrase, date, initializingString, agentsNumber, password;
+            public int n;
+            public string input, output, phrase, date, initializingString, number, password;
         }
 
-        TestVector[] testvectors = new TestVector[] {
-            new TestVector () {input="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-            phrase="Met defective are allowance two perceived listening consulted contained", date="391945",initializingString="208103",agentsNumber="10",password="snowfall"}
+        TestVector[] testvectors = new TestVector[] 
+        {
+            new TestVector () {n=0, 
+                input="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                phrase="Met defective are allowance two perceived listening consulted contained", 
+                date="391945",
+                initializingString="208103",
+                number="10",
+                password="snowfall", 
+                output="Some output value" }
         };
 
     }
