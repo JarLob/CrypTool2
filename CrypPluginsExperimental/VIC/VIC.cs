@@ -192,7 +192,7 @@ namespace Cryptool.Plugins.VIC
             }
 
 
-            if (settings.Action == ActionType.Decrypt)
+            if ((ActionType)settings.Action == ActionType.Decrypt)
             {
                 int saltInsertionIndex = int.Parse(Date.ElementAt(Date.Length - 1).ToString());
                 Input = RemoveSalt(Input, saltInsertionIndex);
@@ -678,11 +678,11 @@ namespace Cryptool.Plugins.VIC
                 }
             }
             
-            if (settings.Alphabet.Equals(AlphabetType.Cyrillic))
+            if (settings.Alphabet.Equals((int)AlphabetType.Cyrillic))
             {
                 substitutionTable = InjectCyrillicLetters(substitutionTable);
             }
-            else if (settings.Alphabet.Equals(AlphabetType.Latin))
+            else if (settings.Alphabet.Equals((int)AlphabetType.Latin))
             {
                 substitutionTable = InjectLatinLetters(substitutionTable);
             }
@@ -770,7 +770,7 @@ namespace Cryptool.Plugins.VIC
         /// <returns></returns>
         private bool PerformSpecialCharSubstitution(string input, int index, ref string outputMessage, ref int iterationsToSkip, string[,] substitutionTable)
         {
-            if (settings.Alphabet == AlphabetType.Cyrillic)
+            if ((AlphabetType)settings.Alphabet == AlphabetType.Cyrillic)
             {
                 return PerformSpecialCyrillicCharSubstitution(input, index, ref outputMessage, ref iterationsToSkip, substitutionTable);
             }
@@ -1600,14 +1600,14 @@ namespace Cryptool.Plugins.VIC
         public void Execute()
         {
             ProgressChanged(0, 1);
-            if (settings.Alphabet == AlphabetType.Cyrillic)
+            if ((AlphabetType)settings.Alphabet == AlphabetType.Cyrillic)
             {
                 ALPHABET = cyrillicAlphabet;
                 textStartSymbol = "НТ";
                 digitLetterSymbol = "Н/Ц";
                 repeatSymbol = "Л/П";
             }
-            else if (settings.Alphabet == AlphabetType.Latin)
+            else if ((AlphabetType)settings.Alphabet == AlphabetType.Latin)
             {
                 ALPHABET = latinAlphabet;
                 textStartSymbol = "TS";
@@ -1741,21 +1741,12 @@ namespace Cryptool.Plugins.VIC
                 ProgressChanged(13, 16);
 
 
-                if (settings.Action == ActionType.Encrypt)
+                if ((ActionType)settings.Action == ActionType.Encrypt)
                 {
 
                     //14. Perform the first substitution
                     substitutionTable = ConstructSubstitutionTable(lineS, Password, ALPHABET);
-                    string logMessage = "";
-                    for (int i = 0; i < substitutionTable.GetLength(0); i++)
-                    {
-                        for (int j = 0; j < substitutionTable.GetLength(1); j++)
-                        {
-                            logMessage += substitutionTable.GetValue(i, j);
-                        }
-                        logMessage += "\n";
-                    }
-                    
+
                     substitutionResult = (PerformSubstitution(substitutionTable, Input));
                     substitutionResult = AddZeros(substitutionResult);
 
@@ -1780,7 +1771,7 @@ namespace Cryptool.Plugins.VIC
                     
                     OnPropertyChanged("Output");
                 }
-                else if (settings.Action == ActionType.Decrypt)
+                else if ((ActionType)settings.Action == ActionType.Decrypt)
                 {
                     // 14. Detranspose second transposition
                     onceDetransposedMessage = DeTransposeSecondTransposition(Input, secondTransposition);
@@ -1804,17 +1795,10 @@ namespace Cryptool.Plugins.VIC
                     // 16. Desubstitute substitution
                     substitutionTable = ConstructSubstitutionTable(lineS, Password, ALPHABET);
                     string logMessage = "";
-                    for (int i = 0; i < substitutionTable.GetLength(0); i++)
-                    {
-                        for (int j = 0; j < substitutionTable.GetLength(1); j++)
-                        {
-                            logMessage += substitutionTable.GetValue(i, j);
-                        }
-                        logMessage += "\n";
-                    }
                     
                     Output = Desubstitute(twiceDetransposedMessage, substitutionTable);
                     Output = DetermineTextStart(Output);
+                    
 
 
                     OnPropertyChanged("Output");

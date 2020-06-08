@@ -141,6 +141,7 @@
   <ItemGroup>
     <Compile Include="AchterbahnTest.cs" />
     <Compile Include="ADFGVXTest.cs" />
+    <Compile Include="VICTest.cs" />
     <Compile Include="SpeckTest.cs" />
     <Compile Include="LAMBDA1Test.cs" />
     <Compile Include="AESTest.cs" />

@@ -42,34 +42,34 @@ namespace Cryptool.Plugins.VIC
         #region TaskPane Settings
 
         [TaskPane("EncryptionTypeSwitch", "EncryptionTypeSwitchCaption", null, 0, false, ControlType.ComboBox, new string[] { "Encrypt", "Decrypt" })]
-        public ActionType Action
+        public int Action
         {
             get
             {
-                return _action;
+                return (int)_action;
             }
             set
             {
-                if (_action != value)
+                if (_action != (ActionType)value)
                 {
-                    _action = value;
+                    _action = (ActionType)value;
                     OnPropertyChanged("Action");
                 }
             }
         }
 
         [TaskPane("AlphabetTypeSwitch", "AlphabetTypeSwitchCaption", null, 0, false, ControlType.ComboBox, new string[] { "Latin", "Cyrillic" })]
-        public AlphabetType Alphabet
+        public int Alphabet
         {
             get
             {
-                return _alphabet;
+                return (int)_alphabet;
             }
             set
             {
-                if (_alphabet != value)
+                if (_alphabet != (AlphabetType)value)
                 {
-                    _alphabet = value;
+                    _alphabet = (AlphabetType)value;
                     OnPropertyChanged("Alphabet");
                 }
             }
