@@ -75,7 +75,7 @@ namespace Cryptool.Plugins.DCAPathFinder
         public DCAPathFinder()
         {
             _stop = false;
-            settings.PropertyChanged += new PropertyChangedEventHandler(SettingChangedListener);
+            settings.PropertyChanged += SettingChangedListener;
             settings.SettingsErrorOccured += HandleSettingsError;
 
             //Check specific algorithm and invoke the selection into the UI class

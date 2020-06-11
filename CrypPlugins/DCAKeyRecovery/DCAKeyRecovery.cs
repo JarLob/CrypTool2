@@ -18,7 +18,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,7 +34,6 @@ using DCAKeyRecovery.Logic.Cipher2;
 using DCAKeyRecovery.Logic.Cipher3;
 using DCAKeyRecovery.Properties;
 using DCAKeyRecovery.UI;
-using DCAKeyRecovery.UI.Cipher1;
 using Newtonsoft.Json;
 
 namespace Cryptool.Plugins.DCAKeyRecovery

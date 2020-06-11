@@ -14,7 +14,6 @@
    limitations under the License.
 */
 
-using System;
 using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
@@ -26,22 +25,7 @@ namespace Cryptool.Plugins.DCAPathVisualiser
     {
         #region Private Variables
 
-        private string _choiceOfAlgorithm = "0";
         private Algorithms _currentAlgorithm = Algorithms.Cipher1;
-
-        #endregion
-
-        #region Properties
-
-        public Algorithms CurrentAlgorithm
-        {
-            get { return _currentAlgorithm; }
-            set
-            {
-                _currentAlgorithm = value;
-                OnPropertyChanged("CurrentAlgorithm");
-            }
-        }
 
         #endregion
 
@@ -51,42 +35,13 @@ namespace Cryptool.Plugins.DCAPathVisualiser
         /// Selection of the toy cipher algorithm
         /// </summary>
         [TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", null, 2, false, ControlType.ComboBox, new string[] { "Cipher1", "Cipher2", "Cipher3" })]
-        public string ChoiceOfAlgorithm
+        public Algorithms CurrentAlgorithm
         {
-            get
-            {
-                return _choiceOfAlgorithm;
-            }
+            get { return _currentAlgorithm; }
             set
             {
-                if (_choiceOfAlgorithm != value)
-                {
-                    _choiceOfAlgorithm = value;
-                    switch (_choiceOfAlgorithm)
-                    {
-                        case "0":
-                        {
-                            CurrentAlgorithm = Algorithms.Cipher1;
-                        }
-                            break;
-                        case "1":
-                        {
-                            CurrentAlgorithm = Algorithms.Cipher2;
-                        }
-                            break;
-                        case "2":
-                        {
-                            CurrentAlgorithm = Algorithms.Cipher3;
-                        }
-                            break;
-                        case "3":
-                        {
-                            CurrentAlgorithm = Algorithms.Cipher4;
-                        }
-                            break;
-                    }
-                    OnPropertyChanged("ChoiceOfAlgorithm");
-                }
+                _currentAlgorithm = value;
+                OnPropertyChanged("CurrentAlgorithm");
             }
         }
 

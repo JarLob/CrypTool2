@@ -14,7 +14,6 @@
    limitations under the License.
 */
 
-using System;
 using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
@@ -26,52 +25,8 @@ namespace Cryptool.Plugins.DCAToyCiphers
     {
         #region Private Variables
 
-        private string _choiceOfAlgorithm = "0";
-        private string _choiceOfMode ="0";
-        private Algorithms _currentAlgorithm = Algorithms.Cipher1;
-        private Mode _currentMode = Mode.Encrypt;
-
-        #endregion
-
-        #region methods
-
-        /// <summary>
-        /// default constructor
-        /// </summary>
-        public DCAToyCiphersSettings()
-        {
-            ChoiceOfAlgorithm = "0";
-        }
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Property for the mode
-        /// </summary>
-        public Mode CurrentMode
-        {
-            get { return _currentMode; }
-            set
-            {
-                _currentMode = value;
-                OnPropertyChanged("CurrentMode");
-            }
-        }
-
-        /// <summary>
-        /// Property for the cipher
-        /// </summary>
-        public Algorithms CurrentAlgorithm
-        {
-            get { return _currentAlgorithm; }
-            set
-            {
-                _currentAlgorithm = value;
-                OnPropertyChanged("CurrentAlgorithm");
-            }
-        }
+        private Algorithms _algorithm = Algorithms.Cipher1;
+        private Mode _mode = Mode.Encrypt;
 
         #endregion
 
@@ -81,29 +36,13 @@ namespace Cryptool.Plugins.DCAToyCiphers
         /// Selection of the operating mode
         /// </summary>
         [TaskPane("ChoiceOfMode", "ChoiceOfModeToolTop", "OperatingOptions", 1, false, ControlType.ComboBox, new string[] { "Mode1", "Mode2"})]
-        public string ChoiceOfMode
+        public Mode CurrentMode
         {
-            get { return _choiceOfMode; }
+            get { return _mode; }
             set
             {
-                if (_choiceOfMode != value)
-                {
-                    _choiceOfMode = value;
-                    switch (_choiceOfMode)
-                    {
-                        case "0":
-                        {
-                            CurrentMode = Mode.Encrypt;
-                        }
-                            break;
-                        case "1":
-                        {
-                            CurrentMode = Mode.Decrypt;
-                        }
-                            break;
-                    }
-                    OnPropertyChanged("ChoiceOfMode");
-                } 
+                _mode = value;
+                OnPropertyChanged("CurrentMode");
             }
         }
 
@@ -112,41 +51,18 @@ namespace Cryptool.Plugins.DCAToyCiphers
         /// </summary>
         //[TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", null, 1, false, ControlType.ComboBox, new string[]{ "Cipher1", "Cipher2", "Cipher3", "Cipher4", "Cipher5" })]
         [TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", "OperatingOptions", 2, false, ControlType.ComboBox, new string[] { "Cipher1", "Cipher2", "Cipher3"})]
-        public string ChoiceOfAlgorithm
+        public Algorithms CurrentAlgorithm
         {
             get
             {
-                return _choiceOfAlgorithm;
+                return _algorithm;
             }
             set
             {
-                if (_choiceOfAlgorithm != value)
+                if (_algorithm != value)
                 {
-                    _choiceOfAlgorithm = value;
-                    switch (_choiceOfAlgorithm)
-                    {
-                        case "0":
-                        {
-                            CurrentAlgorithm = Algorithms.Cipher1;
-                        }
-                            break;
-                        case "1":
-                        {
-                            CurrentAlgorithm = Algorithms.Cipher2;
-                            }
-                            break;
-                        case "2":
-                        {
-                            CurrentAlgorithm = Algorithms.Cipher3;
-                        }
-                            break;
-                        case "3":
-                        {
-                            CurrentAlgorithm = Algorithms.Cipher4;
-                        }
-                            break;
-                    }
-                    OnPropertyChanged("ChoiceOfAlgorithm");
+                    _algorithm = value;
+                    OnPropertyChanged("CurrentAlgorithm");
                 }
             }
         }

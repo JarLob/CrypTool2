@@ -30,62 +30,16 @@ namespace Cryptool.Plugins.DCAPathFinder
         #region Private Variables
 
         private int _chosenMessagePairsCount = 5000;
-        private string _choiceOfAlgorithm = "0";
         private Algorithms _currentAlgorithm = Algorithms.Cipher1;
-        private string _choiceOfSearchPolicy = "0";
         private SearchPolicy _currentSearchPolicy = SearchPolicy.FirstAllCharacteristicsDepthSearch;
-        private string _choiceOfAbortingPolicy = "0";
         private AbortingPolicy _currentAbortingPolicy = AbortingPolicy.Threshold;
         private bool _presentationMode = true;
-        private bool _automaticMode =false;
-        private int _maxThreads = Environment.ProcessorCount;
+        private bool _automaticMode;
+        private readonly int _maxThreads = Environment.ProcessorCount;
         private int _threadCount = 1;
-        private bool _useOfflinePaths = false;
+        private bool _useOfflinePaths;
         private double _thresholdDifferentialSearch = 0.0001;
         private double _thresholdCharacteristicSearch = 0.001;
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Property for Algorithm
-        /// </summary>
-        public Algorithms CurrentAlgorithm
-        {
-            get { return _currentAlgorithm; }
-            set
-            {
-                _currentAlgorithm = value;
-                OnPropertyChanged("CurrentAlgorithm");
-            }
-        }
-
-        /// <summary>
-        /// Property for SearchPolicy
-        /// </summary>
-        public SearchPolicy CurrentSearchPolicy
-        {
-            get { return _currentSearchPolicy; }
-            set
-            {
-                _currentSearchPolicy = value;
-                OnPropertyChanged("CurrentSearchPolicy");
-            }
-        }
-
-        /// <summary>
-        /// Property for AbortingPolicy
-        /// </summary>
-        public AbortingPolicy CurrentAbortingPolicy
-        {
-            get { return _currentAbortingPolicy; }
-            set
-            {
-                _currentAbortingPolicy = value;
-                OnPropertyChanged("CurrentAbortingPolicy");
-            }
-        }
 
         #endregion
 
@@ -96,97 +50,93 @@ namespace Cryptool.Plugins.DCAPathFinder
         /// </summary>
         [TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", "ChoiceOfAlgorithmGroup", 1, false,
             ControlType.ComboBox, new string[] {"Cipher1", "Cipher2", "Cipher3"})]
-        public string ChoiceOfAlgorithm
+        public Algorithms CurrentAlgorithm
         {
-            get { return _choiceOfAlgorithm; }
+            get { return _currentAlgorithm; }
             set
             {
-                if (_choiceOfAlgorithm != value)
+                if (_currentAlgorithm != value)
                 {
-                    _choiceOfAlgorithm = value;
-                    switch (_choiceOfAlgorithm)
+                    _currentAlgorithm = value;
+                    switch (_currentAlgorithm)
                     {
-                        case "0":
-                            CurrentAlgorithm = Algorithms.Cipher1;
-                            hideSettingsElement("ChosenMessagePairsCount");
-                            hideSettingsElement("ChoiceOfSearchPolicy");
-                            hideSettingsElement("ChoiceOfAbortingPolicy");
-                            hideSettingsElement("ThreadCount");
-                            hideSettingsElement("UseOfflinePaths");
-                            hideSettingsElement("AbortingThresholdCharacteristicSearch");
-                            hideSettingsElement("AbortingThresholdDifferentialSearch");
+                        case Algorithms.Cipher1:
+                            HideSettingsElement("ChosenMessagePairsCount");
+                            HideSettingsElement("CurrentSearchPolicy");
+                            HideSettingsElement("CurrentAbortingPolicy");
+                            HideSettingsElement("ThreadCount");
+                            HideSettingsElement("UseOfflinePaths");
+                            HideSettingsElement("AbortingThresholdCharacteristicSearch");
+                            HideSettingsElement("AbortingThresholdDifferentialSearch");
                             break;
-                        case "1":
-                            CurrentAlgorithm = Algorithms.Cipher2;
-                            showSettingsElement("ChosenMessagePairsCount");
-                            showSettingsElement("ChoiceOfSearchPolicy");
-                            showSettingsElement("ChoiceOfAbortingPolicy");
-                            showSettingsElement("ThreadCount");
-                            showSettingsElement("UseOfflinePaths");
+                        case Algorithms.Cipher2:
+                            ShowSettingsElement("ChosenMessagePairsCount");
+                            ShowSettingsElement("CurrentSearchPolicy");
+                            ShowSettingsElement("CurrentAbortingPolicy");
+                            ShowSettingsElement("ThreadCount");
+                            ShowSettingsElement("UseOfflinePaths");
 
-                            if (_choiceOfSearchPolicy.Equals("1"))
+                            if (_currentSearchPolicy == SearchPolicy.FirstBestCharacteristicDepthSearch)
                             {
-                                showSettingsElement("ChoiceOfAbortingPolicy");
-                                if (_choiceOfAbortingPolicy == "0")
+                                ShowSettingsElement("CurrentAbortingPolicy");
+                                if (_currentAbortingPolicy == AbortingPolicy.GlobalMaximum)
                                 {
-                                    showSettingsElement("AbortingThresholdDifferentialSearch");
-                                    hideSettingsElement("AbortingThresholdCharacteristicSearch");
+                                    ShowSettingsElement("AbortingThresholdDifferentialSearch");
+                                    HideSettingsElement("AbortingThresholdCharacteristicSearch");
                                 }
                                 else
                                 {
-                                    showSettingsElement("AbortingThresholdCharacteristicSearch");
-                                    showSettingsElement("AbortingThresholdDifferentialSearch");
+                                    ShowSettingsElement("AbortingThresholdCharacteristicSearch");
+                                    ShowSettingsElement("AbortingThresholdDifferentialSearch");
                                 }
                             }
                             else
                             {
-                                hideSettingsElement("ChoiceOfAbortingPolicy");
-                                hideSettingsElement("AbortingThresholdCharacteristicSearch");
-                                showSettingsElement("AbortingThresholdDifferentialSearch");
+                                HideSettingsElement("CurrentAbortingPolicy");
+                                HideSettingsElement("AbortingThresholdCharacteristicSearch");
+                                ShowSettingsElement("AbortingThresholdDifferentialSearch");
                             }
 
                             break;
-                        case "2":
-                            CurrentAlgorithm = Algorithms.Cipher3;
-                            showSettingsElement("ChosenMessagePairsCount");
-                            showSettingsElement("ChoiceOfSearchPolicy");
-                            showSettingsElement("ChoiceOfAbortingPolicy");
-                            showSettingsElement("ThreadCount");
-                            showSettingsElement("UseOfflinePaths");
+                        case Algorithms.Cipher3:
+                            ShowSettingsElement("ChosenMessagePairsCount");
+                            ShowSettingsElement("CurrentSearchPolicy");
+                            ShowSettingsElement("CurrentAbortingPolicy");
+                            ShowSettingsElement("ThreadCount");
+                            ShowSettingsElement("UseOfflinePaths");
 
-                            if (_choiceOfSearchPolicy.Equals("1"))
+                            if (_currentSearchPolicy == SearchPolicy.FirstBestCharacteristicDepthSearch)
                             {
-                                showSettingsElement("ChoiceOfAbortingPolicy");
-                                if (_choiceOfAbortingPolicy == "0")
+                                ShowSettingsElement("CurrentAbortingPolicy");
+                                if (_currentAbortingPolicy == AbortingPolicy.GlobalMaximum)
                                 {
-                                    showSettingsElement("AbortingThresholdDifferentialSearch");
-                                    hideSettingsElement("AbortingThresholdCharacteristicSearch");
+                                    ShowSettingsElement("AbortingThresholdDifferentialSearch");
+                                    HideSettingsElement("AbortingThresholdCharacteristicSearch");
                                 }
                                 else
                                 {
-                                    showSettingsElement("AbortingThresholdCharacteristicSearch");
-                                    showSettingsElement("AbortingThresholdDifferentialSearch");
+                                    ShowSettingsElement("AbortingThresholdCharacteristicSearch");
+                                    ShowSettingsElement("AbortingThresholdDifferentialSearch");
                                 }
                             }
                             else
                             {
-                                hideSettingsElement("ChoiceOfAbortingPolicy");
-                                hideSettingsElement("AbortingThresholdCharacteristicSearch");
-                                showSettingsElement("AbortingThresholdDifferentialSearch");
+                                HideSettingsElement("CurrentAbortingPolicy");
+                                HideSettingsElement("AbortingThresholdCharacteristicSearch");
+                                ShowSettingsElement("AbortingThresholdDifferentialSearch");
                             }
 
                             break;
-                        case "3":
-                            CurrentAlgorithm = Algorithms.Cipher4;
-                            showSettingsElement("ChosenMessagePairsCount");
-                            showSettingsElement("ChoiceOfSearchPolicy");
-                            showSettingsElement("ChoiceOfAbortingPolicy");
-                            showSettingsElement("ThreadCount");
-                            showSettingsElement("UseOfflinePaths");
+                        case Algorithms.Cipher4:
+                            ShowSettingsElement("ChosenMessagePairsCount");
+                            ShowSettingsElement("CurrentSearchPolicy");
+                            ShowSettingsElement("CurrentAbortingPolicy");
+                            ShowSettingsElement("ThreadCount");
+                            ShowSettingsElement("UseOfflinePaths");
                             break;
                     }
 
-                    OnPropertyChanged("ChoiceOfAlgorithm");
+                    OnPropertyChanged("CurrentAlgorithm");
                 }
             }
         }
@@ -194,7 +144,8 @@ namespace Cryptool.Plugins.DCAPathFinder
         /// <summary>
         /// setting to specify the number of threads to use in key recovery
         /// </summary>
-        [TaskPane("ThreadCount", "ThreadCountToolTip", "PerformanceSettingsGroup", 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 64)]
+        [TaskPane("ThreadCount", "ThreadCountToolTip", "PerformanceSettingsGroup", 1, false, ControlType.NumericUpDown,
+            ValidationType.RangeInteger, 1, 64)]
         public int ThreadCount
         {
             get { return _threadCount; }
@@ -225,7 +176,8 @@ namespace Cryptool.Plugins.DCAPathFinder
         /// <summary>
         /// textbox to specify the count of chosen message pairs
         /// </summary>
-        [TaskPane("ChosenMessagePairsCount", "ChosenMessagePairsCountToolTip", "DCAOptions", 1, false, ControlType.TextBox)]
+        [TaskPane("ChosenMessagePairsCount", "ChosenMessagePairsCountToolTip", "DCAOptions", 1, false,
+            ControlType.TextBox)]
         public int ChosenMessagePairsCount
         {
             get { return _chosenMessagePairsCount; }
@@ -239,7 +191,8 @@ namespace Cryptool.Plugins.DCAPathFinder
         /// <summary>
         /// setting to specify that paths should be loaded from a file to prevent long search times
         /// </summary>
-        [TaskPane("UseOfflinePaths", "UseOfflinePathsToolTip", "PerformanceSettingsGroup", 2, false,ControlType.CheckBox)]
+        [TaskPane("UseOfflinePaths", "UseOfflinePathsToolTip", "PerformanceSettingsGroup", 2, false,
+            ControlType.CheckBox)]
         public bool UseOfflinePaths
         {
             get { return _useOfflinePaths; }
@@ -249,7 +202,7 @@ namespace Cryptool.Plugins.DCAPathFinder
                 OnPropertyChanged("UseOfflinePaths");
             }
         }
-        
+
         /// <summary>
         /// checkbox to activate the automatic mode (no user interaction needed)
         /// </summary>
@@ -263,12 +216,12 @@ namespace Cryptool.Plugins.DCAPathFinder
 
                 if (_automaticMode)
                 {
-                    hideSettingsElement("PresentationMode");
+                    HideSettingsElement("PresentationMode");
                     _presentationMode = false;
                 }
                 else
                 {
-                    showSettingsElement("PresentationMode");
+                    ShowSettingsElement("PresentationMode");
                 }
 
                 OnPropertyChanged("AutomaticMode");
@@ -289,20 +242,20 @@ namespace Cryptool.Plugins.DCAPathFinder
 
                 if (_presentationMode)
                 {
-                    hideSettingsElement("AutomaticMode");
+                    HideSettingsElement("AutomaticMode");
                     _automaticMode = false;
                 }
                 else
                 {
-                    showSettingsElement("AutomaticMode");
+                    ShowSettingsElement("AutomaticMode");
                 }
 
                 OnPropertyChanged("PresentationMode");
             }
         }
 
-        /* */
-        [TaskPane("AbortingThresholdDifferentialSearch", "AbortingThresholdDifferentialSearchToolTip", "DCAOptions", 5, false, ControlType.NumericUpDown, ValidationType.RangeDouble, 0, 1, 0.0001)]
+        [TaskPane("AbortingThresholdDifferentialSearch", "AbortingThresholdDifferentialSearchToolTip", "DCAOptions", 5,
+            false, ControlType.NumericUpDown, ValidationType.RangeDouble, 0, 1, 0.0001)]
         public double AbortingThresholdDifferentialSearch
         {
             get { return _thresholdDifferentialSearch; }
@@ -313,7 +266,8 @@ namespace Cryptool.Plugins.DCAPathFinder
             }
         }
 
-        [TaskPane("AbortingThresholdBestCharacteristicSearch", "AbortingThresholdBestCharacteristicSearchToolTip", "DCAOptions", 4, false, ControlType.NumericUpDown, ValidationType.RangeDouble, 0, 1, 0.0001)]
+        [TaskPane("AbortingThresholdBestCharacteristicSearch", "AbortingThresholdBestCharacteristicSearchToolTip",
+            "DCAOptions", 4, false, ControlType.NumericUpDown, ValidationType.RangeDouble, 0, 1, 0.0001)]
         public double AbortingThresholdCharacteristicSearch
         {
             get { return _thresholdCharacteristicSearch; }
@@ -323,51 +277,55 @@ namespace Cryptool.Plugins.DCAPathFinder
                 OnPropertyChanged("AbortingThresholdCharacteristicSearch");
             }
         }
-        
-
 
         /// <summary>
         /// Selection of the search policy
         /// </summary>
         [TaskPane("ChoiceOfSearchPolicy", "ChoiceOfSearchPolicyToolTop", "DCAOptions", 2, false, ControlType.ComboBox,
             new string[] {"SearchPolicy1", "SearchPolicy2", "SearchPolicy3"})]
-        public string ChoiceOfSearchPolicy
+        public SearchPolicy CurrentSearchPolicy
         {
-            get { return _choiceOfSearchPolicy; }
+            get { return _currentSearchPolicy; }
             set
             {
-                if (_choiceOfSearchPolicy != value)
+                if (_currentSearchPolicy != value)
                 {
-                    _choiceOfSearchPolicy = value;
-                    switch (_choiceOfSearchPolicy)
+                    _currentSearchPolicy = value;
+                    switch (_currentSearchPolicy)
                     {
-                        case "0":
+                        case SearchPolicy.FirstBestCharacteristicHeuristic:
                         {
-                            CurrentSearchPolicy = SearchPolicy.FirstBestCharacteristicHeuristic;
-                            hideSettingsElement("ChoiceOfAbortingPolicy");
-                            hideSettingsElement("AbortingThresholdCharacteristicSearch");
-                            showSettingsElement("AbortingThresholdDifferentialSearch");
-                            }
-                            break;
-                        case "1":
-                        {
-                            CurrentSearchPolicy = SearchPolicy.FirstBestCharacteristicDepthSearch;
-                            showSettingsElement("ChoiceOfAbortingPolicy");
-                            showSettingsElement("AbortingThresholdCharacteristicSearch");
-                            showSettingsElement("AbortingThresholdDifferentialSearch");
+                            HideSettingsElement("CurrentAbortingPolicy");
+                            HideSettingsElement("AbortingThresholdCharacteristicSearch");
+                            ShowSettingsElement("AbortingThresholdDifferentialSearch");
                         }
                             break;
-                        case "2":
+                        case SearchPolicy.FirstBestCharacteristicDepthSearch:
                         {
-                            CurrentSearchPolicy = SearchPolicy.FirstAllCharacteristicsDepthSearch;
-                            hideSettingsElement("ChoiceOfAbortingPolicy");
-                            hideSettingsElement("AbortingThresholdCharacteristicSearch");
-                            showSettingsElement("AbortingThresholdDifferentialSearch");
+                            ShowSettingsElement("CurrentAbortingPolicy");
+
+                            if (_currentAbortingPolicy == AbortingPolicy.GlobalMaximum)
+                            {
+                                HideSettingsElement("AbortingThresholdCharacteristicSearch");
+                                ShowSettingsElement("AbortingThresholdDifferentialSearch");
+                            }
+                            else if(_currentAbortingPolicy == AbortingPolicy.Threshold)
+                            {
+                                ShowSettingsElement("AbortingThresholdCharacteristicSearch");
+                                ShowSettingsElement("AbortingThresholdDifferentialSearch");
+                            }
+                        }
+                            break;
+                        case SearchPolicy.FirstAllCharacteristicsDepthSearch:
+                        {
+                            HideSettingsElement("CurrentAbortingPolicy");
+                            HideSettingsElement("AbortingThresholdCharacteristicSearch");
+                            ShowSettingsElement("AbortingThresholdDifferentialSearch");
                         }
                             break;
                     }
 
-                    OnPropertyChanged("ChoiceOfSearchPolicy");
+                    OnPropertyChanged("CurrentSearchPolicy");
                 }
             }
         }
@@ -375,33 +333,31 @@ namespace Cryptool.Plugins.DCAPathFinder
         /// <summary>
         /// Selection of the aborting policy
         /// </summary>
-        [TaskPane("ChoiceAbortingPolicyPolicy", "ChoiceOfAbortingPolicyToolTop", "DCAOptions", 3, false, ControlType.ComboBox, new string[] {"AbortingPolicy1", "AbortingPolicy2"})]
-        public string ChoiceOfAbortingPolicy
+        [TaskPane("ChoiceAbortingPolicyPolicy", "ChoiceOfAbortingPolicyToolTop", "DCAOptions", 3, false,
+            ControlType.ComboBox, new string[] {"AbortingPolicy1", "AbortingPolicy2"})]
+        public AbortingPolicy CurrentAbortingPolicy
         {
-            get { return _choiceOfAbortingPolicy; }
+            get { return _currentAbortingPolicy; }
             set
             {
-                if (_choiceOfAbortingPolicy != value)
+                if (_currentAbortingPolicy != value)
                 {
-                    _choiceOfAbortingPolicy = value;
-                    switch (_choiceOfAbortingPolicy)
+                    _currentAbortingPolicy = value;
+                    switch (_currentAbortingPolicy)
                     {
-                        case "0":
+                        case AbortingPolicy.GlobalMaximum:
                         {
-                            CurrentAbortingPolicy = AbortingPolicy.GlobalMaximum;
-                            hideSettingsElement("AbortingThresholdCharacteristicSearch");
-
+                            HideSettingsElement("AbortingThresholdCharacteristicSearch");
                         }
                             break;
-                        case "1":
+                        case AbortingPolicy.Threshold:
                         {
-                            CurrentAbortingPolicy = AbortingPolicy.Threshold;
-                            showSettingsElement("AbortingThresholdCharacteristicSearch");
+                            ShowSettingsElement("AbortingThresholdCharacteristicSearch");
                         }
                             break;
                     }
 
-                    OnPropertyChanged("ChoiceOfAbortingPolicy");
+                    OnPropertyChanged("CurrentAbortingPolicy");
                 }
             }
         }
@@ -427,7 +383,7 @@ namespace Cryptool.Plugins.DCAPathFinder
         /// shows a hidden settings element
         /// </summary>
         /// <param name="element"></param>
-        private void showSettingsElement(string element)
+        private void ShowSettingsElement(string element)
         {
             if (TaskPaneAttributeChanged != null)
             {
@@ -440,7 +396,7 @@ namespace Cryptool.Plugins.DCAPathFinder
         /// hides a settings element
         /// </summary>
         /// <param name="element"></param>
-        private void hideSettingsElement(string element)
+        private void HideSettingsElement(string element)
         {
             if (TaskPaneAttributeChanged != null)
             {
@@ -460,61 +416,59 @@ namespace Cryptool.Plugins.DCAPathFinder
             //check what mode is activated to hide impossible settings
             if (_presentationMode)
             {
-                showSettingsElement("PresentationMode");
-                hideSettingsElement("AutomaticMode");
+                ShowSettingsElement("PresentationMode");
+                HideSettingsElement("AutomaticMode");
             }
             else if (_automaticMode)
             {
-                showSettingsElement("AutomaticMode");
-                hideSettingsElement("PresentationMode");
+                ShowSettingsElement("AutomaticMode");
+                HideSettingsElement("PresentationMode");
             }
 
             //check which algorithm is chosen
             switch (CurrentAlgorithm)
             {
                 case Algorithms.Cipher1:
-                    hideSettingsElement("ChosenMessagePairsCount");
-                    hideSettingsElement("ChoiceOfSearchPolicy");
-                    hideSettingsElement("ChoiceOfAbortingPolicy");
-                    hideSettingsElement("ThreadCount");
-                    hideSettingsElement("UseOfflinePaths");
-                    hideSettingsElement("AbortingThresholdDifferentialSearch");
-                    hideSettingsElement("AbortingThresholdCharacteristicSearch");
+                    HideSettingsElement("ChosenMessagePairsCount");
+                    HideSettingsElement("CurrentSearchPolicy");
+                    HideSettingsElement("CurrentAbortingPolicy");
+                    HideSettingsElement("ThreadCount");
+                    HideSettingsElement("UseOfflinePaths");
+                    HideSettingsElement("AbortingThresholdDifferentialSearch");
+                    HideSettingsElement("AbortingThresholdCharacteristicSearch");
                     break;
                 default:
-                    showSettingsElement("ChosenMessagePairsCount");
-                    showSettingsElement("ChoiceOfSearchPolicy");
-                    showSettingsElement("ThreadCount");
-                    showSettingsElement("UseOfflinePaths");
-                    showSettingsElement("AbortingThresholdDifferentialSearch");
-                    showSettingsElement("AbortingThresholdCharacteristicSearch");
+                    ShowSettingsElement("ChosenMessagePairsCount");
+                    ShowSettingsElement("CurrentSearchPolicy");
+                    ShowSettingsElement("ThreadCount");
+                    ShowSettingsElement("UseOfflinePaths");
+                    ShowSettingsElement("AbortingThresholdDifferentialSearch");
+                    ShowSettingsElement("AbortingThresholdCharacteristicSearch");
 
-                    if (_choiceOfSearchPolicy != null)
+                    if (_currentSearchPolicy == SearchPolicy.FirstBestCharacteristicDepthSearch)
                     {
-                        if (_choiceOfSearchPolicy.Equals("1"))
+                        ShowSettingsElement("CurrentAbortingPolicy");
+                        if (CurrentAbortingPolicy == AbortingPolicy.GlobalMaximum)
                         {
-                            showSettingsElement("ChoiceOfAbortingPolicy");
-                            if (_choiceOfAbortingPolicy == "0")
-                            {
-                                showSettingsElement("AbortingThresholdDifferentialSearch");
-                                hideSettingsElement("AbortingThresholdCharacteristicSearch");
-                            }
-                            else
-                            {
-                                showSettingsElement("AbortingThresholdCharacteristicSearch");
-                                showSettingsElement("AbortingThresholdDifferentialSearch");
-                            }
+                            ShowSettingsElement("AbortingThresholdDifferentialSearch");
+                            HideSettingsElement("AbortingThresholdCharacteristicSearch");
                         }
                         else
                         {
-                            hideSettingsElement("ChoiceOfAbortingPolicy");
-                            hideSettingsElement("AbortingThresholdCharacteristicSearch");
-                            showSettingsElement("AbortingThresholdDifferentialSearch");
+                            ShowSettingsElement("AbortingThresholdCharacteristicSearch");
+                            ShowSettingsElement("AbortingThresholdDifferentialSearch");
                         }
                     }
+                    else
+                    {
+                        HideSettingsElement("CurrentAbortingPolicy");
+                        HideSettingsElement("AbortingThresholdCharacteristicSearch");
+                        ShowSettingsElement("AbortingThresholdDifferentialSearch");
+                    }
+
 
                     break;
-            } 
+            }
         }
     }
 }

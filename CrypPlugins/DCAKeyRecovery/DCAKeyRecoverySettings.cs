@@ -28,26 +28,11 @@ namespace Cryptool.Plugins.DCAKeyRecovery
     {
         #region Private Variables
 
-        private string _choiceOfAlgorithm = "0";
         private Algorithms _currentAlgorithm = Algorithms.Cipher1;
-        private bool _automaticMode = false;
-        private bool _UIUpdateWhileExecution = true;
-        private int _maxThreads = Environment.ProcessorCount;
+        private bool _automaticMode;
+        private bool _uiUpdateWhileExecution = true;
+        private readonly int _maxThreads = Environment.ProcessorCount;
         private int _threadCount = 1;
-
-        #endregion
-
-        #region Properties
-
-        public Algorithms CurrentAlgorithm
-        {
-            get { return _currentAlgorithm; }
-            set
-            {
-                _currentAlgorithm = value;
-                OnPropertyChanged("CurrentAlgorithm");
-            }
-        }
 
         #endregion
 
@@ -93,10 +78,10 @@ namespace Cryptool.Plugins.DCAKeyRecovery
         [TaskPane("UIUpdateWhileExecution", "UIUpdateWhileExecutionToolTip", "PerformanceSettingsGroup", 2, false, ControlType.CheckBox)]
         public bool UIUpdateWhileExecution
         {
-            get { return _UIUpdateWhileExecution; }
+            get { return _uiUpdateWhileExecution; }
             set
             {
-                _UIUpdateWhileExecution = value;
+                _uiUpdateWhileExecution = value;
                 OnPropertyChanged("UIUpdateWhileExecution");
             }
         }
@@ -119,37 +104,28 @@ namespace Cryptool.Plugins.DCAKeyRecovery
         /// Selection of the toy cipher algorithm
         /// </summary>
         [TaskPane("ChoiceOfAlgorithm", "ChoiceOfAlgorithmToolTop", "TutorialSettingsGroup", 1, false, ControlType.ComboBox, new string[] { "Cipher1", "Cipher2", "Cipher3" })]
-        public string ChoiceOfAlgorithm
+        public Algorithms CurrentAlgorithm
         {
             get
             {
-                return _choiceOfAlgorithm;
+                return _currentAlgorithm;
             }
             set
             {
-                if (_choiceOfAlgorithm != value)
+                if (_currentAlgorithm != value)
                 {
-                    _choiceOfAlgorithm = value;
-                    switch (_choiceOfAlgorithm)
+                    _currentAlgorithm = value;
+
+                    if (_currentAlgorithm == Algorithms.Cipher1)
                     {
-                        case "0":
-                            CurrentAlgorithm = Algorithms.Cipher1;
-                            hideSettingsElement("ThreadCount");
-                            break;
-                        case "1":
-                            CurrentAlgorithm = Algorithms.Cipher2;
-                            showSettingsElement("ThreadCount");
-                            break;
-                        case "2":
-                            CurrentAlgorithm = Algorithms.Cipher3;
-                            showSettingsElement("ThreadCount");
-                            break;
-                        case "3":
-                            CurrentAlgorithm = Algorithms.Cipher4;
-                            showSettingsElement("ThreadCount");
-                            break;
+                        HideSettingsElement("ThreadCount");
                     }
-                    OnPropertyChanged("ChoiceOfAlgorithm");
+                    else
+                    {
+                        ShowSettingsElement("ThreadCount");
+                    }
+
+                    OnPropertyChanged("CurrentAlgorithm");
                 }
             }
         }
@@ -175,7 +151,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
         /// shows a hidden settings element
         /// </summary>
         /// <param name="element"></param>
-        private void showSettingsElement(string element)
+        private void ShowSettingsElement(string element)
         {
             if (TaskPaneAttributeChanged != null)
             {
@@ -187,7 +163,7 @@ namespace Cryptool.Plugins.DCAKeyRecovery
         /// hides a settings element
         /// </summary>
         /// <param name="element"></param>
-        private void hideSettingsElement(string element)
+        private void HideSettingsElement(string element)
         {
             if (TaskPaneAttributeChanged != null)
             {
@@ -198,13 +174,13 @@ namespace Cryptool.Plugins.DCAKeyRecovery
         public void Initialize()
         {
             //check what cipher is activated to hide impossible settings
-            if (_choiceOfAlgorithm == "0")
+            if (_currentAlgorithm == Algorithms.Cipher1)
             {
-                hideSettingsElement("ThreadCount");
+                HideSettingsElement("ThreadCount");
             }
             else
             {
-                showSettingsElement("ThreadCount");
+                ShowSettingsElement("ThreadCount");
             }
         }
     }

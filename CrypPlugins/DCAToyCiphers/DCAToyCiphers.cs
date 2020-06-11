@@ -21,9 +21,7 @@ using Cryptool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Threading;
 using Cryptool.PluginBase.IO;
 using DCAToyCiphers;
@@ -223,7 +221,7 @@ namespace Cryptool.Plugins.DCAToyCiphers
             {
                 //create encryption object for the cipher
                 _currentCipher = new Cipher1();
-                int[] subKeys = readSubkeys(Cipher1Configuration.KEYNUM);
+                int[] subKeys = ReadSubkeys(Cipher1Configuration.KEYNUM);
                 if (subKeys != null)
                 {
                     _currentCipher.SetKeys(subKeys);
@@ -237,7 +235,7 @@ namespace Cryptool.Plugins.DCAToyCiphers
             {
                 //create encryption object for the cipher
                 _currentCipher = new Cipher2();
-                int[] subKeys = readSubkeys(Cipher2Configuration.KEYNUM);
+                int[] subKeys = ReadSubkeys(Cipher2Configuration.KEYNUM);
                 if (subKeys != null)
                 {
                     _currentCipher.SetKeys(subKeys);
@@ -251,7 +249,7 @@ namespace Cryptool.Plugins.DCAToyCiphers
             {
                 //create encryption object for the cipher
                 _currentCipher = new Cipher3();
-                int[] subKeys = readSubkeys(Cipher3Configuration.KEYNUM);
+                int[] subKeys = ReadSubkeys(Cipher3Configuration.KEYNUM);
                 if (subKeys != null)
                 {
                     _currentCipher.SetKeys(subKeys);
@@ -265,7 +263,7 @@ namespace Cryptool.Plugins.DCAToyCiphers
             {
                 //create encryption object for the cipher
                 _currentCipher = new Cipher4();
-                int[] subKeys = readSubkeys(Cipher4Configuration.KEYNUM);
+                int[] subKeys = ReadSubkeys(Cipher4Configuration.KEYNUM);
                 if (subKeys != null)
                 {
                     _currentCipher.SetKeys(subKeys);
@@ -428,7 +426,7 @@ namespace Cryptool.Plugins.DCAToyCiphers
         /// </summary>
         /// <param name="keycount"></param>
         /// <returns></returns>
-        private int[] readSubkeys(int keycount)
+        private int[] ReadSubkeys(int keycount)
         {
             int[] keys = new int[keycount];
 

@@ -23,7 +23,6 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using DCAPathVisualiser;
 using DCAPathVisualiser.Logic;
-using DCAPathVisualiser.Logic.Cipher2;
 using DCAPathVisualiser.Properties;
 using DCAPathVisualiser.UI;
 using Newtonsoft.Json;
@@ -45,7 +44,7 @@ namespace Cryptool.Plugins.DCAPathVisualiser
 
         public DCAPathVisualiser()
         {
-            _settings.PropertyChanged += new PropertyChangedEventHandler(SettingChangedListener);
+            _settings.PropertyChanged += SettingChangedListener;
 
             //Check specific algorithm and invoke the selection into the UI class
             if (_settings.CurrentAlgorithm == Algorithms.Cipher1)
@@ -199,10 +198,10 @@ namespace Cryptool.Plugins.DCAPathVisualiser
 
             try
             {
-                config = JsonConvert.DeserializeObject<DifferentialAttackRoundConfiguration>(json, new Newtonsoft.Json.JsonSerializerSettings
+                config = JsonConvert.DeserializeObject<DifferentialAttackRoundConfiguration>(json, new JsonSerializerSettings
                 {
-                    TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Auto,
-                    NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
+                    TypeNameHandling = TypeNameHandling.Auto,
+                    NullValueHandling = NullValueHandling.Ignore,
                 });
 
             }
