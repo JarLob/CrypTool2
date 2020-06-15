@@ -81,7 +81,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// Removes symbol at defined index
         /// </summary>
         /// <param name="index"></param>
-        public void RemoteSymbolAt(int index)
+        public void RemoveSymbolAt(int index)
         {
             symbols.RemoveAt(index);
         }
@@ -209,7 +209,6 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     }
                 }
             }
-            exit_loops:
             return ints.ToArray();
         }
     }
