@@ -14,6 +14,7 @@
    limitations under the License.
 */
 using System;
+using System.Globalization;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -230,6 +231,14 @@ namespace Cryptool.Plugins.VIC
             }
             InitializingString = InitializingString.Substring(0, 5);
 
+            StringBuilder stringBuilder = new StringBuilder();
+            var inputAr = Input.Normalize(NormalizationForm.FormD).ToCharArray();
+            foreach (char letter in inputAr)
+            {
+                if (CharUnicodeInfo.GetUnicodeCategory(letter) != UnicodeCategory.NonSpacingMark)
+                    stringBuilder.Append(letter);
+            }
+            Input = stringBuilder.ToString();
 
             Input = Input.ToUpper();
             Input = (Regex.Replace(Input, @"\s+", ""));
@@ -257,10 +266,7 @@ namespace Cryptool.Plugins.VIC
                 }
             }
             int saltInsertionIndex = int.Parse(Date.ElementAt(Date.Length - 1).ToString());
-            if (saltInsertionIndex != 0)
-            {
-                input = InsertSalt(input, saltInsertionIndex, InitializingString);
-            }
+            input = InsertSalt(input, saltInsertionIndex, InitializingString);
             return input;
         }
 
@@ -628,11 +634,6 @@ namespace Cryptool.Plugins.VIC
                 }
                 injectedLetters[i - 1] = password.ElementAt(iterator);
                 substitutionTable[1, i] = password.ElementAt(iterator++).ToString().ToUpper();
-            }
-            string temp = "";
-            foreach (var element in injectedLetters)
-            {
-                temp += element;
             }
             
             //</Second Line of Table>
@@ -1027,6 +1028,7 @@ namespace Cryptool.Plugins.VIC
                     }
                 }
             }
+
             return Transpose(permutation, transpositionMatrix);
         }
 
@@ -1083,6 +1085,7 @@ namespace Cryptool.Plugins.VIC
         {
             AreaColor[,] secondTranspositionTableColors = ConstructSecondTranspositionTableColors(permutation, message.Length);
             char[,] secondTranspositionTable = FillSecondTranspositionTable(message, secondTranspositionTableColors);
+            
             return Transpose(permutation, secondTranspositionTable);
 
         }
@@ -1197,24 +1200,6 @@ namespace Cryptool.Plugins.VIC
                 {
                     entireWhiteLine = true;
                     greyInProgress = false;
-                }
-
-            }
-            string temp = "";
-            for (int l = 0; l < secondTranspositionTableColors.GetLength(0); ++l)
-            {
-                temp += "\n";
-                for (int k = 0; k < secondTranspositionTableColors.GetLength(1); ++k)
-                {
-                    if (secondTranspositionTableColors.GetValue(l, k).Equals(AreaColor.grey))
-                    {
-                        temp += "grey  ";
-                    }
-                    else if (secondTranspositionTableColors.GetValue(l, k).Equals(AreaColor.white))
-                    {
-                        temp += "white ";
-                    }
-
                 }
 
             }
@@ -1362,16 +1347,9 @@ namespace Cryptool.Plugins.VIC
 
 
             transpositionMatrix = FillFirstTranspositionTableByCol(transpositionMatrix, transposition, message);
-            string temp = "\n";
-            for (int i = 0; i < transpositionMatrix.GetLength(0); ++i)
-            {
-                for (int j = 0; j < transpositionMatrix.GetLength(1); ++j)
-                {
-                    temp += (transpositionMatrix.GetValue(i, j));
-                }
-                temp += "\n";
-            }
             
+
+
             //read the rest of the table by rows;
             for (int i = 0; i < transpositionMatrix.GetLength(0); ++i)
             {
@@ -1438,6 +1416,9 @@ namespace Cryptool.Plugins.VIC
 
             char[,] secondTranspositionTable = new char[secondTranspositionTableColors.GetLength(0), secondTranspositionTableColors.GetLength(1)];
             secondTranspositionTable = FillSecondTranspositionTableByCol(secondTranspositionTable, permutation, message, secondTranspositionTableColors);
+
+            
+
             string output = "";
 
             //read by rows, white first
@@ -1721,20 +1702,12 @@ namespace Cryptool.Plugins.VIC
 
 
                 firstTransposition = EnumeratePermutation(firstPermutation, false);
-                string temp = "";
-                foreach (var element in firstTransposition)
-                {
-                    temp += " & " + element;
-                }
+                
                 
 
 
                 secondTransposition = EnumeratePermutation(secondPermutation, false);
-                temp = "";
-                foreach (var element in secondTransposition)
-                {
-                    temp += " & " + element;
-                }
+                
                 
 
 
@@ -1747,8 +1720,12 @@ namespace Cryptool.Plugins.VIC
                     //14. Perform the first substitution
                     substitutionTable = ConstructSubstitutionTable(lineS, Password, ALPHABET);
 
+
+
                     substitutionResult = (PerformSubstitution(substitutionTable, Input));
                     substitutionResult = AddZeros(substitutionResult);
+
+
 
                     ProgressChanged(14, 16);
 
@@ -1781,12 +1758,6 @@ namespace Cryptool.Plugins.VIC
                     ProgressChanged(15, 16);
 
                     // 15. Detranspose first transposition
-                    temp = "";
-                    foreach (var element in firstTransposition)
-                    {
-                        temp += element + ",";
-                    }
-                    
                     twiceDetransposedMessage = DeTransposeFirstTransposition(onceDetransposedMessage, firstTransposition);
 
                     
@@ -1794,8 +1765,8 @@ namespace Cryptool.Plugins.VIC
 
                     // 16. Desubstitute substitution
                     substitutionTable = ConstructSubstitutionTable(lineS, Password, ALPHABET);
-                    string logMessage = "";
                     
+
                     Output = Desubstitute(twiceDetransposedMessage, substitutionTable);
                     Output = DetermineTextStart(Output);
                     
