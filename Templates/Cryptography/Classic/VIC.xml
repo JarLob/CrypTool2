@@ -12,18 +12,24 @@
     <plugin name="VIC" />
   </relevantPlugins>
   <replacements lang="en">
-    <replacement key="$dateTextBox$" value="Date in a continental format with a mininum length of 5 digits." />
+    <replacement key="$dateTextBox$" value="Date in a continental format." />
     <replacement key="$date$" value="391945" />
-    <replacement key="$passwordTextBox$" value="Single word password of at least 7 characters long." />
+    <replacement key="$dateMemo$" value="Date in a continental format means that e.g. 3rd september 1945 is 391945. Minimum length should be 5 digits." />
+    <replacement key="$passwordTextBox$" value="Password" />
     <replacement key="$password$" value="подумать" />
+    <replacement key="$passwordMemo$" value="Password must consist of at least 7 unique characters." />
     <replacement key="$phraseTextBox$" value="Phrase of at least 20 characters long excluding spaces and interpunction." />
-    <replacement key="$phrase$" value="Расцветали яблони и груши Поплыли туманы над рекой Выходила на берег Катюша На высокий берег на крутой Выходила на берег Катюша                                       На высокий берег на крутой" />
-    <replacement key="$numberTextBox$" value="1 or 2 digit number, maximum value is 33." />
+    <replacement key="$phrase$" value="Расцветали яблони и груши Поплыли туманы над рекой Выходила на берег Катюша На высокий берег на крутой Выходила на берег Катюша На высокий берег на крутой" />
+    <replacement key="$phraseMemo$" value="Phrase consisting of at least 20 unique letters. A good example also used in the original messages enciphered with VIC cipher is a short passage from a folk song." />
+    <replacement key="$numberTextBox$" value="Number" />
     <replacement key="$number$" value="12" />
-    <replacement key="$initializingStringTextBox$" value="Initalizing string consisting only of digits with minimum length of 5." />
+    <replacement key="$numberMemo$" value="1 or 2 digit number. This number must be between 0 and 33, however optimal value is around 10-13. Originally, agent's number was used." />
+    <replacement key="$initializingStringTextBox$" value="Initalizing string" />
     <replacement key="$initializingString$" value="53815" />
+    <replacement key="$initializingStringMemo$" value="Initializing String must be consisting only of digits and at least 5 digits long. This string is also inserted to end of the output string at a position determined by the last digit of Date." />
     <replacement key="$inputTextBox$" value="Plaintext Input" />
     <replacement key="$input$" value="Калинка, калинка, калинка моя! В саду ягода малинка, малинка моя! Ах, под сосною, под зеленою, Спать положите вы меня! Ай-люли, люли, ай-люли, люли, Спать положите вы меня." />
+    <replacement key="$inputPlaintextMemo$" value="Plaintext Input to be processed by the VIC cipher" />
     <replacement key="$componentTextBox$" value="VIC Cipher" />
     <replacement key="$outputTextBox$" value="Output of the VIC cipher. Enciphered text" /> 
     <replacement key="$memo$" value="This is a template showcasing the usage of the VIC cipher.

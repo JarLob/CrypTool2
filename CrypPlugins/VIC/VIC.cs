@@ -24,6 +24,8 @@ using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
+using System.Linq.Expressions;
+using System.Windows;
 
 namespace Cryptool.Plugins.VIC
 {
@@ -39,14 +41,24 @@ namespace Cryptool.Plugins.VIC
 
         private readonly VICSettings settings = new VICSettings();
 
+        private string _Input;
+        private string _Date;
+        private string _Password;
+        private string _Phrase;
+        private string _Number;
+        private string _InitializingString;
 
+        private string input;
+        private string date;
+        private string password;
+        private string phrase;
+        private string number;
+        private string initializingString;
 
         private string ALPHABET;
 
         private string cyrillicAlphabet = "абвгдежзиклмнопрстуфхцчшщыьэюя".ToUpper();
         private string latinAlphabet = "abcdefghijklmnopqrstuvwxyz".ToUpper();
-
-
 
         private string lineC;
         private string lineD;
@@ -67,7 +79,6 @@ namespace Cryptool.Plugins.VIC
         private int[] firstTransposition;
         private int[] secondTransposition;
 
-
         string substitutionResult;
         private string onceTransposedMessage;
         private string twiceTransposedMessage;
@@ -81,12 +92,9 @@ namespace Cryptool.Plugins.VIC
 
         private string textStartSymbol;
         private string digitLetterSymbol;
-        private string repeatSymbol;
 
         string onceDetransposedMessage;
         string twiceDetransposedMessage;
-
-
 
         enum AreaColor
         {
@@ -102,42 +110,105 @@ namespace Cryptool.Plugins.VIC
         [PropertyInfo(Direction.InputData, "DateCaption", "DateTooltip")]
         public string Date
         {
-            get;
-            set;
+            get { return this._Date; }
+            set
+            {
+
+                if (!String.IsNullOrEmpty((String)(value))) {
+
+                    if (DateCheck(ref value))
+                    {
+                        this._Date = value;
+                        OnPropertyChanged("Date");
+                    }
+
+                }
+            }
         }
 
         [PropertyInfo(Direction.InputData, "PasswordCaption", "PasswordTooltip")]
         public string Password
         {
-            get;
-            set;
+            get { return this._Password; }
+            set
+            {
+                if (!String.IsNullOrEmpty((String)(value)))
+                {
+                    if (PasswordCheck(ref value))
+                    {
+                        this._Password = value;
+                        OnPropertyChanged("Password");
+                    }
+
+                }
+            }
         }
 
         [PropertyInfo(Direction.InputData, "PhraseCaption", "PhraseTooltip")]
         public string Phrase
         {
-            get;
-            set;
+            get { return this._Phrase; }
+            set
+            {
+                if (!String.IsNullOrEmpty((String)(value)))
+                {
+                    if (PhraseCheck(ref value))
+                    {
+                        this._Phrase = value;
+                        OnPropertyChanged("Phrase");
+                    }
+
+                }
+            }
         }
 
         [PropertyInfo(Direction.InputData, "NumberCaption", "NumberTooltip")]
         public string Number
         {
-            get;
-            set;
+            get { return this._Number; }
+            set
+            {
+                if (!String.IsNullOrEmpty((String)(value)))
+                {
+                    if (NumberCheck(ref value))
+                    {
+                        this._Number = value;
+                        OnPropertyChanged("Number");
+                    }
+
+                }
+            }
         }
 
         [PropertyInfo(Direction.InputData, "InitializingStringCaption", "InitializingStringTooltip")]
         public string InitializingString
         {
-            get;
-            set;
+            get { return this._InitializingString; }
+            set
+            {
+                if (!String.IsNullOrEmpty((String)(value)))
+                {
+                    if (InitializingStringCheck(ref value))
+                    {
+                        this._InitializingString = value;
+                        OnPropertyChanged("InitializingString");
+                    }
+
+                }
+            }
         }
         [PropertyInfo(Direction.InputData, "TextInputCaption", "TextInputTooltip")]
         public string Input
         {
-            get;
-            set;
+            get
+            {
+                return this._Input;
+            }
+            set
+            {
+                this._Input = value;
+                OnPropertyChanged("Input");
+            }
         }
         [PropertyInfo(Direction.OutputData, "OutputCaption", "OutputTooltip")]
         public string Output
@@ -173,77 +244,168 @@ namespace Cryptool.Plugins.VIC
             substitutionTable = null;
             textStartSymbol = null;
             digitLetterSymbol = null;
-            repeatSymbol = null;
             substitutionResult = null;
             onceDetransposedMessage = null;
             twiceDetransposedMessage = null;
+            input = null;
+            date = null;
+            password = null;
+            phrase = null;
+            number = null;
+            initializingString = null;
+    }
 
+        private bool DateCheck(ref string date)
+        {
+            try
+            {
+
+                date = date.ToUpper();
+                date = (Regex.Replace(date, "[^0-9]", ""));
+                if (date.Length < 6)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception e) {
+                return false;
+            }
         }
+
+        private bool PasswordCheck(ref string password)
+        {
+            try
+            {
+                password = password.ToUpper();
+
+                password = (Regex.Replace(password, $"[^{ALPHABET}]", ""));
+                password = string.Join("", password.ToCharArray().Distinct());
+                GuiLogMessage("From password check:" + password,NotificationLevel.Info);
+                if (password.Length < 7)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception e) {
+                return false;
+            }
+}
+
+        private bool PhraseCheck(ref string phrase)
+        {
+            try
+            {
+
+                phrase = phrase.ToUpper();
+                phrase = (Regex.Replace(phrase, "[^A-Z0-9A-Я]", ""));
+                if (phrase.Length < 20)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        private bool NumberCheck(ref string number)
+        {
+            try
+            {
+
+                number = (Regex.Replace(number, "[^0-9]", ""));
+                if (int.Parse(number) > 33 || int.Parse(number) <= 0)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception e) {
+                return false;
+            }
+        }
+
+        private bool InitializingStringCheck(ref string initializingString)
+        {
+            try
+            {
+
+                initializingString = initializingString.ToUpper();
+                initializingString = (Regex.Replace(initializingString, "[^0-9]", ""));
+                if (initializingString.Length < 5)
+                {
+                    return false;
+                }
+                initializingString = initializingString.Substring(0, 5);
+                return true;
+            }
+            catch (Exception e) { 
+                return false;
+            }
+        }
+
+
+
+
 
         /// <summary>
         /// This function takes global input variables and formats them to desired format
         /// </summary>
-        void FormatInput()
+        private void FormatInput()
         {
-            Date = Date.ToUpper();
-            Date = (Regex.Replace(Date, "[^0-9]", ""));
-            if (Date.Length < 6)
+
+            if (!DateCheck(ref date))
             {
                 throw new InvalidInputException("ShortDateError");
             }
 
-
             if ((ActionType)settings.Action == ActionType.Decrypt)
             {
-                int saltInsertionIndex = int.Parse(Date.ElementAt(Date.Length - 1).ToString());
-                Input = RemoveSalt(Input, saltInsertionIndex);
+                int saltInsertionIndex = int.Parse(date.ElementAt(date.Length - 1).ToString());
+                input = RemoveSalt(input, saltInsertionIndex);
 
             }
-
-            Password = Password.ToUpper();
-            
-            Password = (Regex.Replace(Password, $"[^{ALPHABET}]", ""));
-            
-            if (Password.Length < 7)
+            if (!PasswordCheck(ref password))
             {
-                throw new InvalidInputException("ShortPasswordError");
+                throw new InvalidInputException("ShortPasswordException");
             }
-
-
-            Phrase = Phrase.ToUpper();
-            Phrase = (Regex.Replace(Phrase, "[^A-Z0-9A-Я]", ""));
-            if (Phrase.Length < 20)
+            if (!PhraseCheck(ref phrase))
             {
                 throw new InvalidInputException("ShortPhraseError");
             }
-
-            Number = (Regex.Replace(Number, "[^0-9]", ""));
-            if (int.Parse(Number) > 33 || int.Parse(Number) <= 0)
+            if (!InitializingStringCheck(ref initializingString))
+            {
+                throw new InvalidInputException("ShortInitializingStringError");
+            }
+            if (!NumberCheck(ref number))
             {
                 throw new InvalidInputException("InvalidNumberError");
             }
 
-            InitializingString = InitializingString.ToUpper();
-            InitializingString = (Regex.Replace(InitializingString, "[^0-9]", ""));
-            if (InitializingString.Length < 5)
-            {
-                throw new InvalidInputException("ShortInitializingStringError");
-            }
-            InitializingString = InitializingString.Substring(0, 5);
+
+
+
 
             StringBuilder stringBuilder = new StringBuilder();
-            var inputAr = Input.Normalize(NormalizationForm.FormD).ToCharArray();
+            var inputAr = input.Normalize(NormalizationForm.FormD).ToCharArray();
             foreach (char letter in inputAr)
             {
                 if (CharUnicodeInfo.GetUnicodeCategory(letter) != UnicodeCategory.NonSpacingMark)
                     stringBuilder.Append(letter);
             }
-            Input = stringBuilder.ToString();
+            input = stringBuilder.ToString();
 
-            Input = Input.ToUpper();
-            Input = (Regex.Replace(Input, @"\s+", ""));
-            
+            input = input.ToUpper();
+            input = (Regex.Replace(input, @"\s+", ""));
+
+
         }
+
+
 
 
         /// <summary>
@@ -251,7 +413,7 @@ namespace Cryptool.Plugins.VIC
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        string FormatOutput(string input)
+        private string FormatOutput(string input)
         {
             input = (Regex.Replace(input, "[^0-9]", ""));
             int iterator = 0;
@@ -265,8 +427,8 @@ namespace Cryptool.Plugins.VIC
                     }
                 }
             }
-            int saltInsertionIndex = int.Parse(Date.ElementAt(Date.Length - 1).ToString());
-            input = InsertSalt(input, saltInsertionIndex, InitializingString);
+            int saltInsertionIndex = int.Parse(date.ElementAt(date.Length - 1).ToString());
+            input = InsertSalt(input, saltInsertionIndex, initializingString);
             return input;
         }
 
@@ -542,7 +704,7 @@ namespace Cryptool.Plugins.VIC
         /// </summary>
         /// <param name="substitutionTable"></param>
         /// <returns></returns>
-        string[,] InjectCyrillicLetters(string[,] substitutionTable)
+        private string[,] InjectCyrillicLetters(string[,] substitutionTable)
         {
 
             substitutionTable[2, 3] = ".";
@@ -563,7 +725,7 @@ namespace Cryptool.Plugins.VIC
         /// </summary>
         /// <param name="substitutionTable"></param>
         /// <returns></returns>
-        string[,] InjectLatinLetters(string[,] substitutionTable)
+        private string[,] InjectLatinLetters(string[,] substitutionTable)
         {
             substitutionTable[2, 3] = ".";
             substitutionTable[3, 3] = ",";
@@ -892,7 +1054,7 @@ namespace Cryptool.Plugins.VIC
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        string SplitMessageRandomly(string input)
+        private string SplitMessageRandomly(string input)
         {
             
             Random random = new Random();
@@ -913,7 +1075,7 @@ namespace Cryptool.Plugins.VIC
         /// </summary>
         /// <param name="input"> input string to append the numbers to</param>
         /// <returns></returns>
-        string AddZeros(string input)
+        private string AddZeros(string input)
         {
             
             if (input.Length % 5 == 0)
@@ -939,7 +1101,7 @@ namespace Cryptool.Plugins.VIC
         /// </summary>
         /// <param name="digit"></param>
         /// <returns></returns>
-        string PerformDigitSubstitution(char digit, string[,] substitutionTable)
+        private string PerformDigitSubstitution(char digit, string[,] substitutionTable)
         {
             
             
@@ -952,7 +1114,7 @@ namespace Cryptool.Plugins.VIC
         /// <param name="Matrix"></param>
         /// <param name="input"></param>
         /// <returns></returns>
-        string LocateStringInMatrix(string[,] Matrix, string input)
+        private string LocateStringInMatrix(string[,] Matrix, string input)
         {
             for (int i = 1; i <= 4; ++i)
             {
@@ -980,7 +1142,7 @@ namespace Cryptool.Plugins.VIC
         /// <param name="Matrix"></param>
         /// <param name="letter"></param>
         /// <returns></returns>
-        string LocateLetterInMatrix(string[,] Matrix, char letter)
+        private string LocateLetterInMatrix(string[,] Matrix, char letter)
         {
             for (int i = 1; i <= 4; ++i)
             {
@@ -1064,7 +1226,7 @@ namespace Cryptool.Plugins.VIC
         /// <param name="element"></param>
         /// <param name="input"></param>
         /// <returns></returns>
-        int IndexOf(string element, int[] input)
+        private int IndexOf(string element, int[] input)
         {
             for (int i = 0; i < input.Length; ++i)
             {
@@ -1081,7 +1243,7 @@ namespace Cryptool.Plugins.VIC
         /// <param name="message"></param>
         /// <param name="permutation"></param>
         /// <returns></returns>
-        string PerformSecondTransposition(string message, int[] permutation)
+        private string PerformSecondTransposition(string message, int[] permutation)
         {
             AreaColor[,] secondTranspositionTableColors = ConstructSecondTranspositionTableColors(permutation, message.Length);
             char[,] secondTranspositionTable = FillSecondTranspositionTable(message, secondTranspositionTableColors);
@@ -1097,7 +1259,7 @@ namespace Cryptool.Plugins.VIC
         /// <param name="message">Message to transpose.</param>
         /// <param name="secondTranspositionTableColors"> Matrix with the same dimensions as the transposition matrix indicating the colors of the areas of transposition matrix.</param>
         /// <returns></returns>
-        char[,] FillSecondTranspositionTable(string message, AreaColor[,] secondTranspositionTableColors)
+        private char[,] FillSecondTranspositionTable(string message, AreaColor[,] secondTranspositionTableColors)
         {
             int iterator = 0;
             char[,] secondTranspositionTable = new char[secondTranspositionTableColors.GetLength(0), secondTranspositionTableColors.GetLength(1)];
@@ -1459,7 +1621,7 @@ namespace Cryptool.Plugins.VIC
         /// <param name="message"></param>
         /// <param name="secondTranspositionTableColors"></param>
         /// <returns></returns>
-        static char[,] FillSecondTranspositionTableByCol(char[,] transpositionMatrix, int[] transposition, string message, AreaColor[,] secondTranspositionTableColors)
+        private char[,] FillSecondTranspositionTableByCol(char[,] transpositionMatrix, int[] transposition, string message, AreaColor[,] secondTranspositionTableColors)
         {
             int numberOfEmptyCells = (transpositionMatrix.GetLength(0) * transpositionMatrix.GetLength(1)) % message.Length;
             //Tag the emptycells
@@ -1500,10 +1662,17 @@ namespace Cryptool.Plugins.VIC
             return transpositionMatrix;
         }
 
-        string DetermineTextStart(string input)
+        private string DetermineTextStart(string input)
         {
             string output;
-            if (input.Contains(textStartSymbol))
+            int count = 0;
+            int i = 0;
+            while ((i = input.IndexOf(textStartSymbol, i)) != -1)
+            {
+                i += textStartSymbol.Length;
+                count++;
+            }
+            if (count==1)
             {
                 string[] stringSeparators = new string[] { textStartSymbol };
                 string[] splitStrings = input.Split(stringSeparators, StringSplitOptions.None);
@@ -1523,7 +1692,7 @@ namespace Cryptool.Plugins.VIC
         /// <param name="pos"></param>
         /// <param name="salt"></param>
         /// <returns></returns>
-        string InsertSalt(string input, int pos, string salt)
+        private string InsertSalt(string input, int pos, string salt)
         {
             string[] inputAr = input.Split(' ');
             ArrayList inputAl = new ArrayList(inputAr);
@@ -1538,7 +1707,7 @@ namespace Cryptool.Plugins.VIC
         /// <param name="input"></param>
         /// <param name="pos"></param>
         /// <returns></returns>
-        string RemoveSalt(string input, int pos)
+        private string RemoveSalt(string input, int pos)
         {
             string[] inputAr = input.Split(' ');
             ArrayList inputAl = new ArrayList(inputAr);
@@ -1573,6 +1742,18 @@ namespace Cryptool.Plugins.VIC
         public void PreExecution()
         {
             ClearLocalVariables();
+            if ((AlphabetType)settings.Alphabet == AlphabetType.Cyrillic)
+            {
+                ALPHABET = cyrillicAlphabet;
+                textStartSymbol = "НТ";
+                digitLetterSymbol = "Н/Ц";
+            }
+            else if ((AlphabetType)settings.Alphabet == AlphabetType.Latin)
+            {
+                ALPHABET = latinAlphabet;
+                textStartSymbol = "TS";
+                digitLetterSymbol = "C/D";
+            }
         }
 
         /// <summary>
@@ -1580,26 +1761,32 @@ namespace Cryptool.Plugins.VIC
         /// </summary>
         public void Execute()
         {
+            ClearLocalVariables();
             ProgressChanged(0, 1);
             if ((AlphabetType)settings.Alphabet == AlphabetType.Cyrillic)
             {
                 ALPHABET = cyrillicAlphabet;
                 textStartSymbol = "НТ";
                 digitLetterSymbol = "Н/Ц";
-                repeatSymbol = "Л/П";
             }
             else if ((AlphabetType)settings.Alphabet == AlphabetType.Latin)
             {
                 ALPHABET = latinAlphabet;
                 textStartSymbol = "TS";
                 digitLetterSymbol = "C/D";
-                repeatSymbol = "RPT";
             }
             try
             {
+                input = Input;
+                date = Date;
+                password = Password;
+                phrase = Phrase;
+                number = Number;
+                initializingString = InitializingString;
+
                 FormatInput();
                 //1. Take first five digits from date and substract them from the random number
-                lineC = SubstractModulo(InitializingString, Date);
+                lineC = SubstractModulo(initializingString, date);
                 
                 ProgressChanged(1, 16);
                 //2.Extend to ten digits by adding together pairs
@@ -1607,35 +1794,26 @@ namespace Cryptool.Plugins.VIC
                 
                 ProgressChanged(2, 16);
 
-
                 //3.Append '1234567890'
                 lineF = lineC + "1234567890";
 
-                
                 ProgressChanged(3, 16);
 
-
                 //4.Take first 20 letters of passphrase
-                lineD = Phrase.Substring(0, 20);
+                lineD = phrase.Substring(0, 20);
 
-                
                 ProgressChanged(4, 16);
-
 
                 //5.Enumerate each 10 letters
                 lineE = string.Join("", EnumerateString(lineD.Substring(0, 10)));
                 lineE += string.Join("", EnumerateString(lineD.Substring(10, 10)));
 
-                
                 ProgressChanged(5, 16);
-
 
                 //6.Add first 10 letters together with line F
                 lineG = AddModulo(lineE.Substring(0, 10), lineF.Substring(0, 10));
 
-                
                 ProgressChanged(6, 16);
-
 
                 //7. Find each letter of line G in line F and replace it by the letter on the same index in line E
                 foreach (var item in LocateEachLetterInAnotherString(lineG, lineF.Substring(10, 10)))
@@ -1644,12 +1822,9 @@ namespace Cryptool.Plugins.VIC
                 }
                 ProgressChanged(7, 16);
 
-                
-
                 //8.Enumerate it and obtain line J.
                 lineJ = string.Join("", EnumerateString(lineH));
 
-                
                 ProgressChanged(8, 16);
 
                 //9. chain addition to obtain lines K,L,M,N,P
@@ -1659,20 +1834,12 @@ namespace Cryptool.Plugins.VIC
                 lineN = ChainAddition(lineM);
                 lineP = ChainAddition(lineN);
 
-                
-                
-                
-                
-                
                 ProgressChanged(9, 16);
 
                 //10. Get the first and second transposition table width
-                firstTableWidth = FindLastTwoDissimilarDigits(lineP).Item2 + int.Parse(Number);
+                firstTableWidth = FindLastTwoDissimilarDigits(lineP).Item2 + int.Parse(number);
 
-                secondTableWidth = FindLastTwoDissimilarDigits(lineP).Item1 + int.Parse(Number);
-
-                
-                
+                secondTableWidth = FindLastTwoDissimilarDigits(lineP).Item1 + int.Parse(number);
 
                 ProgressChanged(10, 16);
 
@@ -1684,66 +1851,38 @@ namespace Cryptool.Plugins.VIC
                 //12. Get the first and second transposition.
                 firstPermutation = ReadColsFromCharMatrix(matrix, firstTableWidth, secondTableWidth, lineJ).Item1;
 
-                
                 ProgressChanged(12, 16);
 
                 secondPermutation = ReadColsFromCharMatrix(matrix, firstTableWidth, secondTableWidth, lineJ).Item2;
 
-                
-
-
                 //13. Enumerate line P to obtain line s
                 lineS = string.Join("", EnumeratePermutation(lineP, true));
 
-                
-
-
-
-
-
                 firstTransposition = EnumeratePermutation(firstPermutation, false);
-                
-                
-
 
                 secondTransposition = EnumeratePermutation(secondPermutation, false);
-                
-                
-
 
                 ProgressChanged(13, 16);
-
 
                 if ((ActionType)settings.Action == ActionType.Encrypt)
                 {
 
                     //14. Perform the first substitution
-                    substitutionTable = ConstructSubstitutionTable(lineS, Password, ALPHABET);
+                    substitutionTable = ConstructSubstitutionTable(lineS, password, ALPHABET);
 
-
-
-                    substitutionResult = (PerformSubstitution(substitutionTable, Input));
+                    substitutionResult = (PerformSubstitution(substitutionTable, input));
                     substitutionResult = AddZeros(substitutionResult);
-
-
 
                     ProgressChanged(14, 16);
 
                     // 15. Perform the first transposition
                     onceTransposedMessage = PerformFirstTransposition(substitutionResult, firstTransposition);
 
-                    
-
-
-                    
                     ProgressChanged(15, 16);
 
                     //16.Perform the first transposition
                     twiceTransposedMessage = PerformSecondTransposition(onceTransposedMessage, secondTransposition);
                     
-
-
-
                     Output = FormatOutput(twiceTransposedMessage);
                     
                     OnPropertyChanged("Output");
@@ -1751,38 +1890,29 @@ namespace Cryptool.Plugins.VIC
                 else if ((ActionType)settings.Action == ActionType.Decrypt)
                 {
                     // 14. Detranspose second transposition
-                    onceDetransposedMessage = DeTransposeSecondTransposition(Input, secondTransposition);
-
-                    
+                    onceDetransposedMessage = DeTransposeSecondTransposition(input, secondTransposition);
 
                     ProgressChanged(15, 16);
 
                     // 15. Detranspose first transposition
                     twiceDetransposedMessage = DeTransposeFirstTransposition(onceDetransposedMessage, firstTransposition);
 
-                    
-
-
                     // 16. Desubstitute substitution
-                    substitutionTable = ConstructSubstitutionTable(lineS, Password, ALPHABET);
+                    substitutionTable = ConstructSubstitutionTable(lineS, password, ALPHABET);
                     
-
                     Output = Desubstitute(twiceDetransposedMessage, substitutionTable);
                     Output = DetermineTextStart(Output);
                     
-
-
                     OnPropertyChanged("Output");
                 }
                 ProgressChanged(16, 16);
 
-
             }
             catch (Exception ex)
             {
-                GuiLogMessage(string.Format(ex.Message + "\n" + ex.StackTrace), NotificationLevel.Error);
+                GuiLogMessage(string.Format(ex.Message)+"\n"+string.Format(ex.StackTrace), NotificationLevel.Error);
             }
-
+            GuiLogMessage("Input values were formatted and used as following: \nInput Plaintext:" + input + "\nDate:" + date + "\nPassword:" + password + "\nPhrase:" + phrase + "\nNumber:" + number + "\nInitializing String:" + initializingString, NotificationLevel.Info);
             ProgressChanged(1, 1);
         }
 

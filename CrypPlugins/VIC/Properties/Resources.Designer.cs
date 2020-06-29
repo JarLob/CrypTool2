@@ -252,9 +252,9 @@ namespace Cryptool.Plugins.VIC.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Password input is too short. Minimum length is 6..
         /// </summary>
-        internal static string ShortPasswordError {
+        internal static string ShortPasswordException {
             get {
-                return ResourceManager.GetString("ShortPasswordError", resourceCulture);
+                return ResourceManager.GetString("ShortPasswordException", resourceCulture);
             }
         }
         

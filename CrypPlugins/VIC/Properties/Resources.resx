@@ -180,7 +180,7 @@
   <data name="ShortInitializingStringError" xml:space="preserve">
     <value>Initializing string is too short. Minimum length should be 5 and it should be composed of numbers only.</value>
   </data>
-  <data name="ShortPasswordError" xml:space="preserve">
+  <data name="ShortPasswordException" xml:space="preserve">
     <value>Password input is too short. Minimum length is 6.</value>
   </data>
   <data name="ShortPhraseError" xml:space="preserve">
