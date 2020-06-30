@@ -29,9 +29,9 @@
     <replacement key="$initializingStringMemo$" value="Initializing String must be consisting only of digits and at least 5 digits long. This string is also inserted to end of the output string at a position determined by the last digit of Date." />
     <replacement key="$inputTextBox$" value="Plaintext Input" />
     <replacement key="$input$" value="Калинка, калинка, калинка моя! В саду ягода малинка, малинка моя! Ах, под сосною, под зеленою, Спать положите вы меня! Ай-люли, люли, ай-люли, люли, Спать положите вы меня." />
-    <replacement key="$inputPlaintextMemo$" value="Plaintext Input to be processed by the VIC cipher" />
+    <replacement key="$inputPlaintextMemo$" value="Plaintext/Ciphertext Input to be processed by the VIC cipher" />
     <replacement key="$componentTextBox$" value="VIC Cipher" />
-    <replacement key="$outputTextBox$" value="Output of the VIC cipher. Enciphered text" /> 
+    <replacement key="$outputTextBox$" value="Output of the VIC cipher. Enciphered/Plain text" /> 
     <replacement key="$memo$" value="This is a template showcasing the usage of the VIC cipher.
     As you can see, VIC cipher needs to have 5 different 
     inputs for the key and one for the plaintext. Please,
