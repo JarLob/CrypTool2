@@ -68,14 +68,10 @@ namespace Cryptool.CrypWin
         {
             var pricipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
             var hasAdministrativeRight = pricipal.IsInRole(WindowsBuiltInRole.Administrator);
-
             var sb = new StringBuilder();
-            sb.AppendLine(string.Format("User Name: {0}", System.Environment.UserName));
             sb.AppendLine(string.Format("Operating System: {0}", System.Environment.OSVersion.ToString()));
             sb.AppendLine(string.Format("Plattform: {0}", Environment.OSVersion.Platform));
-            sb.AppendLine(string.Format("Machine Name: {0}", System.Environment.MachineName));
             sb.AppendLine(string.Format("Processors: {0}", System.Environment.ProcessorCount));
-            sb.AppendLine(string.Format("Process Info: {0}", (System.Environment.Is64BitProcess ? "64 Bit" : "32 Bit")));
             sb.AppendLine(string.Format("Administrative Rights: {0}", hasAdministrativeRight));
             sb.AppendLine(string.Format("Current culture: {0}", CultureInfo.CurrentUICulture.Name));
             sb.AppendLine(string.Format("CrypTool version: {0}", AssemblyHelper.Version));
@@ -83,7 +79,6 @@ namespace Cryptool.CrypWin
             sb.AppendLine(string.Format("Build time: {0}", File.GetLastWriteTime(Assembly.GetExecutingAssembly().Location)));
             sb.AppendLine(string.Format("Product name: {0}", AssemblyHelper.ProductName));
             sb.AppendLine(string.Format("Common language runtime version: {0}", Environment.Version));
-
             return sb.ToString();
         }
 
