@@ -82,6 +82,7 @@ namespace PlayfairAnalysis.Common
         {
 
             instance.CtAPI.shutdownIfNeeded();
+            if (plaintextLength < 6) return 0;  //Do not evaluate
             evaluations++;
 
             int index = (((((((plaintext[0] * 26) + plaintext[1]) * 26) + plaintext[2]) * 26) + plaintext[3]) * 26 + plaintext[4]);

@@ -256,7 +256,7 @@ namespace PlayfairAnalysis
                 lastPlainTextSymbol2 = plainTextSymbol2;
             }
 
-            while (plainText[plainTextRemoveNullsLength - 1] == Utils.X || plainText[plainTextRemoveNullsLength - 1] == Utils.Z)
+            while (plainTextRemoveNullsLength > 1 && (plainText[plainTextRemoveNullsLength - 1] == Utils.X || plainText[plainTextRemoveNullsLength - 1] == Utils.Z))
             {
                 plainTextRemoveNullsLength--;
             }

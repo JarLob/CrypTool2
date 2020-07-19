@@ -291,6 +291,10 @@ namespace Cryptool.PlayfairAnalyzer
                 }
 
                 var cipherText = Utils.getText(Ciphertext);
+                if (cipherText.Length < 6)
+                {
+                    throw new Exception($"Ciphertext length must have at least six characters - found {cipherText.Length} characters.");
+                }
                 if (cipherText.Length % 2 != 0)
                 {
                     throw new Exception($"Ciphertext length must be even - found {cipherText.Length} characters.");
