@@ -3,8 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:src="clr-namespace:CrypToolStoreDeveloperClient.Views"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="1200">
+    <UserControl.Resources>
+        <src:StringTrimmer x:Key="stringTrimmer" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
@@ -21,21 +25,21 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Username" DisplayMemberBinding="{Binding Path=Username}" Width="115">
+                    <GridViewColumn Header="Username" DisplayMemberBinding="{Binding Path=Username, Converter={StaticResource stringTrimmer}}" Width="115">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}" Width="115">
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name, Converter={StaticResource stringTrimmer}}" Width="115">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Path=Description}" Width="115">
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Path=Description, Converter={StaticResource stringTrimmer}}" Width="115">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
