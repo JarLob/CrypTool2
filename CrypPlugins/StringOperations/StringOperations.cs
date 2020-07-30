@@ -163,7 +163,19 @@ namespace StringOperations
                             _settings.Blocksize = 1;                            
                         }
                         var str = Regex.Replace(_string1, @"\s+", "");
-                        _outputString = Regex.Replace(str, $".{_settings.Blocksize}", "$0 ").TrimEnd();
+                        StringBuilder builder = new StringBuilder();
+                        for(var i = 0; i < str.Length; i+=_settings.Blocksize)
+                        {
+                            if (i <= str.Length - _settings.Blocksize)
+                            {
+                                builder.Append(str.Substring(i, _settings.Blocksize) + " ");
+                            }
+                        }
+                        if(str.Length % _settings.Blocksize != 0)
+                        {
+                            builder.Append(str, str.Length - str.Length % _settings.Blocksize, str.Length % _settings.Blocksize);
+                        }
+                        _outputString = builder.ToString().Trim();
                         OnPropertyChanged("OutputString");
                         break;
                     case StringOperationType.Reverse:
