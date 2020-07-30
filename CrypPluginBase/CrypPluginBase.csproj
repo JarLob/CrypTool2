@@ -118,7 +118,6 @@
     <Compile Include="Attributes\AutoAssumeFullEndProgressAttribute.cs" />
     <Compile Include="Attributes\ComponentCategoryAttribute.cs" />
     <Compile Include="Attributes\ComponentVisualAppearance.cs" />
-    <Compile Include="Attributes\CryptoBenchmarkAttribute.cs" />
     <Compile Include="Attributes\DontSaveAttribute.cs" />
     <Compile Include="Attributes\FunctionListAttribute.cs" />
     <Compile Include="Attributes\LocalizationAttribute.cs" />
@@ -140,7 +139,6 @@
     <Compile Include="IO\CStreamReader.cs" />
     <Compile Include="IO\CStreamWriter.cs" />
     <Compile Include="IO\DirectoryHelper.cs" />
-    <Compile Include="IO\EvaluationContainer.cs" />
     <Compile Include="IO\ICryptoolStream.cs" />
     <Compile Include="ICrypTutorial.cs" />
     <Compile Include="Miscellaneous\ApplicationSettingsHelper.cs" />

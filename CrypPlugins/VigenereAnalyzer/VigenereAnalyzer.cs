@@ -51,26 +51,7 @@ namespace Cryptool.VigenereAnalyzer
         private DateTime _startTime;
         private DateTime _endTime;
         private const string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-        // EVALUATION!
-        private static int threads = 1;
-        private static int currentThread = 0;
-        private int _improvements = 0;
-        
-        private string _ciphertextInput;
-        private string _plaintextInput;
-        private double _percentageInput;
-
-        private bool _newCiphertext = false;
-        private bool _newPlaintext = false;
-        private bool _newPercentage = false;
-
-        private TimeSpan _runtime = new TimeSpan();
-        private bool _finished = false;
-        private int _totalNumberOfRestarts;
-        private int _totalNumberOfDecryptions;
-        private int[] _numberOfRestarts;
-        private int[] _numberOfDecryptions;
+        private string _ciphertextInput;    
 
         public VigenereAnalyzer()
         {
@@ -92,7 +73,6 @@ namespace Cryptool.VigenereAnalyzer
                 if (!String.IsNullOrEmpty(value) && value != _ciphertextInput)
                 {
                     _ciphertextInput = value;
-                    _newCiphertext = true;
                     OnPropertyChanged("Ciphertext");
                 }
             }
@@ -100,37 +80,7 @@ namespace Cryptool.VigenereAnalyzer
 
         [PropertyInfo(Direction.InputData, "VigenereAlphabetCaption", "VigenereAlphabetTooltip", false)]
         public string VigenereAlphabet { get; set; }
-
-        // EVALUATION!
-        [CryptoBenchmark()]
-        [PropertyInfo(Direction.InputData, "PlaintextInputCaption", "PlaintextInputTooltip", false)]
-        public string CorrectPlaintextInput
-        {
-            get { return this._plaintextInput; }
-            set
-            {
-                if (!String.IsNullOrEmpty(value) && value != this._plaintextInput)
-                {
-                    this._plaintextInput = value;
-                    OnPropertyChanged("CorrectPlaintextInput");
-                    this._newPlaintext = true;
-                }
-            }
-        }
-
-        // EVALUATION!
-        [CryptoBenchmark()]
-        [PropertyInfo(Direction.InputData, "DecryptionPercentageCaption", "DecryptionPercentageTooltip", false)]
-        public double MinimalCorrectPercentage
-        {
-            get { return this._percentageInput; }
-            set
-            {
-                this._percentageInput = value;
-                this._newPercentage = true;
-                OnPropertyChanged("MinimalCorrectPercentage");
-            }
-        }
+             
 
         [PropertyInfo(Direction.OutputData, "PlaintextCaption", "PlaintextTooltip", true)]
         public String Plaintext
@@ -145,21 +95,7 @@ namespace Cryptool.VigenereAnalyzer
             get { return _key; }
             set { _key = value; OnPropertyChanged("Key"); }
         }
-
-        // EVALUATION!
-        [CryptoBenchmark()]
-        [PropertyInfo(Direction.OutputData, "EvaluationOutputCaption", "EvaluationOutputTooltip", true)]
-        public EvaluationContainer EvaluationOutput
-        {
-            get
-            {
-                var elapsedtime = DateTime.Now.Subtract(_startTime);
-                _runtime = new TimeSpan(elapsedtime.Days, elapsedtime.Hours, elapsedtime.Minutes, elapsedtime.Seconds, elapsedtime.Milliseconds);
-                var ID = _ciphertextInput.GetHashCode();
-
-                return new EvaluationContainer(ID, _runtime, _totalNumberOfDecryptions, _totalNumberOfRestarts);
-            }
-        }
+      
         
         public void PreExecution()
         {           
@@ -169,23 +105,12 @@ namespace Cryptool.VigenereAnalyzer
         public void PostExecution()
         {
             Ciphertext = null;
-            VigenereAlphabet = null;
-
-            _plaintext = String.Empty;
-            _plaintextInput = String.Empty;
+            VigenereAlphabet = null;            
             _key = String.Empty;
-            _ciphertextInput = String.Empty;
-            _percentageInput = new Double();
+            _ciphertextInput = String.Empty;            
             _stopped = false;
             _startTime = new DateTime();
-            _endTime = new DateTime();
-
-            // EVALUATION! reset values
-            _runtime = new TimeSpan();
-            _totalNumberOfRestarts = 0;
-            _totalNumberOfDecryptions = 0;
-            _improvements = 0;
-            _finished = false;
+            _endTime = new DateTime();           
         }
 
         public event StatusChangedEventHandler OnPluginStatusChanged;
@@ -214,11 +139,7 @@ namespace Cryptool.VigenereAnalyzer
 
             _stopped = false;
             ProgressChanged(0, 1);
-
-            if (!_newCiphertext)
-            {
-                return;
-            }
+            
             if (string.IsNullOrEmpty(Ciphertext))
             {
                 GuiLogMessage("No Ciphertext given for analysis!", NotificationLevel.Error);
@@ -249,20 +170,7 @@ namespace Cryptool.VigenereAnalyzer
                 builder.Remove(builder.Length - 1, 1);
                 GuiLogMessage(string.Format("Invalid characters in Vigenère alphabet: {0}", builder.ToString()), NotificationLevel.Error);
                 return;
-            }
-
-            // EVALUATION! if stopping is active, percentage and plaintext are necessary
-            if (_settings.StopIfPercentReached &&
-                    (!_newPercentage || !_newPlaintext))
-            {
-                // wait for new values
-                return;
-            }
-
-            // consume values
-            _newCiphertext = false;
-            _newPercentage = false;
-            _newPlaintext = false;
+            }                   
 
             var ciphertext = MapTextIntoNumberSpace(RemoveInvalidChars(_ciphertextInput.ToUpper(), Alphabet), Alphabet);
 
@@ -276,28 +184,10 @@ namespace Cryptool.VigenereAnalyzer
                 var temp = _settings.ToKeyLength;
                 _settings.ToKeyLength = _settings.FromKeylength;
                 _settings.FromKeylength = temp;
-            }
-
-            // EVALUATION!
-            if (_percentageInput <= 0 ||
-                _percentageInput > 100)
-            {
-                _percentageInput = 95;
-            }
-            _runtime = new TimeSpan();
-
-            _totalNumberOfRestarts = 0;
-            _totalNumberOfDecryptions = 0;
-            _numberOfRestarts = new int[1 /*_settings.CoresUsed*/]; // prepared for multi threading
-            _numberOfDecryptions = new int[1 /*_settings.CoresUsed*/];
-            for (int t = 1 /*_settings.CoresUsed*/ - 1; t >= 0; t--)
-            {
-                _numberOfRestarts[t] = 0;
-                _numberOfDecryptions[t] = 0;
-            }
+            }      
 
             UpdateDisplayStart();
-            for (var keylength = _settings.FromKeylength; keylength <= _settings.ToKeyLength && !_finished; keylength++)
+            for (var keylength = _settings.FromKeylength; keylength <= _settings.ToKeyLength; keylength++)
             {
                 UpdateDisplayEnd(keylength);
                 HillclimbVigenere(ciphertext, keylength, _settings.Restarts);
@@ -307,24 +197,12 @@ namespace Cryptool.VigenereAnalyzer
                 }
             }
             UpdateDisplayEnd(_settings.ToKeyLength);
-
-            // EVALUATION!
-            for (var i = 0; i < threads; i++)
-            {
-                _totalNumberOfRestarts += _numberOfRestarts[i];
-                _totalNumberOfDecryptions += _numberOfDecryptions[i];
-            }
-            // adding 1 for the last decryption
-            _totalNumberOfDecryptions++;    
+          
 
             if (_presentation.BestList.Count > 0)
             {
                 Plaintext = _presentation.BestList[0].Text;
-                Key = _presentation.BestList[0].Key;
-
-                // EVALUATION!
-                _finished = false;
-                OnPropertyChanged("EvaluationOutput");
+                Key = _presentation.BestList[0].Key;            
             }
             
             ProgressChanged(1, 1);            
@@ -425,65 +303,24 @@ namespace Cryptool.VigenereAnalyzer
                 {
                     foundbetter = false;
                     // permute key
-                    for (var i = 0; i < keylength && !_finished; i++)
+                    for (var i = 0; i < keylength; i++)
                     {
-                        for (var j = 0; j < alphabetlength && !_finished; j++)
+                        for (var j = 0; j < alphabetlength; j++)
                         {
                             var oldLetter = runkey[i];
                             runkey[i] = j;
                             plaintext = _settings.Mode == Mode.Vigenere
                                 ? DecryptVigenereOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext)
-                                : DecryptAutokeyOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext);
-
-                            // EVALUATION! Count the number of decryptions per thread
-                            _numberOfDecryptions[currentThread]++;
+                                : DecryptAutokeyOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext);                          
 
                             keys++;
-                            var costvalue = 0.0;
-
-                            costvalue = grams.CalculateCost(plaintext);
+                            var costvalue = grams.CalculateCost(plaintext);
                             
                             if (costvalue > bestkeycost)
                             {
                                 bestkeycost = costvalue;
                                 bestkey = (int[]) runkey.Clone();
-                                foundbetter = true;
-
-                                // EVALUATION!
-                                if (bestkeycost > globalbestkeycost)
-                                {
-
-                                    // EVALUATION! increase the _improvements counter
-                                    _improvements++;
-                                    // only map the current plaintext into text space and
-                                    // compare its correctness, if the stopping option is
-                                    // active, a percentage is provided and the _improvements
-                                    // have reached the specified minimum (frequency)
-                                    if (_settings.StopIfPercentReached &&
-                                        _percentageInput != 0 &&
-                                        _improvements % _settings.ComparisonFrequency == 0)
-                                    {
-                                        double progress1 = (keylength - _settings.FromKeylength) * totalrestarts + totalrestarts - restarts;
-                                        double progress2 = (_settings.ToKeyLength - _settings.FromKeylength + 1) * totalrestarts;
-                                        double progress = progress1 / progress2 * 100.0;
-
-                                        string currentBestPlaintext = MapNumbersIntoTextSpace(_settings.Mode == Mode.Vigenere ? DecryptVigenereOwnAlphabet(ciphertext, bestkey, MapTextIntoNumberSpace(VigenereAlphabet, Alphabet)) :
-                                            DecryptAutokeyOwnAlphabet(ciphertext, bestkey, MapTextIntoNumberSpace(VigenereAlphabet, Alphabet)), Alphabet);
-                                        
-                                        // calculate string similarity between the current
-                                        // plaintext and the provided original plaintext
-                                        double currentlyCorrect = _plaintextInput.CalculateSimilarity(currentBestPlaintext) * 100;
-
-                                        Console.WriteLine(progress + "% - currentlyCorrect: " + currentlyCorrect + "% - best key cost:" + bestkeycost);
-
-                                        // stop the algorithm if the percentage is high enough
-                                        if (currentlyCorrect >= _percentageInput)
-                                        {
-                                            _finished = true;
-                                            restarts = 0;
-                                        }
-                                    }
-                                }
+                                foundbetter = true;                                                               
                             }
                             else
                             {
@@ -493,7 +330,7 @@ namespace Cryptool.VigenereAnalyzer
                                 {
                                     plaintext = _settings.Mode == Mode.Vigenere
                                         ? DecryptVigenereOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext)
-                                        : DecryptAutokeyOwnAlphabet(ciphertext, runkey, numvigalphabet);
+                                        : DecryptAutokeyOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext);
                                 }
                             }
 
@@ -525,13 +362,11 @@ namespace Cryptool.VigenereAnalyzer
                         }
                     }
                     runkey = (int[])bestkey.Clone();
-                } while (foundbetter && !_finished);
+                } while (foundbetter);
 
                 UpdateDisplayEnd(keylength);
                 restarts--;
-
-                // EVALUATION! count the number of restarts per thread
-                _numberOfRestarts[currentThread]++;
+               
 
                 if (bestkeycost > globalbestkeycost)
                 {
@@ -539,10 +374,7 @@ namespace Cryptool.VigenereAnalyzer
                     AddNewBestListEntry(bestkey, globalbestkeycost, ciphertext);
                 }
                 ProgressChanged((keylength - _settings.FromKeylength) * totalrestarts + totalrestarts - restarts, (_settings.ToKeyLength - _settings.FromKeylength + 1) * totalrestarts);
-            
-                // EVALUATION!
-                if (_finished)
-                    return;
+                           
             }
             //We update finally the keys/second of the ui
             var keysDispatcher2 = keys;
@@ -556,13 +388,9 @@ namespace Cryptool.VigenereAnalyzer
                 // ReSharper disable once EmptyGeneralCatchClause
                 catch (Exception e)
                 {
-                    //wtf?
-                    Console.WriteLine("e2: " + e);
+                    //do nothing
                 }
             }, null);
-
-            // EVALUATION!
-            return;
         }
 
         /// <summary>

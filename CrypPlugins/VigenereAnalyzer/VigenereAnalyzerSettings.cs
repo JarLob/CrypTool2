@@ -46,14 +46,9 @@ namespace Cryptool.VigenereAnalyzer
         private Mode _mode = Mode.Vigenere;
         private int _fromKeylength;
         private int _toKeyLength = 20;
-        private bool _fastConverge;
         private int _restarts = 50;
         private KeyStyle _keyStyle;
-        private int _language;
-
-        // EVALUATION!
-        private bool _stopIfPercentReached = false;
-        private int _comparisonFrequency = 1;
+        private int _language;  
 
         public void Initialize()
         {
@@ -163,42 +158,7 @@ namespace Cryptool.VigenereAnalyzer
                     OnPropertyChanged("KeyStyle");
                 }
             }
-        }
-
-        // EVALUATION!
-        [CryptoBenchmarkAttribute()]
-        [TaskPane("StopIfPercentReachedCaption", "StopIfPercentReachedTooltip", null, 7, false, ControlType.CheckBox)]
-        public bool StopIfPercentReached
-        {
-            get
-            {
-                return this._stopIfPercentReached;
-            }
-            set
-            {
-                this._stopIfPercentReached = value;
-                OnPropertyChanged("StopIfPercentReached");
-            }
-        }
-
-        // EVALUATION!
-        [CryptoBenchmarkAttribute()]
-        [TaskPane("ComparisonFrequencyCaption", "ComparisonFrequencyTooltip", null, 8, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 10000)]
-        public int ComparisonFrequency
-        {
-            get
-            {
-                return _comparisonFrequency;
-            }
-            set
-            {
-                if (value != _comparisonFrequency)
-                {
-                    _comparisonFrequency = value;
-                    OnPropertyChanged("ComparisonFrequency");
-                }
-            }
-        }
+        }               
 
         protected void OnPropertyChanged(string name)
         {

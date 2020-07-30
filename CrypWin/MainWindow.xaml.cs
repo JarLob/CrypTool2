@@ -308,14 +308,7 @@ namespace Cryptool.CrypWin
             if (IsCommandParameterGiven("-GenerateComponentConnectionStatistics"))
             {
                 GenerateComponentConnectionStatistics(IsCommandParameterGiven("-storeInBaseDir"));
-            }
-
-            // enable CryptoBenchmark; thus, input and output connectors and settings of plugins belonging
-            // to "CryptoBenchmark" are visible now
-            if (IsCommandParameterGiven("-CryptoBenchmark"))
-            {
-                Cryptool.Core.Globals.cryptoBenchmark = true;
-            }
+            }         
 
             if (Settings.Default.SingletonApplication && !EstablishSingleInstance())
             {

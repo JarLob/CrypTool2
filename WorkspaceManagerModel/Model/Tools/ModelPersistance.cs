@@ -299,17 +299,7 @@ namespace WorkspaceManager.Model
                         connectorModels.Remove(connectorModel);
                         GuiLogMessage(string.Format(Resources.ModelPersistance_restoreSettings_A_property_with_name___0___of_type___1___does_not_exist_in___2___3___but_a_ConnectorModel_exists_in_the_PluginModel__Delete_the_ConnectorModel_now_, connectorModel.PropertyName, connectorModel.ConnectorType.Name, pluginModel.PluginType, pluginModel.Name),
                                       NotificationLevel.Warning);
-                    }
-                    else
-                    {
-                        //silently delete here CryptoBenchmarkProperties if not running in this mode
-                        CryptoBenchmarkAttribute[] cryptoBenchmarkAttributes = (CryptoBenchmarkAttribute[])propertyInfo.GetCustomAttributes(typeof(CryptoBenchmarkAttribute), false);
-                        if (!Cryptool.Core.Globals.cryptoBenchmark && cryptoBenchmarkAttributes.Length > 0)
-                        {
-                            pluginModel.WorkspaceModel.deleteConnectorModel(connectorModel);
-                            connectorModels.Remove(connectorModel);
-                        }
-                    }
+                    }                  
                 }
                 //Check if there are properties which have no own ConnectorModel
                 foreach (PropertyInfoAttribute propertyInfoAttribute in pluginModel.Plugin.GetProperties())
@@ -318,14 +308,7 @@ namespace WorkspaceManager.Model
                                 where c.PropertyName.Equals(propertyInfoAttribute.PropertyName)
                                 select c;
                     if (query.Count() == 0)
-                    {
-                        //if the property has a CryptoBenchmarkPropertyAttribute we do not create a Connector
-                        CryptoBenchmarkAttribute[] cryptoBenchmarkAttributes = (CryptoBenchmarkAttribute[])propertyInfoAttribute.PropertyInfo.GetCustomAttributes(typeof(CryptoBenchmarkAttribute), false);
-                        if (!Cryptool.Core.Globals.cryptoBenchmark && cryptoBenchmarkAttributes.Length > 0)
-                        {
-                            continue;
-                        }
-
+                    {                       
                         //we found a property which has no ConnectorModel, so we create a new one
                         pluginModel.generateConnector(propertyInfoAttribute);
                         GuiLogMessage(string.Format(Resources.ModelPersistance_restoreSettings_A_ConnectorModel_for_the_plugins_property___0___of_type___1___does_not_exist_in_the_PluginModel_of___2___3____Create_a_ConnectorModel_now_, propertyInfoAttribute.PropertyName, propertyInfoAttribute.PropertyInfo.PropertyType.Name, pluginModel.PluginType, pluginModel.Name),

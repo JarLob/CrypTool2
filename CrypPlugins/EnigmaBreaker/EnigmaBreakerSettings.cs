@@ -31,6 +31,14 @@ using Cryptool.PluginBase.Attributes;
 
 namespace Cryptool.EnigmaBreaker
 {
+    public enum AnalysisMode
+    {
+        BOMBE,
+        Gillogly,
+        HILLCLIMBING,
+        ANNEALING
+    }
+
     public class EnigmaBreakerSettings : ISettings
     {
         #region Private variables
@@ -73,11 +81,7 @@ namespace Cryptool.EnigmaBreaker
 
         private int reflector = 0;
 
-        private StringBuilder plugBoard = new StringBuilder("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-
-        // EVALUATION!
-        private bool _stopIfPercentReached = false;
-        private int _comparisonFrequency = 1;
+        private StringBuilder plugBoard = new StringBuilder("ABCDEFGHIJKLMNOPQRSTUVWXYZ");       
 
         #endregion
 
@@ -1267,57 +1271,15 @@ namespace Cryptool.EnigmaBreaker
         [TaskPane( "ResetPlugboardCaption", "ResetPlugboardTooltip", "PlugboardGroup", 70, false, ControlType.Button)]
         public void ResetPlugboard()
         {
-            plugBoard = new StringBuilder("ABCDEFGHIJKLMNOPQRSTUVWXYZ");            
+            plugBoard = new StringBuilder("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
             foreach (char c in this.alphabet)
+            {
                 OnPropertyChanged("PlugBoard" + c);
-
+            }
             OnPropertyChanged("PlugBoard");
-
-            // Are the following needed? For the presentation? indeed
-            //OnPropertyChanged("PlugBoardDisplay");
-            //OnPropertyChanged("Remove all Plugs");
         }
 
-        #endregion
-
-        #region Evaluation settings
-
-        // EVALUATION!
-        [CryptoBenchmark()]
-        [TaskPane("Stop current analysis if percent reached", "Stop the current analysis in the cryptanalytic component if entered percentage reached", null, 7, false, ControlType.CheckBox)]
-        public bool StopIfPercentReached
-        {
-            get
-            {
-                return this._stopIfPercentReached;
-            }
-            set
-            {
-                this._stopIfPercentReached = value;
-                OnPropertyChanged("StopIfPercentReached");
-            }
-        }
-
-        // EVALUATION!
-        [CryptoBenchmark()]
-        [TaskPane("ComparisonFrequencyCaption", "ComparisonFrequencyTooltip", null, 8, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 10000)]
-        public int ComparisonFrequency
-        {
-            get
-            {
-                return _comparisonFrequency;
-            }
-            set
-            {
-                if (value != _comparisonFrequency)
-                {
-                    _comparisonFrequency = value;
-                    OnPropertyChanged("ComparisonFrequency");
-                }
-            }
-        }
-
-        #endregion
+        #endregion     
 
         #endregion
 
