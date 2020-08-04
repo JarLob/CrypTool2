@@ -22,7 +22,7 @@ namespace EnigmaAnalyzer.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace EnigmaAnalyzer.Properties {
         ///   Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EnigmaAnalyzer.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace EnigmaAnalyzer.Properties {
         ///   Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -127,7 +127,7 @@ namespace EnigmaAnalyzer.Properties {
         ///EQ 65 
         /// [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string _2WH {
+        public static string _2WH {
             get {
                 return ResourceManager.GetString("_2WH", resourceCulture);
             }
@@ -200,7 +200,7 @@ namespace EnigmaAnalyzer.Properties {
         ///IVX 18
         /// [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string _3WH {
+        public static string _3WH {
             get {
                 return ResourceManager.GetString("_3WH", resourceCulture);
             }
@@ -217,7 +217,7 @@ namespace EnigmaAnalyzer.Properties {
         ///reasoning and observing machine that the world has seen, but as a
         ///lover he would have placed himself in a false position. He neve [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string book {
+        public static string book {
             get {
                 return ResourceManager.GetString("book", resourceCulture);
             }
@@ -268,7 +268,7 @@ namespace EnigmaAnalyzer.Properties {
         ///TA 26147593
         ///EC 257 [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string english_bigrams {
+        public static string english_bigrams {
             get {
                 return ResourceManager.GetString("english_bigrams", resourceCulture);
             }
@@ -325,7 +325,7 @@ namespace EnigmaAnalyzer.Properties {
         ///BV 70611
         ///BW 7215 [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string english_logbigrams {
+        public static string english_logbigrams {
             get {
                 return ResourceManager.GetString("english_logbigrams", resourceCulture);
             }
@@ -377,7 +377,7 @@ namespace EnigmaAnalyzer.Properties {
         ///ABQ 68692
         ///ABR 1383 [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string english_logtrigrams {
+        public static string english_logtrigrams {
             get {
                 return ResourceManager.GetString("english_logtrigrams", resourceCulture);
             }
@@ -412,7 +412,7 @@ namespace EnigmaAnalyzer.Properties {
         ///Q 4550166
         /// ähnelt.
         /// </summary>
-        internal static string english_monograms {
+        public static string english_monograms {
             get {
                 return ResourceManager.GetString("english_monograms", resourceCulture);
             }
@@ -461,7 +461,7 @@ namespace EnigmaAnalyzer.Properties {
         ///THI 8363593
         ///TIN 82180 [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string english_trigrams {
+        public static string english_trigrams {
             get {
                 return ResourceManager.GetString("english_trigrams", resourceCulture);
             }
@@ -521,7 +521,7 @@ namespace EnigmaAnalyzer.Properties {
         ///mx	46347
         ///ra [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string enigma_logbigrams {
+        public static string enigma_logbigrams {
             get {
                 return ResourceManager.GetString("enigma_logbigrams", resourceCulture);
             }
@@ -576,7 +576,7 @@ namespace EnigmaAnalyzer.Properties {
         ///eqs	38286
         ///ber	38 [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string enigma_logtrigrams {
+        public static string enigma_logtrigrams {
             get {
                 return ResourceManager.GetString("enigma_logtrigrams", resourceCulture);
             }
@@ -601,7 +601,7 @@ namespace EnigmaAnalyzer.Properties {
         /// Zwar bin ich gescheiter als all die Laffen,
         /// Doktoren, Magister, Schreiber und Pfaffen; [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string faust {
+        public static string faust {
             get {
                 return ResourceManager.GetString("faust", resourceCulture);
             }
@@ -656,7 +656,7 @@ namespace EnigmaAnalyzer.Properties {
         ///IO 1791796
         ///AL 178 [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string french_bigrams {
+        public static string french_bigrams {
             get {
                 return ResourceManager.GetString("french_bigrams", resourceCulture);
             }
@@ -690,7 +690,7 @@ namespace EnigmaAnalyzer.Properties {
         ///Z 290265
         ///W 226826 ähnelt.
         /// </summary>
-        internal static string french_monograms {
+        public static string french_monograms {
             get {
                 return ResourceManager.GetString("french_monograms", resourceCulture);
             }
@@ -712,7 +712,7 @@ namespace EnigmaAnalyzer.Properties {
         ///place dans leur vie et surtout dans leur destinee que ce qu&apos;ils font. M.
         ///Myriel etait fils d&apos;un conseiller au parlement d&apos;Aix; nobles [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string frenchbook {
+        public static string frenchbook {
             get {
                 return ResourceManager.GetString("frenchbook", resourceCulture);
             }
@@ -766,7 +766,7 @@ namespace EnigmaAnalyzer.Properties {
         ///AR 4935805
         ///R [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string german_bigrams {
+        public static string german_bigrams {
             get {
                 return ResourceManager.GetString("german_bigrams", resourceCulture);
             }
@@ -826,7 +826,7 @@ namespace EnigmaAnalyzer.Properties {
         ///ar	53820
         ///eh [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string german_logbigrams {
+        public static string german_logbigrams {
             get {
                 return ResourceManager.GetString("german_logbigrams", resourceCulture);
             }
@@ -881,7 +881,7 @@ namespace EnigmaAnalyzer.Properties {
         ///lnu	46109
         ///end	46 [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string german_logtrigrams {
+        public static string german_logtrigrams {
             get {
                 return ResourceManager.GetString("german_logtrigrams", resourceCulture);
             }
@@ -916,7 +916,7 @@ namespace EnigmaAnalyzer.Properties {
         ///Q 340631
         /// ähnelt.
         /// </summary>
-        internal static string german_monograms {
+        public static string german_monograms {
             get {
                 return ResourceManager.GetString("german_monograms", resourceCulture);
             }
@@ -981,7 +981,7 @@ namespace EnigmaAnalyzer.Properties {
         ///SX   84
         ///SS   84        /// [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string german1941_bigrams {
+        public static string german1941_bigrams {
             get {
                 return ResourceManager.GetString("german1941_bigrams", resourceCulture);
             }
@@ -1041,7 +1041,7 @@ namespace EnigmaAnalyzer.Properties {
         ///RIN   35
         ///TA [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string german1941_trigrams {
+        public static string german1941_trigrams {
             get {
                 return ResourceManager.GetString("german1941_trigrams", resourceCulture);
             }
@@ -1059,7 +1059,7 @@ namespace EnigmaAnalyzer.Properties {
         ///Weinberge.  Die Lese war beendigt.  Zur Rechten und Linken zeigte der
         ///Weinstock nur gelbe oder zerriss [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string germanbook {
+        public static string germanbook {
             get {
                 return ResourceManager.GetString("germanbook", resourceCulture);
             }
