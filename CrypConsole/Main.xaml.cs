@@ -107,8 +107,15 @@ namespace Cryptool.CrypConsole
                 Environment.Exit(-2);
             }
 
-            //Step 3: Get additional parameters
-            _verbose = ArgsHelper.GetVerbose(args);
+            //Step 3: Check, if discover mode was selected
+            if (ArgsHelper.CheckDiscoverMode(args))
+            {
+                DiscoverCWMFile(cwm_file);
+                Environment.Exit(0);
+            }            
+
+            //Step 4: Get additional parameters
+            _verbose = ArgsHelper.CheckVerboseMode(args);
             try
             {
                 _timeout = ArgsHelper.GetTimeout(args);
@@ -138,7 +145,7 @@ namespace Cryptool.CrypConsole
             }
             try
             {
-                _jsonoutput = ArgsHelper.GetJsonOutput(args);
+                _jsonoutput = ArgsHelper.CheckJsonOutput(args);
             }
             catch (Exception ex)
             {
@@ -146,7 +153,7 @@ namespace Cryptool.CrypConsole
                 Environment.Exit(-2);
             }
 
-            //Step 4: Get input parameters
+            //Step 5: Get input parameters
             List<Parameter> inputParameters = null;
             try
             {
@@ -170,7 +177,7 @@ namespace Cryptool.CrypConsole
                 Environment.Exit(-3);
             }
 
-            //Step 5: Get output parameters
+            //Step 6: Get output parameters
             List<Parameter> outputParameters = null;
             try
             {
@@ -194,7 +201,7 @@ namespace Cryptool.CrypConsole
                 Environment.Exit(-3);
             }
 
-            //Step 6: Update application domain. This allows loading additional .net assemblies
+            //Step 7: Update application domain. This allows loading additional .net assemblies
             try
             {
                 UpdateAppDomain();
@@ -205,7 +212,7 @@ namespace Cryptool.CrypConsole
                 Environment.Exit(-4);
             }
 
-            //Step 7: Load cwm file and create model            
+            //Step 8: Load cwm file and create model            
             try
             {
                 ModelPersistance modelPersistance = new ModelPersistance();
@@ -222,7 +229,7 @@ namespace Cryptool.CrypConsole
                 Environment.Exit(-5);
             }
 
-            //Step 8: Set input parameters
+            //Step 9: Set input parameters
             foreach (var param in inputParameters)
             {
                 string name = param.Name;
@@ -275,7 +282,7 @@ namespace Cryptool.CrypConsole
                 }
             }
 
-            //Step 9: Set output parameters
+            //Step 10: Set output parameters
             foreach (var param in outputParameters)
             {
                 string name = param.Name;
@@ -298,13 +305,13 @@ namespace Cryptool.CrypConsole
                 }
             }
 
-            //Step 10: add OnPluginProgressChanged handlers
+            //Step 11: add OnPluginProgressChanged handlers
             foreach(var plugin in _workspaceModel.GetAllPluginModels())
             {
                 plugin.Plugin.OnPluginProgressChanged += OnPluginProgressChanged;
             }
 
-            //Step 11: Create execution engine            
+            //Step 12: Create execution engine            
             try
             {
                 _engine = new ExecutionEngine(null);
@@ -317,7 +324,7 @@ namespace Cryptool.CrypConsole
                 Environment.Exit(-7);
             }
 
-            //Step 12: Start execution in a dedicated thread
+            //Step 13: Start execution in a dedicated thread
             DateTime endTime = DateTime.Now.AddSeconds(_timeout);
             Thread t = new Thread(() =>
             {
@@ -339,6 +346,79 @@ namespace Cryptool.CrypConsole
                 Environment.Exit(0);
             });
             t.Start();
+        }
+
+        /// <summary>
+        /// This method analyses a given cwm file and returns all parameters
+        /// </summary>
+        /// <param name="cwm_file"></param>
+        private void DiscoverCWMFile(string cwm_file)
+        {
+            try
+            {
+                UpdateAppDomain();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception occured while updating AppDomain: {0}", ex.Message);
+                Environment.Exit(-4);
+            }
+
+            ModelPersistance modelPersistance = new ModelPersistance();
+            try
+            {                
+                _workspaceModel = modelPersistance.loadModel(cwm_file, true);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception occured during loading of cwm file: {0}", ex.Message);
+                Environment.Exit(0);
+            }
+            DiscoverWorkspaceModel(cwm_file);
+        }
+
+        private void DiscoverWorkspaceModel(string cwm_file)
+        {
+            Console.WriteLine("Discovery of cwm_file \"{0}\"", cwm_file);
+            Console.WriteLine();
+            foreach(var pluginModel in _workspaceModel.GetAllPluginModels())
+            {
+                Console.WriteLine("\"{0}\" (\"{1}\")", pluginModel.GetName(), pluginModel.Plugin.GetType().FullName);
+
+                var inputs = pluginModel.GetInputConnectors();
+                var outputs = pluginModel.GetOutputConnectors();
+                var settings = pluginModel.Plugin.Settings;
+                var taskPaneAttributes = settings.GetSettingsProperties(pluginModel.Plugin);
+
+                if (inputs.Count > 0)
+                {
+                    Console.WriteLine("- Input connectors:");
+                    foreach(var input in inputs)
+                    {
+                        Console.WriteLine("-- \"{0}\" (\"{1}\")", input.GetName(), input.ConnectorType.FullName);
+                    }
+                }
+                if (outputs.Count > 0)
+                {
+                    Console.WriteLine("- Output connectors:");
+                    foreach (var output in outputs)
+                    {
+                        Console.WriteLine("-- \"{0}\" (\"{1}\")", output.GetName(), output.ConnectorType.FullName);
+                    }
+                }
+
+                
+                if(taskPaneAttributes != null && taskPaneAttributes.Length > 0)
+                {
+                    Console.WriteLine("- Settings:");
+                    foreach (var taskPaneAttribute in taskPaneAttributes)
+                    {
+                        Console.WriteLine("-- \"{0}\" (\"{1}\")", taskPaneAttribute.PropertyName, taskPaneAttribute.PropertyInfo.PropertyType.FullName);
+                    }
+                }
+
+                Console.WriteLine();
+            }
         }
 
         /// <summary>

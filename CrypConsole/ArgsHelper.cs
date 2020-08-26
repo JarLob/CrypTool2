@@ -55,7 +55,7 @@ namespace Cryptool.CrypConsole
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static bool GetVerbose(string[] args)
+        public static bool CheckVerboseMode(string[] args)
         {
             var query = from str in args
                         where (str.Length >= 8 && str.ToLower().Substring(0, 8).Equals("-verbose"))
@@ -70,11 +70,30 @@ namespace Cryptool.CrypConsole
         }
 
         /// <summary>
+        /// Returns, if discover mode should be executed
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static bool CheckDiscoverMode(string[] args)
+        {
+            var query = from str in args
+                        where (str.Length >= 9 && str.ToLower().Substring(0, 9).Equals("-discover"))
+                           || (str.Length >= 10 && str.ToLower().Substring(0, 10).Equals("--discover"))
+                        select str;
+
+            if (query.Count() > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Returns, if json output should be enabled
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static bool GetJsonOutput(string[] args)
+        public static bool CheckJsonOutput(string[] args)
         {
             var query = from str in args
                         where (str.Length >= 11 && str.ToLower().Substring(0, 11).Equals("-jsonoutput"))
@@ -325,6 +344,7 @@ namespace Cryptool.CrypConsole
             Console.WriteLine("CrypConsole.exe -cwm=path/to/cwm/file -input=<input param definition> -output=<output param definition>");
             Console.WriteLine("All arguments:");
             Console.WriteLine(" -help                               -> shows this help page");
+            Console.WriteLine(" -discover                           -> discovers the given cwm file: returns all possible inputs and outputs");
             Console.WriteLine(" -cwm=path/to/cwm/file               -> specifies a path to a cwm file that should be executed");
             Console.WriteLine(" -input=type,name,data               -> specifies an input parameter");
             Console.WriteLine("                                        type can be number,text,file");
@@ -336,7 +356,6 @@ namespace Cryptool.CrypConsole
             Console.WriteLine(" -jsonoutput                         -> enables the json output");
             Console.WriteLine(" -verbose                            -> writes logs etc to the console; for debugging");
             Console.WriteLine(" -loglevel=info/debug/warning/error  -> changes the log level; default is \"warning\"");
-
         }
     }
 
