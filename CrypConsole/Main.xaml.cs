@@ -105,16 +105,9 @@ namespace Cryptool.CrypConsole
             {
                 Console.WriteLine("Specified cwm file \"{0}\" does not exist", cwm_file);
                 Environment.Exit(-2);
-            }
+            }             
 
-            //Step 3: Check, if discover mode was selected
-            if (ArgsHelper.CheckDiscoverMode(args))
-            {
-                DiscoverCWMFile(cwm_file);
-                Environment.Exit(0);
-            }            
-
-            //Step 4: Get additional parameters
+            //Step 3: Get additional parameters
             _verbose = ArgsHelper.CheckVerboseMode(args);
             try
             {
@@ -151,6 +144,13 @@ namespace Cryptool.CrypConsole
             {
                 Console.WriteLine(ex.Message);
                 Environment.Exit(-2);
+            }
+
+            //Step 4: Check, if discover mode was selected
+            if (ArgsHelper.CheckDiscoverMode(args))
+            {
+                DiscoverCWMFile(cwm_file);
+                Environment.Exit(0);
             }
 
             //Step 5: Get input parameters
@@ -379,21 +379,43 @@ namespace Cryptool.CrypConsole
 
         private void DiscoverWorkspaceModel(string cwm_file)
         {
-            Console.WriteLine("Discovery of cwm_file \"{0}\"", cwm_file);
-            Console.WriteLine();
-            foreach(var pluginModel in _workspaceModel.GetAllPluginModels())
+            if (_jsonoutput)
             {
-                Console.WriteLine("\"{0}\" (\"{1}\")", pluginModel.GetName(), pluginModel.Plugin.GetType().FullName);
+                Console.Write("{\"components\":[");
+            }
+            else
+            {
+                Console.WriteLine("Discovery of cwm_file \"{0}\"", cwm_file);
+                Console.WriteLine();
+            }
+            int counter = 0;
+            var allPluginModels = _workspaceModel.GetAllPluginModels();
+            foreach (var pluginModel in allPluginModels)
+            {
+                counter++;
+                if (!_jsonoutput)
+                {
+                    Console.WriteLine("\"{0}\" (\"{1}\")", pluginModel.GetName(), pluginModel.Plugin.GetType().FullName);
+                }
 
                 var inputs = pluginModel.GetInputConnectors();
                 var outputs = pluginModel.GetOutputConnectors();
                 var settings = pluginModel.Plugin.Settings;
                 var taskPaneAttributes = settings.GetSettingsProperties(pluginModel.Plugin);
 
+                if (_jsonoutput)
+                {
+                    Console.Write("{0}", JsonHelper.GetPluginDiscoveryString(pluginModel, inputs, outputs, taskPaneAttributes));
+                    if (counter < allPluginModels.Count)
+                    {
+                        Console.Write(",");
+                    }
+                    continue;
+                }
                 if (inputs.Count > 0)
                 {
                     Console.WriteLine("- Input connectors:");
-                    foreach(var input in inputs)
+                    foreach (var input in inputs)
                     {
                         Console.WriteLine("-- \"{0}\" (\"{1}\")", input.GetName(), input.ConnectorType.FullName);
                     }
@@ -406,9 +428,7 @@ namespace Cryptool.CrypConsole
                         Console.WriteLine("-- \"{0}\" (\"{1}\")", output.GetName(), output.ConnectorType.FullName);
                     }
                 }
-
-                
-                if(taskPaneAttributes != null && taskPaneAttributes.Length > 0)
+                if (taskPaneAttributes != null && taskPaneAttributes.Length > 0)
                 {
                     Console.WriteLine("- Settings:");
                     foreach (var taskPaneAttribute in taskPaneAttributes)
@@ -416,8 +436,11 @@ namespace Cryptool.CrypConsole
                         Console.WriteLine("-- \"{0}\" (\"{1}\")", taskPaneAttribute.PropertyName, taskPaneAttribute.PropertyInfo.PropertyType.FullName);
                     }
                 }
-
                 Console.WriteLine();
+            }
+            if (_jsonoutput)
+            {
+                Console.Write("]}");
             }
         }
 

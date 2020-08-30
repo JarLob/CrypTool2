@@ -14,7 +14,10 @@
    limitations under the License.
 */
 using System;
+using System.Collections.ObjectModel;
+using System.Text;
 using Cryptool.PluginBase;
+using WorkspaceManager.Model;
 
 namespace Cryptool.CrypConsole
 {
@@ -67,6 +70,65 @@ namespace Cryptool.CrypConsole
             newoutput = newoutput.Replace("\n", "\\n");
             newoutput = newoutput.Replace("\r", "\\r");
             return newoutput;
+        }
+
+        /// <summary>
+        /// Returns the inputs, outputs, and settings as a json string
+        /// </summary>
+        /// <param name="globalProgress"></param>
+        /// <returns></returns>
+        public static string GetPluginDiscoveryString(PluginModel pluginModel, ReadOnlyCollection<ConnectorModel> inputs, ReadOnlyCollection<ConnectorModel> outputs, TaskPaneAttribute[] taskPaneAttributes)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendFormat("{{\"name\":\"{0}\", \"type\":\"{1}\"", pluginModel.GetName(), pluginModel.Plugin.GetType().FullName);
+
+            if (inputs.Count > 0)
+            {
+                stringBuilder.AppendFormat(",\"inputs\":[");
+                int counter = 0;
+                foreach (var input in inputs)
+                {
+                    counter++;
+                    stringBuilder.AppendFormat("{{\"name\":\"{0}\",\"type\":\"{1}\"}}", input.GetName(), input.ConnectorType.FullName);
+                    if(counter < inputs.Count)
+                    {
+                        stringBuilder.Append(",");
+                    }
+                }
+                stringBuilder.AppendFormat("]");
+            }
+            if (outputs.Count > 0)
+            {
+                stringBuilder.AppendFormat(",\"outputs\":[");
+                int counter = 0;
+                foreach (var output in outputs)
+                {
+                    counter++;
+                    stringBuilder.AppendFormat("{{\"name\":\"{0}\",\"type\":\"{1}\"}}", output.GetName(), output.ConnectorType.FullName);
+                    if (counter < outputs.Count)
+                    {
+                        stringBuilder.Append(",");
+                    }
+                }
+                stringBuilder.AppendFormat("]");
+            }
+            if (taskPaneAttributes != null && taskPaneAttributes.Length > 0)
+            {
+                stringBuilder.AppendFormat(",\"settings\":[");
+                int counter = 0;
+                foreach (var taskPaneAttribute in taskPaneAttributes)
+                {
+                    counter++;
+                    stringBuilder.AppendFormat("{{\"name\":\"{0}\",\"type\":\"{1}\"}}", taskPaneAttribute.PropertyName, taskPaneAttribute.PropertyInfo.PropertyType.FullName);
+                    if (counter < taskPaneAttributes.Length)
+                    {
+                        stringBuilder.Append(",");
+                    }
+                }
+                stringBuilder.AppendFormat("]");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
         }
 
     }
