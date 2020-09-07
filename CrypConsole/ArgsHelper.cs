@@ -58,8 +58,8 @@ namespace Cryptool.CrypConsole
         public static bool CheckVerboseMode(string[] args)
         {
             var query = from str in args
-                        where (str.Length >= 8 && str.ToLower().Substring(0, 8).Equals("-verbose"))
-                           || (str.Length >= 9 && str.ToLower().Substring(0, 9).Equals("--verbose"))
+                        where (str.Length >= 8 && str.ToLower().Equals("-verbose"))
+                           || (str.Length >= 9 && str.ToLower().Equals("--verbose"))
                         select str;
 
             if (query.Count() > 0)
@@ -77,8 +77,8 @@ namespace Cryptool.CrypConsole
         public static bool CheckDiscoverMode(string[] args)
         {
             var query = from str in args
-                        where (str.Length >= 9 && str.ToLower().Substring(0, 9).Equals("-discover"))
-                           || (str.Length >= 10 && str.ToLower().Substring(0, 10).Equals("--discover"))
+                        where (str.Length >= 9 && str.ToLower().Equals("-discover"))
+                           || (str.Length >= 10 && str.ToLower().Equals("--discover"))
                         select str;
 
             if (query.Count() > 0)
@@ -96,8 +96,8 @@ namespace Cryptool.CrypConsole
         public static bool CheckJsonOutput(string[] args)
         {
             var query = from str in args
-                        where (str.Length >= 11 && str.ToLower().Substring(0, 11).Equals("-jsonoutput"))
-                           || (str.Length >= 12 && str.ToLower().Substring(0, 12).Equals("--jsonoutput"))
+                        where (str.Length >= 11 && str.ToLower().Equals("-jsonoutput"))
+                           || (str.Length >= 12 && str.ToLower().Equals("--jsonoutput"))
                         select str;
 
             if (query.Count() > 0)
@@ -115,7 +115,7 @@ namespace Cryptool.CrypConsole
         public static int GetTimeout(string[] args)
         {
             var query = from str in args
-                        where (str.Length >= 9 && str.ToLower().Substring(0, 9).Equals("-timeout="))
+                        where (str.Length >= 9 && str.ToLower().Substring(0,9).Equals("-timeout="))
                            || (str.Length >= 10 && str.ToLower().Substring(0, 10).Equals("--timeout="))
                         select str;
 
