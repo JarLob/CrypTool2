@@ -667,10 +667,7 @@ namespace Cryptool.EnigmaAnalyzer
         /// <param name="rangeLowS"></param>
         /// <param name="rangeHighS"></param>
         private void GenerateRangeStrings(out string rangeLowS, out string rangeHighS)
-        {
-            rangeLowS = null;
-            rangeHighS = null;
-
+        {         
             /*
                   case Model.M3:
                         fminS = "B:111:AAA:AAA";
@@ -689,7 +686,40 @@ namespace Cryptool.EnigmaAnalyzer
 
             switch (_settings.Model)
             {
-                case Model.M3:
+                case Model.M4:
+                    //M4 has 4 rotors
+                    rangeLowS = string.Format("{0}:{1}{2}{3}{4}:{5}{6}{7}{8}:{9}{10}{11}{12}",
+                       EnigmaAnalyzerSettings.GetReflectString(_settings.ReflectorFrom),
+                       EnigmaAnalyzerSettings.GetRotorString(_settings.GreekRotorFrom),
+                       EnigmaAnalyzerSettings.GetRotorString(_settings.LeftRotorFrom),
+                       EnigmaAnalyzerSettings.GetRotorString(_settings.MiddleRotorFrom),
+                       EnigmaAnalyzerSettings.GetRotorString(_settings.RightRotorFrom),
+                       EnigmaAnalyzerSettings.GetRotorRingPositionString(_settings.GreekRingFrom),
+                       EnigmaAnalyzerSettings.GetRotorRingPositionString(_settings.LeftRingFrom),
+                       EnigmaAnalyzerSettings.GetRotorRingPositionString(_settings.MiddleRingFrom),
+                       EnigmaAnalyzerSettings.GetRotorRingPositionString(_settings.RightRingFrom),
+                       EnigmaAnalyzerSettings.GetRotorRingPositionString(_settings.GreekRotorPositionFrom),
+                       EnigmaAnalyzerSettings.GetRotorRingPositionString(_settings.LeftRotorPositionFrom),
+                       EnigmaAnalyzerSettings.GetRotorRingPositionString(_settings.MiddleRotorPositionFrom),
+                       EnigmaAnalyzerSettings.GetRotorRingPositionString(_settings.RightRotorPositionFrom));
+                    rangeHighS = string.Format("{0}:{1}{2}{3}{4}:{5}{6}{7}{8}:{9}{10}{11}{12}",
+                        EnigmaAnalyzerSettings.GetReflectString(_settings.ReflectorTo),
+                        EnigmaAnalyzerSettings.GetRotorString(_settings.GreekRotorTo),
+                        EnigmaAnalyzerSettings.GetRotorString(_settings.LeftRotorTo),
+                        EnigmaAnalyzerSettings.GetRotorString(_settings.MiddleRotorTo),
+                        EnigmaAnalyzerSettings.GetRotorString(_settings.RightRotorTo),
+                        EnigmaAnalyzerSettings.GetRotorRingPositionString(_settings.GreekRingTo),
+                        EnigmaAnalyzerSettings.GetRotorRingPositionString(_settings.LeftRingTo),
+                        EnigmaAnalyzerSettings.GetRotorRingPositionString(_settings.MiddleRingTo),
+                        EnigmaAnalyzerSettings.GetRotorRingPositionString(_settings.RightRingTo),
+                        EnigmaAnalyzerSettings.GetRotorRingPositionString(_settings.GreekRotorPositionTo),
+                        EnigmaAnalyzerSettings.GetRotorRingPositionString(_settings.LeftRotorPositionTo),
+                        EnigmaAnalyzerSettings.GetRotorRingPositionString(_settings.MiddleRotorPositionTo),
+                        EnigmaAnalyzerSettings.GetRotorRingPositionString(_settings.RightRotorPositionTo));
+                    break;
+
+                default:
+                    //all other have 3 rotors
                     rangeLowS = string.Format("{0}:{1}{2}{3}:{4}{5}{6}:{7}{8}{9}",
                         EnigmaAnalyzerSettings.GetReflectString(_settings.ReflectorFrom),
                         EnigmaAnalyzerSettings.GetRotorString(_settings.LeftRotorFrom),
@@ -839,9 +869,7 @@ namespace Cryptool.EnigmaAnalyzer
         }
 
         public double ExactValue => Math.Abs(Value);
-
-        public int KeyLength => Key.Length;
-
+    
         public string ClipboardValue => ExactValue.ToString();
 
         public string ClipboardKey => Key;
@@ -849,11 +877,10 @@ namespace Cryptool.EnigmaAnalyzer
         public string ClipboardText => Text;
 
         public string ClipboardEntry =>
-            "Rank: " + Ranking + Environment.NewLine +
-            "Value: " + ExactValue + Environment.NewLine +
-            "Key: " + Key + Environment.NewLine +
-            "KeyLength: " + KeyLength + Environment.NewLine +
-            "Text: " + Text;
+            Properties.Resources.RankingHeader + " " + Ranking + Environment.NewLine +
+            Properties.Resources.ValueHeader + " " + ExactValue + Environment.NewLine +
+            Properties.Resources.KeyHeader + " " + Key + Environment.NewLine +
+            Properties.Resources.TextHeader + " " + Text;
     }
 
     /// <summary>

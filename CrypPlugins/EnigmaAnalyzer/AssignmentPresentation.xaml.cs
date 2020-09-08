@@ -23,7 +23,7 @@ using Cryptool.CrypAnalysisViewControl;
 
 namespace Cryptool.EnigmaAnalyzer
 {
-    [PluginBase.Attributes.Localization("Cryptool.EnigmaAnalyzerLib.Properties.Resources")]
+    [PluginBase.Attributes.Localization("Cryptool.EnigmaAnalyzer.Properties.Resources")]
     public partial class AssignmentPresentation : UserControl
     {
 

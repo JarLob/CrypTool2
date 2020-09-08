@@ -246,7 +246,7 @@ namespace Cryptool.EnigmaAnalyzer
         }
 
 
-        [TaskPane("AnalysisLanguageTooltip", "AnalysisLanguageTooltip", "AnalysisTypeGroup", 4, false, ControlType.ComboBox, new string[] { "English", "French", "German", "Italian" })]
+        [TaskPane("AnalysisLanguageCaption", "AnalysisLanguageTooltip", "AnalysisTypeGroup", 4, false, ControlType.ComboBox, new string[] { "English", "French", "German", "Italian" })]
         public Language AnalysisLanguage
         {
             get
@@ -266,7 +266,7 @@ namespace Cryptool.EnigmaAnalyzer
         /// <summary>
         /// Getter/Setter for the number of cores which should be used by ADFGVXAnalyzer
         /// </summary>
-        [TaskPane("Threads", "ThreadsToolTip", "AnalysisTypeGroup", 5, false, ControlType.DynamicComboBox, new string[] { "CoresAvailable" })]
+        [TaskPane("ThreadsCaption", "ThreadsToolTip", "AnalysisTypeGroup", 5, false, ControlType.DynamicComboBox, new string[] { "CoresAvailable" })]
         public int CoresUsed
         {
             get { return _coresUsed; }

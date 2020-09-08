@@ -39,7 +39,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cryptool.EnigmaAnalyzerLib.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cryptool.EnigmaAnalyzer.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,6 +61,528 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Language ähnelt.
+        /// </summary>
+        public static string AnalysisLanguageCaption {
+            get {
+                return ResourceManager.GetString("AnalysisLanguageCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Use this language for the cost function. ähnelt.
+        /// </summary>
+        public static string AnalysisLanguageTooltip {
+            get {
+                return ResourceManager.GetString("AnalysisLanguageTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis Mode ähnelt.
+        /// </summary>
+        public static string AnalysisModeCaption {
+            get {
+                return ResourceManager.GetString("AnalysisModeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Which cryptanalysis mode should be performed? ähnelt.
+        /// </summary>
+        public static string AnalysisModeTooltip {
+            get {
+                return ResourceManager.GetString("AnalysisModeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis Type ähnelt.
+        /// </summary>
+        public static string AnalysisTypeGroup {
+            get {
+                return ResourceManager.GetString("AnalysisTypeGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext ähnelt.
+        /// </summary>
+        public static string CiphertextCaption {
+            get {
+                return ResourceManager.GetString("CiphertextCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The ciphertext that should be analyzed. ähnelt.
+        /// </summary>
+        public static string CiphertextTooltip {
+            get {
+                return ResourceManager.GetString("CiphertextTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Crib ähnelt.
+        /// </summary>
+        public static string CribCaption {
+            get {
+                return ResourceManager.GetString("CribCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Crib Position From ähnelt.
+        /// </summary>
+        public static string CribPositionFromCaption {
+            get {
+                return ResourceManager.GetString("CribPositionFromCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start position of crib used during the analysis ähnelt.
+        /// </summary>
+        public static string CribPositionFromTooltip {
+            get {
+                return ResourceManager.GetString("CribPositionFromTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Crib Position To ähnelt.
+        /// </summary>
+        public static string CribPositionToCaption {
+            get {
+                return ResourceManager.GetString("CribPositionToCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die End position of crib used during the analysis ähnelt.
+        /// </summary>
+        public static string CribPositionToTooltip {
+            get {
+                return ResourceManager.GetString("CribPositionToTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Crib that is used during the cryptanalysis using the Turing Bombe. ähnelt.
+        /// </summary>
+        public static string CribTooltip {
+            get {
+                return ResourceManager.GetString("CribTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die End Time: ähnelt.
+        /// </summary>
+        public static string EndLabel {
+            get {
+                return ResourceManager.GetString("EndLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Greek Ring From ähnelt.
+        /// </summary>
+        public static string GreekRingFromCaption {
+            get {
+                return ResourceManager.GetString("GreekRingFromCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First ring in greek position to analyze ähnelt.
+        /// </summary>
+        public static string GreekRingFromTooltip {
+            get {
+                return ResourceManager.GetString("GreekRingFromTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Greek Ring To ähnelt.
+        /// </summary>
+        public static string GreekRingToCaption {
+            get {
+                return ResourceManager.GetString("GreekRingToCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Last ring in greek position to analyze ähnelt.
+        /// </summary>
+        public static string GreekRingToTooltip {
+            get {
+                return ResourceManager.GetString("GreekRingToTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Last rotor position in greek position to analyze ähnelt.
+        /// </summary>
+        public static string GreekRoto_PositionToTooltip {
+            get {
+                return ResourceManager.GetString("GreekRoto PositionToTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Greek Rotor From ähnelt.
+        /// </summary>
+        public static string GreekRotorFromCaption {
+            get {
+                return ResourceManager.GetString("GreekRotorFromCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First rotor in greek position to analyze ähnelt.
+        /// </summary>
+        public static string GreekRotorFromTooltip {
+            get {
+                return ResourceManager.GetString("GreekRotorFromTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Greek Rotor Position From ähnelt.
+        /// </summary>
+        public static string GreekRotorPositionFromCaption {
+            get {
+                return ResourceManager.GetString("GreekRotorPositionFromCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First rotor position in greek position to analyze ähnelt.
+        /// </summary>
+        public static string GreekRotorPositionFromTooltip {
+            get {
+                return ResourceManager.GetString("GreekRotorPositionFromTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Greek Rotor Position To ähnelt.
+        /// </summary>
+        public static string GreekRotorPositionToCaption {
+            get {
+                return ResourceManager.GetString("GreekRotorPositionToCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Greek Rotor To ähnelt.
+        /// </summary>
+        public static string GreekRotorToCaption {
+            get {
+                return ResourceManager.GetString("GreekRotorToCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Last rotor in greek position to analyze ähnelt.
+        /// </summary>
+        public static string GreekRotorToTooltip {
+            get {
+                return ResourceManager.GetString("GreekRotorToTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Best Key ähnelt.
+        /// </summary>
+        public static string KeyCaption {
+            get {
+                return ResourceManager.GetString("KeyCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key ähnelt.
+        /// </summary>
+        public static string KeyHeader {
+            get {
+                return ResourceManager.GetString("KeyHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The best key found during the analysis. ähnelt.
+        /// </summary>
+        public static string KeyTooltip {
+            get {
+                return ResourceManager.GetString("KeyTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Left Ring From ähnelt.
+        /// </summary>
+        public static string LeftRingFromCaption {
+            get {
+                return ResourceManager.GetString("LeftRingFromCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First ring in left position to analyze ähnelt.
+        /// </summary>
+        public static string LeftRingFromTooltip {
+            get {
+                return ResourceManager.GetString("LeftRingFromTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Left Ring To ähnelt.
+        /// </summary>
+        public static string LeftRingToCaption {
+            get {
+                return ResourceManager.GetString("LeftRingToCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Last ring in left position to analyze ähnelt.
+        /// </summary>
+        public static string LeftRingToTooltip {
+            get {
+                return ResourceManager.GetString("LeftRingToTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Left Rotor From ähnelt.
+        /// </summary>
+        public static string LeftRotorFromCaption {
+            get {
+                return ResourceManager.GetString("LeftRotorFromCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First rotor in left position to analyze ähnelt.
+        /// </summary>
+        public static string LeftRotorFromTooltip {
+            get {
+                return ResourceManager.GetString("LeftRotorFromTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Left Rotor Position From ähnelt.
+        /// </summary>
+        public static string LeftRotorPositionFromCaption {
+            get {
+                return ResourceManager.GetString("LeftRotorPositionFromCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First rotor position in left position to analyze ähnelt.
+        /// </summary>
+        public static string LeftRotorPositionFromTooltip {
+            get {
+                return ResourceManager.GetString("LeftRotorPositionFromTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Left Rotor Position To ähnelt.
+        /// </summary>
+        public static string LeftRotorPositionToCaption {
+            get {
+                return ResourceManager.GetString("LeftRotorPositionToCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Last rotor position in left position to analyze ähnelt.
+        /// </summary>
+        public static string LeftRotorPositionToTooltip {
+            get {
+                return ResourceManager.GetString("LeftRotorPositionToTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Left Rotor To ähnelt.
+        /// </summary>
+        public static string LeftRotorToCaption {
+            get {
+                return ResourceManager.GetString("LeftRotorToCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Last rotor in left position to analyze ähnelt.
+        /// </summary>
+        public static string LeftRotorToTooltip {
+            get {
+                return ResourceManager.GetString("LeftRotorToTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Local ähnelt.
+        /// </summary>
+        public static string LocalLabel {
+            get {
+                return ResourceManager.GetString("LocalLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Machine Model ähnelt.
+        /// </summary>
+        public static string MachineModelCaption {
+            get {
+                return ResourceManager.GetString("MachineModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The model of the Enigma that should be analyzed. ähnelt.
+        /// </summary>
+        public static string MachineModelTooltip {
+            get {
+                return ResourceManager.GetString("MachineModelTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Middle Ring From ähnelt.
+        /// </summary>
+        public static string MiddleRingFromCaption {
+            get {
+                return ResourceManager.GetString("MiddleRingFromCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First ring in middle position to analyze ähnelt.
+        /// </summary>
+        public static string MiddleRingFromTooltip {
+            get {
+                return ResourceManager.GetString("MiddleRingFromTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Middle Ring To ähnelt.
+        /// </summary>
+        public static string MiddleRingToCaption {
+            get {
+                return ResourceManager.GetString("MiddleRingToCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Last ring in middle position to analyze ähnelt.
+        /// </summary>
+        public static string MiddleRingToTooltip {
+            get {
+                return ResourceManager.GetString("MiddleRingToTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Middle Rotor From ähnelt.
+        /// </summary>
+        public static string MiddleRotorFromCaption {
+            get {
+                return ResourceManager.GetString("MiddleRotorFromCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First rotor in middle position to analyze ähnelt.
+        /// </summary>
+        public static string MiddleRotorFromTooltip {
+            get {
+                return ResourceManager.GetString("MiddleRotorFromTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Middle Rotor Position From ähnelt.
+        /// </summary>
+        public static string MiddleRotorPositionFromCaption {
+            get {
+                return ResourceManager.GetString("MiddleRotorPositionFromCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First rotor position in middle position to analyze ähnelt.
+        /// </summary>
+        public static string MiddleRotorPositionFromTooltip {
+            get {
+                return ResourceManager.GetString("MiddleRotorPositionFromTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Middle Rotor Position To ähnelt.
+        /// </summary>
+        public static string MiddleRotorPositionToCaption {
+            get {
+                return ResourceManager.GetString("MiddleRotorPositionToCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Last rotor position in middle position to analyze ähnelt.
+        /// </summary>
+        public static string MiddleRotorPositionToTooltip {
+            get {
+                return ResourceManager.GetString("MiddleRotorPositionToTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Middle Rotor To ähnelt.
+        /// </summary>
+        public static string MiddleRotorToCaption {
+            get {
+                return ResourceManager.GetString("MiddleRotorToCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Last rotor in middle position to analyze ähnelt.
+        /// </summary>
+        public static string MiddleRotorToTooltip {
+            get {
+                return ResourceManager.GetString("MiddleRotorToTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Best Plaintext ähnelt.
+        /// </summary>
+        public static string PlaintextCaption {
+            get {
+                return ResourceManager.GetString("PlaintextCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The best plaintext which was found during the analysis. ähnelt.
+        /// </summary>
+        public static string PlaintextTooltip {
+            get {
+                return ResourceManager.GetString("PlaintextTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Enigma Analyzer ähnelt.
         /// </summary>
         public static string PluginCaption {
@@ -75,6 +597,267 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         public static string PluginTooltip {
             get {
                 return ResourceManager.GetString("PluginTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ranking ähnelt.
+        /// </summary>
+        public static string RankingHeader {
+            get {
+                return ResourceManager.GetString("RankingHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reflector From ähnelt.
+        /// </summary>
+        public static string ReflectorFromCaption {
+            get {
+                return ResourceManager.GetString("ReflectorFromCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First reflector to analyze ähnelt.
+        /// </summary>
+        public static string ReflectorFromTooltip {
+            get {
+                return ResourceManager.GetString("ReflectorFromTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Last reflector to analyze ähnelt.
+        /// </summary>
+        public static string ReflectorFromTooltip1 {
+            get {
+                return ResourceManager.GetString("ReflectorFromTooltip1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reflectors ähnelt.
+        /// </summary>
+        public static string ReflectorGroup {
+            get {
+                return ResourceManager.GetString("ReflectorGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reflector To ähnelt.
+        /// </summary>
+        public static string ReflectorToCaption {
+            get {
+                return ResourceManager.GetString("ReflectorToCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Right Ring From ähnelt.
+        /// </summary>
+        public static string RightRingFromCaption {
+            get {
+                return ResourceManager.GetString("RightRingFromCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First ring in right position to analyze ähnelt.
+        /// </summary>
+        public static string RightRingFromTooltip {
+            get {
+                return ResourceManager.GetString("RightRingFromTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Right Ring To ähnelt.
+        /// </summary>
+        public static string RightRingToCaption {
+            get {
+                return ResourceManager.GetString("RightRingToCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Last ring in right position to analyze ähnelt.
+        /// </summary>
+        public static string RightRingToTooltip {
+            get {
+                return ResourceManager.GetString("RightRingToTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Right Rotor From ähnelt.
+        /// </summary>
+        public static string RightRotorFromCaption {
+            get {
+                return ResourceManager.GetString("RightRotorFromCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First rotor in right position to analyze ähnelt.
+        /// </summary>
+        public static string RightRotorFromTooltip {
+            get {
+                return ResourceManager.GetString("RightRotorFromTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Right Rotor Position From ähnelt.
+        /// </summary>
+        public static string RightRotorPositionFromCaption {
+            get {
+                return ResourceManager.GetString("RightRotorPositionFromCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First rotor position in right position to analyze ähnelt.
+        /// </summary>
+        public static string RightRotorPositionFromTooltip {
+            get {
+                return ResourceManager.GetString("RightRotorPositionFromTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Right Rotor Position To ähnelt.
+        /// </summary>
+        public static string RightRotorPositionToCaption {
+            get {
+                return ResourceManager.GetString("RightRotorPositionToCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Last rotor position in right position to analyze ähnelt.
+        /// </summary>
+        public static string RightRotorPositionToTooltip {
+            get {
+                return ResourceManager.GetString("RightRotorPositionToTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Right Rotor To ähnelt.
+        /// </summary>
+        public static string RightRotorToCaption {
+            get {
+                return ResourceManager.GetString("RightRotorToCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Last rotor in right position to analyze ähnelt.
+        /// </summary>
+        public static string RightRotorToTooltip {
+            get {
+                return ResourceManager.GetString("RightRotorToTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ring Positions ähnelt.
+        /// </summary>
+        public static string RingGroup {
+            get {
+                return ResourceManager.GetString("RingGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Rotors ähnelt.
+        /// </summary>
+        public static string RotorGroup {
+            get {
+                return ResourceManager.GetString("RotorGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Rotor Positions ähnelt.
+        /// </summary>
+        public static string RotorPositionGroup {
+            get {
+                return ResourceManager.GetString("RotorPositionGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start Time: ähnelt.
+        /// </summary>
+        public static string StartLabel {
+            get {
+                return ResourceManager.GetString("StartLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis Step: ähnelt.
+        /// </summary>
+        public static string StepLabel {
+            get {
+                return ResourceManager.GetString("StepLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Text ähnelt.
+        /// </summary>
+        public static string TextHeader {
+            get {
+                return ResourceManager.GetString("TextHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Threads ähnelt.
+        /// </summary>
+        public static string ThreadsCaption {
+            get {
+                return ResourceManager.GetString("ThreadsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die How many threads should be used during the analysis? ähnelt.
+        /// </summary>
+        public static string ThreadsTooltip {
+            get {
+                return ResourceManager.GetString("ThreadsTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Time Left: ähnelt.
+        /// </summary>
+        public static string TimeLeftLabel {
+            get {
+                return ResourceManager.GetString("TimeLeftLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Top List ähnelt.
+        /// </summary>
+        public static string TopTenLabel {
+            get {
+                return ResourceManager.GetString("TopTenLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Value ähnelt.
+        /// </summary>
+        public static string ValueHeader {
+            get {
+                return ResourceManager.GetString("ValueHeader", resourceCulture);
             }
         }
     }
