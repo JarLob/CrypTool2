@@ -52,12 +52,13 @@ namespace Cryptool.EnigmaAnalyzer
     }
 
     public enum AnalysisMode
-    {        
+    {
+        GILLOGLY,
         BOMBE,
         IC_SEARCH,
         TRIGRAM_SEARCH,
         HILLCLIMBING,
-        SIMULATED_ANNEALING
+        SIMULATED_ANNEALING,        
     }
 
     #endregion
@@ -65,7 +66,7 @@ namespace Cryptool.EnigmaAnalyzer
     public class EnigmaAnalyzerSettings : ISettings
     {
         private Model _model = Model.M3;
-        private AnalysisMode _analysisMode = AnalysisMode.BOMBE;
+        private AnalysisMode _analysisMode = AnalysisMode.GILLOGLY;
         private Language _analysisLanguage = Language.ENGLISH;
         private ObservableCollection<string> coresAvailable = new ObservableCollection<string>();
         private int _coresUsed = 0; // 0 means 1 core, 1 means 2 cores, etc...
@@ -193,7 +194,7 @@ namespace Cryptool.EnigmaAnalyzer
             }
         }
 
-        [TaskPane("AnalysisModeCaption", "AnalysisModeTooltip", "AnalysisTypeGroup", 1, false, ControlType.ComboBox, new string[] { "Turing Bombe", "IoC Search", "Trigram Search", "Hillclimbing", "Simulated Annealing" })]
+        [TaskPane("AnalysisModeCaption", "AnalysisModeTooltip", "AnalysisTypeGroup", 1, false, ControlType.ComboBox, new string[] { "Gillogly", "Turing Bombe", "IoC Search", "Trigram Search", "Hillclimbing", "Simulated Annealing"})]
         public AnalysisMode AnalysisMode
         {
             get

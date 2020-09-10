@@ -499,7 +499,7 @@ namespace EnigmaAnalyzerLib
                     break;
                 case MRingScope.STEPPING_INSIDE_MSG_WITH_SMALL_IMPACT_AND_ONE_NON_STEPPING:
                     mRingOptions = Math.Min((3 * len / 5) / 26 + 1, 26);
-                    break;
+                    break;                
                 default:
                     break;
             }
@@ -528,6 +528,11 @@ namespace EnigmaAnalyzerLib
                     }
                 }
             }
+            if(wheelPossibilities == 0)
+            {
+                wheelPossibilities = 1;
+            }
+
             numberOfKeysToCheck *= wheelPossibilities;
             return numberOfKeysToCheck;
         }

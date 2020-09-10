@@ -75,6 +75,7 @@
     <Compile Include="Common\SimulatedAnnealing.cs" />
     <Compile Include="Common\Stats.cs" />
     <Compile Include="Common\Utils.cs" />
+    <Compile Include="GilloglyAttack.cs" />
     <Compile Include="HcSaRunnable.cs" />
     <Compile Include="HillClimb.cs" />
     <Compile Include="Key.cs" />

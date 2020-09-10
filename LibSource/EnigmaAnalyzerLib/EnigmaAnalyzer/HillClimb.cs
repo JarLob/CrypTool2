@@ -26,7 +26,8 @@ namespace EnigmaAnalyzerLib
                                   int minScoreToPrint, MRingScope lRingSettingScope, int rRingSpacing,
                                   short[] ciphertext, int len, HcSaRunnable.Mode mode, int rounds,
                                   EnigmaStats enigmaStats,
-                                  ResultReporter resultReporter) 
+                                  ResultReporter resultReporter,
+                                  bool showProgress = true) 
         {           
             int globalscore = 0;
             long count = 0;
@@ -138,13 +139,13 @@ namespace EnigmaAnalyzerLib
                                             {                                               
                                                 for (ckey.rRing = low.rRing; ckey.rRing <= high.rRing; ckey.rRing++) 
                                                 {
-                                                    if (mode == HcSaRunnable.Mode.SA)
+                                                    if (showProgress && mode == HcSaRunnable.Mode.SA)
                                                     {
-                                                        resultReporter.UpdateCryptanalysisStep(string.Format("Simulated Annealing Range ({0})", ckey.getKeystringShort(false)));
+                                                        resultReporter.UpdateCryptanalysisStep(string.Format("Sim. Annealing ({0})", ckey.getKeystringShort(false)));
                                                     }
-                                                    else
+                                                    else if(showProgress && mode == HcSaRunnable.Mode.SA)
                                                     {
-                                                        resultReporter.UpdateCryptanalysisStep(string.Format("Hill Climbing Range ({0})", ckey.getKeystringShort(false)));
+                                                        resultReporter.UpdateCryptanalysisStep(string.Format("Hillclimbing ({0})", ckey.getKeystringShort(false)));
                                                     }
                                                     //       if (ckey.r_slot > 5 && ckey.r_ring > 12) continue;
                                                     for (ckey.gMesg = low.gMesg; ckey.gMesg <= high.gMesg; ckey.gMesg++)
@@ -206,7 +207,6 @@ namespace EnigmaAnalyzerLib
                                                                 {
                                                                     if (resultReporter.shouldPushResult(ckey.score)) 
                                                                     {
-
                                                                         ckey.addRightRotorOffset(processes[k].bestOffset);
                                                                         ckey.initPathLookupAll(len);
                                                                         string plainStr = ckey.plaintextstring(ciphertext, len);
@@ -254,6 +254,14 @@ namespace EnigmaAnalyzerLib
             }
             return globalscore;
         }
+
+        /*public void hillClimbRange(HillClimbParameterSet hillClimbParameterSet, EnigmaStats enigmaStats, ResultReporter resultReporter)
+        {
+            hillClimbRange(hillClimbParameterSet.KeyFrom, hillClimbParameterSet.KeyTo, hillClimbParameterSet.Cycles, hillClimbParameterSet.Threads,
+            hillClimbParameterSet.MinScoreToPrint, hillClimbParameterSet.LRingSettingScope, hillClimbParameterSet.RRingSpacing,
+            hillClimbParameterSet.Ciphertext, hillClimbParameterSet.Len, hillClimbParameterSet.Mode, hillClimbParameterSet.Rounds,
+            enigmaStats, resultReporter);
+        }*/
 
         public int hillClimbBatch(Key[] keys, int nKeys, int hcMaxPass, int THREADS, int minScoreToPrint, short[] ciphertext, int len, int rRingSpacing,
             EnigmaStats enigmaStats,

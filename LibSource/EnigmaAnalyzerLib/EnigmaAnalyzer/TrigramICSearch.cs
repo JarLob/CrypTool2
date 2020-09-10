@@ -209,11 +209,10 @@ namespace EnigmaAnalyzerLib
                     }
                 }
             }
-            Console.WriteLine("SEARCH ENDED: Total {0} in {1} Seconds ({2}/Sec)",
+            resultReporter.WriteMessage(string.Format("SEARCH ENDED: Total {0} in {1} Seconds ({2}/Sec)",
                     counter,
                     (DateTime.Now - startTime).TotalMilliseconds / 1000.0,
-                    1000 * counter / (DateTime.Now - startTime).TotalMilliseconds + 1);
-
+                    1000 * counter / (DateTime.Now - startTime).TotalMilliseconds + 1));
 
             if ((bestKey != null) && (hcMaxPass > 0))
             {

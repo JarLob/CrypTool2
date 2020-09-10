@@ -286,6 +286,9 @@ namespace Cryptool.EnigmaAnalyzer
                 case AnalysisMode.SIMULATED_ANNEALING:
                     PerformHillclimbingSimulatedAnnealing(HcSaRunnable.Mode.SA);
                     break;
+                case AnalysisMode.GILLOGLY:
+                    PerformGilloglyAttack();
+                    break;
                 default:
                     throw new NotImplementedException(string.Format("Cryptanalysis mode {0} not implemented", _settings.AnalysisMode));
             }
@@ -489,9 +492,8 @@ namespace Cryptool.EnigmaAnalyzer
             //perform hill climbing
             try
             {
-                //TODO: put hc every best maybe as setting
                 trigramICSearch.searchTrigramIC(lowKey, highKey, findSettingsIc, middle_ring_scope, right_ring_sampling, false, hc_sa_cycles, 0, 
-                    threads, ciphertext, clen, indicatorS, indicatorMessageKeyS, enigmaStats, _resultReporter);
+                    threads, ciphertext, clen, indicatorS, indicatorMessageKeyS, enigmaStats, _resultReporter);                
             }
             catch (Exception ex)
             {
@@ -499,6 +501,67 @@ namespace Cryptool.EnigmaAnalyzer
             }
         }
 
+        /// <summary>
+        /// Performs a cryptanalysis using (an improved version of) Gillogly's original attack
+        /// </summary>
+        /// <param name="findSettingsIc"></param>
+        private void PerformGilloglyAttack()
+        {
+            //parameters
+            short[] ciphertext = new short[MAXLEN];
+            string strciphertext = Regex.Replace(Ciphertext != null ? Ciphertext.ToUpper() : string.Empty, "[^A-Z]", "");
+            int clen;
+            Key lowKey = new Key();
+            Key highKey = new Key();
+
+            int hc_sa_cycles = 2;
+            int right_ring_sampling = 1;            
+
+            int threads = _settings.CoresUsed + 1;
+
+            //convert ciphertext to numerical representation
+            clen = EnigmaUtils.getText(strciphertext, ciphertext);
+
+            //validate/format parameters                   
+            if (string.IsNullOrEmpty(strciphertext))
+            {
+                GuiLogMessage("Empty ciphertext given. Cryptanalysis can not work without any ciphertext to analyze", NotificationLevel.Error);
+                return;
+            }
+            if (!CheckRanges())
+            {
+                return;
+            }
+
+            //convert and check key range
+            string rangeLowS;
+            string rangeHighS;
+            GenerateRangeStrings(out rangeLowS, out rangeHighS);
+            int result = setRange(lowKey, highKey, rangeLowS, rangeHighS, _settings.Model);
+            if (result != 1)
+            {
+                GuiLogMessage(string.Format("Invalid key range: {0}-{1} - Invalid key format, or first key has a higher value than the last key", rangeLowS, rangeHighS), NotificationLevel.Error);
+                return;
+            }
+
+            //analysis objects
+            var gilloglyAttack = new GilloglyAttack();
+            var enigmaStats = new EnigmaStats();
+
+            //load correct language
+            LoadAnalysisLanguage(enigmaStats);
+
+            //perform hill climbing
+            try
+            {              
+                gilloglyAttack.PerformAttack(lowKey, highKey, right_ring_sampling, hc_sa_cycles,
+                    threads, ciphertext, clen, enigmaStats, _resultReporter);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(string.Format("Exception occured during execution of cryptanalysis: {0}", ex.Message), NotificationLevel.Error);
+            }
+        }
 
         /// <summary>
         /// Performs a cryptanalysis using hill climbing or simulated annealing
