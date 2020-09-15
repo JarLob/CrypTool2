@@ -53,15 +53,10 @@ namespace Cryptool.Enigma
         private EnigmaCore _core;
         private string _textInput;
         private string _keyInput;
-        private IDictionary<int, IDictionary<string, double[]>> _statistics;
-        // FIXME: enable optional statistics input
-        //private IDictionary<string, double[]> inputTriGrams;
+        private IDictionary<int, IDictionary<string, double[]>> _statistics;       
         private string _textOutput;
-        private string _savedInitialRotorPos;
+
         public bool _isrunning;
-        private bool _newText = false;
-        private bool _keyInputConnected = false;
-        private bool _newKey = false;
 
         private bool _running = false;
         private bool _stopped = false;
@@ -85,22 +80,22 @@ namespace Cryptool.Enigma
         /// <returns>The encrypted/decrypted string</returns>
         private string FormattedEncrypt(int rotor1Pos, int rotor2Pos, int rotor3Pos, int rotor4Pos, string text)
         {
-            String input = preFormatInput(text);
+            string input = preFormatInput(text);
             _enigmaPresentationFrame.ChangeStatus(_isrunning, _enigmaPresentationFrame.EnigmaPresentation.IsVisible);
 
             if (Presentation.IsVisible && _enigmaPresentationFrame.EnigmaPresentation.PresentationDisabled.DisabledBoolProperty)
             {
-                String output = _core.Encrypt(rotor1Pos, rotor2Pos, rotor3Pos, rotor4Pos, input);
-
+                string output = _core.Encrypt(rotor1Pos, rotor2Pos, rotor3Pos, rotor4Pos, input);
                 _enigmaPresentationFrame.EnigmaPresentation.output = output;
                 if (_enigmaPresentationFrame.EnigmaPresentation.checkReady())
+                {
                     _enigmaPresentationFrame.EnigmaPresentation.setinput(input);
+                }
                 else
+                {
                     LogMessage("Presentation Error!", NotificationLevel.Error);
-                //myPresentation.playClick(null, EventArgs.Empty);
-                //return postFormatOutput(output);
-               
-                return "";
+                }               
+                return string.Empty;
             }
 
             return postFormatOutput(_core.Encrypt(rotor1Pos, rotor2Pos, rotor3Pos, rotor4Pos, input));
@@ -302,17 +297,15 @@ namespace Cryptool.Enigma
         [PropertyInfo(Direction.InputData, "TextInputCaption", "TextInputTooltip", true)]
         public string TextInput
         {
-            get { return this._textInput; }
+            get 
+            { 
+                return _textInput; 
+            }
             set
-            {
-                if (!_isrunning)
-                {
-                    return;
-                }
+            {               
                 if (value != _textInput)
                 {
-                    this._textInput = value;
-                    this._newText = true;
+                    _textInput = value;
                     OnPropertyChanged("TextInput");
                 }
             }
@@ -321,20 +314,20 @@ namespace Cryptool.Enigma
         [PropertyInfo(Direction.InputData, "KeyInputCaption", "KeyInputTooltip", false)]
         public string KeyInput
         {
-            get { return this._keyInput; }
+            get 
+            { 
+                return _keyInput; 
+            }
             set
             {
                 if (!_isrunning)
                 {
                     return;
                 }
-                this._keyInputConnected = true;
-                if (!String.IsNullOrEmpty(value) && value != this._keyInput)
+                if (!string.IsNullOrEmpty(value) && value != _keyInput)
                 {
-                    this._keyInput = value;
-                    this._newKey = true;
-                    OnPropertyChanged("KeyInput");
-                    _settings.SetKeySettings(value);
+                    _keyInput = value;
+                    OnPropertyChanged("KeyInput");                    
                 }
             }
         }
@@ -342,7 +335,10 @@ namespace Cryptool.Enigma
         [PropertyInfo(Direction.OutputData, "TextOutputCaption", "TextOutputTooltip", false)]
         public string TextOutput
         {
-            get { return this._textOutput; }
+            get
+            { 
+                return _textOutput; 
+            }
             set
             {
                 _textOutput = value;
@@ -356,53 +352,45 @@ namespace Cryptool.Enigma
 
         public void PreExecution()
         {
-            _isrunning = true;
-
-            _running = false;
-            _stopped = false;
-
-            if (_enigmaPresentationFrame.EnigmaPresentation.checkReady())
-                _enigmaPresentationFrame.EnigmaPresentation.stopclick(this, EventArgs.Empty);
-            EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs("Preparing enigma for operation..", this,  NotificationLevel.Info));
-
-            if (_settings.Model != 3 && _settings.Model != 2)
-            {
-                EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs("This simulator is work in progress. As of right now only Enigma I and Enigma Reichsbahn (Rocket) is supported!!", this, NotificationLevel.Warning));
-                return;
-            }
-
-            // remember the current key-setting, in order to restore on stop
-            _savedInitialRotorPos = _settings.InitialRotorPos;
-
-            //configure the enigma
-            _core.setInternalConfig(_settings.Rotor1, _settings.Rotor2, _settings.Rotor3, _settings.Rotor4,
-                        _settings.Reflector, _settings.Ring1, _settings.Ring2, _settings.Ring3, _settings.Ring4,
-                        _settings.PlugBoard);
+            
         }
 
         public void Execute()
         {
-            if (!this._newText || this._keyInputConnected && !this._newKey)
-                return;
-
-            this._newText = false;
-            this._newKey = false;
-
+            if (!string.IsNullOrEmpty(KeyInput)) 
+            {              
+                _settings.SetKeySettings(KeyInput);
+            }
             if (_settings.Model != 3 && _settings.Model != 2)
             {
                 LogMessage("This simulator is work in progress. As of right now only Enigma I and Enigma Reichsbahn (Rocket) is supported!!", NotificationLevel.Error);
                 return;
             }
 
-            while(_running)
+            _isrunning = true;
+            _running = false;
+            _stopped = false;
+
+            if (_enigmaPresentationFrame.EnigmaPresentation.checkReady())
+            {
+                _enigmaPresentationFrame.EnigmaPresentation.stopclick(this, EventArgs.Empty);
+            }
+
+            //configure the Enigma
+            _core.setInternalConfig(_settings.Rotor1, _settings.Rotor2, _settings.Rotor3, _settings.Rotor4,
+                        _settings.Reflector, _settings.Ring1, _settings.Ring2, _settings.Ring3, _settings.Ring4,
+                        _settings.PlugBoard);
+
+            while (_running)
             {
                 _enigmaPresentationFrame.EnigmaPresentation.stopclick(this, EventArgs.Empty);
                 if (_stopped)
-                return;
+                {
+                    return;
+                }
             }
 
-            _running = true;
-            LogMessage("Enigma encryption/decryption started...", NotificationLevel.Info);
+            _running = true;         
 
             // re-set the key, in case we get executed again during single run
             //_settings.InitialRotorPos = _savedInitialRotorPos.ToUpper();
@@ -412,20 +400,17 @@ namespace Cryptool.Enigma
                 _settings.Alphabet.IndexOf(_settings.InitialRotorPos[1]),
                 _settings.Alphabet.IndexOf(_settings.InitialRotorPos[0]), 
                 0, _textInput);                    
-
-            // FIXME: output all scorings
-            //LogMessage("Enigma encryption done. The resulting index of coincidences is " + analyzer.calculateScore(outputString, 0), NotificationLevel.Info);
-
+          
             // "fire" the output
             OnPropertyChanged("TextOutput");
+
+            LogMessage("Decrypted with key: " + KeyInput, NotificationLevel.Info);
         }
 
         public void PostExecution()
         {
-            _keyInput = String.Empty;
-            _textInput = String.Empty;
-            _newKey = false;
-            _newText = false;
+            _keyInput = string.Empty;
+            _textInput = string.Empty;
             _running = false;
             _isrunning = false;
             _enigmaPresentationFrame.ChangeStatus(_isrunning, _enigmaPresentationFrame.EnigmaPresentation.IsVisible);

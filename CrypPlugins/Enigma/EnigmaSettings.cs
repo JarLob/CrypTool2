@@ -166,113 +166,147 @@ namespace Cryptool.Enigma
 
         public void SetKeySettings(string inputKey)
         {
-            // delete the spaces
-            inputKey = inputKey.Replace(" ", String.Empty);
-            inputKey = inputKey.Replace("\n", String.Empty);
-            inputKey = inputKey.Replace("\r", String.Empty);
+            const string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            // delete whitespaces
+            inputKey = inputKey.Replace(" ", string.Empty).Replace("\n", string.Empty).Replace("\r", string.Empty);
+            inputKey = inputKey.ToUpper();
 
-            // count slashes
-            int slashes = inputKey.Count(x => x == '/');
+            string[] keyElements = inputKey.Split(':');
 
-            // search slash indices
-            int firstSlashIndex = inputKey.IndexOf('/');
-            int secondSlashIndex = 0;
-            if (slashes > 1)
-                secondSlashIndex = (inputKey.Substring(firstSlashIndex + 1)).IndexOf('/') + firstSlashIndex + 1;
-            int thirdSlashIndex = 0;
-            if (slashes > 2)
-                thirdSlashIndex = (inputKey.Substring(secondSlashIndex + 1)).IndexOf('/') + secondSlashIndex + 1;
-            
-            // trim different parts of the key
-            string rotorString = inputKey.Substring(0, firstSlashIndex);
-            string ringString = inputKey.Substring(firstSlashIndex + 1);
-            if (slashes > 1)
-                ringString = inputKey.Substring(firstSlashIndex + 1, secondSlashIndex - firstSlashIndex - 1);
-
-            string plugBoardString = "";
-            if (slashes > 1)
-                plugBoardString = inputKey.Substring(secondSlashIndex + 1);
-
-            string initialRotorPosString = "";
-            if (slashes > 2)
+            if(keyElements.Length != 4)
             {
-                plugBoardString = inputKey.Substring(secondSlashIndex + 1, thirdSlashIndex - secondSlashIndex - 1);
-                initialRotorPosString = inputKey.Substring(thirdSlashIndex + 1);
+                throw new Exception("Invalid key. Key has to be of the following format:  Reflector:Rotors:Ring:RotorPositions|Plugboard");
             }
 
-            // set settings by strings
+            string reflectorString = keyElements[0];
+            string rotorString = keyElements[1];
+            string ringString = keyElements[2];
+            string[] split = keyElements[3].Split('|');
+            _initialRotorPos = split[0];
+            string plugBoardString = null;            
+            if(split.Length == 2)
+            {
+                plugBoardString = split[1];
+            }
+
+            if(rotorString.Length < 3 || rotorString.Length > 4)
+            {
+                throw new Exception("Invalid key. You have to define 3 or 4 rotors, depending on selected machine model");
+            }
+
+            if(ringString.Length != rotorString.Length || _initialRotorPos.Length != rotorString.Length)
+            {
+                throw new Exception("Invalid key. You have to define same number of rotors, rings, and rotor positions");
+            }            
+
+            SetReflectorByString(reflectorString);
             SetRotorsByString(rotorString);
             SetRingByString(ringString);
-            if (slashes > 1)
-                SetPlugBoardByString(plugBoardString);
-            if (slashes > 2)
+            if (plugBoardString != null)
             {
-                _initialRotorPos = initialRotorPosString;
-                OnPropertyChanged("InitialRotorPos");
+                SetPlugBoardByString(plugBoardString);
+            }
+            OnPropertyChanged("InitialRotorPos");            
+            foreach (var c in _initialRotorPos)
+            {
+                if(alphabet.IndexOf(c) < 0)
+                {
+                    throw new Exception("Invalid key. Rotor positions have to be defined from A to Z");
+                }
+            }
+        }
+        
+        private void SetReflectorByString(string reflectorString)
+        {
+            const string reflectors = "ABC";
+            Reflector = reflectors.IndexOf(reflectorString.ToUpper());
+            if(Reflector < 0)
+            {
+                throw new Exception("Invalid key. Reflector has to be A,B, or C");
             }
         }
 
         private void SetRotorsByString(string rotorString)
         {
-            string[] rotors = rotorString.Split(',');
-            rotor1 = GetRotorIndexFromString(rotors[0]);
-            rotor2 = GetRotorIndexFromString(rotors[1]);
-            rotor3 = GetRotorIndexFromString(rotors[2]);
-            if (rotors.Length > 3)
+            const string rotorNumbers = "12345678";
+            if (rotorString.Length == 3) 
             {
-                rotor4 = GetRotorIndexFromString(rotors[3]);
-                OnPropertyChanged("Rotor4");
+                rotor1 = rotorNumbers.IndexOf(rotorString[2]);
+                rotor2 = rotorNumbers.IndexOf(rotorString[1]);
+                rotor3 = rotorNumbers.IndexOf(rotorString[0]);
+                OnPropertyChanged("Rotor1");
+                OnPropertyChanged("Rotor2");
+                OnPropertyChanged("Rotor3");
             }
-
-            OnPropertyChanged("Rotor1");
-            OnPropertyChanged("Rotor2");
-            OnPropertyChanged("Rotor3");
-        }
-
-        string[] rotorNames = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII" };
-        private int GetRotorIndexFromString(string indexString)
-        {
-            return Array.IndexOf(rotorNames, indexString);
-        }
+            else
+            {
+                rotor1 = rotorNumbers.IndexOf(rotorString[3]);
+                rotor2 = rotorNumbers.IndexOf(rotorString[2]);
+                rotor3 = rotorNumbers.IndexOf(rotorString[1]);
+                rotor4 = rotorNumbers.IndexOf(rotorString[0]);
+                OnPropertyChanged("Rotor1");
+                OnPropertyChanged("Rotor2");
+                OnPropertyChanged("Rotor3");
+                OnPropertyChanged("Rotor4");
+            }                    
+            
+            if (rotor1 < 0 || rotor2 < 0 || rotor3 < 0 || (rotorString.Length == 4 && rotor4 < 0))
+            {
+                throw new Exception("Invalid key. Rotors have to be defined from A to Z");
+            }
+         
+        }       
 
         private void SetRingByString(string ringString)
         {
-            string[] rings = ringString.Split(',');
-            
-            int value1, value2, value3, value4 = -1;
-
-            if (!Int32.TryParse(rings[0], out value1) ||
-                !Int32.TryParse(rings[1], out value2) ||
-                !Int32.TryParse(rings[2], out value3) ||
-                rings.Length > 3 && !Int32.TryParse(rings[3], out value4))
+            const string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            ringString = ringString.ToUpper();
+            if (ringString.Length == 3)
             {
-                Console.WriteLine("Error parsing the InputKey ring settings!");
-                return;
+                ring1 = alphabet.IndexOf(ringString[2]) + 1;
+                ring2 = alphabet.IndexOf(ringString[1]) + 1;
+                ring3 = alphabet.IndexOf(ringString[0]) + 1;
+                OnPropertyChanged("Ring1");
+                OnPropertyChanged("Ring2");
+                OnPropertyChanged("Ring3");
             }
-
-            ring1 = value1;
-            ring2 = value2;
-            ring3 = value3;
-            if (rings.Length > 3)
+            else
             {
-                ring4 = value4;
+                ring1 = alphabet.IndexOf(ringString[3]) + 1;
+                ring2 = alphabet.IndexOf(ringString[2]) + 1;
+                ring3 = alphabet.IndexOf(ringString[1]) + 1;
+                ring4 = alphabet.IndexOf(ringString[0]) + 1;
+                OnPropertyChanged("Ring1");
+                OnPropertyChanged("Ring2");
+                OnPropertyChanged("Ring3");
                 OnPropertyChanged("Ring4");
             }
-
-            OnPropertyChanged("Ring1");
-            OnPropertyChanged("Ring2");
-            OnPropertyChanged("Ring3");
+            if (ring1 < 1 || ring2 < 1 || ring3 < 1 || (ringString.Length == 4 && ring4 < 1))
+            {
+                throw new Exception("Invalid key. Rings have to be defined from A to Z");
+            }            
         }
 
         private void SetPlugBoardByString(string plugBoardString)
         {
-            ResetPlugboard();
-            string[] plugBoardStringArray = plugBoardString.Split(',');
+            const string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-            for (int i = 0; i < plugBoardStringArray.Length; i++)
+            if(plugBoardString.Length % 2 != 0)
             {
-                int indexLetterOne = alphabet.IndexOf(plugBoardStringArray[i].Substring(0, 1));
-                int indexLetterTwo = alphabet.IndexOf(plugBoardStringArray[i].Substring(1, 1));
+                throw new Exception("Invalid key. Plugboard definition has to be of even length");
+            }
+
+            ResetPlugboard();
+            plugBoardString = plugBoardString.ToUpper();
+
+            for (int i = 0; i < plugBoardString.Length; i+=2)
+            {
+                int indexLetterOne = alphabet.IndexOf(plugBoardString[i]);
+                int indexLetterTwo = alphabet.IndexOf(plugBoardString[i + 1]);
+                if(indexLetterOne < 0 || indexLetterTwo < 0)
+                {
+                    throw new Exception("Invalid key. Plugboard has to be defined from A to Z");
+                }
                 setPlugBoard(indexLetterOne, indexLetterTwo);
                 setPlugBoard(indexLetterTwo, indexLetterOne);
             }

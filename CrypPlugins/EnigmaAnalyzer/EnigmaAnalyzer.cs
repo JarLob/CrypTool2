@@ -252,8 +252,6 @@ namespace Cryptool.EnigmaAnalyzer
             _resultReporter = new UiResultReporter(this);
             _resultReporter.OnGuiLogNotificationOccured += OnGuiLogNotificationOccured;
             _resultReporter.OnPluginProgressChanged += OnPluginProgressChanged;
-            _resultReporter.OnNewBestKey += _resultReporter_OnNewBestKey;
-            _resultReporter.OnNewBestPlaintext += _resultReporter_OnNewBestPlaintext;
             _resultReporter.OnNewBestlistEntry += _resultReporter_OnNewBestlistEntry;
             _resultReporter.OnNewCryptanalysisStep += _resultReporter_OnNewCryptanalysisStep;
 
@@ -333,31 +331,20 @@ namespace Cryptool.EnigmaAnalyzer
                         e.Ranking = ranking;
                         ranking++;
                     }
+
+                    //if we have a new number 1, we output it
+                    if(args.ResultEntry.Ranking == 1)
+                    {
+                        Plaintext = args.ResultEntry.Text;
+                        Key = args.ResultEntry.Key;
+                    }
                 }
                 catch (Exception)
                 {                 
                     //do nothing
                 }
             }, null);
-        }
-
-        /// <summary>
-        /// We received a new best plaintext from the analysis and output it
-        /// </summary>
-        /// <param name="args"></param>
-        private void _resultReporter_OnNewBestPlaintext(NewBestPlaintextEventArgs args)
-        {
-            Plaintext = args.Plaintext;
-        }
-
-        /// <summary>
-        /// We received a new best key from the analysis and output it
-        /// </summary>
-        /// <param name="args"></param>
-        private void _resultReporter_OnNewBestKey(NewBestKeyEventArgs args)
-        {
-            Key = args.Key;
-        }
+        }               
 
         /// <summary>
         /// Performs a cryptanalysis using the Turing bombe algorithm
