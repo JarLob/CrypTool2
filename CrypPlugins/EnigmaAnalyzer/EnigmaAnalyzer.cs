@@ -266,6 +266,7 @@ namespace Cryptool.EnigmaAnalyzer
                 case AnalysisMode.BOMBE:
                     try
                     {
+                        _resultReporter_OnNewCryptanalysisStep(new NewCryptanalysisStepArgs("Turing Bomb"));
                         PerformTuringBombeAnalysis();
                     }
                     catch(Exception ex)
@@ -403,6 +404,7 @@ namespace Cryptool.EnigmaAnalyzer
             {
                 return;
             }
+            SetPlugs(lowKey, highKey, key);
 
             //convert and check key range
             string rangeLowS;
@@ -463,9 +465,7 @@ namespace Cryptool.EnigmaAnalyzer
                 {
                     GuiLogMessage("No plugs given. Trigram search can not work without any plugs", NotificationLevel.Error);
                     return;
-                }                
-                lowKey.setStecker(PlugsInput);
-                highKey.setStecker(PlugsInput);
+                }                                
             }            
 
             //convert ciphertext to numerical representation
@@ -481,6 +481,7 @@ namespace Cryptool.EnigmaAnalyzer
             {
                 return;
             }
+            SetPlugs(lowKey, highKey, null);
 
             //convert and check key range
             string rangeLowS;
@@ -509,6 +510,25 @@ namespace Cryptool.EnigmaAnalyzer
             catch (Exception ex)
             {
                 GuiLogMessage(string.Format("Exception occured during execution of cryptanalysis: {0}", ex.Message), NotificationLevel.Error);
+            }
+        }
+
+        /// <summary>
+        /// Sets plugs of lowKey, highKey, and key
+        /// </summary>
+        /// <param name="lowKey"></param>
+        /// <param name="highKey"></param>
+        /// <param name="key"></param>
+        private void SetPlugs(Key lowKey, Key highKey, Key key)
+        {
+            if (!string.IsNullOrEmpty(PlugsInput)) 
+            {
+                lowKey.setStecker(PlugsInput);
+                highKey.setStecker(PlugsInput);
+                if (key != null)
+                {
+                    key.setStecker(PlugsInput);
+                }
             }
         }
 
@@ -543,6 +563,7 @@ namespace Cryptool.EnigmaAnalyzer
             {
                 return;
             }
+            SetPlugs(lowKey, highKey, null);
 
             //convert and check key range
             string rangeLowS;
@@ -608,6 +629,7 @@ namespace Cryptool.EnigmaAnalyzer
             {
                 return;
             }
+            SetPlugs(lowKey, highKey, key);
 
             //convert and check key range
             string rangeLowS;
