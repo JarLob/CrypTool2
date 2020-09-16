@@ -297,6 +297,12 @@
   <data name="PluginTooltip" xml:space="preserve">
     <value>Component to cryptanalyze different types of the Enigma crypto machine</value>
   </data>
+  <data name="PlugsInputCaption" xml:space="preserve">
+    <value>Plugs</value>
+  </data>
+  <data name="PlugsInputTooltip" xml:space="preserve">
+    <value>Plugs, that are used during Trigram Search.</value>
+  </data>
   <data name="RankingHeader" xml:space="preserve">
     <value>Ranking</value>
   </data>

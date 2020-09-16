@@ -601,6 +601,24 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Plugs ähnelt.
+        /// </summary>
+        public static string PlugsInputCaption {
+            get {
+                return ResourceManager.GetString("PlugsInputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Plugs, that are used during Trigram Search. ähnelt.
+        /// </summary>
+        public static string PlugsInputTooltip {
+            get {
+                return ResourceManager.GetString("PlugsInputTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Ranking ähnelt.
         /// </summary>
         public static string RankingHeader {

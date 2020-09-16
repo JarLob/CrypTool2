@@ -58,6 +58,7 @@ namespace Cryptool.EnigmaAnalyzer
         private string _crib = string.Empty;
         private string _plaintext = string.Empty;
         private string _key = string.Empty;
+        private string _plugsInput = string.Empty;
 
         private UiResultReporter _resultReporter = null;
 
@@ -85,12 +86,8 @@ namespace Cryptool.EnigmaAnalyzer
                 return _ciphertext;
             }
             set
-            {
-                if (!string.IsNullOrEmpty(value) && value != _ciphertext)
-                {
-                    _ciphertext = value;
-                    OnPropertyChanged("Ciphertext");
-                }
+            {                
+                _ciphertext = value;                
             }
         }
 
@@ -102,12 +99,21 @@ namespace Cryptool.EnigmaAnalyzer
                 return _crib; 
             }
             set
+            {               
+                _crib = value;                
+            }
+        }
+
+        [PropertyInfo(Direction.InputData, "PlugsInputCaption", "PlugsInputTooltip", false)]
+        public string PlugsInput
+        {
+            get
             {
-                if (!string.IsNullOrEmpty(value) && value != _crib)
-                {
-                    _crib = value;
-                    OnPropertyChanged("Crib");
-                }
+                return _plugsInput;
+            }
+            set
+            {                               
+                _plugsInput = value;                
             }
         }
 
@@ -273,18 +279,23 @@ namespace Cryptool.EnigmaAnalyzer
                     }
                     break;
                 case AnalysisMode.IC_SEARCH:
+                    _resultReporter_OnNewCryptanalysisStep(new NewCryptanalysisStepArgs("IoC Search"));
                     PerformICTrigramSearch(true);
                     break;
                 case AnalysisMode.TRIGRAM_SEARCH:
+                    _resultReporter_OnNewCryptanalysisStep(new NewCryptanalysisStepArgs("Trigram Search"));
                     PerformICTrigramSearch(false);
                     break;
                 case AnalysisMode.HILLCLIMBING:
+                    _resultReporter_OnNewCryptanalysisStep(new NewCryptanalysisStepArgs("Hillclimbing"));
                     PerformHillclimbingSimulatedAnnealing(HcSaRunnable.Mode.HC);
                     break;
                 case AnalysisMode.SIMULATED_ANNEALING:
+                    _resultReporter_OnNewCryptanalysisStep(new NewCryptanalysisStepArgs("Simulated Annealing"));
                     PerformHillclimbingSimulatedAnnealing(HcSaRunnable.Mode.SA);
                     break;
                 case AnalysisMode.GILLOGLY:
+                    _resultReporter_OnNewCryptanalysisStep(new NewCryptanalysisStepArgs("Gillogly"));
                     PerformGilloglyAttack();
                     break;
                 default:
@@ -435,6 +446,7 @@ namespace Cryptool.EnigmaAnalyzer
             int clen;
             Key lowKey = new Key();
             Key highKey = new Key();
+
             string indicatorS = "";
             string indicatorMessageKeyS = "";
 
@@ -443,6 +455,18 @@ namespace Cryptool.EnigmaAnalyzer
             MRingScope middle_ring_scope = MRingScope.ALL;
 
             int threads = _settings.CoresUsed + 1;
+
+            //check, if we have plugs
+            if (!findSettingsIc)
+            {
+                if (string.IsNullOrEmpty(PlugsInput))
+                {
+                    GuiLogMessage("No plugs given. Trigram search can not work without any plugs", NotificationLevel.Error);
+                    return;
+                }                
+                lowKey.setStecker(PlugsInput);
+                highKey.setStecker(PlugsInput);
+            }            
 
             //convert ciphertext to numerical representation
             clen = EnigmaUtils.getText(strciphertext, ciphertext);

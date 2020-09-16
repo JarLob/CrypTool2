@@ -1970,7 +1970,8 @@ namespace EnigmaAnalyzerLib
 
             /* alphabetic, no repetitions */
 
-            for (int i = 0; i < len; i++) {
+            for (int i = 0; i < len; i++) 
+            {
                 letters[i] = EnigmaUtils.getIndex(s[i]);
                 if (letters[i] == -1)
                 {

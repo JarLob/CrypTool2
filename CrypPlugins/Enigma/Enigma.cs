@@ -52,8 +52,8 @@ namespace Cryptool.Enigma
         private EnigmaPresentationFrame _enigmaPresentationFrame;
         private EnigmaCore _core;
         private string _textInput;
-        private string _keyInput;
-        private IDictionary<int, IDictionary<string, double[]>> _statistics;       
+        private string _keyInput;        
+
         private string _textOutput;
 
         public bool _isrunning;
@@ -94,7 +94,7 @@ namespace Cryptool.Enigma
                 else
                 {
                     LogMessage("Presentation Error!", NotificationLevel.Error);
-                }               
+                }
                 return string.Empty;
             }
 
@@ -103,18 +103,18 @@ namespace Cryptool.Enigma
 
         internal class UnknownToken
         {
-            internal string text;
-            internal int position;
+            internal string _text;
+            internal int _position;
 
             internal UnknownToken(char c, int position)
             {
-                this.text = char.ToString(c);
-                this.position = position;
+                _text = char.ToString(c);
+                _position = position;
             }
 
             public override string ToString()
             {
-                return "[" + text + "," + position + "]";
+                return "[" + _text + "," + _position + "]";
             }
         }
 
@@ -149,7 +149,7 @@ namespace Cryptool.Enigma
                         {
                             lowerList.Add(new UnknownToken(text[i], i));
                         }
-                        
+
                     }                                      //underconstruction end
                     result.Append(char.ToUpper(text[i])); // FIXME: shall save positions of lowercase letters
                 }
@@ -165,26 +165,13 @@ namespace Cryptool.Enigma
                     }
                     else
                     {
-                        unknownList.Last().text += symbol;
+                        unknownList.Last()._text += symbol;
                     }
                 }
             }
 
             return result.ToString().ToUpper();
         }
-
-        //// legacy code
-        //switch (settings.UnknownSymbolHandling)
-        //{
-        //    case 0: // ignore
-        //        result.Append(c);
-        //        break;
-        //    case 1: // remove
-        //        continue;
-        //    case 2: // replace by X
-        //        result.Append('X');
-        //        break;
-        //}
 
         /// <summary>
         /// Formats the string processed by the encryption for presentation according
@@ -197,14 +184,14 @@ namespace Cryptool.Enigma
             StringBuilder workstring = new StringBuilder(text);
             foreach (UnknownToken token in unknownList)
             {
-                workstring.Insert(token.position, token.text);
+                workstring.Insert(token._position, token._text);
             }
 
             foreach (UnknownToken token in lowerList)   //Solution for preserve FIXME underconstruction
             {
-                char help = workstring[token.position];
-                workstring.Remove(token.position, 1);
-                workstring.Insert(token.position, char.ToLower(help));
+                char help = workstring[token._position];
+                workstring.Remove(token._position, 1);
+                workstring.Insert(token._position, char.ToLower(help));
             }                                           //underconstruction end
 
             switch (_settings.CaseHandling)
@@ -228,18 +215,16 @@ namespace Cryptool.Enigma
 
         public Enigma()
         {
-            this._settings = new EnigmaSettings();
-            this._core = new EnigmaCore(this);
-            this._statistics = new Dictionary<int, IDictionary<string, double[]>>();
-            
+            _settings = new EnigmaSettings();
+            _core = new EnigmaCore(this);
+
             _enigmaPresentationFrame = new EnigmaPresentationFrame(this);
             EnigmaPresentation myPresentation = _enigmaPresentationFrame.EnigmaPresentation;
-            this.Presentation = _enigmaPresentationFrame;
-            //this.Presentation.IsVisibleChanged += presentation_isvisibleChanged;
-            this._settings.PropertyChanged += _enigmaPresentationFrame.EnigmaPresentation.settings_OnPropertyChange;
-            this._settings.PropertyChanged += settings_OnPropertyChange;
-            this._enigmaPresentationFrame.EnigmaPresentation.fireLetters += fireLetters;
-            this._enigmaPresentationFrame.EnigmaPresentation.newInput += newInput;
+            Presentation = _enigmaPresentationFrame;
+            //Presentation.IsVisibleChanged += presentation_isvisibleChanged;
+            _settings.PropertyChanged += _enigmaPresentationFrame.EnigmaPresentation.settings_OnPropertyChange;
+            _enigmaPresentationFrame.EnigmaPresentation.fireLetters += fireLetters;
+            _enigmaPresentationFrame.EnigmaPresentation.newInput += newInput;
         }
 
         #endregion
@@ -257,23 +242,16 @@ namespace Cryptool.Enigma
             _running = false;
         }
 
-        private void fireLetters(object sender, EventArgs args)  
+        private void fireLetters(object sender, EventArgs args)
         {
-            Object[] carrier = sender as Object[];
+            object[] carrier = sender as object[];
 
-            this._textOutput = (String)carrier[0] ;
+            _textOutput = (string)carrier[0];
             int x = (int)carrier[1];
             int y = (int)carrier[2];
-            
-            ShowProgress(x,y);
-        }
 
-        private void settings_OnPropertyChange(object sender, PropertyChangedEventArgs e)
-        {
-            EnigmaSettings dummyset = sender as EnigmaSettings;
-            //myPresentation.settingsChanged(dummyset);                        
-            //LogMessage("OnPropertyChange " + e.PropertyName, NotificationLevel.Debug);
-        }
+            ShowProgress(x, y);
+        }      
 
         #endregion
 
@@ -281,7 +259,7 @@ namespace Cryptool.Enigma
 
         public ISettings Settings
         {
-            get { return this._settings; }
+            get { return _settings; }
         }
 
         public UserControl Presentation
@@ -297,47 +275,37 @@ namespace Cryptool.Enigma
         [PropertyInfo(Direction.InputData, "TextInputCaption", "TextInputTooltip", true)]
         public string TextInput
         {
-            get 
-            { 
-                return _textInput; 
+            get
+            {
+                return _textInput;
             }
             set
             {               
-                if (value != _textInput)
-                {
-                    _textInput = value;
-                    OnPropertyChanged("TextInput");
-                }
+                _textInput = value;
+                OnPropertyChanged("TextInput");                
             }
         }
 
         [PropertyInfo(Direction.InputData, "KeyInputCaption", "KeyInputTooltip", false)]
         public string KeyInput
         {
-            get 
-            { 
-                return _keyInput; 
+            get
+            {
+                return _keyInput;
             }
             set
-            {
-                if (!_isrunning)
-                {
-                    return;
-                }
-                if (!string.IsNullOrEmpty(value) && value != _keyInput)
-                {
-                    _keyInput = value;
-                    OnPropertyChanged("KeyInput");                    
-                }
+            {                
+                _keyInput = value;
+                OnPropertyChanged("KeyInput");                
             }
-        }
+        }        
 
         [PropertyInfo(Direction.OutputData, "TextOutputCaption", "TextOutputTooltip", false)]
         public string TextOutput
         {
             get
-            { 
-                return _textOutput; 
+            {
+                return _textOutput;
             }
             set
             {
@@ -352,13 +320,13 @@ namespace Cryptool.Enigma
 
         public void PreExecution()
         {
-            
+
         }
 
         public void Execute()
         {
-            if (!string.IsNullOrEmpty(KeyInput)) 
-            {              
+            if (!string.IsNullOrEmpty(KeyInput))
+            {
                 _settings.SetKeySettings(KeyInput);
             }
             if (_settings.Model != 3 && _settings.Model != 2)
@@ -390,17 +358,17 @@ namespace Cryptool.Enigma
                 }
             }
 
-            _running = true;         
+            _running = true;
 
             // re-set the key, in case we get executed again during single run
             //_settings.InitialRotorPos = _savedInitialRotorPos.ToUpper();
 
             // do the encryption
-            _textOutput = FormattedEncrypt(_settings.Alphabet.IndexOf(_settings.InitialRotorPos[2]), 
+            _textOutput = FormattedEncrypt(_settings.Alphabet.IndexOf(_settings.InitialRotorPos[2]),
                 _settings.Alphabet.IndexOf(_settings.InitialRotorPos[1]),
-                _settings.Alphabet.IndexOf(_settings.InitialRotorPos[0]), 
-                0, _textInput);                    
-          
+                _settings.Alphabet.IndexOf(_settings.InitialRotorPos[0]),
+                0, _textInput);
+
             // "fire" the output
             OnPropertyChanged("TextOutput");
 
@@ -430,7 +398,7 @@ namespace Cryptool.Enigma
         public void Dispose()
         {
         }
-        
+
         /// <summary>
         /// Logs a message to the Cryptool console
         /// </summary>
