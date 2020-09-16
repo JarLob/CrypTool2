@@ -84,7 +84,7 @@ namespace EnigmaAnalyzerLib
                     //bidict[l1][l2] = freq;
                     biflat[(l1 << 5) + l2] = freq;
                     items++;
-                    //Console.WriteLine("Bigram %d (%c) %d (%c) = %d ",l1, line.charAt(0),l2, line.charAt(1),freq);
+                    //Console.WriteLine("Bigram {0} ({1}) {2} ({3}) = {4}",l1, line.charAt(0),l2, line.charAt(1),freq);
                 }
 
                 // Always close files.

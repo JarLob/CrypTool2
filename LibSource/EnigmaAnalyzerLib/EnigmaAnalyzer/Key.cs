@@ -828,10 +828,12 @@ namespace EnigmaAnalyzerLib
                             letter = nextLetter;
                         }
                     } while (letter != startLetter);
+
                     if (print)
                     {
                         cycles += "[" + cycleSize + "])";
                     }
+
                     keyCycleSizes[pos][cycleSize]++;
 
                     startLetter = -1;
@@ -855,20 +857,23 @@ namespace EnigmaAnalyzerLib
                             cyclesS += keyCycleSizes[pos][i] + "x" + i + ",";
                         }
                     }
-
                     Console.WriteLine("Cycle Match Search: Cycles for pos {0}: {1}", pos, cyclesS);
                     Console.WriteLine("Detailed cycled for pos {0}: {1}", pos, cycles);
                 }
                 /*
-                        string cyclesS = "";
-                        for (int i = 25; i >=0; i--)
-                                if (keyCycleSizes[pos][i] > 0)
-                                    cyclesS += keyCycleSizes[pos][i]+"x"+i+",";
-
-                        while (cyclesS.Length< 10)
-                            cyclesS+=" ";
-
-                        Console.WriteLine("\t%d=>%d: {0}", pos+1,pos+4, cyclesS);
+                    string cyclesS = "";
+                    for (int i = 25; i >=0; i--)
+                    {
+                            if (keyCycleSizes[pos][i] > 0)
+                            {
+                                cyclesS += keyCycleSizes[pos][i]+"x"+i+",";
+                            }
+                    }
+                    while (cyclesS.Length< 10)
+                    {
+                        cyclesS+=" ";
+                    }
+                    Console.WriteLine("\t{0}=>{1}: {2}", pos+1,pos+4, cyclesS);
                 */
             }
             return true;
@@ -886,7 +891,7 @@ namespace EnigmaAnalyzerLib
                 {
                     if (stb[stb[i]] != i)
                     {
-                        string stbS = "";
+                        string stbS = string.Empty;
                         for (int k = 0; k < 26; k++)
                         {
                             if (stb[k] == -1)

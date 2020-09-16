@@ -422,7 +422,7 @@ namespace EnigmaAnalyzerLib
                     }
                     if (clen > 400) 
                     {
-                        Console.WriteLine("Message too long for -{0} selection - Length is %d, -{0} allowed only for messages shorter than 400",
+                        Console.WriteLine("Message too long for -{0} selection - Length is {1}, -{2} allowed only for messages shorter than 400",
                                 Flag.MIDDLE_RING_SCOPE, clen, Flag.MIDDLE_RING_SCOPE);
                     }
                 }
@@ -549,7 +549,7 @@ namespace EnigmaAnalyzerLib
                 Console.WriteLine("Removing Xs and Js: {0}", EnigmaUtils.getCiphertextstringNoXJ(plaintext, clen));
 
                 Key.initPathLookupAll(clen);
-                Console.WriteLine("Plaintext Trigrams Score: %d, Bigrams Score %d, IC: %.5f",
+                Console.WriteLine("Plaintext Trigrams Score: {0}, Bigrams Score {1}, IC: {2}",
                         Key.triscore(ciphertext, clen, enigmaStats),
                         Key.biscore(ciphertext, clen, enigmaStats),
                         Key.icscore(ciphertext, clen));

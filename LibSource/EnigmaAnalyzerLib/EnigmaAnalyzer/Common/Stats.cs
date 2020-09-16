@@ -132,10 +132,10 @@ namespace EnigmaAnalyzerLib.Common
 
                 bufferedReader.Close();
             } catch (IOException ex) {
-                Console.WriteLine("Unable to read bigram file {0} - {0}", fileName, ex.ToString());
+                Console.WriteLine("Unable to read bigram file {0} - {1}", fileName, ex.ToString());
             }
 
-            Console.WriteLine("Bigram file read: {0}, items  = %d  ", fileName, items);
+            Console.WriteLine("Bigram file read: {0}, items  = {1}  ", fileName, items);
 
             convertToLog(bigramStats);
 
@@ -168,10 +168,10 @@ namespace EnigmaAnalyzerLib.Common
 
                 bufferedReader.Close();
             } catch (IOException ex) {
-                Console.WriteLine("Unable to read mono file {0} - {0}", fileName, ex.ToString());
+                Console.WriteLine("Unable to read mono file {0} - {1}", fileName, ex.ToString());
             }
 
-            Console.WriteLine("mono file read: {0}, items  = %d  ", fileName, items);
+            Console.WriteLine("mono file read: {0}, items  = {1}  ", fileName, items);
 
             convertToLog(monogramStats);
 

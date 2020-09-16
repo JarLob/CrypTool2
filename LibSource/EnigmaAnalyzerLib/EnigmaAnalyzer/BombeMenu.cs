@@ -153,7 +153,7 @@ namespace EnigmaAnalyzerLib
                             subGraphs[subgraph].items.Count);
                     foreach (SubGraphItem item in subGraphs[subgraph].items)
                     {
-                        Console.WriteLine("(%d) Link %s->%s at pos %d",
+                        Console.WriteLine("({0}) Link {1}->{2} at pos {3}",
                                 subgraph, EnigmaUtils.getChar(item.l1),
                                 EnigmaUtils.getChar(item.l2), item.pos);
                     }

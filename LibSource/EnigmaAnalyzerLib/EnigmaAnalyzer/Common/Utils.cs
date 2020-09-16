@@ -477,7 +477,7 @@ namespace EnigmaAnalyzerLib.Common
                 Console.WriteLine("Unable to read book file {0} - {0}", fileName, ex.ToString());
             }
 
-            Console.WriteLine("Generated Random Plaintext - Book: {0}, Position: %d , Length: %d", fileName, startPosition, text.Length);
+            Console.WriteLine("Generated Random Plaintext - Book: {0}, Position: {1} , Length: {2}", fileName, startPosition, text.Length);
             Console.WriteLine("{0}", text.ToString().Replace("Z", " "));
 
             return text.ToString();

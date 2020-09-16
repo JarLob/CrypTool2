@@ -349,11 +349,11 @@ namespace EnigmaAnalyzerLib
 
             }
 
-            Console.WriteLine("Random text file extracted from {0} (length: %d, start: %d, end: %d)",
+            Console.WriteLine("Random text file extracted from {0} (length: {1}, start: {2}, end: {3})",
                     fileName, Length, start, end);
             if (garbledLettersPercentage > 0)
             {
-                Console.WriteLine("Generated %d percent of garbled letters. Clean Version:{0}With Garbles:{0}",
+                Console.WriteLine("Generated {0} percent of garbled letters. Clean Version:{1} With Garbles:{2}",
                         garbledLettersPercentage, cleanText, garbledText);
             }
             return Length;
