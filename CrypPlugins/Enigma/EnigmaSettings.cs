@@ -346,7 +346,9 @@ namespace Cryptool.Enigma
         {
             coll.Clear();
             foreach (string key in keys)
+            {
                 coll.Add(typeof(Enigma).GetPluginStringResource(key));
+            }
         }
         
         [TaskPane( "ModelTPCaption", "ModelTPTooltip", null, 0, false, ControlType.ComboBox, new string[] { "ModelList1", "ModelList2", "ModelList3", "ModelList4", "ModelList5", "ModelList6", "ModelList7" })]
@@ -499,10 +501,10 @@ namespace Cryptool.Enigma
         #region Used rotor settings
 
         [TaskPane( "Rotor1Caption", "Rotor1Tooltip",
-            "UsedRotorsGroup", 10, false, ControlType.DynamicComboBox, new string[] { "RotorAStrings" })]
+            "UsedRotorsGroup", 13, false, ControlType.DynamicComboBox, new string[] { "RotorAStrings" })]
         public int Rotor1
         {
-            get { return this.rotor1; }
+            get { return rotor1; }
             set
             {
                 if (((int)value) != rotor1)
@@ -515,10 +517,10 @@ namespace Cryptool.Enigma
         }
 
         [TaskPane( "Rotor2Caption", "Rotor2Tooltip",
-            "UsedRotorsGroup", 11, false, ControlType.DynamicComboBox, new string[] { "RotorAStrings" })]
+            "UsedRotorsGroup", 12, false, ControlType.DynamicComboBox, new string[] { "RotorAStrings" })]
         public int Rotor2
         {
-            get { return this.rotor2; }
+            get { return rotor2; }
             set
             {
                 if (((int)value) != rotor2)
@@ -531,10 +533,10 @@ namespace Cryptool.Enigma
         }
 
         [TaskPane( "Rotor3Caption", "Rotor3Tooltip",
-            "UsedRotorsGroup", 12, false, ControlType.DynamicComboBox, new string[] { "RotorAStrings" })]
+            "UsedRotorsGroup", 11, false, ControlType.DynamicComboBox, new string[] { "RotorAStrings" })]
         public int Rotor3
         {
-            get { return this.rotor3; }
+            get { return rotor3; }
             set
             {
                 if (((int)value) != rotor3)
@@ -547,7 +549,7 @@ namespace Cryptool.Enigma
         }
 
         [TaskPane( "Rotor4Caption", "Rotor4Tooltip",
-            "UsedRotorsGroup", 13, false, ControlType.DynamicComboBox, new string[] { "RotorBStrings" })]
+            "UsedRotorsGroup", 10, false, ControlType.DynamicComboBox, new string[] { "RotorBStrings" })]
         public int Rotor4
         {
             get { return this.rotor4; }
@@ -629,7 +631,7 @@ namespace Cryptool.Enigma
 
         #region Used ring settings
 
-        [TaskPane( "Ring1Caption", "Ring1Tooltip", "RingSettingsGroup", 20, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 26)]
+        [TaskPane( "Ring1Caption", "Ring1Tooltip", "RingSettingsGroup", 23, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 26)]
         public int Ring1
         {
             get { return ring1; }
@@ -665,7 +667,7 @@ namespace Cryptool.Enigma
             }
         }
 
-        [TaskPane( "Ring2Caption", "Ring2Tooltip", "RingSettingsGroup", 21, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 26)]
+        [TaskPane( "Ring2Caption", "Ring2Tooltip", "RingSettingsGroup", 22, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 26)]
         public int Ring2
         {
             get { return ring2; }
@@ -703,7 +705,7 @@ namespace Cryptool.Enigma
             }
         }
 
-        [TaskPane( "Ring3Caption", "Ring3Tooltip", "RingSettingsGroup", 22, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 26)]
+        [TaskPane( "Ring3Caption", "Ring3Tooltip", "RingSettingsGroup", 21, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 26)]
         public int Ring3
         {
             get { return ring3; }
@@ -739,7 +741,7 @@ namespace Cryptool.Enigma
             }
         }
 
-        [TaskPane( "Ring4Caption", "Ring4Tooltip", "RingSettingsGroup", 23, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 26)]
+        [TaskPane( "Ring4Caption", "Ring4Tooltip", "RingSettingsGroup", 20, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 26)]
         public int Ring4
         {
             get { return ring4; }
