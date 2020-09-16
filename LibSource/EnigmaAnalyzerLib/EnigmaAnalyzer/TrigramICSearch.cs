@@ -186,8 +186,12 @@ namespace EnigmaAnalyzerLib
                                                                     string plains = EnigmaUtils.getstring(plaintext, len);
 
                                                                     long elapsed = (long)(DateTime.Now - startTime).TotalMilliseconds;
+                                                                    if(elapsed <= 0)
+                                                                    {
+                                                                        elapsed = 1;
+                                                                    }
                                                                     string desc = string.Format("{0} [{1}K/{2}K][{3}K/sec][{4} Sec]",
-                                                                            findSettingsIc ? "IC" : "TRIGRAMS", counter / 1000, totalKeys / 1000, counter / (elapsed + 1), elapsed / 1000);
+                                                                            findSettingsIc ? "IC" : "TRIGRAMS", counter / 1000, totalKeys / 1000, counter / elapsed, elapsed / 1000);
 
                                                                     resultReporter.reportResult(ckey, ckey.score, plains, desc);
                                                                 }

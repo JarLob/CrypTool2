@@ -388,6 +388,10 @@ namespace EnigmaAnalyzerLib
 
             }
             long elapsed = (long)(DateTime.Now - start).TotalMilliseconds + 1;
+            if(elapsed <= 0)
+            {
+                elapsed = 1;
+            }
 
             if (nMenus == 1)
             {
@@ -475,7 +479,6 @@ namespace EnigmaAnalyzerLib
                         strengthSelfS += " " + EnigmaUtils.getChar(i) + "{" + strength[i] + "}";
                     }
                 }
-
             }
 
             ckey.setStecker(stbs.ToString());
@@ -483,7 +486,11 @@ namespace EnigmaAnalyzerLib
 
             plains = EnigmaUtils.getstring(plaintext, len);
             long elapsed = (long)(DateTime.Now - startTime).TotalMilliseconds;
-            string desc = String.Format("BOMBE [Pos: {0}][{1}K/{2}K][{3}K/sec][{4} Sec]",
+            if(elapsed <= 0)
+            {
+                elapsed = 1;
+            }
+            string desc = string.Format("BOMBE [Pos: {0}][{1}K/{2}K][{3}K/sec][{4} Sec]",
                     bombeMenu.cribStartPos, counterKeys / 1000, totalKeys / 1000, counterKeys / elapsed, elapsed / 1000);
 
             if (resultReporter.shouldPushResult(ckey.score))

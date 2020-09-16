@@ -213,6 +213,10 @@ namespace EnigmaAnalyzerLib
                                                                       
 
                                                                         long elapsed = (long)(DateTime.Now - startTime).TotalMilliseconds;
+                                                                        if(elapsed <= 0)
+                                                                        {
+                                                                            elapsed = 1;
+                                                                        }
                                                                         string desc = string.Format("{0} [{1}][{2}: {3}/{4}][{5}/sec][{6}/sec][{7} Sec][{8}][Offset: {9}]", modestring,
                                                                                 count / 1000, cycle + 1, keyCountInCycle / 1000, totalKeysPerCycle / 1000, count * 1000 / elapsed, (count + rejected) * 1000 / elapsed, elapsed / 1000, DateTime.Now, processes[k].bestOffset);
                                                                         //ckey.printKeystring("Hillclimbing " + desc);
@@ -324,6 +328,10 @@ namespace EnigmaAnalyzerLib
                                 string plainStr = ckey.plaintextstring(ciphertext, len);                            
 
                                 long elapsed = (long)(DateTime.Now - startTime).TotalMilliseconds;
+                                if(elapsed <= 0)
+                                {
+                                    elapsed = 1;
+                                }
                                 string desc = string.Format("HILLCLIMBING TOP [{0}][{1}: {2}/{3}][{4} Sec][{5}/sec]][{6}]",
                                         count / 1000, pass + 1, countInPass, nKeys, elapsed / 1000, count * 1000 / elapsed, DateTime.Now);
 

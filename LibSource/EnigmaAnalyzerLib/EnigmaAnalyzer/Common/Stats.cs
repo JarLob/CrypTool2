@@ -100,8 +100,13 @@ namespace EnigmaAnalyzerLib.Common
             return evalPlaintextHexagram(plaintext, plaintext.Length);
         }
 
-        public static string evaluationsSummary() {
+        public static string evaluationsSummary() 
+        {
             long elapsed = Utils.getElapsedMillis();
+            if(elapsed <= 0)
+            {
+                elapsed = 1;
+            }
             return string.Format("[{0} sec.][{1} decryptions ({2}/sec.)]", elapsed / 1000, Stats.evaluations / 1000, Stats.evaluations / elapsed);
         }
 
