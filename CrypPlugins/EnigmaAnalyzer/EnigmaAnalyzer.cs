@@ -1096,14 +1096,21 @@ namespace Cryptool.EnigmaAnalyzer
             }
         }
 
-        public override void reportResult(Key key, int currScore, string plaintext, string desc)
+        public override void reportResult(Key key, int currScore, string plaintext, string desc, int cribPosition = -1)
         {
             lock (_lockObject)
             {
                 if (currScore > lastScore)
                 {
                     var resultEntry = new BestListEntry();
-                    resultEntry.Key = key.getKeystringShort();
+                    if (cribPosition == -1)
+                    {
+                        resultEntry.Key = key.getKeystringShort();
+                    }
+                    else
+                    {
+                        resultEntry.Key = string.Format("{0}, position={1}", key.getKeystringShort(), cribPosition);
+                    }
                     resultEntry.Text = plaintext;
                     resultEntry.Value = currScore;
                     OnNewBestlistEntry?.Invoke(new NewBestListEntryArgs(resultEntry));

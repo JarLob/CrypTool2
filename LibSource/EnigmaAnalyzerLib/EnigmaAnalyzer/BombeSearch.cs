@@ -495,7 +495,7 @@ namespace EnigmaAnalyzerLib
 
             if (resultReporter.shouldPushResult(ckey.score))
             {
-                resultReporter.reportResult(ckey, ckey.score, plains, desc);
+                resultReporter.reportResult(ckey, ckey.score, plains, desc, bombeMenu.cribStartPos);
 
                 resultReporter.WriteMessage(string.Format("MENU STOP NEW BEST - Pos: {0} Stop Score: {1} (Tri: {2} IC: {3}) - Crib Length: {4}, Crib: {5}",
                         bombeMenu.cribStartPos, ckey.score, tri, ic, bombeMenu.cribLen,

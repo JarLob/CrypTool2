@@ -35,7 +35,7 @@ namespace EnigmaAnalyzerLib
             set;
         }
 
-        public abstract void reportResult(Key key, int currScore, string plaintext, string desc);
+        public abstract void reportResult(Key key, int currScore, string plaintext, string desc, int cribPosition = -1);
         public abstract void displayProgress(long count, long max);
         public abstract bool shouldPushResult(int score);
         public abstract void displayBestKey(string key);
@@ -66,13 +66,21 @@ namespace EnigmaAnalyzerLib
             UpdateIntervalInSeconds = 1;
         }
 
-        public override void reportResult(Key key, int currScore, string plaintext, string desc)
+        public override void reportResult(Key key, int currScore, string plaintext, string desc, int cribPosition = -1)
         {
             //only report Score if it was better than the previous one
             if(currScore > lastScore)
             {
                 lastScore = currScore;
-                Console.WriteLine("Best : {0} {1} {2} {3} {4}", currScore, key.getKeystringlong(), key.getKeystringShort(), plaintext, desc);
+                if(cribPosition != -1)
+                {
+                    Console.WriteLine("Best : {0} {1} {2} {3} {4} {5}", currScore, key.getKeystringlong(), key.getKeystringShort(), plaintext, desc, cribPosition);
+                }
+                else
+                {
+                    Console.WriteLine("Best : {0} {1} {2} {3} {4}", currScore, key.getKeystringlong(), key.getKeystringShort(), plaintext, desc);
+                }
+                
             }
         }
 
