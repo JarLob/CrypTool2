@@ -266,7 +266,9 @@ namespace Cryptool.EnigmaAnalyzer
                 case AnalysisMode.BOMBE:
                     try
                     {
-                        _resultReporter_OnNewCryptanalysisStep(new NewCryptanalysisStepArgs("Turing Bomb"));
+                        var step = new NewCryptanalysisStepArgs("Turing Bombe");
+                        _resultReporter_OnNewCryptanalysisStep(step);
+                        OnNewAnalysisMode(step);
                         PerformTuringBombeAnalysis();
                     }
                     catch(Exception ex)
