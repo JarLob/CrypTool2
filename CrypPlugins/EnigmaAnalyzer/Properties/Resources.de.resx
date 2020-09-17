@@ -123,11 +123,17 @@
   <data name="AnalysisLanguageTooltip" xml:space="preserve">
     <value>Verwende diese Sprache für die Kostenfunktion.</value>
   </data>
+  <data name="AnalysisMode" xml:space="preserve">
+    <value>Analyse Modus:</value>
+  </data>
   <data name="AnalysisModeCaption" xml:space="preserve">
     <value>Analysemodus</value>
   </data>
   <data name="AnalysisModeTooltip" xml:space="preserve">
     <value>Welcher Kryptoanalysemodus soll ausgeführt werden?</value>
+  </data>
+  <data name="AnalysisStep" xml:space="preserve">
+    <value>Analyseschritt:</value>
   </data>
   <data name="AnalysisTypeGroup" xml:space="preserve">
     <value>Analyseverfahren</value>
@@ -366,11 +372,14 @@
   <data name="RotorPositionGroup" xml:space="preserve">
     <value>Rotorstellungen</value>
   </data>
+  <data name="SearchFrom" xml:space="preserve">
+    <value>Suche von:</value>
+  </data>
+  <data name="SearchTo" xml:space="preserve">
+    <value>Suche bis:</value>
+  </data>
   <data name="StartLabel" xml:space="preserve">
     <value>Startzeit:</value>
-  </data>
-  <data name="StepLabel" xml:space="preserve">
-    <value>Analyseschritt:</value>
   </data>
   <data name="TextHeader" xml:space="preserve">
     <value>Text</value>

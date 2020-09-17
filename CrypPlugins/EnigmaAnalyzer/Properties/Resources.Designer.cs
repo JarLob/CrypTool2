@@ -79,6 +79,15 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis Mode: ähnelt.
+        /// </summary>
+        public static string AnalysisMode {
+            get {
+                return ResourceManager.GetString("AnalysisMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Analysis Mode ähnelt.
         /// </summary>
         public static string AnalysisModeCaption {
@@ -93,6 +102,15 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         public static string AnalysisModeTooltip {
             get {
                 return ResourceManager.GetString("AnalysisModeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis Step: ähnelt.
+        /// </summary>
+        public static string AnalysisStep {
+            get {
+                return ResourceManager.GetString("AnalysisStep", resourceCulture);
             }
         }
         
@@ -808,20 +826,29 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Search From: ähnelt.
+        /// </summary>
+        public static string SearchFrom {
+            get {
+                return ResourceManager.GetString("SearchFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Search To: ähnelt.
+        /// </summary>
+        public static string SearchTo {
+            get {
+                return ResourceManager.GetString("SearchTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Start Time: ähnelt.
         /// </summary>
         public static string StartLabel {
             get {
                 return ResourceManager.GetString("StartLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis Step: ähnelt.
-        /// </summary>
-        public static string StepLabel {
-            get {
-                return ResourceManager.GetString("StepLabel", resourceCulture);
             }
         }
         

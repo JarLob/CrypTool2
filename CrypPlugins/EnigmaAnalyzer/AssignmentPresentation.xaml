@@ -9,13 +9,13 @@
 
     <crypanalysisviewcontrol:CrypAnalysisViewControl ResultHeaderCaption="{Loc LocalLabel}" ResultListCaption="{Loc TopTenLabel}">
         <crypanalysisviewcontrol:CrypAnalysisViewControl.ResultHeaderLabels>
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc AnalysisMode}" x:Name="AnalysisMode"  />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc AnalysisStep}" x:Name="AnalysisStep" />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc SearchFrom}" x:Name="SearchFrom"  />
+            <crypanalysisviewcontrol:ViewLabel Caption="{Loc SearchTo}" x:Name="SearchTo"  />
             <crypanalysisviewcontrol:ViewLabel Caption="{Loc StartLabel}" x:Name="StartTime" />
-            <!--<crypanalysisviewcontrol:ViewLabel Caption="{Loc EndLabel}" x:Name="EndTime" />-->
             <crypanalysisviewcontrol:ViewLabel Caption="{Loc TimeLeftLabel}" x:Name="TimeLeft" />
-            <!--<crypanalysisviewcontrol:ViewLabel Caption="{Loc SpeedLabel}" x:Name="CurrentSpeed" />-->
-            <!--Empty for layouting purposes:-->
             <crypanalysisviewcontrol:ViewLabel Caption="{Loc EndLabel}" x:Name="EndTime" />
-            <crypanalysisviewcontrol:ViewLabel Caption="{Loc StepLabel}" x:Name="Step" />
         </crypanalysisviewcontrol:CrypAnalysisViewControl.ResultHeaderLabels>
 
         <crypanalysisviewcontrol:CrypAnalysisResultListView ItemsSource="{Binding}" ResultItemAction="HandleResultItemAction">

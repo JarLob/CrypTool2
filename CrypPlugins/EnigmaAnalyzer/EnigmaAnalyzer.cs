@@ -280,29 +280,81 @@ namespace Cryptool.EnigmaAnalyzer
                     }
                     break;
                 case AnalysisMode.IC_SEARCH:
-                    _resultReporter_OnNewCryptanalysisStep(new NewCryptanalysisStepArgs("IoC Search"));
-                    PerformICTrigramSearch(true);
+                    {
+                        var step = new NewCryptanalysisStepArgs("IoC Search");
+                        _resultReporter_OnNewCryptanalysisStep(step);
+                        OnNewAnalysisMode(step);
+                        PerformICTrigramSearch(true);
+                    }
                     break;
                 case AnalysisMode.TRIGRAM_SEARCH:
-                    _resultReporter_OnNewCryptanalysisStep(new NewCryptanalysisStepArgs("Trigram Search"));
-                    PerformICTrigramSearch(false);
+                    {
+                        var step = new NewCryptanalysisStepArgs("Trigram Search");
+                        _resultReporter_OnNewCryptanalysisStep(step);
+                        OnNewAnalysisMode(step);
+                        PerformICTrigramSearch(false);
+                    }
                     break;
                 case AnalysisMode.HILLCLIMBING:
-                    _resultReporter_OnNewCryptanalysisStep(new NewCryptanalysisStepArgs("Hillclimbing"));
-                    PerformHillclimbingSimulatedAnnealing(HcSaRunnable.Mode.HC);
+                    {
+                        var step = new NewCryptanalysisStepArgs("Hillclimbing");
+                        _resultReporter_OnNewCryptanalysisStep(step);
+                        OnNewAnalysisMode(step);
+                        PerformHillclimbingSimulatedAnnealing(HcSaRunnable.Mode.HC);
+                    }
                     break;
                 case AnalysisMode.SIMULATED_ANNEALING:
-                    _resultReporter_OnNewCryptanalysisStep(new NewCryptanalysisStepArgs("Simulated Annealing"));
-                    PerformHillclimbingSimulatedAnnealing(HcSaRunnable.Mode.SA);
+                    {
+                        var step = new NewCryptanalysisStepArgs("Simulated Annealing");
+                        _resultReporter_OnNewCryptanalysisStep(step);
+                        OnNewAnalysisMode(step);
+                        PerformHillclimbingSimulatedAnnealing(HcSaRunnable.Mode.SA);
+                    }
                     break;
                 case AnalysisMode.GILLOGLY:
-                    _resultReporter_OnNewCryptanalysisStep(new NewCryptanalysisStepArgs("Gillogly"));
-                    PerformGilloglyAttack();
+                    {
+                        var step = new NewCryptanalysisStepArgs("Gillogly");
+                        _resultReporter_OnNewCryptanalysisStep(step);
+                        OnNewAnalysisMode(step);
+                        PerformGilloglyAttack();
+                    }
                     break;
                 default:
                     throw new NotImplementedException(string.Format("Cryptanalysis mode {0} not implemented", _settings.AnalysisMode));
             }
-        }       
+        }
+
+        private void OnNewSearchSpace(Key from, Key to)
+        {
+            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                try
+                {
+                    _presentation.SearchFrom.Value = string.Format("{0}", from.getKeystringShort());
+                    _presentation.SearchTo.Value = string.Format("{0}", to.getKeystringShort());
+                }
+                catch (Exception)
+                {
+                    //do nothing
+                }
+            }, null);
+        }
+
+
+        private void OnNewAnalysisMode(NewCryptanalysisStepArgs args)
+        {
+            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                try
+                {
+                    _presentation.AnalysisMode.Value = args.Step;
+                }
+                catch (Exception)
+                {
+                    //do nothing
+                }
+            }, null);
+        }
 
         private void _resultReporter_OnNewCryptanalysisStep(NewCryptanalysisStepArgs args)
         {
@@ -310,7 +362,7 @@ namespace Cryptool.EnigmaAnalyzer
             {
                 try
                 {
-                    _presentation.Step.Value = args.Step;
+                    _presentation.AnalysisStep.Value = args.Step;
                 }
                 catch (Exception)
                 {
@@ -417,6 +469,8 @@ namespace Cryptool.EnigmaAnalyzer
                 return;
             }
 
+            OnNewSearchSpace(lowKey, highKey);
+
             //analysis objects
             var bombeSearch = new BombeSearch();
             var enigmaStats = new EnigmaStats();
@@ -494,6 +548,8 @@ namespace Cryptool.EnigmaAnalyzer
                 return;
             }
 
+            OnNewSearchSpace(lowKey, highKey);
+
             //analysis objects
             var trigramICSearch = new TrigramICSearch();
             var enigmaStats = new EnigmaStats();
@@ -563,6 +619,7 @@ namespace Cryptool.EnigmaAnalyzer
             {
                 return;
             }
+
             SetPlugs(lowKey, highKey, null);
 
             //convert and check key range
@@ -575,6 +632,8 @@ namespace Cryptool.EnigmaAnalyzer
                 GuiLogMessage(string.Format("Invalid key range: {0}-{1} - Invalid key format, or first key has a higher value than the last key", rangeLowS, rangeHighS), NotificationLevel.Error);
                 return;
             }
+
+            OnNewSearchSpace(lowKey, highKey);
 
             //analysis objects
             var gilloglyAttack = new GilloglyAttack();
@@ -641,6 +700,8 @@ namespace Cryptool.EnigmaAnalyzer
                 GuiLogMessage(string.Format("Invalid key range: {0}-{1} - Invalid key format, or first key has a higher value than the last key", rangeLowS, rangeHighS), NotificationLevel.Error);
                 return;
             }
+
+            OnNewSearchSpace(lowKey, highKey);
 
             //analysis objects
             var hillClimb = new HillClimb();
