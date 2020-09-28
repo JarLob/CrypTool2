@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Enigma Turing Bomb Attack (with Turnover)</title>
+  <title lang="en">Enigma Turing Bombe Attack (with Turnover)</title>
   <title lang="ru">Энигма Тьюринг Бомба Атака (с оборотом)</title>
   <summary lang="en">Cryptanalysis of the <i>Enigma</i> cipher</summary>
   <summary lang="ru">Криптоанализ шифрования Enigma</summary>
