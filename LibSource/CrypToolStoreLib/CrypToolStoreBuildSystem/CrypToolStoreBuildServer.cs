@@ -97,7 +97,8 @@ namespace CrypToolStoreBuildSystem
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogText(String.Format("Exception occured in BuildServerLoop: {0}", ex.Message), this, Logtype.Error);
+                    Logger.LogText(string.Format("Exception occured in BuildServerLoop: {0}", ex.Message), this, Logtype.Error);
+                    Logger.LogException(ex, this, Logtype.Error);
                 }
                 finally
                 {
@@ -148,7 +149,7 @@ namespace CrypToolStoreBuildSystem
             {
                 if (workers.Count < MAX_BUILD_WORKERS)
                 {
-                    Logger.LogText(String.Format("Creating and starting worker to build source {0}-{1}", source.PluginId, source.PluginVersion), this, Logtype.Info);
+                    Logger.LogText(string.Format("Creating and starting worker to build source {0}-{1}", source.PluginId, source.PluginVersion), this, Logtype.Info);
                     BuildWorker worker = new BuildWorker(source, ServerCertificate);
                     worker.SigningCertificatePfxFile = Config.GetConfigEntry("SigningCertificatePfxFile");
                     worker.SigningCertificatePassword = Config.GetConfigEntry("SigningCertificatePassword");

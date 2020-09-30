@@ -15,10 +15,7 @@
 */
 using CrypToolStoreLib.Tools;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CrypToolStoreBuildSystem
 {
@@ -49,29 +46,63 @@ namespace CrypToolStoreBuildSystem
                 {
                     //here, write everything to the LogStringBuilder
                     case Logtype.Debug:
-                        entry = String.Format("{0} {1} {2}: {3}", DateTime.Now, "Debug", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
-                        LogStringBuilder.AppendLine(entry);
+                        entry = string.Format("{0} {1} {2}: {3}", DateTime.Now, "Debug", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);                        
                         break;
                     case Logtype.Info:
-                        entry = String.Format("{0} {1} {2}: {3}", DateTime.Now, "Info", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
-                        LogStringBuilder.AppendLine(entry);
+                        entry = string.Format("{0} {1} {2}: {3}", DateTime.Now, "Info", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
                         break;
                     case Logtype.Warning:
-                        entry = String.Format("{0} {1} {2}: {3}", DateTime.Now, "Warning", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
-                        LogStringBuilder.AppendLine(entry);
+                        entry = string.Format("{0} {1} {2}: {3}", DateTime.Now, "Warning", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
                         break;
                     case Logtype.Error:
-                        entry = String.Format("{0} {1} {2}: {3}", DateTime.Now, "Error", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
-                        LogStringBuilder.AppendLine(entry);
+                        entry = string.Format("{0} {1} {2}: {3}", DateTime.Now, "Error", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
                         break;
                     default:
-                        entry = String.Format("{0} {1} {2}: {3}", DateTime.Now, "Unknown", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
-                        LogStringBuilder.AppendLine(entry);
+                        entry = string.Format("{0} {1} {2}: {3}", DateTime.Now, "Unknown", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
                         break;
                 }
+                LogStringBuilder.AppendLine(entry);
                 //finally, forward the log to the actual logger
                 Logger.LogText(entry, whoLoggs, logtype);
             }
+        }
+
+        /// <summary>
+        /// Logs an exception
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <param name="whoLoggs"></param>
+        /// <param name="logtype"></param>
+        public void LogException(Exception ex, object whoLoggs, Logtype logtype)
+        {
+            string entry;
+            switch (logtype)
+            {
+                //here, write everything to the LogStringBuilder
+                case Logtype.Debug:
+                    entry = string.Format("{0} {1} {2}: Stacktrace: {3}", DateTime.Now, "Debug", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", ex.StackTrace);
+                    LogStringBuilder.AppendLine(entry);
+                    break;
+                case Logtype.Info:
+                    entry = string.Format("{0} {1} {2}: Stacktrace: {3}", DateTime.Now, "Info", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", ex.StackTrace);
+                    LogStringBuilder.AppendLine(entry);
+                    break;
+                case Logtype.Warning:
+                    entry = string.Format("{0} {1} {2}: Stacktrace: {3}", DateTime.Now, "Warning", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", ex.StackTrace);
+                    LogStringBuilder.AppendLine(entry);
+                    break;
+                case Logtype.Error:
+                    entry = string.Format("{0} {1} {2}: Stacktrace: {3}", DateTime.Now, "Error", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", ex.StackTrace);
+                    LogStringBuilder.AppendLine(entry);
+                    break;
+                default:
+                    entry = string.Format("{0} {1} {2}: Stacktrace: {3}", DateTime.Now, "Unknown", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", ex.StackTrace);
+                    LogStringBuilder.AppendLine(entry);
+                    break;
+            }            
+            LogStringBuilder.AppendLine(entry);
+            //finally, forward the log to the actual logger
+            Logger.LogException(ex, whoLoggs, logtype);
         }
 
         /// <summary>

@@ -36,7 +36,7 @@ namespace CrypToolStoreBuildSystem
             }
             catch (Exception ex)
             {
-                Logger.GetLogger().LogText(String.Format("Exception while loading server certificate", ex.Message), null, Logtype.Error);
+                Logger.GetLogger().LogText(string.Format("Exception while loading server certificate", ex.Message), null, Logtype.Error);
                 return;
             }
 

@@ -147,7 +147,7 @@ namespace CrypToolStoreBuildSystem
         /// </summary>
         public void BuildWorkerTaskMethod()
         {
-            Logger.LogText(String.Format("(General) Started build of source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(string.Format("(General) Started build of source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             bool buildError = true; //set build error to true; at the end, if everything is ok, error is set to false
                                     //this is needed for the update of the Source's state in the CrypToolStoreDatabase
             try
@@ -321,11 +321,12 @@ namespace CrypToolStoreBuildSystem
 
                 //if the build process reaches this point, we have no build error
                 buildError = false;
-                Logger.LogText(String.Format("(General) Finished build of source-{0}-{1} without errors", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+                Logger.LogText(string.Format("(General) Finished build of source-{0}-{1} without errors", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             }
             catch (Exception ex)
             {
-                Logger.LogText(String.Format("(General) Exception occured during build of source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, ex.Message), this, Logtype.Error);
+                Logger.LogText(string.Format("(General) Exception occured during build of source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, ex.Message), this, Logtype.Error);
+                Logger.LogException(ex, this, Logtype.Error);
             }
             finally
             {
@@ -336,7 +337,8 @@ namespace CrypToolStoreBuildSystem
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogText(String.Format("(General) Exception occured during cleanup of source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, ex.Message), this, Logtype.Error);
+                    Logger.LogText(string.Format("(General) Exception occured during cleanup of source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, ex.Message), this, Logtype.Error);
+                    Logger.LogException(ex, this, Logtype.Error);
                 }
 
                 // 15) Set state of source in database to BUILDED or ERROR
@@ -347,7 +349,8 @@ namespace CrypToolStoreBuildSystem
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogText(String.Format("(General) Exception occured during SetFinalBuildStateAndUploadBuildlog of source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, ex.Message), this, Logtype.Error);
+                    Logger.LogText(string.Format("(General) Exception occured during SetFinalBuildStateAndUploadBuildlog of source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, ex.Message), this, Logtype.Error);
+                    Logger.LogException(ex, this, Logtype.Error);
                 }
                 IsRunning = false;
 
@@ -358,7 +361,8 @@ namespace CrypToolStoreBuildSystem
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogText(String.Format("(General) Exception occured during SendEmailToDeveloper of source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, ex.Message), this, Logtype.Error);
+                    Logger.LogText(string.Format("(General) Exception occured during SendEmailToDeveloper of source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, ex.Message), this, Logtype.Error);
+                    Logger.LogException(ex, this, Logtype.Error);
                 }
             }
         }
@@ -368,7 +372,7 @@ namespace CrypToolStoreBuildSystem
         /// </summary>
         private bool SetToBuildingState()
         {
-            Logger.LogText(String.Format("(Buildstep 0) Set source-{0}-{1} to state: {2}", Source.PluginId, Source.PluginVersion, BuildState.BUILDING.ToString()), this, Logtype.Info);
+            Logger.LogText(string.Format("(Buildstep 0) Set source-{0}-{1} to state: {2}", Source.PluginId, Source.PluginVersion, BuildState.BUILDING.ToString()), this, Logtype.Info);
 
             CrypToolStoreClient client = new CrypToolStoreClient();
             client.ServerCertificate = ServerCertificate;
@@ -383,21 +387,21 @@ namespace CrypToolStoreBuildSystem
                 DataModificationOrRequestResult result = client.GetSource(Source.PluginId, Source.PluginVersion);
                 if (!result.Success)
                 {
-                    Logger.LogText(String.Format("(Buildstep 0) Could not get source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, result.Message), this, Logtype.Error);
+                    Logger.LogText(string.Format("(Buildstep 0) Could not get source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, result.Message), this, Logtype.Error);
                     return false;
                 }
                 Source source = (Source)result.DataObject;
                 //update that source to building state
                 source.BuildState = BuildState.BUILDING.ToString();
-                source.BuildLog = String.Format("Buildserver started build worker at {0}", DateTime.Now);
+                source.BuildLog = string.Format("Buildserver started build worker at {0}", DateTime.Now);
                 result = client.UpdateSource(source);
                 if (!result.Success)
                 {
-                    Logger.LogText(String.Format("(Buildstep 0) Could not set source-{0}-{1} to state {2}: {3}", Source.PluginId, Source.PluginVersion, BuildState.BUILDING, result.Message), this, Logtype.Error);
+                    Logger.LogText(string.Format("(Buildstep 0) Could not set source-{0}-{1} to state {2}: {3}", Source.PluginId, Source.PluginVersion, BuildState.BUILDING, result.Message), this, Logtype.Error);
                     return false;
                 }
 
-                Logger.LogText(String.Format("(Buildstep 0) Source-{0}-{1} is now in state: {2}", Source.PluginId, Source.PluginVersion, BuildState.BUILDING.ToString()), this, Logtype.Info);
+                Logger.LogText(string.Format("(Buildstep 0) Source-{0}-{1} is now in state: {2}", Source.PluginId, Source.PluginVersion, BuildState.BUILDING.ToString()), this, Logtype.Info);
                 return true;
             }
             finally
@@ -418,7 +422,7 @@ namespace CrypToolStoreBuildSystem
                 if (!Directory.Exists(BUILD_FOLDER))
                 {
                     Directory.CreateDirectory(BUILD_FOLDER);
-                    Logger.LogText(String.Format("(Buildstep 1) Created build folder: {0}", BUILD_FOLDER), this, Logtype.Info);                    
+                    Logger.LogText(string.Format("(Buildstep 1) Created build folder: {0}", BUILD_FOLDER), this, Logtype.Info);                    
                 }
             }
 
@@ -427,12 +431,12 @@ namespace CrypToolStoreBuildSystem
             if (!Directory.Exists(buildfoldername))
             {                
                 Directory.CreateDirectory(buildfoldername);
-                Logger.LogText(String.Format("(Buildstep 1) Created build folder for source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, buildfoldername), this, Logtype.Info);
+                Logger.LogText(string.Format("(Buildstep 1) Created build folder for source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, buildfoldername), this, Logtype.Info);
                 return true;
             }
             else
             {
-                Logger.LogText(String.Format("(Buildstep 1) Folder for source-{0}-{1} already exists. Maybe because of faulty previous build. Abort now", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
+                Logger.LogText(string.Format("(Buildstep 1) Folder for source-{0}-{1} already exists. Maybe because of faulty previous build. Abort now", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
                 return false;
             }
         }
@@ -455,11 +459,11 @@ namespace CrypToolStoreBuildSystem
 
             //1. create plugin folder
             Directory.CreateDirectory(buildfoldername + @"\plugin");
-            Logger.LogText(String.Format("(Buildstep 2) Created plugin folder for source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(string.Format("(Buildstep 2) Created plugin folder for source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
 
             //2. create build_output folder
             Directory.CreateDirectory(buildfoldername + @"\build_output");
-            Logger.LogText(String.Format("(Buildstep 2) Created build_output folder for source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(string.Format("(Buildstep 2) Created build_output folder for source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
 
             //3. create build_plugin.xml
             using (Stream stream = new FileStream(buildfoldername + @"\build_plugin.xml", FileMode.Create))
@@ -474,7 +478,7 @@ namespace CrypToolStoreBuildSystem
                     writer.WriteLine("</Project>");
                 }
             }
-            Logger.LogText(String.Format("(Buildstep 2) Created build_plugin.xml for source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(string.Format("(Buildstep 2) Created build_plugin.xml for source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             return true;
         }
 
@@ -484,7 +488,7 @@ namespace CrypToolStoreBuildSystem
         /// <returns></returns>
         private bool DownloadZipFile()
         {
-            Logger.LogText(String.Format("(Buildstep 3) Start downloading source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(string.Format("(Buildstep 3) Start downloading source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             CrypToolStoreClient client = new CrypToolStoreClient();
             client.ServerCertificate = ServerCertificate;
             client.ServerAddress = Config.GetConfigEntry("ServerAddress");
@@ -496,17 +500,17 @@ namespace CrypToolStoreBuildSystem
 
             DateTime startTime = DateTime.Now;
             bool stop = false;
-            DataModificationOrRequestResult result = client.DownloadSourceZipFile(Source, String.Format(buildfoldername + @"\plugin\source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), ref stop);
+            DataModificationOrRequestResult result = client.DownloadSourceZipFile(Source, string.Format(buildfoldername + @"\plugin\source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), ref stop);
             client.Disconnect();
 
             if (result.Success)
             {
-                Logger.LogText(String.Format("(Buildstep 3) Downloaded source-{0}-{1}.zip in {2}", Source.PluginId, Source.PluginVersion, DateTime.Now.Subtract(startTime)), this, Logtype.Info);
+                Logger.LogText(string.Format("(Buildstep 3) Downloaded source-{0}-{1}.zip in {2}", Source.PluginId, Source.PluginVersion, DateTime.Now.Subtract(startTime)), this, Logtype.Info);
                 return true;
             }
             else
             {
-                Logger.LogText(String.Format("(Buildstep 3) Download of source-{0}-{1}.zip failed. Message was: {2}", Source.PluginId, Source.PluginVersion, result.Message), this, Logtype.Error);
+                Logger.LogText(string.Format("(Buildstep 3) Download of source-{0}-{1}.zip failed. Message was: {2}", Source.PluginId, Source.PluginVersion, result.Message), this, Logtype.Error);
                 return false;
             }            
         }
@@ -517,11 +521,11 @@ namespace CrypToolStoreBuildSystem
         /// <returns></returns>
         private bool ExtractZipFile()
         {
-            Logger.LogText(String.Format("(Buildstep 4) Start extracting source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(string.Format("(Buildstep 4) Start extracting source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             string buildfoldername = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion;
-            ZipFile.ExtractToDirectory(buildfoldername + String.Format(@"\plugin\source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), buildfoldername + @"\plugin\");
-            File.Delete(buildfoldername + String.Format(@"\plugin\source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion));
-            Logger.LogText(String.Format("(Buildstep 4) Finished extracting source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            ZipFile.ExtractToDirectory(buildfoldername + string.Format(@"\plugin\source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), buildfoldername + @"\plugin\");
+            File.Delete(buildfoldername + string.Format(@"\plugin\source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion));
+            Logger.LogText(string.Format("(Buildstep 4) Finished extracting source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             return true;
         }
 
@@ -541,15 +545,15 @@ namespace CrypToolStoreBuildSystem
             //We only allow exactly one csproj file per Source
             if (counter == 0)
             {
-                Logger.LogText(String.Format("(Buildstep 5) Source-{0}-{1} does not contain any csproj file", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
+                Logger.LogText(string.Format("(Buildstep 5) Source-{0}-{1} does not contain any csproj file", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
                 return false;
             }
             if (counter > 1)
             {
-                Logger.LogText(String.Format("(Buildstep 5) source-{0}-{1} contains more than one csproj file", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
+                Logger.LogText(string.Format("(Buildstep 5) source-{0}-{1} contains more than one csproj file", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
             }
 
-            Logger.LogText(String.Format("(Buildstep 5) Found csproj file in source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, CSProjFileName), this, Logtype.Info);
+            Logger.LogText(string.Format("(Buildstep 5) Found csproj file in source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, CSProjFileName), this, Logtype.Info);
             return true;
         }
 
@@ -758,7 +762,7 @@ namespace CrypToolStoreBuildSystem
                 return false;
             }            
             csprojXDocument.Save(CSProjFileName,SaveOptions.OmitDuplicateNamespaces);
-            Logger.LogText(String.Format("(Buildstep 6) Wrote changes to {0}", CSProjFileName), this, Logtype.Info);
+            Logger.LogText(string.Format("(Buildstep 6) Wrote changes to {0}", CSProjFileName), this, Logtype.Info);
 
             return true;
         }
@@ -789,11 +793,11 @@ namespace CrypToolStoreBuildSystem
         /// <returns></returns>
         private bool BuildPlugin()
         {
-            Logger.LogText(String.Format("(Buildstep 8) Starting actual build of source-{0}-{1} using msbuild.exe", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(string.Format("(Buildstep 8) Starting actual build of source-{0}-{1} using msbuild.exe", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             string buildfoldername = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion;
 
             ProcessStartInfo info = new ProcessStartInfo("msbuild.exe");
-            info.Arguments = buildfoldername + String.Format("\\build_plugin.xml /p:Platform={0} /p:Configuration=Release /p:CertificatePfxFile=\"{1}\" /p:CertificatePassword=\"{2}\"", BUILD_TARGET, SigningCertificatePfxFile, SigningCertificatePassword);
+            info.Arguments = buildfoldername + string.Format("\\build_plugin.xml /p:Platform={0} /p:Configuration=Release /p:CertificatePfxFile=\"{1}\" /p:CertificatePassword=\"{2}\"", BUILD_TARGET, SigningCertificatePfxFile, SigningCertificatePassword);
             info.CreateNoWindow = false;
             info.UseShellExecute = false;
             info.RedirectStandardOutput = true;
@@ -808,11 +812,11 @@ namespace CrypToolStoreBuildSystem
             process.BeginErrorReadLine();
             process.WaitForExit();
 
-            Logger.LogText(String.Format("(Buildstep 8) Output of msbuild for source-{0}-{1}:\r\n{2}", Source.PluginId, Source.PluginVersion, msbuild_Log.ToString()), this, process.ExitCode == 0 ? Logtype.Info : Logtype.Error);
+            Logger.LogText(string.Format("(Buildstep 8) Output of msbuild for source-{0}-{1}:\r\n{2}", Source.PluginId, Source.PluginVersion, msbuild_Log.ToString()), this, process.ExitCode == 0 ? Logtype.Info : Logtype.Error);
 
             if (process.ExitCode != 0)
             {
-                Logger.LogText(String.Format("(Buildstep 8) Build of source-{0}-{1} failed", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
+                Logger.LogText(string.Format("(Buildstep 8) Build of source-{0}-{1} failed", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
                 return false;
             }
             return true;
@@ -860,10 +864,10 @@ namespace CrypToolStoreBuildSystem
 
             if (counter == 0)
             {
-                Logger.LogText(String.Format("(Buildstep 9) Did not find any dll-file in build_output folder after building source-{0}-{1}. Abort now", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
+                Logger.LogText(string.Format("(Buildstep 9) Did not find any dll-file in build_output folder after building source-{0}-{1}. Abort now", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
                 return false;
             } 
-            Logger.LogText(String.Format("(Buildstep 9) Found {0} dll-file in build_output folder after building source-{1}-{2}", counter, Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(string.Format("(Buildstep 9) Found {0} dll-file in build_output folder after building source-{1}-{2}", counter, Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             return true;
         }
 
@@ -889,7 +893,7 @@ namespace CrypToolStoreBuildSystem
             }
 
             ProcessStartInfo info = new ProcessStartInfo("signtool.exe");
-            info.Arguments = String.Format("sign /f {0} /p {1} /t {2} {3}", SigningCertificatePfxFile, SigningCertificatePassword, TIMESTAMP_SERVER, filenames.ToString());
+            info.Arguments = string.Format("sign /f {0} /p {1} /t {2} {3}", SigningCertificatePfxFile, SigningCertificatePassword, TIMESTAMP_SERVER, filenames.ToString());
             info.CreateNoWindow = false;
             info.UseShellExecute = false;
             info.RedirectStandardOutput = true;
@@ -904,7 +908,7 @@ namespace CrypToolStoreBuildSystem
             process.BeginErrorReadLine();
             process.WaitForExit();
 
-            Logger.LogText(String.Format("(Buildstep 10) Output of signtool:\r\n{0}",signtool_Log.ToString()), this, process.ExitCode == 0 ? Logtype.Info : Logtype.Error);
+            Logger.LogText(string.Format("(Buildstep 10) Output of signtool:\r\n{0}",signtool_Log.ToString()), this, process.ExitCode == 0 ? Logtype.Info : Logtype.Error);
 
             if (process.ExitCode != 0)
             {
@@ -952,7 +956,7 @@ namespace CrypToolStoreBuildSystem
         /// <returns></returns>
         private bool CreateMetaFile()
         {
-            Logger.LogText(String.Format("(Buildstep 11) Start creating pluginmetainfo.xml for assembly-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(string.Format("(Buildstep 11) Start creating pluginmetainfo.xml for assembly-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
 
             string metafilename = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\build_output\pluginmetainfo.xml";
 
@@ -984,7 +988,7 @@ namespace CrypToolStoreBuildSystem
                 }
             }
 
-            Logger.LogText(String.Format("(Buildstep 11) Created pluginmetainfo.xml for assembly-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(string.Format("(Buildstep 11) Created pluginmetainfo.xml for assembly-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             return true;
         }
 
@@ -995,7 +999,7 @@ namespace CrypToolStoreBuildSystem
         /// <returns></returns>
         private bool CreateAssemblyZip()
         {           
-            Logger.LogText(String.Format("(Buildstep 12) Start creating assembly-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(string.Format("(Buildstep 12) Start creating assembly-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
 
             //remove pdb-files since these are not needed in the zip file
             DirectoryInfo DirectoryInfo = new DirectoryInfo(BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\" + "build_output\\");
@@ -1008,7 +1012,7 @@ namespace CrypToolStoreBuildSystem
             string zipfile_path_and_name = BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\assembly-" + Source.PluginId + "-" + Source.PluginVersion + ".zip";
             ZipFile.CreateFromDirectory(BUILD_FOLDER + @"\" + SOURCE_FILE_NAME + "-" + Source.PluginId + "-" + Source.PluginVersion + @"\" + "build_output\\", zipfile_path_and_name, CompressionLevel.Optimal, false);
 
-            Logger.LogText(String.Format("(Buildstep 12) Created assembly-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(string.Format("(Buildstep 12) Created assembly-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             return true;
         }
 
@@ -1018,7 +1022,7 @@ namespace CrypToolStoreBuildSystem
         /// <returns></returns>
         private bool UploadAssemblyZip()
         {
-            Logger.LogText(String.Format("(Buildstep 13) Start uploading assembly zipfile for source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(string.Format("(Buildstep 13) Start uploading assembly zipfile for source-{0}-{1}.zip", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             CrypToolStoreClient client = new CrypToolStoreClient();
             client.ServerCertificate = ServerCertificate;
             client.ServerAddress = Config.GetConfigEntry("ServerAddress");
@@ -1036,12 +1040,12 @@ namespace CrypToolStoreBuildSystem
 
             if (result.Success)
             {
-                Logger.LogText(String.Format("(Buildstep 13) Uploaded assembly zipfile of source-{0}-{1}.zip in {2}", Source.PluginId, Source.PluginVersion, DateTime.Now.Subtract(startTime)), this, Logtype.Info);
+                Logger.LogText(string.Format("(Buildstep 13) Uploaded assembly zipfile of source-{0}-{1}.zip in {2}", Source.PluginId, Source.PluginVersion, DateTime.Now.Subtract(startTime)), this, Logtype.Info);
                 return true;
             }
             else
             {
-                Logger.LogText(String.Format("(Buildstep 13) Upload of assembly zipfile of source-{0}-{1}.zip failed. Message was: {2}", Source.PluginId, Source.PluginVersion, result.Message), this, Logtype.Error);
+                Logger.LogText(string.Format("(Buildstep 13) Upload of assembly zipfile of source-{0}-{1}.zip failed. Message was: {2}", Source.PluginId, Source.PluginVersion, result.Message), this, Logtype.Error);
                 return false;
             }            
         }
@@ -1055,7 +1059,7 @@ namespace CrypToolStoreBuildSystem
             if (Directory.Exists(buildfoldername))
             {
                 Directory.Delete(buildfoldername, true);
-                Logger.LogText(String.Format("(Buildstep 14) Deleted build folder for source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, buildfoldername), this, Logtype.Info);                
+                Logger.LogText(string.Format("(Buildstep 14) Deleted build folder for source-{0}-{1}: {2}", Source.PluginId, Source.PluginVersion, buildfoldername), this, Logtype.Info);                
             }            
         }
 
@@ -1065,7 +1069,7 @@ namespace CrypToolStoreBuildSystem
         /// </summary>
         private void SetFinalBuildStateAndUploadBuildlog(bool buildError)
         {
-            Logger.LogText(String.Format("(Buildstep 15) Set final build state of source-{0}-{1} and upload build log", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(string.Format("(Buildstep 15) Set final build state of source-{0}-{1} and upload build log", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             CrypToolStoreClient client = new CrypToolStoreClient();
             client.ServerCertificate = ServerCertificate;
             client.ServerAddress = Config.GetConfigEntry("ServerAddress");
@@ -1078,7 +1082,7 @@ namespace CrypToolStoreBuildSystem
 
             if (buildError)
             {
-                Logger.LogText(String.Format("(Buildstep 15) Set state of source-{0}-{1} to ERROR", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
+                Logger.LogText(string.Format("(Buildstep 15) Set state of source-{0}-{1} to ERROR", Source.PluginId, Source.PluginVersion), this, Logtype.Error);
                 source.BuildState = BuildState.ERROR.ToString();
             }
             else
@@ -1086,7 +1090,7 @@ namespace CrypToolStoreBuildSystem
                 //increment build version only if there was not error
                 source.BuildVersion++;
 
-                Logger.LogText(String.Format("(Buildstep 15) Set state of source-{0}-{1} to SUCCESS", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+                Logger.LogText(string.Format("(Buildstep 15) Set state of source-{0}-{1} to SUCCESS", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
                 source.BuildState = BuildState.SUCCESS.ToString();
             }
 
@@ -1099,11 +1103,11 @@ namespace CrypToolStoreBuildSystem
 
             if (result.Success)
             {
-                Logger.LogText(String.Format("(Buildstep 15) Uploaded build log of source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+                Logger.LogText(string.Format("(Buildstep 15) Uploaded build log of source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             }
             else
             {
-                Logger.LogText(String.Format("(Buildstep 15) Setting final build state of source-{0}-{1} and upload build log failed. Message was: {2}", Source.PluginId, Source.PluginVersion, result.Message), this, Logtype.Error);
+                Logger.LogText(string.Format("(Buildstep 15) Setting final build state of source-{0}-{1} and upload build log failed. Message was: {2}", Source.PluginId, Source.PluginVersion, result.Message), this, Logtype.Error);
             }           
         }
 
@@ -1112,7 +1116,7 @@ namespace CrypToolStoreBuildSystem
         /// </summary>
         private void SendEmailToDeveloper(bool buildError)
         {
-            Logger.LogText(String.Format("(Buildstep 16) Send email to developer of source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(string.Format("(Buildstep 16) Send email to developer of source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
             //Get email of developer
             CrypToolStoreClient client = new CrypToolStoreClient();
             client.ServerCertificate = ServerCertificate;
@@ -1127,7 +1131,7 @@ namespace CrypToolStoreBuildSystem
             //check, if email is valid
             if (String.IsNullOrEmpty(developer.Email) || !IsValidEmail(developer.Email))
             {
-                Logger.LogText(String.Format("(Buildstep 16) Cannot send build email to {0} since we have no valid email address (={1}) of this developer!", plugin.Username, developer.Email), this, Logtype.Warning);
+                Logger.LogText(string.Format("(Buildstep 16) Cannot send build email to {0} since we have no valid email address (={1}) of this developer!", plugin.Username, developer.Email), this, Logtype.Warning);
                 return;
             }
             MailClient mailClient = new MailClient(Config.GetConfigEntry("EmailServerAddress"), int.Parse(Config.GetConfigEntry("EmailServerPort")));
@@ -1140,10 +1144,10 @@ namespace CrypToolStoreBuildSystem
 
             if (buildError)
             {
-                subject = String.Format("[CrypToolStore Build System] Build Error occured while building your Source-{0}-{1}", Source.PluginId, Source.PluginVersion);
-                bodyBuilder.AppendLine(String.Format("Dear {0},", plugin.Username));
+                subject = string.Format("[CrypToolStore Build System] Build Error occured while building your Source-{0}-{1}", Source.PluginId, Source.PluginVersion);
+                bodyBuilder.AppendLine(string.Format("Dear {0},", plugin.Username));
                 bodyBuilder.AppendLine();
-                bodyBuilder.AppendLine(String.Format("The build of Source-{0}-{1} was erroneous.", Source.PluginId, Source.PluginVersion));
+                bodyBuilder.AppendLine(string.Format("The build of Source-{0}-{1} was erroneous.", Source.PluginId, Source.PluginVersion));
                 bodyBuilder.AppendLine("Please see attached buildlog.txt for additional information.");
                 bodyBuilder.AppendLine();
                 bodyBuilder.AppendLine("Kind regards,");
@@ -1151,17 +1155,17 @@ namespace CrypToolStoreBuildSystem
             }
             else
             {
-                subject = String.Format("[CrypToolStore Build System] Build of your Source-{0}-{1} successfully finished", Source.PluginId, Source.PluginVersion);
-                bodyBuilder.AppendLine(String.Format("Dear {0},", plugin.Username));
+                subject = string.Format("[CrypToolStore Build System] Build of your Source-{0}-{1} successfully finished", Source.PluginId, Source.PluginVersion);
+                bodyBuilder.AppendLine(string.Format("Dear {0},", plugin.Username));
                 bodyBuilder.AppendLine();
-                bodyBuilder.AppendLine(String.Format("The build of Source-{0}-{1} was a success.", Source.PluginId, Source.PluginVersion));
+                bodyBuilder.AppendLine(string.Format("The build of Source-{0}-{1} was a success.", Source.PluginId, Source.PluginVersion));
                 bodyBuilder.AppendLine("Please see attached buildlog.txt for additional information.");
                 bodyBuilder.AppendLine();
                 bodyBuilder.AppendLine("Kind regards,");
                 bodyBuilder.AppendLine("The CrypToolStore Build System");
             }
             mailClient.SendEmail(from, to, subject, bodyBuilder.ToString(), "buildlog.txt", Logger.ToString());
-            Logger.LogText(String.Format("(Buildstep 16) Successfully sent email to developer of Source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+            Logger.LogText(string.Format("(Buildstep 16) Successfully sent email to developer of Source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
         }
 
         /// <summary>

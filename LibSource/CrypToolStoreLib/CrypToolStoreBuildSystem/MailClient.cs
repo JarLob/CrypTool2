@@ -86,12 +86,12 @@ namespace CrypToolStoreBuildSystem
                             }
                         }
                     }                                        
-                    _logger.LogText(String.Format("Successfully sent email from {0} to {1}", from, to), this, Logtype.Info);
+                    _logger.LogText(string.Format("Successfully sent email from {0} to {1}", from, to), this, Logtype.Info);
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogText(String.Format("Exception occured during sending of build message: {0}",ex.Message), this, Logtype.Error);
+                    _logger.LogText(string.Format("Exception occured during sending of build message: {0}",ex.Message), this, Logtype.Error);
                     return false;
                 }
             }
