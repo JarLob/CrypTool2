@@ -256,4 +256,7 @@
   <data name="ShowResources" xml:space="preserve">
     <value>Show resources</value>
   </data>
+  <data name="CopyInfo" xml:space="preserve">
+    <value>Copy infos</value>
+  </data>
 </root>

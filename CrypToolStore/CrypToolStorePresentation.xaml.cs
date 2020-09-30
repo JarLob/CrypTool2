@@ -34,6 +34,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Xml;
 using CrypToolStoreLib.Tools;
+using System.Text;
 
 namespace Cryptool.CrypToolStore
 {
@@ -998,6 +999,44 @@ namespace Cryptool.CrypToolStore
             //update StorePluginList
             Task updateStorePluginListTask = new Task(UpdateStorePluginList);
             updateStorePluginListTask.Start();
+        }
+
+        /// <summary>
+        /// Copies all infos about the currently selected plugin to the clipboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CopyInfo_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (SelectedPlugin != null)
+                {
+                    StringBuilder builder = new StringBuilder();
+                    builder.AppendLine(string.Format("Name: {0}", SelectedPlugin.Name));
+                    builder.AppendLine(string.Format("AuthorNames: {0}", SelectedPlugin.Authornames));
+                    builder.AppendLine(string.Format("AuthorInstitutes: {0}", SelectedPlugin.Authorinstitutes));
+                    builder.AppendLine(string.Format("AuthorEmails: {0}", SelectedPlugin.Authoremails));
+                    builder.AppendLine(string.Format("BuildDate: {0}", SelectedPlugin.BuildDate));
+                    builder.AppendLine(string.Format("PluginId: {0}", SelectedPlugin.PluginId));
+                    builder.AppendLine(string.Format("PluginVersion: {0}", SelectedPlugin.PluginVersion));
+                    builder.AppendLine(string.Format("BuildVersion: {0}", SelectedPlugin.BuildVersion));
+                    builder.AppendLine(string.Format("ShortDescription: {0}", SelectedPlugin.ShortDescription));
+                    builder.AppendLine(string.Format("LongDescription: {0}", SelectedPlugin.LongDescription));
+                    builder.AppendLine(string.Format("FileSize: {0}", SelectedPlugin.FileSize));
+                    SetClipboard(builder.ToString());
+                }
+            }
+            catch (Exception)
+            {
+                //do nothing
+            }
+        }
+
+        private void SetClipboard(string text)
+        {
+            text = text.Replace(Convert.ToChar(0x0).ToString(), "");    //Remove null chars in order to avoid problems in clipboard
+            Clipboard.SetText(text);
         }
     }
 

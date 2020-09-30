@@ -98,6 +98,15 @@ namespace Cryptool.CrypToolStore.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy infos ähnelt.
+        /// </summary>
+        internal static string CopyInfo {
+            get {
+                return ResourceManager.GetString("CopyInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Exception occured during check of &quot;{0}&quot; for updates: {1} ähnelt.
         /// </summary>
         internal static string CrypToolStorePresentation_CheckIfAlreadyInstalled_Exception_occured_during_check_of__0__for_updates___1_ {

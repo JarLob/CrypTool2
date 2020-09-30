@@ -244,4 +244,7 @@
   <data name="ShowResources" xml:space="preserve">
     <value>Zeige Ressourcen</value>
   </data>
+  <data name="CopyInfo" xml:space="preserve">
+    <value>Kopiere Informationen</value>
+  </data>
 </root>
