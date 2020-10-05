@@ -15,17 +15,14 @@ using System.Windows.Documents;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-
 using WorkspaceManager.Base.Sort;
 using WorkspaceManager.Model;
 using WorkspaceManager.View.VisualComponents;
 using WorkspaceManager.View.Base;
 using WorkspaceManager.View.VisualComponents.CryptoLineView;
-
 using WorkspaceManagerModel.Model.Tools;
 using WorkspaceManagerModel.Model.Interfaces;
 using WorkspaceManagerModel.Model.Operations;
-
 using Cryptool.Core;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Editor;
@@ -298,14 +295,14 @@ namespace WorkspaceManager.View.Visuals
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     if (e.OldItems == null)
+                    {
                         return;
+                    }
                     if (e.OldItems[0] is ComponentVisual)
                     {
                         (e.OldItems[0] as ComponentVisual).IsDraggingChanged -= new EventHandler<IsDraggingChangedArgs>(VisualsHelperIsDraggingChanged);
                         (e.OldItems[0] as ComponentVisual).Loaded -= new RoutedEventHandler(VisualsHelper_Loaded);
                     }
-
-
                     if (e.OldItems[0] is CryptoLineView)
                     {
                         (e.OldItems[0] as CryptoLineView).Line.ComputationDone -= new EventHandler<ComputationDoneEventArgs>(Line_ComputationDone);
@@ -318,7 +315,9 @@ namespace WorkspaceManager.View.Visuals
         void Line_ComputationDone(object sender, ComputationDoneEventArgs e)
         {
             if (e.IsPathComputationDone)
+            {
                 renewFromToTree();
+            }
         }
 
         void VisualsHelper_Loaded(object sender, RoutedEventArgs e)
@@ -1384,13 +1383,21 @@ namespace WorkspaceManager.View.Visuals
                 int n = SelectedItems.OfType<ComponentVisual>().Count();
                 string name = ((RoutedCommand)e.Command).Name;
                 if (name.StartsWith("Align"))
+                {
                     e.CanExecute = n > 1;
+                }
                 else if (name.StartsWith("Spread"))
+                {
                     e.CanExecute = n > 2;
+                }
                 else if (name.StartsWith("Move"))
+                {
                     e.CanExecute = n > 0;
+                }
                 else
+                {
                     e.CanExecute = n > 1;
+                }
             }
             else
             {
@@ -1404,12 +1411,17 @@ namespace WorkspaceManager.View.Visuals
             List<Operation> list = DoSelectionOperation(name);
 
             if (list != null && list.Count > 0)
-                this.Model.ModifyModel(new MultiOperation(list));
+            {
+                Model.ModifyModel(new MultiOperation(list));
+            }
         }
 
         private List<Operation> DoSelectionOperation(string operation)
         {
-            if (SelectedItems == null) return null;
+            if (SelectedItems == null)
+            {
+                return null;
+            }
             var components = SelectedItems.OfType<ComponentVisual>().ToList();
 
             switch (operation)
@@ -1449,34 +1461,53 @@ namespace WorkspaceManager.View.Visuals
 
         private void ComponentPositionDeltaChanged(object sender, PositionDeltaChangedArgs e)
         {
-            if (MyEditor.isExecuting())
-                return;
-
-            var list = new List<Operation>();
-
-            if (sender is ComponentVisual)
+            try
             {
-                if (SelectedItems != null)
+                //moving is not allowed, when workspace is being executed
+                //also, moving while conntrol pressed is not allowed
+                if (MyEditor.isExecuting() || Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
                 {
-                    var components = SelectedItems.OfType<ComponentVisual>();
-                    var min = new Point(components.Select(p => p.Position.X).Min(), components.Select(p => p.Position.Y).Min());  // upper left corner of component bounding box
-                    var delta = new Vector(Math.Max(e.PosDelta.X, -min.X), Math.Max(e.PosDelta.Y, -min.Y));
+                    return;
+                }
 
-                    if (delta.LengthSquared > 0.00001)  // don't add non-movements to undo list
-                        foreach (var element in components)
-                            list.Add(new MoveModelElementOperation(element.Model, element.Position + delta));
+                var list = new List<Operation>();
+
+                if (sender is ComponentVisual)
+                {
+                    if (SelectedItems != null && SelectedItems.Length > 0)
+                    {
+                        var components = SelectedItems.OfType<ComponentVisual>();
+                        var min = new Point(components.Select(p => p.Position.X).Min(), components.Select(p => p.Position.Y).Min());  // upper left corner of component bounding box
+                        var delta = new Vector(Math.Max(e.PosDelta.X, -min.X), Math.Max(e.PosDelta.Y, -min.Y));
+
+                        if (delta.LengthSquared > 0.00001)
+                        {  // don't add non-movements to undo list
+                            foreach (var element in components)
+                            {
+                                list.Add(new MoveModelElementOperation(element.Model, element.Position + delta));
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    var pos = ((Base.Interfaces.IRouting)sender).Position;
+                    var delta = new Vector(Math.Max(e.PosDelta.X, -pos.X), Math.Max(e.PosDelta.Y, -pos.Y));
+                    if (delta.LengthSquared > 0.00001)
+                    {
+                        list.Add(new MoveModelElementOperation(e.Model, pos + delta));
+                    }
+                }
+
+                if (list.Count > 0)
+                {
+                    Model.ModifyModel(new MultiOperation(list));
                 }
             }
-            else
+            catch(Exception ex)
             {
-                var pos = ((WorkspaceManager.View.Base.Interfaces.IRouting)sender).Position;
-                var delta = new Vector(Math.Max(e.PosDelta.X, -pos.X), Math.Max(e.PosDelta.Y, -pos.Y));
-                if (delta.LengthSquared > 0.00001)
-                    list.Add(new MoveModelElementOperation(e.Model, pos + delta));
+                //do nothing here
             }
-
-            if (list.Count > 0)
-                this.Model.ModifyModel(new MultiOperation(list));
         }
 
         private void ExecuteEvent(object sender, EventArgs e)
@@ -1625,24 +1656,37 @@ namespace WorkspaceManager.View.Visuals
             {
                 case NotifyCollectionChangedAction.Add:
                     if (e.NewItems == null)
+                    {
                         return;
+                    }
                     if (e.NewItems[0] is ComponentVisual && ComponentCollection != null)
+                    {
                         ComponentCollection.Add(e.NewItems[0] as ComponentVisual);
-
+                    }
                     if (e.NewItems[0] is CryptoLineView && PathCollection != null)
+                    {
                         PathCollection.Add(e.NewItems[0] as CryptoLineView);
+                    }
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     if (e.OldItems == null)
+                    {
                         return;
+                    }
                     if (e.OldItems[0] is ComponentVisual && ComponentCollection != null)
+                    {
                         ComponentCollection.Remove(e.OldItems[0] as ComponentVisual);
+                    }
 
                     if (e.OldItems[0] is TextVisual)
+                    {
                         SelectedText = null;
+                    }
 
                     if (e.OldItems[0] is CryptoLineView && PathCollection != null)
+                    {
                         PathCollection.Remove(e.OldItems[0] as CryptoLineView);
+                    }
 
                     if (SelectedItems != null && SelectedItems.Length > 0)
                     {
@@ -1784,25 +1828,35 @@ namespace WorkspaceManager.View.Visuals
                         {
                             ImageVisual c = (ImageVisual)e.Source;
                             if (SelectedImage != c)
+                            {
                                 SelectedImage = c;
+                            }
                         }
                         else
+                        {
                             SelectedImage = null;
+                        }
 
                         if (e.Source is TextVisual)
                         {
                             TextVisual c = (TextVisual)e.Source;
                             if (SelectedText != c)
+                            {
                                 SelectedText = c;
+                            }
                         }
                         else
+                        {
                             SelectedText = null;
-
+                        }
                         SelectedItems = null;
                         return;
                     }
                     else
-                    { SelectedText = null; SelectedImage = null; }
+                    { 
+                        SelectedText = null; 
+                        SelectedImage = null; 
+                    }
 
                     if (e.Source is ComponentVisual && e.OriginalSource is FrameworkElement)
                     {
@@ -1923,9 +1977,13 @@ namespace WorkspaceManager.View.Visuals
                         {
                             Rect elementRect = new Rect(element.Position, new Size(element.ActualWidth, element.ActualHeight));
                             if (selectRectGeometry.Rect.IntersectsWith(elementRect))
+                            {
                                 items.Add(element);
+                            }
                             else
+                            {
                                 items.Remove(element);
+                            }
                         }
 
                         foreach (var line in PathCollection)
@@ -1939,17 +1997,24 @@ namespace WorkspaceManager.View.Visuals
                                     break;
                                 }
                                 else
+                                {
                                     items.Remove(line);
+                                }
                             }
                         }
 
                         // if Control is pressed, add new items to selection, otherwise replace selection with new items
                         if ((Keyboard.Modifiers & ModifierKeys.Control) != ModifierKeys.None)
+                        {
                             foreach (var x in SelectedItems)
-                                if (!items.Contains(x)) items.Add(x);
-
+                            {
+                                if (!items.Contains(x))
+                                {
+                                    items.Add(x);
+                                }
+                            }
+                        }
                         SelectedItems = items.ToArray();
-
                         return;
                     }
                 }
@@ -1964,7 +2029,6 @@ namespace WorkspaceManager.View.Visuals
         {
             if (e.Source is ComponentVisual && e.OriginalSource is FrameworkElement)
             {
-                ComponentVisual c = (ComponentVisual)e.Source;
                 FrameworkElement f = (FrameworkElement)e.OriginalSource, element = (FrameworkElement)Util.TryFindParent<ConnectorVisual>(f);
                 if (element is ConnectorVisual)
                 {
