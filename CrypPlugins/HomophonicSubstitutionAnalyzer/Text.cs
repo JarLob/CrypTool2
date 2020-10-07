@@ -182,16 +182,20 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <returns></returns>
         public int[] ToIntegerArray(int nullsymbol = -1)
         {
-            List<int> ints = new List<int>();
+            return ToIntegerList(nullsymbol).ToArray();
+        }
 
+        public List<int> ToIntegerList(int nullsymbol = -1)
+        {
+            List<int> ints = new List<int>();
             //I repeated the inner loop and put the if-statement outside for performance optimization
             if (nullsymbol == -1) //we have no null symbol
-            {                
+            {
                 foreach (var symbol in symbols)
                 {
                     foreach (var i in symbol)
                     {
-                        ints.Add(i);                       
+                        ints.Add(i);
                     }
                 }
             }
@@ -204,12 +208,12 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                         //only add symbols to array, if it is not a null symbol
                         if (i != nullsymbol)
                         {
-                            ints.Add(i);                            
+                            ints.Add(i);
                         }
                     }
                 }
             }
-            return ints.ToArray();
+            return ints;
         }
     }
 }

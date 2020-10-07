@@ -406,7 +406,8 @@ namespace Cryptool.PluginBase.Utils
     public abstract class Grams
     {
         public string Alphabet { get; protected set; }
-        public abstract double CalculateCost(int[] plaintext);
+        public abstract double CalculateCost(int[] text);
+        public abstract double CalculateCost(List<int> text);
         public abstract int GramSize();
     }
 
@@ -450,6 +451,26 @@ namespace Cryptool.PluginBase.Utils
         public override int GramSize()
         {
             return 1;
+        }
+
+        public override double CalculateCost(List<int> text)
+        {
+            int end = text.Count;
+            if (end <= 0) return 0;
+
+            double value = 0;
+
+            for (int i = 0; i < end; i++)
+            {
+                if (text[i] >= Alphabet.Length ||
+                    text[i] < 0)
+                {
+                    continue;
+                }
+                value += Frequencies[text[i]];
+
+            }
+            return value / end;
         }
     }
 
@@ -497,6 +518,30 @@ namespace Cryptool.PluginBase.Utils
         public override int GramSize()
         {
             return 2;
+        }
+
+        public override double CalculateCost(List<int> text)
+        {
+            int end = text.Count - 1;
+            if (end <= 0) return 0;
+
+            double value = 0;
+            var alphabetLength = Alphabet.Length;
+
+            for (int i = 0; i < end; i++)
+            {
+                var a = text[i];
+                var b = text[i + 1];
+                if (a >= alphabetLength ||
+                    b >= alphabetLength ||
+                    a < 0 ||
+                    b < 0)
+                {
+                    continue;
+                }
+                value += Frequencies[a, b];
+            }
+            return value / end;
         }
     }
 
@@ -547,6 +592,33 @@ namespace Cryptool.PluginBase.Utils
         public override int GramSize()
         {
             return 3;
+        }
+
+        public override double CalculateCost(List<int> text)
+        {
+            int end = text.Count - 2;
+            if (end <= 0) return 0;
+
+            double value = 0;
+            var alphabetLength = Alphabet.Length;
+
+            for (int i = 0; i < end; i++)
+            {
+                var a = text[i];
+                var b = text[i + 1];
+                var c = text[i + 2];
+                if (a >= alphabetLength ||
+                    b >= alphabetLength ||
+                    c >= alphabetLength ||
+                    a < 0 ||
+                    b < 0 ||
+                    c < 0)
+                {
+                    continue;
+                }
+                value += Frequencies[a, b, c];
+            }
+            return value / end;
         }
     }
 
@@ -600,6 +672,36 @@ namespace Cryptool.PluginBase.Utils
         public override int GramSize()
         {
             return 4;
+        }
+
+        public override double CalculateCost(List<int> text)
+        {
+            int end = text.Count - 3;
+            if (end <= 0) return 0;
+
+            double value = 0;
+            var alphabetLength = Alphabet.Length;
+
+            for (int i = 0; i < end; i++)
+            {
+                var a = text[i];
+                var b = text[i + 1];
+                var c = text[i + 2];
+                var d = text[i + 3];
+                if (a >= alphabetLength ||
+                    b >= alphabetLength ||
+                    c >= alphabetLength ||
+                    d >= alphabetLength ||
+                    a < 0 ||
+                    b < 0 ||
+                    c < 0 ||
+                    d < 0)
+                {
+                    continue;
+                }
+                value += Frequencies[a, b, c, d];
+            }
+            return value / end;
         }
     }
 
@@ -656,6 +758,39 @@ namespace Cryptool.PluginBase.Utils
         public override int GramSize()
         {
             return 5;
+        }
+
+        public override double CalculateCost(List<int> text)
+        {
+            int end = text.Count - 4;
+            if (end <= 0) return 0;
+
+            double value = 0;
+            var alphabetLength = Alphabet.Length;
+
+            for (int i = 0; i < end; i++)
+            {
+                var a = text[i];
+                var b = text[i + 1];
+                var c = text[i + 2];
+                var d = text[i + 3];
+                var e = text[i + 4];
+                if (a >= alphabetLength ||
+                   b >= alphabetLength ||
+                   c >= alphabetLength ||
+                   d >= alphabetLength ||
+                   e >= alphabetLength ||
+                   a < 0 ||
+                   b < 0 ||
+                   c < 0 ||
+                   d < 0 ||
+                   e < 0)
+                {
+                    continue;
+                }
+                value += Frequencies[a, b, c, d, e];
+            }
+            return value / end;
         }
     }
 

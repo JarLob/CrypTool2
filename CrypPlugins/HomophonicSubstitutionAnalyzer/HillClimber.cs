@@ -135,7 +135,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                         DecryptHomophonicSubstitutionInPlace(plaintext, runkey, i, j);
 
                         // compute cost value to rate the key (fitness)
-                        var costvalue = Grams.CalculateCost(plaintext.ToIntegerArray(nullsymbol)) * AnalyzerConfiguration.CostFunctionMultiplicator;
+                        var costvalue = Grams.CalculateCost(plaintext.ToIntegerList(nullsymbol)) * AnalyzerConfiguration.CostFunctionMultiplicator;
                         
                         // use Cowans churn to accept or refuse the new key
                         if (simulatedAnnealing.AcceptWithConstantTemperature(costvalue, bestkeycost))
