@@ -196,8 +196,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// <returns></returns>
         private string HandleLinebreaks(string ciphertext, out List<int> linebreakPositions)
         {
-            //here, we memorize all linebreak positions
-            ciphertext = ciphertext.Replace(Environment.NewLine,"\n");
+            //here, we memorize all linebreak positions 
+            ciphertext = ciphertext.Replace(Environment.NewLine, "\0");
             ciphertext = ciphertext.Replace("\r", "\0");
             ciphertext = ciphertext.Replace("\n", "\0");
             linebreakPositions = new List<int>();
@@ -321,8 +321,15 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 foreach (var position in _presentation.AnalyzerConfiguration.LinebreakPositions)
                 {
-                    builder.AppendLine(text.Substring(lastposition, position - lastposition));
-                    lastposition = position;
+                    try
+                    {
+                        builder.AppendLine(text.Substring(lastposition, position - lastposition));
+                        lastposition = position;
+                    }
+                    catch (Exception)
+                    {
+                        //wtf?
+                    }
                 }
             }
             builder.AppendLine(text.Substring(lastposition, text.Length - lastposition));
