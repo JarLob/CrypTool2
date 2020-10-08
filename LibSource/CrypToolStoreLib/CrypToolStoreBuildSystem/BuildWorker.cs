@@ -21,14 +21,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Net.Mail;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using CrypToolStoreLib;
 
 namespace CrypToolStoreBuildSystem
 {
@@ -49,7 +46,7 @@ namespace CrypToolStoreBuildSystem
         /// <summary>
         /// Reference to source to build
         /// </summary>
-        private Source Source
+        public Source Source
         {
             get;
             set;
@@ -377,7 +374,7 @@ namespace CrypToolStoreBuildSystem
             CrypToolStoreClient client = new CrypToolStoreClient();
             client.ServerCertificate = ServerCertificate;
             client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-            client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+            client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
             client.Login(Config.GetConfigEntry("Username"), Config.GetConfigEntry("Password"));
 
@@ -492,7 +489,7 @@ namespace CrypToolStoreBuildSystem
             CrypToolStoreClient client = new CrypToolStoreClient();
             client.ServerCertificate = ServerCertificate;
             client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-            client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+            client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
             client.Login(Config.GetConfigEntry("Username"), Config.GetConfigEntry("Password"));
 
@@ -963,7 +960,7 @@ namespace CrypToolStoreBuildSystem
             CrypToolStoreClient client = new CrypToolStoreClient();
             client.ServerCertificate = ServerCertificate;
             client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-            client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+            client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
             client.Login(Config.GetConfigEntry("Username"), Config.GetConfigEntry("Password"));
 
@@ -1026,7 +1023,7 @@ namespace CrypToolStoreBuildSystem
             CrypToolStoreClient client = new CrypToolStoreClient();
             client.ServerCertificate = ServerCertificate;
             client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-            client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+            client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
             client.Login(Config.GetConfigEntry("Username"), Config.GetConfigEntry("Password"));
 
@@ -1073,7 +1070,7 @@ namespace CrypToolStoreBuildSystem
             CrypToolStoreClient client = new CrypToolStoreClient();
             client.ServerCertificate = ServerCertificate;
             client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-            client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+            client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
             client.Login(Config.GetConfigEntry("Username"), Config.GetConfigEntry("Password"));
 
@@ -1121,7 +1118,7 @@ namespace CrypToolStoreBuildSystem
             CrypToolStoreClient client = new CrypToolStoreClient();
             client.ServerCertificate = ServerCertificate;
             client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-            client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+            client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
             client.Login(Config.GetConfigEntry("Username"), Config.GetConfigEntry("Password"));
             Plugin plugin = (Plugin)client.GetPlugin(Source.PluginId).DataObject;
@@ -1129,7 +1126,7 @@ namespace CrypToolStoreBuildSystem
             client.Disconnect();
 
             //check, if email is valid
-            if (String.IsNullOrEmpty(developer.Email) || !IsValidEmail(developer.Email))
+            if (string.IsNullOrEmpty(developer.Email) || !IsValidEmail(developer.Email))
             {
                 Logger.LogText(string.Format("(Buildstep 16) Cannot send build email to {0} since we have no valid email address (={1}) of this developer!", plugin.Username, developer.Email), this, Logtype.Warning);
                 return;
@@ -1147,7 +1144,7 @@ namespace CrypToolStoreBuildSystem
                 subject = string.Format("[CrypToolStore Build System] Build Error occured while building your Source-{0}-{1}", Source.PluginId, Source.PluginVersion);
                 bodyBuilder.AppendLine(string.Format("Dear {0},", plugin.Username));
                 bodyBuilder.AppendLine();
-                bodyBuilder.AppendLine(string.Format("The build of Source-{0}-{1} was erroneous.", Source.PluginId, Source.PluginVersion));
+                bodyBuilder.AppendLine(string.Format("The build of Source-{0}-{1} has failed.", Source.PluginId, Source.PluginVersion));
                 bodyBuilder.AppendLine("Please see attached buildlog.txt for additional information.");
                 bodyBuilder.AppendLine();
                 bodyBuilder.AppendLine("Kind regards,");
@@ -1164,8 +1161,17 @@ namespace CrypToolStoreBuildSystem
                 bodyBuilder.AppendLine("Kind regards,");
                 bodyBuilder.AppendLine("The CrypToolStore Build System");
             }
+
             mailClient.SendEmail(from, to, subject, bodyBuilder.ToString(), "buildlog.txt", Logger.ToString());
             Logger.LogText(string.Format("(Buildstep 16) Successfully sent email to developer of Source-{0}-{1}", Source.PluginId, Source.PluginVersion), this, Logtype.Info);
+
+            //send an email to buildserver admin
+            if (!string.IsNullOrEmpty(Config.GetConfigEntry("BuildServer_AdminEmailAddress")) && !string.IsNullOrEmpty(Config.GetConfigEntry("BuildServer_AdminEmailAddress")))
+            {
+                to = new MailAddress(Config.GetConfigEntry("BuildServer_AdminEmailAddress"), Config.GetConfigEntry("BuildServer_AdminEmailAddress"));
+                mailClient.SendEmail(from, to, subject, bodyBuilder.ToString(), "buildlog.txt", Logger.ToString());
+                Logger.LogText(string.Format("(Buildstep 16) Successfully sent email to builderserver admin"), this, Logtype.Info);
+            }
         }
 
         /// <summary>

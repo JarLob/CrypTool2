@@ -187,12 +187,12 @@ namespace CrypToolStoreLib.Network
         {
             if (bytes.Length < 21)
             {
-                throw new DeserializationException(String.Format("Message header too small. Got {0} but expect min 21", bytes.Length));
+                throw new DeserializationException(string.Format("Message header too small. Got {0} but expect min 21", bytes.Length));
             }
             string magicnumber = ASCIIEncoding.ASCII.GetString(bytes, 0, 13);
             if (!magicnumber.Equals(Constants.MESSAGEHEADER_MAGIC))
             {
-                throw new DeserializationException(String.Format("Magic number mismatch. Got \"{0}\" but expect \"{1}\"", magicnumber, Constants.MESSAGEHEADER_MAGIC));
+                throw new DeserializationException(string.Format("Magic number mismatch. Got \"{0}\" but expect \"{1}\"", magicnumber, Constants.MESSAGEHEADER_MAGIC));
             }
             try
             {
@@ -205,7 +205,7 @@ namespace CrypToolStoreLib.Network
             }
             catch (Exception ex)
             {
-                throw new DeserializationException(String.Format("Exception during Deserialization: {0}", ex.Message));
+                throw new DeserializationException(string.Format("Exception during Deserialization: {0}", ex.Message));
             }
         }
 
@@ -215,7 +215,7 @@ namespace CrypToolStoreLib.Network
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("MessageHeader{{MessageType={0}, PayloadSize={1}}}", MessageType.ToString(), PayloadSize);
+            return string.Format("MessageHeader{{MessageType={0}, PayloadSize={1}}}", MessageType.ToString(), PayloadSize);
         }
     }
 
@@ -480,7 +480,7 @@ namespace CrypToolStoreLib.Network
                                     }
                                     else
                                     {
-                                        throw new SerializationException(String.Format("Fieldtype \"{0}\" of field \"{1}\" of class \"{2}\" cannot be serialized!", fieldInfo.FieldType.Name, fieldInfo.Name, this.GetType().Name));
+                                        throw new SerializationException(string.Format("Fieldtype \"{0}\" of field \"{1}\" of class \"{2}\" cannot be serialized!", fieldInfo.FieldType.Name, fieldInfo.Name, this.GetType().Name));
                                     }
                                     break;
                             }
@@ -569,7 +569,7 @@ namespace CrypToolStoreLib.Network
                                     }
                                     else
                                     {
-                                        throw new SerializationException(String.Format("Propertytype \"{0}\" of property \"{1}\" of class \"{2}\" cannot be serialized!", propertyInfo.PropertyType.Name, propertyInfo.Name, this.GetType().Name));
+                                        throw new SerializationException(string.Format("Propertytype \"{0}\" of property \"{1}\" of class \"{2}\" cannot be serialized!", propertyInfo.PropertyType.Name, propertyInfo.Name, this.GetType().Name));
                                     }
                                     break;
                             }
@@ -625,7 +625,7 @@ namespace CrypToolStoreLib.Network
                             MemberInfo[] memberInfo = GetType().GetMember(name);
                             if (memberInfo == null || memberInfo.Length == 0)
                             {
-                                throw new DeserializationException(String.Format("Cannot find any member with name \"{0}\" for deserialization!", name));
+                                throw new DeserializationException(string.Format("Cannot find any member with name \"{0}\" for deserialization!", name));
                             }
 
                             FieldInfo fieldInfo = memberInfo[0] as FieldInfo;
@@ -701,7 +701,7 @@ namespace CrypToolStoreLib.Network
                                         }
                                         else
                                         {
-                                            throw new SerializationException(String.Format("Fieldtype \"{0}\" of field \"{1}\" of class \"{2}\" cannot be deserialized!", fieldInfo.FieldType.Name, fieldInfo.Name, this.GetType().Name));
+                                            throw new SerializationException(string.Format("Fieldtype \"{0}\" of field \"{1}\" of class \"{2}\" cannot be deserialized!", fieldInfo.FieldType.Name, fieldInfo.Name, this.GetType().Name));
                                         }
                                         break;
                                 }
@@ -776,7 +776,7 @@ namespace CrypToolStoreLib.Network
                                         }
                                         else
                                         {
-                                            throw new SerializationException(String.Format("Propertytype \"{0}\" of property \"{1}\" of class \"{2}\" cannot be deserialized!", propertyInfo.PropertyType.Name, propertyInfo.Name, this.GetType().Name));
+                                            throw new SerializationException(string.Format("Propertytype \"{0}\" of property \"{1}\" of class \"{2}\" cannot be deserialized!", propertyInfo.PropertyType.Name, propertyInfo.Name, this.GetType().Name));
                                         }
                                         break;
                                 }
@@ -784,7 +784,7 @@ namespace CrypToolStoreLib.Network
                         }
                         catch (Exception ex)
                         {
-                            throw new DeserializationException(String.Format("Exception during deserialization of message \"{0}\": {1}", this.GetType().Name, ex.Message));
+                            throw new DeserializationException(string.Format("Exception during deserialization of message \"{0}\": {1}", this.GetType().Name, ex.Message));
                         }
                     }
                 }
@@ -807,7 +807,7 @@ namespace CrypToolStoreLib.Network
                 header.Deserialize(bytes);
                 if (MessageTypeDictionary[header.MessageType] == null)
                 {
-                    throw new DeserializationException(String.Format("Could not deserialize message! Message type {0} is not defined in MessageTypeDictionary!", header.MessageType));
+                    throw new DeserializationException(string.Format("Could not deserialize message! Message type {0} is not defined in MessageTypeDictionary!", header.MessageType));
                 }
                 Message message = (Message)Activator.CreateInstance(MessageTypeDictionary[header.MessageType]);
                 message.Deserialize(bytes);
@@ -815,7 +815,7 @@ namespace CrypToolStoreLib.Network
             }
             catch (Exception ex)
             {
-                throw new DeserializationException(String.Format("Could not deserialize message: {0}", ex.Message));
+                throw new DeserializationException(string.Format("Could not deserialize message: {0}", ex.Message));
             }
         }
 
@@ -935,7 +935,7 @@ namespace CrypToolStoreLib.Network
         public ResponseLoginMessage()
         {
             LoginOk = false;
-            Message = String.Empty;
+            Message = string.Empty;
         }
     }
 
@@ -953,7 +953,7 @@ namespace CrypToolStoreLib.Network
         /// </summary>
         public LogoutMessage()
         {
-            Username = String.Empty;
+            Username = string.Empty;
         }
     }
 
@@ -1067,7 +1067,7 @@ namespace CrypToolStoreLib.Network
 
         public ResponseDeveloperModificationMessage()
         {
-            Message = String.Empty;
+            Message = string.Empty;
         }
     }
 

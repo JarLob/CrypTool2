@@ -71,7 +71,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = MainWindow.ServerCertificate;
                 client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
 
@@ -91,14 +91,14 @@ namespace CrypToolStoreDeveloperClient.Views
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(String.Format("Exception during retrieval of Resource data: {0}", ex.Message), "Exception");
+                        MessageBox.Show(string.Format("Exception during retrieval of Resource data: {0}", ex.Message), "Exception");
                     }
                 }));
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during retrieval of Resource data: {0}", ex.Message), "Exception");
+                MessageBox.Show(string.Format("Exception during retrieval of Resource data: {0}", ex.Message), "Exception");
             }
         }
 
@@ -119,7 +119,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = MainWindow.ServerCertificate;
                 client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
 
@@ -139,13 +139,13 @@ namespace CrypToolStoreDeveloperClient.Views
                 }
                 else
                 {
-                    MessageBox.Show(String.Format("Could not update: {0}", result.Message), "Update not possible");
+                    MessageBox.Show(string.Format("Could not update: {0}", result.Message), "Update not possible");
                 }
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during update of Resource: {0}", ex.Message), "Exception");
+                MessageBox.Show(string.Format("Exception during update of Resource: {0}", ex.Message), "Exception");
             }
         }
     }

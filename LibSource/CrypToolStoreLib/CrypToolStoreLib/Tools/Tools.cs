@@ -34,7 +34,7 @@ namespace CrypToolStoreLib.Tools
         /// </summary>
         /// <param name="hex"></param>
         /// <returns></returns>
-        public static byte[] HexStringToByteArray(String hex)
+        public static byte[] HexStringToByteArray(string hex)
         {
             int length = hex.Length;
             byte[] bytes = new byte[length / 2];

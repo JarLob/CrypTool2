@@ -207,7 +207,7 @@ namespace CrypToolStoreLib.Tools
                         }
                         break;
                 }
-                OnLoggOccured(String.Format("{0} {1}", (whoLoggs != null ? whoLoggs.GetType().FullName : "null"), message), logtype);
+                OnLoggOccured(string.Format("{0} {1}", (whoLoggs != null ? whoLoggs.GetType().FullName : "null"), message), logtype);
             }
         }
 
@@ -329,7 +329,7 @@ namespace CrypToolStoreLib.Tools
                         }
                         break;
                 }
-                OnLoggOccured(String.Format("{0} {1}: Stacktrace: {2}", (whoLoggs != null ? whoLoggs.GetType().FullName : "null"), ex.Message, ex.StackTrace), logtype);
+                OnLoggOccured(string.Format("{0} {1}: Stacktrace: {2}", (whoLoggs != null ? whoLoggs.GetType().FullName : "null"), ex.Message, ex.StackTrace), logtype);
             }
         }
 

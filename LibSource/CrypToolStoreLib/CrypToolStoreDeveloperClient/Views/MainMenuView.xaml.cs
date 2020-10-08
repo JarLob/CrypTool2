@@ -88,8 +88,8 @@ namespace CrypToolStoreDeveloperClient.Views
         /// <param name="e"></param>
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Username = String.Empty;
-            MainWindow.Password = String.Empty;
+            MainWindow.Username = string.Empty;
+            MainWindow.Password = string.Empty;
             MainWindow.IsLoggedIn = false;
             MainWindow.IsAdmin = false;
             MainWindow.ChangeScreen(UiState.LoginScreen);

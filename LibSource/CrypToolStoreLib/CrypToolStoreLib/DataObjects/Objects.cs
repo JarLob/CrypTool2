@@ -60,17 +60,17 @@ namespace CrypToolStoreLib.DataObjects
         /// </summary>
         public Developer()
         {
-            Username = String.Empty;
-            Password = String.Empty;
-            Firstname = String.Empty;
-            Lastname = String.Empty;
-            Email = String.Empty;
+            Username = string.Empty;
+            Password = string.Empty;
+            Firstname = string.Empty;
+            Lastname = string.Empty;
+            Email = string.Empty;
             IsAdmin = false;
         }
 
         public override string ToString()
         {
-            return String.Format("Developer{{username={0}, firstname={1}, lastname={2}, email={3}, isadmin={4}}}", Username, Firstname, Lastname, Email, (IsAdmin ? "true" : "false"));
+            return string.Format("Developer{{username={0}, firstname={1}, lastname={2}, email={3}, isadmin={4}}}", Username, Firstname, Lastname, Email, (IsAdmin ? "true" : "false"));
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace CrypToolStoreLib.DataObjects
             }
             catch (Exception ex)
             {
-                throw new SerializationException(String.Format("Exception during serialization of developer: {0}", ex.Message));
+                throw new SerializationException(string.Format("Exception during serialization of developer: {0}", ex.Message));
             }
         }
 
@@ -124,7 +124,7 @@ namespace CrypToolStoreLib.DataObjects
             }
             catch (Exception ex)
             {
-                throw new DeserializationException(String.Format("Exception during deserialization of developer: {0}", ex.Message));
+                throw new DeserializationException(string.Format("Exception during deserialization of developer: {0}", ex.Message));
             }
         }
     }
@@ -150,13 +150,13 @@ namespace CrypToolStoreLib.DataObjects
         public Plugin()
         {
             Id = 0;
-            Username = String.Empty;
-            Name = String.Empty;
-            ShortDescription = String.Empty;
-            LongDescription = String.Empty;
-            Authornames = String.Empty;
-            Authorinstitutes = String.Empty;
-            Authoremails = String.Empty;
+            Username = string.Empty;
+            Name = string.Empty;
+            ShortDescription = string.Empty;
+            LongDescription = string.Empty;
+            Authornames = string.Empty;
+            Authorinstitutes = string.Empty;
+            Authoremails = string.Empty;
             Icon = new byte[0];
         }
 
@@ -188,7 +188,7 @@ namespace CrypToolStoreLib.DataObjects
             }
             catch (Exception ex)
             {
-                throw new SerializationException(String.Format("Exception during serialization of plugin: {0}", ex.Message));
+                throw new SerializationException(string.Format("Exception during serialization of plugin: {0}", ex.Message));
             }
         }
 
@@ -219,13 +219,13 @@ namespace CrypToolStoreLib.DataObjects
             }
             catch (Exception ex)
             {
-                throw new DeserializationException(String.Format("Exception during deserialization of plugin: {0}", ex.Message));
+                throw new DeserializationException(string.Format("Exception during deserialization of plugin: {0}", ex.Message));
             }
         }
         
         public override string ToString()
         {
-            return String.Format("Plugin{{id={0}, username={1}, name={2}, shortdescription={3}, longdescription={4}, authornames={5}, authoremails={6}, authorinstitutes={7}, icon={8}}}",
+            return string.Format("Plugin{{id={0}, username={1}, name={2}, shortdescription={3}, longdescription={4}, authornames={5}, authoremails={6}, authorinstitutes={7}, icon={8}}}",
                 Id, Username, Name, ShortDescription, LongDescription, Authornames, Authoremails, Authorinstitutes, Icon != null ? Icon.Length.ToString() : "null");
         }
     }
@@ -250,7 +250,7 @@ namespace CrypToolStoreLib.DataObjects
         {
             get
             {
-                return !ZipFileName.Equals(String.Empty);
+                return !ZipFileName.Equals(string.Empty);
             }
         }
 
@@ -258,7 +258,7 @@ namespace CrypToolStoreLib.DataObjects
         {
             get
             {
-                return !AssemblyFileName.Equals(String.Empty);
+                return !AssemblyFileName.Equals(string.Empty);
             }
         }
 
@@ -270,10 +270,10 @@ namespace CrypToolStoreLib.DataObjects
             PluginId = -1;
             PluginVersion = -1;
             BuildVersion = -1;
-            ZipFileName = String.Empty;
-            BuildState = String.Empty;
-            BuildLog = String.Empty;
-            AssemblyFileName = String.Empty;
+            ZipFileName = string.Empty;
+            BuildState = string.Empty;
+            BuildLog = string.Empty;
+            AssemblyFileName = string.Empty;
             UploadDate = DateTime.MinValue;
             BuildDate = DateTime.MinValue;
             PublishState = CrypToolStoreLib.DataObjects.PublishState.NOTPUBLISHED.ToString();
@@ -307,7 +307,7 @@ namespace CrypToolStoreLib.DataObjects
             }
             catch (Exception ex)
             {
-                throw new SerializationException(String.Format("Exception during serialization of source: {0}", ex.Message));
+                throw new SerializationException(string.Format("Exception during serialization of source: {0}", ex.Message));
             }
         }
 
@@ -338,13 +338,13 @@ namespace CrypToolStoreLib.DataObjects
             }
             catch (Exception ex)
             {
-                throw new DeserializationException(String.Format("Exception during deserialization of source: {0}", ex.Message));
+                throw new DeserializationException(string.Format("Exception during deserialization of source: {0}", ex.Message));
             }
         }
 
         public override string ToString()
         {
-            return String.Format("Source{{pluginid={0}, pluginversion={1}, buildversion={2}, zipfile={3},buildstate={4}, buildlog={5}, assembly={6}, uploaddate={7}, builddate={8}, publishstate={9}}}",
+            return string.Format("Source{{pluginid={0}, pluginversion={1}, buildversion={2}, zipfile={3},buildstate={4}, buildlog={5}, assembly={6}, uploaddate={7}, builddate={8}, publishstate={9}}}",
                 PluginId, PluginVersion, BuildVersion, ZipFileName != null ? ZipFileName.Length.ToString() : "null", BuildState, BuildLog, AssemblyFileName != null ? AssemblyFileName.Length.ToString() : "null", UploadDate, BuildDate, PublishState);
         }        
     }
@@ -399,7 +399,7 @@ namespace CrypToolStoreLib.DataObjects
             }
             catch (Exception ex)
             {
-                throw new SerializationException(String.Format("Exception during serialization of pluginsource: {0}", ex.Message));
+                throw new SerializationException(string.Format("Exception during serialization of pluginsource: {0}", ex.Message));
             }
         }
 
@@ -434,13 +434,13 @@ namespace CrypToolStoreLib.DataObjects
             }
             catch (Exception ex)
             {
-                throw new DeserializationException(String.Format("Exception during deserialization of pluginsource: {0}", ex.Message));
+                throw new DeserializationException(string.Format("Exception during deserialization of pluginsource: {0}", ex.Message));
             }
         }
 
         public override string ToString()
         {
-            return String.Format("PluginAndSource{{Plugin{{{0}}}, Source{{{1}}}}}", Plugin.ToString(), Source.ToString());
+            return string.Format("PluginAndSource{{Plugin{{{0}}}, Source{{{1}}}}}", Plugin.ToString(), Source.ToString());
         }        
     }
 
@@ -461,9 +461,9 @@ namespace CrypToolStoreLib.DataObjects
         public Resource()
         {
             Id = -1;
-            Username = String.Empty;
-            Name = String.Empty;
-            Description = String.Empty;
+            Username = string.Empty;
+            Name = string.Empty;
+            Description = string.Empty;
         }
 
         /// <summary>
@@ -488,7 +488,7 @@ namespace CrypToolStoreLib.DataObjects
             }
             catch (Exception ex)
             {
-                throw new SerializationException(String.Format("Exception during serialization of resource: {0}", ex.Message));
+                throw new SerializationException(string.Format("Exception during serialization of resource: {0}", ex.Message));
             }
         }
 
@@ -513,13 +513,13 @@ namespace CrypToolStoreLib.DataObjects
             }
             catch (Exception ex)
             {
-                throw new DeserializationException(String.Format("Exception during deserialization of resource: {0}", ex.Message));
+                throw new DeserializationException(string.Format("Exception during deserialization of resource: {0}", ex.Message));
             }
         }
 
         public override string ToString()
         {
-            return String.Format("Resource{{id={0}, username={1}, name={2}, description={3}}}", Id, Username, Name, Description);
+            return string.Format("Resource{{id={0}, username={1}, name={2}, description={3}}}", Id, Username, Name, Description);
         }        
     }
 
@@ -581,7 +581,7 @@ namespace CrypToolStoreLib.DataObjects
             }
             catch (Exception ex)
             {
-                throw new SerializationException(String.Format("Exception during serialization of resource data: {0}", ex.Message));
+                throw new SerializationException(string.Format("Exception during serialization of resource data: {0}", ex.Message));
             }
         }
 
@@ -607,13 +607,13 @@ namespace CrypToolStoreLib.DataObjects
             }
             catch (Exception ex)
             {
-                throw new DeserializationException(String.Format("Exception during deserialization of resource data: {0}", ex.Message));
+                throw new DeserializationException(string.Format("Exception during deserialization of resource data: {0}", ex.Message));
             }
         }
 
         public override string ToString()
         {
-            return String.Format("ResourceData{{resourceid={0}, version={1}, datafilename={2}, uploadtime={3}, publishstate={4}}}",
+            return string.Format("ResourceData{{resourceid={0}, version={1}, datafilename={2}, uploadtime={3}, publishstate={4}}}",
                 ResourceId, ResourceVersion, DataFilename, UploadDate, PublishState);
         }
     }
@@ -667,7 +667,7 @@ namespace CrypToolStoreLib.DataObjects
             }
             catch (Exception ex)
             {
-                throw new SerializationException(String.Format("Exception during serialization of resourceandrosourcedata: {0}", ex.Message));
+                throw new SerializationException(string.Format("Exception during serialization of resourceandrosourcedata: {0}", ex.Message));
             }
         }
 
@@ -712,13 +712,13 @@ namespace CrypToolStoreLib.DataObjects
             }
             catch (Exception ex)
             {
-                throw new DeserializationException(String.Format("Exception during deserialization of resourceandrosourcedata: {0}", ex.Message));
+                throw new DeserializationException(string.Format("Exception during deserialization of resourceandrosourcedata: {0}", ex.Message));
             }
         }
 
         public override string ToString()
         {
-            return String.Format("ResourceAndResourceData{{Resource{{{0}}}, ResourceData{{{1}}}}}", Resource.ToString(), ResourceData.ToString());
+            return string.Format("ResourceAndResourceData{{Resource{{{0}}}, ResourceData{{{1}}}}}", Resource.ToString(), ResourceData.ToString());
         }
     }
 

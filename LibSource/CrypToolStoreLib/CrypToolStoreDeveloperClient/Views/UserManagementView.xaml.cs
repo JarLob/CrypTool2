@@ -82,7 +82,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = MainWindow.ServerCertificate;
                 client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
                 DataModificationOrRequestResult result = client.GetDeveloperList();
@@ -100,14 +100,14 @@ namespace CrypToolStoreDeveloperClient.Views
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(String.Format("Exception during adding developers to list: {0}", ex.Message), "Exception");
+                        MessageBox.Show(string.Format("Exception during adding developers to list: {0}", ex.Message), "Exception");
                     }
                 }));
                 
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during retrieving list of developers: {0}", ex.Message), "Exception");
+                MessageBox.Show(string.Format("Exception during retrieving list of developers: {0}", ex.Message), "Exception");
             }
         }
 
@@ -122,7 +122,7 @@ namespace CrypToolStoreDeveloperClient.Views
             Button button = (Button)sender;
             string username = (string)button.CommandParameter;
 
-            MessageBoxResult messageBoxResult = MessageBox.Show(String.Format("Do you really want to delete the developer {0}?", username), String.Format("Delete {0}", username), MessageBoxButton.YesNo);
+            MessageBoxResult messageBoxResult = MessageBox.Show(string.Format("Do you really want to delete the developer {0}?", username), string.Format("Delete {0}", username), MessageBoxButton.YesNo);
 
             if (messageBoxResult == MessageBoxResult.Yes)
             {
@@ -131,7 +131,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     CrypToolStoreClient client = new CrypToolStoreClient();
                     client.ServerCertificate = MainWindow.ServerCertificate;
                     client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                    client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                    client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                     client.Connect();
                     client.Login(MainWindow.Username, MainWindow.Password);
                     DataModificationOrRequestResult result = client.DeleteDeveloper(username);
@@ -139,17 +139,17 @@ namespace CrypToolStoreDeveloperClient.Views
 
                     if (result.Success)
                     {
-                        MessageBox.Show(String.Format("Successfully deleted {0}", username), "Developer deleted");
+                        MessageBox.Show(string.Format("Successfully deleted {0}", username), "Developer deleted");
                         FetchUserList();
                     }
                     else
                     {
-                        MessageBox.Show(String.Format("Could not delete developer: {0}", result.Message), "Deletion not possible");
+                        MessageBox.Show(string.Format("Could not delete developer: {0}", result.Message), "Deletion not possible");
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(String.Format("Exception during deletion of developer: {0}", ex.Message), "Exception");
+                    MessageBox.Show(string.Format("Exception during deletion of developer: {0}", ex.Message), "Exception");
                 }
             }
         }
@@ -202,7 +202,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(String.Format("Exception during reset of developer list: {0}", ex.Message), "Exception");
+                    MessageBox.Show(string.Format("Exception during reset of developer list: {0}", ex.Message), "Exception");
                 }
             }));
         }

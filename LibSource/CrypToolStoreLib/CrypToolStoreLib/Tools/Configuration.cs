@@ -53,7 +53,7 @@ namespace CrypToolStoreLib.Tools
             {
                 string[] entries = File.ReadAllLines(ConfigFileName);
                 int line = 1;
-                Logger.LogText(String.Format("Reading configfile {0}", ConfigFileName), this, Logtype.Info);
+                Logger.LogText(string.Format("Reading configfile {0}", ConfigFileName), this, Logtype.Info);
                 foreach (string entry in entries)
                 {
                     if (entry.TrimStart().StartsWith("#"))
@@ -64,20 +64,20 @@ namespace CrypToolStoreLib.Tools
                     string[] keyvalue = entry.Split('=');
                     if (keyvalue.Length != 2)
                     {
-                        Logger.LogText(String.Format("Invalid entry in config file line {0}. It will be ignored.", line), this, Logtype.Warning);
+                        Logger.LogText(string.Format("Invalid entry in config file line {0}. It will be ignored.", line), this, Logtype.Warning);
                     }
                     else
                     {
-                        Logger.LogText(String.Format("Read config entry of line {0} for {1}", line, keyvalue[0]), this, Logtype.Info);
+                        Logger.LogText(string.Format("Read config entry of line {0} for {1}", line, keyvalue[0]), this, Logtype.Info);
                         ConfigurationDictionary[keyvalue[0].ToLower()] = keyvalue[1];
                     }
                     line++;
                 }
-                Logger.LogText(String.Format("Finished reading configfile {0}", ConfigFileName), this, Logtype.Info);
+                Logger.LogText(string.Format("Finished reading configfile {0}", ConfigFileName), this, Logtype.Info);
             }
             catch (Exception ex)
             {
-                Logger.LogText(String.Format("Exception occured during reading of config file: {0}", ex.Message), this, Logtype.Error);
+                Logger.LogText(string.Format("Exception occured during reading of config file: {0}", ex.Message), this, Logtype.Error);
             }
         }
 
@@ -94,7 +94,7 @@ namespace CrypToolStoreLib.Tools
             }
             else
             {
-                return String.Empty;
+                return string.Empty;
             }
         }
 

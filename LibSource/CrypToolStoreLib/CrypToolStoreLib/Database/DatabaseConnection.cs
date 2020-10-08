@@ -62,11 +62,11 @@ namespace CrypToolStoreLib.Database
                 {
                     return;
                 }
-                logger.LogText(String.Format("Connecting to mysql database={0} on server={1} with username={2}", databaseName, databaseServer, databaseUser), this, Logtype.Debug);
+                logger.LogText(string.Format("Connecting to mysql database={0} on server={1} with username={2}", databaseName, databaseServer, databaseUser), this, Logtype.Debug);
                 string connectstring = string.Format("Server={0}; database={1}; UID={2}; password={3}", databaseServer, databaseName, databaseUser, databasePassword);
                 mySqlConnection = new MySqlConnection(connectstring);
                 mySqlConnection.Open();
-                logger.LogText(String.Format("Connected to mysql database={0} on server={1} with username={2}", databaseName, databaseServer, databaseUser), this, Logtype.Debug);
+                logger.LogText(string.Format("Connected to mysql database={0} on server={1} with username={2}", databaseName, databaseServer, databaseUser), this, Logtype.Debug);
             }
         }
 
@@ -116,19 +116,19 @@ namespace CrypToolStoreLib.Database
                     //Step 0: Create a prepared statement for cache, if it does not exist
                     if (!preparedStatementCache.ContainsKey(query))
                     {
-                        logger.LogText(String.Format("Creating prepared statement and putting it into cache: {0}", query), this, Logtype.Debug);
+                        logger.LogText(string.Format("Creating prepared statement and putting it into cache: {0}", query), this, Logtype.Debug);
                         MySqlCommand command = new MySqlCommand(query, mySqlConnection);
                         command.Prepare();
                         preparedStatementCache[query] = command;
                     }
 
                     //Step 1: Get prepared statement from cache. Also clear parameters of prepared statement
-                    logger.LogText(String.Format("Fetching prepared statement from cache: {0}", query), this, Logtype.Debug);
+                    logger.LogText(string.Format("Fetching prepared statement from cache: {0}", query), this, Logtype.Debug);
                     MySqlCommand mySqlCommand = preparedStatementCache[query];
                     mySqlCommand.Parameters.Clear();
 
                     //Step 2: Fill parameters of prepared statement
-                    logger.LogText(String.Format("Filling parameters of prepared statement: {0}", query), this, Logtype.Debug);
+                    logger.LogText(string.Format("Filling parameters of prepared statement: {0}", query), this, Logtype.Debug);
                     if (parameters != null && parameters.Length > 0)
                     {
                         foreach (object[] o in parameters)
@@ -138,7 +138,7 @@ namespace CrypToolStoreLib.Database
                     }
 
                     //Step 3: Execute prepared statement and fetch results
-                    logger.LogText(String.Format("Executing prepared statement: {0}", query), this, Logtype.Debug);
+                    logger.LogText(string.Format("Executing prepared statement: {0}", query), this, Logtype.Debug);
                     using (var reader = mySqlCommand.ExecuteReader())
                     {
                         while (reader.Read())
@@ -159,7 +159,7 @@ namespace CrypToolStoreLib.Database
                             }
                         }
                     }
-                    logger.LogText(String.Format("Returning result of prepared statement: {0}", query), this, Logtype.Debug);
+                    logger.LogText(string.Format("Returning result of prepared statement: {0}", query), this, Logtype.Debug);
                     return resultset;
                 }
                 finally

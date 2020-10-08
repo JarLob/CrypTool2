@@ -83,7 +83,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = MainWindow.ServerCertificate;
                 client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
                 DataModificationOrRequestResult result = client.GetSourceList(PluginId);
@@ -101,13 +101,13 @@ namespace CrypToolStoreDeveloperClient.Views
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(String.Format("Exception during adding sources to list: {0}", ex.Message), "Exception");
+                        MessageBox.Show(string.Format("Exception during adding sources to list: {0}", ex.Message), "Exception");
                     }
                 }));                
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during retrieving list of sources: {0}", ex.Message), "Exception");
+                MessageBox.Show(string.Format("Exception during retrieving list of sources: {0}", ex.Message), "Exception");
             }
         }
 
@@ -122,7 +122,7 @@ namespace CrypToolStoreDeveloperClient.Views
             Button button = (Button)sender;
             int pluginversion = (int)button.CommandParameter;
 
-            MessageBoxResult messageBoxResult = MessageBox.Show(String.Format("Do you really want to delete the source {0}-{1}?", PluginId, pluginversion), String.Format("Delete {0}-{1}", PluginId, pluginversion), MessageBoxButton.YesNo);
+            MessageBoxResult messageBoxResult = MessageBox.Show(string.Format("Do you really want to delete the source {0}-{1}?", PluginId, pluginversion), string.Format("Delete {0}-{1}", PluginId, pluginversion), MessageBoxButton.YesNo);
 
             if (messageBoxResult == MessageBoxResult.Yes)
             {
@@ -131,7 +131,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     CrypToolStoreClient client = new CrypToolStoreClient();
                     client.ServerCertificate = MainWindow.ServerCertificate;
                     client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                    client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                    client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                     client.Connect();
                     client.Login(MainWindow.Username, MainWindow.Password);
                     DataModificationOrRequestResult result = client.DeleteSource(PluginId, pluginversion);
@@ -139,7 +139,7 @@ namespace CrypToolStoreDeveloperClient.Views
 
                     if (result.Success)
                     {
-                        MessageBox.Show(String.Format("Successfully deleted source {0}-{1}", PluginId, pluginversion), "Source deleted");
+                        MessageBox.Show(string.Format("Successfully deleted source {0}-{1}", PluginId, pluginversion), "Source deleted");
                         //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
                         Thread fetchSourceListThread = new Thread(FetchSourceList);
                         fetchSourceListThread.IsBackground = true;
@@ -147,12 +147,12 @@ namespace CrypToolStoreDeveloperClient.Views
                     }
                     else
                     {
-                        MessageBox.Show(String.Format("Could not delete source: {0}", result.Message), "Deletion not possible");
+                        MessageBox.Show(string.Format("Could not delete source: {0}", result.Message), "Deletion not possible");
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(String.Format("Exception during deletion of source: {0}", ex.Message), "Exception");
+                    MessageBox.Show(string.Format("Exception during deletion of source: {0}", ex.Message), "Exception");
                 }
             }
         }
@@ -233,7 +233,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = MainWindow.ServerCertificate;
                 client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
                 DataModificationOrRequestResult result = client.GetSource(PluginId, pluginversion);
@@ -264,14 +264,14 @@ namespace CrypToolStoreDeveloperClient.Views
         {
             try
             {
-                MessageBoxResult messageBoxResult = MessageBox.Show(String.Format("Do you really want to create a new source for plugin {0}?", PluginId), "Create new source", MessageBoxButton.YesNo);
+                MessageBoxResult messageBoxResult = MessageBox.Show(string.Format("Do you really want to create a new source for plugin {0}?", PluginId), "Create new source", MessageBoxButton.YesNo);
 
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
                     CrypToolStoreClient client = new CrypToolStoreClient();
                     client.ServerCertificate = MainWindow.ServerCertificate;
                     client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                    client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                    client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                     client.Connect();
                     client.Login(MainWindow.Username, MainWindow.Password);
 
@@ -281,7 +281,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     if (result.Success == false)
                     {
                         client.Disconnect();
-                        MessageBox.Show(String.Format("Could not get source list for computing new version number: {0}", result.Message), "Creation not possible");
+                        MessageBox.Show(string.Format("Could not get source list for computing new version number: {0}", result.Message), "Creation not possible");
                         return;
                     }
 
@@ -301,7 +301,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     newsource.PluginId = PluginId;
                     newsource.PluginVersion = highestVersionNumber + 1;
                     newsource.BuildState = BuildState.CREATED.ToString();
-                    newsource.BuildLog = String.Format("Created by {0}", MainWindow.Username);
+                    newsource.BuildLog = string.Format("Created by {0}", MainWindow.Username);
 
                     result = client.CreateSource(newsource);
                     client.Disconnect();
@@ -309,7 +309,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     //3. Show result to user
                     if (result.Success == true)
                     {
-                        MessageBox.Show(String.Format("Created new source: {0}-{1}", newsource.PluginId, newsource.PluginVersion), "Source created");
+                        MessageBox.Show(string.Format("Created new source: {0}-{1}", newsource.PluginId, newsource.PluginVersion), "Source created");
                         //we fetch the source list in a separate thread, thus, the ui is not blocked during download of the list
                         Thread fetchSourceListThread = new Thread(FetchSourceList);
                         fetchSourceListThread.IsBackground = true;
@@ -317,13 +317,13 @@ namespace CrypToolStoreDeveloperClient.Views
                     }
                     else
                     {
-                        MessageBox.Show(String.Format("Creation not possible: {0}", result.Message), "Source created");
+                        MessageBox.Show(string.Format("Creation not possible: {0}", result.Message), "Source created");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during creation of new source: {0}", ex.Message), "Exception");
+                MessageBox.Show(string.Format("Exception during creation of new source: {0}", ex.Message), "Exception");
             }
         }
 
@@ -357,7 +357,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(String.Format("Exception during reset of source list: {0}", ex.Message), "Exception");
+                    MessageBox.Show(string.Format("Exception during reset of source list: {0}", ex.Message), "Exception");
                 }
             }));
         }

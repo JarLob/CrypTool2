@@ -151,7 +151,7 @@ namespace CrypToolStoreDeveloperClient.Views
             {
                 if (!IsValidEmail(email))
                 {
-                    MessageBox.Show(String.Format("Invalid email address: {0}", email), "Invalid email");
+                    MessageBox.Show(string.Format("Invalid email address: {0}", email), "Invalid email");
                     return;
                 }
             }
@@ -161,7 +161,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = MainWindow.ServerCertificate;
                 client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
 
@@ -185,12 +185,12 @@ namespace CrypToolStoreDeveloperClient.Views
                 }
                 else
                 {
-                    MessageBox.Show(String.Format("Could not create new plugin: {0}", result.Message), "Creation not possible");
+                    MessageBox.Show(string.Format("Could not create new plugin: {0}", result.Message), "Creation not possible");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during creation of new plugin: {0}", ex.Message), "Exception");
+                MessageBox.Show(string.Format("Exception during creation of new plugin: {0}", ex.Message), "Exception");
             }
         }
 
@@ -231,7 +231,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     byte[] image = File.ReadAllBytes(openFileDialog.FileName);
                     if (image.Length > Constants.CLIENTHANDLER_MAX_ICON_FILE_SIZE)
                     {
-                        MessageBox.Show(String.Format("File size of icons can only be less or equal to {0} byte!", Constants.CLIENTHANDLER_MAX_ICON_FILE_SIZE), "Invalid icon file size");
+                        MessageBox.Show(string.Format("File size of icons can only be less or equal to {0} byte!", Constants.CLIENTHANDLER_MAX_ICON_FILE_SIZE), "Invalid icon file size");
                         return;
                     }
                     Icon = image;
@@ -239,7 +239,7 @@ namespace CrypToolStoreDeveloperClient.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during selecting of icon: {0}", ex.Message), "Exception");
+                MessageBox.Show(string.Format("Exception during selecting of icon: {0}", ex.Message), "Exception");
             }
         }
     }

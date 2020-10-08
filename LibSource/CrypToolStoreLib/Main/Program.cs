@@ -108,7 +108,7 @@ namespace CrpyStoreLib
                 {
                     //you have to enter quit to go down
                     string line = Console.ReadLine();
-                    if (String.IsNullOrEmpty(line))
+                    if (string.IsNullOrEmpty(line))
                     {
                         Thread.Sleep(1000);
                     }
@@ -120,7 +120,7 @@ namespace CrpyStoreLib
                         }
                         else
                         {
-                            Console.WriteLine(String.Format(
+                            Console.WriteLine(string.Format(
                                 "Command >{0}< unknown... you can only enter >quit< to stop the server...", line));
                         }
                     }
@@ -128,7 +128,7 @@ namespace CrpyStoreLib
             }
             catch (Exception ex)
             {
-                logger.LogText(String.Format("Exception while starting/running the server: {0}", ex.Message), this, Logtype.Error);
+                logger.LogText(string.Format("Exception while starting/running the server: {0}", ex.Message), this, Logtype.Error);
             }
             finally
             {

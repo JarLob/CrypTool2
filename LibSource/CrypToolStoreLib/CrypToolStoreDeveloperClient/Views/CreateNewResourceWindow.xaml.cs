@@ -81,7 +81,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = MainWindow.ServerCertificate;
                 client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
 
@@ -100,12 +100,12 @@ namespace CrypToolStoreDeveloperClient.Views
                 }
                 else
                 {
-                    MessageBox.Show(String.Format("Could not create new Resource: {0}", result.Message), "Creation not possible");
+                    MessageBox.Show(string.Format("Could not create new Resource: {0}", result.Message), "Creation not possible");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during creation of new Resource: {0}", ex.Message), "Exception");
+                MessageBox.Show(string.Format("Exception during creation of new Resource: {0}", ex.Message), "Exception");
             }
         }
     }

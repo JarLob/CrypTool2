@@ -83,7 +83,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = MainWindow.ServerCertificate;
                 client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
                 DataModificationOrRequestResult result = client.GetResourceDataList(ResourceId);
@@ -101,13 +101,13 @@ namespace CrypToolStoreDeveloperClient.Views
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(String.Format("Exception during adding ResourceDatas to list: {0}", ex.Message), "Exception");
+                        MessageBox.Show(string.Format("Exception during adding ResourceDatas to list: {0}", ex.Message), "Exception");
                     }
                 }));
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during retrieving list of ResourceDatas: {0}", ex.Message), "Exception");
+                MessageBox.Show(string.Format("Exception during retrieving list of ResourceDatas: {0}", ex.Message), "Exception");
             }
         }
 
@@ -122,7 +122,7 @@ namespace CrypToolStoreDeveloperClient.Views
             Button button = (Button)sender;
             int pluginversion = (int)button.CommandParameter;
 
-            MessageBoxResult messageBoxResult = MessageBox.Show(String.Format("Do you really want to delete the ResourceData {0}-{1}?", ResourceId, pluginversion), String.Format("Delete {0}-{1}", ResourceId, pluginversion), MessageBoxButton.YesNo);
+            MessageBoxResult messageBoxResult = MessageBox.Show(string.Format("Do you really want to delete the ResourceData {0}-{1}?", ResourceId, pluginversion), string.Format("Delete {0}-{1}", ResourceId, pluginversion), MessageBoxButton.YesNo);
 
             if (messageBoxResult == MessageBoxResult.Yes)
             {
@@ -131,7 +131,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     CrypToolStoreClient client = new CrypToolStoreClient();
                     client.ServerCertificate = MainWindow.ServerCertificate;
                     client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                    client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                    client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                     client.Connect();
                     client.Login(MainWindow.Username, MainWindow.Password);
                     DataModificationOrRequestResult result = client.DeleteResourceData(ResourceId, pluginversion);
@@ -139,7 +139,7 @@ namespace CrypToolStoreDeveloperClient.Views
 
                     if (result.Success)
                     {
-                        MessageBox.Show(String.Format("Successfully deleted ResourceData {0}-{1}", ResourceId, pluginversion), "ResourceData deleted");
+                        MessageBox.Show(string.Format("Successfully deleted ResourceData {0}-{1}", ResourceId, pluginversion), "ResourceData deleted");
                         //we fetch the ResourceData list in a separate thread, thus, the ui is not blocked during download of the list
                         Thread fetchResourceDataListThread = new Thread(FetchResourceDataList);
                         fetchResourceDataListThread.IsBackground = true;
@@ -147,12 +147,12 @@ namespace CrypToolStoreDeveloperClient.Views
                     }
                     else
                     {
-                        MessageBox.Show(String.Format("Could not delete ResourceData: {0}", result.Message), "Deletion not possible");
+                        MessageBox.Show(string.Format("Could not delete ResourceData: {0}", result.Message), "Deletion not possible");
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(String.Format("Exception during deletion of ResourceData: {0}", ex.Message), "Exception");
+                    MessageBox.Show(string.Format("Exception during deletion of ResourceData: {0}", ex.Message), "Exception");
                 }
             }
         }
@@ -215,7 +215,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = MainWindow.ServerCertificate;
                 client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
                 DataModificationOrRequestResult result = client.GetResourceData(ResourceId, resourceversion);
@@ -246,14 +246,14 @@ namespace CrypToolStoreDeveloperClient.Views
         {
             try
             {
-                MessageBoxResult messageBoxResult = MessageBox.Show(String.Format("Do you really want to create a new ResourceData for Resource {0}?", ResourceId), "Create new ResourceData", MessageBoxButton.YesNo);
+                MessageBoxResult messageBoxResult = MessageBox.Show(string.Format("Do you really want to create a new ResourceData for Resource {0}?", ResourceId), "Create new ResourceData", MessageBoxButton.YesNo);
 
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
                     CrypToolStoreClient client = new CrypToolStoreClient();
                     client.ServerCertificate = MainWindow.ServerCertificate;
                     client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                    client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                    client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                     client.Connect();
                     client.Login(MainWindow.Username, MainWindow.Password);
 
@@ -263,7 +263,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     if (result.Success == false)
                     {
                         client.Disconnect();
-                        MessageBox.Show(String.Format("Could not get ResourceData list for computing new version number: {0}", result.Message), "Creation not possible");
+                        MessageBox.Show(string.Format("Could not get ResourceData list for computing new version number: {0}", result.Message), "Creation not possible");
                         return;
                     }
 
@@ -289,7 +289,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     //3. Show result to user
                     if (result.Success == true)
                     {
-                        MessageBox.Show(String.Format("Created new ResourceData: {0}-{1}", newResourceData.ResourceId, newResourceData.ResourceVersion), "ResourceData created");
+                        MessageBox.Show(string.Format("Created new ResourceData: {0}-{1}", newResourceData.ResourceId, newResourceData.ResourceVersion), "ResourceData created");
                         //we fetch the ResourceData list in a separate thread, thus, the ui is not blocked during download of the list
                         Thread fetchResourceDataListThread = new Thread(FetchResourceDataList);
                         fetchResourceDataListThread.IsBackground = true;
@@ -297,13 +297,13 @@ namespace CrypToolStoreDeveloperClient.Views
                     }
                     else
                     {
-                        MessageBox.Show(String.Format("Creation not possible: {0}", result.Message), "ResourceData created");
+                        MessageBox.Show(string.Format("Creation not possible: {0}", result.Message), "ResourceData created");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during creation of new ResourceData: {0}", ex.Message), "Exception");
+                MessageBox.Show(string.Format("Exception during creation of new ResourceData: {0}", ex.Message), "Exception");
             }
         }
 
@@ -337,7 +337,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(String.Format("Exception during reset of ResourceData list: {0}", ex.Message), "Exception");
+                    MessageBox.Show(string.Format("Exception during reset of ResourceData list: {0}", ex.Message), "Exception");
                 }
             }));
         }

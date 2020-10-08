@@ -108,7 +108,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = MainWindow.ServerCertificate;
                 client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
 
@@ -153,13 +153,13 @@ namespace CrypToolStoreDeveloperClient.Views
                 {
                     if (result.Message != "USERSTOP")
                     {
-                        MessageBox.Show(String.Format("Could not upload zip file: {0}", result.Message), "Zipfile upload not possible");
+                        MessageBox.Show(string.Format("Could not upload zip file: {0}", result.Message), "Zipfile upload not possible");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during upload of zip file: {0}", ex.Message), "Exception");
+                MessageBox.Show(string.Format("Exception during upload of zip file: {0}", ex.Message), "Exception");
             }
             
             Dispatcher.BeginInvoke(new ThreadStart(() =>
@@ -232,7 +232,7 @@ namespace CrypToolStoreDeveloperClient.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during selecting of zip file: {0}", ex.Message), "Exception");
+                MessageBox.Show(string.Format("Exception during selecting of zip file: {0}", ex.Message), "Exception");
             }
         }
     }

@@ -19,11 +19,8 @@ using CrypToolStoreLib.Tools;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace CrypToolStoreBuildSystem
 {
@@ -136,7 +133,7 @@ namespace CrypToolStoreBuildSystem
             client.ServerCertificate = ServerCertificate;
 
             client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-            client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+            client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
             client.Connect();
             client.Login(Config.GetConfigEntry("Username"), Config.GetConfigEntry("Password"));
 

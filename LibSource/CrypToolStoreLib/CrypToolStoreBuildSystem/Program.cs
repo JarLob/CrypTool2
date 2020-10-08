@@ -1,5 +1,4 @@
-﻿using CrypToolStoreLib.Tools;
-/*
+﻿/*
    Copyright 2018 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,12 +13,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using CrypToolStoreLib.Tools;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CrypToolStoreBuildSystem
 {
@@ -42,7 +38,10 @@ namespace CrypToolStoreBuildSystem
 
             CrypToolStoreBuildServer server = new CrypToolStoreBuildServer(serverCertificate);
             server.Start();
-            Console.ReadLine();
+            while (true)
+            {
+                Console.ReadLine();
+            }
         }
     }
 }

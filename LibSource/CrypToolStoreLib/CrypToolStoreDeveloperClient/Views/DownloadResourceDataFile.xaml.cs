@@ -61,7 +61,7 @@ namespace CrypToolStoreDeveloperClient.Views
             ResourceId = pluginid;
             ResourceVersion = pluginversion;
             Closing += DownloadResourceDataFileWindow_Closing;
-            this.Title = String.Format("Downoad ResourceData File: ResourceData-{0}-{1}.bin", pluginid, pluginversion);
+            this.Title = string.Format("Downoad ResourceData File: ResourceData-{0}-{1}.bin", pluginid, pluginversion);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = MainWindow.ServerCertificate;
                 client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
 
@@ -149,13 +149,13 @@ namespace CrypToolStoreDeveloperClient.Views
                 {
                     if (result.Message != "USERSTOP")
                     {
-                        MessageBox.Show(String.Format("Could not download ResourceData file: {0}", result.Message), "ResourceData file download not possible");
+                        MessageBox.Show(string.Format("Could not download ResourceData file: {0}", result.Message), "ResourceData file download not possible");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during download of ResourceData zip file: {0}", ex.Message), "Exception");
+                MessageBox.Show(string.Format("Exception during download of ResourceData zip file: {0}", ex.Message), "Exception");
             }
 
             Dispatcher.BeginInvoke(new ThreadStart(() =>

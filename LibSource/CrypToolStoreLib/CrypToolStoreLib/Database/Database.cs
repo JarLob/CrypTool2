@@ -67,7 +67,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="numberOfConnections"></param>
         public bool InitAndConnect(string databaseServer, string databaseName, string databaseUser, string databasePassword, int numberOfConnections)
         {
-            logger.LogText(String.Format("Connecting to mysql database with databaseServer={0}, databaseName={1}, databaseUser={2}", databaseServer, databaseName, databaseUser), this, Logtype.Info);
+            logger.LogText(string.Format("Connecting to mysql database with databaseServer={0}, databaseName={1}, databaseUser={2}", databaseServer, databaseName, databaseUser), this, Logtype.Info);
             try
             {
                 this.databaseServer = databaseServer;
@@ -80,7 +80,7 @@ namespace CrypToolStoreLib.Database
             }
             catch (Exception ex)
             {
-                logger.LogText(String.Format("Connection failed with exception: {0}", ex.Message), this, Logtype.Error);
+                logger.LogText(string.Format("Connection failed with exception: {0}", ex.Message), this, Logtype.Error);
                 return false;
             }
         }
@@ -144,7 +144,7 @@ namespace CrypToolStoreLib.Database
                 }
                 catch (Exception ex)
                 {
-                    logger.LogText(String.Format("Exception occured while closing a connection to database: {0}", ex.Message), this, Logtype.Error);
+                    logger.LogText(string.Format("Exception occured while closing a connection to database: {0}", ex.Message), this, Logtype.Error);
                 }
             }
             logger.LogText("All connections to database closed", this, Logtype.Debug);
@@ -164,7 +164,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="password"></param>
         public void CreateDeveloper(string username, string firstname, string lastname, string email, string password, bool isAdmin = false)
         {
-            logger.LogText(String.Format("Creating new developer: username={0}, firstname={1}, lastname={2}, email={3}", username, firstname, lastname, email), this, Logtype.Debug);
+            logger.LogText(string.Format("Creating new developer: username={0}, firstname={1}, lastname={2}, email={3}", username, firstname, lastname, email), this, Logtype.Debug);
             string query = "insert into developers (username, firstname, lastname, email, password, passwordsalt, passworditerations, isadmin) values (@username, @firstname, @lastname, @email, @password, @passwordsalt, @passworditerations, @isadmin)";
 
             byte[] hash_bytes;
@@ -194,7 +194,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Created new developer: username={0}, firstname={1}, lastname={2}, email={3}", username, firstname, lastname, email), this, Logtype.Debug);
+            logger.LogText(string.Format("Created new developer: username={0}, firstname={1}, lastname={2}, email={3}", username, firstname, lastname, email), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace CrypToolStoreLib.Database
        /// <param name="isAdmin"></param>
         public void UpdateDeveloper(string username, string firstname, string lastname, string email, bool isAdmin = false)
         {
-            logger.LogText(String.Format("Updating existing developer: username={0}, firstname={1}, lastname={2}, email={3}", username, firstname, lastname, email), this, Logtype.Debug);
+            logger.LogText(string.Format("Updating existing developer: username={0}, firstname={1}, lastname={2}, email={3}", username, firstname, lastname, email), this, Logtype.Debug);
             string query = "update developers set firstname=@firstname, lastname=@lastname, email=@email, isadmin=@isadmin where username=@username";
 
             DatabaseConnection connection = GetConnection();
@@ -297,7 +297,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated existing developer: username={0}, firstname={1}, lastname={2}, email={3}, isadmin={4}", username, firstname, lastname, email, isAdmin == true ? "true" : "false"), this, Logtype.Debug);
+            logger.LogText(string.Format("Updated existing developer: username={0}, firstname={1}, lastname={2}, email={3}, isadmin={4}", username, firstname, lastname, email, isAdmin == true ? "true" : "false"), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="isAdmin"></param>
         public void UpdateDeveloperNoAdmin(string username, string firstname, string lastname, string email)
         {
-            logger.LogText(String.Format("Updating existing developer: username={0}, firstname={1}, lastname={2}, email={3}", username, firstname, lastname, email), this, Logtype.Debug);
+            logger.LogText(string.Format("Updating existing developer: username={0}, firstname={1}, lastname={2}, email={3}", username, firstname, lastname, email), this, Logtype.Debug);
             string query = "update developers set firstname=@firstname, lastname=@lastname, email=@email where username=@username";
 
             DatabaseConnection connection = GetConnection();
@@ -325,7 +325,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated existing developer: username={0}, firstname={1}, lastname={2}, email={3}", username, firstname, lastname, email), this, Logtype.Debug);
+            logger.LogText(string.Format("Updated existing developer: username={0}, firstname={1}, lastname={2}, email={3}", username, firstname, lastname, email), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -335,7 +335,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="password"></param>
         public void UpdateDeveloperPassword(string username, string password)
         {
-            logger.LogText(String.Format("Updating existing developer's password: username={0}", username), this, Logtype.Debug);
+            logger.LogText(string.Format("Updating existing developer's password: username={0}", username), this, Logtype.Debug);
             string query = "update developers set password=@password, passwordsalt=@passwordsalt, passworditerations=@passworditerations where username=@username";
 
             byte[] hash_bytes;
@@ -361,7 +361,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated existing developer's password: username={0}", username), this, Logtype.Debug);
+            logger.LogText(string.Format("Updated existing developer's password: username={0}", username), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -370,7 +370,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="username"></param>
         public void DeleteDeveloper(string username)
         {
-            logger.LogText(String.Format("Deleting developer account: username={0}", username), this, Logtype.Debug);
+            logger.LogText(string.Format("Deleting developer account: username={0}", username), this, Logtype.Debug);
             string query = "delete from developers where username=@username";
 
             DatabaseConnection connection = GetConnection();
@@ -382,7 +382,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Deleted developer account: username={0}", username), this, Logtype.Debug);
+            logger.LogText(string.Format("Deleted developer account: username={0}", username), this, Logtype.Debug);
         }
 
 
@@ -424,7 +424,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="icon"></param>
         public void CreatePlugin(string username, string name, string shortdescription, string longdescription, string authornames, string authoremails, string authorinstitutes, byte[] icon)
         {
-            logger.LogText(String.Format("Creating new plugin: username={0}, name={1}, shortdescription={2}, longdescription={3}, authornames={4}, authoremails={5} authorinstitutes={6}, icon={7}", 
+            logger.LogText(string.Format("Creating new plugin: username={0}, name={1}, shortdescription={2}, longdescription={3}, authornames={4}, authoremails={5} authorinstitutes={6}, icon={7}", 
                 username, name, shortdescription, longdescription, authornames, authoremails, authorinstitutes, icon != null ? icon.Length.ToString() : "null"), this, Logtype.Debug);
             string query = "insert into plugins (username, name, shortdescription, longdescription, authornames, authoremails, authorinstitutes, icon) values (@username, @name, @shortdescription, @longdescription, @authornames, @authoremails, @authorinstitutes, @icon)";
 
@@ -443,7 +443,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Created new plugin: username={0}, name={1}, shortdescription={2}, longdescription={3}, authornames={4}, authoremails={5} authorinstitutes={6}",
+            logger.LogText(string.Format("Created new plugin: username={0}, name={1}, shortdescription={2}, longdescription={3}, authornames={4}, authoremails={5} authorinstitutes={6}",
                 username, name, shortdescription, longdescription, authornames, authoremails, authorinstitutes), this, Logtype.Debug);
         }
 
@@ -451,7 +451,6 @@ namespace CrypToolStoreLib.Database
         /// Updates the dedicated plugin identified by its id
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="username"></param>
         /// <param name="name"></param>
         /// <param name="shortdescription"></param>
         /// <param name="longdescription"></param>
@@ -459,16 +458,15 @@ namespace CrypToolStoreLib.Database
         /// <param name="authoremails"></param>
         /// <param name="authorinstitutes"></param>
         /// <param name="icon"></param>
-        public void UpdatePlugin(int id, string username, string name, string shortdescription, string longdescription, string authornames, string authoremails, string authorinstitutes, byte[] icon)
+        public void UpdatePlugin(int id, string name, string shortdescription, string longdescription, string authornames, string authoremails, string authorinstitutes, byte[] icon)
         {
-            logger.LogText(String.Format("Updating plugin: id={0}, username={1}, name={2}, shortdescription={3}, longdescription={4}, authornames={5}, authoremails={6} authorinstitutes={7}, icon={8}",
-                id, username, name, shortdescription, longdescription, authornames, authoremails, authorinstitutes, icon != null ? icon.Length.ToString() : "null"), this, Logtype.Debug);
-            string query = "update plugins set username=@username, name=@name, shortdescription=@shortdescription, longdescription=@longdescription, authornames=@authornames, authoremails=@authoremails, authorinstitutes=@authorinstitutes, icon=@icon where id=@id";
+            logger.LogText(string.Format("Updating plugin: id={0}, name={1}, shortdescription={2}, longdescription={3}, authornames={4}, authoremails={5} authorinstitutes={6}, icon={7}",
+                id, name, shortdescription, longdescription, authornames, authoremails, authorinstitutes, icon != null ? icon.Length.ToString() : "null"), this, Logtype.Debug);
+            string query = "update plugins set name=@name, shortdescription=@shortdescription, longdescription=@longdescription, authornames=@authornames, authoremails=@authoremails, authorinstitutes=@authorinstitutes, icon=@icon where id=@id";
 
             DatabaseConnection connection = GetConnection();
 
             object[][] parameters = new object[][]{
-                new object[]{"@username", username},
                 new object[]{"@name", name},
                 new object[]{"@shortdescription", shortdescription},
                 new object[]{"@longdescription", longdescription},
@@ -481,8 +479,8 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated plugin: id={0}, username={1}, name={2}, shortdescription={3}, longdescription={4}, authornames={5}, authoremails={6} authorinstitutes={7}, icon={8}",
-                id, username, name, shortdescription, longdescription, authornames, authoremails, authorinstitutes, icon != null ? icon.Length.ToString() : "null"), this, Logtype.Debug);
+            logger.LogText(string.Format("Updated plugin: id={0}, name={1}, shortdescription={2}, longdescription={3}, authornames={4}, authoremails={5} authorinstitutes={6}, icon={7}",
+                id, name, shortdescription, longdescription, authornames, authoremails, authorinstitutes, icon != null ? icon.Length.ToString() : "null"), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -491,7 +489,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="id"></param>
         public void DeletePlugin(int id)
         {
-            logger.LogText(String.Format("Deleting plugin: id={0}", id), this, Logtype.Debug);
+            logger.LogText(string.Format("Deleting plugin: id={0}", id), this, Logtype.Debug);
             string query = "delete from plugins where id=@id";
 
             DatabaseConnection connection = GetConnection();
@@ -502,7 +500,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Deleted plugin: id={0}", id), this, Logtype.Debug);
+            logger.LogText(string.Format("Deleted plugin: id={0}", id), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -735,7 +733,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="source"></param>
         public void CreateSource(Source source)
         {
-            logger.LogText(String.Format("Creating new source: pluginid={0}, pluginversion={1}, buildstate={2}, buildlog={3}", source.PluginId, source.PluginVersion, source.BuildState, source.BuildLog), this, Logtype.Debug);
+            logger.LogText(string.Format("Creating new source: pluginid={0}, pluginversion={1}, buildstate={2}, buildlog={3}", source.PluginId, source.PluginVersion, source.BuildState, source.BuildLog), this, Logtype.Debug);
             string query = "insert into sources (pluginid, pluginversion, zipfilename, assemblyfilename, buildstate, buildlog, publishstate) values (@pluginid, @pluginversion, @zipfilename, @assemblyfilename, @buildstate, @buildlog, @publishstate)";
 
             DatabaseConnection connection = GetConnection();
@@ -743,8 +741,8 @@ namespace CrypToolStoreLib.Database
             object[][] parameters = new object[][]{
                 new object[]{"@pluginid", source.PluginId},
                 new object[]{"@pluginversion", source.PluginVersion},             
-                new object[]{"@zipfilename", String.Empty},       
-                new object[]{"@assemblyfilename", String.Empty},       
+                new object[]{"@zipfilename", string.Empty},       
+                new object[]{"@assemblyfilename", string.Empty},       
                 new object[]{"@buildstate", source.BuildState},       
                 new object[]{"@buildlog", source.BuildLog},
                 new object[]{"@publishstate", PublishState.NOTPUBLISHED.ToString()}
@@ -752,7 +750,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Created new source: pluginid={0}, pluginversion={1}, buildstate={2}, buildlog={3}", source.PluginId, source.PluginVersion, source.BuildState, source.BuildLog), this, Logtype.Debug);
+            logger.LogText(string.Format("Created new source: pluginid={0}, pluginversion={1}, buildstate={2}, buildlog={3}", source.PluginId, source.PluginVersion, source.BuildState, source.BuildLog), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -766,7 +764,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="uploaddate"></param>
         public void UpdateSource(int pluginid, int pluginversion, string zipfilename, string buildstate, string buildlog, DateTime uploaddate)
         {
-            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, zipfilename={2}, buildstate={3}, buildlog={4}, uploaddate={5}", pluginid, pluginversion, zipfilename, buildstate, buildlog, uploaddate), this, Logtype.Debug);
+            logger.LogText(string.Format("Updating source: pluginid={0}, pluginversion={1}, zipfilename={2}, buildstate={3}, buildlog={4}, uploaddate={5}", pluginid, pluginversion, zipfilename, buildstate, buildlog, uploaddate), this, Logtype.Debug);
             string query = "update sources set zipfilename = @zipfilename, buildstate=@buildstate, buildlog=@buildlog, uploaddate=@uploaddate where pluginid=@pluginid and pluginversion=@pluginversion";
 
             DatabaseConnection connection = GetConnection();
@@ -783,7 +781,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, zipfilename={2}, buildstate={3}, buildlog={4}, uploaddate={5}", pluginid, pluginversion, zipfilename, buildstate, buildlog, uploaddate), this, Logtype.Debug);
+            logger.LogText(string.Format("Updating source: pluginid={0}, pluginversion={1}, zipfilename={2}, buildstate={3}, buildlog={4}, uploaddate={5}", pluginid, pluginversion, zipfilename, buildstate, buildlog, uploaddate), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -795,7 +793,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="assemblyfilename"></param>
         public void UpdateSource(int pluginid, int pluginversion, string assemblyfilename)
         {
-            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, assemblyfilename={2}, builddate={3}", pluginid, pluginversion, assemblyfilename, DateTime.Now), this, Logtype.Debug);
+            logger.LogText(string.Format("Updating source: pluginid={0}, pluginversion={1}, assemblyfilename={2}, builddate={3}", pluginid, pluginversion, assemblyfilename, DateTime.Now), this, Logtype.Debug);
             string query = "update sources set assemblyfilename=@assemblyfilename, builddate=@builddate where pluginid=@pluginid and pluginversion=@pluginversion";
 
             DatabaseConnection connection = GetConnection();
@@ -810,7 +808,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated source: pluginid={0}, pluginversion={1}, assemblyfilename={2}, builddate={3}", pluginid, pluginversion, assemblyfilename, DateTime.Now), this, Logtype.Debug);
+            logger.LogText(string.Format("Updated source: pluginid={0}, pluginversion={1}, assemblyfilename={2}, builddate={3}", pluginid, pluginversion, assemblyfilename, DateTime.Now), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -821,7 +819,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="publishstate"></param>
         public void UpdateSource(int pluginid, int pluginversion, PublishState publishstate)
         {
-            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, publishstate={2}", pluginid, pluginversion, publishstate.ToString()), this, Logtype.Debug);
+            logger.LogText(string.Format("Updating source: pluginid={0}, pluginversion={1}, publishstate={2}", pluginid, pluginversion, publishstate.ToString()), this, Logtype.Debug);
             string query = "update sources set publishstate=@publishstate where pluginid=@pluginid and pluginversion=@pluginversion";
 
             DatabaseConnection connection = GetConnection();
@@ -834,7 +832,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated source: pluginid={0}, pluginversion={1}, publishstate={2}", pluginid, pluginversion, publishstate.ToString()), this, Logtype.Debug);
+            logger.LogText(string.Format("Updated source: pluginid={0}, pluginversion={1}, publishstate={2}", pluginid, pluginversion, publishstate.ToString()), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -847,7 +845,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="buildlog"></param>
         public void UpdateSource(int pluginid, int pluginversion, string zipfilename, string buildstate, string buildlog, int buildversion)
         {
-            logger.LogText(String.Format("Updating source: pluginid={0}, pluginversion={1}, zipfilename={2}, buildstate={3}, buildlog={4}, buildversion={5}", pluginid, pluginversion, zipfilename, buildstate, buildlog, buildversion), this, Logtype.Debug);
+            logger.LogText(string.Format("Updating source: pluginid={0}, pluginversion={1}, zipfilename={2}, buildstate={3}, buildlog={4}, buildversion={5}", pluginid, pluginversion, zipfilename, buildstate, buildlog, buildversion), this, Logtype.Debug);
             string query = "update sources set zipfilename = @zipfilename, buildstate=@buildstate, buildlog=@buildlog, buildversion=@buildversion where pluginid=@pluginid and pluginversion=@pluginversion";
 
             DatabaseConnection connection = GetConnection();
@@ -864,7 +862,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated source: pluginid={0}, pluginversion={1}, zipfilename={2}, buildstate={3}, buildlog={4}, buildversion={5}", pluginid, pluginversion, zipfilename, buildstate, buildlog, buildversion), this, Logtype.Debug);
+            logger.LogText(string.Format("Updated source: pluginid={0}, pluginversion={1}, zipfilename={2}, buildstate={3}, buildlog={4}, buildversion={5}", pluginid, pluginversion, zipfilename, buildstate, buildlog, buildversion), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -874,7 +872,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="pluginversion"></param>
         public void DeleteSource(int pluginid, int pluginversion)
         {
-            logger.LogText(String.Format("Deleting source: pluginid={0}, pluginversion={1}", pluginid, pluginversion), this, Logtype.Debug);
+            logger.LogText(string.Format("Deleting source: pluginid={0}, pluginversion={1}", pluginid, pluginversion), this, Logtype.Debug);
             string query = "delete from sources where pluginid=@pluginid and pluginversion=@pluginversion";
 
             DatabaseConnection connection = GetConnection();
@@ -886,7 +884,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Deleted source: pluginid={0}, pluginversion={1}", pluginid, pluginversion), this, Logtype.Debug);
+            logger.LogText(string.Format("Deleted source: pluginid={0}, pluginversion={1}", pluginid, pluginversion), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -1008,7 +1006,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="description"></param>
         public void CreateResource(string username, string name, string description)
         {
-            logger.LogText(String.Format("Creating new resource: username={0}, name={1}, description={2}", username, name, description), this, Logtype.Debug);
+            logger.LogText(string.Format("Creating new resource: username={0}, name={1}, description={2}", username, name, description), this, Logtype.Debug);
             string query = "insert into resources (username, name, description) values (@username, @name, @description)";
 
             DatabaseConnection connection = GetConnection();
@@ -1021,7 +1019,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Created new resource: username={0}, name={1}, description={2}", username, name, description), this, Logtype.Debug);
+            logger.LogText(string.Format("Created new resource: username={0}, name={1}, description={2}", username, name, description), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -1033,7 +1031,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="description"></param>
         public void UpdateResource(int id, string name, string description)
         {
-            logger.LogText(String.Format("Updating resource: id={0}, name={1}, description={2}", id, name, description), this, Logtype.Debug);
+            logger.LogText(string.Format("Updating resource: id={0}, name={1}, description={2}", id, name, description), this, Logtype.Debug);
             string query = "update resources set name=@name, description=@description where id=@id";
 
             DatabaseConnection connection = GetConnection();
@@ -1046,7 +1044,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated resource: id={0}, name={1}, description={2}", id, name, description), this, Logtype.Debug);
+            logger.LogText(string.Format("Updated resource: id={0}, name={1}, description={2}", id, name, description), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -1057,7 +1055,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="description"></param>
         public void DeleteResource(int id)
         {
-            logger.LogText(String.Format("Deleting resource: id={0}", id), this, Logtype.Debug);
+            logger.LogText(string.Format("Deleting resource: id={0}", id), this, Logtype.Debug);
             string query = "delete from resources where id=@id";
 
             DatabaseConnection connection = GetConnection();
@@ -1068,7 +1066,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Deleted resource: id={0}", id), this, Logtype.Debug);
+            logger.LogText(string.Format("Deleted resource: id={0}", id), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -1188,14 +1186,14 @@ namespace CrypToolStoreLib.Database
             foreach (var entry in resultset)
             {               
                 Resource resource = new Resource();
-                resource.Id = Int32.Parse(entry["id"].ToString());
+                resource.Id = int.Parse(entry["id"].ToString());
                 resource.Username = (string)entry["username"];
                 resource.Name = (string)entry["name"];
                 resource.Description = (string)entry["description"];
 
                 ResourceData resourceData = new ResourceData();
                 resourceData.ResourceId = resource.Id;
-                resourceData.ResourceVersion = Int32.Parse(entry["resourceversion"].ToString());
+                resourceData.ResourceVersion = int.Parse(entry["resourceversion"].ToString());
                 resourceData.PublishState = (string)entry["publishstate"];
 
                 ResourceAndResourceData resourceAndResourceData = new ResourceAndResourceData();
@@ -1276,7 +1274,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="uploaddate"></param>
         public void CreateResourceData(int resourceid, int version, string datafilename, DateTime uploaddate)
         {
-            logger.LogText(String.Format("Creating new resource data: resourceid={0}, version={1}, datafilename={2}, uploaddate={3}", resourceid, version, datafilename != null ? datafilename.Length.ToString() : "null", uploaddate), this, Logtype.Debug);
+            logger.LogText(string.Format("Creating new resource data: resourceid={0}, version={1}, datafilename={2}, uploaddate={3}", resourceid, version, datafilename != null ? datafilename.Length.ToString() : "null", uploaddate), this, Logtype.Debug);
             string query = "insert into resourcesdata (resourceid, version, datafilename, uploaddate, publishstate) values (@resourceid, @version, @datafilename, @uploaddate, @publishstate)";
 
             DatabaseConnection connection = GetConnection();
@@ -1291,7 +1289,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Created new resource data: resourceid={0}, version={1}, datafilename={2}, uploaddate={3}", resourceid, version, datafilename, uploaddate), this, Logtype.Debug);
+            logger.LogText(string.Format("Created new resource data: resourceid={0}, version={1}, datafilename={2}, uploaddate={3}", resourceid, version, datafilename, uploaddate), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -1303,7 +1301,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="publishstate"></param>
         public void UpdateResourceData(int resourceid, int version, string datafilename, DateTime uploaddate, string publishstate)
         {
-            logger.LogText(String.Format("Updating resource data: resourceid={0}, version={1}, datafilename={2}, uploaddate={3}", resourceid, version, datafilename, uploaddate), this, Logtype.Debug);
+            logger.LogText(string.Format("Updating resource data: resourceid={0}, version={1}, datafilename={2}, uploaddate={3}", resourceid, version, datafilename, uploaddate), this, Logtype.Debug);
             string query = "update resourcesdata set datafilename=@datafilename, uploaddate=@uploaddate, publishstate=@publishstate where resourceid=@resourceid and version=@version";
 
             DatabaseConnection connection = GetConnection();
@@ -1318,9 +1316,10 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated resource data: resourceid={0}, version={1}, datafilename={2}, uploaddate={3}", resourceid, version, datafilename != null ? datafilename.Length.ToString() : "null", uploaddate), this, Logtype.Debug);
+            logger.LogText(string.Format("Updated resource data: resourceid={0}, version={1}, datafilename={2}, uploaddate={3}", resourceid, version, datafilename != null ? datafilename.Length.ToString() : "null", uploaddate), this, Logtype.Debug);
         }
 
+        /// <summary>
         /// Updates a resource data entry in the database
         /// </summary>
         /// <param name="version"></param>
@@ -1328,7 +1327,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="uploaddate"></param>
         public void UpdateResourceData(int resourceid, int version, string datafilename)
         {
-            logger.LogText(String.Format("Updating resource data: resourceid={0}, version={1}, datafilename={2}", resourceid, version, datafilename), this, Logtype.Debug);
+            logger.LogText(string.Format("Updating resource data: resourceid={0}, version={1}, datafilename={2}", resourceid, version, datafilename), this, Logtype.Debug);
             string query = "update resourcesdata set datafilename=@datafilename, uploaddate=@uploaddate where resourceid=@resourceid and version=@version";
 
             DatabaseConnection connection = GetConnection();
@@ -1342,7 +1341,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated resource data: resourceid={0}, version={1}, datafilename={2}", resourceid, version, datafilename != null ? datafilename.Length.ToString() : "null"), this, Logtype.Debug);
+            logger.LogText(string.Format("Updated resource data: resourceid={0}, version={1}, datafilename={2}", resourceid, version, datafilename != null ? datafilename.Length.ToString() : "null"), this, Logtype.Debug);
         }
 
         /// Updates a resource data entry in the database
@@ -1352,7 +1351,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="publishstate"></param>
         public void UpdateResourceData(int resourceid, int version, PublishState publishstate)
         {
-            logger.LogText(String.Format("Updating resourcedata: resourceid={0}, version={1}, publishstate={2}", resourceid, version, publishstate.ToString()), this, Logtype.Debug);
+            logger.LogText(string.Format("Updating resourcedata: resourceid={0}, version={1}, publishstate={2}", resourceid, version, publishstate.ToString()), this, Logtype.Debug);
             string query = "update resourcesdata set publishstate=@publishstate where resourceid=@resourceid and version=@version";
 
             DatabaseConnection connection = GetConnection();
@@ -1365,7 +1364,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Updated resourcedata: resourceid={0}, version={1}, publishstate={2}", resourceid, version, publishstate.ToString()), this, Logtype.Debug);
+            logger.LogText(string.Format("Updated resourcedata: resourceid={0}, version={1}, publishstate={2}", resourceid, version, publishstate.ToString()), this, Logtype.Debug);
         }
 
         /// <summary>
@@ -1376,7 +1375,7 @@ namespace CrypToolStoreLib.Database
         /// <param name="uploaddate"></param>
         public void DeleteResourceData(int resourceid, int version)
         {
-            logger.LogText(String.Format("Deleting resource data: resourceid={0}, version={1}", resourceid, version), this, Logtype.Debug);
+            logger.LogText(string.Format("Deleting resource data: resourceid={0}, version={1}", resourceid, version), this, Logtype.Debug);
             string query = "delete from resourcesdata where resourceid=@resourceid and version=@version";
 
             DatabaseConnection connection = GetConnection();
@@ -1388,7 +1387,7 @@ namespace CrypToolStoreLib.Database
 
             connection.ExecutePreparedStatement(query, parameters);
 
-            logger.LogText(String.Format("Deleted resource data: resourceid={0}, version={1}", resourceid, version), this, Logtype.Debug);
+            logger.LogText(string.Format("Deleted resource data: resourceid={0}, version={1}", resourceid, version), this, Logtype.Debug);
         }
 
         /// <summary>

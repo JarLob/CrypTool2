@@ -82,7 +82,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = MainWindow.ServerCertificate;
                 client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
                 DataModificationOrRequestResult result = client.GetResourceList(MainWindow.IsAdmin ? "*" : MainWindow.Username);
@@ -103,13 +103,13 @@ namespace CrypToolStoreDeveloperClient.Views
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(String.Format("Exception during adding Resources to list: {0}", ex.Message), "Exception");
+                        MessageBox.Show(string.Format("Exception during adding Resources to list: {0}", ex.Message), "Exception");
                     }
                 }));
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during retrieving list of Resources: {0}", ex.Message), "Exception");
+                MessageBox.Show(string.Format("Exception during retrieving list of Resources: {0}", ex.Message), "Exception");
             }
         }
 
@@ -124,7 +124,7 @@ namespace CrypToolStoreDeveloperClient.Views
             Button button = (Button)sender;
             int id = (int)button.CommandParameter;
 
-            MessageBoxResult messageBoxResult = MessageBox.Show(String.Format("Do you really want to delete the Resource {0}?", id), String.Format("Delete {0}", id), MessageBoxButton.YesNo);
+            MessageBoxResult messageBoxResult = MessageBox.Show(string.Format("Do you really want to delete the Resource {0}?", id), string.Format("Delete {0}", id), MessageBoxButton.YesNo);
 
             if (messageBoxResult == MessageBoxResult.Yes)
             {
@@ -133,7 +133,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     CrypToolStoreClient client = new CrypToolStoreClient();
                     client.ServerCertificate = MainWindow.ServerCertificate;
                     client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                    client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                    client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                     client.Connect();
                     client.Login(MainWindow.Username, MainWindow.Password);
                     DataModificationOrRequestResult result = client.DeleteResource(id);
@@ -141,17 +141,17 @@ namespace CrypToolStoreDeveloperClient.Views
 
                     if (result.Success)
                     {
-                        MessageBox.Show(String.Format("Successfully deleted {0}", id), "Resource deleted");
+                        MessageBox.Show(string.Format("Successfully deleted {0}", id), "Resource deleted");
                         FetchResourceList();
                     }
                     else
                     {
-                        MessageBox.Show(String.Format("Could not delete Resource: {0}", result.Message), "Deletion not possible");
+                        MessageBox.Show(string.Format("Could not delete Resource: {0}", result.Message), "Deletion not possible");
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(String.Format("Exception during deletion of Resource: {0}", ex.Message), "Exception");
+                    MessageBox.Show(string.Format("Exception during deletion of Resource: {0}", ex.Message), "Exception");
                 }
             }
         }
@@ -217,7 +217,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(String.Format("Exception during reset of Resource list: {0}", ex.Message), "Exception");
+                    MessageBox.Show(string.Format("Exception during reset of Resource list: {0}", ex.Message), "Exception");
                 }
             }));
         }

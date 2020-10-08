@@ -86,7 +86,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     PublishStateComboBox.SelectedIndex = 4;
                     break;                
             }
-            this.Title = String.Format("Update Publish State of Source-{0}-{1}", PluginId, PluginVersion);
+            this.Title = string.Format("Update Publish State of Source-{0}-{1}", PluginId, PluginVersion);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 CrypToolStoreClient client = new CrypToolStoreClient();
                 client.ServerCertificate = MainWindow.ServerCertificate;
                 client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                 client.Connect();
                 client.Login(MainWindow.Username, MainWindow.Password);
                 DataModificationOrRequestResult result = client.UpdateSourcePublishState(new Source() { PluginId = PluginId, PluginVersion = PluginVersion }, publishState);
@@ -135,13 +135,13 @@ namespace CrypToolStoreDeveloperClient.Views
                 }
                 else
                 {
-                    MessageBox.Show(String.Format("Could not update: {0}", result.Message), "Update not possible");
+                    MessageBox.Show(string.Format("Could not update: {0}", result.Message), "Update not possible");
                 }
                 
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Exception during update of source's publish state: {0}", ex.Message), "Exception");
+                MessageBox.Show(string.Format("Exception during update of source's publish state: {0}", ex.Message), "Exception");
             }         
         }
     }

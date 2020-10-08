@@ -74,12 +74,12 @@ namespace CrypToolStoreDeveloperClient.Views
                         return;
                     }
 
-                    if (String.IsNullOrEmpty(Username.Text))
+                    if (string.IsNullOrEmpty(Username.Text))
                     {
                         MessageBox.Show("You have to enter a username to login.", "No username entered");
                         return;
                     }
-                    if (String.IsNullOrEmpty(Password.Password))
+                    if (string.IsNullOrEmpty(Password.Password))
                     {
                         MessageBox.Show("You have to enter a password to login.", "No username entered");
                         return;
@@ -88,7 +88,7 @@ namespace CrypToolStoreDeveloperClient.Views
                     CrypToolStoreClient client = new CrypToolStoreClient();
                     client.ServerCertificate = MainWindow.ServerCertificate;
                     client.ServerAddress = Config.GetConfigEntry("ServerAddress");
-                    client.ServerPort = Int32.Parse(Config.GetConfigEntry("ServerPort"));
+                    client.ServerPort = int.Parse(Config.GetConfigEntry("ServerPort"));
                     client.Connect();
                     //just a test login, to verify username and password
                     bool authenticated = client.Login(Username.Text, Password.Password);
@@ -106,8 +106,8 @@ namespace CrypToolStoreDeveloperClient.Views
                             MainWindow.IsAdmin = true;
                         }
                         //remove everything from UI for later logout; thus, the inputs are empty for a new login
-                        Username.Text = String.Empty;
-                        Password.Password = String.Empty;                        
+                        Username.Text = string.Empty;
+                        Password.Password = string.Empty;                        
                         ((MainWindow)((Grid)this.Parent).Parent).ChangeScreen(UiState.MainMenu);                        
                     }
                     else
@@ -118,7 +118,7 @@ namespace CrypToolStoreDeveloperClient.Views
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(String.Format("Exception during login: {0}", ex.Message), "Login failed");
+                    MessageBox.Show(string.Format("Exception during login: {0}", ex.Message), "Login failed");
                 }
             }
         }
