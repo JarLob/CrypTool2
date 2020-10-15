@@ -41,9 +41,7 @@ namespace Cryptool.Plugins.FEAL
         private ICryptoolStream _InputStream;
         
         private bool _stop = false;
-        
-        private delegate byte[] CryptoFunction(byte[] text, byte[] key);
-        
+                
         private byte[] _lastInputBlock = null; //needed for the visualization of the cipher; we only show the last encrypted/decrypted block
 
         #endregion
@@ -196,44 +194,44 @@ namespace Cryptool.Plugins.FEAL
             }
 
             //Select crypto function based on algorithm, blockmode, and action
-            CryptoFunction cryptoFunction = null;
+            BlockCipherHelper.BlockCipher blockCipher = null;
             if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL4 && _FEALSettings.BlockMode == BlockMode.CFB)
             {
-                cryptoFunction = new CryptoFunction(FEAL_Algorithms.FEAL4_EncryptBlock);
+                blockCipher = new BlockCipherHelper.BlockCipher(FEAL_Algorithms.FEAL4_EncryptBlock);
             }
             else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL8 && _FEALSettings.BlockMode == BlockMode.CFB)
             {
-                cryptoFunction = new CryptoFunction(FEAL_Algorithms.FEAL8_EncryptBlock); //uses encryption since it only XORs result of cipher
+                blockCipher = new BlockCipherHelper.BlockCipher(FEAL_Algorithms.FEAL8_EncryptBlock); //uses encryption since it only XORs result of cipher
             }
             else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL4 && _FEALSettings.BlockMode == BlockMode.OFB)
             {
-                cryptoFunction = new CryptoFunction(FEAL_Algorithms.FEAL4_EncryptBlock);
+                blockCipher = new BlockCipherHelper.BlockCipher(FEAL_Algorithms.FEAL4_EncryptBlock);
             }
             else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL8 && _FEALSettings.BlockMode == BlockMode.OFB)
             {
-                cryptoFunction = new CryptoFunction(FEAL_Algorithms.FEAL8_EncryptBlock); //uses encryption since it only XORs result of cipher
+                blockCipher = new BlockCipherHelper.BlockCipher(FEAL_Algorithms.FEAL8_EncryptBlock); //uses encryption since it only XORs result of cipher
             }
             else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL4 && _FEALSettings.Action == Action.Encrypt)
             {
-                cryptoFunction = new CryptoFunction(FEAL_Algorithms.FEAL4_EncryptBlock);
+                blockCipher = new BlockCipherHelper.BlockCipher(FEAL_Algorithms.FEAL4_EncryptBlock);
             }
             else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL4 && _FEALSettings.Action == Action.Decrypt)
             {
-                cryptoFunction = new CryptoFunction(FEAL_Algorithms.FEAL4_DecryptBlock);
+                blockCipher = new BlockCipherHelper.BlockCipher(FEAL_Algorithms.FEAL4_DecryptBlock);
             }
             else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL8 && _FEALSettings.Action == Action.Encrypt)
             {
-                cryptoFunction = new CryptoFunction(FEAL_Algorithms.FEAL8_EncryptBlock);
+                blockCipher = new BlockCipherHelper.BlockCipher(FEAL_Algorithms.FEAL8_EncryptBlock);
             }
             else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL8 && _FEALSettings.Action == Action.Decrypt)
             {
-                cryptoFunction = new CryptoFunction(FEAL_Algorithms.FEAL8_DecryptBlock);
+                blockCipher = new BlockCipherHelper.BlockCipher(FEAL_Algorithms.FEAL8_DecryptBlock);
             }            
 
             //Check, if we found a crypto function that we can use
             //this error should NEVER occur. Only in case someone adds functionality and misses
             //to create a valid configuration
-            if (cryptoFunction == null)
+            if (blockCipher == null)
             {
                 GuiLogMessage("No crypto function could be selected based on your settings", NotificationLevel.Error);
                 return;
@@ -262,23 +260,57 @@ namespace Cryptool.Plugins.FEAL
             switch (_FEALSettings.BlockMode)
             {
                 case BlockMode.ECB:
-                    Execute_ECB(cryptoFunction);
+                    BlockCipherHelper.ExecuteECB(blockCipher,
+                        _FEALSettings.Action == Action.Encrypt ? BlockCipherHelper.CipherAction.Encrypt : BlockCipherHelper.CipherAction.Decrypt,
+                        ref _InputStream,
+                        ref _OutputStreamWriter,
+                        _InputKey,
+                        _FEALSettings.Padding,
+                        ref _stop,
+                        ProgressChanged,
+                        ref _lastInputBlock);
                     break;
                 case BlockMode.CBC:
                     CheckIV();
-                    Execute_CBC(cryptoFunction);
+                    BlockCipherHelper.ExecuteCBC(blockCipher,
+                       _FEALSettings.Action == Action.Encrypt ? BlockCipherHelper.CipherAction.Encrypt : BlockCipherHelper.CipherAction.Decrypt,
+                       ref _InputStream,
+                       ref _OutputStreamWriter,
+                       _InputKey,
+                       _InputIV,
+                       _FEALSettings.Padding,
+                       ref _stop,
+                       ProgressChanged,
+                       ref _lastInputBlock);
                     break;
                 case BlockMode.CFB:
                     CheckIV();
-                    Execute_CFB(cryptoFunction);
+                    BlockCipherHelper.ExecuteCFB(blockCipher,
+                      _FEALSettings.Action == Action.Encrypt ? BlockCipherHelper.CipherAction.Encrypt : BlockCipherHelper.CipherAction.Decrypt,
+                      ref _InputStream,
+                      ref _OutputStreamWriter,
+                      _InputKey,
+                      _InputIV,
+                      _FEALSettings.Padding,
+                      ref _stop,
+                      ProgressChanged,
+                      ref _lastInputBlock);
                     break;
                 case BlockMode.OFB:
                     CheckIV();
-                    Execute_OFB(cryptoFunction);
+                    BlockCipherHelper.ExecuteOFB(blockCipher,
+                      _FEALSettings.Action == Action.Encrypt ? BlockCipherHelper.CipherAction.Encrypt : BlockCipherHelper.CipherAction.Decrypt,
+                      ref _InputStream,
+                      ref _OutputStreamWriter,
+                      _InputKey,
+                      _InputIV,
+                      _FEALSettings.Padding,
+                      ref _stop,
+                      ProgressChanged,
+                      ref _lastInputBlock);
                     break;   
                 default:
-                    throw new NotImplementedException(String.Format("The mode {0} has not been implemented.", _FEALSettings.BlockMode));
-                    break;
+                    throw new NotImplementedException(string.Format("The mode {0} has not been implemented.", _FEALSettings.BlockMode));
             }
 
             if (_lastInputBlock != null)
@@ -332,369 +364,6 @@ namespace Cryptool.Plugins.FEAL
                 Array.Copy(_InputIV, 0, iv, 0, 8);
                 GuiLogMessage(String.Format(Resources.FEAL_CheckIV_IV_too_long, _InputIV.Length), NotificationLevel.Warning);
                 _InputIV = iv;
-            }
-        }
-
-        /// <summary>
-        /// Encrypts/Decrypts using ECB
-        /// </summary>
-        /// <param name="cryptoFunction"></param>
-        private void Execute_ECB(CryptoFunction cryptoFunction)
-        {
-            using (CStreamReader reader = _InputStream.CreateReader())
-            {
-                using (CStreamWriter writer = new CStreamWriter())
-                {
-
-                    byte[] inputBlock = new byte[8];
-                    int readcount = 0;
-
-                    while (reader.Position < reader.Length && !_stop)
-                    {
-                        //we always try to read a complete block (=8 bytes)
-                        readcount = 0;
-                        while ((readcount += reader.Read(inputBlock, readcount, 8 - readcount)) < 8 &&
-                               reader.Position < reader.Length && !_stop);
-                        if (_stop)
-                        {
-                            return;
-                        }
-
-                        //Show progress in UI
-                        ProgressChanged(reader.Position, reader.Length);
-
-                        byte[] outputblock = null;
-                        //we read a complete block
-                        if (readcount == 8)
-                        {
-                            outputblock = cryptoFunction(inputBlock, _InputKey);
-                        }
-                        //we read an incomplete block, thus, we are at the end of the stream
-                        else if (readcount > 0)
-                        {
-                            byte[] block = new byte[8];
-                            Array.Copy(inputBlock, 0, block, 0, readcount);
-                            outputblock = cryptoFunction(block, _InputKey);
-                        }
-
-                        //check if it is the last block and we decrypt, thus, we have to remove the padding
-                        if (reader.Position == reader.Length && _FEALSettings.Action == Action.Decrypt && _FEALSettings.Padding != BlockCipherHelper.PaddingType.None)
-                        {
-                            int valid = BlockCipherHelper.StripPadding(outputblock, 8, _FEALSettings.Padding, 8);
-                            if (valid != 8)
-                            {
-                                byte[] newoutputblock = new byte[valid];
-                                Array.Copy(outputblock, 0, newoutputblock, 0, valid);
-                                outputblock = newoutputblock;
-                            }
-                            else if(valid == 0)
-                            {
-                                outputblock = null;
-                            }
-                        }
-
-                        //if we crypted something, we output it
-                        if (outputblock != null)
-                        {
-                            writer.Write(outputblock, 0, outputblock.Length);
-                            //if we wrote to the stream, we memorize the last input block for the visualization
-                            _lastInputBlock = inputBlock;
-                        }
-                    }
-
-                    writer.Flush();
-                    _OutputStreamWriter = writer;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Encrypts/Decrypts using CBC
-        /// </summary>
-        /// <param name="cryptoFunction"></param>
-        private void Execute_CBC(CryptoFunction cryptoFunction)
-        {            
-            using (CStreamReader reader = _InputStream.CreateReader())
-            {
-                using (CStreamWriter writer = new CStreamWriter())
-                {
-
-                    byte[] lastBlock = InputIV;
-                    int readcount = 0;
-
-                    while (reader.Position < reader.Length && !_stop)
-                    {
-                        //we always try to read a complete block (=8 bytes)
-                        byte[] inputBlock = new byte[8];
-                        readcount = 0;
-                        while ((readcount += reader.Read(inputBlock, readcount, 8 - readcount)) < 8 &&
-                               reader.Position < reader.Length && !_stop);
-                        if (_stop)
-                        {
-                            return;
-                        }
-
-                        //Show progress in UI
-                        ProgressChanged(reader.Position, reader.Length);
-
-                        byte[] outputblock = null;
-                        //we read a complete block
-                        if (readcount == 8)
-                        {
-                            //Compute XOR with lastblock for CBC mode
-                            if (_FEALSettings.Action == Action.Encrypt)
-                            {
-                                inputBlock = FEAL_Algorithms.XOR(inputBlock, lastBlock);
-                                outputblock = cryptoFunction(inputBlock, _InputKey);
-                                lastBlock = outputblock;
-                            }
-                            else
-                            {
-                                outputblock = cryptoFunction(inputBlock, _InputKey);
-                                outputblock = FEAL_Algorithms.XOR(outputblock, lastBlock);
-                                lastBlock = inputBlock;
-                            }
-                        }
-                        //we read an incomplete block, thus, we are at the end of the stream
-                        else if (readcount > 0)
-                        {
-                            //Compute XOR with lastblock for CBC mode
-                            if (_FEALSettings.Action == Action.Encrypt)
-                            {
-                                byte[] block = new byte[8];
-                                Array.Copy(inputBlock, 0, block, 0, readcount);
-                                inputBlock = FEAL_Algorithms.XOR(block, lastBlock);
-                                outputblock = cryptoFunction(inputBlock, _InputKey);
-                            }
-                            else
-                            {
-                                outputblock = cryptoFunction(inputBlock, _InputKey);
-                                outputblock = FEAL_Algorithms.XOR(outputblock, lastBlock);
-                            }
-                        }
-
-                        //check if it is the last block and we decrypt, thus, we have to remove the padding
-                        if (reader.Position == reader.Length && _FEALSettings.Action == Action.Decrypt && _FEALSettings.Padding != BlockCipherHelper.PaddingType.None)
-                        {
-                            int valid = BlockCipherHelper.StripPadding(outputblock, 8, _FEALSettings.Padding, 8);
-                            if (valid != 8)
-                            {
-                                byte[] newoutputblock = new byte[valid];
-                                Array.Copy(outputblock, 0, newoutputblock, 0, valid);
-                                outputblock = newoutputblock;
-                            }
-                            else if(valid == 0)
-                            {
-                                outputblock = null;
-                            }
-                        }
-
-                        //if we crypted something, we output it
-                        if (outputblock != null)
-                        {
-                            writer.Write(outputblock, 0, outputblock.Length);
-                            //if we wrote to the stream, we memorize the last input block for the visualization
-                            _lastInputBlock = inputBlock;
-                        }
-                    }
-
-                    writer.Flush();
-                    _OutputStreamWriter = writer;
-                }
-            }
-        }       
-
-        /// <summary>
-        /// Encrypts/Decrypts using CFB
-        /// </summary>
-        /// <param name="cryptoFunction"></param>
-        private void Execute_CFB(CryptoFunction cryptoFunction)
-        {
-            using (CStreamReader reader = _InputStream.CreateReader())
-            {
-                using (CStreamWriter writer = new CStreamWriter())
-                {
-                    byte[] lastBlock = InputIV;
-                    int readcount = 0;
-
-                    while (reader.Position < reader.Length && !_stop)
-                    {
-                        //we always try to read a complete block (=8 bytes)
-                        byte[] inputBlock = new byte[8];
-                        readcount = 0;
-                        while ((readcount += reader.Read(inputBlock, readcount, 8 - readcount)) < 8 &&
-                               reader.Position < reader.Length && !_stop) ;
-                        if (_stop)
-                        {
-                            return;
-                        }
-
-                        //Show progress in UI
-                        ProgressChanged(reader.Position, reader.Length);
-
-                        byte[] outputblock = null;
-                        //we read a complete block
-                        if (readcount == 8)
-                        {
-                            //Compute XOR with lastblock for CFB mode
-                            if (_FEALSettings.Action == Action.Encrypt)
-                            {                                
-                                outputblock = cryptoFunction(lastBlock, _InputKey);
-                                outputblock = FEAL_Algorithms.XOR(outputblock, inputBlock);                             
-                                lastBlock = outputblock;
-                            }
-                            else
-                            {
-                                outputblock = cryptoFunction(lastBlock, _InputKey);
-                                outputblock = FEAL_Algorithms.XOR(outputblock, inputBlock);
-                                lastBlock = inputBlock;
-                            }
-                        }
-                        //we read an incomplete block, thus, we are at the end of the stream
-                        else if (readcount > 0)
-                        {
-                            //Compute XOR with lastblock for CFB mode
-                            if (_FEALSettings.Action == Action.Encrypt)
-                            {
-                                byte[] block = new byte[8];
-                                Array.Copy(inputBlock, 0, block, 0, readcount);
-                                outputblock = cryptoFunction(lastBlock, _InputKey);
-                                outputblock = FEAL_Algorithms.XOR(outputblock, block);
-                            }
-                            else
-                            {
-                                byte[] block = new byte[8];
-                                Array.Copy(inputBlock, 0, block, 0, readcount);
-                                outputblock = cryptoFunction(inputBlock, _InputKey);
-                                outputblock = FEAL_Algorithms.XOR(outputblock, lastBlock);
-                            }
-                        }
-
-                        //check if it is the last block and we decrypt, thus, we have to remove the padding
-                        if (reader.Position == reader.Length && _FEALSettings.Action == Action.Decrypt && _FEALSettings.Padding != BlockCipherHelper.PaddingType.None)
-                        {
-                            int valid = BlockCipherHelper.StripPadding(outputblock, 8, _FEALSettings.Padding, 8);
-                            if (valid != 8)
-                            {
-                                byte[] newoutputblock = new byte[valid];
-                                Array.Copy(outputblock, 0, newoutputblock, 0, valid);
-                                outputblock = newoutputblock;
-                            }
-                            else if(valid == 0)
-                            {
-                                outputblock = null;
-                            }
-                        }
-
-                        //if we crypted something, we output it
-                        if (outputblock != null)
-                        {
-                            writer.Write(outputblock, 0, outputblock.Length);
-                            //if we wrote to the stream, we memorize the last input block for the visualization
-                            _lastInputBlock = inputBlock;
-                        }
-                    }
-
-                    writer.Flush();
-                    _OutputStreamWriter = writer;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Encrypts/Decrypts using OFB
-        /// </summary>
-        /// <param name="cryptoFunction"></param>
-        private void Execute_OFB(CryptoFunction cryptoFunction)
-        {
-            using (CStreamReader reader = _InputStream.CreateReader())
-            {
-                using (CStreamWriter writer = new CStreamWriter())
-                {
-                    byte[] lastBlock = InputIV;
-                    int readcount = 0;
-
-                    while (reader.Position < reader.Length && !_stop)
-                    {
-                        //we always try to read a complete block (=8 bytes)
-                        byte[] inputBlock = new byte[8];
-                        readcount = 0;
-                        while ((readcount += reader.Read(inputBlock, readcount, 8 - readcount)) < 8 &&
-                               reader.Position < reader.Length && !_stop) ;
-                        if (_stop)
-                        {
-                            return;
-                        }
-
-                        //Show progress in UI
-                        ProgressChanged(reader.Position, reader.Length);
-
-                        byte[] outputblock = null;
-                        //we read a complete block
-                        if (readcount == 8)
-                        {
-                            //Compute XOR with lastblock for OFB mode
-                            if (_FEALSettings.Action == Action.Encrypt)
-                            {
-                                outputblock = cryptoFunction(lastBlock, _InputKey);
-                                lastBlock = outputblock;
-                                outputblock = FEAL_Algorithms.XOR(outputblock, inputBlock);                                
-                            }
-                            else
-                            {
-                                outputblock = cryptoFunction(lastBlock, _InputKey);
-                                lastBlock = outputblock;
-                                outputblock = FEAL_Algorithms.XOR(outputblock, inputBlock);                                
-                            }
-                        }
-                        //we read an incomplete block, thus, we are at the end of the stream
-                        else if (readcount > 0)
-                        {
-                            //Compute XOR with lastblock for CFB mode
-                            if (_FEALSettings.Action == Action.Encrypt)
-                            {
-                                byte[] block = new byte[8];
-                                Array.Copy(inputBlock, 0, block, 0, readcount);
-                                outputblock = cryptoFunction(lastBlock, _InputKey);
-                                outputblock = FEAL_Algorithms.XOR(outputblock, block);
-                            }
-                            else
-                            {
-                                byte[] block = new byte[8];
-                                Array.Copy(inputBlock, 0, block, 0, readcount);
-                                outputblock = cryptoFunction(inputBlock, _InputKey);
-                                outputblock = FEAL_Algorithms.XOR(outputblock, lastBlock);
-                            }
-                        }
-
-                        //check if it is the last block and we decrypt, thus, we have to remove the padding
-                        if (reader.Position == reader.Length && _FEALSettings.Action == Action.Decrypt && _FEALSettings.Padding != BlockCipherHelper.PaddingType.None)
-                        {
-                            int valid = BlockCipherHelper.StripPadding(outputblock, 8, _FEALSettings.Padding, 8);
-                            if (valid != 8)
-                            {
-                                byte[] newoutputblock = new byte[valid];
-                                Array.Copy(outputblock, 0, newoutputblock, 0, valid);
-                                outputblock = newoutputblock;
-                            }
-                            else if (valid == 0)
-                            {
-                                outputblock = null;
-                            }
-                        }
-
-                        //if we crypted something, we output it
-                        if (outputblock != null)
-                        {
-                            writer.Write(outputblock, 0, outputblock.Length);
-                            //if we wrote to the stream, we memorize the last input block for the visualization
-                            _lastInputBlock = inputBlock;
-                        }
-                    }
-
-                    writer.Flush();
-                    _OutputStreamWriter = writer;
-                }
             }
         }
 
