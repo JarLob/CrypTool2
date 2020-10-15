@@ -574,7 +574,7 @@
     <value>Alle Linien neu anordnen</value>
   </data>
   <data name="TemplateReplacement" xml:space="preserve">
-    <value>Vorlagen-Ersetzung</value>
+    <value>Vorlagen-Platzhalter-Ersetzung</value>
   </data>
   <data name="TemplateReplacementTooltip" xml:space="preserve">
     <value>Aktiviert/deaktiviert das Ersetzen von Vorlagen-Platzhaltern ($something$) durch den Text der aktuell in CrypTool 2 ausgewählten Sprache</value>

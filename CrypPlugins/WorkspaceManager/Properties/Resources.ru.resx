@@ -574,7 +574,7 @@
     <value>Переставить все линии</value>
   </data>
   <data name="TemplateReplacement" xml:space="preserve">
-    <value>Замена шаблона</value>
+    <value>Замена заполнителя шаблона</value>
   </data>
   <data name="TemplateReplacementTooltip" xml:space="preserve">
     <value>Активирует / деактивирует замену шаблонных заполнителей ($something$) текстом языка, выбранного в данный момент в CrypTool 2</value>

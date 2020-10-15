@@ -1204,7 +1204,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Template replacement ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Template placeholder replacement ähnelt.
         /// </summary>
         public static string TemplateReplacement {
             get {
