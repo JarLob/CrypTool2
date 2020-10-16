@@ -27,6 +27,14 @@ namespace Cryptool.PluginBase.Miscellaneous
             Decrypt
         }
 
+        public enum BlockMode
+        {
+            ECB,
+            CBC,
+            CFB,
+            OFB
+        }
+
         public enum PaddingType
         {
             None, 

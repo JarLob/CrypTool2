@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2019 Nils Kopal <Nils.Kopal<at>CrypTool.org
+   Copyright 2020 Nils Kopal <Nils.Kopal<at>CrypTool.org
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ using System;
 using System.Windows.Threading;
 using System.Threading;
 using Cryptool.Plugins.FEAL.Properties;
+using static Cryptool.PluginBase.Miscellaneous.BlockCipherHelper;
 
 namespace Cryptool.Plugins.FEAL
 {
@@ -147,7 +148,7 @@ namespace Cryptool.Plugins.FEAL
                 }
                 catch (Exception ex)
                 {
-                    GuiLogMessage(String.Format("Exception occured during updating of visualization: {0}", ex.Message), NotificationLevel.Error);
+                    GuiLogMessage(string.Format("Exception occured during updating of visualization: {0}", ex.Message), NotificationLevel.Error);
                 }
             }, null);        
         }
@@ -182,50 +183,50 @@ namespace Cryptool.Plugins.FEAL
             {
                 byte[] key = new byte[8];
                 Array.Copy(_InputKey, 0, key, 0, _InputKey.Length);
-                GuiLogMessage(String.Format(Resources.FEAL_Execute_Key_too_short,_InputKey.Length), NotificationLevel.Warning);
+                GuiLogMessage(string.Format(Resources.FEAL_Execute_Key_too_short,_InputKey.Length), NotificationLevel.Warning);
                 _InputKey = key;
             }
             if (_InputKey.Length > 8)
             {
                 byte[] key = new byte[8];
                 Array.Copy(_InputKey, 0, key, 0, 8);
-                GuiLogMessage(String.Format(Resources.FEAL_Execute_Key_too_long, _InputKey.Length), NotificationLevel.Warning);
+                GuiLogMessage(string.Format(Resources.FEAL_Execute_Key_too_long, _InputKey.Length), NotificationLevel.Warning);
                 _InputKey = key;
             }
 
             //Select crypto function based on algorithm, blockmode, and action
-            BlockCipherHelper.BlockCipher blockCipher = null;
+            BlockCipher blockCipher = null;
             if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL4 && _FEALSettings.BlockMode == BlockMode.CFB)
             {
-                blockCipher = new BlockCipherHelper.BlockCipher(FEAL_Algorithms.FEAL4_EncryptBlock);
+                blockCipher = new BlockCipher(FEAL_Algorithms.FEAL4_EncryptBlock);
             }
             else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL8 && _FEALSettings.BlockMode == BlockMode.CFB)
             {
-                blockCipher = new BlockCipherHelper.BlockCipher(FEAL_Algorithms.FEAL8_EncryptBlock); //uses encryption since it only XORs result of cipher
+                blockCipher = new BlockCipher(FEAL_Algorithms.FEAL8_EncryptBlock); //uses encryption since it only XORs result of cipher
             }
             else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL4 && _FEALSettings.BlockMode == BlockMode.OFB)
             {
-                blockCipher = new BlockCipherHelper.BlockCipher(FEAL_Algorithms.FEAL4_EncryptBlock);
+                blockCipher = new BlockCipher(FEAL_Algorithms.FEAL4_EncryptBlock);
             }
             else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL8 && _FEALSettings.BlockMode == BlockMode.OFB)
             {
-                blockCipher = new BlockCipherHelper.BlockCipher(FEAL_Algorithms.FEAL8_EncryptBlock); //uses encryption since it only XORs result of cipher
+                blockCipher = new BlockCipher(FEAL_Algorithms.FEAL8_EncryptBlock); //uses encryption since it only XORs result of cipher
             }
-            else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL4 && _FEALSettings.Action == Action.Encrypt)
+            else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL4 && _FEALSettings.Action == CipherAction.Encrypt)
             {
-                blockCipher = new BlockCipherHelper.BlockCipher(FEAL_Algorithms.FEAL4_EncryptBlock);
+                blockCipher = new BlockCipher(FEAL_Algorithms.FEAL4_EncryptBlock);
             }
-            else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL4 && _FEALSettings.Action == Action.Decrypt)
+            else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL4 && _FEALSettings.Action == CipherAction.Decrypt)
             {
-                blockCipher = new BlockCipherHelper.BlockCipher(FEAL_Algorithms.FEAL4_DecryptBlock);
+                blockCipher = new BlockCipher(FEAL_Algorithms.FEAL4_DecryptBlock);
             }
-            else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL8 && _FEALSettings.Action == Action.Encrypt)
+            else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL8 && _FEALSettings.Action == CipherAction.Encrypt)
             {
-                blockCipher = new BlockCipherHelper.BlockCipher(FEAL_Algorithms.FEAL8_EncryptBlock);
+                blockCipher = new BlockCipher(FEAL_Algorithms.FEAL8_EncryptBlock);
             }
-            else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL8 && _FEALSettings.Action == Action.Decrypt)
+            else if (_FEALSettings.FealAlgorithmType == FealAlgorithmType.FEAL8 && _FEALSettings.Action == CipherAction.Decrypt)
             {
-                blockCipher = new BlockCipherHelper.BlockCipher(FEAL_Algorithms.FEAL8_DecryptBlock);
+                blockCipher = new BlockCipher(FEAL_Algorithms.FEAL8_DecryptBlock);
             }            
 
             //Check, if we found a crypto function that we can use
@@ -237,10 +238,10 @@ namespace Cryptool.Plugins.FEAL
                 return;
             }
 
-            if (_FEALSettings.Action == Action.Encrypt)
+            if (_FEALSettings.Action == CipherAction.Encrypt)
             {
                 //in case of encryption, we have to add padding
-                _InputStream = BlockCipherHelper.AppendPadding(InputStream, _FEALSettings.Padding, 8);
+                _InputStream = AppendPadding(InputStream, _FEALSettings.Padding, 8);
             }
             else
             {
@@ -260,8 +261,8 @@ namespace Cryptool.Plugins.FEAL
             switch (_FEALSettings.BlockMode)
             {
                 case BlockMode.ECB:
-                    BlockCipherHelper.ExecuteECB(blockCipher,
-                        _FEALSettings.Action == Action.Encrypt ? BlockCipherHelper.CipherAction.Encrypt : BlockCipherHelper.CipherAction.Decrypt,
+                    ExecuteECB(blockCipher,
+                        _FEALSettings.Action,
                         ref _InputStream,
                         ref _OutputStreamWriter,
                         _InputKey,
@@ -272,8 +273,8 @@ namespace Cryptool.Plugins.FEAL
                     break;
                 case BlockMode.CBC:
                     CheckIV();
-                    BlockCipherHelper.ExecuteCBC(blockCipher,
-                       _FEALSettings.Action == Action.Encrypt ? BlockCipherHelper.CipherAction.Encrypt : BlockCipherHelper.CipherAction.Decrypt,
+                    ExecuteCBC(blockCipher,
+                       _FEALSettings.Action,
                        ref _InputStream,
                        ref _OutputStreamWriter,
                        _InputKey,
@@ -285,8 +286,8 @@ namespace Cryptool.Plugins.FEAL
                     break;
                 case BlockMode.CFB:
                     CheckIV();
-                    BlockCipherHelper.ExecuteCFB(blockCipher,
-                      _FEALSettings.Action == Action.Encrypt ? BlockCipherHelper.CipherAction.Encrypt : BlockCipherHelper.CipherAction.Decrypt,
+                    ExecuteCFB(blockCipher,
+                      _FEALSettings.Action,
                       ref _InputStream,
                       ref _OutputStreamWriter,
                       _InputKey,
@@ -298,8 +299,8 @@ namespace Cryptool.Plugins.FEAL
                     break;
                 case BlockMode.OFB:
                     CheckIV();
-                    BlockCipherHelper.ExecuteOFB(blockCipher,
-                      _FEALSettings.Action == Action.Encrypt ? BlockCipherHelper.CipherAction.Encrypt : BlockCipherHelper.CipherAction.Decrypt,
+                    ExecuteOFB(blockCipher,
+                      _FEALSettings.Action,
                       ref _InputStream,
                       ref _OutputStreamWriter,
                       _InputKey,
@@ -320,7 +321,7 @@ namespace Cryptool.Plugins.FEAL
                 {
                     try
                     {
-                        if (_FEALSettings.Action == Action.Encrypt)
+                        if (_FEALSettings.Action == BlockCipherHelper.CipherAction.Encrypt)
                         {
                             fealPresentation.VisualizeEncryptBlock(_lastInputBlock, _InputKey);
                         }
@@ -331,7 +332,7 @@ namespace Cryptool.Plugins.FEAL
                     }
                     catch (Exception ex)
                     {
-                        GuiLogMessage(String.Format("Exception occured during building of visualization: {0}", ex.Message), NotificationLevel.Error);
+                        GuiLogMessage(string.Format("Exception occured during building of visualization: {0}", ex.Message), NotificationLevel.Error);
                     }
                 }, null);
             }
@@ -355,14 +356,14 @@ namespace Cryptool.Plugins.FEAL
             {
                 byte[] iv = new byte[8];
                 Array.Copy(_InputIV, 0, iv, 0, _InputIV.Length);
-                GuiLogMessage(String.Format(Resources.FEAL_CheckIV_IV_too_short, _InputIV.Length), NotificationLevel.Warning);
+                GuiLogMessage(string.Format(Resources.FEAL_CheckIV_IV_too_short, _InputIV.Length), NotificationLevel.Warning);
                 _InputIV = iv;
             }
             if (_InputIV.Length > 8)
             {
                 byte[] iv = new byte[8];
                 Array.Copy(_InputIV, 0, iv, 0, 8);
-                GuiLogMessage(String.Format(Resources.FEAL_CheckIV_IV_too_long, _InputIV.Length), NotificationLevel.Warning);
+                GuiLogMessage(string.Format(Resources.FEAL_CheckIV_IV_too_long, _InputIV.Length), NotificationLevel.Warning);
                 _InputIV = iv;
             }
         }

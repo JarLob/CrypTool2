@@ -17,6 +17,7 @@
 using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
+using static Cryptool.PluginBase.Miscellaneous.BlockCipherHelper;
 
 namespace Cryptool.Plugins.FEAL
 {  
@@ -26,26 +27,12 @@ namespace Cryptool.Plugins.FEAL
         FEAL8
     }
 
-    public enum Action
-    {
-        Encrypt,
-        Decrypt
-    }
-
-    public enum BlockMode
-    {
-        ECB,
-        CBC,
-        CFB,
-        OFB,
-    }
-
     public class FEALSettings : ISettings
     {
         #region Private Variables
 
         private FealAlgorithmType _fealAlgorithmType = FealAlgorithmType.FEAL8;
-        private Action _action = Action.Encrypt;
+        private CipherAction _action = CipherAction.Encrypt;
         private BlockMode _blockMode = BlockMode.ECB;
         private BlockCipherHelper.PaddingType _padding = BlockCipherHelper.PaddingType.None;
         private bool _enableKeyParityBits = false;
@@ -71,7 +58,7 @@ namespace Cryptool.Plugins.FEAL
 
         [TaskPane("ActionCaption", "ActionTooltip", null, 2, false, ControlType.ComboBox,
             new string[] {"ActionList1", "ActionList2"})]
-        public Action Action
+        public CipherAction Action
         {
             get { return _action; }
             set
