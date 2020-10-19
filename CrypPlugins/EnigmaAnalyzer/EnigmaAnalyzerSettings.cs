@@ -39,6 +39,12 @@ namespace Cryptool.EnigmaAnalyzer
         Eight = 7
     }
 
+    public enum GreekRotor
+    {
+        Beta = 8,
+        Gamma = 9
+    }
+
     public enum RingRotorPosition
     {
         A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z
@@ -77,8 +83,8 @@ namespace Cryptool.EnigmaAnalyzer
         private Reflector _reflectorFrom = Reflector.B;
         private Reflector _reflectorTo = Reflector.B;
 
-        private Rotor _greekRotorFrom = Rotor.One;
-        private Rotor _greekRotorTo = Rotor.Five;
+        private GreekRotor _greekRotorFrom = GreekRotor.Beta;
+        private GreekRotor _greekRotorTo = GreekRotor.Gamma;
         private Rotor _leftRotorFrom = Rotor.One;
         private Rotor _leftRotorTo = Rotor.Five;
         private Rotor _middleRotorFrom = Rotor.One;
@@ -325,8 +331,8 @@ namespace Cryptool.EnigmaAnalyzer
 
         #region rotor settings
 
-        [TaskPane("GreekRotorFromCaption", "GreekRotorFromTooltip", "RotorGroup", 1, false, ControlType.ComboBox, new string[] { "I", "II", "III", "IV", "V", "VI", "VII", "VIII" })]
-        public Rotor GreekRotorFrom
+        [TaskPane("GreekRotorFromCaption", "GreekRotorFromTooltip", "RotorGroup", 1, false, ControlType.ComboBox, new string[] { "Beta", "Gamma" })]
+        public GreekRotor GreekRotorFrom
         {
             get
             {
@@ -342,8 +348,8 @@ namespace Cryptool.EnigmaAnalyzer
             }
         }
 
-        [TaskPane("GreekRotorToCaption", "GreekRotorToTooltip", "RotorGroup", 1, false, ControlType.ComboBox, new string[] { "I", "II", "III", "IV", "V", "VI", "VII", "VIII" })]
-        public Rotor GreekRotorTo
+        [TaskPane("GreekRotorToCaption", "GreekRotorToTooltip", "RotorGroup", 1, false, ControlType.ComboBox, new string[] { "Beta", "Gamma" })]
+        public GreekRotor GreekRotorTo
         {
             get
             {
@@ -824,6 +830,19 @@ namespace Cryptool.EnigmaAnalyzer
                     return "8";
                 default:
                     return "1";
+            }
+        }
+
+        public static string GetRotorString(GreekRotor rotor)
+        {
+            switch (rotor)
+            {
+                case GreekRotor.Beta:
+                    return "B";
+                case GreekRotor.Gamma:
+                    return "G";               
+                default:
+                    return "B";
             }
         }
 
