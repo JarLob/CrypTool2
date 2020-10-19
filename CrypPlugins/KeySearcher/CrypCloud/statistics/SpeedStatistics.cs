@@ -6,12 +6,15 @@ using System.Numerics;
 namespace KeySearcher.CrypCloud.statistics
 {
     public class SpeedStatistics
-    {
-        public int MinutesUntilEntryInvalidates = 30;
+    {        
+        private DateTime _startTime = DateTime.Now;
+        public int MinutesUntilEntryInvalidates { get; set; } = 30;
+        public int MinutesUntilStartCollecting { get; set; } = 2;
 
-        public SpeedStatistics(int minutesTillInvalidate)
+        public SpeedStatistics(int minutesTillInvalidate, int minutesUntilStartCollecting)
         {
             MinutesUntilEntryInvalidates = minutesTillInvalidate;
+            MinutesUntilStartCollecting = minutesUntilStartCollecting;
         }
 
         private DateTime statisticsStartTime = DateTime.UtcNow;
@@ -19,6 +22,12 @@ namespace KeySearcher.CrypCloud.statistics
 
         public void AddEntry(BigInteger numberOfKeysCalculated)
         {
+            if(DateTime.Now < _startTime.AddMinutes(MinutesUntilStartCollecting))
+            {
+                //we ignore the received blocks for the statistic at start since we 
+                //could get too many during the connection phase
+                return;
+            }
             var entry = new SpeedStatisticsEntry
             {
                 NumberOfKeysInBlock = numberOfKeysCalculated,
@@ -45,7 +54,7 @@ namespace KeySearcher.CrypCloud.statistics
                 calculatedKeys = calculations.Aggregate(new BigInteger(0), (prev, it) => prev + it.NumberOfKeysInBlock);
             }
 
-            var seconds = MinutesUntilEntryInvalidates*60;
+            var seconds = MinutesUntilEntryInvalidates * 60;
             if (statisticsStartTime.AddMinutes(MinutesUntilEntryInvalidates) > DateTime.UtcNow)
             {
                 var timeSpan = (DateTime.UtcNow - statisticsStartTime);

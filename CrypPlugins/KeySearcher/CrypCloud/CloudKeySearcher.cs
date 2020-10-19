@@ -26,9 +26,9 @@ namespace KeySearcher
         private readonly BigInteger jobId;
         private readonly P2PPresentationVM viewModel; 
         private readonly TaskFactory uiContext;
-        
-        private readonly SpeedStatistics globalSpeedStatistics = new SpeedStatistics(30);
-        private readonly SpeedStatistics localSpeedStatistics = new SpeedStatistics(5);
+
+        private readonly SpeedStatistics globalSpeedStatistics = new SpeedStatistics(30, 2);
+        private readonly SpeedStatistics localSpeedStatistics = new SpeedStatistics(5, 0);
 
         private Timer updateTimer;
         private StreamWriter Logfile = null;
