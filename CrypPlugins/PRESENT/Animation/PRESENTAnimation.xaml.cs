@@ -44,7 +44,7 @@ namespace Cryptool.PRESENT {
                 ks_animation = new KS_Animation(this, this.KS_Model3DGroup);
                 ks_animation.InitStart();
             } catch (Exception e) {
-                Console.WriteLine(e.ToString());
+                //Console.WriteLine(e.ToString());
             }
         }
 

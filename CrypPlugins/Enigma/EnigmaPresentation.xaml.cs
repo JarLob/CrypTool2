@@ -229,7 +229,7 @@ namespace Cryptool.Enigma
                     case 0:
                         rotorarray[position] = new Rotor2(settings.Model, settings.Rotor3 + 1, this.Width, this.Height,
                                                           settings.InitialRotorPos.ToUpper()[0] - 65, settings.Ring3);
-                        Console.WriteLine(position + "  " + settings.Rotor3 + 1 + "   " + settings.InitialRotorPos.ToUpper());
+                        //Console.WriteLine(position + "  " + settings.Rotor3 + 1 + "   " + settings.InitialRotorPos.ToUpper());
                         break;
                     case 1:
                         rotorarray[position] = new Rotor2(settings.Model, settings.Rotor2 + 1, this.Width, this.Height,

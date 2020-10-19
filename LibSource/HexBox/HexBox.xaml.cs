@@ -1788,7 +1788,7 @@ namespace HexBox
         {
             //grid1.IsEnabled = b;
             //grid2.IsEnabled = b;
-            Console.WriteLine("--------------------------hallo----------------------------");
+            //Console.WriteLine("--------------------------hallo----------------------------");
             canvas1.IsEnabled = b;
             canvas2.IsEnabled = b;
             saveAs.IsEnabled = b;

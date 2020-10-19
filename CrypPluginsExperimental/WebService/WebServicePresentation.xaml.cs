@@ -1135,7 +1135,7 @@ namespace WebService
                      if ((p.Y - offset) > 0)
                      {
                          this._arrowImage.Margin = new Thickness((e.NewValue as TreeViewItem).Margin.Left, p.Y - offset, (e.NewValue as TreeViewItem).Margin.Right, (e.NewValue as TreeViewItem).Margin.Bottom);
-                         Console.WriteLine(p.Y - offset);
+                         //Console.WriteLine(p.Y - offset);
                      }
                      else
                      {
@@ -1170,7 +1170,7 @@ namespace WebService
                         if ((p.Y - offset) > 0)
                         {
                             this._arrowImage.Margin = new Thickness((this._animationTreeView.SelectedItem as TreeViewItem).Margin.Left, p.Y - offset, (this._animationTreeView.SelectedItem as TreeViewItem).Margin.Right, (this._animationTreeView.SelectedItem as TreeViewItem).Margin.Bottom);
-                            Console.WriteLine(p.Y - offset);
+                            //Console.WriteLine(p.Y - offset);
                         }
                     }
                 }

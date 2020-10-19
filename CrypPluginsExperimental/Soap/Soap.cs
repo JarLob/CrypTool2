@@ -1439,7 +1439,7 @@ namespace Soap
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.ToString());
+                    //Console.WriteLine(e.ToString());
 
                 }
                 return obj;
@@ -1465,7 +1465,7 @@ namespace Soap
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.ToString());
+                    //Console.WriteLine(e.ToString());
 
                 }
                 return obj;
@@ -1492,7 +1492,7 @@ namespace Soap
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.ToString());
+                    //Console.WriteLine(e.ToString());
 
                 }
                 

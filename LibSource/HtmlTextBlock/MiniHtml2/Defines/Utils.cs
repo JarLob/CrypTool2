@@ -1648,12 +1648,12 @@ namespace QuickZip.MiniHtml2
             PrivateFontCollection pfc = new PrivateFontCollection();
             Debug.Assert((LoadFont("AARDC___.TTF", ref pfc) == true), "loadFont Failed.");
             Debug.Assert((UserFontExists("Aardvark Cafe", pfc) == true), "UserFontExists Failed.");
-            Console.WriteLine("TextSize of abc = " + Convert.ToString(TextSize(g, "abc", new Font(pfc.Families[0], 10F))));
-            Console.WriteLine("TextSize2 of abc = " + Convert.ToString(TextSize2(g, "abc", new Font(pfc.Families[0], 10F))));
-            Console.WriteLine("TextSize of abcdefgh = " + Convert.ToString(TextSize(g, "abcdefgh", new Font(pfc.Families[0], 12F))));
-            Console.WriteLine("TextSize2 of abcdefgh = " + Convert.ToString(TextSize2(g, "abcdefgh", new Font(pfc.Families[0], 12F))));
-            Console.WriteLine("TextSize of aToz = " + Convert.ToString(TextSize(g, "abcdefghijklmnopqrstuvwxyz", new Font(pfc.Families[0], 9F))));
-            Console.WriteLine("TextSize2 of aToz = " + Convert.ToString(TextSize2(g, "abcdefghijklmnopqrstuvwxyz", new Font(pfc.Families[0], 9F))));
+            //Console.WriteLine("TextSize of abc = " + Convert.ToString(TextSize(g, "abc", new Font(pfc.Families[0], 10F))));
+            //Console.WriteLine("TextSize2 of abc = " + Convert.ToString(TextSize2(g, "abc", new Font(pfc.Families[0], 10F))));
+            //Console.WriteLine("TextSize of abcdefgh = " + Convert.ToString(TextSize(g, "abcdefgh", new Font(pfc.Families[0], 12F))));
+            //Console.WriteLine("TextSize2 of abcdefgh = " + Convert.ToString(TextSize2(g, "abcdefgh", new Font(pfc.Families[0], 12F))));
+            //Console.WriteLine("TextSize of aToz = " + Convert.ToString(TextSize(g, "abcdefghijklmnopqrstuvwxyz", new Font(pfc.Families[0], 9F))));
+            //Console.WriteLine("TextSize2 of aToz = " + Convert.ToString(TextSize2(g, "abcdefghijklmnopqrstuvwxyz", new Font(pfc.Families[0], 9F))));
 
 
             g.Dispose();

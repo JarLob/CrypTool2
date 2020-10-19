@@ -84,16 +84,6 @@ namespace QuickZip.MiniHtml2
 		public override string ToString()
 		{
 			return tag.ToString();
-		}
-		
-		///<summary> Debug this component. </summary>
-		public void PrintItems()
-		{
-			foreach (HtmlTag t in this)
-				Console.WriteLine(t);
-		}
-	}
-	
-	
-		
+		}				
+	}		
 }

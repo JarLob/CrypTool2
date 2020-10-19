@@ -163,7 +163,7 @@ namespace TranspositionAnalyser
                         finalkey1[i].RemoveAt(0);
                     }
                 }
-                Console.WriteLine();
+                //Console.WriteLine();
                 keysum.Add(dummy);
             }
             return keysum;

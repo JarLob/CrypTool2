@@ -662,10 +662,10 @@ namespace Wintellect.PowerCollections
         /// </summary>
         internal void PrintStats()
         {
-            Console.WriteLine("count={0}  usedSlots={1}  totalSlots={2}", count, usedSlots, totalSlots);
-            Console.WriteLine("loadFactor={0}  thresholdGrow={1}  thresholdShrink={2}", loadFactor, thresholdGrow, thresholdShrink);
-            Console.WriteLine("hashMask={0:X}  secondaryShift={1}", hashMask, secondaryShift);
-            Console.WriteLine();
+            //Console.WriteLine("count={0}  usedSlots={1}  totalSlots={2}", count, usedSlots, totalSlots);
+            //Console.WriteLine("loadFactor={0}  thresholdGrow={1}  thresholdShrink={2}", loadFactor, thresholdGrow, thresholdShrink);
+            //Console.WriteLine("hashMask={0:X}  secondaryShift={1}", hashMask, secondaryShift);
+            //Console.WriteLine();
         }
 
         /// <summary>
@@ -678,10 +678,10 @@ namespace Wintellect.PowerCollections
         internal void Print()
         {
             PrintStats();
-            for (int i = 0; i < totalSlots; ++i) 
-                Console.WriteLine("Slot {0,4:X}: {1} {2,8:X} {3}", i, table[i].Collision ? "C" : " ", 
-                    table[i].HashValue, table[i].Empty ? "<empty>" : table[i].item.ToString());
-            Console.WriteLine();
+            //for (int i = 0; i < totalSlots; ++i) 
+                //Console.WriteLine("Slot {0,4:X}: {1} {2,8:X} {3}", i, table[i].Collision ? "C" : " ", 
+                //    table[i].HashValue, table[i].Empty ? "<empty>" : table[i].item.ToString());
+            //Console.WriteLine();
         }
 
         /// <summary>

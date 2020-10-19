@@ -353,7 +353,7 @@ namespace Cryptool.VigenereAnalyzer
                                     catch (Exception e)
                                     {
                                         //wtf?
-                                        Console.WriteLine("e1: " + e);
+                                        //Console.WriteLine("e1: " + e);
                                     }
                                 }, null);
                                 keys = 0;
@@ -447,7 +447,7 @@ namespace Cryptool.VigenereAnalyzer
                 catch (Exception e)
                 {
                     //wtf?
-                    Console.WriteLine("e3: " + e);
+                    //Console.WriteLine("e3: " + e);
                 }
             }, null); 
         }

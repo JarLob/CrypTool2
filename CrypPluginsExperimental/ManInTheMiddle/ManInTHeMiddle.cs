@@ -198,7 +198,7 @@ namespace ManInTheMiddle
                 XmlSchema fsdf = types.Schemas[0];
                 if (fsdf == null)
                 {
-                    Console.WriteLine("Test");
+                    //Console.WriteLine("Test");
                 }
                 StringWriter twriter = new StringWriter();
                 //  TextWriter writer= new TextWriter(twriter);
@@ -299,7 +299,7 @@ namespace ManInTheMiddle
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                //Console.WriteLine(e.ToString());
 
             }
             return obj;

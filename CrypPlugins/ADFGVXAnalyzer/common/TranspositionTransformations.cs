@@ -77,8 +77,8 @@ namespace common
 
             if (!isKeyValid(toKey, keylen))
             {
-                Console.WriteLine("BAD KEY SHIFT3\n");
-                Console.WriteLine("p1=%d, Len = %d, Shift %d, AFTER: \n%s BEFORE: \n%s\n", startPosition, len, shift, getKeyString(toKey, keylen), getKeyString(fromKey, keylen));
+                //Console.WriteLine("BAD KEY SHIFT3\n");
+                //Console.WriteLine("p1=%d, Len = %d, Shift %d, AFTER: \n%s BEFORE: \n%s\n", startPosition, len, shift, getKeyString(toKey, keylen), getKeyString(fromKey, keylen));
             }
         }
 
@@ -98,8 +98,8 @@ namespace common
             }
             if (!isKeyValid(toKey, keylen))
             {
-                Console.WriteLine("BAD KEY INVERT\n");
-                Console.WriteLine("p1=%d, Len = %d, AFTER: \n%s BEFORE: \n%s\n", startPosition, len, getKeyString(toKey, keylen), getKeyString(fromKey, keylen));
+                //Console.WriteLine("BAD KEY INVERT\n");
+                //Console.WriteLine("p1=%d, Len = %d, AFTER: \n%s BEFORE: \n%s\n", startPosition, len, getKeyString(toKey, keylen), getKeyString(fromKey, keylen));
             }
         }
         //private static void invertAdjacent(int[] fromKey, int toKey[], int keylen, bool skipFirst)
@@ -117,8 +117,8 @@ namespace common
             }
             if (!isKeyValid(toKey, keylen))
             {
-                Console.WriteLine("BAD KEY invertAdjacent\n");
-                Console.WriteLine("skip=%s, AFTER: \n%s BEFORE: \n%s\n", skipFirst, getKeyString(toKey, keylen), getKeyString(fromKey, keylen));
+                //Console.WriteLine("BAD KEY invertAdjacent\n");
+                //Console.WriteLine("skip=%s, AFTER: \n%s BEFORE: \n%s\n", skipFirst, getKeyString(toKey, keylen), getKeyString(fromKey, keylen));
             }
         }
 
@@ -138,8 +138,8 @@ namespace common
 
             if (!isKeyValid(toKey, keylen))
             {
-                Console.WriteLine("BAD KEY SWAP\n");
-                Console.WriteLine("p1=%d, p2 = %d, Len %d, AFTER: \n%s BEFORE: \n%s \n", p1, p2, len, getKeyString(toKey, keylen), getKeyString(fromKey, keylen));
+                //Console.WriteLine("BAD KEY SWAP\n");
+                //Console.WriteLine("p1=%d, p2 = %d, Len %d, AFTER: \n%s BEFORE: \n%s \n", p1, p2, len, getKeyString(toKey, keylen), getKeyString(fromKey, keylen));
             }
 
         }
@@ -315,7 +315,7 @@ namespace common
         {
             if (!isKeyValid(tempk, keylen))
             {
-                Console.WriteLine("Invalid transformation");
+                //Console.WriteLine("Invalid transformation");
                 return;
             }
 

@@ -217,7 +217,7 @@ namespace Cryptool.Plugins.KKDFSHAKE256
                                     renderState3(prgress_step, i);
                                     WaitHandle.WaitAny(waitHandles);
                                 }
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
+                                //Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;

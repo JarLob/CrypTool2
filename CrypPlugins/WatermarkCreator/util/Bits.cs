@@ -68,7 +68,7 @@ namespace net.util
 			}
 			catch (System.IO.IOException e)
 			{
-                Console.WriteLine(e.GetType().Name);
+                //Console.WriteLine(e.GetType().Name);
                 return null;
 			}
 		}

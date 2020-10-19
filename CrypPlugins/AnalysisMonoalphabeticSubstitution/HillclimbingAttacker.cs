@@ -192,7 +192,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                     string keystring = MapNumbersIntoTextSpace(bestkey, plaintextalphabet);
                     if (keystring.Contains("ABIRD"))
                     {
-                        Console.WriteLine(keystring);
+                        //Console.WriteLine(keystring);
                     }
                     KeyCandidate newKeyCan = new KeyCandidate(bestkey, bestkeycost, MapNumbersIntoTextSpace(UseKeyOnCipher(ciphertext, bestkey), plaintextalphabet), keystring);
                     newKeyCan.HillAttack = true;
@@ -272,7 +272,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                 int p = text[i];
                 if (p < 0 || p > length)
                 {
-                    Console.WriteLine("Error: illegal symbol found");
+                    //Console.WriteLine("Error: illegal symbol found");
                     break;
                 }
                 inplaceSpots[p, inplaceAmountOfSymbols[p]++] = i;

@@ -167,7 +167,7 @@ namespace WebService
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                //Console.WriteLine(e.ToString());
 
             }
 
@@ -188,7 +188,7 @@ namespace WebService
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                //Console.WriteLine(e.ToString());
 
             }
 
@@ -213,7 +213,7 @@ namespace WebService
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.ToString());
+                    //Console.WriteLine(e.ToString());
 
                 }
                 return obj;

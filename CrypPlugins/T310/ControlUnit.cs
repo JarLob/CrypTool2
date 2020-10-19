@@ -257,7 +257,7 @@ namespace Cryptool.Plugins.T310
             }
 
             if (!validKey)
-                Console.WriteLine("Key parity is incorrect (even)");
+                //Console.WriteLine("Key parity is incorrect (even)");
 
             /*DEBUGGING CODE BEGINNING*/
             S2[0] = 0x4c4f0d;

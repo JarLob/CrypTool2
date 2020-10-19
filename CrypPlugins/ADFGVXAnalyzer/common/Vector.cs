@@ -48,7 +48,7 @@ namespace common
                 TextInInt[i] = Index(s[i]);
                 if (TextInInt[i] == -1)
                 {
-                    Console.WriteLine("Bad %d = %s\n", i, s[i]);
+                    //Console.WriteLine("Bad %d = %s\n", i, s[i]);
                 }
             }
             stats();
@@ -108,7 +108,7 @@ namespace common
 
             if (keyS.Length > TextInInt.Length)
             {
-                Console.WriteLine("Cannot create transposition key; adding now Z at the end");
+                //Console.WriteLine("Cannot create transposition key; adding now Z at the end");
                 while(keyS.Length > TextInInt.Length)
                 {
                     keyS = keyS + "Z";

@@ -1154,7 +1154,7 @@ namespace Wintellect.PowerCollections
 		/// </summary>
 		public void Print() {
 			PrintSubTree(root, "", "");
-			Console.WriteLine();
+			//Console.WriteLine();
 		}
 
 		/// <summary>
@@ -1168,7 +1168,7 @@ namespace Wintellect.PowerCollections
 				return;
 
 			// Red nodes marked as "@@", black nodes as "..".
-            Console.WriteLine("{0}{1} {2,4} {3}", prefixNode, node.IsRed ? "@@" : "..", node.Count, node.item);
+            //Console.WriteLine("{0}{1} {2,4} {3}", prefixNode, node.IsRed ? "@@" : "..", node.Count, node.item);
 
 			PrintSubTree(node.left, prefixChildren + "|-L-", prefixChildren + "|  ");
 			PrintSubTree(node.right, prefixChildren + "|-R-", prefixChildren + "   ");

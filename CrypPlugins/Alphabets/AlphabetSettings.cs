@@ -76,7 +76,7 @@ namespace Cryptool.Alphabets
             }
             catch (SerializationException e)
             {
-                Console.WriteLine("Failed to serialize. Reason: " + e.Message);
+                //Console.WriteLine("Failed to serialize. Reason: " + e.Message);
             }
             finally
             {
@@ -101,7 +101,7 @@ namespace Cryptool.Alphabets
             }
             catch (SerializationException e)
             {
-                Console.WriteLine("Failed to deserialize. Reason: " + e.Message);
+                //Console.WriteLine("Failed to deserialize. Reason: " + e.Message);
             }
             finally
             {

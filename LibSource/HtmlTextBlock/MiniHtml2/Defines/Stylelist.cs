@@ -50,15 +50,7 @@ namespace QuickZip.MiniCss
 				default:
 					return ElementType.Active;
 			}
-		}
-		public void PrintItems()
-		{
-			string fmt = "Name:{0}, ID:{1}, Cls:{2}, EleIdx:{3}, Flags:{4}{5}";
-			string f = "_"; if (familyTag) f = "F"; 
-			string n = "_"; if (noOtherClassID) n = "N"; 
-			Console.WriteLine(String.Format(fmt, tagName, tagID, tagClass, 
-			                              (Int32)elements, f, n));
-		}
+		}		
 		
 		public string Css()
 		{
@@ -127,16 +119,7 @@ namespace QuickZip.MiniCss
 		{			
 			styles = null;
 			parentTagName = null;
-		}
-		public string printParentTagName()
-		{
-			string retVal = "";
-			foreach (object o in parentTagName)
-			{
-				retVal += ',' + (string)o;
-			}
-			return retVal.Trim(',');
-		}
+		}		
 	}
 	
 	public class CssStyleGroupType
@@ -223,25 +206,7 @@ namespace QuickZip.MiniCss
 		public bool Contains(CssStyleType value)
 		{
 			return List.Contains(value);
-		}
-		
-		public void PrintItems()
-		{
-			for (Int32 i = 0; i < Count; i++)
-			{
-				CssStyleType c = this[i];
-				CssHeaderStyleType style = new CssHeaderStyleType(c.styleTagName);
-				style.PrintItems();
-				
-				for (Int32 j = 0; j < c.styles.Count; j++)
-				{
-					string output = String.Format("[key: {0} = {1}]", 
-					                              c.styles[j].key, c.styles[j].value);
-					Console.WriteLine(output);					
-				}
-				Console.WriteLine("");
-			}
-		}
+		}			
 		
 		public string Css()
 		{
@@ -352,14 +317,7 @@ namespace QuickZip.MiniCss
 		~TagCssStyleDictionary()
 		{
 			
-		}
-		
-		public void PrintItems()
-		{
-			IDictionaryEnumerator em = this.GetEnumerator();						
-			while (em.MoveNext())			
-				((TagCssStyleType)(em.Value)).cssStyles.PrintItems();			
-		}
+		}		
 		
 		public string Css()
 		{

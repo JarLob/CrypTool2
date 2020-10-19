@@ -1206,7 +1206,7 @@ namespace Cryptool.M138Analyzer
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.StackTrace);
+                    //Console.WriteLine(e.StackTrace);
                 }
 
             }, null);
@@ -1233,7 +1233,7 @@ namespace Cryptool.M138Analyzer
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.StackTrace);
+                    //Console.WriteLine(e.StackTrace);
                 }
 
             }, null);
