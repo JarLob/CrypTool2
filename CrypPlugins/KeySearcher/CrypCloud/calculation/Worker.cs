@@ -228,6 +228,11 @@ namespace KeySearcher
                     costs.Dispose();
                 }
             }
+            catch(OperationCanceledException ocex)
+            {
+                //VoluntLib2/CrypCloud know that the operation has been stopped by throwing this exception
+                throw ocex; 
+            }
             catch (Exception ex)
             {                          
                 throw new Exception("Bruteforcing with OpenCL failed!", ex);
