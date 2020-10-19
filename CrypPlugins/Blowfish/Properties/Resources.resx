@@ -172,16 +172,16 @@
     <value>Round 8</value>
   </data>
   <data name="Blowfish_Execute_Key_too_short" xml:space="preserve">
-    <value>Key length = {0} is too short. Fill it with zeros to key length = 8</value>
+    <value>Key length = {0} is too short. Fill it with zeros to key length = {1}</value>
   </data>
   <data name="Blowfish_Execute_Key_too_long" xml:space="preserve">
-    <value>Key length = {0} is too long. Cut it to key length = 8</value>
+    <value>Key length = {0} is too long. Cut it to key length = {1}</value>
   </data>
   <data name="Blowfish_CheckIV_IV_too_short" xml:space="preserve">
-    <value>IV length = {0} is too short. Fill it with zeros to IV length = 8</value>
+    <value>IV length = {0} is too short. Fill it with zeros to IV length = {1}</value>
   </data>
   <data name="Blowfish_CheckIV_IV_too_long" xml:space="preserve">
-    <value>IV length = {0} is too long. Cut it to IV length = 8</value>
+    <value>IV length = {0} is too long. Cut it to IV length = {1}</value>
   </data>
   <data name="ActionCaption" xml:space="preserve">
     <value>Action</value>

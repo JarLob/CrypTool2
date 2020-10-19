@@ -271,7 +271,7 @@ namespace Cryptool.Plugins.Blowfish
         }
 
         /// <summary>
-        /// Encrypts a given plauintext with Blowfish
+        /// Encrypts a given plaintext with Blowfish
         /// The key has to be set before usage via KeySchedule call
         /// The given key here is ignored
         /// </summary>
@@ -297,13 +297,13 @@ namespace Cryptool.Plugins.Blowfish
         }
 
         /// <summary>
-        /// Decrypts a given plauintext with Blowfish
+        /// Decrypts a given ciphertext with Blowfish
         /// The key has to be set before usage via KeySchedule call
         /// The given key here is ignored
         /// </summary>
         /// <param name="ciphertext"></param>
         /// <param name="key"></param>
-        /// <returns>plauintext</returns>
+        /// <returns>plaintext</returns>
         public byte[] Decrypt(byte[] ciphertext, byte[] key)
         {
             uint l = (uint)(ciphertext[0] << 24 | ciphertext[1] << 16 | ciphertext[2] << 8 | ciphertext[3]);

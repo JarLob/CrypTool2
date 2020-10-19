@@ -169,7 +169,7 @@ namespace Cryptool.Plugins.Blowfish.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die IV length = {0} is too long. Cut it to IV length = 8 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die IV length = {0} is too long. Cut it to IV length = {1} ähnelt.
         /// </summary>
         internal static string Blowfish_CheckIV_IV_too_long {
             get {
@@ -178,7 +178,7 @@ namespace Cryptool.Plugins.Blowfish.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die IV length = {0} is too short. Fill it with zeros to IV length = 8 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die IV length = {0} is too short. Fill it with zeros to IV length = {1} ähnelt.
         /// </summary>
         internal static string Blowfish_CheckIV_IV_too_short {
             get {
@@ -187,7 +187,7 @@ namespace Cryptool.Plugins.Blowfish.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Key length = {0} is too long. Cut it to key length = 8 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key length = {0} is too long. Cut it to key length = {1} ähnelt.
         /// </summary>
         internal static string Blowfish_Execute_Key_too_long {
             get {
@@ -196,7 +196,7 @@ namespace Cryptool.Plugins.Blowfish.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Key length = {0} is too short. Fill it with zeros to key length = 8 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key length = {0} is too short. Fill it with zeros to key length = {1} ähnelt.
         /// </summary>
         internal static string Blowfish_Execute_Key_too_short {
             get {

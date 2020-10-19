@@ -130,23 +130,9 @@ namespace Cryptool.Plugins.Blowfish
             
             _lastInputBlock = null;
             _OutputStreamWriter = null;
-            _stop = false;
+            _stop = false;           
 
-            //Extend or cut key to length 8
-            if (_InputKey.Length < 8)
-            {
-                byte[] key = new byte[8];
-                Array.Copy(_InputKey, 0, key, 0, _InputKey.Length);
-                GuiLogMessage(string.Format(Resources.Blowfish_Execute_Key_too_short,_InputKey.Length), NotificationLevel.Warning);
-                _InputKey = key;
-            }
-            if (_InputKey.Length > 8)
-            {
-                byte[] key = new byte[8];
-                Array.Copy(_InputKey, 0, key, 0, 8);
-                GuiLogMessage(string.Format(Resources.Blowfish_Execute_Key_too_long, _InputKey.Length), NotificationLevel.Warning);
-                _InputKey = key;
-            }
+            CheckKeyLength();
 
             //Select crypto function based on algorithm, blockmode, and action
             BlockCipher blockCipher = null;
@@ -173,7 +159,27 @@ namespace Cryptool.Plugins.Blowfish
                 BlowfishAlgorithm algorithm = new BlowfishAlgorithm();
                 algorithm.KeySchedule(_InputKey);
                 blockCipher = new BlockCipher(algorithm.Decrypt);
-            }                              
+            }
+            else if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Twofish && _BlowfishSettings.BlockMode == BlockMode.CFB)
+            {
+                TwofishAlgorithm algorithm = new TwofishAlgorithm(_InputKey);
+                blockCipher = new BlockCipher(algorithm.Encrypt);
+            }
+            else if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Twofish && _BlowfishSettings.BlockMode == BlockMode.OFB)
+            {
+                TwofishAlgorithm algorithm = new TwofishAlgorithm(_InputKey);
+                blockCipher = new BlockCipher(algorithm.Encrypt);
+            }
+            else if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Twofish && _BlowfishSettings.Action == CipherAction.Encrypt)
+            {
+                TwofishAlgorithm algorithm = new TwofishAlgorithm(_InputKey);
+                blockCipher = new BlockCipher(algorithm.Encrypt);
+            }
+            else if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Twofish && _BlowfishSettings.Action == CipherAction.Decrypt)
+            {
+                TwofishAlgorithm algorithm = new TwofishAlgorithm(_InputKey);
+                blockCipher = new BlockCipher(algorithm.Decrypt);
+            }
 
             //Check, if we found a crypto function that we can use
             //this error should NEVER occur. Only in case someone adds functionality and misses
@@ -204,6 +210,12 @@ namespace Cryptool.Plugins.Blowfish
                 }
             }
 
+            int blocksize = 8;
+            if(_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Twofish)
+            {
+                blocksize = 16;
+            }
+
             switch (_BlowfishSettings.BlockMode)
             {
                 case BlockMode.ECB:
@@ -215,7 +227,8 @@ namespace Cryptool.Plugins.Blowfish
                         _BlowfishSettings.Padding,
                         ref _stop,
                         ProgressChanged,
-                        ref _lastInputBlock);
+                        ref _lastInputBlock,
+                        blocksize);
                     break;
                 case BlockMode.CBC:
                     CheckIV();
@@ -228,7 +241,8 @@ namespace Cryptool.Plugins.Blowfish
                        _BlowfishSettings.Padding,
                        ref _stop,
                        ProgressChanged,
-                       ref _lastInputBlock);
+                       ref _lastInputBlock,
+                       blocksize);
                     break;
                 case BlockMode.CFB:
                     CheckIV();
@@ -241,7 +255,8 @@ namespace Cryptool.Plugins.Blowfish
                       _BlowfishSettings.Padding,
                       ref _stop,
                       ProgressChanged,
-                      ref _lastInputBlock);
+                      ref _lastInputBlock,
+                      blocksize);
                     break;
                 case BlockMode.OFB:
                     CheckIV();
@@ -254,7 +269,8 @@ namespace Cryptool.Plugins.Blowfish
                       _BlowfishSettings.Padding,
                       ref _stop,
                       ProgressChanged,
-                      ref _lastInputBlock);
+                      ref _lastInputBlock,
+                      blocksize);
                     break;   
                 default:
                     throw new NotImplementedException(string.Format("The mode {0} has not been implemented.", _BlowfishSettings.BlockMode));
@@ -266,28 +282,91 @@ namespace Cryptool.Plugins.Blowfish
         }
 
         /// <summary>
+        /// Checks the given key and extends/cuts it, if needed
+        /// </summary>
+        private void CheckKeyLength()
+        {
+            if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Blowfish)
+            {
+                //blowfish specifies key lengths between 32 bit (4 bytes) and 448 bit (56 bytes)
+                //usual case is 16 byte (= 128 bit key)
+                if (_InputKey.Length < 4)
+                {
+                    byte[] key = new byte[4];
+                    Array.Copy(_InputKey, 0, key, 0, _InputKey.Length);
+                    GuiLogMessage(string.Format(Resources.Blowfish_Execute_Key_too_short, _InputKey.Length, 4), NotificationLevel.Warning);
+                    _InputKey = key;
+                }
+                if (_InputKey.Length > 56)
+                {
+                    byte[] key = new byte[8];
+                    Array.Copy(_InputKey, 0, key, 0, 56);
+                    GuiLogMessage(string.Format(Resources.Blowfish_Execute_Key_too_long, _InputKey.Length, 56), NotificationLevel.Warning);
+                    _InputKey = key;
+                }
+            }
+            else if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Twofish)
+            {
+                //twofish specifies keylengths of 128 bit (16 byte), 192 bit (24 byte), and 256 bit (32 byte)
+                if (_InputKey.Length < 16)
+                {
+                    byte[] key = new byte[16];
+                    Array.Copy(_InputKey, 0, key, 0, _InputKey.Length);
+                    GuiLogMessage(string.Format(Resources.Blowfish_Execute_Key_too_short, _InputKey.Length, 16), NotificationLevel.Warning);
+                    _InputKey = key;
+                }
+                else if (_InputKey.Length != 16 && _InputKey.Length < 24)
+                {
+                    byte[] key = new byte[24];
+                    Array.Copy(_InputKey, 0, key, 0, _InputKey.Length);
+                    GuiLogMessage(string.Format(Resources.Blowfish_Execute_Key_too_short, _InputKey.Length, 24), NotificationLevel.Warning);
+                    _InputKey = key;
+                }
+                else if (_InputKey.Length != 16 && _InputKey.Length != 24 && _InputKey.Length < 32)
+                {
+                    byte[] key = new byte[32];
+                    Array.Copy(_InputKey, 0, key, 0, _InputKey.Length);
+                    GuiLogMessage(string.Format(Resources.Blowfish_Execute_Key_too_short, _InputKey.Length, 32), NotificationLevel.Warning);
+                    _InputKey = key;
+                }
+                else if (_InputKey.Length > 32)
+                {
+                    byte[] key = new byte[32];
+                    Array.Copy(_InputKey, 0, key, 0, 32);
+                    GuiLogMessage(string.Format(Resources.Blowfish_Execute_Key_too_long, _InputKey.Length, 32), NotificationLevel.Warning);
+                    _InputKey = key;
+                }
+            }
+        }
+
+        /// <summary>
         /// Checks the given initialization vector and extends/cuts it, if needed
         /// </summary>
         private void CheckIV()
         {
+            int blocksize = 8;
+            if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Twofish)
+            {
+                blocksize = 16;
+            }
             //if no IV is given, we set it to an array with length 0
             if (_InputIV == null)
             {
                 _InputIV = new byte[0];
             }
             //Extend or cut IV to length 8
-            if (_InputIV.Length < 8)
+            if (_InputIV.Length < blocksize)
             {
-                byte[] iv = new byte[8];
+                byte[] iv = new byte[blocksize];
                 Array.Copy(_InputIV, 0, iv, 0, _InputIV.Length);
-                GuiLogMessage(string.Format(Resources.Blowfish_CheckIV_IV_too_short, _InputIV.Length), NotificationLevel.Warning);
+                GuiLogMessage(string.Format(Resources.Blowfish_CheckIV_IV_too_short, _InputIV.Length, blocksize), NotificationLevel.Warning);
                 _InputIV = iv;
             }
-            if (_InputIV.Length > 8)
+            if (_InputIV.Length > blocksize)
             {
-                byte[] iv = new byte[8];
+                byte[] iv = new byte[blocksize];
                 Array.Copy(_InputIV, 0, iv, 0, 8);
-                GuiLogMessage(string.Format(Resources.Blowfish_CheckIV_IV_too_long, _InputIV.Length), NotificationLevel.Warning);
+                GuiLogMessage(string.Format(Resources.Blowfish_CheckIV_IV_too_long, _InputIV.Length, blocksize), NotificationLevel.Warning);
                 _InputIV = iv;
             }
         }
