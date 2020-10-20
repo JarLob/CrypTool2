@@ -160,16 +160,16 @@
     <value>Wenn Paritätsbits aktiviert sind, wird jedes 8. Bit des eingegebenen Schlüssels auf Null gesetzt.</value>
   </data>
   <data name="Blowfish_CheckIV_IV_too_long" xml:space="preserve">
-    <value>Die IV-Länge = {0} ist zu lang. Kürze ihn zu Länge = 8</value>
+    <value>Die IV-Länge = {0} ist zu lang. Kürze ihn zu Länge = {1}</value>
   </data>
   <data name="Blowfish_CheckIV_IV_too_short" xml:space="preserve">
-    <value>Die IV-Länge = {0} ist zu kurz. Fülle ihn mit Nullen auf Länge = 8</value>
+    <value>Die IV-Länge = {0} ist zu kurz. Fülle ihn mit Nullen auf Länge = {1}</value>
   </data>
   <data name="Blowfish_Execute_Key_too_long" xml:space="preserve">
-    <value>Die Schlüssellänge = {0} ist zu lang. Kürze ihn zu Länge = 8</value>
+    <value>Die Schlüssellänge = {0} ist zu lang. Kürze ihn zu Länge = {1}</value>
   </data>
   <data name="Blowfish_Execute_Key_too_short" xml:space="preserve">
-    <value>Die Schlüssellänge = {0} ist zu kurz. Fülle ihn mit Nullen auf Länge = 8</value>
+    <value>Die Schlüssellänge = {0} ist zu kurz. Fülle ihn mit Nullen auf Länge = {1}</value>
   </data>
   <data name="InputIVCaption" xml:space="preserve">
     <value>Initialisierungsvektor</value>
@@ -248,5 +248,17 @@
   </data>
   <data name="Round8" xml:space="preserve">
     <value>Runde 8</value>
+  </data>
+  <data name="Blowfish_CheckTweak_Tweak_too_long" xml:space="preserve">
+    <value>Tweak Länge = {0} ist zu lang. Kürze es auf die Länge = {1}</value>
+  </data>
+  <data name="Blowfish_CheckTweak_Tweak_too_short" xml:space="preserve">
+    <value>Tweak Länge = {0} ist zu kurz. Fülle es mit Nullen auf die Länge = {1}</value>
+  </data>
+  <data name="TweakCaption" xml:space="preserve">
+    <value>Tweak</value>
+  </data>
+  <data name="TweakTooltip" xml:space="preserve">
+    <value>Geben Sie hier einen Tweak-Wert an. Dieser wird nur von Threefish verwendet</value>
   </data>
 </root>

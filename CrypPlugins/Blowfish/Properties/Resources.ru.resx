@@ -160,16 +160,16 @@
     <value>Если биты четности включены, каждый 8-й бит в ключе устанавливается на ноль.</value>
   </data>
   <data name="Blowfish_CheckIV_IV_too_long" xml:space="preserve">
-    <value>Длина IV = {0} слишком длинная. Укоротить до длины = 8</value>
+    <value>Длина IV = {0} слишком длинная. Укоротить до длины = {1}</value>
   </data>
   <data name="Blowfish_CheckIV_IV_too_short" xml:space="preserve">
-    <value>Длина IV = {0} слишком коротка. Заполните его нулями до длины = 8</value>
+    <value>Длина IV = {0} слишком коротка. Заполните его нулями до длины = {1}</value>
   </data>
   <data name="Blowfish_Execute_Key_too_long" xml:space="preserve">
-    <value>Длина ключа = {0} слишком длинная. Укоротить до длины = 8</value>
+    <value>Длина ключа = {0} слишком длинная. Укоротить до длины = {1}</value>
   </data>
   <data name="Blowfish_Execute_Key_too_short" xml:space="preserve">
-    <value>Длина ключа = {0} слишком короткая. Заполните его нулями до длины = 8</value>
+    <value>Длина ключа = {0} слишком короткая. Заполните его нулями до длины = {1}</value>
   </data>
   <data name="InputIVCaption" xml:space="preserve">
     <value>Вектор инициализации</value>
@@ -181,7 +181,7 @@
     <value>ключ</value>
   </data>
   <data name="InputKeyTooltip" xml:space="preserve">
-    <value>Предоставленный ключ должен быть 8 байтов. Слишком короткие или слишком длинные ключи будут расширены или усечены.</value>
+    <value>Предоставленный ключ. Слишком короткие или слишком длинные ключи будут расширены или усечены.</value>
   </data>
   <data name="InputStreamCaption" xml:space="preserve">
     <value>Входной поток</value>
@@ -248,5 +248,17 @@
   </data>
   <data name="Round8" xml:space="preserve">
     <value>Раунд 8</value>
+  </data>
+  <data name="Blowfish_CheckTweak_Tweak_too_long" xml:space="preserve">
+    <value>Длина настройки = {0} слишком длинная. Сократите его до длины настройки = {1}</value>
+  </data>
+  <data name="Blowfish_CheckTweak_Tweak_too_short" xml:space="preserve">
+    <value>Длина настройки = {0} слишком короткая. Заполните его нулями до длины = {1}</value>
+  </data>
+  <data name="TweakCaption" xml:space="preserve">
+    <value>Tweak</value>
+  </data>
+  <data name="TweakTooltip" xml:space="preserve">
+    <value>Введите здесь значение настройки. Используется только Threefish.</value>
   </data>
 </root>

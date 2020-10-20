@@ -52,8 +52,9 @@ namespace Cryptool.Plugins.Blowfish
 
         private BlowfishSettings _BlowfishSettings = new BlowfishSettings();
 
-        private byte[] _InputKey;
-        private byte[] _InputIV;
+        private byte[] _InputKey = null;
+        private byte[] _InputIV = null;
+        private byte[] _InputTweak = null;
         private ICryptoolStream _OutputStreamWriter;
         private ICryptoolStream _InputStream;
         
@@ -104,6 +105,19 @@ namespace Cryptool.Plugins.Blowfish
             }
         }
 
+        [PropertyInfo(Direction.InputData, "TweakCaption", "TweakTooltip", false)]
+        public byte[] Tweak
+        {
+            get
+            {
+                return _InputTweak;
+            }
+            set
+            {
+                _InputTweak = value;
+            }
+        }
+
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
         public ICryptoolStream OutputStream
         {
@@ -137,7 +151,7 @@ namespace Cryptool.Plugins.Blowfish
         /// Called once when workflow execution starts.
         /// </summary>
         public void PreExecution()
-        {       
+        {              
         }
 
         /// <summary>
@@ -158,8 +172,8 @@ namespace Cryptool.Plugins.Blowfish
             //Blowfish:
             if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Blowfish && _BlowfishSettings.BlockMode == BlockMode.CFB)
             {
-                BlowfishAlgorithm algorithm = new BlowfishAlgorithm();
-                algorithm.KeySchedule(_InputKey);
+                BlowfishAlgorithm algorithm = new BlowfishAlgorithm();                
+                algorithm.KeySchedule(_InputKey);                
                 blockCipher = new BlockCipher(algorithm.Encrypt);
             }           
             else if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Blowfish && _BlowfishSettings.BlockMode == BlockMode.OFB)
@@ -204,29 +218,48 @@ namespace Cryptool.Plugins.Blowfish
             //Threefish:
             else if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Threefish && _BlowfishSettings.BlockMode == BlockMode.CFB)
             {
+                CheckTweak();
                 ThreefishAlgorithm algorithm = GetThreefishAlgorithm();
                 algorithm.SetKey(_InputKey);
+                if (_InputTweak != null && _InputTweak.Length != 0)
+                {
+                    algorithm.SetTweak(_InputTweak);
+                }
                 blockCipher = new BlockCipher(algorithm.Encrypt);
             }
             else if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Threefish && _BlowfishSettings.BlockMode == BlockMode.OFB)
             {
+                CheckTweak();
                 ThreefishAlgorithm algorithm = GetThreefishAlgorithm();
                 algorithm.SetKey(_InputKey);
+                if (_InputTweak != null && _InputTweak.Length != 0)
+                {
+                    algorithm.SetTweak(_InputTweak);
+                }
                 blockCipher = new BlockCipher(algorithm.Encrypt);
             }
             else if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Threefish && _BlowfishSettings.Action == CipherAction.Encrypt)
             {
+                CheckTweak();
                 ThreefishAlgorithm algorithm = GetThreefishAlgorithm();
                 algorithm.SetKey(_InputKey);
+                if (_InputTweak != null && _InputTweak.Length != 0)
+                {
+                    algorithm.SetTweak(_InputTweak);
+                }
                 blockCipher = new BlockCipher(algorithm.Encrypt);
             }
             else if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Threefish && _BlowfishSettings.Action == CipherAction.Decrypt)
             {
+                CheckTweak();
                 ThreefishAlgorithm algorithm = GetThreefishAlgorithm();
                 algorithm.SetKey(_InputKey);
+                if (_InputTweak != null && _InputTweak.Length != 0)
+                {
+                    algorithm.SetTweak(_InputTweak);
+                }
                 blockCipher = new BlockCipher(algorithm.Decrypt);
             }
-
 
             //Check, if we found a crypto function that we can use
             //this error should NEVER occur. Only in case someone adds functionality and misses
@@ -237,28 +270,8 @@ namespace Cryptool.Plugins.Blowfish
                 return;
             }
 
-            if (_BlowfishSettings.Action == CipherAction.Encrypt)
-            {
-                //in case of encryption, we have to add padding
-                _InputStream = AppendPadding(InputStream, _BlowfishSettings.Padding, 8);
-            }
-            else
-            {
-                //with decryption, we have to do nothing
-                _InputStream = InputStream;
-            }
-
-            //parity rule is: if parity is used, zero the least significant bit of each byte
-            if (_BlowfishSettings.EnableKeyParityBits == true)
-            {
-                for (int i = 0; i < _InputKey.Length; i++)
-                {
-                    _InputKey[i] = (byte)(_InputKey[i] & 254);
-                }
-            }
-
             int blocksize = 8;
-            if(_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Twofish)
+            if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Twofish)
             {
                 blocksize = 16;
             }
@@ -266,6 +279,18 @@ namespace Cryptool.Plugins.Blowfish
             {
                 //Threefish blocksize is equal to the key length
                 blocksize = _InputKey.Length;
+            }
+
+            //Append padding
+            if (_BlowfishSettings.Action == CipherAction.Encrypt && _BlowfishSettings.Padding != PaddingType.None)
+            {
+                //in case of encryption, we have to add padding
+                _InputStream = AppendPadding(InputStream, _BlowfishSettings.Padding, blocksize);
+            }
+            else
+            {
+                //with decryption, we have to do nothing
+                _InputStream = InputStream;
             }
 
             switch (_BlowfishSettings.BlockMode)
@@ -331,7 +356,7 @@ namespace Cryptool.Plugins.Blowfish
             OnPropertyChanged("OutputStream");
 
             ProgressChanged(1, 1);
-        }
+        }       
 
         /// <summary>
         /// Returns instance of Threefish based on provided key length
@@ -480,6 +505,35 @@ namespace Cryptool.Plugins.Blowfish
                 Array.Copy(_InputIV, 0, iv, 0, blocksize);
                 GuiLogMessage(string.Format(Resources.Blowfish_CheckIV_IV_too_long, _InputIV.Length, blocksize), NotificationLevel.Warning);
                 _InputIV = iv;
+            }
+        }
+
+        /// <summary>
+        /// Checks if Threefish's tweak is too long or too short
+        /// Default tweak is all set to zero
+        /// </summary>
+        private void CheckTweak()
+        {
+            //if no tweak is given, we set it to an array with length 24
+            if (_InputTweak == null)
+            {
+                //default tweak is all set to zero
+                _InputTweak = new byte[16];
+            }
+            //Extend or cut tweak to length 24
+            if (_InputTweak.Length < 16)
+            {
+                byte[] tweak = new byte[16];
+                Array.Copy(_InputTweak, 0, tweak, 0, _InputIV.Length);
+                GuiLogMessage(string.Format(Resources.Blowfish_CheckTweak_Tweak_too_short, _InputTweak.Length, 16), NotificationLevel.Warning);
+                _InputTweak = tweak;
+            }
+            if (_InputTweak.Length > 16)
+            {
+                byte[] tweak = new byte[24];
+                Array.Copy(_InputTweak, 0, tweak, 0, 16);
+                GuiLogMessage(string.Format(Resources.Blowfish_CheckTweak_Tweak_too_long, _InputTweak.Length, 16), NotificationLevel.Warning);
+                _InputTweak = tweak;
             }
         }
 

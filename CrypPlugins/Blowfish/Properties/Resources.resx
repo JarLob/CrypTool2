@@ -127,7 +127,7 @@
     <value>Key</value>
   </data>
   <data name="InputKeyTooltip" xml:space="preserve">
-    <value>The provided key must be 8 bytes. Too short or too long keys will be extended or truncated.</value>
+    <value>Der eingegebene Schlüssel. Zu kurze oder zu lange Schlüssel werden verlängert oder abgeschnitten.</value>
   </data>
   <data name="InputStreamCaption" xml:space="preserve">
     <value>Input stream</value>
@@ -248,5 +248,17 @@
   </data>
   <data name="PaddingTooltip" xml:space="preserve">
     <value>Selects a mode to fill partial data blocks.</value>
+  </data>
+  <data name="Blowfish_CheckTweak_Tweak_too_long" xml:space="preserve">
+    <value>Tweak length = {0} is too long. Cut it to tweak length = {1}</value>
+  </data>
+  <data name="Blowfish_CheckTweak_Tweak_too_short" xml:space="preserve">
+    <value>Tweak length = {0} is too short. Fill it with zeros to tweak length = {1}</value>
+  </data>
+  <data name="TweakCaption" xml:space="preserve">
+    <value>Tweak</value>
+  </data>
+  <data name="TweakTooltip" xml:space="preserve">
+    <value>Enter a tweak. Only used by Threefish</value>
   </data>
 </root>

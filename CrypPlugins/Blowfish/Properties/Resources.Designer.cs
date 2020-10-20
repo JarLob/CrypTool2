@@ -187,6 +187,24 @@ namespace Cryptool.Plugins.Blowfish.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tweak length = {0} is too long. Cut it to tweak length = {1} ähnelt.
+        /// </summary>
+        internal static string Blowfish_CheckTweak_Tweak_too_long {
+            get {
+                return ResourceManager.GetString("Blowfish_CheckTweak_Tweak_too_long", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tweak length = {0} is too short. Fill it with zeros to tweak length = {1} ähnelt.
+        /// </summary>
+        internal static string Blowfish_CheckTweak_Tweak_too_short {
+            get {
+                return ResourceManager.GetString("Blowfish_CheckTweak_Tweak_too_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Key length = {0} is too long. Cut it to key length = {1} ähnelt.
         /// </summary>
         internal static string Blowfish_Execute_Key_too_long {
@@ -250,7 +268,7 @@ namespace Cryptool.Plugins.Blowfish.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The provided key must be 8 bytes. Too short or too long keys will be extended or truncated. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Der eingegebene Schlüssel. Zu kurze oder zu lange Schlüssel werden verlängert oder abgeschnitten. ähnelt.
         /// </summary>
         internal static string InputKeyTooltip {
             get {
@@ -453,6 +471,24 @@ namespace Cryptool.Plugins.Blowfish.Properties {
         internal static string Round8 {
             get {
                 return ResourceManager.GetString("Round8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tweak ähnelt.
+        /// </summary>
+        internal static string TweakCaption {
+            get {
+                return ResourceManager.GetString("TweakCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a tweak. Only used by Threefish ähnelt.
+        /// </summary>
+        internal static string TweakTooltip {
+            get {
+                return ResourceManager.GetString("TweakTooltip", resourceCulture);
             }
         }
     }

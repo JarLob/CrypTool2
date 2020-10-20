@@ -36,7 +36,6 @@ namespace Cryptool.Plugins.Blowfish
         private CipherAction _action = CipherAction.Encrypt;
         private BlockMode _blockMode = BlockMode.ECB;
         private PaddingType _padding = PaddingType.None;
-        private bool _enableKeyParityBits = false;
         #endregion
 
         #region TaskPane Settings
@@ -68,20 +67,6 @@ namespace Cryptool.Plugins.Blowfish
                 {
                     _action = value;
                     OnPropertyChanged("Action");
-                }
-            }
-        }
-
-        [TaskPane("EnableKeyParityBitsCaption", "EnableKeyParityBitsTooltip", null, 3, false, ControlType.CheckBox)]
-        public bool EnableKeyParityBits
-        {
-            get { return _enableKeyParityBits; }
-            set
-            {
-                if (_enableKeyParityBits != value)
-                {
-                    _enableKeyParityBits = value;
-                    OnPropertyChanged("EnableKeyParityBits");
                 }
             }
         }

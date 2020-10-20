@@ -78,12 +78,10 @@ namespace Cryptool.Plugins.Blowfish.Threefish
 
         public void SetTweak(byte[] bytetweak)
         {
-            ulong[] tweak = new ulong[3];
+            ulong[] tweak = new ulong[2];
 
-            for (int i = 0; i < tweak.Length; i++)
-            {
-                tweak[i] = ByteArrayToULong(bytetweak, i * 8);
-            }
+            tweak[0] = BitConverter.ToUInt64(bytetweak, 0);
+            tweak[1] = BitConverter.ToUInt64(bytetweak, 8);
 
             ExpandedTweak[0] = tweak[0];
             ExpandedTweak[1] = tweak[1];
@@ -96,7 +94,7 @@ namespace Cryptool.Plugins.Blowfish.Threefish
 
             for (int i = 0; i < key.Length; i++)
             {
-                key[i] = ByteArrayToULong(bytekey, i * 8);
+                key[i] = BitConverter.ToUInt64(bytekey, i * 8);
             }
 
             int j;
@@ -107,51 +105,10 @@ namespace Cryptool.Plugins.Blowfish.Threefish
                 ExpandedKey[j] = key[j];
                 parity ^= key[j];
             }
-
             ExpandedKey[j] = parity;
         }
 
         abstract public byte[] Encrypt(byte[] input, byte[] key);
-        abstract public byte[] Decrypt(byte[] input, byte[] key);
-
-        /// <summary>
-        /// Converts a ulong value to a byte array
-        /// </summary>
-        /// <param name="ul"></param>
-        /// <returns>byte array</returns>
-        public static byte[] ULongToByteArray(ulong ul)
-        {
-            byte[] array = new byte[8];
-            array[7] = (byte)((ul >> 0) & 0xFF);
-            array[6] = (byte)((ul >> 8) & 0xFF);
-            array[5] = (byte)((ul >> 16) & 0xFF);
-            array[4] = (byte)((ul >> 24) & 0xFF);
-            array[3] = (byte)((ul >> 32) & 0xFF);
-            array[2] = (byte)((ul >> 40) & 0xFF);
-            array[1] = (byte)((ul >> 48) & 0xFF);
-            array[0] = (byte)((ul >> 56) & 0xFF);
-            return array;
-        }
-
-        /// <summary>
-        /// Converts 8 bytes beginning from the offset of the given byte array
-        /// to ulong
-        /// </summary>
-        /// <param name="array"></param>
-        /// <param name="offset"></param>
-        /// <returns>ulong</returns>
-        public static ulong ByteArrayToULong(byte[] array, int offset = 0)
-        {
-            ulong ul = 0;
-            ul = ul + ((ulong)array[7 + offset] << 0);
-            ul = ul + ((ulong)array[6 + offset] << 8);
-            ul = ul + ((ulong)array[5 + offset] << 16);
-            ul = ul + ((ulong)array[4 + offset] << 24);
-            ul = ul + ((ulong)array[3 + offset] << 32);
-            ul = ul + ((ulong)array[2 + offset] << 40);
-            ul = ul + ((ulong)array[1 + offset] << 48);
-            ul = ul + ((ulong)array[0 + offset] << 56);
-            return ul;
-        }
+        abstract public byte[] Decrypt(byte[] input, byte[] key);        
     }
 }

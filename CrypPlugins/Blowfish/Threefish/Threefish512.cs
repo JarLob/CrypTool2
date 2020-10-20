@@ -23,6 +23,8 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 
+using System;
+
 namespace Cryptool.Plugins.Blowfish.Threefish
 {
     internal class Threefish512 : ThreefishAlgorithm
@@ -686,14 +688,14 @@ namespace Cryptool.Plugins.Blowfish.Threefish
 
             for (int i = 0; i < number_count; i++)
             {
-                b[i] = ByteArrayToULong(input, i * 8);
+                b[i] = BitConverter.ToUInt64(input, i * 8);
             }
 
             Encrypt(b, o);
 
             for (int i = 0; i < number_count; i++)
             {
-                byte[] tmp = ULongToByteArray(o[i]);
+                byte[] tmp = BitConverter.GetBytes(o[i]);
                 for (int j = 0; j < 8; j++)
                 {
                     output[i * 8 + j] = tmp[j];
@@ -712,14 +714,14 @@ namespace Cryptool.Plugins.Blowfish.Threefish
 
             for (int i = 0; i < number_count; i++)
             {
-                b[i] = ByteArrayToULong(input, i * 8);
+                b[i] = BitConverter.ToUInt64(input, i * 8);
             }
 
             Decrypt(b, o);
 
             for (int i = 0; i < number_count; i++)
             {
-                byte[] tmp = ULongToByteArray(o[i]);
+                byte[] tmp = BitConverter.GetBytes(o[i]);
                 for (int j = 0; j < 8; j++)
                 {
                     output[i * 8 + j] = tmp[j];
