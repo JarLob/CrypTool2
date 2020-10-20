@@ -115,6 +115,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.ru.resx</DependentUpon>
     </Compile>
+    <Compile Include="Threefish\Threefish1024.cs" />
+    <Compile Include="Threefish\Threefish256.cs" />
+    <Compile Include="Threefish\Threefish512.cs" />
+    <Compile Include="Threefish\ThreefishAlgorithm.cs" />
     <Compile Include="TwofishAlgorithm.cs" />
   </ItemGroup>
   <ItemGroup>

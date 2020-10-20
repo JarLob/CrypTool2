@@ -1,6 +1,24 @@
 ﻿/*
    Copyright 2020 Nils Kopal <Nils.Kopal<at>CrypTool.org
 
+   The three ciphers are invented by Bruce Schneier (and others)
+   Source codes are based on/from:
+
+   a) Blowfish:
+   Implementation of Bruce Schneier's Blowfish cipher. 
+   The code is based on pseudo code from the German and English Wikipedia articles, see:
+   https://de.wikipedia.org/wiki/Blowfish
+   https://en.wikipedia.org/wiki/Blowfish_(cipher)
+
+   b) Twofish:
+   Original Twofish C# algorithm implemention is from Josip Medved <jmedved@jmedved.com> * www.medo64.com * MIT License   
+   Found on Bruce Schneier's homepage: https://www.schneier.com/academic/twofish/download/
+   Test vectors: https://www.schneier.com/wp-content/uploads/2015/12/ecb_ival.txt
+   
+   c) Threefish:
+   Original Threefish code is taken from: https://code.google.com/archive/p/skeinfish/ 
+   Threefish code was written by Alberto Fajardo, 2010   
+   
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
@@ -21,6 +39,7 @@ using Cryptool.PluginBase.IO;
 using System;
 using Cryptool.Plugins.Blowfish.Properties;
 using static Cryptool.PluginBase.Miscellaneous.BlockCipherHelper;
+using Cryptool.Plugins.Blowfish.Threefish;
 
 namespace Cryptool.Plugins.Blowfish
 {
@@ -136,6 +155,7 @@ namespace Cryptool.Plugins.Blowfish
 
             //Select crypto function based on algorithm, blockmode, and action
             BlockCipher blockCipher = null;
+            //Blowfish:
             if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Blowfish && _BlowfishSettings.BlockMode == BlockMode.CFB)
             {
                 BlowfishAlgorithm algorithm = new BlowfishAlgorithm();
@@ -160,6 +180,7 @@ namespace Cryptool.Plugins.Blowfish
                 algorithm.KeySchedule(_InputKey);
                 blockCipher = new BlockCipher(algorithm.Decrypt);
             }
+            //Twofish:
             else if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Twofish && _BlowfishSettings.BlockMode == BlockMode.CFB)
             {
                 TwofishAlgorithm algorithm = new TwofishAlgorithm(_InputKey);
@@ -180,6 +201,32 @@ namespace Cryptool.Plugins.Blowfish
                 TwofishAlgorithm algorithm = new TwofishAlgorithm(_InputKey);
                 blockCipher = new BlockCipher(algorithm.Decrypt);
             }
+            //Threefish:
+            else if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Threefish && _BlowfishSettings.BlockMode == BlockMode.CFB)
+            {
+                ThreefishAlgorithm algorithm = GetThreefishAlgorithm();
+                algorithm.SetKey(_InputKey);
+                blockCipher = new BlockCipher(algorithm.Encrypt);
+            }
+            else if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Threefish && _BlowfishSettings.BlockMode == BlockMode.OFB)
+            {
+                ThreefishAlgorithm algorithm = GetThreefishAlgorithm();
+                algorithm.SetKey(_InputKey);
+                blockCipher = new BlockCipher(algorithm.Encrypt);
+            }
+            else if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Threefish && _BlowfishSettings.Action == CipherAction.Encrypt)
+            {
+                ThreefishAlgorithm algorithm = GetThreefishAlgorithm();
+                algorithm.SetKey(_InputKey);
+                blockCipher = new BlockCipher(algorithm.Encrypt);
+            }
+            else if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Threefish && _BlowfishSettings.Action == CipherAction.Decrypt)
+            {
+                ThreefishAlgorithm algorithm = GetThreefishAlgorithm();
+                algorithm.SetKey(_InputKey);
+                blockCipher = new BlockCipher(algorithm.Decrypt);
+            }
+
 
             //Check, if we found a crypto function that we can use
             //this error should NEVER occur. Only in case someone adds functionality and misses
@@ -214,6 +261,11 @@ namespace Cryptool.Plugins.Blowfish
             if(_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Twofish)
             {
                 blocksize = 16;
+            }
+            if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Threefish)
+            {
+                //Threefish blocksize is equal to the key length
+                blocksize = _InputKey.Length;
             }
 
             switch (_BlowfishSettings.BlockMode)
@@ -282,13 +334,36 @@ namespace Cryptool.Plugins.Blowfish
         }
 
         /// <summary>
+        /// Returns instance of Threefish based on provided key length
+        /// hint: key length is automatically "fixed" by adding zeros if CT2 user
+        /// provided a key that was too short or too long
+        /// </summary>
+        /// <returns></returns>
+        private ThreefishAlgorithm GetThreefishAlgorithm()
+        {
+            if(_InputKey.Length == 32)
+            {
+                return new Threefish256();
+            }
+            else if(_InputKey.Length == 64)
+            {
+                return new Threefish512();
+            }
+            else if(_InputKey.Length == 128)
+            {
+                return new Threefish1024();
+            }
+            throw new ArgumentException("Provided key for Threefish has not length 256 bit, 5120 bit, or 1024 bit");
+        }
+
+        /// <summary>
         /// Checks the given key and extends/cuts it, if needed
         /// </summary>
         private void CheckKeyLength()
         {
             if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Blowfish)
             {
-                //blowfish specifies key lengths between 32 bit (4 bytes) and 448 bit (56 bytes)
+                //Blowfish specifies key lengths between 32 bit (4 bytes) and 448 bit (56 bytes)
                 //usual case is 16 byte (= 128 bit key)
                 if (_InputKey.Length < 4)
                 {
@@ -307,7 +382,7 @@ namespace Cryptool.Plugins.Blowfish
             }
             else if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Twofish)
             {
-                //twofish specifies keylengths of 128 bit (16 byte), 192 bit (24 byte), and 256 bit (32 byte)
+                //Twofish specifies keylengths of 128 bit (16 byte), 192 bit (24 byte), and 256 bit (32 byte)
                 if (_InputKey.Length < 16)
                 {
                     byte[] key = new byte[16];
@@ -337,6 +412,38 @@ namespace Cryptool.Plugins.Blowfish
                     _InputKey = key;
                 }
             }
+            else if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Threefish)
+            {
+                //Threefish specifies keylengths of 256 bit (32 byte), 512 bit (64 byte), and 1024 bit (128 byte)
+                if (_InputKey.Length < 32)
+                {
+                    byte[] key = new byte[32];
+                    Array.Copy(_InputKey, 0, key, 0, _InputKey.Length);
+                    GuiLogMessage(string.Format(Resources.Blowfish_Execute_Key_too_short, _InputKey.Length, 32), NotificationLevel.Warning);
+                    _InputKey = key;
+                }
+                else if (_InputKey.Length != 32 && _InputKey.Length < 64)
+                {
+                    byte[] key = new byte[64];
+                    Array.Copy(_InputKey, 0, key, 0, _InputKey.Length);
+                    GuiLogMessage(string.Format(Resources.Blowfish_Execute_Key_too_short, _InputKey.Length, 64), NotificationLevel.Warning);
+                    _InputKey = key;
+                }
+                else if (_InputKey.Length != 32 && _InputKey.Length != 64 && _InputKey.Length < 128)
+                {
+                    byte[] key = new byte[128];
+                    Array.Copy(_InputKey, 0, key, 0, _InputKey.Length);
+                    GuiLogMessage(string.Format(Resources.Blowfish_Execute_Key_too_short, _InputKey.Length, 128), NotificationLevel.Warning);
+                    _InputKey = key;
+                }
+                else if (_InputKey.Length > 128)
+                {
+                    byte[] key = new byte[128];
+                    Array.Copy(_InputKey, 0, key, 0, 128);
+                    GuiLogMessage(string.Format(Resources.Blowfish_Execute_Key_too_long, _InputKey.Length, 128), NotificationLevel.Warning);
+                    _InputKey = key;
+                }
+            }
         }
 
         /// <summary>
@@ -348,6 +455,11 @@ namespace Cryptool.Plugins.Blowfish
             if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Twofish)
             {
                 blocksize = 16;
+            }
+            if (_BlowfishSettings.BlowfishAlgorithmType == BlowfishAlgorithmType.Threefish)
+            {
+                //blocksize of Threefish is the same as the keylength
+                blocksize = _InputKey.Length;
             }
             //if no IV is given, we set it to an array with length 0
             if (_InputIV == null)
@@ -365,7 +477,7 @@ namespace Cryptool.Plugins.Blowfish
             if (_InputIV.Length > blocksize)
             {
                 byte[] iv = new byte[blocksize];
-                Array.Copy(_InputIV, 0, iv, 0, 8);
+                Array.Copy(_InputIV, 0, iv, 0, blocksize);
                 GuiLogMessage(string.Format(Resources.Blowfish_CheckIV_IV_too_long, _InputIV.Length, blocksize), NotificationLevel.Warning);
                 _InputIV = iv;
             }

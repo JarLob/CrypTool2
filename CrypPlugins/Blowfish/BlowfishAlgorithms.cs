@@ -22,7 +22,7 @@ namespace Cryptool.Plugins.Blowfish
     /// https://de.wikipedia.org/wiki/Blowfish
     /// https://en.wikipedia.org/wiki/Blowfish_(cipher)
     /// </summary>
-    public class BlowfishAlgorithm
+    internal class BlowfishAlgorithm
     {
         #region S-Boxes and P-Box
         

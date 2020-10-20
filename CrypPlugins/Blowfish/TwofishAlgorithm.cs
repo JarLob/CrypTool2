@@ -1,5 +1,6 @@
 ﻿/*
    Copyright 2020 Nils Kopal <Nils.Kopal<at>CrypTool.org   
+   
    Original Twofish C# algorithm implemention is from Josip Medved <jmedved@jmedved.com> * www.medo64.com * MIT License   
    Found on Bruce Schneier's homepage: https://www.schneier.com/academic/twofish/download/
    Test vectors: https://www.schneier.com/wp-content/uploads/2015/12/ecb_ival.txt
@@ -25,7 +26,7 @@ using System.Runtime.InteropServices;
 
 namespace Cryptool.Plugins.Blowfish
 {
-    public class TwofishAlgorithm
+    internal class TwofishAlgorithm
     {
         public TwofishAlgorithm(byte[] key)
         {
