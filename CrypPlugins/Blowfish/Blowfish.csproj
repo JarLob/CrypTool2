@@ -96,7 +96,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlowfishAlgorithms.cs" />
+    <Compile Include="BlowfishAlgorithm.cs" />
     <Compile Include="Blowfish.cs" />
     <Compile Include="BlowfishSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

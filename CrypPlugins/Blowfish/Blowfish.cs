@@ -378,7 +378,7 @@ namespace Cryptool.Plugins.Blowfish
             {
                 return new Threefish1024();
             }
-            throw new ArgumentException("Provided key for Threefish has not length 256 bit, 5120 bit, or 1024 bit");
+            throw new ArgumentException("Provided key for Threefish has not length 256 bit, 512 bit, or 1024 bit");
         }
 
         /// <summary>
@@ -399,7 +399,7 @@ namespace Cryptool.Plugins.Blowfish
                 }
                 if (_InputKey.Length > 56)
                 {
-                    byte[] key = new byte[8];
+                    byte[] key = new byte[56];
                     Array.Copy(_InputKey, 0, key, 0, 56);
                     GuiLogMessage(string.Format(Resources.Blowfish_Execute_Key_too_long, _InputKey.Length, 56), NotificationLevel.Warning);
                     _InputKey = key;
