@@ -79,7 +79,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis Mode: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis mode: ähnelt.
         /// </summary>
         public static string AnalysisMode {
             get {
@@ -88,7 +88,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis Mode ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis mode ähnelt.
         /// </summary>
         public static string AnalysisModeCaption {
             get {
@@ -106,7 +106,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis Step: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis step: ähnelt.
         /// </summary>
         public static string AnalysisStep {
             get {
@@ -115,7 +115,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis Type ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis type ähnelt.
         /// </summary>
         public static string AnalysisTypeGroup {
             get {
@@ -151,7 +151,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Crib Position From ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Crib position from ähnelt.
         /// </summary>
         public static string CribPositionFromCaption {
             get {
@@ -169,7 +169,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Crib Position To ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Crib position to ähnelt.
         /// </summary>
         public static string CribPositionToCaption {
             get {
@@ -196,7 +196,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die End Time: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die End time: ähnelt.
         /// </summary>
         public static string EndLabel {
             get {
@@ -205,7 +205,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Greek Ring From ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Greek ring from ähnelt.
         /// </summary>
         public static string GreekRingFromCaption {
             get {
@@ -223,7 +223,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Greek Ring To ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Greek ring to ähnelt.
         /// </summary>
         public static string GreekRingToCaption {
             get {
@@ -232,7 +232,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Last ring in greek position to analyze ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Last ring in Greek position to analyze ähnelt.
         /// </summary>
         public static string GreekRingToTooltip {
             get {
@@ -241,7 +241,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Last rotor position in greek position to analyze ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Last rotor position in Greek position to analyze ähnelt.
         /// </summary>
         public static string GreekRoto_PositionToTooltip {
             get {
@@ -250,7 +250,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Greek Rotor From ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Greek rotor from ähnelt.
         /// </summary>
         public static string GreekRotorFromCaption {
             get {
@@ -268,7 +268,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Greek Rotor Position From ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Greek rotor position from ähnelt.
         /// </summary>
         public static string GreekRotorPositionFromCaption {
             get {
@@ -277,7 +277,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die First rotor position in greek position to analyze ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die First rotor position in Greek position to analyze ähnelt.
         /// </summary>
         public static string GreekRotorPositionFromTooltip {
             get {
@@ -286,7 +286,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Greek Rotor Position To ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Greek rotor position to ähnelt.
         /// </summary>
         public static string GreekRotorPositionToCaption {
             get {
@@ -295,7 +295,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Greek Rotor To ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Greek rotor to ähnelt.
         /// </summary>
         public static string GreekRotorToCaption {
             get {
@@ -304,7 +304,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Last rotor in greek position to analyze ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Last rotor in Greek position to analyze ähnelt.
         /// </summary>
         public static string GreekRotorToTooltip {
             get {
@@ -313,7 +313,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Best Key ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Best key ähnelt.
         /// </summary>
         public static string KeyCaption {
             get {
@@ -340,7 +340,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Left Ring From ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Left ring from ähnelt.
         /// </summary>
         public static string LeftRingFromCaption {
             get {
@@ -358,7 +358,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Left Ring To ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Left ring to ähnelt.
         /// </summary>
         public static string LeftRingToCaption {
             get {
@@ -376,7 +376,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Left Rotor From ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Left rotor from ähnelt.
         /// </summary>
         public static string LeftRotorFromCaption {
             get {
@@ -394,7 +394,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Left Rotor Position From ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Left rotor position from ähnelt.
         /// </summary>
         public static string LeftRotorPositionFromCaption {
             get {
@@ -412,7 +412,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Left Rotor Position To ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Left rotor position to ähnelt.
         /// </summary>
         public static string LeftRotorPositionToCaption {
             get {
@@ -430,7 +430,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Left Rotor To ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Left rotor to ähnelt.
         /// </summary>
         public static string LeftRotorToCaption {
             get {
@@ -457,7 +457,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Machine Model ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Machine model ähnelt.
         /// </summary>
         public static string MachineModelCaption {
             get {
@@ -475,7 +475,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Middle Ring From ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Middle ring from ähnelt.
         /// </summary>
         public static string MiddleRingFromCaption {
             get {
@@ -493,7 +493,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Middle Ring To ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Middle ring to ähnelt.
         /// </summary>
         public static string MiddleRingToCaption {
             get {
@@ -511,7 +511,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Middle Rotor From ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Middle rotor from ähnelt.
         /// </summary>
         public static string MiddleRotorFromCaption {
             get {
@@ -529,7 +529,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Middle Rotor Position From ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Middle rotor position from ähnelt.
         /// </summary>
         public static string MiddleRotorPositionFromCaption {
             get {
@@ -547,7 +547,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Middle Rotor Position To ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Middle rotor position to ähnelt.
         /// </summary>
         public static string MiddleRotorPositionToCaption {
             get {
@@ -565,7 +565,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Middle Rotor To ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Middle rotor to ähnelt.
         /// </summary>
         public static string MiddleRotorToCaption {
             get {
@@ -583,7 +583,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Best Plaintext ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Best plaintext ähnelt.
         /// </summary>
         public static string PlaintextCaption {
             get {
@@ -646,7 +646,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Reflector From ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reflector from ähnelt.
         /// </summary>
         public static string ReflectorFromCaption {
             get {
@@ -682,7 +682,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Reflector To ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reflector to ähnelt.
         /// </summary>
         public static string ReflectorToCaption {
             get {
@@ -691,7 +691,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Right Ring From ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Right ring from ähnelt.
         /// </summary>
         public static string RightRingFromCaption {
             get {
@@ -709,7 +709,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Right Ring To ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Right ring to ähnelt.
         /// </summary>
         public static string RightRingToCaption {
             get {
@@ -727,7 +727,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Right Rotor From ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Right rotor from ähnelt.
         /// </summary>
         public static string RightRotorFromCaption {
             get {
@@ -745,7 +745,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Right Rotor Position From ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Right rotor position from ähnelt.
         /// </summary>
         public static string RightRotorPositionFromCaption {
             get {
@@ -763,7 +763,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Right Rotor Position To ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Right rotor position to ähnelt.
         /// </summary>
         public static string RightRotorPositionToCaption {
             get {
@@ -781,7 +781,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Right Rotor To ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Right rotor to ähnelt.
         /// </summary>
         public static string RightRotorToCaption {
             get {
@@ -799,7 +799,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ring Positions ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ring positions ähnelt.
         /// </summary>
         public static string RingGroup {
             get {
@@ -817,7 +817,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Rotor Positions ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Rotor positions ähnelt.
         /// </summary>
         public static string RotorPositionGroup {
             get {
@@ -826,7 +826,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Search From: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Search from: ähnelt.
         /// </summary>
         public static string SearchFrom {
             get {
@@ -835,7 +835,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Search To: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Search to: ähnelt.
         /// </summary>
         public static string SearchTo {
             get {
@@ -844,7 +844,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Start Time: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start time: ähnelt.
         /// </summary>
         public static string StartLabel {
             get {
@@ -880,7 +880,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Time Left: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Time left: ähnelt.
         /// </summary>
         public static string TimeLeftLabel {
             get {
@@ -889,7 +889,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Top List ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Top list ähnelt.
         /// </summary>
         public static string TopTenLabel {
             get {
