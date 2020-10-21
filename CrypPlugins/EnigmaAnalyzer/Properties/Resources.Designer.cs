@@ -214,7 +214,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die First ring in greek position to analyze ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die First ring in Greek position to analyze ähnelt.
         /// </summary>
         public static string GreekRingFromTooltip {
             get {
@@ -259,7 +259,7 @@ namespace Cryptool.EnigmaAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die First rotor in greek position to analyze ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die First rotor in Greek position to analyze ähnelt.
         /// </summary>
         public static string GreekRotorFromTooltip {
             get {
