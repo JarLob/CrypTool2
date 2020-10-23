@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+  <title lang="en">Text Steganography with Zero Width Spaces</title>
+  <summary lang="en">Hide and extract a message in and from another text</summary>
+  <description lang="en">This is a text steganography technique where a secret message is hidden in another text using zero width spaces</description>
+  <keywords lang="en">Steganography, Text Steganography, Zero width spaces</keywords>
+  <title lang="de">Text Steganographie mit Leerzeichen ohne Breite</title>
+  <summary lang="de">Geheime Nachrichten in einem Text verstecken und wieder extrahieren</summary>
+  <description lang="de">Das ist eine Text Steganographie Technik, wo eine geheime Nachricht in einem Text versteckt wird mit Leerzeichen die keine Breite haben</description>
+  <keywords lang="de">Steganographie, Text Steganographie, Leerzeichen ohne Breite</keywords>
+  <relevantPlugins>
+    <plugin name="TextSteganography" />
+  </relevantPlugins>
+  <replacements lang="de">
+    <replacement key="$secretmessage$" value="Geheime Nachricht" />
+    <replacement key="$covertext$" value="Das Wetter is schön heute" />
+    <replacement key="$steghide$" value="Verstecken" />
+    <replacement key="$stegextract$" value="Extrahieren" />
+    <replacement key="$extractedmessage$" value="Extrahierte Nachricht" />
+    <replacement key="$secretmessagetext$" value= "hallo"/>
+    <replacement key="$memotext$" value= "Dieser Modus der Text-Steganographie wandelt eine geheime Nachricht in Bits und verwendet zwei Arten von Leerzeichen ohne Breite, um die Bits der Nachricht im Covertext zu codieren. In diesem Modus gibt es keine Einschränkungen in Bezug auf die Länge der geheimen Nachricht oder des Covertextes."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$secretmessage$" value="Secret message" />
+    <replacement key="$covertext$" value="The weather is lovely today" />
+    <replacement key="$steghide$" value="Hide" />
+    <replacement key="$stegextract$" value="Extract" />
+    <replacement key="$extractedmessage$" value="Extracted message" />
+    <replacement key="$secretmessagetext$" value= "hello"/>
+    <replacement key="$memotext$" value= "This mode of text steganography converts a secret message to bits and uses two types of zero width spaces to encode the bits of the message in the cover text. When using this technique there are no restrictions regarding the length of the secret message or the cover text."/>
+  </replacements>
+</sample>

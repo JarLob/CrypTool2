@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+  <title lang="en">LSB Steganography</title>
+  <summary lang="en">Hide and extract messages with LSB Steganography</summary>
+  <description lang="en">In Steganography, LSB is one of the most used techniques to hide a secret message in an image, in this plugin a secret message can be hidden in
+  an image using only LSB as default, or with the visualization component you can choose which bits to be used to hide the message and then extract it</description>
+  <keywords>Steganography, LSB</keywords>
+  <title lang="de">LSB Steganographie</title>
+  <summary lang="de">Geheime Nachrichten in Bilder verstecken und wieder extrahieren</summary>
+  <description lang="de">In der Steganographie ist LSB eine der am häufigsten verwendeten Techniken, um eine geheime Nachricht in einem Bild zu verstecken.
+  In diesem Plugin kann eine geheime Nachricht standardmäßig mit LSB in ein Bild versteckt werden, oder mit der Visualisierungskomponente können Sie auswählen,
+  welche Bits zum Verstecken der Nachricht verwendet werden sollen, und diese dann extrahieren /></description>
+  <keywords lang="de">Steganographie, LSB</keywords>
+  <relevantPlugins>
+    <plugin name="ImageSteganographyVisualization" />
+  </relevantPlugins>
+  <replacements lang="de">
+    <replacement key="$secretmessage$" value="Geheime Nachricht" />
+    <replacement key="$coverimage$" value="Coverbild" />
+    <replacement key="$lsbhide$" value="LSB verstecken" />
+    <replacement key="$stegoimage$" value="Stego Bild" />
+    <replacement key="$lsbextract$" value="LSB extrahieren" />
+    <replacement key="$extractedmessage$" value="Extrahierte Nachricht" />
+    <replacement key="$secretmessagetext$" value= "Hallo, dies ist eine geheime Nachricht!"/>
+    <replacement key="$memotext$" value= "Diese Vorlage wird verwendet, um die Bildsteganographie mit der LSB-Methode zu demonstrieren. Bitmasken können in den Einstellungen oder mithilfe der Ansicht &quot;Bits auswählen&quot; wenn die Präsentation aktiviert ist. Die Bitmasken geben an, welche Bits zum Verstecken der Nachricht verwendet werden (1 = ausgewählt, 0 = nicht ausgewählt). Wenn Sie mehr Bits auswählen, können Sie eine höhere Versteckkapazität erzielen, und weniger Pixel werden von den Änderungen betroffen. Dies kann jedoch zu einer Verzerrung des Bildes führen. Daher können die anderen Ansichten verwendet werden, um die besten Einstellungen basierend auf den Eingaben zu vergleichen und auszuwählen. Nachdem Sie den Versteckprozess ausgeführt haben, können Sie die Pixel zwischen dem Original und dem Coverbild in der Pixelkonvertierung Ansicht vergleichen. In der Übersicht finden Sie Informationen zum Bild und zur Versteckkapazität."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$secretmessage$" value="Secret message" />
+    <replacement key="$coverimage$" value="Cover image" />
+    <replacement key="$lsbhide$" value="LSB hide" />
+    <replacement key="$stegoimage$" value="Stego image" />
+    <replacement key="$lsbextract$" value="LSB extract" />
+    <replacement key="$extractedmessage$" value="Extracted message" />
+    <replacement key="$secretmessagetext$" value= "Hi, this is a secret message!"/>
+    <replacement key="$memotext$" value= "This template is used to demonstrate image steganography using the LSB technique. Bitmasks can be chosen from the settings or from the presentation if it is activated using the &quot;Choose bits&quot; view. The bitmasks indicate which bits are used to hide the message (1 = chosen, 0 = not chosen). When you choose more bits, you can achieve a higher hiding capacity and less pixels are affected by the changes, but this can result in a distortion of the image. Therefore the other views can be used to compare and choose the best settings based on the provided inputs. After executing the hiding process, you can compare the pixels between the original and the cover image in the pixel coversion view. In the overview you can find information about the image and hiding capacity.  "/>
+  </replacements>
+</sample>
