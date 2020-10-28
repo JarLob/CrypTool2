@@ -5,7 +5,7 @@
   <description lang="en">This template shows how to use the <i>subsitution</i> component in order to perform a homophonic encryption and to use a nomenclature as key.</description>
   <keywords>substitution, monoalphabetic, homophone, nomenclature</keywords>
 
-  <title lang="de">Homophone Substitutions-Chiffre und Nomenklatur -- Verschlüsselung</title>
+  <title lang="de">Homophone Substitutions-Chiffre und Nomenklatur – Verschlüsselung</title>
   <summary lang="de">Benutzung des <i>Substitutions-Plugins</i> für homophone Verschlüsselungen und Nomenklaturen</summary>
   <description lang="de">Diese Vorlage zeigt, wie man die <i>Substitutions-Komponente</i> nutzen kann, um homophone Verschlüsselungen durchzuführen und auch Nomenklaturen als Schlüssel zu benutzen.</description>
   <keywords lang="de">Substitution, monoalphabetisch, homophon, Nomenklatur</keywords>
@@ -45,7 +45,7 @@ In the TextInput component {\b Nomenclature} the homophones or the nomenclature 
 {\b [BISHOP];[85]} defines that the word {\b BISHOP} is substituted with the homophone {\b 85}.\line\line
 With the help of the two CSV-Reader components, the elements of the plaintext alphabet (A ... Z and words) and the elements of the ciphertext alphabet (01 up to any integer number) are extracted and forwarded to the Substitution component. The Substitution component then uses these as inputs together with the plaintext to perform the actual encryption.\line\line
 In the nomenclature, each mapping of an element of the plaintext alphabet is placed in a separate line; the elements of plaintext and ciphertext alphabet within one line are separated by a semicolon.\line
-Whole words of the plaintext alphabet are -- like the single characters -- defined by square brackets {\b[]}. To map a character or a word to several different homophones, the homophones are separated by {\b |}.\line
+Whole words of the plaintext alphabet are – like the single characters – defined by square brackets {\b[]}. To map a character or a word to several different homophones, the homophones are separated by {\b |}.\line
 To define your own mappings, an existing line in the nomenclature can simply be copied and added at the bottom. The changed mapping is effective in the Play mode at once.\line\line
 Source of the plaintext: https://en.wikipedia.org/wiki/Pope
 }"/>	
