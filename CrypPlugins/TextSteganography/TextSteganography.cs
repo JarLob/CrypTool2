@@ -73,7 +73,7 @@ namespace TextSteganography
                 if (secretMessage != value)
                 {
                     secretMessage = value;
-                    OnPropertyChanged("InputSecretMessage");
+                    //OnPropertyChanged("InputSecretMessage");
                 }
             }
         }
@@ -87,7 +87,7 @@ namespace TextSteganography
                 if (stegoText != value)
                 {
                     stegoText = value;
-                    OnPropertyChanged("StegoText");
+                    //OnPropertyChanged("StegoText");
                 }
             }
         }
@@ -101,12 +101,10 @@ namespace TextSteganography
                 if (secretMessage != value)
                 {
                     secretMessage = value;
-                    OnPropertyChanged("OutputSecretMessage");
+                    //OnPropertyChanged("OutputSecretMessage");
                 }
             }
         }
-
-
 
         public ISettings Settings
         {
@@ -130,18 +128,13 @@ namespace TextSteganography
         public void Execute()
         {
             ProgressChanged(0, 1);
-
-            // make sure valid cover text available
-
             if (settings.Mode == ModeType.ZeroWidthSpace)
             {
                 offset = settings.Offset;
-
                 if (settings.Action == ActionType.Hide)
                 {
                     ZeroWidthSpaceHide();
                 }
-
                 else
                 {
                     ZeroWidthSpaceExtract();
@@ -197,8 +190,6 @@ namespace TextSteganography
                     MarkingLettersTextExtract();
                 }
             }
-
-
             ProgressChanged(1, 1);
         }
 
@@ -212,17 +203,20 @@ namespace TextSteganography
 
         public void Initialize()
         {
+            // set the presentation if the mode is already set to zero width spaces in settings
             if (settings.Mode == ModeType.ZeroWidthSpace)
             {
                 Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     if (settings.Mode == ModeType.ZeroWidthSpace)
+                    {
                         presentation.ShowBitsCheckbox();
+                    }
                     else
+                    {
                         presentation.HideBitsCheckBox();
-
+                    }
                 }, null);
-
             }
         }
 
@@ -234,6 +228,9 @@ namespace TextSteganography
 
         #region Implementations 
 
+        /// <summary>
+        /// hides a secret message using zero width spaces
+        /// </summary>
         private void ZeroWidthSpaceHide()
         {
             StringBuilder stegoTextBuilder = new StringBuilder();
@@ -256,10 +253,12 @@ namespace TextSteganography
             }
             stegoTextBuilder.Append(coverText.Substring(offset));
             StegoText = stegoTextBuilder.ToString();
-
             OnPropertyChanged("StegoText");
         }
 
+        /// <summary>
+        /// extracts a secret message that was hidden using zero width spaces
+        /// </summary>
         private void ZeroWidthSpaceExtract()
         {
             string messageBitsString = "";
@@ -280,7 +279,10 @@ namespace TextSteganography
             OnPropertyChanged("OutputSecretMessage");
         }
 
-        public void CapitalLettersTextHide()
+        /// <summary>
+        /// hides a message in text by converting the letters of the secret message to capital letters in the cover text
+        /// </summary>
+        private void CapitalLettersTextHide()
         {
             string stegoTextTmp = coverText.ToLower();
             StringBuilder stegoTextBuilder = new StringBuilder();
@@ -288,7 +290,6 @@ namespace TextSteganography
             int coverTextIndex;
             for (coverTextIndex = 0; coverTextIndex < stegoTextTmp.Length; coverTextIndex++)
             {
-
                 if (stegoTextTmp[coverTextIndex] == secretMessage[messageIndex])
                 {
                     stegoTextBuilder.Append(Char.ToUpper(stegoTextTmp[coverTextIndex]));
@@ -308,16 +309,16 @@ namespace TextSteganography
                     messageIndex++;
                 }
             }
-
+            // display warning if not the entire message could be hidden
             if (messageIndex < secretMessage.Length - 1)
             {
                 GuiLogMessage(Properties.Resources.NotAllMessageHidden1, NotificationLevel.Warning);
             }
+            // append the rest of the original cover text after the message is encoded
             if (coverTextIndex < stegoTextTmp.Length - 1)
             {
                 stegoTextBuilder.Append(stegoTextTmp.Substring(coverTextIndex + 1));
             }
-
             StegoText = stegoTextBuilder.ToString();
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
@@ -327,8 +328,10 @@ namespace TextSteganography
             OnPropertyChanged("StegoText");
         }
 
-
-        public void CapitalLettersTextExtract()
+        /// <summary>
+        ///  extracts a secret message that was hidden using capital letters (text mode)
+        /// </summary>
+        private void CapitalLettersTextExtract()
         {
             StringBuilder secretMessageTmp = new StringBuilder();
             for (int i = 0; i < coverText.Length; i++)
@@ -353,16 +356,19 @@ namespace TextSteganography
             OnPropertyChanged("OutputSecretMessage");
         }
 
+        /// <summary>
+        /// hides a message in text using capital letters (binary mode)
+        /// </summary> 
         private void CapitalLettersBinaryHide()
         {
             StringBuilder stegoTextBuilder = new StringBuilder();
             BitArray messageBits = new BitArray(Encoding.UTF8.GetBytes(secretMessage));
 
+            // length of cover text should be equal to or greater than the number of bits of the secret message to encode it fully, if this is not the case display a warning
             if (messageBits.Length > coverText.Length)
             {
                 GuiLogMessage(Properties.Resources.NotAllMessageHidden2, NotificationLevel.Warning);
             }
-
             int messageIndex = 0;
             int coverTextIndex;
             for (coverTextIndex = 0; (coverTextIndex < coverText.Length) && (messageIndex < messageBits.Length); coverTextIndex++)
@@ -384,6 +390,7 @@ namespace TextSteganography
                     stegoTextBuilder.Append(coverText[coverTextIndex]);
                 }
             }
+            // append the rest of the original cover text after the message is encoded fully
             if (coverTextIndex < coverText.Length - 1)
             {
                 stegoTextBuilder.Append(coverText.Substring(coverTextIndex).ToLower());
@@ -392,11 +399,13 @@ namespace TextSteganography
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 presentation.ShowCapitalLetterEncoding(StegoText);
-
             }, null);
             OnPropertyChanged("StegoText");
         }
 
+        /// <summary>
+        /// extracts a secret message that was hidden using capital letters (binary mode)
+        /// </summary>
         private void CapitalLettersBinaryExtract()
         {
             string messageBitsString = "";
@@ -427,14 +436,18 @@ namespace TextSteganography
 
             OutputSecretMessage = Encoding.UTF8.GetString(ConvertToBytes(messageBits));
             OutputSecretMessage = OutputSecretMessage.Trim('\0');
-
             OnPropertyChanged("OutputSecretMessage");
         }
 
+        /// <summary>
+        /// hides a message in text by marking letters in the cover text (binary mode)
+        /// </summary>
         private void MarkingLettersBinaryHide()
         {
             StringBuilder stegoTextBuilder = new StringBuilder();
             BitArray messageBits = new BitArray(Encoding.UTF8.GetBytes(secretMessage));
+
+            // length of cover text should be equal to or greater than the number of bits of the secret message to encode it fully, if this is not the case display a warning
             if (messageBits.Length > coverText.Length)
             {
                 GuiLogMessage(Properties.Resources.NotAllMessageHidden2, NotificationLevel.Warning);
@@ -443,6 +456,7 @@ namespace TextSteganography
             int messageIndex = 0;
             int coverTextIndex;
             char mark;
+            // set the marking character (dot above or under) depending on the chosen settings
             if (settings.Marking == MarkingType.DotUnder)
             {
                 mark = '\u0323';
@@ -451,7 +465,6 @@ namespace TextSteganography
             {
                 mark = '\u0307';
             }
-
             for (coverTextIndex = 0; (coverTextIndex < coverText.Length) && (messageIndex < messageBits.Length); coverTextIndex++)
             {
                 stegoTextBuilder.Append(coverText[coverTextIndex]);
@@ -469,15 +482,16 @@ namespace TextSteganography
             }
 
             StegoText = stegoTextBuilder.ToString();
-
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 presentation.ShowLettersMarkingEncoding(StegoText);
-
             }, null);
             OnPropertyChanged("StegoText");
         }
 
+        /// <summary>
+        /// extracts a secret message that was hidden by marking letters (binary mode)
+        /// </summary>
         private void MarkingLettersBinaryExtract()
         {
             string messageBitsString = "";
@@ -512,17 +526,17 @@ namespace TextSteganography
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 presentation.ShowLettersMarkingEncoding(CoverText);
-
             }, null);
 
             byte[] bytes = ConvertToBytes(messageBits);
-
-            OutputSecretMessage = Encoding.UTF8.GetString(bytes);
-            OutputSecretMessage = OutputSecretMessage.Trim('\0');
-
+            secretMessage = Encoding.UTF8.GetString(bytes);
+            secretMessage = secretMessage.Trim('\0');
             OnPropertyChanged("OutputSecretMessage");
         }
 
+        /// <summary>
+        /// hides a message in text by marking letters in the cover text (text mode)
+        /// </summary>
         private void MarkingLettersTextHide()
         {
             char mark;
@@ -567,6 +581,9 @@ namespace TextSteganography
             OnPropertyChanged("StegoText");
         }
 
+        /// <summary>
+        /// extracts a secret message that was hidden by marking letters (text mode)
+        /// </summary>
         private void MarkingLettersTextExtract()
         {
             StringBuilder messageBuilder = new StringBuilder();
@@ -591,11 +608,13 @@ namespace TextSteganography
             {
                 presentation.ShowLettersMarkingEncoding(CoverText);
             }, null);
-
             OutputSecretMessage = messageBuilder.ToString();
             OnPropertyChanged("OutputSecretMessage");
         }
 
+        /// <summary>
+        /// converts a bit array to a byte array
+        /// </summary>
         private byte[] ConvertToBytes(BitArray bits)
         {
             byte[] bytes = new byte[bits.Length / 8 + 1];
@@ -615,13 +634,14 @@ namespace TextSteganography
                 {
                     presentation.ClearPres();
                     if (settings.Mode == ModeType.ZeroWidthSpace)
+                    {
                         presentation.ShowBitsCheckbox();
+                    }  
                     else
+                    {
                         presentation.HideBitsCheckBox();
-
+                    }                     
                 }, null);
-
-
             }
         }
 

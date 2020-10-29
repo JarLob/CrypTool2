@@ -225,6 +225,9 @@ namespace ImageSteganographyVisualization
             }
         }
 
+        /// <summary>
+        /// Creates the binary string of a provided input integer value
+        /// </summary>
         public static string GetBinaryString(int value)
         {
             string s = Convert.ToString(value, 2);
@@ -275,6 +278,7 @@ namespace ImageSteganographyVisualization
 
         public void Initialize()
         {
+            // if template or saved workplace is used, display necessary settings elements and hide elements that are not relevant
             if (mode == ModeType.LSB)
             {
                 HideSettingsElement("ComplexityThreshold");

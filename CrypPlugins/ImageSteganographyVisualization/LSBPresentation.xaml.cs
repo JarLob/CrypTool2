@@ -39,6 +39,9 @@ namespace ImageSteganographyVisualization
         }
 
         #region Main menu methods
+        /// <summary>
+        /// Enables choose bits button after executing the model
+        /// </summary>
         public void EnableButtons()
         {
             SeeChooseBitsButton.IsEnabled = true;
@@ -50,9 +53,11 @@ namespace ImageSteganographyVisualization
             BitArray messageBits = new BitArray(Encoding.UTF8.GetBytes(imageStegVis.InputSecretMessage));
             this.totalMessageBits = messageBits.Length;
             CoverImage.Source = BitmapConversion.BitmapToBitmapSource(imageStegVis.inputBitmap);
-
         }
 
+        /// <summary>
+        /// Enables all the buttons of the views in the main menu after choosing hiding bits
+        /// </summary>
         public void EnableAllButtons()
         {
             SeeChooseBitsButton.IsEnabled = true;
@@ -62,6 +67,10 @@ namespace ImageSteganographyVisualization
             StartHint.Visibility = Visibility.Hidden;
             ChooseBitsHint.Visibility = Visibility.Hidden;
         }
+
+        /// <summary>
+        /// Disables the buttons in the main menu after clicking stop
+        /// </summary>
         public void DisableButtons()
         {
             SeeChooseBitsButton.IsEnabled = false;
@@ -154,6 +163,10 @@ namespace ImageSteganographyVisualization
             PixelConversionView.Visibility = Visibility.Hidden;
             ChooseBitsView.Visibility = Visibility.Visible;
         }
+
+        /// <summary>
+        /// Event listener to when a bit button is clicked 
+        /// </summary>
         void BitClick(object sender, RoutedEventArgs e)
         {
             Button bitButton = (Button)sender;
@@ -170,11 +183,14 @@ namespace ImageSteganographyVisualization
             }
             SwitchBit(bitName);
         }
+
+        /// <summary>
+        /// Apply the changes in the bitmasks in response to clicking a bit button
+        /// </summary>
         private void SwitchBit(string bitName)
         {
             char colorChannel = bitName[0];
             int index = (int)Char.GetNumericValue(bitName[1]); 
-
             if(colorChannel == 'R')
             {
                 imageStegVis.rBitMask[index] = !imageStegVis.rBitMask[index];
@@ -185,7 +201,6 @@ namespace ImageSteganographyVisualization
             {
                 imageStegVis.bBitMask[index] = !imageStegVis.bBitMask[index];
             }
-            //imageStegVis.UpdateBitmasksSettings();
         }
         void ApplyChangesClick(object sender, RoutedEventArgs e)
         {
@@ -228,6 +243,7 @@ namespace ImageSteganographyVisualization
             SetGValueBitsString(GValueBitsAfter, pixelAfter);
             SetBValueBitsString(BValueBitsAfter, pixelAfter);
             CurrentPixelText.Text = string.Format(Properties.Resources.CurrentPixelLabel + " ( x , y ) : ( {0} , {1} )", currentX, currentY);
+            // enable and disable arrow buttons when necessary
             if ((currentX == imageStegVis.inputBitmap.Width - 1) && (currentY == imageStegVis.inputBitmap.Height - 1))
             {
                 NextPixelButton.IsEnabled = false;
@@ -290,9 +306,7 @@ namespace ImageSteganographyVisualization
                         else { tb.Inlines.Add("0"); }
                     }
                 }
-            }
-
-            
+            }       
         }
 
         private void SetGValueBitsString(TextBlock tb, Color pixel)
@@ -444,7 +458,7 @@ namespace ImageSteganographyVisualization
             {
                 int x = Int32.Parse(PixelX.Text);
                 int y = Int32.Parse(PixelY.Text);
-
+                // display warning if the input is not valid
                 if ((x < 0) || (x >= imageStegVis.inputBitmap.Width) || (y < 0) || (y >= imageStegVis.inputBitmap.Height))
                 {
                     InvalidXYMessage.Visibility = Visibility.Visible;
@@ -460,6 +474,7 @@ namespace ImageSteganographyVisualization
             }
             catch (System.FormatException)
             {
+                // display warning in case something other than a number was not entered
                 InvalidXYMessage.Visibility = Visibility.Visible;
                 ValidXY.Text = string.Format("0 <= x < {0} and 0 <= y < {1}", imageStegVis.inputBitmap.Width, imageStegVis.inputBitmap.Height);
             }
@@ -496,6 +511,9 @@ namespace ImageSteganographyVisualization
             PercentageCapacityLabel.Text = string.Format(Properties.Resources.PercentageCapacityLabel + " {0:0.##} %", percentageCapacity);
         }
 
+        /// <summary>
+        /// Initializes the combobox with the appropriate units
+        /// </summary>
         private void CBLoaded(object sender, RoutedEventArgs e)
         {
             List<string> units = new List<string>();
@@ -509,6 +527,9 @@ namespace ImageSteganographyVisualization
             comboBox.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Converts the size displayed based on the unit selected from the combobox
+        /// </summary>
         void CBUnitChanged(object sender, RoutedEventArgs e)
         {
             var comboBox = sender as ComboBox;
@@ -546,6 +567,9 @@ namespace ImageSteganographyVisualization
             }
         }
 
+        /// <summary>
+        /// Get total number of chosen bits
+        /// </summary>
         private int GetNumberOfChosenBits()
         {
             int total = 0;
@@ -620,7 +644,6 @@ namespace ImageSteganographyVisualization
             InitButton(B5);
             InitButton(B6);
             InitButton(B7);
-
         }
 
         #endregion

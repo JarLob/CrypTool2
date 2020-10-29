@@ -31,7 +31,6 @@ namespace ImageSteganographyVisualization
     [PluginInfo("ImageSteganographyVisualization.Properties.Resources", "PluginCaption", "PluginTooltip", "ImageSteganographyVisualization/userdoc.xml", new[] { "ImageSteganographyVisualization/images/icon.png" })]
     [ComponentCategory(ComponentCategory.Steganography)]
 
-
     public class ImageSteganographyVisualization : ICrypComponent
     {
         #region Private Variables
@@ -64,7 +63,6 @@ namespace ImageSteganographyVisualization
 
         #region Data Properties
 
-
         [PropertyInfo(Direction.InputData, "InputMessageCaption", "InputMessageTooltip", false)]
         public string InputSecretMessage
         {
@@ -92,7 +90,6 @@ namespace ImageSteganographyVisualization
             get;
             set;
         }
-
 
         #endregion
 
@@ -130,7 +127,6 @@ namespace ImageSteganographyVisualization
             {
                 if (settings.Action == ActionType.Hide)
                 {
-
                     if (settings.ShowPresentation)
                     {
                         Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -139,7 +135,6 @@ namespace ImageSteganographyVisualization
                             presentation.DisplayHidingProcessPresentation(settings.SelectedMode);
                             presentation.lsb.EnableButtons();
                         }, null);
-
                         ProgressChanged(0.5, 1);
                     }
                     else
@@ -149,7 +144,6 @@ namespace ImageSteganographyVisualization
                             HideDataLSB();
                             presentation.HidePresentation();
                         }, null);
-
                     }
                 }
                 else
@@ -160,7 +154,6 @@ namespace ImageSteganographyVisualization
                         presentation.DisplayExtractionPresentation(OutputSecretMessage.Length, rBitMask, gBitMask, bBitMask);
                     }, null);
                 }
-
             }
             else
             {
@@ -191,7 +184,6 @@ namespace ImageSteganographyVisualization
                     ExtractDataBPCS();
                 }
             }
-
         }
 
         private void settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -224,7 +216,6 @@ namespace ImageSteganographyVisualization
         }
 
         public void PostExecution()
-
         {
 
         }
@@ -264,7 +255,6 @@ namespace ImageSteganographyVisualization
                     presentation.lsb = new LSBPresentation(this);
                 }
                 presentation.DisplayHidingProcessPresentation(settings.SelectedMode);
-
             }, null);
             }
         }
@@ -275,20 +265,14 @@ namespace ImageSteganographyVisualization
 
         #endregion
 
-        int GetIndex(BitArray bitmask)
-        {
-            int[] array = new int[1];
-            bitmask.CopyTo(array, 0);
-            return array[0];
-        }
-
         #region Hiding and extracting methods
 
+        /// <summary>
+        /// Hides a secret message in a cover image using lsb technique
+        /// </summary>
         public void HideDataLSB()
         {
-
             outputBitmap = new Bitmap(inputBitmap);
-
             if(!settings.ShowPresentation)
             {
                 rBitMask = GetBitmask(settings.RedBitmask);
@@ -298,7 +282,6 @@ namespace ImageSteganographyVisualization
 
             BitArray messageBits = new BitArray(Encoding.UTF8.GetBytes(InputSecretMessage));
             int totalBitsToHide = messageBits.Length;
-
             int counter = 0;
 
             for (int y = 0; y < inputBitmap.Height; y++)
@@ -355,11 +338,11 @@ namespace ImageSteganographyVisualization
                     outputBitmap.SetPixel(x, y, newColor);
                 }
             }
+            // display warning if the hiding capacity is not enough
             if (counter < totalBitsToHide)
             {
                 GuiLogMessage(Properties.Resources.NotEnoughHidingCapacity, NotificationLevel.Warning);
             }
-
             // Create header to encode message length and used bitmasks
             byte[] messageLengthBytes = BitConverter.GetBytes(totalBitsToHide);
             int lastX = outputBitmap.Width - 1;
@@ -378,11 +361,12 @@ namespace ImageSteganographyVisualization
             ProgressChanged(1, 1);
         }
 
+        /// <summary>
+        /// Extracts a message from a stego image which was hidden using the lsb technique
+        /// </summary>
         public void ExtractDataLSB()
         {
-
             byte[] lengthBytes = new byte[4];
-
             int lastX = inputBitmap.Width - 1;
             int lastY = inputBitmap.Height - 1;
             rBitMask = new BitArray(new byte[] { inputBitmap.GetPixel(lastX - 2, lastY).R });
@@ -397,14 +381,11 @@ namespace ImageSteganographyVisualization
 
             int totalBitsToExtract = BitConverter.ToInt32(lengthBytes, 0);
             BitArray bits = new BitArray(totalBitsToExtract);
-
-
             int counter = 0;
 
             for (int y = 0; y < inputBitmap.Height; y++)
             {
                 for (int x = 0; x < inputBitmap.Width; x++)
-
                 {
                     Color currentPixel = inputBitmap.GetPixel(x, y);
                     BitArray redValueBits = new BitArray(new byte[] { currentPixel.R });
@@ -455,9 +436,11 @@ namespace ImageSteganographyVisualization
             ProgressChanged(1, 1);
         }
 
+        /// <summary>
+        /// Hides a secret message in a cover image using bpcs technique
+        /// </summary>
         public void HideDataBPCS()
         {
-
             int width = inputBitmap.Width;
             int height = inputBitmap.Height;
 
@@ -480,7 +463,6 @@ namespace ImageSteganographyVisualization
                 }
                 messageBlocks.Add(new MessageBlock(currentMessageBits));
             }
-
 
             // Fetch CGC bits for all pixels by creating a Pixel instance for each pixel in the image
             Pixel[,] pixels = new Pixel[height, width];
@@ -573,6 +555,9 @@ namespace ImageSteganographyVisualization
             ProgressChanged(1, 1);
         }
 
+        /// <summary>
+        /// Extracts a message from a stego image which was hidden using the bpcs technique
+        /// </summary>
         public void ExtractDataBPCS()
         {
             int height = inputBitmap.Height;
@@ -663,6 +648,9 @@ namespace ImageSteganographyVisualization
 
         #region Helper methods
 
+        /// <summary>
+        /// Get bitmask from binary string selected from the combobox in the settings
+        /// </summary>
         BitArray GetBitmask(string binaryString)
         {
             int value = Convert.ToInt32(binaryString);
@@ -675,6 +663,9 @@ namespace ImageSteganographyVisualization
             return bitMask8bits;
         }
 
+        /// <summary>
+        /// Converts bitarray to a byte
+        /// </summary>
         byte ConvertToByte(BitArray bits)
         {
             byte[] bytes = new byte[1];
@@ -682,6 +673,9 @@ namespace ImageSteganographyVisualization
             return bytes[0];
         }
 
+        /// <summary>
+        /// Converts bitarray to a byte array
+        /// </summary>
         byte[] ConvertToBytes(BitArray bits)
         {
             byte[] bytes = new byte[bits.Length / 8 + 1];
@@ -719,11 +713,17 @@ namespace ImageSteganographyVisualization
         #endregion
     }
 
+    /// <summary>
+    /// Class that represents a message block which later replaces an image block in the cover image
+    /// </summary>
     public class MessageBlock
     {
         private bool[,] block;
         private bool conjugated;
 
+        /// <summary>
+        /// Constructor 1 for actual message
+        /// </summary>
         public MessageBlock(bool[] block)
         {
             int k = 0;
@@ -738,6 +738,9 @@ namespace ImageSteganographyVisualization
             if (!IsComplex()) Conjugate();
         }
 
+        /// <summary>
+        /// Constructor 2 for the length of the secret message
+        /// </summary>
         public MessageBlock(BitArray lengthBits)
         {
             int q = 0;
@@ -752,15 +755,20 @@ namespace ImageSteganographyVisualization
             Conjugate();
         }
 
+        /// <summary>
+        /// Computes complexity of message block
+        /// </summary>
         public double GetComplexity()
         {
             return (GetBorder() / 112.0);
         }
 
+        /// <summary>
+        /// Computes border of the message block used to compute its complexity
+        /// </summary>
         public int GetBorder()
         {
             int changes = 0;
-
             for (int row = 0; row < 8; row++)
             {
                 for (int col = 1; col < 8; col++)
@@ -768,7 +776,6 @@ namespace ImageSteganographyVisualization
                     if (block[row, col] != block[row, col - 1]) changes++;
                 }
             }
-
             for (int col = 0; col < 8; col++)
             {
                 for (int row = 1; row < 8; row++)
@@ -776,7 +783,6 @@ namespace ImageSteganographyVisualization
                     if (block[row, col] != block[row - 1, col]) changes++;
                 }
             }
-
             return changes;
         }
 
@@ -785,6 +791,9 @@ namespace ImageSteganographyVisualization
             return GetComplexity() > ImageSteganographyVisualization.complexityThreshold;
         }
 
+        /// <summary>
+        /// Conjugates a message block in case the complexity was under the selected complexity threshold
+        /// </summary>
         public void Conjugate()
         {
             for (int row = 0; row < 8; row++)
@@ -810,11 +819,17 @@ namespace ImageSteganographyVisualization
         }
     }
 
+    /// <summary>
+    /// Class that represents an image block (local areas) in the cover image
+    /// </summary>
     public class ImageBlock
     {
         private int row, col, layer;
         private bool[,] plane;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ImageBlock(int row, int col, bool[,] plane, int layer)
         {
             this.row = row;
@@ -823,18 +838,9 @@ namespace ImageSteganographyVisualization
             this.layer = layer;
         }
 
-        public ImageBlock(ImageBlock source)
-        {
-            this.row = source.row;
-            this.col = source.col;
-            this.plane = (bool[,])source.plane.Clone();
-            this.layer = source.layer;
-        }
-
-        public bool[,] GetPlane()
-        {
-            return plane;
-        }
+        /// <summary>
+        /// Returns bits of the image block in form of a two-dimensional bool array
+        /// </summary>
         public bool[,] GetBlockArray()
         {
             bool[,] blockArray = new bool[8, 8];
@@ -848,6 +854,9 @@ namespace ImageSteganographyVisualization
             return blockArray;
         }
 
+        /// <summary>
+        /// Returns bits of the image block in form of a bool array
+        /// </summary>
         public bool[] GetArray()
         {
             bool[] arr = new bool[64];
@@ -874,6 +883,10 @@ namespace ImageSteganographyVisualization
         {
             return this.row;
         }
+
+        /// <summary>
+        /// Retrieves the original image block if it was conjugated
+        /// </summary>
         public void GetOriginal()
         {
             for (int i = row; i < row + 8; i++)
@@ -884,6 +897,10 @@ namespace ImageSteganographyVisualization
                 }
             }
         }
+
+        /// <summary>
+        /// Computes border of an image block used to compute its complexity
+        /// </summary>
         public int GetBorder()
         {
             int changes = 0;
@@ -906,6 +923,9 @@ namespace ImageSteganographyVisualization
             return changes;
         }
 
+        /// <summary>
+        /// Computes complexity of image block
+        /// </summary>
         public double GetComplexity()
         {
             return (GetBorder() / 112.0);
@@ -916,6 +936,9 @@ namespace ImageSteganographyVisualization
             return (GetBorder() / 112.0) > ImageSteganographyVisualization.complexityThreshold;
         }
 
+        /// <summary>
+        /// Replaces an image block with a message block provided as a paramater for the method
+        /// </summary>
         public void ReplaceWith(MessageBlock data)
         {
             bool[,] temp = data.GetBlock();
@@ -931,18 +954,23 @@ namespace ImageSteganographyVisualization
 
     }
 
+    /// <summary>
+    /// Class that represents a bit plane in an image 
+    /// </summary>
     public class Plane
     {
         private int layer;
         private bool[,] plane;
         private ArrayList imageBlocks;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Plane(bool[,] plane, int layer)
         {
             this.plane = (bool[,])plane.Clone();
             this.layer = layer;
             this.imageBlocks = new ArrayList();
-
             for (int row = 0; row < this.plane.GetUpperBound(0) - 8; row += 8)
             {
                 for (int col = 0; col < this.plane.GetUpperBound(1) - 8; col += 8)
@@ -981,23 +1009,34 @@ namespace ImageSteganographyVisualization
             return imageBlocks;
         }
 
+        /// <summary>
+        /// Computes complexity of image blocks of the bit planes and adds the complex image blocks
+        /// </summary>
         public ArrayList GetComplexBlocksOfPlane()
         {
             ArrayList complexBlocks = new ArrayList();
             for (int i = 0; i < imageBlocks.Count; i++)
             {
-                if (((ImageBlock)imageBlocks[i]).IsComplex()) complexBlocks.Add(imageBlocks[i]);
+                if (((ImageBlock)imageBlocks[i]).IsComplex())
+                {
+                    complexBlocks.Add(imageBlocks[i]);
+                }                
             }
             return complexBlocks;
         }
     }
 
+    /// <summary>
+    /// Class that represents a pixel in an image and stores the pbc and cgc bits of the pixel
+    /// </summary>
     public class Pixel
     {
-
         private byte red, green, blue;
         private bool[] cgcBits;
 
+        /// <summary>
+        /// Constructor 1: computes and stores the cgc bits of the pixel from its original pbc bits
+        /// </summary>
         public Pixel(Color c, int blueIndex, int redIndex, int greenIndex)
         {
             green = c.G;
@@ -1005,7 +1044,6 @@ namespace ImageSteganographyVisualization
             blue = c.B;
 
             cgcBits = new bool[24];
-
             bool[] blueCGC = GetCGC(blue);
             bool[] greenCGC = GetCGC(green);
             bool[] redCGC = GetCGC(red);
@@ -1013,7 +1051,6 @@ namespace ImageSteganographyVisualization
             int blueCounter = 0;
             int greenCounter = 0;
             int redeCounter = 0;
-
 
             for (int i = 0; i < 24; i++)
             {
@@ -1032,23 +1069,21 @@ namespace ImageSteganographyVisualization
             }
         }
 
+        /// <summary>
+        /// Constructor 2: computes the bpc bits of the pixel from the modified cgc bits after embedding the message blocks
+        /// </summary>
         public Pixel(bool[] rgbPlanes, int blueIndex, int redIndex, int greenIndex)
         {
-
             bool[] cgcBlue = new bool[8];
             bool[] cgcGreen = new bool[8];
             bool[] cgcRed = new bool[8];
-
-
 
             int blueCounter = 0;
             int greenCounter = 0;
             int redeCounter = 0;
 
-
             for (int i = 0; i < 24; i++)
             {
-
                 if (i % 3 == blueIndex)
                 {
                     cgcBlue[blueCounter++] = rgbPlanes[i];
@@ -1067,7 +1102,9 @@ namespace ImageSteganographyVisualization
             green = ConvertToByte(GetPBC(cgcGreen));
         }
 
-
+        /// <summary>
+        /// Converts bool array to a byte
+        /// </summary>
         byte ConvertToByte(bool[] arr)
         {
             BitArray bits = new BitArray(arr);
@@ -1076,6 +1113,9 @@ namespace ImageSteganographyVisualization
             return bytes[0];
         }
 
+        /// <summary>
+        /// Computes cgc bits from original pbc bits
+        /// </summary>
         public bool[] GetCGC(byte b)
         {
             bool[] cgc = new bool[8];
@@ -1085,10 +1125,12 @@ namespace ImageSteganographyVisualization
             {
                 cgc[i] = PBCbits[i] ^ PBCbits[i + 1];
             }
-
             return cgc;
         }
 
+        /// <summary>
+        /// Computes pbc bits from modified cgc bits
+        /// </summary>
         public bool[] GetPBC(bool[] b)
         {
             bool[] bpc = new bool[8];

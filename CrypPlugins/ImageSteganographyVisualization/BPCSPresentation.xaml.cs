@@ -19,7 +19,6 @@ namespace ImageSteganographyVisualization
         ImageSteganographyVisualization imageStegVis;
         private int pixelX;
         private int pixelY;
-
         private Bitmap inputBitmap;
         private int introViewCounter;
         Bitmap[] bitplanes;
@@ -46,12 +45,15 @@ namespace ImageSteganographyVisualization
             string orderString = imageStegVis.order.ToString();
             this.blueIndex = orderString.IndexOf('B');
             this.greenIndex = orderString.IndexOf('G');
-            this.redIndex = orderString.IndexOf('R');
-            
+            this.redIndex = orderString.IndexOf('R');            
             InitImageSourcesAndLinks();
         }
 
         #region Main menu methods
+
+        /// <summary>
+        /// Enables all the buttons of the views in the main menu after executing the model
+        /// </summary>
         public void EnableButtons()
         {
             SeeBitPlanesButton.IsEnabled = true;
@@ -61,6 +63,10 @@ namespace ImageSteganographyVisualization
             BitArray messageBits = new BitArray(Encoding.UTF8.GetBytes(imageStegVis.InputSecretMessage));
             totalMessageSize = messageBits.Count;
         }
+
+        /// <summary>
+        /// Disables the buttons in the main menu after clicking stop
+        /// </summary>
         public void DisableButtons()
         {
             SeeBitPlanesButton.IsEnabled = false;
@@ -73,6 +79,9 @@ namespace ImageSteganographyVisualization
             ShowMainMenu();
         }
 
+        /// <summary>
+        /// Navigates back to main menu from any view
+        /// </summary>
         public void ShowMainMenu()
         {
             HidingProcessView.Visibility = Visibility.Hidden;
@@ -97,6 +106,7 @@ namespace ImageSteganographyVisualization
             Intro2TextBlock4.Text = Properties.Resources.Intro2BPCSText4;
             Intro2TextBlock4.Inlines.Add(Slide5HyperLink);
         }
+
         void ShowIntroView(object sender, RoutedEventArgs e)
         {
             MainMenu.Visibility = Visibility.Hidden;
@@ -109,6 +119,7 @@ namespace ImageSteganographyVisualization
             introViewCounter = 0;
             PrevIntro.IsEnabled = false;
         }
+
         void NextIntroButtonClick(object sender, RoutedEventArgs e)
         {
             introViewCounter++;
@@ -178,7 +189,9 @@ namespace ImageSteganographyVisualization
         #endregion
 
         #region Hiding process view methods
-
+        /// <summary>
+        /// Initializes the image and message blocks to be displayed in the presentation using a deep copy of the lists created when hiding the message
+        /// </summary>
         public void InitMessageAndImageBlocks(ArrayList hiderBlocks, ArrayList messageBlocks, ArrayList allImageBlocks)
         {
             this.messageBlocks = new ArrayList(messageBlocks);
@@ -205,6 +218,9 @@ namespace ImageSteganographyVisualization
             UpdateHidingIterationsView();
         }
 
+        /// <summary>
+        /// Shows only complex image blocks and the corresponding message blocks
+        /// </summary>
         void HiderBlocksButtonClick(object sender, RoutedEventArgs e)
         {
             HiderBlocksButton.IsEnabled = false;
@@ -214,6 +230,9 @@ namespace ImageSteganographyVisualization
             HiderBlocksLabel1.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Shows only all image blocks
+        /// </summary>
         void AllBlocksButtonClick(object sender, RoutedEventArgs e)
         {
             AllBlocksButton.IsEnabled = false;
@@ -224,6 +243,9 @@ namespace ImageSteganographyVisualization
             UpdateAllBlocksView();
         }
 
+        /// <summary>
+        /// Initializes the combobox with the appropriate units
+        /// </summary>
         private void CBLoaded(object sender, RoutedEventArgs e)
         {
             List<string> units = new List<string>();
@@ -231,18 +253,19 @@ namespace ImageSteganographyVisualization
             units.Add("bytes");
             units.Add("kilobits");
             units.Add("megabits");
-
             var comboBox = sender as ComboBox;
             comboBox.ItemsSource = units;
             comboBox.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Converts the size displayed based on the unit selected from the combobox
+        /// </summary>
         void CBUnitChanged(object sender, RoutedEventArgs e)
         {
             var comboBox = sender as ComboBox;
             string value = comboBox.SelectedItem as string;
             double sizeConverted = comboBox.Name == "UnitComboBoxMessage" ? totalMessageSize : totalCapacitySize;
-
             switch (value)
             {
                 case "bits":
@@ -355,7 +378,8 @@ namespace ImageSteganographyVisualization
         {
             try
             {
-                int enteredIteration = Int32.Parse(IterationInput.Text);
+                int enteredIteration = Int32.Parse(IterationInput.Text);                
+                // display warning if the input is not valid
                 if (enteredIteration < 0 || enteredIteration >= hiderBlocks.Count)
                 {
                     InvalidIterationPrompt.Visibility = Visibility.Visible;
@@ -384,9 +408,9 @@ namespace ImageSteganographyVisualization
             }
             catch (FormatException)
             {
+                // display warning in case something other than a number was not entered
                 InvalidIterationPrompt.Visibility = Visibility.Visible;
             }
-
         }
 
         void ManualIndexEntered(object sender, RoutedEventArgs e)
@@ -394,6 +418,7 @@ namespace ImageSteganographyVisualization
             try
             {
                 int enteredIndex = Int32.Parse(IndexInput.Text);
+                // display warning if the input is not valid
                 if (enteredIndex < 0 || enteredIndex >= allImageBlocks.Count)
                 {
                     InvalidIndexPrompt.Visibility = Visibility.Visible;
@@ -422,10 +447,14 @@ namespace ImageSteganographyVisualization
             }
             catch (FormatException)
             {
+                // display warning in case something other than a number was not entered
                 InvalidIndexPrompt.Visibility = Visibility.Visible;
             }
         }
 
+        /// <summary>
+        /// Creats and returns bitmap that represents a message or image block
+        /// </summary>
         public Bitmap GetBlockBitmap(bool[,] block, Color color)
         {
             Bitmap img = new Bitmap(80, 80);
@@ -569,7 +598,6 @@ namespace ImageSteganographyVisualization
             }
 
             SetPixelConversionView(pixelX, pixelY);
-
             PixelX.Text = Properties.Resources.XCoTextArea;
             PixelY.Text = Properties.Resources.YCoTextArea;
             PixelX.GotFocus += TextBoxClicked;
@@ -596,9 +624,7 @@ namespace ImageSteganographyVisualization
             if ((pixelX == 0) && (pixelY == 0))
             {
                 PrevPixelButton.IsEnabled = false;
-            }
-
-            
+            }            
             PixelX.Text = Properties.Resources.XCoTextArea;
             PixelY.Text = Properties.Resources.YCoTextArea;
             PixelX.GotFocus += TextBoxClicked;
@@ -606,6 +632,9 @@ namespace ImageSteganographyVisualization
             InvalidXYMessage.Visibility = Visibility.Hidden;
         }
 
+        /// <summary>
+        /// Creates and returns a string with the range of valid inputs to be displayed as a prompt when invalid input is entered
+        /// </summary>
         private string GetValidCoordinates(Bitmap inputImage)
         {
             string validXYstring = string.Format("0 <= x < {0} and 0 <= y < {1}", imageStegVis.inputBitmap.Width, imageStegVis.inputBitmap.Height);
@@ -626,7 +655,6 @@ namespace ImageSteganographyVisualization
             tb.GotFocus -= TextBoxClicked;
         }
 
-
         #endregion
 
         #region Bit planes view methods
@@ -637,6 +665,9 @@ namespace ImageSteganographyVisualization
             DisplayRedBitPlanesClick(sender, e);
         }
 
+        /// <summary>
+        /// Creates bitmaps that represent the different bit planes of the image
+        /// </summary>
         public void InitBitPlanes(Plane[] rgbPlanes)
         {
             bitplanes = new Bitmap[24];
@@ -672,10 +703,8 @@ namespace ImageSteganographyVisualization
                         }
                     }
                 }
-
             });
         }
-
 
         void DisplayRedBitPlanesClick(object sender, RoutedEventArgs e)
         {

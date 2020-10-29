@@ -6,7 +6,7 @@
   <language culture="de-DE"/>
 
   <introduction lang="en">
-    This component implements image steganogrphy which hides a secret message inside an image.  The component also offers an interactive visualization of the process. <newline />
+    This component implements image steganography which hides a secret message inside an image.  The component also offers an interactive visualization of the process. <newline />
     The message can be hidden using the LSB or the BPCS technique, see <ref id="steganographywiki" /> and <ref id="bpcswiki" /> for more information about these techniques.
   </introduction>
 

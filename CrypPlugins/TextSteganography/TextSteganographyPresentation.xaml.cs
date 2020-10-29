@@ -19,6 +19,9 @@ namespace TextSteganography
             this.textSteg = textSteg;
         }
 
+        /// <summary>
+        /// displays stego text in the presentation with highlighted blocks that represent the zero width spaces added 
+        /// </summary>
         public void ShowZeroWidthSpaceEncoding()
         {
             StegoTextBlock.Text = "";
@@ -54,7 +57,6 @@ namespace TextSteganography
                     }
                 }
             }
-            
             CBShowBits.IsChecked = false;
         }
 
@@ -73,15 +75,20 @@ namespace TextSteganography
             StegoTextBlock.Text = ""; 
         }
 
+        /// <summary>
+        /// hides bits of the secret message and display only the stego text
+        /// </summary>
         public void HideMessageBits(object sender, RoutedEventArgs e)
         {
             ShowZeroWidthSpaceEncoding();
         }
 
+        /// <summary>
+        /// display bits of the secret message in the highlighted blocks if the check box is checked
+        /// </summary>
         public void ShowMessageBits(object sender, RoutedEventArgs e)
         {
-            StegoTextBlock.Text = "";
-            
+            StegoTextBlock.Text = "";            
             if(textSteg.GetAction() == ActionType.Hide)
             {
                 BitArray messagebits = new BitArray(Encoding.UTF8.GetBytes(textSteg.InputSecretMessage));
@@ -115,16 +122,19 @@ namespace TextSteganography
                         StegoTextBlock.Inlines.Add((textSteg.CoverText[i]).ToString());
                     }
                 }
-            }
-            
+            }            
         }
 
+        /// <summary>
+        /// displays stego text in the presentation with the capital letters highlighted
+        /// </summary>
         public void ShowCapitalLetterEncoding(string stegoText)
         {
             StegoTextBlock.Text = "";
             for (int i = 0; i < stegoText.Length; i++)
             {
                 char c = stegoText[i];
+                // highlight the letter if it is capital letter
                 if (Char.IsUpper(stegoText[i]))
                 {
                     StegoTextBlock.Inlines.Add(new Run(Char.ToString(stegoText[i])) { FontWeight = FontWeights.Bold, Background = Brushes.Aquamarine });
@@ -140,6 +150,9 @@ namespace TextSteganography
             }
         }
 
+        /// <summary>
+        /// displays stego text in the presentation with the marked letters highlighted
+        /// </summary>
         public void ShowLettersMarkingEncoding(string stegoText)
         {
             StegoTextBlock.Text = "";
@@ -147,7 +160,7 @@ namespace TextSteganography
             {
                 char c = stegoText[i];
                 char d = stegoText[i + 1];
-
+                // highlight the letter if the next character is a mark
                 if (d == '\u0323')
                 {
                     string s = "";
@@ -157,6 +170,7 @@ namespace TextSteganography
                     StegoTextBlock.Inlines.Add(new Run(s) { FontWeight = FontWeights.Bold, Background = Brushes.Aquamarine });
                     i++;
                 }
+                // add the character without highlight
                 else
                 {
                     StegoTextBlock.Inlines.Add(new Run(Char.ToString(c)));

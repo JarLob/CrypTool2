@@ -116,8 +116,6 @@ namespace TextSteganography
             }
         }
 
-
-
         #endregion
 
         private void ShowSettingsElement(string element)
@@ -150,11 +148,13 @@ namespace TextSteganography
 
         public void Initialize()
         {
+            // if template or saved workplace is used, display necessary settings elements and hide elements that are not relevant
             if (mode == ModeType.MarkingLettersBinary || mode == ModeType.MarkingLettersText)
             {
                 ShowSettingsElement("Marking");
                 HideSettingsElement("Offset");
-            } else if(mode == ModeType.ZeroWidthSpace)
+            } 
+            else if(mode == ModeType.ZeroWidthSpace)
             {
                 ShowSettingsElement("Offset");
                 HideSettingsElement("Marking");
