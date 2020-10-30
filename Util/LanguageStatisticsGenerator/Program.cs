@@ -316,7 +316,7 @@ namespace LanguageStatisticsGenerator
         */
 
         static Dictionary<string, string> alphabets = new Dictionary<string, string>
-            {
+        {
                 {"en", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
                 {"de", "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß" },
                 {"fr", "ABCDEFGHIJKLMNOPQRSTUVWXYZÀÂŒÇÈÉÊËÎÏÔÙÛ" },
@@ -327,7 +327,8 @@ namespace LanguageStatisticsGenerator
                 {"cs", "AÁBCČDĎEÉĚFGHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYÝZŽ" },
                 {"la", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
                 {"el", "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ" },
-    };
+                {"nl", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"}
+        };
 
         public static void WriteStatistics(string path, string filename, NGrams data)
         {

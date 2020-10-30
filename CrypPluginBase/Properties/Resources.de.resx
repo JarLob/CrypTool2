@@ -165,4 +165,7 @@
   <data name="LanguageLA" xml:space="preserve">
     <value>Lateinisch</value>
   </data>
+  <data name="LanguageNL" xml:space="preserve">
+    <value>Niederländisch</value>
+  </data>
 </root>

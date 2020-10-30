@@ -171,4 +171,7 @@
   <data name="LanguageLA" xml:space="preserve">
     <value>Latin</value>
   </data>
+  <data name="LanguageNL" xml:space="preserve">
+    <value>Dutch</value>
+  </data>
 </root>

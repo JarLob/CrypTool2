@@ -24,17 +24,18 @@ namespace Cryptool.PluginBase.Utils
             Russian,
             Czech,
             Greek,
-            Latin
+            Latin,
+            Dutch
         }
 
         public static string[] SupportedLanguages
         {
-            get { return new string[] { Resources.LanguageEN, Resources.LanguageDE, Resources.LanguageES, Resources.LanguageFR, Resources.LanguageIT, Resources.LanguageHU, Resources.LanguageRU, Resources.LanguageCS, Resources.LanguageEL, Resources.LanguageLA }; }
+            get { return new string[] { Resources.LanguageEN, Resources.LanguageDE, Resources.LanguageES, Resources.LanguageFR, Resources.LanguageIT, Resources.LanguageHU, Resources.LanguageRU, Resources.LanguageCS, Resources.LanguageEL, Resources.LanguageLA, Resources.LanguageNL }; }
         }
 
         public static string[] SupportedLanguagesCodes
         {
-            get { return new string[] { "en", "de", "es", "fr", "it", "hu", "ru", "cs", "el", "la" }; }
+            get { return new string[] { "en", "de", "es", "fr", "it", "hu", "ru", "cs", "el", "la", "nl" }; }
         }
 
         public static string LanguageCode(int n)
@@ -63,7 +64,7 @@ namespace Cryptool.PluginBase.Utils
             //Source: http://practicalcryptography.com/cryptanalysis/letter-frequencies-various-languages/
             { "ru", new double[] { 0.0804, 0.0155, 0.0475, 0.0188, 0.0295, 0.0821, 0.0022, 0.008, 0.0161, 0.0798, 0.0136, 0.0349, 0.0432, 0.0311, 0.0672, 0.1061, 0.0282, 0.0538, 0.0571, 0.0583, 0.0228, 0.0041, 0.0102, 0.0058, 0.0123, 0.0055, 0.0034, 0.0003, 0.0191, 0.0139, 0.0031, 0.0063, 0.02 } }, // Russian
             //Source: https://everything2.com/title/Letter+frequency+in+several+languages
-            { "la", new double[] { 0.072, 0.012, 0.033, 0.017, 0.092, 0.009, 0.014, 0.005, 0.101, 0, 0, 0.021, 0.034, 0.06, 0.044, 0.03, 0.013, 0.068, 0.068, 0.072, 0.074, 0.007, 0, 0.006, 0, 0 } } // Latin
+            { "la", new double[] { 0.072, 0.012, 0.033, 0.017, 0.092, 0.009, 0.014, 0.005, 0.101, 0, 0, 0.021, 0.034, 0.06, 0.044, 0.03, 0.013, 0.068, 0.068, 0.072, 0.074, 0.007, 0, 0.006, 0, 0 } }, // Latin
         };
         
         public static Dictionary<string, string> Alphabets = new Dictionary<string, string>()
@@ -78,6 +79,7 @@ namespace Cryptool.PluginBase.Utils
             { "cs", "AÁBCČDĎEÉĚFGHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYÝZŽ" },
             { "el", "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ" },
             { "la", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
+            { "nl", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
         };
 
         public static string Alphabet(string language, bool useSpaces = false)
