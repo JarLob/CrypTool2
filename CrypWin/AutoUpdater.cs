@@ -57,8 +57,11 @@ namespace Cryptool.CrypWin
         private Version currentlyRunningVersion = AssemblyHelper.Version;
         private bool serverAvailable = true;
         private string serverNotAvailableMessage;
-        private System.Net.WebClient wc;
-        private string changelogTemplate = "https://www.cryptool.org/trac/CrypTool2/log/trunk?format=rss&action=stop_on_copy&mode=stop_on_copy&rev=§&stop_rev=$"; //§ new $ current build
+        private WebClient wc;
+        /// <summary>
+        /// Changed URI to ct2 trac subdomain to allow nightly builds show changelogs again
+        /// </summary>
+        private string changelogTemplate = "https://trac.ct2.cryptool.org/log/trunk?format=rss&action=stop_on_copy&mode=stop_on_copy&rev=§&stop_rev=$"; //§ new $ current build
         private string changelog;
         private string changelogText;
         private string updateName;
@@ -352,9 +355,8 @@ namespace Cryptool.CrypWin
                     // replace the detected fileversion with a version, which is 10 builds older than the online version in the template for retrieving the rss
                     changelogTemplate = changelogTemplate.Replace((currentlyRunningVersion.Build + 1).ToString(), (onlineUpdateVersion.Build - 10).ToString());
                     //artificially make this version older than the online update, hence an update is always detected
-                    currentlyRunningVersion = new Version(2,0,onlineUpdateVersion.Build - 10); 
+                    currentlyRunningVersion = new Version(2, 0, onlineUpdateVersion.Build - 10);
                 }
-
 
                 if (IsOnlineUpdateAvailable(downloadedVersion))
                 {
@@ -370,7 +372,9 @@ namespace Cryptool.CrypWin
                     }
 
                     if (File.Exists(FilePath))
+                    {
                         File.Delete(FilePath);
+                    }
 
                     CurrentState = State.UpdateAvailable; // this also starts the download
                     GuiLogMessage("AutoUpdate: New version found online: " + updateName, NotificationLevel.Info);
