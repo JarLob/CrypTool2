@@ -27,7 +27,7 @@ using System;
 
 namespace ImageSteganographyVisualization
 {
-    [Author("Sally Addad", "saddad@mail.uni-mannheim.de", "University of Mannheim", "https://www.cryptool.org")]
+    [Author("Sally Addad", "addadsally@gmail.com", "University of Mannheim", "https://www.uni-mannheim.de")]
     [PluginInfo("ImageSteganographyVisualization.Properties.Resources", "PluginCaption", "PluginTooltip", "ImageSteganographyVisualization/userdoc.xml", new[] { "ImageSteganographyVisualization/images/icon.png" })]
     [ComponentCategory(ComponentCategory.Steganography)]
 

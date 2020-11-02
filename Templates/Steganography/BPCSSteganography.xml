@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">BPCS Steganography</title>
+  <title lang="en">Image steganography with BPCS</title>
   <summary lang="en">Hide and extract messages with BPCS steganography</summary>
   <description lang="en">Bit Plane Complexity Segmentation (BPCS) is a steganography technique used to hide a secret message in a cover image, this technique can hide secret messages
   with a higher capacity than the classical steganography techniques without changing the image in a way that is noticeable to the human eye.</description>
   <keywords>Steganography, BPCS</keywords>
-  <title lang="de">BPCS Steganographie</title>
+  <title lang="de">Bild Steganographie mit BPCS</title>
   <summary lang="de">Geheime Nachrichten in Bilder verstecken und wieder extrahieren</summary>
   <description lang="de">Die Bit Plane Complexity Segmentation (BPCS) ist eine Steganographietechnik, mit der eine geheime Nachricht in einem Bild versteckt wird. Diese Technik kann geheime Nachrichten verstecken
   mit einer höheren Kapazität als die klassischen Steganographietechniken, ohne das Bild auf eine Weise zu verändern, die für das menschliche Auge wahrnehmbar ist</description>

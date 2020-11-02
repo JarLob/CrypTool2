@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">LSB Steganography</title>
+  <title lang="en">Image steganography with LSB</title>
   <summary lang="en">Hide and extract messages with LSB Steganography</summary>
   <description lang="en">In Steganography, LSB is one of the most used techniques to hide a secret message in an image, in this plugin a secret message can be hidden in
   an image using only LSB as default, or with the visualization component you can choose which bits to be used to hide the message and then extract it</description>
   <keywords>Steganography, LSB</keywords>
-  <title lang="de">LSB Steganographie</title>
+  <title lang="de">Bild Steganographie mit LSB</title>
   <summary lang="de">Geheime Nachrichten in Bilder verstecken und wieder extrahieren</summary>
   <description lang="de">In der Steganographie ist LSB eine der am häufigsten verwendeten Techniken, um eine geheime Nachricht in einem Bild zu verstecken.
   In diesem Plugin kann eine geheime Nachricht standardmäßig mit LSB in ein Bild versteckt werden, oder mit der Visualisierungskomponente können Sie auswählen,

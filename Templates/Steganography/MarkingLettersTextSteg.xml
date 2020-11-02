@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Text Steganography with letter marking</title>
+  <title lang="en">Text steganography with letter marking</title>
   <summary lang="en">Hide and extract a message in and from another text</summary>
-  <description lang="en">This is a text steganography technique where a secret message is hidden by marking the letters of the message in the cover text</description>
+  <description lang="en">This is a text steganography technique where a secret message is hidden by marking the letters of the message in the cover text.</description>
   <keywords lang="en">Steganography, Text Steganography, Marking letters</keywords>
   <title lang="de">Text Steganographie mit Zeichenmarkierung</title>
   <summary lang="de">Geheime Nachrichten in einem Text verstecken und wieder extrahieren</summary>
-  <description lang="de">Das ist eine Text Steganographie Technik, wo eine geheime Nachricht in einem Text versteckt wird indem die Buchstaben der geheimen Nachricht im Cover Text markiert werden</description>
+  <description lang="de">Das ist eine Text Steganographie Technik, wo eine geheime Nachricht in einem Text versteckt wird indem die Buchstaben der geheimen Nachricht im Cover Text markiert werden.</description>
   <keywords lang="de">Steganographie, Text Steganographie, Buchstaben markieren</keywords>
   <relevantPlugins>
     <plugin name="TextSteganography" />
@@ -27,6 +27,6 @@
     <replacement key="$stegextract$" value="Extract" />
     <replacement key="$extractedmessage$" value="Extracted message" />
     <replacement key="$secretmessagetext$" value= "secret message"/>
-    <replacement key="$memotext$" value= "This mode of text steganography marks the letters of the secret message in the covertext with a little dot under or above the letter. In order to hide the whole message correctly, the cover text should contain all the letters of the secret message distributed and in the same order."/>
+    <replacement key="$memotext$" value= "This mode of text steganography marks the letters of the secret message in the covertext with a little dot under or above the letter. In order to hide the whole message correctly, the cover text should contain all the letters of the secret message in the same order distributed within a longer text."/>
   </replacements>
 </sample>

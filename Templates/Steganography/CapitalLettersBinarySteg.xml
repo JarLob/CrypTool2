@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Text Steganography with capital letters (binary mode)</title>
+  <title lang="en">Text steganography with capital letters (binary mode)</title>
   <summary lang="en">Hide and extract a message in and from another text</summary>
-  <description lang="en">This is a text steganography technique where a secret message is hidden by changing the letters of the message in the cover text to upper case</description>
+  <description lang="en">This is a text steganography technique where a secret message is hidden by changing the letters of the message in the cover text to uppercase.</description>
   <keywords lang="en">Steganography, Text Steganography, Capital letters</keywords>
   <title lang="de">Text Steganographie mit Großbuchstaben (binärer Modus)</title>
   <summary lang="de">Geheime Nachrichten in einem Text verstecken und wieder extrahieren</summary>
-  <description lang="de">Das ist eine Text Steganographie Technik, wo eine geheime Nachricht in einem Text versteckt wird indem die Buchstaben der geheimen Nachricht im Cover Text großgeschrieben werden</description>
+  <description lang="de">Das ist eine Text Steganographie Technik, wo eine geheime Nachricht in einem Text versteckt wird indem die Buchstaben der geheimen Nachricht im Cover Text großgeschrieben werden.</description>
   <keywords lang="de">Steganographie, Text Steganographie, Großbuchstaben</keywords>
   <relevantPlugins>
     <plugin name="TextSteganography" />

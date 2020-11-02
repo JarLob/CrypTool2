@@ -6,12 +6,12 @@
   <language culture="de-DE"/>
 
   <introduction lang="en">
-    This component implements text steganogrphy which hides a secret message inside text, see <ref id="steganographywiki" /> for more information about steganography. <newline/>
+    This component implements text steganography which hides a secret message inside cover text, see <ref id="steganographywiki" /> for more information about steganography. <newline/>
     The secret message can be hidden using several techniques. This includes: using zero-width spaces, capital letters and marking letters with special characters. 
   </introduction>
 
   <introduction lang="de-DE">
-    Diese Komponente implementiert Text-Steganographie, die eine geheime Nachricht im Text versteckt. Weitere Informationen zur Steganographie finden Sie unter <ref id = "steganographywiki" />. <newline />
+    Diese Komponente implementiert Text-Steganographie, die eine geheime Nachricht in einem Covertext versteckt. Weitere Informationen zur Steganographie finden Sie unter <ref id = "steganographywiki" />. <newline />
     Die geheime Nachricht kann mit verschiedenen Verfahren versteckt werden. Dies umfasst: Verwenden von Leerzeichen ohne Breite, Großbuchstaben und Markieren von Buchstaben mit Sonderzeichen.
   </introduction>
 

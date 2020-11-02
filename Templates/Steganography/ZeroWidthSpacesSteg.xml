@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Text Steganography with Zero Width Spaces</title>
+  <title lang="en">Text steganography with zero width spaces</title>
   <summary lang="en">Hide and extract a message in and from another text</summary>
-  <description lang="en">This is a text steganography technique where a secret message is hidden in another text using zero width spaces</description>
+  <description lang="en">This is a text steganography technique where a secret message is hidden in another text using zero width spaces.</description>
   <keywords lang="en">Steganography, Text Steganography, Zero width spaces</keywords>
   <title lang="de">Text Steganographie mit Leerzeichen ohne Breite</title>
   <summary lang="de">Geheime Nachrichten in einem Text verstecken und wieder extrahieren</summary>
-  <description lang="de">Das ist eine Text Steganographie Technik, wo eine geheime Nachricht in einem Text versteckt wird mit Leerzeichen die keine Breite haben</description>
+  <description lang="de">Das ist eine Text Steganographie Technik, wo eine geheime Nachricht in einem Text versteckt wird mit Leerzeichen die keine Breite haben.</description>
   <keywords lang="de">Steganographie, Text Steganographie, Leerzeichen ohne Breite</keywords>
   <relevantPlugins>
     <plugin name="TextSteganography" />

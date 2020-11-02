@@ -25,7 +25,7 @@ using Cryptool.PluginBase.Miscellaneous;
 
 namespace TextSteganography
 {
-    [Author("Sally Addad", "saddad@mail.uni-mannheim.de", "University of Mannheim", "https://www.cryptool.org")]
+    [Author("Sally Addad", "addadsally@gmail.com", "University of Mannheim", "https://www.uni-mannheim.de")]
     [PluginInfo("TextSteganography.Properties.Resources", "PluginCaption", "PluginTooltip", "TextSteganography/userdoc.xml", new[] { "TextSteganography/icon.png" })]
     [ComponentCategory(ComponentCategory.Steganography)]
     public class TextSteganography : ICrypComponent
@@ -478,7 +478,7 @@ namespace TextSteganography
             }
             if (coverTextIndex < coverText.Length - 1)
             {
-                stegoTextBuilder.Append(coverText.Substring(coverTextIndex + 1));
+                stegoTextBuilder.Append(coverText.Substring(coverTextIndex));
             }
 
             StegoText = stegoTextBuilder.ToString();

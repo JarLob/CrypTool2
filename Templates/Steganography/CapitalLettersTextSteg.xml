@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Text Steganography with capital letters</title>
+  <title lang="en">Text steganography with capital letters</title>
   <summary lang="en">Hide and extract a message in and from another text</summary>
-  <description lang="en">This is a text steganography technique where a secret message is hidden by changing the letters of the message in the cover text to upper case</description>
+  <description lang="en">This is a text steganography technique where a secret message is hidden by changing the letters of the message in the cover text to uppercase.</description>
   <keywords lang="en">Steganography, Text Steganography, Capital letters</keywords>
   <title lang="de">Text Steganographie mit Großbuchstaben</title>
   <summary lang="de">Geheime Nachrichten in einem Text verstecken und wieder extrahieren</summary>
-  <description lang="de">Das ist eine Text Steganographie Technik, wo eine geheime Nachricht in einem Text versteckt wird indem die Buchstaben der geheimen Nachricht im Cover Text großgeschrieben werden</description>
+  <description lang="de">Das ist eine Text Steganographie Technik, wo eine geheime Nachricht in einem Text versteckt wird indem die Buchstaben der geheimen Nachricht im Cover Text großgeschrieben werden.</description>
   <keywords lang="de">Steganographie, Text Steganographie, Großbuchstaben</keywords>
   <relevantPlugins>
     <plugin name="TextSteganography" />
@@ -27,6 +27,6 @@
     <replacement key="$stegextract$" value="Extract" />
     <replacement key="$extractedmessage$" value="Extracted message" />
     <replacement key="$secretmessagetext$" value= "secret message"/>
-    <replacement key="$memotext$" value= "This mode of text steganography converts all the letters of the cover text to lower case letters and then converts only the letters of the secret message to uppercase. In order to hide the whole message correctly, the cover text should contain all the letters of the secret message distributed and in the same order. "/>
+    <replacement key="$memotext$" value= "This mode of text steganography converts all the letters of the cover text to lowercase letters and then converts only the letters of the secret message to uppercase. In order to hide the whole message correctly, the cover text should contain all the letters of the secret message in the same order distributed within a longer text. "/>
   </replacements>
 </sample>
