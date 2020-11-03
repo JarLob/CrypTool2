@@ -8,6 +8,7 @@
   <summary lang="de">Geheime Nachrichten in einem Text verstecken und wieder extrahieren</summary>
   <description lang="de">Das ist eine Text Steganographie Technik, wo die Bits einer geheimen Nachricht in einem Text versteckt wird indem die Buchstaben der geheimen Nachricht im Cover Text entsprechend markiert werden.</description>
   <keywords lang="de">Steganographie, Text Steganographie, Buchstaben markieren</keywords>
+  <icon file="TextSteganography.png" />
   <relevantPlugins>
     <plugin name="TextSteganography" />
   </relevantPlugins>

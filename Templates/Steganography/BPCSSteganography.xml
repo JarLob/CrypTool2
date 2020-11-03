@@ -10,6 +10,7 @@
   <description lang="de">Die Bit Plane Complexity Segmentation (BPCS) ist eine Steganographietechnik, mit der eine geheime Nachricht in einem Bild versteckt wird. Diese Technik kann geheime Nachrichten verstecken
   mit einer höheren Kapazität als die klassischen Steganographietechniken, ohne das Bild auf eine Weise zu verändern, die für das menschliche Auge wahrnehmbar ist</description>
   <keywords lang="de">Steganographie, BPCS</keywords>
+  <icon file="ImageSteganography.png" />
   <relevantPlugins>
     <plugin name="ImageSteganographyVisualization" />
   </relevantPlugins>

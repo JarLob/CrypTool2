@@ -11,6 +11,7 @@
   In diesem Plugin kann eine geheime Nachricht standardmäßig mit LSB in ein Bild versteckt werden, oder mit der Visualisierungskomponente können Sie auswählen,
   welche Bits zum Verstecken der Nachricht verwendet werden sollen, und diese dann extrahieren /></description>
   <keywords lang="de">Steganographie, LSB</keywords>
+  <icon file="ImageSteganography.png" />
   <relevantPlugins>
     <plugin name="ImageSteganographyVisualization" />
   </relevantPlugins>
