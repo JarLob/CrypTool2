@@ -6,8 +6,8 @@
   <keywords lang="en">Steganography, Text Steganography, Marking letters</keywords>
   <title lang="de">Text Steganographie mit Zeichenmarkierung</title>
   <summary lang="de">Geheime Nachrichten in einem Text verstecken und wieder extrahieren</summary>
-  <description lang="de">Das ist eine Text Steganographie Technik, wo eine geheime Nachricht in einem Text versteckt wird indem die Buchstaben der geheimen Nachricht im Cover Text markiert werden.</description>
-  <keywords lang="de">Steganographie, Text Steganographie, Buchstaben markieren</keywords>
+  <description lang="de">Das ist eine Text-Steganographie-Technik, die eine geheime Nachricht in einem Text versteckt, indem die Buchstaben der geheimen Nachricht im Covertext markiert werden.</description>
+  <keywords lang="de">Steganographie, Text-Steganographie, Buchstaben markieren</keywords>
   <icon file="TextSteganography.png" />
   <relevantPlugins>
     <plugin name="TextSteganography" />
@@ -19,7 +19,7 @@
     <replacement key="$stegextract$" value="Extrahieren" />
     <replacement key="$extractedmessage$" value="Extrahierte Nachricht" />
     <replacement key="$secretmessagetext$" value= "secret message"/>
-    <replacement key="$memotext$" value= "Dieser Modus der Textsteganographie markiert die Buchstaben der geheimen Nachricht im Covertext mit einem kleinen Punkt unter oder über dem Buchstaben. Um die gesamte Nachricht korrekt zu verstecken, sollte der Covertxt alle Buchstaben und Zeichen der geheimen Nachricht sortiert und verteilt enthalten."/>
+    <replacement key="$memotext$" value= "Dieser Modus der Textsteganographie markiert die Buchstaben der geheimen Nachricht im Covertext mit einem kleinen Punkt unter oder über dem Buchstaben. Um die gesamte Nachricht korrekt zu verstecken, sollte der Covertext alle Buchstaben und Zeichen der geheimen Nachricht sortiert und verteilt enthalten."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$secretmessage$" value="Secret message" />
@@ -28,6 +28,6 @@
     <replacement key="$stegextract$" value="Extract" />
     <replacement key="$extractedmessage$" value="Extracted message" />
     <replacement key="$secretmessagetext$" value= "secret message"/>
-    <replacement key="$memotext$" value= "This mode of text steganography marks the letters of the secret message in the covertext with a little dot under or above the letter. In order to hide the whole message correctly, the cover text should contain all the letters of the secret message in the same order distributed within a longer text."/>
+    <replacement key="$memotext$" value= "This mode of text steganography marks the letters of the secret message in the cover text with a little dot under or above the letter. In order to hide the whole message correctly, the cover text should contain all the letters of the secret message in the same order distributed within a longer text."/>
   </replacements>
 </sample>

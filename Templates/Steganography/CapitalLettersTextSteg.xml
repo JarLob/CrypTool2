@@ -6,8 +6,8 @@
   <keywords lang="en">Steganography, Text Steganography, Capital letters</keywords>
   <title lang="de">Text Steganographie mit Großbuchstaben</title>
   <summary lang="de">Geheime Nachrichten in einem Text verstecken und wieder extrahieren</summary>
-  <description lang="de">Das ist eine Text Steganographie Technik, wo eine geheime Nachricht in einem Text versteckt wird indem die Buchstaben der geheimen Nachricht im Cover Text großgeschrieben werden.</description>
-  <keywords lang="de">Steganographie, Text Steganographie, Großbuchstaben</keywords>
+  <description lang="de">Das ist eine Text-Steganographie Technik, wo eine geheime Nachricht in einem Text versteckt wird indem die Buchstaben der geheimen Nachricht im Covertext großgeschrieben werden.</description>
+  <keywords lang="de">Steganographie, Text-Steganographie, Großbuchstaben</keywords>
   <icon file="TextSteganography.png" />
   <relevantPlugins>
     <plugin name="TextSteganography" />
@@ -19,7 +19,7 @@
     <replacement key="$stegextract$" value="Extrahieren" />
     <replacement key="$extractedmessage$" value="Extrahierte Nachricht" />
     <replacement key="$secretmessagetext$" value= "secret message"/>
-    <replacement key="$memotext$" value= "Dieser Modus der Textsteganographie konvertiert alle Buchstaben des Covertexts in Kleinbuchstaben und konvertiert dann nur die Buchstaben der geheimen Nachricht in Großbuchstaben. Um die gesamte Nachricht korrekt auszublenden, sollte der Cover Text alle Buchstaben und Zeichen der geheimen Nachricht sortiert und verteilt enthalten."/>
+    <replacement key="$memotext$" value= "Dieser Modus der Textsteganographie konvertiert alle Buchstaben des Covertexts in Kleinbuchstaben und konvertiert dann nur die Buchstaben der geheimen Nachricht in Großbuchstaben. Um die gesamte Nachricht korrekt auszublenden, sollte der Covertext alle Buchstaben und Zeichen der geheimen Nachricht sortiert und verteilt enthalten."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$secretmessage$" value="Secret message" />

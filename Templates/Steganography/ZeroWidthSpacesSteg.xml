@@ -6,11 +6,11 @@
   <keywords lang="en">Steganography, Text Steganography, Zero width spaces</keywords>
   <title lang="de">Text Steganographie mit Leerzeichen ohne Breite</title>
   <summary lang="de">Geheime Nachrichten in einem Text verstecken und wieder extrahieren</summary>
-  <description lang="de">Das ist eine Text Steganographie Technik, wo eine geheime Nachricht in einem Text versteckt wird mit Leerzeichen die keine Breite haben.</description>
-  <keywords lang="de">Steganographie, Text Steganographie, Leerzeichen ohne Breite</keywords>
+  <description lang="de">Das ist eine Text-Steganographie-Technik, die eine geheime Nachricht in einem Text versteckt, indem sie Leerzeichen nutzt, die keine Breite haben</description>
+  <keywords lang="de">Steganographie, Text-Steganographie, Leerzeichen ohne Breite</keywords>
   <icon file="TextSteganography.png" />
   <relevantPlugins>
-    <plugin name="TextSteganography" />	
+    <plugin name="TextSteganography" />
   </relevantPlugins>
   <replacements lang="de">
     <replacement key="$secretmessage$" value="Geheime Nachricht" />

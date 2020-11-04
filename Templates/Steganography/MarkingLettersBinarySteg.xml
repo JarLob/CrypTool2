@@ -2,12 +2,12 @@
 <sample>
   <title lang="en">Text steganography with letter marking (binary mode)</title>
   <summary lang="en">Hide and extract a message in and from another text</summary>
-  <description lang="en">This is a text steganography technique where the bits of a secret message is hidden by marking the letters of the message in the cover text.</description>
+  <description lang="en">This is a text steganography technique where the bits of a secret message are hidden by marking the letters of the message in the cover text.</description>
   <keywords lang="en">Steganography, Text Steganography, Marking letters</keywords>
   <title lang="de">Text Steganographie mit Zeichenmarkierung (binärer Modus)</title>
   <summary lang="de">Geheime Nachrichten in einem Text verstecken und wieder extrahieren</summary>
-  <description lang="de">Das ist eine Text Steganographie Technik, wo die Bits einer geheimen Nachricht in einem Text versteckt wird indem die Buchstaben der geheimen Nachricht im Cover Text entsprechend markiert werden.</description>
-  <keywords lang="de">Steganographie, Text Steganographie, Buchstaben markieren</keywords>
+  <description lang="de">Das ist eine Text-Steganographie-Technik, die die Bits einer geheimen Nachricht in einem Text versteckt, indem die Buchstaben der geheimen Nachricht im Covertext entsprechend markiert werden.</description>
+  <keywords lang="de">Steganographie, Text-Steganographie, Buchstaben markieren</keywords>
   <icon file="TextSteganography.png" />
   <relevantPlugins>
     <plugin name="TextSteganography" />

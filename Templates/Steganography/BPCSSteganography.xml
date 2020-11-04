@@ -4,12 +4,12 @@
   <summary lang="en">Hide and extract messages with BPCS steganography</summary>
   <description lang="en">Bit Plane Complexity Segmentation (BPCS) is a steganography technique used to hide a secret message in a cover image, this technique can hide secret messages
   with a higher capacity than the classical steganography techniques without changing the image in a way that is noticeable to the human eye.</description>
-  <keywords>Steganography, BPCS</keywords>
-  <title lang="de">Bild Steganographie mit BPCS</title>
+  <keywords>Steganography, BPCS, Image steganography</keywords>
+  <title lang="de">Bild-Steganographie mit BPCS</title>
   <summary lang="de">Geheime Nachrichten in Bilder verstecken und wieder extrahieren</summary>
   <description lang="de">Die Bit Plane Complexity Segmentation (BPCS) ist eine Steganographietechnik, mit der eine geheime Nachricht in einem Bild versteckt wird. Diese Technik kann geheime Nachrichten verstecken
   mit einer höheren Kapazität als die klassischen Steganographietechniken, ohne das Bild auf eine Weise zu verändern, die für das menschliche Auge wahrnehmbar ist</description>
-  <keywords lang="de">Steganographie, BPCS</keywords>
+  <keywords lang="de">Steganographie, BPCS, Bild-Steganographie</keywords>
   <icon file="ImageSteganography.png" />
   <relevantPlugins>
     <plugin name="ImageSteganographyVisualization" />
@@ -32,6 +32,6 @@
     <replacement key="$bpcsextract$" value="BPCS extract" />
     <replacement key="$extractedmessage$" value="Extracted message" />
     <replacement key="$secretmessagetext$" value= "Hi, this is a secret message!"/>
-    <replacement key="$memotext$" value= "This template is used to demonstrate image steganography using the BPCS technique. After starting the program you can see the created message and image blocks in the hiding process view (2). You can also compare the pixels between the original and the cover image in the pixel coversion view (3). The different bit planes of the image can be seen by navigating to the bit planes view (4). In the settings you can set the complexity threshold and the order of the color channels used when hiding/extracting the message."/>
+    <replacement key="$memotext$" value= "This template is used to demonstrate image steganography using the BPCS technique. After starting the program you can see the created message and image blocks in the hiding process view (2). You can also compare the pixels between the original and the cover image in the pixel conversion view (3). The different bit planes of the image can be seen by navigating to the bit planes view (4). In the settings you can set the complexity threshold and the order of the color channels used when hiding/extracting the message."/>
   </replacements>
 </sample>
