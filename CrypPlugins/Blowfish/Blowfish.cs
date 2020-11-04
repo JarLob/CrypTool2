@@ -44,7 +44,7 @@ using Cryptool.Plugins.Blowfish.Threefish;
 namespace Cryptool.Plugins.Blowfish
 {
     [Author("Nils Kopal", "Nils.Kopal@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
-    [PluginInfo("Cryptool.Plugins.Blowfish.Properties.Resources", "PluginCaption", "PluginTooltip", "", "Blowfish/Images/icon.png")]
+    [PluginInfo("Cryptool.Plugins.Blowfish.Properties.Resources", "PluginCaption", "PluginTooltip", "Blowfish/userdoc.xml", "Blowfish/Images/icon.png")]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class Blowfish : ICrypComponent
     {

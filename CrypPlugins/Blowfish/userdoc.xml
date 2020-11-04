@@ -1,28 +1,121 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
 <documentation>
   <language culture="en"/>
   <language culture="de-DE"/>
+  <language culture="ru"/>
 
-  <introduction lang="en">    
+  <introduction lang="en">
+    The Blowfish component implements three ciphers invented by Bruce Schneier, namely Blowfish, Twofish, and Threefish.<newline />
+    <newline />
+    Blowfish <ref id="Blowfish" /> is a block cipher, designed in 1993 by Bruce Schneier and included in many cipher suites and encryption products. 
+    It is based on a Feistel network, has a block size of 64 bit, and it supports key sizes from 32 bit to 448 bit. 
+    Blowfish provides a good encryption rate in software and no effective cryptanalysis of it has been found to date. 
+    However, the Advanced Encryption Standard (AES) now receives more attention, and Schneier recommends Twofish for modern applications.<newline />
+    <newline />
+    Twofish <ref id="Twofish" /> is a block cipher, also based on a Feistel network, with a block size of 128 bit and key sizes of 128 bit, 192 bit, and 256 bit. 
+    It was one of the five finalists of the Advanced Encryption Standard contest, but it was not selected for standardization. 
+    Twofish is related to the earlier block cipher Blowfish.<newline />
+    <newline />
+    Threefish <ref id="Threefish" /> is a tweakable block cipher designed as part of the Skein hash function, an entry in the NIST hash function competition. 
+    It supports 256 bit, 512 bit, and 1024 bit keys. 
+    The block size is equal to the selected key size. 
+    Threefish uses no S-boxes or other table lookups in order to avoid cache timing attacks. 
+    Its nonlinearity comes from alternating additions with exclusive ORs. 
+    In that respect, it is similar to Salsa20, TEA, and the SHA-3 candidates CubeHash and BLAKE.
   </introduction>
 
-  <introduction lang="de-DE">    
+  <introduction lang="de-DE">
+    Die Blowfish-Komponente implementiert drei von Bruce Schneier erfundene Chiffren, nämlich Blowfish, Twofish und Threefish. <newline />
+    <newline />
+    Blowfish <ref id = "Blowfish" /> ist eine Blockverschlüsselung, die 1993 von Bruce Schneier entworfen und in vielen Verschlüsselungssuiten und Verschlüsselungsprodukten enthalten ist.
+    Es basiert auf einem Feistel-Netzwerk, hat eine Blockgröße von 64 Bit und unterstützt Schlüsselgrößen von 32 Bit bis 448 Bit.
+    Blowfish bietet eine gute Verschlüsselungsrate in Software, und es wurde bisher keine effektive Kryptoanalyse gefunden.
+    Der Advanced Encryption Standard (AES) erhält jedoch jetzt mehr Aufmerksamkeit, und Schneier empfiehlt Twofish für moderne Anwendungen. <newline />
+    <newline />
+    Twofish <ref id = "Twofish" /> ist eine symmetrische Blockverschlüsselung, die ebenfalls auf einem Feistel-Netzwerk basiert und eine Blockgröße von 128 Bit und Schlüsselgrößen von 128 Bit, 192 Bit und 256 Bit aufweist.
+    Es war einer der fünf Finalisten des Advanced Encryption Standard-Wettbewerbs, wurde jedoch nicht für die Standardisierung ausgewählt.
+    Twofish ist mit der früheren Blockchiffre Blowfish verwandt.<newline />
+    <newline />
+    Threefish <ref id = "Threefish" /> ist eine optimierbare Blockverschlüsselung mit symmetrischen Schlüsseln, die als Teil der Skein-Hash-Funktion entwickelt wurde, einem Eintrag im NIST-Hash-Funktionswettbewerb.
+    Es unterstützt 256-Bit-, 512-Bit- und 1024-Bit-Schlüssel.
+    Die Blockgröße entspricht der ausgewählten Schlüsselgröße.
+    Threefish verwendet keine S-Boxen oder Tabellen-Lookups, um Cache-Timing-Angriffe zu vermeiden.
+    Seine Nichtlinearität beruht auf wechselenden Additionen und exklusiven Veroderungen.
+    In dieser Hinsicht ähnelt es Salsa20, TEA und den SHA-3-Kandidaten CubeHash und BLAKE.
   </introduction>
 
+  <introduction lang="ru">
+    Компонент Blowfish реализует три шифра, изобретенные Брюсом Шнайером, а именно Blowfish, Twofish и Threefish. <newline />
+    <newline />
+    Blowfish <ref id = "Blowfish" /> - блочный шифр, разработанный в 1993 году Брюсом Шнайером и включенный во многие комплекты шифров и продукты для шифрования.
+    Он основан на сети Фейстеля, имеет размер блока 64 бита и поддерживает размеры ключей от 32 бит до 448 бит.
+    Blowfish обеспечивает хорошую скорость шифрования в программном обеспечении, и на сегодняшний день не было найдено никакого эффективного криптоанализа.
+    Однако теперь расширенному стандарту шифрования (AES) уделяется больше внимания, и Шнайер рекомендует Twofish для современных приложений. <newline />
+    <newline />
+    Twofish <ref id = "Twofish" /> - это блочный шифр, также основанный на сети Фейстеля, с размером блока 128 бит и размерами ключа 128, 192 и 256 бит.
+    Он был одним из пяти финалистов конкурса Advanced Encryption Standard, но не был выбран для стандартизации.
+    Twofish связан с более ранним блочным шифром Blowfish.<newline />
+    <newline />
+    Threefish <ref id = "Threefish" /> - это настраиваемый блочный шифр, разработанный как часть хэш-функции Skein, вход в соревнование хэш-функций NIST.
+    Он поддерживает 256-битные, 512-битные и 1024-битные ключи.
+    Размер блока равен выбранному размеру ключа.
+    Threefish не использует S-блоки или другие таблицы, чтобы избежать атак по времени кэширования.
+    Его нелинейность возникает из-за чередования добавлений с исключающим ИЛИ.
+    В этом отношении он похож на Salsa20, TEA и кандидатов на SHA-3 CubeHash и BLAKE.
+  </introduction>
+  
   <usage lang="en">
+    In the settings of the component, you can select whether the component should be operated in Blowfish mode, Twofish mode, or Threefish mode.
+    Depending on the mode of operation, you have to add an input for the init vector.
+    Only Threefish needs and supports the tweak input.
   </usage>
 
   <usage lang="de-DE">
+    In den Einstellungen der Komponente können Sie auswählen, ob die Komponente im Blowfish-Modus, im Twofish-Modus oder im Threefish-Modus betrieben werden soll.
+    Abhängig von der Betriebsart müssen Sie eine Eingabe für den Init-Vektor hinzufügen.
+    Nur Threefish benötigt und unterstützt die tweak-Eingabe.
   </usage>
-  
+
+  <usage lang="ru">
+    В настройках компонента вы можете выбрать, должен ли компонент работать в режиме Blowfish, режиме Twofish или режиме Threefish.
+    В зависимости от режима работы вам необходимо добавить вход для вектора инициализации.
+    Только Threefish нуждается в вводе настроек и поддерживает его.
+  </usage>
+
   <presentation lang="en">
   </presentation>
   
   <presentation lang="de-DE">
   </presentation>
+
+  <presentation lang="ru">
+  </presentation>
   
   <references>
+    <linkReference id="Blowfish">
+      <link url="https://en.wikipedia.org/wiki/Blowfish_(cipher)" lang="en" />
+      <caption lang="en">Blowfish (Wikipedia)</caption>
+      <link url="http://de.wikipedia.org/wiki/Advanced_Encryption_Standard" lang="de-DE" />
+      <caption lang="de-DE">Blowfish (Wikipedia)</caption>
+      <link url="https://ru.wikipedia.org/wiki/Blowfish" lang="ru" />
+      <caption lang="ru">Blowfish (Wikipedia)</caption>
+    </linkReference>
+    <linkReference id="Twofish">
+      <link url="https://en.wikipedia.org/wiki/Twofish" lang="en" />
+      <caption lang="en">Twofish (Wikipedia)</caption>
+      <link url="https://de.wikipedia.org/wiki/Twofish" lang="de-DE" />
+      <caption lang="de-DE">Twofish (Wikipedia)</caption>
+      <link url="https://ru.wikipedia.org/wiki/Twofish" lang="ru" />
+      <caption lang="ru">Twofish (Wikipedia)</caption>
+    </linkReference>
+    <linkReference id="Threefish">
+      <link url="https://en.wikipedia.org/wiki/Threefish" lang="en" />
+      <caption lang="en">Threefish (Wikipedia)</caption>
+      <link url="https://de.wikipedia.org/wiki/Threefish" lang="de-DE" />
+      <caption lang="de-DE">Threefish (Wikipedia)</caption>
+      <link url="https://ru.wikipedia.org/wiki/Threefish" lang="ru" />
+      <caption lang="ru">Threefish (Wikipedia)</caption>
+    </linkReference>
   </references>
 </documentation>
