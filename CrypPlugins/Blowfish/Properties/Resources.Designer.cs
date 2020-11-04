@@ -268,7 +268,7 @@ namespace Cryptool.Plugins.Blowfish.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Der eingegebene Schlüssel. Zu kurze oder zu lange Schlüssel werden verlängert oder abgeschnitten. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The provided key. Keys that are too short or long are lengthened or shortened. ähnelt.
         /// </summary>
         internal static string InputKeyTooltip {
             get {

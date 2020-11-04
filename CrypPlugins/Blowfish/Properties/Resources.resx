@@ -127,7 +127,7 @@
     <value>Key</value>
   </data>
   <data name="InputKeyTooltip" xml:space="preserve">
-    <value>Der eingegebene Schlüssel. Zu kurze oder zu lange Schlüssel werden verlängert oder abgeschnitten.</value>
+    <value>The provided key. Keys that are too short or long are lengthened or shortened.</value>
   </data>
   <data name="InputStreamCaption" xml:space="preserve">
     <value>Input stream</value>

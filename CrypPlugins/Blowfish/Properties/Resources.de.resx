@@ -181,7 +181,7 @@
     <value>Schlüssel</value>
   </data>
   <data name="InputKeyTooltip" xml:space="preserve">
-    <value>Der bereitgestellte Schlüssel sollte 8 Bytes lang sein. Zu kurze oder lange Schlüssel werden verlängert bzw. gekürzt.</value>
+    <value>Der bereitgestellte Schlüssel. Zu kurze oder lange Schlüssel werden verlängert bzw. gekürzt.</value>
   </data>
   <data name="InputStreamCaption" xml:space="preserve">
     <value>Eingabestrom</value>

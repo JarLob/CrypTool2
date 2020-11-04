@@ -181,7 +181,7 @@
     <value>ключ</value>
   </data>
   <data name="InputKeyTooltip" xml:space="preserve">
-    <value>Предоставленный ключ. Слишком короткие или слишком длинные ключи будут расширены или усечены.</value>
+    <value>Предоставленный ключ. Слишком короткие или длинные клавиши удлиняются или укорачиваются.</value>
   </data>
   <data name="InputStreamCaption" xml:space="preserve">
     <value>Входной поток</value>
