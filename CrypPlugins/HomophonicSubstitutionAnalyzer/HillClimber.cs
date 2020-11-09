@@ -489,6 +489,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public AnalysisMode AnalysisMode { get; set; }
         public int Keylength { get; private set; }
         public string PlaintextMapping { get; set; }
+        public string PlaintextAlphabet { get; set; }
         public string CiphertextAlphabet { get; set; }
         public int TextColumns { get; set; }
         public int Cycles { get; set; }

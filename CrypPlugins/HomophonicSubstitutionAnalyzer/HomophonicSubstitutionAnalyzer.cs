@@ -22,6 +22,7 @@ using System.Threading;
 using Cryptool.PluginBase.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
 {
@@ -46,6 +47,8 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             _presentation.NewBestValue += PresentationOnNewBestValue;
             _presentation.UserChangedText += PresentationOnUserChangedText;
             _presentation.Progress += PresentationOnProgress;
+            _presentation.LetterLimitsChanged += PresentationOnLetterLimitsChanged;
+            _settings.PropertyChanged += SettingsOnPropertyChanged;
         }
 
         #region Data Properties
@@ -147,8 +150,13 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             }
             string ciphertext = HandleLinebreaks(Ciphertext, out List<int> linebreakPositions);
             _presentation.LoadLangStatistics(_settings.Language, _settings.UseSpaces, _settings.UseNulls);
-            _presentation.AddCiphertext(ciphertext, _settings.CiphertextFormat, separator, _settings.CostFactorMultiplicator, _settings.FixedTemperature, _settings.UseNulls);
-            GenerateLetterLimits();
+            _presentation.AddCiphertext(ciphertext, _settings.CiphertextFormat, separator, _settings.CostFactorMultiplicator, _settings.FixedTemperature, _settings.UseNulls);            
+            _presentation.AnalyzerConfiguration.PlaintextAlphabet = LanguageStatistics.Alphabet(LanguageStatistics.LanguageCode(_settings.Language), _settings.UseSpaces);
+            if (_settings.UseNulls)
+            {
+                //add symbol for null
+                _presentation.AnalyzerConfiguration.PlaintextAlphabet += "#";
+            }
             _presentation.AnalyzerConfiguration.WordCountToFind = _settings.WordCountToFind;
             _presentation.AnalyzerConfiguration.MinWordLength = _settings.MinWordLength;
             _presentation.AnalyzerConfiguration.MaxWordLength = _settings.MaxWordLength;
@@ -158,6 +166,14 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             _presentation.AnalyzerConfiguration.UseNulls = _settings.UseNulls;
             _presentation.AnalyzerConfiguration.LinebreakPositions = linebreakPositions;
             _presentation.AnalyzerConfiguration.KeepLinebreaks = _settings.KeepLinebreaks;
+            if (string.IsNullOrWhiteSpace(_settings.LetterLimits))
+            {
+                GenerateLetterLimits();
+            }
+            else
+            {
+                DeserializeLetterLimits();
+            }
             _presentation.AddDictionary(Dictionary);
             _presentation.GenerateGrids();            
             _running = true;            
@@ -186,6 +202,55 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             _presentation.DisableUIAndStop();
             
             ProgressChanged(1, 1);
+        }
+
+        /// <summary>
+        /// Deserialize LetterLimits stored in the settings
+        /// </summary>
+        private void DeserializeLetterLimits()
+        {
+            _presentation.AnalyzerConfiguration.KeyLetterLimits.Clear();
+            using (StringReader reader = new StringReader(_settings.LetterLimits))
+            {
+                string line = null;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    try
+                    {
+                        var splits = line.Split(';');
+                        if (splits.Length == 3)
+                        {
+                            int letter = int.Parse(splits[0]);
+                            int minValue = int.Parse(splits[1]);
+                            int maxValue = int.Parse(splits[2]);
+                            _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = letter, MinValue = minValue, MaxValue = maxValue });
+                        }
+                        else
+                        {
+                            throw new Exception(string.Format("Invalid line in LetterLimits: {0}", line));
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        GuiLogMessage(string.Format("Error while deserializing LetterLimits: {0}", ex.Message), NotificationLevel.Error);
+                    }
+                }
+            }
+            _presentation.GenerateKeyLetterLimitsListView();
+        }
+
+        /// <summary>
+        /// Serializes and stores LetterLimits in the settings
+        /// </summary>
+        private void SerializeLetterLimits()
+        {
+            var builder = new StringBuilder();
+            foreach(var letterLimit in _presentation.AnalyzerConfiguration.KeyLetterLimits)
+            {
+                builder.AppendLine(string.Format("{0};{1};{2}", letterLimit.Letter, letterLimit.MinValue, letterLimit.MaxValue));
+            }
+            _settings.LetterLimits = builder.ToString();
         }
 
         /// <summary>
@@ -232,7 +297,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 //if we have no unigram stats, we just equally distribute the letters 
                 unigrams = new double[alphabet.Length];
-                for(int i=0;i< alphabet.Length; i++)
+                for (int i = 0; i < alphabet.Length; i++)
                 {
                     unigrams[i] = 1.0 / alphabet.Length;
                 }
@@ -251,11 +316,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             }
             if (_settings.UseSpaces)
             {
-                _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = Tools.MapIntoNumberSpace(" ", _presentation.AnalyzerConfiguration.PlaintextMapping)[0], MinValue = 2, MaxValue = 3 });   //SPACE
+                _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = Tools.MapIntoNumberSpace(" ", _presentation.AnalyzerConfiguration.PlaintextAlphabet)[0], MinValue = 2, MaxValue = 3 });   //SPACE
             }
             if (_settings.UseNulls)
             {
-                _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = Tools.MapIntoNumberSpace("#", _presentation.AnalyzerConfiguration.PlaintextMapping)[0], MinValue = 1, MaxValue = 2 });   //NULLS
+                _presentation.AnalyzerConfiguration.KeyLetterLimits.Add(new LetterLimits() { Letter = Tools.MapIntoNumberSpace("#", _presentation.AnalyzerConfiguration.PlaintextAlphabet)[0], MinValue = 1, MaxValue = 2 });   //NULLS
             }
             _presentation.GenerateKeyLetterLimitsListView();
         }
@@ -272,6 +337,12 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                 return;
             }
             ProgressChanged(progressChangedEventArgs.Percentage, 1);
+        }
+
+        private void PresentationOnLetterLimitsChanged(object sender, TextChangedEventArgs e)
+        {
+            _presentation.UpdateKeyLetterLimits();
+            SerializeLetterLimits();
         }
 
         /// <summary>
@@ -347,6 +418,28 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             OnPropertyChanged("Plaintext");
             Key = userChangedTextEventArgs.SubstitutionKey;
             OnPropertyChanged("Key");
+        }
+
+        /// <summary>
+        /// Settings property was changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SettingsOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (_presentation.AnalyzerConfiguration != null &&                
+               (e.PropertyName.Equals("Language") || e.PropertyName.Equals("UseSpaces") || e.PropertyName.Equals("UseNulls")))
+            {
+                _presentation.AnalyzerConfiguration.PlaintextAlphabet = LanguageStatistics.Alphabet(LanguageStatistics.LanguageCode(_settings.Language), _settings.UseSpaces);
+                if (_settings.UseNulls)
+                {
+                    //add symbol for null
+                    _presentation.AnalyzerConfiguration.PlaintextAlphabet += "#";
+                }
+                //update letter limits based on language
+                GenerateLetterLimits();
+                SerializeLetterLimits();
+            }
         }
 
         /// <summary>

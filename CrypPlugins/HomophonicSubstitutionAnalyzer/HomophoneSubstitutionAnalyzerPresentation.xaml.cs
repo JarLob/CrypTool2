@@ -57,6 +57,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public event EventHandler<ProgressChangedEventArgs> Progress;
         public event EventHandler<NewBestValueEventArgs> NewBestValue;
         public event EventHandler<UserChangedTextEventArgs> UserChangedText;
+        public event TextChangedEventHandler LetterLimitsChanged;
 
         private ObservableCollection<ResultEntry> BestList { get; } = new ObservableCollection<ResultEntry>();
         private int _restart = 0;
@@ -650,7 +651,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     Label label = new Label();
                     label.FontSize = 16;
                     label.Width = 50;                    
-                    label.Content = String.Format("\"{0}\"", Tools.MapNumbersIntoTextSpace(new int[] { limits.Letter }, AnalyzerConfiguration.PlaintextMapping));
+                    label.Content = String.Format("\"{0}\"", Tools.MapNumbersIntoTextSpace(new int[] { limits.Letter }, AnalyzerConfiguration.PlaintextAlphabet));
                     
                     Grid.SetRow(label, 0);
                     Grid.SetColumn(label, 0);
@@ -662,6 +663,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     minbox.Width = 150;
                     minbox.Height = 25;
                     minbox.FontSize = 12;
+                    minbox.TextChanged += LetterLimitsChanged;
                     Grid.SetRow(minbox, 0);
                     Grid.SetColumn(minbox, 1);
 
@@ -672,6 +674,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
                     maxbox.Width = 150;
                     maxbox.Height = 25;
                     maxbox.FontSize = 12;
+                    maxbox.TextChanged += LetterLimitsChanged;
                     Grid.SetRow(maxbox, 0);
                     Grid.SetColumn(maxbox, 2);
 
@@ -1175,13 +1178,7 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             {
                 return;
             }
-            _running = true;
-            
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                UpdateKeyLetterLimits();
-            },
-            null);
+            _running = true;                       
 
             if (AnalyzerConfiguration.AnalysisMode == AnalysisMode.SemiAutomatic)
             {              
@@ -1214,37 +1211,48 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         /// Updates the key letter LetterLimits in the analyzer's config
         /// Also updates the ui; if a non-integer value has been entered, it is set to 0
         /// </summary>
-        private void UpdateKeyLetterLimits()
+        public void UpdateKeyLetterLimits()
         {
-            for (int index = 0; index < AnalyzerConfiguration.KeyLetterLimits.Count; index++)
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                int minvalue = 0;
-                int maxvalue = 0;
-                try
+                for (int index = 0; index < AnalyzerConfiguration.KeyLetterLimits.Count; index++)
                 {
-                    minvalue = int.Parse(_minTextBoxes[index].Text);
-                }
-                catch (Exception ex)
-                {
-                    //do nothing
-                }
+                    try
+                    {
+                        int minvalue = 0;
+                        int maxvalue = 0;
+                        try
+                        {
+                            minvalue = int.Parse(_minTextBoxes[index].Text);
+                        }
+                        catch (Exception)
+                        {
+                            //do nothing
+                        }
 
-                try
-                {
-                    maxvalue = int.Parse(_maxTextBoxes[index].Text);
-                }
-                catch (Exception ex)
-                {
-                    //do nothing
-                }
+                        try
+                        {
+                            maxvalue = int.Parse(_maxTextBoxes[index].Text);
+                        }
+                        catch (Exception)
+                        {
+                            //do nothing
+                        }
 
-                LetterLimits limits = AnalyzerConfiguration.KeyLetterLimits[index];
-                limits.MinValue = minvalue;
-                limits.MaxValue = maxvalue;
+                        LetterLimits limits = AnalyzerConfiguration.KeyLetterLimits[index];
+                        limits.MinValue = minvalue;
+                        limits.MaxValue = maxvalue;
 
-                _minTextBoxes[index].Text = "" + minvalue;
-                _maxTextBoxes[index].Text = "" + maxvalue;
-            }
+                        _minTextBoxes[index].Text = "" + minvalue;
+                        _maxTextBoxes[index].Text = "" + maxvalue;
+                    }
+                    catch (Exception)
+                    {
+                        //do nothing                
+                    }
+                }
+            },
+            null);
         }
 
         /// <summary>

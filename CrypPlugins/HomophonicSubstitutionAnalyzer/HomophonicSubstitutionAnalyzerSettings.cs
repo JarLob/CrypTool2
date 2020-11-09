@@ -73,30 +73,60 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         private int _fixedTemperature = 15000;
         private bool _useNulls = false;
         private bool _keepLinebreaks = false;
-
+        private string _letterLimits = string.Empty;
         #endregion
 
-        #region TaskPane Settings
+        #region TaskPane Settings      
 
         [TaskPane("LanguageCaption", "LanguageTooltip", "LanguageSettingsGroup", 0, false, ControlType.LanguageSelector)]
         public int Language
         {
-            get { return _language; }
-            set { _language = value; }
+            get 
+            { 
+                return _language; 
+            }
+            set 
+            {
+                if (value != _language)
+                {
+                    _language = value;
+                    OnPropertyChanged("Language");
+                }
+            }
         }
 
         [TaskPane("UseSpacesCaption", "UseSpacesTooltip", "LanguageSettingsGroup", 1, false, ControlType.CheckBox)]
         public bool UseSpaces
         {
-            get { return _useSpaces; }
-            set { _useSpaces = value; }
+            get 
+            { 
+                return _useSpaces; 
+            }
+            set 
+            {
+                if (value != _useSpaces)
+                {
+                    _useSpaces = value;
+                    OnPropertyChanged("UseSpaces");
+                }
+            }
         }
 
         [TaskPane("UseNullsCaption", "UseNullsTooltip", "LanguageSettingsGroup", 2, false, ControlType.CheckBox)]
         public bool UseNulls
         {
-            get { return _useNulls; }
-            set { _useNulls = value; }
+            get
+            {
+                return _useNulls;
+            }
+            set
+            {
+                if (value != _useNulls)
+                {
+                    _useNulls = value;
+                    OnPropertyChanged("UseNulls");
+                }
+            }
         }
 
         [TaskPane("KeepLinebreaksCaption", "KeepLinebreaksTooltip", "LanguageSettingsGroup", 3, false, ControlType.CheckBox)]
@@ -176,6 +206,22 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
             set { _fixedTemperature = value; }
         }
 
+        public string LetterLimits
+        {
+            get
+            {
+                return _letterLimits;
+            }
+            set
+            {
+                if (value != _letterLimits)
+                {
+                    _letterLimits = value;
+                    OnPropertyChanged("LetterLimits");
+                }
+            }
+        }
+
         #endregion
 
         #region Events
@@ -183,6 +229,11 @@ namespace Cryptool.Plugins.HomophonicSubstitutionAnalyzer
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
+
+        private void OnPropertyChanged(string name)
+        {
+            EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
+        }
 
         public void Initialize()
         {
