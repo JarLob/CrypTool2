@@ -133,7 +133,7 @@
     <value>Algorithmus-Typ</value>
   </data>
   <data name="AlgorithmTypeTooltip" xml:space="preserve">
-    <value>Legt den Typ des Blowfish-Algorithmus fest.</value>
+    <value>Legt den Typ des Algorithmus fest.</value>
   </data>
   <data name="BlockModeCaption" xml:space="preserve">
     <value>Blockverkettungsmodus</value>
@@ -175,7 +175,7 @@
     <value>Initialisierungsvektor</value>
   </data>
   <data name="InputIVTooltip" xml:space="preserve">
-    <value>Der Initialisierungsvektor (IV) der in den Blockmodi verwendet wird. Er muss die selbe größe wie die Blockgröße haben.</value>
+    <value>Der Initialisierungsvektor (IV) wird bei den Blockmodi verwendet. Er muss dieselbe Größe haben wie die Blockgröße.</value>
   </data>
   <data name="InputKeyCaption" xml:space="preserve">
     <value>Schlüssel</value>
@@ -187,7 +187,7 @@
     <value>Eingabestrom</value>
   </data>
   <data name="InputStreamTooltip" xml:space="preserve">
-    <value>Daten die ver- oder entschlüsselt werden sollen.</value>
+    <value>Daten, die ver- oder entschlüsselt werden sollen.</value>
   </data>
   <data name="OutputStreamCaption" xml:space="preserve">
     <value>Ausgabestrom</value>
@@ -217,7 +217,7 @@
     <value>1-0 Padding</value>
   </data>
   <data name="PaddingTooltip" xml:space="preserve">
-    <value>Stellt den Modus zum Füllen von Teildatenblöcken ein.</value>
+    <value>Stellt den Modus ein, wie ein unvollständiger Datenblock gefüllt wird.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Blowfish</value>
@@ -259,6 +259,6 @@
     <value>Tweak</value>
   </data>
   <data name="TweakTooltip" xml:space="preserve">
-    <value>Geben Sie hier einen Tweak-Wert an. Dieser wird nur von Threefish verwendet</value>
+    <value>Der Tweak wird nur von Threefish verwendet.</value>
   </data>
 </root>

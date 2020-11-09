@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sample>
+  <title lang="en">Threefish Cipher</title>
+  <title lang="de">Threefish-Chiffre</title>
+  <title lang="ru">Шифр Threefish</title>
+  <summary lang="en">Usage of the <i>Threefish</i> cipher</summary>
+  <summary lang="de">Benutzung der <i>Threefish</i>-Chiffre</summary>
+  <summary lang="ru">Использование шифра <i> Threefish </i></summary>    
+  <description lang="en">This template shows how to encrypt and decrypt using the Threefish cipher.</description>
+  <description lang="de">Diese Vorlage zeigt, wie Sie Text mit Threefish ver- und entschlüsseln.</description>
+  <description lang="ru">Этот шаблон показывает, как зашифровать и расшифровать с помощью шифра Threefish.</description>    
+  <keywords>symmetric, block, cipher, Bruce Schneier</keywords>  
+  <keywords lang="de">symmetrisch, Block, Chiffre, Bruce Schneier</keywords>
+  <keywords lang="ru">симметричный, блок, шифр, Брюс Шнайер</keywords>  
+  <icon file="Blowfish.png" />
+  <relevantPlugins>
+    <plugin name="Blowfish" />
+  </relevantPlugins>
+  <replacements lang="en">
+    <replacement key="$plaintext$" value="Plaintext" />
+	<replacement key="$plaintext_dec$" value="Plaintext (decrypted)" />
+    <replacement key="$ciphertext$" value="Ciphertext" />
+	<replacement key="$cipher_enc$" value="Threefish (enc)" />
+	<replacement key="$cipher_dec$" value="Threefish (dec)" />
+    <replacement key="$key$" value="Key (Hex values)" />
+    <replacement key="$stringencoder$" value="String Encoder" />
+    <replacement key="$stringdecoder$" value="String Decoder" />
+	<replacement key="$tweak$" value="Tweak" />
+    <replacement key="$memo$" value="This template encrypts text with Threefish (one of 3 encryption algorithms of the Blowfish component).\newline\newline You can enter any text into the &quot;Plaintext&quot; component on the left. The encrypted text is shown in the &quot;Ciphertext&quot; component, on the right after you clicked the &quot;Start&quot; button. In the same workflow, the ciphertext is then decrypted again and displayed in the right &quot;Plaintext&quot; component." />
+  </replacements>
+  <replacements lang="de">
+    <replacement key="$plaintext$" value="Klartext" />
+	<replacement key="$plaintext_dec$" value="Klartext (entschlüsselt)" />
+    <replacement key="$ciphertext$" value="Geheimtext" />
+	<replacement key="$cipher_enc$" value="Threefish (verschl.)" />
+	<replacement key="$cipher_dec$" value="Threefish (entschl.)" />	
+    <replacement key="$key$" value="Schlüssel (Hex-Werte)" />	
+    <replacement key="$stringencoder$" value="String-Encodierer" />
+    <replacement key="$stringdecoder$" value="String-Decodierer" />
+	<replacement key="$tweak$" value="Tweak" />
+    <replacement key="$memo$" value="Diese Vorlage verschlüsselt Text mit Threefish (einer von 3 Verschlüsselungs-Algorithmen in der Blowfish-Komponente).\newline\newline\newline Sie können einen beliebigen Text in die Komponente &quot;Klartext&quot; auf der linken Seite eingegeben. Der verschlüsselte Text wird in der Komponente &quot;Geheimtext&quot; auf der rechten Seite angezeigt, nachdem Sie auf die Schaltfläche &quot;Starten&quot; geklickt haben. Im gleichen Workflow wird der Geheimtext danach wieder entschlüsselt und in der rechten &quot;Klartext&quot;-Komponente angezeigt." />
+  </replacements>
+    <replacements lang="ru">
+    <replacement key="$plaintext$" value="Простой текст" />
+	<replacement key="$plaintext_dec$" value="Открытый текст (расшифрованный)" />
+    <replacement key="$ciphertext$" value="Зашифрованный текст" />
+	<replacement key="$cipher_enc$" value="Threefish (шифрование)" />
+	<replacement key="$cipher_dec$" value="Threefish (расшифровка)" />	
+    <replacement key="$key$" value="ключ (Значения Hex)" />	
+    <replacement key="$stringencoder$" value="Кодировщик строк" />
+    <replacement key="$stringdecoder$" value="Строковый декодер" />
+	<replacement key="$tweak$" value="Tweak" />
+    <replacement key="$memo$" value="Этот шаблон шифрует текст с помощью Threefish (один из 3 алгоритмов шифрования в компоненте Blowfish).\newline\newline\newline Вы можете вставить любой текст в компонент «Открытый текст». вошел слева. Зашифрованный текст хранится в компоненте «зашифрованный текст». отображается справа после нажатия кнопки «Пуск» нажали. В том же рабочем процессе зашифрованный текст затем снова дешифруется и отображается в правом компоненте «открытого текста»." />
+  </replacements>
+</sample>
