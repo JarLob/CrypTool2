@@ -95,7 +95,7 @@
   <references>
     <linkReference id="Schneier">
       <link url="https://www.schneier.com/academic/" lang="en" />
-      <caption lang="en">Bruce Schneier's webpage with information about all three ciphers (e.g. text vectors)</caption>
+      <caption lang="en">Bruce Schneier's webpage with information about all three ciphers (e.g. test vectors)</caption>
       <link url="https://www.schneier.com/academic/" lang="de-DE" />
       <caption lang="de-DE">Bruce Schneier's Webseite mit Informationen über alle drei Chiffren (u.a. Testvektoren)</caption>
       <link url="https://www.schneier.com/academic/" lang="ru" />
