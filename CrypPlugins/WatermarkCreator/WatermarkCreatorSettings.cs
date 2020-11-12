@@ -164,25 +164,7 @@ namespace Cryptool.Plugins.WatermarkCreator
                 }
             }
         }
-        // NOT YET WORKING. Code fails for values different from 0
-        /*
-        [TaskPane("ErrorCorrectionCap", "ErrorCorrectionDes", null, 13, false, ControlType.TextBox)]
-        public int ErrorCorrection
-        {
-            get
-            {
-                return _errorCorrection;
-            }
-            set
-            {
-                if (_errorCorrection != value)
-                {
-                    _errorCorrection = value;
-                    OnPropertyChanged("ErrorCorrection");
-                }
-            }
-        }
-        */
+       
         [TaskPane("Seed1", "Seed", null, 14, false, ControlType.TextBox)]
         public long Seed1
         {
@@ -243,7 +225,6 @@ namespace Cryptool.Plugins.WatermarkCreator
             SettingChanged("WatermarkLocation", Visibility.Collapsed);
             SettingChanged("Opacity", Visibility.Collapsed);
             SettingChanged("BoxSize", Visibility.Collapsed);
-            //SettingChanged("ErrorCorrection", Visibility.Collapsed);
             SettingChanged("Seed1", Visibility.Collapsed);
             SettingChanged("Seed2", Visibility.Collapsed);
             SettingChanged("LocationPercentage", Visibility.Collapsed);
@@ -263,10 +244,7 @@ namespace Cryptool.Plugins.WatermarkCreator
                     SettingChanged("AdvancedMode", Visibility.Visible);
                     break;
             }
-        }
 
-        public void UpdateSlider()
-        {
             switch (WatermarkLocation)
             {
                 case 2:
@@ -276,26 +254,14 @@ namespace Cryptool.Plugins.WatermarkCreator
                     SettingChanged("LocationPercentage", Visibility.Collapsed);
                     break;
             }
-        }
 
-        public void UpdateAdvanced()
-        {
-            switch (AdvancedMode)
+            //only show this settings for invisible water marks and when we are in "advanced mode"
+            if (AdvancedMode == 1 && ModificationType > 0)
             {
-                case 1:
-                    SettingChanged("Opacity", Visibility.Visible);
-                    SettingChanged("BoxSize", Visibility.Visible);
-                    //SettingChanged("ErrorCorrection", Visibility.Visible);
-                    SettingChanged("Seed1", Visibility.Visible);
-                    SettingChanged("Seed2", Visibility.Visible);
-                    break;
-                case 0:
-                    SettingChanged("Opacity", Visibility.Collapsed);
-                    SettingChanged("BoxSize", Visibility.Collapsed);
-                    //SettingChanged("ErrorCorrection", Visibility.Collapsed);
-                    SettingChanged("Seed1", Visibility.Collapsed);
-                    SettingChanged("Seed2", Visibility.Collapsed);
-                    break;
+                SettingChanged("Opacity", Visibility.Visible);
+                SettingChanged("BoxSize", Visibility.Visible);
+                SettingChanged("Seed1", Visibility.Visible);
+                SettingChanged("Seed2", Visibility.Visible);
             }
         }
         private void SettingChanged(string setting, Visibility vis)
@@ -319,7 +285,7 @@ namespace Cryptool.Plugins.WatermarkCreator
 
         public void Initialize()
         {
-
+            UpdateTaskPaneVisibility();
         }
 
         #endregion

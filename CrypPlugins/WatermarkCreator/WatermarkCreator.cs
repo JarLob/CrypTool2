@@ -264,25 +264,8 @@ namespace Cryptool.Plugins.WatermarkCreator
         private void settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             try
-            {
-                switch (e.PropertyName)
-                {
-                    case "ModificationType":
-                        _settings.UpdateTaskPaneVisibility();
-                        break;
-                    case "WatermarkLocation":
-                        _settings.UpdateSlider();
-                        break;
-                    case "AdvancedMode":
-                        _settings.UpdateAdvanced();
-                        break;
-                    case "LocationPercentage":
-                        if(!_stopped)
-                        {
-                            Execute();
-                        }
-                        break;
-                }
+            {            
+                _settings.UpdateTaskPaneVisibility();
             }
             catch(Exception ex)
             {

@@ -195,7 +195,7 @@ namespace WorkspaceManager.View.Visuals
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     HandleTaskPaneAttributeChanges(attributeChanges);
-                });
+                }, null);
             }
         }
 
